@@ -71,7 +71,8 @@ function sourceContext(types) {
   const frame = {id: 1, methodId: 0, pc: 6, base: 0, locals: [], caught: [], unwinds: []};
   return Object.assign(Object.create(VirtualMachine.prototype), {
     heap: new ManagedHeap(), image: {methods: [{qualifiedName: 'Test.Main', code, handlers}]},
-    frames: [frame], stack: [], state: 'running', fault: null, pendingFault: null
+    frames: [frame], stack: [], state: 'running', fault: null, pendingFault: null,
+    platform: {singletons: new Map()}, scheduler: {current: null}, options: {}
   });
 }
 

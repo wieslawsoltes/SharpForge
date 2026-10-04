@@ -1,0 +1,28 @@
+{
+  "id": "nullable",
+  "status": "passed",
+  "command": {
+    "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/nullable",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/home/runner/work/SharpForge/SharpForge/artifacts/a05-native/nullable/evidence"
+    ],
+    "cwd": "/home/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "nullable/evidence",
+  "report": "nullable/result.json",
+  "startedAt": "2026-10-04T18:37:52.783Z",
+  "durationMs": 3257.9461079999965,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "nullable/stdout.log",
+  "stderr": "nullable/stderr.log",
+  "finishedAt": "2026-10-04T18:37:56.042Z"
+}

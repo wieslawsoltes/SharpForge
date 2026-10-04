@@ -4,6 +4,7 @@ import { CilError } from '../binary.js';
 import { strongNameOptions, reserveStrongName } from '../pe/strong-name.js';
 import { writeManagedResources } from '../pe/managed-resources.js';
 import { linkAssemblyModules } from '../pe/module-linker.js';
+import {sourceIdentityMetadata} from '../source-type-identities.js';
 
 /** Canonical source-emitter PE options; method RVAs use the fixed .text address. */
 export function emissionPEOptions(image, options, framework) {
@@ -46,7 +47,7 @@ export function finishEmittedPE({ section, metadata, debug, includeDebug, entryT
   const strongNameSignature = reserveStrongName(section, metadata, options.strongName);
   section.pad();
   const metadataOffset = section.length;
-  const bytes = metadata.finish(includeDebug ? debug : null, section.finish());
+  const bytes = metadata.finish(sourceIdentityMetadata(debug, includeDebug), section.finish());
   section.bytes(bytes);
   const image = writePE(section.finish(), metadataOffset, bytes.length, entryToken, { ...options, resources, strongNameSignature });
   return { bytes: image, metadataBytes: bytes.length };

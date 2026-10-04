@@ -46,7 +46,7 @@ export function emitMember(node) {
     this.emit(Op.BUILTIN, BuiltinMap.get('Type.' + node.name).id, 1);
     return 'string';
   }
-  if (node.name === 'Message' && type === 'Exception') {
+  if (node.name === 'Message' && ['Exception', 'System.Exception'].includes(type)) {
     this.expr(node.target);
     this.emit(Op.BUILTIN, BuiltinMap.get('Exception.Message').id, 1);
     return 'string';

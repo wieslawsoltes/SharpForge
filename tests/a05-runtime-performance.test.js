@@ -59,7 +59,7 @@ test('A05 warm field caches still reject null, stale handles, foreign owners and
   assert.throws(() => vm.field(fixture.field, instance), {name: 'InvalidReferenceException'});
 });
 
-test('A05 field caches retain metadata but use restored heap records after a snapshot', () => {
+test('A05 field caches rebuild equivalent closed metadata and use restored heap records after a snapshot', () => {
   const fixture = fieldAssembly();
   const vm = new CilVirtualMachine(fixture.bytes);
   const instance = vm.heap.object('Box`1<int>', [42]);
@@ -68,7 +68,9 @@ test('A05 field caches retain metadata but use restored heap records after a sna
   before.record.data[0] = 99;
   vm.restore(snapshot);
   const restored = vm.field(fixture.field, instance);
-  assert.equal(restored.field, before.field);
+  assert.notEqual(restored.field, before.field, 'restore invalidates derived closed field descriptors');
+  assert.deepEqual(restored.field, before.field);
+  assert.equal(vm.field(fixture.field, instance).field, restored.field, 'the rebuilt descriptor is cached within its new epoch');
   assert.notEqual(restored.record, before.record);
   assert.equal(restored.record.data[restored.index], 42);
 });

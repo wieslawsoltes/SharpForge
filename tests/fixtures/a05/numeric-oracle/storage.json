@@ -1,0 +1,1730 @@
+[
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "local",
+    "input": -128,
+    "expected": -128,
+    "assemblySha256": "b397c62030bfebef02bbeefb3b30f4abdab0b5ed229649f19b0b6b6485e619b4"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "arg",
+    "input": -128,
+    "expected": -128,
+    "assemblySha256": "aeccdd7da995b20016f427ad377e77aa4ea9ac336a7a12d99aeb70a09c78eca7"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "field",
+    "input": -128,
+    "expected": -128,
+    "assemblySha256": "7257d61ad8b66a3b06a750744b1a08c487856309788de3ad013ed9901d6cb41e"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "static",
+    "input": -128,
+    "expected": -128,
+    "assemblySha256": "3b7512e696d010a7852bae31591386ae1d18d407c5e996179799d4d92e3e1a57"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "array",
+    "input": -128,
+    "expected": -128,
+    "assemblySha256": "9e72a30fdb66484d523497a96255190021de149cea4fe6f17e869c0a0745d1d8"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "byref",
+    "input": -128,
+    "expected": -128,
+    "assemblySha256": "f8fbc2d2da4977a8f202e7fa30dde6af0a4ba4c7e311c40781ce2932ba45217d"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "local",
+    "input": 127,
+    "expected": 127,
+    "assemblySha256": "7a407db5160f979684aaa7e072ce81ac808843bc0d6d7d2cb4f794249524799e"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "arg",
+    "input": 127,
+    "expected": 127,
+    "assemblySha256": "ebca6e8b41a1bd38bfc4d960972b14309ac274b2abe81397c8bc4adb1413bf29"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "field",
+    "input": 127,
+    "expected": 127,
+    "assemblySha256": "0bafd6c225585af6485be95dd27ad88f5b0c9f6a05b1c2558dab819de0d14049"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "static",
+    "input": 127,
+    "expected": 127,
+    "assemblySha256": "27e17450e604e1440a750c435978c5410a0f10a3fed61f06736bddcdb781cbd7"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "array",
+    "input": 127,
+    "expected": 127,
+    "assemblySha256": "1f904a03e86373f55197e3fa9e0518c9bead053fcb3a2fc8675de68955a199f3"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "byref",
+    "input": 127,
+    "expected": 127,
+    "assemblySha256": "03a343ca0b4bac05fc463a32d84ad01fda8724fca61024ff048ce095d277de00"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "local",
+    "input": -129,
+    "expected": 127,
+    "assemblySha256": "82fc8b696cb1a5e7c4331d892ebe8558322c93ce5dda69d222ed4d279ce9a866"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "arg",
+    "input": -129,
+    "expected": 127,
+    "assemblySha256": "f1b54be94c730458488f8dbc645307fb507482f628b4c9e7dbe13222641c1d03"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "field",
+    "input": -129,
+    "expected": 127,
+    "assemblySha256": "53bb059f83728408553ba88db0a4ba40fca57d88b045948d1db1338737b9c473"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "static",
+    "input": -129,
+    "expected": 127,
+    "assemblySha256": "03b2a0d5de36e223a43139010b3c4ea2bcc04de5429a1cbd303b43c7610be5c4"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "array",
+    "input": -129,
+    "expected": 127,
+    "assemblySha256": "82e7b3b732d9e4586dccfd936df21ee1a1d313cc5fe60ef788f015bf64eff800"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "byref",
+    "input": -129,
+    "expected": 127,
+    "assemblySha256": "84e91449bc090e5e47fcd882df340acdbe48774ae1893856a8278a7702877bf5"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "local",
+    "input": 128,
+    "expected": -128,
+    "assemblySha256": "86600ccae23f519a8f140caa3c73678a2a5bc5c1eef7b540e70d9d29b41d0062"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "arg",
+    "input": 128,
+    "expected": -128,
+    "assemblySha256": "b91e490a784328143f7f9f02f35fbe5f930f1b0d88b2cb6ea72a272b115b9e17"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "field",
+    "input": 128,
+    "expected": -128,
+    "assemblySha256": "3cedcc7083eee169f1eed8bbd2373d15e27f93da7fca08e9cb61706883d79242"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "static",
+    "input": 128,
+    "expected": -128,
+    "assemblySha256": "f644716851fb92237456f10a62db8ac485234d55b35587fd59c1c701e7ea99f7"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "array",
+    "input": 128,
+    "expected": -128,
+    "assemblySha256": "577a3aca4c1719337889f872509b7ea8006e9ea95f05550eb4af6ec03c182565"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "byref",
+    "input": 128,
+    "expected": -128,
+    "assemblySha256": "8f2b2a9d757585a3e91b012309e1209ab5143c29753b74304f19f5e7837048a9"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "local",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "7ee3c83c944ea4c39a9829fc7fa8ebe9bc6a96d952604651022bd83793d30be8"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "arg",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "997db8d30eb9929830bb7b0741f9e5c8071a189c5242d8dc26318ebb2077a860"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "field",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "2727100730089cc7a7c31b0c7de600e0b59556e3748da743346b65998e9324fe"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "static",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "4ede73e0dba1bf24fa8203430b49e9a019cde11f76b85b0b94778222e5c8d522"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "array",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "8ad25ffcafd1e952f13e7686187e5dee59be7507559fc63658805167a324e677"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "byref",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "21d99b1cfb1488f2dc758ea40b653fa578b311a89b10ac6731a776f0b3eba7da"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "local",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "c3c312f35296172393eb6e26360a6c04683a95df802d40d5a544bd7ed8056ef3"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "arg",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "cc9db518c6fcb0eefa805061a2ce473b08658f937bc0bb74d1af345813fa3c7a"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "field",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "a7e352cd27a2942169e1be8924be94a1de3c8c2cd299e4ea160009c7567f1df4"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "static",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "15eb3fa23ca774991eec73bb01590f79d78b0b1fa2f28b954084c6bc7bca73eb"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "array",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "eb1a8ed3fb8fb9e131df0394dbf5eefb154cabe1713cc7c386455396cfd19b78"
+  },
+  {
+    "type": "sbyte",
+    "suffix": "i1",
+    "location": "byref",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "e615d35d388ceb78d409d3b085f334790d84e743a8c7ef88bea2bfa325933581"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "local",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "fa5e7f66aa328fcada60a6f1b52f00f9e4bd7d8f0e5324fc2dd0e926159f9200"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "arg",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "b44ba9167792a1a67cebde1215e5b801059046a50ddfda8fc1a6ba294c8cb04c"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "field",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "e58a03621de44c631439cc536d45dcffc6e2db918a2cdce8db46b09fcf0af8f8"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "static",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "a281bf6bc3194ddb1643bcdde65ce2c7e7e5637abbe81152edeed598f4ea23b6"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "array",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "0c0843521dbc28c40ccc5c7dcc2627edd7e4cb77bde345b5d527490290427b0e"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "byref",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "af81417866a5ff82173a9fa29dd264514a22cd6733a100b108cfbacbb75fd9ce"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "local",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "70041eec9fafed78c1876474eb00ef1f9918d2aad3ae3679c58ab579e02b08bc"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "arg",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "aab284d8126943fce1427ed50a94026ce6e30e11c625f486ac5db48f947b6cee"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "field",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "54ecba87dfe60c23811abcc737b3f762c331e29023e01bf197a89376d7ac6a74"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "static",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "11cd0c44c77d2045648466904bc7601a9fe5872aa8d418628a5b32acc26872e2"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "array",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "61f649be23300c7aead5e3ddb677ed2573ade89fdf0367fb58c4f2bf096c4408"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "byref",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "d6c377804f6d2ec1251652fdd8bd90db3f3fa994a7e0c075289e947df9eb7c4f"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "local",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "537fee713a26499ec71f8497c3e83753efe21671d44af57f076c479f1c26b374"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "arg",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "43f738b491aecce0cd2d1f8ef337a55eb2eae72da44b97276938ab8632be0581"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "field",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "d12957bc8da82b75fcae154f688b5c0bedd108ee287a5b69e11ec03d760e2415"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "static",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "7b9d19e78400c8d5f93919a2b17893b86318ca590009295e4995c55c94dc53bd"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "array",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "5f71bb1faad901e02cef68cb8031663c536cb3652ad90411b9b1d7fdc9af42f4"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "byref",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "7cf0bfbeec3fb33c7440eaedcff8f87b263d18d6adac1288d4e53fc1e2463587"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "local",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "a256045bacc7aec7401dd7e995c1c1eeef9b5fbf37dfd395f34c6433795991b9"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "arg",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "e682673d946bc8659921e231ed735d272c32af1a5bd79033d984747fd0f23e91"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "field",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "fd7df10c6095cdbc864b07d7707b5a2e55593fed949ccde6a622d3bb0da19cdf"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "static",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "78408c8f36fce1b5aaa8f9f3602938debcd137279c7436add19fc322aa4e23ae"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "array",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "4e4dbd0d9a453b726e9ce585813db1b70be7e2ccb54096173afa6d823e778682"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "byref",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "f4b96d7fc1ffe9fd091d00d36fecf9578656b72135f8488f8c9f868a00953d53"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "local",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "537fee713a26499ec71f8497c3e83753efe21671d44af57f076c479f1c26b374"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "arg",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "43f738b491aecce0cd2d1f8ef337a55eb2eae72da44b97276938ab8632be0581"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "field",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "d12957bc8da82b75fcae154f688b5c0bedd108ee287a5b69e11ec03d760e2415"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "static",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "7b9d19e78400c8d5f93919a2b17893b86318ca590009295e4995c55c94dc53bd"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "array",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "5f71bb1faad901e02cef68cb8031663c536cb3652ad90411b9b1d7fdc9af42f4"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "byref",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "7cf0bfbeec3fb33c7440eaedcff8f87b263d18d6adac1288d4e53fc1e2463587"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "local",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "e2d40f881764aafcc0404946ed3cda1d54cd5771853bff628f33f2e79eb165ed"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "arg",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "a5a44a6e134e3b7bac5d6ff073d3746e5800c5d2710109e399c0b38e9a3fc8ac"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "field",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "2e81489e7e9a93bd70cd9274c55bc96bb4fcbb8678177774a7b623cb8cfedd3d"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "static",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "56155560c4bd031a145ccf2f11ecbeaa1575d98fba0d21cb07fcffd4b18c12b7"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "array",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "8d84620355d15a6e8e6ef108dd72d5b9fbbd64416e0a66d75f673333872e904c"
+  },
+  {
+    "type": "byte",
+    "suffix": "u1",
+    "location": "byref",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "da8a083257bfafdf0da6e6918b62b3180373d27e7dcb69d81cfb483689fd57f9"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "local",
+    "input": -32768,
+    "expected": -32768,
+    "assemblySha256": "883a60a49e40fea13adf289fed96cd1c67fd4aa15f1ce74fca4e98452a4a5f38"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "arg",
+    "input": -32768,
+    "expected": -32768,
+    "assemblySha256": "307e9b43afb36566f0ba000fbd082d42f2fb2e96a220b0dc8c3d4ac4064ab622"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "field",
+    "input": -32768,
+    "expected": -32768,
+    "assemblySha256": "cf3f25967a834269064af5c327a2e28dfd3882ea0943c49dd6af03dad253e644"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "static",
+    "input": -32768,
+    "expected": -32768,
+    "assemblySha256": "1d7be1fb0a38fcd0b625ab60c0badd0ae8177a575a5a6a54eb38be0364ad5765"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "array",
+    "input": -32768,
+    "expected": -32768,
+    "assemblySha256": "ccb4040f8abd99bb7639c0a1e505d4fad1d6f5d9deda3c6d0cd778d364d22c92"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "byref",
+    "input": -32768,
+    "expected": -32768,
+    "assemblySha256": "854b1e417834bf389f020060b34ee26c76c0ba473a908caaab700d188ee2767a"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "local",
+    "input": 32767,
+    "expected": 32767,
+    "assemblySha256": "f2e889735970bd32cf3c36a43db5bc2811674ade4298818c9f5902635e3de39f"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "arg",
+    "input": 32767,
+    "expected": 32767,
+    "assemblySha256": "1dc6ba7040012487c14e0d291b4998c93279112b213b330414badbf675bcf1e6"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "field",
+    "input": 32767,
+    "expected": 32767,
+    "assemblySha256": "8e70b54e451c5a4857edbe02c093907e558148a00c9be17a85bb5c10855f7e10"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "static",
+    "input": 32767,
+    "expected": 32767,
+    "assemblySha256": "d268e99129181076ed4d352a43eedc13f1073277d0d67877b5ad4097b8af1d1b"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "array",
+    "input": 32767,
+    "expected": 32767,
+    "assemblySha256": "9587af242841136ff1baa14ad9c573b4aac9338da8e42700e7b89ee3434f6829"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "byref",
+    "input": 32767,
+    "expected": 32767,
+    "assemblySha256": "e16b89d2ffc7fe80258149d861191f65f17448d917000f94fc6daa8b81693026"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "local",
+    "input": -32769,
+    "expected": 32767,
+    "assemblySha256": "67c5275dc65e840f968bd9c940ccbe4c2f96c2d5dfd289a81c0548f317a22f81"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "arg",
+    "input": -32769,
+    "expected": 32767,
+    "assemblySha256": "3e8cc260b2ff60e91a838fc91404c1e0c0df9b1ec44425e1b66a7152de27c21e"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "field",
+    "input": -32769,
+    "expected": 32767,
+    "assemblySha256": "5285a83c0d260a068af0217e40dad46a860e9d4e2471a06ec754027746bc7a4a"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "static",
+    "input": -32769,
+    "expected": 32767,
+    "assemblySha256": "7246dbdcfe62f502c7839db5ea3ea8fe9222b5c05ad1f49f28457450da9c1161"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "array",
+    "input": -32769,
+    "expected": 32767,
+    "assemblySha256": "aabe5ecb63603f497ce3ecf2ae890e27796cebbefd4b1a02d956fcd1852c9616"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "byref",
+    "input": -32769,
+    "expected": 32767,
+    "assemblySha256": "4997a44e705117d6f288e9e2736b4279bbd66f15e27fb0eb1ef5b7c517cbb548"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "local",
+    "input": 32768,
+    "expected": -32768,
+    "assemblySha256": "1adcea9ae0ece53cdca828f598e3ff008bcb3feaba6d75621b3f21adbbe809f7"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "arg",
+    "input": 32768,
+    "expected": -32768,
+    "assemblySha256": "f1ca2440e072ef31e155b024266274bee068c601d744c8b9faf1fc676039f72e"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "field",
+    "input": 32768,
+    "expected": -32768,
+    "assemblySha256": "405ffec99d60aacb510e8d9b637350fab290fdbe92183cbfbe7a0c8b50f010d8"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "static",
+    "input": 32768,
+    "expected": -32768,
+    "assemblySha256": "7b2c3207e198457a8b613881af430f4bacaa2a9dab6c03d584d2caad26d5c447"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "array",
+    "input": 32768,
+    "expected": -32768,
+    "assemblySha256": "60cf473002d37e32a7eec25c3ad2d8756fd7ee0829f1a5a39c367a3681c39f71"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "byref",
+    "input": 32768,
+    "expected": -32768,
+    "assemblySha256": "4b7a88a8792605c4dbad23476bc4c1c71b486e6ff8bd35d3692583f3481d01b8"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "local",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "7155cfcc04198e10aa8b3978e59b8b3295f366b0b3651012583ba148fb95dcc0"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "arg",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "ba2bf062cfb01288e46e586843cb51cb5603b8af883c4b8e2b0cbe6cd3026418"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "field",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "7b906c0d4be0f49ff3fde6fb8cbe6696c89f923e562a608fda80ae114d499a6c"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "static",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "2efc9a474fd613a2afdc4769d6253704ca7b736e05b3e43513d30433902df728"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "array",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "e54fd2cb241e9a82fc44f3a5aa4a974d00f36a55921f1ca11825af491af54d5c"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "byref",
+    "input": -1,
+    "expected": -1,
+    "assemblySha256": "8dc7bce4b37c552b78598b4607463fdb11715f2ba18feb8463356b35a1fc8f6e"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "local",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "df62f3a3c18e1227700c2eb52c8a57ba2ead12b82f0ebbf532c019f2100bcdce"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "arg",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "9d5caf438e9975d1b32ea2ec313ef627f6cabd9c470da396fcd088c2d3e06c30"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "field",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "dab0cb587818cc7acf8059a214137a36f09a20003b78b973f8919624c55b1413"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "static",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "2dea6f8fd402d3a6f46a8910ba478cbfef9a86cd272c363aa638795004ddc1e6"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "array",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "6ba6d04ccf531f24070837ed554abe6f81acf61f6eba3cab58f424db3e5804a3"
+  },
+  {
+    "type": "short",
+    "suffix": "i2",
+    "location": "byref",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "80febb56da89f9be15c574130d4101c4b3252f2e39c606ab04d8a6567d1aef72"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "local",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "e891f96e6657d60da0f692d2eee00ea919d2a18cb0d67cf04f96c87a61e637be"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "arg",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "7e7228712866e827d681f08fede7ed54703a8214d2c81727c5ca0146ca8fe6a2"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "field",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "ac178a90cfaca7bd562f7f86613d64f42eae3a1dd06dd1238719d015f9fc8d29"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "static",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "a3f94526fb62b96406d91af3d0e2d4a80301fec9ec1ac38dbd46a378dff3dcd4"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "array",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "efff39467989ebae713d9c1d9ea8753ae52af36f852887c306e2bf54c1a051f0"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "byref",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "40e2d52b0314e2af7822e6a10d30c2c922fced8b4e8d6ce5a1284006b94ccdcb"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "local",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "58936b5fe0a29e9df7382811328fb7e3ecea5d02886a87df9020d444ff408b3e"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "arg",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "9bf87358ce41a183778bb42ef52c5ba9dcbd55d7d4329239cd88b2ea5ec6078e"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "field",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "b5d31fde3f805a29911ae98f7ed8aa7d58f94dd5661c1cd9855ee1050e06b607"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "static",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "156f2af65e8e25ca55786cd9883bc81429058dd6b23618b9023c14430bc62d97"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "array",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "02a15182abd39c3e9e1b99c99a4263871c88e42936810bccf4076e150d42977d"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "byref",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "3d8f2451fa272645a0f68a37ae596066bdb1272a37ceeea71a02347157855397"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "local",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "0846f360160cea76644bf5c74a9046f2180145daa1802d84b5edd2ba5db3526c"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "arg",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "d5dce8fa56dbeed81650ff12b5931b680f72d38f745d55ead451f127b7f94a80"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "field",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "215352d2f17f88158b745fd15f5df2029b129c79d3df35f8e5e485d6ba8433f4"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "static",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "90d163480a8b114da1e8893acf25c218eed54172e83c1488e324e36028bba2a1"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "array",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "d7835728f17da8266aa443000e1abeebe12d42c857e5372bb04559e0782fd372"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "byref",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "99d70e7d15ec3af698c73f125fcc8b4807eb78679839cc1826ee4a6934e716f3"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "local",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "ccaac7c4e658890672694a881fa862aff5002c54ac52ad8dccb33be90f435a5c"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "arg",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "ff9e4375e5f7a6381f34e3cbc0bf0d96dfced829fe6fc8cef2e6a5427aef2f7a"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "field",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "a4b51f063c8aed62d12d188de3298bee7909b3e55fb7e1597580801d33ef838c"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "static",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "2e521b89b9ab309a90e5c1c84b98996c325ec1aed618ed4fcf59c77c411c1ebf"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "array",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "af224cdd024f18e5cfd34ab8a01c6cec6f1cba91d6d8f1dba7178a3d3fec2acb"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "byref",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "4594b52def5075173d942b8b9b4675c9f9beb698a7e9dd7352ddb1d68469b151"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "local",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "0846f360160cea76644bf5c74a9046f2180145daa1802d84b5edd2ba5db3526c"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "arg",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "d5dce8fa56dbeed81650ff12b5931b680f72d38f745d55ead451f127b7f94a80"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "field",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "215352d2f17f88158b745fd15f5df2029b129c79d3df35f8e5e485d6ba8433f4"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "static",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "90d163480a8b114da1e8893acf25c218eed54172e83c1488e324e36028bba2a1"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "array",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "d7835728f17da8266aa443000e1abeebe12d42c857e5372bb04559e0782fd372"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "byref",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "99d70e7d15ec3af698c73f125fcc8b4807eb78679839cc1826ee4a6934e716f3"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "local",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "df0dac8c9ea81a242d53ffb1850cb7ec21e978f3ac510911a10cfd61621eb592"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "arg",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "1fe260f7d2a15a6a08fca1c0f0a7c0b37653053448e2de89805321066e7a586c"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "field",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "ea5dcc720e1e7726f4033cd580a417f496c9a30451da811a64c2842502bc3e51"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "static",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "5730547d5b83b6cc7142bd22be2800fdafcb362c9ef348d99c10c58b84f81ae9"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "array",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "5c775d0480735ca9cdba3bc7b790a02f448ad155ea90a9b21f0e875ca082f0bd"
+  },
+  {
+    "type": "ushort",
+    "suffix": "u2",
+    "location": "byref",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "0c7dca10a4d7d8f22fe18bd04a6cf89d76c2bcd83f1c9286295a4b598b1b9f18"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "local",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "2f5d38989a03f66fa8ff132eb8aeec2d7f1b81104836e6ad43954860dc4242d4"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "arg",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "1e0c386ab9d63e306ad19184ad091022dcd16dedade0e3e391133597b476702b"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "field",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "8c413ea46206720cc6bfb1764d22d4cf7379465859c18366f6a7a0736a468b6f"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "static",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "598f37c05e429282dc5b77f1ee9ef4fa9c97083d14b002413f92c64f22223798"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "array",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "7a362467e69592066236e5006c91bd4020931625f9f764c7ca822df4d0bb51fb"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "byref",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "71f4e3d29ccc9917dd9ccf512854b57bf7840855bd22b63fa2fd4d74a0dd00c2"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "local",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "25c1bcf7d36d18203d5fcc9f92ab73ea0f5527197acb5275f2a734532d7bbaae"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "arg",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "c2c91b1a5658e9fd578eaafa6d365b878452bbd5211522dda88b0320d7d03ead"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "field",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "fc568ed107d5962d40be3b043bacb33ea0eb534ab4a2abcfbfa9ad6b75ad5189"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "static",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "bff7e2a66d9b8311433414bc40fb3a2af1f1cb1776b88c7d798defcaed94e0ce"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "array",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "f340e0de6ba74d3fa95b477f2bf9852bd1b2880614b91eef1ea7fdbc87509d30"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "byref",
+    "input": 65535,
+    "expected": 65535,
+    "assemblySha256": "b511c1ceb8318201df2c3987fbba85dc13ba97d638d1f18ef17906837b0b5f23"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "local",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "3bf0c6c1d7eb7fb1b5e3504eed26c2c5e9e8910bd0a643321d1fd6456e734e17"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "arg",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "491bdd5001ae5da56c5adfa0500539d350ddc636457a360d9d43a81b7196ab57"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "field",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "41acf46cb1aac916f3dbb52c95978f315450a2f73178b510157d38b9e973a9a6"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "static",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "82a57e33d0f31a6da0d50747ec341874dae73048d85396da6f5ce6fc5f236a57"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "array",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "d3cd8832dfbd57b82524c6ff1e769fc6ec27b4b26a28e9937c0f0b1254ec9c61"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "byref",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "6f5b39e3723722efc7ed48e4153d7cbd7350921b249c203814f7bfa7e9a5d7bb"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "local",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "542f2f86e3671d220a527d937341e6466a9d6be55fcd1da1e64c3b900dc12547"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "arg",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "185448c0e1b217ee10c4c55f25ee5cf4ccd166639c577d66dd39ce3a58daf425"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "field",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "2bce11c0fc5bee7388e56c974488dfd2c9cebaf7d460d028c7cad042fb1821b6"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "static",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "56abcef2f274af1ead8d68429d75dedf420f99e03aeecfadded3c30c993a2bf7"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "array",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "ef44a58d79c6bbf23f6e46efcd7e87a257b0d6eab983091c078edf146f57740d"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "byref",
+    "input": 65536,
+    "expected": 0,
+    "assemblySha256": "b8b19ee919ec95d82b1372ff5ca5c4ffcbdb594ce4de1a7cd408ee7b5884ffbb"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "local",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "3bf0c6c1d7eb7fb1b5e3504eed26c2c5e9e8910bd0a643321d1fd6456e734e17"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "arg",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "491bdd5001ae5da56c5adfa0500539d350ddc636457a360d9d43a81b7196ab57"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "field",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "41acf46cb1aac916f3dbb52c95978f315450a2f73178b510157d38b9e973a9a6"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "static",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "82a57e33d0f31a6da0d50747ec341874dae73048d85396da6f5ce6fc5f236a57"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "array",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "d3cd8832dfbd57b82524c6ff1e769fc6ec27b4b26a28e9937c0f0b1254ec9c61"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "byref",
+    "input": -1,
+    "expected": 65535,
+    "assemblySha256": "6f5b39e3723722efc7ed48e4153d7cbd7350921b249c203814f7bfa7e9a5d7bb"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "local",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "ff965fad85826f79125aa638dcc352a041d7af129b5771ab7bcc80b9efbae3c0"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "arg",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "e660c8f91896de22d82ad7c65a5e9b9b5ca9306c65824fe1edd1721b8b6e9371"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "field",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "242f751ceb6b960b67d6236c503be1de3af5556e9c81912505092c86089a5143"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "static",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "8d8478b9d231af2de3d634bd95102d77d18ff7ee38b0168e65d382ff91d95faa"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "array",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "73d9d7198ec6766d987c0610baca510e37d7e54df9c4c36bca4c99d90bc61dc1"
+  },
+  {
+    "type": "char",
+    "suffix": "u2",
+    "location": "byref",
+    "input": 74565,
+    "expected": 9029,
+    "assemblySha256": "ad9fff91fed1241cda649569bfb766210f881213c500a7a4d164bcb75a9d0836"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "local",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "3d031824c37813abc837c308953f85d048f59da5e5637197ffe5e5e8c38657f0"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "arg",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "bdb6b7b04e771f0a723a6654dd6f6b5d40998bda1b23ab487bf347c91b4bb5c1"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "field",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "dad9224510d86d4c186bcde9a1490be88f0ac1c684927dfeb2bf40b7cb077abe"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "static",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "ca2323efe770e2dba8838006b5c9d45c4cd39ac7f975a9c2b6e86bfac6306122"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "array",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "0353f608eac0f97c73cb6cd2b0f5159a34b52ab791fc93671863f965c3638924"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "byref",
+    "input": 0,
+    "expected": 0,
+    "assemblySha256": "19cfdd4b7bc68a702d4df910dcfef002b45e542d3e8577204f7fad0abec950e9"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "local",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "5b3df302037b7f24dd2f8f5e36d1cfd5807dcf2f4357b56e648783aafa0f7830"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "arg",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "0e8ec72ae9f5163401746723c3c6b94f72a60eaa4753b8e7fc76c2c344132253"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "field",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "51af0c96cbb31ffe42b473232933fbe13510f09e7567ed69723afb89c10b7c2b"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "static",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "3223d1f6894121ea178d257ad1f7b4c950a0a90d1c7c34120fcc16b8afc8c1f2"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "array",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "5c529d344dfa793f8cf12380743065b1329745fd6afaedfb4f677ff3508508d3"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "byref",
+    "input": 255,
+    "expected": 255,
+    "assemblySha256": "c38baa0dd0b93eb3ef3972b7ba47a05690f583b868dc2626f4d7a81f5d523b7a"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "local",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "a128f90855dc7eb3931e178f816e74932914ffed0eedd1ed6da4d6700262ac1e"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "arg",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "58272f9bdb076ad86d743f3b03df03bafe107e1a7d85bdba9d1dcf17a143cdff"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "field",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "0f42bdc389b89311e2f72ca76fd7de9b95394cf42f821ed9640c18fdb0e97e7d"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "static",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "76f975acb0f2c00e28a272b5a9c4b52b128dd5dcdb1b40fbff14e983a4affcef"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "array",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "440eaf8dd2332d8e57dea46d2fc3521de5826bbbca64fced1dfe970fe5f83dd5"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "byref",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "cfc98ea77d897083eea3ec04233950619815796f605f7ef4e26cbd6a1c66fc17"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "local",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "feff9e6c443141c1b69e13218f32385aaa55c3f7fd80f54c9d084f62ea2bbc5d"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "arg",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "208ad0f76cd30f1116564228a6ad21266b0c3f6f83ef9bbfabd88e31e6b316a3"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "field",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "7cd8e930c629fa353a64c68bb59c9e01edb1de05fcd612fc758186bb4c38edff"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "static",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "21879ec97a5208dc112e1820085d612823027521979aebe851b52f35c1f88291"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "array",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "9977915e6da07e529b04e40103fc821a16cb6330cab17267141c1a6c349f6053"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "byref",
+    "input": 256,
+    "expected": 0,
+    "assemblySha256": "f1be330fe10491577cb1cb3ced5d90ae3d2a0b832c3183075f417f050e7900fe"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "local",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "a128f90855dc7eb3931e178f816e74932914ffed0eedd1ed6da4d6700262ac1e"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "arg",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "58272f9bdb076ad86d743f3b03df03bafe107e1a7d85bdba9d1dcf17a143cdff"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "field",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "0f42bdc389b89311e2f72ca76fd7de9b95394cf42f821ed9640c18fdb0e97e7d"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "static",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "76f975acb0f2c00e28a272b5a9c4b52b128dd5dcdb1b40fbff14e983a4affcef"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "array",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "440eaf8dd2332d8e57dea46d2fc3521de5826bbbca64fced1dfe970fe5f83dd5"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "byref",
+    "input": -1,
+    "expected": 255,
+    "assemblySha256": "cfc98ea77d897083eea3ec04233950619815796f605f7ef4e26cbd6a1c66fc17"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "local",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "b7b1a49209d6f98b8b2521409fe3220773722b464939633efc781a00501fbbf9"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "arg",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "787f14efd1ca9a176cb277370cdee6d1217781e11a884fa2b07001b5021d31d0"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "field",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "e3911e7603747f6782ebee18a3822b7d9caaebdcce12559aa2a49a8725bf8eb5"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "static",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "ad870cd7173d658ba4ac73852f81fd570baa04c9f89ce440d84362b920ea728c"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "array",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "bdb8a643b6949f920b8d22ec0c07c5a3b522caf82ed683196f3c3725eaae7fe7"
+  },
+  {
+    "type": "bool",
+    "suffix": "u1",
+    "location": "byref",
+    "input": 74565,
+    "expected": 69,
+    "assemblySha256": "5da2fe57b51ab2ede6a3b0f0423ca6fcd29488f73618e9ef99f0d3720b6e9f1a"
+  }
+]

@@ -15,6 +15,7 @@
  * delegate identity for `-=`.
  */
 import { n } from './node-factory.js';
+import {registeredDelegateInfo, frameworkDelegateCall} from './framework-delegates.js';
 import { typeNameText } from '../../lowering/generics/instantiation-names.js';
 import { isScalarType, scalarDefault } from '../scalar-values.js';
 
@@ -36,6 +37,8 @@ export class DelegateClasses {
       this.byType.set(type, info);
       return info;
     }
+    const registered = registeredDelegateInfo(this.generator, type, syntax);
+    if (registered) { this.byType.set(type, registered); return registered; }
     const invoke = type.delegateInvokeMethod;
     if (!invoke) return this.generator.unsupported(`delegate type '${type.toDisplayString()}'`, syntax);
     // The image reads `Name<...>` as a framework generic and `,` as an argument separator (also inside the element
@@ -64,6 +67,7 @@ export class DelegateClasses {
    * `bindsFirstArgument` the value bound as the first argument of a static method (an extension method's receiver).
    */
   create(info, method, receiver, { bindsFirstArgument = false } = {}) {
+    if (info.frameworkType) return n.frameworkDelegate(info.frameworkType, method, receiver);
     let thunk = info.thunks.find(t => t.method === method && t.bindsFirstArgument === bindsFirstArgument);
     if (!thunk) {
       thunk = { id: info.thunks.length + 1, method, targetField: null, bindsFirstArgument };
@@ -89,16 +93,20 @@ export class DelegateClasses {
     return field;
   }
   invoke(info, delegate, args) {
+    if (info.frameworkType) return frameworkDelegateCall(info, 'Invoke', [delegate, ...args]);
     return n.call(info.invoke, null, [delegate, ...args]);
   }
   combine(info, left, right) {
+    if (info.frameworkType) return frameworkDelegateCall(info, 'Combine', [left, right]);
     return n.call(this.helper(info, 'Combine', 2), null, [left, right]);
   }
   /** Delegate equality: the same invocation list (methods and targets), not the same object. */
   equal(info, left, right) {
+    if (info.frameworkType) return frameworkDelegateCall(info, 'op_Equality', [left, right]);
     return n.call(this.helper(info, 'Equal', 2, 'bool'), null, [left, right]);
   }
   remove(info, left, right) {
+    if (info.frameworkType) return frameworkDelegateCall(info, 'Remove', [left, right]);
     return n.call(this.helper(info, 'Remove', 2), null, [left, right]);
   }
   /** A static helper `D name(D, D)` (or a helper it needs), declared on first use. */

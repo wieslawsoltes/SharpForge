@@ -1,3 +1,5 @@
+import {nullableValue} from './nullable-value.js';
+import {isAggregateType,createValue} from './value-types.js';
 import {enumTypes} from '@sharpforge/framework';
 import {EnumConvertBase, decodeNumericMode, isNumericMode, isNumber, isDecimal} from '@sharpforge/bytecode';
 import {scalarBinary, scalarConvert, scalarUnary, sourceNumericContext} from './scalar-ops.js';
@@ -11,6 +13,9 @@ const numericContext = Object.freeze({fault: (name, message) => new ManagedFault
 
 export function defaultValue(type,vm={}) {
   if(enumInfo(vm,type))return enumValue(vm,type,0);
+  const table=vm.heap?.methodTables.get(type);
+  if(table?.flags.nullable)return nullableValue(vm,table);
+  if(table&&isAggregateType(table))return createValue(vm,table);
   return type === 'double' ? 0 : type === 'bool' ? false : defaults(type, vm.options);
 }
 
@@ -57,7 +62,7 @@ export function convert(value, type, checked = 0, vm = {}) {
     return scalarConvert(value, source.type, type, source.checked, sourceNumericContext(vm));
   }
   if (type !== 0) return Number(number(value));
-  return cilConvert(checked === 1 ? 'conv.ovf.i4' : 'conv.i4', float(value), {
+  return cilConvert(checked === 1 ? 'conv.ovf.i4' : 'conv.i4', value?.float ? value : float(value), {
     fault: (name, message) => new ManagedFault(name, message)
   });
 }

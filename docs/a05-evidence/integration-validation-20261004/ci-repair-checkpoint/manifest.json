@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "scope": "Revision-scoped CI repair and additive proof-harness validation; not full A05, full A00, platform or performance qualification. Overlapping runs must not be summed.",
+  "runs": [
+    {
+      "id": "initial-budget-dispatch-cursor",
+      "revision": "59da6ca7710e867702189cd67e3eedd527fb8c13",
+      "tree": "a6bc77992bdb5f71a9209daf88cbd4461507ede2",
+      "log": "budget-dispatch-cursor.tap",
+      "journal": "budget-dispatch-cursor-journal.json",
+      "tests": 216,
+      "passed": 208,
+      "failed": 8,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 21221.426102,
+      "scope": "21-file focused diagnostic, source-dispatch, reservation, frame, cache and stack-budget selection; failed run retained."
+    },
+    {
+      "id": "runtime-after-initial-fixture-repair",
+      "revision": "0e111a882cae857c77cb3add3ce541023a413df6",
+      "tree": "cddaa5d4f8c2d72350d16dbb3644b3972ea527ca",
+      "log": "runtime-candidates-after-fixture-repair.tap",
+      "journal": "runtime-candidates-after-fixture-repair-journal.json",
+      "tests": 308,
+      "passed": 306,
+      "failed": 2,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 37273.350056,
+      "scope": "29-file runtime selection. The two source-profiler fixture failures remain failures in this run."
+    },
+    {
+      "id": "source-profiler-fixture-before",
+      "parentRevision": "d1e4d807a88d0349f0151f8995d0b3c002675f2e",
+      "fixtureBlob": "f21c03141d121f3f1f2234f157a09d946beb4de6",
+      "log": "a05-source-profiler-fixture-before.log",
+      "tests": 4,
+      "passed": 2,
+      "failed": 2,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 1803.618209,
+      "scope": "Separate focused reproduction with provenance limits in provenance-notes.json."
+    },
+    {
+      "id": "source-profiler-fixture-after",
+      "parentRevision": "d1e4d807a88d0349f0151f8995d0b3c002675f2e",
+      "subsequentCommit": "a75cafa0e3fb6ee908545da50204cb997170fa74",
+      "fixtureBlob": "9d2c6688bf9dbde6801aed2511a0997bf625a5f1",
+      "log": "a05-source-profiler-fixture-after.log",
+      "tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 1641.316149,
+      "scope": "Separate uncommitted fixture-patch validation; not a full rerun of the 308-test cohort."
+    },
+    {
+      "id": "byref-wasm-latency-harness",
+      "revision": "65130534ef8cec81662b17d9eb0d1d76c6030cdc",
+      "tree": "22fbc2c30d9900b0991e39f10628353b341432a9",
+      "log": "byref-wasm-latency-harness.tap",
+      "journal": "byref-wasm-latency-harness-journal.json",
+      "tests": 53,
+      "passed": 53,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 13125.154875,
+      "scope": "Seven-file harness, tiering, OSR, runtime bridge, deoptimization and option selection. No prescribed latency or allocation qualification measurement."
+    }
+  ],
+  "files": [
+    {
+      "path": "budget-dispatch-cursor-journal.json",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/budget-dispatch-cursor-journal.json",
+      "bytes": 1389,
+      "sha256": "27b8e812afccf4c0db10fff4ed7c970509436ac357b64c0b9168984cb70c5ce9"
+    },
+    {
+      "path": "budget-dispatch-cursor.tap",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/budget-dispatch-cursor.tap",
+      "bytes": 26915,
+      "sha256": "8a19c12fa07e919946cf34c50b5d844ff7839d02527c2acc80970de663fe66e4"
+    },
+    {
+      "path": "byref-wasm-latency-harness-journal.json",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/byref-wasm-latency-harness-journal.json",
+      "bytes": 861,
+      "sha256": "79345427a0ce1f2378fdf1056afcad3c988dd0f7bcf570d4219070d30ae1bb46"
+    },
+    {
+      "path": "byref-wasm-latency-harness.tap",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/byref-wasm-latency-harness.tap",
+      "bytes": 12716,
+      "sha256": "426433123146be8dba9f0c05855094857198fcd490d21fbf0930fd84a517f8bb"
+    },
+    {
+      "path": "runtime-candidates-after-fixture-repair-journal.json",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/runtime-candidates-after-fixture-repair-journal.json",
+      "bytes": 1946,
+      "sha256": "72d82c17595ecd589aebc5877828b5800ec1e6d707965840d707d90983463f3f"
+    },
+    {
+      "path": "runtime-candidates-after-fixture-repair.tap",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/runtime-candidates-after-fixture-repair.tap",
+      "bytes": 71798,
+      "sha256": "adb75d4424dca0d8edf044d1ecb40d21879facb1e2c2639e2cf32ad47ee0d238"
+    },
+    {
+      "path": "a05-source-profiler-fixture-before.log",
+      "source": "/workspace/scratch/42f7738360b9/a05-source-profiler-fixture-before.log",
+      "bytes": 2355,
+      "sha256": "13e0229f74aada1d702eb05f44b59a28e7ca397d9c3d3e8d99765140e86ebb90"
+    },
+    {
+      "path": "a05-source-profiler-fixture-after.log",
+      "source": "/workspace/scratch/42f7738360b9/a05-source-profiler-fixture-after.log",
+      "bytes": 563,
+      "sha256": "49df5a275540412af986d4c80d5002b4bb9f579d74c2857f5e3dd22eb172c173"
+    }
+  ],
+  "provenanceNotes": "provenance-notes.json"
+}

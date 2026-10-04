@@ -1,0 +1,305 @@
+{
+  "format": "SharpForge.A05PolicyWeakInternValidation/1",
+  "archivedAtUTC": "2026-10-04T18:00:02.514346+00:00",
+  "scope": "Two non-overlapping focused Node correctness cohorts: 33 policy/weak-intern tests and 70 existing snapshot/event regressions. Not a full-repository, native, browser or performance qualification.",
+  "workingDirectory": "/workspace/scratch/42f7738360b9/a05-memory",
+  "pretestRevision": "bf6197349c275e1b5ccac97c854ed5323c147208",
+  "pretestTree": "95ed4faaa867cbe36cc1a292e01047bd52a2d37f",
+  "pretestTreeMatchesIntegrationRevision": "3fd119f21672637fea3c67841f06236eaf33d6f7",
+  "testedSourceEquivalentCommit": "2cf5a3d23e1320cca27bcc538e88a6fc5c4f6704",
+  "testedSourceEquivalentTree": "474581e4f5b491fbe787275b43e4599f89a48939",
+  "dirtyAtTestTime": {
+    "trackedModified": [
+      "packages/runtime/src/snapshot.js"
+    ],
+    "untrackedAdded": [
+      "packages/runtime/src/execution/snapshot-strings.js",
+      "tests/a05-weak-intern-snapshot.test.js"
+    ],
+    "explanation": "Both tests ran before committing the repair. No source or test edit occurred between the two cohorts or between testing and commit2cf5a3d23. The only changed/untracked source files are exactly the three paths in that commit; hashes below match committed bytes. Other tracked files retain the pretest tree. Logs were written outside the repository. Local ignored workspace package symlinks resolved this checkout.",
+    "equivalentPatchSHA256": "c92e9f958230e223088c7b3f8dc86652b357a473b1a9b095fbb5e9bc4fdf25f2"
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "architecture": "x64",
+    "kernelRelease": "6.18.44",
+    "nodePath": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "visibleLogicalCpus": 9,
+    "explicitNodeTestConcurrency": 1,
+    "configuredParallelRuns": 1,
+    "configuredMaxOldSpaceMiB": 512,
+    "effectiveChildNODE_OPTIONS": "--max-old-space-size=512",
+    "archiveTimeParentEnvironment": {
+      "CI": null,
+      "NODE_OPTIONS": null,
+      "SHARPFORGE_TEST_CONCURRENCY": null
+    },
+    "archiveTimeHeapSizeLimitBytesUnderSameFlag": 738197504,
+    "provenance": "Commands and overrides were recorded at execution. Node/V8, kernel/CPU and parent-environment details were queried from the same unchanged execution workspace while archiving; the logs themselves do not contain per-run environment or heap-gauge samples. The total V8 heap limit was a separate archive-time probe, not a measurement during either test run."
+  },
+  "validationScheduling": "Root granted the sole heavy-job slot. Cohorts executed serially through scripts/limited.js; slot was released after completion. No jobs ran while constructing this archive.",
+  "records": [
+    {
+      "file": "a05-policy-weak-intern-r1.log",
+      "sha256": "3b07c2ff40d5fd97341b945ed378ad64ee238216ba720be6048d4292642916d6",
+      "bytes": 3409,
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-policy-weak-intern-r1.log",
+      "logModifiedAtUTC": "2026-10-04T17:54:39.207020+00:00",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-first-chance-unwind-policy.test.js",
+        "tests/a05-weak-intern-snapshot.test.js"
+      ],
+      "environmentOverrides": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "stdoutStderrRedirect": {
+        "path": "/workspace/scratch/42f7738360b9/a05-policy-weak-intern-r1.log",
+        "mode": "truncate",
+        "merged": true
+      },
+      "commandProvenance": "Exact argv and environment overrides retained in the executing agent tool call; tail only displayed the resulting log and did not modify it.",
+      "pretestRevision": "bf6197349c275e1b5ccac97c854ed5323c147208",
+      "testedSourceEquivalentCommit": "2cf5a3d23e1320cca27bcc538e88a6fc5c4f6704",
+      "tests": 33,
+      "passed": 33,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 3497.508239,
+      "result": "passed",
+      "testRunnerExitCode": null,
+      "exitCodeProvenance": "The shell returned the following tail command status; no independent runner exit-code sidecar was captured. Passing status is taken from the original complete Node test summary."
+    },
+    {
+      "file": "a05-policy-snapshot-regressions-r1.log",
+      "sha256": "3a16d141293134f3fed7e17caffc2e4e1127a428dcf3b41ac6d76cc0d8cdd8d0",
+      "bytes": 7264,
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-policy-snapshot-regressions-r1.log",
+      "logModifiedAtUTC": "2026-10-04T17:55:10.246655+00:00",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-06-memory-snapshot.test.js",
+        "tests/a05-06-coherent-snapshot.test.js",
+        "tests/a05-06-portable-snapshot.test.js",
+        "tests/a05-06-snapshot-json.test.js",
+        "tests/a05-06-snapshot-cow.test.js",
+        "tests/a05-exception-event-policy.test.js",
+        "tests/a05-source-appdomain-events.test.js"
+      ],
+      "environmentOverrides": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "stdoutStderrRedirect": {
+        "path": "/workspace/scratch/42f7738360b9/a05-policy-snapshot-regressions-r1.log",
+        "mode": "truncate",
+        "merged": true
+      },
+      "commandProvenance": "Exact argv and environment overrides retained in the executing agent tool call; tail only displayed the resulting log and did not modify it.",
+      "pretestRevision": "bf6197349c275e1b5ccac97c854ed5323c147208",
+      "testedSourceEquivalentCommit": "2cf5a3d23e1320cca27bcc538e88a6fc5c4f6704",
+      "tests": 70,
+      "passed": 70,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 7886.018,
+      "result": "passed",
+      "testRunnerExitCode": null,
+      "exitCodeProvenance": "The shell returned the following tail command status; no independent runner exit-code sidecar was captured. Passing status is taken from the original complete Node test summary."
+    }
+  ],
+  "sourceHashes": [
+    {
+      "path": "packages/runtime/src/execution/snapshot-strings.js",
+      "bytes": 581,
+      "sha256": "e98f34036a2fd356b8f5a9e215a39cc782ab98892f273c1a5001e62468dddc56",
+      "gitBlob": "d71bfd475bd0a3fca0da745d620b35dec413ecd9",
+      "dirtyAtTestTime": true
+    },
+    {
+      "path": "packages/runtime/src/snapshot.js",
+      "bytes": 6886,
+      "sha256": "12530d9aeb3cd61d5411de6021edf970940b68c1c3debfe047ff59c4df092adf",
+      "gitBlob": "77ae550fbb0423e4d9090416d9453c5492c95ce4",
+      "dirtyAtTestTime": true
+    },
+    {
+      "path": "tests/a05-weak-intern-snapshot.test.js",
+      "bytes": 3550,
+      "sha256": "226b933cfae63e63775b32d6222cad6efe2c873c0c964fa5d52cc96c4c3b0c05",
+      "gitBlob": "ba22767908b3c002fab516bca5ac9ee03a1823dd",
+      "dirtyAtTestTime": true
+    },
+    {
+      "path": "scripts/limited.js",
+      "bytes": 1280,
+      "sha256": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+      "gitBlob": "cecc071634fa4b4b738dfaa0a1ac516bf3e059dd",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "scripts/planning/lib/resource-limits.js",
+      "bytes": 3850,
+      "sha256": "f70d0f2862ad4a5e0afce5e47ecf8e055cf82aefc44fefc96a3b4989293ee382",
+      "gitBlob": "71a9fb7d6879a2bf977a3f9a02a39e876038acca",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/launch-options.js",
+      "bytes": 4743,
+      "sha256": "e112a094cff54128917b42ee8e48798ff0d64f53d77b9befa1e677695abc6acc",
+      "gitBlob": "00cf0079df7d4ffb0b6cf1bc4f4b3e2b49d1f048",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/execution/exception-event-failure.js",
+      "bytes": 1742,
+      "sha256": "e875494edc5e0160eaa079ee00513f56152f65df96d221b1ca00209990fb9165",
+      "gitBlob": "b1ddb32b1a68a581be7fdf380ce27b893b402218",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/execution/exception-events.js",
+      "bytes": 6656,
+      "sha256": "2c94bd417f1a38c6dd6ba4edcf26191dc7b347b7d0adeb25b848049c3389c341",
+      "gitBlob": "43d334b59963b076b6ce05710dd2aaff571ca3ee",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/execution/exception-events-snapshot.js",
+      "bytes": 5635,
+      "sha256": "4192750275b8874dc587de44128af245828acf5bc7ba9a5b58941f895c30b486",
+      "gitBlob": "5f744c0e8cd13b38d11d20ea0c06e7c73605095e",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/execution/frame-roots.js",
+      "bytes": 8755,
+      "sha256": "7f672ec5123f893595652b12f3c697d8dfa294c359c148f836e2218e88585a59",
+      "gitBlob": "b7867e6094c1cbeda23a50a978b436c259186927",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/execution/source-eh.js",
+      "bytes": 10769,
+      "sha256": "53811d9041f4842436df8902f321a921734fa8bb7dec14042f72aed8d8816be9",
+      "gitBlob": "fcb37248382fb22dd21282e248748e1f192868e9",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/execution/eh.js",
+      "bytes": 7169,
+      "sha256": "ee143fb4200b1fb8f7c03920e2ba79ac98fbdc4303ef42de34835d4509aec90d",
+      "gitBlob": "7d0a072c3a30eb70a8dac291b5a3454a5838f4c2",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/execution/snapshot-exception-validation.js",
+      "bytes": 6088,
+      "sha256": "32c364c25deb6de315f6a968f0bfb91de7adad43a92e5af8ec7d80f189060a47",
+      "gitBlob": "5a4f59141bb119d40cf9d1248b1958f4c17d0ae9",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/execution/snapshot-memory-validation.js",
+      "bytes": 3295,
+      "sha256": "e5ee46264dc190411c988f48ab122419e79e682419c3b9b3781d54d6adfd5ba9",
+      "gitBlob": "6219c08f33906150e09e3316a89a6921ea3540b1",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/execution/snapshot-heap-validation.js",
+      "bytes": 3720,
+      "sha256": "92f740010ac3c54ea8108fd10bc85ec28ceb9fef5fd8a7e0055004784f03eac7",
+      "gitBlob": "97b44efe51ac9655c44612c599877f38d52bc576",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/execution/execution-copy.js",
+      "bytes": 3480,
+      "sha256": "dc7e053b44db3506afecb93d57325eec080a76fc7516c156bae4d010c2f291e9",
+      "gitBlob": "09872927174912463275971a7ae651398cd810ee",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "packages/runtime/src/execution/strings.js",
+      "bytes": 3295,
+      "sha256": "a6fc2db5b46a6ee42c3c7ea96af1e38e48a244870283e0f85bab7faa6f16d6b7",
+      "gitBlob": "9538d4cd712fd4f33c41b7bd98ed6ba655c76c8a",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "tests/a05-first-chance-unwind-policy.test.js",
+      "bytes": 10623,
+      "sha256": "163dbab1d7504292d4d9b2f7efd4d0cb9ddf78d5bf6364e7ec9a89080d614618",
+      "gitBlob": "52777920fe1536db2225388da8cd6b92fd256496",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "tests/a05-06-memory-snapshot.test.js",
+      "bytes": 6382,
+      "sha256": "b946ea639b575cc8b19faecdb4a4f9cda3444a2cacbfdf4e29dfc9328d1e7cea",
+      "gitBlob": "72151d6352b47b0fbd6f1c7eecbf6ae2d8fcf378",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "tests/a05-06-coherent-snapshot.test.js",
+      "bytes": 5292,
+      "sha256": "9bad90d81c211cd0507eb18eed43e7cef96e44772db3eda7bbb689c97cca0d70",
+      "gitBlob": "9841e79984401f40040e5bece9ec8a18cdff2836",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "tests/a05-06-portable-snapshot.test.js",
+      "bytes": 8293,
+      "sha256": "9a97e5b4bc23b2632915274cd145814784428a20599bcb2fd84a2b5e58695d11",
+      "gitBlob": "69474b6b8b584a10e9007cd6111db038d2345ac7",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "tests/a05-06-snapshot-json.test.js",
+      "bytes": 2638,
+      "sha256": "f2a87732a5d803878be702a5a8040ff170ad813fdb519d9c57f7d6baf40fa283",
+      "gitBlob": "c0d582b42a5f20d0d43ac11da844d52c60035233",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "tests/a05-06-snapshot-cow.test.js",
+      "bytes": 6882,
+      "sha256": "d91d55f2b06c90ff58a929f35e96c4285e1db41e4402919fe633170a2ff339ec",
+      "gitBlob": "b29b59646cbc0302f6a2d52d32b3516c995c6a06",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "tests/a05-exception-event-policy.test.js",
+      "bytes": 3495,
+      "sha256": "395967bf3a3679ba9f20af0074c402d195d69019eec93b21f15b01f2ab4c832c",
+      "gitBlob": "298caa83c8dff5ee7d26f12317a8d0fdf4674a01",
+      "dirtyAtTestTime": false
+    },
+    {
+      "path": "tests/a05-source-appdomain-events.test.js",
+      "bytes": 4708,
+      "sha256": "a80dfa35c95f3e345b4b9c712e1807bafd0bd420d13e9963541a279a58cc72db",
+      "gitBlob": "bcc1bcc6116230a0c555f1a26b6b1c98ecac5c8b",
+      "dirtyAtTestTime": false
+    }
+  ],
+  "priorFailedAttempt": "The original117-test integrated run at3fd119f21 (107pass,10fail) is preserved separately by root; this archive does not overwrite or relabel it. Nine policy failures are repaired here; the separate missing standalone native capture fixture is outside this repair."
+}

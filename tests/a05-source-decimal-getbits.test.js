@@ -72,12 +72,13 @@ test('GetBits returns independently owned mutable arrays rooted across collectio
     assert.equal(result.output, 'RFalse\n12300\n-2147221504\n-1.2300\nSystem.Int32[]\n', engine);
     const first = staticValue(vm, 'First'), second = staticValue(vm, 'Second');
     assert.notDeepEqual(first, second, engine);
-    assert.deepEqual(vm.heap.get(first).data, [999, 0, 0, 0], engine);
-    assert.deepEqual(vm.heap.get(second).data, [12300, 0, 0, -2147221504], engine);
+    assert.deepEqual([...vm.heap.get(first).data], [999, 0, 0, 0], engine);
+    assert.deepEqual([...vm.heap.get(second).data], [12300, 0, 0, -2147221504], engine);
     for (const reference of [first, second]) {
       const record = vm.heap.get(reference);
       assert.equal(record.kind, 'array', engine);
       assert.equal(record.methodTable.elementType.name, 'System.Int32', engine);
+      assert(record.data instanceof Int32Array, engine);
       assert.equal(record.data.length, 4, engine);
     }
     assert.deepEqual(decimalBits(staticValue(vm, 'Original')), [12300, 0, 0, -2147221504], engine);

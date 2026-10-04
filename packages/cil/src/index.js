@@ -8,7 +8,11 @@ export * from './disassembler.js';
 export * from './inspector.js';
 export { inspectPE } from './inspector-pe.js';
 export * from './execution-profile.js';
+export {analyzeMethod} from './analysis.js';
 export {intrinsicKey,intrinsicDefinitions,intrinsicDefinition} from './intrinsic-profile.js';
+export {arrayMethodDefinition} from './array-profile.js';
+export {arrayRuntimeDefinition} from './array-runtime-profile.js';
+export {memoryMethodDefinition} from './memory-profile.js';
 export * from './il-document.js';
 export * from './decompiler.js';
 export {CilDispatchTable} from './dispatch-profile.js';
@@ -52,7 +56,12 @@ export { createMetadataVerificationContext, verificationMemberDiagnosticCatalog 
 
 export { AssemblySymbolIndex } from './browser/index.js';
 export { AssemblyTypeHierarchy } from './browser/hierarchy.js';
+
+export {asyncMethodDefinition, asyncTypeDefinition, reachableAsyncMethods} from './async-profile.js';
+export {syncIntrinsicDefinitions, isSynchronizationIntrinsic} from '@sharpforge/bytecode';
+export {varargsIntrinsicDefinitions, varargsTypeDefinition, fixedCallSignature, validVarargsSignature} from './varargs-profile.js';
 export { referenceAssemblyMemberIncluded, addReferenceAssemblyAttribute } from './emit/ref-assembly.js';
 export { AssemblyUsageAnalysis } from './browser/analyzers.js';
 export { MetadataTableInspector } from './inspector-tables.js';
+export {readSourceTypeIdentities} from './source-type-identities.js';
 export { MetadataGenerations, metadataGenerationDiagnosticCatalog } from './metadata/delta-reader.js';

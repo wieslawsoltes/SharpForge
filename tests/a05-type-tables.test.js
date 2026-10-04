@@ -75,9 +75,12 @@ test('A05 heap headers survive collection, snapshots and metadata registry repla
   assert.equal(heap.get(parent).methodTable,table);
   assert.equal(heap.get(box).methodTable,heap.methodTables.get('int'));
   assert.equal(heap.get(array).methodTable.elementType,heap.methodTables.get('int'));
-  assert.deepEqual(heap.get(array).data,[0,0]);
-  assert.deepEqual(heap.get(heap.array('System.Boolean',1)).data,[false]);
-  assert.deepEqual(heap.get(heap.array('long',1)).data,[0n]);
+  assert(heap.get(array).data instanceof Int32Array);
+  assert.deepEqual([...heap.get(array).data],[0,0]);
+  const booleans=heap.get(heap.array('System.Boolean',1));
+  assert(booleans.data instanceof Uint8Array);assert.deepEqual([...booleans.data],[0]);
+  const longs=heap.get(heap.array('long',1));
+  assert(longs.data instanceof BigInt64Array);assert.deepEqual([...longs.data],[0n]);
   const saved=heap.snapshot(),copied=copyExecution(saved);
   assert.equal(copied.records[parent.h].methodTable,table);
   heap.collect([parent,array,box]);assert.equal(heap.get(child).data,'retained');
@@ -123,7 +126,8 @@ test('A05 CIL headers distinguish namespaced virtual method declarations',()=>{
 
 test('A05 CIL metadata tables preserve enum backing widths and rebuilt heap headers',()=>{
   const type={token:0x02000001,name:'Example.Tiny',baseToken:0x01000001,flags:0x101,interfaces:[],methods:[],fields:[{name:'value__',token:0x04000001,isStatic:false}]};
-  const vm={heap:new ManagedHeap(),inspector:{types:[type],metadata:{rows:[],typeName:token=>token===type.token?type.name:'System.Enum'},signature:()=>({type:'byte'})}};
+  const metadata={rows:[],streams:new Map(),typeName:token=>token===type.token?type.name:'System.Enum'};
+  const vm={heap:new ManagedHeap(),inspector:{types:[type],metadata,signature:()=>({type:'byte'})}};
   const before=new CilTypeSystem(vm),ref=vm.heap.allocate('box',before.table(type.token),[255]),after=new CilTypeSystem(vm);
   assert.notEqual(before.table(type.token),after.table(type.token));
   assert.equal(vm.heap.get(ref).methodTable,after.table(type.token));
@@ -136,7 +140,7 @@ test('A05 CIL GenericParam variance and TypeSpec identities feed the same cast l
   const contravariant={...covariant,token:0x02000002,name:'Example.IContra`1'};
   const names=new Map([[covariant.token,covariant.name],[contravariant.token,contravariant.name],[0x1b000001,'Example.ICov`1<string>'],[0x1b000002,'Example.ICov`1<object>']]);
   const rows=[];rows[42]=[[0,1,2,0],[0,2,4,0]];
-  const vm={heap:new ManagedHeap(),inspector:{types:[covariant,contravariant],metadata:{rows,typeName:token=>names.get(token)}}};
+  const vm={heap:new ManagedHeap(),inspector:{types:[covariant,contravariant],metadata:{rows,streams:new Map(),typeName:token=>names.get(token)}}};
   const system=new CilTypeSystem(vm);
   assert.deepEqual(system.table(covariant.token).variance,[1]);assert.deepEqual(system.table(contravariant.token).variance,[-1]);
   assert.equal(system.table(0x1b000001),system.table('Example.ICov`1<System.String>'));

@@ -146,16 +146,23 @@ test('newobj constructor storage survives snapshot replay and is released after 
   } finally { vm.stop(); }
 });
 
-test('a throwing constructor never returns its temporary box and leaves no constructor root', () => {
+test('a throwing constructor never returns its temporary box and stop releases its inspectable root', () => {
   const methods = [{name: '.ctor', static: false, flags: 0x1886, body(writer) {
     writer.op('ldnull').op('throw');
   }}];
   run(fixture((writer, context) => writer.op('newobj', context.methods.get('Point..ctor')).op('pop').op('ret'),
     {methods, result: 'void'}), (result, vm) => {
     assert.equal(result.fault?.name, 'NullReferenceException');
-    assert.equal(vm.frames.length, 0);
+    assert.equal(result.fault.phase, 'unhandled');
+    assert.deepEqual(vm.frames.map(frame => frame.method.name), ['Main', '.ctor']);
     assert.equal(vm.returnValue, null);
+    const receiver = vm.top.returnObject;
     vm.heap.collect();
+    assert.equal(vm.heap.get(receiver).type, 'Point');
+    vm.stop();
+    assert.equal(vm.frames.length, 0);
+    vm.heap.collect();
+    assert.throws(() => vm.heap.get(receiver), {name: 'InvalidReferenceException'});
     assert.equal(vm.heap.records.some(record => record?.kind === 'box' && record.type === 'Point'), false);
   });
 });

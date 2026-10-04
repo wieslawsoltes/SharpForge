@@ -6,9 +6,9 @@ import {defaults} from './numeric-ops.js';
 const admitted = new WeakMap();
 const invalid = message => { throw new ManagedFault('InvalidProgramException', message); };
 
-/** Nullable payloads remain reference-free and use the existing underlying storage admission. */
+/** Nullable payloads use the underlying value storage and preserve nested reference roots. */
 export function nullableTable(vm, type) {
-  const table = vm.typeSystem.table(type), element = table.nullableType;
+  const table = vm.inspector ? vm.typeSystem.table(type) : vm.heap.methodTables.get(type), element = table.nullableType;
   if (!element || table.containsGenericParameters || !element.flags.valueType || element.flags.nullable ||
       element.flags.refStruct || element.flags.dynamic || element.name === 'System.Void') {
     throw new ManagedFault('NotSupportedException', 'Nullable requires an admitted non-nullable value type');

@@ -1,9 +1,11 @@
+import {callSourceVirtual} from '../source-interface-dispatch.js';
 import {Op} from '@sharpforge/bytecode';
 import {SUSPENDED} from '../../platform.js';
 import {callSourceFromStack} from '../call-frames.js';
 
 /** Call scratch storage, suspension identity and delegate roots retain their owners. */
 export const sourceCallHandlers = Object.freeze({
+  [Op.CALLVIRT]: callSourceVirtual,
   [Op.CALL](vm,frame,a,b) {
     callSourceFromStack(vm,a,b);
   },

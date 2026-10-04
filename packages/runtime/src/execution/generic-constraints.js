@@ -1,26 +1,13 @@
-import {decodeCoded, methodGenericParameters, substituteCallType, primitiveSizes, isByrefStructForwarder} from '@sharpforge/cil';
+import {decodeCoded, methodGenericParameters, substituteCallType, primitiveSizes} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
-import {executionCodeState} from './code-version.js';
 import {isAggregateType, requireValueStorage} from './value-types.js';
-import {valueLayout} from './value-layout.js';
-
-const forwarders = new WeakMap();
+import {managedValueLayout, valueLayout} from './value-layout.js';
 
 /** Canonical method admission is derived from the code epoch, never snapshot or heap state. */
 export function requireGenericStructArgument(vm, owner, type) {
-  const epoch = executionCodeState(vm);
-  let methods = forwarders.get(epoch);
-  if (!methods) forwarders.set(epoch, methods = new Map());
-  let admitted = methods.get(owner);
-  if (admitted === undefined) {
-    admitted = isByrefStructForwarder(vm.inspector, owner);
-    methods.set(owner, admitted);
-  }
-  if (!admitted || !isAggregateType(type) || type.flags.nullable || type.genericArity || type.typeArguments.length) {
-    throw new ManagedFault('NotSupportedException',
-      'Struct generic arguments require a static Apply<T>(ref T, ...) constrained interface forwarder');
-  }
-  requireValueStorage(vm, type);
+  managedValueLayout(vm, type);
+  const element = type.flags.nullable ? type.nullableType : type;
+  if (isAggregateType(element)) requireValueStorage(vm, element);
 }
 
 function invalid(message) {

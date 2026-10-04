@@ -1,3 +1,6 @@
+import {emitSourceVarargsBuiltin} from './source-varargs-emission.js';
+import {decodeNumericBuiltin, emitNumericBuiltin} from './numeric-builtin-mapping.js';
+import {emitControlBuiltin,decodeControlBuiltin} from './control-builtin-mapping.js';
 import {Builtins, numericTypeId, numericTypeName} from '@sharpforge/bytecode';
 import {frameworkType} from '@sharpforge/framework';
 import {CilError} from './binary.js';
@@ -10,7 +13,7 @@ const decimalBuiltins = Object.values(Builtins).filter(builtin => builtin.decima
 
 /** Keep exact typed families ahead of the released name-based source mappings. */
 export function decodeProfileBuiltin(target, span) {
-  return decodeMathBuiltin(target, span) ?? decodeDecimalBuiltin(target);
+  return decodeControlBuiltin(target) ?? decodeNumericBuiltin(target, span) ?? decodeMathBuiltin(target, span) ?? decodeDecimalBuiltin(target);
 }
 
 /** Recognize only the source-visible Decimal overload with its complete CLI signature. */
@@ -86,6 +89,8 @@ function stringTarget(member, count) {
 export function emitBuiltin(context, writer, id, types, adapt) {
   const count = types.length;
   const builtin = Builtins[id], name = builtin.name;
+  if (emitNumericBuiltin(context, writer, builtin, types, adapt)) return;
+  if (emitSourceVarargsBuiltin(context, writer, builtin, types, adapt) || emitControlBuiltin(context, writer, builtin, types, adapt)) return;
   if (emitMathBuiltin(context, writer, builtin, types, adapt)) return;
   if (builtin.decimal) {
     const descriptor = builtin.decimal;

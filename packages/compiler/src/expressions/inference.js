@@ -44,7 +44,7 @@ export function inferIndex(node) {
 export function inferMember(node) {
   if (node.name === 'Length')
     return 'int';
-  if (node.name === 'Message' && this.infer(node.target) === 'Exception' ||
+  if (node.name === 'Message' && ['Exception', 'System.Exception'].includes(this.infer(node.target)) ||
       ['Name', 'FullName'].includes(node.name) && this.infer(node.target) === 'System.Type')
     return 'string';
   return this.property(node)?.type ?? this.field(node)?.type ?? 'error';

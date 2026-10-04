@@ -1,3 +1,4 @@
+import {bindArgumentHandle, bindTypedReferenceExpression} from './varargs.js';
 /**
  * The core of the body binder: scopes and locals, diagnostics, conversions of bound expressions and the
  * expression dispatcher. The expression and statement families are class mixins composed in ../body-binder.js.
@@ -255,6 +256,9 @@ export class BinderCore {
       }
       case 'SimpleMemberAccessExpression':
         return this.memberAccess(syntax, options);
+      case 'ArgListExpression': return bindArgumentHandle(this, syntax);
+      case 'MakeRefExpression': case 'RefTypeExpression': case 'RefValueExpression':
+        return bindTypedReferenceExpression(this, syntax);
       case 'InvocationExpression':
         return this.invocation(syntax);
       case 'ElementAccessExpression':

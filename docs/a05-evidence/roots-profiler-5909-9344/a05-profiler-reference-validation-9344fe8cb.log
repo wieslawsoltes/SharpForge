@@ -1,0 +1,20 @@
+✔ reference dependencies stay ignored while explicit hook-free runtime imports retain their own identity (323.977666ms)
+✔ reference dependency verification rejects changed copied entries and added paths (2.239452ms)
+✔ prepared pool capabilities, source identities, calls and callbacks remain byte-identical in the reference (2.506314ms)
+✔ reference removes only profiler eligibility from the integrated batching guards (0.609166ms)
+✔ current instruction, continuation and method consumers produce syntactically valid reference modules (471.146407ms)
+✔ option-only gates and direct profiler calls require explicit transformation review (0.694941ms)
+✔ reference transformation deletes only reviewed consumers and preserves runtime cleanup (16.104261ms)
+✔ reference creation refuses unknown hook sites and newly introduced profiler behavior (1.141007ms)
+✔ numeric block reference retains all non-profiler observation guards (0.191371ms)
+✔ object-value reference preserves reviewed CIL work and source fault/cleanup boundaries (0.202848ms)
+✔ reviewed array continuation hooks preserve their exact resume/result and fault-cleanup semantics (0.310567ms)
+✔ profiler reference rejects oversized input before parsing or importing another runtime (2.639249ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2519.460697

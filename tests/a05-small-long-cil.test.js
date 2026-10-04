@@ -10,8 +10,9 @@ function arithmetic(name = 'add', left = 1n, right = 2n) {
     body: writer => writer.op('ldc.i8', left).op('ldc.i8', right).op(name).op('ret')} ]});
 }
 
-function loop() {
-  return managedFixture({methods: [{name: 'Main', result: 'long', maxStack: 2, locals: ['long', 'long', 'double'], body(writer) {
+function loop(referenceLocal = false) {
+  const locals = referenceLocal ? ['long', 'long', 'double', 'object'] : ['long', 'long', 'double'];
+  return managedFixture({methods: [{name: 'Main', result: 'long', maxStack: 2, locals, body(writer) {
     writer.op('ldc.i8', 0n).op('stloc.0').op('ldc.i8', 0n).op('stloc.1').op('ldc.r8', 0).op('stloc.2').mark('loop');
     writer.op('ldloc.0').op('ldloc.1').op('add').op('stloc.0');
     writer.op('ldloc.2').op('ldc.r8', 0.25).op('add').op('stloc.2');
@@ -155,14 +156,14 @@ test('option edits invalidate plans independently and unproven methods retain or
 });
 
 test('snapshot replay preserves BigInt arrays, aliases and managed roots', () => {
-  const vm = new CilVirtualMachine(loop(), {smallLongs: true});
+  const vm = new CilVirtualMachine(loop(true), {smallLongs: true});
   vm.step();
   vm.step();
   const caller = vm.top;
   vm.call(caller.method.token, []);
   vm.top.locals = caller.locals;
   const reference = vm.heap.string('root next to long');
-  vm.top.locals.push(reference);
+  vm.dereference(vm.address('local', 3), true, reference);
   vm.heap.collect();
   assert.equal(vm.heap.get(reference).data, 'root next to long');
   const saved = vm.snapshot();

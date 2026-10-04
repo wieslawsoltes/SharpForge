@@ -303,7 +303,13 @@ for (const [name, ownerType] of [
   assert(report.issues.some(issue => ['IL_CALLI', 'IL_TOKEN'].includes(issue.code)));
 });
 
-for (const prefix of ['tail.']) test(`${prefix} remains a separate calli feature`, () => {
-  const report = verifyCilAssembly(fixture({prefix}));
-  assert.equal(report.success, false);
+test('tail.calli preserves the selected managed instance target', () => {
+  const assembly = fixture({prefix: 'tail.'}), report = verifyCilAssembly(assembly);
+  assert.equal(report.success, true, JSON.stringify(report.issues));
+  withVM(assembly, vm => {
+    const result = vm.run();
+    assert.equal(result.state, 'terminated', result.fault?.stack);
+    assert.equal(result.returnValue, 42);
+    assert.equal(vm.frames.length, 0);
+  });
 });

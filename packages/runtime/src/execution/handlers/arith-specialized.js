@@ -81,6 +81,11 @@ function comparisonHandler(name, generic) {
   };
 }
 
+/** Shared exact Int32 arithmetic selected once by verifier-derived numeric execution plans. */
+export function int32Operation(name) {
+  return operations.get(name) ?? null;
+}
+
 /** Predecode selects width and operation once; host-edited noncanonical slots use the original handler. */
 export function specializedInt32Handler(name, state, generic) {
   if (!state || state.at(-1) !== StackCategory.i4) return null;

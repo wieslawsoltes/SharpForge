@@ -3,6 +3,7 @@ import {CilError} from '@sharpforge/cil';
 import {ManagedFault, isReference} from '../heap.js';
 import {float, number} from './numeric-ops.js';
 import {isNativeInteger, nativeInteger, nativeIntegerBits} from './native-int.js';
+import {storageWrite} from './array-storage.js';
 
 const contexts = new WeakMap();
 const maximumIndex = BigInt(Number.MAX_SAFE_INTEGER);
@@ -53,7 +54,7 @@ export function marshalCilValue(vm, value, type) {
     const element = type.slice(0, -2), ref = vm.heap.array(element, value.length);
     return vm.heap.withRoots([ref], () => {
       const record = vm.heap.get(ref);
-      for (let i = 0; i < value.length; i++) record.data[i] = marshalCilValue(vm, value[i], element);
+      for (let i = 0; i < value.length; i++) storageWrite(record.data, i, marshalCilValue(vm, value[i], element));
       return ref;
     });
   }

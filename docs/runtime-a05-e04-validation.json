@@ -809,5 +809,11 @@
     "ThreadStatic uses cooperative scheduler contexts and volatile guarantees instruction-level ordering; host-thread shared-memory execution is not implemented.",
     "Snapshots are owned by their original VM and held in memory. T06 broader replay qualification remains part of E01.",
     "Browser managed/debugger suites passed on f23c1bd; the subsequent enum conversion change passed all Node checks and the full runtime browser suite."
-  ]
+  ],
+  "project7Reconciliation": {
+    "historicalEvidence": true,
+    "assessedAt": "2026-10-04",
+    "currentCriteria": "a05-project7-acceptance-audit.json",
+    "note": "Original scope, revisions, commands, counts and results are preserved. A historical passed status is not final qualification for the83open criteria or current integration."
+  }
 }

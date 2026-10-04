@@ -1,5 +1,7 @@
 # Concrete constrained Int64 and UInt64 ToString
 
+> Historical increment: the current [A05 Object slot contract](a05-constrained-object-slots.md) supersedes the Object-call admission and source-support limits below. The original revision-specific validation remains historical evidence.
+
 Direct CIL supports `constrained. System.Int64` and `constrained. System.UInt64`
 TypeRefs followed by the ordinary instance `System.Object.ToString(): string`
 MemberRef. This extends the [Int32 path](runtime-constrained-int32-tostring.md)

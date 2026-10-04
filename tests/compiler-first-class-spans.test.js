@@ -1,3 +1,4 @@
+import {linesOf} from './support/semantic-codegen.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parse } from '@sharpforge/syntax';
@@ -9,7 +10,7 @@ import { walk } from '../packages/compiler/src/bound/semantic-walker.js';
 // SF-A02-T86: C# 14 first-class span conversions - binding rules and diagnostics. The Roslyn-pinned programs are the
 // `first-class-spans` fixtures of packages/compiler/test/differential (Roslyn 5.3.0-2.26153.122); these tests look
 // at what the fixtures cannot show without running: which overload is chosen and what type inference fixes.
-// Span<T> does not run on the execution profile yet, so a valid program is reported as not executable (SF2200).
+// Span execution uses the shared managed memory profile after the existing language checks.
 
 const analysed = (source, langVersion = '14') => {
   const file = parse(new SourceText(source, 'Program.cs'), undefined, { languageVersion: langVersion });
@@ -78,10 +79,7 @@ test('A02-T86 an extension method takes a span receiver through the span convers
   assert.deepEqual(errors(source), []);
 });
 
-test('A02-T86 a valid program with spans is bound and reported as not executable (SF2200), never run wrongly', () => {
+test('A02-T86 a valid first-class span conversion executes on both backends', () => {
   const source = program('', 'int[] n = new int[] { 1, 2 }; ReadOnlySpan<int> s = n; Console.WriteLine(s.Length);');
-  const result = compile(source, { langVersion: '14' }),
-    codes = result.diagnostics.filter(d => !/^SF1/.test(d.code)).map(d => d.code);
-  assert.deepEqual(codes, ['SF2200']);
-  assert.equal(result.image ?? null, null);
+  assert.deepEqual(linesOf(source, {langVersion: '14'}), ['2']);
 });

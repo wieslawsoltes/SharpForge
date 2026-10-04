@@ -61,7 +61,7 @@ export function constructBoundDelegate(vm, type, receiver, pointer) {
   return vm.platform.make(type, {method: pointer.token, receiver, mode}, 'delegate');
 }
 
-function delegateRecord(vm, reference) {
+export function delegateRecord(vm, reference) {
   const record = vm.heap.get(reference);
   if (record.kind !== 'delegate') throw fault('Managed delegate required');
   return record;
@@ -72,7 +72,11 @@ function bindingMode(vm, reference, method) {
   if (mode !== null) return mode;
   // Existing source/platform records predate explicit binding modes.
   const target = vm.inspector ? vm.inspector.getMethod(method) : vm.image.methods[method];
-  return (vm.inspector ? target.signature.isStatic : target.isStatic) ? 'static' : 'closed-instance';
+  const isStatic = vm.inspector ? target.signature.isStatic : target.isStatic;
+  if (!isStatic) return 'closed-instance';
+  const signature = managedDelegateSignature(vm.inspector, vm.heap.get(reference).type);
+  const parameters = vm.inspector ? target.signature.parameters : target.parameters;
+  return parameters.length === signature.parameters.length + 1 ? 'closed-static' : 'static';
 }
 
 /** Equality uses canonical method, delegate type, target identity and binding mode. */
@@ -97,17 +101,4 @@ export function boundDelegateCall(vm, reference, args) {
   const mode = bindingMode(vm, reference, method);
   if (!['static', 'closed-static', 'open-instance', 'closed-instance'].includes(mode)) throw fault('Unknown delegate binding mode');
   return {method, arguments: mode === 'closed-static' || mode === 'closed-instance' ? [receiver, ...args] : [...args]};
-}
-
-/** Leaves ordinary calls and returns on main's existing frame/scheduler path. */
-export function invokeBoundDelegate(vm, descriptor, args, constructing) {
-  if (constructing) return constructBoundDelegate(vm, descriptor.ownerInstance ?? descriptor.owner, args[0], args[1]);
-  if (descriptor.name === '.ctor') throw new ManagedFault('NotSupportedException', 'Delegate construction requires newobj');
-  delegateRecord(vm, args[0]);
-  if (descriptor.name === 'Equals') return boundDelegatesEqual(vm, args[0], args[1]) ? 1 : 0;
-  const expected = vm.heap.methodTables.get(descriptor.ownerInstance ?? descriptor.owner);
-  if (!castCacheFor(vm.heap.methodTables).isAssignableFrom(expected, vm.heap.get(args[0]).methodTable)) {
-    throw fault('Delegate invocation receiver type mismatch');
-  }
-  return vm.scheduler.callDelegate(args[0], args.slice(1));
 }

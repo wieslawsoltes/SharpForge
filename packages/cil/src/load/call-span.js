@@ -25,9 +25,8 @@ export function decodeCallSpan(span, call, context) {
     if (!type) throw new CilError('Unknown allocation constructor');
     return emit(Op.NEWOBJ, type.id);
   }
-  if (context.methodByToken.has(call.operand)) {
-    return emit(Op.CALL, context.methodByToken.get(call.operand).id, count);
-  }
+  const method = context.methodByToken.get(target.methodToken ?? call.operand);
+  if (method) return emit(call.name === 'callvirt' ? Op.CALLVIRT : Op.CALL, method.id, count);
   if (target.name === '<assert>' && target.owner === 'SharpForge.<>Program') {
     return emit(Op.BUILTIN, BuiltinMap.get('Debug.Assert').id, span.some(instruction => instruction.name === 'ldstr') ? 1 : 2);
   }

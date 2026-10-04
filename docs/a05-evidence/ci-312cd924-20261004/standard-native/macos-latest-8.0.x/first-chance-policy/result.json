@@ -1,0 +1,33 @@
+{
+  "id": "first-chance-policy",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/first-chance-policy",
+      "--failfast",
+      "--first-chance-policy",
+      "before-unwind",
+      "--expected",
+      "tests/fixtures/a05/first-chance-policy/expected.txt",
+      "--framework",
+      "net8.0",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/first-chance-policy/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "first-chance-policy/evidence",
+  "report": "first-chance-policy/result.json",
+  "startedAt": "2026-10-04T19:16:22.191Z",
+  "durationMs": 5220.352500000008,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "first-chance-policy/stdout.log",
+  "stderr": "first-chance-policy/stderr.log",
+  "finishedAt": "2026-10-04T19:16:27.439Z"
+}

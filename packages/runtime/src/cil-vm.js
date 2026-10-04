@@ -1,8 +1,9 @@
-import {requireVerifiedCil} from './execution/verification-error.js';
+import {registerScalarStoreAdapters} from './execution/scalar-slot-store.js';
+import {arrayVectorRecord} from './execution/arrays.js';
+import {admitCilAssembly} from './execution/cil-admission.js';
 import {admitCilAssemblyStacks,pushStackValue} from './execution/frame-stack.js';
 import {installRootProvider,rootValues} from './execution/frame-roots.js';
 import {stopExecution} from './execution/stop.js';
-import {executionProfiler} from './execution/profiler.js';
 import {bindNativeAbi,cilNumericContext,marshalCilValue,cilValue,cilResultValue,cilArrayIndex} from './execution/cil-values.js';
 import {formatCilValue} from './value-formatting.js';
 import {clearRuntimeTypes} from './execution/tokens.js';
@@ -12,11 +13,12 @@ import {literalString} from './execution/strings.js';
 import {ManagedPlatform} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
-import { AssemblyInspector, verifyCilAssembly, resolveExecutionField, CilError } from '@sharpforge/cil';
+import { resolveExecutionField, CilError } from '@sharpforge/cil';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
 import {executeCilStep} from './execution/cil-step.js';
 import {call,ensureInitialized,invoke} from './execution/calls.js';
+import {registerCanonicalCilCall} from './execution/call-entry-guard.js';
 import {CilTypeSystem} from './execution/type-system.js';
 import {throwFault,continueUnwind,exceptionRoots} from './execution/eh.js';
 import {runCilSlice} from './execution/cil-slice.js';
@@ -26,21 +28,24 @@ import {normalizeRuntimeLaunchOptions} from './launch-options.js';
 import {cilEntryArguments} from './execution/entry-arguments.js';
 import {startCilEntry} from './execution/module-startup.js';
 import {initializeCilInstrumentation} from './execution/cil-instrumentation.js';
+import {executionOptions} from './execution/execution-options.js';
 /** Direct, cooperative CIL interpreter for a verified managed subset, independent of #SF.
  * No eval, native imports, network, files, threads, dynamic JS plugins or CLR loading. */
 export class CilVirtualMachine {
+  #profiler = null;
   constructor(bytes,options={}){
+    registerCanonicalCilCall(this,canonicalCilCall);
+    registerScalarStoreAdapters(this,canonicalScalarStoreAdapters);
     options=normalizeRuntimeLaunchOptions(options);
-    const started=performance.now();this.options={maxInstructions:20_000_000,maxFrames:512,maxStackValues:65536,maxOutputCharacters:1_000_000,...options};
+    const started=performance.now();this.options=executionOptions(options);
     bindNativeAbi(this.options);
     initializeCilMethodEvents(this, options.runtimeEvents);
-    this.inspector=bytes instanceof AssemblyInspector?bytes:new AssemblyInspector(bytes,options);this.report=verifyCilAssembly(this.inspector,options);
-    requireVerifiedCil(this.report);
+    admitCilAssembly(this,bytes,options);
     admitCilAssemblyStacks(this);
     const entry=this.inspector.getMethod(this.report.entryPoint);this.returnType=entry.signature.returnType;if(!entry.signature.isStatic)throw new CilError('Host invocation requires a static method');
     this.heap=new ManagedHeap(options);installRootProvider(this);this.frames=[];this.statics=new Map();this.strings=new Map();this.initialized=new Map();this._typeSystem=null;this.layoutCache=this.typeSystem.layouts;this.frameId=0;
     this.snapshotOwner=Object.freeze({});this.writeRevision=0;this.onWrite=null;this.state='ready';this.instructions=0;this.elapsedMs=0;this.output=[];this.outputCharacters=0;this.fault=null;this.pendingFault=null;this.onException=null;this.returnValue=null;this.exitCode=0;this.onOutput=options.onOutput??(()=>{});this.loadMs=performance.now()-started;
-    initializeCilInstrumentation(this,options);
+    initializeCilInstrumentation(this,options, profiler => { this.#profiler = profiler; });
     for(const f of this.inspector.fields.values())if(f.isStatic)this.statics.set(f.token,storageDefault(this,resolveExecutionField(this.inspector,f.token).signature.type));
     const args=cilEntryArguments(this,entry,options);
     this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);startCilEntry(this,entry,args);
@@ -48,7 +53,7 @@ export class CilVirtualMachine {
   *roots(){yield* rootValues(this);}
   get top(){return this.frames.at(-1);}
   get runtimeEvents(){return cilRuntimeEvents(this);}
-  get profiler(){return executionProfiler(this);}
+  get profiler(){return this.#profiler;}
   get typeSystem(){
     if(this._typeSystem?.inspector!==this.inspector){clearRuntimeTypes(this);this._typeSystem=new CilTypeSystem(this);this.layoutCache=this._typeSystem.layouts;}
     return this._typeSystem;
@@ -56,7 +61,7 @@ export class CilVirtualMachine {
   marshal(value,type){return marshalCilValue(this,value,type);}
   // CLI storage locations narrow integers and round single precision on write/load.
   storage(value,type){return storageValue(this,value,type,cilNumericContext(this));}
-  slotType(frame,arg,index){return arg?(frame.method.signature.isStatic?frame.method.signature.parameters[index]:index===0?'object':frame.method.signature.parameters[index-1]):frame.method.locals[index];}
+  slotType(frame,arg,index){const optional=arg&&frame.varargs?.find(item=>item.index===index);if(optional)return optional.type.name;return arg?(frame.method.signature.isStatic?frame.method.signature.parameters[index]:index===0?'object':frame.method.signature.parameters[index-1]):frame.method.locals[index];}
   indirect(value,name){return numericIndirect(value,name,cilNumericContext(this));}
   resultValue(){return cilResultValue(this);}
   resultDisplay(){return this.returnType==='string'?this.display(this.returnValue):this.format(this.returnValue,this.returnType);}
@@ -73,11 +78,11 @@ export class CilVirtualMachine {
   matches(ref,typeName){return this.typeSystem.matches(ref,typeName);}
   field(token,ref){return this.typeSystem.field(token,ref);}
   notifyWrite(write){this.writeRevision++;if(write.handle!==undefined)this.heap.mutationRevision++;this.onWrite?.({...write,frameId:write.frameId??this.top?.id});}
-  address(kind,index,owner){return createManagedAddress(this,kind,index,owner);}
+  address(kind,index,owner,options){return createManagedAddress(this,kind,index,owner,options);}
   dereference(address,write=false,value){return dereferenceManagedAddress(this,address,write,value);}
   snapshot(){return snapshotVM(this,'cil');}
   restore(snapshot){const result=restoreVM(this,snapshot,'cil');restoreCilMethodEvents(this);return result;}
-  indexed(ref,index){const r=this.heap.get(ref),n=cilArrayIndex(index);if(r.kind!=='array'||!Number.isInteger(n)||n<0||n>=r.data.length)throw new ManagedFault('IndexOutOfRangeException','Array index out of range');return r;}
+  indexed(ref,index){return arrayVectorRecord(this,ref,index);}
   emitOutput(s){if(this.outputCharacters+s.length>this.options.maxOutputCharacters)throw new ManagedFault('OutputLimitException','Program output limit exceeded');this.outputCharacters+=s.length;this.output.push(s);this.onOutput(s);}
   compare(a,b,op,unsigned=false,branch=false){return numericCompare(a,b,op,unsigned,cilNumericContext(this),branch);}
   binary(name,a,b){return numericBinary(name,a,b,cilNumericContext(this));}
@@ -96,3 +101,6 @@ export class CilVirtualMachine {
   stop(){stopExecution(this);}
   statistics(){return {artifactFormat:'ECMA-335',profile:this.report.profile,instructions:this.instructions,elapsedMs:this.elapsedMs,frames:this.frames.length,assembly:{bytes:this.inspector.pe.bytes.length,loadMs:this.loadMs},heap:{...this.heap.stats,maxBytes:this.heap.maxBytes,threshold:this.heap.threshold}};}
 }
+const canonicalCilCall = CilVirtualMachine.prototype.call;
+const canonicalScalarStoreAdapters = Object.freeze({address: CilVirtualMachine.prototype.address,
+  dereference: CilVirtualMachine.prototype.dereference, storage: CilVirtualMachine.prototype.storage, pop: CilVirtualMachine.prototype.pop});

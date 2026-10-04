@@ -1,0 +1,1 @@
+Managed IL verification failed: Program::Main IL_a3: External member 'System.Exception::GetType' is not implemented

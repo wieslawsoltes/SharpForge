@@ -1,0 +1,6 @@
+console.log: speedscope v1.24.0
+console.log: WebGL initialized. renderer: llvmpipe, or similar, vendor: Mesa, version: WebGL 1.0
+console.warning: [JavaScript Warning: "WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER." {file: "http://127.0.0.1:35641/speedscope/speedscope-432XE7GS.js" line: 4}]
+console.warning: [JavaScript Warning: "WebGL context was lost." {file: "debugger eval code line 311 > eval" line: 6}]
+console.log: Importing as speedscope json file
+console.timeEnd: import

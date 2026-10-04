@@ -1,3 +1,4 @@
+import {declareVarargsTypes} from './varargs-types.js';
 /**
  * The predefined types the type-system modules reason about, resolved once against the core library of a compilation
  * (the framework registry bridge): `core.int`, `core.object`, `core.nullableOf(T)`, `core.keyword('ulong')`...
@@ -80,6 +81,7 @@ export class CoreTypes {
     this.augment();
     declareNumericConstants(this);
     declareExceptionTypes(this);
+    declareVarargsTypes(bridge);
     Object.assign(this, declareSpanTypes(this), declareIndexRangeTypes(this), declareCoreTypeRelations(this));
     this.task = bridge.coreType('System_Threading_Tasks_Task');
     this.taskT = bridge.coreType('System_Threading_Tasks_Task_T');
@@ -129,7 +131,15 @@ export class CoreTypes {
     const V = DeclarationModifiers.Virtual,
       S = DeclarationModifiers.Static,
       o = this.object;
-    for (const m of o.getMembers('ToString')) m.modifiers |= V;
+    // Registry builtins may already declare these slots before augmentation; retain their exact virtual contract.
+    for (const [name, result, parameters] of [['ToString', this.string, []], ['Equals', this.bool, [o]], ['GetHashCode', this.int, []]]) {
+      for (const m of o.getMembers(name)) {
+        if (m.kind === 'Method' && !m.isStatic && !m.arity && m.returnType === result &&
+            m.parameters.length === parameters.length && m.parameters.every((parameter, index) => parameter.type === parameters[index])) {
+          m.modifiers |= V;
+        }
+      }
+    }
     method(o, 'ToString', this.string, [], V);
     method(o, 'Equals', this.bool, [['obj', o]], V);
     method(o, 'GetHashCode', this.int, [], V);
@@ -179,6 +189,14 @@ export class CoreTypes {
           new PropertySymbol({ name, type, getMethod: get, declaredAccessibility: Accessibility.Public, isImplicitlyDeclared: true }),
         );
       };
+      n.addMember(new MethodSymbol({
+        name: '.ctor',
+        methodKind: MethodKind.Constructor,
+        returnType: this.void,
+        parameters: [new ParameterSymbol({name: 'value', type: t})],
+        declaredAccessibility: Accessibility.Public,
+        isImplicitlyDeclared: true,
+      }));
       getter('HasValue', this.bool);
       getter('Value', t);
       n.addMember(

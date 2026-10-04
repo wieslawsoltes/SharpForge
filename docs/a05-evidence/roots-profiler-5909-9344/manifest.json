@@ -1,0 +1,58 @@
+{
+  "rootsRevision": "5909d54f25ef9898c956c736c96db782e36978ff",
+  "profilerProductRevision": "9344fe8cb43a9198e618367525395a840cd7baa3",
+  "profilerReferenceRevision": "a21338c73b278d733434bb51444a16a9ebd29dac",
+  "checkout": "/workspace/scratch/42f7738360b9/a05-performance",
+  "wrapper": "scripts/limited.js",
+  "environment": {
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "exitCodes": {
+    "roots": 0,
+    "profilerReferenceAt5909": 1,
+    "referenceFocusedTestsAt9344": 0,
+    "profilerReferenceAt9344": 0,
+    "profiler": 1
+  },
+  "completionChecks": {
+    "productClean": true,
+    "referenceClean": true,
+    "referenceRevisionUnchanged": true
+  },
+  "files": {
+    "a05-roots-5909d54f2-attempt1.json": {
+      "bytes": 329563,
+      "sha256": "11ba12c5d93977e55c8b9fc2d361ce82457a96dc0690a4be0cd94747e7498031"
+    },
+    "a05-roots-5909d54f2-attempt1.log": {
+      "bytes": 122,
+      "sha256": "39491d5c6d9b2e010b617cda75c26c293c6325754af19256d22e330a4095b43f"
+    },
+    "a05-profiler-off-9344fe8cb-attempt1.json": {
+      "bytes": 2891366,
+      "sha256": "b03d1bb5923cc278815cebb9cfaaf25d5d9f4fbec106d3cdde861909367ffca2"
+    },
+    "a05-profiler-off-9344fe8cb-attempt1.log": {
+      "bytes": 635,
+      "sha256": "d4aa5deca8257d094206b9bf2175db0ceff112fc50dc412dea7773902a910782"
+    },
+    "a05-profiler-reference-9344fe8cb.json": {
+      "bytes": 25544,
+      "sha256": "5360764ff1fdccf2a1a1e705a659418b6054f08948029816bd648ff56dc245e6"
+    },
+    "a05-profiler-reference-9344fe8cb.log": {
+      "bytes": 165,
+      "sha256": "4b488bf026bc6a2d24d82191815a72d0ac372cd0f1466d21dd83b6ccea445b05"
+    },
+    "a05-profiler-reference-validation-9344fe8cb.log": {
+      "bytes": 1392,
+      "sha256": "020d001dccc18345474608638fe8f4d0d9df3b69b04bbf17101d758385e03982"
+    },
+    "a05-profiler-reference-5909d54f2.log": {
+      "bytes": 525,
+      "sha256": "a629ae99f6f3a09e668c3fc0c37a4648cd4fb47be4af6505d2561746953b53e5"
+    }
+  }
+}

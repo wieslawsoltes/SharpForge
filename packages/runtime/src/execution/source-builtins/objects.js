@@ -1,3 +1,4 @@
+import {createException, exceptionField} from '../exception-object.js';
 import {internString,isInternedString,referenceEquals,stringChar} from '../strings.js';
 import {enumHasFlag} from '../enums.js';
 import {objectType,typeName} from '../tokens.js';
@@ -17,8 +18,8 @@ function typeFullName(vm,args) {
 function objectReferenceEquals(vm,args) { return referenceEquals(args[0],args[1]); }
 function enumFlag(vm,args) { return enumHasFlag(vm,args[0],args[1]); }
 function objectNew(vm) { return vm.heap.object('System.Object',[]); }
-function exceptionNew(vm,args) { return vm.heap.allocate('exception','Exception',[args[0]]); }
-function exceptionMessage(vm,args) { return vm.heap.get(args[0]).data[0]; }
+function exceptionNew(vm,args) { return createException(vm, 'System.Exception', args[0]); }
+function exceptionMessage(vm,args) { return exceptionField(vm, args[0], 'Message'); }
 
 export const objectBuiltins=Object.freeze({
   'string.Intern':stringIntern,

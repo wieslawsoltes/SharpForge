@@ -1,0 +1,6 @@
+{
+  "available": true,
+  "version": "WebGL 1.0",
+  "vendor": "Mozilla",
+  "renderer": "llvmpipe, or similar"
+}

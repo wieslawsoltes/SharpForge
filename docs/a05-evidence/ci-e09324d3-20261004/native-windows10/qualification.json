@@ -1,0 +1,1006 @@
+{
+  "format": "SharpForge.A05NativeQualification/1",
+  "task": "SF-A05",
+  "startedAt": "2026-10-04T17:20:26.305Z",
+  "revision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+  "platform": "win32",
+  "architecture": "x64",
+  "node": "v22.23.3",
+  "requestedSdk": "10.0.201",
+  "dotnetSdk": "10.0.201",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 10.0.5 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.NETCore.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 10.0.5 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.WindowsDesktop.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 10.0.5 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]",
+  "requestedSdkChannel": "10.0.201",
+  "resources": {
+    "nodeOptions": "--max-old-space-size=4096",
+    "concurrentCases": 1
+  },
+  "runnerImage": {
+    "os": "win25-vs2026",
+    "version": "20260925.250.1"
+  },
+  "probes": [
+    {
+      "command": "git",
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "e09324d3e83d742d47eb39b8f0482c38dc0f8756\n",
+      "stderr": ""
+    },
+    {
+      "command": "git",
+      "arguments": [
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "3322938bc25bfd2ba108ffdc77f1202aa2dabbb8\n",
+      "stderr": ""
+    },
+    {
+      "command": "git",
+      "arguments": [
+        "status",
+        "--porcelain",
+        "--untracked-files=no"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "git",
+      "arguments": [
+        "ls-files",
+        "--",
+        "global.json"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "--version"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "10.0.201\r\n",
+      "stderr": ""
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "--list-runtimes"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "Microsoft.AspNetCore.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 10.0.5 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.AspNetCore.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\r\nMicrosoft.NETCore.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 10.0.5 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.NETCore.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\r\nMicrosoft.WindowsDesktop.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 10.0.5 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\nMicrosoft.WindowsDesktop.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\r\n",
+      "stderr": ""
+    }
+  ],
+  "tree": "3322938bc25bfd2ba108ffdc77f1202aa2dabbb8",
+  "trackedChanges": "",
+  "cleanTrackedTree": true,
+  "globalJson": {
+    "path": "global.json",
+    "present": true,
+    "tracked": false,
+    "content": "{\"sdk\":{\"version\":\"10.0.201\",\"rollForward\":\"disable\"}}\n",
+    "sha256": "6e8ea1d80966e817f64f6eaf16fa6b1e9a682bb4bd4b05ff6a849498356390d6"
+  },
+  "workflow": {
+    "runId": "37219653301",
+    "runAttempt": "1",
+    "eventName": "push",
+    "repository": "wieslawsoltes/SharpForge",
+    "sha": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+    "ref": "refs/heads/codex/a05-e01-started-handoff-20261004",
+    "headRef": "",
+    "baseRef": "",
+    "workflowRef": "wieslawsoltes/SharpForge/.github/workflows/a05-runtime.yml@refs/heads/codex/a05-e01-started-handoff-20261004",
+    "workflowSha": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+    "pullRequest": null
+  },
+  "nativeRuntimeObservation": "dotnetRuntimes is the installed runtime inventory; it does not identify the guest process runtime patch.",
+  "targetFramework": "net10.0",
+  "setupError": null,
+  "cases": [
+    {
+      "id": "value-storage",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/value-storage",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\value-storage\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "value-storage\\evidence",
+      "report": "value-storage\\result.json",
+      "startedAt": "2026-10-04T17:20:26.308Z",
+      "durationMs": 6652.883599999999,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "value-storage\\stdout.log",
+      "stderr": "value-storage\\stderr.log",
+      "finishedAt": "2026-10-04T17:20:32.966Z"
+    },
+    {
+      "id": "value-layout-sizeof",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/value-layout-sizeof",
+          "--unsafe",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\value-layout-sizeof\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "value-layout-sizeof\\evidence",
+      "report": "value-layout-sizeof\\result.json",
+      "startedAt": "2026-10-04T17:20:32.968Z",
+      "durationMs": 2042.6628999999994,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "value-layout-sizeof\\stdout.log",
+      "stderr": "value-layout-sizeof\\stderr.log",
+      "finishedAt": "2026-10-04T17:20:35.015Z"
+    },
+    {
+      "id": "value-boxing",
+      "status": "failed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/value-boxing",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\value-boxing\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "value-boxing\\evidence",
+      "report": "value-boxing\\result.json",
+      "startedAt": "2026-10-04T17:20:35.015Z",
+      "durationMs": 1960.3557999999994,
+      "exitCode": 1,
+      "signal": null,
+      "stdout": "value-boxing\\stdout.log",
+      "stderr": "value-boxing\\stderr.log",
+      "finishedAt": "2026-10-04T17:20:36.977Z"
+    },
+    {
+      "id": "value-instance-calls",
+      "status": "failed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/value-instance-calls",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\value-instance-calls\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "value-instance-calls\\evidence",
+      "report": "value-instance-calls\\result.json",
+      "startedAt": "2026-10-04T17:20:36.977Z",
+      "durationMs": 1984.590400000001,
+      "exitCode": 1,
+      "signal": null,
+      "stdout": "value-instance-calls\\stdout.log",
+      "stderr": "value-instance-calls\\stderr.log",
+      "finishedAt": "2026-10-04T17:20:38.963Z"
+    },
+    {
+      "id": "virtual-slots",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/virtual-slots",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\virtual-slots\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "virtual-slots\\evidence",
+      "report": "virtual-slots\\result.json",
+      "startedAt": "2026-10-04T17:20:38.964Z",
+      "durationMs": 2043.6874999999982,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "virtual-slots\\stdout.log",
+      "stderr": "virtual-slots\\stderr.log",
+      "finishedAt": "2026-10-04T17:20:41.009Z"
+    },
+    {
+      "id": "delegates",
+      "status": "failed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/delegates",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\delegates\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "delegates\\evidence",
+      "report": "delegates\\result.json",
+      "startedAt": "2026-10-04T17:20:41.010Z",
+      "durationMs": 2072.9112999999998,
+      "exitCode": 1,
+      "signal": null,
+      "stdout": "delegates\\stdout.log",
+      "stderr": "delegates\\stderr.log",
+      "finishedAt": "2026-10-04T17:20:43.083Z"
+    },
+    {
+      "id": "default-interfaces",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/default-interfaces",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\default-interfaces\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "default-interfaces\\evidence",
+      "report": "default-interfaces\\result.json",
+      "startedAt": "2026-10-04T17:20:43.084Z",
+      "durationMs": 1995.7976999999992,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "default-interfaces\\stdout.log",
+      "stderr": "default-interfaces\\stderr.log",
+      "finishedAt": "2026-10-04T17:20:45.081Z"
+    },
+    {
+      "id": "generic-calls",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/generic-calls",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\generic-calls\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "generic-calls\\evidence",
+      "report": "generic-calls\\result.json",
+      "startedAt": "2026-10-04T17:20:45.081Z",
+      "durationMs": 3804.5892999999996,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "generic-calls\\stdout.log",
+      "stderr": "generic-calls\\stderr.log",
+      "finishedAt": "2026-10-04T17:20:48.887Z"
+    },
+    {
+      "id": "source-generic-values",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/source-generic-values",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\source-generic-values\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "source-generic-values\\evidence",
+      "report": "source-generic-values\\result.json",
+      "startedAt": "2026-10-04T17:20:48.888Z",
+      "durationMs": 4431.4866,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "source-generic-values\\stdout.log",
+      "stderr": "source-generic-values\\stderr.log",
+      "finishedAt": "2026-10-04T17:20:53.321Z"
+    },
+    {
+      "id": "enum-unboxing",
+      "status": "failed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/enum-unboxing",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\enum-unboxing\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "enum-unboxing\\evidence",
+      "report": "enum-unboxing\\result.json",
+      "startedAt": "2026-10-04T17:20:53.322Z",
+      "durationMs": 5075.119999999999,
+      "exitCode": 1,
+      "signal": null,
+      "stdout": "enum-unboxing\\stdout.log",
+      "stderr": "enum-unboxing\\stderr.log",
+      "finishedAt": "2026-10-04T17:20:58.398Z"
+    },
+    {
+      "id": "nullable",
+      "status": "failed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/nullable",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\nullable\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "nullable\\evidence",
+      "report": "nullable\\result.json",
+      "startedAt": "2026-10-04T17:20:58.399Z",
+      "durationMs": 2308.430499999995,
+      "exitCode": 1,
+      "signal": null,
+      "stdout": "nullable\\stdout.log",
+      "stderr": "nullable\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:00.709Z"
+    },
+    {
+      "id": "enums-strings",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/enums-strings",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\enums-strings\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "enums-strings\\evidence",
+      "report": "enums-strings\\result.json",
+      "startedAt": "2026-10-04T17:21:00.710Z",
+      "durationMs": 2266.3189000000057,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "enums-strings\\stdout.log",
+      "stderr": "enums-strings\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:02.977Z"
+    },
+    {
+      "id": "tokens",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/tokens",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\tokens\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "tokens\\evidence",
+      "report": "tokens\\result.json",
+      "startedAt": "2026-10-04T17:21:02.978Z",
+      "durationMs": 2356.0216,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "tokens\\stdout.log",
+      "stderr": "tokens\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:05.335Z"
+    },
+    {
+      "id": "statics",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-statics",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\statics\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "statics\\evidence",
+      "report": "statics\\result.json",
+      "startedAt": "2026-10-04T17:21:05.337Z",
+      "durationMs": 2154.256500000003,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "statics\\stdout.log",
+      "stderr": "statics\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:07.492Z"
+    },
+    {
+      "id": "calli",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-calli",
+          "--unsafe",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\calli\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "calli\\evidence",
+      "report": "calli\\result.json",
+      "startedAt": "2026-10-04T17:21:07.493Z",
+      "durationMs": 2068.7212,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "calli\\stdout.log",
+      "stderr": "calli\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:09.563Z"
+    },
+    {
+      "id": "varargs",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-source-varargs",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\varargs\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "varargs\\evidence",
+      "report": "varargs\\result.json",
+      "startedAt": "2026-10-04T17:21:09.564Z",
+      "durationMs": 2123.4146000000037,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "varargs\\stdout.log",
+      "stderr": "varargs\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:11.688Z"
+    },
+    {
+      "id": "control-exceptions",
+      "status": "failed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-control-exceptions",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\control-exceptions\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "control-exceptions\\evidence",
+      "report": "control-exceptions\\result.json",
+      "startedAt": "2026-10-04T17:21:11.689Z",
+      "durationMs": 2294.432099999998,
+      "exitCode": 1,
+      "signal": null,
+      "stdout": "control-exceptions\\stdout.log",
+      "stderr": "control-exceptions\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:13.984Z"
+    },
+    {
+      "id": "runtime-faults",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/runtime-faults",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\runtime-faults\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "runtime-faults\\evidence",
+      "report": "runtime-faults\\result.json",
+      "startedAt": "2026-10-04T17:21:13.985Z",
+      "durationMs": 2125.0615000000034,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "runtime-faults\\stdout.log",
+      "stderr": "runtime-faults\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:16.111Z"
+    },
+    {
+      "id": "decimal",
+      "status": "failed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/decimal",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\decimal\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "decimal\\evidence",
+      "report": "decimal\\result.json",
+      "startedAt": "2026-10-04T17:21:16.112Z",
+      "durationMs": 2262.5869999999995,
+      "exitCode": 1,
+      "signal": null,
+      "stdout": "decimal\\stdout.log",
+      "stderr": "decimal\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:18.376Z"
+    },
+    {
+      "id": "unsigned-widening",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/numeric-conversions",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\unsigned-widening\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "unsigned-widening\\evidence",
+      "report": "unsigned-widening\\result.json",
+      "startedAt": "2026-10-04T17:21:18.376Z",
+      "durationMs": 2131.6735000000044,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "unsigned-widening\\stdout.log",
+      "stderr": "unsigned-widening\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:20.509Z"
+    },
+    {
+      "id": "memory",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-memory",
+          "--unsafe",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\memory\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "memory\\evidence",
+      "report": "memory\\result.json",
+      "startedAt": "2026-10-04T17:21:20.510Z",
+      "durationMs": 2214.252800000002,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "memory\\stdout.log",
+      "stderr": "memory\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:22.725Z"
+    },
+    {
+      "id": "async-replay",
+      "status": "failed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-async",
+          "--async",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\async-replay\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "async-replay\\evidence",
+      "report": "async-replay\\result.json",
+      "startedAt": "2026-10-04T17:21:22.726Z",
+      "durationMs": 2279.9354999999996,
+      "exitCode": 1,
+      "signal": null,
+      "stdout": "async-replay\\stdout.log",
+      "stderr": "async-replay\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:25.007Z"
+    },
+    {
+      "id": "synchronization",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/synchronization",
+          "--scheduled",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\synchronization\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "synchronization\\evidence",
+      "report": "synchronization\\result.json",
+      "startedAt": "2026-10-04T17:21:25.007Z",
+      "durationMs": 2108.1259999999966,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "synchronization\\stdout.log",
+      "stderr": "synchronization\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:27.118Z"
+    },
+    {
+      "id": "exception-event-identity",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/exception-event-identity",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\exception-event-identity\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "exception-event-identity\\evidence",
+      "report": "exception-event-identity\\result.json",
+      "startedAt": "2026-10-04T17:21:27.119Z",
+      "durationMs": 2134.3947999999946,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "exception-event-identity\\stdout.log",
+      "stderr": "exception-event-identity\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:29.254Z"
+    },
+    {
+      "id": "first-chance-policy",
+      "status": "failed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/first-chance-policy",
+          "--failfast",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\first-chance-policy\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "first-chance-policy\\evidence",
+      "report": "first-chance-policy\\result.json",
+      "startedAt": "2026-10-04T17:21:29.255Z",
+      "durationMs": 2340.2952000000078,
+      "exitCode": 1,
+      "signal": null,
+      "stdout": "first-chance-policy\\stdout.log",
+      "stderr": "first-chance-policy\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:31.596Z"
+    },
+    {
+      "id": "unhandled-policy",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/unhandled-policy",
+          "--fault",
+          "Exception",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\unhandled-policy\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "unhandled-policy\\evidence",
+      "report": "unhandled-policy\\result.json",
+      "startedAt": "2026-10-04T17:21:31.597Z",
+      "durationMs": 2159.1564999999973,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "unhandled-policy\\stdout.log",
+      "stderr": "unhandled-policy\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:33.757Z"
+    },
+    {
+      "id": "assignability",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--casts",
+          "--framework",
+          "net10.0",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\assignability\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "assignability\\evidence",
+      "report": "assignability\\result.json",
+      "startedAt": "2026-10-04T17:21:33.758Z",
+      "durationMs": 2014.6736999999994,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "assignability\\stdout.log",
+      "stderr": "assignability\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:35.773Z"
+    },
+    {
+      "id": "dispatch",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-dispatch.js",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\dispatch\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "dispatch\\evidence",
+      "report": "dispatch\\result.json",
+      "startedAt": "2026-10-04T17:21:35.774Z",
+      "durationMs": 1959.7664000000077,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "dispatch\\stdout.log",
+      "stderr": "dispatch\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:37.735Z"
+    },
+    {
+      "id": "static-init",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-static-init.js",
+          "--output",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\static-init\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "static-init\\evidence",
+      "report": "static-init\\result.json",
+      "startedAt": "2026-10-04T17:21:37.735Z",
+      "durationMs": 1959.170299999998,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "static-init\\stdout.log",
+      "stderr": "static-init\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:39.695Z"
+    },
+    {
+      "id": "numeric-conversions",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/validate-a05-numeric-dotnet.js"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "numeric-conversions",
+      "report": "numeric-conversions\\result.json",
+      "startedAt": "2026-10-04T17:21:39.696Z",
+      "durationMs": 1738.967300000004,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "numeric-conversions\\stdout.log",
+      "stderr": "numeric-conversions\\stderr.log",
+      "finishedAt": "2026-10-04T17:21:41.436Z"
+    },
+    {
+      "id": "numeric-capture",
+      "status": "passed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "scripts/numeric/generate-oracle.js",
+          "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\numeric-capture\\evidence"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {},
+      "timeoutMs": 900000,
+      "evidence": "numeric-capture\\evidence",
+      "report": "numeric-capture\\result.json",
+      "startedAt": "2026-10-04T17:21:41.437Z",
+      "durationMs": 28370.513900000005,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "numeric-capture\\stdout.log",
+      "stderr": "numeric-capture\\stderr.log",
+      "finishedAt": "2026-10-04T17:22:09.809Z"
+    },
+    {
+      "id": "numeric-replay",
+      "status": "failed",
+      "command": {
+        "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+        "arguments": [
+          "--test",
+          "--test-concurrency=1",
+          "tests/numeric-differential.test.js"
+        ],
+        "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+      },
+      "environment": {
+        "SHARPFORGE_NUMERIC_ORACLE_DIR": "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\numeric-capture\\evidence"
+      },
+      "timeoutMs": 900000,
+      "evidence": "numeric-replay",
+      "report": "numeric-replay\\result.json",
+      "startedAt": "2026-10-04T17:22:09.810Z",
+      "durationMs": 7002.7497,
+      "exitCode": 1,
+      "signal": null,
+      "stdout": "numeric-replay\\stdout.log",
+      "stderr": "numeric-replay\\stderr.log",
+      "finishedAt": "2026-10-04T17:22:16.814Z"
+    }
+  ],
+  "counts": {
+    "passed": 22,
+    "failed": 10
+  },
+  "status": "failed",
+  "passed": false,
+  "finishedAt": "2026-10-04T17:22:16.815Z"
+}

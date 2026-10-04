@@ -1,6 +1,7 @@
 import {ManagedFault} from '../heap.js';
 import {byteLayout, explicitByteBudget} from './explicit-layout.js';
 import {scalarAccess, readScalarBytes, writeScalarBytes} from './scalar-bytes.js';
+import {valueReferenceOffsets} from './value-layout.js';
 
 const invalid = message => { throw new ManagedFault('InvalidProgramException', message); };
 
@@ -9,16 +10,20 @@ function reserve(vm, budget, size) {
   if (size > budget.bytes) throw new ManagedFault('OutOfMemoryException', 'Explicit scalar copy exceeds its byte budget');
 }
 
-function read(vm, table, view, offset, budget) {
-  if (scalarAccess(table)) return readScalarBytes(vm, view, offset, table);
+function read(vm, table, state, offset, budget) {
+  if (!table.flags.valueType) return state.references.get(offset) ?? null;
+  if (scalarAccess(table)) return readScalarBytes(vm, state.view, offset, table);
   const layout = byteLayout(vm, table);
   reserve(vm, budget, layout.size);
   budget.bytes -= layout.size;
   budget.fields -= table.fields.length;
   if (budget.fields < 0) throw new ManagedFault('OutOfMemoryException', 'Explicit scalar copy exceeds its field budget');
-  const fields = table.fields.map((field, index) => read(vm, field.type, view, offset + layout.offsets[index], budget));
-  const bytes = new Uint8Array(view.buffer, view.byteOffset + offset, layout.size);
-  return Object.freeze({valueType: table, fields: Object.freeze(fields), explicitBytes: Object.freeze(Array.from(bytes))});
+  const fields = table.fields.map((field, index) => read(vm, field.type, state, offset + layout.offsets[index], budget));
+  const bytes = new Uint8Array(state.view.buffer, state.view.byteOffset + offset, layout.size);
+  const result = {valueType: table, fields: Object.freeze(fields), explicitBytes: Object.freeze(Array.from(bytes))};
+  const offsets = valueReferenceOffsets(vm, table);
+  if (offsets.length) result.explicitReferences = Object.freeze(offsets.map(index => state.references.get(offset + index) ?? null));
+  return Object.freeze(result);
 }
 
 function sameViews(left, right) {
@@ -31,7 +36,8 @@ function sameViews(left, right) {
   }
   if (left.valueType || right.valueType) {
     if (left.valueType !== right.valueType) return false;
-    return sameViews(left.fields, right.fields) && sameViews(left.explicitBytes, right.explicitBytes);
+    return sameViews(left.fields, right.fields) && sameViews(left.explicitBytes, right.explicitBytes) &&
+      sameViews(left.explicitReferences, right.explicitReferences);
   }
   if (left.float || right.float) return left.float === right.float && Object.is(left.value, right.value);
   if (left.nativeInt || right.nativeInt) return left.nativeInt === right.nativeInt && left.value === right.value;
@@ -43,14 +49,31 @@ function viewOf(vm, table, source, budget) {
   reserve(vm, budget, layout.size);
   if (!Array.isArray(bytes) || !Object.isFrozen(bytes) || bytes.length !== layout.size) invalid('Malformed explicit scalar bytes');
   for (const byte of bytes) if (!Number.isInteger(byte) || byte < 0 || byte > 255) invalid('Malformed explicit scalar bytes');
-  return new DataView(Uint8Array.from(bytes).buffer);
+  const offsets = valueReferenceOffsets(vm, table), references = new Map();
+  if (offsets.length && (!Array.isArray(source.explicitReferences) || !Object.isFrozen(source.explicitReferences) ||
+      source.explicitReferences.length !== offsets.length)) invalid('Malformed explicit reference slots');
+  for (let index = 0; index < offsets.length; index++) references.set(offsets[index], source.explicitReferences[index]);
+  // Reference bytes are always zero: managed handles are never exposed as integer bit patterns.
+  const pointerSize = vm.heap.methodTables.nativeIntBits / 8;
+  for (const offset of offsets) for (let index = 0; index < pointerSize; index++) {
+    if (bytes[offset + index] !== 0) invalid('Explicit reference bytes must remain opaque');
+  }
+  return {view: new DataView(Uint8Array.from(bytes).buffer), references};
 }
 
 /** Zero bytes provide all overlapping default field views, including nested padding. */
 export function createExplicitValue(vm, table, budget) {
   const layout = byteLayout(vm, table);
   reserve(vm, budget, layout.size);
-  return read(vm, table, new DataView(new ArrayBuffer(layout.size)), 0, budget);
+  return read(vm, table, {view: new DataView(new ArrayBuffer(layout.size)), references: new Map()}, 0, budget);
+}
+
+/** Decode an unmanaged explicit value while preserving all scalar aliases and padding bytes. */
+export function explicitValueFromBytes(vm, table, view, offset = 0) {
+  const layout = byteLayout(vm, table);
+  if (layout.containsReferences) invalid('Raw byte storage cannot construct managed-reference slots');
+  if (!Number.isSafeInteger(offset) || offset < 0 || offset > view.byteLength - layout.size) invalid('Raw struct view exceeds storage');
+  return read(vm, table, {view, references: new Map()}, offset, {fields: 65_536, bytes: explicitByteBudget(vm)});
 }
 
 /** Preserve every byte rather than re-encoding possibly overlapping scalar field views. */
@@ -60,20 +83,28 @@ export function copyExplicitValue(vm, table, source, normalizedFields, budget) {
   return result;
 }
 
-function write(vm, table, value, view, offset) {
+function write(vm, table, value, state, offset) {
+  if (!table.flags.valueType) {
+    state.references.set(offset, value);
+    return;
+  }
   if (scalarAccess(table)) {
-    writeScalarBytes(view, offset, value, table);
+    writeScalarBytes(state.view, offset, value, table);
     return;
   }
   const layout = byteLayout(vm, table);
-  const bytes = new Uint8Array(view.buffer, view.byteOffset + offset, layout.size);
+  const bytes = new Uint8Array(state.view.buffer, state.view.byteOffset + offset, layout.size);
   if (value.explicitBytes) {
     bytes.set(value.explicitBytes);
+    const offsets = valueReferenceOffsets(vm, table);
+    for (let index = 0; index < offsets.length; index++) {
+      state.references.set(offset + offsets[index], value.explicitReferences[index]);
+    }
     return;
   }
   bytes.fill(0);
   for (let index = 0; index < table.fields.length; index++) {
-    write(vm, table.fields[index].type, value.fields[index], view, offset + layout.offsets[index]);
+    write(vm, table.fields[index].type, value.fields[index], state, offset + layout.offsets[index]);
   }
 }
 

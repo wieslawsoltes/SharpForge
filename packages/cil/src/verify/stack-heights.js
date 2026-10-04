@@ -36,6 +36,8 @@ function heightTransfer(inspector, method, context, result) {
         if (height !== pop) reject(instruction, 'Invalid return stack', pop ? 'ReturnEmpty' : 'ReturnVoid');
         return null;
       }
+      if (instruction.name === 'jmp' && height !== 0) reject(instruction, 'jmp requires an empty stack', 'JmpStack');
+      if (instruction.name === 'endfilter' && height !== 1) reject(instruction, 'endfilter requires one Int32 decision', 'FilterStack');
       if (instruction.name === 'endfinally' && height !== 0)
         reject(instruction, 'endfinally requires an empty stack', 'FinOrFaultNonEmptyStack');
       height = after;
@@ -69,9 +71,12 @@ export function executionStackHeights(inspector, method, offsets, context) {
     }, options);
     worklist.enqueue(graph.blocks.length ? 0 : -1, 0);
     for (const handler of method.handlers) {
-      if (handler.flags === 1) continue;
       const index = offsets.get(handler.target);
-      worklist.enqueue(index === undefined ? -1 : graph.blockAt[index], handler.flags === 0 ? 1 : 0);
+      worklist.enqueue(index === undefined ? -1 : graph.blockAt[index], handler.flags === 0 || handler.flags === 1 ? 1 : 0);
+      if (handler.flags === 1) {
+        const filter = offsets.get(handler.catchType);
+        worklist.enqueue(filter === undefined ? -1 : graph.blockAt[filter], 1);
+      }
     }
     worklist.run();
     validateHandlerEntryHeights(method, offsets, result.heights, issue);

@@ -39,6 +39,12 @@ const legacy = parse('class C { int x; }');      // the plain AST consumed by th
 - `features.js`, `langversion.js`, `feature-gate.js`: the C# 1-14 (+ preview) feature catalog and LangVersion gating.
 - `visitor.js`: `SyntaxVisitor`, `SyntaxWalker` and `SyntaxRewriter`.
 
+Typed-reference expressions have native node kinds and exported typed facades:
+`MakeRefExpressionSyntax` and `RefTypeExpressionSyntax` expose their `expression` operand;
+`RefValueExpressionSyntax` exposes the value `expression`, separator `comma`, and requested `type` separately.
+Their corresponding `SyntaxFactory.makeRefExpression`, `refTypeExpression`, and `refValueExpression` builders
+and `withExpression` / `withType` updates retain ordinary lossless tree behavior. Existing syntax kind IDs remain stable.
+
 Reference data under `test/` is dumped from Roslyn with `node packages/syntax/tools/update-reference.js` (requires the .NET SDK);
 the tests compare node kinds, spans, trivia, token values and error codes against those dumps.
 

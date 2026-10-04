@@ -1,0 +1,53 @@
+{
+  "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+  "tree": "e5081c0ab138129057fd13b4b7629c32ae0e39c6",
+  "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "runs": [
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-native-final-quarantine-r2.log",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/flaky/detect.js",
+        "--check-quarantine"
+      ],
+      "startedAt": "2026-10-04T18:12:38Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T18:12:38Z"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-native-final-byref.log",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/byref-gc-stress.test.js"
+      ],
+      "startedAt": "2026-10-04T18:12:38Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T18:12:47Z"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-native-final-build.log",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-10-04T18:12:47Z",
+      "exitCode": 1,
+      "finishedAt": "2026-10-04T18:12:57Z"
+    }
+  ]
+}

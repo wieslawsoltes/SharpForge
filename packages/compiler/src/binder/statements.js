@@ -1,9 +1,10 @@
+import {bindLegacyTry, bindLegacyThrow} from './exception-statements.js';
 import {DiagnosticId} from '../diagnostics/codes.js';
 import {frameworkType} from '@sharpforge/framework';
 import {typeText,usingSpan} from '../type-utils.js';
 import {LocalDeclarationKind} from '../symbols/members.js';
 import {directlyLabeledStatement} from './labeled-jumps.js';
-import {BoundBadStatement,BoundNoOpStatement,BoundBlock,BoundLocalDeclaration,BoundMultipleLocalDeclarations,BoundExpressionStatement,BoundIfStatement,BoundWhileStatement,BoundDoStatement,BoundForStatement,BoundForEachStatement,BoundForEachEnumerator,BoundSwitchStatement,BoundSwitchSection,BoundSwitchLabel,BoundTryStatement,BoundCatchBlock,BoundUsingStatement,BoundUsingResource,BoundReturnStatement,BoundThrowStatement,BoundBreakStatement,BoundContinueStatement,BoundCheckedStatement,BoundConditionalAccessAssignment} from '../bound/nodes.js';
+import {BoundBadStatement,BoundNoOpStatement,BoundBlock,BoundLocalDeclaration,BoundMultipleLocalDeclarations,BoundExpressionStatement,BoundIfStatement,BoundWhileStatement,BoundDoStatement,BoundForStatement,BoundForEachStatement,BoundForEachEnumerator,BoundSwitchStatement,BoundSwitchSection,BoundSwitchLabel,BoundUsingStatement,BoundUsingResource,BoundReturnStatement,BoundBreakStatement,BoundContinueStatement,BoundCheckedStatement,BoundConditionalAccessAssignment} from '../bound/nodes.js';
 /**
  * Statement binding: syntax to bound statements. Scopes are binder scopes (see binder.js); loops and switches are
  * tracked only to validate break/continue. Reachability (CS0161, CS0162, CS0163) and definite assignment are not
@@ -72,21 +73,8 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
         if(node.expression){expression=this.bindTyped(node.expression,this.m.returnType);this.checkAssign(this.m.returnType,expression.legacyType,node);}else if(this.m.returnType!=='void')this.c.report(node,DiagnosticId.CS0126,[typeText(this.m.returnType)]);
         return this.statement(BoundReturnStatement,node,{expression});
       }
-      case 'Throw':{
-        let expression=null;
-        if(node.expression){expression=this.bindExpression(node.expression);const type=expression.legacyType;if(type!=='Exception'&&type!=='null'&&type!=='error')this.c.report(node,DiagnosticId.CS0155);}else if(!this.catchDepth)this.c.report(node,DiagnosticId.CS0156);
-        return this.statement(BoundThrowStatement,node,{expression});
-      }
-      case 'Try':{
-        const tryBlock=this.bindStatement(node.body),catchBlocks=node.catches.map(ca=>{
-          this.pushScope();const type=this.c.resolveType(ca.type,node,false,this.m);if(type!=='Exception')this.c.report(node,DiagnosticId.SF2002);let local=null;
-          if(ca.name)local=this.local(ca.name,'Exception',{...ca.body,name:ca.name,nameSpan:ca.nameSpan},false,{declarationKind:LocalDeclarationKind.Catch});
-          this.catchDepth++;const body=this.bindStatement(ca.body);this.catchDepth--;this.popScope();
-          return this.statement(BoundCatchBlock,ca.body,{exceptionType:this.type(type),local,body});
-        });
-        let finallyBlock=null;if(node.finallyBody){this.finallyScopes.push(this.loops.length);finallyBlock=this.bindStatement(node.finallyBody);this.finallyScopes.pop();}
-        return this.statement(BoundTryStatement,node,{tryBlock,catchBlocks,finallyBlock});
-      }
+      case 'Throw':return bindLegacyThrow(this,node);
+      case 'Try':return bindLegacyTry(this,node);
       default:this.c.report(node,DiagnosticId.SF2099,[node.kind]);return this.statement(BoundBadStatement,node,{parts:[]},true);
     }
   }

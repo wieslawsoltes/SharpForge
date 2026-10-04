@@ -1,0 +1,73 @@
+{
+  "task": "SF-A05-E04",
+  "fixture": "nullable",
+  "timestamp": "2026-10-04T17:20:59.084Z",
+  "revision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+  "platform": "win32",
+  "architecture": "x64",
+  "node": "v22.23.3",
+  "dotnetSdk": "10.0.201",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.5 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.5 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.WindowsDesktop.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 10.0.5 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]",
+  "targetFramework": "net10.0",
+  "passed": false,
+  "qualification": "same Roslyn DLL executed by native .NET and CilVirtualMachine",
+  "sources": [
+    {
+      "path": "tests\\fixtures\\a05\\nullable\\Program.cs",
+      "sha256": "b86fb8944a5c407b01c2184549b2c4acd56684a4eaf6fbdd6a77106c7173ebb2"
+    }
+  ],
+  "expectedOutput": "False\n0\n99\nTrue\nTrue\n12\n12\n23\nInt32\nFalse\n7\n0\n42\ncounter\n5\ncounter\n5\ncounter\n4\n\nTrue\nFalse\nA\n4294967295\n18446744073709551615\n",
+  "assemblySha256": "e1ff0749e7187231c2c3b9aedd375417400cc27250ead27bb5d73748212039de",
+  "native": {
+    "exitCode": 0,
+    "signal": null,
+    "output": "False\n0\n99\nTrue\nTrue\n12\n12\n23\nInt32\nFalse\n7\n0\n42\ncounter\n5\ncounter\n5\ncounter\n4\n\nTrue\nFalse\nA\n4294967295\n18446744073709551615\n",
+    "stderr": ""
+  },
+  "error": {
+    "name": "CilError",
+    "message": "Managed IL verification failed: Program::Main IL_88: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_14c: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_195: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_1bb: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_1f7: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_209: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_21b: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_22d: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_23f: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Read IL_9: constrained. Object execution requires a closed managed primitive, class or user struct",
+    "stack": "CilError: Managed IL verification failed: Program::Main IL_88: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_14c: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_195: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_1bb: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_1f7: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_209: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_21b: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_22d: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Main IL_23f: constrained. Object execution requires a closed managed primitive, class or user struct; Program::Read IL_9: constrained. Object execution requires a closed managed primitive, class or user struct\n    at requireVerifiedCil (file:///D:/a/SharpForge/SharpForge/packages/runtime/src/execution/verification-error.js:16:13)\n    at admitCilAssembly (file:///D:/a/SharpForge/SharpForge/packages/runtime/src/execution/cil-admission.js:15:3)\n    at new CilVirtualMachine (file:///D:/a/SharpForge/SharpForge/packages/runtime/src/cil-vm.js:42:5)\n    at qualify (file:///D:/a/SharpForge/SharpForge/scripts/validate-a05-type-system.js:141:18)\n    at async file:///D:/a/SharpForge/SharpForge/scripts/validate-a05-type-system.js:169:16"
+  },
+  "commands": [
+    {
+      "command": "dotnet",
+      "arguments": [
+        "restore",
+        "Qualification.csproj",
+        "--configfile",
+        "NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "build",
+        "Qualification.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "<temporary-project>\\bin\\Release\\net10.0\\Qualification.dll"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    }
+  ]
+}

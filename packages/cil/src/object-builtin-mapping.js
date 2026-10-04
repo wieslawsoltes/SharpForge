@@ -1,8 +1,8 @@
+import {sourceObjectSlot} from '@sharpforge/bytecode';
 import {CilError} from './binary.js';
 import {decodeCoded} from './metadata/indices.js';
 import {decodeSignature} from './metadata/signatures.js';
 import {frameworkAssemblyScope, approvedFrameworkAssembly} from './metadata/framework-type-identity.js';
-
 const getType = Object.freeze({owner: 'object', name: 'GetType', result: 'System.Type', parameters: [], instance: true});
 const toString = Object.freeze({owner: 'object', name: 'ToString', result: 'string', parameters: [], instance: true});
 const referenceEquals = Object.freeze({owner: 'System.Object', name: 'ReferenceEquals', result: 'bool',
@@ -19,10 +19,12 @@ export function emitObjectBuiltin(context, writer, name, types, adapt) {
   }
   let target;
   if (name === 'object.ToString') target = toString;
+  else if (name === 'object.Equals') target = {owner: 'object', name: 'Equals', result: 'bool', parameters: ['object'], instance: true};
+  else if (name === 'object.GetHashCode') target = {owner: 'object', name: 'GetHashCode', result: 'int', parameters: [], instance: true};
   else if (name === 'object.ReferenceEquals') target = referenceEquals;
   else if (name === 'object.GetType' || name.startsWith('$type.')) target = getType;
   else return false;
-  adapt(types, target.instance ? ['object'] : target.parameters);
+  adapt(types, [...(target.instance ? ['object'] : []), ...target.parameters]);
   writer.op(target.instance ? 'callvirt' : 'call',
     context.external(target.owner, target.name, target.result, target.parameters, !target.instance));
   return true;
@@ -49,7 +51,7 @@ export function decodeObjectBuiltin(target, call, span, metadata) {
     }
     return 'object.new';
   }
-  if (target.name === 'ToString' && call.name === 'callvirt') return 'object.ToString';
+  if (call.name === 'callvirt' && sourceObjectSlot({name: target.name, ...target.sig})) return 'object.' + target.name;
   if (target.name === 'ReferenceEquals') return 'object.ReferenceEquals';
   if (target.name !== 'GetType') return null;
   const box = span.find(instruction => instruction.name === 'box');

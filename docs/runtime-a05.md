@@ -1,8 +1,19 @@
 # JavaScript runtime project delivery
 
 The complete requested scope is [project 7](https://github.com/users/wieslawsoltes/projects/7).
-`runtime-a05-scope.json` records all 41 board items and their acceptance criteria as of
-2026-10-03. Pending entries remain delivery requirements, not declared capabilities.
+`runtime-a05-scope.json` is the historical 41-item capture from 2026-10-03.
+The current [Project 7 acceptance audit](a05-project7-acceptance-audit.md) accounts
+for all 83 open issues and their 210 stated criteria in the newer 108-issue capture.
+Pending entries remain delivery requirements, not declared capabilities.
+
+The current [scalar, call, preparation, numeric-option and frame API map](a05-runtime-capabilities.md)
+links runnable examples and focused regressions for parents #74, #75 and #80–#82.
+It separates source/reloaded-source from direct CIL admission and keeps measured
+results tied to their recorded revisions.
+
+The E03/E04 and defect qualification counts below are historical and apply only
+to the revisions in their linked JSON. They are not a passing claim for the
+current integration or its new memory, control, compiler and snapshot features.
 
 Implementation is staged in worktrees and stacked pull requests. Validation runs once
 a complete epic scope has been integrated, followed by targeted reruns only for fixes.
@@ -65,10 +76,11 @@ with `--dotnet <executable>` to repeat native qualification.
 | Type initialization | Source lowering | Precise/beforefieldinit triggers, failure caching and re-entrancy |
 | Volatile access | Cooperative instruction ordering | Verified volatile prefixes and cooperative instruction ordering |
 
-The source frontend does not yet accept arbitrary user enum declarations,
-`typeof`, or user generic type declarations. Runtime support beyond that syntax
-profile is exercised through independent IL and Roslyn DLLs. Native results are
-qualified on macOS arm64 and .NET 10.0.5; no host-thread memory model is claimed.
+At that E04 revision, the source frontend did not accept arbitrary user enum
+declarations, `typeof`, or user generic type declarations. Later compiler work
+changes that boundary; current support requires the end-to-end tests recorded in
+the acceptance audit. Historical native results are qualified on macOS arm64 and
+.NET 10.0.5; no host-thread memory model is claimed.
 
 ## Snapshot schema
 
@@ -80,19 +92,32 @@ required fields are rejected before restoring execution state. Every own VM fiel
 must be registered; adding an execution field without a schema entry fails the
 schema coverage test and snapshot capture.
 
-Snapshots remain in-memory and scoped to their original VM. Host operations retain
-the existing revision checks. Source restore pauses execution; CIL restore retains
-the captured run state. Managed frame identifiers remain monotonic. Frames retain
-code metadata while mutable execution state is copied with shared fault aliases.
-Maps, sets, and typed buffer views are copied without aliasing the live execution.
+Schema2 in-memory snapshots retain their original VM ownership. The separate
+portable version1 format encodes code/type/reference identities and rebinds them
+to a fresh VM with the same verified code and native width. Host revision checks
+remain mandatory. Both paths validate captured memory, scheduler and continuation
+state before replacing live components. Source restore pauses runnable state;
+CIL restore retains captured debugger/run state. Explicitly resume a restored
+CIL debugger pause before calling `run()`.
+
+Managed frame identifiers remain monotonic. Shared graph copying retains fault,
+frame and typed-buffer aliases without aliasing mutable live storage. Immutable
+heap record sharing has a full-copy comparison mode; see
+[shared snapshot limits](a05-snapshot-cow.md) and
+[portable API](runtime-a05-portable-snapshots.md).
 
 Run the replay example with `node examples/runtime/snapshot-replay.mjs`.
 
 | API/capability | Source VM | CIL VM | Regression evidence |
 | --- | --- | --- | --- |
-| Versioned in-memory snapshot and restore | Schema 1 | Schema 1 | `tests/a05-seams-snapshot.test.js` |
+| Versioned in-memory snapshot and restore | Schema 2 | Schema 2 | `tests/a05-06-coherent-snapshot.test.js` |
 | Unknown execution-field detection | Explicit schema coverage | Explicit schema coverage | Same suite |
-| Portable serialized snapshots | Pending T06; no capability claim | Pending T06; no capability claim | Pending |
+| Portable serialized snapshots | Version 1, fresh owner | Version 1, fresh owner | `tests/a05-06-portable-snapshot.test.js` |
+
+These rows describe implemented contracts. Full parked-context replay,
+worker/browser transfer and final-revision performance qualification remain
+tracked by the acceptance audit. Run the portable example with
+`node examples/runtime/portable-snapshot.js`.
 
 ## Qualification
 

@@ -180,10 +180,14 @@ for (const type of ['long', 'ulong']) test(`${type} initlocals=false remains uni
   withVM(fixture({type, initialized: false}), vm => assert.equal(vm.run().fault?.name, 'InvalidProgramException'));
 });
 
-for (const type of ['long', 'ulong']) test(`${type} generic parameter constraint remains outside this concrete leaf`, () => {
+for (const type of ['long', 'ulong']) test(`${type} generic parameter constraint preserves exact builtin formatting without boxing`, () => {
   const report = verifyCilAssembly(fixture({type, generic: true}));
-  assert.equal(report.success, false);
-  assert(report.issues.some(issue => issue.method === 'Program::Apply' && issue.code === 'IL_PREFIX'));
+  assert.equal(report.success, true, JSON.stringify(report.issues));
+  withVM(fixture({type, generic: true}), vm => {
+    assert.equal(vm.run().state, 'terminated', vm.fault?.message);
+    assert.equal(vm.format(vm.returnValue), display(type, -1n));
+    assert.equal(vm.heap.records.some(record => record?.kind === 'box'), false);
+  });
 });
 
 test('metadata plans stay frozen and cached while the int32 boolean helper retains its contract', () => {

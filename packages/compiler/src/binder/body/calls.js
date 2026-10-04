@@ -1,3 +1,4 @@
+import {bindVarargsInvocation} from './varargs.js';
 /**
  * Arguments and invocations: overload resolution, extension methods, delegate invocation, element access
  * and `out` declarations. A call that cannot be bound keeps its arguments so flow analysis still sees `out` writes.
@@ -110,6 +111,8 @@ export const CallBinding = Base =>
       return nameNode;
     }
     invocation(syntax) {
+      const varargs = bindVarargsInvocation(this, syntax);
+      if (varargs !== undefined) return varargs;
       const target = this.expression(syntax.expression, { invoked: true });
       const args = this.arguments(syntax.argumentList);
       const result = this.invokeBound(target, args, syntax);

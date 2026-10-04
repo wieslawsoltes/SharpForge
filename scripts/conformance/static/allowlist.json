@@ -408,13 +408,6 @@
       "reason": "Development server imports the fixed local build command only when the built index is missing."
     },
     {
-      "path": "scripts/validate-a05-type-system.js",
-      "operation": "dynamic-import",
-      "count": 2,
-      "sha256": "29989ce590f21800671044d9f10ea4e44cedfbfbec693b86cb7c5663bed16f95",
-      "reason": "Oracle validation loads an operator-selected trusted fixture module and fixed runtime adapter."
-    },
-    {
       "path": "scripts/validate-clr-wasm.js",
       "operation": "dynamic-import",
       "count": 1,
@@ -434,6 +427,13 @@
       "count": 3,
       "sha256": "007c94cc9a7e9baef77d27a089f3ad90c3370d07a5059a317626cb246b6e6cd1",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/a05-profiler-reference-dependencies.test.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "df5fdca0bcf747df9b90c463145cf9995174a2fd324d11b02baacfea9e2aa263",
+      "reason": "Node-only isolation test imports the fixed src/index.js public entry of its freshly copied trusted runtime after reviewed fail-closed profiler-hook removal and dependency provenance checks. Its temporary directory is created by the test; managed inputs and remote content never select a host module. A static product import would erase the distinct reference class identity the test verifies."
     },
     {
       "path": "tests/benchmarks/cil-pe.mjs",

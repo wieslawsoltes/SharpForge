@@ -8,19 +8,28 @@ function siteFor(vm, frame, instruction, target, owner) {
     if (!Number.isInteger(limit) || limit < 1 || limit > 16) {
       throw new RangeError('Inline cache size must be 1–16');
     }
-    state.inline = cache = {limit, methods: new WeakMap()};
+    state.inline = cache = {limit, methods: new WeakMap(), method: null, instructions: null, offset: null, site: null};
   }
-  let method = cache.methods.get(frame.method);
-  if (!method || method.instructions !== frame.method.instructions) {
-    method = {instructions: frame.method.instructions, sites: new Map()};
-    cache.methods.set(frame.method, method);
+  const currentMethod = frame.method, instructions = currentMethod.instructions;
+  let site = cache.site;
+  if (cache.method === currentMethod && cache.instructions === instructions && cache.offset === instruction.offset &&
+      site?.operand === instruction.operand && site.target === target && site.owner === owner) return site;
+  let method = cache.methods.get(currentMethod);
+  if (!method || method.instructions !== instructions) {
+    method = {instructions, sites: new Map()};
+    cache.methods.set(currentMethod, method);
   }
-  let site = method.sites.get(instruction.offset);
+  site = method.sites.get(instruction.offset);
   if (!site || site.operand !== instruction.operand || site.target !== target || site.owner !== owner) {
     site = {operand: instruction.operand, target, owner, limit,
       first: null, rest: [], megamorphic: false, hits: 0, misses: 0};
     method.sites.set(instruction.offset, site);
   }
+  // The cursor contains metadata only; changing any live site key returns to the indexed lookup.
+  cache.method = currentMethod;
+  cache.instructions = instructions;
+  cache.offset = instruction.offset;
+  cache.site = site;
   return site;
 }
 
@@ -31,30 +40,40 @@ export function resolveVirtualTarget(vm, frame, instruction, descriptor, receive
   const table = vm.heap.get(receiver).methodTable;
   const target = descriptor.resolvedToken ?? descriptor.token;
   if (vm.options.inlineCaches === false) return system.virtualTarget(receiver, descriptor, target);
+  return resolveEntry(vm, frame, instruction, descriptor, receiver, table, target).target;
+}
+
+/** A prepared call retains this metadata-only entry; live receiver validation still precedes every hit. */
+export function resolveVirtualCallEntry(vm, frame, instruction, descriptor, receiver) {
+  const table = vm.heap.get(receiver).methodTable;
+  return resolveEntry(vm, frame, instruction, descriptor, receiver, table, descriptor.resolvedToken ?? descriptor.token);
+}
+
+function resolveEntry(vm, frame, instruction, descriptor, receiver, table, target) {
   const site = siteFor(vm, frame, instruction, target, descriptor.ownerInstance ?? null);
   if (site.first?.table === table) {
     site.hits++;
-    return site.first.target;
+    return site.first;
   }
   for (const entry of site.rest) {
     if (entry.table === table) {
       site.hits++;
-      return entry.target;
+      return entry;
     }
   }
   site.misses++;
-  const dispatch = system.virtualTarget(receiver, descriptor, target);
-  if (site.megamorphic) return dispatch;
+  const dispatch = vm.typeSystem.virtualTarget(receiver, descriptor, target);
+  const entry = Object.freeze({table, target: dispatch});
+  if (site.megamorphic) return entry;
   if (site.first && site.rest.length + 1 === site.limit) {
     site.first = null;
     site.rest = [];
     site.megamorphic = true;
   } else {
-    const entry = Object.freeze({table, target: dispatch});
     if (site.first) site.rest.push(entry);
     else site.first = entry;
   }
-  return dispatch;
+  return entry;
 }
 
 /** Internal diagnostics expose counts only, never cached types or object identities. */

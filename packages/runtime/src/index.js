@@ -17,3 +17,7 @@ export {instantiateWasmIR} from './execution/wasm/compile.js';
 export {prepareWasmMethod, runWasmSlice, disposeWasmMethod} from './execution/wasm/manual-runtime.js';
 export {wasmTieringStatistics, disposeWasmTiering} from './execution/wasm/tiering.js';
 export {deoptWasmFrames} from './execution/wasm/deopt.js';
+export {prepareExecution, executionPreparationCapabilities} from './execution/prepare.js';
+export {snapshotSchemaVersion, SnapshotVersionError} from './execution/snapshot-version.js';
+export {serializeSnapshot, deserializeSnapshot, restoreSerializedSnapshot, SnapshotFormatError,
+  portableSnapshotVersion} from './execution/snapshot-serialize.js';

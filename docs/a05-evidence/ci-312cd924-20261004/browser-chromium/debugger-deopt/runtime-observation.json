@@ -1,0 +1,57 @@
+{
+  "url": "http://127.0.0.1:33799/allowed.html",
+  "result": {
+    "passed": true,
+    "stopped": {
+      "pc": 3,
+      "locals": [
+        3
+      ],
+      "stack": [
+        3
+      ]
+    },
+    "hostArithmeticCalls": 3,
+    "statistics": {
+      "enabled": true,
+      "epoch": 1,
+      "invalidated": false,
+      "activeCompilations": 0,
+      "compilationAttempts": 1,
+      "cancellations": 0,
+      "calls": 1,
+      "overflowCalls": 0,
+      "selectedCalls": 0,
+      "selectedInstructions": 0,
+      "osrTransitions": 1,
+      "osrRejectedEntries": 0,
+      "compiledBytes": 500,
+      "methods": [
+        {
+          "token": 100663297,
+          "name": "Fixture.Program::Main",
+          "calls": 1,
+          "status": "ready",
+          "bytes": 500,
+          "reason": null,
+          "backedges": 5,
+          "hottestBackedge": 5,
+          "backedgeOverflow": 0,
+          "backedgeReason": null,
+          "backedgeSites": [
+            {
+              "fromOffset": 8,
+              "toOffset": 2,
+              "count": 5
+            }
+          ]
+        }
+      ]
+    },
+    "instructions": 46,
+    "browserVersion": "153.0.8010.12",
+    "csp": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8=' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+    "blockedRequests": []
+  },
+  "cspEvents": []
+}

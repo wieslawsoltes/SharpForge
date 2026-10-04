@@ -5,10 +5,14 @@
     "tests/runtime.test.js",
     "tests/runtime14.test.js",
     "tests/engine-parity.test.js",
+    "tests/byref-gc-stress.test.js",
+    "tests/numeric-differential.test.js",
+    "tests/preemption.test.js",
     "tests/a05-*.test.js"
   ],
   "browserScripts": [
-    "tests/browser_release14_test.py"
+    "tests/browser_release14_test.py",
+    "tests/fixtures/a05-browser/test_contract.py"
   ],
   "requiredServices": [
     "studio-http",

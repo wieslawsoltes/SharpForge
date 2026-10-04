@@ -577,3 +577,12 @@ retain 33 passing focused Node tests and exact comparison with 19 CoreCLR 10.0.5
 relationships, including corrected interface reimplementation precedence. The browser
 harness is prepared but was not launched successfully; browser and wider execution
 coverage remain pending. No benchmark or speedup is claimed for this batch.
+# Source construction identity metadata
+
+`readSourceTypeIdentities(metadataOrInspector)` reads and validates additive logical type
+identities from source-emitted `#SF` mappings, returning owned immutable
+descriptors indexed by physical TypeDef token. Ordinary CLI generics retain
+their actual GenericParam/TypeSpec identity. Source identity projections also
+survive `includeDebug: false` in a minimal semantic-only payload. See
+[Source generic type identities](../../docs/a05-source-generic-type-identities.md)
+for the schema, rejection behavior and native CLR reflection boundary.

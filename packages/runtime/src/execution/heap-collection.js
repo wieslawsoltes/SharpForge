@@ -1,4 +1,5 @@
 import {beginHeapCollection, endHeapCollection} from './heap-events.js';
+import {forEachValueReference} from './value-references.js';
 
 /** Existing non-moving mark/sweep policy, shared by standalone and VM heaps. */
 export function collectHeap(heap, extraRoots, isReference) {
@@ -24,7 +25,7 @@ export function collectHeap(heap, extraRoots, isReference) {
   };
   const visit = value => {
     rootsScanned++;
-    add(value);
+    forEachValueReference(value, add);
   };
   const provided = heap.rootProvider(visit);
   if (provided !== undefined) for (const value of provided) visit(value);
@@ -33,9 +34,9 @@ export function collectHeap(heap, extraRoots, isReference) {
   for (const handle of heap.handles.values()) if (!handle.weak) visit(handle.value);
   while (work.length) {
     const record = heap.records[work.pop()];
-    if (record.kind !== 'string') for (const value of record.data) {
+    if (record.kind !== 'string' && !ArrayBuffer.isView(record.data)) for (const value of record.data) {
       edgesScanned++;
-      add(value);
+      forEachValueReference(value, add);
     }
   }
   const markEnd = performance.now();

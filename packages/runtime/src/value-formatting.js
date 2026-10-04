@@ -5,6 +5,7 @@ import {nativeIntegerBits} from './execution/native-int.js';
 import {isReference} from './heap.js';
 import {enumToString} from './execution/enums.js';
 import {runtimeTypeText} from './execution/tokens.js';
+import {typeDisplayName} from './execution/type-display-name.js';
 
 const boxedDisplayTypes = Object.freeze({
   'System.Boolean': 'bool',
@@ -20,6 +21,7 @@ const boxedDisplayTypes = Object.freeze({
 /** Preserve source managed-value display semantics, with invariant binary64 numeric text. */
 export function formatSourceValue(vm, value, type) {
   if (isDecimal(value)) return decimalFormat(value);
+  if (isValueRecord(value)) return typeDisplayName(value.valueType);
   const name = runtimeTypeText(vm, value) ?? enumToString(vm, value);
   if (name !== null) return name;
   if (value === null) return '';
@@ -28,18 +30,22 @@ export function formatSourceValue(vm, value, type) {
   if (value === false) return 'False';
   if (isReference(value)) {
     const record = vm.heap.get(value);
-    if (record.kind === 'box') return vm.format(record.data[0], record.type);
+    if (record.kind === 'box') return vm.format(record.data[0], boxedDisplayTypes[record.type] ?? record.type);
     if (record.kind === 'string') return record.data;
     if (record.kind === 'exception') return record.type + ': ' + vm.format(record.data[0]);
-    return record.type;
+    return typeDisplayName(record.methodTable);
   }
+  type = boxedDisplayTypes[type] ?? type;
+  if (type === 'bool') return value ? 'True' : 'False';
+  if (type === 'char') return String.fromCharCode(Number(value));
   return formatSourceNumber(vm, value, type) ?? String(value);
 }
 
 /** Preserve CIL boxing, enums and typed integer display before binary64 numeric formatting. */
 export function formatCilValue(vm, value, type) {
+  type = boxedDisplayTypes[type] ?? type;
   if (isDecimal(value)) return decimalFormat(value);
-  if (isValueRecord(value)) return vm.typeSystem.table(value.valueType).name;
+  if (isValueRecord(value)) return typeDisplayName(vm.typeSystem.table(value.valueType));
   const name = runtimeTypeText(vm, value) ?? enumToString(vm, value, type);
   if (name !== null) return name;
   if (value === null) return '';
@@ -56,7 +62,7 @@ export function formatCilValue(vm, value, type) {
   if (type === 'ulong') return String(BigInt.asUintN(64, native));
   if (isReference(native)) {
     const record = vm.heap.get(native);
-    return record.kind === 'exception' ? record.type + ': ' + vm.format(record.data[0]) : record.type;
+    return record.kind === 'exception' ? record.type + ': ' + vm.format(record.data[0]) : typeDisplayName(record.methodTable);
   }
   return formatSourceNumber(vm, value, type) ?? String(native);
 }

@@ -173,21 +173,29 @@ test('default-interface implementation remains an explicit unsupported boundary'
   withVM(bytes, vm => assert.equal(vm.run().fault?.name, 'NotSupportedException'));
 });
 
-test('throwing constrained implementation releases frames without allocating a receiver box', () => {
+test('throwing constrained implementation preserves its unboxed first-pass receiver until stop', () => {
   const bytes = fixture((writer, context) => {
     writer.op('ldloca.s', 0);
     constrained(writer, context);
     writer.op('ret');
   }, {throwing: true});
   withVM(bytes, vm => {
-    assert.equal(vm.run().fault?.name, 'NullReferenceException');
-    assert.equal(vm.frames.length, 0);
+    const result = vm.run();
+    assert.equal(result.fault?.name, 'NullReferenceException');
+    assert.equal(result.fault.phase, 'unhandled');
+    assert.equal(vm.frames.length, 2);
+    const receiver = vm.top.args[0];
+    vm.heap.collect();
+    assert.equal(vm.dereference(receiver).valueType.name, 'Point');
     assert.equal(vm.heap.records.some(record => record?.kind === 'box'), false);
+    vm.stop();
+    assert.equal(vm.frames.length, 0);
+    assert.throws(() => vm.dereference(receiver), /outlived its frame/);
   });
 });
 
 for (const malformed of ['dangling', 'wrong-opcode', 'duplicate', 'branch-tail', 'switch-tail',
-  'interface', 'object-call', 'type-spec', 'primitive']) {
+  'interface', 'object-overload', 'type-spec', 'primitive']) {
   test(`verifier rejects constrained ${malformed}`, () => {
     const bytes = fixture((writer, context) => {
       const type = malformed === 'type-spec' ? context.typeSpec('valuetype Point')
@@ -199,8 +207,8 @@ for (const malformed of ['dangling', 'wrong-opcode', 'duplicate', 'branch-tail',
       writer.op('constrained.', type);
       if (malformed === 'wrong-opcode') writer.op('nop');
       if (malformed === 'duplicate') writer.op('constrained.', type);
-      const method = malformed === 'object-call'
-        ? context.member('System.Object', 'Equals', 'bool', ['object'], false) : context.methods.get('IAdjust.Bump');
+      const method = malformed === 'object-overload'
+        ? context.member('System.Object', 'Equals', 'bool', ['int'], false) : context.methods.get('IAdjust.Bump');
       writer.mark('call').op('callvirt', method).op('ret');
     });
     const report = verifyCilAssembly(bytes);
@@ -227,7 +235,9 @@ test('a generic interface declaration stays unsupported even with a nongeneric s
 });
 
 test('exception boundaries cannot split a constrained prefix from its call', () => {
+  let catchType;
   const inspector = new AssemblyInspector(fixture((writer, context) => {
+    catchType = context.resolve('System.Exception');
     writer.op('ldloca.s', 0);
     constrained(writer, context);
     writer.op('ret');
@@ -236,8 +246,8 @@ test('exception boundaries cannot split a constrained prefix from its call', () 
   const call = method.instructions.find(instruction => instruction.name === 'callvirt');
   const ret = method.instructions.at(-1);
   method.handlers.push({flags: 0, start: 0, end: call.offset, target: call.offset,
-    handlerEnd: ret.offset, catchType: 0});
+    handlerEnd: ret.offset, catchType});
   const report = verifyCilAssembly(inspector);
   assert.equal(report.success, false);
-  assert(report.issues.some(issue => issue.code === 'IL_PREFIX' && issue.message.includes('exception region')));
+  assert(report.issues.some(issue => issue.code === 'IL_EH_FLOW' && issue.diagnostic === 'CILR0017'), JSON.stringify(report.issues));
 });

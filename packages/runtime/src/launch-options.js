@@ -64,6 +64,13 @@ export function validateLaunchEnvironment(value = {}) {
 
 /** `arguments` remains a selected method's raw parameter vector; `programArguments` is process argv. */
 export function normalizeRuntimeLaunchOptions(options = {}) {
+  const firstChanceFailurePolicy = options.firstChanceFailurePolicy === undefined ? 'before-unwind' : options.firstChanceFailurePolicy;
+  if (!['before-unwind', 'after-unwind'].includes(firstChanceFailurePolicy)) {
+    throw new RuntimeLaunchError('FIRST_CHANCE_FAILURE_POLICY', 'firstChanceFailurePolicy must be before-unwind or after-unwind');
+  }
+  if (options.gcStress !== undefined && options.gcStress !== false && options.gcStress !== 'instruction') {
+    throw new RuntimeLaunchError('GC_STRESS_MODE', "gcStress must be false or 'instruction'");
+  }
   const argv = options.programArguments === undefined ? undefined : validateProgramArguments(options.programArguments);
   if (options.arguments !== undefined && !Array.isArray(options.arguments)) {
     throw new RuntimeLaunchError('METHOD_ARGUMENTS', 'Method arguments must be an array');
@@ -71,7 +78,7 @@ export function normalizeRuntimeLaunchOptions(options = {}) {
   if (argv && (options.methodToken !== undefined && options.methodToken !== null || options.arguments !== undefined) && argv.length) {
     throw new RuntimeLaunchError('PROGRAM_ARGUMENTS_METHOD', 'Program arguments cannot accompany an explicit method invocation');
   }
-  return { ...options, programArguments: argv, environment: validateLaunchEnvironment(options.environment) };
+  return { ...options, firstChanceFailurePolicy, programArguments: argv, environment: validateLaunchEnvironment(options.environment) };
 }
 
 /** Resolve the supported Main signatures without changing explicit method invocation arguments. */

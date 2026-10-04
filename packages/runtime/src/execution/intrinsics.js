@@ -1,3 +1,8 @@
+import {ieeeRemainder} from '@sharpforge/bytecode';
+import {exceptionConstructor, exceptionIntrinsic} from './exception-intrinsics.js';
+import {varargsCall} from './varargs.js';
+import {invokeAsyncIntrinsic} from './async-runtime.js';
+import {invokeSynchronization} from './sync-primitives.js';
 import {invokeDecimal} from './decimal-intrinsics.js';
 import {unsignedMathExtremum, smallMathExtremum} from './math-extrema.js';
 import {mathSign} from './math-sign.js';
@@ -13,6 +18,7 @@ import {floatingMathExtremum} from './float-extrema.js';
 import {internString,isInternedString,referenceEquals,stringChar,stringFromChars} from './strings.js';
 import {enumToString,enumHasFlag} from './enums.js';
 import {objectType,typeFromHandle,typeEquals,typeName,typeHandle,typeProperty,runtimeTypeText} from './tokens.js';
+import {objectValueIntrinsics} from './object-intrinsics.js';
 
 function legacyHost(vm, formatType = null) {
   const cache = vm.platform;
@@ -44,6 +50,11 @@ function stringReceiver(context) {
   return value;
 }
 const implementations={
+  ...objectValueIntrinsics,
+  ieeeRemainder: ({parameters}) => float(ieeeRemainder(parameters[0], parameters[1])),
+  exception: ({vm,descriptor,self,parameters}) => exceptionIntrinsic(vm,descriptor,self,parameters),
+  synchronization: ({vm,descriptor,parameters}) => invokeSynchronization(vm,descriptor,parameters).value,
+  varargs: ({vm,descriptor,self,parameters}) => varargsCall(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
   mathSign: ({descriptor, values}) => mathSign(descriptor.signature.parameters[0], values[0]),
   smallMathExtremum: ({descriptor, values}) =>
     smallMathExtremum(descriptor.name, descriptor.signature.returnType, values[0], values[1]),
@@ -55,7 +66,6 @@ const implementations={
   arrayMutate:({vm,descriptor,parameters})=>mutateArray(vm,descriptor.name,parameters[0]),
   console:({vm,descriptor,parameters})=>{vm.emitOutput((parameters.length?vm.format(parameters[0],descriptor.signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return null;},
   objectCtor:()=>null,
-  objectToString:({vm,self,isVirtual})=>invokeLegacyBclBuiltin(legacyHost(vm),isVirtual?'object.ToString':'Convert.ToString',[self]),
   objectGetType:({vm,self})=>objectType(vm,self),
   typeFromHandle:({vm,parameters})=>typeFromHandle(vm,parameters[0]),
   typeCompare:({vm,descriptor,parameters})=>typeEquals(vm,parameters[0],parameters[1])!==(descriptor.name==='op_Inequality')?1:0,
@@ -67,7 +77,7 @@ const implementations={
   objectReferenceEquals:({parameters})=>referenceEquals(parameters[0],parameters[1])?1:0,
   enumToString:({vm,self})=>{const text=enumToString(vm,self);if(text===null)throw new ManagedFault('ArgumentException','Enum receiver required');return vm.heap.string(text);},
   enumHasFlag:({vm,self,parameters})=>enumHasFlag(vm,self,parameters[0])?1:0,
-  exceptionCtor:({vm,self,parameters})=>{vm.heap.get(self).data[0]=parameters[0]??vm.heap.string('Exception');return null;},
+  exceptionCtor:({vm,descriptor,self,parameters})=>exceptionConstructor(vm,descriptor,self,parameters),
   exceptionMessage:({vm,self})=>vm.heap.get(self).data[0],
   exceptionInner:({vm,self})=>vm.heap.get(self).data[1]??null,
   stringCtor:({vm,parameters})=>stringFromChars(vm,parameters[0]),
@@ -149,6 +159,8 @@ export const intrinsicHandlers=new Map(intrinsicDefinitions.map(definition=>{
   }];
 }));
 export function invokeIntrinsic(vm,descriptor,args,isVirtual=false) {
+  const async=invokeAsyncIntrinsic(vm,descriptor,args);if(async.handled)return async.value;
+  const sync=invokeSynchronization(vm,descriptor,args);if(sync.handled)return sync.value;
   const definition=intrinsicDefinition(descriptor),handler=definition&&(intrinsicHandlers.get(definition.key)??valueIntrinsicHandler(definition));
   if(!handler)throw new ManagedFault('MissingMethodException',`${descriptor.owner}::${descriptor.name}`);
   return handler(vm,descriptor,args,definition,isVirtual);

@@ -1,3 +1,4 @@
+import {nullableToString} from './nullable-methods.js';
 import {ManagedFault} from '../heap.js';
 import {nullableValue, copyNullable, nullableDefaultValue} from './nullable-value.js';
 
@@ -19,7 +20,7 @@ export function invokeNullable(vm, definition, args, newObject = false) {
       return {handled: true, value: value.value};
     case 'default': return {handled: true, value: value.hasValue ? value.value : parameters.length
       ? vm.storage(parameters[0], value.nullableType.nullableType.name) : nullableDefaultValue(vm, value.nullableType)};
-    case 'text': return {handled: true, value: vm.heap.string(value.hasValue ? vm.format(value.value, definition.element) : '')};
+    case 'text': return {handled: true, value: nullableToString(vm, self, definition.owner)};
     default: throw new ManagedFault('MissingMethodException', 'Unknown Nullable intrinsic');
   }
 }

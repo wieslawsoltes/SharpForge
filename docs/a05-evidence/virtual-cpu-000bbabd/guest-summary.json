@@ -1,0 +1,3331 @@
+{
+  "candidate": {
+    "guestMs": 5181.894,
+    "self": [
+      {
+        "name": "executeCilStep packages/runtime/src/execution/cil-step.js:14",
+        "ms": 767.016,
+        "percent": 14.8
+      },
+      {
+        "name": "flush packages/runtime/src/execution/frame-pool.js:80",
+        "ms": 385.496,
+        "percent": 7.44
+      },
+      {
+        "name": "substituteTypeArguments packages/cil/src/generic-signatures.js:14",
+        "ms": 272.203,
+        "percent": 5.25
+      },
+      {
+        "name": "runCilSlice packages/runtime/src/execution/cil-slice.js:28",
+        "ms": 270.541,
+        "percent": 5.22
+      },
+      {
+        "name": "step packages/runtime/src/cil-vm.js:93",
+        "ms": 256.278,
+        "percent": 4.95
+      },
+      {
+        "name": "runtimeTypeName packages/runtime/src/execution/method-table.js:27",
+        "ms": 183.92,
+        "percent": 3.55
+      },
+      {
+        "name": "createManagedAddress packages/runtime/src/execution/managed-address.js:78",
+        "ms": 176.738,
+        "percent": 3.41
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:23",
+        "ms": 173.25,
+        "percent": 3.34
+      },
+      {
+        "name": "normalizeCallType packages/cil/src/generic-signatures.js:28",
+        "ms": 168.064,
+        "percent": 3.24
+      },
+      {
+        "name": "beginFrameInstruction packages/runtime/src/execution/frame-stack.js:37",
+        "ms": 131.251,
+        "percent": 2.53
+      },
+      {
+        "name": "resolveCallType packages/runtime/src/execution/generic-calls.js:7",
+        "ms": 122.616,
+        "percent": 2.37
+      },
+      {
+        "name": "acquire packages/runtime/src/execution/frame-pool.js:31",
+        "ms": 122.569,
+        "percent": 2.37
+      },
+      {
+        "name": "storageValue packages/runtime/src/execution/storage.js:33",
+        "ms": 117.607,
+        "percent": 2.27
+      },
+      {
+        "name": "binary packages/runtime/src/execution/numeric-ops.js:63",
+        "ms": 116.687,
+        "percent": 2.25
+      },
+      {
+        "name": "executionCodeState packages/runtime/src/execution/code-version.js:29",
+        "ms": 115.125,
+        "percent": 2.22
+      },
+      {
+        "name": "get packages/runtime/src/execution/method-table.js:116",
+        "ms": 109.448,
+        "percent": 2.11
+      },
+      {
+        "name": "convert packages/bytecode/src/numeric/conversions.js:87",
+        "ms": 100.937,
+        "percent": 1.95
+      },
+      {
+        "name": "admitStackPush packages/runtime/src/execution/frame-stack.js:72",
+        "ms": 98.779,
+        "percent": 1.91
+      },
+      {
+        "name": "dispatchWasmCall packages/runtime/src/execution/wasm/call-tier-state.js:131",
+        "ms": 93.39,
+        "percent": 1.8
+      },
+      {
+        "name": "flushFramePool packages/runtime/src/execution/frame-pool.js:135",
+        "ms": 93.266,
+        "percent": 1.8
+      },
+      {
+        "name": "enterPreparedCilFrame packages/runtime/src/execution/prepared-cil-frame.js:24",
+        "ms": 80.953,
+        "percent": 1.56
+      },
+      {
+        "name": "tryPreparedVirtualCall packages/runtime/src/execution/prepared-virtual-call.js:41",
+        "ms": 77.993,
+        "percent": 1.51
+      },
+      {
+        "name": "dereferenceManagedAddress packages/runtime/src/execution/managed-address.js:107",
+        "ms": 68.258,
+        "percent": 1.32
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/call.js:14",
+        "ms": 66.344,
+        "percent": 1.28
+      },
+      {
+        "name": "storage packages/runtime/src/cil-vm.js:60",
+        "ms": 59.359,
+        "percent": 1.15
+      },
+      {
+        "name": "location packages/runtime/src/execution/managed-address.js:17",
+        "ms": 53.905,
+        "percent": 1.04
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/arith.js:11",
+        "ms": 47.236,
+        "percent": 0.91
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:15",
+        "ms": 47.08,
+        "percent": 0.91
+      },
+      {
+        "name": "uint32Binary packages/bytecode/src/numeric/uint32.js:5",
+        "ms": 44.432,
+        "percent": 0.86
+      },
+      {
+        "name": "executionProfiler packages/runtime/src/execution/profiler.js:236",
+        "ms": 38.271,
+        "percent": 0.74
+      },
+      {
+        "name": "enumInfo packages/runtime/src/execution/enums.js:27",
+        "ms": 37.543,
+        "percent": 0.72
+      },
+      {
+        "name": "varargsStorage packages/runtime/src/execution/varargs-storage.js:16",
+        "ms": 36.219,
+        "percent": 0.7
+      },
+      {
+        "name": "compare packages/runtime/src/execution/numeric-ops.js:25",
+        "ms": 31.504,
+        "percent": 0.61
+      },
+      {
+        "name": "genericTypeParts packages/cil/src/generic-signatures.js:2",
+        "ms": 29.954,
+        "percent": 0.58
+      },
+      {
+        "name": "leaf packages/runtime/src/execution/managed-address.js:49",
+        "ms": 29.559,
+        "percent": 0.57
+      },
+      {
+        "name": "planFor packages/runtime/src/execution/prepared-virtual-call.js:24",
+        "ms": 29.013,
+        "percent": 0.56
+      },
+      {
+        "name": "resolveEntry packages/runtime/src/execution/inline-cache.js:43",
+        "ms": 27.892,
+        "percent": 0.54
+      },
+      {
+        "name": "add packages/runtime/src/execution/frame-lifetimes.js:17",
+        "ms": 25.165,
+        "percent": 0.49
+      },
+      {
+        "name": "cilNumericContext packages/runtime/src/execution/cil-values.js:21",
+        "ms": 23.72,
+        "percent": 0.46
+      },
+      {
+        "name": "prepareCall packages/runtime/src/execution/calls.js:32",
+        "ms": 22.898,
+        "percent": 0.44
+      },
+      {
+        "name": "observeWasmBackedge packages/runtime/src/execution/wasm/call-tier-state.js:102",
+        "ms": 22.172,
+        "percent": 0.43
+      },
+      {
+        "name": "boundsFor packages/runtime/src/execution/frame-stack.js:20",
+        "ms": 22.169,
+        "percent": 0.43
+      },
+      {
+        "name": "address packages/runtime/src/cil-vm.js:78",
+        "ms": 22.101,
+        "percent": 0.43
+      },
+      {
+        "name": "integerSource packages/bytecode/src/numeric/conversions.js:80",
+        "ms": 22.062,
+        "percent": 0.43
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:12",
+        "ms": 21.679,
+        "percent": 0.42
+      },
+      {
+        "name": "indexFor packages/runtime/src/execution/frame-lifetimes.js:70",
+        "ms": 20.931,
+        "percent": 0.4
+      },
+      {
+        "name": "storage packages/runtime/src/execution/numeric-ops.js:132",
+        "ms": 20.852,
+        "percent": 0.4
+      },
+      {
+        "name": "popPooledFrame packages/runtime/src/execution/frame-retirement.js:8",
+        "ms": 19.271,
+        "percent": 0.37
+      },
+      {
+        "name": "guardFor packages/runtime/src/execution/slot-storage.js:7",
+        "ms": 18.853,
+        "percent": 0.36
+      },
+      {
+        "name": "admitCallFrame packages/runtime/src/execution/call-frames.js:16",
+        "ms": 17.88,
+        "percent": 0.35
+      },
+      {
+        "name": "instancePointerLocalPlan packages/runtime/src/execution/instance-pointer-locals.js:17",
+        "ms": 17.105,
+        "percent": 0.33
+      },
+      {
+        "name": "dereference packages/runtime/src/cil-vm.js:79",
+        "ms": 16.409,
+        "percent": 0.32
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/branch.js:21",
+        "ms": 14.876,
+        "percent": 0.29
+      },
+      {
+        "name": "invoke packages/runtime/src/execution/calls.js:42",
+        "ms": 11.99,
+        "percent": 0.23
+      },
+      {
+        "name": "executeCilNumericBlock packages/runtime/src/execution/numeric-blocks.js:28",
+        "ms": 9.964,
+        "percent": 0.19
+      },
+      {
+        "name": "floatPlanCurrent packages/runtime/src/execution/typed-float-plan.js:15",
+        "ms": 9.894,
+        "percent": 0.19
+      },
+      {
+        "name": "enterCilMethod packages/runtime/src/execution/cil-method-events.js:21",
+        "ms": 9.279,
+        "percent": 0.18
+      },
+      {
+        "name": "getDecodePlan packages/runtime/src/execution/decode-plan.js:87",
+        "ms": 8.752,
+        "percent": 0.17
+      },
+      {
+        "name": "captureFrameSlot packages/runtime/src/execution/frame-root-liveness.js:13",
+        "ms": 8.467,
+        "percent": 0.16
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/call.js:10",
+        "ms": 7.174,
+        "percent": 0.14
+      },
+      {
+        "name": "reserveStackFrame packages/runtime/src/execution/stack-budget.js:126",
+        "ms": 6.014,
+        "percent": 0.12
+      },
+      {
+        "name": "retire packages/runtime/src/execution/frame-pool.js:72",
+        "ms": 5.802,
+        "percent": 0.11
+      },
+      {
+        "name": "afterSchedulerInstruction packages/runtime/src/execution/scheduler-boundary.js:11",
+        "ms": 5.366,
+        "percent": 0.1
+      },
+      {
+        "name": "leaveCilMethod packages/runtime/src/execution/cil-method-events.js:36",
+        "ms": 5.248,
+        "percent": 0.1
+      },
+      {
+        "name": "ensureInitialized packages/runtime/src/cil-vm.js:72",
+        "ms": 5.22,
+        "percent": 0.1
+      },
+      {
+        "name": "runSlice packages/runtime/src/cil-vm.js:94",
+        "ms": 5.126,
+        "percent": 0.1
+      },
+      {
+        "name": "siteFor packages/runtime/src/execution/inline-cache.js:3",
+        "ms": 5.052,
+        "percent": 0.1
+      },
+      {
+        "name": "table packages/runtime/src/execution/type-system.js:44",
+        "ms": 4.927,
+        "percent": 0.1
+      },
+      {
+        "name": "releaseFrame packages/runtime/src/execution/frame-lifetimes.js:99",
+        "ms": 4.349,
+        "percent": 0.08
+      },
+      {
+        "name": "mustInitialize packages/runtime/src/execution/static-init.js:7",
+        "ms": 4.238,
+        "percent": 0.08
+      },
+      {
+        "name": "observeWasmCall packages/runtime/src/execution/wasm/call-tier-state.js:64",
+        "ms": 4.007,
+        "percent": 0.08
+      },
+      {
+        "name": "methodOffsets packages/runtime/src/execution/method-offsets.js:3",
+        "ms": 3.763,
+        "percent": 0.07
+      },
+      {
+        "name": "containerFor packages/runtime/src/execution/frame-lifetimes.js:8",
+        "ms": 2.834,
+        "percent": 0.05
+      },
+      {
+        "name": "binary packages/runtime/src/cil-vm.js:85",
+        "ms": 2.535,
+        "percent": 0.05
+      },
+      {
+        "name": "pushStackValue packages/runtime/src/execution/frame-stack.js:87",
+        "ms": 2.46,
+        "percent": 0.05
+      },
+      {
+        "name": "now :0",
+        "ms": 2.406,
+        "percent": 0.05
+      },
+      {
+        "name": "intrinsicDefinition packages/cil/src/intrinsic-profile.js:125",
+        "ms": 2.307,
+        "percent": 0.04
+      },
+      {
+        "name": "getMethod packages/cil/src/inspector.js:59",
+        "ms": 2.297,
+        "percent": 0.04
+      },
+      {
+        "name": "numericPlanCurrent packages/runtime/src/execution/numeric-specialization.js:61",
+        "ms": 2.267,
+        "percent": 0.04
+      },
+      {
+        "name": "runQualificationVM bench/vm/qualification-execution.js:28",
+        "ms": 2.244,
+        "percent": 0.04
+      },
+      {
+        "name": "continueObjectValue packages/runtime/src/execution/object-value-operation.js:191",
+        "ms": 1.895,
+        "percent": 0.04
+      },
+      {
+        "name": "retirePooledFrame packages/runtime/src/execution/frame-pool.js:130",
+        "ms": 1.747,
+        "percent": 0.03
+      },
+      {
+        "name": "hasCanonicalCilCall packages/runtime/src/execution/call-entry-guard.js:5",
+        "ms": 1.362,
+        "percent": 0.03
+      },
+      {
+        "name": "checkQualificationLimit bench/vm/qualification-execution.js:22",
+        "ms": 1.292,
+        "percent": 0.02
+      },
+      {
+        "name": "frameById packages/runtime/src/execution/frame-lifetimes.js:120",
+        "ms": 1.247,
+        "percent": 0.02
+      },
+      {
+        "name": "compare packages/runtime/src/cil-vm.js:84",
+        "ms": 1.218,
+        "percent": 0.02
+      },
+      {
+        "name": "releaseStackFrame packages/runtime/src/execution/stack-budget.js:167",
+        "ms": 1.164,
+        "percent": 0.02
+      },
+      {
+        "name": "signatureKey packages/cil/src/intrinsic-profile.js:13",
+        "ms": 1.08,
+        "percent": 0.02
+      },
+      {
+        "name": "toggleImmediateRef :0",
+        "ms": 1.042,
+        "percent": 0.02
+      },
+      {
+        "name": "framePool packages/runtime/src/execution/frame-pool.js:124",
+        "ms": 1.039,
+        "percent": 0.02
+      },
+      {
+        "name": "now node:internal/perf/performance:137",
+        "ms": 0.899,
+        "percent": 0.02
+      },
+      {
+        "name": "ref node:internal/timers:698",
+        "ms": 0.855,
+        "percent": 0.02
+      },
+      {
+        "name": "replace packages/runtime/src/execution/managed-address.js:97",
+        "ms": 0.77,
+        "percent": 0.01
+      },
+      {
+        "name": "ensureTypeInitialized packages/runtime/src/execution/static-init.js:31",
+        "ms": 0.75,
+        "percent": 0.01
+      },
+      {
+        "name": "Immediate node:internal/timers:682",
+        "ms": 0.641,
+        "percent": 0.01
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/heap-storage.js:17",
+        "ms": 0.527,
+        "percent": 0.01
+      },
+      {
+        "name": "get node:internal/util:638",
+        "ms": 0.525,
+        "percent": 0.01
+      },
+      {
+        "name": "initAsyncResource node:internal/timers:164",
+        "ms": 0.513,
+        "percent": 0.01
+      },
+      {
+        "name": "selectedCallOwner packages/runtime/src/execution/generic-calls.js:33",
+        "ms": 0.489,
+        "percent": 0.01
+      },
+      {
+        "name": "managedDelegateSignature packages/cil/src/delegate-profile.js:9",
+        "ms": 0.472,
+        "percent": 0.01
+      },
+      {
+        "name": "asyncMethodDefinition packages/cil/src/async-profile.js:55",
+        "ms": 0.419,
+        "percent": 0.01
+      },
+      {
+        "name": "read packages/cil/src/metadata/type-names.js:29",
+        "ms": 0.413,
+        "percent": 0.01
+      },
+      {
+        "name": "invokeMemoryRuntime packages/runtime/src/execution/memory-call-adapter.js:5",
+        "ms": 0.399,
+        "percent": 0.01
+      },
+      {
+        "name": "allocate packages/runtime/src/heap.js:26",
+        "ms": 0.372,
+        "percent": 0.01
+      },
+      {
+        "name": "<anonymous> node:internal/validators:547",
+        "ms": 0.356,
+        "percent": 0.01
+      },
+      {
+        "name": "isAggregateType packages/runtime/src/execution/value-types.js:16",
+        "ms": 0.35,
+        "percent": 0.01
+      },
+      {
+        "name": "setImmediate node:timers:207",
+        "ms": 0.35,
+        "percent": 0.01
+      },
+      {
+        "name": "admitCilStack packages/runtime/src/execution/frame-stack.js:56",
+        "ms": 0.349,
+        "percent": 0.01
+      },
+      {
+        "name": "flushCilMethodEvents packages/runtime/src/execution/cil-method-events.js:55",
+        "ms": 0.349,
+        "percent": 0.01
+      },
+      {
+        "name": "wrappedFn node:internal/errors:537",
+        "ms": 0.344,
+        "percent": 0.01
+      },
+      {
+        "name": "resolveVirtualCallEntry packages/runtime/src/execution/inline-cache.js:38",
+        "ms": 0.344,
+        "percent": 0.01
+      },
+      {
+        "name": "memorySignature packages/cil/src/memory-signatures.js:6",
+        "ms": 0.342,
+        "percent": 0.01
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/calls.js:61",
+        "ms": 0.339,
+        "percent": 0.01
+      },
+      {
+        "name": "get packages/runtime/src/heap.js:32",
+        "ms": 0.338,
+        "percent": 0.01
+      },
+      {
+        "name": "get typeSystem packages/runtime/src/cil-vm.js:54",
+        "ms": 0.337,
+        "percent": 0.01
+      },
+      {
+        "name": "allocateHeapRecord packages/runtime/src/execution/heap-storage.js:11",
+        "ms": 0.306,
+        "percent": 0.01
+      },
+      {
+        "name": "arraySignatureShape packages/cil/src/memory-signatures.js:26",
+        "ms": 0.304,
+        "percent": 0.01
+      },
+      {
+        "name": "signatureKey packages/bytecode/src/sync-intrinsic-profile.js:74",
+        "ms": 0.281,
+        "percent": 0.01
+      },
+      {
+        "name": "slotType packages/runtime/src/cil-vm.js:61",
+        "ms": 0.261,
+        "percent": 0.01
+      },
+      {
+        "name": "memoryLocalType packages/runtime/src/execution/memory-values.js:8",
+        "ms": 0.236,
+        "percent": 0.0
+      },
+      {
+        "name": "invokeIntrinsic packages/runtime/src/execution/intrinsics.js:161",
+        "ms": 0.23,
+        "percent": 0.0
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/intrinsics.js:152",
+        "ms": 0.2,
+        "percent": 0.0
+      },
+      {
+        "name": "refreshCompositeSignal node:internal/abort_controller:140",
+        "ms": 0.185,
+        "percent": 0.0
+      },
+      {
+        "name": "<anonymous> bench/vm/qualification-execution.js:32",
+        "ms": 0.181,
+        "percent": 0.0
+      },
+      {
+        "name": "cilCallFrame packages/runtime/src/execution/call-frames.js:30",
+        "ms": 0.179,
+        "percent": 0.0
+      },
+      {
+        "name": "verifiedMethod packages/runtime/src/execution/token-cache.js:41",
+        "ms": 0.178,
+        "percent": 0.0
+      },
+      {
+        "name": "isValueRecord packages/runtime/src/execution/value-types.js:15",
+        "ms": 0.175,
+        "percent": 0.0
+      },
+      {
+        "name": "typeName packages/cil/src/metadata.js:62",
+        "ms": 0.172,
+        "percent": 0.0
+      },
+      {
+        "name": "decodeCoded packages/cil/src/metadata/indices.js:36",
+        "ms": 0.169,
+        "percent": 0.0
+      },
+      {
+        "name": "callDescriptor packages/runtime/src/execution/generic-calls.js:18",
+        "ms": 0.168,
+        "percent": 0.0
+      },
+      {
+        "name": "get aborted node:internal/abort_controller:255",
+        "ms": 0.168,
+        "percent": 0.0
+      },
+      {
+        "name": "enterManagedCall packages/runtime/src/execution/managed-call-entry.js:31",
+        "ms": 0.167,
+        "percent": 0.0
+      },
+      {
+        "name": "continueControlReturn packages/runtime/src/execution/return-control.js:13",
+        "ms": 0.167,
+        "percent": 0.0
+      },
+      {
+        "name": "createHeapReference packages/runtime/src/execution/heap-reference.js:4",
+        "ms": 0.155,
+        "percent": 0.0
+      },
+      {
+        "name": "isSynchronizationIntrinsic packages/bytecode/src/sync-intrinsic-profile.js:81",
+        "ms": 0.142,
+        "percent": 0.0
+      },
+      {
+        "name": "invokeFrameworkInterface packages/runtime/src/execution/framework-interface-calls.js:8",
+        "ms": 0.121,
+        "percent": 0.0
+      }
+    ],
+    "inclusive": [
+      {
+        "name": "(root) :0",
+        "ms": 5181.894,
+        "percent": 100.0
+      },
+      {
+        "name": "runQualificationVM bench/vm/qualification-execution.js:28",
+        "ms": 5181.894,
+        "percent": 100.0
+      },
+      {
+        "name": "runCilSlice packages/runtime/src/execution/cil-slice.js:28",
+        "ms": 5167.236,
+        "percent": 99.72
+      },
+      {
+        "name": "step packages/runtime/src/cil-vm.js:93",
+        "ms": 4840.242,
+        "percent": 93.41
+      },
+      {
+        "name": "runSlice packages/runtime/src/cil-vm.js:94",
+        "ms": 4709.534,
+        "percent": 90.88
+      },
+      {
+        "name": "executeCilStep packages/runtime/src/execution/cil-step.js:14",
+        "ms": 4607.529,
+        "percent": 88.92
+      },
+      {
+        "name": "dispatchWasmCall packages/runtime/src/execution/wasm/call-tier-state.js:131",
+        "ms": 3051.477,
+        "percent": 58.89
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:23",
+        "ms": 1951.456,
+        "percent": 37.66
+      },
+      {
+        "name": "storageValue packages/runtime/src/execution/storage.js:33",
+        "ms": 1226.766,
+        "percent": 23.67
+      },
+      {
+        "name": "storage packages/runtime/src/cil-vm.js:60",
+        "ms": 1205.787,
+        "percent": 23.27
+      },
+      {
+        "name": "dereference packages/runtime/src/cil-vm.js:79",
+        "ms": 1154.49,
+        "percent": 22.28
+      },
+      {
+        "name": "dereferenceManagedAddress packages/runtime/src/execution/managed-address.js:107",
+        "ms": 1137.903,
+        "percent": 21.96
+      },
+      {
+        "name": "resolveCallType packages/runtime/src/execution/generic-calls.js:7",
+        "ms": 592.463,
+        "percent": 11.43
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/call.js:10",
+        "ms": 490.751,
+        "percent": 9.47
+      },
+      {
+        "name": "table packages/runtime/src/execution/type-system.js:44",
+        "ms": 489.141,
+        "percent": 9.44
+      },
+      {
+        "name": "invoke packages/runtime/src/execution/calls.js:42",
+        "ms": 483.577,
+        "percent": 9.33
+      },
+      {
+        "name": "invoke packages/runtime/src/cil-vm.js:89",
+        "ms": 483.577,
+        "percent": 9.33
+      },
+      {
+        "name": "flushFramePool packages/runtime/src/execution/frame-pool.js:135",
+        "ms": 478.6,
+        "percent": 9.24
+      },
+      {
+        "name": "substituteCallType packages/cil/src/generic-signatures.js:39",
+        "ms": 469.847,
+        "percent": 9.07
+      },
+      {
+        "name": "tryPreparedVirtualCall packages/runtime/src/execution/prepared-virtual-call.js:41",
+        "ms": 461.15,
+        "percent": 8.9
+      },
+      {
+        "name": "flush packages/runtime/src/execution/frame-pool.js:80",
+        "ms": 385.496,
+        "percent": 7.44
+      },
+      {
+        "name": "loadSlot packages/runtime/src/execution/slot-storage.js:24",
+        "ms": 352.589,
+        "percent": 6.8
+      },
+      {
+        "name": "enterPreparedCilFrame packages/runtime/src/execution/prepared-cil-frame.js:24",
+        "ms": 306.631,
+        "percent": 5.92
+      },
+      {
+        "name": "get packages/runtime/src/execution/method-table.js:116",
+        "ms": 293.368,
+        "percent": 5.66
+      },
+      {
+        "name": "substituteTypeArguments packages/cil/src/generic-signatures.js:14",
+        "ms": 272.203,
+        "percent": 5.25
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/arith.js:11",
+        "ms": 258.085,
+        "percent": 4.98
+      },
+      {
+        "name": "address packages/runtime/src/cil-vm.js:78",
+        "ms": 215.198,
+        "percent": 4.15
+      },
+      {
+        "name": "normalizeCallType packages/cil/src/generic-signatures.js:28",
+        "ms": 198.018,
+        "percent": 3.82
+      },
+      {
+        "name": "createManagedAddress packages/runtime/src/execution/managed-address.js:78",
+        "ms": 193.097,
+        "percent": 3.73
+      },
+      {
+        "name": "runtimeTypeName packages/runtime/src/execution/method-table.js:27",
+        "ms": 183.92,
+        "percent": 3.55
+      },
+      {
+        "name": "binary packages/runtime/src/cil-vm.js:85",
+        "ms": 176.444,
+        "percent": 3.41
+      },
+      {
+        "name": "observe file:///workspace/scratch/42f7738360b9/a05-virtual-profile-000bbabd.mjs:40",
+        "ms": 165.686,
+        "percent": 3.2
+      },
+      {
+        "name": "beginFrameInstruction packages/runtime/src/execution/frame-stack.js:37",
+        "ms": 165.201,
+        "percent": 3.19
+      },
+      {
+        "name": "binary packages/runtime/src/execution/numeric-ops.js:63",
+        "ms": 161.119,
+        "percent": 3.11
+      },
+      {
+        "name": "storage packages/runtime/src/execution/numeric-ops.js:132",
+        "ms": 143.851,
+        "percent": 2.78
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/call.js:14",
+        "ms": 124.965,
+        "percent": 2.41
+      },
+      {
+        "name": "convert packages/bytecode/src/numeric/conversions.js:87",
+        "ms": 122.999,
+        "percent": 2.37
+      },
+      {
+        "name": "acquire packages/runtime/src/execution/frame-pool.js:31",
+        "ms": 122.569,
+        "percent": 2.37
+      },
+      {
+        "name": "push packages/runtime/src/cil-vm.js:69",
+        "ms": 121.993,
+        "percent": 2.35
+      },
+      {
+        "name": "pushStackValue packages/runtime/src/execution/frame-stack.js:87",
+        "ms": 121.993,
+        "percent": 2.35
+      },
+      {
+        "name": "admitStackPush packages/runtime/src/execution/frame-stack.js:72",
+        "ms": 119.85,
+        "percent": 2.31
+      },
+      {
+        "name": "executionCodeState packages/runtime/src/execution/code-version.js:29",
+        "ms": 115.125,
+        "percent": 2.22
+      },
+      {
+        "name": "getDecodePlan packages/runtime/src/execution/decode-plan.js:87",
+        "ms": 74.395,
+        "percent": 1.44
+      },
+      {
+        "name": "location packages/runtime/src/execution/managed-address.js:17",
+        "ms": 64.142,
+        "percent": 1.24
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:15",
+        "ms": 56.831,
+        "percent": 1.1
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/branch.js:21",
+        "ms": 52.67,
+        "percent": 1.02
+      },
+      {
+        "name": "admitCallFrame packages/runtime/src/execution/call-frames.js:16",
+        "ms": 50.189,
+        "percent": 0.97
+      },
+      {
+        "name": "uint32Binary packages/bytecode/src/numeric/uint32.js:5",
+        "ms": 44.432,
+        "percent": 0.86
+      },
+      {
+        "name": "executionProfiler packages/runtime/src/execution/profiler.js:236",
+        "ms": 38.271,
+        "percent": 0.74
+      },
+      {
+        "name": "get profiler packages/runtime/src/cil-vm.js:53",
+        "ms": 38.271,
+        "percent": 0.74
+      },
+      {
+        "name": "compare packages/runtime/src/cil-vm.js:84",
+        "ms": 37.794,
+        "percent": 0.73
+      },
+      {
+        "name": "enumInfo packages/runtime/src/execution/enums.js:27",
+        "ms": 37.543,
+        "percent": 0.72
+      },
+      {
+        "name": "varargsStorage packages/runtime/src/execution/varargs-storage.js:16",
+        "ms": 36.219,
+        "percent": 0.7
+      },
+      {
+        "name": "resolveEntry packages/runtime/src/execution/inline-cache.js:43",
+        "ms": 33.624,
+        "percent": 0.65
+      },
+      {
+        "name": "popPooledFrame packages/runtime/src/execution/frame-retirement.js:8",
+        "ms": 32.333,
+        "percent": 0.62
+      },
+      {
+        "name": "registerFrame packages/runtime/src/execution/frame-lifetimes.js:85",
+        "ms": 32.309,
+        "percent": 0.62
+      },
+      {
+        "name": "compare packages/runtime/src/execution/numeric-ops.js:25",
+        "ms": 31.504,
+        "percent": 0.61
+      },
+      {
+        "name": "planFor packages/runtime/src/execution/prepared-virtual-call.js:24",
+        "ms": 30.727,
+        "percent": 0.59
+      },
+      {
+        "name": "resolveVirtualCallEntry packages/runtime/src/execution/inline-cache.js:38",
+        "ms": 30.221,
+        "percent": 0.58
+      },
+      {
+        "name": "genericTypeParts packages/cil/src/generic-signatures.js:2",
+        "ms": 29.954,
+        "percent": 0.58
+      },
+      {
+        "name": "leaf packages/runtime/src/execution/managed-address.js:49",
+        "ms": 29.559,
+        "percent": 0.57
+      },
+      {
+        "name": "prepareCall packages/runtime/src/execution/calls.js:32",
+        "ms": 25.773,
+        "percent": 0.5
+      },
+      {
+        "name": "add packages/runtime/src/execution/frame-lifetimes.js:17",
+        "ms": 25.165,
+        "percent": 0.49
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:12",
+        "ms": 24.609,
+        "percent": 0.47
+      },
+      {
+        "name": "admitCilStack packages/runtime/src/execution/frame-stack.js:56",
+        "ms": 24.184,
+        "percent": 0.47
+      },
+      {
+        "name": "boundsFor packages/runtime/src/execution/frame-stack.js:20",
+        "ms": 23.835,
+        "percent": 0.46
+      },
+      {
+        "name": "cilNumericContext packages/runtime/src/execution/cil-values.js:21",
+        "ms": 23.72,
+        "percent": 0.46
+      },
+      {
+        "name": "observeWasmBackedge packages/runtime/src/execution/wasm/call-tier-state.js:102",
+        "ms": 22.172,
+        "percent": 0.43
+      },
+      {
+        "name": "integerSource packages/bytecode/src/numeric/conversions.js:80",
+        "ms": 22.062,
+        "percent": 0.43
+      },
+      {
+        "name": "indexFor packages/runtime/src/execution/frame-lifetimes.js:70",
+        "ms": 20.931,
+        "percent": 0.4
+      },
+      {
+        "name": "guardFor packages/runtime/src/execution/slot-storage.js:7",
+        "ms": 18.853,
+        "percent": 0.36
+      },
+      {
+        "name": "frameById packages/runtime/src/execution/frame-lifetimes.js:120",
+        "ms": 17.868,
+        "percent": 0.34
+      },
+      {
+        "name": "instancePointerLocalPlan packages/runtime/src/execution/instance-pointer-locals.js:17",
+        "ms": 17.105,
+        "percent": 0.33
+      },
+      {
+        "name": "enterCilMethod packages/runtime/src/execution/cil-method-events.js:21",
+        "ms": 16.201,
+        "percent": 0.31
+      },
+      {
+        "name": "executeCilNumericBlock packages/runtime/src/execution/numeric-blocks.js:28",
+        "ms": 9.964,
+        "percent": 0.19
+      },
+      {
+        "name": "floatPlanCurrent packages/runtime/src/execution/typed-float-plan.js:15",
+        "ms": 9.894,
+        "percent": 0.19
+      },
+      {
+        "name": "ensureInitialized packages/runtime/src/cil-vm.js:72",
+        "ms": 8.622,
+        "percent": 0.17
+      },
+      {
+        "name": "captureFrameSlot packages/runtime/src/execution/frame-root-liveness.js:13",
+        "ms": 8.467,
+        "percent": 0.16
+      },
+      {
+        "name": "retirePooledFrame packages/runtime/src/execution/frame-pool.js:130",
+        "ms": 7.549,
+        "percent": 0.15
+      },
+      {
+        "name": "reserveStackFrame packages/runtime/src/execution/stack-budget.js:126",
+        "ms": 6.014,
+        "percent": 0.12
+      },
+      {
+        "name": "retire packages/runtime/src/execution/frame-pool.js:72",
+        "ms": 5.802,
+        "percent": 0.11
+      },
+      {
+        "name": "siteFor packages/runtime/src/execution/inline-cache.js:3",
+        "ms": 5.732,
+        "percent": 0.11
+      },
+      {
+        "name": "afterSchedulerInstruction packages/runtime/src/execution/scheduler-boundary.js:11",
+        "ms": 5.366,
+        "percent": 0.1
+      },
+      {
+        "name": "afterInstruction packages/runtime/src/scheduler.js:107",
+        "ms": 5.354,
+        "percent": 0.1
+      },
+      {
+        "name": "leaveCilMethod packages/runtime/src/execution/cil-method-events.js:36",
+        "ms": 5.248,
+        "percent": 0.1
+      },
+      {
+        "name": "ensureTypeInitialized packages/runtime/src/execution/static-init.js:31",
+        "ms": 4.988,
+        "percent": 0.1
+      },
+      {
+        "name": "intrinsicDefinition packages/cil/src/intrinsic-profile.js:125",
+        "ms": 4.794,
+        "percent": 0.09
+      },
+      {
+        "name": "releaseFrame packages/runtime/src/execution/frame-lifetimes.js:99",
+        "ms": 4.349,
+        "percent": 0.08
+      },
+      {
+        "name": "mustInitialize packages/runtime/src/execution/static-init.js:7",
+        "ms": 4.238,
+        "percent": 0.08
+      },
+      {
+        "name": "observeWasmCall packages/runtime/src/execution/wasm/call-tier-state.js:64",
+        "ms": 4.007,
+        "percent": 0.08
+      },
+      {
+        "name": "withRoots packages/runtime/src/heap.js:16",
+        "ms": 3.939,
+        "percent": 0.08
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/calls.js:61",
+        "ms": 3.939,
+        "percent": 0.08
+      },
+      {
+        "name": "<anonymous> bench/vm/qualification-execution.js:32",
+        "ms": 3.926,
+        "percent": 0.08
+      },
+      {
+        "name": "methodOffsets packages/runtime/src/execution/method-offsets.js:3",
+        "ms": 3.763,
+        "percent": 0.07
+      },
+      {
+        "name": "setImmediate node:timers:207",
+        "ms": 3.745,
+        "percent": 0.07
+      },
+      {
+        "name": "now node:internal/perf/performance:137",
+        "ms": 3.47,
+        "percent": 0.07
+      },
+      {
+        "name": "ensureInitialized packages/runtime/src/execution/calls.js:28",
+        "ms": 3.402,
+        "percent": 0.07
+      },
+      {
+        "name": "Immediate node:internal/timers:682",
+        "ms": 3.051,
+        "percent": 0.06
+      },
+      {
+        "name": "containerFor packages/runtime/src/execution/frame-lifetimes.js:8",
+        "ms": 2.834,
+        "percent": 0.05
+      },
+      {
+        "name": "framePool packages/runtime/src/execution/frame-pool.js:124",
+        "ms": 2.758,
+        "percent": 0.05
+      },
+      {
+        "name": "now :0",
+        "ms": 2.406,
+        "percent": 0.05
+      },
+      {
+        "name": "getMethod packages/cil/src/inspector.js:59",
+        "ms": 2.297,
+        "percent": 0.04
+      },
+      {
+        "name": "numericPlanCurrent packages/runtime/src/execution/numeric-specialization.js:61",
+        "ms": 2.267,
+        "percent": 0.04
+      },
+      {
+        "name": "continueControlReturn packages/runtime/src/execution/return-control.js:13",
+        "ms": 2.062,
+        "percent": 0.04
+      },
+      {
+        "name": "ref node:internal/timers:698",
+        "ms": 1.897,
+        "percent": 0.04
+      },
+      {
+        "name": "continueObjectValue packages/runtime/src/execution/object-value-operation.js:191",
+        "ms": 1.895,
+        "percent": 0.04
+      },
+      {
+        "name": "ownerOf packages/runtime/src/execution/frame-pool.js:5",
+        "ms": 1.719,
+        "percent": 0.03
+      },
+      {
+        "name": "checkQualificationLimit bench/vm/qualification-execution.js:22",
+        "ms": 1.651,
+        "percent": 0.03
+      },
+      {
+        "name": "hasCanonicalCilCall packages/runtime/src/execution/call-entry-guard.js:5",
+        "ms": 1.362,
+        "percent": 0.03
+      },
+      {
+        "name": "allocate packages/runtime/src/heap.js:26",
+        "ms": 1.36,
+        "percent": 0.03
+      },
+      {
+        "name": "object packages/runtime/src/heap.js:30",
+        "ms": 1.36,
+        "percent": 0.03
+      },
+      {
+        "name": "supportedDelegateCall packages/cil/src/delegate-profile.js:34",
+        "ms": 1.226,
+        "percent": 0.02
+      },
+      {
+        "name": "managedDelegateSignature packages/cil/src/delegate-profile.js:9",
+        "ms": 1.226,
+        "percent": 0.02
+      },
+      {
+        "name": "releaseStackFrame packages/runtime/src/execution/stack-budget.js:167",
+        "ms": 1.164,
+        "percent": 0.02
+      },
+      {
+        "name": "frameworkKey packages/cil/src/intrinsic-profile.js:94",
+        "ms": 1.08,
+        "percent": 0.02
+      },
+      {
+        "name": "signatureKey packages/cil/src/intrinsic-profile.js:13",
+        "ms": 1.08,
+        "percent": 0.02
+      },
+      {
+        "name": "toggleImmediateRef :0",
+        "ms": 1.042,
+        "percent": 0.02
+      },
+      {
+        "name": "allocateHeapRecord packages/runtime/src/execution/heap-storage.js:11",
+        "ms": 0.988,
+        "percent": 0.02
+      },
+      {
+        "name": "invokeRuntimeCall packages/runtime/src/execution/runtime-call-adapters.js:16",
+        "ms": 0.862,
+        "percent": 0.02
+      },
+      {
+        "name": "replace packages/runtime/src/execution/managed-address.js:97",
+        "ms": 0.77,
+        "percent": 0.01
+      },
+      {
+        "name": "typeName packages/cil/src/metadata.js:62",
+        "ms": 0.754,
+        "percent": 0.01
+      },
+      {
+        "name": "invokeMemoryRuntime packages/runtime/src/execution/memory-call-adapter.js:5",
+        "ms": 0.741,
+        "percent": 0.01
+      },
+      {
+        "name": "memorySignature packages/cil/src/memory-signatures.js:6",
+        "ms": 0.716,
+        "percent": 0.01
+      },
+      {
+        "name": "wrappedFn node:internal/errors:537",
+        "ms": 0.7,
+        "percent": 0.01
+      },
+      {
+        "name": "read packages/cil/src/metadata/type-names.js:29",
+        "ms": 0.582,
+        "percent": 0.01
+      },
+      {
+        "name": "invokeIntrinsic packages/runtime/src/execution/intrinsics.js:161",
+        "ms": 0.543,
+        "percent": 0.01
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/heap-storage.js:17",
+        "ms": 0.527,
+        "percent": 0.01
+      },
+      {
+        "name": "get node:internal/util:638",
+        "ms": 0.525,
+        "percent": 0.01
+      },
+      {
+        "name": "initAsyncResource node:internal/timers:164",
+        "ms": 0.513,
+        "percent": 0.01
+      },
+      {
+        "name": "selectedCallOwner packages/runtime/src/execution/generic-calls.js:33",
+        "ms": 0.489,
+        "percent": 0.01
+      },
+      {
+        "name": "arrayMethodDefinition packages/cil/src/array-profile.js:48",
+        "ms": 0.479,
+        "percent": 0.01
+      },
+      {
+        "name": "isSynchronizationIntrinsic packages/bytecode/src/sync-intrinsic-profile.js:81",
+        "ms": 0.423,
+        "percent": 0.01
+      },
+      {
+        "name": "asyncMethodDefinition packages/cil/src/async-profile.js:55",
+        "ms": 0.419,
+        "percent": 0.01
+      },
+      {
+        "name": "memoryMethodDefinition packages/cil/src/memory-profile.js:63",
+        "ms": 0.374,
+        "percent": 0.01
+      },
+      {
+        "name": "memoryType packages/cil/src/memory-signatures.js:3",
+        "ms": 0.374,
+        "percent": 0.01
+      },
+      {
+        "name": "<anonymous> node:internal/validators:547",
+        "ms": 0.356,
+        "percent": 0.01
+      },
+      {
+        "name": "get aborted node:internal/abort_controller:255",
+        "ms": 0.353,
+        "percent": 0.01
+      },
+      {
+        "name": "isAggregateType packages/runtime/src/execution/value-types.js:16",
+        "ms": 0.35,
+        "percent": 0.01
+      },
+      {
+        "name": "flushCilMethodEvents packages/runtime/src/execution/cil-method-events.js:55",
+        "ms": 0.349,
+        "percent": 0.01
+      },
+      {
+        "name": "call packages/runtime/src/cil-vm.js:71",
+        "ms": 0.346,
+        "percent": 0.01
+      },
+      {
+        "name": "enterManagedCall packages/runtime/src/execution/managed-call-entry.js:31",
+        "ms": 0.346,
+        "percent": 0.01
+      },
+      {
+        "name": "arrayCall packages/runtime/src/execution/array-calls.js:66",
+        "ms": 0.342,
+        "percent": 0.01
+      },
+      {
+        "name": "verifiedMethod packages/runtime/src/execution/token-cache.js:41",
+        "ms": 0.341,
+        "percent": 0.01
+      },
+      {
+        "name": "get packages/runtime/src/heap.js:32",
+        "ms": 0.338,
+        "percent": 0.01
+      },
+      {
+        "name": "get typeSystem packages/runtime/src/cil-vm.js:54",
+        "ms": 0.337,
+        "percent": 0.01
+      },
+      {
+        "name": "userValueCallType packages/runtime/src/execution/value-calls.js:11",
+        "ms": 0.31,
+        "percent": 0.01
+      },
+      {
+        "name": "arraySignatureShape packages/cil/src/memory-signatures.js:26",
+        "ms": 0.304,
+        "percent": 0.01
+      },
+      {
+        "name": "signatureKey packages/bytecode/src/sync-intrinsic-profile.js:74",
+        "ms": 0.281,
+        "percent": 0.01
+      },
+      {
+        "name": "slotType packages/runtime/src/cil-vm.js:61",
+        "ms": 0.261,
+        "percent": 0.01
+      },
+      {
+        "name": "memoryLocalType packages/runtime/src/execution/memory-values.js:8",
+        "ms": 0.236,
+        "percent": 0.0
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/intrinsics.js:152",
+        "ms": 0.2,
+        "percent": 0.0
+      },
+      {
+        "name": "refreshCompositeSignal node:internal/abort_controller:140",
+        "ms": 0.185,
+        "percent": 0.0
+      },
+      {
+        "name": "cilCallFrame packages/runtime/src/execution/call-frames.js:30",
+        "ms": 0.179,
+        "percent": 0.0
+      },
+      {
+        "name": "isValueRecord packages/runtime/src/execution/value-types.js:15",
+        "ms": 0.175,
+        "percent": 0.0
+      },
+      {
+        "name": "decodeCoded packages/cil/src/metadata/indices.js:36",
+        "ms": 0.169,
+        "percent": 0.0
+      },
+      {
+        "name": "callDescriptor packages/runtime/src/execution/generic-calls.js:18",
+        "ms": 0.168,
+        "percent": 0.0
+      },
+      {
+        "name": "arrayRuntimeDefinition packages/cil/src/array-runtime-profile.js:32",
+        "ms": 0.167,
+        "percent": 0.0
+      },
+      {
+        "name": "arrayRuntimeCall packages/runtime/src/execution/array-runtime.js:136",
+        "ms": 0.167,
+        "percent": 0.0
+      },
+      {
+        "name": "cacheFor packages/runtime/src/execution/token-cache.js:3",
+        "ms": 0.163,
+        "percent": 0.0
+      },
+      {
+        "name": "createHeapReference packages/runtime/src/execution/heap-reference.js:4",
+        "ms": 0.155,
+        "percent": 0.0
+      },
+      {
+        "name": "invokeFrameworkInterface packages/runtime/src/execution/framework-interface-calls.js:8",
+        "ms": 0.121,
+        "percent": 0.0
+      },
+      {
+        "name": "invokeAsyncIntrinsic packages/runtime/src/execution/async-runtime.js:230",
+        "ms": 0.113,
+        "percent": 0.0
+      }
+    ]
+  },
+  "baseline": {
+    "guestMs": 10360.933,
+    "self": [
+      {
+        "name": "normalizeCallType packages/cil/src/generic-signatures.js:28",
+        "ms": 1008.149,
+        "percent": 9.73
+      },
+      {
+        "name": "executeCilStep packages/runtime/src/execution/cil-step.js:14",
+        "ms": 820.574,
+        "percent": 7.92
+      },
+      {
+        "name": "substituteTypeArguments packages/cil/src/generic-signatures.js:14",
+        "ms": 757.111,
+        "percent": 7.31
+      },
+      {
+        "name": "flush packages/runtime/src/execution/frame-pool.js:80",
+        "ms": 478.67,
+        "percent": 4.62
+      },
+      {
+        "name": "asyncMethodDefinition packages/cil/src/async-profile.js:55",
+        "ms": 469.586,
+        "percent": 4.53
+      },
+      {
+        "name": "memorySignature packages/cil/src/memory-signatures.js:6",
+        "ms": 306.86,
+        "percent": 2.96
+      },
+      {
+        "name": "runCilSlice packages/runtime/src/execution/cil-slice.js:28",
+        "ms": 285.635,
+        "percent": 2.76
+      },
+      {
+        "name": "step packages/runtime/src/cil-vm.js:93",
+        "ms": 279.713,
+        "percent": 2.7
+      },
+      {
+        "name": "intrinsicDefinition packages/cil/src/intrinsic-profile.js:125",
+        "ms": 260.057,
+        "percent": 2.51
+      },
+      {
+        "name": "signatureKey packages/bytecode/src/sync-intrinsic-profile.js:74",
+        "ms": 253.773,
+        "percent": 2.45
+      },
+      {
+        "name": "resolveCallType packages/runtime/src/execution/generic-calls.js:7",
+        "ms": 249.207,
+        "percent": 2.41
+      },
+      {
+        "name": "memoryType packages/cil/src/memory-signatures.js:3",
+        "ms": 228.978,
+        "percent": 2.21
+      },
+      {
+        "name": "invoke packages/runtime/src/execution/calls.js:42",
+        "ms": 199.47,
+        "percent": 1.93
+      },
+      {
+        "name": "createManagedAddress packages/runtime/src/execution/managed-address.js:78",
+        "ms": 197.72,
+        "percent": 1.91
+      },
+      {
+        "name": "runtimeTypeName packages/runtime/src/execution/method-table.js:27",
+        "ms": 196.369,
+        "percent": 1.9
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:23",
+        "ms": 192.505,
+        "percent": 1.86
+      },
+      {
+        "name": "signatureKey packages/cil/src/intrinsic-profile.js:13",
+        "ms": 175.8,
+        "percent": 1.7
+      },
+      {
+        "name": "get packages/runtime/src/execution/method-table.js:116",
+        "ms": 170.008,
+        "percent": 1.64
+      },
+      {
+        "name": "cilCallFrame packages/runtime/src/execution/call-frames.js:30",
+        "ms": 161.293,
+        "percent": 1.56
+      },
+      {
+        "name": "genericTypeParts packages/cil/src/generic-signatures.js:2",
+        "ms": 159.762,
+        "percent": 1.54
+      },
+      {
+        "name": "acquire packages/runtime/src/execution/frame-pool.js:31",
+        "ms": 158.58,
+        "percent": 1.53
+      },
+      {
+        "name": "beginFrameInstruction packages/runtime/src/execution/frame-stack.js:37",
+        "ms": 155.401,
+        "percent": 1.5
+      },
+      {
+        "name": "executionCodeState packages/runtime/src/execution/code-version.js:29",
+        "ms": 144.574,
+        "percent": 1.4
+      },
+      {
+        "name": "storageValue packages/runtime/src/execution/storage.js:33",
+        "ms": 143.62,
+        "percent": 1.39
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/calls.js:61",
+        "ms": 136.741,
+        "percent": 1.32
+      },
+      {
+        "name": "canonicalType packages/framework/src/registry.js:26",
+        "ms": 133.962,
+        "percent": 1.29
+      },
+      {
+        "name": "binary packages/runtime/src/execution/numeric-ops.js:63",
+        "ms": 126.189,
+        "percent": 1.22
+      },
+      {
+        "name": "convert packages/bytecode/src/numeric/conversions.js:87",
+        "ms": 120.166,
+        "percent": 1.16
+      },
+      {
+        "name": "flushFramePool packages/runtime/src/execution/frame-pool.js:135",
+        "ms": 113.045,
+        "percent": 1.09
+      },
+      {
+        "name": "admitStackPush packages/runtime/src/execution/frame-stack.js:72",
+        "ms": 112.153,
+        "percent": 1.08
+      },
+      {
+        "name": "isSynchronizationIntrinsic packages/bytecode/src/sync-intrinsic-profile.js:81",
+        "ms": 104.086,
+        "percent": 1.0
+      },
+      {
+        "name": "dispatchWasmCall packages/runtime/src/execution/wasm/call-tier-state.js:131",
+        "ms": 93.652,
+        "percent": 0.9
+      },
+      {
+        "name": "dereferenceManagedAddress packages/runtime/src/execution/managed-address.js:107",
+        "ms": 84.255,
+        "percent": 0.81
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/call.js:14",
+        "ms": 71.086,
+        "percent": 0.69
+      },
+      {
+        "name": "location packages/runtime/src/execution/managed-address.js:17",
+        "ms": 67.369,
+        "percent": 0.65
+      },
+      {
+        "name": "storage packages/runtime/src/cil-vm.js:60",
+        "ms": 62.444,
+        "percent": 0.6
+      },
+      {
+        "name": "arguments packages/runtime/src/execution/frame-pool.js:101",
+        "ms": 58.091,
+        "percent": 0.56
+      },
+      {
+        "name": "enterManagedCall packages/runtime/src/execution/managed-call-entry.js:31",
+        "ms": 56.293,
+        "percent": 0.54
+      },
+      {
+        "name": "invokeRuntimeCall packages/runtime/src/execution/runtime-call-adapters.js:16",
+        "ms": 55.0,
+        "percent": 0.53
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/arith.js:11",
+        "ms": 50.702,
+        "percent": 0.49
+      },
+      {
+        "name": "releaseArguments packages/runtime/src/execution/frame-pool.js:113",
+        "ms": 49.838,
+        "percent": 0.48
+      },
+      {
+        "name": "enumInfo packages/runtime/src/execution/enums.js:27",
+        "ms": 49.256,
+        "percent": 0.48
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:15",
+        "ms": 48.64,
+        "percent": 0.47
+      },
+      {
+        "name": "withRoots packages/runtime/src/heap.js:16",
+        "ms": 48.371,
+        "percent": 0.47
+      },
+      {
+        "name": "uint32Binary packages/bytecode/src/numeric/uint32.js:5",
+        "ms": 48.096,
+        "percent": 0.46
+      },
+      {
+        "name": "arraySignatureShape packages/cil/src/memory-signatures.js:26",
+        "ms": 42.796,
+        "percent": 0.41
+      },
+      {
+        "name": "table packages/runtime/src/execution/type-system.js:44",
+        "ms": 40.597,
+        "percent": 0.39
+      },
+      {
+        "name": "leaf packages/runtime/src/execution/managed-address.js:49",
+        "ms": 39.921,
+        "percent": 0.39
+      },
+      {
+        "name": "selectedCallOwner packages/runtime/src/execution/generic-calls.js:33",
+        "ms": 39.225,
+        "percent": 0.38
+      },
+      {
+        "name": "boundsFor packages/runtime/src/execution/frame-stack.js:20",
+        "ms": 38.548,
+        "percent": 0.37
+      },
+      {
+        "name": "executionProfiler packages/runtime/src/execution/profiler.js:236",
+        "ms": 36.932,
+        "percent": 0.36
+      },
+      {
+        "name": "varargsStorage packages/runtime/src/execution/varargs-storage.js:16",
+        "ms": 35.57,
+        "percent": 0.34
+      },
+      {
+        "name": "add packages/runtime/src/execution/frame-lifetimes.js:17",
+        "ms": 34.519,
+        "percent": 0.33
+      },
+      {
+        "name": "resolve packages/runtime/src/execution/vtable.js:20",
+        "ms": 30.096,
+        "percent": 0.29
+      },
+      {
+        "name": "compare packages/runtime/src/execution/numeric-ops.js:25",
+        "ms": 30.09,
+        "percent": 0.29
+      },
+      {
+        "name": "storage packages/runtime/src/execution/numeric-ops.js:132",
+        "ms": 29.095,
+        "percent": 0.28
+      },
+      {
+        "name": "arrayMethodDefinition packages/cil/src/array-profile.js:48",
+        "ms": 28.956,
+        "percent": 0.28
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:12",
+        "ms": 27.876,
+        "percent": 0.27
+      },
+      {
+        "name": "prepareCall packages/runtime/src/execution/calls.js:32",
+        "ms": 26.201,
+        "percent": 0.25
+      },
+      {
+        "name": "observeWasmBackedge packages/runtime/src/execution/wasm/call-tier-state.js:102",
+        "ms": 25.693,
+        "percent": 0.25
+      },
+      {
+        "name": "admitCallFrame packages/runtime/src/execution/call-frames.js:16",
+        "ms": 24.326,
+        "percent": 0.23
+      },
+      {
+        "name": "integerSource packages/bytecode/src/numeric/conversions.js:80",
+        "ms": 23.032,
+        "percent": 0.22
+      },
+      {
+        "name": "popPooledFrame packages/runtime/src/execution/frame-retirement.js:8",
+        "ms": 22.906,
+        "percent": 0.22
+      },
+      {
+        "name": "indexFor packages/runtime/src/execution/frame-lifetimes.js:70",
+        "ms": 22.636,
+        "percent": 0.22
+      },
+      {
+        "name": "invokeMemoryRuntime packages/runtime/src/execution/memory-call-adapter.js:5",
+        "ms": 22.366,
+        "percent": 0.22
+      },
+      {
+        "name": "guardFor packages/runtime/src/execution/slot-storage.js:7",
+        "ms": 21.875,
+        "percent": 0.21
+      },
+      {
+        "name": "cilNumericContext packages/runtime/src/execution/cil-values.js:21",
+        "ms": 21.089,
+        "percent": 0.2
+      },
+      {
+        "name": "framePool packages/runtime/src/execution/frame-pool.js:124",
+        "ms": 20.431,
+        "percent": 0.2
+      },
+      {
+        "name": "table packages/cil/src/dispatch-profile.js:62",
+        "ms": 20.086,
+        "percent": 0.19
+      },
+      {
+        "name": "address packages/runtime/src/cil-vm.js:78",
+        "ms": 20.025,
+        "percent": 0.19
+      },
+      {
+        "name": "instancePointerLocalPlan packages/runtime/src/execution/instance-pointer-locals.js:17",
+        "ms": 19.768,
+        "percent": 0.19
+      },
+      {
+        "name": "callDescriptor packages/runtime/src/execution/generic-calls.js:18",
+        "ms": 19.762,
+        "percent": 0.19
+      },
+      {
+        "name": "invokeAsyncIntrinsic packages/runtime/src/execution/async-runtime.js:230",
+        "ms": 17.626,
+        "percent": 0.17
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/branch.js:21",
+        "ms": 17.132,
+        "percent": 0.17
+      },
+      {
+        "name": "typeName packages/bytecode/src/sync-intrinsic-profile.js:73",
+        "ms": 16.372,
+        "percent": 0.16
+      },
+      {
+        "name": "builtinSignatureType packages/cil/src/intrinsic-signature-types.js:4",
+        "ms": 16.119,
+        "percent": 0.16
+      },
+      {
+        "name": "floatPlanCurrent packages/runtime/src/execution/typed-float-plan.js:15",
+        "ms": 15.599,
+        "percent": 0.15
+      },
+      {
+        "name": "table packages/runtime/src/execution/vtable.js:12",
+        "ms": 12.863,
+        "percent": 0.12
+      },
+      {
+        "name": "runQualificationVM bench/vm/qualification-execution.js:28",
+        "ms": 12.334,
+        "percent": 0.12
+      },
+      {
+        "name": "executeCilNumericBlock packages/runtime/src/execution/numeric-blocks.js:28",
+        "ms": 12.025,
+        "percent": 0.12
+      },
+      {
+        "name": "virtualTarget packages/runtime/src/execution/type-system.js:69",
+        "ms": 11.814,
+        "percent": 0.11
+      },
+      {
+        "name": "nullableMethodDefinition packages/cil/src/nullable-profile.js:6",
+        "ms": 11.698,
+        "percent": 0.11
+      },
+      {
+        "name": "mustInitialize packages/runtime/src/execution/static-init.js:7",
+        "ms": 11.627,
+        "percent": 0.11
+      },
+      {
+        "name": "captureFrameSlot packages/runtime/src/execution/frame-root-liveness.js:13",
+        "ms": 11.358,
+        "percent": 0.11
+      },
+      {
+        "name": "resolveVirtualTarget packages/runtime/src/execution/inline-cache.js:28",
+        "ms": 11.071,
+        "percent": 0.11
+      },
+      {
+        "name": "getDecodePlan packages/runtime/src/execution/decode-plan.js:87",
+        "ms": 10.722,
+        "percent": 0.1
+      },
+      {
+        "name": "userValueCallType packages/runtime/src/execution/value-calls.js:11",
+        "ms": 10.491,
+        "percent": 0.1
+      },
+      {
+        "name": "typeContext packages/cil/src/dispatch-profile.js:49",
+        "ms": 10.378,
+        "percent": 0.1
+      },
+      {
+        "name": "callPrefix packages/runtime/src/execution/call-prefix.js:2",
+        "ms": 10.298,
+        "percent": 0.1
+      },
+      {
+        "name": "supportedDelegateOperation packages/cil/src/delegate-operations.js:29",
+        "ms": 10.112,
+        "percent": 0.1
+      },
+      {
+        "name": "supportedDelegateCall packages/cil/src/delegate-profile.js:34",
+        "ms": 9.681,
+        "percent": 0.09
+      },
+      {
+        "name": "substituteCallType packages/cil/src/generic-signatures.js:39",
+        "ms": 9.156,
+        "percent": 0.09
+      },
+      {
+        "name": "ensureInitialized packages/runtime/src/cil-vm.js:72",
+        "ms": 8.878,
+        "percent": 0.09
+      },
+      {
+        "name": "memoryCall packages/runtime/src/execution/memory-calls.js:62",
+        "ms": 8.301,
+        "percent": 0.08
+      },
+      {
+        "name": "constrainedCallType packages/runtime/src/execution/constrained-call.js:32",
+        "ms": 8.0,
+        "percent": 0.08
+      },
+      {
+        "name": "spanOperation packages/cil/src/memory-profile.js:9",
+        "ms": 7.811,
+        "percent": 0.08
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/call.js:10",
+        "ms": 7.508,
+        "percent": 0.07
+      },
+      {
+        "name": "enterCilMethod packages/runtime/src/execution/cil-method-events.js:21",
+        "ms": 7.31,
+        "percent": 0.07
+      },
+      {
+        "name": "systemType packages/cil/src/intrinsic-profile.js:11",
+        "ms": 7.112,
+        "percent": 0.07
+      },
+      {
+        "name": "boxedInterfaceReceiver packages/runtime/src/execution/value-dispatch.js:15",
+        "ms": 7.096,
+        "percent": 0.07
+      },
+      {
+        "name": "containerFor packages/runtime/src/execution/frame-lifetimes.js:8",
+        "ms": 7.04,
+        "percent": 0.07
+      },
+      {
+        "name": "afterSchedulerInstruction packages/runtime/src/execution/scheduler-boundary.js:11",
+        "ms": 6.524,
+        "percent": 0.06
+      },
+      {
+        "name": "runtimeOperation packages/cil/src/array-runtime-profile.js:5",
+        "ms": 6.406,
+        "percent": 0.06
+      },
+      {
+        "name": "methodOffsets packages/runtime/src/execution/method-offsets.js:3",
+        "ms": 6.027,
+        "percent": 0.06
+      },
+      {
+        "name": "observeWasmCall packages/runtime/src/execution/wasm/call-tier-state.js:64",
+        "ms": 5.855,
+        "percent": 0.06
+      },
+      {
+        "name": "retire packages/runtime/src/execution/frame-pool.js:72",
+        "ms": 5.653,
+        "percent": 0.05
+      },
+      {
+        "name": "instantiatedMethod packages/runtime/src/execution/generics.js:99",
+        "ms": 5.477,
+        "percent": 0.05
+      },
+      {
+        "name": "verifiedMethod packages/runtime/src/execution/token-cache.js:41",
+        "ms": 5.472,
+        "percent": 0.05
+      },
+      {
+        "name": "frameworkKey packages/cil/src/intrinsic-profile.js:94",
+        "ms": 4.907,
+        "percent": 0.05
+      },
+      {
+        "name": "Immediate node:internal/timers:682",
+        "ms": 4.872,
+        "percent": 0.05
+      },
+      {
+        "name": "releaseFrame packages/runtime/src/execution/frame-lifetimes.js:99",
+        "ms": 4.608,
+        "percent": 0.04
+      },
+      {
+        "name": "dereference packages/runtime/src/cil-vm.js:79",
+        "ms": 4.384,
+        "percent": 0.04
+      },
+      {
+        "name": "binary packages/runtime/src/cil-vm.js:85",
+        "ms": 4.183,
+        "percent": 0.04
+      },
+      {
+        "name": "reserveStackFrame packages/runtime/src/execution/stack-budget.js:126",
+        "ms": 4.177,
+        "percent": 0.04
+      },
+      {
+        "name": "setImmediate node:timers:207",
+        "ms": 3.915,
+        "percent": 0.04
+      },
+      {
+        "name": "call packages/runtime/src/cil-vm.js:71",
+        "ms": 3.552,
+        "percent": 0.03
+      },
+      {
+        "name": "leaveCilMethod packages/runtime/src/execution/cil-method-events.js:36",
+        "ms": 3.367,
+        "percent": 0.03
+      },
+      {
+        "name": "get packages/runtime/src/heap.js:32",
+        "ms": 3.287,
+        "percent": 0.03
+      },
+      {
+        "name": "arrayRuntimeDefinition packages/cil/src/array-runtime-profile.js:32",
+        "ms": 3.135,
+        "percent": 0.03
+      },
+      {
+        "name": "releaseStackFrame packages/runtime/src/execution/stack-budget.js:167",
+        "ms": 2.994,
+        "percent": 0.03
+      },
+      {
+        "name": "retirePooledFrame packages/runtime/src/execution/frame-pool.js:130",
+        "ms": 2.941,
+        "percent": 0.03
+      },
+      {
+        "name": "memoryMethodDefinition packages/cil/src/memory-profile.js:63",
+        "ms": 2.777,
+        "percent": 0.03
+      },
+      {
+        "name": "continueObjectValue packages/runtime/src/execution/object-value-operation.js:191",
+        "ms": 2.769,
+        "percent": 0.03
+      },
+      {
+        "name": "varargsCall packages/runtime/src/execution/varargs.js:168",
+        "ms": 2.702,
+        "percent": 0.03
+      },
+      {
+        "name": "pushStackValue packages/runtime/src/execution/frame-stack.js:87",
+        "ms": 2.219,
+        "percent": 0.02
+      },
+      {
+        "name": "numericPlanCurrent packages/runtime/src/execution/numeric-specialization.js:61",
+        "ms": 1.916,
+        "percent": 0.02
+      },
+      {
+        "name": "invokeFrameworkInterface packages/runtime/src/execution/framework-interface-calls.js:8",
+        "ms": 1.901,
+        "percent": 0.02
+      },
+      {
+        "name": "now :0",
+        "ms": 1.847,
+        "percent": 0.02
+      },
+      {
+        "name": "now node:internal/perf/performance:137",
+        "ms": 1.738,
+        "percent": 0.02
+      },
+      {
+        "name": "toggleImmediateRef :0",
+        "ms": 1.639,
+        "percent": 0.02
+      },
+      {
+        "name": "getMethod packages/cil/src/inspector.js:59",
+        "ms": 1.634,
+        "percent": 0.02
+      },
+      {
+        "name": "<anonymous> bench/vm/qualification-execution.js:32",
+        "ms": 1.399,
+        "percent": 0.01
+      },
+      {
+        "name": "<anonymous> node:internal/validators:547",
+        "ms": 1.383,
+        "percent": 0.01
+      },
+      {
+        "name": "prepareValueReceiver packages/runtime/src/execution/value-calls.js:21",
+        "ms": 1.382,
+        "percent": 0.01
+      },
+      {
+        "name": "ref node:internal/timers:698",
+        "ms": 1.379,
+        "percent": 0.01
+      },
+      {
+        "name": "frameworkSignatureType packages/cil/src/intrinsic-profile.js:93",
+        "ms": 1.246,
+        "percent": 0.01
+      },
+      {
+        "name": "splitVarargs packages/runtime/src/execution/varargs.js:35",
+        "ms": 1.113,
+        "percent": 0.01
+      },
+      {
+        "name": "get typeSystem packages/runtime/src/cil-vm.js:54",
+        "ms": 1.037,
+        "percent": 0.01
+      },
+      {
+        "name": "slotType packages/runtime/src/cil-vm.js:61",
+        "ms": 1.034,
+        "percent": 0.01
+      },
+      {
+        "name": "frameById packages/runtime/src/execution/frame-lifetimes.js:120",
+        "ms": 1.032,
+        "percent": 0.01
+      },
+      {
+        "name": "flushAsyncFault packages/runtime/src/scheduler.js:46",
+        "ms": 0.894,
+        "percent": 0.01
+      },
+      {
+        "name": "cacheFor packages/runtime/src/execution/token-cache.js:3",
+        "ms": 0.855,
+        "percent": 0.01
+      },
+      {
+        "name": "compare packages/runtime/src/cil-vm.js:84",
+        "ms": 0.765,
+        "percent": 0.01
+      },
+      {
+        "name": "invokeConstrainedReferenceObject packages/runtime/src/execution/constrained-reference-object.js:10",
+        "ms": 0.713,
+        "percent": 0.01
+      },
+      {
+        "name": "flushCilMethodEvents packages/runtime/src/execution/cil-method-events.js:55",
+        "ms": 0.695,
+        "percent": 0.01
+      },
+      {
+        "name": "wrappedFn node:internal/errors:537",
+        "ms": 0.675,
+        "percent": 0.01
+      },
+      {
+        "name": "initializeFloatFrame packages/runtime/src/execution/typed-float-frame.js:4",
+        "ms": 0.667,
+        "percent": 0.01
+      },
+      {
+        "name": "row packages/cil/src/metadata.js:58",
+        "ms": 0.656,
+        "percent": 0.01
+      },
+      {
+        "name": "resolve packages/cil/src/dispatch-profile.js:188",
+        "ms": 0.529,
+        "percent": 0.01
+      },
+      {
+        "name": "admitCilStack packages/runtime/src/execution/frame-stack.js:56",
+        "ms": 0.504,
+        "percent": 0.0
+      },
+      {
+        "name": "append node:internal/timers:297",
+        "ms": 0.496,
+        "percent": 0.0
+      },
+      {
+        "name": "typeName packages/cil/src/metadata.js:62",
+        "ms": 0.369,
+        "percent": 0.0
+      },
+      {
+        "name": "createHeapReference packages/runtime/src/execution/heap-reference.js:4",
+        "ms": 0.357,
+        "percent": 0.0
+      },
+      {
+        "name": "validStackValueLimit packages/runtime/src/execution/frame-stack.js:13",
+        "ms": 0.347,
+        "percent": 0.0
+      },
+      {
+        "name": "initAsyncResource node:internal/timers:164",
+        "ms": 0.347,
+        "percent": 0.0
+      },
+      {
+        "name": "commitStackFrame packages/runtime/src/execution/stack-budget.js:139",
+        "ms": 0.333,
+        "percent": 0.0
+      },
+      {
+        "name": "isValueRecord packages/runtime/src/execution/value-types.js:15",
+        "ms": 0.329,
+        "percent": 0.0
+      },
+      {
+        "name": "get aborted node:internal/abort_controller:255",
+        "ms": 0.319,
+        "percent": 0.0
+      },
+      {
+        "name": "tailRequested packages/runtime/src/execution/tailcall.js:61",
+        "ms": 0.252,
+        "percent": 0.0
+      },
+      {
+        "name": "beforeSlice packages/runtime/src/scheduler.js:105",
+        "ms": 0.192,
+        "percent": 0.0
+      },
+      {
+        "name": "externalTarget packages/cil/src/dispatch-profile.js:206",
+        "ms": 0.185,
+        "percent": 0.0
+      },
+      {
+        "name": "get node:internal/util:638",
+        "ms": 0.179,
+        "percent": 0.0
+      },
+      {
+        "name": "replace packages/runtime/src/execution/managed-address.js:97",
+        "ms": 0.178,
+        "percent": 0.0
+      },
+      {
+        "name": "get top packages/runtime/src/cil-vm.js:51",
+        "ms": 0.178,
+        "percent": 0.0
+      },
+      {
+        "name": "nextFrameId packages/runtime/src/execution/frame-lifetimes.js:76",
+        "ms": 0.174,
+        "percent": 0.0
+      },
+      {
+        "name": "decodeCoded packages/cil/src/metadata/indices.js:36",
+        "ms": 0.173,
+        "percent": 0.0
+      },
+      {
+        "name": "read packages/cil/src/metadata/type-names.js:29",
+        "ms": 0.17,
+        "percent": 0.0
+      },
+      {
+        "name": "frameworkType packages/framework/src/registry.js:40",
+        "ms": 0.169,
+        "percent": 0.0
+      },
+      {
+        "name": "isAggregateType packages/runtime/src/execution/value-types.js:16",
+        "ms": 0.167,
+        "percent": 0.0
+      },
+      {
+        "name": "callCache packages/runtime/src/execution/generic-calls.js:13",
+        "ms": 0.162,
+        "percent": 0.0
+      },
+      {
+        "name": "allocateHeapRecord packages/runtime/src/execution/heap-storage.js:11",
+        "ms": 0.112,
+        "percent": 0.0
+      },
+      {
+        "name": "invokeIntrinsic packages/runtime/src/execution/intrinsics.js:161",
+        "ms": 0.11,
+        "percent": 0.0
+      }
+    ],
+    "inclusive": [
+      {
+        "name": "(root) :0",
+        "ms": 10360.933,
+        "percent": 100.0
+      },
+      {
+        "name": "runQualificationVM bench/vm/qualification-execution.js:28",
+        "ms": 10360.933,
+        "percent": 100.0
+      },
+      {
+        "name": "runCilSlice packages/runtime/src/execution/cil-slice.js:28",
+        "ms": 10332.501,
+        "percent": 99.73
+      },
+      {
+        "name": "step packages/runtime/src/cil-vm.js:93",
+        "ms": 10008.379,
+        "percent": 96.6
+      },
+      {
+        "name": "executeCilStep packages/runtime/src/execution/cil-step.js:14",
+        "ms": 9726.949,
+        "percent": 93.88
+      },
+      {
+        "name": "dispatchWasmCall packages/runtime/src/execution/wasm/call-tier-state.js:131",
+        "ms": 7959.601,
+        "percent": 76.82
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/call.js:10",
+        "ms": 5108.654,
+        "percent": 49.31
+      },
+      {
+        "name": "invoke packages/runtime/src/cil-vm.js:89",
+        "ms": 5101.146,
+        "percent": 49.23
+      },
+      {
+        "name": "invoke packages/runtime/src/execution/calls.js:42",
+        "ms": 5100.969,
+        "percent": 49.23
+      },
+      {
+        "name": "withRoots packages/runtime/src/heap.js:16",
+        "ms": 2701.144,
+        "percent": 26.07
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/calls.js:61",
+        "ms": 2652.773,
+        "percent": 25.6
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:23",
+        "ms": 2206.152,
+        "percent": 21.29
+      },
+      {
+        "name": "intrinsicDefinition packages/cil/src/intrinsic-profile.js:125",
+        "ms": 1847.526,
+        "percent": 17.83
+      },
+      {
+        "name": "memorySignature packages/cil/src/memory-signatures.js:6",
+        "ms": 1598.755,
+        "percent": 15.43
+      },
+      {
+        "name": "invokeRuntimeCall packages/runtime/src/execution/runtime-call-adapters.js:16",
+        "ms": 1443.879,
+        "percent": 13.94
+      },
+      {
+        "name": "storageValue packages/runtime/src/execution/storage.js:33",
+        "ms": 1397.193,
+        "percent": 13.49
+      },
+      {
+        "name": "storage packages/runtime/src/cil-vm.js:60",
+        "ms": 1373.446,
+        "percent": 13.26
+      },
+      {
+        "name": "substituteCallType packages/cil/src/generic-signatures.js:39",
+        "ms": 1361.234,
+        "percent": 13.14
+      },
+      {
+        "name": "dereference packages/runtime/src/cil-vm.js:79",
+        "ms": 1329.832,
+        "percent": 12.84
+      },
+      {
+        "name": "dereferenceManagedAddress packages/runtime/src/execution/managed-address.js:107",
+        "ms": 1325.283,
+        "percent": 12.79
+      },
+      {
+        "name": "normalizeCallType packages/cil/src/generic-signatures.js:28",
+        "ms": 1133.786,
+        "percent": 10.94
+      },
+      {
+        "name": "resolveCallType packages/runtime/src/execution/generic-calls.js:7",
+        "ms": 1099.117,
+        "percent": 10.61
+      },
+      {
+        "name": "table packages/runtime/src/execution/type-system.js:44",
+        "ms": 1063.305,
+        "percent": 10.26
+      },
+      {
+        "name": "invokeMemoryRuntime packages/runtime/src/execution/memory-call-adapter.js:5",
+        "ms": 953.814,
+        "percent": 9.21
+      },
+      {
+        "name": "arrayMethodDefinition packages/cil/src/array-profile.js:48",
+        "ms": 903.562,
+        "percent": 8.72
+      },
+      {
+        "name": "canonical packages/cil/src/memory-signatures.js:20",
+        "ms": 856.529,
+        "percent": 8.27
+      },
+      {
+        "name": "enterManagedCall packages/runtime/src/execution/managed-call-entry.js:31",
+        "ms": 763.249,
+        "percent": 7.37
+      },
+      {
+        "name": "substituteTypeArguments packages/cil/src/generic-signatures.js:14",
+        "ms": 757.111,
+        "percent": 7.31
+      },
+      {
+        "name": "memoryType packages/cil/src/memory-signatures.js:3",
+        "ms": 737.677,
+        "percent": 7.12
+      },
+      {
+        "name": "arrayCall packages/runtime/src/execution/array-calls.js:66",
+        "ms": 708.544,
+        "percent": 6.84
+      },
+      {
+        "name": "arrayRuntimeDefinition packages/cil/src/array-runtime-profile.js:32",
+        "ms": 696.926,
+        "percent": 6.73
+      },
+      {
+        "name": "flushFramePool packages/runtime/src/execution/frame-pool.js:135",
+        "ms": 591.552,
+        "percent": 5.71
+      },
+      {
+        "name": "memoryMethodDefinition packages/cil/src/memory-profile.js:63",
+        "ms": 506.435,
+        "percent": 4.89
+      },
+      {
+        "name": "flush packages/runtime/src/execution/frame-pool.js:80",
+        "ms": 478.67,
+        "percent": 4.62
+      },
+      {
+        "name": "asyncMethodDefinition packages/cil/src/async-profile.js:55",
+        "ms": 473.808,
+        "percent": 4.57
+      },
+      {
+        "name": "loadSlot packages/runtime/src/execution/slot-storage.js:24",
+        "ms": 387.014,
+        "percent": 3.74
+      },
+      {
+        "name": "cilCallFrame packages/runtime/src/execution/call-frames.js:30",
+        "ms": 382.987,
+        "percent": 3.7
+      },
+      {
+        "name": "isSynchronizationIntrinsic packages/bytecode/src/sync-intrinsic-profile.js:81",
+        "ms": 374.231,
+        "percent": 3.61
+      },
+      {
+        "name": "get packages/runtime/src/execution/method-table.js:116",
+        "ms": 366.198,
+        "percent": 3.53
+      },
+      {
+        "name": "call packages/runtime/src/cil-vm.js:71",
+        "ms": 356.481,
+        "percent": 3.44
+      },
+      {
+        "name": "call packages/runtime/src/execution/calls.js:27",
+        "ms": 334.808,
+        "percent": 3.23
+      },
+      {
+        "name": "userValueCallType packages/runtime/src/execution/value-calls.js:11",
+        "ms": 272.682,
+        "percent": 2.63
+      },
+      {
+        "name": "signatureKey packages/bytecode/src/sync-intrinsic-profile.js:74",
+        "ms": 270.145,
+        "percent": 2.61
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/arith.js:11",
+        "ms": 269.187,
+        "percent": 2.6
+      },
+      {
+        "name": "arrayRuntimeCall packages/runtime/src/execution/array-runtime.js:136",
+        "ms": 268.525,
+        "percent": 2.59
+      },
+      {
+        "name": "invokeAsyncIntrinsic packages/runtime/src/execution/async-runtime.js:230",
+        "ms": 263.042,
+        "percent": 2.54
+      },
+      {
+        "name": "frameworkKey packages/cil/src/intrinsic-profile.js:94",
+        "ms": 239.817,
+        "percent": 2.31
+      },
+      {
+        "name": "address packages/runtime/src/cil-vm.js:78",
+        "ms": 237.192,
+        "percent": 2.29
+      },
+      {
+        "name": "memoryCall packages/runtime/src/execution/memory-calls.js:62",
+        "ms": 223.256,
+        "percent": 2.15
+      },
+      {
+        "name": "createManagedAddress packages/runtime/src/execution/managed-address.js:78",
+        "ms": 217.167,
+        "percent": 2.1
+      },
+      {
+        "name": "runtimeTypeName packages/runtime/src/execution/method-table.js:27",
+        "ms": 196.369,
+        "percent": 1.9
+      },
+      {
+        "name": "beginFrameInstruction packages/runtime/src/execution/frame-stack.js:37",
+        "ms": 196.189,
+        "percent": 1.89
+      },
+      {
+        "name": "binary packages/runtime/src/cil-vm.js:85",
+        "ms": 188.444,
+        "percent": 1.82
+      },
+      {
+        "name": "signatureKey packages/cil/src/intrinsic-profile.js:13",
+        "ms": 175.8,
+        "percent": 1.7
+      },
+      {
+        "name": "binary packages/runtime/src/execution/numeric-ops.js:63",
+        "ms": 174.285,
+        "percent": 1.68
+      },
+      {
+        "name": "storage packages/runtime/src/execution/numeric-ops.js:132",
+        "ms": 172.293,
+        "percent": 1.66
+      },
+      {
+        "name": "observe file:///workspace/scratch/42f7738360b9/a05-virtual-profile-000bbabd.mjs:40",
+        "ms": 167.95,
+        "percent": 1.62
+      },
+      {
+        "name": "invokeSynchronization packages/runtime/src/execution/sync-primitives.js:476",
+        "ms": 167.026,
+        "percent": 1.61
+      },
+      {
+        "name": "genericTypeParts packages/cil/src/generic-signatures.js:2",
+        "ms": 159.762,
+        "percent": 1.54
+      },
+      {
+        "name": "acquire packages/runtime/src/execution/frame-pool.js:31",
+        "ms": 158.58,
+        "percent": 1.53
+      },
+      {
+        "name": "boxedInterfaceReceiver packages/runtime/src/execution/value-dispatch.js:15",
+        "ms": 144.827,
+        "percent": 1.4
+      },
+      {
+        "name": "executionCodeState packages/runtime/src/execution/code-version.js:29",
+        "ms": 144.574,
+        "percent": 1.4
+      },
+      {
+        "name": "convert packages/bytecode/src/numeric/conversions.js:87",
+        "ms": 143.198,
+        "percent": 1.38
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/call.js:14",
+        "ms": 138.622,
+        "percent": 1.34
+      },
+      {
+        "name": "canonicalType packages/framework/src/registry.js:26",
+        "ms": 133.962,
+        "percent": 1.29
+      },
+      {
+        "name": "push packages/runtime/src/cil-vm.js:69",
+        "ms": 128.683,
+        "percent": 1.24
+      },
+      {
+        "name": "pushStackValue packages/runtime/src/execution/frame-stack.js:87",
+        "ms": 128.683,
+        "percent": 1.24
+      },
+      {
+        "name": "admitStackPush packages/runtime/src/execution/frame-stack.js:72",
+        "ms": 126.63,
+        "percent": 1.22
+      },
+      {
+        "name": "instantiatedMethod packages/runtime/src/execution/generics.js:99",
+        "ms": 117.84,
+        "percent": 1.14
+      },
+      {
+        "name": "prepareValueReceiver packages/runtime/src/execution/value-calls.js:21",
+        "ms": 114.965,
+        "percent": 1.11
+      },
+      {
+        "name": "resolveVirtualTarget packages/runtime/src/execution/inline-cache.js:28",
+        "ms": 99.819,
+        "percent": 0.96
+      },
+      {
+        "name": "getDecodePlan packages/runtime/src/execution/decode-plan.js:87",
+        "ms": 85.365,
+        "percent": 0.82
+      },
+      {
+        "name": "location packages/runtime/src/execution/managed-address.js:17",
+        "ms": 78.499,
+        "percent": 0.76
+      },
+      {
+        "name": "resolve packages/runtime/src/execution/vtable.js:20",
+        "ms": 73.952,
+        "percent": 0.71
+      },
+      {
+        "name": "virtualTarget packages/runtime/src/execution/type-system.js:69",
+        "ms": 72.89,
+        "percent": 0.7
+      },
+      {
+        "name": "admitCallFrame packages/runtime/src/execution/call-frames.js:16",
+        "ms": 71.368,
+        "percent": 0.69
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:15",
+        "ms": 61.844,
+        "percent": 0.6
+      },
+      {
+        "name": "arguments packages/runtime/src/execution/frame-pool.js:101",
+        "ms": 58.091,
+        "percent": 0.56
+      },
+      {
+        "name": "frameworkSignatureType packages/cil/src/intrinsic-profile.js:93",
+        "ms": 52.54,
+        "percent": 0.51
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/branch.js:21",
+        "ms": 50.378,
+        "percent": 0.49
+      },
+      {
+        "name": "releaseArguments packages/runtime/src/execution/frame-pool.js:113",
+        "ms": 49.838,
+        "percent": 0.48
+      },
+      {
+        "name": "enumInfo packages/runtime/src/execution/enums.js:27",
+        "ms": 49.256,
+        "percent": 0.48
+      },
+      {
+        "name": "uint32Binary packages/bytecode/src/numeric/uint32.js:5",
+        "ms": 48.096,
+        "percent": 0.46
+      },
+      {
+        "name": "registerFrame packages/runtime/src/execution/frame-lifetimes.js:85",
+        "ms": 47.042,
+        "percent": 0.45
+      },
+      {
+        "name": "builtinSignatureType packages/cil/src/intrinsic-signature-types.js:4",
+        "ms": 46.239,
+        "percent": 0.45
+      },
+      {
+        "name": "table packages/runtime/src/execution/vtable.js:12",
+        "ms": 43.327,
+        "percent": 0.42
+      },
+      {
+        "name": "arraySignatureShape packages/cil/src/memory-signatures.js:26",
+        "ms": 42.796,
+        "percent": 0.41
+      },
+      {
+        "name": "selectedCallOwner packages/runtime/src/execution/generic-calls.js:33",
+        "ms": 42.035,
+        "percent": 0.41
+      },
+      {
+        "name": "boundsFor packages/runtime/src/execution/frame-stack.js:20",
+        "ms": 40.654,
+        "percent": 0.39
+      },
+      {
+        "name": "leaf packages/runtime/src/execution/managed-address.js:49",
+        "ms": 39.921,
+        "percent": 0.39
+      },
+      {
+        "name": "popPooledFrame packages/runtime/src/execution/frame-retirement.js:8",
+        "ms": 39.102,
+        "percent": 0.38
+      },
+      {
+        "name": "executionProfiler packages/runtime/src/execution/profiler.js:236",
+        "ms": 36.932,
+        "percent": 0.36
+      },
+      {
+        "name": "get profiler packages/runtime/src/cil-vm.js:53",
+        "ms": 36.932,
+        "percent": 0.36
+      },
+      {
+        "name": "varargsStorage packages/runtime/src/execution/varargs-storage.js:16",
+        "ms": 35.57,
+        "percent": 0.34
+      },
+      {
+        "name": "admitCilStack packages/runtime/src/execution/frame-stack.js:56",
+        "ms": 35.092,
+        "percent": 0.34
+      },
+      {
+        "name": "add packages/runtime/src/execution/frame-lifetimes.js:17",
+        "ms": 34.519,
+        "percent": 0.33
+      },
+      {
+        "name": "compare packages/runtime/src/cil-vm.js:84",
+        "ms": 33.246,
+        "percent": 0.32
+      },
+      {
+        "name": "<anonymous> packages/runtime/src/execution/handlers/load-store.js:12",
+        "ms": 31.407,
+        "percent": 0.3
+      },
+      {
+        "name": "prepareCall packages/runtime/src/execution/calls.js:32",
+        "ms": 30.722,
+        "percent": 0.3
+      },
+      {
+        "name": "table packages/cil/src/dispatch-profile.js:62",
+        "ms": 30.464,
+        "percent": 0.29
+      },
+      {
+        "name": "compare packages/runtime/src/execution/numeric-ops.js:25",
+        "ms": 30.09,
+        "percent": 0.29
+      },
+      {
+        "name": "observeWasmBackedge packages/runtime/src/execution/wasm/call-tier-state.js:102",
+        "ms": 25.693,
+        "percent": 0.25
+      },
+      {
+        "name": "framePool packages/runtime/src/execution/frame-pool.js:124",
+        "ms": 25.143,
+        "percent": 0.24
+      },
+      {
+        "name": "integerSource packages/bytecode/src/numeric/conversions.js:80",
+        "ms": 23.032,
+        "percent": 0.22
+      },
+      {
+        "name": "indexFor packages/runtime/src/execution/frame-lifetimes.js:70",
+        "ms": 22.636,
+        "percent": 0.22
+      },
+      {
+        "name": "callDescriptor packages/runtime/src/execution/generic-calls.js:18",
+        "ms": 21.902,
+        "percent": 0.21
+      },
+      {
+        "name": "guardFor packages/runtime/src/execution/slot-storage.js:7",
+        "ms": 21.875,
+        "percent": 0.21
+      },
+      {
+        "name": "supportedDelegateCall packages/cil/src/delegate-profile.js:34",
+        "ms": 21.708,
+        "percent": 0.21
+      },
+      {
+        "name": "cilNumericContext packages/runtime/src/execution/cil-values.js:21",
+        "ms": 21.089,
+        "percent": 0.2
+      },
+      {
+        "name": "ensureInitialized packages/runtime/src/cil-vm.js:72",
+        "ms": 20.505,
+        "percent": 0.2
+      },
+      {
+        "name": "instancePointerLocalPlan packages/runtime/src/execution/instance-pointer-locals.js:17",
+        "ms": 19.768,
+        "percent": 0.19
+      },
+      {
+        "name": "enterCilMethod packages/runtime/src/execution/cil-method-events.js:21",
+        "ms": 19.293,
+        "percent": 0.19
+      },
+      {
+        "name": "cacheFor packages/runtime/src/execution/token-cache.js:3",
+        "ms": 18.958,
+        "percent": 0.18
+      },
+      {
+        "name": "frameById packages/runtime/src/execution/frame-lifetimes.js:120",
+        "ms": 18.185,
+        "percent": 0.18
+      },
+      {
+        "name": "cachedTypeName packages/runtime/src/execution/token-cache.js:27",
+        "ms": 18.068,
+        "percent": 0.17
+      },
+      {
+        "name": "nullableMethodDefinition packages/cil/src/nullable-profile.js:6",
+        "ms": 16.775,
+        "percent": 0.16
+      },
+      {
+        "name": "typeName packages/bytecode/src/sync-intrinsic-profile.js:73",
+        "ms": 16.372,
+        "percent": 0.16
+      },
+      {
+        "name": "resolve packages/cil/src/dispatch-profile.js:188",
+        "ms": 15.756,
+        "percent": 0.15
+      },
+      {
+        "name": "floatPlanCurrent packages/runtime/src/execution/typed-float-plan.js:15",
+        "ms": 15.599,
+        "percent": 0.15
+      },
+      {
+        "name": "<anonymous> bench/vm/qualification-execution.js:32",
+        "ms": 14.21,
+        "percent": 0.14
+      },
+      {
+        "name": "setImmediate node:timers:207",
+        "ms": 12.811,
+        "percent": 0.12
+      },
+      {
+        "name": "executeCilNumericBlock packages/runtime/src/execution/numeric-blocks.js:28",
+        "ms": 12.025,
+        "percent": 0.12
+      },
+      {
+        "name": "ensureTypeInitialized packages/runtime/src/execution/static-init.js:31",
+        "ms": 11.627,
+        "percent": 0.11
+      },
+      {
+        "name": "ensureInitialized packages/runtime/src/execution/calls.js:28",
+        "ms": 11.627,
+        "percent": 0.11
+      },
+      {
+        "name": "mustInitialize packages/runtime/src/execution/static-init.js:7",
+        "ms": 11.627,
+        "percent": 0.11
+      },
+      {
+        "name": "captureFrameSlot packages/runtime/src/execution/frame-root-liveness.js:13",
+        "ms": 11.358,
+        "percent": 0.11
+      },
+      {
+        "name": "constrainedCallType packages/runtime/src/execution/constrained-call.js:32",
+        "ms": 10.863,
+        "percent": 0.1
+      },
+      {
+        "name": "typeContext packages/cil/src/dispatch-profile.js:49",
+        "ms": 10.378,
+        "percent": 0.1
+      },
+      {
+        "name": "callPrefix packages/runtime/src/execution/call-prefix.js:2",
+        "ms": 10.298,
+        "percent": 0.1
+      },
+      {
+        "name": "supportedDelegateOperation packages/cil/src/delegate-operations.js:29",
+        "ms": 10.112,
+        "percent": 0.1
+      },
+      {
+        "name": "Immediate node:internal/timers:682",
+        "ms": 8.733,
+        "percent": 0.08
+      },
+      {
+        "name": "retirePooledFrame packages/runtime/src/execution/frame-pool.js:130",
+        "ms": 8.594,
+        "percent": 0.08
+      },
+      {
+        "name": "spanOperation packages/cil/src/memory-profile.js:9",
+        "ms": 7.811,
+        "percent": 0.08
+      },
+      {
+        "name": "systemType packages/cil/src/intrinsic-profile.js:11",
+        "ms": 7.112,
+        "percent": 0.07
+      },
+      {
+        "name": "containerFor packages/runtime/src/execution/frame-lifetimes.js:8",
+        "ms": 7.04,
+        "percent": 0.07
+      },
+      {
+        "name": "afterSchedulerInstruction packages/runtime/src/execution/scheduler-boundary.js:11",
+        "ms": 6.524,
+        "percent": 0.06
+      },
+      {
+        "name": "afterInstruction packages/runtime/src/scheduler.js:107",
+        "ms": 6.524,
+        "percent": 0.06
+      },
+      {
+        "name": "runtimeOperation packages/cil/src/array-runtime-profile.js:5",
+        "ms": 6.406,
+        "percent": 0.06
+      },
+      {
+        "name": "verifiedMethod packages/runtime/src/execution/token-cache.js:41",
+        "ms": 6.362,
+        "percent": 0.06
+      },
+      {
+        "name": "methodOffsets packages/runtime/src/execution/method-offsets.js:3",
+        "ms": 6.027,
+        "percent": 0.06
+      },
+      {
+        "name": "observeWasmCall packages/runtime/src/execution/wasm/call-tier-state.js:64",
+        "ms": 5.855,
+        "percent": 0.06
+      },
+      {
+        "name": "retire packages/runtime/src/execution/frame-pool.js:72",
+        "ms": 5.653,
+        "percent": 0.05
+      },
+      {
+        "name": "now node:internal/perf/performance:137",
+        "ms": 4.968,
+        "percent": 0.05
+      },
+      {
+        "name": "ownerOf packages/runtime/src/execution/frame-pool.js:5",
+        "ms": 4.712,
+        "percent": 0.05
+      },
+      {
+        "name": "releaseFrame packages/runtime/src/execution/frame-lifetimes.js:99",
+        "ms": 4.608,
+        "percent": 0.04
+      },
+      {
+        "name": "reserveStackFrame packages/runtime/src/execution/stack-budget.js:126",
+        "ms": 4.177,
+        "percent": 0.04
+      },
+      {
+        "name": "leaveCilMethod packages/runtime/src/execution/cil-method-events.js:36",
+        "ms": 3.367,
+        "percent": 0.03
+      },
+      {
+        "name": "get packages/runtime/src/heap.js:32",
+        "ms": 3.287,
+        "percent": 0.03
+      },
+      {
+        "name": "callCache packages/runtime/src/execution/generic-calls.js:13",
+        "ms": 3.027,
+        "percent": 0.03
+      },
+      {
+        "name": "ref node:internal/timers:698",
+        "ms": 3.018,
+        "percent": 0.03
+      },
+      {
+        "name": "releaseStackFrame packages/runtime/src/execution/stack-budget.js:167",
+        "ms": 2.994,
+        "percent": 0.03
+      },
+      {
+        "name": "continueObjectValue packages/runtime/src/execution/object-value-operation.js:191",
+        "ms": 2.769,
+        "percent": 0.03
+      },
+      {
+        "name": "continueControlReturn packages/runtime/src/execution/return-control.js:13",
+        "ms": 2.769,
+        "percent": 0.03
+      },
+      {
+        "name": "varargsCall packages/runtime/src/execution/varargs.js:168",
+        "ms": 2.702,
+        "percent": 0.03
+      },
+      {
+        "name": "invokeFrameworkInterface packages/runtime/src/execution/framework-interface-calls.js:8",
+        "ms": 2.086,
+        "percent": 0.02
+      },
+      {
+        "name": "wrappedFn node:internal/errors:537",
+        "ms": 2.058,
+        "percent": 0.02
+      },
+      {
+        "name": "numericPlanCurrent packages/runtime/src/execution/numeric-specialization.js:61",
+        "ms": 1.916,
+        "percent": 0.02
+      },
+      {
+        "name": "managedDelegateSignature packages/cil/src/delegate-profile.js:9",
+        "ms": 1.915,
+        "percent": 0.02
+      },
+      {
+        "name": "now :0",
+        "ms": 1.847,
+        "percent": 0.02
+      },
+      {
+        "name": "toggleImmediateRef :0",
+        "ms": 1.639,
+        "percent": 0.02
+      },
+      {
+        "name": "getMethod packages/cil/src/inspector.js:59",
+        "ms": 1.634,
+        "percent": 0.02
+      },
+      {
+        "name": "<anonymous> node:internal/validators:547",
+        "ms": 1.383,
+        "percent": 0.01
+      },
+      {
+        "name": "typeName packages/cil/src/metadata.js:62",
+        "ms": 1.368,
+        "percent": 0.01
+      },
+      {
+        "name": "splitVarargs packages/runtime/src/execution/varargs.js:35",
+        "ms": 1.113,
+        "percent": 0.01
+      },
+      {
+        "name": "beforeSlice packages/runtime/src/scheduler.js:105",
+        "ms": 1.086,
+        "percent": 0.01
+      },
+      {
+        "name": "get typeSystem packages/runtime/src/cil-vm.js:54",
+        "ms": 1.037,
+        "percent": 0.01
+      },
+      {
+        "name": "slotType packages/runtime/src/cil-vm.js:61",
+        "ms": 1.034,
+        "percent": 0.01
+      },
+      {
+        "name": "flushAsyncFault packages/runtime/src/scheduler.js:46",
+        "ms": 0.894,
+        "percent": 0.01
+      },
+      {
+        "name": "read packages/cil/src/metadata/type-names.js:29",
+        "ms": 0.826,
+        "percent": 0.01
+      },
+      {
+        "name": "invokeConstrainedReferenceObject packages/runtime/src/execution/constrained-reference-object.js:10",
+        "ms": 0.713,
+        "percent": 0.01
+      },
+      {
+        "name": "flushCilMethodEvents packages/runtime/src/execution/cil-method-events.js:55",
+        "ms": 0.695,
+        "percent": 0.01
+      },
+      {
+        "name": "initializeFloatFrame packages/runtime/src/execution/typed-float-frame.js:4",
+        "ms": 0.667,
+        "percent": 0.01
+      },
+      {
+        "name": "row packages/cil/src/metadata.js:58",
+        "ms": 0.656,
+        "percent": 0.01
+      },
+      {
+        "name": "tailRequested packages/runtime/src/execution/tailcall.js:61",
+        "ms": 0.592,
+        "percent": 0.01
+      },
+      {
+        "name": "frameworkType packages/framework/src/registry.js:40",
+        "ms": 0.547,
+        "percent": 0.01
+      },
+      {
+        "name": "append node:internal/timers:297",
+        "ms": 0.496,
+        "percent": 0.0
+      },
+      {
+        "name": "allocateHeapRecord packages/runtime/src/execution/heap-storage.js:11",
+        "ms": 0.469,
+        "percent": 0.0
+      },
+      {
+        "name": "allocate packages/runtime/src/heap.js:26",
+        "ms": 0.469,
+        "percent": 0.0
+      },
+      {
+        "name": "object packages/runtime/src/heap.js:30",
+        "ms": 0.469,
+        "percent": 0.0
+      },
+      {
+        "name": "createHeapReference packages/runtime/src/execution/heap-reference.js:4",
+        "ms": 0.357,
+        "percent": 0.0
+      },
+      {
+        "name": "validStackValueLimit packages/runtime/src/execution/frame-stack.js:13",
+        "ms": 0.347,
+        "percent": 0.0
+      },
+      {
+        "name": "initAsyncResource node:internal/timers:164",
+        "ms": 0.347,
+        "percent": 0.0
+      },
+      {
+        "name": "commitStackFrame packages/runtime/src/execution/stack-budget.js:139",
+        "ms": 0.333,
+        "percent": 0.0
+      },
+      {
+        "name": "isValueRecord packages/runtime/src/execution/value-types.js:15",
+        "ms": 0.329,
+        "percent": 0.0
+      },
+      {
+        "name": "get aborted node:internal/abort_controller:255",
+        "ms": 0.319,
+        "percent": 0.0
+      },
+      {
+        "name": "externalTarget packages/cil/src/dispatch-profile.js:206",
+        "ms": 0.185,
+        "percent": 0.0
+      },
+      {
+        "name": "get node:internal/util:638",
+        "ms": 0.179,
+        "percent": 0.0
+      },
+      {
+        "name": "replace packages/runtime/src/execution/managed-address.js:97",
+        "ms": 0.178,
+        "percent": 0.0
+      },
+      {
+        "name": "get top packages/runtime/src/cil-vm.js:51",
+        "ms": 0.178,
+        "percent": 0.0
+      },
+      {
+        "name": "nextFrameId packages/runtime/src/execution/frame-lifetimes.js:76",
+        "ms": 0.174,
+        "percent": 0.0
+      },
+      {
+        "name": "decodeCoded packages/cil/src/metadata/indices.js:36",
+        "ms": 0.173,
+        "percent": 0.0
+      },
+      {
+        "name": "isAggregateType packages/runtime/src/execution/value-types.js:16",
+        "ms": 0.167,
+        "percent": 0.0
+      },
+      {
+        "name": "invokeIntrinsic packages/runtime/src/execution/intrinsics.js:161",
+        "ms": 0.11,
+        "percent": 0.0
+      }
+    ]
+  }
+}

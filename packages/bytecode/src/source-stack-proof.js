@@ -4,8 +4,12 @@ const handlerFields = ['start', 'end', 'target', 'kind', 'slot', 'handlerEnd', '
 /** Publish bounds only after the existing verifier accepted every method in this image. */
 export function recordSourceStacks(image, bounds) {
   const methods = new WeakMap();
-  for (let index = 0; index < bounds.length; index++) {
-    const [method, peak] = bounds[index];
+  const peaks = new WeakMap(bounds);
+  // Abstract declarations occupy image slots but have no executable CFG bound.
+  for (let index = 0; index < image.methods.length; index++) {
+    const method = image.methods[index];
+    const peak = peaks.get(method);
+    if (peak === undefined) continue;
     methods.set(method, {index, code: method.code, handlers: method.handlers,
       words: method.code.slice(), regions: method.handlers.map(handler => handlerFields.map(field => handler[field])),
       bound: Object.freeze({peak})});

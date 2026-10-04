@@ -5,6 +5,8 @@ import {executionCodeState} from './code-version.js';
 import {methodOffsets, methodOffsetAllocations} from './method-offsets.js';
 import {specializeNumericPlan, numericPlanCurrent, numericPlanIdentity} from './numeric-specialization.js';
 import {specializeFloatPlan, floatPlanCurrent, floatPlanIdentity} from './typed-float-plan.js';
+import {buildNumericBlockPlan} from './numeric-block-plan.js';
+import {rejectCilOpcode} from './opcode-fault.js';
 
 function invalid(message) {
   throw new ManagedFault('InvalidProgramException', message);
@@ -50,7 +52,7 @@ function createPlan(vm, method, state) {
     const instruction = instructions[index];
     const opcode = CilOpcodes[instruction.name];
     const handler = cilHandlers.get(instruction.name);
-    if (!opcode || !handler) invalid(`Opcode '${instruction.name}' is not executable`);
+    if (!opcode || !handler) rejectCilOpcode(instruction.name);
     handlers[index] = handler;
     if (opcode.operand === 'switch') {
       for (const target of instruction.operand) branchIndex(offsets, target);
@@ -59,13 +61,14 @@ function createPlan(vm, method, state) {
     }
   }
   const numericHandlerIds = specializeNumericPlan(vm, method, offsets, handlers);
+  const numericBlocks = buildNumericBlockPlan(vm, method, offsets);
   specializeFloatPlan(vm, method, offsets, handlers);
   // Dispatch only needs handlers and original instructions. Allocate optional
   // numeric diagnostics on their first read; these buffers never enter snapshots.
   let metadata;
   const readMetadata = () => metadata ??= operandMetadata(instructions, offsets);
   const plan = {
-    instructions, offsets, handlers: Object.freeze(handlers), numericHandlerIds,
+    instructions, offsets, handlers: Object.freeze(handlers), numericHandlerIds, numericBlocks,
     get operandValues() { return readMetadata().operandValues; },
     get opcodeIds() { return readMetadata().opcodeIds.slice(); },
     get operands() { return readMetadata().operands.slice(); },

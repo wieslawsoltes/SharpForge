@@ -4,14 +4,20 @@ import { fieldSignature, methodSignature, localSignature, propertySignature } fr
 
 /** Bind declared image classes before interpreting punctuation in compatibility type strings. */
 export class EmitterSignatures {
-  constructor(typeTokens, resolveToken) {
+  constructor(typeTokens, resolveToken, types = []) {
     const namedTypes = new Map();
-    for (const [name, token] of typeTokens) namedTypes.set(name, { kind: 'class', token });
+    const values = new Set(types.filter(type => type.valueType).map(type => type.name));
+    for (const [name, token] of typeTokens) namedTypes.set(name, {kind: values.has(name) ? 'valuetype' : 'class', token});
     this.options = { namedTypes };
     this.resolveToken = resolveToken;
   }
 
   type(type) {
+    for (const name of ['ArgIterator', 'RuntimeArgumentHandle', 'RuntimeTypeHandle', 'RuntimeMethodHandle', 'RuntimeFieldHandle']) {
+      const fullName = 'System.' + name;
+      if (typeof type === 'string' && type.includes(fullName) && !this.options.namedTypes.has(fullName))
+        this.options.namedTypes.set(fullName, {kind: 'valuetype', token: this.resolveToken(fullName)});
+    }
     if (typeof type === 'string' && /(?:^|[<, ])(?:decimal|System\.Decimal)(?:$|[>\[&,])/.test(type)) {
       const decimal = {kind: 'valuetype', token: this.resolveToken('System.Decimal')};
       this.options.namedTypes.set('decimal', decimal);
@@ -28,8 +34,8 @@ export class EmitterSignatures {
     return fieldSignature(this.type(type));
   }
 
-  method(result, parameters, isStatic) {
-    return methodSignature(this.type(result), this.types(parameters), isStatic);
+  method(result, parameters, isStatic, options = {}) {
+    return methodSignature(this.type(result), this.types(parameters), isStatic, undefined, options);
   }
 
   locals(types) {

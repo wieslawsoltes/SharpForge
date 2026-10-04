@@ -1,0 +1,39 @@
+{
+  "suite": "csp-denied-fallback",
+  "passed": false,
+  "engine": "chromium",
+  "cspViolations": [
+    {
+      "source": "event",
+      "directive": "script-src",
+      "blockedURI": "wasm-eval",
+      "disposition": "enforce",
+      "documentURI": "http://127.0.0.1:33799/denied.html",
+      "policy": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    },
+    {
+      "source": "event",
+      "directive": "script-src",
+      "blockedURI": "wasm-eval",
+      "disposition": "enforce",
+      "documentURI": "http://127.0.0.1:33799/denied.html",
+      "policy": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    },
+    {
+      "source": "event",
+      "directive": "script-src",
+      "blockedURI": "wasm-eval",
+      "disposition": "enforce",
+      "documentURI": "http://127.0.0.1:33799/denied.html",
+      "policy": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    }
+  ],
+  "browser": "153.0.8010.12",
+  "executable": "playwright-managed",
+  "launchOptions": {
+    "headless": true
+  },
+  "mode": "A05 public runtime / denied CSP",
+  "seconds": 3.223628958000006,
+  "diagnosticErrors": []
+}

@@ -1,0 +1,11 @@
+✔ A00 T06 runner executes only the selected area, propagates failures, and handles empty areas (1339.009943ms)
+✔ A00 serial Node policy preserves script arguments and rejects concurrent overrides (0.431194ms)
+✔ A00 manifest runner prevents overlapping test files (518.272947ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1982.489559

@@ -5,16 +5,18 @@ import {prepareValueReceiver} from './value-calls.js';
 import {requireValueInterfaceTarget} from './value-dispatch.js';
 import {cachedTypeName, verifiedMethod} from './token-cache.js';
 import {resolveCallType} from './generic-calls.js';
-import {constrainedPrimitivePlan, constrainedObjectPlan, constrainedReferenceObjectPlan,
+import {constrainedPrimitivePlan, constrainedObjectPlan, constrainedReferenceObjectPlan, constrainedNullableObjectPlan,
   requireConstrainedObjectBound, invokeConstrainedObject} from './constrained-object.js';
 import {requireGenericStructArgument} from './generic-constraints.js';
 import {invokeConstrainedPrimitive} from './constrained-primitive.js';
+import {callPrefix} from './call-prefix.js';
+import {invokeConstrainedNullable} from './constrained-nullable.js';
 
 function closedConstraint(vm, caller, token) {
-  if (token >>> 24 === 2) return vm.typeSystem.table(token);
+  if ([1, 2].includes(token >>> 24)) return vm.typeSystem.table(token);
   const name = cachedTypeName(vm, token);
-  if (token >>> 24 !== 27 || !/^!!?\d+$/.test(name)) {
-    throw new ManagedFault('NotSupportedException', 'A constrained TypeSpec must identify one generic parameter');
+  if (token >>> 24 !== 27) {
+    throw new ManagedFault('InvalidProgramException', 'A constrained operand must identify a managed type');
   }
   const resolved = resolveCallType(vm, name, caller);
   if (resolved.includes('!')) {
@@ -27,21 +29,30 @@ function closedConstraint(vm, caller, token) {
   return table;
 }
 
-/** The verified instruction pair defines the constraint without mutable frame state. */
+/** The verified prefix group defines the constraint without mutable frame state. */
 export function constrainedCallType(vm, caller, instruction, descriptor) {
   if (instruction.name !== 'callvirt') return null;
-  const prefix = caller.method.instructions[caller.pc - 2];
-  if (prefix?.name !== 'constrained.') return null;
+  const prefix = callPrefix(caller, instruction, 'constrained.');
+  if (!prefix) return null;
   const primitivePlan = constrainedPrimitivePlan(vm, prefix.operand, descriptor);
   if (primitivePlan) {
     const primitive = vm.typeSystem.table(prefix.operand);
     if (!primitive.flags.primitive || primitive.name !== primitivePlan.name) {
-      throw new ManagedFault('NotSupportedException', 'Constrained integer ToString requires its builtin primitive type');
+      throw new ManagedFault('NotSupportedException', 'Constrained integer Object call requires its builtin primitive type');
     }
     return primitive;
   }
   const table = closedConstraint(vm, caller, prefix.operand);
-  if (prefix.operand >>> 24 === 2 && table.flags.valueType && constrainedObjectPlan(vm, table, descriptor)) return table;
+  if (constrainedNullableObjectPlan(vm, table, descriptor)) {
+    if (prefix.operand >>> 24 === 27) requireConstrainedObjectBound(vm, caller, prefix.operand, table);
+    return table;
+  }
+  const objectPlan = table.flags.primitive ? constrainedPrimitivePlan(vm, table.name, descriptor)
+    : constrainedObjectPlan(vm, table, descriptor);
+  if (objectPlan) {
+    if (prefix.operand >>> 24 === 27) requireConstrainedObjectBound(vm, caller, prefix.operand, table);
+    return table;
+  }
   if (constrainedReferenceObjectPlan(vm, table, descriptor)) {
     if (prefix.operand >>> 24 === 27) requireConstrainedObjectBound(vm, caller, prefix.operand, table);
     return table;
@@ -76,8 +87,8 @@ export function constrainedReferenceReceiver(vm, table, receiver) {
   if (!vm.typeSystem.castCache.isAssignableFrom(table, actual)) {
     throw new ManagedFault('InvalidProgramException', 'Constrained reference is incompatible with its declared storage');
   }
-  if (actual.genericArity || actual.typeArguments.length) {
-    throw new ManagedFault('NotSupportedException', 'Generic constrained reference receivers are not implemented');
+  if (actual.containsGenericParameters) {
+    throw new ManagedFault('InvalidProgramException', 'Constrained reference receiver must have a closed runtime type');
   }
   return value;
 }
@@ -96,10 +107,12 @@ export function invokeConstrainedValue(vm, caller, descriptor, table) {
   const count = descriptor.signature.parameters.length + 1;
   const receiver = caller.stack[caller.stack.length - count];
   const current = receiverStorage(vm, receiver, table);
+  if (constrainedNullableObjectPlan(vm, table, descriptor)) {
+    return invokeConstrainedNullable(vm, caller, descriptor, table);
+  }
   if (table.flags.primitive) {
-    const prefix = caller.method.instructions[caller.pc - 2];
-    const primitive = constrainedPrimitivePlan(vm, prefix.operand, descriptor);
-    if (primitive) return invokeConstrainedPrimitive(vm, caller, receiver, current, primitive);
+    const plan = constrainedPrimitivePlan(vm, table.name, descriptor);
+    if (plan) return invokeConstrainedPrimitive(vm, caller, receiver, current, {plan, descriptor});
   }
   const plan = constrainedObjectPlan(vm, table, descriptor);
   if (plan) return invokeConstrainedObject(vm, caller, descriptor, {table, plan, receiver, current});

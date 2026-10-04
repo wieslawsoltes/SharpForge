@@ -4,7 +4,7 @@ import {compileToIL} from '@sharpforge/compiler';
 import {verifiedStackBound} from '@sharpforge/cil';
 import {VirtualMachine, CilVirtualMachine, ManagedFault, framePoolStatistics, invalidateExecutionCode} from '@sharpforge/runtime';
 import {invokeManagedMethod} from '../packages/runtime/src/execution/synchronous-call.js';
-import {callbackAssembly} from './fixtures/managed-object-string.js';
+import {callbackAssembly, unverifiedCallbackAssembly} from './fixtures/managed-object-string.js';
 
 const controlFields = ['frames', 'stack', 'state', 'sourcePause', 'currentPoint', 'pendingFault',
   'fault', 'returnValue', 'exitCode', 'onException'];
@@ -167,16 +167,28 @@ test('synchronous callback instruction exhaustion restores the paused caller and
 });
 
 
+test('CIL constructor admission verifies the reachable Object.ToString override', () => {
+  assert.throws(() => new CilVirtualMachine(callbackAssembly({unverified: true})), error =>
+    error.name === 'CilError' && /ToString IL_0: Evaluation stack underflow/.test(error.message));
+});
+
 test('synchronous CIL callback verification rejection preserves prior report and stack proof', () => {
-  const vm = new CilVirtualMachine(callbackAssembly({unverified: true}), {maxStackBytes: 1024});
-  const receiver = objectFor(vm, 'Fixture.Program'), report = vm.report, caller = vm.top;
+  const vm = new CilVirtualMachine(unverifiedCallbackAssembly(), {maxStackBytes: 1024});
+  const report = vm.report, caller = vm.top, frames = vm.frames, instructions = vm.instructions, pins = [...vm.heap.pins];
+  const method = vm.inspector.types.find(type => type.name === 'Fixture.Program').methods
+    .find(method => method.name === 'UnverifiedCallback');
+  assert.equal(report.methods.includes(method.token), false, 'the entry point does not reach this ordinary host callback');
   const proof = verifiedStackBound(vm.inspector, report, caller.method);
   vm.state = 'paused';
   try {
-    assert.throws(() => stringify(vm, receiver), {name: 'InvalidProgramException'});
+    assert.throws(() => invokeManagedMethod(vm.platform, method.token, null, []), error =>
+      error.name === 'InvalidProgramException' && /Evaluation stack underflow/.test(error.message));
     assert.equal(vm.report, report);
     assert.equal(verifiedStackBound(vm.inspector, vm.report, caller.method), proof);
     assert.equal(vm.top, caller);
+    assert.equal(vm.frames, frames);
+    assert.equal(vm.instructions, instructions);
+    assert.deepEqual(vm.heap.pins, pins);
     assert.equal(vm.state, 'paused');
     assert.equal(vm.scheduler.callbackScopes?.length ?? 0, 0);
   } finally { vm.stop(); }

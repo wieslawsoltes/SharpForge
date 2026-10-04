@@ -1,0 +1,50 @@
+.NET SDK:
+ Version:           8.0.425
+ Commit:            4a98f641c7
+ Workload version:  8.0.400-manifests.ac071bc2
+ MSBuild version:   17.11.48+02bf66295
+
+Runtime Environment:
+ OS Name:     Windows
+ OS Version:  10.0.26100
+ OS Platform: Windows
+ RID:         win-x86
+ Base Path:   D:\a\_temp\a05-dotnet-x86-8.0.425\sdk\8.0.425\
+
+.NET workloads installed:
+Configured to use loose manifests when installing new manifests.
+ [maui-windows]
+   Installation Source: VS 18.10.12217.157
+   Manifest Version:    8.0.3/8.0.100
+   Manifest Path:       D:\a\_temp\a05-dotnet-x86-8.0.425\sdk-manifests\8.0.100\microsoft.net.sdk.maui\8.0.3\WorkloadManifest.json
+   Install Type:        FileBased
+
+
+Host:
+  Version:      8.0.31
+  Architecture: x86
+  Commit:       1219a42122
+
+.NET SDKs installed:
+  8.0.425 [D:\a\_temp\a05-dotnet-x86-8.0.425\sdk]
+
+.NET runtimes installed:
+  Microsoft.AspNetCore.App 8.0.31 [D:\a\_temp\a05-dotnet-x86-8.0.425\shared\Microsoft.AspNetCore.App]
+  Microsoft.NETCore.App 8.0.31 [D:\a\_temp\a05-dotnet-x86-8.0.425\shared\Microsoft.NETCore.App]
+  Microsoft.WindowsDesktop.App 8.0.31 [D:\a\_temp\a05-dotnet-x86-8.0.425\shared\Microsoft.WindowsDesktop.App]
+
+Other architectures found:
+  x64   [C:\Program Files\dotnet]
+    registered at [HKLM\SOFTWARE\dotnet\Setup\InstalledVersions\x64\InstallLocation]
+
+Environment variables:
+  Not set
+
+global.json file:
+  Not found
+
+Learn more:
+  https://aka.ms/dotnet/info
+
+Download .NET:
+  https://aka.ms/dotnet/download

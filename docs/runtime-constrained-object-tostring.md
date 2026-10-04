@@ -1,5 +1,7 @@
 # Concrete struct constrained Object.ToString
 
+> Historical increment: the current [A05 Object slot contract](a05-constrained-object-slots.md) supersedes the Object-call admission and source-support limits below. The original revision-specific validation remains historical evidence.
+
 The direct CIL engine admits `constrained. <TypeDef>; callvirt
 System.Object.ToString(): string` for nongeneric internal reference-free sequential
 structs. A public virtual reuse-slot override receives the original owned managed

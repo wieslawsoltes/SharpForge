@@ -1,3 +1,6 @@
+import {bindFrameworkDelegate} from './framework-delegates.js';
+import {bindCoreProperty} from './core-properties.js';
+import {executableFrameworkType} from '../framework-type-selection.js';
 import {DiagnosticId} from '../diagnostics/codes.js';
 import {canonicalType,frameworkType,enumValue,eventsFor} from '@sharpforge/framework';
 import {BuiltinMap} from '@sharpforge/bytecode';
@@ -5,7 +8,7 @@ import {numeric,isReference,assignable,pathOf,typeText} from '../type-utils.js';
 import {classifyBinary} from './operators.js';
 import {bindArrayCreation} from './array-creation.js';
 import {bindValueArgument} from './value-arguments.js';
-import {BoundLiteral,BoundDefaultExpression,BoundLocal,BoundParameter,BoundThisReference,BoundFieldAccess,BoundPropertyAccess,BoundIndexerAccess,BoundArrayAccess,BoundArrayLength,BoundCall,BoundObjectCreationExpression,BoundObjectInitializerMember,BoundCollectionElementInitializer,BoundDelegateCreationExpression,BoundUnaryOperator,BoundIncrementOperator,BoundBinaryOperator,BoundNullCoalescingOperator,BoundConditionalOperator,BoundAssignmentOperator,BoundCompoundAssignmentOperator,BoundNullCoalescingAssignmentOperator,BoundEventAssignmentOperator,BoundConversion,BoundInterpolatedString,BoundStringInsert,BoundAwaitExpression,BoundSwitchExpression,BoundSwitchExpressionArm,BoundConstantPattern,BoundCollectionExpression,BoundCollectionElement,BoundCollectionSpread} from '../bound/nodes.js';
+import {BoundLiteral,BoundDefaultExpression,BoundLocal,BoundParameter,BoundThisReference,BoundFieldAccess,BoundPropertyAccess,BoundIndexerAccess,BoundArrayAccess,BoundArrayLength,BoundCall,BoundObjectCreationExpression,BoundObjectInitializerMember,BoundCollectionElementInitializer,BoundUnaryOperator,BoundIncrementOperator,BoundBinaryOperator,BoundNullCoalescingOperator,BoundConditionalOperator,BoundAssignmentOperator,BoundCompoundAssignmentOperator,BoundNullCoalescingAssignmentOperator,BoundEventAssignmentOperator,BoundConversion,BoundInterpolatedString,BoundStringInsert,BoundAwaitExpression,BoundSwitchExpression,BoundSwitchExpressionArm,BoundConstantPattern,BoundCollectionExpression,BoundCollectionElement,BoundCollectionSpread} from '../bound/nodes.js';
 /**
  * Expression binding: syntax to bound expressions typed with TypeSymbols. No IR is produced here; evaluation order,
  * temporaries and ABI calls are the business of lowering and code generation.
@@ -56,9 +59,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
       case 'Member':{
         const type=this.infer(node.target);
         if(node.name==='Length'&&(type==='string'||type.endsWith('[]')))return this.node(BoundArrayLength,node,{expression:this.bindExpression(node.target)},'int');
-        if(['Name','FullName'].includes(node.name)&&type==='System.Type')return this.node(BoundPropertyAccess,node,{receiver:this.bindExpression(node.target),property:this.sym.builtin(BuiltinMap.get('Type.'+node.name))},'string');
-        if(node.name==='Message'&&type==='Exception')return this.node(BoundPropertyAccess,node,{receiver:this.bindExpression(node.target),property:this.sym.builtin(BuiltinMap.get('Exception.Message'))},'string');
-        if(pathOf(node)==='Environment.TickCount'||pathOf(node)==='System.Environment.TickCount')return this.node(BoundPropertyAccess,node,{receiver:null,property:this.sym.builtin(BuiltinMap.get('Environment.TickCount'))},'int');
+        const coreProperty=bindCoreProperty(this,node,type);if(coreProperty)return coreProperty;
         const property=this.property(node);if(property)return this.readProperty(property,node);
         const f=this.field(node);if(f){this.c.reference(node,f.symbol);return this.node(BoundFieldAccess,node,{receiver:f.isStatic?null:this.bindExpression(node.target),field:this.sym.field(f)},f.type);}
         this.c.report(node,DiagnosticId.CS1061,[typeText(type),node.name]);return this.bad(node);}
@@ -224,12 +225,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
     if(existing&&existing.getMethod===getter&&existing.setMethod===setter)return existing;
     return Object.freeze({kind:'Property',name,getMethod:getter,setMethod:setter,isStatic:(get??set).isStatic,containingSymbol:owner,toDisplayString:()=>owner.toDisplayString()+'.'+name});
   }
-  bindDelegate(node,type){
-    const binding=this.delegateMethod(node,type,true);if(!binding)return this.bad(node,[],type);let receiver=null;
-    if(!binding.method.isStatic){if(binding.receiver)receiver=this.bindExpression(binding.receiver);else{if(!this.thisParameter)this.c.report(node,DiagnosticId.CS0120,[binding.method.name]);receiver=this.implicitThis(node);}}
-    if(binding.method.symbol)this.c.reference(binding.node,binding.method.symbol);
-    return this.node(BoundDelegateCreationExpression,node,{receiver,method:this.sym.method(binding.method)},canonicalType(type));
-  }
+  bindDelegate(node,type){return bindFrameworkDelegate(this,node,type);}
   bindFrameworkArguments(args,parameters,boxPrimitives=false){
     return args.map((arg,i)=>bindValueArgument(this,arg,parameters[i],boxPrimitives));
   }
@@ -247,7 +243,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
       return this.node(BoundCall,node,{receiver,method:this.sym.contract(call.contract),args,intrinsic:null},call.contract.result);
     }
     if(node.kind==='New'){
-      const t=this.c.findType(node.type,this.m)?null:frameworkType(node.type);if(!t)return undefined;if(t.kind==='delegate')return this.bindDelegate(node,t.name);
+      const t=executableFrameworkType(this.c,node.type,this.m);if(!t)return undefined;if(t.kind==='delegate')return this.bindDelegate(node,t.name);
       const constructor=this.frameworkConstructor(t.name,node);
       if(!constructor){this.c.report(node,DiagnosticId.CS1729,[typeText(t.name),node.args.length]);return this.bad(node,[],t.name);}
       const args=this.bindFrameworkArguments(node.args,constructor.parameters,t.kind==='bcl'),initializers=[],collectionInitializers=[];let broken=false;

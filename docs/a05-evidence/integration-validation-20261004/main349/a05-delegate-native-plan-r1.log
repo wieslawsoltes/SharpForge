@@ -1,0 +1,70 @@
+✔ direct CIL delegate binding: closed-static-null (36.423166ms)
+✔ direct CIL delegate binding: closed-static-string (5.344381ms)
+✔ direct CIL delegate binding: open-static (4.202864ms)
+✔ direct CIL delegate binding: closed-instance (5.050359ms)
+✔ direct CIL delegate binding: open-instance (4.464528ms)
+✔ open instance invocation rejects a null receiver at the existing call gate (4.961379ms)
+✔ delegate equality compares canonical target method, type, receiver and binding (2.387978ms)
+✔ static target type, value binding and foreign pointer failures precede allocation (5.693524ms)
+✔ scheduled delegates use the same closed-static arguments and snapshot identity (10.920132ms)
+✔ guest Equals uses the same identity and verifier rejects malformed Invoke signatures (2.646928ms)
+✔ public delegate profile accepts CLR arity boundary: System.Action (0.440277ms)
+✔ public delegate profile accepts CLR arity boundary: System.Action`1<int> (0.124573ms)
+✔ public delegate profile accepts CLR arity boundary: System.Action`16<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int> (0.131714ms)
+✔ public delegate profile accepts CLR arity boundary: System.Func`1<int> (0.06798ms)
+✔ public delegate profile accepts CLR arity boundary: System.Func`17<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int> (0.061861ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Action`0 (0.179434ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Action`0<> (0.045677ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Action`17<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int> (0.086908ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Func`18<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int> (0.035021ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Func (0.055721ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Func`0 (0.029603ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Func`0<> (0.032017ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Func`01<int> (0.030055ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Action`x<int> (0.029443ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Action`-1<int> (0.032848ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Action`1<> (0.065807ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Func`1 (0.056353ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Action<int> (0.036945ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Func`2<int> (0.029213ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Func`1<int,int> (0.02705ms)
+✔ public delegate profile rejects malformed or out-of-range arity: System.Action`2<int> (0.109251ms)
+✔ registered framework canonicalization cannot bypass the standard delegate arity guard (0.107278ms)
+✔ ldvirtftn binds the override and original receiver, PIC false (40.256617ms)
+✔ ldvirtftn binds the override and original receiver, PIC true (9.5205ms)
+✔ managed delegate null capture throws NullReferenceException (5.821011ms)
+✔ managed delegate null invoke throws NullReferenceException (3.488205ms)
+✔ virtual delegate equality includes the selected body and receiver identity (6.899545ms)
+✔ managed Combine invokes ordered targets and returns the final result (6.758438ms)
+✔ managed Remove removes the last matching subsequence (5.142133ms)
+✔ managed Remove retains order after removing a final scalar occurrence and yields null for the full list (11.270176ms)
+✔ GetInvocationList returns an independent ordered array of equal single-target delegates (12.329011ms)
+✔ native provenance retains exact tree and generated SDK file while permitting untracked evidence (44.958313ms)
+✔ native provenance rejects unstaged and staged tracked edits before native work (36.268729ms)
+✔ native provenance records public workflow and PR identities without copying the event payload (26.778227ms)
+✔ A05 native plan keeps SDK policy, unsafe compilation and replay evidence explicit (1.414848ms)
+FAILED failed: /tmp/sharpforge-a05-plan-gZc30K/failed/result.json
+BLOCKED dependent: /tmp/sharpforge-a05-plan-gZc30K/dependent/result.json
+UNSUPPORTED sdk-policy: /tmp/sharpforge-a05-plan-gZc30K/sdk-policy/result.json
+PASSED last: /tmp/sharpforge-a05-plan-gZc30K/last/result.json
+✔ A05 native aggregation continues independent failures and never counts unavailable evidence as a pass (17.959242ms)
+BLOCKED fixture: /tmp/sharpforge-a05-missing-sdk-wH4zuk/fixture/result.json
+✔ A05 native missing SDK blocks every case and retains a complete failed report (3.220241ms)
+✔ external vararg admission retains member and unsupported convention (false) (12.724833ms)
+✔ external vararg admission retains member and unsupported convention (true) (1.956644ms)
+✔ pinvoke vararg admission retains member and unsupported convention (false) (1.906481ms)
+✔ pinvoke vararg admission retains member and unsupported convention (true) (1.594772ms)
+✔ native vararg admission retains member and unsupported convention (false) (1.57897ms)
+✔ native vararg admission retains member and unsupported convention (true) (1.216738ms)
+✔ a non-vararg unmanaged call convention retains its structured diagnostic (1.156839ms)
+✔ managed varargs remain executable with optional arguments=false (10.575295ms)
+✔ managed varargs remain executable with optional arguments=true (2.800905ms)
+✔ a malformed managed fixed signature remains invalid, not unsupported (1.669913ms)
+ℹ tests 57
+ℹ suites 0
+ℹ pass 57
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2667.993152

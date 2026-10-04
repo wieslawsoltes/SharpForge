@@ -1,0 +1,21 @@
+{
+  "id": "numeric-replay",
+  "status": "unsupported",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "--test",
+      "--test-concurrency=1",
+      "tests/numeric-differential.test.js"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {
+    "SHARPFORGE_NUMERIC_ORACLE_DIR": "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/numeric-capture/evidence"
+  },
+  "timeoutMs": 900000,
+  "evidence": "numeric-replay",
+  "report": "numeric-replay/result.json",
+  "reason": "The numeric conversion policy and generated oracle explicitly pin the .NET 10 JIT; .NET 8 is not qualified.",
+  "finishedAt": "2026-10-04T19:16:38.907Z"
+}

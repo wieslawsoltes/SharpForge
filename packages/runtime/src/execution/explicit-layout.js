@@ -21,10 +21,10 @@ function plan(vm, table, cache, context) {
     throw new ManagedFault('TypeLoadException', 'Explicit scalar layout requires an owned closed nonrecursive type');
   }
   if (context.active.size >= 128) unsupported('nesting limit exceeded');
-  if (!table.flags.valueType || table.flags.nullable || table.flags.refStruct || table.flags.pointer ||
-      table.flags.external || table.flags.dynamic && !table.flags.enum || table.name === 'System.Decimal') unsupported(table.name);
+  if (table.flags.nullable || table.flags.refStruct || table.flags.pointer || table.name === 'System.Decimal') unsupported(table.name);
   const layout = valueLayout(vm, table);
-  if (layout.containsReferences) unsupported('managed reference fields in ' + table.name);
+  if (!table.flags.valueType) return layout;
+  if (table.flags.external || table.flags.dynamic && !table.flags.enum) unsupported(table.name);
   context.remaining -= table.fields.length;
   if (context.remaining < 0) unsupported('field expansion limit exceeded');
   if (!scalarAccess(table)) {
@@ -38,7 +38,7 @@ function plan(vm, table, cache, context) {
   return layout;
 }
 
-/** Metadata-only scalar overlay layout, shared by explicit roots and nested sequential views. */
+/** Metadata-only overlay layout; managed slots remain separate from byte-addressable scalars. */
 export function byteLayout(vm, table) {
   const cache = cacheFor(vm);
   if (cache.has(table)) return cache.get(table);
@@ -46,7 +46,7 @@ export function byteLayout(vm, table) {
 }
 
 export function hasExplicitLayout(vm, table) {
-  return (vm.typeSystem.types.get(table.definitionToken)?.flags & 0x18) === 0x10;
+  return (vm.typeSystem?.types.get(table.definitionToken)?.flags & 0x18) === 0x10;
 }
 
 /** Host copy-work limit; checked on each operation rather than cached with metadata. */

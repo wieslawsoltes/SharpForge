@@ -1,0 +1,28 @@
+{
+  "id": "enum-unboxing",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/enum-unboxing",
+      "--framework",
+      "net8.0",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/enum-unboxing/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "enum-unboxing/evidence",
+  "report": "enum-unboxing/result.json",
+  "startedAt": "2026-10-04T19:15:26.119Z",
+  "durationMs": 3964.470709000001,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "enum-unboxing/stdout.log",
+  "stderr": "enum-unboxing/stderr.log",
+  "finishedAt": "2026-10-04T19:15:30.086Z"
+}

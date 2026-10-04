@@ -1,6 +1,6 @@
 import {resolveCallType} from './generic-calls.js';
 import {exceptionMatches} from './exception-types.js';
-import {CilError,decodeCoded} from '@sharpforge/cil';
+import {CilError,decodeCoded,readSourceTypeIdentities} from '@sharpforge/cil';
 import {VirtualDispatch} from './vtable.js';
 import {MethodTableRegistry} from './method-table.js';
 import {castCacheFor} from './casting.js';
@@ -19,6 +19,7 @@ export class CilTypeSystem {
     this.initializers=new Map();
     this.dispatch=new VirtualDispatch(vm.inspector);
     const metadata=vm.inspector.metadata;
+    const sourceIdentities=readSourceTypeIdentities(vm.inspector);
     this.methodTables=new MethodTableRegistry({nativeIntBits:vm.options?.nativeIntBits,tokenResolver:token=>cachedTypeName(vm,token)});
     for(const type of this.types.values()) {
       this.initializers.set(type.token,type.methods.find(method=>method.name==='.cctor')??null);
@@ -31,6 +32,7 @@ export class CilTypeSystem {
       const underlying=base==='System.Enum'?fields.find(field=>field.name==='value__')?.type??'int':null;
       const dispatch=this.dispatch.table(type.token);
       this.methodTables.define({name:type.name,token:type.token,base,interfaces:type.interfaces.map(token=>metadata.typeName(token)),fields,
+        sourceIdentity:sourceIdentities.get(type.token),genericArity:parameters.length,
         flags:{interface:!!(type.flags&0x20),abstract:!!(type.flags&0x80),sealed:!!(type.flags&0x100),enum:base==='System.Enum',valueType:base==='System.ValueType'||base==='System.Enum'},
         enumUnderlyingType:underlying,variance:parameters.map(row=>(row[1]&3)===1?1:(row[1]&3)===2?-1:0),
         vtable:[...[...dispatch.slots.keys()].map(slot=>[slot,this.dispatch.resolveSlot(dispatch,slot)]),...[...dispatch.declarations].map(([declaration,slot])=>[declaration,this.dispatch.resolveSlot(dispatch,slot)])]});

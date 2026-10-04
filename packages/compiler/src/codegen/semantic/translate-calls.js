@@ -7,12 +7,10 @@ import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { defaultSourceOf } from '../../overload/override-parameters.js';
 import { n } from './node-factory.js';
+import {objectSlotSymbol} from './object-slots.js';
 
 const primitiveToString = new Set(['int', 'double', 'bool', 'string']);
-const derivesFrom = (type, ancestor) => {
-  for (let current = type.baseType; current; current = current.baseType) if (current.equals(ancestor)) return true;
-  return false;
-};
+
 
 /** Class mixin: calls, creation, properties, indexers, events. */
 export const CallTranslation = Base =>
@@ -101,6 +99,16 @@ export const CallTranslation = Base =>
     }
     frameworkInvocation(node, method) {
       const type = this.imageType(node.type, node.syntax);
+      const objectSlot = method.containingType.specialType === 'System_Object' && objectSlotSymbol(method);
+      if (objectSlot && node.receiver) {
+        if (node.receiver.kind === 'Base') return this.unsupported('base member access', node.syntax);
+        let receiver = this.expression(node.receiver);
+        if (!this.types.isReference(receiver.legacyType)) receiver = {
+          kind: 'BoxValue', legacyType: 'object', isExpression: true, operand: receiver, valueType: receiver.legacyType
+        };
+        return n.frameworkCall({builtin: BuiltinMap.get('object.' + objectSlot)}, null,
+          [receiver, ...this.arguments(node, method)], type);
+      }
       if (method.contract || method.builtin) {
         const receiver = method.isStatic || !node.receiver ? null : this.expression(node.receiver);
         this.checkFrameworkParameters(method, node.syntax);
@@ -152,10 +160,7 @@ export const CallTranslation = Base =>
       return this.withInitializers(node, creation);
     }
     frameworkCreation(node) {
-      const ctor = node.constructor,
-        exception = this.g.analysis.core.exception;
-      if (!node.type.equals(exception) && derivesFrom(node.type, exception))
-        return this.unsupported(`exception class '${node.type.toDisplayString()}' (the runtime creates System.Exception only)`, node.syntax);
+      const ctor = node.constructor;
       const name = this.imageType(node.type, node.syntax);
       if (!ctor || typeof ctor !== 'object' || !(ctor.contract || ctor.builtin))
         return this.unsupported(`creating '${node.type.toDisplayString()}' (constructor not in the framework registry)`, node.syntax);

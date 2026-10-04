@@ -1,0 +1,1076 @@
+{
+  "format": "SharpForge.CIEvidenceArchive/1",
+  "head": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+  "tree": "21dd929c4087bb7dc97fdd735d88ae36d1e76050",
+  "scope": "Completed three browser and two Windows x86 native-width cells; standard native matrix archived separately after completion.",
+  "artifacts": [
+    {
+      "id": 11312240172,
+      "name": "a05-native-width-windows-x86-8.0.425",
+      "size_in_bytes": 10805,
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11312240172",
+      "archive_download_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11312240172/zip",
+      "expired": false,
+      "created_at": "2026-10-04T18:36:40Z",
+      "expires_at": "2026-10-18T18:36:39Z",
+      "updated_at": "2026-10-04T18:36:40Z",
+      "digest": "sha256:794f9fce8b89640cc18dbbfebd72f2e9810b323c0d397b92b9a47a10c9344d59",
+      "workflow_run": {
+        "id": 37225004330,
+        "repository_id": 1402948787,
+        "head_repository_id": 1402948787,
+        "head_branch": "codex/a05-e01-started-handoff-20261004",
+        "head_sha": "312cd9242a492ce6f03e7e034a51cc17669a7edf"
+      },
+      "jobId": 111502740922,
+      "verifiedZipSha256": "794f9fce8b89640cc18dbbfebd72f2e9810b323c0d397b92b9a47a10c9344d59",
+      "retainedFileCount": 10,
+      "omittedEntries": [
+        "native-width/Qualification.dll",
+        "native-width/RuntimeProbe.dll"
+      ]
+    },
+    {
+      "id": 11312225344,
+      "name": "a05-native-width-windows-x86-10.0.201",
+      "size_in_bytes": 10939,
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11312225344",
+      "archive_download_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11312225344/zip",
+      "expired": false,
+      "created_at": "2026-10-04T18:38:06Z",
+      "expires_at": "2026-10-18T18:38:06Z",
+      "updated_at": "2026-10-04T18:38:06Z",
+      "digest": "sha256:87f9412ec347e252a88caeb7daf3a62219279da5ec89472029bafacb1f03f16a",
+      "workflow_run": {
+        "id": 37225004330,
+        "repository_id": 1402948787,
+        "head_repository_id": 1402948787,
+        "head_branch": "codex/a05-e01-started-handoff-20261004",
+        "head_sha": "312cd9242a492ce6f03e7e034a51cc17669a7edf"
+      },
+      "jobId": 111502740908,
+      "verifiedZipSha256": "87f9412ec347e252a88caeb7daf3a62219279da5ec89472029bafacb1f03f16a",
+      "retainedFileCount": 10,
+      "omittedEntries": [
+        "native-width/Qualification.dll",
+        "native-width/RuntimeProbe.dll"
+      ]
+    },
+    {
+      "id": 11312155408,
+      "name": "a05-browser-ubuntu-chromium",
+      "size_in_bytes": 653005,
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11312155408",
+      "archive_download_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11312155408/zip",
+      "expired": false,
+      "created_at": "2026-10-04T18:36:10Z",
+      "expires_at": "2026-10-18T18:36:09Z",
+      "updated_at": "2026-10-04T18:36:10Z",
+      "digest": "sha256:d9cb4bc8b853c2d4c57e9d26a590ef9cccd4e8b25c09a0cf2a28e65a6d6b4efa",
+      "workflow_run": {
+        "id": 37225004274,
+        "repository_id": 1402948787,
+        "head_repository_id": 1402948787,
+        "head_branch": "codex/a05-e01-started-handoff-20261004",
+        "head_sha": "312cd9242a492ce6f03e7e034a51cc17669a7edf"
+      },
+      "jobId": 111502740579,
+      "verifiedZipSha256": "d9cb4bc8b853c2d4c57e9d26a590ef9cccd4e8b25c09a0cf2a28e65a6d6b4efa",
+      "retainedFileCount": 36,
+      "omittedEntries": [
+        "a05-browser/csp-denied-fallback/trace.zip",
+        "a05-browser-assets/speedscope.zip",
+        "a05-browser-assets/ui/speedscope/LICENSE",
+        "a05-browser-assets/ui/speedscope/README",
+        "a05-browser-assets/ui/speedscope/SourceCodePro-Regular.ttf-ILST5JV6.woff2",
+        "a05-browser-assets/ui/speedscope/favicon-16x16-V2DMIAZS.js",
+        "a05-browser-assets/ui/speedscope/favicon-16x16-VSI62OPJ.png",
+        "a05-browser-assets/ui/speedscope/favicon-32x32-3EB2YCUY.png",
+        "a05-browser-assets/ui/speedscope/favicon-32x32-THY3JDJL.js",
+        "a05-browser-assets/ui/speedscope/favicon-FOKUP5Y5.ico",
+        "a05-browser-assets/ui/speedscope/favicon-M34RF7BI.js",
+        "a05-browser-assets/ui/speedscope/file-format-schema.json",
+        "a05-browser-assets/ui/speedscope/index.html",
+        "a05-browser-assets/ui/speedscope/perf-vertx-stacks-01-collapsed-all-ZNUIGAJL.txt",
+        "a05-browser-assets/ui/speedscope/release.txt",
+        "a05-browser-assets/ui/speedscope/source-code-pro.LICENSE.md",
+        "a05-browser-assets/ui/speedscope/speedscope-432XE7GS.js",
+        "a05-browser-assets/ui/speedscope/speedscope-GHPHNKXC.css"
+      ]
+    },
+    {
+      "id": 11311537364,
+      "name": "a05-browser-ubuntu-firefox",
+      "size_in_bytes": 650564,
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11311537364",
+      "archive_download_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11311537364/zip",
+      "expired": false,
+      "created_at": "2026-10-04T18:37:31Z",
+      "expires_at": "2026-10-18T18:37:31Z",
+      "updated_at": "2026-10-04T18:37:31Z",
+      "digest": "sha256:52be8ec90710ec49c899f0dc478b9b7f5300e63d4654b44574b442f7f5f59387",
+      "workflow_run": {
+        "id": 37225004274,
+        "repository_id": 1402948787,
+        "head_repository_id": 1402948787,
+        "head_branch": "codex/a05-e01-started-handoff-20261004",
+        "head_sha": "312cd9242a492ce6f03e7e034a51cc17669a7edf"
+      },
+      "jobId": 111502740522,
+      "verifiedZipSha256": "52be8ec90710ec49c899f0dc478b9b7f5300e63d4654b44574b442f7f5f59387",
+      "retainedFileCount": 36,
+      "omittedEntries": [
+        "a05-browser/csp-denied-fallback/trace.zip",
+        "a05-browser-assets/speedscope.zip",
+        "a05-browser-assets/ui/speedscope/LICENSE",
+        "a05-browser-assets/ui/speedscope/README",
+        "a05-browser-assets/ui/speedscope/SourceCodePro-Regular.ttf-ILST5JV6.woff2",
+        "a05-browser-assets/ui/speedscope/favicon-16x16-V2DMIAZS.js",
+        "a05-browser-assets/ui/speedscope/favicon-16x16-VSI62OPJ.png",
+        "a05-browser-assets/ui/speedscope/favicon-32x32-THY3JDJL.js",
+        "a05-browser-assets/ui/speedscope/favicon-32x32-3EB2YCUY.png",
+        "a05-browser-assets/ui/speedscope/favicon-FOKUP5Y5.ico",
+        "a05-browser-assets/ui/speedscope/favicon-M34RF7BI.js",
+        "a05-browser-assets/ui/speedscope/file-format-schema.json",
+        "a05-browser-assets/ui/speedscope/index.html",
+        "a05-browser-assets/ui/speedscope/perf-vertx-stacks-01-collapsed-all-ZNUIGAJL.txt",
+        "a05-browser-assets/ui/speedscope/release.txt",
+        "a05-browser-assets/ui/speedscope/source-code-pro.LICENSE.md",
+        "a05-browser-assets/ui/speedscope/speedscope-432XE7GS.js",
+        "a05-browser-assets/ui/speedscope/speedscope-GHPHNKXC.css"
+      ]
+    },
+    {
+      "id": 11311598119,
+      "name": "a05-browser-ubuntu-webkit",
+      "size_in_bytes": 508107,
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11311598119",
+      "archive_download_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11311598119/zip",
+      "expired": false,
+      "created_at": "2026-10-04T18:39:24Z",
+      "expires_at": "2026-10-18T18:39:22Z",
+      "updated_at": "2026-10-04T18:39:24Z",
+      "digest": "sha256:e39fd1563709352b1fdc84c7d893b1186e4a7c449cd56724b04eacc0988b664b",
+      "workflow_run": {
+        "id": 37225004274,
+        "repository_id": 1402948787,
+        "head_repository_id": 1402948787,
+        "head_branch": "codex/a05-e01-started-handoff-20261004",
+        "head_sha": "312cd9242a492ce6f03e7e034a51cc17669a7edf"
+      },
+      "jobId": 111502740393,
+      "verifiedZipSha256": "e39fd1563709352b1fdc84c7d893b1186e4a7c449cd56724b04eacc0988b664b",
+      "retainedFileCount": 35,
+      "omittedEntries": [
+        "a05-browser-assets/speedscope.zip",
+        "a05-browser-assets/ui/speedscope/README",
+        "a05-browser-assets/ui/speedscope/LICENSE",
+        "a05-browser-assets/ui/speedscope/SourceCodePro-Regular.ttf-ILST5JV6.woff2",
+        "a05-browser-assets/ui/speedscope/favicon-16x16-V2DMIAZS.js",
+        "a05-browser-assets/ui/speedscope/favicon-16x16-VSI62OPJ.png",
+        "a05-browser-assets/ui/speedscope/favicon-32x32-3EB2YCUY.png",
+        "a05-browser-assets/ui/speedscope/favicon-32x32-THY3JDJL.js",
+        "a05-browser-assets/ui/speedscope/favicon-FOKUP5Y5.ico",
+        "a05-browser-assets/ui/speedscope/favicon-M34RF7BI.js",
+        "a05-browser-assets/ui/speedscope/file-format-schema.json",
+        "a05-browser-assets/ui/speedscope/index.html",
+        "a05-browser-assets/ui/speedscope/perf-vertx-stacks-01-collapsed-all-ZNUIGAJL.txt",
+        "a05-browser-assets/ui/speedscope/release.txt",
+        "a05-browser-assets/ui/speedscope/source-code-pro.LICENSE.md",
+        "a05-browser-assets/ui/speedscope/speedscope-432XE7GS.js",
+        "a05-browser-assets/ui/speedscope/speedscope-GHPHNKXC.css"
+      ]
+    }
+  ],
+  "retainedFiles": [
+    {
+      "path": "native-width-sdk8/installation.json",
+      "bytes": 697,
+      "sha256": "43431a2815984bef8b0a320e24b5194a3a64dc00e2933a8cc442153755015157",
+      "artifactId": 11312240172,
+      "originalPath": "installation.json"
+    },
+    {
+      "path": "native-width-sdk8/dotnet-info.txt",
+      "bytes": 1520,
+      "sha256": "e32277564bdb3cfba9e5f8fd3f4bcec5b5fde03137aaff410df389ae422a6bf7",
+      "artifactId": 11312240172,
+      "originalPath": "dotnet-info.txt"
+    },
+    {
+      "path": "native-width-sdk8/installation.log",
+      "bytes": 1257,
+      "sha256": "bde35d00f2a8508f325643d72b6ea49df2ea4898852767ce2571f034febb02d9",
+      "artifactId": 11312240172,
+      "originalPath": "installation.log"
+    },
+    {
+      "path": "native-width-sdk8/native-width/expected.txt",
+      "bytes": 120,
+      "sha256": "0df5184d168fe5cde1477f8e74281d32c81440afb2c9c2f761c7abe213de66d7",
+      "artifactId": 11312240172,
+      "originalPath": "native-width/expected.txt"
+    },
+    {
+      "path": "native-width-sdk8/native-width/qualification.json",
+      "bytes": 6428,
+      "sha256": "b713eff0315ac49a938b1dbb0390978a846d899a92d76e872999c0b4f3fa4037",
+      "artifactId": 11312240172,
+      "originalPath": "native-width/qualification.json"
+    },
+    {
+      "path": "native-width-sdk8/native-width/Qualification.runtimeconfig.json",
+      "bytes": 340,
+      "sha256": "28329cf08f6505e73806b17558b187c02f0c1c516fe47ebfb7a013d082aaa306",
+      "artifactId": 11312240172,
+      "originalPath": "native-width/Qualification.runtimeconfig.json"
+    },
+    {
+      "path": "native-width-sdk8/native-width/RuntimeProbe.cs",
+      "bytes": 401,
+      "sha256": "e71c8ef2c6af179c6c2e7cfc64e8f4193ad4110475875f729771938bd32bb1d7",
+      "artifactId": 11312240172,
+      "originalPath": "native-width/RuntimeProbe.cs"
+    },
+    {
+      "path": "native-width-sdk8/native-width/source/Program.cs",
+      "bytes": 1520,
+      "sha256": "b764599bc1399b0a3af0b53fa0a747a0abb811531c778cd2f1a56673bd1c3533",
+      "artifactId": 11312240172,
+      "originalPath": "native-width/source/Program.cs"
+    },
+    {
+      "path": "native-width-sdk8/native-width-result.json",
+      "bytes": 2162,
+      "sha256": "18d612d190718d9c1a68c35b3349d25cb2248d7f71cf8fb0b935b5c56146e06d",
+      "artifactId": 11312240172,
+      "originalPath": "native-width-result.json"
+    },
+    {
+      "path": "native-width-sdk8/qualification.json",
+      "bytes": 925,
+      "sha256": "5c11b586c4d265e57a0eec7817dbdb53e265befca0e0b0b49f4ba09b0eeb6068",
+      "artifactId": 11312240172,
+      "originalPath": "qualification.json"
+    },
+    {
+      "path": "native-width-sdk10/dotnet-info.txt",
+      "bytes": 1867,
+      "sha256": "59c3759f91e772455ae9a8f2e605f29a5350865fd287d7f8386733c873d49e2c",
+      "artifactId": 11312225344,
+      "originalPath": "dotnet-info.txt"
+    },
+    {
+      "path": "native-width-sdk10/installation.json",
+      "bytes": 698,
+      "sha256": "cfe067cd8d356cf9b17645fbf6e847ef8b6570c8c9bbe9d3e343010ebeb17e0d",
+      "artifactId": 11312225344,
+      "originalPath": "installation.json"
+    },
+    {
+      "path": "native-width-sdk10/installation.log",
+      "bytes": 1257,
+      "sha256": "060312d00700c1166e1f6a68687d6716ab2d412b4df44824484350d85536acef",
+      "artifactId": 11312225344,
+      "originalPath": "installation.log"
+    },
+    {
+      "path": "native-width-sdk10/native-width/expected.txt",
+      "bytes": 120,
+      "sha256": "0df5184d168fe5cde1477f8e74281d32c81440afb2c9c2f761c7abe213de66d7",
+      "artifactId": 11312225344,
+      "originalPath": "native-width/expected.txt"
+    },
+    {
+      "path": "native-width-sdk10/native-width/qualification.json",
+      "bytes": 6447,
+      "sha256": "71da31ea631b603fecef55984227aeee4de929f4d8b84eb6a5fa9730a1803990",
+      "artifactId": 11312225344,
+      "originalPath": "native-width/qualification.json"
+    },
+    {
+      "path": "native-width-sdk10/native-width/Qualification.runtimeconfig.json",
+      "bytes": 342,
+      "sha256": "c230a317a54dd960bcbeb5f347f52e18dc665a26f7efda2159fced9a5ac7e097",
+      "artifactId": 11312225344,
+      "originalPath": "native-width/Qualification.runtimeconfig.json"
+    },
+    {
+      "path": "native-width-sdk10/native-width/RuntimeProbe.cs",
+      "bytes": 401,
+      "sha256": "e71c8ef2c6af179c6c2e7cfc64e8f4193ad4110475875f729771938bd32bb1d7",
+      "artifactId": 11312225344,
+      "originalPath": "native-width/RuntimeProbe.cs"
+    },
+    {
+      "path": "native-width-sdk10/native-width/source/Program.cs",
+      "bytes": 1520,
+      "sha256": "b764599bc1399b0a3af0b53fa0a747a0abb811531c778cd2f1a56673bd1c3533",
+      "artifactId": 11312225344,
+      "originalPath": "native-width/source/Program.cs"
+    },
+    {
+      "path": "native-width-sdk10/native-width-result.json",
+      "bytes": 2169,
+      "sha256": "f3b85f7c4ff1b6468c15e6d42ff51d7f0e44c6360f25c9e8ba85d65c6d013c99",
+      "artifactId": 11312225344,
+      "originalPath": "native-width-result.json"
+    },
+    {
+      "path": "native-width-sdk10/qualification.json",
+      "bytes": 930,
+      "sha256": "8ece934146fd6096f77c74f6817bd7e8051306b1204028eddc6d7ab5f62edb0c",
+      "artifactId": 11312225344,
+      "originalPath": "qualification.json"
+    },
+    {
+      "path": "browser-chromium/csp-denied-fallback/console.log",
+      "bytes": 1777,
+      "sha256": "ef010839d3de8a71d34cfa6238febade821c11c873525540aef4ffcf163afeac",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/csp-denied-fallback/console.log"
+    },
+    {
+      "path": "browser-chromium/csp-denied-fallback/screenshot.png",
+      "bytes": 8400,
+      "sha256": "becd6e165634ac5438292ec600b7cd557f113780568688303a8f63f357ae119a",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/csp-denied-fallback/screenshot.png"
+    },
+    {
+      "path": "browser-chromium/csp-denied-fallback/runtime-observation.json",
+      "bytes": 4623,
+      "sha256": "f9d431decc02bded65dcef0c6dd0da584858f042baabfab84d4ce02d961f961b",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/csp-denied-fallback/runtime-observation.json"
+    },
+    {
+      "path": "browser-chromium/csp-denied-fallback/session.json",
+      "bytes": 1799,
+      "sha256": "0964cd094fe275a774cc2f335c00fff43316d5076e3fb30c9768484951e90f99",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/csp-denied-fallback/session.json"
+    },
+    {
+      "path": "browser-chromium/debugger-deopt/runtime-observation.json",
+      "bytes": 1525,
+      "sha256": "24e77911a410163d7502aca93f51333a5e043664344bac56df9d89eb18e7e8e4",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/debugger-deopt/runtime-observation.json"
+    },
+    {
+      "path": "browser-chromium/debugger-deopt/console.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/debugger-deopt/console.log"
+    },
+    {
+      "path": "browser-chromium/debugger-deopt/session.json",
+      "bytes": 315,
+      "sha256": "019a8a485ce5188a6891231cb78a2016dd29c31b124cbb7c6100eef5545d71d6",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/debugger-deopt/session.json"
+    },
+    {
+      "path": "browser-chromium/profile-cil.speedscope.json",
+      "bytes": 873,
+      "sha256": "ffab84c6b541899de599881726101e69b21219a983f50f213a263a1f3da9c488",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/profile-cil.speedscope.json"
+    },
+    {
+      "path": "browser-chromium/profile-exports/console.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/profile-exports/console.log"
+    },
+    {
+      "path": "browser-chromium/profile-exports/runtime-observation.json",
+      "bytes": 12704,
+      "sha256": "5ce3703184a4074b03f3025e549c237ad218a45f32b67601649bbccaf92f42e6",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/profile-exports/runtime-observation.json"
+    },
+    {
+      "path": "browser-chromium/profile-exports/session.json",
+      "bytes": 317,
+      "sha256": "aff6771fbd469e7a62e4ed5cd7c132c29e70bc729399bf6c081caa9e0bef0b64",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/profile-exports/session.json"
+    },
+    {
+      "path": "browser-chromium/profile-reload.speedscope.json",
+      "bytes": 855,
+      "sha256": "683e2a6417ae3bf1dcf0514203859fb8d7574f60e59e2158a5011b7b5ca87f6a",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/profile-reload.speedscope.json"
+    },
+    {
+      "path": "browser-chromium/profile-source.speedscope.json",
+      "bytes": 855,
+      "sha256": "1ce4c85b3042640f221f889f0e429f92ed7824a8c79c4b932562d4a28728bcfc",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/profile-source.speedscope.json"
+    },
+    {
+      "path": "browser-chromium/report.json",
+      "bytes": 25873,
+      "sha256": "a3002ebf4fd8d99b720f778eef599d5fd8ff8957288a6dbf773e3968bab8ffab",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/report.json"
+    },
+    {
+      "path": "browser-chromium/speedscope-cil/body.txt",
+      "bytes": 254,
+      "sha256": "d4681ca6a7d1defd529a6268e3fd4c9b483408a36140df0f48a5b8f43f95eaf7",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-cil/body.txt"
+    },
+    {
+      "path": "browser-chromium/speedscope-cil/console.log",
+      "bytes": 728,
+      "sha256": "08ae5125b9211eeb483de776823d3241366f3303021109e2dddb49918d854c56",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-cil/console.log"
+    },
+    {
+      "path": "browser-chromium/speedscope-cil/dom.json",
+      "bytes": 349,
+      "sha256": "86d651aa8ecb781c5b21be1b5ec8aff1630738d0b0c4f8f5cc97beee3fd0c14f",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-cil/dom.json"
+    },
+    {
+      "path": "browser-chromium/speedscope-cil/graphics.json",
+      "bytes": 127,
+      "sha256": "66ef785c642adc2cac047df1e57ce3a6a383da9e2a2c7353a007c5244eb8a247",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-cil/graphics.json"
+    },
+    {
+      "path": "browser-chromium/speedscope-cil/session.json",
+      "bytes": 319,
+      "sha256": "faf10dfb1f54aa575ca356a497e51853c47f628218eb57f0e28d01260b75a1a5",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-cil/session.json"
+    },
+    {
+      "path": "browser-chromium/speedscope-cil/speedscope.png",
+      "bytes": 22556,
+      "sha256": "c6b8dc92b067983d7f355b85be7727957aac7f257379c1cd4479eca6fab9d7ef",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-cil/speedscope.png"
+    },
+    {
+      "path": "browser-chromium/speedscope-reload/body.txt",
+      "bytes": 232,
+      "sha256": "166890dc4f837758dcf04dbb1d19dcd6645049b6da6dbf02d951e2bd1acaa62c",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-reload/body.txt"
+    },
+    {
+      "path": "browser-chromium/speedscope-reload/console.log",
+      "bytes": 725,
+      "sha256": "b2efd203c755462f151b144b2ef07178e1a23cf7dfc88355c0b03f60ef3e1724",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-reload/console.log"
+    },
+    {
+      "path": "browser-chromium/speedscope-reload/dom.json",
+      "bytes": 327,
+      "sha256": "d0e7b70dceaaa3242c6baf1a286c45cca8f52be34b244f97a67a3f32c39fce4d",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-reload/dom.json"
+    },
+    {
+      "path": "browser-chromium/speedscope-reload/graphics.json",
+      "bytes": 127,
+      "sha256": "66ef785c642adc2cac047df1e57ce3a6a383da9e2a2c7353a007c5244eb8a247",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-reload/graphics.json"
+    },
+    {
+      "path": "browser-chromium/speedscope-reload/session.json",
+      "bytes": 321,
+      "sha256": "b4085275c9bad46c426850ba9db34432f4693454d11aae4a4341dfec3fb58fed",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-reload/session.json"
+    },
+    {
+      "path": "browser-chromium/speedscope-reload/speedscope.png",
+      "bytes": 21381,
+      "sha256": "5cdbc274cc05570adb3d894210a99dd2fdbe01058aa4a20f392bd28e119539a1",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-reload/speedscope.png"
+    },
+    {
+      "path": "browser-chromium/speedscope-source/body.txt",
+      "bytes": 232,
+      "sha256": "e58f7a9c4db8d8412d572e2d0f7f1479469c3e3985e1a9965e4bb4ab068e34e1",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-source/body.txt"
+    },
+    {
+      "path": "browser-chromium/speedscope-source/console.log",
+      "bytes": 728,
+      "sha256": "c3820aa8de909e62ee020772cc1d659c70ce093983b84c7983c251b921eee388",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-source/console.log"
+    },
+    {
+      "path": "browser-chromium/speedscope-source/dom.json",
+      "bytes": 327,
+      "sha256": "a2c34e8d2144efa03e4d3588793b2fccf7f2c33c13bd2c74a517fecf951e95e1",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-source/dom.json"
+    },
+    {
+      "path": "browser-chromium/speedscope-source/graphics.json",
+      "bytes": 127,
+      "sha256": "66ef785c642adc2cac047df1e57ce3a6a383da9e2a2c7353a007c5244eb8a247",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-source/graphics.json"
+    },
+    {
+      "path": "browser-chromium/speedscope-source/session.json",
+      "bytes": 321,
+      "sha256": "cfb5963676c8cf26fabf258d49b1fc5c63e2d285d2f9654a6c17ae6c29706592",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-source/session.json"
+    },
+    {
+      "path": "browser-chromium/speedscope-source/speedscope.png",
+      "bytes": 21262,
+      "sha256": "e47b4b3432f8a5e53bf3f67f6563ce410b41e2b3a1fd0f0bc33db08988fd7667",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/speedscope-source/speedscope.png"
+    },
+    {
+      "path": "browser-chromium/wasm-execution/console.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/wasm-execution/console.log"
+    },
+    {
+      "path": "browser-chromium/wasm-execution/runtime-observation.json",
+      "bytes": 731,
+      "sha256": "f7fe4c527ba3c28f8d20fce98561bb20a9054cf116b6eaf3a2a7eda184076afa",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/wasm-execution/runtime-observation.json"
+    },
+    {
+      "path": "browser-chromium/wasm-execution/session.json",
+      "bytes": 316,
+      "sha256": "5fe52460eae688df0e7607cfa126daab08574895ccd10579418925074f527ea3",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser/wasm-execution/session.json"
+    },
+    {
+      "path": "browser-chromium/assets-manifest.json",
+      "bytes": 3096,
+      "sha256": "eb6ec67ab2493597ec987023fd44fc503dbf030115123cbc148381ba4ec640e7",
+      "artifactId": 11312155408,
+      "originalPath": "a05-browser-assets/manifest.json"
+    },
+    {
+      "path": "browser-firefox/csp-denied-fallback/console.log",
+      "bytes": 4356,
+      "sha256": "a716edf4525ae479ab0a191b32fb152ac7781b7c33bb6057ec775919a8f076c8",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/csp-denied-fallback/console.log"
+    },
+    {
+      "path": "browser-firefox/csp-denied-fallback/runtime-observation.json",
+      "bytes": 5048,
+      "sha256": "6a8435ba1addcc846a80e2b9ba0abaf2f9a7e0eccb7f9c63f78fb668596d7c83",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/csp-denied-fallback/runtime-observation.json"
+    },
+    {
+      "path": "browser-firefox/csp-denied-fallback/screenshot.png",
+      "bytes": 10896,
+      "sha256": "7a1b8d3f02b1bbfd89dd249d1bee607fb281d6e81b463d3a5a934c8337bf677f",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/csp-denied-fallback/screenshot.png"
+    },
+    {
+      "path": "browser-firefox/csp-denied-fallback/session.json",
+      "bytes": 3292,
+      "sha256": "8916976ea6029c8f130b76b5f3604e02569b14e38c3c044623ffa0f5bed037d7",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/csp-denied-fallback/session.json"
+    },
+    {
+      "path": "browser-firefox/debugger-deopt/console.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/debugger-deopt/console.log"
+    },
+    {
+      "path": "browser-firefox/debugger-deopt/runtime-observation.json",
+      "bytes": 1517,
+      "sha256": "fca520bb86a62e269a890ad2fa443ced9f48de42decefb9bec887b16e0aa1a6f",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/debugger-deopt/runtime-observation.json"
+    },
+    {
+      "path": "browser-firefox/debugger-deopt/session.json",
+      "bytes": 308,
+      "sha256": "1b01676cefa2eb93e5c6f9c69f735285ae6d95958ccf8158b7f8c6d3c0e4bff4",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/debugger-deopt/session.json"
+    },
+    {
+      "path": "browser-firefox/profile-cil.speedscope.json",
+      "bytes": 873,
+      "sha256": "ffab84c6b541899de599881726101e69b21219a983f50f213a263a1f3da9c488",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/profile-cil.speedscope.json"
+    },
+    {
+      "path": "browser-firefox/profile-exports/console.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/profile-exports/console.log"
+    },
+    {
+      "path": "browser-firefox/profile-exports/runtime-observation.json",
+      "bytes": 12696,
+      "sha256": "9aaef76c89ab3a6509bb9cd0b536952730fea3f0cd9ac6dc0c5f1307ba08e344",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/profile-exports/runtime-observation.json"
+    },
+    {
+      "path": "browser-firefox/profile-exports/session.json",
+      "bytes": 309,
+      "sha256": "b624fd8e80ace6d6c3a1e07b765bf8caf18bea265c4da16d042db5bc09b8958c",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/profile-exports/session.json"
+    },
+    {
+      "path": "browser-firefox/profile-reload.speedscope.json",
+      "bytes": 855,
+      "sha256": "683e2a6417ae3bf1dcf0514203859fb8d7574f60e59e2158a5011b7b5ca87f6a",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/profile-reload.speedscope.json"
+    },
+    {
+      "path": "browser-firefox/profile-source.speedscope.json",
+      "bytes": 855,
+      "sha256": "1ce4c85b3042640f221f889f0e429f92ed7824a8c79c4b932562d4a28728bcfc",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/profile-source.speedscope.json"
+    },
+    {
+      "path": "browser-firefox/report.json",
+      "bytes": 26276,
+      "sha256": "39f1a9b2120e6a4cd75f36f05a7b74508ed63969f53122a4a67891cd44166bc3",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/report.json"
+    },
+    {
+      "path": "browser-firefox/speedscope-cil/console.log",
+      "bytes": 527,
+      "sha256": "ccff79fb2d26148dce51929c04036ff08fbd7fb6bbaf2b124c41d24e3b9ad1f1",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-cil/console.log"
+    },
+    {
+      "path": "browser-firefox/speedscope-cil/body.txt",
+      "bytes": 254,
+      "sha256": "d4681ca6a7d1defd529a6268e3fd4c9b483408a36140df0f48a5b8f43f95eaf7",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-cil/body.txt"
+    },
+    {
+      "path": "browser-firefox/speedscope-cil/dom.json",
+      "bytes": 349,
+      "sha256": "86d651aa8ecb781c5b21be1b5ec8aff1630738d0b0c4f8f5cc97beee3fd0c14f",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-cil/dom.json"
+    },
+    {
+      "path": "browser-firefox/speedscope-cil/graphics.json",
+      "bytes": 111,
+      "sha256": "77d5e45354b2cb5eac45481974b5926f2e3d3da028bd728d347e16dd37e59d12",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-cil/graphics.json"
+    },
+    {
+      "path": "browser-firefox/speedscope-cil/session.json",
+      "bytes": 311,
+      "sha256": "d11702d57ce11bdf2e4f60bf7bb351a3c8ce053cb088579d8c2b2f09e6206970",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-cil/session.json"
+    },
+    {
+      "path": "browser-firefox/speedscope-cil/speedscope.png",
+      "bytes": 23928,
+      "sha256": "fc1a8b07cce027fda9c5cdb33470a18fe48cd3ee621d1b8ef266e32f9603b270",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-cil/speedscope.png"
+    },
+    {
+      "path": "browser-firefox/speedscope-reload/body.txt",
+      "bytes": 232,
+      "sha256": "166890dc4f837758dcf04dbb1d19dcd6645049b6da6dbf02d951e2bd1acaa62c",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-reload/body.txt"
+    },
+    {
+      "path": "browser-firefox/speedscope-reload/console.log",
+      "bytes": 527,
+      "sha256": "ccff79fb2d26148dce51929c04036ff08fbd7fb6bbaf2b124c41d24e3b9ad1f1",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-reload/console.log"
+    },
+    {
+      "path": "browser-firefox/speedscope-reload/dom.json",
+      "bytes": 327,
+      "sha256": "d0e7b70dceaaa3242c6baf1a286c45cca8f52be34b244f97a67a3f32c39fce4d",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-reload/dom.json"
+    },
+    {
+      "path": "browser-firefox/speedscope-reload/graphics.json",
+      "bytes": 111,
+      "sha256": "77d5e45354b2cb5eac45481974b5926f2e3d3da028bd728d347e16dd37e59d12",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-reload/graphics.json"
+    },
+    {
+      "path": "browser-firefox/speedscope-reload/session.json",
+      "bytes": 313,
+      "sha256": "5915d64b98b6bb5b823bd62d88c4e528cfaa8e9daf9984f01a6dfa11c31dec0d",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-reload/session.json"
+    },
+    {
+      "path": "browser-firefox/speedscope-source/body.txt",
+      "bytes": 232,
+      "sha256": "e58f7a9c4db8d8412d572e2d0f7f1479469c3e3985e1a9965e4bb4ab068e34e1",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-source/body.txt"
+    },
+    {
+      "path": "browser-firefox/speedscope-reload/speedscope.png",
+      "bytes": 23196,
+      "sha256": "a938a3e71ec894ab440bc01e85d5d89175381633ecc24ada0c7d3a736ea1f6bf",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-reload/speedscope.png"
+    },
+    {
+      "path": "browser-firefox/speedscope-source/console.log",
+      "bytes": 527,
+      "sha256": "ccff79fb2d26148dce51929c04036ff08fbd7fb6bbaf2b124c41d24e3b9ad1f1",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-source/console.log"
+    },
+    {
+      "path": "browser-firefox/speedscope-source/dom.json",
+      "bytes": 327,
+      "sha256": "a2c34e8d2144efa03e4d3588793b2fccf7f2c33c13bd2c74a517fecf951e95e1",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-source/dom.json"
+    },
+    {
+      "path": "browser-firefox/speedscope-source/graphics.json",
+      "bytes": 111,
+      "sha256": "77d5e45354b2cb5eac45481974b5926f2e3d3da028bd728d347e16dd37e59d12",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-source/graphics.json"
+    },
+    {
+      "path": "browser-firefox/speedscope-source/session.json",
+      "bytes": 313,
+      "sha256": "51317633f97bcc6f8b9ad4d7b8e35e40890258af219db1442b2c0bb7964d652d",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-source/session.json"
+    },
+    {
+      "path": "browser-firefox/speedscope-source/speedscope.png",
+      "bytes": 23133,
+      "sha256": "1a804b1ac4ea9933daf264194a33fdb1997b823063648d4eed311db5433978a1",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/speedscope-source/speedscope.png"
+    },
+    {
+      "path": "browser-firefox/wasm-execution/console.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/wasm-execution/console.log"
+    },
+    {
+      "path": "browser-firefox/wasm-execution/runtime-observation.json",
+      "bytes": 723,
+      "sha256": "1eca3b9c3286f6d6f4c16cc02a45874717287cb798ca228dde735ea40d074bf8",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/wasm-execution/runtime-observation.json"
+    },
+    {
+      "path": "browser-firefox/wasm-execution/session.json",
+      "bytes": 308,
+      "sha256": "230822052f4029e50bdf1edd1f5cee65b9a58c5281f15b7de2224a2749b258cf",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser/wasm-execution/session.json"
+    },
+    {
+      "path": "browser-firefox/assets-manifest.json",
+      "bytes": 3096,
+      "sha256": "eb6ec67ab2493597ec987023fd44fc503dbf030115123cbc148381ba4ec640e7",
+      "artifactId": 11311537364,
+      "originalPath": "a05-browser-assets/manifest.json"
+    },
+    {
+      "path": "browser-webkit/csp-denied-fallback/console.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/csp-denied-fallback/console.log"
+    },
+    {
+      "path": "browser-webkit/csp-denied-fallback/runtime-observation.json",
+      "bytes": 3067,
+      "sha256": "ebfecc8078d7ec83c218485b1d05e86edfdab160a22a6ae0f66afa52a1ff0629",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/csp-denied-fallback/runtime-observation.json"
+    },
+    {
+      "path": "browser-webkit/csp-denied-fallback/session.json",
+      "bytes": 310,
+      "sha256": "44e4cd0fe4fb3f4596cb72a832bf4a919cc8321457240b6bc98451cbedf874a8",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/csp-denied-fallback/session.json"
+    },
+    {
+      "path": "browser-webkit/debugger-deopt/console.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/debugger-deopt/console.log"
+    },
+    {
+      "path": "browser-webkit/debugger-deopt/runtime-observation.json",
+      "bytes": 1516,
+      "sha256": "22850a0225c757c07088e40925abc3938ab4678b8f1e5a7a4c93a3e64ee39a72",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/debugger-deopt/runtime-observation.json"
+    },
+    {
+      "path": "browser-webkit/debugger-deopt/session.json",
+      "bytes": 305,
+      "sha256": "67690a4131ecdf2d8ed5fff2cb9a8b077f2c53a651d4a1ec15dd7c65773b1438",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/debugger-deopt/session.json"
+    },
+    {
+      "path": "browser-webkit/profile-cil.speedscope.json",
+      "bytes": 873,
+      "sha256": "ffab84c6b541899de599881726101e69b21219a983f50f213a263a1f3da9c488",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/profile-cil.speedscope.json"
+    },
+    {
+      "path": "browser-webkit/profile-exports/console.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/profile-exports/console.log"
+    },
+    {
+      "path": "browser-webkit/profile-exports/runtime-observation.json",
+      "bytes": 12695,
+      "sha256": "e1ceee24d79244deffed69e8b03e7682293e5c7c27d2b7665682bc7599c5728f",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/profile-exports/runtime-observation.json"
+    },
+    {
+      "path": "browser-webkit/profile-exports/session.json",
+      "bytes": 306,
+      "sha256": "6b6e74624d566d5636dc53aea379c5ef7017ee6bc1f555752580835b60cba40e",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/profile-exports/session.json"
+    },
+    {
+      "path": "browser-webkit/profile-reload.speedscope.json",
+      "bytes": 855,
+      "sha256": "683e2a6417ae3bf1dcf0514203859fb8d7574f60e59e2158a5011b7b5ca87f6a",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/profile-reload.speedscope.json"
+    },
+    {
+      "path": "browser-webkit/profile-source.speedscope.json",
+      "bytes": 855,
+      "sha256": "1ce4c85b3042640f221f889f0e429f92ed7824a8c79c4b932562d4a28728bcfc",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/profile-source.speedscope.json"
+    },
+    {
+      "path": "browser-webkit/report.json",
+      "bytes": 24082,
+      "sha256": "321291bebe1279032ffee007c106de01cf86926bf20a1ea63c244e439680ae17",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/report.json"
+    },
+    {
+      "path": "browser-webkit/speedscope-cil/body.txt",
+      "bytes": 246,
+      "sha256": "7deb6bc3107108a0d4bc1a6df2e0ac29b5afd829e30789346347a3a811edff22",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-cil/body.txt"
+    },
+    {
+      "path": "browser-webkit/speedscope-cil/console.log",
+      "bytes": 205,
+      "sha256": "a212acb2ee9fc79825d1f001bc8c9c6cbf413828b0f268b74571a129b65fb0d9",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-cil/console.log"
+    },
+    {
+      "path": "browser-webkit/speedscope-cil/dom.json",
+      "bytes": 349,
+      "sha256": "86d651aa8ecb781c5b21be1b5ec8aff1630738d0b0c4f8f5cc97beee3fd0c14f",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-cil/dom.json"
+    },
+    {
+      "path": "browser-webkit/speedscope-cil/graphics.json",
+      "bytes": 102,
+      "sha256": "a98c669913ee9b08ea48ca169c7fcae0a3d724d0ae06ec1cc01f96273a0b4301",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-cil/graphics.json"
+    },
+    {
+      "path": "browser-webkit/speedscope-cil/session.json",
+      "bytes": 308,
+      "sha256": "ab8951f50c78a6ff7529b4626fc7a46e3a020faa037b640e33b530d6499db0d9",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-cil/session.json"
+    },
+    {
+      "path": "browser-webkit/speedscope-cil/speedscope.png",
+      "bytes": 24821,
+      "sha256": "bec1112b698b88dfa6a334cfd6ae2683c5f5a54b3987e053384709e88ca4a0f4",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-cil/speedscope.png"
+    },
+    {
+      "path": "browser-webkit/speedscope-reload/body.txt",
+      "bytes": 224,
+      "sha256": "1cfb9828cc37acbb03ec152b475f1899e1d035ad0ed2898b88a543dc52f11c3a",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-reload/body.txt"
+    },
+    {
+      "path": "browser-webkit/speedscope-reload/console.log",
+      "bytes": 205,
+      "sha256": "4c66e847c7a9130cecfc96ab8c0dafeb13a14fdd4bcaf65363d18d09a25fb701",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-reload/console.log"
+    },
+    {
+      "path": "browser-webkit/speedscope-reload/dom.json",
+      "bytes": 327,
+      "sha256": "d0e7b70dceaaa3242c6baf1a286c45cca8f52be34b244f97a67a3f32c39fce4d",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-reload/dom.json"
+    },
+    {
+      "path": "browser-webkit/speedscope-reload/graphics.json",
+      "bytes": 102,
+      "sha256": "a98c669913ee9b08ea48ca169c7fcae0a3d724d0ae06ec1cc01f96273a0b4301",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-reload/graphics.json"
+    },
+    {
+      "path": "browser-webkit/speedscope-reload/session.json",
+      "bytes": 311,
+      "sha256": "fb12c7e25428ade32193135a3b67dda8de3c26681feeb17d4f4d5b73a9d43afd",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-reload/session.json"
+    },
+    {
+      "path": "browser-webkit/speedscope-reload/speedscope.png",
+      "bytes": 23806,
+      "sha256": "38488766417202e49fd2952e86da456e88d2d67f0d3e8eb4249fdce82ddbf971",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-reload/speedscope.png"
+    },
+    {
+      "path": "browser-webkit/speedscope-source/body.txt",
+      "bytes": 224,
+      "sha256": "8effed648fde36262042637efd82810b9eca507a4e7df98da384fd3c0183982b",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-source/body.txt"
+    },
+    {
+      "path": "browser-webkit/speedscope-source/console.log",
+      "bytes": 204,
+      "sha256": "9e28b5ce741fa912054e33023532931a1bfdc98b2c768d277470b6211196912c",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-source/console.log"
+    },
+    {
+      "path": "browser-webkit/speedscope-source/dom.json",
+      "bytes": 327,
+      "sha256": "a2c34e8d2144efa03e4d3588793b2fccf7f2c33c13bd2c74a517fecf951e95e1",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-source/dom.json"
+    },
+    {
+      "path": "browser-webkit/speedscope-source/graphics.json",
+      "bytes": 102,
+      "sha256": "a98c669913ee9b08ea48ca169c7fcae0a3d724d0ae06ec1cc01f96273a0b4301",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-source/graphics.json"
+    },
+    {
+      "path": "browser-webkit/speedscope-source/session.json",
+      "bytes": 311,
+      "sha256": "ed588a17508a8e2763ba03e81e733ba88bc344f6a3b87952336929879f959d00",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-source/session.json"
+    },
+    {
+      "path": "browser-webkit/speedscope-source/speedscope.png",
+      "bytes": 23720,
+      "sha256": "a1de1c1ae06bbd93aab65ebc4a482f429620fc11049a9110fae8ebb9abf82e4d",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/speedscope-source/speedscope.png"
+    },
+    {
+      "path": "browser-webkit/wasm-execution/console.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/wasm-execution/console.log"
+    },
+    {
+      "path": "browser-webkit/wasm-execution/runtime-observation.json",
+      "bytes": 722,
+      "sha256": "73c6486523bf9f8e0c3f7bf073727804daf1ad6ca6a72619d01efef8c3000110",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/wasm-execution/runtime-observation.json"
+    },
+    {
+      "path": "browser-webkit/wasm-execution/session.json",
+      "bytes": 305,
+      "sha256": "0b7102b2d62f7158ca9c1321b2a4f6b512235cefe03e879135847c61bff75747",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser/wasm-execution/session.json"
+    },
+    {
+      "path": "browser-webkit/assets-manifest.json",
+      "bytes": 3096,
+      "sha256": "eb6ec67ab2493597ec987023fd44fc503dbf030115123cbc148381ba4ec640e7",
+      "artifactId": 11311598119,
+      "originalPath": "a05-browser-assets/manifest.json"
+    }
+  ]
+}

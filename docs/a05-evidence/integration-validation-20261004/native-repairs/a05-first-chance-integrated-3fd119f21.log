@@ -1,0 +1,325 @@
+✔ source: filter, event, delegate and managed-array continuations expose every owner (9.89889ms)
+✔ source: scheduler async state, unhandled delivery and synchronization roots remain reachable (1.468276ms)
+✔ cil: filter, event, delegate and managed-array continuations expose every owner (13.116781ms)
+✔ cil: scheduler async state, unhandled delivery and synchronization roots remain reachable (2.860252ms)
+✔ source: first-chance-policy follows pinned CoreCLR callback failure and notification order (16.515919ms)
+✔ source: first-chance-policy First callback preserves policy through local and portable restore (36.653939ms)
+✔ source: first-chance-policy Second callback preserves policy through local and portable restore (20.662881ms)
+✔ source: unhandled-policy follows pinned CoreCLR callback failure and notification order (3.537986ms)
+✔ source: unhandled-policy First callback preserves policy through local and portable restore (10.175646ms)
+✔ source: unhandled-policy Second callback preserves policy through local and portable restore (8.811543ms)
+✔ reload: first-chance-policy follows pinned CoreCLR callback failure and notification order (26.779775ms)
+✔ reload: first-chance-policy First callback preserves policy through local and portable restore (37.866039ms)
+✔ reload: first-chance-policy Second callback preserves policy through local and portable restore (30.115845ms)
+✔ reload: unhandled-policy follows pinned CoreCLR callback failure and notification order (7.77472ms)
+✔ reload: unhandled-policy First callback preserves policy through local and portable restore (16.295685ms)
+✔ reload: unhandled-policy Second callback preserves policy through local and portable restore (17.888816ms)
+✔ cil: first-chance-policy follows pinned CoreCLR callback failure and notification order (29.485259ms)
+✔ cil: first-chance-policy First callback preserves policy through local and portable restore (25.955363ms)
+✔ cil: first-chance-policy Second callback preserves policy through local and portable restore (26.567052ms)
+✔ cil: unhandled-policy follows pinned CoreCLR callback failure and notification order (8.795133ms)
+✔ cil: unhandled-policy First callback preserves policy through local and portable restore (32.840953ms)
+✔ cil: unhandled-policy Second callback preserves policy through local and portable restore (16.021643ms)
+✔ source: first-chance failure policy validates exact values and preserves the default (141.718165ms)
+✔ source: after-unwind runs callback cleanup and handles cleanup throws=false (4.710249ms)
+✔ source: after-unwind runs callback cleanup and handles cleanup throws=true (20.774535ms)
+✖ source: cleanup suspension preserves captured policy through local and portable restore (8.706479ms)
+✔ source: older captured notifications without a policy retain before-unwind behavior (32.664961ms)
+✖ source: terminal diagnostic graphs survive GC and local/portable snapshots (7.082703ms)
+✖ source: malformed captured policies and failfast boundaries reject atomically (4.643521ms)
+✔ source: runtime resource failure during cleanup bypasses further unwinding and notifications (2.913239ms)
+✔ source: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched (11.408127ms)
+✔ reload: first-chance failure policy validates exact values and preserves the default (111.12009ms)
+✔ reload: after-unwind runs callback cleanup and handles cleanup throws=false (12.952606ms)
+✔ reload: after-unwind runs callback cleanup and handles cleanup throws=true (12.552117ms)
+✖ reload: cleanup suspension preserves captured policy through local and portable restore (33.44734ms)
+✔ reload: older captured notifications without a policy retain before-unwind behavior (35.617127ms)
+✖ reload: terminal diagnostic graphs survive GC and local/portable snapshots (39.496655ms)
+✖ reload: malformed captured policies and failfast boundaries reject atomically (9.985327ms)
+✔ reload: runtime resource failure during cleanup bypasses further unwinding and notifications (9.257258ms)
+✔ reload: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched (6.504334ms)
+✔ cil: first-chance failure policy validates exact values and preserves the default (30.347947ms)
+✔ cil: after-unwind runs callback cleanup and handles cleanup throws=false (10.161186ms)
+✔ cil: after-unwind runs callback cleanup and handles cleanup throws=true (13.106842ms)
+✖ cil: cleanup suspension preserves captured policy through local and portable restore (15.344269ms)
+✔ cil: older captured notifications without a policy retain before-unwind behavior (26.425656ms)
+✖ cil: terminal diagnostic graphs survive GC and local/portable snapshots (14.061194ms)
+✖ cil: malformed captured policies and failfast boundaries reject atomically (9.747598ms)
+✔ cil: runtime resource failure during cleanup bypasses further unwinding and notifications (10.282774ms)
+✔ cil: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched (6.782513ms)
+✔ verified arbitrary-name async values use bounded managed storage at 32 bits (46.129278ms)
+✔ verified arbitrary-name async values use bounded managed storage at 64 bits (8.27184ms)
+✔ managed state storage never makes auto-layout bytes, sizeof or unsafe unboxing available (5.382556ms)
+✔ auto-layout state requires the supported interface slots and verified bodies (10.384013ms)
+✔ managed state admission does not hide unsupported nested auto layouts or recursive value fields (5.265615ms)
+✔ auto-layout logical bytes are reserved before managed frame allocation (8.845222ms)
+✔ native fault qualification retains platform-specific exits while requiring identical ordered traces (1.397884ms)
+✔ native fault qualification accepts canonical System names without erasing foreign namespaces (1.955853ms)
+✔ successful exits, unrelated signals, wrong exceptions and changed event order cannot qualify (0.835687ms)
+✔ ordinary success fixtures keep exact zero-exit semantics (0.349764ms)
+✔ first-chance failfast requires the pinned native HRESULT and the VM fatal boundary (0.375341ms)
+✔ native fixture projects opt into unsafe compilation only for explicitly selected fixtures (0.255406ms)
+✔ observed CLR varargs rejection remains unsupported after an independent authored VM trace succeeds (2.204328ms)
+✔ varargs policy cannot hide wrong native exceptions, successful native divergence, signals or VM failures (0.767768ms)
+✔ A05 native plan keeps SDK policy, unsafe compilation and replay evidence explicit (1.385725ms)
+UNSUPPORTED varargs: /tmp/sharpforge-a05-observed-target-Km15E6/varargs/result.json
+FAILED varargs: /tmp/sharpforge-a05-observed-target-Km15E6/varargs/result.json
+✔ native plan propagates only a completed observed unsupported outcome and never turns it into a pass (19.291797ms)
+FAILED failed: /tmp/sharpforge-a05-plan-apuh2R/failed/result.json
+BLOCKED dependent: /tmp/sharpforge-a05-plan-apuh2R/dependent/result.json
+UNSUPPORTED sdk-policy: /tmp/sharpforge-a05-plan-apuh2R/sdk-policy/result.json
+PASSED last: /tmp/sharpforge-a05-plan-apuh2R/last/result.json
+✔ A05 native aggregation continues independent failures and never counts unavailable evidence as a pass (12.766903ms)
+BLOCKED fixture: /tmp/sharpforge-a05-missing-sdk-bla0Rz/fixture/result.json
+✔ A05 native missing SDK blocks every case and retains a complete failed report (2.412494ms)
+✔ first-chance policy is an explicit target contract with independent authored traces (7.106459ms)
+✔ runtime probe binds the native identity to the exact fixture runtimeconfig and same host invocation (13.184447ms)
+✔ runtime provenance cannot pass with an unexpected runtime major or malformed probe identity (17.948514ms)
+✔ Roslyn async regression consumes the exact SDK8 native-qualified DLL and source (1.450681ms)
+✔ generic suffix parsing preserves generated CLI identifiers and nested argument lists (2.279368ms)
+✔ generated generic method tables retain exact definitions, closed fields and argument limits (2.030452ms)
+✔ actual Roslyn generic iterator MethodImpl rows resolve specialized external slots (60.719249ms)
+✔ actual Roslyn iterator still rejects a duplicated MethodImpl declaration (4.202553ms)
+✔ actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay (384.027434ms)
+✔ source: AppDomain subscriptions execute guest delegates with exact subscription identity (111.829793ms)
+✔ source: AppDomain lambda execute guest delegates with exact subscription identity (63.220102ms)
+✔ source: AppDomain variables execute guest delegates with exact subscription identity (40.722826ms)
+✔ source: suspended unhandled guest callback survives local and portable replay (55.288607ms)
+✔ reload: AppDomain subscriptions execute guest delegates with exact subscription identity (36.206507ms)
+✔ reload: AppDomain lambda execute guest delegates with exact subscription identity (29.772121ms)
+✔ reload: AppDomain variables execute guest delegates with exact subscription identity (33.120369ms)
+✔ reload: suspended unhandled guest callback survives local and portable replay (28.308141ms)
+✔ cil: AppDomain subscriptions execute guest delegates with exact subscription identity (38.45803ms)
+✔ cil: AppDomain lambda execute guest delegates with exact subscription identity (66.243948ms)
+✔ cil: AppDomain variables execute guest delegates with exact subscription identity (36.548154ms)
+✔ cil: suspended unhandled guest callback survives local and portable replay (27.250187ms)
+✔ source: one origin precedes debugger notification, catch and finally without retaining the fault (98.595343ms)
+✔ source: valid rethrow and restored catch state reuse the existing origin (30.946316ms)
+✔ source: debugger pending-fault resume and restore do not invent another throw (3.018794ms)
+✔ source: explicit throw of the same object is a new origin (27.832112ms)
+✔ source: invalid rethrow reports its new fault rather than suppressing by opcode alone (1.99441ms)
+✔ source: replaying the originating instruction creates a new chronological event (5.31722ms)
+✔ source: runtime instruction quota and pre-dispatch stack quota each emit one fatal origin (9.893872ms)
+✔ source: captured attempted location survives a host callback stopping and retiring its frame (6.203782ms)
+✔ source: subscriber failures escape after guest handlers and never become managed origins (2.013557ms)
+✔ source: host handleFault stays outside the origin boundary and disabled observation stays off (6.145297ms)
+✔ reload: one origin precedes debugger notification, catch and finally without retaining the fault (15.165586ms)
+✔ reload: valid rethrow and restored catch state reuse the existing origin (29.707847ms)
+✔ reload: debugger pending-fault resume and restore do not invent another throw (18.691976ms)
+✔ reload: explicit throw of the same object is a new origin (7.891321ms)
+✔ reload: invalid rethrow reports its new fault rather than suppressing by opcode alone (10.092244ms)
+✔ reload: replaying the originating instruction creates a new chronological event (10.288473ms)
+✔ reload: runtime instruction quota and pre-dispatch stack quota each emit one fatal origin (6.369615ms)
+✔ reload: captured attempted location survives a host callback stopping and retiring its frame (3.716499ms)
+✔ reload: subscriber failures escape after guest handlers and never become managed origins (4.79916ms)
+✔ reload: host handleFault stays outside the origin boundary and disabled observation stays off (10.485051ms)
+✔ actual SDK8 value-boxing DLL retains native Unsafe.Unbox behavior (43.817973ms)
+✔ actual SDK8 value-instance-calls DLL retains native Unsafe.Unbox behavior (19.768322ms)
+✔ actual SDK8 enum-unboxing DLL retains native Unsafe.Unbox behavior (22.735295ms)
+✔ Unsafe.Unbox admits the exact SDK8 MethodSpec contract and rejects neighboring signatures (2.871107ms)
+✔ a real MethodSpec returns a mutable struct box interior without changing original and copied values (47.143093ms)
+✔ Unsafe.Unbox retains enum-underlying compatibility while preserving box identity (8.429932ms)
+✔ Unsafe.Unbox faults for null, an inexact struct, wrong primitive width and invalid generic constraints (18.229205ms)
+✔ Unsafe.Unbox interiors alone retain owned boxes across GC and snapshot replay then expire after retirement (18.355495ms)
+✖ Roslyn FieldRVA, overlapping Copy, rectangular bounds, spans and pins replay the captured CoreCLR result (3.387074ms)
+ℹ tests 117
+ℹ suites 0
+ℹ pass 107
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12375.325366
+
+✖ failing tests:
+
+test at tests/a05-first-chance-unwind-policy.test.js:98:3
+✖ source: cleanup suspension preserves captured policy through local and portable restore (8.706479ms)
+  TypeError: Invalid snapshot managed reference ownership or generation
+      at invalidSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-validation-helpers.js:7:9)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-heap-validation.js:54:7
+      at walk (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:29:14)
+      at validateCapturedMemory (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:58:3)
+      at validateSnapshotState (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot-validation.js:49:18)
+      at serializeSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-serialize.js:45:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:102:49)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+
+test at tests/a05-first-chance-unwind-policy.test.js:133:3
+✖ source: terminal diagnostic graphs survive GC and local/portable snapshots (7.082703ms)
+  TypeError: Invalid snapshot managed reference ownership or generation
+      at invalidSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-validation-helpers.js:7:9)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-heap-validation.js:54:7
+      at walk (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:29:14)
+      at validateCapturedMemory (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:58:3)
+      at validateSnapshotState (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot-validation.js:49:18)
+      at serializeSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-serialize.js:45:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:143:49)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+
+test at tests/a05-first-chance-unwind-policy.test.js:165:3
+✖ source: malformed captured policies and failfast boundaries reject atomically (4.643521ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /failure policy|failfast boundary/. Input:
+  
+  'TypeError: Invalid snapshot managed reference ownership or generation'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:172:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: Invalid snapshot managed reference ownership or generation
+        at invalidSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-validation-helpers.js:7:9)
+        at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-heap-validation.js:54:7
+        at walk (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:29:14)
+        at validateCapturedMemory (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:58:3)
+        at validateSnapshotState (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot-validation.js:49:18)
+        at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot.js:85:5
+        at resolveSnapshotTypes (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-type-resolution.js:7:12)
+        at restoreVM (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot.js:84:47)
+        at VirtualMachine.restore (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:55:20)
+        at file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:172:30,
+    expected: /failure policy|failfast boundary/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/a05-first-chance-unwind-policy.test.js:98:3
+✖ reload: cleanup suspension preserves captured policy through local and portable restore (33.44734ms)
+  TypeError: Invalid snapshot managed reference ownership or generation
+      at invalidSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-validation-helpers.js:7:9)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-heap-validation.js:54:7
+      at walk (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:29:14)
+      at validateCapturedMemory (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:58:3)
+      at validateSnapshotState (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot-validation.js:49:18)
+      at serializeSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-serialize.js:45:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:102:49)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+
+test at tests/a05-first-chance-unwind-policy.test.js:133:3
+✖ reload: terminal diagnostic graphs survive GC and local/portable snapshots (39.496655ms)
+  TypeError: Invalid snapshot managed reference ownership or generation
+      at invalidSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-validation-helpers.js:7:9)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-heap-validation.js:54:7
+      at walk (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:29:14)
+      at validateCapturedMemory (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:58:3)
+      at validateSnapshotState (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot-validation.js:49:18)
+      at serializeSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-serialize.js:45:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:143:49)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+
+test at tests/a05-first-chance-unwind-policy.test.js:165:3
+✖ reload: malformed captured policies and failfast boundaries reject atomically (9.985327ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /failure policy|failfast boundary/. Input:
+  
+  'TypeError: Invalid snapshot managed reference ownership or generation'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:172:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: Invalid snapshot managed reference ownership or generation
+        at invalidSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-validation-helpers.js:7:9)
+        at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-heap-validation.js:54:7
+        at walk (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:29:14)
+        at validateCapturedMemory (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:58:3)
+        at validateSnapshotState (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot-validation.js:49:18)
+        at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot.js:85:5
+        at resolveSnapshotTypes (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-type-resolution.js:7:12)
+        at restoreVM (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot.js:84:47)
+        at VirtualMachine.restore (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:55:20)
+        at file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:172:30,
+    expected: /failure policy|failfast boundary/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/a05-first-chance-unwind-policy.test.js:98:3
+✖ cil: cleanup suspension preserves captured policy through local and portable restore (15.344269ms)
+  TypeError: Invalid snapshot managed reference ownership or generation
+      at invalidSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-validation-helpers.js:7:9)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-heap-validation.js:54:7
+      at walk (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:29:14)
+      at validateCapturedMemory (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:58:3)
+      at validateSnapshotState (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot-validation.js:49:18)
+      at serializeSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-serialize.js:45:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:102:49)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+
+test at tests/a05-first-chance-unwind-policy.test.js:133:3
+✖ cil: terminal diagnostic graphs survive GC and local/portable snapshots (14.061194ms)
+  TypeError: Invalid snapshot managed reference ownership or generation
+      at invalidSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-validation-helpers.js:7:9)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-heap-validation.js:54:7
+      at walk (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:29:14)
+      at validateCapturedMemory (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:58:3)
+      at validateSnapshotState (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot-validation.js:49:18)
+      at serializeSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-serialize.js:45:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:143:49)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+
+test at tests/a05-first-chance-unwind-policy.test.js:165:3
+✖ cil: malformed captured policies and failfast boundaries reject atomically (9.747598ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /failure policy|failfast boundary/. Input:
+  
+  'TypeError: Invalid snapshot managed reference ownership or generation'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:172:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: Invalid snapshot managed reference ownership or generation
+        at invalidSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-validation-helpers.js:7:9)
+        at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-heap-validation.js:54:7
+        at walk (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:29:14)
+        at validateCapturedMemory (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-memory-validation.js:58:3)
+        at validateSnapshotState (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot-validation.js:49:18)
+        at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot.js:85:5
+        at resolveSnapshotTypes (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-type-resolution.js:7:12)
+        at restoreVM (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot.js:84:47)
+        at CilVirtualMachine.restore (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/cil-vm.js:83:34)
+        at file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-first-chance-unwind-policy.test.js:172:30,
+    expected: /failure policy|failfast boundary/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/fixtures/a05-memory/replay.mjs:12:1
+✖ Roslyn FieldRVA, overlapping Copy, rectangular bounds, spans and pins replay the captured CoreCLR result (3.387074ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/42f7738360b9/a05-integration/tests/fixtures/a05-memory/native.json'
+      at async open (node:internal/fs/promises:697:25)
+      at async readFile (node:internal/fs/promises:1348:14)
+      at async TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/fixtures/a05-memory/replay.mjs:13:29)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/42f7738360b9/a05-integration/tests/fixtures/a05-memory/native.json'
+  }

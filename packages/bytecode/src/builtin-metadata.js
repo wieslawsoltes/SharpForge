@@ -4,7 +4,8 @@ export const builtinOwners = Object.freeze({
   double: 'System.Double', decimal: 'System.Decimal', Convert: 'System.Convert', string: 'System.String',
   Array: 'System.Array', object: 'System.Object', Exception: 'System.Exception',
   Debug: 'System.Diagnostics.Debug', Environment: 'System.Environment',
-  Enum: 'System.Enum', Type: 'System.Type'
+  Enum: 'System.Enum', Type: 'System.Type', BitConverter: 'System.BitConverter',
+  nint: 'System.IntPtr', nuint: 'System.UIntPtr'
 });
 
 const parameterTypes = Object.freeze({any: 'object', number: 'double', array: 'System.Array', exception: 'Exception'});
@@ -13,6 +14,18 @@ const properties = new Set(['Exception.Message', 'Environment.TickCount', 'Type.
 
 /** Describe the source-visible member without changing its stable runtime ID or receiver-inclusive parameter table. */
 export function builtinMemberShape(builtin) {
+  const control = builtin.synchronization ?? builtin.varargs;
+  if (control) {
+    const property = control.name.startsWith('get_'), constructor = control.name === '.ctor';
+    return {name: constructor ? 'new' : property ? control.name.slice(4) : control.name,
+      instance: !constructor && !control.isStatic, property};
+  }
+  if (builtin.numeric) return {name: builtin.numeric.name.replace(/^get_/, ''), instance: false,
+    property: builtin.numeric.name.startsWith('get_')};
+  if (builtin.arrayRuntime && !builtin.arrayRuntime.internal) {
+    const descriptor = builtin.arrayRuntime, property = descriptor.name.startsWith('get_');
+    return {name: property ? descriptor.name.slice(4) : descriptor.name, instance: !descriptor.isStatic, property};
+  }
   if (builtin.math) return {name: builtin.math.name, instance: false, property: false};
   if (builtin.decimal) return {name: builtin.decimal.name, instance: false, property: false};
   const separator = builtin.name.lastIndexOf('.');

@@ -1,3 +1,6 @@
+import {connectSourceInterfaces} from './interface-shape.js';
+import {SourceInterfaceInstantiations} from './interface-instantiations.js';
+import {sourceThis} from './source-type-shape.js';
 /**
  * Code generation from semantic bound trees (SF-A02-E02): a whole analysed program is lowered to the constructs the
  * bytecode IR already has - classes with fields, statically bound calls, branches - and emitted through the IR
@@ -8,7 +11,7 @@
  *   patterns, switches -> sequential tests over shared evaluations   (lowering/decision-dag.js, translate-patterns.js)
  *   initialization     -> initializer methods run where .NET runs them (initialization.js)
  *   async functions    -> a kickoff and a body on the runtime's continuation ABI (lowering/async/async-methods.js)
- *   rank-n arrays      -> a class over one flat array with computed indexing (lowering/arrays.js)
+ *   rank-n arrays      -> native managed arrays with preserved rank and bounds (lowering/arrays.js)
  *
  * A construct that needs an instruction the runtime does not have raises `UnsupportedConstruct`; the generator then
  * produces no image and names the construct, which `compile()` reports as SF2200.
@@ -39,7 +42,6 @@ import { Frame } from './frame.js';
 import { UnsupportedConstruct } from './unsupported.js';
 import { n } from './node-factory.js';
 import { memberGenerators } from '../../lowering/members/index.js';
-import { MultiDimensionalArrays } from '../../lowering/arrays.js';
 
 class GeneratorCore {
   /**
@@ -54,13 +56,13 @@ class GeneratorCore {
     this.types = new TypeMapper(this);
     this.delegates = new DelegateClasses(this);
     this.iterators = new IteratorClasses(this);
-    this.arrays = new MultiDimensionalArrays(this);
     this.structural = new StructuralMembers(this);
     this.tuples = this.structural.register(new TupleClasses(this));
     this.records = this.structural.register(new RecordMembers(this));
     this.anonymous = this.structural.register(new AnonymousClasses(this));
     // Records are kept per construction: a table resolves a symbol to its key first (lowering/generics).
     this.generics = new GenericInstantiations(this);
+    this.interfaceMethods = new SourceInterfaceInstantiations(this);
     this.frameworkConstructions = new FrameworkConstructions(this);
     const table = () => new InstantiationTable(this.generics);
     this.classes = new Map();
@@ -135,7 +137,7 @@ class GeneratorCore {
     if (symbol?.initializerCall) markVariablesPassedByReference(symbol.initializerCall, captures);
     const root = { name: symbol?.name ?? 'Main', ordinal: this.methodOrdinal++, lambdas: 0, closures: 0, locals: 0, localFunctions: new Map() };
     const frame = new Frame({ uri, method, captures, root });
-    if (!method.isStatic) frame.thisExpr = () => n.thisReference(method.owner.name);
+    if (!method.isStatic) frame.thisExpr = () => sourceThis(method.owner);
     return frame;
   }
   /** Lowers one queued body and records it for emission; a queued `run` thunk lowers its body itself. */
@@ -173,6 +175,7 @@ const Members = Base =>
     }
     /** Lowers the body of one declared method (or synthesizes it) under the active substitution. */
     translateMember(symbol, record, body) {
+      if (record.isAbstract) return;
       if (!body) {
         if (!this.records.buildConstructor(symbol, record)) this.synthesizeAccessor(symbol, record);
         return;
@@ -250,7 +253,7 @@ const Members = Base =>
       const property = symbol.associatedSymbol,
         field = property && this.autoProperties.get(property);
       if (!field) return this.unsupported(`'${symbol.toDisplayString()}' has no body`, symbol.locations?.[0], this.uriOf(symbol));
-      const slot = () => (field.isStatic ? n.staticField(field) : n.field(n.thisReference(record.owner.name), field));
+      const slot = () => (field.isStatic ? n.staticField(field) : n.field(sourceThis(record.owner), field));
       const ensure = field.isStatic ? this.typeInitializerCall(property) : null,
         statements = ensure ? [n.expressionStatement(ensure)] : [];
       if (symbol.methodKind === MethodKind.PropertyGet) statements.push(n.returnStatement(slot()));
@@ -316,6 +319,7 @@ export class SemanticGenerator extends GeneratorBase {
   generate() {
     try {
       this.declareTypes();
+      connectSourceInterfaces(this);
       this.declareInitializers();
       const entry = this.entryPoint();
       this.translateMembers();

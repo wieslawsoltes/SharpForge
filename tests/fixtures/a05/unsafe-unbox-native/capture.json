@@ -1,0 +1,72 @@
+{
+  "format": "SharpForge.NativeUnsafeUnbox/1",
+  "qualification": "Original SDK8 native outputs and immutable Roslyn DLLs; SharpForge replay is a separate test",
+  "captures": [
+    {
+      "name": "value-boxing",
+      "assembly": "value-boxing.dll",
+      "assemblySha256": "90932a7abb68bc02e71ae6d21f3bb60f1617cdf7c3b9758616e9c491e62c10e9",
+      "source": "tests/fixtures/a05/value-boxing/Program.cs",
+      "sourceSha256": "591cfbb1e8455c8769e724ab85a635ede160eebd8f85ff9ecd5ffaeddb1c1cea",
+      "expected": "tests/fixtures/a05/value-boxing/expected.txt",
+      "expectedSha256": "c35b58e1dfd0646e35fabe26b03a598b1bc3c1b7498169e230cae10eb4338572",
+      "revision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+      "platform": "linux",
+      "architecture": "x64",
+      "node": "v22.23.3",
+      "dotnetSdk": "8.0.425",
+      "targetFramework": "net8.0",
+      "native": {
+        "exitCode": 0,
+        "signal": null,
+        "output": "7\n9\n11\n255\nPoint\nPoint\nTrue\nFalse\n",
+        "stderr": ""
+      },
+      "originalSharpForgeError": "Managed IL verification failed: Program::Main IL_17: External member 'System.Runtime.CompilerServices.Unsafe::Unbox' is not implemented"
+    },
+    {
+      "name": "value-instance-calls",
+      "assembly": "value-instance-calls.dll",
+      "assemblySha256": "6f74eb6691b2cb38f3c56bb99d8ea0fb4c7b3795382af69cc2aaf6a77098a6cd",
+      "source": "tests/fixtures/a05/value-instance-calls/Program.cs",
+      "sourceSha256": "a71938abde3afc7687a41829ed6d123ff9dff610ade8a14007cd966a4cbd7a7f",
+      "expected": "tests/fixtures/a05/value-instance-calls/expected.txt",
+      "expectedSha256": "d14c07ddcc25c552fecd6a9ad7111de1714bd560d4d490a7d5c490c4b58acba6",
+      "revision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+      "platform": "linux",
+      "architecture": "x64",
+      "node": "v22.23.3",
+      "dotnetSdk": "8.0.425",
+      "targetFramework": "net8.0",
+      "native": {
+        "exitCode": 0,
+        "signal": null,
+        "output": "3\n7\n99\n43\n9\n7\n55\n",
+        "stderr": ""
+      },
+      "originalSharpForgeError": "Managed IL verification failed: Program::Main IL_76: External member 'System.Runtime.CompilerServices.Unsafe::Unbox' is not implemented"
+    },
+    {
+      "name": "enum-unboxing",
+      "assembly": "enum-unboxing.dll",
+      "assemblySha256": "76a9fb754520518c644709bda09e4b2f18e361a3a7714b75e03a4866fb153c49",
+      "source": "tests/fixtures/a05/enum-unboxing/Program.cs",
+      "sourceSha256": "6909c25cb88f483179dbd673b5468297c8456392092042ab23ea6e0ba80f05f4",
+      "expected": "tests/fixtures/a05/enum-unboxing/expected.txt",
+      "expectedSha256": "2f6b2f012890c6a8d300753f2599f845e02588d035d7e93d45c0451e39f7e326",
+      "revision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+      "platform": "linux",
+      "architecture": "x64",
+      "node": "v22.23.3",
+      "dotnetSdk": "8.0.425",
+      "targetFramework": "net8.0",
+      "native": {
+        "exitCode": 0,
+        "signal": null,
+        "output": "-128\n255\n-32768\n65535\n-2147483648\n4294967295\n-9223372036854775808\n18446744073709551615\n17\n-2147483648\n29\nChoice\n29\nTrue\nTrue\nFalse\nFalse\n31\nFalse\nsign rejected\nwidth rejected\nreverse sign rejected\n",
+        "stderr": ""
+      },
+      "originalSharpForgeError": "Managed IL verification failed: Program::Main IL_c6: External member 'System.Runtime.CompilerServices.Unsafe::Unbox' is not implemented; Program::Main IL_132: External member 'System.Runtime.CompilerServices.Unsafe::Unbox' is not implemented"
+    }
+  ]
+}

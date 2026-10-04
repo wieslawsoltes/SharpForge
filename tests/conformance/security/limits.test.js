@@ -16,8 +16,11 @@ import { run } from '../../../scripts/conformance/repro/common.js';
 
 const defaults = {
   heap: 32 * 1024 * 1024,
-  array: 1_000_000,
-  frames: 512,
+  arrayHeader: 32,
+  intElementBytes: Int32Array.BYTES_PER_ELEMENT,
+  entryArgumentsBytes: 32,
+  frames: Infinity,
+  stackBytes: 4 * 1024 * 1024,
   instructions: 20_000_000,
   output: 1_000_000,
 };
@@ -26,17 +29,40 @@ function compiled(source) {
   assert(result.success, JSON.stringify(result.diagnostics));
   return result;
 }
+function heapAccounting(vm, bootstrap) {
+  const records = vm.heap.records.filter(Boolean);
+  const guest = records.filter(record => !bootstrap.records.has(record));
+  const arrays = guest.filter(record => record.kind === 'array').map(record => ({
+    length: record.data.length,
+    size: record.size,
+    storage: record.data.constructor.name,
+    first: record.data[0],
+    last: record.data.at(-1),
+  }));
+  const runtimeRecords = guest.filter(record => record.kind !== 'array').map(record => ({
+    kind: record.kind, size: record.size, length: record.data.length,
+  }));
+  return {
+    bootstrapBytes: bootstrap.bytes,
+    arrays,
+    guestArrayBytes: arrays.reduce((total, array) => total + array.size, 0),
+    runtimeRecords,
+    runtimeRecordBytes: runtimeRecords.reduce((total, record) => total + record.size, 0),
+  };
+}
 function execute(source, engine, options = {}) {
   const artifact = compiled(source);
   const vm =
     engine === 'source'
       ? new VirtualMachine(artifact.image, options)
       : new CilVirtualMachine(artifact.assembly, options);
+  const bootstrap = {bytes: vm.heap.stats.liveBytes, records: new Set(vm.heap.records.filter(Boolean))};
   let peakRss = process.memoryUsage().rss;
   let peakFrames = vm.frames.length;
   try {
     assert.equal(vm.heap.maxBytes, options.maxBytes ?? defaults.heap);
     assert.equal(vm.options.maxFrames, options.maxFrames ?? defaults.frames);
+    assert.equal(vm.options.maxStackBytes, options.maxStackBytes ?? defaults.stackBytes);
     assert.equal(
       vm.options.maxInstructions,
       options.maxInstructions ?? defaults.instructions,
@@ -61,6 +87,7 @@ function execute(source, engine, options = {}) {
       instructions: vm.instructions,
       outputCharacters: vm.outputCharacters,
       heapPeak: vm.heap.stats.peakBytes,
+      ...heapAccounting(vm, bootstrap),
       peakRss,
       peakFrames,
     };
@@ -80,38 +107,62 @@ function fault(result, name) {
 }
 const cases = {
   heap(engine) {
-    const source =
-      'int[] a=new int[1000000];int[] b=new int[1000000];int[] c=new int[1000000];int[] d=new int[1000000];int[] e=new int[1000000];Console.WriteLine(a[0]+b[0]+c[0]+d[0]+e[0]);';
+    const elements = 1_000_000;
+    const arrayBytes = defaults.arrayHeader + elements * defaults.intElementBytes;
+    const retained = Math.floor(defaults.heap / arrayBytes);
+    const names = Array.from({length: retained + 1}, (_, index) => 'array' + index);
+    // Every admitted array remains reachable when the next allocation collects.
+    const source = names.map(name => `int[] ${name}=new int[${elements}];`).join('') +
+      `Console.WriteLine(${names.map(name => name + '[0]').join('+')});`;
     const result = execute(source, engine);
     fault(result, 'OutOfMemoryException');
     assert.equal(result.output, '');
+    assert.equal(retained, 8);
+    assert.equal(result.bootstrapBytes, defaults.entryArgumentsBytes);
+    assert.equal(result.guestArrayBytes, retained * arrayBytes);
+    assert.equal(result.arrays.length, retained);
+    assert(result.arrays.every(array => array.size === arrayBytes && array.storage === 'Int32Array'));
+    assert.deepEqual(result.runtimeRecords.map(record => record.kind).sort(), ['exception', 'string']);
+    for (const record of result.runtimeRecords) {
+      assert.equal(record.size, record.kind === 'string' ? 24 + 2 * record.length : 32 + 8 * record.length);
+    }
+    assert.equal(result.heapPeak, result.bootstrapBytes + result.guestArrayBytes + result.runtimeRecordBytes);
     return result;
   },
   array(engine) {
+    // The compiler's entry wrapper owns an empty argv array throughout Main.
+    const available = defaults.heap - defaults.entryArgumentsBytes;
+    const elements = Math.floor((available - defaults.arrayHeader) / defaults.intElementBytes);
+    assert.equal(elements, 8_388_592);
     const positive = execute(
-      'int[] value=new int[1000000];Console.WriteLine(value.Length);',
+      `int[] value=new int[${elements}];value[0]=7;value[value.Length-1]=9;`,
       engine,
     );
     assert.equal(positive.state, 'terminated');
-    assert.equal(positive.output, '1000000\n');
+    assert.equal(positive.bootstrapBytes, defaults.entryArgumentsBytes);
+    assert.equal(positive.heapPeak, defaults.heap);
+    assert.deepEqual(positive.arrays, [{length: elements, size: available, storage: 'Int32Array', first: 7, last: 9}]);
     const negative = execute(
-      'int[] value=new int[1000001];Console.WriteLine(value.Length);',
+      `int[] value=new int[${elements + 1}];Console.WriteLine(value.Length);`,
       engine,
     );
     fault(negative, 'OutOfMemoryException');
+    assert.equal(negative.bootstrapBytes, defaults.entryArgumentsBytes);
+    assert.equal(negative.guestArrayBytes, 0, 'rejection must not publish the oversized guest backing');
+    assert.deepEqual(negative.arrays, []);
     return negative;
   },
   frames(engine) {
     const source = (depth) =>
       `class P { static int F(int n){if(n==0)return 0;return F(n-1)+1;} static void Main(){Console.WriteLine(F(${depth}));} }`;
     // The emitted entry wrapper and Main add two frames before F(509)..F(0).
-    const positive = execute(source(509), engine, { observeFrames: true });
+    const positive = execute(source(509), engine, { observeFrames: true, maxFrames: 512 });
     assert.equal(positive.state, 'terminated');
     assert.equal(positive.output, '509\n');
-    assert.equal(positive.peakFrames, defaults.frames);
-    const negative = execute(source(510), engine, { observeFrames: true });
+    assert.equal(positive.peakFrames, 512);
+    const negative = execute(source(510), engine, { observeFrames: true, maxFrames: 512 });
     fault(negative, 'StackOverflowException');
-    assert.equal(negative.peakFrames, defaults.frames);
+    assert.equal(negative.peakFrames, 512);
     return negative;
   },
   instructions(engine) {
@@ -155,6 +206,9 @@ if (process.argv[2] === '--limit-case') {
       fault: result.fault.name,
       instructions: result.instructions,
       heapPeak: result.heapPeak,
+      bootstrapBytes: result.bootstrapBytes,
+      guestArrayBytes: result.guestArrayBytes,
+      runtimeRecordBytes: result.runtimeRecordBytes,
       peakRss: result.peakRss,
     }),
   );
@@ -164,7 +218,7 @@ if (process.argv[2] === '--limit-case') {
   for (const engine of ['source', 'cil'])
     for (const name of Object.keys(cases)) {
       test(
-        `limits ${engine}: documented ${name} default and fault`,
+        `limits ${engine}: documented ${name} policy and fault`,
         { timeout: 100000 },
         async (t) => {
           const result = await run(
@@ -187,12 +241,21 @@ if (process.argv[2] === '--limit-case') {
     }
   test('limits heap: exact allocation boundary, one over, invalid length and rooted survival', () => {
     const heap = new ManagedHeap({ maxBytes: 256, initialThreshold: 256 });
-    const value = heap.array('int', 28),
+    assert.throws(
+      () => heap.array('int', 57),
+      error => error instanceof ManagedFault && error.name === 'OutOfMemoryException',
+    );
+    assert.equal(heap.stats.allocations, 0);
+    assert.equal(heap.stats.liveBytes, 0);
+    const value = heap.array('int', 56),
       handle = heap.createHandle(value);
     try {
       assert.equal(heap.stats.liveBytes, 256);
+      assert(heap.get(value).data instanceof Int32Array);
+      assert.equal(heap.get(value).data.byteLength, 224);
+      assert.equal(heap.get(value).size, 256);
       assert.throws(
-        () => heap.array('int', 29),
+        () => heap.array('int', 0),
         (error) =>
           error instanceof ManagedFault &&
           error.name === 'OutOfMemoryException',
@@ -212,12 +275,41 @@ if (process.argv[2] === '--limit-case') {
         (error) => error.name === 'OverflowException',
       );
       assert.equal(heap.getHandle(handle), value);
+      assert.equal(heap.stats.liveBytes, 256);
+      assert.equal(heap.stats.allocations, 1, 'rejected allocations cannot publish heap objects');
     } finally {
       heap.releaseHandle(handle);
       heap.collect();
     }
     assert.equal(heap.stats.liveBytes, 0);
   });
+  for (const engine of ['source', 'cil']) {
+    test(`limits ${engine}: retained guest arrays meet the exact byte budget and fail one element over`, () => {
+      const source = length => `int[] a=new int[28];int[] b=new int[${length}];a[0]=7;b[0]=11;`;
+      const positive = execute(source(12), engine, {maxBytes: 256});
+      assert.equal(positive.state, 'terminated');
+      assert.equal(positive.bootstrapBytes, defaults.entryArgumentsBytes);
+      assert.equal(positive.heapPeak, 256);
+      assert.deepEqual(positive.arrays.map(array => [array.length, array.size, array.first]), [[28, 144, 7], [12, 80, 11]]);
+      const negative = execute(source(13), engine, {maxBytes: 256});
+      fault(negative, 'OutOfMemoryException');
+      assert.equal(negative.bootstrapBytes, defaults.entryArgumentsBytes);
+      assert.equal(negative.heapPeak, defaults.entryArgumentsBytes + 144);
+      assert.deepEqual(negative.arrays.map(array => [array.length, array.size]), [[28, 144]]);
+    });
+    test(`limits ${engine}: explicit array length ceiling remains independent of available heap bytes`, () => {
+      const positive = execute('int[] a=new int[3];a[2]=9;', engine, {maxBytes: 256, maxArrayLength: 3});
+      assert.equal(positive.state, 'terminated');
+      assert.equal(positive.bootstrapBytes, defaults.entryArgumentsBytes);
+      assert.equal(positive.heapPeak, defaults.entryArgumentsBytes + 44);
+      assert.equal(positive.arrays[0].last, 9);
+      const negative = execute('int[] a=new int[4];', engine, {maxBytes: 256, maxArrayLength: 3});
+      fault(negative, 'OutOfMemoryException');
+      assert.equal(negative.bootstrapBytes, defaults.entryArgumentsBytes);
+      assert.equal(negative.guestArrayBytes, 0);
+      assert.deepEqual(negative.arrays, []);
+    });
+  }
   test('limits parser: nesting and diagnostics remain bounded', () => {
     assert.equal(nestingBudget, 200);
     const nested = (depth) =>
@@ -264,9 +356,10 @@ if (process.argv[2] === '--limit-case') {
       assert.equal(session.history.length, 64);
       assert(session.historyBytes <= session.maxHistoryBytes);
       const retained = session.vm.heap.createHandle(
-        session.vm.heap.array('int', 400000),
+        session.vm.heap.array('int', session.maxHistoryBytes / Int32Array.BYTES_PER_ELEMENT),
       );
       try {
+        assert(session.vm.heap.get(session.vm.heap.getHandle(retained)).size > session.maxHistoryBytes);
         const dropped = session.historyDropped;
         session.remember(true);
         assert.equal(

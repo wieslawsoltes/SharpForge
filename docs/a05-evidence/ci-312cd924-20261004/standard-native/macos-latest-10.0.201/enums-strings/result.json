@@ -1,0 +1,28 @@
+{
+  "id": "enums-strings",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/enums-strings",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/enums-strings/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "enums-strings/evidence",
+  "report": "enums-strings/result.json",
+  "startedAt": "2026-10-04T19:18:03.622Z",
+  "durationMs": 1968.5577080000003,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "enums-strings/stdout.log",
+  "stderr": "enums-strings/stderr.log",
+  "finishedAt": "2026-10-04T19:18:05.591Z"
+}

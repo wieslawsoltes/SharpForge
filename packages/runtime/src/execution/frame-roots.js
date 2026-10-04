@@ -1,3 +1,4 @@
+import {visitFaultRoots} from './exception-event-failure.js';
 import {scalarStorageGuard} from './scalar-storage-plan.js';
 import {isReference} from '../heap.js';
 import {visitRetiredFrames} from './frame-pool.js';
@@ -5,6 +6,8 @@ import {initializationRoots} from './static-init.js';
 import {runtimeTypeRoots} from './tokens.js';
 import {stringRoots} from './strings.js';
 import {floatSlots, floatSlotRoot} from './typed-stack.js';
+import {pruneDeadFrameRoots} from './frame-root-liveness.js';
+import {visitObjectValueRoots} from './object-value-state.js';
 
 const terminal = new Set(['completed', 'faulted', 'canceled']);
 const borrowItems = Symbol('root iterable groups');
@@ -59,21 +62,34 @@ function slots(vm, frame, argument, visit, precise) {
 
 /** Continuations retain their values independent of declared slots or instruction position. */
 export function visitFrameContinuations(frame, visit, sourceOrder = false) {
+  visitObjectValueRoots(frame, visit);
+  offer(frame.asyncBuilderTask, visit);
+  visitFaultRoots(frame.filterSearch?.error, visit);
+  visitFaultRoots(frame.exceptionEventContinuation?.fault, visit);
+  values(frame.exceptionEventContinuation?.handlers, visit);
+  values(frame.exceptionEventContinuation?.args, visit);
+  values(frame.delegateContinuation?.entries, visit);
+  values(frame.delegateContinuation?.args, visit);
+  offer(frame.intrinsicContinuation?.reference, visit);
+  offer(frame.intrinsicContinuation?.source, visit);
+  offer(frame.intrinsicContinuation?.destination, visit);
+  offer(frame.intrinsicContinuation?.value, visit);
+  offer(frame.intrinsicContinuation?.resultAddress, visit);
   if (!sourceOrder) {
-    offer(frame.exception?.reference, visit);
-    for (const caught of frame.caught ?? []) offer(caught.fault?.reference, visit);
+    visitFaultRoots(frame.exception, visit);
+    for (const caught of frame.caught ?? []) visitFaultRoots(caught.fault, visit);
   }
   for (const unwind of frame.unwinds ?? []) {
     offer(unwind.value, visit);
-    offer(unwind.error?.reference, visit);
+    visitFaultRoots(unwind.error, visit);
   }
   if (sourceOrder) {
-    offer(frame.exception?.reference, visit);
-    for (const caught of frame.caught ?? []) offer(caught.fault?.reference, visit);
+    visitFaultRoots(frame.exception, visit);
+    for (const caught of frame.caught ?? []) visitFaultRoots(caught.fault, visit);
   }
   if (frame.pending && !frame.unwinds?.includes(frame.pending)) {
     offer(frame.pending.value, visit);
-    offer(frame.pending.error?.reference, visit);
+    visitFaultRoots(frame.pending.error, visit);
   }
 }
 
@@ -94,14 +110,15 @@ export function visitFrameRoots(vm, frame, visit, precise = true, parked = false
 
 /** Shared scheduler inventory for collection and its public iterable compatibility wrapper. */
 export function visitSchedulerRoots(scheduler, visit, precise = true) {
+  visitFaultRoots(scheduler?.unhandledFault, visit);
   if (!scheduler) return;
   const vm = scheduler.vm;
   for (const scope of scheduler.callbackScopes ?? []) {
     values(scope.stack, visit);
     for (const frame of scope.frames) visitFrameRoots(vm, frame, visit, precise);
     offer(scope.returnValue, visit);
-    offer(scope.pendingFault?.reference, visit);
-    offer(scope.fault?.reference, visit);
+    visitFaultRoots(scope.pendingFault, visit);
+    visitFaultRoots(scope.fault, visit);
   }
   if (!scheduler.enabled) return;
   for (const context of scheduler.contexts.values()) {
@@ -111,24 +128,28 @@ export function visitSchedulerRoots(scheduler, visit, precise = true) {
     offer(context.delegate, visit);
     offer(context.returnValue, visit);
     offer(context.wait?.task, visit);
-    offer(context.resumeFault?.reference, visit);
-    if (context.id === scheduler.currentId && !scheduler.parked) continue;
+    visitFaultRoots(context.resumeFault, visit);
+    if (context.id === scheduler.currentId && !scheduler.parked && context.frames === vm.frames) continue;
     values(context.stack, visit);
     for (const frame of context.frames) visitFrameRoots(vm, frame, visit, precise, true);
-    offer(context.pendingFault?.reference, visit);
-    offer(context.fault?.reference, visit);
+    visitFaultRoots(context.pendingFault, visit);
+    visitFaultRoots(context.fault, visit);
   }
   for (const task of scheduler.tasks.values()) {
     if (terminal.has(task.status)) continue;
     offer(task.ref, visit);
     values(task.dependencies, visit);
-    offer(task.error?.reference, visit);
+    visitFaultRoots(task.error, visit);
+    offer(task.asyncState?.machine, visit);
+    offer(task.asyncState?.awaitedTask, visit);
   }
 }
 
 /** One VM root inventory, consumed without generators on the frame/slot collection path. */
 export function visitVMRoots(vm, visit, precise = true) {
+  if (precise) pruneDeadFrameRoots(vm);
   values(vm.platform?.roots(), visit);
+  values(vm.sync?.roots(), visit);
   visitSchedulerRoots(vm.scheduler, visit, precise);
   if (vm.inspector) {
     values(initializationRoots(vm), visit);
@@ -136,8 +157,8 @@ export function visitVMRoots(vm, visit, precise = true) {
     values(vm.statics.values(), visit);
     values(stringRoots(vm), visit);
     offer(vm.returnValue, visit);
-    offer(vm.fault?.reference, visit);
-    offer(vm.pendingFault?.reference, visit);
+    visitFaultRoots(vm.fault, visit);
+    visitFaultRoots(vm.pendingFault, visit);
     for (const frame of vm.frames) visitFrameRoots(vm, frame, visit, precise);
   } else {
     offer(vm.returnValue, visit);
@@ -148,8 +169,8 @@ export function visitVMRoots(vm, visit, precise = true) {
     values(runtimeTypeRoots(vm), visit);
     for (const frame of vm.frames) slots(vm, frame, false, visit, precise);
     for (const frame of vm.frames) visitFrameContinuations(frame, visit, true);
-    offer(vm.fault?.reference, visit);
-    offer(vm.pendingFault?.reference, visit);
+    visitFaultRoots(vm.fault, visit);
+    visitFaultRoots(vm.pendingFault, visit);
   }
   // Return/EH callbacks can still inspect retired frames before the instruction's flush.
   visitRetiredFrames(vm, frame => visitFrameRoots(vm, frame, visit, false));

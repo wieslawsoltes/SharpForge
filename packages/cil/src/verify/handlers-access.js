@@ -9,7 +9,7 @@ export function validateHandlerEntryHeights(method, offsets, heights, issue) {
   }
   if (!entries) return;
   for (const handler of method.handlers) {
-    const entry = handler.flags === 0 && entries.get(offsets.get(handler.target));
+    const entry = (handler.flags === 0 || handler.flags === 1) && entries.get(offsets.get(handler.target));
     if (entry?.height === 1) entry.exceptional = true;
   }
   let count = 0;

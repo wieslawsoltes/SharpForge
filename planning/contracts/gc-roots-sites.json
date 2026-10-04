@@ -2,31 +2,31 @@
   {
     "id": "cil-vm.js:roots:1",
     "file": "packages/runtime/src/cil-vm.js",
-    "line": 27,
-    "provider": "ptions);this.heap.rootProvider=()=>this.roots();this.frames=[];this.statics=new "
+    "line": 53,
+    "provider": ";startCilEntry(this,entry,args); } *roots(){yield* rootValues(this);} get "
   },
   {
-    "id": "cil-vm.js:roots:2",
-    "file": "packages/runtime/src/cil-vm.js",
-    "line": 35,
-    "provider": "try.ownerToken,'static-method'); } *roots(){yield* this.platform?.roots()??["
+    "id": "execution/frame-roots.js:roots:1",
+    "file": "packages/runtime/src/execution/frame-roots.js",
+    "line": 151,
+    "provider": "adFrameRoots(vm); values(vm.platform?.roots(), visit); values(vm.sync?.roots"
   },
   {
-    "id": "cil-vm.js:roots:3",
-    "file": "packages/runtime/src/cil-vm.js",
-    "line": 35,
-    "provider": "); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots"
+    "id": "execution/frame-roots.js:roots:2",
+    "file": "packages/runtime/src/execution/frame-roots.js",
+    "line": 152,
+    "provider": "orm?.roots(), visit); values(vm.sync?.roots(), visit); visitSchedulerRoots(v"
   },
   {
-    "id": "cil-vm.js:roots:4",
-    "file": "packages/runtime/src/cil-vm.js",
-    "line": 35,
-    "provider": "orm?.roots()??[];yield* this.scheduler?.roots()??[]; const root=function*(v)"
+    "id": "execution/frame-roots.js:roots:3",
+    "file": "packages/runtime/src/execution/frame-roots.js",
+    "line": 216,
+    "provider": "| vm.roots !== originalRoots) return vm.roots(); visitVMRoots(vm, visit); "
   },
   {
     "id": "execution/source-eh.js:roots:1",
     "file": "packages/runtime/src/execution/source-eh.js",
-    "line": 6,
+    "line": 16,
     "provider": "urn value or fault. */ export function* roots(vm) { for (const frame of vm.fra"
   },
   {
@@ -42,6 +42,12 @@
     "provider": "tion* stringRoots(vm) { yield* pool(vm).roots(); } export function clearStrings("
   },
   {
+    "id": "execution/sync-primitives.js:roots:1",
+    "file": "packages/runtime/src/execution/sync-primitives.js",
+    "line": 278,
+    "provider": " this.contentions = 0n; } * roots() { for (const block of this"
+  },
+  {
     "id": "host-operations.js:roots:1",
     "file": "packages/runtime/src/host-operations.js",
     "line": 5,
@@ -50,49 +56,31 @@
   {
     "id": "platform.js:roots:1",
     "file": "packages/runtime/src/platform.js",
-    "line": 17,
+    "line": 16,
     "provider": "perations=new HostOperations(this);} *roots(){yield* this.hostOperations.roots"
   },
   {
     "id": "platform.js:roots:2",
     "file": "packages/runtime/src/platform.js",
-    "line": 17,
+    "line": 16,
     "provider": "} *roots(){yield* this.hostOperations.roots();yield* this.animations.roots();y"
   },
   {
     "id": "platform.js:roots:3",
     "file": "packages/runtime/src/platform.js",
-    "line": 17,
+    "line": 16,
     "provider": "erations.roots();yield* this.animations.roots();yield this.application;yield* th"
   },
   {
     "id": "scheduler.js:roots:1",
     "file": "packages/runtime/src/scheduler.js",
-    "line": 26,
-    "provider": " this.contexts.get(this.currentId);} *roots(){if(!this.enabled)return;for(cons"
+    "line": 32,
+    "provider": " this.contexts.get(this.currentId);} *roots(){yield* schedulerRootValues(this)"
   },
   {
     "id": "vm.js:roots:1",
     "file": "packages/runtime/src/vm.js",
-    "line": 18,
-    "provider": "mage)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];thi"
-  },
-  {
-    "id": "vm.js:roots:2",
-    "file": "packages/runtime/src/vm.js",
-    "line": 22,
-    "provider": ";this.call(image.entryPoint,[]); } *roots(){yield* this.platform?.roots()??["
-  },
-  {
-    "id": "vm.js:roots:3",
-    "file": "packages/runtime/src/vm.js",
-    "line": 22,
-    "provider": "); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots"
-  },
-  {
-    "id": "vm.js:roots:4",
-    "file": "packages/runtime/src/vm.js",
-    "line": 22,
-    "provider": "orm?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield"
+    "line": 23,
+    "provider": "{ this.#profiler = profiler; }); } *roots(){yield* rootValues(this);} call"
   }
 ]

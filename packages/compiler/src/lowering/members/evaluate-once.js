@@ -34,6 +34,8 @@ export const EvaluateOnce = Base =>
      * property or indexer, the array of an element access, and every index argument, in evaluation order.
      */
     spillOperands(target, sink, { receiver = true } = {}) {
+      const reference = this.spillReferenceTarget(target, sink);
+      if (reference) return reference;
       switch (target.kind) {
         case 'FieldAccess':
         case 'PropertyAccess':

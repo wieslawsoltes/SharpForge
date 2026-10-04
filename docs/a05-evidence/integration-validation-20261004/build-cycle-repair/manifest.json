@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Static runtime dependency cycle repair: unchanged strict bundler and focused behavioral regression evidence.",
+  "failureRevision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+  "testedRevision": "807879f511a877ba7e5e1e0e63d9b9b75ba91319",
+  "testedTree": "6ef09110d2ad9d881fa96ee66e964d42a339f263",
+  "repairCommits": [
+    "dc049e0199cdcbf3019e9fc1884dec0388aa6030",
+    "0d2318d0997174bd1498da11dcfcfdf4f14e4f46",
+    "807879f511a877ba7e5e1e0e63d9b9b75ba91319"
+  ],
+  "sourceIdenticalIntegrationRevision": "39055a8527e840b4534c45ffca122f3f89466106",
+  "sourceTrees": {
+    "packages/runtime": "5e213ce4ca972da9c46408313201f50859ec2244",
+    "packages": "572312e5fab97cf9d32d3b32fd4ef1cb13bf4c2c",
+    "apps": "4576bc46cc870b669abb17e52754fad7449e28c0",
+    "scripts": "ef9f7820d8de888494248294f5fcaa0d760afe2a"
+  },
+  "environmentObservedInSameWorkspaceAfterValidation": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "Linux",
+    "machine": "x86_64",
+    "kernel": "6.18.44",
+    "CI": null,
+    "NODE_OPTIONS": null
+  },
+  "runs": [
+    {
+      "cwd": "/workspace/scratch/42f7738360b9/a05-memory",
+      "environmentOverrides": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "pretestRevision": "807879f511a877ba7e5e1e0e63d9b9b75ba91319",
+      "pretestTree": "6ef09110d2ad9d881fa96ee66e964d42a339f263",
+      "workingTreeBeforeValidation": "clean (git status --short produced no output)",
+      "log": "build-pass.log",
+      "command": "SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js npm run build > /workspace/scratch/42f7738360b9/a05-native-final-build-cycle-repair-r1.log 2>&1",
+      "exitCode": 0,
+      "exitCodeProvenance": "actual terminal process exit returned by write_stdin, not a following tail command"
+    },
+    {
+      "cwd": "/workspace/scratch/42f7738360b9/a05-memory",
+      "environmentOverrides": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "pretestRevision": "807879f511a877ba7e5e1e0e63d9b9b75ba91319",
+      "pretestTree": "6ef09110d2ad9d881fa96ee66e964d42a339f263",
+      "workingTreeBeforeValidation": "clean (git status --short produced no output)",
+      "log": "delegate-policy-retirement-pass.log",
+      "command": "SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --test --test-concurrency=1 tests/a05-delegate-targets.test.js tests/a05-managed-delegate-protocol.test.js tests/a05-first-chance-unwind-policy.test.js tests/a05-frame-memory-retirement.test.js > /workspace/scratch/42f7738360b9/a05-native-final-cycle-regressions-r1.log 2>&1",
+      "exitCode": 0,
+      "exitCodeProvenance": "actual terminal process exit returned by write_stdin, not a following tail command",
+      "tests": {
+        "total": 78,
+        "passed": 78,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "cwd": "/workspace/scratch/42f7738360b9/a05-memory",
+      "environmentOverrides": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "pretestRevision": "807879f511a877ba7e5e1e0e63d9b9b75ba91319",
+      "pretestTree": "6ef09110d2ad9d881fa96ee66e964d42a339f263",
+      "workingTreeBeforeValidation": "clean (git status --short produced no output)",
+      "log": "async-roots-pass.log",
+      "command": "SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --test --test-concurrency=1 tests/a05-29-async.test.js tests/a05-continuation-root-inventory.test.js > /workspace/scratch/42f7738360b9/a05-native-final-cycle-async-regressions-r1.log 2>&1",
+      "exitCode": 0,
+      "exitCodeProvenance": "actual terminal process exit returned by write_stdin, not a following tail command",
+      "tests": {
+        "total": 19,
+        "passed": 19,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+      "environmentOverrides": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "pretestRevision": "d1044a1707a6b72b90a5cbf14c8eb45da0b259eb",
+      "pretestTree": "5b1b546dd88064cc4a7da1416f16787d7f235ff2",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "log": "npm-check-pass.log",
+      "journal": "npm-check-journal.json",
+      "startedAt": "2026-10-04T18:21:14Z",
+      "finishedAt": "2026-10-04T18:21:23Z",
+      "exitCode": 0,
+      "exitCodeProvenance": "root-owned validation journal retained byte-identically",
+      "sourceTrees": {
+        "packages/runtime": "5e213ce4ca972da9c46408313201f50859ec2244",
+        "packages": "572312e5fab97cf9d32d3b32fd4ef1cb13bf4c2c",
+        "apps": "4576bc46cc870b669abb17e52754fad7449e28c0",
+        "scripts": "ef9f7820d8de888494248294f5fcaa0d760afe2a"
+      },
+      "results": {
+        "areas": 30,
+        "nodeFiles": 1293,
+        "browserScripts": 38,
+        "unassigned": 0,
+        "duplicate": 0,
+        "syntaxModulesChecked": 4624,
+        "syntaxErrors": 0,
+        "linkInspectionPassed": true,
+        "inspected": 4575,
+        "linkedModules": 4612,
+        "linkErrors": []
+      }
+    }
+  ],
+  "logs": [
+    {
+      "path": "original-failed-build.log",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-native-final-build.log",
+      "bytes": 1591,
+      "sha256": "cf472fedb9fc903ea260fd0b845012425a322d54807687732364e06b5518aa9f",
+      "byteIdenticalToOriginal": true
+    },
+    {
+      "path": "original-static-cycles.log",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-native-final-static-cycles-8f6eba479.log",
+      "bytes": 1864,
+      "sha256": "361271de4366d86a0b86eaf9166548a32bd411a3f5a19b74e7b8497dc158053e",
+      "byteIdenticalToOriginal": true
+    },
+    {
+      "path": "build-pass.log",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-native-final-build-cycle-repair-r1.log",
+      "bytes": 206,
+      "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f",
+      "byteIdenticalToOriginal": true
+    },
+    {
+      "path": "delegate-policy-retirement-pass.log",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-native-final-cycle-regressions-r1.log",
+      "bytes": 7745,
+      "sha256": "3f0e20f7e88812ec12a9eb0164207b43ce2141c13adfe417369ace5f8759112f",
+      "byteIdenticalToOriginal": true
+    },
+    {
+      "path": "async-roots-pass.log",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-native-final-cycle-async-regressions-r1.log",
+      "bytes": 1934,
+      "sha256": "a3cdf3335f094ebb50bfb3143b3881747124bea4039c051abf1c2a0ffff4bd08",
+      "byteIdenticalToOriginal": true
+    },
+    {
+      "path": "npm-check-pass.log",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-native-final-cycle-npm-check.log",
+      "bytes": 382,
+      "sha256": "366274743d470afd945cc8c93f40f8599ae50f1696cd254e8f22d2735e6c18f6",
+      "byteIdenticalToOriginal": true
+    },
+    {
+      "path": "npm-check-journal.json",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-native-final-cycle-npm-check-journal.json",
+      "bytes": 590,
+      "sha256": "d16c2f0e91208fb3cd616e844c7969983726bbcab91e06a8f1adc2b587c7c589",
+      "byteIdenticalToOriginal": true
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "packages/runtime/src/execution/source-object-slots.js",
+      "sha256": "cb65bb5d5aedd48168690b0fb1eb205281cd9f298755b319c9df9183b6b56e42",
+      "gitBlob": "6e088f08883cd491a41d8e26671332a975b47b58"
+    },
+    {
+      "path": "packages/runtime/src/execution/delegate-invocations.js",
+      "sha256": "19cbca952fadb72238635affdec1582ed93f14a66a17edd3bca57c428044a659",
+      "gitBlob": "9259ae460911a239c39ebb6c6a2f624a363b5196"
+    },
+    {
+      "path": "packages/runtime/src/execution/delegate-targets.js",
+      "sha256": "06110c0963d08fbf1e9cf21b70dc2cea86b1d8b30f975edc10e740a7148a1fe0",
+      "gitBlob": "5229f641aa2a62660e027b6a1b10267d3f58fd95"
+    },
+    {
+      "path": "packages/runtime/src/execution/delegate-calls.js",
+      "sha256": "ea4832faa890b6ae9532609b9cd0bb5dd9826bbd192ea229fa8ad541cb79f5cb",
+      "gitBlob": "73704b4cc7cdd14712964318db16a44a3b907382"
+    },
+    {
+      "path": "packages/runtime/src/execution/calls.js",
+      "sha256": "cbf8ae3b49c0ab234408fbf3abfbff03188662fc36cac0c6da078d7533d79e02",
+      "gitBlob": "b2bd1f547041881147202a8387f3a2c03cd24093"
+    },
+    {
+      "path": "packages/runtime/src/execution/frame-retirement.js",
+      "sha256": "098b1f795503ba5ed74b3d89ed58b2900e02c4a4cf9663ebc075f1d618fa45ae",
+      "gitBlob": "08c8140fe40da4442e98c4b1bae0911458c4befc"
+    },
+    {
+      "path": "packages/runtime/src/execution/scheduler-async-faults.js",
+      "sha256": "9b3f10b941bb5afb11f30932d81ca7c3902c6cb5a71fda7beed7070cf77787d3",
+      "gitBlob": "8238391e559eb4b6bfe00953a7de3d7341ac5955"
+    },
+    {
+      "path": "packages/runtime/src/execution/scheduler-context-completion.js",
+      "sha256": "5f7f2e56a7c4e5ad7baeb1c0e487b52da620c0b4bf2dad206cf75baef26f1f27",
+      "gitBlob": "c5d6011a632de4a2ca4c1b342140203ce631d3e2"
+    },
+    {
+      "path": "scripts/limited.js",
+      "sha256": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+      "gitBlob": "cecc071634fa4b4b738dfaa0a1ac516bf3e059dd"
+    },
+    {
+      "path": "scripts/build.js",
+      "sha256": "1d9580b1ad678f19c17a20c0b7f43d80bf5481d3e3d8797c6c4b30d1be4b14aa",
+      "gitBlob": "4b270182c78e4a5eb35c7faaef77d8340d8e8dd4"
+    },
+    {
+      "path": "scripts/bundle-worker.js",
+      "sha256": "f2b449ca98400388500bd49cd08d762cd39b836fe60d40f3ec94a2b963b48f3b",
+      "gitBlob": "bca8517da836c27fb4c602d84a4922b559886523"
+    },
+    {
+      "path": "tests/a05-delegate-targets.test.js",
+      "sha256": "169dd499ae2941d24d26cc02f3947569da9d580d7c5324df5474ef946e983ddc",
+      "gitBlob": "d8a7b695c70942a0d3ba92fd2255378b6527982f"
+    },
+    {
+      "path": "tests/a05-managed-delegate-protocol.test.js",
+      "sha256": "ecb0658b324200a85df5bbc1adf2d3f6597a76a28ea4a1f02722edb328b97659",
+      "gitBlob": "ba444beef22a949acf6921ddcea578586b8f45e3"
+    },
+    {
+      "path": "tests/a05-first-chance-unwind-policy.test.js",
+      "sha256": "163dbab1d7504292d4d9b2f7efd4d0cb9ddf78d5bf6364e7ec9a89080d614618",
+      "gitBlob": "52777920fe1536db2225388da8cd6b92fd256496"
+    },
+    {
+      "path": "tests/a05-frame-memory-retirement.test.js",
+      "sha256": "d4d579713596da8c62d956fe83843f6cc758d961e73634fa4e1df6774ec52e78",
+      "gitBlob": "70124edc9a56210293ab8e567acf68eca7132101"
+    },
+    {
+      "path": "tests/a05-29-async.test.js",
+      "sha256": "aeab5f06b883ed2631cf6d05b69fd025b26c7888d35ee94402372b0517383651",
+      "gitBlob": "a946f54efbad714e407d6b2bd747bd65aeae7ea2"
+    },
+    {
+      "path": "tests/a05-continuation-root-inventory.test.js",
+      "sha256": "9503b17ac2e4e39eb9de9249ad97e0f0c2505c2be6b4119bc126a4099efd010d",
+      "gitBlob": "3e9daa8fff3654c00945648bc1b4f08f81f23aca"
+    }
+  ],
+  "limitations": [
+    "Original failed build log is retained unchanged; its process exit was not independently captured by this agent.",
+    "The static cycle log is diagnostic output from a read-only import/export graph walk over dist left by the failed build; the real strict build is the authoritative validation.",
+    "Build identity contains the tested revision; identical product source trees do not imply byte-identical build identity metadata across different commits.",
+    "No performance or cross-platform qualification claim is made by this build and focused regression record.",
+    "The appended npm check ran in the root integration worktree at its separately recorded revision and tree; it is static manifest, syntax and module-link validation, not a new runtime test, performance run or cross-platform qualification. The retained root journal provides its timing, environment overrides and exit status; it does not record a working-tree status check."
+  ]
+}

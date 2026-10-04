@@ -199,11 +199,21 @@ test('expired reference storage cannot reach Object fallback', () => {
   }}), vm => assert.equal(vm.run().fault?.name, 'InvalidProgramException'));
 });
 
-test('throwing override unwinds without any receiver copy or box', () => {
+test('throwing override preserves its original first-pass receiver and stop releases it', () => {
   withVM(fixture({root: true, throwing: true}), vm => {
-    assert.equal(vm.run().fault?.name, 'NullReferenceException');
-    assert.equal(vm.frames.length, 0);
+    const result = vm.run();
+    assert.equal(result.fault?.name, 'NullReferenceException');
+    assert.equal(result.fault.phase, 'unhandled');
+    assert.deepEqual(vm.frames.map(frame => frame.method.name), ['Main', 'Apply', 'ToString']);
+    const receiver = vm.top.args[0];
+    assert.equal(receiver, vm.frames[0].locals[0]);
+    vm.heap.collect();
+    assert.equal(vm.heap.get(receiver).type, 'Leaf');
     assert.equal(vm.heap.records.some(record => record?.kind === 'box'), false);
+    vm.stop();
+    assert.equal(vm.frames.length, 0);
+    vm.heap.collect();
+    assert.throws(() => vm.heap.get(receiver), {name: 'InvalidReferenceException'});
   });
 });
 
@@ -227,7 +237,7 @@ test('a malformed cyclic hierarchy is bounded before descendant traversal', () =
   assert(report.issues.some(issue => issue.message.includes('cyclic')));
 });
 
-for (const base of ['System.Exception', 'Generic`1<int>']) test(`external/generic base ${base} remains unsupported`, () => {
+for (const base of ['System.Exception', 'Generic`1<int>']) test(`external and closed generic base ${base} preserve their admission boundary`, () => {
   const bytes = genericCallFixture([
     {name: 'Generic`1', genericParameters: [{}], methods: []},
     {name: 'Receiver', base, methods: []},
@@ -237,8 +247,9 @@ for (const base of ['System.Exception', 'Generic`1<int>']) test(`external/generi
     }}]}
   ]);
   const report = verifyCilAssembly(bytes);
-  assert.equal(report.success, false);
-  assert(report.issues.some(issue => issue.code === 'IL_PREFIX'));
+  assert.equal(report.success, base !== 'System.Exception', JSON.stringify(report.issues));
+  if (base === 'System.Exception') assert(report.issues.some(issue => issue.code === 'IL_PREFIX'));
+  else withVM(bytes, vm => assert.equal(vm.run().fault?.name, 'NullReferenceException'));
 });
 
 for (const depth of [64, 65]) test(`reference hierarchy depth ${depth} obeys the metadata boundary`, () => {

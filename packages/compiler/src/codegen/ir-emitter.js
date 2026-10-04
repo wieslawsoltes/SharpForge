@@ -1,3 +1,12 @@
+import {emitNullableExpression, emitNullableDefault} from './nullable-expressions.js';
+import {sourceNullableElement} from '@sharpforge/bytecode';
+import {emitVarargsExpression} from './varargs-emission.js';
+import {emitObjectCreation} from './object-creation.js';
+import {emitValueExpression} from './value-expressions.js';
+import {isSourceValueType} from './semantic/source-type-shape.js';
+import {emitTryCatch} from './exception-emission.js';
+import {emitUnsafeMemoryExpression} from './unsafe-memory-expressions.js';
+import {emitMemoryExpression,prepareMemoryReference,loadMemoryReference,storeMemoryReference,emitManagedReceiver,emitMemoryDefault} from './memory-expressions.js';
 import {emitScalarExpression} from './scalar-expressions.js';
 import {scalarImageConstant, isScalarType, scalarDefault} from './scalar-values.js';
 import {canonicalType,frameworkType,enumTypes} from '@sharpforge/framework';
@@ -19,7 +28,7 @@ export class IrEmitter {
   /** @param compilation the Compilation (constant pool, sequence points, sources); @param method the method record to fill. */
   constructor(compilation,method){
     this.c=compilation;this.m=method;this.code=[];this.locals=[];this.slots=new Map();this.names=new Map();this.loops=[];this.handlers=[];this.scopeNode=null;
-    if(!method.isStatic)this.thisSlot=this.addLocal('this',method.owner.name,method.node,true).slot;
+    if(!method.isStatic)this.thisSlot=this.addLocal('this',method.owner.name+(method.owner.valueType?'&':''),method.node,true).slot;
     this.parameterSlots=method.parameters.map(p=>this.addLocal(p.name,p.type,p,false).slot);
   }
   get pc(){return this.code.length/3;}
@@ -33,18 +42,25 @@ export class IrEmitter {
   /** Fixes the final name of synthesized, name-bearing locals at the point their statement starts. */
   nameSynthesized(locals){for(const local of locals){const prefix=synthesizedPrefixes[local.synthesizedKind];if(prefix&&!this.names.has(local))this.names.set(local,prefix+this.locals.length+(local.synthesizedKind==='using'?'_'+this.pc:''));}}
   /** Allocates the slot of a declared local. */
-  declare(local){const record=this.addLocal(this.names.get(local)??local.name,local.legacyType,local.syntax,!!local.hidden);this.slots.set(local,record.slot);return record;}
+  declare(local){const record=this.addLocal(this.names.get(local)??local.name,local.legacyType,local.syntax,!!local.hidden);this.slots.set(local,record.slot);if(local.pinned)record.pinned=true;return record;}
   /** Allocates a compiler temporary for a synthesized local. */
   declareTemp(local){const slot=this.temp(local.legacyType);this.slots.set(local,slot);return slot;}
   slot(variable){
     if(variable.kind==='Parameter')return variable.isThis?this.thisSlot:this.parameterSlots[variable.ordinal];
     const slot=this.slots.get(variable);if(slot===undefined)throw new Error(`Local '${variable.name}' is used before its declaration was emitted`);return slot;
   }
-  clear(slot){if(!isReference(this.locals[slot].type))return;this.emitConstant(null);this.emit(Op.STLOC,slot);this.emit(Op.POP);}
+  clear(slot){if(sourceNullableElement(this.locals[slot].type)||!isReference(this.locals[slot].type)||isSourceValueType(this.c,this.locals[slot].type))return;if(!emitMemoryDefault(this,this.locals[slot].type))this.emitConstant(null);this.emit(Op.STLOC,slot);this.emit(Op.POP);}
   closeScope(locals){for(const local of locals){const slot=this.slots.get(local);if(slot!==undefined)this.locals[slot].scopeEndPc=this.pc;}}
   seq(node){if(!node||node.debugHidden)return;const source=this.c.sources.get(node.uri);if(!source)return;const pos=source.positionAt(node.start),point={id:this.c.sequencePoints.length,methodId:this.m.id,offset:this.pc,uri:node.uri,start:node.start,end:node.end,line:pos.line+1,column:pos.character+1};this.c.sequencePoints.push(point);this.emit(Op.SEQ,point.id);}
   /** Emits a complete method body followed by the implicit return. */
-  build(body){this.stmt(body);this.emitConstant(isScalarType(this.m.returnType)?scalarDefault(this.m.returnType):defaultValue(this.m.returnType),this.m.returnType);this.emit(Op.RET);this.finish();}
+  build(body) {
+    this.stmt(body);
+    if (isSourceValueType(this.c, this.m.returnType)) this.emit(Op.NEWOBJ, this.c.typesByName.get(this.m.returnType).id);
+    else if (!emitNullableDefault(this, this.m.returnType) && !emitMemoryDefault(this, this.m.returnType)) this.emitConstant(isScalarType(this.m
+      .returnType) ? scalarDefault(this.m.returnType) : defaultValue(this.m.returnType), this.m.returnType);
+    this.emit(Op.RET);
+    this.finish();
+  }
   finish(){this.m.code=Int32Array.from(this.code);this.m.locals=this.locals.map(l=>({...l,...(!l.hidden?{scopeEndPc:l.scopeEndPc??this.pc}:{})}));this.m.handlers=this.handlers;}
   // ---- statements --------------------------------------------------------------------------------------------
   stmt(node){
@@ -86,15 +102,7 @@ export class IrEmitter {
       default:throw new Error(`Bound statement '${node.kind}' reached code generation without being lowered`);
     }
   }
-  tryCatch(node){
-    const start=this.pc;this.stmt(node.tryBlock);if(this.pc===start)this.emit(Op.NOP);const end=this.pc,jumps=[this.emit(Op.JUMP)];
-    for(const ca of node.catchBlocks){
-      const type=this.c.semantic.nameOf(ca.exceptionType),slot=this.temp('Exception');
-      if(ca.local){const l=this.declare(ca.local);l.scopeEnd=ca.body.syntax.end;this.handlers.push({start,end,target:this.pc,slot:l.slot,type});}else this.handlers.push({start,end,target:this.pc,slot,type});
-      this.stmt(ca.body);jumps.push(this.emit(Op.JUMP));this.closeScope(ca.local?[ca.local]:[]);
-    }
-    for(const jump of jumps)this.patch(jump);
-  }
+  tryCatch(node){return emitTryCatch(this,node);}
   /** Evaluates the governing expression once and emits one equality test per constant label. */
   switchDispatch(syntax,expression,groups){
     this.seq({...syntax,end:syntax.expression.end});this.expr(expression);const slot=this.temp(expression.legacyType);this.emit(Op.STLOC,slot);this.emit(Op.POP);
@@ -109,7 +117,7 @@ export class IrEmitter {
     this.emit(Op.BINARY,Binary[operator],binaryMode(operator,left,classifyBinary(operator,left,right).result,checked));
   }
   expr(node){
-    if(emitScalarExpression(this,node))return;
+    if(emitNullableExpression(this,node)||emitVarargsExpression(this,node)||emitUnsafeMemoryExpression(this,node)||emitValueExpression(this,node)||emitMemoryExpression(this,node)||emitScalarExpression(this,node))return;
     switch(node.kind){
       case 'Literal':this.emitConstant(node.value,node.legacyType);break;
       case 'DefaultExpression':this.emitConstant(isScalarType(node.legacyType)?scalarDefault(node.legacyType):defaultValue(node.legacyType),node.legacyType);break;
@@ -119,7 +127,7 @@ export class IrEmitter {
       case 'FieldAccess':{const f=node.field?.legacy;if(!f){this.emit(Op.ENUM,enumTypes.indexOf(node.legacyType),node.constantValue.value);break;}if(f.isStatic)this.emit(Op.LDSTATIC,f.index);else{this.expr(node.receiver);this.emit(Op.LDFLD,f.index);}break;}
       case 'PropertyAccess':{
         const p=node.property,legacy=p.legacy;
-        if(legacy){if(!legacy.isStatic)this.expr(node.receiver);this.emit(Op.CALL,legacy.get.id,legacy.isStatic?0:1);}
+        if(legacy){if(!legacy.isStatic)emitManagedReceiver(this,node.receiver,legacy.get.owner);this.emit(legacy.get.owner.interface?Op.CALLVIRT:Op.CALL,legacy.get.id,legacy.isStatic?0:1);}
         else if(p.builtin){if(node.receiver)this.expr(node.receiver);this.emit(Op.BUILTIN,p.builtin.id,node.receiver?1:0);}
         else{if(node.receiver)this.expr(node.receiver);this.emitContract(p.getMethod.contract);}
         break;}
@@ -127,15 +135,10 @@ export class IrEmitter {
       case 'ArrayAccess':this.expr(node.expression);this.expr(node.index);this.emit(Op.LDELEM);break;
       case 'ArrayLength':this.expr(node.expression);this.emit(Op.LENGTH);break;
       case 'Call':{
-        if(node.receiver)this.expr(node.receiver);this.args(node.args);const count=node.args.length+(node.receiver?1:0);
-        if(node.intrinsic)this.emit(Op.BUILTIN,node.intrinsic.id,count);else if(node.method.contract)this.emitContract(node.method.contract);else this.emit(Op.CALL,node.method.legacy.id,count);
+        if(node.receiver)emitManagedReceiver(this,node.receiver,node.method.legacy?.owner);this.args(node.args);const count=node.args.length+(node.receiver?1:0);
+        if(node.intrinsic)this.emit(Op.BUILTIN,node.intrinsic.id,count);else if(node.method.contract)this.emitContract(node.method.contract);else this.emit(node.method.legacy.owner?.interface?Op.CALLVIRT:Op.CALL,node.method.legacy.id,count);
         break;}
       case 'ObjectCreationExpression':this.objectCreation(node);break;
-      case 'ArrayCreation':{
-        if(node.length)this.expr(node.length);else this.emitConstant(node.hasInitializer?node.initializer.length:0);
-        this.emit(Op.NEWARR,this.c.constant(node.legacyType.slice(0,-2)));
-        if(node.hasInitializer)node.initializer.forEach((value,i)=>{this.emit(Op.DUP);this.emitConstant(i);this.expr(value);this.emit(Op.STELEM);this.emit(Op.POP);});
-        break;}
       case 'DelegateCreationExpression':if(node.receiver)this.expr(node.receiver);else this.emitConstant(null);this.emit(Op.DELEGATE,node.method.legacy.id,this.c.constant(node.legacyType));break;
       case 'UnaryOperator':this.expr(node.operand);this.emit(Op.UNARY,Unary[node.operator],node.operand.legacyType==='int'?(node.isChecked?5:1):0);break;
       case 'IncrementOperator':{
@@ -169,27 +172,11 @@ export class IrEmitter {
       default:throw new Error(`Bound expression '${node.kind}' reached code generation without being lowered`);
     }
   }
-  objectCreation(node){
-    const ctor=node.constructorMethod;
-    if(ctor?.builtin){this.args(node.args);this.emit(Op.BUILTIN,ctor.builtin.id,node.args.length);return;}
-    if(ctor?.contract){
-      const name=node.legacyType;this.args(node.args);this.emitContract(ctor.contract);
-      if(node.initializers.length){const slot=this.temp(name);this.emit(Op.STLOC,slot);this.emit(Op.POP);for(const init of node.initializers){this.emit(Op.LDLOC,slot);this.expr(init.value);this.emitContract(init.member.contract);this.emit(Op.POP);}this.emit(Op.LDLOC,slot);this.clear(slot);}
-      if(node.collectionInitializers.length){const slot=this.temp(name);this.emit(Op.STLOC,slot);this.emit(Op.POP);for(const element of node.collectionInitializers){this.emit(Op.LDLOC,slot);this.args(element.args);this.emitContract(element.addMethod.contract);this.emit(Op.POP);}this.emit(Op.LDLOC,slot);this.clear(slot);}
-      return;
-    }
-    const type=node.type.legacy;this.emit(Op.NEWOBJ,type.id);const slot=this.temp(node.legacyType);this.emit(Op.STLOC,slot);this.emit(Op.POP);
-    if(type.initializer!==undefined){this.emit(Op.LDLOC,slot);this.emit(Op.CALL,type.initializer,1);this.emit(Op.POP);}
-    if(ctor){this.emit(Op.LDLOC,slot);this.args(node.args);this.emit(Op.CALL,ctor.legacy.id,node.args.length+1);this.emit(Op.POP);}
-    for(const init of node.initializers){
-      const member=init.member.legacy;this.emit(Op.LDLOC,slot);this.expr(init.value);
-      if(init.member.kind==='Property'){this.emit(Op.CALL,member.set.id,2);this.emit(Op.POP);}else{this.emit(Op.STFLD,member.index);this.emit(Op.POP);}
-    }
-    this.emit(Op.LDLOC,slot);this.clear(slot);
-  }
+  objectCreation(node){emitObjectCreation(this,node);}
   // ---- assignment targets ------------------------------------------------------------------------------------
   /** Evaluates the receiver and index of an assignment target once into temporaries and describes how to load and store it. */
   prepare(node){
+    const memory=prepareMemoryReference(this,node);if(memory)return memory;
     const type=node.legacyType;
     switch(node.kind){
       case 'Local':return {kind:'local',type,slot:this.slot(node.local)};
@@ -198,7 +185,7 @@ export class IrEmitter {
       case 'FieldAccess':{const f=node.field.legacy;if(f.isStatic)return {kind:'static',type,index:f.index};this.expr(node.receiver);const receiver=this.temp(f.owner.name);this.emit(Op.STLOC,receiver);this.emit(Op.POP);return {kind:'field',type,index:f.index,receiver};}
       case 'PropertyAccess':{
         const legacy=node.property.legacy;
-        if(legacy){let receiver=null;if(!legacy.isStatic){this.expr(node.receiver);receiver=this.temp(legacy.owner.name);this.emit(Op.STLOC,receiver);this.emit(Op.POP);}return {kind:'property',property:legacy,type,receiver};}
+        if(legacy){let receiver=null;if(!legacy.isStatic){emitManagedReceiver(this,node.receiver,legacy.owner);receiver=this.temp(legacy.owner.name+(legacy.owner.valueType?'&':''));this.emit(Op.STLOC,receiver);this.emit(Op.POP);}return {kind:'property',property:legacy,type,receiver};}
         let receiver=null;if(node.receiver){this.expr(node.receiver);const legacyType=node.receiver.legacyType;receiver=this.temp(frameworkType(legacyType==='string'?'System.String':canonicalType(legacyType)).name);this.emit(Op.STLOC,receiver);this.emit(Op.POP);}
         return {kind:'framework',type,receiver,get:node.property.getMethod?.contract??null,set:node.property.setMethod?.contract??null};}
       case 'IndexerAccess':{
@@ -209,19 +196,21 @@ export class IrEmitter {
     }
   }
   loadRef(ref){
+    if(loadMemoryReference(this,ref))return;
     if(ref.kind==='framework'){if(!ref.get){this.emitConstant(null);return;}if(ref.receiver!==null)this.emit(Op.LDLOC,ref.receiver);if(ref.key!==undefined)this.emit(Op.LDLOC,ref.key);this.emitContract(ref.get);}
-    else if(ref.kind==='property'){if(!ref.property.isStatic)this.emit(Op.LDLOC,ref.receiver);this.emit(Op.CALL,ref.property.get.id,ref.property.isStatic?0:1);}
+    else if(ref.kind==='property'){if(!ref.property.isStatic)this.emit(Op.LDLOC,ref.receiver);this.emit(ref.property.get.owner.interface?Op.CALLVIRT:Op.CALL,ref.property.get.id,ref.property.isStatic?0:1);}
     else if(ref.kind==='local')this.emit(Op.LDLOC,ref.slot);else if(ref.kind==='static')this.emit(Op.LDSTATIC,ref.index);
     else{this.emit(Op.LDLOC,ref.receiver);if(ref.kind==='field')this.emit(Op.LDFLD,ref.index);else{this.emit(Op.LDLOC,ref.index);this.emit(Op.LDELEM);}}
   }
   storeRef(ref){
+    if(storeMemoryReference(this,ref))return;
     if(ref.kind==='framework'){
       const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);
       if(ref.set){if(ref.receiver!==null)this.emit(Op.LDLOC,ref.receiver);if(ref.key!==undefined)this.emit(Op.LDLOC,ref.key);this.emit(Op.LDLOC,value);this.emitContract(ref.set);this.emit(Op.POP);}
       this.emit(Op.LDLOC,value);this.clear(value);if(ref.receiver!==null)this.clear(ref.receiver);if(ref.key!==undefined)this.clear(ref.key);
     }else if(ref.kind==='property'){
       const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);
-      if(ref.property.set){if(!ref.property.isStatic)this.emit(Op.LDLOC,ref.receiver);this.emit(Op.LDLOC,value);this.emit(Op.CALL,ref.property.set.id,ref.property.isStatic?1:2);this.emit(Op.POP);}
+      if(ref.property.set){if(!ref.property.isStatic)this.emit(Op.LDLOC,ref.receiver);this.emit(Op.LDLOC,value);this.emit(ref.property.set.owner.interface?Op.CALLVIRT:Op.CALL,ref.property.set.id,ref.property.isStatic?1:2);this.emit(Op.POP);}
       this.emit(Op.LDLOC,value);this.clear(value);if(ref.receiver!==null)this.clear(ref.receiver);
     }else if(ref.kind==='local')this.emit(Op.STLOC,ref.slot);else if(ref.kind==='static')this.emit(Op.STSTATIC,ref.index);
     else{const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);this.emit(Op.LDLOC,ref.receiver);if(ref.kind==='index')this.emit(Op.LDLOC,ref.index);this.emit(Op.LDLOC,value);this.emit(ref.kind==='field'?Op.STFLD:Op.STELEM,ref.kind==='field'?ref.index:0);this.clear(value);this.clear(ref.receiver);if(ref.kind==='index')this.clear(ref.index);}

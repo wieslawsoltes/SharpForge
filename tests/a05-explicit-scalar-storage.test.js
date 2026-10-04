@@ -198,7 +198,7 @@ test('declared explicit tail sizes are bounded before allocating a byte payload'
   assert.throws(() => new CilVirtualMachine(bytes, {maxValueTypeBytes: 128}), {name: 'OutOfMemoryException'});
 });
 
-for (const type of ['object', 'decimal', 'System.Nullable`1<int>']) {
+for (const type of ['decimal', 'System.Nullable`1<int>']) {
   test(`explicit overlays containing ${type} remain explicitly unsupported`, () => {
     const bytes = fixture(undefined, {types: [{...union, fields: [{name: 'Value', type, offset: 0}]}], locals: ['valuetype Union']});
     assert.throws(() => new CilVirtualMachine(bytes), {name: 'NotSupportedException'});

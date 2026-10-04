@@ -105,16 +105,19 @@ test('inherited generic fields use the declaring base context, including nested 
   assert.equal(run(bytes), 3);
 });
 
-test('aggregate generic values and external generic methods keep explicit unsupported diagnostics', () => {
+test('aggregate generic arguments are admitted while unknown external generic methods remain rejected', () => {
   const bytes = genericCallFixture([
-    {name: 'Value', base: 'System.ValueType', fields: [{name: 'N', type: 'int'}], methods: []},
+    {name: 'Value', base: 'System.ValueType', flags: 0x100109, fields: [{name: 'N', type: 'int'}], methods: []},
     {name: 'Program', methods: [
       {name: 'Main', body: (writer, context) => writer.op('call',
         context.methodSpec(context.methods.get('Program.Use'), ['Value'])).op('ret')},
       {name: 'Use', genericParameters: [{}], body: writer => writer.op('ret')}
     ]}
   ]);
-  assert(verifyCilAssembly(bytes).issues.some(issue => /T03 value storage/.test(issue.message)));
+  const report = verifyCilAssembly(bytes);
+  assert.equal(report.success, true, JSON.stringify(report.issues));
+  const result = new CilVirtualMachine(bytes).run();
+  assert.equal(result.state, 'terminated', result.fault?.message);
   const external = genericCallFixture([{name: 'Program', methods: [{name: 'Main', body(writer, context) {
     writer.op('newobj', context.member(context.typeSpec('Unsupported.Collection`1<int>'), '.ctor', 'void', [], false));
     writer.op('pop').op('ret');

@@ -39,4 +39,8 @@ export function staticSlot(vm, token, frame = vm.top, opcode = 'ldsfld') {
  * These operations therefore provide acquire/release ordering without host threads.
  */
 export function volatilePrefix(frame) { frame.volatileAccess = true; }
-export function finishMemoryAccess(frame) { if (frame.volatileAccess) frame.volatileAccess = false; }
+export function finishMemoryAccess(frame) {
+  if (frame.volatileAccess) frame.volatileAccess = false;
+  if (frame.readonlyAccess) frame.readonlyAccess = false;
+  if (frame.unalignedAccess) frame.unalignedAccess = 0;
+}

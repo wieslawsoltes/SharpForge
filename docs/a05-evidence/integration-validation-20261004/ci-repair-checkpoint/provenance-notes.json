@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "scope": "Additive provenance notes; original logs and journals remain byte-for-byte unchanged.",
+  "initialCohort": {
+    "journal": "budget-dispatch-cursor-journal.json",
+    "resourceLimits": {
+      "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+      "SHARPFORGE_TEST_CONCURRENCY": "1",
+      "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+    },
+    "resourceLimitsSource": "Coordinator confirmed the exact original orchestration command retained in the conversation; the original journal omitted these fields.",
+    "nodeVersion": null,
+    "nodeVersionNote": "No contemporaneous version string was retained for this command."
+  },
+  "sourceProfilerFixture": {
+    "worktree": "/workspace/scratch/42f7738360b9/a05-performance",
+    "parent": {
+      "revision": "d1e4d807a88d0349f0151f8995d0b3c002675f2e",
+      "tree": "462d2ff2466e13347707db47e070da4c06e9b936"
+    },
+    "subsequentCommit": {
+      "revision": "a75cafa0e3fb6ee908545da50204cb997170fa74",
+      "tree": "4dc172331f31cf7d4e2858c1541173a0df13f23d"
+    },
+    "beforeFixtureBlob": "f21c03141d121f3f1f2234f157a09d946beb4de6",
+    "afterFixtureBlob": "9d2c6688bf9dbde6801aed2511a0997bf625a5f1",
+    "fixture": "tests/a05-source-profiler-dispatch.test.js",
+    "commandReconstruction": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/a05-source-profiler-dispatch.test.js"
+    ],
+    "resourceLimitsReconstruction": {
+      "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+      "SHARPFORGE_TEST_CONCURRENCY": "1",
+      "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+    },
+    "source": "Executing agent confirmed parent and fixture blobs from its retained session. Command form and limits were reconstructed from that session summary/resource rule, not recorded in a machine-written journal or embedded in the logs.",
+    "afterTreeState": "The test-only patch was uncommitted during the passing run and was subsequently committed as a75cafa0e3fb6ee908545da50204cb997170fa74; this is not a pristine committed-revision run.",
+    "nodeVersion": null,
+    "cleanTreeRecorded": false,
+    "limits": "Raw logs establish four case names, test path, counts and durations; they do not independently establish host/runtime versions, environment, expanded argv or clean-tree status."
+  }
+}

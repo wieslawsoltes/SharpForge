@@ -1,3 +1,4 @@
+import {attachExceptionBuiltins} from './exception-builtins.js';
 /**
  * The exception classes of the base class library for compilations bound against the closed framework registry
  * (SF-A02-T44).
@@ -56,6 +57,7 @@ const hierarchy = [
   ['System.Collections.Generic', 'KeyNotFoundException', 'SystemException', standard],
   ['System.IO', 'IOException', 'SystemException', standard],
   ['System.IO', 'FileNotFoundException', 'IOException', standard],
+  ['System.Threading', 'SynchronizationLockException', 'SystemException', standard],
 ];
 
 function hasConstructor(type, parameterTypes) {
@@ -93,6 +95,7 @@ function completeException(core) {
     exception.addMember(
       new MethodSymbol({ ...publicMember, name: 'GetBaseException', returnType: exception, parameters: [], modifiers: DeclarationModifiers.Virtual }),
     );
+  attachExceptionBuiltins(exception);
   return typeOf;
 }
 
@@ -117,5 +120,6 @@ export function declareExceptionTypes(core) {
     byName.set(name, type);
     addConstructors(type, constructors, typeOf, core.void);
     for (const property of properties) addGetter(type, property, core.string, DeclarationModifiers.Virtual);
+    attachExceptionBuiltins(type);
   }
 }

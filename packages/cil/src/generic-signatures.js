@@ -1,7 +1,13 @@
 /** Split a CLI display signature without confusing nested generic arguments. */
 export function genericTypeParts(name) {
-  const open = name.indexOf('<');
-  if (open < 0 || !name.endsWith('>')) return {definition: name, arguments: []};
+  // CLI identifiers may contain angle brackets (for example Roslyn's <Echo>d__7).
+  // Only the balanced trailing group can be an instantiated argument list.
+  let open = -1, nesting = 0;
+  if (name.endsWith('>')) for (let index = name.length - 1; index >= 0; index--) {
+    if (name[index] === '>') nesting++;
+    if (name[index] === '<' && --nesting === 0) { open = index; break; }
+  }
+  if (open <= 0 || /[.+]$/.test(name.slice(0, open))) return {definition: name, arguments: []};
   const argumentsList = []; let depth = 0, start = open + 1;
   for (let i = start; i < name.length - 1; i++) {
     if (name[i] === '<' || name[i] === '[') depth++;
@@ -21,7 +27,7 @@ const aliases = new Map(Object.entries({
   'System.Byte': 'byte', 'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Int32': 'int',
   'System.UInt32': 'uint', 'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float',
   'System.Double': 'double', 'System.String': 'string', 'System.Object': 'object',
-  'System.IntPtr': 'nint', 'System.UIntPtr': 'nuint'
+  'System.IntPtr': 'nint', 'System.UIntPtr': 'nuint', 'Exception': 'System.Exception'
 }));
 
 /** Canonical signature spelling; opaque metadata names are left intact. */
@@ -51,4 +57,3 @@ export function callSignatureKey(signature) {
   return JSON.stringify([!!signature.isStatic, signature.callingConvention ?? 0, signature.genericArity ?? 0,
     normalizeCallType(signature.returnType), signature.parameters.map(normalizeCallType)]);
 }
-

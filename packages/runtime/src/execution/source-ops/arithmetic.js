@@ -1,5 +1,6 @@
 import {Op,BinaryName,UnaryName} from '@sharpforge/bytecode';
 import {convert,unary,sourceEnum} from '../source-ops.js';
+import {sourcePointerBinary} from '../source-pointer-ops.js';
 
 /** Keep declared numeric modes and the existing source arithmetic helpers intact. */
 export const sourceArithmeticHandlers = Object.freeze({
@@ -8,7 +9,8 @@ export const sourceArithmeticHandlers = Object.freeze({
   },
   [Op.BINARY](vm,frame,a,b) {
     const right=vm.stack.pop(),left=vm.stack.pop();
-    vm.stack.push(vm.binary(BinaryName[a],left,right,b));
+    vm.stack.push(left?.memoryPointer || right?.memoryPointer
+      ? sourcePointerBinary(vm,BinaryName[a],left,right) : vm.binary(BinaryName[a],left,right,b));
   },
   [Op.CONVERT](vm,frame,a,b) {
     vm.stack.push(convert(vm.stack.pop(),a,b,vm));

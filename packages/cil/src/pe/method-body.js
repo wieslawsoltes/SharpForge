@@ -19,7 +19,6 @@ function exceptionSection(reader, codeSize, inspection) {
     const handlerLength = fat ? reader.u32() : reader.u8();
     const catchType = reader.u32();
     if (![0, 1, 2, 4].includes(flags)) throw new CilError('Invalid EH flags');
-    if (!inspection && ![0, 2].includes(flags)) throw new CilError('Only catch and finally clauses are supported in this runtime profile');
     if (!length || !handlerLength || start + length > codeSize || target + handlerLength > codeSize) throw new CilError('Invalid EH range');
     if (flags === 1 && catchType >= codeSize) throw new CilError('Invalid filter offset');
     handlers.push({ start, end: start + length, target, handlerEnd: target + handlerLength, catchType,

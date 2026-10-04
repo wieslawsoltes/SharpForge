@@ -1,0 +1,69 @@
+{
+  "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+  "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58",
+  "node": "v24.19.0",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "cases": [
+    {
+      "name": "nullable",
+      "nativeIntBits": 32,
+      "assemblySha256": "4a537aedd32fbb12e52ae974e0646ef5acb110b624bc1c96e67ffaf1ebd4b034",
+      "nativeSdk": "8.0.425",
+      "capturedRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+      "result": {
+        "state": "terminated",
+        "output": "False\n0\n99\nTrue\nTrue\n12\n12\n23\nInt32\nFalse\n7\n0\n42\ncounter\n5\ncounter\n5\ncounter\n4\n\nTrue\nFalse\nA\n4294967295\n18446744073709551615\n",
+        "exitCode": 0,
+        "instructions": 195
+      },
+      "passed": true
+    },
+    {
+      "name": "nullable",
+      "nativeIntBits": 64,
+      "assemblySha256": "4a537aedd32fbb12e52ae974e0646ef5acb110b624bc1c96e67ffaf1ebd4b034",
+      "nativeSdk": "8.0.425",
+      "capturedRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+      "result": {
+        "state": "terminated",
+        "output": "False\n0\n99\nTrue\nTrue\n12\n12\n23\nInt32\nFalse\n7\n0\n42\ncounter\n5\ncounter\n5\ncounter\n4\n\nTrue\nFalse\nA\n4294967295\n18446744073709551615\n",
+        "exitCode": 0,
+        "instructions": 195
+      },
+      "passed": true
+    },
+    {
+      "name": "decimal",
+      "nativeIntBits": 32,
+      "assemblySha256": "4ff6a492fb784be5674e7f910792e59f0a030e23bfc47b8956f0b41ad96852ad",
+      "nativeSdk": "8.0.425",
+      "capturedRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+      "result": {
+        "state": "terminated",
+        "output": "0.3\n0.3333333333333333333333333333\n1.10\n1.24\n-1.25\nOverflowException\n",
+        "exitCode": 0,
+        "instructions": 65
+      },
+      "passed": true
+    },
+    {
+      "name": "decimal",
+      "nativeIntBits": 64,
+      "assemblySha256": "4ff6a492fb784be5674e7f910792e59f0a030e23bfc47b8956f0b41ad96852ad",
+      "nativeSdk": "8.0.425",
+      "capturedRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+      "result": {
+        "state": "terminated",
+        "output": "0.3\n0.3333333333333333333333333333\n1.10\n1.24\n-1.25\nOverflowException\n",
+        "exitCode": 0,
+        "instructions": 65
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

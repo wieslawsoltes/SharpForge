@@ -1,3 +1,5 @@
+import {invokeSynchronization} from './sync-primitives.js';
+import {sourceExceptionBuiltin} from './source-exception-builtins.js';
 import {hasLegacyBclBuiltin,invokeLegacyBclBuiltin} from '@sharpforge/bcl-core';
 import {Builtins} from '@sharpforge/bytecode';
 import {ManagedFault,isReference} from '../heap.js';
@@ -7,6 +9,9 @@ import {invokeNamedBuiltin} from './source-builtins/index.js';
 import {invokeDecimal} from './decimal-intrinsics.js';
 import {invokeIntrinsic} from './intrinsics.js';
 import {floatingNumberExtremum} from './float-extrema.js';
+import {sourceArrayBuiltin} from './source-array-builtins.js';
+import {sourceVarargsBuiltin} from './source-varargs.js';
+import {sourceObjectBuiltin} from './source-object-builtins.js';
 
 function legacyStringPlatform(vm) {
   // The builtin seam also supports heap/value/format services without a complete VM.
@@ -45,6 +50,12 @@ export function builtin(vm, id, args) {
   }
   const name = entry.name;
   return vm.heap.withRoots(args, () => {
+    if (['object.ToString', 'object.Equals', 'object.GetHashCode'].includes(name)) return sourceObjectBuiltin(vm, name, args);
+    if (entry.numeric) return invokeIntrinsic(vm, entry.numeric, args);
+    if (entry.exceptionRuntime) return sourceExceptionBuiltin(vm, entry.exceptionRuntime, args);
+    if (entry.synchronization) return invokeSynchronization(vm, entry.synchronization, args).value;
+    if (entry.varargs) return sourceVarargsBuiltin(vm, entry.varargs, args);
+    if (entry.arrayRuntime) return sourceArrayBuiltin(vm, entry, args);
     if (entry.math) return invokeIntrinsic(vm, entry.math, args);
     if (entry.decimal) return invokeDecimal(vm, entry.decimal, args).value;
     if (hasLegacyBclBuiltin(name)) {

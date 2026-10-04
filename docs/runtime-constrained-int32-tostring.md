@@ -1,5 +1,7 @@
 # Concrete constrained Int32 ToString
 
+> Historical increment: the current [A05 Object slot contract](a05-constrained-object-slots.md) supersedes the Object-call admission and source-support limits below. The original revision-specific validation remains historical evidence.
+
 Direct CIL supports `constrained. System.Int32` (a concrete TypeRef) immediately
 followed by the ordinary instance `System.Object.ToString(): string` MemberRef.
 The receiver must be an owned, live managed address whose declared storage type

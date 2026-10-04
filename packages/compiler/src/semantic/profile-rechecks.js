@@ -13,6 +13,12 @@ import { needsTopLevelRules } from '../binder/top-level.js';
 /** The rules: a source-text filter that is false for almost every program, the syntax that needs the rule, and its codes. */
 const rules = [
   {
+    text: /\b__arglist\b/,
+    applies: node => node.kind === 'ArgListExpression' || node.kind === 'Parameter' && node.identifier.valueText === '__arglist',
+    codes: [DiagnosticId.CS0190, DiagnosticId.CS0224, DiagnosticId.CS0226, DiagnosticId.CS0257, DiagnosticId.CS1601,
+      DiagnosticId.CS1636, DiagnosticId.CS1669, DiagnosticId.CS4006, DiagnosticId.CS8362, DiagnosticId.CS8378],
+  },
+  {
     // Catch clauses after one that already catches everything: CS0160, CS1017 and the warning CS1058.
     text: /\bcatch\b[^]*\bcatch\b/,
     applies: node => node.kind === 'TryStatement' && node.catches.length > 1,

@@ -1,0 +1,92 @@
+name: A05 browser runtime qualification
+# Focused actual engine/tool evidence; existing Studio browser matrices remain independent.
+on:
+  push:
+    branches: [codex/a05-e01-started-handoff-20261004]
+  pull_request:
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  # Separate skipped PR events from push qualification of the same branch.
+  group: >-
+    ${{ format('a05-browser-{0}-{1}-{2}', github.event_name,
+        github.event.pull_request.head.repo.full_name || github.repository,
+        github.head_ref || github.ref_name) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
+defaults:
+  run:
+    shell: bash
+jobs:
+  browser:
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch' ||
+          (github.event_name == 'push' && github.ref == 'refs/heads/codex/a05-e01-started-handoff-20261004') ||
+          (github.event_name == 'pull_request' &&
+           (github.event.pull_request.head.repo.full_name != github.repository ||
+            github.head_ref != 'codex/a05-e01-started-handoff-20261004') &&
+           contains(github.event.pull_request.labels.*.name, 'full-ci') &&
+           contains(github.event.pull_request.title, 'SF-A05')) }}
+    name: A05 / Ubuntu / ${{ matrix.engine }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        engine: [chromium, firefox, webkit]
+    env:
+      NODE_OPTIONS: --max-old-space-size=512
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: tests/requirements.txt
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: >-
+          python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+      - name: Verify pinned official Speedscope UI
+        # Runtime cases still execute if the external tool is unavailable; its UI rows fail explicitly.
+        continue-on-error: true
+        run: python tests/fixtures/a05-browser/qualify.py --prepare
+      - name: Install the pinned Playwright browser
+        env:
+          ENGINE: ${{ matrix.engine }}
+        run: python -m playwright install --with-deps "$ENGINE"
+      - name: Exercise actual Wasm, CSP, debugger, and Speedscope import
+        env:
+          ENGINE: ${{ matrix.engine }}
+        # Official Speedscope requires WebGL; Firefox headless has no GL driver on this runner.
+        # Playwright's supported headed Linux path uses Xvfb without changing browser security.
+        run: |
+          if [[ "$ENGINE" == firefox ]]; then
+            xvfb-run --auto-servernum python tests/fixtures/a05-browser/qualify.py --engine "$ENGINE" --headed
+          else
+            python tests/fixtures/a05-browser/qualify.py --engine "$ENGINE"
+          fi
+      - name: Preserve setup and interruption failures
+        if: always()
+        env:
+          ENGINE: ${{ matrix.engine }}
+        run: |
+          options=()
+          if [[ "$ENGINE" == firefox ]]; then options+=(--headed); fi
+          python tests/fixtures/a05-browser/qualify.py --engine "$ENGINE" --finalize "${options[@]}"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: a05-browser-ubuntu-${{ matrix.engine }}
+          path: |
+            artifacts/a05-browser/
+            artifacts/a05-browser-assets/
+          if-no-files-found: error
+          retention-days: 14

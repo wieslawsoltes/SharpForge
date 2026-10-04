@@ -124,7 +124,8 @@ export class GenericInstantiations {
   }
   /** True for a source class that is generic or nested in a generic class: it exists only as constructions. */
   isGenericClass(type) {
-    return type instanceof NamedTypeSymbol && type.typeKind === TypeKind.Class && type.isGenericType && this.host.isSource(type);
+    return type instanceof NamedTypeSymbol && [TypeKind.Class, TypeKind.Struct, TypeKind.Interface].includes(type.typeKind) &&
+      type.isGenericType && this.host.isSource(type);
   }
   /** True for a source method that has type parameters of its own. */
   isGenericMethod(method) {

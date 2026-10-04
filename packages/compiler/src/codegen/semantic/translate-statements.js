@@ -1,3 +1,4 @@
+import {translateExceptionStatement} from './exception-translation.js';
 /**
  * Lowering of statements: blocks and declarations, control flow, loops over arrays and enumerators, exception
  * handling and resource disposal.
@@ -355,28 +356,7 @@ export const StatementTranslation = Base =>
       return this.statement(node.block);
     }
     stmtTry(node) {
-      const catches = node.catches.map(clause => {
-        if (clause.filter) return this.unsupported('exception filters', node.syntax);
-        // The runtime keeps no type on a thrown object and enters the innermost handler for every exception.
-        if (!clause.type.equals(this.g.analysis.core.exception))
-          return this.unsupported(`a catch clause for '${clause.type.toDisplayString()}' (the runtime catches System.Exception only)`, clause.syntax);
-        let variable = null;
-        const body = this.scoped(() => {
-          if (!clause.local) return this.statement(clause.block);
-          if (this.frame.captures.isCaptured(clause.local)) return this.unsupported('a captured catch variable', node.syntax);
-          variable = n.newLocal(clause.local.name, 'Exception', n.spanOf(clause.local.syntax, this.frame.uri), { hidden: false });
-          this.frame.vars.set(clause.local, () => n.local(variable));
-          return this.statement(clause.block);
-        });
-        body.syntax = this.span(clause.block.syntax);
-        return { kind: 'CatchBlock', exceptionType: null, local: variable, body };
-      });
-      const span = this.span(node.syntax);
-      if (!catches.length && node.finallyBlock) {
-        const statement = this.protect(node.body, () => this.statement(node.body), () => this.statement(node.finallyBlock));
-        return statement.kind === 'TryStatement' ? { ...statement, syntax: span } : statement;
-      }
-      return n.tryStatement(this.statement(node.body), catches, node.finallyBlock ? this.statement(node.finallyBlock) : null, span);
+      return translateExceptionStatement(this, node);
     }
     /** `using (R r = e) body` is `{ R r = e; try body finally { if (r != null) r.Dispose(); } }`. */
     stmtUsing(node) {

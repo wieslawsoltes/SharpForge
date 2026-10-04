@@ -1,0 +1,9 @@
+✔ T01.6/T01.10 exhaustive source/target/checked/.un matrix matches native operand by operand (5494.678347ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6844.589487

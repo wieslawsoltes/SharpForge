@@ -1,5 +1,11 @@
 # A05 pending-work closeout — 2026-10-04
 
+This is a historical report for the restricted closeout instruction and revisions
+below. The subsequent request to implement all remaining Project 7 items
+supersedes its deferral statement. Current criteria and unresolved obligations
+are tracked in [the 83-issue acceptance audit](a05-project7-acceptance-audit.md).
+Its original measurements and failures remain preserved as revision-scoped evidence.
+
 This integration finishes the existing 20 PRs and four committed unpublished
 leaves after the user requested no new work. It preserves every original head
 as an ancestor and combines validation/merge to avoid twenty duplicate CI runs.

@@ -2,16 +2,19 @@ import {decodeCoded} from '@sharpforge/cil';
 import {frameworkType} from '@sharpforge/framework';
 import {ManagedFault, isReference} from '../heap.js';
 import {defaults, storage as numericStorage} from './numeric-ops.js';
-import {valueLayout} from './value-layout.js';
+import {managedValueLayout} from './value-layout.js';
+import {hasManagedStateMachineLayout} from './managed-state-machine-layout.js';
 import {executionCodeState} from './code-version.js';
 import {byteLayout, hasExplicitLayout} from './explicit-layout.js';
 import {createExplicitValue, copyExplicitValue, replaceExplicitField} from './explicit-values.js';
+import {castCacheFor} from './casting.js';
+import {ownsHeapReference} from './heap-reference.js';
 
 const plans = new WeakMap();
 const invalid = message => { throw new ManagedFault('InvalidProgramException', message); };
 const unsupported = name => { throw new ManagedFault('NotSupportedException', 'Struct storage is not implemented: ' + name); };
 export const isValueRecord = value => !!value?.valueType && Array.isArray(value.fields);
-export const isAggregateType = table => table.flags.valueType && !table.flags.primitive && !table.flags.enum &&
+export const isAggregateType = table => table.flags.valueType && !table.flags.primitive && !table.flags.enum && !table.flags.refStruct &&
   table.name !== 'System.Decimal' && !(table.flags.dynamic && frameworkType(table.name)?.kind === 'value');
 
 function cacheFor(vm) {
@@ -38,19 +41,33 @@ function cacheFor(vm) {
 export function requireValueStorage(vm, table) {
   const cache = cacheFor(vm);
   if (cache.types.has(table)) return;
-  const definition = vm.typeSystem.types.get(table.definitionToken);
+  const definition = vm.typeSystem?.types.get(table.definitionToken);
   const layoutKind = definition?.flags & 0x18;
-  if (!definition || layoutKind !== 8 && layoutKind !== 0x10 || table.flags.nullable || table.flags.refStruct ||
+  if ((!definition || layoutKind !== 8 && layoutKind !== 0x10) && !table.flags.runtimeValue &&
+      !hasManagedStateMachineLayout(vm, table) ||
+      table.flags.nullable || table.flags.refStruct ||
       cache.restricted.has(table.definitionToken)) unsupported(table.name);
-  if (valueLayout(vm, table).containsReferences) unsupported('managed-reference fields in ' + table.name);
+  managedValueLayout(vm, table);
   if (hasExplicitLayout(vm, table)) byteLayout(vm, table);
   cache.types.add(table);
 }
 
 function fieldValue(vm, type, value, budget, defaulting = false) {
+  if (type.flags.nullable) {
+    if (defaulting) return Object.freeze({nullableType: type, hasValue: false, value: null});
+    return vm.storage(value, type.name);
+  }
   if (isAggregateType(type)) {
     if (!defaulting && value === null) invalid('Nested struct field requires a value');
     return record(vm, type, defaulting ? null : value, budget);
+  }
+  if (!type.flags.valueType) {
+    if (defaulting || value === null) return null;
+    if (!isReference(value) || !ownsHeapReference(vm.heap, value) ||
+        !castCacheFor(vm.heap.methodTables).isAssignableFrom(type, vm.heap.get(value).methodTable)) {
+      invalid('Struct reference field requires an owned assignable managed reference');
+    }
+    return value;
   }
   if (defaulting) value = defaults(type.enumUnderlyingType?.name ?? type.name, vm.options);
   if (value === undefined || isReference(value) || value?.byref || value?.valueType || value?.methodPointer) {
@@ -76,10 +93,16 @@ function record(vm, table, source, budget) {
   return Object.freeze({valueType: table, fields: Object.freeze(fields)});
 }
 
-/** Reference-free values have immutable owned fields; copies never expose mutable host aliases. */
+/** Inline values copy nested fields and preserve owned managed-reference identities. */
 export function createValue(vm, table, source = null) {
   if (table.registry !== vm.heap.methodTables) invalid('Struct type belongs to another VM');
   return record(vm, table, source, {fields: 65_536});
+}
+
+/** Normalize synthetic runtime aggregate fields through the same copy and ownership checks. */
+export function createValueFromFields(vm, table, fields) {
+  if (!Array.isArray(fields)) invalid('Struct fields must be an array');
+  return createValue(vm, table, Object.freeze({valueType: table, fields: Object.freeze([...fields])}));
 }
 
 export function replaceValueField(vm, value, index, replacement) {

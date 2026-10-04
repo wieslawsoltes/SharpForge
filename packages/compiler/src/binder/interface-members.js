@@ -11,13 +11,12 @@ import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { allInterfacesOf } from '../symbols/substitution.js';
+import {interfaceParametersMatch} from './interface-signatures.js';
 
 export const defaultInterfaceImplementationFeature = Object.freeze({ name: 'default interface implementation', version: 8 });
 export const staticAbstractMembersFeature = Object.freeze({ name: 'static abstract members in interfaces', version: 11 });
 const sameSignature = (a, b) =>
-  a.kind === b.kind &&
-  a.parameters?.length === b.parameters?.length &&
-  (a.parameters ?? []).every((p, i) => p.type.equals(b.parameters[i].type) && p.refKind === b.parameters[i].refKind);
+  a.kind === b.kind && interfaceParametersMatch(a, b);
 /**
  * Members an interface cannot declare even with default implementations: instance state and instance constructors.
  * @returns {{code:string,args:string[],member:object}[]}

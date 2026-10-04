@@ -1,5 +1,7 @@
 > **0.10 update:** [Advanced debugger and WinUI guide](advanced-debugging-winui.md) and [validation](validation-0.10.0.md) define the new symbol, async, live-editing and web-framework support; older limitations below describe the baseline unless explicitly superseded.
 
+> **Project 7 Object-call update:** the [current Object slot contract](a05-constrained-object-slots.md) supersedes the older Object-call restrictions below. Exact `ToString`, `Equals(object)` and `GetHashCode` overrides execute through source images, reloaded source images and direct CIL, including writable struct receivers and closed source struct overrides. Its linked evidence identifies the tested revision and outstanding qualification.
+
 # Compatibility status — 0.9.0
 
 The [0.9 debugger guide](debugger.md) supersedes older debugger descriptions: exact source binding, opt-in entry stops, source/direct-IL conditional/function/write/instruction rules and bounded reverse state are implemented. Native/PDB/hot-reload debugging is not. See [current validation](validation-0.9.0.md). The language, native build and runtime scopes below remain bounded.

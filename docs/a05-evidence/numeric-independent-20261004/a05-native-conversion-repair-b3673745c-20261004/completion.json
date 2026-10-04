@@ -1,0 +1,351 @@
+{
+  "format": "SharpForge.NativeNumericReplayRepair/1",
+  "revision": "b3673745c998dc571a82b56920d8b82549ef4a0e",
+  "tree": "20af49265d17a71cab113824a469243dbed17589",
+  "runtime": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "resourceEnvironment": {
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "testedState": "Focused and matrix runs used d3c670cf8 plus the exact runtime/test changes subsequently committed as b3673745c; all changed file hashes are recorded. No source edits occurred between passing runs and the runtime commit.",
+  "files": [
+    {
+      "path": "packages/compiler/src/constants.js",
+      "sha256": "178847e6635a8a88b8531fcf462775667a0302584c71038a707c04e370001abd"
+    },
+    {
+      "path": "tests/support/numeric-conversion-matrix.js",
+      "sha256": "9ad189faa287d71b8af436cf35c475104252325cde08539da982286709b5afe2"
+    },
+    {
+      "path": "tests/a05-integer-literal-profile-boundaries.test.js",
+      "sha256": "9dc350f62b50ab87ab95df71f1050975679dbb95d203b9668923fce75a8e6f62"
+    },
+    {
+      "path": "packages/runtime/src/execution/source-ops.js",
+      "sha256": "bf5636aad3938a4a9a1ef7148540fa847fdcad8f6ee1ba8290b0f1103d0e2ffa"
+    },
+    {
+      "path": "tests/a05-source-legacy-floating-conversion.test.js",
+      "sha256": "963218e2f48073c4c6d8dd55c922e629751fe5058c87a21980f5b15b5a74431a"
+    }
+  ],
+  "oracle": {
+    "provenance": {
+      "format": "SharpForge.NativeNumericOracle/1",
+      "sdk": "10.0.201",
+      "runtime": ".NET SDK:\n Version:           10.0.201\n Commit:            4d3023de60\n Workload version:  10.0.203.1\n MSBuild version:   18.3.0-release-26153-122+4d3023de6\n\nRuntime Environment:\n OS Name:     Mac OS X\n OS Version:  26.6\n OS Platform: Darwin\n RID:         osx-arm64\n Base Path:   /Users/wieslawsoltes/.dotnet/sdk/10.0.201/\n\n.NET workloads installed:\n [wasm-tools]\n   Installation Source: SDK 10.0.200\n   Manifest Version:    10.0.107/10.0.100\n   Manifest Path:       /Users/wieslawsoltes/.dotnet/sdk-manifests/10.0.100/microsoft.net.workload.mono.toolchain.current/10.0.107/WorkloadManifest.json\n   Install Type:        FileBased\n\n [macos]\n   Installation Source: SDK 10.0.200\n   Manifest Version:    26.4.10259/10.0.100\n   Manifest Path:       /Users/wieslawsoltes/.dotnet/sdk-manifests/10.0.100/microsoft.net.sdk.macos/26.4.10259/WorkloadManifest.json\n   Install Type:        FileBased\n\n [maui-android]\n   Installation Source: SDK 10.0.200\n   Manifest Version:    10.0.20/10.0.100\n   Manifest Path:       /Users/wieslawsoltes/.dotnet/sdk-manifests/10.0.100/microsoft.net.sdk.maui/10.0.20/WorkloadManifest.json\n   Install Type:        FileBased\n\n [ios]\n   Installation Source: SDK 10.0.200\n   Manifest Version:    26.4.10259/10.0.100\n   Manifest Path:       /Users/wieslawsoltes/.dotnet/sdk-manifests/10.0.100/microsoft.net.sdk.ios/26.4.10259/WorkloadManifest.json\n   Install Type:        FileBased\n\n [maccatalyst]\n   Installation Source: SDK 10.0.200\n   Manifest Version:    26.4.10259/10.0.100\n   Manifest Path:       /Users/wieslawsoltes/.dotnet/sdk-manifests/10.0.100/microsoft.net.sdk.maccatalyst/26.4.10259/WorkloadManifest.json\n   Install Type:        FileBased\n\n [android]\n   Installation Source: SDK 10.0.200\n   Manifest Version:    36.1.53/10.0.100\n   Manifest Path:       /Users/wieslawsoltes/.dotnet/sdk-manifests/10.0.100/microsoft.net.sdk.android/36.1.53/WorkloadManifest.json\n   Install Type:        FileBased\n\n [wasm-tools-net8]\n   Installation Source: SDK 10.0.200\n   Manifest Version:    10.0.107/10.0.100\n   Manifest Path:       /Users/wieslawsoltes/.dotnet/sdk-manifests/10.0.100/microsoft.net.workload.mono.toolchain.net8/10.0.107/WorkloadManifest.json\n   Install Type:        FileBased\n\nConfigured to use workload sets when installing new manifests.\n\nHost:\n  Version:      10.0.5\n  Architecture: arm64\n  Commit:       a612c2a105\n\n.NET SDKs installed:\n  10.0.201 [/Users/wieslawsoltes/.dotnet/sdk]\n\n.NET runtimes installed:\n  Microsoft.AspNetCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.NETCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.NETCore.App]\n\nOther architectures found:\n  None\n\nEnvironment variables:\n  DOTNET_CLI_TELEMETRY_OPTOUT              [1]\n  DOTNET_NOLOGO                            [1]\n  DOTNET_PATH                              [/Users/wieslawsoltes/.dotnet/dotnet]\n  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT    [1]\n\nglobal.json file:\n  Not found\n\nLearn more:\n  https://aka.ms/dotnet/info\n\nDownload .NET:\n  https://aka.ms/dotnet/download\n",
+      "node": "v24.21.0",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "nativeIntBits": 64,
+      "globalization": "invariant",
+      "commit": "13c959a7a62810958333f605ea46524fb5d09410",
+      "conversionTargetEncodings": 13,
+      "concreteTargetsAcrossAbis": 15,
+      "unqualifiedNativeWidths": [
+        32
+      ],
+      "files": {
+        "int64.cs": {
+          "sha256": "6eadf18bcf4285086228f4e525edece53e2cbd419119441ff01c6f6d508cc1d7",
+          "bytes": 1912
+        },
+        "int64.txt.gz": {
+          "sha256": "4e57861b8982cd866aa353f26d305e60ed462702d7dd08e4f3941884169deef5",
+          "bytes": 10562855,
+          "pairs": 100000,
+          "operationsPerPair": 29,
+          "seed": "88172645463325252",
+          "languageVersion": "9.0"
+        },
+        "uint32-matrix.cs": {
+          "sha256": "e08b49ecd4a2af0a762c4061654ce0c1fc2e576c2f3b17251379a8a1c9c4e1dd",
+          "bytes": 1539
+        },
+        "uint32-matrix.txt": {
+          "sha256": "1ada8aafcdc6454fbbbf42bd067b82ca9cd80c8ba0b35137ad42e90c83c1bb5c",
+          "bytes": 4029,
+          "pairs": 25
+        },
+        "uint32.cs": {
+          "sha256": "102937e9cd7a73277015948f0c886845af7b02e43aa7660fd7b0c441342fceb9",
+          "bytes": 455
+        },
+        "uint32.txt": {
+          "sha256": "920d5f6aede2a503c959e97880edc850e47db09da5969014ca676dceeef9dd8f",
+          "bytes": 95,
+          "languageVersion": "9.0"
+        },
+        "native.cs": {
+          "sha256": "0715c0a2786e5c20d6dde563143d127c0974f2015361fd5c5086b5ef914fe9ec",
+          "bytes": 416
+        },
+        "native.txt": {
+          "sha256": "83ddf98c214d656e7611f29b7d1b71a7e507b23a686f414e128aa7a2fe29aef2",
+          "bytes": 60,
+          "languageVersion": "9.0"
+        },
+        "float.cs": {
+          "sha256": "08368642a5de7795c416d8268b9a11a00623271dd862248debcbd1bef9aee3cd",
+          "bytes": 828
+        },
+        "float.txt": {
+          "sha256": "b86f6d16684daf44a02b98e73172838cd331546ac1e796591254ef1b6e5907ea",
+          "bytes": 151,
+          "languageVersion": "9.0"
+        },
+        "decimal.cs": {
+          "sha256": "8ca6671628d355127d6ae12cdeb6f60c75b7f7cb6a173ca2833265d77a04e754",
+          "bytes": 436
+        },
+        "decimal.txt": {
+          "sha256": "c55e157d56aee6ef6881df1fde896953078dcb2aab09241ecf6fc8e5388dc4c8",
+          "bytes": 69,
+          "languageVersion": "9.0"
+        },
+        "checked-shift.cs": {
+          "sha256": "3b9999fc5cdd76bc93dacd7e6e52722c89b919b0b274b7c8fcafbdd810b8a3de",
+          "bytes": 458
+        },
+        "checked-shift.txt": {
+          "sha256": "faa3884b8c0176a8d9cc06aeb7460d342bcbc120cda69cd6498f565ea3b29028",
+          "bytes": 98,
+          "languageVersion": "11.0"
+        },
+        "small-storage.cs": {
+          "sha256": "4c4a0ba7725e4904d00ffacbc27d57ca1a43b50b987b2e4be68ac8a20fe3dcd7",
+          "bytes": 3386
+        },
+        "small-storage.txt": {
+          "sha256": "7d435148f2f2c7418d425044a9d652cda7eea56f4baf1661fc9cec3eebc7872b",
+          "bytes": 162
+        },
+        "conversions.json": {
+          "sha256": "25f1366e9b134bbf90e71ec91571e4efd360a1f2f51a0f1e292dd801db84523e",
+          "bytes": 350197
+        },
+        "conversions.txt.gz": {
+          "sha256": "2e4a1ac07c86cab8a6210f580b5cab66b9e42b445dbcf024625a4c2f57bb1512",
+          "bytes": 1190,
+          "cases": 2112,
+          "sourceSha256": "0b5bca25f3071eb8e11c9e2a9fea95802a5aeddc6a4b901c1c1181e88ea55a14"
+        },
+        "storage.json": {
+          "sha256": "98d2f0b0da945317c2640532471b787fc2d98302a3de50642cae7b27233882e4",
+          "bytes": 43863
+        }
+      }
+    },
+    "verifiedFixtureCount": 19,
+    "fixtures": [
+      {
+        "name": "int64.cs",
+        "sha256": "6eadf18bcf4285086228f4e525edece53e2cbd419119441ff01c6f6d508cc1d7",
+        "bytes": 1912
+      },
+      {
+        "name": "int64.txt.gz",
+        "sha256": "4e57861b8982cd866aa353f26d305e60ed462702d7dd08e4f3941884169deef5",
+        "bytes": 10562855,
+        "pairs": 100000,
+        "operationsPerPair": 29,
+        "seed": "88172645463325252",
+        "languageVersion": "9.0"
+      },
+      {
+        "name": "uint32-matrix.cs",
+        "sha256": "e08b49ecd4a2af0a762c4061654ce0c1fc2e576c2f3b17251379a8a1c9c4e1dd",
+        "bytes": 1539
+      },
+      {
+        "name": "uint32-matrix.txt",
+        "sha256": "1ada8aafcdc6454fbbbf42bd067b82ca9cd80c8ba0b35137ad42e90c83c1bb5c",
+        "bytes": 4029,
+        "pairs": 25
+      },
+      {
+        "name": "uint32.cs",
+        "sha256": "102937e9cd7a73277015948f0c886845af7b02e43aa7660fd7b0c441342fceb9",
+        "bytes": 455
+      },
+      {
+        "name": "uint32.txt",
+        "sha256": "920d5f6aede2a503c959e97880edc850e47db09da5969014ca676dceeef9dd8f",
+        "bytes": 95,
+        "languageVersion": "9.0"
+      },
+      {
+        "name": "native.cs",
+        "sha256": "0715c0a2786e5c20d6dde563143d127c0974f2015361fd5c5086b5ef914fe9ec",
+        "bytes": 416
+      },
+      {
+        "name": "native.txt",
+        "sha256": "83ddf98c214d656e7611f29b7d1b71a7e507b23a686f414e128aa7a2fe29aef2",
+        "bytes": 60,
+        "languageVersion": "9.0"
+      },
+      {
+        "name": "float.cs",
+        "sha256": "08368642a5de7795c416d8268b9a11a00623271dd862248debcbd1bef9aee3cd",
+        "bytes": 828
+      },
+      {
+        "name": "float.txt",
+        "sha256": "b86f6d16684daf44a02b98e73172838cd331546ac1e796591254ef1b6e5907ea",
+        "bytes": 151,
+        "languageVersion": "9.0"
+      },
+      {
+        "name": "decimal.cs",
+        "sha256": "8ca6671628d355127d6ae12cdeb6f60c75b7f7cb6a173ca2833265d77a04e754",
+        "bytes": 436
+      },
+      {
+        "name": "decimal.txt",
+        "sha256": "c55e157d56aee6ef6881df1fde896953078dcb2aab09241ecf6fc8e5388dc4c8",
+        "bytes": 69,
+        "languageVersion": "9.0"
+      },
+      {
+        "name": "checked-shift.cs",
+        "sha256": "3b9999fc5cdd76bc93dacd7e6e52722c89b919b0b274b7c8fcafbdd810b8a3de",
+        "bytes": 458
+      },
+      {
+        "name": "checked-shift.txt",
+        "sha256": "faa3884b8c0176a8d9cc06aeb7460d342bcbc120cda69cd6498f565ea3b29028",
+        "bytes": 98,
+        "languageVersion": "11.0"
+      },
+      {
+        "name": "small-storage.cs",
+        "sha256": "4c4a0ba7725e4904d00ffacbc27d57ca1a43b50b987b2e4be68ac8a20fe3dcd7",
+        "bytes": 3386
+      },
+      {
+        "name": "small-storage.txt",
+        "sha256": "7d435148f2f2c7418d425044a9d652cda7eea56f4baf1661fc9cec3eebc7872b",
+        "bytes": 162
+      },
+      {
+        "name": "conversions.json",
+        "sha256": "25f1366e9b134bbf90e71ec91571e4efd360a1f2f51a0f1e292dd801db84523e",
+        "bytes": 350197
+      },
+      {
+        "name": "conversions.txt.gz",
+        "sha256": "2e4a1ac07c86cab8a6210f580b5cab66b9e42b445dbcf024625a4c2f57bb1512",
+        "bytes": 1190,
+        "cases": 2112,
+        "sourceSha256": "0b5bca25f3071eb8e11c9e2a9fea95802a5aeddc6a4b901c1c1181e88ea55a14"
+      },
+      {
+        "name": "storage.json",
+        "sha256": "98d2f0b0da945317c2640532471b787fc2d98302a3de50642cae7b27233882e4",
+        "bytes": 43863
+      }
+    ]
+  },
+  "results": [
+    {
+      "name": "constant-and-floating-boundaries",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-source-legacy-floating-conversion.test.js",
+        "tests/a05-integer-literal-profile-boundaries.test.js",
+        "tests/compiler-constant-folding.test.js",
+        "tests/compiler-constant-conversion-integration.test.js"
+      ],
+      "log": "a05-integer-floating-boundaries-r3.log",
+      "exitCode": 0,
+      "tests": 18,
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 4721.933155
+    },
+    {
+      "name": "complete-conversion-matrix",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "--test-name-pattern",
+        "exhaustive source/target",
+        "tests/numeric-differential.test.js"
+      ],
+      "log": "a05-native-conversion-matrix-r2.log",
+      "exitCode": 0,
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 6844.589487,
+      "cases": 2112,
+      "routes": [
+        "scalar helpers",
+        "source",
+        "reloaded source",
+        "direct CIL"
+      ],
+      "nativeIntBits": 64
+    }
+  ],
+  "history": {
+    "fullReplay": "../a05-native-numeric-replay-139917fe5f-20261004/completion.json",
+    "fullReplayRevision": "139917fe5f1a623c75642abbc1e9bbab0dc536df",
+    "fullReplayTests": 11,
+    "fullReplayPassed": 10,
+    "fullReplayFailed": 1,
+    "fullReplaySkipped": 0,
+    "full100kThreeRoutePassed": true,
+    "fullReplayRerun": false,
+    "repairs": [
+      "d3c670cf8: defer imprecise legacy literal constants; parenthesize native negative fixture operands",
+      "b3673745c: retain tagged floating carrier for legacy source Int32 conversion"
+    ]
+  },
+  "limits": [
+    "This replays the saved .NET10 macOS ARM64 ABI64 oracle; no fresh native runtime or ABI32 qualification is claimed.",
+    "The full replay report remains10/11 at its original revision; this additive report qualifies the formerly failing conversion test after repair.",
+    "Other project qualification gates are independent."
+  ],
+  "logs": [
+    {
+      "path": "a05-integer-literal-boundary-r1.log",
+      "sha256": "dc6be43c718e8e52af3deb3ed4696bcc473d8e886a11c4991b26551849372e94"
+    },
+    {
+      "path": "a05-integer-literal-boundary-r2.log",
+      "sha256": "7217556c936a38d624624c9387152be6fc12dfafbb87780203ba74f2a5423b2e"
+    },
+    {
+      "path": "a05-native-conversion-matrix-r1.log",
+      "sha256": "58e2dab44b892e6eb67f0ca52acb5e6e779dd5e0e7f760d65044e5380c522e6a"
+    },
+    {
+      "path": "a05-integer-floating-boundaries-r3.log",
+      "sha256": "c27a6795b2298997c377bfe624ffa55c2b251a4d337c53455f507710a7a65831"
+    },
+    {
+      "path": "a05-native-conversion-matrix-r2.log",
+      "sha256": "10a23a5319926a796ef90dd847fd0ab4f4fa5d068e35ef83b84d73e98b8d291f"
+    }
+  ]
+}

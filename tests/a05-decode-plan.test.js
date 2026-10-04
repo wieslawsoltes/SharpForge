@@ -165,9 +165,22 @@ test('invalid opcode and branch plans are rejected without replacing an executab
     {offset: 0, name: 'br', operandKind: 'br32', operand: 999}]) {
     assert.throws(() => getDecodePlan(vm, {...method, instructions: [instruction]}), {name: 'InvalidProgramException'});
   }
+  assert.throws(() => getDecodePlan(vm, {...method,
+    instructions: [{offset: 0, name: 'no.', operandKind: 'i8', operand: 0}]}), {name: 'NotSupportedException'});
   assert.equal(executionCodeStatistics(vm).decodePlans, 1);
   assert.equal(getDecodePlan(vm, method), plan);
   assert.equal(vm.run().returnValue, 42);
+});
+
+test('generic and planned dispatch distinguish malformed opcodes from known unsupported opcodes', () => {
+  for (const decodePlans of [false, true]) for (const [name, fault] of [
+    ['host.execute', 'InvalidProgramException'], ['no.', 'NotSupportedException']
+  ]) {
+    const vm = new CilVirtualMachine(literalFixture(), {decodePlans});
+    vm.top.method.instructions = [{offset: 0, name, operandKind: 'i8', operand: 0}];
+    try { assert.throws(() => vm.step(), {name: fault}); }
+    finally { vm.stop(); }
+  }
 });
 
 test('body replacement refreshes both handler slots and branch offsets on the next instruction', () => {

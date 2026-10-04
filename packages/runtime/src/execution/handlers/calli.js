@@ -1,3 +1,4 @@
+import {tailRequested} from '../tailcall.js';
 import {callSignatureKey} from '@sharpforge/cil';
 import {ManagedFault} from '../../heap.js';
 import {cachedMetadataToken} from '../token-cache.js';
@@ -26,7 +27,7 @@ export function indirectCall(vm, frame, instruction) {
   // PrepareCall on the selected frame gates its precise initializer before pc 0.
   frame.stack.pop();
   const pool = framePool(vm), args = pool.arguments(frame.stack, count);
-  try { vm.heap.withRoots(args, () => vm.call(pointer.token, args)); }
+  try { vm.heap.withRoots(args, () => vm.call(pointer.token, args, {tail:tailRequested(frame,instruction)})); }
   finally { pool.releaseArguments(args); }
 }
 

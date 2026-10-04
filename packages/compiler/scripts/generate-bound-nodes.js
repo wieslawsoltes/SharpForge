@@ -54,8 +54,12 @@ export class Bound${n.name} extends ${n.expression?'BoundExpression':'BoundState
 `;
 }
 nodes+=`function sameList(a,b){if(a===b)return true;if(!a||!b||a.length!==b.length)return false;for(let i=0;i<a.length;i++)if(a[i]!==b[i])return false;return true;}
-/** Field kinds per node kind: used by generic tooling such as the tree dumper. */
-export const boundNodeFields=Object.freeze({${all.map(n=>`${n.name}:Object.freeze([${n.fields.map(([name,kind])=>`['${name}','${kind}']`).join(',')}])`).join(',')}});
+export {boundNodeFields} from './fields.js';
+`;
+const fields=banner+`/** Field kinds per node kind, shared by the tree dumper and generic tooling. */
+export const boundNodeFields=Object.freeze({
+${all.map(n=>`  ${n.name}:Object.freeze([\n${n.fields.map(([name,kind])=>`    ['${name}','${kind}']`).join(',\n')}\n  ])`).join(',\n')}
+});
 `;
 const visitor=banner+`/**
  * Visitors over the bound tree. \`BoundTreeVisitor\` dispatches on node kind with every \`visitX\` falling back to
@@ -83,5 +87,6 @@ ${all.map(n=>{const kids=children(n);return `  visit${n.name}(node){${kids.lengt
 }
 `;
 let stale=false;
-for(const [file,text] of [['nodes.js',nodes],['visitor.js',visitor],['rewriter.js',rewriter]]){const path=join(dir,file);if(process.argv.includes('--check')){if(!existsSync(path)||readFileSync(path,'utf8')!==text){console.error(file+' is stale; run packages/compiler/scripts/generate-bound-nodes.js');stale=true;}}else writeFileSync(path,text);}
+const outputs=[['nodes.js',nodes],['fields.js',fields],['visitor.js',visitor],['rewriter.js',rewriter]];
+for(const [file,text] of outputs){const path=join(dir,file);if(process.argv.includes('--check')){if(!existsSync(path)||readFileSync(path,'utf8')!==text){console.error(file+' is stale; run packages/compiler/scripts/generate-bound-nodes.js');stale=true;}}else writeFileSync(path,text);}
 if(stale)process.exit(1);if(!process.argv.includes('--check'))console.log(`Generated ${all.length} bound node classes.`);

@@ -1,0 +1,70 @@
+[
+  {
+    "name": "browser-observer-cleanup",
+    "commit": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+    "tree": "5a1db2dbc3fcbe948ac46553a73774260c98c8fd",
+    "argv": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--expose-gc",
+      "--test",
+      "--test-concurrency=1",
+      "--test-reporter=tap",
+      "tests/a05-browser-qualification.test.js"
+    ],
+    "limits": {
+      "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+      "SHARPFORGE_TEST_CONCURRENCY": "1",
+      "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+    },
+    "started": 1791141975.3127582,
+    "finished": 1791141977.2157028,
+    "exitCode": 0,
+    "postCommit": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+    "status": ""
+  },
+  {
+    "name": "final-license-policy",
+    "commit": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+    "tree": "5a1db2dbc3fcbe948ac46553a73774260c98c8fd",
+    "argv": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "scripts/conformance/oracle/license-policy.js"
+    ],
+    "limits": {
+      "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+      "SHARPFORGE_TEST_CONCURRENCY": "1",
+      "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+    },
+    "started": 1791141977.271286,
+    "finished": 1791141977.479854,
+    "exitCode": 0,
+    "postCommit": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+    "status": ""
+  },
+  {
+    "name": "final-strict-build",
+    "commit": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+    "tree": "5a1db2dbc3fcbe948ac46553a73774260c98c8fd",
+    "argv": [
+      "node",
+      "scripts/limited.js",
+      "npm",
+      "run",
+      "build"
+    ],
+    "limits": {
+      "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+      "SHARPFORGE_TEST_CONCURRENCY": "1",
+      "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+    },
+    "started": 1791141977.5165179,
+    "finished": 1791141989.613124,
+    "exitCode": 0,
+    "postCommit": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+    "status": ""
+  }
+]

@@ -1,0 +1,46 @@
+✔ the legacy constant adapter defers imprecise integer tokens without changing Int32 minimum folding (2.688878ms)
+✖ exact signed minimum and unsigned maximum literals execute through source, reload and CIL (87.58736ms)
+✔ an out-of-range implicit signed assignment reports a source diagnostic rather than throwing (4.629577ms)
+✔ floating conversion evidence binds the actual source to two pinned native runs (1.988008ms)
+✔ floating constants and runtime casts retain distinct native results: bound (137.145645ms)
+✔ floating constants and runtime casts retain distinct native results: legacy (27.826466ms)
+✔ constant conversion integration emits identical images through both compiler pipelines (12.453204ms)
+✔ constant folding retains invalid conversion and checked overflow diagnostics: bound (27.041082ms)
+✔ constant folding retains invalid conversion and checked overflow diagnostics: legacy (9.369067ms)
+✔ A02-T32 ConstantValue is a typed, immutable value for every primitive and for enums (3.170185ms)
+✔ A02-T32 fold API: results, not-constant and error records (1.843106ms)
+✔ A02-T32 Decimal models System.Decimal scale and rounding (0.810871ms)
+✔ A02-T32 evaluateConstant keeps the current AST profile behaviour on top of fold.js (11.662985ms)
+✔ A02-T32 corpus is a Roslyn pin of a few hundred constant expressions (1.036682ms)
+✔ A02-T32 constant folding matches Roslyn results and diagnostics on the whole corpus (57.259271ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 14
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2950.648357
+
+✖ failing tests:
+
+test at tests/a05-integer-literal-profile-boundaries.test.js:17:1
+✖ exact signed minimum and unsigned maximum literals execute through source, reload and CIL (87.58736ms)
+  AssertionError [ERR_ASSERTION]: [{"uri":"Program.cs","version":1,"start":71,"length":20,"code":"SF1003","message":"decimal, long and unsigned literals are not implemented","severity":"error","range":{"start":{"line":1,"character":20},"end":{"line":1,"character":40}}},{"uri":"Program.cs","version":1,"start":71,"length":20,"code":"SF2004","message":"Integer literals above Int32.MaxValue are not supported by this profile","severity":"error","range":{"start":{"line":1,"character":20},"end":{"line":1,"character":40}}},{"uri":"Program.cs","version":1,"start":113,"length":22,"code":"SF1003","message":"decimal, long and unsigned literals are not implemented","severity":"error","range":{"start":{"line":2,"character":20},"end":{"line":2,"character":42}}},{"uri":"Program.cs","version":1,"start":113,"length":22,"code":"SF2004","message":"Integer literals above Int32.MaxValue are not supported by this profile","severity":"error","range":{"start":{"line":2,"character":20},"end":{"line":2,"character":42}}},{"uri":"Program.cs","version":1,"start":162,"length":4,"code":"CS0119","message":"'nint' is a type, which is not valid in the given context","severity":"error","range":{"start":{"line":3,"character":25},"end":{"line":3,"character":29}}},{"uri":"Program.cs","version":1,"start":168,"length":20,"code":"SF1003","message":"decimal, long and unsigned literals are not implemented","severity":"error","range":{"start":{"line":3,"character":31},"end":{"line":3,"character":51}}},{"uri":"Program.cs","version":1,"start":168,"length":20,"code":"SF2004","message":"Integer literals above Int32.MaxValue are not supported by this profile","severity":"error","range":{"start":{"line":3,"character":31},"end":{"line":3,"character":51}}}]
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-source-memory/tests/a05-integer-literal-profile-boundaries.test.js:25:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

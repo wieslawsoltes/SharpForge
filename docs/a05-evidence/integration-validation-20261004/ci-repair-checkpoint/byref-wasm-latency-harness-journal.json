@@ -1,0 +1,30 @@
+{
+  "commit": "65130534ef8cec81662b17d9eb0d1d76c6030cdc",
+  "tree": "22fbc2c30d9900b0991e39f10628353b341432a9",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--expose-gc",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a05-byref-latency.test.js",
+    "tests/a05-wasm-latency.test.js",
+    "tests/a05-11-wasm-call-tiering.test.js",
+    "tests/a05-11-wasm-osr.test.js",
+    "tests/a05-11-wasm-runtime-bridge.test.js",
+    "tests/a05-11-wasm-deopt.test.js",
+    "tests/a05-qualification-options.test.js"
+  ],
+  "limits": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "started": 1791141220.115017,
+  "finished": 1791141233.4116192,
+  "exitCode": 0,
+  "postCommit": "65130534ef8cec81662b17d9eb0d1d76c6030cdc",
+  "status": ""
+}

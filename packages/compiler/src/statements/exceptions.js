@@ -1,3 +1,4 @@
+import {exceptionTypeName, isExceptionType} from '../symbols/exception-identity.js';
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { Op } from '@sharpforge/bytecode';
 
@@ -5,7 +6,7 @@ export function compileThrow(node) {
   this.seq(node);
   if (node.expression) {
     const type = this.expr(node.expression);
-    if (type !== 'Exception' && type !== 'null' && type !== 'error')
+    if (type !== 'null' && !isExceptionType(this.c, type))
       this.c.report(node, DiagnosticId.CS0155);
     this.emit(Op.THROW);
   }
@@ -54,21 +55,27 @@ export function compileTry(node) {
     this.scopes.push(new Map());
     this.assigned = new Set(before);
     const type = this.c.resolveType(ca.type, node, false, this.m);
-    if (type !== 'Exception')
-      this.c.report(node, DiagnosticId.SF2002);
-    const slot = this.temp('Exception');
+    if (!isExceptionType(this.c, type)) this.c.report(node, DiagnosticId.CS0155);
+    let slot = this.temp(type);
     if (ca.name) {
-      const l = this.local(ca.name, 'Exception', { ...ca.body, name: ca.name, nameSpan: ca.nameSpan }, true);
-      l.scopeEnd = ca.body.end;
+      const local = this.local(ca.name, type, { ...ca.body, name: ca.name, nameSpan: ca.nameSpan }, true);
+      local.scopeEnd = ca.body.end;
       this.locals[slot].hidden = true;
-      this.handlers.push({ start, end, target: this.pc, slot: l.slot, type });
+      slot = local.slot;
     }
-    else
-      this.handlers.push({ start, end, target: this.pc, slot, type });
+    const handler = {start, end, target: 0, handlerEnd: 0, slot, type: exceptionTypeName(type)};
+    if (ca.filter) {
+      handler.filter = this.pc;
+      this.bool(ca.filter);
+      this.emit(Op.ENDFILTER);
+    }
+    handler.target = this.pc;
+    this.handlers.push(handler);
     this.catchDepth++;
     this.stmt(ca.body);
     this.catchDepth--;
     jumps.push(this.emit(Op.JUMP));
+    handler.handlerEnd = this.pc;
     this.closeScope();
   }
   for (const jump of jumps)

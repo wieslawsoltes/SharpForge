@@ -20,6 +20,12 @@ This package participates in Portable PDB symbols, cooperative async/logical-thr
 
 `VirtualMachine` and `CilVirtualMachine` support `runAsync()` and `{virtualTime:true}` for deterministic tests. `vm.platform.scene()` provides the current managed UI scene. The scheduler parks managed frames and uses cooperative contexts sharing a precise managed heap, not OS threads.
 
+The runtime `maxInstructions` option limits executed instructions, including repeated
+loop iterations. It does not set the number of instructions permitted in a decoded
+method or change exception-region validation bounds. Hosts that need tighter CIL
+decoding limits can supply an `AssemblyInspector` constructed with its own limits;
+the standalone `verifyCilAssembly` options continue to control structural admission.
+
 ## 0.13 managed collections and playback
 
 Both engines dispatch the closed BCL collection/text contracts through managed heap state. Interpolated formatting is invariant and bounded. ManagedPlatform owns a shared data-only animation clock; headless applications advance it explicitly, while Studio supplies a timer that freezes at debugger stops. Automatic clocks are not an implicit timer inside a synchronous `run()`. Compatible snapshots retain collection and timeline state; native CLR behavior is not implied.

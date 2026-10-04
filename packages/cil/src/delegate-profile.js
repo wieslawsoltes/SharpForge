@@ -1,3 +1,4 @@
+import {supportedDelegateOperation} from './delegate-operations.js';
 import {frameworkType, canonicalType} from '@sharpforge/framework';
 import {genericTypeParts, substituteTypeArguments} from './field-profile.js';
 
@@ -31,6 +32,7 @@ export function managedDelegateSignature(inspector, name) {
 
 /** Constructor, invocation and equality are one finite verifier/runtime contract. */
 export function supportedDelegateCall(inspector, descriptor) {
+  if (supportedDelegateOperation(descriptor)) return true;
   if (descriptor.name !== '.ctor' && descriptor.name !== 'Invoke' && descriptor.name !== 'Equals') return false;
   const invoke = managedDelegateSignature(inspector, descriptor.ownerInstance ?? descriptor.owner);
   const actual = descriptor.signature;

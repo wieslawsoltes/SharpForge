@@ -5,6 +5,8 @@ import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import * as catalog from '../packages/compiler/src/diagnostics/codes.js';
 import * as diagnostics from '../packages/compiler/src/diagnostics.js';
+import {roslynCodes} from '../packages/compiler/src/diagnostics/roslyn-codes.js';
+import {unsafeRoslynCodes} from '../packages/compiler/src/diagnostics/roslyn-unsafe-codes.js';
 import {codeTokens} from '../scripts/conformance/static/code-tokens.js';
 
 const {DiagnosticId, diagnosticCodes, diagnosticDescriptor, formatMessage} = diagnostics;
@@ -35,6 +37,17 @@ test('A00-T14 the diagnostic seam shares the existing catalog and every descript
     assert.equal(descriptor, diagnosticDescriptor(code));
     assert.equal(descriptor.id, code);
     assert(Object.isFrozen(descriptor), code);
+  }
+});
+
+test('A00-T14 the generated unsafe fragment contributes descriptor rows to the same catalog', () => {
+  assert(Object.isFrozen(unsafeRoslynCodes));
+  assert(Object.keys(unsafeRoslynCodes).length > 0);
+  for (const [code, row] of Object.entries(unsafeRoslynCodes)) {
+    assert.equal(roslynCodes[code], row, code);
+    assert.equal(DiagnosticId[code], code);
+    const descriptor = diagnosticDescriptor(code);
+    assert.deepEqual([descriptor.name, descriptor.severity, descriptor.warningLevel, descriptor.format], row, code);
   }
 });
 
@@ -86,7 +99,8 @@ test('A00-T14 every compiler identifier reference resolves to the exact catalog 
 });
 
 test('A00-T14 compiler diagnostic id literals are confined to the existing catalog', () => {
-  const catalogs = new Set(['codes.js', 'roslyn-codes.js'].map(name => join(sourceRoot, 'diagnostics', name)));
+  const catalogs = new Set(['codes.js', 'roslyn-codes.js', 'roslyn-unsafe-codes.js']
+    .map(name => join(sourceRoot, 'diagnostics', name)));
   let callers = 0;
   for (const file of sourceFiles(sourceRoot)) {
     if (catalogs.has(file)) continue;

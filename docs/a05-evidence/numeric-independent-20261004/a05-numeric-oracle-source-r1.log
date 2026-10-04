@@ -1,0 +1,14 @@
+✔ A05 numeric differential runs the same source through all three routes (131.966171ms)
+✔ A05 numeric differential includes engine, operands and output row on divergence (9.408931ms)
+✔ A05 numeric differential enforces execution and output quotas (14.024583ms)
+✔ A05 native oracle rejects path escape and tampered fixtures (2.912397ms)
+✔ fresh native numeric artifacts retain SDK, width and content-hash validation outside tracked fixtures (8.071147ms)
+✔ native numeric source retains the explicit System import used by the CLR generator (234.979556ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4031.524878

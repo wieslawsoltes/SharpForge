@@ -9,9 +9,6 @@ export function executionHandlerOffsets(method, options, issue) {
     if (method.handlers.length) {
       const { tree, boundaries, limits } = decodedExceptionRegions(method.codeSize, method.instructions, method.handlers, options);
       validateDecodedExceptionControlFlow(method.instructions, tree, limits, boundaries);
-      for (const handler of method.handlers) {
-        if (handler.flags === 1) issue(method, null, 'IL_FILTER', 'Exception filters are inspection-only');
-      }
       return new Map(method.instructions.map((instruction, index) => [instruction.offset, index]));
     }
     // Fold placement into the existing index pass; no additional scan or per-instruction scratch arrays.

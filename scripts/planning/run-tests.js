@@ -15,14 +15,14 @@ export function serialTestArgs(args) {
   result.splice(result.indexOf('--test') + 1, 0, '--test-concurrency=1');
   return result;
 }
-export function runProcess(command, args, {cwd, timeout}) {
+export function runProcess(command, args, {cwd, timeout, env = process.env}) {
   return new Promise((resolve, reject) => {
     if (timeout != null && (!Number.isInteger(timeout) || timeout < 0)) {
       const error = new RangeError('timeout must be an unsigned integer');
       error.code = 'ERR_OUT_OF_RANGE';
       throw error;
     }
-    const child = spawn(command, args, {cwd, stdio: 'inherit', shell: false, env: limitedEnv()});
+    const child = spawn(command, args, {cwd, stdio: 'inherit', shell: false, env: limitedEnv(env)});
     let cancellationStatus, timer;
     const forward = (signal, status) => {
       // A child may exit zero after graceful cleanup. Cancellation must still stop the caller's next task.
@@ -76,14 +76,15 @@ export async function runTests(options) {
   // Areas and their files execute serially, each with its own declared timeout. Node reports per-area counts.
   // Locally, the run also waits for a machine-wide slot and caps each process's heap (lib/resource-limits.js).
   const release = await acquireRunSlot();
+  const env = {...process.env, ...release.environment};
   try {
     for (const {area, args} of commands) {
       console.error(`Running Node tests for ${area}.`);
-      const status = await runProcess(process.execPath, args, {cwd: options.root});
+      const status = await runProcess(process.execPath, args, {cwd: options.root, env});
       if (status) return status;
     }
     if (options.browser) for (const manifest of manifests) for (const script of manifest.browserScripts) {
-      const status = await runProcess(process.env.PYTHON || 'python', [script], {cwd: options.root, timeout: manifest.timeout});
+      const status = await runProcess(process.env.PYTHON || 'python', [script], {cwd: options.root, timeout: manifest.timeout, env});
       if (status) return status;
     }
     return 0;

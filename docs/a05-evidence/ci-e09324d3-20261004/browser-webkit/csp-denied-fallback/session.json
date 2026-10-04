@@ -1,0 +1,11 @@
+{
+  "suite": "csp-denied-fallback",
+  "passed": true,
+  "engine": "webkit",
+  "cspViolations": [],
+  "browser": "26.6",
+  "executable": "playwright-managed",
+  "mode": "A05 public runtime / denied CSP",
+  "seconds": 3.3331027309999968,
+  "diagnosticErrors": []
+}

@@ -1,0 +1,28 @@
+{
+  "id": "source-generic-values",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/source-generic-values",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/source-generic-values/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "source-generic-values/evidence",
+  "report": "source-generic-values/result.json",
+  "startedAt": "2026-10-04T19:17:57.049Z",
+  "durationMs": 2148.7452080000003,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "source-generic-values/stdout.log",
+  "stderr": "source-generic-values/stderr.log",
+  "finishedAt": "2026-10-04T19:17:59.199Z"
+}

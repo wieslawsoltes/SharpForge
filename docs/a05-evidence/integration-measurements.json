@@ -1,0 +1,46 @@
+{
+  "format": "SharpForge.A05IntegrationEvidence/1",
+  "scope": "Revision-scoped measurements; no final project completion claim.",
+  "reports": [
+    {
+      "file": "a05-byref-gc-stress-17f2620c.json",
+      "sha256": "91a6f28e040a561f95abbbe757f589f98792bd91432b0c4ea4673e7923d67086",
+      "revision": "17f2620c8cc1241748a00f1f913318903db883bc",
+      "kind": "SharpForge.ByrefGCStress/1",
+      "status": null,
+      "acceptance": null
+    },
+    {
+      "file": "a05-targets-c8ff8c6f.json",
+      "sha256": "febfa5e4592c5853c46cce87386b9bfac4b1d7a7c126cfe585b9424725200d48",
+      "revision": "c8ff8c6f0de6ccb81efae7d89450b9e14d124429",
+      "kind": "SharpForge.A05Qualification/1",
+      "status": "measured",
+      "acceptance": "missed"
+    },
+    {
+      "file": "a05-targets-9ab4a805.json",
+      "sha256": "45bb8068d961c05f3d345fd9b2b4e0b56ca9cbdedacd278b0dda73d0ba3ef9a1",
+      "revision": "9ab4a80504503d3c48a9c44eb9852ff1425f2466",
+      "kind": "SharpForge.A05Qualification/1",
+      "status": "measured",
+      "acceptance": "missed"
+    },
+    {
+      "file": "a05-fibonacci-6cea3cb3.json",
+      "sha256": "3190b806d77f15c9fb478ef8385786c775d0658b71ad39aae873d7d8fdd924c9",
+      "revision": "6cea3cb3368f06c31517092868e555d7f84b2391",
+      "kind": "SharpForge.A05Qualification/1",
+      "status": "measured",
+      "acceptance": "missed"
+    },
+    {
+      "file": "a05-virtual-6cea3cb3.json",
+      "sha256": "d9a55779ec5f66250b29baa418265a044b9a0efaa4688d1d5bd8902a79715b8d",
+      "revision": "6cea3cb3368f06c31517092868e555d7f84b2391",
+      "kind": "SharpForge.A05Qualification/1",
+      "status": "measured",
+      "acceptance": "missed"
+    }
+  ]
+}

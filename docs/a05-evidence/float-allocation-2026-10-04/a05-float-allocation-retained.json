@@ -1,0 +1,675 @@
+{
+  "schemaVersion": 2,
+  "suite": "SF-A05-T08.1",
+  "status": "measured",
+  "measurementKind": "runtime-benchmark",
+  "nativeQualification": false,
+  "startedAt": "2026-10-04T13:51:32.014Z",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "/workspace/scratch/42f7738360b9/a05-performance/bench/vm/float-allocation.js",
+    "--runner",
+    "a05-linux-x64-node24",
+    "--out",
+    "artifacts/a05-float-allocation-retained.json"
+  ],
+  "commit": "4e716d790634675a887724ff8be6f80262e59434",
+  "worktreeStatus": "",
+  "harnessHash": "b47954a57d35685be862177429d580a523e13da5284e1802e434f4af3662250f",
+  "environment": {
+    "runner": "a05-linux-x64-node24",
+    "host": "a4a6cb866850d910ed62eb11bf180b15a7723a193c1953cabad275e6babdc766",
+    "platform": "linux",
+    "arch": "x64",
+    "os": "6.18.44",
+    "cpuModels": [
+      "AMD EPYC 9V74 80-Core Processor"
+    ],
+    "logicalCpus": 9,
+    "memoryBytes": 10451464192,
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "versions": {
+      "node": "24.19.0",
+      "acorn": "8.17.0",
+      "ada": "3.4.4",
+      "amaro": "1.1.10",
+      "ares": "1.34.6",
+      "brotli": "1.2.0",
+      "cldr": "48.0",
+      "icu": "78.3",
+      "llhttp": "9.4.3",
+      "merve": "1.2.2",
+      "modules": "137",
+      "napi": "10",
+      "nbytes": "0.1.4",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.69.0",
+      "nghttp3": "",
+      "ngtcp2": "",
+      "openssl": "3.5.7",
+      "simdjson": "4.6.4",
+      "simdutf": "6.4.0",
+      "sqlite": "3.53.3",
+      "tz": "2026b",
+      "undici": "7.29.0",
+      "unicode": "17.0",
+      "uv": "1.52.1",
+      "uvwasi": "0.0.23",
+      "v8": "13.6.233.17-node.51",
+      "zlib": "1.3.2.1-motley-3246f1b",
+      "zstd": "1.5.7"
+    },
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "execArgv": [],
+    "gcExposed": false,
+    "locale": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "TZ": "Europe/Berlin"
+    }
+  },
+  "environmentFingerprint": "80090683cf7c24050f44a9efa502370377c4b53d7c06a2c2ad3c6165a9b33741",
+  "protocol": {
+    "name": "float-allocation-v1",
+    "iterations": 1000000,
+    "warmup": 100000,
+    "runner": "a05-linux-x64-node24",
+    "out": "artifacts/a05-float-allocation-retained.json"
+  },
+  "rows": [
+    {
+      "mode": "typed",
+      "control": {
+        "mode": "typed",
+        "iterations": 0,
+        "warmupIterations": 100000,
+        "instructions": 0,
+        "floatCarriers": 0,
+        "floatCarriersPerIteration": null,
+        "boundaryCarriers": 2,
+        "inspectionCarriers": 1,
+        "returnCarriers": 1,
+        "outputVerified": true,
+        "expected": 25000,
+        "managedAllocations": 0,
+        "framesAllocated": 0,
+        "frameArraysAllocated": 0,
+        "instrumentation": {
+          "path": "packages/bytecode/src/numeric/float.js",
+          "beforeSHA256": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
+          "afterSHA256": "a8bfbc30c74cc34041867850436bc73191142e68f391333b8b81febe94c3d539",
+          "allocationSites": 1
+        },
+        "preparation": {
+          "status": "prepared",
+          "engine": "cil",
+          "methods": 1,
+          "numericHandlerCounts": {},
+          "statistics": {
+            "epoch": 1,
+            "reason": "type-system-replaced",
+            "decodePlans": 1,
+            "decodedInstructions": 17,
+            "decodeMilliseconds": 1.4086210000000392,
+            "offsetMapAllocations": 0,
+            "sourcePlans": 0,
+            "sourcePlanMilliseconds": 0,
+            "sourceFusionGroups": 0
+          }
+        },
+        "environment": {
+          "node": "v24.19.0",
+          "v8": "13.6.233.17-node.51",
+          "platform": "linux",
+          "arch": "x64"
+        },
+        "trace": {
+          "collectionsDuringLoop": 0,
+          "reportedAllocatedBytes": 792,
+          "initialCollection": {
+            "kind": "mc",
+            "reportedAllocatedBytes": 13447128,
+            "raw": "[43:0x38591000:0]      976 ms: pause=14.9 mutator=408.6 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.01 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.1 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.1 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.1 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=3.7 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=2.6 evacuate.prologue=0.0 evacuate.epilogue=0.0 evacuate.rebalance=0.2 evacuate.update_pointers=0.9 evacuate.update_pointers.to_new_roots=0.4 evacuate.update_pointers.slots.main=0.4 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=10.5 mark.finish_incremental=0.0 mark.roots=0.1 mark.full_closure_parallel=10.3 mark.full_closure=0.0 mark.ephemeron.marking=10.1 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=1.0 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=620414 incremental_walltime_duration=0 background.mark=36.5 background.sweep=2.5 background.evacuate.copy=7.1 background.evacuate.update_pointers=1.0 conservative_stack_scanning=0.00 start_object_size=39132520 end_object_size=29199168 start_memory_size=58298368 end_memory_size=64851968 start_holes_size=1138088 end_holes_size=848080 allocated=13447128 promoted=6952976 new_space_survived=0 nodes_died_in_new=3 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=44.1% average_survival_ratio=36.9% promotion_rate=168.2% new_space_survive_rate=0.0% new_space_allocation_throughput=37099.1 new_space_capacity=16777216 old_gen_allocation_limit=31332640 global_allocation_limit=31332640 allocation_throughput=48188.3 pool_local_chunks=0 pool_shared_chunks=0 pool_total_chunks=0 compaction_speed=745693.2"
+          },
+          "loopCollections": [],
+          "closingCollection": {
+            "kind": "mc",
+            "reportedAllocatedBytes": 792,
+            "raw": "[43:0x38591000:0]      989 ms: pause=12.1 mutator=0.2 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.01 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.0 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.1 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.1 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=1.1 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=0.3 evacuate.prologue=0.0 evacuate.epilogue=0.1 evacuate.rebalance=0.0 evacuate.update_pointers=0.7 evacuate.update_pointers.to_new_roots=0.5 evacuate.update_pointers.slots.main=0.1 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=10.1 mark.finish_incremental=0.0 mark.roots=0.1 mark.full_closure_parallel=9.9 mark.full_closure=0.0 mark.ephemeron.marking=9.6 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.1 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=620414 incremental_walltime_duration=0 background.mark=34.1 background.sweep=0.0 background.evacuate.copy=0.2 background.evacuate.update_pointers=0.1 conservative_stack_scanning=0.00 start_object_size=29199960 end_object_size=29160944 start_memory_size=64851968 end_memory_size=63803392 start_holes_size=2039440 end_holes_size=312512 allocated=792 promoted=0 new_space_survived=0 nodes_died_in_new=0 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=0.0% average_survival_ratio=33.6% promotion_rate=0.0% new_space_survive_rate=0.0% new_space_allocation_throughput=37047.5 new_space_capacity=16777216 old_gen_allocation_limit=54388672 global_allocation_limit=54388672 allocation_throughput=96278.5 pool_local_chunks=3 pool_shared_chunks=0 pool_total_chunks=3 compaction_speed=723558.6"
+          }
+        },
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "--max-old-space-size=512",
+          "--expose-gc",
+          "--trace-gc-nvp",
+          "/workspace/scratch/42f7738360b9/a05-performance/bench/vm/float-allocation-worker.js",
+          "typed",
+          "0",
+          "100000"
+        ],
+        "traceSHA256": "b22a99d82b8cdf3a123222d83862fe01aedb8b951b80835e1a52e3c2c221fffc",
+        "tracePath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.typed.0.log"
+      },
+      "samples": [
+        {
+          "mode": "typed",
+          "iterations": 100000,
+          "warmupIterations": 100000,
+          "instructions": 1100000,
+          "floatCarriers": 0,
+          "floatCarriersPerIteration": 0,
+          "boundaryCarriers": 2,
+          "inspectionCarriers": 1,
+          "returnCarriers": 1,
+          "outputVerified": true,
+          "expected": 50000,
+          "managedAllocations": 0,
+          "framesAllocated": 0,
+          "frameArraysAllocated": 0,
+          "instrumentation": {
+            "path": "packages/bytecode/src/numeric/float.js",
+            "beforeSHA256": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
+            "afterSHA256": "a8bfbc30c74cc34041867850436bc73191142e68f391333b8b81febe94c3d539",
+            "allocationSites": 1
+          },
+          "preparation": {
+            "status": "prepared",
+            "engine": "cil",
+            "methods": 1,
+            "numericHandlerCounts": {},
+            "statistics": {
+              "epoch": 1,
+              "reason": "type-system-replaced",
+              "decodePlans": 1,
+              "decodedInstructions": 17,
+              "decodeMilliseconds": 1.3485520000000406,
+              "offsetMapAllocations": 0,
+              "sourcePlans": 0,
+              "sourcePlanMilliseconds": 0,
+              "sourceFusionGroups": 0
+            }
+          },
+          "environment": {
+            "node": "v24.19.0",
+            "v8": "13.6.233.17-node.51",
+            "platform": "linux",
+            "arch": "x64"
+          },
+          "trace": {
+            "collectionsDuringLoop": 0,
+            "reportedAllocatedBytes": 317632,
+            "initialCollection": {
+              "kind": "mc",
+              "reportedAllocatedBytes": 13831080,
+              "raw": "[51:0x2b077000:0]      873 ms: pause=20.3 mutator=374.2 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.01 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.1 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.2 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.1 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=4.6 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=3.0 evacuate.prologue=0.0 evacuate.epilogue=0.1 evacuate.rebalance=0.3 evacuate.update_pointers=1.2 evacuate.update_pointers.to_new_roots=0.5 evacuate.update_pointers.slots.main=0.6 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=14.9 mark.finish_incremental=0.0 mark.roots=0.2 mark.full_closure_parallel=14.7 mark.full_closure=0.0 mark.ephemeron.marking=12.8 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.9 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=697185 incremental_walltime_duration=0 background.mark=49.1 background.sweep=3.4 background.evacuate.copy=10.2 background.evacuate.update_pointers=1.8 conservative_stack_scanning=0.00 start_object_size=39400632 end_object_size=29203752 start_memory_size=58560512 end_memory_size=64327680 start_holes_size=1397672 end_holes_size=819352 allocated=13831080 promoted=6919208 new_space_survived=0 nodes_died_in_new=3 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=43.1% average_survival_ratio=37.0% promotion_rate=172.3% new_space_survive_rate=0.0% new_space_allocation_throughput=43361.8 new_space_capacity=16777216 old_gen_allocation_limit=31212568 global_allocation_limit=31212568 allocation_throughput=56273.1 pool_local_chunks=0 pool_shared_chunks=0 pool_total_chunks=0 compaction_speed=546028.7"
+            },
+            "loopCollections": [],
+            "closingCollection": {
+              "kind": "mc",
+              "reportedAllocatedBytes": 317632,
+              "raw": "[51:0x2b077000:0]     1157 ms: pause=11.9 mutator=271.4 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.01 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.0 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.1 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.1 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=0.8 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=0.1 evacuate.prologue=0.0 evacuate.epilogue=0.0 evacuate.rebalance=0.0 evacuate.update_pointers=0.7 evacuate.update_pointers.to_new_roots=0.5 evacuate.update_pointers.slots.main=0.2 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=10.4 mark.finish_incremental=0.0 mark.roots=0.2 mark.full_closure_parallel=10.1 mark.full_closure=0.0 mark.ephemeron.marking=9.8 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.1 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=697185 incremental_walltime_duration=0 background.mark=39.8 background.sweep=0.0 background.evacuate.copy=0.0 background.evacuate.update_pointers=0.0 conservative_stack_scanning=0.00 start_object_size=29521384 end_object_size=29179448 start_memory_size=64589824 end_memory_size=64589824 start_holes_size=1621280 end_holes_size=181992 allocated=317632 promoted=19656 new_space_survived=0 nodes_died_in_new=0 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=12.0% average_survival_ratio=34.9% promotion_rate=0.0% new_space_survive_rate=0.0% new_space_allocation_throughput=7122.1 new_space_capacity=16777216 old_gen_allocation_limit=57697054 global_allocation_limit=57697054 allocation_throughput=31179.4 pool_local_chunks=0 pool_shared_chunks=0 pool_total_chunks=0 compaction_speed=540641.8"
+            }
+          },
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "--max-old-space-size=512",
+            "--expose-gc",
+            "--trace-gc-nvp",
+            "/workspace/scratch/42f7738360b9/a05-performance/bench/vm/float-allocation-worker.js",
+            "typed",
+            "100000",
+            "100000"
+          ],
+          "traceSHA256": "e74efdd9ea210cd7a54877f8c91ef58096f1a059e40b851f414271e50c6e98a6",
+          "tracePath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.typed.100000.log"
+        },
+        {
+          "mode": "typed",
+          "iterations": 1000000,
+          "warmupIterations": 100000,
+          "instructions": 11000000,
+          "floatCarriers": 0,
+          "floatCarriersPerIteration": 0,
+          "boundaryCarriers": 2,
+          "inspectionCarriers": 1,
+          "returnCarriers": 1,
+          "outputVerified": true,
+          "expected": 275000,
+          "managedAllocations": 0,
+          "framesAllocated": 0,
+          "frameArraysAllocated": 0,
+          "instrumentation": {
+            "path": "packages/bytecode/src/numeric/float.js",
+            "beforeSHA256": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
+            "afterSHA256": "a8bfbc30c74cc34041867850436bc73191142e68f391333b8b81febe94c3d539",
+            "allocationSites": 1
+          },
+          "preparation": {
+            "status": "prepared",
+            "engine": "cil",
+            "methods": 1,
+            "numericHandlerCounts": {},
+            "statistics": {
+              "epoch": 1,
+              "reason": "type-system-replaced",
+              "decodePlans": 1,
+              "decodedInstructions": 17,
+              "decodeMilliseconds": 1.3893330000000788,
+              "offsetMapAllocations": 0,
+              "sourcePlans": 0,
+              "sourcePlanMilliseconds": 0,
+              "sourceFusionGroups": 0
+            }
+          },
+          "environment": {
+            "node": "v24.19.0",
+            "v8": "13.6.233.17-node.51",
+            "platform": "linux",
+            "arch": "x64"
+          },
+          "trace": {
+            "collectionsDuringLoop": 0,
+            "reportedAllocatedBytes": 334888,
+            "initialCollection": {
+              "kind": "mc",
+              "reportedAllocatedBytes": 13912960,
+              "raw": "[59:0x179e5000:0]      844 ms: pause=15.8 mutator=361.3 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.01 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.1 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.1 clear.weak_references_trivial=0.2 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.1 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=4.4 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=2.8 evacuate.prologue=0.0 evacuate.epilogue=0.1 evacuate.rebalance=0.2 evacuate.update_pointers=1.2 evacuate.update_pointers.to_new_roots=0.5 evacuate.update_pointers.slots.main=0.7 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=10.7 mark.finish_incremental=0.0 mark.roots=0.1 mark.full_closure_parallel=10.5 mark.full_closure=0.0 mark.ephemeron.marking=10.3 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.7 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.1 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=589527 incremental_walltime_duration=0 background.mark=41.2 background.sweep=3.7 background.evacuate.copy=9.4 background.evacuate.update_pointers=2.0 conservative_stack_scanning=0.00 start_object_size=39510464 end_object_size=29204416 start_memory_size=58036224 end_memory_size=64589824 start_holes_size=889256 end_holes_size=1127416 allocated=13912960 promoted=6936512 new_space_survived=0 nodes_died_in_new=3 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=42.9% average_survival_ratio=36.7% promotion_rate=172.5% new_space_survive_rate=0.0% new_space_allocation_throughput=46024.6 new_space_capacity=16777216 old_gen_allocation_limit=31210632 global_allocation_limit=31210632 allocation_throughput=59531.6 pool_local_chunks=0 pool_shared_chunks=0 pool_total_chunks=0 compaction_speed=591669.2"
+            },
+            "loopCollections": [],
+            "closingCollection": {
+              "kind": "mc",
+              "reportedAllocatedBytes": 334888,
+              "raw": "[59:0x179e5000:0]     3552 ms: pause=10.0 mutator=2697.6 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.00 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.0 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.1 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.1 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=0.9 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=0.3 evacuate.prologue=0.0 evacuate.epilogue=0.0 evacuate.rebalance=0.0 evacuate.update_pointers=0.6 evacuate.update_pointers.to_new_roots=0.4 evacuate.update_pointers.slots.main=0.1 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=8.5 mark.finish_incremental=0.0 mark.roots=0.2 mark.full_closure_parallel=8.2 mark.full_closure=0.0 mark.ephemeron.marking=6.9 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.1 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=589527 incremental_walltime_duration=0 background.mark=31.1 background.sweep=0.0 background.evacuate.copy=0.0 background.evacuate.update_pointers=0.0 conservative_stack_scanning=0.00 start_object_size=29539304 end_object_size=29183648 start_memory_size=64589824 end_memory_size=64065536 start_holes_size=1607632 end_holes_size=212672 allocated=334888 promoted=20184 new_space_survived=0 nodes_died_in_new=0 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=11.8% average_survival_ratio=34.6% promotion_rate=0.0% new_space_survive_rate=0.0% new_space_allocation_throughput=63.4 new_space_capacity=16777216 old_gen_allocation_limit=55079106 global_allocation_limit=55079106 allocation_throughput=2695.5 pool_local_chunks=3 pool_shared_chunks=0 pool_total_chunks=3 compaction_speed=612812.1"
+            }
+          },
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "--max-old-space-size=512",
+            "--expose-gc",
+            "--trace-gc-nvp",
+            "/workspace/scratch/42f7738360b9/a05-performance/bench/vm/float-allocation-worker.js",
+            "typed",
+            "1000000",
+            "100000"
+          ],
+          "traceSHA256": "2364d4f2a8b36db807c4c1cf3db7924b2552ff7aed19ad1ac2778080f57d37ee",
+          "tracePath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.typed.1000000.log"
+        }
+      ],
+      "assessment": {
+        "floatCarrierAcceptance": "met",
+        "hostAllocationObservation": "allocation-or-noise-observed",
+        "totalJSObjectAcceptance": "unqualified",
+        "reason": "The exact counter covers every float() carrier. V8 GC bytes/events include other host work and do not count all JS objects.",
+        "observations": [
+          {
+            "iterations": 100000,
+            "floatCarriers": 0,
+            "collectionsDuringLoop": 0,
+            "reportedBytesAboveControl": 316840,
+            "managedAllocations": 0,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0
+          },
+          {
+            "iterations": 1000000,
+            "floatCarriers": 0,
+            "collectionsDuringLoop": 0,
+            "reportedBytesAboveControl": 334096,
+            "managedAllocations": 0,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0
+          }
+        ]
+      }
+    },
+    {
+      "mode": "mixed",
+      "control": {
+        "mode": "mixed",
+        "iterations": 0,
+        "warmupIterations": 100000,
+        "instructions": 0,
+        "floatCarriers": 0,
+        "floatCarriersPerIteration": null,
+        "boundaryCarriers": 2,
+        "inspectionCarriers": 1,
+        "returnCarriers": 1,
+        "outputVerified": true,
+        "expected": 25000,
+        "managedAllocations": 0,
+        "framesAllocated": 0,
+        "frameArraysAllocated": 0,
+        "instrumentation": {
+          "path": "packages/bytecode/src/numeric/float.js",
+          "beforeSHA256": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
+          "afterSHA256": "a8bfbc30c74cc34041867850436bc73191142e68f391333b8b81febe94c3d539",
+          "allocationSites": 1
+        },
+        "preparation": {
+          "status": "prepared",
+          "engine": "cil",
+          "methods": 1,
+          "numericHandlerCounts": {
+            "add_i4": 1,
+            "blt_i4": 1
+          },
+          "statistics": {
+            "epoch": 1,
+            "reason": "type-system-replaced",
+            "decodePlans": 1,
+            "decodedInstructions": 17,
+            "decodeMilliseconds": 2.0502070000000003,
+            "offsetMapAllocations": 0,
+            "sourcePlans": 0,
+            "sourcePlanMilliseconds": 0,
+            "sourceFusionGroups": 0
+          }
+        },
+        "environment": {
+          "node": "v24.19.0",
+          "v8": "13.6.233.17-node.51",
+          "platform": "linux",
+          "arch": "x64"
+        },
+        "trace": {
+          "collectionsDuringLoop": 0,
+          "reportedAllocatedBytes": 792,
+          "initialCollection": {
+            "kind": "mc",
+            "reportedAllocatedBytes": 14311392,
+            "raw": "[67:0xe166000:0]      816 ms: pause=16.1 mutator=333.1 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.00 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.1 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.2 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.1 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=4.8 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=3.2 evacuate.prologue=0.0 evacuate.epilogue=0.1 evacuate.rebalance=0.3 evacuate.update_pointers=1.2 evacuate.update_pointers.to_new_roots=0.5 evacuate.update_pointers.slots.main=0.7 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=10.6 mark.finish_incremental=0.0 mark.roots=0.2 mark.full_closure_parallel=10.4 mark.full_closure=0.0 mark.ephemeron.marking=10.0 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.7 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=574873 incremental_walltime_duration=0 background.mark=40.5 background.sweep=3.6 background.evacuate.copy=10.7 background.evacuate.update_pointers=2.0 conservative_stack_scanning=0.00 start_object_size=39925984 end_object_size=29407320 start_memory_size=58822656 end_memory_size=64851968 start_holes_size=1385376 end_holes_size=994968 allocated=14311392 promoted=6946528 new_space_survived=0 nodes_died_in_new=3 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=42.6% average_survival_ratio=36.5% promotion_rate=172.6% new_space_survive_rate=0.0% new_space_allocation_throughput=52045.8 new_space_capacity=16777216 old_gen_allocation_limit=31247344 global_allocation_limit=31247344 allocation_throughput=67709.6 pool_local_chunks=0 pool_shared_chunks=0 pool_total_chunks=0 compaction_speed=544108.0"
+          },
+          "loopCollections": [],
+          "closingCollection": {
+            "kind": "mc",
+            "reportedAllocatedBytes": 792,
+            "raw": "[67:0xe166000:0]      829 ms: pause=12.7 mutator=0.2 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.00 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.0 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.2 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.2 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=1.0 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=0.2 evacuate.prologue=0.0 evacuate.epilogue=0.1 evacuate.rebalance=0.0 evacuate.update_pointers=0.6 evacuate.update_pointers.to_new_roots=0.4 evacuate.update_pointers.slots.main=0.2 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=10.7 mark.finish_incremental=0.0 mark.roots=0.2 mark.full_closure_parallel=10.5 mark.full_closure=0.0 mark.ephemeron.marking=10.1 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.1 sweep=0.1 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=574873 incremental_walltime_duration=0 background.mark=40.7 background.sweep=0.0 background.evacuate.copy=0.0 background.evacuate.update_pointers=0.2 conservative_stack_scanning=0.00 start_object_size=29408112 end_object_size=29365304 start_memory_size=64851968 end_memory_size=64065536 start_holes_size=1837520 end_holes_size=321272 allocated=792 promoted=0 new_space_survived=0 nodes_died_in_new=0 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=0.0% average_survival_ratio=33.2% promotion_rate=0.0% new_space_survive_rate=0.0% new_space_allocation_throughput=51975.4 new_space_capacity=16777216 old_gen_allocation_limit=57465460 global_allocation_limit=57465460 allocation_throughput=115732.5 pool_local_chunks=2 pool_shared_chunks=0 pool_total_chunks=2 compaction_speed=466684.4"
+          }
+        },
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "--max-old-space-size=512",
+          "--expose-gc",
+          "--trace-gc-nvp",
+          "/workspace/scratch/42f7738360b9/a05-performance/bench/vm/float-allocation-worker.js",
+          "mixed",
+          "0",
+          "100000"
+        ],
+        "traceSHA256": "9b5b51034a10f61747d33a8990d7f7ce16439207ca299074ee63f19a97af5098",
+        "tracePath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.mixed.0.log"
+      },
+      "samples": [
+        {
+          "mode": "mixed",
+          "iterations": 100000,
+          "warmupIterations": 100000,
+          "instructions": 1100000,
+          "floatCarriers": 0,
+          "floatCarriersPerIteration": 0,
+          "boundaryCarriers": 2,
+          "inspectionCarriers": 1,
+          "returnCarriers": 1,
+          "outputVerified": true,
+          "expected": 50000,
+          "managedAllocations": 0,
+          "framesAllocated": 0,
+          "frameArraysAllocated": 0,
+          "instrumentation": {
+            "path": "packages/bytecode/src/numeric/float.js",
+            "beforeSHA256": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
+            "afterSHA256": "a8bfbc30c74cc34041867850436bc73191142e68f391333b8b81febe94c3d539",
+            "allocationSites": 1
+          },
+          "preparation": {
+            "status": "prepared",
+            "engine": "cil",
+            "methods": 1,
+            "numericHandlerCounts": {
+              "add_i4": 1,
+              "blt_i4": 1
+            },
+            "statistics": {
+              "epoch": 1,
+              "reason": "type-system-replaced",
+              "decodePlans": 1,
+              "decodedInstructions": 17,
+              "decodeMilliseconds": 1.984027000000026,
+              "offsetMapAllocations": 0,
+              "sourcePlans": 0,
+              "sourcePlanMilliseconds": 0,
+              "sourceFusionGroups": 0
+            }
+          },
+          "environment": {
+            "node": "v24.19.0",
+            "v8": "13.6.233.17-node.51",
+            "platform": "linux",
+            "arch": "x64"
+          },
+          "trace": {
+            "collectionsDuringLoop": 0,
+            "reportedAllocatedBytes": 586608,
+            "initialCollection": {
+              "kind": "mc",
+              "reportedAllocatedBytes": 14321960,
+              "raw": "[75:0x32cbe000:0]      788 ms: pause=12.5 mutator=318.9 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.00 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.0 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.1 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.1 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=3.6 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=2.4 evacuate.prologue=0.0 evacuate.epilogue=0.1 evacuate.rebalance=0.2 evacuate.update_pointers=0.8 evacuate.update_pointers.to_new_roots=0.4 evacuate.update_pointers.slots.main=0.4 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=8.3 mark.finish_incremental=0.0 mark.roots=0.1 mark.full_closure_parallel=8.1 mark.full_closure=0.0 mark.ephemeron.marking=7.8 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.6 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=826510 incremental_walltime_duration=0 background.mark=31.5 background.sweep=3.0 background.evacuate.copy=8.2 background.evacuate.update_pointers=1.1 conservative_stack_scanning=0.00 start_object_size=39907376 end_object_size=29406944 start_memory_size=58822656 end_memory_size=64327680 start_holes_size=1436040 end_holes_size=1044512 allocated=14321960 promoted=6956312 new_space_survived=0 nodes_died_in_new=3 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=42.6% average_survival_ratio=36.7% promotion_rate=172.8% new_space_survive_rate=0.0% new_space_allocation_throughput=55424.5 new_space_capacity=16777216 old_gen_allocation_limit=31213592 global_allocation_limit=31213592 allocation_throughput=71965.6 pool_local_chunks=0 pool_shared_chunks=0 pool_total_chunks=0 compaction_speed=690470.8"
+            },
+            "loopCollections": [],
+            "closingCollection": {
+              "kind": "mc",
+              "reportedAllocatedBytes": 586608,
+              "raw": "[75:0x32cbe000:0]     1086 ms: pause=11.3 mutator=286.9 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.00 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.0 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.1 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.1 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=1.1 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=0.4 evacuate.prologue=0.0 evacuate.epilogue=0.0 evacuate.rebalance=0.0 evacuate.update_pointers=0.6 evacuate.update_pointers.to_new_roots=0.4 evacuate.update_pointers.slots.main=0.1 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=9.6 mark.finish_incremental=0.0 mark.roots=0.2 mark.full_closure_parallel=9.4 mark.full_closure=0.0 mark.ephemeron.marking=9.0 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.1 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=826510 incremental_walltime_duration=0 background.mark=36.4 background.sweep=0.1 background.evacuate.copy=0.3 background.evacuate.update_pointers=0.1 conservative_stack_scanning=0.00 start_object_size=29993552 end_object_size=29392912 start_memory_size=64851968 end_memory_size=64065536 start_holes_size=1588240 end_holes_size=526688 allocated=586608 promoted=35152 new_space_survived=0 nodes_died_in_new=0 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=10.4% average_survival_ratio=34.4% promotion_rate=0.0% new_space_survive_rate=0.0% new_space_allocation_throughput=8604.5 new_space_capacity=16777216 old_gen_allocation_limit=54908915 global_allocation_limit=54908915 allocation_throughput=32539.8 pool_local_chunks=2 pool_shared_chunks=0 pool_total_chunks=2 compaction_speed=674937.6"
+            }
+          },
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "--max-old-space-size=512",
+            "--expose-gc",
+            "--trace-gc-nvp",
+            "/workspace/scratch/42f7738360b9/a05-performance/bench/vm/float-allocation-worker.js",
+            "mixed",
+            "100000",
+            "100000"
+          ],
+          "traceSHA256": "41f1643817ca6c1c17588c6112109a102a3e36276999cd52c0a0c19fe3a17994",
+          "tracePath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.mixed.100000.log"
+        },
+        {
+          "mode": "mixed",
+          "iterations": 1000000,
+          "warmupIterations": 100000,
+          "instructions": 11000000,
+          "floatCarriers": 0,
+          "floatCarriersPerIteration": 0,
+          "boundaryCarriers": 2,
+          "inspectionCarriers": 1,
+          "returnCarriers": 1,
+          "outputVerified": true,
+          "expected": 275000,
+          "managedAllocations": 0,
+          "framesAllocated": 0,
+          "frameArraysAllocated": 0,
+          "instrumentation": {
+            "path": "packages/bytecode/src/numeric/float.js",
+            "beforeSHA256": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
+            "afterSHA256": "a8bfbc30c74cc34041867850436bc73191142e68f391333b8b81febe94c3d539",
+            "allocationSites": 1
+          },
+          "preparation": {
+            "status": "prepared",
+            "engine": "cil",
+            "methods": 1,
+            "numericHandlerCounts": {
+              "add_i4": 1,
+              "blt_i4": 1
+            },
+            "statistics": {
+              "epoch": 1,
+              "reason": "type-system-replaced",
+              "decodePlans": 1,
+              "decodedInstructions": 17,
+              "decodeMilliseconds": 2.3406420000000026,
+              "offsetMapAllocations": 0,
+              "sourcePlans": 0,
+              "sourcePlanMilliseconds": 0,
+              "sourceFusionGroups": 0
+            }
+          },
+          "environment": {
+            "node": "v24.19.0",
+            "v8": "13.6.233.17-node.51",
+            "platform": "linux",
+            "arch": "x64"
+          },
+          "trace": {
+            "collectionsDuringLoop": 0,
+            "reportedAllocatedBytes": 726672,
+            "initialCollection": {
+              "kind": "mc",
+              "reportedAllocatedBytes": 14106224,
+              "raw": "[83:0x1116b000:0]      779 ms: pause=14.5 mutator=319.8 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.00 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.1 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.2 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.2 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=4.0 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=2.8 evacuate.prologue=0.0 evacuate.epilogue=0.0 evacuate.rebalance=0.2 evacuate.update_pointers=1.0 evacuate.update_pointers.to_new_roots=0.4 evacuate.update_pointers.slots.main=0.5 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=9.8 mark.finish_incremental=0.0 mark.roots=0.1 mark.full_closure_parallel=9.7 mark.full_closure=0.0 mark.ephemeron.marking=9.6 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.9 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=784327 incremental_walltime_duration=0 background.mark=37.3 background.sweep=3.1 background.evacuate.copy=9.7 background.evacuate.update_pointers=1.5 conservative_stack_scanning=0.00 start_object_size=39783992 end_object_size=29401480 start_memory_size=58822656 end_memory_size=64851968 start_holes_size=1442520 end_holes_size=1047880 allocated=14106224 promoted=6969416 new_space_survived=0 nodes_died_in_new=3 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=43.0% average_survival_ratio=36.8% promotion_rate=169.2% new_space_survive_rate=0.0% new_space_allocation_throughput=54855.0 new_space_capacity=16777216 old_gen_allocation_limit=31284864 global_allocation_limit=31284864 allocation_throughput=71183.6 pool_local_chunks=0 pool_shared_chunks=0 pool_total_chunks=0 compaction_speed=582233.6"
+            },
+            "loopCollections": [],
+            "closingCollection": {
+              "kind": "mc",
+              "reportedAllocatedBytes": 726672,
+              "raw": "[83:0x1116b000:0]     3531 ms: pause=10.2 mutator=2742.3 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.00 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.0 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.2 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.2 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=0.9 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=0.3 evacuate.prologue=0.0 evacuate.epilogue=0.1 evacuate.rebalance=0.0 evacuate.update_pointers=0.6 evacuate.update_pointers.to_new_roots=0.4 evacuate.update_pointers.slots.main=0.1 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=8.5 mark.finish_incremental=0.0 mark.roots=0.2 mark.full_closure_parallel=8.3 mark.full_closure=0.0 mark.ephemeron.marking=8.2 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.1 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.0 sweep.start_jobs=0.1 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=784327 incremental_walltime_duration=0 background.mark=32.4 background.sweep=0.0 background.evacuate.copy=0.1 background.evacuate.update_pointers=0.0 conservative_stack_scanning=0.00 start_object_size=30128152 end_object_size=29401040 start_memory_size=65376256 end_memory_size=64327680 start_holes_size=2106448 end_holes_size=253368 allocated=726672 promoted=35760 new_space_survived=0 nodes_died_in_new=0 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=7.7% average_survival_ratio=34.2% promotion_rate=0.0% new_space_survive_rate=0.0% new_space_allocation_throughput=168.9 new_space_capacity=16777216 old_gen_allocation_limit=56572577 global_allocation_limit=56572577 allocation_throughput=2806.4 pool_local_chunks=3 pool_shared_chunks=0 pool_total_chunks=3 compaction_speed=576072.1"
+            }
+          },
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "--max-old-space-size=512",
+            "--expose-gc",
+            "--trace-gc-nvp",
+            "/workspace/scratch/42f7738360b9/a05-performance/bench/vm/float-allocation-worker.js",
+            "mixed",
+            "1000000",
+            "100000"
+          ],
+          "traceSHA256": "97b0f4cb41c8d07b2b3679d174b0c666736c1f4d409d9af621e0079cd9c0fad9",
+          "tracePath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.mixed.1000000.log"
+        }
+      ],
+      "assessment": {
+        "floatCarrierAcceptance": "met",
+        "hostAllocationObservation": "allocation-or-noise-observed",
+        "totalJSObjectAcceptance": "unqualified",
+        "reason": "The exact counter covers every float() carrier. V8 GC bytes/events include other host work and do not count all JS objects.",
+        "observations": [
+          {
+            "iterations": 100000,
+            "floatCarriers": 0,
+            "collectionsDuringLoop": 0,
+            "reportedBytesAboveControl": 585816,
+            "managedAllocations": 0,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0
+          },
+          {
+            "iterations": 1000000,
+            "floatCarriers": 0,
+            "collectionsDuringLoop": 0,
+            "reportedBytesAboveControl": 725880,
+            "managedAllocations": 0,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "unsupportedTargets": [
+    "Browser timing/host-memory: this Node harness does not qualify browsers",
+    "Native .NET throughput: no CLR executable is measured",
+    "Wasm tier: interpreter baseline options explicitly disable it"
+  ],
+  "format": "SharpForge.FloatAllocation/1",
+  "positiveAllocationControl": {
+    "mode": "reference",
+    "iterations": 10000,
+    "warmupIterations": 10000,
+    "instructions": 110000,
+    "floatCarriers": 70000,
+    "floatCarriersPerIteration": 7,
+    "boundaryCarriers": 0,
+    "inspectionCarriers": 0,
+    "returnCarriers": 0,
+    "outputVerified": true,
+    "expected": 5000,
+    "managedAllocations": 0,
+    "framesAllocated": 0,
+    "frameArraysAllocated": 0,
+    "instrumentation": {
+      "path": "packages/bytecode/src/numeric/float.js",
+      "beforeSHA256": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
+      "afterSHA256": "a8bfbc30c74cc34041867850436bc73191142e68f391333b8b81febe94c3d539",
+      "allocationSites": 1
+    },
+    "preparation": {
+      "status": "prepared",
+      "engine": "cil",
+      "methods": 1,
+      "numericHandlerCounts": {},
+      "statistics": {
+        "epoch": 1,
+        "reason": "type-system-replaced",
+        "decodePlans": 1,
+        "decodedInstructions": 17,
+        "decodeMilliseconds": 0.1528049999999439,
+        "offsetMapAllocations": 0,
+        "sourcePlans": 0,
+        "sourcePlanMilliseconds": 0,
+        "sourceFusionGroups": 0
+      }
+    },
+    "environment": {
+      "node": "v24.19.0",
+      "v8": "13.6.233.17-node.51",
+      "platform": "linux",
+      "arch": "x64"
+    },
+    "trace": {
+      "collectionsDuringLoop": 1,
+      "reportedAllocatedBytes": 36384992,
+      "initialCollection": {
+        "kind": "mc",
+        "reportedAllocatedBytes": 21247880,
+        "raw": "[91:0x6c51000:0]      718 ms: pause=14.9 mutator=58.1 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.01 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=2 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.1 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.1 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=2.1 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=1.2 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=0.2 evacuate.prologue=0.1 evacuate.epilogue=0.0 evacuate.rebalance=0.0 evacuate.update_pointers=1.0 evacuate.update_pointers.to_new_roots=0.7 evacuate.update_pointers.slots.main=0.2 evacuate.update_pointers.weak=0.0 finish=0.1 finish.sweep_array_buffers=0.0 mark=10.8 mark.finish_incremental=0.0 mark.roots=0.2 mark.full_closure_parallel=10.5 mark.full_closure=0.0 mark.ephemeron.marking=10.4 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.1 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.1 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=421446 incremental_walltime_duration=0 background.mark=40.7 background.sweep=0.0 background.evacuate.copy=0.1 background.evacuate.update_pointers=0.0 conservative_stack_scanning=0.00 start_object_size=51050208 end_object_size=29357520 start_memory_size=98668544 end_memory_size=98668544 start_holes_size=1558376 end_holes_size=636416 allocated=21247880 promoted=24232 new_space_survived=0 nodes_died_in_new=0 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=0.1% average_survival_ratio=31.5% promotion_rate=0.0% new_space_survive_rate=0.0% new_space_allocation_throughput=258969.5 new_space_capacity=33554432 old_gen_allocation_limit=75278833 global_allocation_limit=75278833 allocation_throughput=315792.1 pool_local_chunks=6 pool_shared_chunks=0 pool_total_chunks=6 compaction_speed=249814.4"
+      },
+      "loopCollections": [
+        {
+          "kind": "s",
+          "reportedAllocatedBytes": 33875136,
+          "raw": "[91:0x6c51000:0]      849 ms: pause=0.4 mutator=130.7 gc=s reduce_memory=0 interleaved=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.epilogue=0.00 heap.external.prologue=0.00 heap.external.epilogue=0.00 heap.external_weak_global_handles=0.00 complete.sweep_array_buffers=0.00 scavenge=0.30 scavenge.free_remembered_set=0.00 scavenge.roots=0.07 scavenge.weak=0.00 scavenge.weak_global_handles.identify=0.00 scavenge.weak_global_handles.process=0.00 scavenge.parallel=0.05 scavenge.update_refs=0.00 scavenge.sweep_array_buffers=0.00 scavenge.resize_new_space=0.00 background.scavenge.parallel=0.02 incremental.steps_count=0 incremental.steps_took=0.0 scavenge_throughput=1660596 start_object_size=63232656 end_object_size=29715184 start_memory_size=98668544 end_memory_size=98668544 start_holes_size=1858536 end_holes_size=1858536 allocated=33875136 promoted=0 quarantined_size=0 quarantined_pages=0 new_space_survived=33136 nodes_died_in_new=0 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=0.0% average_survival_ratio=29.0% promotion_rate=0.0% new_space_survive_rate_=0.1% new_space_allocation_throughput=257567.3 new_space_capacity=33554432 old_gen_allocation_limit=74654971 global_allocation_limit=74654971 allocation_throughput=282106.6 pool_local_chunks=6 pool_shared_chunks=0 pool_total_chunks=6"
+        }
+      ],
+      "closingCollection": {
+        "kind": "mc",
+        "reportedAllocatedBytes": 2509856,
+        "raw": "[91:0x6c51000:0]      866 ms: pause=12.2 mutator=5.0 gc=mc reduce_memory=0 time_to_safepoint=0.00 heap.prologue=0.00 heap.embedder_tracing_epilogue=0.00 heap.epilogue=0.00 heap.external.prologue=0.0 heap.external.epilogue=0.0 heap.external.weak_global_handles=0.0 clear=0 clear.external_string_table=0.0 clear.string_forwarding_table=0.0 clear.weak_global_handles=0.0 clear.dependent_code=0.0 clear.maps=0.0 clear.slots_buffer=0.0 clear.weak_collections=0.0 clear.weak_lists=0.0 clear.weak_references_trivial=0.1 clear.weak_references_non_trivial=0.0 clear.weak_references_filter_non_trivial=0.0 clear.js_weak_references=0.0 clear.join_filter_job=0.0clear.join_job=0.1 weakness_handling=0.0 complete.sweep_array_buffers=0.0 complete.sweeping=0.0 epilogue=0.0 evacuate=0.6 evacuate.pin_pages=0.0 evacuate.candidates=0.0 evacuate.clean_up=0.0 evacuate.copy=0.1 evacuate.prologue=0.0 evacuate.epilogue=0.0 evacuate.rebalance=0.0 evacuate.update_pointers=0.5 evacuate.update_pointers.to_new_roots=0.3 evacuate.update_pointers.slots.main=0.1 evacuate.update_pointers.weak=0.0 finish=0.0 finish.sweep_array_buffers=0.0 mark=10.9 mark.finish_incremental=0.0 mark.roots=0.3 mark.full_closure_parallel=10.5 mark.full_closure=0.0 mark.ephemeron.marking=10.3 mark.ephemeron.linear=0.0 mark.embedder_prologue=0.0 mark.embedder_tracing=0.0 prologue=0.0 sweep=0.1 sweep.code=0.0 sweep.map=0.0 sweep.new=0.0 sweep.new_lo=0.0 sweep.old=0.1 sweep.start_jobs=0.0 incremental=0.0 incremental.finalize.external.prologue=0.0 incremental.finalize.external.epilogue=0.0 incremental.layout_change=0.0 incremental.sweep_array_buffers=0.0 incremental.sweeping=0.0 incremental.embedder_tracing=0.0 incremental_wrapper_tracing_longest_step=0.0 incremental_longest_step=0.0 incremental_steps_count=0 incremental_marking_throughput=421446 incremental_walltime_duration=0 background.mark=31.1 background.sweep=0.0 background.evacuate.copy=0.0 background.evacuate.update_pointers=0.0 conservative_stack_scanning=0.00 start_object_size=32225040 end_object_size=29396072 start_memory_size=98668544 end_memory_size=98144256 start_holes_size=1858536 end_holes_size=92512 allocated=2509856 promoted=32760 new_space_survived=0 nodes_died_in_new=0 nodes_copied_in_new=0 nodes_promoted=0 promotion_ratio=1.3% average_survival_ratio=26.0% promotion_rate=98.9% new_space_survive_rate=0.0% new_space_allocation_throughput=265865.9 new_space_capacity=33554432 old_gen_allocation_limit=74654971 global_allocation_limit=74654971 allocation_throughput=289566.8 pool_local_chunks=8 pool_shared_chunks=0 pool_total_chunks=8 compaction_speed=511128.7"
+      }
+    },
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "--max-old-space-size=512",
+      "--expose-gc",
+      "--trace-gc-nvp",
+      "/workspace/scratch/42f7738360b9/a05-performance/bench/vm/float-allocation-worker.js",
+      "reference",
+      "10000",
+      "10000"
+    ],
+    "traceSHA256": "c115d4348820f4d863f8f220dc070b9e1d76f69f77662b17fb81d76d4a23be92",
+    "tracePath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.reference.log"
+  },
+  "acceptance": "partial",
+  "limit": "Exact zero float carriers can be established; total JS object count remains unqualified by this trace protocol.",
+  "completedCommit": "4e716d790634675a887724ff8be6f80262e59434",
+  "completedWorktreeStatus": "",
+  "completedAt": "2026-10-04T13:51:44.231Z"
+}

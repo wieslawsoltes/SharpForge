@@ -188,11 +188,19 @@ for (const override of [false, true]) for (const receiver of ['copy', 'wrong', '
   });
 }
 
-test('throwing override releases frames without allocating a receiver box', () => {
+test('throwing override retains its unboxed first-pass receiver until stop', () => {
   withVM(fixture({override: true, throwing: true}), vm => {
-    assert.equal(vm.run().fault?.name, 'NullReferenceException');
-    assert.equal(vm.frames.length, 0);
+    const result = vm.run();
+    assert.equal(result.fault?.name, 'NullReferenceException');
+    assert.equal(result.fault.phase, 'unhandled');
+    assert.deepEqual(vm.frames.map(frame => frame.method.name), ['Main', 'ToString']);
+    const receiver = vm.top.args[0];
+    vm.heap.collect();
+    assert.equal(vm.dereference(receiver).valueType.name, 'Point');
     assert.equal(vm.heap.records.some(record => record?.kind === 'box'), false);
+    vm.stop();
+    assert.equal(vm.frames.length, 0);
+    assert.throws(() => vm.dereference(receiver), /outlived its frame/);
   });
 });
 
@@ -227,24 +235,28 @@ for (const typeFlags of [0x100101, 0x100111]) test(`unsupported struct layout fl
   assert(report.issues.some(issue => issue.code === 'IL_PREFIX'));
 });
 
-test('reference-containing storage is not admitted by the Object fallback', () => {
-  assert.throws(() => new CilVirtualMachine(fixture({fieldType: 'object'})), {name: 'NotSupportedException'});
+test('reference-containing storage retains default Object formatting through its copied box', () => {
+  withVM(fixture({fieldType: 'object'}), vm => {
+    assert.equal(vm.run().state, 'terminated', vm.fault?.message);
+    assert.equal(vm.format(vm.returnValue), 'Point');
+  });
 });
 
-for (const member of ['Equals', 'GetHashCode']) test(`Object.${member} remains outside the constrained leaf`, () => {
-  const report = verifyCilAssembly(fixture({main(writer, context) {
+for (const member of ['Equals', 'GetHashCode']) test(`Object.${member} uses the exact newly admitted constrained slot`, () => {
+  const bytes = fixture({main(writer, context) {
     writer.op('ldloca.s', 0);
     if (member === 'Equals') writer.op('ldnull');
     writer.op('constrained.', context.resolve('Point'))
       .op('callvirt', context.member('System.Object', member, member === 'Equals' ? 'bool' : 'int',
         member === 'Equals' ? ['object'] : [], false)).op('pop').op('ldnull').op('ret');
-  }}));
-  assert.equal(report.success, false);
-  assert(report.issues.some(issue => issue.code === 'IL_PREFIX'));
+  }});
+  const report = verifyCilAssembly(bytes);
+  assert.equal(report.success, true, JSON.stringify(report.issues));
+  withVM(bytes, vm => assert.equal(vm.run().state, 'terminated', vm.fault?.message));
 });
 
 for (const receiver of ['enum', 'primitive', 'generic-struct', 'method-parameter']) {
-  test(`Object.ToString does not broaden ${receiver} constraint admission`, () => {
+  test(`Object.ToString retains the ${receiver} type or owned-address boundary`, () => {
     const generic = receiver === 'method-parameter';
     const body = (writer, context) => {
       writer.op(generic ? 'ldarg.0' : 'ldnull');
@@ -265,7 +277,8 @@ for (const receiver of ['enum', 'primitive', 'generic-struct', 'method-parameter
       ]}
     ]);
     const report = verifyCilAssembly(bytes);
-    assert.equal(report.success, false);
-    assert(report.issues.some(issue => issue.code === 'IL_PREFIX'), JSON.stringify(report.issues));
+    assert.equal(report.success, generic, JSON.stringify(report.issues));
+    if (generic) withVM(bytes, vm => assert.equal(vm.run().fault?.name, 'InvalidProgramException', 'a null value is not an owned byref'));
+    else assert(report.issues.some(issue => issue.code === 'IL_PREFIX'), JSON.stringify(report.issues));
   });
 }

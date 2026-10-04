@@ -1,0 +1,36 @@
+{
+  "revision": "48c62243ef4cf614dfcafdb7af9a7ce360b643c4",
+  "checkout": "/workspace/scratch/42f7738360b9/a05-numeric-qualification",
+  "wrapper": "scripts/limited.js",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "order": [
+    "virtual-cache (20 measured pairs)",
+    "scalar-slot-loads (100 measured pairs)"
+  ],
+  "exitCodes": {
+    "virtual-cache": 1,
+    "scalar-slot-loads": 0
+  },
+  "files": {
+    "a05-virtual-48c62243.json": {
+      "bytes": 62173,
+      "sha256": "b98cf996109d0089d9ade4123c82113b54dd4c70d12d92682152e512188a6655"
+    },
+    "a05-virtual-48c62243.log": {
+      "bytes": 110,
+      "sha256": "c12998599d0039821f8b086d512be32f3d4266e143368909b63df1541c42c288"
+    },
+    "a05-slots-48c62243.json": {
+      "bytes": 225295,
+      "sha256": "8fd73cc0e0b8651a8a13e5c03a775f5629e2c7011b429dd7720d4290d90b06ae"
+    },
+    "a05-slots-48c62243.log": {
+      "bytes": 106,
+      "sha256": "e319824e0e924d694af8f96c46de16c5fa30088e9b41f6b2d782fdaacf234c0d"
+    }
+  }
+}

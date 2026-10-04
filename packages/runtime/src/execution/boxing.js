@@ -5,10 +5,13 @@ import {isDecimal} from './decimal.js';
 import {isNumber} from './numeric-ops.js';
 import {isAggregateType} from './value-types.js';
 import {nullableValue, copyNullable} from './nullable-value.js';
+import {valueLayout} from './value-layout.js';
+import {ownsHeapReference} from './heap-reference.js';
 
 /** Copy an admitted value into a box whose canonical MethodTable retains its exact type. */
 export function boxValue(vm, value, type) {
-  const table = vm.typeSystem.table(type);
+  const table = vm.inspector ? vm.typeSystem.table(type) : vm.heap.methodTables.get(type);
+  if (table.flags.refStruct) throw new ManagedFault('InvalidProgramException', 'Ref structs cannot be boxed');
   if (table.flags.nullable) {
     const nullable = copyNullable(vm, value, table);
     return nullable.hasValue ? boxValue(vm, nullable.value, table.nullableType) : null;
@@ -23,13 +26,13 @@ export function boxValue(vm, value, type) {
     });
   }
   if (isAggregateType(table)) {
-    // Storage owns layout admission, recursive copies, VM identity and reference rejection.
+    // Storage owns layout admission, recursive copies and managed-reference identity.
     return vm.heap.allocate('box', table, [vm.storage(value, table.name)]);
   }
   if (isDecimal(value) && table.name !== 'System.Decimal') {
     throw new ManagedFault('InvalidProgramException', 'Decimal boxing requires its declared type');
   }
-  if (!isNumber(value) && !isDecimal(value)) {
+  if (!isNumber(value) && !isDecimal(value) && !(typeof value === 'boolean' && table.name === 'System.Boolean')) {
     throw new ManagedFault('NotSupportedException', 'Only admitted scalar, sequential struct and registered WinUI value boxing is implemented');
   }
   return vm.heap.allocate('box', table, [vm.storage(value, table.name)]);
@@ -47,7 +50,7 @@ function unboxCompatible(boxed, requested) {
 
 /** unbox retains a live owned location; unbox.any copies through the declared storage adapter. */
 export function unboxValue(vm, reference, type, byReference = false) {
-  const table = vm.typeSystem.table(type);
+  const table = vm.inspector ? vm.typeSystem.table(type) : vm.heap.methodTables.get(type);
   if (table.flags.nullable) {
     if (byReference) throw new ManagedFault('NotSupportedException', 'A Nullable box interior is not supported');
     if (reference === null) return nullableValue(vm, table);
@@ -64,4 +67,17 @@ export function unboxValue(vm, reference, type, byReference = false) {
     throw new ManagedFault('InvalidCastException', 'Boxed type mismatch');
   }
   return byReference ? vm.address('box', 0, reference) : vm.storage(record.data[0], table.name);
+}
+
+/** Unsafe.Unbox<T> has a non-nullable value constraint and returns the existing owned box interior. */
+export function unsafeUnboxValue(vm, reference, type) {
+  const table = vm.inspector ? vm.typeSystem.table(type) : vm.heap.methodTables.get(type);
+  if (table.containsGenericParameters || !table.flags.valueType || table.flags.nullable || table.flags.refStruct) {
+    throw new ManagedFault('ArgumentException', 'Unsafe.Unbox requires a closed non-nullable value type');
+  }
+  valueLayout(vm, table);
+  if (reference !== null && !ownsHeapReference(vm.heap, reference)) {
+    throw new ManagedFault('InvalidReferenceException', 'Unsafe.Unbox requires an owned heap reference');
+  }
+  return unboxValue(vm, reference, table.name, true);
 }

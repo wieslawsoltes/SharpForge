@@ -21,8 +21,7 @@ export class ProgramModel {
     this.constants = [];
     this.constantMap = new Map();
     this.sequencePoints = [];
-    // The IR emitter asks the compilation for the image name of a catch type; every handler is a catch of Exception.
-    this.semantic = { nameOf: () => 'Exception' };
+    this.semantic = {nameOf: type => typeof type === 'string' ? type : type?.toDisplayString() ?? 'System.Exception'};
   }
   /** Interns a constant and returns its pool index (same keying as the execution pipeline). */
   constant(value) {
@@ -41,8 +40,9 @@ export class ProgramModel {
     for (let i = 1; ; i++) if (!this.typesByName.has(name + '#' + i)) return name + '#' + i;
   }
   /** Declares an image class. `node` is `{uri,start,end}` of its declaration (or nothing for synthesized classes). */
-  addClass(name, node = null) {
+  addClass(name, node = null, shape = {}) {
     const record = {
+      ...shape,
       id: this.types.length,
       name: this.uniqueTypeName(name),
       fields: [],
@@ -81,9 +81,10 @@ export class ProgramModel {
       qualifiedName: (owner ? owner.name + '.' : '') + name,
       owner,
       isStatic: signature.isStatic,
-      isVirtual: signature.isVirtual,
+      callingConvention: signature.callingConvention ?? 0,
+      objectSlot: signature.objectSlot ?? null,
       isOverride: signature.isOverride,
-      isFinal: signature.isFinal,
+      ...dispatchShape(signature),
       returnType: signature.returnType,
       parameters: signature.parameters.map(p => ({ start: node.start, end: node.end, ...p })),
       node,
@@ -109,13 +110,27 @@ export class ProgramModel {
       sequencePoints: this.sequencePoints,
       sources: files.map(f => ({ uri: f.source.uri, text: f.source.text, version: f.source.version })),
       types: this.types.map(t => ({
+        ...(t.valueType ? {valueType: true, base: t.base} : {}),
+        ...(t.interface ? {interface: true, abstract: true} : {}),
+        ...(t.interfaces.length ? {interfaces: t.interfaces} : {}),
+        ...(t.sourceIdentity ? {sourceIdentity: t.sourceIdentity} : {}),
         id: t.id,
         name: t.name,
         fields: t.fields.map(f => ({ name: f.name, type: f.type, index: f.index, ...(f.backing ? { backing: true } : {}) })),
         initializer: t.initializer,
       })),
       statics: this.statics.map(f => ({ name: `${f.owner.name}.${f.name}`, type: f.type, value: defaultValue(f.type) })),
-      methods: this.methods.map(imageMethod),
+      methods: this.methods.map(method => ({
+        ...imageMethod(method),
+        ...dispatchShape(method),
+        ...(method.callingConvention ? {callingConvention: method.callingConvention} : {}),
+        ...(method.objectSlot ? {objectSlot: method.objectSlot} : {}),
+      })),
     };
   }
+}
+
+function dispatchShape(method) {
+  return Object.fromEntries(['isVirtual', 'isAbstract', 'isFinal', 'isNewSlot', 'access', 'explicitInterfaceImplementations']
+    .filter(key => method[key] !== undefined).map(key => [key, method[key]]));
 }

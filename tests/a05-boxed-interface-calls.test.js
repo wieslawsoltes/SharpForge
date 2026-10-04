@@ -124,12 +124,20 @@ test('boxed struct generic interface dispatch remains explicitly unsupported', (
   run(bytes, result => assert.equal(result.fault?.name, 'NotSupportedException'));
 });
 
-test('throwing boxed implementations release their frame-owned interior', () => {
+test('throwing boxed implementations retain their inspectable interior until stop releases it', () => {
   run(fixture((writer, context) => writer.op('ldloc.0').op('box', context.resolve('Point')).op('ldc.i4.1')
     .op('callvirt', context.methods.get('IAdjust.Bump')).op('pop').op('ret'), {throwing: true}), (result, vm) => {
     assert.equal(result.fault?.name, 'NullReferenceException');
+    assert.equal(result.fault.phase, 'unhandled');
+    assert.deepEqual(vm.frames.map(frame => frame.method.name), ['Main', 'Bump']);
+    const interior = vm.top.args[0];
+    assert.equal(interior.kind, 'box');
+    vm.heap.collect();
+    assert.equal(vm.heap.get(interior.owner).type, 'Point');
+    vm.stop();
     assert.equal(vm.frames.length, 0);
     vm.heap.collect();
+    assert.throws(() => vm.heap.get(interior.owner), {name: 'InvalidReferenceException'});
     assert.equal(vm.heap.records.some(record => record?.kind === 'box' && record.type === 'Point'), false);
   });
 });

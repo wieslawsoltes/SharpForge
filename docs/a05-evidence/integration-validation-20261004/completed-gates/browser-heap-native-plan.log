@@ -1,0 +1,161 @@
+TAP version 13
+# Subtest: manual selection executes actual native arithmetic within ordinary budgets and profiler accounting
+ok 1 - manual selection executes actual native arithmetic within ordinary budgets and profiler accounting
+  ---
+  duration_ms: 47.084801
+  type: 'test'
+  ...
+# Subtest: field/array/allocation imports preserve GC roots and write notifications
+ok 2 - field/array/allocation imports preserve GC roots and write notifications
+  ---
+  duration_ms: 52.752419
+  type: 'test'
+  ...
+# Subtest: selected callees return through pooled frames without retaining old execution values
+ok 3 - selected callees return through pooled frames without retaining old execution values
+  ---
+  duration_ms: 12.738006
+  type: 'test'
+  ...
+# Subtest: debugger pause and snapshot restore preserve frames and invalidate compiled handles
+ok 4 - debugger pause and snapshot restore preserve frames and invalidate compiled handles
+  ---
+  duration_ms: 14.846804
+  type: 'test'
+  ...
+# Subtest: failed operand guards leave numeric inputs intact for the canonical handler
+ok 5 - failed operand guards leave numeric inputs intact for the canonical handler
+  ---
+  duration_ms: 2.900697
+  type: 'test'
+  ...
+# Subtest: instruction and heap faults retain canonical frame offsets and debugger behavior
+ok 6 - instruction and heap faults retain canonical frame offsets and debugger behavior
+  ---
+  duration_ms: 17.084071
+  type: 'test'
+  ...
+# Subtest: a host lowering its stack quota after preparation still faults at ordinary admission
+ok 7 - a host lowering its stack quota after preparation still faults at ordinary admission
+  ---
+  duration_ms: 3.095619
+  type: 'test'
+  ...
+# Subtest: foreign, copied, stale and disposed handles reject before changing a frame
+ok 8 - foreign, copied, stale and disposed handles reject before changing a frame
+  ---
+  duration_ms: 2.903306
+  type: 'test'
+  ...
+# Subtest: stop invalidates an asynchronous preparation before its handle can publish
+ok 9 - stop invalidates an asynchronous preparation before its handle can publish
+  ---
+  duration_ms: 1.880994
+  type: 'test'
+  ...
+# Subtest: body replacement invalidates an existing handle and unsupported methods never publish one
+ok 10 - body replacement invalidates an existing handle and unsupported methods never publish one
+  ---
+  duration_ms: 4.755631
+  type: 'test'
+  ...
+# Subtest: callback invalidation is a host error before the next counter or PC change
+ok 11 - callback invalidation is a host error before the next counter or PC change
+  ---
+  duration_ms: 2.480385
+  type: 'test'
+  ...
+# Subtest: ordinary custom steps are preserved and slice callbacks cannot reenter compiled execution
+ok 12 - ordinary custom steps are preserved and slice callbacks cannot reenter compiled execution
+  ---
+  duration_ms: 4.33493
+  type: 'test'
+  ...
+# Subtest: a direct CIL step host callback cannot reenter or dispose its compiled handle
+ok 13 - a direct CIL step host callback cannot reenter or dispose its compiled handle
+  ---
+  duration_ms: 3.066235
+  type: 'test'
+  ...
+# Subtest: browser Wasm fixture requires native arithmetic and preserves exact instruction/profile totals
+ok 14 - browser Wasm fixture requires native arithmetic and preserves exact instruction/profile totals
+  ---
+  duration_ms: 56.819654
+  type: 'test'
+  ...
+# Subtest: browser debugger fixture proves OSR, actual breakpoint, canonical step, and interpreted resume
+ok 15 - browser debugger fixture proves OSR, actual breakpoint, canonical step, and interpreted resume
+  ---
+  duration_ms: 12.840937
+  type: 'test'
+  ...
+# Subtest: browser profile fixtures export actual source/reload/CIL counts and named guest methods
+ok 16 - browser profile fixtures export actual source/reload/CIL counts and named guest methods
+  ---
+  duration_ms: 97.025057
+  type: 'test'
+  ...
+# Subtest: browser native arithmetic fixture fails when a required WebAssembly dependency is unavailable
+ok 17 - browser native arithmetic fixture fails when a required WebAssembly dependency is unavailable
+  ---
+  duration_ms: 2.862506
+  type: 'test'
+  ...
+# Subtest: denial fixture cannot pass when native compilation is actually allowed
+ok 18 - denial fixture cannot pass when native compilation is actually allowed
+  ---
+  duration_ms: 3.719785
+  type: 'test'
+  ...
+# Subtest: browser heap fixture executes native allocation/field/array imports with GC, write and profile parity
+ok 19 - browser heap fixture executes native allocation/field/array imports with GC, write and profile parity
+  ---
+  duration_ms: 16.370683
+  type: 'test'
+  ...
+# Subtest: browser heap fixture cannot qualify without the actual WebAssembly backend
+ok 20 - browser heap fixture cannot qualify without the actual WebAssembly backend
+  ---
+  duration_ms: 5.264345
+  type: 'test'
+  ...
+# Subtest: A05 native plan keeps SDK policy, unsafe compilation and replay evidence explicit
+ok 21 - A05 native plan keeps SDK policy, unsafe compilation and replay evidence explicit
+  ---
+  duration_ms: 1.437282
+  type: 'test'
+  ...
+# UNSUPPORTED varargs: /tmp/sharpforge-a05-observed-target-Hs4Qtu/varargs/result.json
+# FAILED varargs: /tmp/sharpforge-a05-observed-target-Hs4Qtu/varargs/result.json
+# Subtest: native plan propagates only a completed observed unsupported outcome and never turns it into a pass
+ok 22 - native plan propagates only a completed observed unsupported outcome and never turns it into a pass
+  ---
+  duration_ms: 14.38098
+  type: 'test'
+  ...
+# FAILED failed: /tmp/sharpforge-a05-plan-HzlWGC/failed/result.json
+# BLOCKED dependent: /tmp/sharpforge-a05-plan-HzlWGC/dependent/result.json
+# UNSUPPORTED sdk-policy: /tmp/sharpforge-a05-plan-HzlWGC/sdk-policy/result.json
+# PASSED last: /tmp/sharpforge-a05-plan-HzlWGC/last/result.json
+# Subtest: A05 native aggregation continues independent failures and never counts unavailable evidence as a pass
+ok 23 - A05 native aggregation continues independent failures and never counts unavailable evidence as a pass
+  ---
+  duration_ms: 8.049487
+  type: 'test'
+  ...
+# BLOCKED fixture: /tmp/sharpforge-a05-missing-sdk-Bfj9LF/fixture/result.json
+# Subtest: A05 native missing SDK blocks every case and retains a complete failed report
+ok 24 - A05 native missing SDK blocks every case and retains a complete failed report
+  ---
+  duration_ms: 2.016663
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2715.387749

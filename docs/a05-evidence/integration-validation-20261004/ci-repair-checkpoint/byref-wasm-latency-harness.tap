@@ -1,0 +1,328 @@
+TAP version 13
+# Subtest: only calls after readiness use Wasm; the current frame stays interpreted with exact accounting
+ok 1 - only calls after readiness use Wasm; the current frame stays interpreted with exact accounting
+  ---
+  duration_ms: 51.534719
+  type: 'test'
+  ...
+# Subtest: disabled mode never compiles; method and call-counter storage is bounded
+ok 2 - disabled mode never compiles; method and call-counter storage is bounded
+  ---
+  duration_ms: 16.710493
+  type: 'test'
+  ...
+# Subtest: unsupported bodies and unavailable backends report a stable fallback without retrying every call
+ok 3 - unsupported bodies and unavailable backends report a stable fallback without retrying every call
+  ---
+  duration_ms: 6.511714
+  type: 'test'
+  ...
+# Subtest: retained byte capacity rejects another ready candidate without changing guest output
+ok 4 - retained byte capacity rejects another ready candidate without changing guest output
+  ---
+  duration_ms: 7.509199
+  type: 'test'
+  ...
+# Subtest: restore drops selections and never treats an already running restored frame as a new call
+ok 5 - restore drops selections and never treats an already running restored frame as a new call
+  ---
+  duration_ms: 7.563488
+  type: 'test'
+  ...
+# Subtest: canceled platform jobs retain their concurrency slot across a code generation change
+ok 6 - canceled platform jobs retain their concurrency slot across a code generation change
+  ---
+  duration_ms: 4.403357
+  type: 'test'
+  ...
+# Subtest: disposal cancels queued work before analysis and remains safe inside a compiled host callback
+ok 7 - disposal cancels queued work before analysis and remains safe inside a compiled host callback
+  ---
+  duration_ms: 7.019509
+  type: 'test'
+  ...
+# Subtest: manual selection takes precedence over automatic selection and live quotas still apply
+ok 8 - manual selection takes precedence over automatic selection and live quotas still apply
+  ---
+  duration_ms: 7.38082
+  type: 'test'
+  ...
+# Subtest: invalid host tiering limits reject deliberately
+ok 9 - invalid host tiering limits reject deliberately
+  ---
+  duration_ms: 9.068669
+  type: 'test'
+  ...
+# Subtest: forced deopt preserves canonical values and suppresses both automatic and manual selection
+ok 10 - forced deopt preserves canonical values and suppresses both automatic and manual selection
+  ---
+  duration_ms: 33.932206
+  type: 'test'
+  ...
+# Subtest: code invalidation and repeated live restore retain host deopt policy; stopped restore starts independently
+ok 11 - code invalidation and repeated live restore retain host deopt policy; stopped restore starts independently
+  ---
+  duration_ms: 14.382964
+  type: 'test'
+  ...
+# Subtest: pooled reuse and new calls do not inherit a returned invocation mark
+ok 12 - pooled reuse and new calls do not inherit a returned invocation mark
+  ---
+  duration_ms: 8.57264
+  type: 'test'
+  ...
+# Subtest: deopt covers parked scheduler frames and transfers their marks through live restore
+ok 13 - deopt covers parked scheduler frames and transfers their marks through live restore
+  ---
+  duration_ms: 6.160067
+  type: 'test'
+  ...
+# Subtest: reentrant deopt completes an active imported output instruction exactly once
+ok 14 - reentrant deopt completes an active imported output instruction exactly once
+  ---
+  duration_ms: 4.933105
+  type: 'test'
+  ...
+# Subtest: CIL instruction breakpoint deopts a selected invocation and preserves single-step inspection
+ok 15 - CIL instruction breakpoint deopts a selected invocation and preserves single-step inspection
+  ---
+  duration_ms: 7.030265
+  type: 'test'
+  ...
+# Subtest: a source breakpoint in an OSR-selected method retains its sequence point and variable values
+ok 16 - a source breakpoint in an OSR-selected method retains its sequence point and variable values
+  ---
+  duration_ms: 96.396336
+  type: 'test'
+  ...
+# Subtest: host pause marks the invocation before returning; invalid engines are rejected
+ok 17 - host pause marks the invocation before returning; invalid engines are rejected
+  ---
+  duration_ms: 5.109424
+  type: 'test'
+  ...
+# Subtest: a data breakpoint after a selected store suppresses the rest of that invocation
+ok 18 - a data breakpoint after a selected store suppresses the rest of that invocation
+  ---
+  duration_ms: 4.219337
+  type: 'test'
+  ...
+# Subtest: a compiled helper exception stop marks live frames before pending fault delivery
+ok 19 - a compiled helper exception stop marks live frames before pending fault delivery
+  ---
+  duration_ms: 4.706192
+  type: 'test'
+  ...
+# Subtest: OSR selects the same canonical frame at the next hot edge and preserves debugger/event boundaries
+ok 20 - OSR selects the same canonical frame at the next hot edge and preserves debugger/event boundaries
+  ---
+  duration_ms: 32.06977
+  type: 'test'
+  ...
+# Subtest: a different cold edge cannot borrow the first loop hotness
+ok 21 - a different cold edge cannot borrow the first loop hotness
+  ---
+  duration_ms: 13.84175
+  type: 'test'
+  ...
+# Subtest: target entry depth rejects without consuming or replacing operands
+ok 22 - target entry depth rejects without consuming or replacing operands
+  ---
+  duration_ms: 5.33146
+  type: 'test'
+  ...
+# Subtest: manual dispatch suppresses automatic OSR until ordinary execution takes another hot edge
+ok 23 - manual dispatch suppresses automatic OSR until ordinary execution takes another hot edge
+  ---
+  duration_ms: 3.750589
+  type: 'test'
+  ...
+# Subtest: restore cancels OSR membership; host stack quotas still run before a selected target executes
+ok 24 - restore cancels OSR membership; host stack quotas still run before a selected target executes
+  ---
+  duration_ms: 9.781917
+  type: 'test'
+  ...
+# Subtest: a target callback invalidates a selection before any compiled operand is consumed
+ok 25 - a target callback invalidates a selection before any compiled operand is consumed
+  ---
+  duration_ms: 2.801535
+  type: 'test'
+  ...
+# Subtest: deferred TierUp subscriber failures remain host failures after the boundary transition
+ok 26 - deferred TierUp subscriber failures remain host failures after the boundary transition
+  ---
+  duration_ms: 3.367335
+  type: 'test'
+  ...
+# Subtest: OSR defaults off and accepts only a boolean option
+ok 27 - OSR defaults off and accepts only a boolean option
+  ---
+  duration_ms: 9.258859
+  type: 'test'
+  ...
+# Subtest: manual selection executes actual native arithmetic within ordinary budgets and profiler accounting
+ok 28 - manual selection executes actual native arithmetic within ordinary budgets and profiler accounting
+  ---
+  duration_ms: 34.896723
+  type: 'test'
+  ...
+# Subtest: field/array/allocation imports preserve GC roots and write notifications
+ok 29 - field/array/allocation imports preserve GC roots and write notifications
+  ---
+  duration_ms: 25.731201
+  type: 'test'
+  ...
+# Subtest: selected callees return through pooled frames without retaining old execution values
+ok 30 - selected callees return through pooled frames without retaining old execution values
+  ---
+  duration_ms: 4.974466
+  type: 'test'
+  ...
+# Subtest: debugger pause and snapshot restore preserve frames and invalidate compiled handles
+ok 31 - debugger pause and snapshot restore preserve frames and invalidate compiled handles
+  ---
+  duration_ms: 8.913111
+  type: 'test'
+  ...
+# Subtest: failed operand guards leave numeric inputs intact for the canonical handler
+ok 32 - failed operand guards leave numeric inputs intact for the canonical handler
+  ---
+  duration_ms: 2.381108
+  type: 'test'
+  ...
+# Subtest: instruction and heap faults retain canonical frame offsets and debugger behavior
+ok 33 - instruction and heap faults retain canonical frame offsets and debugger behavior
+  ---
+  duration_ms: 14.429482
+  type: 'test'
+  ...
+# Subtest: a host lowering its stack quota after preparation still faults at ordinary admission
+ok 34 - a host lowering its stack quota after preparation still faults at ordinary admission
+  ---
+  duration_ms: 3.240159
+  type: 'test'
+  ...
+# Subtest: foreign, copied, stale and disposed handles reject before changing a frame
+ok 35 - foreign, copied, stale and disposed handles reject before changing a frame
+  ---
+  duration_ms: 3.786151
+  type: 'test'
+  ...
+# Subtest: stop invalidates an asynchronous preparation before its handle can publish
+ok 36 - stop invalidates an asynchronous preparation before its handle can publish
+  ---
+  duration_ms: 2.553009
+  type: 'test'
+  ...
+# Subtest: body replacement invalidates an existing handle and unsupported methods never publish one
+ok 37 - body replacement invalidates an existing handle and unsupported methods never publish one
+  ---
+  duration_ms: 3.835504
+  type: 'test'
+  ...
+# Subtest: callback invalidation is a host error before the next counter or PC change
+ok 38 - callback invalidation is a host error before the next counter or PC change
+  ---
+  duration_ms: 2.185159
+  type: 'test'
+  ...
+# Subtest: ordinary custom steps are preserved and slice callbacks cannot reenter compiled execution
+ok 39 - ordinary custom steps are preserved and slice callbacks cannot reenter compiled execution
+  ---
+  duration_ms: 3.761114
+  type: 'test'
+  ...
+# Subtest: a direct CIL step host callback cannot reenter or dispose its compiled handle
+ok 40 - a direct CIL step host callback cannot reenter or dispose its compiled handle
+  ---
+  duration_ms: 3.15248
+  type: 'test'
+  ...
+# Subtest: source: byref latency retains complete cold/warm executions and exact result/counter scope
+ok 41 - source: byref latency retains complete cold/warm executions and exact result/counter scope
+  ---
+  duration_ms: 601.848257
+  type: 'test'
+  ...
+# Subtest: reloaded: byref latency retains complete cold/warm executions and exact result/counter scope
+ok 42 - reloaded: byref latency retains complete cold/warm executions and exact result/counter scope
+  ---
+  duration_ms: 439.230648
+  type: 'test'
+  ...
+# Subtest: cil: byref latency retains complete cold/warm executions and exact result/counter scope
+ok 43 - cil: byref latency retains complete cold/warm executions and exact result/counter scope
+  ---
+  duration_ms: 1846.416688
+  type: 'test'
+  ...
+# Subtest: byref latency rejects wrong guest output instead of publishing a measured row
+ok 44 - byref latency rejects wrong guest output instead of publishing a measured row
+  ---
+  duration_ms: 376.9746
+  type: 'test'
+  ...
+# Subtest: byref latency validates bounds and cancellation before constructing a guest
+ok 45 - byref latency validates bounds and cancellation before constructing a guest
+  ---
+  duration_ms: 1.26644
+  type: 'test'
+  ...
+# Subtest: qualification defaults retain the actual full acceptance counts and explicit runner
+ok 46 - qualification defaults retain the actual full acceptance counts and explicit runner
+  ---
+  duration_ms: 1.172762
+  type: 'test'
+  ...
+# Subtest: qualification options reject unsafe sizes, duplicate flags and accidental reference overwrite
+ok 47 - qualification options reject unsafe sizes, duplicate flags and accidental reference overwrite
+  ---
+  duration_ms: 0.368871
+  type: 'test'
+  ...
+# Subtest: qualification never promotes unavailable, reduced-count or uncertain targets to completion
+ok 48 - qualification never promotes unavailable, reduced-count or uncertain targets to completion
+  ---
+  duration_ms: 0.262215
+  type: 'test'
+  ...
+# Subtest: wasm-call-arithmetic: repeated cold preparation and warm calls execute real Wasm with exact scoped counters
+ok 49 - wasm-call-arithmetic: repeated cold preparation and warm calls execute real Wasm with exact scoped counters
+  ---
+  duration_ms: 1665.30305
+  type: 'test'
+  ...
+# Subtest: wasm-call-boxing: repeated cold preparation and warm calls execute real Wasm with exact scoped counters
+ok 50 - wasm-call-boxing: repeated cold preparation and warm calls execute real Wasm with exact scoped counters
+  ---
+  duration_ms: 1736.003254
+  type: 'test'
+  ...
+# Subtest: a declined Wasm backend cannot become a successful interpreter timing row
+ok 51 - a declined Wasm backend cannot become a successful interpreter timing row
+  ---
+  duration_ms: 38.388407
+  type: 'test'
+  ...
+# Subtest: incorrect output fails before cold or warm Wasm observations can be accepted
+ok 52 - incorrect output fails before cold or warm Wasm observations can be accepted
+  ---
+  duration_ms: 18.686552
+  type: 'test'
+  ...
+# Subtest: cancellation and bounded options reject before compiling or executing a guest
+ok 53 - cancellation and bounded options reject before compiling or executing a guest
+  ---
+  duration_ms: 1.447225
+  type: 'test'
+  ...
+1..53
+# tests 53
+# suites 0
+# pass 53
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13125.154875

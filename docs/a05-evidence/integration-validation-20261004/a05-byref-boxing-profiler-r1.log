@@ -1,0 +1,55 @@
+✔ T02.8 Swap, out, ref-returning indexers and in structs share storage across all routes; fusion=false (327.309029ms)
+✔ T02.8 Swap, out, ref-returning indexers and in structs share storage across all routes; fusion=true (91.325754ms)
+✔ T02.8 indexer getter metadata returns an owned byref rather than a copied scalar (25.886691ms)
+✔ T02.8 ref indexers cannot expose expired local storage or writable aliases to readonly results (8.484789ms)
+✔ T02.8 ref indexer assignment, compound assignment and postfix evaluate the address once before the value (52.018386ms)
+✔ generic boxed BCL callback source: Insert mutates each original closed box and retains its payload (183.389107ms)
+✔ generic boxed BCL callback source: escaping override faults preserve writes and the managed catch (27.363631ms)
+✔ generic boxed BCL callback source: stop cancels insertion without restoring the interrupted caller (18.46886ms)
+✔ generic boxed BCL callback reloaded: Insert mutates each original closed box and retains its payload (41.19743ms)
+✔ generic boxed BCL callback reloaded: escaping override faults preserve writes and the managed catch (29.815003ms)
+✔ generic boxed BCL callback reloaded: stop cancels insertion without restoring the interrupted caller (20.165724ms)
+✔ generic boxed BCL callback cil: Insert mutates each original closed box and retains its payload (56.259735ms)
+✔ generic boxed BCL callback cil: escaping override faults preserve writes and the managed catch (24.031735ms)
+✔ generic boxed BCL callback cil: stop cancels insertion without restoring the interrupted caller (43.732535ms)
+✔ independent CIL generic box callback: closed owner, roots and control survive throwing=false (17.709033ms)
+✔ independent CIL generic box callback: closed owner, roots and control survive throwing=true (7.944715ms)
+✔ prepared pool capabilities, source identities, calls and callbacks remain byte-identical in the reference (2.562966ms)
+✔ reference removes only profiler eligibility from the integrated batching guards (0.640351ms)
+✔ current instruction, continuation and method consumers produce syntactically valid reference modules (476.591962ms)
+✔ option-only gates and direct profiler calls require explicit transformation review (0.818613ms)
+✔ reference transformation deletes only reviewed consumers and preserves runtime cleanup (14.858094ms)
+✔ reference creation refuses unknown hook sites and newly introduced profiler behavior (0.965569ms)
+✔ numeric block reference retains all non-profiler observation guards (0.187846ms)
+✔ object-value reference preserves reviewed CIL work and source fault/cleanup boundaries (0.204501ms)
+✔ reviewed array continuation hooks preserve their exact resume/result and fault-cleanup semantics (0.335753ms)
+✔ profiler reference rejects oversized input before parsing or importing another runtime (1.858531ms)
+✔ paired target intervals distinguish achieved, missed and unresolved requirements deterministically (33.069556ms)
+✔ paired execution verifies every result, preserves warm plans and reports raw phases (59.263197ms)
+✔ source: 500-frame root qualification compares the same complete live inventory (200.515941ms)
+✔ cil: 500-frame root qualification compares the same complete live inventory (150.496776ms)
+✔ runnable rectangular, lower-bound, Span and fixed example verifies all three routes (312.402188ms)
+✔ runnable EH example proves filters observe pre-unwind state and throwing filters preserve the original exception (89.185959ms)
+✔ logical generic names preserve boxing, distinct type identities and formatting in all source routes (278.510045ms)
+✔ source identity descriptors roundtrip as owned immutable data, including debug-stripped CIL (71.492673ms)
+✔ boxing through a substituted method parameter uses the closed struct storage category (36.703859ms)
+✔ malformed, cyclic, overdeep and colliding logical descriptors fail source admission (25.788708ms)
+✔ independent real CLI generic metadata retains its actual definition and type arguments (5.148246ms)
+✔ bound-tree native CIL emission retains true generic metadata without source identity projection (21.482029ms)
+﹣ A02-T30 every AssemblyRef carries the identity of the referenced assembly that defines the type (0.887314ms) # no .NET reference pack is installed
+﹣ A02-T30 constants of imported fields and enums fold (0.10897ms) # no .NET reference pack is installed
+﹣ A02-T30 foreach finds MoveNext on the base interface and enumerates explicit implementations through the interface (0.067119ms) # no .NET reference pack is installed
+﹣ A02-T30 LINQ binds: generic extension methods, lambdas, and an invoked name skips a property (0.063633ms) # no .NET reference pack is installed
+﹣ A02-T30 with references a missing member is an error, not an incomplete analysis (0.071836ms) # no .NET reference pack is installed
+﹣ A02-T30 span conversions call the operators of the span types; ref-returning members keep their modifiers (0.062291ms) # no .NET reference pack is installed
+﹣ A02-T30 System.Threading.Lock, FormattableString and decimal constants emit (0.052437ms) # no .NET reference pack is installed
+✔ A02-T30 a ref-returning indexer or property of a source type is read, written and referenced through its pointer (118.726872ms)
+✔ A02-T30 without references the registry stays the library and its behaviour is unchanged (12.40555ms)
+ℹ tests 47
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 7
+ℹ todo 0
+ℹ duration_ms 9260.472285

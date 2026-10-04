@@ -60,7 +60,7 @@ for (const [engine, create] of Object.entries(engines)) {
   });
 
   test(`managed Object.ToString ${engine}: infinite callbacks stop at the instruction boundary`, () => {
-    const compiled = program('object value = new Value(); Console.WriteLine(value.ToString());', 'while (true) { Count++; }');
+    const compiled = program('object value = new Value(); new StringBuilder().Insert(0, value);', 'while (true) { Count++; }');
     const vm = create(compiled, {maxSynchronousInstructions: 64});
     try {
       const result = vm.run();

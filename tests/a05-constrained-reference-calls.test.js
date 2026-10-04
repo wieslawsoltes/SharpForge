@@ -178,14 +178,18 @@ test('a foreign address and a live incompatible object are rejected after a warm
   }));
 });
 
-test('external Object members remain rejected for reference constraints', () => {
+test('an internal reference constraint can call the exact external Object.GetHashCode slot', () => {
   const bytes = fixture((writer, context) => {
+    writer.op('newobj', context.methods.get('Base..ctor')).op('stloc.0');
     writer.op('ldloca.s', 0).op('constrained.', context.resolve('Base'));
     writer.op('callvirt', context.member('System.Object', 'GetHashCode', 'int', [], false)).op('ret');
   });
   const report = verifyCilAssembly(bytes);
-  assert.equal(report.success, false);
-  assert(report.issues.some(issue => issue.code === 'IL_PREFIX' && issue.message.includes('internal class')));
+  assert.equal(report.success, true, JSON.stringify(report.issues));
+  withVM(bytes, vm => {
+    assert.equal(vm.run().state, 'terminated', vm.fault?.message);
+    assert(Number.isInteger(vm.returnValue));
+  });
 });
 
 test('reference constraints do not admit default-interface bodies', () => {

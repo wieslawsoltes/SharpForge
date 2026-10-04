@@ -15,30 +15,11 @@
  * The resulting map (`type.interfaceImplementations`) is what a back end emits as MethodImpl rows / interface vtables.
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
-import { TypeKind, SymbolKind, Accessibility, TypeCompareKind } from '../symbols/types.js';
+import { TypeKind, SymbolKind, Accessibility } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain, allInterfacesOf } from '../symbols/substitution.js';
 import { mostSpecificImplementation } from './interface-members.js';
-
-const sameType = (a, b, ma, mb) => {
-  if (!a || !b) return a === b;
-  if (a.equals(b, TypeCompareKind.IgnoreDynamic)) return true;
-  const ia = (ma.typeParameters ?? []).indexOf(a),
-    ib = (mb.typeParameters ?? []).indexOf(b);
-  if (ia >= 0 && ia === ib) return true;
-  return mapMethodTypeParameters(a, ma) === mapMethodTypeParameters(b, mb);
-};
-const mapMethodTypeParameters = (t, m) => {
-  let text = t.toDisplayString();
-  (m.typeParameters ?? []).forEach((p, i) => {
-    text = text.replace(new RegExp('\\b' + p.name + '\\b', 'g'), '!!' + i);
-  });
-  return text;
-};
-const parametersMatch = (a, b) =>
-  a.parameters.length === b.parameters.length &&
-  (a.arity ?? 0) === (b.arity ?? 0) &&
-  a.parameters.every((p, i) => p.refKind === b.parameters[i].refKind && sameType(p.type, b.parameters[i].type, a, b));
+import {interfaceTypeMatches as sameType, interfaceParametersMatch as parametersMatch} from './interface-signatures.js';
 const typeOfMember = m => (m.kind === SymbolKind.Method ? m.returnType : m.type);
 const simpleName = m => m.simpleName ?? m.name;
 /**

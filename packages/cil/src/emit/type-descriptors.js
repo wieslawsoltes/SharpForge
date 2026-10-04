@@ -5,7 +5,11 @@ export function emissionTypeDescriptors(image, options) {
     { name: '<Module>', namespace: '', flags: 0, original: null },
     { name: '<>Program', namespace: 'SharpForge', flags: 0x100181 - hidden, original: null, program: true },
     { name: '<>AllocationToken', namespace: 'SharpForge', flags: 0x100101 - hidden, original: null, marker: true },
-    ...image.types.map(type => ({ name: type.name, namespace: '', flags: image.outputKind === 'library' ? 1 : 0x100001,
-      original: type })),
+    ...image.types.map(type => ({
+      name: type.name,
+      namespace: '',
+      flags: (image.outputKind === 'library' ? 1 : 0x100001) | (type.interface ? 0xa0 : type.valueType ? 0x108 : 0),
+      original: type
+    })),
   ];
 }

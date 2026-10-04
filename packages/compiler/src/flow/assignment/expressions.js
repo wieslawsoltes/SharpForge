@@ -111,6 +111,7 @@ export const AssignmentExpressions = Base =>
               this.read(value.local, value, s);
             } else s = this.expr(value, s);
           }
+          for (const value of e.varargs ?? []) s = this.expr(value, s);
           for (const o of outs) s = this.assign(o, s);
           for (const i of e.initializers ?? []) {
             // An index initializer evaluates its arguments before its value.

@@ -1,0 +1,74 @@
+{
+  "format": "SharpForge.A05ValidationCheckpoint/1",
+  "scope": "Overlapping focused cohorts; counts must not be added or presented as one full-suite result.",
+  "execution": "One machine-wide run at a time through scripts/limited.js; Node tests concurrency1 and512MiB.",
+  "skipReason": "Seven existing compiler-reference-binding cases require an unavailable local .NET reference pack.",
+  "records": [
+    {
+      "file": "a05-main-merge-focused-r2.log",
+      "revision": "8cc82866ba5400678951d7a197fb2103a5a5714d",
+      "sha256": "2c0c1b54595180655958972d6ab1cec8f6d0ee5c7b1274586f3f39d26068720f",
+      "bytes": 14769,
+      "tests": 146,
+      "passed": 146,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Selected main-merge regressions and profiler reference"
+    },
+    {
+      "file": "a05-scalar-store-validation-7a088-r2.log",
+      "revision": "7a088bfede2223c803023a0127eadfb8db6e1b21",
+      "sha256": "b6907b5a0dc21a40c6a5c973dc0e5e8b3a5c6bc7802f58834dc4cd13f8a5e673",
+      "bytes": 6586,
+      "tests": 73,
+      "passed": 73,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Callback frame index, scalar stores/loads and prepared virtual calls"
+    },
+    {
+      "file": "a05-native-generics-r2.log",
+      "revision": "b70703e4f44b91f7acae19ecdf12406da499832d",
+      "sha256": "7ac8c3f446bddb98831469f31c626e7677c12c821f97dce2a502d3198f5e25ee",
+      "bytes": 4969,
+      "tests": 45,
+      "passed": 45,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Native evidence protocol, generic callbacks/type identities and tokens"
+    },
+    {
+      "file": "a05-browser-python-r1.log",
+      "revision": "b70703e4f44b91f7acae19ecdf12406da499832d",
+      "sha256": "feabb4add9e2ca3374e538560634d1ec97dc4f4ce89aab12f3d726e36ea9b2f6",
+      "bytes": 102,
+      "tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Python browser harness contract; no browser execution"
+    },
+    {
+      "file": "a05-byref-boxing-profiler-r1.log",
+      "revision": "d9453a9795d3047ff8790e7c252294ec11052f03",
+      "sha256": "5354589679e16f6910d9ca8e74ef8c042707f61ccf6fe92a74acd6c75b6ea447",
+      "bytes": 5550,
+      "tests": 47,
+      "passed": 40,
+      "failed": 0,
+      "skipped": 7,
+      "scope": "Ref indexer/Swap/out/in, memory examples, generic boxing and strict profiler reference"
+    },
+    {
+      "file": "a05-native-generic-final-r1.log",
+      "revision": "5909d54f25ef9898c956c736c96db782e36978ff",
+      "sha256": "028de7aacca8decd8d0c9fde840c57c7d83382c893564fb8cf53b8469948ba43",
+      "bytes": 3366,
+      "tests": 28,
+      "passed": 28,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Actual CLI nested generic metadata, source logical collisions, calls and native plan"
+    }
+  ]
+}

@@ -1,3 +1,8 @@
+import {NullableTranslation} from './nullable-translation.js';
+import {UnsafeMemoryTranslation} from '../../lowering/unsafe-memory.js';
+import {VarargsTranslation} from '../../lowering/varargs.js';
+import {SpanTranslation} from '../../lowering/spans.js';
+import {StructTranslation} from './struct-translation.js';
 import {ScalarTranslation} from './scalar-translation.js';
 /**
  * Lowers one semantic bound body (binder/body-binder.js) to the nodes the IR emitter consumes. The translator owns
@@ -217,6 +222,7 @@ const families = [
   AwaitTranslation,
   AsyncStreamTranslation,
   ByReferenceTranslation,
+  VarargsTranslation,
   Locations,
   TupleTranslation,
   SynthesizedTextTranslation,
@@ -227,7 +233,11 @@ const families = [
   StructuralPatternTranslation,
   ...languageLowerings,
   // Last: what depends on a type argument is decided before any other family sees the node.
+  SpanTranslation,
+  UnsafeMemoryTranslation,
   ScalarTranslation,
+  StructTranslation,
+  NullableTranslation,
   GenericTranslation,
 ];
 

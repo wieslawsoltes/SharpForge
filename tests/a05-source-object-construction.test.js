@@ -56,9 +56,14 @@ test('Object allocation appends wire 1848 after the released scalar families wit
 
 for (const pipeline of ['bound', 'legacy']) {
   test(`Object allocation ${pipeline}: fresh identities allocate once in source, reloaded source and CIL`, () => {
-    const program = compile('object first = new object(); object second = new System.Object();' +
-      'Console.WriteLine(Object.ReferenceEquals(first, second));', pipeline);
-    assertOutput(program, 'False\n', vm => {
+    // Keep Boolean formatting and its managed temporaries outside the constructor allocation measurement.
+    const program = compileToIL(`using System; class Program { static int Main() {
+      object first = new object(); object second = new System.Object();
+      return Object.ReferenceEquals(first, second) ? 1 : 0;
+    } }`, {pipeline});
+    assert.equal(program.success, true, JSON.stringify(program.diagnostics));
+    assertOutput(program, '', vm => {
+      assert.equal(vm.exitCode, 0);
       assert.equal(vm.heap.stats.allocations, 2);
       assert.equal(vm.heap.stats.allocatedBytes, 64);
     });

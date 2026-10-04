@@ -1,0 +1,24 @@
+{
+  "cwd": "/workspace/scratch/42f7738360b9/a05-memory",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-name-pattern=runner executes only the selected area|serial Node policy|manifest runner prevents overlapping",
+    "tests/a00-06-registration.test.js"
+  ],
+  "controls": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": "--max-old-space-size=512"
+  },
+  "revision": "c40e007469c60d3ad17e9756043eb5d37c904558",
+  "tree": "881ff57e62f79136c9a34245359ccfce0a1ffad3",
+  "statusBefore": "",
+  "started": "2026-10-04T19:17:24.178012+00:00",
+  "exitCode": 0,
+  "finished": "2026-10-04T19:17:26.361832+00:00"
+}

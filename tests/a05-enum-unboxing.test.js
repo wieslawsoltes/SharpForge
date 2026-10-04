@@ -85,6 +85,23 @@ test('compatible unboxing mutates the existing box without changing casts, GetTy
   }, {nativeIntBits});
 });
 
+test('boxed internal enums retain inherited scalar Object equality and hash contracts', () => {
+  const bytes = fixture((writer, context) => {
+    const choice = context.resolve('Choice');
+    const boolean = context.member('System.Console', 'WriteLine', 'void', ['bool']);
+    const equals = context.member('System.Object', 'Equals', 'bool', ['object'], false);
+    writer.op('ldc.i4.7').op('box', choice).op('stloc.0');
+    writer.op('ldloc.0').op('ldc.i4.7').op('box', choice).op('callvirt', equals).op('call', boolean);
+    writer.op('ldloc.0').op('ldc.i4.7').op('box', context.resolve('Other')).op('callvirt', equals).op('call', boolean);
+    writer.op('ldloc.0').op('callvirt', context.member('System.Object', 'GetHashCode', 'int', [], false));
+    writer.op('call', context.member('System.Console', 'WriteLine', 'void', ['int'])).op('ret');
+  }, {result: 'void', locals: ['object']});
+  run(bytes, result => {
+    assert.equal(result.state, 'terminated', result.fault?.message);
+    assert.equal(result.output, 'True\nFalse\n7\n');
+  });
+});
+
 test('unboxing rejects different widths, signedness and primitive kinds in either direction', () => {
   const incompatible = ['System.UInt32', 'System.Int64', 'System.IntPtr', 'System.Single', 'System.Boolean', 'System.Char'];
   for (const opcode of ['unbox', 'unbox.any']) {

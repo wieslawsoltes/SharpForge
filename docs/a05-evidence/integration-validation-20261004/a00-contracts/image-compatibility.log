@@ -1,0 +1,11 @@
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+✔ A00 nested-finally image accepts canonical and explicit catch boundary (18.460407ms)
+✔ A00 nested-finally image accepts legacy alias and inferred catch boundary (2.490049ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1122.271563

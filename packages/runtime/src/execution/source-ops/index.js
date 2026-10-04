@@ -1,9 +1,14 @@
+import {sourceNullableHandlers} from './nullable.js';
 import {Op} from '@sharpforge/bytecode';
 import {sourceLoadStoreHandlers} from './load-store.js';
 import {sourceArithmeticHandlers} from './arithmetic.js';
 import {sourceControlHandlers} from './control.js';
 import {sourceCallHandlers} from './call.js';
 import {sourceObjectHandlers} from './object.js';
+import {sourceMemoryHandlers} from './memory.js';
+import {sourceAddressHandlers} from './addresses.js';
+import {sourceUnsafeMemoryHandlers} from './unsafe-memory.js';
+import {sourceVarargsHandlers} from './varargs.js';
 
 /** Dense, immutable dispatch for the released source opcode IDs; the VM owns unknown-op faults. */
 export const sourceOpcodeHandlers = Object.freeze(Object.assign([],
@@ -11,7 +16,12 @@ export const sourceOpcodeHandlers = Object.freeze(Object.assign([],
   sourceArithmeticHandlers,
   sourceControlHandlers,
   sourceCallHandlers,
-  sourceObjectHandlers
+  sourceObjectHandlers,
+  sourceMemoryHandlers,
+  sourceAddressHandlers,
+  sourceUnsafeMemoryHandlers,
+  sourceVarargsHandlers,
+  sourceNullableHandlers
 ));
 
 /** Fixed call sites let each grouped handler specialize without a polymorphic call per instruction. */
@@ -47,6 +57,12 @@ export function dispatchSourceOpcode(vm,frame,op,a,b) {
     case Op.ENDFINALLY: sourceOpcodeHandlers[Op.ENDFINALLY](vm,frame,a,b); return true;
     case Op.DELEGATE: sourceOpcodeHandlers[Op.DELEGATE](vm,frame,a,b); return true;
     case Op.ENUM: sourceOpcodeHandlers[Op.ENUM](vm,frame,a,b); return true;
-    default: return false;
+    default: {
+      if (!Number.isInteger(op) || !Object.hasOwn(sourceOpcodeHandlers, op)) return false;
+      const handler = sourceOpcodeHandlers[op];
+      if (!handler) return false;
+      handler(vm, frame, a, b);
+      return true;
+    }
   }
 }

@@ -202,8 +202,9 @@ export class FunctionPointerProfile {
     for (const index of escaped.args) args[index] = null;
     const initial = {stack: [], locals: method.locals.map(() => null), args}, queue = [[0, initial]], states = new Map();
     for (const handler of method.handlers) {
-      queue.push([offsets.get(handler.target), {...initial, stack: handler.flags === 0 ? [null] : [],
+      queue.push([offsets.get(handler.target), {...initial, stack: handler.flags === 0 || handler.flags === 1 ? [null] : [],
         locals: method.locals.map(() => null)}]);
+      if (handler.flags === 1) queue.push([offsets.get(handler.catchType), {...initial,stack:[null],locals:method.locals.map(() => null)}]);
     }
     let work = 0;
     while (queue.length) {
@@ -216,7 +217,7 @@ export class FunctionPointerProfile {
       let output;
       try { output = this.transfer(method, instruction, state, {effects, fail, escaped}); }
       catch (error) { fail(instruction, error.message, error); continue; }
-      if (['ret', 'throw', 'rethrow', 'endfinally'].includes(instruction.name)) continue;
+      if (['ret', 'throw', 'rethrow', 'endfinally', 'endfilter', 'jmp'].includes(instruction.name)) continue;
       if (instruction.operandKind.startsWith('br')) queue.push([offsets.get(instruction.operand), output]);
       if (instruction.name === 'switch') for (const target of instruction.operand) queue.push([offsets.get(target), output]);
       if (!/^(br|leave)(\.s)?$/.test(instruction.name)) queue.push([index + 1, output]);

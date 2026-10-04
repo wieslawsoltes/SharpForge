@@ -1,0 +1,28 @@
+{
+  "id": "tokens",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/tokens",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/tokens/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "tokens/evidence",
+  "report": "tokens/result.json",
+  "startedAt": "2026-10-04T19:18:05.592Z",
+  "durationMs": 2036.8630419999972,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "tokens/stdout.log",
+  "stderr": "tokens/stderr.log",
+  "finishedAt": "2026-10-04T19:18:07.630Z"
+}

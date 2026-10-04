@@ -9,8 +9,10 @@ import {invokeBcl} from './bcl.js';
 import {invokeJson} from './json.js';
 import {invokeNetwork} from './network.js';
 import {invokeNumeric} from './numeric.js';
+import {invokePlatformArray} from './execution/platform-array-calls.js';
 
 const modules = createBclRegistry([...bclModules, closedCollectionsModule]);
+const runtimeFamilies = new Map([['array', invokePlatformArray]]);
 
 const services = Object.freeze({
   frameworkType,
@@ -36,6 +38,8 @@ function invokeCore(platform, descriptor, args, type) {
 }
 
 function invokeRuntime14(platform, descriptor, args, type) {
+  const adapted = runtimeFamilies.get(type.family)?.(platform, descriptor, args);
+  if (adapted?.handled) return adapted;
   return type.family?.startsWith('json') ? invokeJson(platform, descriptor, args) :
     modules.invoke(platform, descriptor, args, type);
 }

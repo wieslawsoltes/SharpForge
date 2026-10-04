@@ -33,14 +33,18 @@ table. `ConstrainedObjectProfile.valuePlan(typeToken)` exposes its metadata-only
 value-type plan without requiring a caller-authored Object MemberRef. Existing
 constrained calls continue to validate the declaration before using that plan.
 
-This callback path supports nongeneric internal reference hierarchies rooted in
-Object and the already admitted nongeneric, reference-free sequential structs.
-A boxed struct override receives the existing box interior, so its writes affect
-the original box. Primitive boxes preserve their previous type-aware formatting.
+This callback path reuses the admitted internal reference hierarchies rooted in
+Object and sequential struct profiles, including closed generic owners and
+structs with managed reference fields. Both ordinary Object calls and synchronous
+BCL callbacks select the receiver's exact closed declaring instance. A boxed
+struct override receives the existing box interior, so its writes affect the
+original box and its managed fields remain rooted during collection. Primitive
+boxes preserve their previous type-aware formatting.
 The explicit framework opt-ins remain `StringBuilder` and `Uri`.
 
-Generic-owner and explicit MethodImpl override cases outside those existing
-profiles fail with `NotSupportedException` when they contain a possible override.
+Explicit MethodImpl override cases outside those existing profiles fail with
+`NotSupportedException` when they contain a possible override. Open generic
+owners retain the managed call admission's `InvalidProgramException` rejection.
 Objects without an override retain their previous fallback. The source compiler
 continues to reject general class inheritance and arbitrary virtual dispatch where
 it cannot bind and execute them. Its semantic generator admits an ordinary
@@ -110,6 +114,7 @@ Run through the repository's serial validation lane:
 ```sh
 node scripts/limited.js node --test tests/a05-object-string-metadata.test.js tests/a05-callback-verification.test.js
 node scripts/limited.js node --test tests/a05-managed-object-string.test.js
+node scripts/limited.js node --test tests/a05-generic-boxed-bcl-callback.test.js
 node scripts/limited.js node --test tests/a05-synchronous-callbacks.test.js tests/a05-callback-lifecycle.test.js
 node scripts/limited.js node --test tests/a07-framework-object-string.test.js tests/a05-constrained-object-tostring.test.js tests/a05-constrained-reference-tostring.test.js
 node scripts/limited.js node --expose-gc scripts/benchmarks/a05-managed-object-string.mjs 1000 --mode candidate

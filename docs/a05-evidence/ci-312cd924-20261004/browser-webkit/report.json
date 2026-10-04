@@ -1,0 +1,728 @@
+{
+  "format": "SharpForge.A05BrowserQualification/1",
+  "revision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+  "tree": "21dd929c4087bb7dc97fdd735d88ae36d1e76050",
+  "trackedChanges": "",
+  "engine": "webkit",
+  "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "python": "3.12.14 (main, Aug 13 2026, 02:47:42) [GCC 13.3.0]",
+  "node": "v24.21.0",
+  "workflow": {
+    "GITHUB_RUN_ID": "37225004274",
+    "GITHUB_RUN_ATTEMPT": "1",
+    "GITHUB_SHA": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+    "GITHUB_REF": "refs/heads/codex/a05-e01-started-handoff-20261004"
+  },
+  "command": [
+    "/opt/hostedtoolcache/Python/3.12.14/x64/bin/python",
+    "tests/fixtures/a05-browser/qualify.py",
+    "--engine",
+    "webkit"
+  ],
+  "speedscope": {
+    "version": "1.24.0",
+    "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+    "release": "https://github.com/jlfwong/speedscope/releases/tag/v1.24.0",
+    "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+    "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+    "bytes": 218392,
+    "entry": "speedscope/index.html",
+    "files": [
+      {
+        "path": "speedscope/LICENSE",
+        "bytes": 1067,
+        "sha256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0"
+      },
+      {
+        "path": "speedscope/README",
+        "bytes": 124,
+        "sha256": "f8f44be85767f0f2dda603f5015803d579742526e53c434cc1e7235dead371c4"
+      },
+      {
+        "path": "speedscope/SourceCodePro-Regular.ttf-ILST5JV6.woff2",
+        "bytes": 52228,
+        "sha256": "8badfe75c98da1e8315a52619f177def4618350f7b3e496baf5b8894da2c2ac0"
+      },
+      {
+        "path": "speedscope/favicon-16x16-V2DMIAZS.js",
+        "bytes": 100,
+        "sha256": "c0f242e15ad5552b1fabfbd8aeff1afe5e28b628bda0f8e27e4998cb355b2a0e"
+      },
+      {
+        "path": "speedscope/favicon-16x16-VSI62OPJ.png",
+        "bytes": 679,
+        "sha256": "a62a6da7742b43ee798b106b709aa82eafd1b500ef050427cfec05e4d41dacac"
+      },
+      {
+        "path": "speedscope/favicon-32x32-3EB2YCUY.png",
+        "bytes": 1585,
+        "sha256": "9ea6e6d13b7b8064187866deba1e8674d8ba25071279ba7b15f34b54df2508d0"
+      },
+      {
+        "path": "speedscope/favicon-32x32-THY3JDJL.js",
+        "bytes": 100,
+        "sha256": "19e14dad956dd3f1735081687479f9ef127fd7060e324a48569b57b5ebf34546"
+      },
+      {
+        "path": "speedscope/favicon-FOKUP5Y5.ico",
+        "bytes": 15086,
+        "sha256": "45701858a8fe9daccd63d2cb5749fdbd155a471b5fc391d04f3f61d18a9efcdd"
+      },
+      {
+        "path": "speedscope/favicon-M34RF7BI.js",
+        "bytes": 88,
+        "sha256": "8a8fc32e3eeca5da272fcea04585a97e47c411c604ae9d8386a3bba02f95ef99"
+      },
+      {
+        "path": "speedscope/file-format-schema.json",
+        "bytes": 9517,
+        "sha256": "4aaaa982e721bdb60fbdc095abb1a5349997826dfc64ca3a41d89e2ef659617c"
+      },
+      {
+        "path": "speedscope/index.html",
+        "bytes": 628,
+        "sha256": "a011cca4a3c4d9a95c210274497601d8a55658e09f6da748820281db2b665375"
+      },
+      {
+        "path": "speedscope/perf-vertx-stacks-01-collapsed-all-ZNUIGAJL.txt",
+        "bytes": 263949,
+        "sha256": "dedaa1c8055267638030efa25081116105fd0e357944cefc0974e792dfcabedd"
+      },
+      {
+        "path": "speedscope/release.txt",
+        "bytes": 88,
+        "sha256": "a034e8e47c2f4459ad45dbdbb0852902ee0c2241a52dbcc9f6b18fffd9bff45a"
+      },
+      {
+        "path": "speedscope/source-code-pro.LICENSE.md",
+        "bytes": 4485,
+        "sha256": "2e14ee65e55dbcc7d66347cd7c76a10a1a18ac49dd7989a2b3838b479676f746"
+      },
+      {
+        "path": "speedscope/speedscope-432XE7GS.js",
+        "bytes": 480944,
+        "sha256": "c7cdebe091dddf523863ae7442437b1c122959d34624c09772baf7515441ee99"
+      },
+      {
+        "path": "speedscope/speedscope-GHPHNKXC.css",
+        "bytes": 1053,
+        "sha256": "0f823f58242a0ca365d46761dd99034626931157a08e24dd667b310363209bc9"
+      }
+    ]
+  },
+  "fixtureSha256": {
+    "profiles.mjs": "82d58fc24deeef4e0980bd2c92c23a626ae81b20d6bb7094a20602b42a266510",
+    "qualify.py": "c3e252b6575e8d7dd49acafafc2f5f1aac6e3ad81982a37465b1e9cbbd26cc8a",
+    "runtime.mjs": "2607a04ad01eae111ad8598352fc862f1a535eb5b2d6bf845b89d7910177ec6a",
+    "server.py": "a83cd9fd1c022168450cb9c86ded3a8d8957c4570c0b1092d24492bfd0f8518a",
+    "speedscope.py": "c14cb0607815123a916bba7a8096a3540e95e325baece0ebf030d44f75f4bfef",
+    "test_contract.py": "ae39d446115b874aea5ac454fe654a440b6e58fe85ad4a4dc4eba96859c65e7e"
+  },
+  "scope": "Actual browser public source modules over HTTP with shipped CSP plus hashed fixture import map; official Speedscope release UI imported using its real file input. No Studio or native CLR claim.",
+  "cases": [
+    {
+      "id": "wasm-execution",
+      "passed": true,
+      "status": "passed",
+      "nativeProbe": {
+        "moduleHex": "0061736d01000000",
+        "compiled": true,
+        "nativeModule": true
+      },
+      "byteLength": 500,
+      "instructions": 46,
+      "referenceInstructions": 46,
+      "hostArithmeticCalls": 0,
+      "result": 6,
+      "browserVersion": "26.6",
+      "csp": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8=' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+      "blockedRequests": [],
+      "seconds": 7.333424000999997
+    },
+    {
+      "id": "debugger-deopt",
+      "passed": true,
+      "status": "passed",
+      "stopped": {
+        "pc": 3,
+        "locals": [
+          3
+        ],
+        "stack": [
+          3
+        ]
+      },
+      "hostArithmeticCalls": 3,
+      "statistics": {
+        "enabled": true,
+        "epoch": 1,
+        "invalidated": false,
+        "activeCompilations": 0,
+        "compilationAttempts": 1,
+        "cancellations": 0,
+        "calls": 1,
+        "overflowCalls": 0,
+        "selectedCalls": 0,
+        "selectedInstructions": 0,
+        "osrTransitions": 1,
+        "osrRejectedEntries": 0,
+        "compiledBytes": 500,
+        "methods": [
+          {
+            "token": 100663297,
+            "name": "Fixture.Program::Main",
+            "calls": 1,
+            "status": "ready",
+            "bytes": 500,
+            "reason": null,
+            "backedges": 5,
+            "hottestBackedge": 5,
+            "backedgeOverflow": 0,
+            "backedgeReason": null,
+            "backedgeSites": [
+              {
+                "fromOffset": 8,
+                "toOffset": 2,
+                "count": 5
+              }
+            ]
+          }
+        ]
+      },
+      "instructions": 46,
+      "browserVersion": "26.6",
+      "csp": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8=' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+      "blockedRequests": [],
+      "seconds": 3.457425865999994
+    },
+    {
+      "id": "profile-exports",
+      "passed": true,
+      "status": "passed",
+      "exports": [
+        {
+          "engine": "source",
+          "name": "A05 browser source",
+          "instructions": 19,
+          "methods": [
+            {
+              "name": "<startup>",
+              "self": 2,
+              "total": 19
+            },
+            {
+              "name": "Program.Main",
+              "self": 7,
+              "total": 17
+            },
+            {
+              "name": "Program.A05BrowserTwice",
+              "self": 10,
+              "total": 10
+            }
+          ],
+          "recorded": {
+            "format": "SharpForge.InstructionProfile/1",
+            "clock": "instructions",
+            "instructions": 19,
+            "suspensions": 0,
+            "allocations": 0,
+            "allocatedBytes": 0,
+            "sampleBudget": 256,
+            "overflow": {
+              "methods": 0,
+              "stackInstructions": 0,
+              "stackDepthInstructions": 0,
+              "allocationBytes": 0,
+              "allocationCount": 0
+            },
+            "methods": [
+              {
+                "id": 0,
+                "name": "[runtime]",
+                "calls": 0,
+                "instructions": 0,
+                "inclusiveInstructions": 0,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 1,
+                "name": "[profile capacity]",
+                "calls": 0,
+                "instructions": 0,
+                "inclusiveInstructions": 0,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 2,
+                "name": "<startup>",
+                "calls": 1,
+                "instructions": 2,
+                "inclusiveInstructions": 19,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 3,
+                "name": "Program.Main",
+                "calls": 1,
+                "instructions": 7,
+                "inclusiveInstructions": 17,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 4,
+                "name": "Program.A05BrowserTwice",
+                "calls": 2,
+                "instructions": 10,
+                "inclusiveInstructions": 10,
+                "allocations": 0,
+                "allocatedBytes": 0
+              }
+            ],
+            "samples": [
+              {
+                "stack": [
+                  2
+                ],
+                "weight": 2
+              },
+              {
+                "stack": [
+                  2,
+                  3
+                ],
+                "weight": 7
+              },
+              {
+                "stack": [
+                  2,
+                  3,
+                  4
+                ],
+                "weight": 10
+              }
+            ],
+            "allocationSites": []
+          },
+          "file": "profile-source.speedscope.json",
+          "fileSha256": "1ce4c85b3042640f221f889f0e429f92ed7824a8c79c4b932562d4a28728bcfc"
+        },
+        {
+          "engine": "reload",
+          "name": "A05 browser reload",
+          "instructions": 19,
+          "methods": [
+            {
+              "name": "<startup>",
+              "self": 2,
+              "total": 19
+            },
+            {
+              "name": "Program.Main",
+              "self": 7,
+              "total": 17
+            },
+            {
+              "name": "Program.A05BrowserTwice",
+              "self": 10,
+              "total": 10
+            }
+          ],
+          "recorded": {
+            "format": "SharpForge.InstructionProfile/1",
+            "clock": "instructions",
+            "instructions": 19,
+            "suspensions": 0,
+            "allocations": 0,
+            "allocatedBytes": 0,
+            "sampleBudget": 256,
+            "overflow": {
+              "methods": 0,
+              "stackInstructions": 0,
+              "stackDepthInstructions": 0,
+              "allocationBytes": 0,
+              "allocationCount": 0
+            },
+            "methods": [
+              {
+                "id": 0,
+                "name": "[runtime]",
+                "calls": 0,
+                "instructions": 0,
+                "inclusiveInstructions": 0,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 1,
+                "name": "[profile capacity]",
+                "calls": 0,
+                "instructions": 0,
+                "inclusiveInstructions": 0,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 2,
+                "name": "<startup>",
+                "calls": 1,
+                "instructions": 2,
+                "inclusiveInstructions": 19,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 3,
+                "name": "Program.Main",
+                "calls": 1,
+                "instructions": 7,
+                "inclusiveInstructions": 17,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 4,
+                "name": "Program.A05BrowserTwice",
+                "calls": 2,
+                "instructions": 10,
+                "inclusiveInstructions": 10,
+                "allocations": 0,
+                "allocatedBytes": 0
+              }
+            ],
+            "samples": [
+              {
+                "stack": [
+                  2
+                ],
+                "weight": 2
+              },
+              {
+                "stack": [
+                  2,
+                  3
+                ],
+                "weight": 7
+              },
+              {
+                "stack": [
+                  2,
+                  3,
+                  4
+                ],
+                "weight": 10
+              }
+            ],
+            "allocationSites": []
+          },
+          "file": "profile-reload.speedscope.json",
+          "fileSha256": "683e2a6417ae3bf1dcf0514203859fb8d7574f60e59e2158a5011b7b5ca87f6a"
+        },
+        {
+          "engine": "cil",
+          "name": "A05 browser cil",
+          "instructions": 26,
+          "methods": [
+            {
+              "name": "SharpForge.<>Program::<startup>",
+              "self": 2,
+              "total": 26
+            },
+            {
+              "name": "Program::Main",
+              "self": 8,
+              "total": 24
+            },
+            {
+              "name": "Program::A05BrowserTwice",
+              "self": 16,
+              "total": 16
+            }
+          ],
+          "recorded": {
+            "format": "SharpForge.InstructionProfile/1",
+            "clock": "instructions",
+            "instructions": 26,
+            "suspensions": 0,
+            "allocations": 0,
+            "allocatedBytes": 0,
+            "sampleBudget": 256,
+            "overflow": {
+              "methods": 0,
+              "stackInstructions": 0,
+              "stackDepthInstructions": 0,
+              "allocationBytes": 0,
+              "allocationCount": 0
+            },
+            "methods": [
+              {
+                "id": 0,
+                "name": "[runtime]",
+                "calls": 0,
+                "instructions": 0,
+                "inclusiveInstructions": 0,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 1,
+                "name": "[profile capacity]",
+                "calls": 0,
+                "instructions": 0,
+                "inclusiveInstructions": 0,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 2,
+                "name": "SharpForge.<>Program::<startup>",
+                "calls": 1,
+                "instructions": 2,
+                "inclusiveInstructions": 26,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 3,
+                "name": "Program::Main",
+                "calls": 1,
+                "instructions": 8,
+                "inclusiveInstructions": 24,
+                "allocations": 0,
+                "allocatedBytes": 0
+              },
+              {
+                "id": 4,
+                "name": "Program::A05BrowserTwice",
+                "calls": 2,
+                "instructions": 16,
+                "inclusiveInstructions": 16,
+                "allocations": 0,
+                "allocatedBytes": 0
+              }
+            ],
+            "samples": [
+              {
+                "stack": [
+                  2
+                ],
+                "weight": 2
+              },
+              {
+                "stack": [
+                  2,
+                  3
+                ],
+                "weight": 8
+              },
+              {
+                "stack": [
+                  2,
+                  3,
+                  4
+                ],
+                "weight": 16
+              }
+            ],
+            "allocationSites": []
+          },
+          "file": "profile-cil.speedscope.json",
+          "fileSha256": "ffab84c6b541899de599881726101e69b21219a983f50f213a263a1f3da9c488"
+        }
+      ],
+      "browserVersion": "26.6",
+      "csp": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8=' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+      "blockedRequests": [],
+      "seconds": 5.480518799999999
+    },
+    {
+      "id": "csp-denied-fallback",
+      "passed": true,
+      "status": "passed",
+      "nativeProbe": {
+        "moduleHex": "0061736d01000000",
+        "compiled": false,
+        "error": {
+          "name": "CompileError",
+          "message": "Refused to create a WebAssembly object because 'unsafe-eval' or 'wasm-unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: \"script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\".\n (evaluating 'WebAssembly.compile(bytes)')",
+          "nativeCompileError": true
+        }
+      },
+      "rejection": {
+        "code": "WASM_COMPILE",
+        "message": "WebAssembly instantiation failed: Refused to create a WebAssembly object because 'unsafe-eval' or 'wasm-unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: \"script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\".\n (evaluating 'backend.instantiate(bytes, imports)')",
+        "cause": "CompileError",
+        "causeMessage": "Refused to create a WebAssembly object because 'unsafe-eval' or 'wasm-unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: \"script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\".\n (evaluating 'backend.instantiate(bytes, imports)')"
+      },
+      "statistics": {
+        "enabled": true,
+        "epoch": 1,
+        "invalidated": false,
+        "activeCompilations": 0,
+        "compilationAttempts": 1,
+        "cancellations": 0,
+        "calls": 1,
+        "overflowCalls": 0,
+        "selectedCalls": 0,
+        "selectedInstructions": 0,
+        "osrTransitions": 0,
+        "osrRejectedEntries": 0,
+        "compiledBytes": 0,
+        "methods": [
+          {
+            "token": 100663297,
+            "name": "Fixture.Program::Main",
+            "calls": 1,
+            "status": "fallback",
+            "bytes": 0,
+            "reason": {
+              "code": "WASM_COMPILE",
+              "message": "WebAssembly instantiation failed: Refused to create a WebAssembly object because 'unsafe-eval' or 'wasm-unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: \"script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\".\n (evaluating 'backend.instantiate(bytes, imports)')"
+            },
+            "backedges": 5,
+            "hottestBackedge": 5,
+            "backedgeOverflow": 0,
+            "backedgeReason": null,
+            "backedgeSites": [
+              {
+                "fromOffset": 8,
+                "toOffset": 2,
+                "count": 5
+              }
+            ]
+          }
+        ]
+      },
+      "instructions": 46,
+      "hostArithmeticCalls": 4,
+      "result": 6,
+      "browserVersion": "26.6",
+      "csp": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+      "blockedRequests": [],
+      "cspObservation": {
+        "eventObserved": false,
+        "denialEvidence": "native-csp-compile-rejection"
+      },
+      "expectedCspViolations": [],
+      "seconds": 3.570880187
+    },
+    {
+      "id": "speedscope-source",
+      "passed": true,
+      "status": "passed",
+      "graphics": {
+        "available": true,
+        "version": "WebGL 1.0",
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL"
+      },
+      "fileSha256": "1ce4c85b3042640f221f889f0e429f92ed7824a8c79c4b932562d4a28728bcfc",
+      "methods": [
+        {
+          "name": "Program.A05BrowserTwice",
+          "total": 10,
+          "self": 10
+        },
+        {
+          "name": "Program.Main",
+          "total": 17,
+          "self": 7
+        },
+        {
+          "name": "<startup>",
+          "total": 19,
+          "self": 2
+        }
+      ],
+      "displayedSelfSum": 19,
+      "recordedInstructions": 19,
+      "browserVersion": "26.6",
+      "blockedRequests": [],
+      "seconds": 0.874539722999998
+    },
+    {
+      "id": "speedscope-reload",
+      "passed": true,
+      "status": "passed",
+      "graphics": {
+        "available": true,
+        "version": "WebGL 1.0",
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL"
+      },
+      "fileSha256": "683e2a6417ae3bf1dcf0514203859fb8d7574f60e59e2158a5011b7b5ca87f6a",
+      "methods": [
+        {
+          "name": "Program.A05BrowserTwice",
+          "total": 10,
+          "self": 10
+        },
+        {
+          "name": "Program.Main",
+          "total": 17,
+          "self": 7
+        },
+        {
+          "name": "<startup>",
+          "total": 19,
+          "self": 2
+        }
+      ],
+      "displayedSelfSum": 19,
+      "recordedInstructions": 19,
+      "browserVersion": "26.6",
+      "blockedRequests": [],
+      "seconds": 1.1146952830000032
+    },
+    {
+      "id": "speedscope-cil",
+      "passed": true,
+      "status": "passed",
+      "graphics": {
+        "available": true,
+        "version": "WebGL 1.0",
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL"
+      },
+      "fileSha256": "ffab84c6b541899de599881726101e69b21219a983f50f213a263a1f3da9c488",
+      "methods": [
+        {
+          "name": "Program::A05BrowserTwice",
+          "total": 16,
+          "self": 16
+        },
+        {
+          "name": "Program::Main",
+          "total": 24,
+          "self": 8
+        },
+        {
+          "name": "SharpForge.<>Program::<startup>",
+          "total": 26,
+          "self": 2
+        }
+      ],
+      "displayedSelfSum": 26,
+      "recordedInstructions": 26,
+      "browserVersion": "26.6",
+      "blockedRequests": [],
+      "seconds": 0.8332864989999962
+    }
+  ],
+  "launchOptions": {
+    "headless": true
+  },
+  "passed": true,
+  "playwright": "1.63.0",
+  "policies": {
+    "shipped": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+    "allowed": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8=' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+    "denied": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+    "importMapSha256": "067c7e7c4e726d92a26a16abca91b7c7468c3e93f643de734bc951401e3375df"
+  }
+}

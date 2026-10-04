@@ -1,11 +1,13 @@
+import {delegatesEqual} from './execution/delegate-invocations.js';
+import {invokeControl} from './execution/control-contracts.js';
 import {initializeBclHost,invokeBclPlatform} from './bcl-adapter.js';
-import {boundDelegatesEqual,constructBoundDelegate} from './execution/delegate-targets.js';
+import {constructBoundDelegate} from './execution/delegate-targets.js';
 import {HostOperations} from './host-operations.js';
 import {invokeAnimation,createManagedAnimationClock,advanceManagedAnimations} from './animation.js';
 import {refreshStyle,refreshStyles,applyTemplate,updateBindings,invokeStyling} from './styling.js';
 import {canonicalType,frameworkType,propertiesFor,eventsFor,frameworkAssignable,colorValues,XAML,CONTROLS,MEDIA,TASK,THREAD,taskResult} from '@sharpforge/framework';
 import {ManagedFault,isReference} from './heap.js';
-export const SUSPENDED = Object.freeze({sharpforgeSuspended:true});
+export {SUSPENDED} from './suspension.js';
 const identity=r=>`${r.h}:${r.g}`;
 const equal=(a,b)=>a===b||isReference(a)&&isReference(b)&&a.h===b.h&&a.g===b.g;
 /** A data-only boundary between managed execution and the browser. No DOM or host eval. */
@@ -41,7 +43,7 @@ export class ManagedPlatform {
   styleMutation(callback){if(this.styleDepth)return callback();const heap=this.heap.snapshot(),platform=this.snapshot(),pending=this.vm.pendingWrite,existing=this.transaction,offset=existing?.length??0,t=existing??this.beginTransaction();this.styleDepth++;
     try{const result=callback();if(!existing)this.commitTransaction(t);return result;}catch(error){this.heap.restore(heap);this.restore(platform);this.vm.pendingWrite=pending;if(existing)existing.length=offset;else this.rollbackTransaction(t);throw error;}finally{this.styleDepth--;}}
   delegate(type,method,receiver){return this.make(type,{method,receiver},'delegate');}
-  delegateEquals(a,b){return boundDelegatesEqual(this.vm,a,b);}
+  delegateEquals(a,b){return delegatesEqual(this.vm,a,b);}
   construct(type,args){
     const t=frameworkType(type);if(!t)throw new ManagedFault('TypeLoadException',`Unknown framework type ${type}`);
     if(t.kind==='delegate')return constructBoundDelegate(this.vm,type,args[0],args[1]);
@@ -110,6 +112,7 @@ export class ManagedPlatform {
   color(css){const hex=css.replace('#',''),n=parseInt(hex,16);return this.make('Windows.UI.Color',{A:hex.length===8?n&255:255,R:hex.length===8?n>>>24:n>>>16&255,G:hex.length===8?n>>>16&255:n>>>8&255,B:hex.length===8?n>>>8&255:n&255});}
   advanceAnimations(delta){return advanceManagedAnimations(this,delta);}
   invoke(d,args){return this.heap.withRoots(args,()=>{
+    const control=invokeControl(this.vm,d,args);if(control.handled)return control.value;
     // Closed ABI dispatch: a collection call must not probe every added subsystem.
     // Resolve only once and keep the common BCL path independent of networking/SIMD.
     const handled=invokeBclPlatform(this,d,args,frameworkType(d.owner));

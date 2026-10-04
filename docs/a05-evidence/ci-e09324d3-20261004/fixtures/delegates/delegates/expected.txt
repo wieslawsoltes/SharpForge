@@ -1,0 +1,18 @@
+True
+False
+142
+3
+ABC
+3
+False
+True
+True
+True
+True
+3
+ABC
+2
+ABB
+True
+null capture
+null invoke

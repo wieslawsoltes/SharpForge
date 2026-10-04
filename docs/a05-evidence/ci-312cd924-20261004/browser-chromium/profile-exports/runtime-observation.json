@@ -1,0 +1,498 @@
+{
+  "url": "http://127.0.0.1:33799/allowed.html",
+  "result": {
+    "passed": true,
+    "exports": [
+      {
+        "engine": "source",
+        "name": "A05 browser source",
+        "instructions": 19,
+        "methods": [
+          {
+            "name": "<startup>",
+            "self": 2,
+            "total": 19
+          },
+          {
+            "name": "Program.Main",
+            "self": 7,
+            "total": 17
+          },
+          {
+            "name": "Program.A05BrowserTwice",
+            "self": 10,
+            "total": 10
+          }
+        ],
+        "file": {
+          "$schema": "https://www.speedscope.app/file-format-schema.json",
+          "name": "A05 browser source",
+          "exporter": "SharpForge.InstructionProfile/1",
+          "activeProfileIndex": 0,
+          "shared": {
+            "frames": [
+              {
+                "name": "[runtime]"
+              },
+              {
+                "name": "[profile capacity]"
+              },
+              {
+                "name": "<startup>"
+              },
+              {
+                "name": "Program.Main"
+              },
+              {
+                "name": "Program.A05BrowserTwice"
+              }
+            ]
+          },
+          "profiles": [
+            {
+              "type": "sampled",
+              "name": "A05 browser source",
+              "unit": "none",
+              "startValue": 0,
+              "endValue": 19,
+              "samples": [
+                [
+                  2
+                ],
+                [
+                  2,
+                  3
+                ],
+                [
+                  2,
+                  3,
+                  4
+                ]
+              ],
+              "weights": [
+                2,
+                7,
+                10
+              ]
+            }
+          ]
+        },
+        "recorded": {
+          "format": "SharpForge.InstructionProfile/1",
+          "clock": "instructions",
+          "instructions": 19,
+          "suspensions": 0,
+          "allocations": 0,
+          "allocatedBytes": 0,
+          "sampleBudget": 256,
+          "overflow": {
+            "methods": 0,
+            "stackInstructions": 0,
+            "stackDepthInstructions": 0,
+            "allocationBytes": 0,
+            "allocationCount": 0
+          },
+          "methods": [
+            {
+              "id": 0,
+              "name": "[runtime]",
+              "calls": 0,
+              "instructions": 0,
+              "inclusiveInstructions": 0,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 1,
+              "name": "[profile capacity]",
+              "calls": 0,
+              "instructions": 0,
+              "inclusiveInstructions": 0,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 2,
+              "name": "<startup>",
+              "calls": 1,
+              "instructions": 2,
+              "inclusiveInstructions": 19,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 3,
+              "name": "Program.Main",
+              "calls": 1,
+              "instructions": 7,
+              "inclusiveInstructions": 17,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 4,
+              "name": "Program.A05BrowserTwice",
+              "calls": 2,
+              "instructions": 10,
+              "inclusiveInstructions": 10,
+              "allocations": 0,
+              "allocatedBytes": 0
+            }
+          ],
+          "samples": [
+            {
+              "stack": [
+                2
+              ],
+              "weight": 2
+            },
+            {
+              "stack": [
+                2,
+                3
+              ],
+              "weight": 7
+            },
+            {
+              "stack": [
+                2,
+                3,
+                4
+              ],
+              "weight": 10
+            }
+          ],
+          "allocationSites": []
+        }
+      },
+      {
+        "engine": "reload",
+        "name": "A05 browser reload",
+        "instructions": 19,
+        "methods": [
+          {
+            "name": "<startup>",
+            "self": 2,
+            "total": 19
+          },
+          {
+            "name": "Program.Main",
+            "self": 7,
+            "total": 17
+          },
+          {
+            "name": "Program.A05BrowserTwice",
+            "self": 10,
+            "total": 10
+          }
+        ],
+        "file": {
+          "$schema": "https://www.speedscope.app/file-format-schema.json",
+          "name": "A05 browser reload",
+          "exporter": "SharpForge.InstructionProfile/1",
+          "activeProfileIndex": 0,
+          "shared": {
+            "frames": [
+              {
+                "name": "[runtime]"
+              },
+              {
+                "name": "[profile capacity]"
+              },
+              {
+                "name": "<startup>"
+              },
+              {
+                "name": "Program.Main"
+              },
+              {
+                "name": "Program.A05BrowserTwice"
+              }
+            ]
+          },
+          "profiles": [
+            {
+              "type": "sampled",
+              "name": "A05 browser reload",
+              "unit": "none",
+              "startValue": 0,
+              "endValue": 19,
+              "samples": [
+                [
+                  2
+                ],
+                [
+                  2,
+                  3
+                ],
+                [
+                  2,
+                  3,
+                  4
+                ]
+              ],
+              "weights": [
+                2,
+                7,
+                10
+              ]
+            }
+          ]
+        },
+        "recorded": {
+          "format": "SharpForge.InstructionProfile/1",
+          "clock": "instructions",
+          "instructions": 19,
+          "suspensions": 0,
+          "allocations": 0,
+          "allocatedBytes": 0,
+          "sampleBudget": 256,
+          "overflow": {
+            "methods": 0,
+            "stackInstructions": 0,
+            "stackDepthInstructions": 0,
+            "allocationBytes": 0,
+            "allocationCount": 0
+          },
+          "methods": [
+            {
+              "id": 0,
+              "name": "[runtime]",
+              "calls": 0,
+              "instructions": 0,
+              "inclusiveInstructions": 0,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 1,
+              "name": "[profile capacity]",
+              "calls": 0,
+              "instructions": 0,
+              "inclusiveInstructions": 0,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 2,
+              "name": "<startup>",
+              "calls": 1,
+              "instructions": 2,
+              "inclusiveInstructions": 19,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 3,
+              "name": "Program.Main",
+              "calls": 1,
+              "instructions": 7,
+              "inclusiveInstructions": 17,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 4,
+              "name": "Program.A05BrowserTwice",
+              "calls": 2,
+              "instructions": 10,
+              "inclusiveInstructions": 10,
+              "allocations": 0,
+              "allocatedBytes": 0
+            }
+          ],
+          "samples": [
+            {
+              "stack": [
+                2
+              ],
+              "weight": 2
+            },
+            {
+              "stack": [
+                2,
+                3
+              ],
+              "weight": 7
+            },
+            {
+              "stack": [
+                2,
+                3,
+                4
+              ],
+              "weight": 10
+            }
+          ],
+          "allocationSites": []
+        }
+      },
+      {
+        "engine": "cil",
+        "name": "A05 browser cil",
+        "instructions": 26,
+        "methods": [
+          {
+            "name": "SharpForge.<>Program::<startup>",
+            "self": 2,
+            "total": 26
+          },
+          {
+            "name": "Program::Main",
+            "self": 8,
+            "total": 24
+          },
+          {
+            "name": "Program::A05BrowserTwice",
+            "self": 16,
+            "total": 16
+          }
+        ],
+        "file": {
+          "$schema": "https://www.speedscope.app/file-format-schema.json",
+          "name": "A05 browser cil",
+          "exporter": "SharpForge.InstructionProfile/1",
+          "activeProfileIndex": 0,
+          "shared": {
+            "frames": [
+              {
+                "name": "[runtime]"
+              },
+              {
+                "name": "[profile capacity]"
+              },
+              {
+                "name": "SharpForge.<>Program::<startup>"
+              },
+              {
+                "name": "Program::Main"
+              },
+              {
+                "name": "Program::A05BrowserTwice"
+              }
+            ]
+          },
+          "profiles": [
+            {
+              "type": "sampled",
+              "name": "A05 browser cil",
+              "unit": "none",
+              "startValue": 0,
+              "endValue": 26,
+              "samples": [
+                [
+                  2
+                ],
+                [
+                  2,
+                  3
+                ],
+                [
+                  2,
+                  3,
+                  4
+                ]
+              ],
+              "weights": [
+                2,
+                8,
+                16
+              ]
+            }
+          ]
+        },
+        "recorded": {
+          "format": "SharpForge.InstructionProfile/1",
+          "clock": "instructions",
+          "instructions": 26,
+          "suspensions": 0,
+          "allocations": 0,
+          "allocatedBytes": 0,
+          "sampleBudget": 256,
+          "overflow": {
+            "methods": 0,
+            "stackInstructions": 0,
+            "stackDepthInstructions": 0,
+            "allocationBytes": 0,
+            "allocationCount": 0
+          },
+          "methods": [
+            {
+              "id": 0,
+              "name": "[runtime]",
+              "calls": 0,
+              "instructions": 0,
+              "inclusiveInstructions": 0,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 1,
+              "name": "[profile capacity]",
+              "calls": 0,
+              "instructions": 0,
+              "inclusiveInstructions": 0,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 2,
+              "name": "SharpForge.<>Program::<startup>",
+              "calls": 1,
+              "instructions": 2,
+              "inclusiveInstructions": 26,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 3,
+              "name": "Program::Main",
+              "calls": 1,
+              "instructions": 8,
+              "inclusiveInstructions": 24,
+              "allocations": 0,
+              "allocatedBytes": 0
+            },
+            {
+              "id": 4,
+              "name": "Program::A05BrowserTwice",
+              "calls": 2,
+              "instructions": 16,
+              "inclusiveInstructions": 16,
+              "allocations": 0,
+              "allocatedBytes": 0
+            }
+          ],
+          "samples": [
+            {
+              "stack": [
+                2
+              ],
+              "weight": 2
+            },
+            {
+              "stack": [
+                2,
+                3
+              ],
+              "weight": 8
+            },
+            {
+              "stack": [
+                2,
+                3,
+                4
+              ],
+              "weight": 16
+            }
+          ],
+          "allocationSites": []
+        }
+      }
+    ],
+    "browserVersion": "153.0.8010.12",
+    "csp": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8=' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+    "blockedRequests": []
+  },
+  "cspEvents": []
+}

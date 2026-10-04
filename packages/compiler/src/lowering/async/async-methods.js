@@ -55,7 +55,7 @@ export const AsyncMethods = Base =>
      */
     asyncBody(kickoff, origin) {
       const result = asyncResultType(kickoff.returnType),
-        start = result === null ? null : asyncContract('Start', startDelegateType(result));
+        start = result === null ? null : asyncContract(kickoff.returnType === 'void' ? 'StartVoid' : 'Start', startDelegateType(result));
       if (!start) {
         const shown = kickoff.returnType.replace('System.Threading.Tasks.', '').replace('`1', '');
         return this.unsupported(`an async function returning '${shown}' (the runtime has no task of that result type)`, origin.syntax, origin.uri);

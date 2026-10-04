@@ -226,13 +226,20 @@ test('a throwing host formatter does not consume or rewrite the receiver', () =>
 });
 
 for (const call of [{constraint: 'System.Single'}, {constraint: 'System.UInt32'}, {constraint: 'System.Double'},
-  {constraint: 'spec'}, {member: 'GetHashCode'}, {member: 'Equals'}, {explicitThis: true}]) {
+  {explicitThis: true}]) {
   test(`unsupported constrained signature ${JSON.stringify(call)} stays rejected`, () => {
     const report = verifyCilAssembly(fixture(call));
     assert.equal(report.success, false);
     assert(report.issues.some(issue => ['IL_PREFIX', 'IL_TOKEN'].includes(issue.code)));
   });
 }
+
+test('a concrete Int32 TypeSpec preserves the primitive ToString contract', () => {
+  withVM(fixture({constraint: 'spec'}), vm => {
+    assert.equal(vm.run().state, 'terminated', vm.fault?.message);
+    assert.equal(vm.format(vm.returnValue), '17');
+  });
+});
 
 test('metadata replacement rebuilds the exact primitive constraint plan', () => {
   const bytes = fixture();
@@ -246,7 +253,7 @@ test('metadata replacement rebuilds the exact primitive constraint plan', () => 
   });
 });
 
-test('closing a generic constrained parameter over Int32 does not broaden generic body admission', () => {
+test('a closed generic Int32 constraint dispatches the exact builtin Object slot without boxing', () => {
   const bytes = genericCallFixture([{name: 'Program', methods: [
     {name: 'Apply', genericParameters: [{flags: 24}], parameters: ['!!0&'], result: 'string', body(writer, context) {
       writer.op('ldarg.0').op('constrained.', context.typeSpec('!!0'))
@@ -257,6 +264,10 @@ test('closing a generic constrained parameter over Int32 does not broaden generi
     }}
   ]}]);
   const report = verifyCilAssembly(bytes);
-  assert.equal(report.success, false);
-  assert(report.issues.some(issue => issue.method === 'Program::Apply' && issue.code === 'IL_PREFIX'));
+  assert.equal(report.success, true, JSON.stringify(report.issues));
+  withVM(bytes, vm => {
+    assert.equal(vm.run().state, 'terminated', vm.fault?.message);
+    assert.equal(vm.format(vm.returnValue), '0');
+    assert.equal(vm.heap.records.some(record => record?.kind === 'box'), false);
+  });
 });

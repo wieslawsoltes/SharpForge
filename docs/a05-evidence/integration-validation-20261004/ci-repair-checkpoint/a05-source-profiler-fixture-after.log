@@ -1,0 +1,12 @@
+✔ source slices capture observer identity once but retain dynamic instruction-method lookup (98.59003ms)
+✔ source sequence pause and exhausted slice budget do not emit instruction observations (10.427552ms)
+✔ an instruction observer failure retains fault accounting and slice finalization before opcode execution (12.23133ms)
+✔ real source profiling counts each budget-one instruction and fault exactly as ordinary execution (14.659967ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1641.316149

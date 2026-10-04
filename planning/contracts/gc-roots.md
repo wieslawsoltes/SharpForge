@@ -1,40 +1,42 @@
 # GC roots: current providers and obligations
 
-The non-moving collector calls ManagedHeap.rootProvider, pins, extra allocation roots and strong handles. Weak handles do not keep objects alive. Scanning must retain interior byref owners, not merely the byref wrapper. Inventory IDs below enumerate every literal `roots(` site (definitions and calls), including modules added outside the original issue's list. `node scripts/planning/check-root-providers.js` fails on a new undocumented occurrence; update this document after reviewing source extraction. Source hashes are not a substitute for this audit.
+The non-moving collector consumes the VM root provider, temporary pins, explicit allocation roots and strong handles. Weak handles do not keep objects alive. Interior addresses retain their managed owner; nested value records, Nullable payloads and explicit-layout reference sidecars must retain their reference fields.
 
-| Category | File and function | Roots |
+The authoritative VM inventory is `execution/frame-roots.js`: `visitVMRoots`, `visitSchedulerRoots`, `visitFrameRoots` and `visitFrameContinuations`. The source and CIL `roots()` methods expose conservative iterable wrappers over that inventory. `installRootProvider` permits direct visitor traversal for normal collection, and preserves the iterable contract and a host override of `vm.roots`. Canonical declared scalar slots may be omitted only after checking the actual value; metadata alone never proves a host-edited slot contains no reference. Frame liveness pruning also preserves captured local/argument addresses and suspended continuations.
+
+| Category | Provider | Roots and lifetime |
 | --- | --- | --- |
-| Active frames | vm.js VirtualMachine.roots | locals, evaluation stack, return value, unwind return/fault, caught/pending/current faults |
-| CIL active frames | cil-vm.js CilVirtualMachine.roots | args, locals, stack, constructor return object, byref owners, exceptions |
-| Source exception continuations | execution/source-eh.js roots | unwind return values/faults, current/caught frame exceptions, VM current/pending faults |
-| Static/cache | both VM roots | statics, cached constant references, interned strings and runtime type objects |
-| Runtime type objects | execution/tokens.js runtimeTypeRoots | canonical System.Type objects, scoped to the VM and cleared on stop |
-| Interned strings | execution/strings.js StringInternPool.roots / stringRoots | strong pool entries only; weak pool entries do not root referents |
-| Parked contexts | scheduler.js CooperativeScheduler.roots | task/thread/delegate, wait task, frame state, resume fault; terminal contexts excluded |
-| Pending tasks | scheduler.js CooperativeScheduler.roots | waiting task, dependencies, error reference |
-| Platform | platform.js ManagedPlatform.roots | app, windows, singletons, pending objects, host and animation providers |
-| Pending operations | host-operations.js HostOperations.roots | task ref and captured managed argument/receiver roots |
-| Handles and temporaries | heap.js ManagedHeap.collect | strong handles, withRoots pins, explicit allocation roots and object input edges |
-| Debugger snapshots | snapshot.js copyExecution; VM snapshot/restore | independent copied heap records, not additional live roots; same-owner restore only |
+| Active source/CIL frames | `visitVMRoots`, `visitFrameRoots` | Source shared stack and frame locals; CIL args, locals and evaluation stacks; constructor return objects. Declared scalar filtering preserves unexpected references. |
+| Suspended control | `visitFrameContinuations` | Object equality/hash callbacks, array search/copy/sort state, delegate arguments/entries, async builders, exception filters/events, return/unwind values, caught faults and pending faults. |
+| Fault diagnostics | `visitFaultRoots` | Fault references and nested first-chance failure diagnostics, including original callback continuation and subscriber failure; cycle-safe traversal. |
+| Retired frames | `visitRetiredFrames` | Frames remain roots until the instruction's retirement flush because return/EH callbacks can still inspect them. |
+| Static/cache | `visitVMRoots` | Static fields, source constants, initialization state, canonical runtime type objects and strong interned strings. Weak interned strings deliberately do not retain referents. |
+| Parked contexts | `visitSchedulerRoots` | Live context task/thread/delegate/wait state, stack, frames, return value and faults. The current context is not traversed twice when it aliases active frames. Terminal context history is excluded. |
+| Pending tasks | `visitSchedulerRoots` | Nonterminal task reference, dependencies, error, async state machine and awaited task. Terminal task payload history is excluded. |
+| Synchronous callbacks | `visitSchedulerRoots` | Saved callback scopes retain suspended caller stack/frames, return value and faults, including when cooperative scheduling is disabled. |
+| Synchronization | `SyncPrimitives.roots` | Monitor owner objects, pending entry/condition tasks and managed owners of lockTaken addresses. |
+| Platform | `ManagedPlatform.roots` | Application, windows, singletons, pending objects, host operations and animation providers. |
+| Host operations | `HostOperations.roots` | Active task reference and captured managed arguments/receivers. |
+| Handles and temporaries | Heap collection/allocation | Strong handles, `withRoots` pins, explicit roots and new input edges. The allocated reference and explicit caller roots stay pinned through synchronous allocation observers. |
+| Snapshots | Snapshot heap copies | Saved heap record versions own independent contents and are not additional live-heap roots. Full restore validates captured memory before replacing live state. |
 
-Snapshot heap copies retain old contents without making them current live objects. Restoring preserves monotonically increasing generation and frame identities. Native/Rust stacks must publish roots explicitly before yielding; no conservative native stack scan is specified.
+Local snapshot restore remains owner-bound. Portable snapshot serialization uses a separate, versioned graph format to rebind owned identities into a VM with matching code, engine and native width; it does not turn saved references into roots in the original live heap. Restoring preserves monotonic generation and frame identities. Native/Rust stacks must publish roots explicitly before yielding; no conservative native stack scan is specified.
 
-## Reviewed sites
-- `cil-vm.js:roots:1` — packages/runtime/src/cil-vm.js:30; ptions);this.heap.rootProvider=()=>this.roots();this.frames=[];this.statics=new
-- `cil-vm.js:roots:2` — packages/runtime/src/cil-vm.js:38; reInitialized(entry.ownerToken); } *roots(){yield* this.platform?.roots()??[
-- `cil-vm.js:roots:3` — packages/runtime/src/cil-vm.js:38; ); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots
-- `cil-vm.js:roots:4` — packages/runtime/src/cil-vm.js:38; orm?.roots()??[];yield* this.scheduler?.roots()??[]; const root=function*(v)
-- `host-operations.js:roots:1` — packages/runtime/src/host-operations.js:5; ;this.revision=0;this.closed=false;} *roots(){for(const op of this.active.valu
-- `platform.js:roots:1` — packages/runtime/src/platform.js:17; perations=new HostOperations(this);} *roots(){yield* this.hostOperations.roots
-- `platform.js:roots:2` — packages/runtime/src/platform.js:17; } *roots(){yield* this.hostOperations.roots();yield* this.animations.roots();y
-- `platform.js:roots:3` — packages/runtime/src/platform.js:17; erations.roots();yield* this.animations.roots();yield this.application;yield* th
-- `scheduler.js:roots:1` — packages/runtime/src/scheduler.js:26;  this.contexts.get(this.currentId);} *roots(){if(!this.enabled)return;for(cons
-- `vm.js:roots:1` — packages/runtime/src/vm.js:15; ptions);this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];thi
-- `vm.js:roots:2` — packages/runtime/src/vm.js:19; ;this.call(image.entryPoint,[]); } *roots(){yield* this.platform?.roots()??[
-- `vm.js:roots:3` — packages/runtime/src/vm.js:19; ); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots
-- `vm.js:roots:4` — packages/runtime/src/vm.js:19; orm?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield
+## Reviewed literal sites
 
-- `execution/source-eh.js:roots:1` — extracted source EH provider retains unwind values, fault references and caught exceptions; vm.js delegates to it. Scheduler frames continue to retain the same references while parked.
+The manifest enumerates every literal `roots(` definition or call under `packages/runtime/src`, including compatibility wrappers. `node scripts/planning/check-root-providers.js` rejects a new undocumented occurrence. This guard supplements the semantic inventory above: helpers using visitor names still require review and are not discovered by this lexical scan. `gc-roots-sites.json` records the current extracted line positions; source hashes are not a substitute for the audit.
 
-- `execution/strings.js:roots:1` — StringInternPool.roots yields strong interned references; weak interning deliberately yields none.
-- `execution/strings.js:roots:2` — stringRoots delegates to the pool for both VM root scans; stop clears the pool and snapshots retain its managed handles.
+- `cil-vm.js:roots:1` — the CIL iterable wrapper delegates to `rootValues(this)`.
+- `execution/frame-roots.js:roots:1` — the shared VM inventory includes platform roots before collecting frames.
+- `execution/frame-roots.js:roots:2` — the shared VM inventory includes synchronization roots.
+- `execution/frame-roots.js:roots:3` — installed heap provider falls back to the public iterable for diagnostics, imprecise mode or a host override.
+- `execution/source-eh.js:roots:1` — compatibility EH iterable retains direct unwind, event and exception references. Normal VM collection uses the shared continuation/fault visitors above.
+- `execution/strings.js:roots:1` — strong intern pool entries only; a weak pool yields no referents.
+- `execution/strings.js:roots:2` — the string-root adapter delegates to that pool for both VMs.
+- `execution/sync-primitives.js:roots:1` — monitor objects and waiting tasks/address owners.
+- `host-operations.js:roots:1` — active operation task and explicit captured roots.
+- `platform.js:roots:1` — platform provider definition, including application, singleton, window and pending roots.
+- `platform.js:roots:2` — delegation to host operation roots.
+- `platform.js:roots:3` — delegation to animation roots.
+- `scheduler.js:roots:1` — scheduler iterable wrapper delegates to the shared inventory.
+- `vm.js:roots:1` — source iterable wrapper delegates to `rootValues(this)`.

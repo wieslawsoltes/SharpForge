@@ -3,7 +3,7 @@ import {typedFloatArray} from './typed-stack.js';
 /** Called before a newly allocated frame becomes observable to host callbacks. */
 export function initializeFloatFrame(vm, frame, capacity) {
   const smallLongs = vm.options.smallLongs === true;
-  if (vm.options.typedNumericStack !== true && !smallLongs) return;
+  if (vm.options.typedNumericStack !== true && !smallLongs && vm.options.specializeNumericHandlers !== true) return;
   frame.stack = typedFloatArray(frame.stack, capacity, smallLongs);
   frame.locals = typedFloatArray(frame.locals, frame.locals.length, smallLongs);
   frame.args = typedFloatArray(frame.args, frame.args.length, smallLongs);
@@ -12,7 +12,7 @@ export function initializeFloatFrame(vm, frame, capacity) {
 /** Restore publishes ordinary snapshots as fresh runtime-owned arrays, preserving shared local aliases. */
 export function restoreFloatFrames(vm) {
   const smallLongs = vm.options.smallLongs === true;
-  if (!vm.inspector || vm.options.typedNumericStack !== true && !smallLongs) return;
+  if (!vm.inspector || vm.options.typedNumericStack !== true && !smallLongs && vm.options.specializeNumericHandlers !== true) return;
   const arrays = new WeakMap();
   const wrap = (values, capacity) => {
     let result = arrays.get(values);

@@ -159,14 +159,14 @@ test('missing explicit offsets, recursive values and oversized layout fail with 
   }
 });
 
-test('unsupported storage boundaries remain explicit rather than fabricating user struct execution', () => {
+test('reference slots have pointer width while auto-layout value storage stays explicit', () => {
   const referenceUnion = {...plain, flags: 0x100111, fields: [{name: 'Value', type: 'object'}]};
   const bytes = fixture('Plain', [referenceUnion], {decorate: ({md, fields}) =>
     md.add(16, [0, fields.get('Plain.Value') & 0xffffff])});
   const vm = new CilVirtualMachine(bytes);
   try {
-    assert.equal(vm.run().fault.name, 'NotSupportedException');
-    assert.throws(() => sizeOfType(vm, 'External.Unknown'), {name: 'NotSupportedException'});
+    assert.equal(vm.run().returnValue, 4);
+    assert.equal(sizeOfType(vm, 'External.Unknown'), 4);
   } finally { vm.stop(); }
   const auto = new CilVirtualMachine(fixture('Plain', [{...plain, flags: 0x100101}]));
   try { assert.equal(auto.run().fault.name, 'NotSupportedException'); }

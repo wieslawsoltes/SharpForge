@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine, CilVirtualMachine, framePoolStatistics} from '@sharpforge/runtime';
-import {dereferenceManagedAddress} from '../packages/runtime/src/execution/managed-address.js';
+import {createManagedAddress, dereferenceManagedAddress} from '../packages/runtime/src/execution/managed-address.js';
 import {managedFixture} from './managed-fixtures.js';
 
 const program = 'class Program { static int Twice(int x) { return x * 2; } static int Main() { int sum = 0; for (int i = 1; i <= 20; i++) sum += Twice(i); return sum; } }';
@@ -82,7 +82,8 @@ test('CIL: a stale managed address cannot bind to a reused frame', () => {
   const vm = new CilVirtualMachine(managedFixture({methods: [{name: 'Main', result: 'int', locals: ['int'],
     body: writer => writer.op('ldc.i4.7').op('stloc.0').op('ldloc.0').op('ret')}]}));
   const frame = vm.top, method = entry(vm);
-  const address = Object.freeze({byref: true, kind: 'local', index: 0, frameId: frame.id});
+  const address = createManagedAddress(vm, 'local', 0);
+  assert.equal(dereferenceManagedAddress(vm, address), 0);
   assert.equal(vm.run().returnValue, 7);
   vm.state = 'running';
   vm.call(method, []);

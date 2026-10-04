@@ -162,6 +162,7 @@ export function classifyVariable(expression, context = {}) {
       if (expression.method?.refKind && expression.method.refKind !== RefKind.None)
         return { isVariable: true, isWritable: expression.method.refKind === RefKind.Ref };
       return no('notVariable');
+    case 'TypedReferenceValue':
     case 'RefConditional':
       return yes;
     case 'MethodGroup':

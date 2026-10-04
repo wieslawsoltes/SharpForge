@@ -88,7 +88,7 @@ test('descriptors, sealing, freezing and prototype edits disable raw storage wit
   assert.equal(floatSlots(array), null);
 });
 
-test('snapshot copies preserve aliases and frozen numeric arrays become ordinary BigInt arrays', () => {
+test('snapshot copies preserve aliases, frozen storage and ordinary BigInt array reads', () => {
   for (const freeze of [false, true]) {
     const array = typedFloatArray([3n, float(-0)], 2, true);
     if (freeze) Object.freeze(array);
@@ -98,7 +98,12 @@ test('snapshot copies preserve aliases and frozen numeric arrays become ordinary
     assert.equal(floatSlots(saved.first), null);
     assert.equal(saved.first[0], 3n);
     assert(Object.is(saved.first[1].value, -0));
-    saved.first[0] = 4n;
+    assert.equal(Object.isFrozen(saved.first), freeze);
+    if (freeze) assert.throws(() => { saved.first[0] = 4n; }, TypeError);
+    else {
+      saved.first[0] = 4n;
+      assert.equal(saved.second[0], 4n);
+    }
     assert.equal(array[0], 3n);
   }
   const existing = typedFloatArray([8n, float(0.5)], 2);

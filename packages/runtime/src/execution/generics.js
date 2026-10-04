@@ -2,7 +2,8 @@ import {genericTypeParts, instantiateSignature, substituteCallType, isSizeOfOnly
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {validateGenericArguments} from './generic-constraints.js';
-import {valueLayout} from './value-layout.js';
+import {managedValueLayout, valueLayout} from './value-layout.js';
+import {requireValueStorage} from './value-types.js';
 
 function invalid(message) {
   throw new ManagedFault('InvalidProgramException', message);
@@ -40,8 +41,9 @@ function makeMethod(vm, entry) {
   if (arity !== methodArguments.length) invalid('Generic method requires a complete instantiation');
   const layoutOnly = isSizeOfOnlyMethod(vm.inspector, token);
   if (owner?.flags.valueType && !owner.flags.primitive && !owner.flags.enum) {
-    if (!layoutOnly) throw new ManagedFault('NotSupportedException', 'Generic aggregate owners require T03 value storage');
-    valueLayout(vm, owner);
+    if (layoutOnly) valueLayout(vm, owner);
+    else managedValueLayout(vm, owner);
+    if (!layoutOnly && !owner.flags.nullable) requireValueStorage(vm, owner);
   }
   const context = {typeArguments, methodArguments, layoutOnly};
   validateGenericArguments(vm, original.ownerToken, typeArguments, context);

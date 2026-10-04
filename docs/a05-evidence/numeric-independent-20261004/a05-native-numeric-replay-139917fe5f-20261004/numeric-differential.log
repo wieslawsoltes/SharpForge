@@ -1,0 +1,35 @@
+✔ T01.1/T01.10 100,000 native operand pairs cover every signed and unsigned Int64 operation (4071.524902ms)
+✔ T01.8/T01.10 the same 100,000-pair C# program matches native in all three execution routes (699280.589898ms)
+✔ T01.10 native numeric family: uint32 (83.741114ms)
+✔ T01.10 native numeric family: native (32.281783ms)
+✔ T01.10 native numeric family: float (37.967377ms)
+✔ T01.10 native numeric family: decimal (34.752423ms)
+✔ T01.10 native numeric family: checked-shift (25.35093ms)
+✖ T01.6/T01.10 exhaustive source/target/checked/.un matrix matches native operand by operand (1284.295899ms)
+✔ T01.2/T01.10 authored small-storage IL matches the same assembly on the native CLR (218.293489ms)
+✔ T01.3/T01.10 complete UInt32 boundary matrix matches native signed stack patterns (220.018453ms)
+✔ T01.2/T01.8/T01.10 source small storage and ref calls match the native family (75.19031ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 706729.664288
+
+✖ failing tests:
+
+test at tests/numeric-differential.test.js:94:1
+✖ T01.6/T01.10 exhaustive source/target/checked/.un matrix matches native operand by operand (1284.295899ms)
+  RangeError: 9223372036854775808 is outside the range of 'long'
+      at ConstantValue.integral (file:///workspace/scratch/42f7738360b9/a05-source-memory/packages/compiler/src/constants/constant-value.js:188:95)
+      at ConstantValue.long (file:///workspace/scratch/42f7738360b9/a05-source-memory/packages/compiler/src/constants/constant-value.js:194:39)
+      at long (file:///workspace/scratch/42f7738360b9/a05-source-memory/packages/compiler/src/constants.js:22:29)
+      at walk (file:///workspace/scratch/42f7738360b9/a05-source-memory/packages/compiler/src/constants.js:57:91)
+      at evaluateConstant (file:///workspace/scratch/42f7738360b9/a05-source-memory/packages/compiler/src/constants.js:92:10)
+      at MethodBodyBinder.constant (file:///workspace/scratch/42f7738360b9/a05-source-memory/packages/compiler/src/binder/method-context.js:69:29)
+      at MethodBodyBinder.bindExpression (file:///workspace/scratch/42f7738360b9/a05-source-memory/packages/compiler/src/binder/expressions.js:41:69)
+      at MethodBodyBinder.bindTyped (file:///workspace/scratch/42f7738360b9/a05-source-memory/packages/compiler/src/binder/expressions.js:30:17)
+      at file:///workspace/scratch/42f7738360b9/a05-source-memory/packages/compiler/src/binder/statements.js:40:46
+      at Array.map (<anonymous>)

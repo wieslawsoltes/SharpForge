@@ -1,4 +1,5 @@
 import {loadSlot} from '../slot-storage.js';
+import {storeScalarSlot} from '../scalar-slot-store.js';
 import {float} from '../numeric-ops.js';
 import {cachedUserString} from '../token-cache.js';
 
@@ -22,7 +23,9 @@ for(const arg of [false,true]) {
       if(suffix!==''&&suffix!=='.s'&&(operation==='lda'||arg&&operation==='st'))continue;
       handlers.set(stem+suffix,(vm,frame,instruction)=>{
         const index=instruction.operand??Number(suffix.slice(1));
-        if(operation==='st')vm.dereference(vm.address(kind,index),true,vm.pop());
+        if (operation === 'st') {
+          if (!storeScalarSlot(vm, frame, arg, index)) vm.dereference(vm.address(kind, index), true, vm.pop());
+        }
         else if(operation==='lda')vm.push(vm.address(kind,index));
         else vm.push(loadSlot(vm,frame,arg,index));
       });

@@ -5,6 +5,7 @@ import {loadAssembly} from '@sharpforge/cil';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {BuiltinMap, decimalIntrinsicDefinitions} from '@sharpforge/bytecode';
 import {decodeDecimalBuiltin} from '../packages/cil/src/builtin-emission.js';
+import {arrayGet} from '../packages/runtime/src/execution/arrays.js';
 
 function engines(body, members = '') {
   const compiled = compileToIL(`using System; using D = System.Decimal;
@@ -64,8 +65,11 @@ test('floating conversion results retain rounded carriers, finite full range and
   for (const [engine, create] of engines(body, 'static float[] Singles; static double[] Doubles;')) {
     const vm = create(), result = vm.run();
     assert.equal(result.state, 'terminated', `${engine}: ${result.fault?.stack}`);
-    const singleValues = vm.heap.get(staticValue(vm, 'Singles')).data;
-    const doubleValues = vm.heap.get(staticValue(vm, 'Doubles')).data;
+    const singles = staticValue(vm, 'Singles'), doubles = staticValue(vm, 'Doubles');
+    assert(vm.heap.get(singles).data instanceof Float32Array, engine);
+    assert(vm.heap.get(doubles).data instanceof Float64Array, engine);
+    const singleValues = cases.map((_, index) => arrayGet(vm, singles, [index]));
+    const doubleValues = cases.map((_, index) => arrayGet(vm, doubles, [index]));
     for (const [index, [input, single, double]] of cases.entries()) {
       for (const [actual, kind, expected] of [[singleValues[index], 'r4', single], [doubleValues[index], 'r8', double]]) {
         assert.equal(actual.float, kind, `${engine}: ${input}`);

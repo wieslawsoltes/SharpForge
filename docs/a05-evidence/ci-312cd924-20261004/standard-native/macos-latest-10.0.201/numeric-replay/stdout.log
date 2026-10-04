@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: T01.1/T01.10 100,000 native operand pairs cover every signed and unsigned Int64 operation
+ok 1 - T01.1/T01.10 100,000 native operand pairs cover every signed and unsigned Int64 operation
+  ---
+  duration_ms: 2397.209125
+  type: 'test'
+  ...
+# Subtest: T01.8/T01.10 the same 100,000-pair C\# program matches native in all three execution routes
+ok 2 - T01.8/T01.10 the same 100,000-pair C\# program matches native in all three execution routes
+  ---
+  duration_ms: 462283.779417
+  type: 'test'
+  ...
+# Subtest: T01.10 native numeric family: uint32
+ok 3 - T01.10 native numeric family: uint32
+  ---
+  duration_ms: 71.07325
+  type: 'test'
+  ...
+# Subtest: T01.10 native numeric family: native
+ok 4 - T01.10 native numeric family: native
+  ---
+  duration_ms: 26.507167
+  type: 'test'
+  ...
+# Subtest: T01.10 native numeric family: float
+ok 5 - T01.10 native numeric family: float
+  ---
+  duration_ms: 32.979333
+  type: 'test'
+  ...
+# Subtest: T01.10 native numeric family: decimal
+ok 6 - T01.10 native numeric family: decimal
+  ---
+  duration_ms: 27.503083
+  type: 'test'
+  ...
+# Subtest: T01.10 native numeric family: checked-shift
+ok 7 - T01.10 native numeric family: checked-shift
+  ---
+  duration_ms: 26.277458
+  type: 'test'
+  ...
+# Subtest: T01.6/T01.10 exhaustive source/target/checked/.un matrix matches native operand by operand
+ok 8 - T01.6/T01.10 exhaustive source/target/checked/.un matrix matches native operand by operand
+  ---
+  duration_ms: 4067.324417
+  type: 'test'
+  ...
+# Subtest: T01.2/T01.10 authored small-storage IL matches the same assembly on the native CLR
+ok 9 - T01.2/T01.10 authored small-storage IL matches the same assembly on the native CLR
+  ---
+  duration_ms: 160.738875
+  type: 'test'
+  ...
+# Subtest: T01.3/T01.10 complete UInt32 boundary matrix matches native signed stack patterns
+ok 10 - T01.3/T01.10 complete UInt32 boundary matrix matches native signed stack patterns
+  ---
+  duration_ms: 186.715792
+  type: 'test'
+  ...
+# Subtest: T01.2/T01.8/T01.10 source small storage and ref calls match the native family
+ok 11 - T01.2/T01.8/T01.10 source small storage and ref calls match the native family
+  ---
+  duration_ms: 52.808167
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 470090.005083

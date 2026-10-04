@@ -13,6 +13,8 @@ import { ComInteropLowering } from './com-interop.js';
 import { ExceptionFilterLowering } from './exception-filters.js';
 import { InterpolatedStringHandlerLowering } from './interpolated-string-handlers.js';
 import { StringElementLowering } from './string-elements.js';
+import {FrameworkDelegateTranslation} from './framework-delegates.js';
+import {SynchronizationTranslation} from './synchronization.js';
 
 // One entry per line: batches that add a lowering then change different lines.
 export const languageLowerings = Object.freeze([
@@ -26,4 +28,6 @@ export const languageLowerings = Object.freeze([
   ExceptionFilterLowering,
   InterpolatedStringHandlerLowering,
   StringElementLowering,
+  SynchronizationTranslation,
+  FrameworkDelegateTranslation,
 ]);

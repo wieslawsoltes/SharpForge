@@ -1,3 +1,4 @@
+import {parseTypedReference} from './typed-references.js';
 import { Precedence, binaryOperators, assignmentOperators, prefixOperators } from '../lexer/operators.js';
 /** Expression parsing by precedence climbing: assignment, conditional, binary, unary, postfix and primary forms. */
 const P = Precedence;
@@ -160,7 +161,7 @@ export const expressionMethods = {
         'throw',
         'stackalloc',
         'ref',
-        '__arglist'
+        '__arglist', '__makeref', '__reftype', '__refvalue'
       ].includes(kind) ||
       this.isPredefined(next)
     );
@@ -191,6 +192,7 @@ export const expressionMethods = {
     const literal = this.literalExpression();
     if (literal) return literal;
     switch (kind) {
+      case '__makeref': case '__reftype': case '__refvalue': return parseTypedReference(this);
       case 'default':
         return this.defaultExpression();
       case 'typeof':

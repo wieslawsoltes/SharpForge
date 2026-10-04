@@ -1,0 +1,15 @@
+✔ gcStress rejects unknown modes and remains disabled by default (146.524947ms)
+✔ byref stress boundary and negative controls cover each owner and root-provider mode (157.270793ms)
+✔ gcStress observes each admitted source and CIL array continuation work unit (154.876581ms)
+✔ instruction collection respects observer pauses, manual CIL steps and stopped machines (8.969555ms)
+✔ 1,000 seeded distinct guest programs retain nested byref writes under instruction GC (6869.964389ms)
+ℹ {"format":"SharpForge.ByrefGCStress/1","seed":"0x53464237","count":1000,"commit":"8f6eba479ee93874b092f55ec9ffb825ded950f9","trackedDirty":false,"environment":{"node":"v24.19.0","platform":"linux","arch":"x64"},"generator":{"tests/byref-gc-stress.test.js":"773dfe99cb2e16ddf286759259b7301cd900121736569f43717118066f74b266","tests/support/byref-stress-programs.js":"1712e2de28d63eea16f1b8257ff3229070fea1c968e078494324f420789caf13","tests/support/byref-stress-runner.js":"ba873d445124fcc89d8f7c60e374690d48141f63b764e98411093552b2705b9f","tests/support/generic-call-fixture.js":"8d7bba12fe3f4462cfd7d64ef2ffb58db1d4d31d771f7f1fb0d3fbc022031d3c"},"corpusSHA256":"18c91f4e6fabf4b7f28afd8e760ff33a3438ac301e1174811241c029f431f140","uniqueAssemblies":1000,"ownerCounts":{"field":334,"array":333,"box":333},"depths":[1,2,3,4,5],"instructions":131341,"collections":131341,"sourceCounterparts":{"count":96,"engines":["source","reloaded-source","compiled-cil"]},"nativeQualification":false,"unsupported":["Native/Rust/browser qualification is not established by this Node report.","Source bytecode cannot create an unbox interior; box ownership is exercised by independent direct CIL."]}
+✔ stress generator bounds and seed are explicit and deterministic (1.049501ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9229.394128

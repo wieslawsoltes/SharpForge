@@ -1,0 +1,72 @@
+[
+  {
+    "name": "browser-heap-native-plan",
+    "commit": "0e27de9250478583c769d7daf59ed1fe721af242",
+    "tree": "2dd421039835fae7031375686a6455c89ad6b4b4",
+    "argv": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--expose-gc",
+      "--test",
+      "--test-concurrency=1",
+      "--test-reporter=tap",
+      "tests/a05-browser-qualification.test.js",
+      "tests/a05-11-wasm-runtime-bridge.test.js",
+      "tests/a05-native-qualification.test.js"
+    ],
+    "limits": {
+      "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+      "SHARPFORGE_TEST_CONCURRENCY": "1",
+      "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+    },
+    "started": 1791141861.979355,
+    "finished": 1791141864.9389749,
+    "exitCode": 0,
+    "postCommit": "0e27de9250478583c769d7daf59ed1fe721af242",
+    "status": ""
+  },
+  {
+    "name": "browser-python-contract",
+    "commit": "0e27de9250478583c769d7daf59ed1fe721af242",
+    "tree": "2dd421039835fae7031375686a6455c89ad6b4b4",
+    "argv": [
+      "node",
+      "scripts/limited.js",
+      "python",
+      "tests/fixtures/a05-browser/test_contract.py"
+    ],
+    "limits": {
+      "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+      "SHARPFORGE_TEST_CONCURRENCY": "1",
+      "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+    },
+    "started": 1791141865.041571,
+    "finished": 1791141865.181093,
+    "exitCode": 0,
+    "postCommit": "0e27de9250478583c769d7daf59ed1fe721af242",
+    "status": ""
+  },
+  {
+    "name": "final-npm-check",
+    "commit": "0e27de9250478583c769d7daf59ed1fe721af242",
+    "tree": "2dd421039835fae7031375686a6455c89ad6b4b4",
+    "argv": [
+      "node",
+      "scripts/limited.js",
+      "npm",
+      "run",
+      "check"
+    ],
+    "limits": {
+      "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+      "SHARPFORGE_TEST_CONCURRENCY": "1",
+      "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+    },
+    "started": 1791141865.2154646,
+    "finished": 1791141871.566902,
+    "exitCode": 0,
+    "postCommit": "0e27de9250478583c769d7daf59ed1fe721af242",
+    "status": ""
+  }
+]

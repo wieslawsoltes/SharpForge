@@ -40,6 +40,11 @@ Write observers keep the regular BigInt notification path. The existing referenc
 plane, pool clearing, stack admission and restore adapters serve both numeric kinds;
 saved frames remain ordinary arrays and shared local-array aliases are preserved.
 
+Eligible integer sequences use [bounded numeric blocks](cil-numeric-blocks.md)
+over the same private planes. These blocks preserve each original instruction's
+quota and fault location while amortizing dispatch and stack admission. Observer
+hooks and pending managed control work retain individual instruction dispatch.
+
 This is a partial product increment for #1397, limited to direct CIL. Source and
 reloaded-source interpreters retain their existing representation. The required
 10-million-operation differential run, all-platform qualification and at-least-3x

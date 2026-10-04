@@ -1,0 +1,1869 @@
+{
+  "schemaVersion": 2,
+  "suite": "SF-A05-qualification",
+  "status": "measured",
+  "measurementKind": "runtime-qualification",
+  "nativeQualification": false,
+  "startedAt": "2026-10-04T14:50:45.608Z",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "/workspace/scratch/42f7738360b9/a05-numeric-qualification/bench/vm/qualification.js",
+    "--runner",
+    "a05-linux-x64-node24",
+    "--native-bits",
+    "64",
+    "--suite",
+    "targets",
+    "--target",
+    "virtual-cache",
+    "--out",
+    "/workspace/scratch/42f7738360b9/a05-virtual-48c62243.json"
+  ],
+  "commit": "48c62243ef4cf614dfcafdb7af9a7ce360b643c4",
+  "worktreeStatus": "",
+  "harnessHash": "3b83797bbeb48a3617df79535fa34588fcb1a55cb9c6339ab6f455a4dc02d992",
+  "environment": {
+    "runner": "a05-linux-x64-node24",
+    "host": "a4a6cb866850d910ed62eb11bf180b15a7723a193c1953cabad275e6babdc766",
+    "platform": "linux",
+    "arch": "x64",
+    "os": "6.18.44",
+    "cpuModels": [
+      "AMD EPYC 9V74 80-Core Processor"
+    ],
+    "logicalCpus": 9,
+    "memoryBytes": 10451464192,
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "versions": {
+      "node": "24.19.0",
+      "acorn": "8.17.0",
+      "ada": "3.4.4",
+      "amaro": "1.1.10",
+      "ares": "1.34.6",
+      "brotli": "1.2.0",
+      "cldr": "48.0",
+      "icu": "78.3",
+      "llhttp": "9.4.3",
+      "merve": "1.2.2",
+      "modules": "137",
+      "napi": "10",
+      "nbytes": "0.1.4",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.69.0",
+      "nghttp3": "",
+      "ngtcp2": "",
+      "openssl": "3.5.7",
+      "simdjson": "4.6.4",
+      "simdutf": "6.4.0",
+      "sqlite": "3.53.3",
+      "tz": "2026b",
+      "undici": "7.29.0",
+      "unicode": "17.0",
+      "uv": "1.52.1",
+      "uvwasi": "0.0.23",
+      "v8": "13.6.233.17-node.51",
+      "zlib": "1.3.2.1-motley-3246f1b",
+      "zstd": "1.5.7"
+    },
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "execArgv": [
+      "--expose-gc"
+    ],
+    "gcExposed": true,
+    "locale": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "TZ": "Europe/Berlin"
+    }
+  },
+  "environmentFingerprint": "6d82a870c693578712ff29b5f8b39683457a20884643fe5791c843b805f272ef",
+  "protocol": {
+    "version": 1,
+    "suite": "targets",
+    "target": "virtual-cache",
+    "width": "all",
+    "samples": 20,
+    "warmup": 3,
+    "int32Cases": 1000000,
+    "int64Cases": 10000000,
+    "seed": 12012,
+    "resamples": 10000,
+    "timeoutSeconds": 900,
+    "rootScans": 20,
+    "arrayElements": 1000000,
+    "vmOptions": {
+      "nativeIntBits": 64,
+      "maxInstructions": 1000000000,
+      "maxFrames": 512,
+      "sourceFusion": false,
+      "specializeNumericHandlers": false,
+      "smallLongs": false,
+      "typedNumericStack": false,
+      "scalarSlotLoads": true,
+      "inlineCaches": true,
+      "preciseRoots": true,
+      "preciseRootLiveness": false,
+      "framePooling": true,
+      "wasmTiering": false,
+      "profile": false
+    },
+    "pairing": "Alternating order, one persistent prepared VM per mode; cold construction/preparation reported separately.",
+    "warmPolicy": "First execution plus configured warmup pairs are retained and excluded from measured summaries.",
+    "gc": "Exposed host GC before each complete warm observation; managed GC stays inside guest execution. Explicit pool/root correctness collections and array verification are outside their respective timers.",
+    "memory": "Managed and frame allocation counters are exact; process host-memory fields are gauges, never allocation totals.",
+    "scope": "Same-host JavaScript VM qualification. Reduced differential counts or array sizes remain explicitly partial."
+  },
+  "rows": [
+    {
+      "id": "virtual-cache",
+      "issue": 1391,
+      "engine": "cil",
+      "status": "measured",
+      "assemblyHash": "f9fb25e572cff426a282eef6f6d56b9318d29af616a7ffd33199c290f1a31c40",
+      "compilationMs": 5.829528999999866,
+      "metric": "executionMs",
+      "samples": {
+        "baseline": [
+          {
+            "index": 0,
+            "phase": "first",
+            "executionMs": 598.6467599999999,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 2137.9172469947925,
+            "instructionsPerSecond": 467744.9519646612,
+            "hostBefore": {
+              "rss": 143081472,
+              "heapUsed": 42581736,
+              "heapTotal": 113348608,
+              "external": 4246621,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 166776832,
+              "heapUsed": 55766160,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 3,
+            "frameArraysAllocated": 16,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 1,
+            "phase": "warmup",
+            "executionMs": 581.3809019999999,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 2076.256551458141,
+            "instructionsPerSecond": 481636.04796223604,
+            "hostBefore": {
+              "rss": 167436288,
+              "heapUsed": 43846344,
+              "heapTotal": 114659328,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 167858176,
+              "heapUsed": 50026448,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 2,
+            "phase": "warmup",
+            "executionMs": 618.0055240000002,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 2207.052233102631,
+            "instructionsPerSecond": 453093.03740139375,
+            "hostBefore": {
+              "rss": 167858176,
+              "heapUsed": 44024456,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 167936000,
+              "heapUsed": 53375616,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 3,
+            "phase": "warmup",
+            "executionMs": 513.828039,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1835.008388866271,
+            "instructionsPerSecond": 544956.6367474936,
+            "hostBefore": {
+              "rss": 168067072,
+              "heapUsed": 44040864,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168452096,
+              "heapUsed": 75086000,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 4,
+            "phase": "measured",
+            "executionMs": 482.35566500000004,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1722.612672937782,
+            "instructionsPerSecond": 580513.551136587,
+            "hostBefore": {
+              "rss": 168452096,
+              "heapUsed": 44100568,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168452096,
+              "heapUsed": 55606776,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 5,
+            "phase": "measured",
+            "executionMs": 554.4158810000008,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1979.9577199711473,
+            "instructionsPerSecond": 505061.2899019745,
+            "hostBefore": {
+              "rss": 168898560,
+              "heapUsed": 44151520,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169160704,
+              "heapUsed": 49569608,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 6,
+            "phase": "measured",
+            "executionMs": 474.16398000000027,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1693.3581178083962,
+            "instructionsPerSecond": 590542.5376259071,
+            "hostBefore": {
+              "rss": 169160704,
+              "heapUsed": 44213296,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169160704,
+              "heapUsed": 47038160,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 7,
+            "phase": "measured",
+            "executionMs": 435.0198499999997,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1553.5646431964105,
+            "instructionsPerSecond": 643680.9722590825,
+            "hostBefore": {
+              "rss": 169070592,
+              "heapUsed": 44175176,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168845312,
+              "heapUsed": 54311024,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 8,
+            "phase": "measured",
+            "executionMs": 383.6738899999982,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1370.195383087982,
+            "instructionsPerSecond": 729822.9233164688,
+            "hostBefore": {
+              "rss": 168845312,
+              "heapUsed": 44180368,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168845312,
+              "heapUsed": 72603576,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 9,
+            "phase": "measured",
+            "executionMs": 390.15620800000033,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1393.3453613033646,
+            "instructionsPerSecond": 717697.1537512989,
+            "hostBefore": {
+              "rss": 168845312,
+              "heapUsed": 44172880,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168845312,
+              "heapUsed": 73383688,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 10,
+            "phase": "measured",
+            "executionMs": 385.93552400000044,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1378.272243530682,
+            "instructionsPerSecond": 725546.0629739793,
+            "hostBefore": {
+              "rss": 168845312,
+              "heapUsed": 44228136,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168845312,
+              "heapUsed": 47391184,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 11,
+            "phase": "measured",
+            "executionMs": 365.7331259999992,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1306.124429492808,
+            "instructionsPerSecond": 765623.839061274,
+            "hostBefore": {
+              "rss": 169336832,
+              "heapUsed": 44184136,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168824832,
+              "heapUsed": 63668640,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 12,
+            "phase": "measured",
+            "executionMs": 388.59650599999986,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1387.7752755219378,
+            "instructionsPerSecond": 720577.7604186696,
+            "hostBefore": {
+              "rss": 168824832,
+              "heapUsed": 44242104,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168824832,
+              "heapUsed": 47806664,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 13,
+            "phase": "measured",
+            "executionMs": 491.7240720000009,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1756.0695965201771,
+            "instructionsPerSecond": 569453.5125382259,
+            "hostBefore": {
+              "rss": 168824832,
+              "heapUsed": 44206760,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168865792,
+              "heapUsed": 56173984,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 14,
+            "phase": "measured",
+            "executionMs": 349.6812179999997,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1248.7990529044966,
+            "instructionsPerSecond": 800769.3452955206,
+            "hostBefore": {
+              "rss": 168865792,
+              "heapUsed": 44208704,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168865792,
+              "heapUsed": 48111720,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 15,
+            "phase": "measured",
+            "executionMs": 353.15147799999977,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1261.1922189604797,
+            "instructionsPerSecond": 792900.5467733033,
+            "hostBefore": {
+              "rss": 168865792,
+              "heapUsed": 44210936,
+              "heapTotal": 115707904,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169127936,
+              "heapUsed": 59364568,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 16,
+            "phase": "measured",
+            "executionMs": 353.5450810000002,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1262.5978736777456,
+            "instructionsPerSecond": 792017.8077657933,
+            "hostBefore": {
+              "rss": 169127936,
+              "heapUsed": 44275520,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169652224,
+              "heapUsed": 52475112,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 17,
+            "phase": "measured",
+            "executionMs": 429.47739300000103,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1533.7711435856816,
+            "instructionsPerSecond": 651987.7520072386,
+            "hostBefore": {
+              "rss": 169652224,
+              "heapUsed": 44233432,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169783296,
+              "heapUsed": 56136248,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 18,
+            "phase": "measured",
+            "executionMs": 474.7105759999995,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1695.3101487782735,
+            "instructionsPerSecond": 589862.5692299729,
+            "hostBefore": {
+              "rss": 169783296,
+              "heapUsed": 44283096,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169914368,
+              "heapUsed": 68374088,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 19,
+            "phase": "measured",
+            "executionMs": 350.12296700000115,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1250.3766490246958,
+            "instructionsPerSecond": 799759.0172369329,
+            "hostBefore": {
+              "rss": 169766912,
+              "heapUsed": 44243760,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169897984,
+              "heapUsed": 46816856,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 20,
+            "phase": "measured",
+            "executionMs": 372.1975910000001,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1329.210650181777,
+            "instructionsPerSecond": 752326.2019178407,
+            "hostBefore": {
+              "rss": 169897984,
+              "heapUsed": 44261376,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169955328,
+              "heapUsed": 51379392,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 21,
+            "phase": "measured",
+            "executionMs": 472.1277850000006,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1686.086356396468,
+            "instructionsPerSecond": 593089.4323451004,
+            "hostBefore": {
+              "rss": 169955328,
+              "heapUsed": 44242176,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169955328,
+              "heapUsed": 52179696,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 22,
+            "phase": "measured",
+            "executionMs": 506.6836579999981,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1809.4940181562283,
+            "instructionsPerSecond": 552640.6774303367,
+            "hostBefore": {
+              "rss": 169955328,
+              "heapUsed": 44297632,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169955328,
+              "heapUsed": 72646616,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 23,
+            "phase": "measured",
+            "executionMs": 430.9177159999999,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1538.914897112287,
+            "instructionsPerSecond": 649808.5123982233,
+            "hostBefore": {
+              "rss": 169439232,
+              "heapUsed": 44249760,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169414656,
+              "heapUsed": 50366000,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          }
+        ],
+        "candidate": [
+          {
+            "index": 0,
+            "phase": "first",
+            "executionMs": 293.7963420000001,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1049.220188990551,
+            "instructionsPerSecond": 953088.7896487149,
+            "hostBefore": {
+              "rss": 166776832,
+              "heapUsed": 43760616,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 167505920,
+              "heapUsed": 47279544,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 3,
+            "frameArraysAllocated": 16,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 1,
+            "phase": "warmup",
+            "executionMs": 277.0837959999999,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 989.5355089388383,
+            "instructionsPerSecond": 1010575.1546727045,
+            "hostBefore": {
+              "rss": 167505920,
+              "heapUsed": 43833280,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 167604224,
+              "heapUsed": 68549520,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 2,
+            "phase": "warmup",
+            "executionMs": 314.8382059999999,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1124.3659459884145,
+            "instructionsPerSecond": 889390.1523501887,
+            "hostBefore": {
+              "rss": 167936000,
+              "heapUsed": 44057912,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 167936000,
+              "heapUsed": 70327160,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 3,
+            "phase": "warmup",
+            "executionMs": 193.68667199999982,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 691.7035291092582,
+            "instructionsPerSecond": 1445706.083483123,
+            "hostBefore": {
+              "rss": 167936000,
+              "heapUsed": 44085752,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168067072,
+              "heapUsed": 68396080,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 4,
+            "phase": "measured",
+            "executionMs": 258.9927969999999,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 924.9280285985697,
+            "instructionsPerSecond": 1081165.2032160575,
+            "hostBefore": {
+              "rss": 168452096,
+              "heapUsed": 44168016,
+              "heapTotal": 114921472,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168583168,
+              "heapUsed": 70814168,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 5,
+            "phase": "measured",
+            "executionMs": 301.3467810000002,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 1076.1846943367125,
+            "instructionsPerSecond": 929208.5320134872,
+            "hostBefore": {
+              "rss": 168583168,
+              "heapUsed": 44148616,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168898560,
+              "heapUsed": 69132488,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 6,
+            "phase": "measured",
+            "executionMs": 203.04193399999986,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 725.1135086102832,
+            "instructionsPerSecond": 1379094.4288385285,
+            "hostBefore": {
+              "rss": 169160704,
+              "heapUsed": 44176176,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168951808,
+              "heapUsed": 70694536,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 7,
+            "phase": "measured",
+            "executionMs": 205.84429999999975,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 735.1214582128028,
+            "instructionsPerSecond": 1360319.4258961766,
+            "hostBefore": {
+              "rss": 168951808,
+              "heapUsed": 44206048,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169070592,
+              "heapUsed": 69467000,
+              "heapTotal": 115183616,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 8,
+            "phase": "measured",
+            "executionMs": 167.00988700000016,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 596.4340604398357,
+            "instructionsPerSecond": 1676631.2763267707,
+            "hostBefore": {
+              "rss": 168845312,
+              "heapUsed": 44202392,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168845312,
+              "heapUsed": 69630720,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 9,
+            "phase": "measured",
+            "executionMs": 171.25182099999984,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 611.5830672752071,
+            "instructionsPerSecond": 1635100.8612048584,
+            "hostBefore": {
+              "rss": 168845312,
+              "heapUsed": 44218096,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168845312,
+              "heapUsed": 69310144,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 10,
+            "phase": "measured",
+            "executionMs": 166.1699320000007,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 593.4343711385884,
+            "instructionsPerSecond": 1685106.3043102096,
+            "hostBefore": {
+              "rss": 168845312,
+              "heapUsed": 44231984,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168845312,
+              "heapUsed": 69965992,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 11,
+            "phase": "measured",
+            "executionMs": 229.34760599999936,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 819.0576399751419,
+            "instructionsPerSecond": 1220915.294838529,
+            "hostBefore": {
+              "rss": 168845312,
+              "heapUsed": 44198208,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169336832,
+              "heapUsed": 68707944,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 12,
+            "phase": "measured",
+            "executionMs": 182.69180300000153,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 652.4381030948507,
+            "instructionsPerSecond": 1532712.444684766,
+            "hostBefore": {
+              "rss": 168824832,
+              "heapUsed": 44205432,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168824832,
+              "heapUsed": 70806136,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 13,
+            "phase": "measured",
+            "executionMs": 183.2110819999998,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 654.2925782282307,
+            "instructionsPerSecond": 1528368.245759284,
+            "hostBefore": {
+              "rss": 168824832,
+              "heapUsed": 44234600,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168824832,
+              "heapUsed": 69227528,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 14,
+            "phase": "measured",
+            "executionMs": 232.99805600000036,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 832.0943095702371,
+            "instructionsPerSecond": 1201786.850959819,
+            "hostBefore": {
+              "rss": 168865792,
+              "heapUsed": 44233208,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168865792,
+              "heapUsed": 70600240,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 15,
+            "phase": "measured",
+            "executionMs": 158.57654000000002,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 566.3164698907913,
+            "instructionsPerSecond": 1765797.1349355963,
+            "hostBefore": {
+              "rss": 168865792,
+              "heapUsed": 44248544,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 168865792,
+              "heapUsed": 69307368,
+              "heapTotal": 115445760,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 16,
+            "phase": "measured",
+            "executionMs": 210.20701799999915,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 750.7018149092515,
+            "instructionsPerSecond": 1332086.8288041702,
+            "hostBefore": {
+              "rss": 169652224,
+              "heapUsed": 44279368,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169652224,
+              "heapUsed": 70455968,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 17,
+            "phase": "measured",
+            "executionMs": 228.9146890000011,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 817.5115851350329,
+            "instructionsPerSecond": 1223224.2553906126,
+            "hostBefore": {
+              "rss": 169652224,
+              "heapUsed": 44247168,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169652224,
+              "heapUsed": 69693800,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 18,
+            "phase": "measured",
+            "executionMs": 197.32632700000067,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 704.7016470605066,
+            "instructionsPerSecond": 1419040.2479847458,
+            "hostBefore": {
+              "rss": 169914368,
+              "heapUsed": 44256328,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169766912,
+              "heapUsed": 69782208,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 19,
+            "phase": "measured",
+            "executionMs": 178.043361,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 635.8373545608434,
+            "instructionsPerSecond": 1572729.240940357,
+            "hostBefore": {
+              "rss": 169766912,
+              "heapUsed": 44277448,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169766912,
+              "heapUsed": 68267232,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 20,
+            "phase": "measured",
+            "executionMs": 167.3648409999987,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 597.7016899154996,
+            "instructionsPerSecond": 1673075.4101454448,
+            "hostBefore": {
+              "rss": 169955328,
+              "heapUsed": 44265392,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169955328,
+              "heapUsed": 69721152,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 21,
+            "phase": "measured",
+            "executionMs": 172.54161499999827,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 616.1892441092169,
+            "instructionsPerSecond": 1622878.0517674116,
+            "hostBefore": {
+              "rss": 169955328,
+              "heapUsed": 44281800,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169955328,
+              "heapUsed": 69892184,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 22,
+            "phase": "measured",
+            "executionMs": 164.39818600000217,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 587.1070232202753,
+            "instructionsPerSecond": 1703266.969137946,
+            "hostBefore": {
+              "rss": 169955328,
+              "heapUsed": 44301416,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169439232,
+              "heapUsed": 70130128,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          },
+          {
+            "index": 23,
+            "phase": "measured",
+            "executionMs": 232.21145099999922,
+            "instructions": 280014,
+            "nanosecondsPerInstruction": 829.2851464569601,
+            "instructionsPerSecond": 1205857.845485841,
+            "hostBefore": {
+              "rss": 169439232,
+              "heapUsed": 44285448,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "hostAfter": {
+              "rss": 169439232,
+              "heapUsed": 69578136,
+              "heapTotal": 115970048,
+              "external": 4038397,
+              "arrayBuffers": 223127
+            },
+            "outputVerified": true,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "framesAllocated": 0,
+            "frameArraysAllocated": 0,
+            "offsetMapAllocations": 0,
+            "sourceFusionGroups": 0,
+            "tokenResolutions": 0
+          }
+        ]
+      },
+      "cold": {
+        "baseline": {
+          "constructionMs": 16.77030999999988,
+          "preparationMs": 0.5437899999999445,
+          "preparation": {
+            "status": "prepared",
+            "engine": "cil",
+            "methods": 5,
+            "numericHandlerCounts": {},
+            "statistics": {
+              "epoch": 1,
+              "reason": "type-system-replaced",
+              "decodePlans": 5,
+              "decodedInstructions": 30,
+              "decodeMilliseconds": 0.1910099999997783,
+              "offsetMapAllocations": 4,
+              "sourcePlans": 0,
+              "sourcePlanMilliseconds": 0,
+              "sourceFusionGroups": 0
+            }
+          }
+        },
+        "candidate": {
+          "constructionMs": 2.973269999999957,
+          "preparationMs": 0.13604000000009364,
+          "preparation": {
+            "status": "prepared",
+            "engine": "cil",
+            "methods": 5,
+            "numericHandlerCounts": {},
+            "statistics": {
+              "epoch": 1,
+              "reason": "type-system-replaced",
+              "decodePlans": 5,
+              "decodedInstructions": 30,
+              "decodeMilliseconds": 0.05240700000013021,
+              "offsetMapAllocations": 4,
+              "sourcePlans": 0,
+              "sourcePlanMilliseconds": 0,
+              "sourceFusionGroups": 0
+            }
+          }
+        }
+      },
+      "vmOptions": {
+        "baseline": {
+          "nativeIntBits": 64,
+          "maxInstructions": 1000000000,
+          "maxFrames": 512,
+          "sourceFusion": false,
+          "specializeNumericHandlers": false,
+          "smallLongs": false,
+          "typedNumericStack": false,
+          "scalarSlotLoads": true,
+          "inlineCaches": false,
+          "preciseRoots": true,
+          "preciseRootLiveness": false,
+          "framePooling": true,
+          "wasmTiering": false,
+          "profile": false
+        },
+        "candidate": {
+          "nativeIntBits": 64,
+          "maxInstructions": 1000000000,
+          "maxFrames": 512,
+          "sourceFusion": false,
+          "specializeNumericHandlers": false,
+          "smallLongs": false,
+          "typedNumericStack": false,
+          "scalarSlotLoads": true,
+          "inlineCaches": true,
+          "preciseRoots": true,
+          "preciseRootLiveness": false,
+          "framePooling": true,
+          "wasmTiering": false,
+          "profile": false
+        }
+      },
+      "summary": {
+        "baseline": {
+          "executionMs": {
+            "count": 20,
+            "minimum": 349.6812179999997,
+            "median": 409.8168005000007,
+            "p95": 509.0702691499983,
+            "p99": 545.3467586300002,
+            "maximum": 554.4158810000008,
+            "interquartileRange": 103.7191542500002,
+            "medianAbsoluteDeviation": 56.46852100000069
+          },
+          "nanosecondsPerInstruction": {
+            "count": 20,
+            "minimum": 1248.7990529044966,
+            "median": 1463.558252444523,
+            "p95": 1818.0172032469743,
+            "p99": 1947.5696166263124,
+            "maximum": 1979.9577199711473,
+            "interquartileRange": 370.40703054133064,
+            "medianAbsoluteDeviation": 201.6632061254104
+          },
+          "instructionsPerSecond": {
+            "count": 20,
+            "minimum": 505061.2899019745,
+            "median": 684842.4528792687,
+            "p95": 799809.5336398623,
+            "p99": 800577.3829643889,
+            "maximum": 800769.3452955206,
+            "interquartileRange": 165278.0656767754,
+            "medianAbsoluteDeviation": 93026.4678937649
+          },
+          "managedAllocations": {
+            "count": 20,
+            "minimum": 1,
+            "median": 1,
+            "p95": 1,
+            "p99": 1,
+            "maximum": 1,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          },
+          "managedAllocatedBytes": {
+            "count": 20,
+            "minimum": 32,
+            "median": 32,
+            "p95": 32,
+            "p99": 32,
+            "maximum": 32,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          },
+          "frameArraysAllocated": {
+            "count": 20,
+            "minimum": 0,
+            "median": 0,
+            "p95": 0,
+            "p99": 0,
+            "maximum": 0,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          },
+          "framesAllocated": {
+            "count": 20,
+            "minimum": 0,
+            "median": 0,
+            "p95": 0,
+            "p99": 0,
+            "maximum": 0,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          },
+          "offsetMapAllocations": {
+            "count": 20,
+            "minimum": 0,
+            "median": 0,
+            "p95": 0,
+            "p99": 0,
+            "maximum": 0,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          },
+          "tokenResolutions": {
+            "count": 20,
+            "minimum": 0,
+            "median": 0,
+            "p95": 0,
+            "p99": 0,
+            "maximum": 0,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          }
+        },
+        "candidate": {
+          "executionMs": {
+            "count": 20,
+            "minimum": 158.57654000000002,
+            "median": 190.26870450000024,
+            "p95": 261.11049619999994,
+            "p99": 293.29952404000005,
+            "maximum": 301.3467810000002,
+            "interquartileRange": 58.742842250001104,
+            "medianAbsoluteDeviation": 23.081340500000806
+          },
+          "nanosecondsPerInstruction": {
+            "count": 20,
+            "minimum": 566.3164698907913,
+            "median": 679.4971126443686,
+            "p95": 932.4908618854769,
+            "p99": 1047.445927846465,
+            "maximum": 1076.1846943367125,
+            "interquartileRange": 209.78537590977987,
+            "medianAbsoluteDeviation": 82.42923746670095
+          },
+          "instructionsPerSecond": {
+            "count": 20,
+            "minimum": 929208.5320134872,
+            "median": 1473704.2468720148,
+            "p95": 1706393.4774278284,
+            "p99": 1753916.4034340426,
+            "maximum": 1765797.1349355963,
+            "interquartileRange": 421947.4831874131,
+            "medianAbsoluteDeviation": 201149.0963640929
+          },
+          "managedAllocations": {
+            "count": 20,
+            "minimum": 1,
+            "median": 1,
+            "p95": 1,
+            "p99": 1,
+            "maximum": 1,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          },
+          "managedAllocatedBytes": {
+            "count": 20,
+            "minimum": 32,
+            "median": 32,
+            "p95": 32,
+            "p99": 32,
+            "maximum": 32,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          },
+          "frameArraysAllocated": {
+            "count": 20,
+            "minimum": 0,
+            "median": 0,
+            "p95": 0,
+            "p99": 0,
+            "maximum": 0,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          },
+          "framesAllocated": {
+            "count": 20,
+            "minimum": 0,
+            "median": 0,
+            "p95": 0,
+            "p99": 0,
+            "maximum": 0,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          },
+          "offsetMapAllocations": {
+            "count": 20,
+            "minimum": 0,
+            "median": 0,
+            "p95": 0,
+            "p99": 0,
+            "maximum": 0,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          },
+          "tokenResolutions": {
+            "count": 20,
+            "minimum": 0,
+            "median": 0,
+            "p95": 0,
+            "p99": 0,
+            "maximum": 0,
+            "interquartileRange": 0,
+            "medianAbsoluteDeviation": 0
+          }
+        }
+      },
+      "target": {
+        "kind": "minimum-speedup",
+        "value": 3,
+        "observed": 2.1538844318982586,
+        "interval": [
+          1.8359783021135954,
+          2.5212459614453246
+        ],
+        "meetsPointTarget": false,
+        "acceptance": "missed",
+        "method": "paired-percentile-ratio-of-medians",
+        "seed": 12012,
+        "confidence": 0.95,
+        "resamples": 10000
+      }
+    }
+  ],
+  "errors": [],
+  "unsupportedTargets": [
+    "Browser timing/host-memory: this Node harness does not qualify browsers",
+    "Native .NET throughput: no CLR executable is measured",
+    "Wasm tier: interpreter baseline options explicitly disable it"
+  ],
+  "format": "SharpForge.A05Qualification/1",
+  "targetScope": {
+    "kind": "selected-target",
+    "id": "virtual-cache"
+  },
+  "acceptance": "missed",
+  "completedCommit": "48c62243ef4cf614dfcafdb7af9a7ce360b643c4",
+  "completedWorktreeStatus": "",
+  "completedAt": "2026-10-04T14:51:02.721Z"
+}

@@ -1,3 +1,4 @@
+import {fixedSourceParameters} from './varargs-parameters.js';
 /**
  * Member symbols of source types: fields, events, methods, constructors, destructors, operators and
  * conversions, with their parameters, type parameters and constraint clauses.
@@ -35,7 +36,7 @@ export const MemberSymbolBuilder = Base =>
     }
     parameters(list, scope, uri, owner) {
       const seen = new Set();
-      return (list?.parameters ?? []).map((p, ordinal) => {
+      return fixedSourceParameters(this, list, uri, owner).map((p, ordinal) => {
         const mods = words(p.modifiers),
           name = p.identifier.valueText;
         if (seen.has(name) && name) this.report(uri, p.identifier, DiagnosticId.CS0100, [name]);

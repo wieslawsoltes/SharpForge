@@ -1,11 +1,16 @@
+import {sourceTypedValue} from '../source-value-storage.js';
 import {Op} from '@sharpforge/bytecode';
 import {ManagedFault} from '../../heap.js';
-import {rethrow} from '../source-eh.js';
+import {rethrow, endSourceFilter} from '../source-eh.js';
+import {faultFromException} from '../exception-object.js';
 
 /** Sequence pauses and instruction accounting remain in the VM slice loop. */
 export const sourceControlHandlers = Object.freeze({
   [Op.SEQ]() {},
   [Op.NOP]() {},
+  [Op.ENDFILTER](vm) {
+    endSourceFilter(vm, vm.stack.pop());
+  },
   [Op.ENDFINALLY](vm,frame) {
     vm.resumeUnwind(frame);
   },
@@ -19,14 +24,11 @@ export const sourceControlHandlers = Object.freeze({
     if(vm.stack.pop())vm.transfer(frame,'jump',a);
   },
   [Op.RET](vm,frame) {
-    const result=vm.stack.pop();
+    const result=sourceTypedValue(vm,vm.stack.pop(),vm.image.methods[frame.methodId].returnType);
     vm.transfer(frame,'return',Infinity,result);
   },
   [Op.THROW](vm) {
-    const ref=vm.stack.pop();
-    if(ref===null)throw new ManagedFault('NullReferenceException','A null exception was thrown');
-    const record=vm.heap.get(ref);
-    throw new ManagedFault(record.type,vm.format(record.data[0]),ref);
+    throw faultFromException(vm, vm.stack.pop());
   },
   [Op.RETHROW](vm,frame) {
     rethrow(frame);

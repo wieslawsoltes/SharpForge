@@ -1,8 +1,11 @@
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
+import {validateReferenceLayout} from './reference-layout.js';
+import {hasManagedStateMachineLayout} from './managed-state-machine-layout.js';
 
 // Layouts contain metadata only. A code epoch, assembly or registry replacement drops them.
 const caches = new WeakMap();
+const memoryShapes = new WeakMap();
 const packingSizes = new Set([1, 2, 4, 8, 16, 32, 64, 128]);
 const maxLayoutFields = 65_536;
 const maxLayoutRows = 262_144;
@@ -12,9 +15,12 @@ const unsupported = name => {
   throw new ManagedFault('NotSupportedException', 'Managed layout is not implemented: ' + name);
 };
 
-function plan(size, alignment, containsReferences, offsets = []) {
+function plan(size, alignment, containsReferences, offsets = [], memory = null) {
   if (!Number.isSafeInteger(size) || size < 1 || size > 0x7fffffff) invalid('Value layout exceeds the supported byte range');
-  return Object.freeze({size, alignment, containsReferences, offsets: Object.freeze(offsets)});
+  const result = Object.freeze({size, alignment, containsReferences, offsets: Object.freeze(offsets)});
+  const shape = memory ?? {references: containsReferences ? [0] : [], scalars: containsReferences ? [] : [[0, size]]};
+  memoryShapes.set(result, Object.freeze({references: Object.freeze(shape.references), scalars: Object.freeze(shape.scalars)}));
+  return result;
 }
 
 function cacheFor(vm) {
@@ -25,7 +31,7 @@ function cacheFor(vm) {
     const classes = rows?.[15] ?? [];
     const fields = rows?.[16] ?? [];
     if (classes.length + fields.length > maxLayoutRows) unsupported('layout metadata row budget exceeded');
-    cache = {plans: new WeakMap(), definitions: vm.inspector ? vm.typeSystem.types : null,
+    cache = {plans: new WeakMap(), managedPlans: new WeakMap(), definitions: vm.inspector ? vm.typeSystem.types : null,
       classes: indexRows(classes, 2), fields: indexRows(fields, 1)};
     caches.set(state, cache);
   }
@@ -53,7 +59,7 @@ function requireClosed(table) {
 
 function aggregateLayout(vm, table, cache, context) {
   const definition = cache.definitions?.get(table.definitionToken);
-  if (!definition && !table.flags.nullable) unsupported(table.name);
+  if (!definition && !table.flags.nullable && !table.flags.runtimeValue) unsupported(table.name);
   const row = table.definitionToken & 0xffffff;
   const classLayout = cache.classes.get(row);
   if (classLayout?.duplicate) invalid('Duplicate ClassLayout rows');
@@ -66,13 +72,16 @@ function aggregateLayout(vm, table, cache, context) {
   const fields = table.flags.nullable
     ? [{type: vm.heap.methodTables.get('bool')}, {type: table.nullableType}]
     : table.fields;
-  if (definition && fields.length && !(definition.flags & 0x18)) unsupported('auto-layout ' + table.name);
+  if (definition && fields.length && !(definition.flags & 0x18) &&
+      !(context.managed && hasManagedStateMachineLayout(vm, table))) unsupported('auto-layout ' + table.name);
   context.remainingFields -= fields.length;
   if (context.remainingFields < 0) unsupported('value layout field budget exceeded');
   const offsets = [];
   let size = 0;
   let alignment = 1;
   let containsReferences = false;
+  const references = [];
+  const scalars = [];
   for (const field of fields) {
     const layout = layoutFor(vm, field.type, cache, context);
     const fieldAlignment = Math.min(packing, layout.alignment);
@@ -84,21 +93,26 @@ function aggregateLayout(vm, table, cache, context) {
     size = Math.max(size, offset + layout.size);
     alignment = Math.max(alignment, fieldAlignment);
     containsReferences ||= layout.containsReferences;
+    const memory = memoryShapes.get(layout);
+    for (const reference of memory.references) references.push(offset + reference);
+    for (const [start, end] of memory.scalars) scalars.push([offset + start, offset + end]);
   }
-  // Managed overlays need the reference-slot validation supplied by the later value-storage slice.
-  if (explicit && containsReferences) unsupported('reference-containing explicit ' + table.name);
+  const orderedReferences = explicit && containsReferences
+    ? validateReferenceLayout(references, scalars, vm.heap.methodTables.nativeIntBits / 8, invalid) : references;
   const declaredSize = classLayout?.row[1] ?? 0;
   if (!Number.isSafeInteger(declaredSize) || declaredSize < 0) invalid('Invalid declared class size');
-  return plan(Math.max(1, declaredSize, align(size, alignment)), alignment, containsReferences, offsets);
+  return plan(Math.max(1, declaredSize, align(size, alignment)), alignment, containsReferences, offsets,
+    {references: orderedReferences, scalars});
 }
 
 function layoutFor(vm, table, cache, context) {
   requireClosed(table);
-  if (cache.plans.has(table)) return cache.plans.get(table);
+  if (context.plans.has(table)) return context.plans.get(table);
   const active = context.active;
   if (active.has(table)) invalid('Recursive value layout');
   if (active.size >= 128) invalid('Value layout nesting limit exceeded');
-  if (table.flags.external || table.flags.dynamic && table.flags.valueType && !table.flags.enum) unsupported(table.name);
+  if (table.flags.valueType && !table.flags.runtimeValue &&
+      (table.flags.external || table.flags.dynamic && !table.flags.enum)) unsupported(table.name);
   let layout;
   if (table.enumUnderlyingType) {
     active.add(table);
@@ -114,7 +128,7 @@ function layoutFor(vm, table, cache, context) {
     try { layout = aggregateLayout(vm, table, cache, context); }
     finally { active.delete(table); }
   }
-  cache.plans.set(table, layout);
+  context.plans.set(table, layout);
   return layout;
 }
 
@@ -123,10 +137,23 @@ export function valueLayout(vm, type) {
   const table = vm.inspector ? vm.typeSystem.table(type) : vm.heap.methodTables.get(type);
   const cache = cacheFor(vm);
   if (cache.plans.has(table)) return cache.plans.get(table);
-  return layoutFor(vm, table, cache, {active: new Set(), remainingFields: maxLayoutFields});
+  return layoutFor(vm, table, cache, {active: new Set(), remainingFields: maxLayoutFields, plans: cache.plans, managed: false});
+}
+
+/** Canonical logical field storage for managed copies and stack quotas; never used for raw bytes or sizeof. */
+export function managedValueLayout(vm, type) {
+  const table = vm.inspector ? vm.typeSystem.table(type) : vm.heap.methodTables.get(type);
+  const cache = cacheFor(vm);
+  if (cache.managedPlans.has(table)) return cache.managedPlans.get(table);
+  return layoutFor(vm, table, cache, {active: new Set(), remainingFields: maxLayoutFields, plans: cache.managedPlans, managed: true});
 }
 
 /** sizeof resolves the executing generic context through the existing MethodTable service. */
 export function sizeOfType(vm, type) {
   return valueLayout(vm, type).size;
+}
+
+/** Physical GC-reference offsets; scalar byte overlays never encode managed handles. */
+export function valueReferenceOffsets(vm, type) {
+  return memoryShapes.get(valueLayout(vm, type)).references;
 }

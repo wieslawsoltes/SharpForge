@@ -1,158 +1,76 @@
-/**
- * Arrays beyond `T[]` (SF-A02-T45). The image has single-dimensional arrays only, so:
- *
- *   jagged arrays    `T[][]` is an array whose elements are arrays: nothing to lower.
- *   rank-n arrays    `T[,]` becomes an object of a synthesized class per element type and rank, holding the elements
- *                    in one flat `T[]` in row-major order (the order .NET stores and enumerates them in) and the length
- *                    of every dimension. `a[i, j]` reads `Items[i * Length1 + j]`; an index outside its own dimension
- *                    selects element -1, so the runtime's bounds check raises the IndexOutOfRangeException .NET raises.
- *   members          `Length` is the length of the flat array, `Rank` a constant, `GetLength(d)` the stored length,
- *                    `GetLowerBound(d)` zero and `GetUpperBound(d)` the length minus one; `foreach` walks the flat array.
- *
- * Not lowered (reported as not executable): a dimension argument that is not a constant. Conversions of an array to
- * System.Array, to an interface or to an array of another element type (array covariance) are reported by the
- * conversion lowering, as before.
- */
-import { ArrayTypeSymbol } from '../symbols/types.js';
-import { n } from '../codegen/semantic/node-factory.js';
+/** Native rectangular arrays retain CLR rank, bounds, covariance, and element addresses. */
+import {ArrayTypeSymbol} from '../symbols/types.js';
+import {n} from '../codegen/semantic/node-factory.js';
+import {rectangularArray, rectangularElement} from '../codegen/memory-nodes.js';
+import {arrayCall, memoryCall} from './memory-builtins.js';
 
-/** The synthesized classes of rank-n arrays, one per element image type and rank. */
-export class MultiDimensionalArrays {
-  /** @param {{program: object}} host the generator (its program model declares the classes) */
-  constructor(host) {
-    this.host = host;
-    this.classes = new Map();
-  }
-  /** `{record, items, lengths}`: the image class, its flat element array field and its per-dimension length fields. */
-  classOf(elementType, rank) {
-    const key = rank + ':' + elementType;
-    let info = this.classes.get(key);
-    if (!info) {
-      // The name is used as an array element type too (`int[][,]`): the runtime reads `<` and `>` as generic brackets.
-      const program = this.host.program,
-        record = program.addClass(`$Array${rank}(${elementType.replace(/[<>]/g, '')})`);
-      info = {
-        record,
-        rank,
-        items: program.addField(record, 'Items', elementType + '[]'),
-        lengths: Array.from({ length: rank }, (_, dimension) => program.addField(record, 'Length' + dimension, 'int')),
-      };
-      this.classes.set(key, info);
-    }
-    return info;
-  }
+const integer = value => n.literal(value, 'int');
+const isRectangular = type => type instanceof ArrayTypeSymbol && type.rank > 1;
+
+function initializerEntries(elements, rank, lower, indices = []) {
+  if (rank === 1) return elements.map((value, index) => ({indices: [...indices, index], value: lower(value)}));
+  return elements.flatMap((items, index) => initializerEntries(items, rank - 1, lower, [...indices, index]));
 }
 
-const isMultiDimensional = type => type instanceof ArrayTypeSymbol && type.rank > 1;
-const int = value => n.literal(value, 'int');
-
-/** Class mixin for the body translator: creation, element access, members and enumeration of rank-n arrays. */
-export const ArrayTranslation = Base =>
-  class extends Base {
-    arrayClassOf(type, syntax) {
-      return this.g.arrays.classOf(this.imageType(type.elementType, syntax), type.rank);
+export const ArrayTranslation = Base => class extends Base {
+  exprArrayCreation(node) {
+    if (!isRectangular(node.type)) return super.exprArrayCreation(node);
+    const elementType = this.imageType(node.type.elementType, node.syntax);
+    const lengths = node.sizes?.length ? node.sizes.map(size => this.expression(size)) : [];
+    if (!lengths.length) {
+      for (let level = node.elements, rank = 0; rank < node.type.rank; rank++, level = level?.[0])
+        lengths.push(integer(level?.length ?? 0));
     }
-    exprArrayCreation(node) {
-      if (!isMultiDimensional(node.type)) return super.exprArrayCreation(node);
-      const info = this.arrayClassOf(node.type, node.syntax),
-        elementType = info.items.type.slice(0, -2),
-        array = this.temp(info.record.name, 'array'),
-        read = () => n.local(array),
-        effects = [n.assign(read(), n.allocate(info.record))];
-      if (node.elements) {
-        // The initializer fixes every length: the count of each nesting level (the binder checked it is rectangular).
-        const lengths = [];
-        for (let level = node.elements, dimension = 0; dimension < info.rank; level = level[0], dimension++) lengths.push(level?.length ?? 0);
-        const flat = node.elements.flat(info.rank - 1).map(element => this.expression(element));
-        lengths.forEach((length, dimension) => effects.push(n.assign(n.field(read(), info.lengths[dimension]), int(length))));
-        effects.push(n.assign(n.field(read(), info.items), n.newArray(elementType, int(flat.length), flat)));
-      } else {
-        // Sizes are evaluated left to right, once; the flat array has their product as its length.
-        node.sizes.forEach((size, dimension) => effects.push(n.assign(n.field(read(), info.lengths[dimension]), this.expression(size))));
-        const total = info.lengths.map(field => n.field(read(), field)).reduce((product, length) => n.binary('*', product, length, 'int'));
-        effects.push(n.assign(n.field(read(), info.items), n.newArray(elementType, total)));
-      }
-      return n.sequence([array], effects, read());
+    const initializer = node.elements ? initializerEntries(node.elements, node.type.rank,
+      value => this.objectArgument(this.expression(value), elementType)) : null;
+    return rectangularArray(elementType, lengths, initializer);
+  }
+  exprArrayAccess(node) {
+    if (!isRectangular(node.array.type)) return super.exprArrayAccess(node);
+    return rectangularElement(this.expression(node.array), node.indices.map(index => this.expression(index)),
+      this.imageType(node.type, node.syntax));
+  }
+  exprArrayLength(node) {
+    const array = this.expression(node.operand ?? node.array ?? node.receiver);
+    if (node.member === 'Rank' || node.member === 'LongLength') return arrayCall('get_' + node.member, array);
+    return n.arrayLength(array);
+  }
+  exprCall(node) {
+    const definition = node.method.originalDefinition ?? node.method;
+    if (definition.arrayMember) return arrayCall(definition.arrayMember, this.expression(node.receiver), this.arguments(node, node.method));
+    const builtin = definition.builtin ?? node.method.builtin;
+    if (builtin?.arrayRuntime) return n.frameworkCall({builtin}, node.method.isStatic ? null : this.expression(node.receiver),
+      this.arguments(node, node.method), this.imageType(node.type, node.syntax));
+    return super.exprCall(node);
+  }
+  exprConversion(node) {
+    const from = node.operand.type, to = node.type, kind = node.conversion?.kind;
+    if ((from instanceof ArrayTypeSymbol || to instanceof ArrayTypeSymbol ||
+        from === this.g.analysis.core.array || to === this.g.analysis.core.array) &&
+        ['Identity', 'ImplicitReference', 'ExplicitReference'].includes(kind)) {
+      const value = this.expression(node.operand), type = this.imageType(to, node.syntax);
+      return kind === 'ExplicitReference' ? memoryCall('cast', [value, n.literal(type, 'string')], type) : value;
     }
-    /**
-     * The element of a rank-n array whose array and index operands are already spilled (each can be read repeatedly):
-     * an element of the flat array that the emitter can load from and store to.
-     */
-    flatElement(node) {
-      const info = this.arrayClassOf(node.array.type, node.syntax),
-        array = () => this.expression(node.array),
-        index = dimension => this.expression(node.indices[dimension]),
-        length = dimension => n.field(array(), info.lengths[dimension]);
-      let inRange = null,
-        offset = null;
-      for (let dimension = 0; dimension < info.rank; dimension++) {
-        const within = n.logicalAnd(n.binary('>=', index(dimension), int(0), 'bool'), n.binary('<', index(dimension), length(dimension), 'bool'));
-        inRange = inRange ? n.logicalAnd(inRange, within) : within;
-        offset = offset ? n.binary('+', n.binary('*', offset, length(dimension), 'int'), index(dimension), 'int') : index(dimension);
-      }
-      return n.arrayElement(n.field(array(), info.items), n.conditional(inRange, offset, int(-1), 'int'));
-    }
-    /** Spills the operands of a rank-n element access and builds `use(element)` after them. */
-    withFlatElement(node, use) {
-      const sink = { locals: [], effects: [] },
-        element = this.flatElement(this.spillOperands(node, sink));
-      return n.sequence(sink.locals, sink.effects, use(element));
-    }
-    isFlatAccess(node) {
-      return node.kind === 'ArrayAccess' && isMultiDimensional(node.array.type);
-    }
-    exprArrayAccess(node) {
-      if (!this.isFlatAccess(node)) return super.exprArrayAccess(node);
-      return this.withFlatElement(node, element => element);
-    }
-    exprAssignment(node) {
-      if (!this.isFlatAccess(node.left)) return super.exprAssignment(node);
-      return this.withFlatElement(node.left, element => n.assign(element, this.expression(node.right)));
-    }
-    exprCompoundAssignment(node) {
-      if (!this.isFlatAccess(node.left) || node.method) return super.exprCompoundAssignment(node);
-      return this.withFlatElement(node.left, element =>
-        n.compoundAssign(node.operator, element, this.expression(node.right), !!node.isChecked),
-      );
-    }
-    exprIncrement(node) {
-      if (!this.isFlatAccess(node.operand) || node.method) return super.exprIncrement(node);
-      return this.withFlatElement(node.operand, element => n.increment(node.operator, element, !!node.isPostfix, !!node.isChecked));
-    }
-    /** A rank-n element as an assignment target of another lowering: its operands must have been spilled by it. */
-    target(node) {
-      if (!this.isFlatAccess(node)) return super.target(node);
-      const spilled = [node.array, ...node.indices].every(operand => operand.kind === 'SpilledOperand');
-      return spilled ? this.flatElement(node) : this.unsupported('an element of a multi-dimensional array in this position', node.syntax);
-    }
-    exprArrayLength(node) {
-      const array = node.operand ?? node.array ?? node.receiver,
-        type = array.type;
-      if (node.member === 'Rank') return n.sequence([], [this.expression(array)], int(type.rank ?? 1));
-      if (!isMultiDimensional(type)) return super.exprArrayLength(node);
-      return n.arrayLength(n.field(this.expression(array), this.arrayClassOf(type, node.syntax).items));
-    }
-    exprCall(node) {
-      const member = (node.method.originalDefinition ?? node.method).arrayMember;
-      if (!member || !(node.receiver?.type instanceof ArrayTypeSymbol)) return super.exprCall(node);
-      const type = node.receiver.type,
-        dimension = node.args[0]?.expression?.constantValue?.value;
-      if (typeof dimension !== 'number' || dimension < 0 || dimension >= type.rank)
-        return this.unsupported(`'${member}' with a dimension that is not a constant within the rank`, node.syntax);
-      if (member === 'GetLowerBound') return n.sequence([], [this.expression(node.receiver)], int(0));
-      const receiver = this.expression(node.receiver),
-        length = isMultiDimensional(type)
-          ? n.field(receiver, this.arrayClassOf(type, node.syntax).lengths[dimension])
-          : n.arrayLength(receiver);
-      return member === 'GetLength' ? length : n.binary('-', length, int(1), 'int');
-    }
-    stmtForEach(node) {
-      const type = node.collection?.type;
-      if (!node.local || !isMultiDimensional(type)) return super.stmtForEach(node);
-      // The elements are enumerated in row-major order, which is the order of the flat array.
-      const info = this.arrayClassOf(type, node.syntax),
-        collection = this.lowered(node.collection, () => n.field(this.expression(node.collection), info.items));
-      collection.type = this.g.analysis.core.arrayOf(type.elementType);
-      return super.stmtForEach({ ...node, collection });
-    }
-  };
+    return super.exprConversion(node);
+  }
+  /** Cache dimensions once and enumerate row-major, retaining normal break/continue targets. */
+  stmtForEach(node) {
+    if (!node.local || !isRectangular(node.collection?.type)) return super.stmtForEach(node);
+    return this.scoped(() => {
+      const type = node.collection.type, span = this.span(node.syntax);
+      const array = this.holder(this.imageType(type, node.syntax), 'array'), index = this.holder('int', 'index');
+      const lengths = Array.from({length: type.rank}, () => this.holder('int', 'length'));
+      const start = [array.init(this.expression(node.collection), span), index.init(integer(0)),
+        ...lengths.map((length, dimension) => length.init(arrayCall('GetLength', array.read(), [integer(dimension)])))];
+      const indices = lengths.map((length, dimension) => {
+        const stride = lengths.slice(dimension + 1).map(item => item.read()).reduce((a, b) => n.binary('*', a, b, 'int'), integer(1));
+        return n.binary('%', n.binary('/', index.read(), stride, 'int'), length.read(), 'int');
+      });
+      const element = rectangularElement(array.read(), indices, this.imageType(type.elementType, node.syntax));
+      const body = this.scoped(() => [...this.declareVariable(node.local, element, span), this.embedded(node.body)]);
+      return [...start, {kind: 'ForStatement', syntax: span, locals: [], initializer: null,
+        condition: n.binary('<', index.read(), n.arrayLength(array.read()), 'bool'), body,
+        increment: n.assign(index.read(), n.binary('+', index.read(), integer(1), 'int')), labels: []}];
+    });
+  }
+};

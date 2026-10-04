@@ -3,15 +3,17 @@ import {normalizeCallType, parseFunctionPointerType, verifiedStackBound} from '@
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {sourceStackSlots} from './source-stack-size.js';
-import {valueLayout} from './value-layout.js';
+import {managedValueLayout} from './value-layout.js';
 import {isAggregateType} from './value-types.js';
+import {isVarargsStorage} from './varargs-storage.js';
 
 const budgets = new WeakMap();
 const slotBytes = 8;
 const frameHeaderBytes = 16;
+const retainedReservations = 32;
 const terminal = new Set(['completed', 'faulted', 'canceled']);
 
-/** Optional VM-wide logical managed stack bytes; omitted preserves the existing policy. */
+/** VM-wide logical managed stack bytes; a host may remove the live option to disable this quota. */
 export function stackByteLimit(options) {
   const limit = options.maxStackBytes;
   if (limit === undefined) return undefined;
@@ -29,27 +31,33 @@ function overflow() {
 
 function storageBytes(vm, type) {
   // Custom modifiers affect access/call contracts, not physical storage width.
-  const name = normalizeCallType(type).replace(/\s+mod(?:req|opt)\([^)]*\)/g, '').replace(/\s+pinned$/, '');
+  // Optional packets already carry closed MethodTables; authenticate ownership
+  // before reading the name rather than passing an object to the text parser.
+  const declared = typeof type === 'string' ? type : vm.heap.methodTables.get(type).name;
+  const name = normalizeCallType(declared).replace(/\s+mod(?:req|opt)\([^)]*\)/g, '').replace(/\s+pinned$/, '');
   // Function-pointer signatures describe code, not a MethodTable name. Their
   // pointee arguments (including arrays/generics) do not affect physical width.
   if (parseFunctionPointerType(name)) return Math.max(slotBytes, vm.heap.methodTables.nativeIntBits / 8);
   const table = vm.inspector ? vm.typeSystem.table(name) : vm.heap.methodTables.get(name);
-  const layout = table.flags.nullable || vm.inspector && isAggregateType(table);
-  const bytes = layout ? valueLayout(vm, table).size : table.flags.valueType ? table.valueSize : slotBytes;
+  // These owned capability records have explicit logical slot widths, not a
+  // raw CLI value layout. Keep sizeof and aggregate storage admission separate.
+  const layout = !isVarargsStorage(table) && (table.flags.nullable || vm.inspector && isAggregateType(table));
+  const bytes = layout ? managedValueLayout(vm, table).size : table.flags.valueType ? table.valueSize : slotBytes;
   if (!Number.isSafeInteger(bytes) || bytes < 0) throw new TypeError('Invalid managed stack storage size');
   return Math.max(slotBytes, Math.ceil(bytes / slotBytes) * slotBytes);
 }
 
 function newBudget(vm) {
   return {epoch: executionCodeState(vm), report: vm.report, valueLimit: vm.options.maxStackValues ?? 65536,
-    imageMethods: vm.image?.methods, methods: new WeakMap(), frames: new Map(), total: 0};
+    imageMethods: vm.image?.methods, methods: new WeakMap(), frames: new WeakMap(), total: 0, freeReservations: []};
 }
 
 function methodSize(vm, budget, method) {
   const cil = !!vm.inspector, code = cil ? method.instructions : method.code, signature = method.signature;
   let entry = budget.methods.get(method);
   if (entry && entry.code === code && entry.handlers === method.handlers && entry.capacity === method.maxStack &&
-      entry.signature === signature && entry.parameters === signature?.parameters && entry.locals === method.locals) return entry;
+      entry.signature === signature && entry.parameters === signature?.parameters && entry.locals === method.locals &&
+      entry.localCount === method.locals.length && entry.parameterCount === signature?.parameters.length) return entry;
   let capacity;
   if (cil) {
     const bound = verifiedStackBound(vm.inspector, vm.report, method);
@@ -66,24 +74,33 @@ function methodSize(vm, budget, method) {
   for (const local of method.locals) bytes += storageBytes(vm, cil ? local : local.type);
   if (!Number.isSafeInteger(bytes) || bytes < frameHeaderBytes) throw new TypeError('Invalid managed frame size');
   entry = {code, handlers: method.handlers, capacity: method.maxStack, signature,
-    parameters: signature?.parameters, locals: method.locals, arguments: arguments_, bytes};
+    parameters: signature?.parameters, parameterCount: signature?.parameters.length,
+    locals: method.locals, localCount: method.locals.length, arguments: arguments_, bytes};
   budget.methods.set(method, entry);
   return entry;
 }
 
-function frameBytes(vm, budget, method, arguments_, locals = method.locals.length) {
+function frameBytes(vm, budget, method, arguments_, locals = method.locals.length, optionalArguments) {
   const entry = methodSize(vm, budget, method);
   const extra = vm.inspector
     ? Math.max(0, arguments_ - entry.arguments) + Math.max(0, locals - method.locals.length)
     : Math.max(0, Math.max(arguments_, locals) - method.locals.length);
-  const bytes = entry.bytes + extra * slotBytes;
+  let bytes = entry.bytes + extra * slotBytes;
+  if (optionalArguments) {
+    if (!Array.isArray(optionalArguments) || optionalArguments.length > extra) {
+      throw new TypeError('Invalid optional managed stack metadata');
+    }
+    // Extra slots already reserve eight bytes each. Widen only the optional
+    // slots using their closed call-site types; a byref remains one slot.
+    for (const item of optionalArguments) bytes += storageBytes(vm, item.type) - slotBytes;
+  }
   if (!Number.isSafeInteger(bytes)) throw new TypeError('Invalid managed frame size');
   return bytes;
 }
 
 function existingFrameBytes(vm, budget, frame) {
   const method = frame.method ?? vm.image.methods[frame.methodId];
-  return frameBytes(vm, budget, method, frame.args?.length ?? 0, frame.locals.length);
+  return frameBytes(vm, budget, method, frame.args?.length ?? 0, frame.locals.length, frame.varargs);
 }
 
 function visitFrames(execution, visit) {
@@ -125,17 +142,21 @@ function budgetFor(vm) {
 }
 
 /** Reserve before pool allocation. The ticket supports rollback if construction fails. */
-export function reserveStackFrame(vm, method, argumentCount) {
+export function reserveStackFrame(vm, method, argumentCount, optionalArguments) {
   const limit = stackByteLimit(vm.options);
   if (limit === undefined) {
     budgets.delete(vm);
     return null;
   }
   const budget = budgetFor(vm);
-  const bytes = frameBytes(vm, budget, method, argumentCount);
+  const bytes = frameBytes(vm, budget, method, argumentCount, method.locals.length, optionalArguments);
   if (bytes > limit - budget.total) throw overflow();
   budget.total += bytes;
-  return {budget, bytes, active: true};
+  const ticket = budget.freeReservations.pop() ?? {budget: null, bytes: 0, active: false};
+  ticket.budget = budget;
+  ticket.bytes = bytes;
+  ticket.active = true;
+  return ticket;
 }
 
 export function commitStackFrame(ticket, frame) {
@@ -148,6 +169,16 @@ export function cancelStackFrame(ticket) {
   if (!ticket?.active) return;
   ticket.budget.total -= ticket.bytes;
   ticket.active = false;
+}
+
+/** End the reservation scope after every possible commit/rollback; callers must not retain a released ticket. */
+export function releaseStackReservation(ticket) {
+  if (!ticket?.budget) return;
+  const budget = ticket.budget;
+  cancelStackFrame(ticket);
+  ticket.budget = null;
+  ticket.bytes = 0;
+  if (budget.freeReservations.length < retainedReservations) budget.freeReservations.push(ticket);
 }
 
 /** Reconcile a restored/replaced frame, then observe the current host byte limit. */
@@ -169,9 +200,10 @@ export function admitStackBytes(vm, frame) {
 export function releaseStackFrame(vm, frame) {
   const budget = budgets.get(vm);
   const bytes = budget?.frames.get(frame);
-  if (bytes === undefined) return;
+  if (!bytes) return;
   budget.total -= bytes;
-  budget.frames.delete(frame);
+  // Pooled frames reuse the same weak entry; zero is retired, never a live charge.
+  budget.frames.set(frame, 0);
 }
 
 export function clearStackBudget(vm) {

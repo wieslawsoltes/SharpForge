@@ -85,12 +85,11 @@ test('ordinary declaring-type initialization remains reachable and runs before t
   });
 });
 
-test('a required unsupported generic aggregate initializer is not bypassed by sizeof-only admission', () => {
+test('a required generic aggregate initializer still runs before a sizeof-only query', () => {
   withVM(fixture({owner: true, argument: 'int', ownerInitializer: true}), vm => {
     const result = vm.run();
-    assert.equal(result.state, 'faulted');
-    assert.equal(result.fault.name, 'TypeInitializationException');
-    assert.equal(result.fault.innerException.name, 'NotSupportedException');
+    assert.equal(result.state, 'terminated', result.fault?.message);
+    assert.equal(result.returnValue, 4);
   });
 });
 
@@ -130,20 +129,19 @@ for (const [name, query] of [
     writer.op('ldnull').op('unbox.any', context.typeSpec('!!0')).op('pop'); sizeofBody('!!0')(writer, context);
   }}],
   ['constant body', {body: writer => writer.op('ldc.i4.4').op('ret')}]
-]) test(`sizeof-only admission does not admit ${name} bodies`, () => {
+]) test(`sizeof-only classification excludes ${name} bodies after general aggregate admission`, () => {
   const bytes = fixture({query}), inspector = new AssemblyInspector(bytes);
   const method = [...inspector.methods.values()].find(method => method.name === 'Size');
   assert.equal(isSizeOfOnlyMethod(inspector, method.token), false);
-  const report = verifyCilAssembly(inspector);
-  assert.equal(report.success, false);
-  assert(report.issues.some(issue => /Struct generic arguments/.test(issue.message)));
 });
 
-test('a nonquery on a closed aggregate owner remains rejected', () => {
-  const report = verifyCilAssembly(fixture({owner: true, argument: 'int',
-    query: {body: writer => writer.op('ldc.i4.4').op('ret')}}));
-  assert.equal(report.success, false);
-  assert(report.issues.some(issue => /Generic aggregate owners/.test(issue.message)));
+test('ordinary methods on closed aggregate owners use the general storage profile', () => {
+  withVM(fixture({owner: true, argument: 'int',
+    query: {body: writer => writer.op('ldc.i4.4').op('ret')}}), vm => {
+    const result = vm.run();
+    assert.equal(result.state, 'terminated', result.fault?.message);
+    assert.equal(result.returnValue, 4);
+  });
 });
 
 test('sizeof-only classification never replaces maxstack, token or generic operand validation', () => {
@@ -209,6 +207,9 @@ test('query admission follows canonical body and execution epoch instead of a st
     invalidateExecutionCode(vm, 'committed-query-edit');
     assert.notEqual(instantiatedMethod(vm, token, null, ['Cell`1<int>']), first);
     vm.inspector = new AssemblyInspector(fixture({query: {body: writer => writer.op('ldc.i4.4').op('ret')}}));
-    assert.throws(() => instantiatedMethod(vm, token, null, ['Cell`1<int>']), {name: 'NotSupportedException'});
+    assert.equal(isSizeOfOnlyMethod(vm.inspector, token), false);
+    const changed = instantiatedMethod(vm, token, null, ['Cell`1<int>']);
+    assert.notEqual(changed, first);
+    assert.equal(changed.signature.returnType, 'int');
   });
 });

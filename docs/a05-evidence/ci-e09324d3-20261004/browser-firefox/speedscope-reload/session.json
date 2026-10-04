@@ -1,0 +1,11 @@
+{
+  "suite": "speedscope-reload",
+  "passed": false,
+  "engine": "firefox",
+  "cspViolations": [],
+  "browser": "155.0",
+  "executable": "playwright-managed",
+  "mode": "Official Speedscope UI file import",
+  "seconds": 16.605160467000005,
+  "diagnosticErrors": []
+}

@@ -3,7 +3,7 @@ import {
   float, floatBinary, floatCompare, int64Binary, int64Compare, int64Unary,
   uint32Binary, uint32Compare, smallInteger, smallIntegerIndirect, convert, number, isNumber
 } from '@sharpforge/bytecode';
-import {isNativeInteger, nativeInteger, nativeIntegerBits, nativeBinary, nativeOperandBits, isNativeStorageType} from './native-int.js';
+import {isNativeInteger, nativeInteger, nativeIntegerBits, nativeBinary, nativeOperandBits, isNativeStorageType, isNativeNull} from './native-int.js';
 export {float, convert, number, isNumber} from '@sharpforge/bytecode';
 
 /** Pure operations on CIL evaluation-stack values.
@@ -25,10 +25,11 @@ export const defaults = (input, context) => { const type=numericAliases[input]??
 export function compare(a, b, op, unsigned = false, context = {}, branch = false) {
   const {fault: createFault = fault, isReference = reference} = context;
   if (isReference(a) || isReference(b) || a === null || b === null) {
-    const equal = a === b || isReference(a) && isReference(b) && a.h === b.h && a.g === b.g;
+    const equal = a === b || a === null && isNativeNull(b, context) || b === null && isNativeNull(a, context) ||
+      isReference(a) && isReference(b) && a.h === b.h && a.g === b.g;
     if (op === 'eq') return equal;
     if (op === 'ne') return !equal;
-    if (unsigned && op === 'gt' && b === null) return a !== null;
+    if (unsigned && op === 'gt' && b === null) return !equal;
     throw createFault('InvalidProgramException', 'Invalid reference comparison');
   }
   if (!isNumber(a) || !isNumber(b)) throw createFault('InvalidProgramException', 'Numeric comparison expected');

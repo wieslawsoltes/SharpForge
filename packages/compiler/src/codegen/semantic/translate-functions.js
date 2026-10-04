@@ -12,6 +12,7 @@ import { TypeKind } from '../../symbols/types.js';
 import { displayClassName, lambdaMethodName, localFunctionName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { n } from './node-factory.js';
 import { Frame } from './frame.js';
+import {delegateInfo} from './framework-delegates.js';
 
 /** Class mixin: lambdas, local functions, delegate creation and combination. */
 export const FunctionTranslation = Base =>
@@ -53,9 +54,9 @@ export const FunctionTranslation = Base =>
       return frame;
     }
     /** A lambda converted to the delegate type `type`. */
-    lambda(node, type) {
+    lambda(node, type, frameworkType = null) {
       if (!node.body) return this.unsupported('a lambda without a bound body', node.syntax);
-      const info = this.g.delegates.classOf(type, node.syntax),
+      const info = delegateInfo(this, type, node.syntax, frameworkType),
         root = this.frame.root,
         name = lambdaMethodName(root.name, root.ordinal, root.lambdas++),
         captures = this.capturesOf(node),
@@ -147,10 +148,10 @@ export const FunctionTranslation = Base =>
       return n.call(entry.method, null, [...args, ...this.extraArguments(entry)]);
     }
     // ---- method groups ----
-    methodGroupDelegate(node) {
+    methodGroupDelegate(node, frameworkType = null) {
       const group = node.operand,
         method = node.conversion.method ?? node.method ?? group.selected ?? (group.methods?.length === 1 ? group.methods[0] : null),
-        info = this.g.delegates.classOf(node.type, node.syntax);
+        info = delegateInfo(this, node.type, node.syntax, frameworkType);
       if (!method) return this.unsupported('this method group conversion', node.syntax);
       const definition = (method.reducedFrom ?? method).originalDefinition ?? method.reducedFrom ?? method;
       // The receiver of an extension method is its first argument: the delegate binds it (codegen/semantic/delegates.js).

@@ -96,10 +96,11 @@
         },
         {
           "end": 10,
+          "handlerEnd": 16,
           "slot": 1,
           "start": 0,
           "target": 11,
-          "type": "Exception"
+          "type": "System.Exception"
         },
         {
           "end": 16,
@@ -116,7 +117,7 @@
           "hidden": true,
           "name": "$t0",
           "slot": 0,
-          "type": "Exception"
+          "type": "System.Exception"
         },
         {
           "declaredAt": 157,

@@ -1,0 +1,24 @@
+{
+  "id": "dispatch",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-dispatch.js",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/dispatch/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "dispatch/evidence",
+  "report": "dispatch/result.json",
+  "startedAt": "2026-10-04T19:16:33.573Z",
+  "durationMs": 2839.9794589999947,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "dispatch/stdout.log",
+  "stderr": "dispatch/stderr.log",
+  "finishedAt": "2026-10-04T19:16:36.414Z"
+}

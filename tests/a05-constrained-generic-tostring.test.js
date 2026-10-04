@@ -174,10 +174,14 @@ test('a null receiver retains the managed callvirt fault', () => {
   }}), vm => assert.equal(vm.run().fault?.name, 'NullReferenceException'));
 });
 
-test('a closed generic receiver remains outside this leaf even when its base satisfies the bound', () => {
+test('a closed generic receiver retains its declaring instance when its base satisfies the bound', () => {
   withVM(fixture({main(writer, context, call) {
     writer.op('ldloca.s', 5).op('call', call('GenericReceiver`1<int>')).op('ret');
-  }}), vm => assert.equal(vm.run().fault?.name, 'NotSupportedException'));
+  }}), vm => {
+    vm.top.locals[5] = vm.heap.object(vm.typeSystem.table('GenericReceiver`1<int>'), [0]);
+    assert.equal(vm.run().state, 'terminated', vm.fault?.message);
+    assert.equal(vm.format(vm.returnValue), 'GenericReceiver`1[System.Int32]');
+  });
 });
 
 test('the original reference stays rooted during a generic override host callback', () => {
@@ -206,10 +210,17 @@ for (const [label, options] of [
   ['struct', {bound: 'Value'}], ['value flag', {parameterFlags: 8}], ['interface-only', {bound: 'IMarker'}],
   ['external', {bound: 'System.Exception'}], ['Object-only', {bound: 'System.Object'}],
   ['generic base', {bound: 'GenericReceiver`1<int>'}], ['two class bounds', {extraBound: 'Alpha'}]
-]) test(`${label} constraint cannot provide the bounded Object.ToString proof`, () => {
-  const report = verifyCilAssembly(fixture(options));
-  assert.equal(report.success, false);
-  assert(report.issues.some(issue => issue.message.includes('base-class bound')), JSON.stringify(report.issues));
+]) test(`${label} Object constraint admits symbolic code while retaining closed-argument constraints`, () => {
+  const bytes = fixture(options), report = verifyCilAssembly(bytes);
+  assert.equal(report.success, true, JSON.stringify(report.issues));
+  const admitted = ['unconstrained', 'class-only', 'Object-only'].includes(label);
+  withVM(bytes, vm => {
+    const result = vm.run();
+    if (admitted) {
+      assert.equal(result.state, 'terminated', result.fault?.message);
+      assert.equal(vm.format(vm.returnValue), 'Beta');
+    } else assert.equal(result.fault?.name, 'ArgumentException');
+  });
 });
 
 for (const [owner, variable] of [[false, '!!1'], [true, '!1'], [false, '!0'], [true, '!!0']]) {

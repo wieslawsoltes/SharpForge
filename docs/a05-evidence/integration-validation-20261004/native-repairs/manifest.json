@@ -1,0 +1,508 @@
+{
+  "format": "SharpForge.A05ValidationCheckpoint/1",
+  "scope": "Thirteen independent overlapping validation runs; counts must not be summed. Native/browser protocol tests do not imply fresh CLR/browser execution.",
+  "revisionProvenance": "Full revisions, trees, argv, cwd and resource settings supplied by the root validation journal. Logs do not independently prove clean tracked trees or full environment fingerprints.",
+  "journalUpdate": "journal.original.json is byte-for-byte source. journal.json changes only the completed 3fd119f21 run status/exit/result with coordinator confirmation and log summary.",
+  "journalFiles": [
+    {
+      "file": "journal.original.json",
+      "sha256": "d6a1efb251a7df4138686595c190c3f1a970df2487e9a9e8645a06f9a3ff2651",
+      "bytes": 10089
+    },
+    {
+      "file": "journal.json",
+      "sha256": "905880b6cd907c42a896323881356856606356c105f29b203e5b6420d1f08578",
+      "bytes": 10550
+    }
+  ],
+  "records": [
+    {
+      "file": "a05-native-repairs-first-5cd5b1d05.log",
+      "sha256": "cc9d34dab90f72515f6a805c70e21b1ad4afed1f252ef4e97d955086ad73b7fe",
+      "bytes": 11424,
+      "revision": "5cd5b1d05de242a3b760658841de624159153aed",
+      "tree": "d524618ba70b0f910d45857ab8cd36c5300270fa",
+      "command": [
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-roslyn-async-admission.test.js",
+        "tests/a05-29-async.test.js",
+        "tests/a05-29-iterator-dispatch.test.js",
+        "tests/a05-02-generic-calls.test.js",
+        "tests/a05-type-tables.test.js",
+        "tests/a05-unsafe-unbox.test.js",
+        "tests/a05-unsafe-unbox-native-replay.test.js",
+        "tests/a05-nullable-constrained-object.test.js",
+        "tests/a05-native-outcome.test.js",
+        "tests/a05-native-qualification.test.js",
+        "tests/a05-exception-signature-aliases.test.js"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "kind": "node-tests",
+      "tests": 72,
+      "passed": 70,
+      "failed": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 8199.239774,
+      "exitCode": 1,
+      "result": "failed"
+    },
+    {
+      "file": "a05-native-browser-adjacent-b9bedea32.log",
+      "sha256": "9c110e10cef5f5ab03b66530a7ead06ae0e46365f74c504140b44b34b4ddb1ca",
+      "bytes": 17271,
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58",
+      "command": [
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-browser-qualification.test.js",
+        "tests/a05-unsafe-unbox.test.js",
+        "tests/a05-unsafe-unbox-native-replay.test.js",
+        "tests/a05-value-boxing.test.js",
+        "tests/a05-value-instance-calls.test.js",
+        "tests/a05-enum-unboxing.test.js",
+        "tests/a05-memory-intrinsic-profile.test.js",
+        "tests/a05-nullable-constrained-object.test.js",
+        "tests/a05-nullable-cil.test.js",
+        "tests/a05-nullable-mutable-text.test.js",
+        "tests/a05-nullable-interior-address.test.js",
+        "tests/a05-source-nullable.test.js",
+        "tests/a05-constrained-object-tostring.test.js",
+        "tests/a05-constrained-object-slots.test.js",
+        "tests/a05-object-value-continuations.test.js",
+        "tests/a05-object-string-return.test.js",
+        "tests/a05-source-legacy-floating-conversion.test.js",
+        "tests/a05-integer-literal-profile-boundaries.test.js",
+        "tests/a05-numeric-oracle-source.test.js"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "kind": "node-tests",
+      "tests": 195,
+      "passed": 195,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 17678.489276,
+      "exitCode": 0,
+      "result": "passed"
+    },
+    {
+      "file": "a05-browser-contracts-b9bedea32.log",
+      "sha256": "6273232de4d3ef7acd4ecafa5c86beeeb974f56586b21089a2990b3f72facbe6",
+      "bytes": 103,
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/fixtures/a05-browser",
+        "-p",
+        "test_contract.py"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "kind": "python-unittest",
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "errors": 0,
+      "durationSeconds": 0.001,
+      "exitCode": 0,
+      "result": "passed"
+    },
+    {
+      "file": "a05-browser-launch-matrix-b9bedea32.log",
+      "sha256": "719f996b2fb6295f01abc2aa424fcbaecb9b3330000cad9dcca18e1aaf2e3ca8",
+      "bytes": 1197,
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58",
+      "command": [
+        "env",
+        "PYTHONPATH=tests",
+        "python",
+        "-m",
+        "unittest",
+        "conformance.browser.test_launch",
+        "conformance.browser.test_matrix"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "note": "The six launch tests passed; matrix module import failed because this invocation omitted the browser script directory from sys.path. The discovery invocation below corrects the command.",
+      "kind": "python-unittest",
+      "tests": 7,
+      "passed": 6,
+      "failed": 0,
+      "errors": 1,
+      "durationSeconds": 0.01,
+      "exitCode": 1,
+      "result": "failed"
+    },
+    {
+      "file": "a05-npm-check-b9bedea32.log",
+      "sha256": "9dbeb7f59a3e519388bbea4a4d82b1b9497df28f55d412359d33e9187f02908f",
+      "bytes": 1740,
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "note": "Manifests and syntax passed. Static import failures retain real replay/policy gaps and two locally sparse planning files; those tracked planning files were then materialized without content changes.",
+      "kind": "static-checks",
+      "syntaxModules": 4609,
+      "syntaxErrors": 0,
+      "exitCode": 1,
+      "result": "failed"
+    },
+    {
+      "file": "a05-browser-python-discover-b9bedea32.log",
+      "sha256": "3d3f9a0cba893057b5ce5780424d189c7560457670dd7481de937d435d6b1e8e",
+      "bytes": 2749,
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/conformance/browser",
+        "-p",
+        "test_*.py"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "note": "Ten tests passed; two modules failed import because local Python lacks Playwright. They are not passing or skipped. CI now installs its existing pinned test requirements before this gate.",
+      "kind": "python-unittest",
+      "tests": 12,
+      "passed": 10,
+      "failed": 0,
+      "errors": 2,
+      "durationSeconds": 10.09,
+      "exitCode": 1,
+      "result": "failed"
+    },
+    {
+      "file": "a05-browser-python-matrix-b9bedea32.log",
+      "sha256": "4f504c6c91b61e7a1448da434cab9443fdf3e8714ab80482a44316b956576975",
+      "bytes": 103,
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/conformance/browser",
+        "-p",
+        "test_matrix.py"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "kind": "python-unittest",
+      "tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "errors": 0,
+      "durationSeconds": 10.088,
+      "exitCode": 0,
+      "result": "passed"
+    },
+    {
+      "file": "a05-native-nullable-decimal-b9bedea32.json",
+      "sha256": "8f54772239237cb6547579d27bb7b7a3a2692e38769595540189a6d3066027f2",
+      "bytes": 2402,
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58",
+      "command": [
+        "node",
+        "--input-type=module"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "note": "Ad-hoc stdin replay compared retained SDK8 nullable and decimal DLLs at both native widths to their verified captured native stdout/exit codes. Report retains assembly hashes and revision. Original stdin command remains in root tool history; no standalone runner was retained, so this is supplemental evidence to fresh CI.",
+      "kind": "supplemental-retained-dll-replay",
+      "cases": 4,
+      "passedCases": 4,
+      "reproducibility": "Original stdin program was not retained as a standalone runner; supplemental evidence only.",
+      "exitCode": 0,
+      "result": "passed"
+    },
+    {
+      "file": "a05-native-async-layout-25a771ed3.log",
+      "sha256": "5ccb6e626ec593efe8e5f8175a142f23b461533a46c64f727ac67bf558862344",
+      "bytes": 12201,
+      "revision": "25a771ed3ef2d91bc09ef4dea48d62eae3ff4f63",
+      "tree": "511d303db8fc4506a5469d7abcf0e1e8a2d37366",
+      "command": [
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-managed-state-machine-layout.test.js",
+        "tests/a05-roslyn-async-admission.test.js",
+        "tests/a05-29-async.test.js",
+        "tests/a05-29-iterator-dispatch.test.js",
+        "tests/a05-value-storage.test.js",
+        "tests/a05-value-layout-sizeof.test.js",
+        "tests/a05-nullable-cil.test.js",
+        "tests/a05-constrained-generic-value.test.js",
+        "tests/a05-native-runtime-probe.test.js"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "kind": "node-tests",
+      "tests": 103,
+      "passed": 101,
+      "failed": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 8198.930785,
+      "exitCode": 1,
+      "result": "failed"
+    },
+    {
+      "file": "a05-npm-check-core-repairs-r2.log",
+      "sha256": "b2cef15309eb86232dd19a10688343c9e04e054ad37b4183075091b4dbb074f2",
+      "bytes": 382,
+      "revision": "e8b04b03a07033c7332b3a3f4a0ad013024ec6ec",
+      "tree": "ee1e92760abe35c460aa9b993c84f34b2a44ff78",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "kind": "static-checks",
+      "syntaxModules": 4615,
+      "syntaxErrors": 0,
+      "exitCode": 0,
+      "result": "passed"
+    },
+    {
+      "file": "a05-first-chance-integrated-3fd119f21.log",
+      "sha256": "83f625a58bdb9759e6a3031776d24915c174e201fccdd53921174b0f66aae3be",
+      "bytes": 29504,
+      "revision": "3fd119f21672637fea3c67841f06236eaf33d6f7",
+      "tree": "95ed4faaa867cbe36cc1a292e01047bd52a2d37f",
+      "command": [
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-first-chance-unwind-policy.test.js",
+        "tests/a05-exception-event-policy.test.js",
+        "tests/a05-source-appdomain-events.test.js",
+        "tests/a05-source-exception-events.test.js",
+        "tests/a05-continuation-root-inventory.test.js",
+        "tests/a05-unsafe-unbox.test.js",
+        "tests/a05-unsafe-unbox-native-replay.test.js",
+        "tests/a05-managed-state-machine-layout.test.js",
+        "tests/a05-roslyn-async-admission.test.js",
+        "tests/a05-native-runtime-probe.test.js",
+        "tests/a05-native-outcome.test.js",
+        "tests/a05-native-qualification.test.js",
+        "tests/fixtures/a05-memory/replay.mjs"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "note": "Nine new policy snapshot ownership failures under repair; one standalone memory replay lacked generated native.json. Existing event, async, nullable layout and Unsafe cases passed in this cohort.",
+      "kind": "node-tests",
+      "tests": 117,
+      "passed": 107,
+      "failed": 10,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 12375.325366,
+      "exitCode": 1,
+      "result": "failed"
+    },
+    {
+      "file": "a05-main197-harness-focused-r1.log",
+      "sha256": "9541204e1b8cf618bde620348da5a2f30e24d0ace3ec4260017127d9f93f6be5",
+      "bytes": 2096,
+      "revision": "abc0b1f0ff038e528cd873cb61571dbfeb62622e",
+      "tree": "2883dd5e76c97ee89401801b842fda58f96f11a4",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-float-iteration-criterion.test.js",
+        "tests/a05-float-allocation-qualification.test.js",
+        "tests/a05-varargs-unsupported.test.js",
+        "tests/a05-delegate-protocol.test.js",
+        "tests/a05-native-provenance.test.js",
+        "tests/a05-native-plan.test.js",
+        "tests/a05-browser-qualification.test.js"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "note": "Only four existing files executed (18 tests). Node24 silently ignored the three nonexistent paths a05-varargs-unsupported.test.js, a05-delegate-protocol.test.js and a05-native-plan.test.js. Their intended coverage was supplied by the separate admission cohort, not this passing exit.",
+      "kind": "node-tests",
+      "tests": 18,
+      "passed": 18,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 4168.265358,
+      "exitCode": 0,
+      "result": "passed"
+    },
+    {
+      "file": "a05-main197-admission-focused-r1.log",
+      "sha256": "7661538980ba31d645c90d696870a3652490b5ec81c125420408a00f549cc381",
+      "bytes": 6818,
+      "revision": "abc0b1f0ff038e528cd873cb61571dbfeb62622e",
+      "tree": "2883dd5e76c97ee89401801b842fda58f96f11a4",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-varargs-unsupported-admission.test.js",
+        "tests/a05-managed-delegate-protocol.test.js",
+        "tests/a05-native-qualification.test.js",
+        "tests/a05-29-async.test.js",
+        "tests/compiler-nullable-constraints.test.js",
+        "tests/compiler-reference-assembly.test.js",
+        "tests/a03-22-reference-assemblies.test.js"
+      ],
+      "wrapper": [
+        "node",
+        "scripts/limited.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+      "kind": "node-tests",
+      "tests": 65,
+      "passed": 65,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 7430.259947,
+      "exitCode": 0,
+      "result": "passed"
+    }
+  ]
+}

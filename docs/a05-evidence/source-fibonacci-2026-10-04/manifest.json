@@ -1,0 +1,30 @@
+{
+  "revision": "48c62243ef4cf614dfcafdb7af9a7ce360b643c4",
+  "files": [
+    {
+      "file": "a05-fibonacci-48c62243.json",
+      "bytes": 62286,
+      "sha256": "79733b04a0aa5ef92e8e736a7bce8f4ad04e306014cbf1a2e37a47f3feedf617"
+    },
+    {
+      "file": "a05-fibonacci-48c62243.log",
+      "bytes": 127,
+      "sha256": "3d3e38a3f8eee38bbeef85345ee12774a224ae2d17951a9627df6adbbcf86f2c"
+    },
+    {
+      "file": "a05-fibonacci-48c62243-100.json",
+      "bytes": 225678,
+      "sha256": "89386d7bc7538e710f2d879616e35067dabdc2016c78da7dd1cedd674caff737"
+    },
+    {
+      "file": "a05-fibonacci-48c62243-100.log",
+      "bytes": 225,
+      "sha256": "a56c6e9191d057eb14b4bbd5fbb6b497a39acef62ba60e67e87a5dcc7ffd079c"
+    },
+    {
+      "file": "a05-prepared-frame-pool-48c62243.log",
+      "bytes": 12064,
+      "sha256": "3f7a24a3e9cf17ff3d8c614fc98c2a6950fa6d2bb41fcbc08f927ee3adb0f5fb"
+    }
+  ]
+}

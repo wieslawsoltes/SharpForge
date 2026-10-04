@@ -1,0 +1,31 @@
+{
+  "id": "varargs",
+  "status": "unsupported",
+  "command": {
+    "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05-source-varargs",
+      "--managed-varargs",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/home/runner/work/SharpForge/SharpForge/artifacts/a05-native/varargs/evidence"
+    ],
+    "cwd": "/home/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "varargs/evidence",
+  "report": "varargs/result.json",
+  "startedAt": "2026-10-04T18:38:08.312Z",
+  "durationMs": 3436.6902679999985,
+  "exitCode": 0,
+  "signal": null,
+  "outcomeReport": "varargs/evidence/qualification.json",
+  "reason": "Observed CLR managed-varargs rejection; VM authored trace passed without native parity.",
+  "stdout": "varargs/stdout.log",
+  "stderr": "varargs/stderr.log",
+  "finishedAt": "2026-10-04T18:38:11.751Z"
+}

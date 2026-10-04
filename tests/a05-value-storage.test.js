@@ -144,7 +144,6 @@ test('reference-free struct storage rejects a managed handle disguised as an imm
 });
 
 for (const [name, changes, attribute] of [
-  ['reference-containing', {fields: [{name: 'Reference', type: 'object'}]}],
   ['auto-layout', {flags: 0x100101}],
   ['readonly', {}, 'System.Runtime.CompilerServices.IsReadOnlyAttribute'],
   ['byref-like', {}, 'System.Runtime.CompilerServices.IsByRefLikeAttribute']

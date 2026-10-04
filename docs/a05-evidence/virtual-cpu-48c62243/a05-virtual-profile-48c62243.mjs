@@ -1,0 +1,104 @@
+import {Session} from 'node:inspector';
+import {mkdir, writeFile} from 'node:fs/promises';
+import {CilVirtualMachine, prepareExecution} from './a05-numeric-qualification/packages/runtime/src/index.js';
+import {compileFixture, assertOutput} from './a05-numeric-qualification/bench/vm/operations.js';
+import {qualificationTargets} from './a05-numeric-qualification/bench/vm/qualification-fixtures.js';
+import {qualificationVmOptions, runQualificationVM} from './a05-numeric-qualification/bench/vm/qualification-execution.js';
+
+const output = '/workspace/scratch/42f7738360b9/a05-virtual-cpu-48c62243';
+const definition = qualificationTargets().find(target => target.id === 'virtual-cache');
+const artifact = compileFixture(definition.fixture);
+const signal = new AbortController().signal;
+const deadline = performance.now() + 120000;
+const session = new Session();
+session.connect();
+const post = (method, params = {}) => new Promise((resolve, reject) => session.post(method, params,
+  (error, result) => error ? reject(error) : resolve(result)));
+await post('Profiler.enable');
+await post('Profiler.setSamplingInterval', {interval: 100});
+await mkdir(output, {recursive: true});
+
+const contexts = {};
+for (const mode of ['baseline', 'candidate']) {
+  const options = {...qualificationVmOptions({nativeBits: 64}), ...definition[mode + 'Options']};
+  const vm = new CilVirtualMachine(artifact.assembly, options);
+  prepareExecution(vm);
+  vm.heap.collect();
+  contexts[mode] = {vm, entry: vm.top.method.token, options};
+}
+
+function reenter(context) {
+  const {vm, entry} = context;
+  if (vm.state !== 'terminated') return;
+  vm.output.length = 0;
+  vm.outputCharacters = 0;
+  vm.returnValue = null;
+  vm.state = 'running';
+  vm.call(entry, []);
+}
+
+async function observe(context, profile) {
+  reenter(context);
+  globalThis.gc();
+  const before = context.vm.instructions;
+  if (profile) await post('Profiler.start');
+  await runQualificationVM(context.vm, deadline, signal);
+  const captured = profile ? (await post('Profiler.stop')).profile : null;
+  assertOutput(context.vm, definition.fixture);
+  return {profile: captured, instructions: context.vm.instructions - before};
+}
+
+const summary = {revision: '48c62243ef4cf614dfcafdb7af9a7ce360b643c4', kind: 'V8 CPU diagnostic, not performance qualification',
+  samplingIntervalMicroseconds: 100, observations: 8, warmupPairs: 4, fixture: definition.fixture,
+  options: Object.fromEntries(Object.entries(contexts).map(([mode, context]) => [mode, context.options])), modes: {}};
+try {
+  for (let index = 0; index < 4; index++) {
+    for (const mode of index % 2 ? ['candidate', 'baseline'] : ['baseline', 'candidate']) await observe(contexts[mode], false);
+  }
+  for (const mode of ['candidate']) {
+    const functions = new Map();
+    let totalMicroseconds = 0, totalSamples = 0, instructions = 0;
+    for (let index = 0; index < 8; index++) {
+      const sample = await observe(contexts[mode], true);
+      instructions += sample.instructions;
+      await writeFile(`${output}/${mode}-${String(index).padStart(2, '0')}.cpuprofile`, JSON.stringify(sample.profile));
+      const nodes = new Map(sample.profile.nodes.map(node => [node.id, node]));
+      const parents = new Map();
+      for (const node of nodes.values()) for (const child of node.children ?? []) parents.set(child, node.id);
+      const key = node => [node.callFrame.url, node.callFrame.functionName, node.callFrame.lineNumber,
+        node.callFrame.columnNumber].join('|');
+      const row = node => {
+        const identity = key(node);
+        let result = functions.get(identity);
+        if (!result) functions.set(identity, result = {...node.callFrame, selfMicroseconds: 0, inclusiveMicroseconds: 0, samples: 0});
+        return result;
+      };
+      for (let offset = 0; offset < sample.profile.samples.length; offset++) {
+        const elapsed = sample.profile.timeDeltas[offset];
+        let node = nodes.get(sample.profile.samples[offset]);
+        totalMicroseconds += elapsed;
+        totalSamples++;
+        row(node).selfMicroseconds += elapsed;
+        row(node).samples++;
+        const seen = new Set();
+        while (node) {
+          const identity = key(node);
+          if (!seen.has(identity)) row(node).inclusiveMicroseconds += elapsed;
+          seen.add(identity);
+          node = nodes.get(parents.get(node.id));
+        }
+      }
+    }
+    const rows = [...functions.values()].map(row => ({...row,
+      selfPercent: row.selfMicroseconds / totalMicroseconds * 100,
+      inclusivePercent: row.inclusiveMicroseconds / totalMicroseconds * 100}));
+    summary.modes[mode] = {totalMicroseconds, totalSamples, instructions,
+      bySelf: rows.sort((a, b) => b.selfMicroseconds - a.selfMicroseconds),
+      byInclusive: [...rows].sort((a, b) => b.inclusiveMicroseconds - a.inclusiveMicroseconds)};
+    process.stdout.write(mode + ': ' + totalSamples + ' samples / ' + instructions + ' guest instructions\n');
+  }
+  await writeFile(`${output}/summary.json`, JSON.stringify(summary, null, 2));
+} finally {
+  for (const {vm} of Object.values(contexts)) vm.stop();
+  session.disconnect();
+}

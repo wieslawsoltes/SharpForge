@@ -1,0 +1,2 @@
+dotnet <temporary-project>/bin/Release/net8.0/Qualification.dll failed: Unhandled exception. System.InvalidProgramException: Vararg calling convention not supported.
+

@@ -40,7 +40,8 @@ export function beginFrameInstruction(vm, frame) {
   if (previous?.epoch === epoch && previous.report === vm.report && previous.method === method &&
       previous.instructions === method.instructions && previous.handlers === method.handlers &&
       previous.capacity === method.maxStack && previous.limit === limit && previous.byteLimit === byteLimit &&
-      previous.signature === method.signature && previous.parameters === method.signature.parameters && previous.locals === method.locals) return;
+      previous.signature === method.signature && previous.parameters === method.signature.parameters && previous.locals === method.locals &&
+      previous.parameterCount === method.signature.parameters.length && previous.localCount === method.locals.length) return;
   admitCilStack(vm, method);
   const bound = boundsFor(vm, method);
   if (bound && frame.stack.length > bound.peak) {
@@ -49,7 +50,8 @@ export function beginFrameInstruction(vm, frame) {
   admitStackBytes(vm, frame);
   frameAdmissions.set(frame, {epoch, report: vm.report, method, verified: bound !== null, instructions: method.instructions,
     handlers: method.handlers, capacity: method.maxStack, limit, byteLimit, signature: method.signature,
-    parameters: method.signature.parameters, locals: method.locals});
+    parameters: method.signature.parameters, parameterCount: method.signature.parameters.length,
+    locals: method.locals, localCount: method.locals.length});
 }
 
 /** Host quotas apply to the reachable peak, not an overestimated CLI header. */
@@ -77,7 +79,9 @@ export function admitStackPush(vm) {
   const verified = admitted?.verified && admitted.report === vm.report && admitted.method === method &&
     admitted.instructions === method.instructions && admitted.handlers === method.handlers &&
     admitted.capacity === method.maxStack && admitted.limit === limit && admitted.signature === method.signature &&
-    admitted.parameters === method.signature.parameters && admitted.locals === method.locals && admitted.epoch === executionCodeState(vm);
+    admitted.parameters === method.signature.parameters && admitted.locals === method.locals &&
+    admitted.parameterCount === method.signature.parameters.length && admitted.localCount === method.locals.length &&
+    admitted.epoch === executionCodeState(vm);
   if (!verified && frame.stack.length >= validStackValueLimit(limit)) {
     throw new ManagedFault('ExecutionLimitException', 'Evaluation stack budget exceeded');
   }

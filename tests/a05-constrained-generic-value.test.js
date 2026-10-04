@@ -165,28 +165,33 @@ test('struct forwarding preserves metadata interface constraints before executio
   withVM(fixture({constraint: 'Other'}), vm => assert.equal(vm.run().fault?.name, 'ArgumentException'));
 });
 
-for (const argument of ['Managed', 'Auto', 'Explicit']) test(`generic admission rejects unsupported or malformed ${argument} struct storage`, () => {
-  withVM(fixture({main(writer, _context, call) {
-    writer.op('ldnull').op('ldc.i4.1').op('call', call(argument)).op('ret');
-  }}), vm => assert.equal(vm.run().fault?.name, argument === 'Explicit' ? 'TypeLoadException' : 'NotSupportedException'));
-});
+for (const [argument, fault] of [['Managed', 'ArgumentException'], ['Auto', 'NotSupportedException'], ['Explicit', 'TypeLoadException']]) {
+  test(`generic admission retains ${argument} layout and interface constraints`, () => {
+    withVM(fixture({main(writer, _context, call) {
+      writer.op('ldnull').op('ldc.i4.1').op('call', call(argument)).op('ret');
+    }}), vm => assert.equal(vm.run().fault?.name, fault));
+  });
+}
 
-test('generic struct layout is not enabled by nongeneric struct admission', () => {
-  const report = verifyCilAssembly(fixture({main(writer, _context, call) {
+test('closed generic struct storage still requires the declared interface constraint', () => {
+  const bytes = fixture({main(writer, _context, call) {
     writer.op('ldnull').op('ldc.i4.1').op('call', call('Generic`1<int>')).op('ret');
-  }}));
-  assert.equal(report.success, false);
-  assert(report.issues.some(issue => issue.message.includes('static Apply<T>')));
+  }});
+  const report = verifyCilAssembly(bytes);
+  assert.equal(report.success, true, JSON.stringify(report.issues));
+  withVM(bytes, vm => assert.equal(vm.run().fault?.name, 'ArgumentException'));
 });
 
 for (const malformed of ['by-value', 'local', 'nested-local', 'nested-signature', 'generic-return',
   'load-value', 'box-value', 'recursive-forward', 'prefix-nop', 'unreachable-storage']) {
-  test(`byref-only admission rejects ${malformed} aggregate use in the canonical body`, () => {
+  test(`byref-only classification excludes ${malformed} aggregate use in the canonical body`, () => {
     const bytes = fixture({malformed}), inspector = new AssemblyInspector(bytes);
     const method = [...inspector.methods.values()].find(method => method.name === 'Apply');
     assert.equal(isByrefStructForwarder(inspector, method.token), false);
-    const report = verifyCilAssembly(inspector);
-    assert.equal(report.success, false);
-    assert(report.issues.some(issue => issue.message.includes('static Apply<T>')));
+    if (malformed === 'prefix-nop') {
+      const report = verifyCilAssembly(inspector);
+      assert.equal(report.success, false);
+      assert(report.issues.some(issue => issue.code === 'IL_PREFIX'));
+    }
   });
 }

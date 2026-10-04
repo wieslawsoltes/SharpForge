@@ -1,11 +1,11 @@
 import {resolveExecutionMethod} from './call-profile.js';
 import {verifyGenericType} from './generic-profile.js';
 import {validateTypePrefixes} from './verify/prefix-constrained.js';
+import {validateMemoryPrefixes} from './verify/prefix-memory.js';
 import {ConstrainedObjectProfile} from './constrained-object-profile.js';
-import {ConstrainedReferenceObjectProfile} from './constrained-reference-object-profile.js';
+import {admitConstrainedObject, verifyObjectCalls} from './constrained-object-admission.js';
 
-const supported = new Set(['volatile.', 'constrained.']);
-const memoryTargets = new Set(['ldfld', 'stfld', 'ldsfld', 'stsfld', 'ldobj', 'stobj']);
+const supported = new Set(['volatile.', 'unaligned.', 'readonly.', 'constrained.', 'tail.']);
 
 /** Executable prefix groups retain their flat debugger offsets and may only be entered at the prefix. */
 export class ExecutionPrefixProfile {
@@ -24,26 +24,12 @@ export class ExecutionPrefixProfile {
     const parameter = prefix.operand >>> 24 === 27 && /^!!?\d+$/.test(name);
     if (parameter) verifyGenericType(this.inspector, name, context);
     const declaration = resolveExecutionMethod(this.inspector, next.operand, context);
-    if (this.objects.primitive(prefix.operand, declaration)) return null;
+    const object = admitConstrainedObject(this, {prefix, descriptor: declaration, method, context}, reachable);
+    if (object !== undefined) return object;
     const type = this.types.get(prefix.operand);
     const base = type?.baseToken ? this.inspector.metadata.typeName(type.baseToken) : null;
     if (!parameter && (!type || !base || type.flags & 0x20 || base === 'System.Enum' || this.genericOwners.has(type.token))) {
       return 'constrained. execution requires a nongeneric class or user-struct TypeDef';
-    }
-    const object = !parameter && this.objects.select(prefix.operand, declaration);
-    if (object) {
-      if (object.target) reachable.push(object.target);
-      reachable.push(...object.initializers);
-      return null;
-    }
-    if (this.objects.declaration(declaration)) {
-      this.references ??= new ConstrainedReferenceObjectProfile(this.inspector, this.objects, this.dispatch);
-      const bound = parameter ? this.references.genericBound(method, prefix.operand) : prefix.operand;
-      if (bound && this.references.select(bound, declaration)) {
-        for (const target of this.references.targets(bound)) reachable.push(target);
-        return null;
-      }
-      if (parameter) return 'Generic Object.ToString requires one concrete nongeneric internal base-class bound';
     }
     const owner = this.types.get(declaration.ownerToken);
     if (!owner || this.genericOwners.has(owner.token) ||
@@ -62,37 +48,32 @@ export class ExecutionPrefixProfile {
   }
 
   verify(method, context, issue, reachable) {
-    if (method.instructions.some(instruction => instruction.name === 'constrained.')) {
-      try {
-        // Reuse the lexical verifier without changing its broader inspection profile.
-        validateTypePrefixes(this.inspector.pe.methodBody(method.token).code, this.inspector.metadata);
-      } catch (error) {
-        issue(method, null, 'IL_PREFIX', error.message);
-        return;
+    verifyObjectCalls(this, method, context, issue, reachable);
+    if (!method.instructions.some(instruction => supported.has(instruction.name))) return;
+    let groups;
+    try {
+      const code = this.inspector.pe.methodBody(method.token).code;
+      groups = validateMemoryPrefixes(code);
+      if (method.instructions.some(instruction => ['constrained.', 'readonly.'].includes(instruction.name))) {
+        validateTypePrefixes(code, this.inspector.metadata);
       }
+    } catch (error) {
+      issue(method, method.instructions.find(instruction => instruction.offset === error.offset), 'IL_PREFIX', error.message);
+      return;
     }
     const tails = new Set();
-    for (let index = 0; index < method.instructions.length; index++) {
-      const prefix = method.instructions[index];
-      if (!supported.has(prefix.name)) continue;
-      const next = method.instructions[index + 1];
-      if (next) tails.add(next.offset);
-      try {
-        let error;
-        if (prefix.name === 'constrained.') error = this.constrained(prefix, next, context, reachable, method);
-        else if (!next || !memoryTargets.has(next.name) && !next.name.startsWith('ldind.') && !next.name.startsWith('stind.')) {
-          error = 'volatile. must precede a supported memory instruction';
+    for (const group of groups) {
+      if (!group.prefixes.length) continue;
+      tails.add(group.opcodeOffset);
+      for (const prefix of group.prefixes) {
+        if (prefix.offset !== group.offset) tails.add(prefix.offset);
+        if (prefix.name !== 'constrained.') continue;
+        try {
+          const error = this.constrained(prefix, group, context, reachable, method);
+          if (error) issue(method, prefix, 'IL_PREFIX', error);
+        } catch (error) {
+          issue(method, prefix, 'IL_TOKEN', error.message);
         }
-        if (error) issue(method, prefix, 'IL_PREFIX', error);
-      } catch (error) {
-        issue(method, prefix, 'IL_TOKEN', error.message);
-      }
-    }
-    for (const instruction of method.instructions) {
-      const targets = instruction.name === 'switch' ? instruction.operand
-        : instruction.operandKind.startsWith('br') ? [instruction.operand] : [];
-      if (targets.some(target => tails.has(target))) {
-        issue(method, instruction, 'IL_PREFIX', 'Control flow cannot enter a prefixed instruction after its prefix');
       }
     }
     for (const handler of method.handlers) {

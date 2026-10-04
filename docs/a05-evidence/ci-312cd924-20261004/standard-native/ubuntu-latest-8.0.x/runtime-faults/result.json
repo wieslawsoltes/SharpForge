@@ -1,0 +1,28 @@
+{
+  "id": "runtime-faults",
+  "status": "passed",
+  "command": {
+    "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/runtime-faults",
+      "--framework",
+      "net8.0",
+      "--output",
+      "/home/runner/work/SharpForge/SharpForge/artifacts/a05-native/runtime-faults/evidence"
+    ],
+    "cwd": "/home/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "runtime-faults/evidence",
+  "report": "runtime-faults/result.json",
+  "startedAt": "2026-10-04T18:36:19.240Z",
+  "durationMs": 1764.9949600000036,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "runtime-faults/stdout.log",
+  "stderr": "runtime-faults/stderr.log",
+  "finishedAt": "2026-10-04T18:36:21.006Z"
+}

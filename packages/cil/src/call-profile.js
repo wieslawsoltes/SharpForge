@@ -1,3 +1,4 @@
+import {fixedCallSignature, validVarargsSignature} from './varargs-profile.js';
 import {CilError} from './binary.js';
 import {decodeCoded} from './metadata.js';
 import {genericTypeParts, substituteCallType, instantiateSignature, callSignatureKey} from './generic-signatures.js';
@@ -22,7 +23,8 @@ export function resolveExecutionMethod(inspector, token, context = {}, raw = ins
   if (raw.genericArguments && methodArguments.length !== arity) throw new CilError('Generic method argument count mismatch');
   let owner = substituteCallType(raw.owner, contextTypes, contextMethods);
   let parts = genericTypeParts(owner);
-  let target = raw.resolvedToken ?? (raw.token >>> 24 === 6 ? raw.token :
+  const varargOwner = raw.signature.callingConvention === 5 && raw.ownerToken >>> 24 === 6 ? raw.ownerToken : null;
+  let target = varargOwner ?? raw.resolvedToken ?? (raw.token >>> 24 === 6 ? raw.token :
     raw.definitionToken >>> 24 === 6 ? raw.definitionToken : null);
   let definition = target ? inspector.methods.get(target) : null;
   if (definition?.ownerToken === context.ownerToken && context.genericIdentity && !parts.arguments.length) {
@@ -39,7 +41,7 @@ export function resolveExecutionMethod(inspector, token, context = {}, raw = ins
       if (!type) break;
       const matches = type.methods.filter(method => method.name === raw.name &&
         callSignatureKey(instantiateSignature(inspector.signature(method.token), parts.arguments, methodArguments)) ===
-          callSignatureKey(signature));
+          callSignatureKey(fixedCallSignature(signature)));
       if (matches.length > 1) throw new CilError('Ambiguous internal call declaration');
       if (matches.length) {
         definition = matches[0];
@@ -50,6 +52,9 @@ export function resolveExecutionMethod(inspector, token, context = {}, raw = ins
       owner = substituteCallType(inspector.metadata.typeName(type.baseToken), parts.arguments);
       parts = genericTypeParts(owner);
     }
+  }
+  if (target && signature.callingConvention === 5 && !validVarargsSignature(inspector.signature(target), signature, callSignatureKey)) {
+    throw new CilError('Vararg fixed signature mismatch: call site does not match the declaration');
   }
   return {...raw, ...(definition ?? {}), token: raw.token, resolvedToken: target,
     definitionToken: target ?? raw.definitionToken, signature,

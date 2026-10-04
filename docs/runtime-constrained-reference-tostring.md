@@ -1,5 +1,7 @@
 # Concrete reference constrained Object.ToString
 
+> Historical increment: the current [A05 Object slot contract](a05-constrained-object-slots.md) supersedes the Object-call admission and source-support limits below. The original revision-specific validation remains historical evidence.
+
 The direct CIL engine accepts a concrete nongeneric internal class `TypeDef`
 constraint followed by `callvirt System.Object.ToString(): string`. The owned
 reference storage must exactly match the constraint; its live object may be a

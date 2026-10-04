@@ -1,169 +1,117 @@
-import {validateCilStackSnapshot} from './execution/frame-stack.js';
-import {validateSourceStackSnapshot} from './execution/source-stack-admission.js';
+import {assertSnapshotFields} from './execution/snapshot-schema.js';
+import {copyExecution} from './execution/execution-copy.js';
+import {SnapshotVersionError} from './execution/snapshot-version.js';
+import {validateSnapshotState} from './snapshot-validation.js';
+import {prepareHeapRestore} from './execution/snapshot-cow.js';
+import {copySchedulerSnapshot, restoreSchedulerState} from './execution/scheduler-snapshot.js';
+import {snapshotPlatformState, restorePlatformState, notifyPlatformRestore} from './execution/snapshot-platform.js';
+import {captureGenericInstantiations, prepareGenericInstantiations, bindRestoredGenericMethods} from './execution/generic-snapshot.js';
 import {clearFramePool} from './execution/frame-pool.js';
 import {clearStackBudget} from './execution/stack-budget.js';
-import {ManagedFault} from './heap.js';
-import {invalidateExecutionCode} from './execution/code-version.js';
+import {executionCodeState, invalidateExecutionCode} from './execution/code-version.js';
 import {restoreFloatFrames} from './execution/typed-float-frame.js';
-import {isTypedFloatArray} from './execution/typed-stack.js';
 import {captureWasmDeopt, restoreWasmDeopt} from './execution/wasm/deopt.js';
+import {rebuildFrameIndex} from './execution/frame-lifetimes.js';
+import {releaseVMFrameMemory} from './execution/frame-memory-release.js';
+import {resolveSnapshotTypes} from './execution/snapshot-type-resolution.js';
+import {prepareSynchronizationRestore, restoreSnapshotSynchronization} from './execution/snapshot-synchronization.js';
 import {requireSnapshotBoundary} from './execution/callback-frames.js';
+import {pruneWeakSnapshotStrings} from './execution/snapshot-strings.js';
 
-/** Clone execution graphs, preserving aliases, immutable handles and fault identity. */
-export function copyExecution(value, memo = new Map()) {
-  if (value === null || typeof value !== 'object') return value;
-  if (memo.has(value)) return memo.get(value);
-  // Freezing a Map or Set does not freeze its contents.
-  if (value instanceof Map) {
-    const copy = new Map(); memo.set(value, copy);
-    for (const [key, item] of value) copy.set(copyExecution(key, memo), copyExecution(item, memo));
-    return copy;
-  }
-  if (value instanceof Set) {
-    const copy = new Set(); memo.set(value, copy);
-    for (const item of value) copy.add(copyExecution(item, memo));
-    return copy;
-  }
-  if (value instanceof ArrayBuffer) {
-    const copy = value.slice(0); memo.set(value, copy); return copy;
-  }
-  if (ArrayBuffer.isView(value)) {
-    const buffer = copyExecution(value.buffer, memo);
-    const copy = value instanceof DataView
-      ? new DataView(buffer, value.byteOffset, value.byteLength)
-      : new value.constructor(buffer, value.byteOffset, value.length);
-    memo.set(value, copy); return copy;
-  }
-  if (Object.isFrozen(value) && !isTypedFloatArray(value)) return value;
-  if (value instanceof ManagedFault) {
-    const copy = new ManagedFault(value.name, value.message, value.reference); memo.set(value, copy);
-    for (const key of Object.keys(value)) copy[key] = copyExecution(value[key], memo);
-    return copy;
-  }
-  const copy = Array.isArray(value) ? [] : {}; memo.set(value, copy);
-  for (const [key, item] of Object.entries(value)) copy[key] = copyExecution(item, memo);
-  return copy;
-}
+export {copyExecution, copyFrames} from './execution/execution-copy.js';
+export {snapshotSchemas, assertSnapshotFields} from './execution/snapshot-schema.js';
+export {snapshotSchemaVersion, SnapshotVersionError} from './execution/snapshot-version.js';
 
-/** Method bodies and decode maps belong to the code generation, not execution state. */
-export function copyFrames(frames, memo = new Map()) {
-  return frames.map(frame => {
-    const {method, offsets, ...execution} = frame;
-    return {...copyExecution(execution, memo), ...(method ? {method, offsets} : {})};
-  });
-}
-
-export const snapshotSchemaVersion = 1;
-const field = (name, copier = copyExecution, options = {}) => Object.freeze({name, copier, ...options});
-const component = name => field(name, null, {component: true});
-const retain = value => value;
-const entries = (value, memo) => copyExecution([...value], memo);
-const common = [
-  component('platform'), component('scheduler'), field('frames', copyFrames), component('heap'),
-  field('typeObjects', copyExecution, {optional: true}),
-  field('statics'), field('fault'), field('pendingFault'), field('state', retain),
-  field('instructions', retain), field('elapsedMs', retain), field('frameId', retain, {monotonic: true}),
-  field('output'), field('outputCharacters', retain), field('returnValue'), field('exitCode', retain),
-  field('writeRevision', retain), field('pendingWrite', copyExecution, {optional: true})
-];
-const exclusions = {
-  options: 'Host configuration is retained by the owning VM.',
-  snapshotOwner: 'Snapshots are scoped to their original VM instance.',
-  onOutput: 'Host callback, retained across restore.',
-  onException: 'Debugger callback, retained across restore.',
-  onWrite: 'Debugger callback, retained across restore.',
-  notifyWrite: 'Designer transaction callback override, retained across restore.',
-  symbols: 'Debug metadata belongs to the current code generation.'
-};
-const schema = (engine, fields, excluded) => Object.freeze({
-  schemaVersion: snapshotSchemaVersion, engine,
-  fields: Object.freeze(fields), excluded: Object.freeze({...exclusions, ...excluded})
-});
-
-/** Every own VM field is explicitly captured or classified as host/derived metadata. */
-export const snapshotSchemas = Object.freeze({
-  source: schema('source', [...common,
-    field('strings'), field('stack'), field('constantValues', entries, {restore: value => new Map(value)}),
-    field('sourcePause', retain), field('currentPoint')
-  ], {
-    image: 'Immutable bytecode for the current code generation.',
-    builtinResults: 'VM-owned source contract return classifications; contains no managed values.'
-  }),
-  cil: schema('cil', [...common,
-    field('strings'), field('initialized'),
-    field('stack', copyExecution, {optional: true}),
-    field('currentPoint', copyExecution, {optional: true}),
-    field('sourcePause', retain, {optional: true})
-  ], {
-    inspector: 'Assembly metadata for the current code generation.',
-    report: 'Verification report for the current code generation.',
-    returnType: 'Entry-point signature metadata.',
-    loadMs: 'Assembly load measurement is not execution state.',
-    layoutCache: 'Derived type layouts; invalidated when code changes.',
-    _typeSystem: 'Derived metadata indexes; invalidated when code changes.',
-    entryToken: 'Debugger entry-point selection.'
-  })
-});
-
-export function assertSnapshotFields(vm, engine) {
-  const selected = snapshotSchemas[engine];
-  if (!selected) throw new TypeError(`Unknown snapshot engine '${engine}'`);
-  const known = new Set([...selected.fields.map(item => item.name), ...Object.keys(selected.excluded)]);
-  const unknown = Object.keys(vm).filter(name => !known.has(name));
-  if (unknown.length) throw new TypeError(`Unregistered ${engine} VM snapshot fields: ${unknown.join(', ')}`);
-  return selected;
-}
-
-/** In-memory snapshots contain no transferable host/native resources. */
+/** Capture one coherent graph, preserving active/parked frame, fault, heap and continuation aliases. */
 export function snapshotVM(vm, engine) {
   requireSnapshotBoundary(vm);
   const selected = assertSnapshotFields(vm, engine), memo = new Map();
-  const snapshot = {
-    schemaVersion: selected.schemaVersion, engine, owner: vm.snapshotOwner,
-    hostRevision: vm.platform.hostOperations.snapshotVersion()
-  };
+  const snapshot = {schemaVersion: selected.schemaVersion, engine, owner: vm.snapshotOwner,
+    codeOwner: vm.inspector ?? vm.image, nativeIntBits: vm.heap.methodTables.nativeIntBits,
+    hostRevision: vm.platform.hostOperations.snapshotVersion()};
   for (const item of selected.fields) {
+    if (item.capture) {
+      snapshot[item.name] = captureGenericInstantiations(vm);
+      continue;
+    }
     if (item.optional && !Object.hasOwn(vm, item.name)) continue;
-    snapshot[item.name] = item.component ? vm[item.name].snapshot() : item.copier(vm[item.name], memo);
+    if (item.name === 'heap') continue;
+    else if (item.name === 'scheduler') snapshot.scheduler = vm.scheduler.snapshot(memo);
+    else if (item.name === 'platform') snapshot.platform = snapshotPlatformState(vm.platform, memo);
+    else if (item.component) snapshot[item.name] = vm[item.name].snapshot(memo);
+    else snapshot[item.name] = item.copier(vm[item.name], memo);
   }
+  // Execution can retain direct backing aliases. Capture these before the heap
+  // decides which otherwise-unchanged record payloads are safe to share.
+  snapshot.heap = vm.heap.snapshot({memo});
+  pruneWeakSnapshotStrings(vm, snapshot);
   if (engine === 'cil') snapshot.heapRevision = vm.heap.mutationRevision;
   return snapshot;
 }
 
-export function restoreVM(vm, snapshot, engine) {
-  requireSnapshotBoundary(vm);
+/** Header validation is shared by local restore and portable graph export/import. */
+export function validateSnapshotHeader(vm, snapshot, engine) {
   const selected = assertSnapshotFields(vm, engine);
   if (snapshot?.owner !== vm.snapshotOwner) throw new TypeError(`Snapshot belongs to another ${engine === 'cil' ? 'CIL' : 'source'} VM`);
-  if (snapshot.schemaVersion !== selected.schemaVersion || snapshot.engine !== engine)
-    throw new TypeError(`Unsupported ${engine} VM snapshot schema version`);
+  if (snapshot.schemaVersion !== selected.schemaVersion || snapshot.engine !== engine) throw new SnapshotVersionError(engine);
+  if (snapshot.codeOwner !== (vm.inspector ?? vm.image)) throw new TypeError('Snapshot belongs to another code generation');
+  if (snapshot.nativeIntBits !== vm.heap.methodTables.nativeIntBits) throw new TypeError('Snapshot native integer ABI differs');
   for (const item of selected.fields) {
-    if (!item.optional && !Object.hasOwn(snapshot, item.name))
-      throw new TypeError(`Snapshot is missing '${item.name}'`);
+    if (!item.optional && !Object.hasOwn(snapshot, item.name)) throw new TypeError(`Snapshot is missing '${item.name}'`);
   }
-  if (!Array.isArray(snapshot.frames) || !Array.isArray(snapshot.output)) throw new TypeError('Invalid snapshot execution state');
-  if (engine === 'cil') validateCilStackSnapshot(vm, snapshot);
-  else validateSourceStackSnapshot(vm, snapshot);
+  if (!Number.isSafeInteger(snapshot.hostRevision) || snapshot.hostRevision < 0) throw new TypeError('Invalid snapshot host revision');
+  return selected;
+}
+
+function prepareRestore(vm, snapshot, selected) {
+  const memo = new Map(), values = new Map();
+  // Thaw heap backing first so execution aliases resolve to the same fresh data.
+  values.set('heap', prepareHeapRestore(vm.heap, snapshot.heap, memo));
+  for (const item of selected.fields) {
+    if (item.name === 'heap' || item.capture || !Object.hasOwn(snapshot, item.name)) continue;
+    let value;
+    if (item.name === 'scheduler') value = copySchedulerSnapshot(snapshot.scheduler, memo);
+    else if (item.component) value = copyExecution(snapshot[item.name], memo);
+    else value = item.copier(snapshot[item.name], memo);
+    values.set(item.name, item.restore ? item.restore(value) : item.monotonic ? Math.max(vm[item.name] ?? 0, value) : value);
+  }
+  return {memo, values};
+}
+
+/** Every rejecting preflight finishes before the first replacement of live execution state. */
+export function restoreVM(vm, snapshot, engine) {
+  requireSnapshotBoundary(vm);
+  const selected = validateSnapshotHeader(vm, snapshot, engine);
   vm.platform.hostOperations.checkRestore(snapshot.hostRevision);
+  const {generics, values, synchronization} = resolveSnapshotTypes(vm, () => {
+    validateSnapshotState(vm, snapshot, engine);
+    const generics = engine === 'cil' ? prepareGenericInstantiations(vm, snapshot.genericCacheKeys) : null;
+    const prepared = prepareRestore(vm, snapshot, selected);
+    if (engine === 'cil') bindRestoredGenericMethods(vm, prepared.values, generics);
+    return {generics, ...prepared, synchronization: prepareSynchronizationRestore(vm, prepared.values)};
+  });
   vm.profiler?.boundary();
   const deopt = engine === 'cil' ? captureWasmDeopt(vm) : null;
-  // Copy before changing the VM; the same memo preserves frame/fault aliases.
-  const memo = new Map(), values = new Map();
+  releaseVMFrameMemory(vm);
+  vm.heap.restore(values.get('heap'), {prepared: true});
   for (const item of selected.fields) {
-    if (item.component || !Object.hasOwn(snapshot, item.name)) continue;
-    const value = item.copier(snapshot[item.name], memo);
-    values.set(item.name, item.restore ? item.restore(value) : item.monotonic ? Math.max(vm[item.name], value) : value);
-  }
-  vm.heap.restore(snapshot.heap);
-  for (const item of selected.fields) {
+    if (item.component || item.capture) continue;
     if (values.has(item.name)) vm[item.name] = values.get(item.name);
-    else if (item.optional) delete vm[item.name];
+    else if (item.optional && !item.monotonic) delete vm[item.name];
   }
-  if (engine === 'source') { vm.state = 'paused'; vm.currentPoint = vm.top?.point ?? null; }
-  vm.scheduler.restore(snapshot.scheduler);
-  vm.platform.restore(snapshot.platform);
-  if (engine === 'cil') invalidateExecutionCode(vm, 'snapshot-restore');
+  if (engine === 'source') {
+    if (['ready', 'running', 'paused'].includes(vm.state)) vm.state = 'paused';
+    vm.currentPoint = vm.top?.point ?? null;
+  }
+  restoreSnapshotSynchronization(vm, synchronization);
+  restoreSchedulerState(vm.scheduler, values.get('scheduler'));
+  restorePlatformState(vm.platform, values.get('platform'));
+  invalidateExecutionCode(vm, 'snapshot-restore');
+  if (engine === 'cil') executionCodeState(vm).generics = generics;
   clearFramePool(vm);
   clearStackBudget(vm);
   restoreFloatFrames(vm);
   if (engine === 'cil') restoreWasmDeopt(vm, deopt);
+  rebuildFrameIndex(vm);
+  notifyPlatformRestore(vm.platform);
 }

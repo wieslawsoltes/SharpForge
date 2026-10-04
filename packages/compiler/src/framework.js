@@ -1,3 +1,4 @@
+import {executableFrameworkType} from './framework-type-selection.js';
 import {DiagnosticId} from './diagnostics/codes.js';
 import {canonicalType,frameworkType,frameworkAssignable,findContracts,enumValue,enumTypes,eventsFor} from '@sharpforge/framework';
 import {Op,frameworkBuiltin} from '@sharpforge/bytecode';
@@ -57,7 +58,7 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     frameworkInfer(node) {
       if(node.kind==='Index')return registeredIndexerContract(this.infer(node.target),'get')?.result;
       if(node.kind==='Member')return legacyRegisteredField(this,node)?.type??enumValue(pathOf(node))?.type??this.frameworkProperty(node)?.type;
-      if(node.kind==='New')return this.c.findType(node.type,this.m)?undefined:frameworkType(node.type)?.name;
+      if(node.kind==='New')return executableFrameworkType(this.c,node.type,this.m)?.name;
       if(node.kind==='Call')return this.frameworkCall(node)?.contract.result;
       return undefined;
     }
@@ -80,7 +81,7 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
         this.emitFrameworkArguments(node.args,call.contract.parameters,frameworkType(call.contract.owner)?.kind==='bcl');return this.emitContract(call.contract);
       }
       if(node.kind==='New') {
-        const t=this.c.findType(node.type,this.m)?null:frameworkType(node.type);if(!t)return undefined;
+        const t=executableFrameworkType(this.c,node.type,this.m);if(!t)return undefined;
         if(t.kind==='delegate')return this.emitDelegate(node,t.name);
         const candidates=findContracts(t.name,'.ctor',false).filter(d=>d.owner===t.name&&d.parameters.length===node.args.length&&d.parameters.every((p,i)=>this.frameworkConversion(p,this.infer(node.args[i]))||this.canTarget(node.args[i],p)||this.delegateMethod(node.args[i],p)));
         if(candidates.length!==1){this.c.report(node,DiagnosticId.CS1729,[typeText(t.name),node.args.length]);this.emitConstant(null);return t.name;}

@@ -37,7 +37,7 @@ test('T10.2 opt-in CIL method events preserve results and report calls in order'
   } finally { dispose(); plain.stop(); observed.stop(); }
 });
 
-test('T10.2 exceptional unwind emits leaves without inventing a normal return', () => {
+test('T10.2 unhandled first-pass inspection retains open method spans until stop', () => {
   const assembly = managedFixture({methods: [
     {name: 'Main', body: (writer, context) => writer.op('call', context.methods.Fail).op('ret')},
     {name: 'Fail', body: writer => writer.op('ldnull').op('throw')}
@@ -45,9 +45,12 @@ test('T10.2 exceptional unwind emits leaves without inventing a normal return', 
   const vm = new CilVirtualMachine(assembly, {runtimeEvents: true});
   try {
     assert.equal(vm.run().state, 'faulted');
+    assert.equal(vm.frames.length, 2);
+    assert.equal(vm.runtimeEvents.read().filter(event => event.name === RuntimeEventName.MethodLeave).length, 0);
+    vm.stop();
     const leaves = vm.runtimeEvents.read().filter(event => event.name === RuntimeEventName.MethodLeave);
     assert.deepEqual(leaves.map(event => [event.payload.method, event.payload.reason]),
-      [[0x06000002, 'exception'], [0x06000001, 'exception']]);
+      [[0x06000002, 'stop'], [0x06000001, 'stop']]);
   } finally { vm.stop(); }
 });
 

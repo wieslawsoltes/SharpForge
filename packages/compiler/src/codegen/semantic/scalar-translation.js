@@ -1,5 +1,6 @@
 import {findContracts} from '@sharpforge/framework';
 import {isScalarType, extendedScalar, scalarImageConstant, scalarDefault} from '../scalar-values.js';
+import {isTupleElement} from '../../lowering/tuples/locations.js';
 import {n} from './node-factory.js';
 
 const numericKinds = new Set(['ImplicitNumeric', 'ExplicitNumeric', 'ImplicitConstant', 'IntPtr']);
@@ -69,12 +70,20 @@ export const ScalarTranslation = Base => class extends Base {
   // int and double keep the general path: it lowers the targets that need temporaries (array elements, indexers,
   // members of a?.b). The direct form is for the wider scalar types, which that path does not know.
   exprCompoundAssignment(node) {
-    return extendedScalar(this.imageType(node.left.type, node.syntax)) ? this.assignStatic(node.left,
+    const target = node.left;
+    if (isTupleElement(target) || this.needsExplicitStore(node, target)) {
+      return super.exprCompoundAssignment(node);
+    }
+    return extendedScalar(this.imageType(target.type, node.syntax)) ? this.assignStatic(target,
       n.compoundAssign(node.operator, this.target(node.left), this.expression(node.right), !!node.isChecked)) : super.exprCompoundAssignment(node);
   }
 
   exprIncrement(node) {
-    return extendedScalar(this.imageType(node.operand.type, node.syntax)) ? this.assignStatic(node.operand,
+    const target = node.operand;
+    if (isTupleElement(target) || this.needsExplicitStore(node, target)) {
+      return super.exprIncrement(node);
+    }
+    return extendedScalar(this.imageType(target.type, node.syntax)) ? this.assignStatic(target,
       n.increment(node.operator, this.target(node.operand), !!node.isPostfix, !!node.isChecked)) : super.exprIncrement(node);
   }
 

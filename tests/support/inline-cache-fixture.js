@@ -3,20 +3,20 @@ import {
 } from '@sharpforge/cil';
 
 /** Independent CLI metadata with one shared call site and several implementation types. */
-export function inlineCacheFixture(sequence = [0, 0, 0, 0], {interfaceCall = false, delta = 0} = {}) {
+export function inlineCacheFixture(sequence = [0, 0, 0, 0], {interfaceCall = false, delta = 0, byteArgument = null} = {}) {
   const constructor = base => ({name: '.ctor', result: 'void', flags: 0x1886,
     body: (writer, context) => writer.op('ldarg.0').op('call',
       base ? context.methods.get(base + '..ctor') : context.objectConstructor).op('ret')});
   const types = [{name: 'Base', interface: interfaceCall, methods: [
     ...(interfaceCall ? [] : [constructor()]),
-    {name: 'Value', flags: interfaceCall ? 0x5c6 : 0x1c6,
+    {name: 'Value', flags: interfaceCall ? 0x5c6 : 0x1c6, parameters: byteArgument === null ? [] : ['byte'],
       ...(interfaceCall ? {} : {body: writer => writer.op('ldc.i4.0').op('ret')})}
   ]}];
   const count = Math.max(6, ...sequence.map(index => index + 1));
   for (let index = 0; index < count; index++) types.push({name: 'Receiver' + index,
     base: interfaceCall ? null : 'Base', methods: [constructor(interfaceCall ? null : 'Base'),
-      {name: 'Value', flags: interfaceCall ? 0x1c6 : 0xc6,
-        body: writer => writer.op('ldc.i4', index + 1 + delta).op('ret')}]
+      {name: 'Value', flags: interfaceCall ? 0x1c6 : 0xc6, parameters: byteArgument === null ? [] : ['byte'],
+        body: writer => (byteArgument === null ? writer.op('ldc.i4', index + 1 + delta) : writer.op('ldarg.1')).op('ret')}]
   });
   types.push({name: 'Program', methods: [
     {name: 'Main', flags: 0x96, body(writer, context) {
@@ -25,8 +25,11 @@ export function inlineCacheFixture(sequence = [0, 0, 0, 0], {interfaceCall = fal
         .op('call', context.methods.get('Program.Invoke')).op('add');
       writer.op('ret');
     }},
-    {name: 'Invoke', flags: 0x96, parameters: ['Base'], body: (writer, context) =>
-      writer.op('ldarg.0').op('callvirt', context.methods.get('Base.Value')).op('ret')}
+    {name: 'Invoke', flags: 0x96, parameters: ['Base'], body(writer, context) {
+      writer.op('ldarg.0');
+      if (byteArgument !== null) writer.op('ldc.i4', byteArgument);
+      writer.op('callvirt', context.methods.get('Base.Value')).op('ret');
+    }}
   ]});
   const metadata = new MetadataBuilder('InlineCache');
   const typeTokens = new Map(types.map((type, index) => [type.name, token(2, index + 2)]));

@@ -1,33 +1,30 @@
-import {userValueCallType, prepareValueReceiver, constructUserValue} from './value-calls.js';
+import {userValueCallType, constructUserValue} from './value-calls.js';
 import {boxedInterfaceReceiver} from './value-dispatch.js';
 import {invokeConstrainedReferenceObject} from './constrained-reference-object.js';
 import {constrainedCallType, invokeConstrainedValue, constrainedReferenceReceiver,
   requireConstrainedReferenceTarget} from './constrained-call.js';
-import {instantiatedMethod} from './generics.js';
+import {enterManagedCall} from './managed-call-entry.js';
+import {invokeRuntimeCall} from './runtime-call-adapters.js';
+import {splitVarargs} from './varargs.js';
+import {tailRequested} from './tailcall.js';
+import {createException} from './exception-object.js';
+import {exceptionBaseType} from './exception-types.js';
 import {callDescriptor, selectedCallOwner} from './generic-calls.js';
 import {constructIntrinsicValue} from './value-intrinsics.js';
 import {pushIntrinsicCallResult} from './intrinsic-call-result.js';
 import {stringFromChars} from './strings.js';
-import {cilCallFrame} from './call-frames.js';
 import {framePool} from './frame-pool.js';
 import {systemType,intrinsicDefinition,supportedDelegateCall} from '@sharpforge/cil';
-import {invokeBoundDelegate} from './delegate-targets.js';
+import {invokeBoundDelegate} from './delegate-calls.js';
 import {ManagedFault} from '../heap.js';
 import {SUSPENDED} from '../platform.js';
 import {storageDefault} from './storage.js';
 import {ensureTypeInitialized} from './static-init.js';
-import {enterCilMethod} from './cil-method-events.js';
 import {verifiedMethod} from './token-cache.js';
 import {resolveVirtualTarget} from './inline-cache.js';
+import {tryPreparedVirtualCall} from './prepared-virtual-call.js';
 
-export function call(vm,token,args,extra={}) {
-  if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
-  const method=instantiatedMethod(vm,token,extra.genericIdentity??null,extra.methodArguments??[]);
-  if(!method.signature.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Instance method receiver is null');
-  prepareValueReceiver(vm,method,args[0]);
-  vm.frames.push(cilCallFrame(vm,method,args,extra));
-  enterCilMethod(vm, vm.top);
-}
+export function call(vm,token,args,extra={}) { return enterManagedCall(vm,token,args,extra); }
 export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=null) {
   return ensureTypeInitialized(vm,typeToken,trigger,genericIdentity);
 }
@@ -43,6 +40,7 @@ export function prepareCall(vm,frame=vm.top) {
   frame.needsInitialization=false;return true;
 }
 export function invoke(vm,instruction) {
+  if(instruction.name==='callvirt'&&vm.options.inlineCaches!==false&&tryPreparedVirtualCall(vm,vm.top,instruction))return;
   const caller=vm.top,descriptor=callDescriptor(vm,instruction.operand,caller);
   const target=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
   const constraint=constrainedCallType(vm,caller,instruction,descriptor);
@@ -68,6 +66,8 @@ export function invoke(vm,instruction) {
       if((instruction.name==='newobj'||descriptor.signature.returnType!=='void')&&value!==SUSPENDED)caller.stack.push(value);
       return;
     }
+    const runtime=invokeRuntimeCall(vm,descriptor,args,instruction.name);
+    if(runtime.handled){if(runtime.returns&&runtime.value!==SUSPENDED)caller.stack.push(runtime.value);return;}
     if(instruction.name==='newobj') {
       const value=constructIntrinsicValue(vm,intrinsic,descriptor,args);
       if(value.handled){caller.stack.push(value.value);return;}
@@ -88,7 +88,7 @@ export function invoke(vm,instruction) {
         ref=vm.heap.object(layout.methodTable,layout.fields.map(field=>storageDefault(vm,field.type)));
       }
       else if(systemType(descriptor.owner)==='System.Object'&&args.length===0)ref=vm.heap.object(vm.typeSystem.table('System.Object'),[]);
-      else if(systemType(descriptor.owner)==='System.Exception')ref=vm.heap.allocate('exception','System.Exception',[args[0]??null]);
+      else if(exceptionBaseType(systemType(descriptor.owner)))ref=createException(vm,systemType(descriptor.owner));
       else throw new ManagedFault('NotSupportedException','External object construction is unavailable');
       if(vm.state==='terminated')return;
       args.unshift(ref);vm.heap.pins.push(ref);
@@ -104,7 +104,9 @@ export function invoke(vm,instruction) {
       if(constraint)requireConstrainedReferenceTarget(vm,dispatch);
       const owner=descriptor.signature.isStatic||valueType?genericIdentity:selectedCallOwner(vm,dispatch,args[0],genericIdentity);
       if(instruction.name==='callvirt')args[0]=boxedInterfaceReceiver(vm,descriptor,dispatch,args[0]);
-      vm.call(dispatch,args,{genericIdentity:owner,methodArguments:descriptor.methodArguments});
+      const invocation=splitVarargs(vm,descriptor,args);
+      vm.call(dispatch,invocation.args,{...invocation.extra,tail:tailRequested(caller,instruction),
+        genericIdentity:owner,methodArguments:descriptor.methodArguments});
     } else pushIntrinsicCallResult(vm,caller,descriptor,args,instruction.name==='callvirt');
   });
   } finally {

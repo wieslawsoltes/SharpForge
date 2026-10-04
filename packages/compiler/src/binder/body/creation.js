@@ -3,6 +3,7 @@
  * in ../target-typing.js.
  */
 import {DiagnosticId} from '../../diagnostics/codes.js';
+import {bindVarargsCreation} from './varargs.js';
 import { SymbolKind, TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { numericKind } from '../../conversions/numeric.js';
@@ -22,6 +23,8 @@ const keywordOf = type =>
 export const CreationBinding = Base =>
   class extends Base {
     objectCreation(syntax) {
+      const varargs = bindVarargsCreation(this, syntax);
+      if (varargs !== undefined) return varargs;
       const type = this.bindType(syntax.type).type,
         args = this.arguments(syntax.argumentList);
       if (type.isErrorType()) {
@@ -75,7 +78,7 @@ export const CreationBinding = Base =>
       if (type.typeKind === TypeKind.Enum || (keywordOf(type) && type.isValueType) || isNullableType(type)) {
         if (!args.length)
           return this.withInitializer(this.node('ObjectCreation', syntax, type, { constructor: null, args: [] }), initializer);
-        if (!isSource(type)) return this.lenient(syntax);
+        if (!isSource(type) && !isNullableType(type)) return this.lenient(syntax);
       }
       if (type.specialType === 'System_String' && !args.length) {
         this.report(typeNode, DiagnosticId.CS1729, [this.display(type), 0]);
@@ -85,7 +88,7 @@ export const CreationBinding = Base =>
       if (!all.length) {
         if (type.isValueType === true && !args.length)
           return this.withInitializer(this.node('ObjectCreation', syntax, type, { constructor: null, args: [] }), initializer);
-        if (!isSource(type)) {
+        if (!isSource(type) && !isNullableType(type)) {
           if (initializer) this.initializerSilently(initializer, type);
           return this.lenient(syntax);
         }
@@ -108,7 +111,7 @@ export const CreationBinding = Base =>
           if (initializer) this.initializerSilently(initializer, type);
           return this.bad(syntax);
         }
-        if (!isSource(type)) {
+        if (!isSource(type) && !isNullableType(type)) {
           if (initializer) this.initializerSilently(initializer, type);
           return this.lenient(syntax);
         }

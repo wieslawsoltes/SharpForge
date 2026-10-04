@@ -1,25 +1,15 @@
 import {CilError} from './binary.js';
 import {decodeCoded} from './metadata.js';
+import {objectSlotDeclaration, objectSlotSignature, slotCache} from './object-slot-profile.js';
 
 const primitives = new Map([
   ['System.Int32', Object.freeze({name: 'System.Int32', format: 'int'})],
   ['System.Int64', Object.freeze({name: 'System.Int64', format: 'long'})],
   ['System.UInt64', Object.freeze({name: 'System.UInt64', format: 'ulong'})]
 ]);
+const primitiveNames = Object.freeze({int: 'System.Int32', long: 'System.Int64', ulong: 'System.UInt64'});
 
-function toStringSignature(signature) {
-  return signature && !signature.isStatic && !signature.genericArity && !signature.callingConvention &&
-    signature.parameters.length === 0 && (signature.returnType === 'string' || signature.returnType === 'System.String');
-}
-
-function objectToString(descriptor) {
-  return descriptor.kind === 'method' && descriptor.owner === 'System.Object' && descriptor.name === 'ToString' &&
-    descriptor.ownerToken >>> 24 === 1 &&
-    !descriptor.resolvedToken && descriptor.token >>> 24 === 10 && descriptor.definitionToken >>> 24 !== 6 &&
-    !descriptor.methodArguments?.length && !descriptor.typeArguments?.length && toStringSignature(descriptor.signature);
-}
-
-/** Metadata-only selection for concrete sequential struct Object.ToString calls.
+/** Metadata-only selection for sequential struct Object virtual calls.
  * Returns null outside this leaf; rejects ambiguous/explicit overrides with CilError.
  * Recreate after metadata edits. Selected targets and initializers still require body verification.
  */
@@ -27,6 +17,7 @@ export class ConstrainedObjectProfile {
   constructor(inspector) {
     this.inspector = inspector;
     this.types = new Map(inspector.types.map(type => [type.token, type]));
+    this.names = new Map(inspector.types.map(type => [type.name, type]));
     this.genericOwners = new Set((inspector.metadata.rows[42] ?? [])
       .map(row => decodeCoded('TypeOrMethodDef', row[2])));
     this.implementations = new Map();
@@ -47,15 +38,16 @@ export class ConstrainedObjectProfile {
   }
 
   declaration(descriptor) {
-    if (!objectToString(descriptor)) return null;
+    if (!objectSlotDeclaration(descriptor)) return null;
     if (!this.declarations.has(descriptor.token)) {
-      if (!this.ordinaryInstanceSignature(descriptor.token)) throw new CilError('Unsupported Object.ToString calling convention');
+      if (!this.ordinaryInstanceSignature(descriptor.token)) throw new CilError(`Unsupported Object.${descriptor.name} calling convention`);
       this.declarations.add(descriptor.token);
     }
     return true;
   }
 
   primitiveType(typeToken) {
+    if (typeof typeToken === 'string') return primitives.get(primitiveNames[typeToken] ?? typeToken) ?? null;
     if (typeToken >>> 24 !== 1) return null;
     if (!this.primitiveTokens.has(typeToken)) {
       this.primitiveTokens.set(typeToken, primitives.get(this.inspector.metadata.typeName(typeToken)) ?? null);
@@ -74,32 +66,41 @@ export class ConstrainedObjectProfile {
     return plan && this.declaration(descriptor) ? plan : null;
   }
 
-  rejectExplicit(typeToken) {
+  rejectExplicit(typeToken, name = 'ToString') {
     for (const row of this.implementations.get(typeToken) ?? []) {
       const declaration = this.inspector.resolveToken(decodeCoded('MethodDefOrRef', row[2]));
-      if (objectToString(declaration)) throw new CilError('Explicit Object.ToString MethodImpl is not implemented');
+      if (declaration.name === name && objectSlotDeclaration(declaration)) {
+        throw new CilError(`Explicit Object.${name} MethodImpl is not implemented`);
+      }
     }
   }
 
-  virtualMethod(method) {
-    if (method.name !== 'ToString' || !(method.flags & 0x40) ||
-        !toStringSignature(this.inspector.signature(method.token))) return false;
+  virtualMethod(method, name = 'ToString') {
+    if (method.name !== name || !(method.flags & 0x40) ||
+        !objectSlotSignature(name, this.inspector.signature(method.token))) return false;
     if ((method.flags & 7) !== 6 || method.flags & 0x10 || this.genericOwners.has(method.token) ||
-        !this.ordinaryInstanceSignature(method.token)) throw new CilError('Unsupported Object.ToString override');
+        !this.ordinaryInstanceSignature(method.token)) throw new CilError(`Unsupported Object.${name} override`);
     return true;
   }
 
   select(typeToken, descriptor) {
-    return this.declaration(descriptor) ? this.valuePlan(typeToken) : null;
+    if (!this.declaration(descriptor)) return null;
+    return this.slot(typeToken, descriptor.name);
   }
 
-  /** Metadata-only ordinary Object slot selection for an already identified concrete value type. */
+  /** Ordinary Object.ToString selection used by synchronous framework callbacks. */
   valuePlan(typeToken) {
-    if (this.plans.has(typeToken)) return this.plans.get(typeToken);
+    return this.slot(typeToken, 'ToString');
+  }
+
+  /** Select a known Object slot for runtime field operations without synthesizing a metadata token. */
+  slot(typeToken, name) {
+    const plans = slotCache(this.plans, name);
+    if (plans.has(typeToken)) return plans.get(typeToken);
     const type = this.types.get(typeToken);
-    if (!type || (type.flags & 0x18) !== 8 || type.flags & 0x20 || this.genericOwners.has(typeToken) ||
+    if (!type || (type.flags & 0x18) !== 8 || type.flags & 0x20 ||
         this.inspector.metadata.typeName(type.baseToken) !== 'System.ValueType') return null;
-    this.rejectExplicit(typeToken);
+    this.rejectExplicit(typeToken, name);
     let target = null;
     const initializers = [];
     for (const method of type.methods) {
@@ -107,12 +108,12 @@ export class ConstrainedObjectProfile {
         if (initializers.length) throw new CilError('Ambiguous type initializer');
         initializers.push(method.token);
       }
-      if (method.flags & 0x100 || !this.virtualMethod(method)) continue;
-      if (target) throw new CilError('Ambiguous Object.ToString override');
+      if (method.flags & 0x100 || !this.virtualMethod(method, name)) continue;
+      if (target) throw new CilError(`Ambiguous Object.${name} override`);
       target = method.token;
     }
     const plan = Object.freeze({target, initializers: Object.freeze(initializers)});
-    this.plans.set(typeToken, plan);
+    plans.set(typeToken, plan);
     return plan;
   }
 }

@@ -205,14 +205,17 @@ test('allocation growth adds managed bytes without inventing allocations; failed
   try {
     const array = vm.heap.array('int', 1), initial = instructionProfile(vm);
     vm.heap.replaceData(array, [1, 2, 3]);
+    assert(vm.heap.get(array).data instanceof Int32Array);
+    assert.equal(vm.heap.get(array).size, 32 + 3 * Int32Array.BYTES_PER_ELEMENT);
     const grown = instructionProfile(vm);
     assert.equal(grown.allocations, initial.allocations);
-    assert.equal(grown.allocatedBytes, initial.allocatedBytes + 16);
+    assert.equal(grown.allocatedBytes, initial.allocatedBytes + 2 * Int32Array.BYTES_PER_ELEMENT);
     vm.heap.replaceData(array, [1]);
     assert.deepEqual(instructionProfile(vm), grown);
-    assert.throws(() => vm.heap.array('int', 1_000_001), /limit/);
+    vm.heap.maxArrayLength = 3;
+    assert.throws(() => vm.heap.array('int', 4), {name: 'OutOfMemoryException'});
     vm.heap.maxBytes = 1;
-    assert.throws(() => vm.heap.array('int', 1), /heap budget/);
+    assert.throws(() => vm.heap.array('int', 1), {name: 'OutOfMemoryException'});
     assert.deepEqual(instructionProfile(vm), grown);
   } finally { vm.stop(); }
 });

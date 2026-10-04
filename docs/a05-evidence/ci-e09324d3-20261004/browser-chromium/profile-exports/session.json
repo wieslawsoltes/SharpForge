@@ -1,0 +1,11 @@
+{
+  "suite": "profile-exports",
+  "passed": true,
+  "engine": "chromium",
+  "cspViolations": [],
+  "browser": "153.0.8010.12",
+  "executable": "playwright-managed",
+  "mode": "A05 public runtime / allowed CSP",
+  "seconds": 4.629278535000026,
+  "diagnosticErrors": []
+}

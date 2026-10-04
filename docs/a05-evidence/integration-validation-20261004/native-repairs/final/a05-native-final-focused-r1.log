@@ -1,0 +1,78 @@
+✔ source: first-chance failure policy validates exact values and preserves the default (143.715671ms)
+✔ source: after-unwind runs callback cleanup and handles cleanup throws=false (4.490489ms)
+✔ source: after-unwind runs callback cleanup and handles cleanup throws=true (21.119927ms)
+✔ source: cleanup suspension preserves captured policy through local and portable restore (34.678823ms)
+✔ source: older captured notifications without a policy retain before-unwind behavior (35.161312ms)
+✔ source: terminal diagnostic graphs survive GC and local/portable snapshots (15.198786ms)
+✔ source: malformed captured policies and failfast boundaries reject atomically (10.49996ms)
+✔ source: runtime resource failure during cleanup bypasses further unwinding and notifications (2.7355ms)
+✔ source: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched (8.427194ms)
+✔ reload: first-chance failure policy validates exact values and preserves the default (154.312578ms)
+✔ reload: after-unwind runs callback cleanup and handles cleanup throws=false (13.193229ms)
+✔ reload: after-unwind runs callback cleanup and handles cleanup throws=true (16.066591ms)
+✔ reload: cleanup suspension preserves captured policy through local and portable restore (71.286742ms)
+✔ reload: older captured notifications without a policy retain before-unwind behavior (77.87315ms)
+✔ reload: terminal diagnostic graphs survive GC and local/portable snapshots (30.248433ms)
+✔ reload: malformed captured policies and failfast boundaries reject atomically (21.03351ms)
+✔ reload: runtime resource failure during cleanup bypasses further unwinding and notifications (13.967185ms)
+✔ reload: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched (10.21371ms)
+✔ cil: first-chance failure policy validates exact values and preserves the default (38.017068ms)
+✔ cil: after-unwind runs callback cleanup and handles cleanup throws=false (21.453307ms)
+✔ cil: after-unwind runs callback cleanup and handles cleanup throws=true (13.904763ms)
+✔ cil: cleanup suspension preserves captured policy through local and portable restore (44.824963ms)
+✔ cil: older captured notifications without a policy retain before-unwind behavior (24.549567ms)
+✔ cil: terminal diagnostic graphs survive GC and local/portable snapshots (20.428852ms)
+✔ cil: malformed captured policies and failfast boundaries reject atomically (12.144777ms)
+✔ cil: runtime resource failure during cleanup bypasses further unwinding and notifications (13.545236ms)
+✔ cil: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched (7.565598ms)
+✔ verified arbitrary-name async values use bounded managed storage at 32 bits (48.77585ms)
+✔ verified arbitrary-name async values use bounded managed storage at 64 bits (9.380054ms)
+✔ managed state storage never makes auto-layout bytes, sizeof or unsafe unboxing available (6.565288ms)
+✔ auto-layout state requires the supported interface slots and verified bodies (9.35636ms)
+✔ managed state admission does not hide unsupported nested auto layouts or recursive value fields (4.839311ms)
+✔ auto-layout logical bytes are reserved before managed frame allocation (13.604858ms)
+✔ Roslyn FieldRVA, overlapping Copy, rectangular bounds, spans and pins replay the captured CoreCLR result (115.110098ms)
+✔ memory replay does not fall back from truncated JSON (4.005297ms)
+✔ memory replay does not fall back from incomplete pinned capture (2.168928ms)
+✔ native fault qualification retains platform-specific exits while requiring identical ordered traces (2.407759ms)
+✔ native fault qualification accepts canonical System names without erasing foreign namespaces (1.879742ms)
+✔ successful exits, unrelated signals, wrong exceptions and changed event order cannot qualify (1.454017ms)
+✔ ordinary success fixtures keep exact zero-exit semantics (0.21826ms)
+✔ first-chance failfast requires the pinned native HRESULT and the VM fatal boundary (0.35395ms)
+✔ native fixture projects opt into unsafe compilation only for explicitly selected fixtures (0.226533ms)
+✔ observed CLR varargs rejection remains unsupported after an independent authored VM trace succeeds (1.441619ms)
+✔ varargs policy cannot hide wrong native exceptions, successful native divergence, signals or VM failures (0.665709ms)
+✔ A05 native plan keeps SDK policy, unsafe compilation and replay evidence explicit (1.978127ms)
+UNSUPPORTED varargs: /tmp/sharpforge-a05-observed-target-sPt03f/varargs/result.json
+FAILED varargs: /tmp/sharpforge-a05-observed-target-sPt03f/varargs/result.json
+✔ native plan propagates only a completed observed unsupported outcome and never turns it into a pass (19.349034ms)
+FAILED failed: /tmp/sharpforge-a05-plan-OCx7f2/failed/result.json
+BLOCKED dependent: /tmp/sharpforge-a05-plan-OCx7f2/dependent/result.json
+UNSUPPORTED sdk-policy: /tmp/sharpforge-a05-plan-OCx7f2/sdk-policy/result.json
+PASSED last: /tmp/sharpforge-a05-plan-OCx7f2/last/result.json
+✔ A05 native aggregation continues independent failures and never counts unavailable evidence as a pass (11.216674ms)
+BLOCKED fixture: /tmp/sharpforge-a05-missing-sdk-lm7mdL/fixture/result.json
+✔ A05 native missing SDK blocks every case and retains a complete failed report (2.236646ms)
+✔ first-chance policy is an explicit target contract with independent authored traces (9.824367ms)
+✔ runtime probe binds the native identity to the exact fixture runtimeconfig and same host invocation (16.436035ms)
+✔ runtime provenance cannot pass with an unexpected runtime major or malformed probe identity (15.643949ms)
+✔ Roslyn async regression consumes the exact SDK8 native-qualified DLL and source (3.059887ms)
+✔ generic suffix parsing preserves generated CLI identifiers and nested argument lists (3.21819ms)
+✔ generated generic method tables retain exact definitions, closed fields and argument limits (3.134657ms)
+✔ actual Roslyn generic iterator MethodImpl rows resolve specialized external slots (53.669732ms)
+✔ actual Roslyn iterator still rejects a duplicated MethodImpl declaration (4.438964ms)
+✔ actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay (306.469785ms)
+✔ source: weak intern snapshot drops collected generations without mutating the live cache (39.713656ms)
+✔ source: weak capture never launders foreign or forged handle ownership (6.546916ms)
+✔ source: invalid expired strong intern entries remain subject to strict validation (1.823379ms)
+✔ cil: weak intern snapshot drops collected generations without mutating the live cache (38.542259ms)
+✔ cil: weak capture never launders foreign or forged handle ownership (8.54117ms)
+✔ cil: invalid expired strong intern entries remain subject to strict validation (4.4238ms)
+ℹ tests 63
+ℹ suites 0
+ℹ pass 63
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6951.566972

@@ -1,0 +1,26 @@
+{
+  "id": 37219653301,
+  "name": "A05 native runtime qualification",
+  "event": "push",
+  "status": "completed",
+  "conclusion": "failure",
+  "head_sha": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+  "head_branch": "codex/a05-e01-started-handoff-20261004",
+  "run_number": 1,
+  "run_attempt": 1,
+  "created_at": "2026-10-04T17:12:56Z",
+  "updated_at": "2026-10-04T17:26:36Z",
+  "run_started_at": "2026-10-04T17:12:56Z",
+  "html_url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37219653301",
+  "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37219653301/jobs",
+  "artifacts_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37219653301/artifacts",
+  "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37219653301/logs",
+  "path": ".github/workflows/a05-runtime.yml",
+  "display_title": "SF-A05: reconcile main197 and qualify continuation head independently",
+  "head_commit": {
+    "id": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+    "tree_id": "3322938bc25bfd2ba108ffdc77f1202aa2dabbb8",
+    "message": "SF-A05: reconcile main197 and qualify continuation head independently\n\nPreserve both CIL export sets while incorporating current main. The runtime/bytecode implementation is unchanged from the 3,236-test passing broad run; affected main admission/compiler cohorts and allocation-report contracts have separate passing validation.\n\nEnable focused native/browser qualification for the exact owned continuation branch on push, preserving existing other-PR/manual gates and preventing duplicate cancellation. Record independent byref stress and remaining native replay/performance gates.\n\nComplete tree verified against local integration 614746489a75f51ca26211f1d3fb318b89614432.",
+    "timestamp": "2026-10-04T17:12:52Z"
+  }
+}

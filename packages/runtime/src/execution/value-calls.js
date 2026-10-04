@@ -4,7 +4,7 @@ import {inspectManagedAddress} from './managed-address.js';
 import {boxValue, unboxValue} from './boxing.js';
 
 const unsupported = () => {
-  throw new ManagedFault('NotSupportedException', 'Only nongeneric direct user-struct calls are implemented');
+  throw new ManagedFault('NotSupportedException', 'User-struct calls require a closed direct managed receiver');
 };
 
 /** Value receivers keep their own address; virtual/reference dispatch must not inspect them as objects. */
@@ -12,8 +12,7 @@ export function userValueCallType(vm, method, opcode = 'call') {
   if (method.signature.isStatic) return null;
   const table = vm.typeSystem.table(method.genericIdentity ?? method.ownerInstance ?? method.ownerToken);
   if (!table.flags.valueType || !vm.typeSystem.types.has(table.definitionToken)) return null;
-  if (!isAggregateType(table) || table.genericArity || table.typeArguments.length || table.containsGenericParameters ||
-      method.signature.genericArity || method.methodArguments?.length ||
+  if (!isAggregateType(table) || table.containsGenericParameters ||
       method.signature.returnType.endsWith('&') || !['call', 'newobj'].includes(opcode)) unsupported();
   return table;
 }
@@ -36,7 +35,7 @@ export function prepareValueReceiver(vm, method, receiver) {
     }
     vm.dereference(receiver, true, createValue(vm, table));
   } else {
-    // Reuse storage admission for layouts, nested fields, frozen ownership and reference rejection.
+    // Reuse storage admission for layouts, nested fields, frozen ownership and reference identity.
     createValue(vm, table, current.value);
   }
 }
@@ -46,13 +45,14 @@ export function constructUserValue(vm, descriptor, table, args) {
   const reference = boxValue(vm, createValue(vm, table), table);
   vm.heap.withRoots([reference], () => {
     args.unshift(vm.address('box', 0, reference));
-    vm.call(descriptor.resolvedToken ?? descriptor.token, args, {returnObject: reference, valueConstructor: true});
+    vm.call(descriptor.resolvedToken ?? descriptor.token, args, {returnObject: reference, valueConstructor: true,
+      genericIdentity: table.typeArguments.length ? table.name : null, methodArguments: descriptor.methodArguments ?? []});
   });
 }
 
 /** Copy before retiring the constructor frame, whose ordinary roots own its temporary box. */
 export function valueCallResult(vm, frame, result) {
   return frame.valueConstructor
-    ? unboxValue(vm, frame.returnObject, frame.method.ownerToken)
+    ? unboxValue(vm, frame.returnObject, frame.genericIdentity ?? frame.method.genericIdentity ?? frame.method.ownerToken)
     : frame.returnObject ?? result;
 }

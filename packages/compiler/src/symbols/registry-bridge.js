@@ -1,7 +1,8 @@
+import {appendRegistryBuiltins} from './registry-builtin-members.js';
+import {declareVarargsTypes} from './varargs-types.js';
 import {registryTypeKind, registryTypeOptions, registryInterfaces, registryVariance} from './registry-type-shapes.js';
 import {types as frameworkTypes,contracts as frameworkContracts,canonicalType} from '@sharpforge/framework';
-import {Builtins} from '@sharpforge/bytecode';
-import {builtinOwners, builtinMemberShape, builtinParameterType} from './registry-builtins.js';
+import {visibleRegistryBuiltins,indexRegistryBuiltins,registryBuiltinOwner} from './registry-builtin-owners.js';
 import {NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,TypeWithAnnotations,TypeKind,Accessibility} from './types.js';
 import {MethodSymbol,FieldSymbol,PropertySymbol,EventSymbol,ParameterSymbol,MethodKind,DeclarationModifiers} from './members.js';
 import {NamespaceSymbol,NamespaceExtent} from './namespaces.js';
@@ -35,16 +36,17 @@ class RegistryConstructedType extends ConstructedNamedTypeSymbol {
 export class RegistryBridge {
   /** @param {object} registry `{types:Map,contracts:[],builtins:[]}`; defaults to the live framework registry and builtin table. */
   constructor(registry={}){
-    this.types=registry.types??frameworkTypes;this.contracts=registry.contracts??frameworkContracts;this.builtins=registry.builtins??Builtins.filter(b=>!b.contract&&!b.name.startsWith('$'));
+    this.types=registry.types??frameworkTypes;this.contracts=registry.contracts??frameworkContracts;this.builtins=registry.builtins??visibleRegistryBuiltins();
     this.module=Object.freeze({name:'SharpForge.Framework',kind:'registry'});this.globalNamespace=new NamespaceSymbol('',null,NamespaceExtent.Metadata,this.module);
     declareCoreTypes(this.globalNamespace,coreIds);this.typeProvider=new TypeProvider(this.globalNamespace);
     this.byName=new Map();this.names=new Map();this.arrays=new Map();this.contractSymbols=new Map();this.builtinSymbols=new Map();this.byOwner=new Map();this.builtinsByOwner=new Map();
     for(const c of this.contracts){if(!this.byOwner.has(c.owner))this.byOwner.set(c.owner,[]);this.byOwner.get(c.owner).push(c);}
-    for(const b of this.builtins){const dot=b.name.lastIndexOf('.'),owner=builtinOwners[b.name.slice(0,dot)];if(!owner)continue;if(!this.builtinsByOwner.has(owner))this.builtinsByOwner.set(owner,[]);this.builtinsByOwner.get(owner).push(b);}
+    indexRegistryBuiltins(this);
     for(const id of coreIds){const d=coreTypeDescriptor(id),type=this.typeProvider.getCoreType(id),full=d.metadataName;this.remember(full,type);this.attach(type,full);}
     for(const [keyword] of Object.entries({object:1,void:1,bool:1,char:1,sbyte:1,byte:1,short:1,ushort:1,int:1,uint:1,long:1,ulong:1,decimal:1,float:1,double:1,string:1,nint:1,nuint:1}))this.byName.set(keyword,this.typeProvider.getCoreType(specialTypeFromKeyword(keyword)));
     this.byName.set('Exception',this.typeProvider.getCoreType('System_Exception'));this.keywords=new Map([...this.byName].filter(([k])=>!k.includes('.')).map(([k,v])=>[v,k]));
     for(const name of this.types.keys())this.declare(name);
+    declareVarargsTypes(this);
     for(const owner of this.builtinsByOwner.keys())if(!this.byName.has(owner)){const dot=owner.lastIndexOf('.'),type=this.globalNamespace.ensureNamespace(owner.slice(0,dot)).addType(new NamedTypeSymbol({name:owner.slice(dot+1),isStatic:owner!=='System.Type',baseType:()=>this.objectType}));this.remember(owner,type);this.attach(type,owner);}
   }
   get objectType(){return this.typeProvider.getCoreType('System_Object');}
@@ -101,31 +103,14 @@ export class RegistryBridge {
     appendRegistryIndexers(members,owner,entry,this.types);
     appendRegistryFields(members,entry,this,pub);
     if(entry?.kind==='enum')for(const [name,value] of Object.entries(entry.values??{}))members.push(new FieldSymbol({...pub,name,type:owner,modifiers:DeclarationModifiers.Const,constantValue:{value}}));
-    for(const b of this.builtinsByOwner.get(registryName)??[]){
-      const {name: short, instance, property} = builtinMemberShape(b);
-      const result = b.result === 'numeric' ? 'double' : b.result;
-      // Instance builtins list the receiver as their first parameter; `string.Concat` and friends are static.
-      const params = instance ? b.params.slice(1) : b.params;
-      const required = b.min - (instance ? 1 : 0);
-      const parameters = params.map((type, index) => new ParameterSymbol({
-        name: b.parameterNames?.[index] ?? 'arg' + index,
-        type: this.typeFromName(builtinParameterType(b, type)) ?? this.objectType,
-        ordinal: index,
-        ...(index >= required ? {explicitDefaultValue: {value: null}} : {})
-      }));
-      let symbol;
-      if(short==='new')symbol=new MethodSymbol({...pub,name:'.ctor',methodKind:MethodKind.Constructor,returnType:this.byName.get('void'),parameters});
-      else if(property){const getter=new MethodSymbol({...pub,name:'get_'+short,methodKind:MethodKind.PropertyGet,returnType:this.typeFromName(result),modifiers:instance?0:DeclarationModifiers.Static});getter.builtin=b;symbol=new PropertySymbol({...pub,name:short,type:this.typeFromName(result),getMethod:getter,modifiers:instance?0:DeclarationModifiers.Static});members.push(getter);}
-      else symbol=new MethodSymbol({...pub,name:short,returnType:this.typeFromName(result)??this.objectType,parameters,modifiers:instance?0:DeclarationModifiers.Static});
-      symbol.builtin=b;this.builtinSymbols.set(b.id,symbol);members.push(symbol);
-    }
+    appendRegistryBuiltins(this,registryName,members,pub);
     if(registryName==='System.IDisposable')members.push(new MethodSymbol({...pub,name:'Dispose',returnType:this.byName.get('void'),modifiers:DeclarationModifiers.Abstract}));
     return members;
   }
   /** The method symbol for a framework contract (materialises the owner's members on demand). */
   symbolForContract(contract){if(!this.contractSymbols.has(contract.id))this.typeFromName(contract.owner)?.getMembers();return this.contractSymbols.get(contract.id)??null;}
   /** The symbol for a bytecode builtin descriptor. */
-  symbolForBuiltin(builtin){if(!this.builtinSymbols.has(builtin.id)){const owner=builtinOwners[builtin.name.slice(0,builtin.name.lastIndexOf('.'))];this.byName.get(owner)?.getMembers();}return this.builtinSymbols.get(builtin.id)??null;}
+  symbolForBuiltin(builtin){if(!this.builtinSymbols.has(builtin.id)){const owner=registryBuiltinOwner(builtin);this.byName.get(owner)?.getMembers();}return this.builtinSymbols.get(builtin.id)??null;}
   /** Every bridged named type (definitions, closed instantiations and nested types). */
   allTypes(){return [...new Set([...this.byName.values()].filter(t=>t instanceof NamedTypeSymbol))];}
 }

@@ -1,4 +1,5 @@
 import {ManagedFault} from '../heap.js';
+import {bindCallbackFrames, releaseCallbackFrames} from './frame-lifetimes.js';
 import {requireHostCallbackBoundary} from './host-callbacks.js';
 
 const terminal = new Set(['completed', 'faulted', 'canceled']);
@@ -13,10 +14,12 @@ export function retainCallbackFrames(scheduler, execution) {
   }
   const scope = {canceled: false, frames: execution.frames, stack: execution.stack,
     returnValue: execution.returnValue, pendingFault: execution.pendingFault, fault: execution.fault};
+  bindCallbackFrames(scheduler.vm, scope);
   scopes.push(scope);
   return {scope, release() {
     if (scopes.at(-1) !== scope) throw new Error('Synchronous callback scopes must unwind in reverse order');
     scopes.pop();
+    releaseCallbackFrames(scheduler.vm, scope);
   }};
 }
 

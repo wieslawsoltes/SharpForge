@@ -81,7 +81,8 @@ function growStorage(platform, reference, capacity) {
   const markers = markerReference ? platform.heap.get(markerReference).data : [];
   if (previous.length >= capacity && markers.length >= capacity) return true;
   const items = previous.concat(Array(capacity - previous.length).fill(null));
-  const slots = markers.concat(Array(capacity - markers.length).fill(-1));
+  const slots = new Int32Array(capacity).fill(-1);
+  slots.set(markers);
   if (!markerReference) slots.fill(ACTIVE_SLOT, 0, count(platform, reference));
   return installStorage(platform, reference, {
     items, slots, retainStorage: previous.length === capacity,

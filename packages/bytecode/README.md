@@ -36,3 +36,37 @@ receiver-inclusive runtime parameter lists or execution behavior. `builtinMember
 `{name, instance, property}`. Core builtin entries whose names begin with `$` are internal and should
 not be shown as source API members. Framework contracts continue to use their registered owner and
 signature metadata.
+
+## Source value conversions
+
+`sourceValueInstruction(image, opcode, typeIndex, declaredTypes?)` describes the
+stack effect and result type of the source `BOX` and `UNBOXANY` instructions. Both
+consume one operand and produce one result. `BOX` produces `object`;
+`UNBOXANY` produces the exact type named by `image.constants[typeIndex]`.
+
+The target must be an admitted numeric scalar, `bool`, or a declared source type
+with `valueType: true`. A reference type, an unresolved type parameter, or an
+invalid constant index throws `TypeError`. Other opcodes return `null`. The
+optional map contains the same declarations as `image.types`, keyed by name; it
+lets a verifier or CIL analysis reuse its existing type index. The helper does
+not mutate instructions, constants, or declarations. Execution checks the actual
+boxed type and performs a value copy when unboxing a struct.
+
+### Closed source nullable values
+
+`sourceNullableElement(type)` returns the underlying source type of a closed
+nullable signature, or `null`. `sourceNullableInstruction(image, opcode,
+typeIndex, operation, declaredTypes?)` returns its verified stack effect and
+result type, returns `null` for another opcode, and throws `TypeError` for an
+invalid closed owner or operation. `NULLABLE` is opcode 57; operations 0–6 are
+default, construction, HasValue, Value, parameterless GetValueOrDefault,
+GetValueOrDefault with a fallback, and ToString. Source boxing/unboxing accepts
+these closed nullable value types and retains the runtime's exact underlying
+box identity contract.
+
+Closed source generic declarations may carry an additive logical `sourceIdentity`
+descriptor. `copySourceTypeIdentity(value)` owns/freezes one bounded descriptor;
+`sourceTypeIdentities(types)` validates declarations and returns their physical
+owner-to-identity Map. `verifyImage` rejects malformed and colliding identities.
+The schema, budgets and runtime projection boundary are documented in
+[Source generic type identities](../../docs/a05-source-generic-type-identities.md).

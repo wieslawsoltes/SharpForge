@@ -9,15 +9,15 @@
  *   new T()                                               ->  creation of the closed type with its parameterless constructor
  *   default(T), T locals, T[]                             ->  the closed type (the type mapper closes every type it maps)
  *
- * Refused (SF2200) instead of miscompiled: converting a construction to `object` or calling an `object` member on
- * it - its run-time type name is the synthesized one, not `Box`1[System.Int32]` - and members that only dispatch
- * could reach (default interface members, explicit implementations inside a generic class).
+ * Source constructions preserve logical type identities beside their physical monomorphized owners. Framework
+ * constructions erased to a shared registry type still reject operations that would expose the erased identity.
  */
 import { TypeKind, SymbolKind, ConstructedNamedTypeSymbol } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { findImplementation } from '../../binder/interface-impl.js';
 import { constrainedTypeParameter } from '../../overload/interface-operators.js';
 import { n } from '../../codegen/semantic/node-factory.js';
+import {sourceValueObjectOverride} from '../../codegen/semantic/object-slots.js';
 
 const toObjectConversions = new Set(['Boxing', 'ImplicitReference', 'Identity']);
 
@@ -32,13 +32,12 @@ export const GenericTranslation = Base =>
       return type?.typeKind === TypeKind.TypeParameter;
     }
     /**
-     * True for a construction whose run-time type name is not the .NET one: a closed construction of a source generic
-     * class (its image class has a synthesized name) or a framework generic that shares the construction over `object`.
+     * True for a framework construction that shares its runtime identity with the construction over `object`.
      */
     isConstruction(type) {
       const closed = this.closedType(type);
       if (!closed) return false;
-      return this.g.generics.isGenericClass(closed) || !!this.g.frameworkConstructions.registryConstruction(closed)?.erased;
+      return !!this.g.frameworkConstructions.registryConstruction(closed)?.erased;
     }
     /**
      * The member of the closed receiver type that a member reached through a type parameter stands for, as a symbol
@@ -104,6 +103,10 @@ export const GenericTranslation = Base =>
         if (target !== method) return this.g.generics.withClosedTarget(() => super.exprCall({ ...node, method: target, constrainedTo: null }));
       }
       if (method?.kind === SymbolKind.Method && method.methodKind !== MethodKind.LocalFunction && receiverType) {
+        const valueTarget = sourceValueObjectOverride(method, this.closedType(receiverType));
+        if (valueTarget && this.g.isSource(valueTarget)) {
+          return this.g.generics.withClosedTarget(() => super.exprCall({...node, method: valueTarget}));
+        }
         if (this.isTypeParameter(receiverType)) {
           const target = this.memberOfClosedReceiver(method, receiverType, node.syntax);
           // The target was chosen from the closed receiver type: what it asks for is not written in this body.

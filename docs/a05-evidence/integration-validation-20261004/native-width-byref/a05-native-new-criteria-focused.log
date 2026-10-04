@@ -1,0 +1,43 @@
+✔ T02.8 Swap, out, ref-returning indexers and in structs share storage across all routes; fusion=false (358.371992ms)
+✔ T02.8 Swap, out, ref-returning indexers and in structs share storage across all routes; fusion=true (98.281048ms)
+✔ T02.8 indexer getter metadata returns an owned byref rather than a copied scalar (31.306065ms)
+✔ T02.8 ref indexers cannot expose expired local storage or writable aliases to readonly results (12.063794ms)
+✔ T02.8 ref indexer assignment, compound assignment and postfix evaluate the address once before the value (79.773542ms)
+✔ native byref input and expected trace are byte-identical to the existing three-route example (2.186833ms)
+✔ native-output adapter checks all compiler routes with observed ABI32 (466.243989ms)
+✔ native-output adapter checks all compiler routes with observed ABI64 (109.190832ms)
+✔ native-output adapter fails divergence and rejects unknown ABI or unsuccessful native execution (51.042762ms)
+✔ native fault qualification retains platform-specific exits while requiring identical ordered traces (1.933541ms)
+✔ native fault qualification accepts canonical System names without erasing foreign namespaces (2.648892ms)
+✔ successful exits, unrelated signals, wrong exceptions and changed event order cannot qualify (1.27968ms)
+✔ ordinary success fixtures keep exact zero-exit semantics (0.3881ms)
+✔ first-chance failfast requires the pinned native HRESULT and the VM fatal boundary (0.757683ms)
+✔ native fixture projects opt into unsafe compilation only for explicitly selected fixtures (0.344536ms)
+✔ observed CLR varargs rejection remains unsupported after an independent authored VM trace succeeds (2.200072ms)
+✔ varargs policy cannot hide wrong native exceptions, successful native divergence, signals or VM failures (0.869818ms)
+✔ A05 native plan keeps SDK policy, unsafe compilation and replay evidence explicit (2.745944ms)
+UNSUPPORTED varargs: /tmp/sharpforge-a05-observed-target-s9Yvvq/varargs/result.json
+FAILED varargs: /tmp/sharpforge-a05-observed-target-s9Yvvq/varargs/result.json
+✔ native plan propagates only a completed observed unsupported outcome and never turns it into a pass (24.939742ms)
+FAILED failed: /tmp/sharpforge-a05-plan-6WCR9G/failed/result.json
+BLOCKED dependent: /tmp/sharpforge-a05-plan-6WCR9G/dependent/result.json
+UNSUPPORTED sdk-policy: /tmp/sharpforge-a05-plan-6WCR9G/sdk-policy/result.json
+PASSED last: /tmp/sharpforge-a05-plan-6WCR9G/last/result.json
+✔ A05 native aggregation continues independent failures and never counts unavailable evidence as a pass (12.287136ms)
+BLOCKED fixture: /tmp/sharpforge-a05-missing-sdk-N9BZ6b/fixture/result.json
+✔ A05 native missing SDK blocks every case and retains a complete failed report (4.265687ms)
+✔ first-chance policy is an explicit target contract with independent authored traces (8.466198ms)
+✔ runtime probe binds the native identity to the exact fixture runtimeconfig and same host invocation (9.673021ms)
+✔ runtime provenance cannot pass with an unexpected runtime major or malformed probe identity (12.155799ms)
+✔ optional native ABI observation reports actual pointer size and process architecture (24.457192ms)
+✔ native-width fixture preserves its authored 32-bit expectations across compiler routes (255.903451ms)
+✔ native-width fixture preserves its authored 64-bit expectations across compiler routes (104.116264ms)
+✔ width proof requires observed CLR process identity and every matching route (9.125224ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6129.876855

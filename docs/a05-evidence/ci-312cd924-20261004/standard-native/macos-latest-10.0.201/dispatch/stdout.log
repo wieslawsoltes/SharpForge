@@ -1,0 +1,2 @@
+PASS A05 B03: native .NET and CIL outputs match ("1\n3\n3\n7\n")
+Evidence: /Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/dispatch/evidence/qualification.json

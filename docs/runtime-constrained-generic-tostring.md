@@ -1,5 +1,7 @@
 # Base-bound generic constrained Object.ToString
 
+> Historical increment: the current [A05 Object slot contract](a05-constrained-object-slots.md) supersedes the Object-call admission and source-support limits below. The original revision-specific validation remains historical evidence.
+
 Direct CIL accepts `constrained. !n` and `constrained. !!n` followed by
 `callvirt System.Object.ToString(): string` when that GenericParam declares one
 concrete nongeneric internal base-class TypeDef constraint, such as

@@ -13,11 +13,15 @@ Int32 values retain the existing signed JavaScript Number stack representation.
 | Missing verification proof or unknown type | Keeps the original handler. |
 | Other widths and source engines | [Int64 specialization](int64-specialization.md) extends the same option. Native integers, Decimal and source/reloaded-source operations retain ordinary handlers. |
 
-Handlers skip the generic numeric family selection and per-operation string
-parsing. They retain the existing `vm.pop`/`vm.push` adapters, including stack
+Individual handlers skip the generic numeric family selection and per-operation
+string parsing. They retain the existing `vm.pop`/`vm.push` adapters, including stack
 admission, profiler/debugger instruction boundaries and managed exception delivery.
 Canonical runtime guards remain necessary because frames are host-visible and
 the existing verifier proves stack heights rather than all numeric value types.
+
+Eligible sequences additionally use [bounded numeric blocks](cil-numeric-blocks.md)
+over private frame storage. Observable instruction hooks, unsupported values and
+managed control boundaries retain the individual handlers.
 
 The private `numericPlanTypes` helper shares one bounded category analysis per
 method/code epoch among numeric decode contributions. It requires an exact

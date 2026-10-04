@@ -2,12 +2,28 @@
  * Lowering of value expressions: literals and constants, variables, member reads, operators, assignments,
  * conversions and interpolated strings.
  */
-import { findContracts } from '@sharpforge/framework';
-import { TypeKind } from '../../symbols/types.js';
-import { isRegisteredReferenceUpcast } from '../../conversions/registered-reference.js';
-import { needsPrimitiveBox, primitiveBoxContract } from '../../primitive-boxing.js';
-import { n } from './node-factory.js';
-import { interpolatedText } from '../../binder/csharp6.js';
+import {
+  isExceptionUpcast
+} from '../../symbols/exception-identity.js';
+import {
+  findContracts
+} from '@sharpforge/framework';
+import {
+  TypeKind
+} from '../../symbols/types.js';
+import {
+  isRegisteredReferenceUpcast
+} from '../../conversions/registered-reference.js';
+import {
+  needsPrimitiveBox,
+  primitiveBoxContract
+} from '../../primitive-boxing.js';
+import {
+  n
+} from './node-factory.js';
+import {
+  interpolatedText
+} from '../../binder/csharp6.js';
 import {registeredFieldLiteral} from '../registered-fields.js';
 
 const foldableTypes = new Set(['int', 'double', 'bool', 'string']);
@@ -40,16 +56,24 @@ export const ExpressionTranslation = Base =>
       if (value.isNull) return n.nullLiteral(node.type ? this.imageType(node.type, node.syntax) : 'object');
       const type = node.type ? this.imageType(node.type, node.syntax) : null;
       if (node.kind === 'FieldAccess' && value.isEnum && value.enumType === node.type &&
-          this.g.bridge.registryName(node.type) === type) {
+        this.g.bridge.registryName(node.type) === type) {
         // The existing enum field IR emits Op.ENUM, retaining the registered carrier on both engines.
-        return {kind: 'FieldAccess', legacyType: type, isExpression: true, receiver: null, field: null, constantValue: value};
+        return {
+          kind: 'FieldAccess',
+          legacyType: type,
+          isExpression: true,
+          receiver: null,
+          field: null,
+          constantValue: value
+        };
       }
       if (!type || !foldableTypes.has(type)) return null;
       const raw = typeof value.value === 'bigint' ? Number(value.value) : value.value;
       return n.literal(raw, type);
     }
     exprLiteral(node) {
-      if (node.literal === 'null' || node.literal === 'default') return n.nullLiteral(node.type ? this.imageType(node.type, node.syntax) : 'object');
+      if (node.literal === 'null' || node.literal === 'default') return n.nullLiteral(node.type ? this.imageType(node.type, node.syntax) :
+      'object');
       return this.unsupported('a literal of a type the runtime does not have', node.syntax);
     }
     exprDefault(node) {
@@ -247,9 +271,14 @@ export const ExpressionTranslation = Base =>
       const type = this.imageType(node.type, node.syntax);
       // Registered upcasts preserve the reference; arbitrary source hierarchies remain unsupported.
       if (value.legacyType !== type && type !== 'object' && value.kind !== 'Literal' && node.conversion?.kind === 'ImplicitReference' &&
-          (this.g.isSource(node.operand.type) || !isRegisteredReferenceUpcast(value.legacyType, type)))
+        !this.g.program.typesByName.get(type)?.interface &&
+         !isExceptionUpcast(node.operand.type, node.type, this.g.analysis.core.exception) && (this.g.isSource(node.operand.type) || !
+           isRegisteredReferenceUpcast(value.legacyType, type)))
         return this.unsupported(`converting '${node.operand.type?.toDisplayString()}' to '${node.type.toDisplayString()}'`, node.syntax);
-      return value.legacyType === type || value.kind !== 'Literal' ? value : { ...value, legacyType: type };
+      return value.legacyType === type || value.kind !== 'Literal' ? value : {
+        ...value,
+        legacyType: type
+      };
     }
     /**
      * General object conversions retain the execution profile's representation.
@@ -266,9 +295,11 @@ export const ExpressionTranslation = Base =>
     }
     /** Preserve primitive identity for a contract argument or an object-array element. */
     objectArgument(value, target) {
-      return needsPrimitiveBox(target, value.legacyType)
-        ? n.frameworkCall({ contract: primitiveBoxContract() }, null, [value, n.literal(value.legacyType, 'string')], 'object')
-        : value;
+      return needsPrimitiveBox(target, value.legacyType) ?
+        n.frameworkCall({
+          contract: primitiveBoxContract()
+        }, null, [value, n.literal(value.legacyType, 'string')], 'object') :
+        value;
     }
     userDefinedConversion(node) {
       const method = node.conversion.method ?? node.method;
@@ -303,7 +334,9 @@ export const ExpressionTranslation = Base =>
       return this.formattedValue(this.expression(node), format, alignment);
     }
     formattedValue(value, format, alignment) {
-      return n.frameworkCall({ contract: formatValue() }, null, [value, format, alignment, n.literal(value.legacyType, 'string')], 'string');
+      return n.frameworkCall({
+        contract: formatValue()
+      }, null, [value, format, alignment, n.literal(value.legacyType, 'string')], 'string');
     }
     exprConditionalReceiver(node) {
       return this.conditionalReceiver ? this.conditionalReceiver() : this.unsupported('a null-conditional receiver', node.syntax);

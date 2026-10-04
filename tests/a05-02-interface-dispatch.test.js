@@ -29,7 +29,7 @@ function diamond(kind, reverse = false) {
     ['Impl', kind === 'default' ? 'IBase' : 'ILeaf']];
   if (reverse) interfaces.reverse();
   const left = constant('LeftValue', 2, 0x1e1);
-  if (kind === 'unsafe-body') left.body = writer => writer.op('ldc.i4.1').op('localloc').op('pop').op('ldc.i4.2').op('ret');
+  if (kind === 'invalid-body') left.body = writer => writer.op('ldarg.1').op('pop').op('ldc.i4.2').op('ret');
   return dispatchFixture([
     iface('IBase', [constant('Value', 1)]),
     iface('ILeft', defaultsOnly ? [] : [left]),
@@ -60,9 +60,9 @@ test('ambiguous diamonds are verifiable and fault only when their declaration is
   assert.equal(result.fault.name, 'System.Runtime.AmbiguousImplementationException');
   const competing = [...vm.inspector.methods.values()].filter(method => ['LeftValue', 'RightValue'].includes(method.name));
   assert(competing.every(method => report.methods.includes(method.token)));
-  const bad = verifyCilAssembly(diamond('unsafe-body'));
+  const bad = verifyCilAssembly(diamond('invalid-body'));
   assert.equal(bad.success, false);
-  assert(bad.issues.some(issue => issue.code === 'IL_OPCODE' && issue.message.includes('localloc')));
+  assert(bad.issues.some(issue => issue.code === 'IL_SLOT'));
 });
 
 test('a private method cannot silently resolve an otherwise ambiguous interface slot', () => {

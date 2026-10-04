@@ -18,7 +18,7 @@ function fixture({capture = 'Derived', receiver = 'Derived', abstract = false, i
   explicit = false, final = false, memberRef = false, loop = false, badOverride = false, customize, main} = {}) {
   const declaration = abstract ? {name: 'Get', static: false, flags: 0x5c6, result: 'int'} : method(7, 0x1c6 | (final ? 0x20 : 0));
   const override = method(42, explicit ? 0xc1 : 0xc6 | (newslot ? 0x100 : 0), explicit ? 'Selected' : 'Get');
-  if (badOverride) override.body = writer => writer.op('localloc').op('pop').op('ldc.i4.0').op('ret');
+  if (badOverride) override.body = writer => writer.op('pop').op('ldc.i4.0').op('ret');
   const types = [
     {name: 'Base', flags: 0x100001 | (abstract ? 0x80 : 0), methods: [constructor(), declaration]},
     {name: 'Derived', base: 'Base', methods: [constructor('Base'), ...(inherited ? [] : [override])]},
@@ -80,7 +80,7 @@ test('verification follows unallocated override bodies, with a bounded cached me
   const bytes = fixture({capture: 'Base', receiver: 'Base', badOverride: true});
   const report = verifyCilAssembly(bytes);
   assert.equal(report.success, false);
-  assert(report.issues.some(issue => issue.method === 'Derived::Get' && issue.code === 'IL_OPCODE'));
+  assert(report.issues.some(issue => issue.method === 'Derived::Get' && issue.code === 'IL_STACK'), JSON.stringify(report.issues));
   const inspector = new AssemblyInspector(fixture());
   const declaration = [...inspector.methods.values()].find(method => method.owner === 'Base' && method.name === 'Get');
   const profile = new VirtualPointerProfile(inspector);

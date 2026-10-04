@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 2,
+  "suite": "SF-A05-T06.2",
+  "status": "measured",
+  "measurementKind": "post-GC-host-retention",
+  "nativeQualification": false,
+  "startedAt": "2026-10-04T15:33:41.091Z",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "/workspace/scratch/42f7738360b9/a05-snapshots/bench/vm/snapshot-retention.js",
+    "--runner",
+    "linux-node24-a05-5909d54f2",
+    "--scenario",
+    "distributed-bytes",
+    "--max-retained-mib",
+    "256",
+    "--out",
+    "/workspace/scratch/42f7738360b9/a05-final-snapshot-retention-distributed-5909d54f2.json"
+  ],
+  "commit": "5909d54f25ef9898c956c736c96db782e36978ff",
+  "worktreeStatus": "",
+  "harnessHash": "3b83797bbeb48a3617df79535fa34588fcb1a55cb9c6339ab6f455a4dc02d992",
+  "environment": {
+    "runner": "linux-node24-a05-5909d54f2",
+    "host": "a4a6cb866850d910ed62eb11bf180b15a7723a193c1953cabad275e6babdc766",
+    "platform": "linux",
+    "arch": "x64",
+    "os": "6.18.44",
+    "cpuModels": [
+      "AMD EPYC 9V74 80-Core Processor"
+    ],
+    "logicalCpus": 9,
+    "memoryBytes": 10451464192,
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "versions": {
+      "node": "24.19.0",
+      "acorn": "8.17.0",
+      "ada": "3.4.4",
+      "amaro": "1.1.10",
+      "ares": "1.34.6",
+      "brotli": "1.2.0",
+      "cldr": "48.0",
+      "icu": "78.3",
+      "llhttp": "9.4.3",
+      "merve": "1.2.2",
+      "modules": "137",
+      "napi": "10",
+      "nbytes": "0.1.4",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.69.0",
+      "nghttp3": "",
+      "ngtcp2": "",
+      "openssl": "3.5.7",
+      "simdjson": "4.6.4",
+      "simdutf": "6.4.0",
+      "sqlite": "3.53.3",
+      "tz": "2026b",
+      "undici": "7.29.0",
+      "unicode": "17.0",
+      "uv": "1.52.1",
+      "uvwasi": "0.0.23",
+      "v8": "13.6.233.17-node.51",
+      "zlib": "1.3.2.1-motley-3246f1b",
+      "zstd": "1.5.7"
+    },
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "execArgv": [
+      "--expose-gc"
+    ],
+    "gcExposed": true,
+    "locale": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "TZ": "Europe/Berlin"
+    }
+  },
+  "environmentFingerprint": "0111dd20e93845c982b3e7f6a71020b5566235ca803247455fcc6693bde62e20",
+  "protocol": {
+    "name": "snapshot-retention-v1",
+    "snapshots": 128,
+    "typedPayloadBytes": 10000000,
+    "scenario": "distributed-bytes",
+    "maxRetainedMiB": 256,
+    "runner": "linux-node24-a05-5909d54f2",
+    "out": "/workspace/scratch/42f7738360b9/a05-final-snapshot-retention-distributed-5909d54f2.json"
+  },
+  "rows": [
+    {
+      "scenario": "distributed-bytes",
+      "fixture": {
+        "scenario": "distributed-bytes",
+        "managedLiveBytes": 10003200,
+        "liveRecords": 100,
+        "typedPayloadBytes": 10000000,
+        "mutationUnit": "payload byte",
+        "changedRecordsPerSnapshot": 100,
+        "changedPayloadBytesPerSnapshot": 100000,
+        "originalScalarSlotsWrittenPerSnapshot": null,
+        "recordMutationFraction": 1,
+        "byteMutationFraction": 0.01,
+        "pattern": "Rewrite the same first 1000 bytes in every one of 100 equally sized records before every snapshot."
+      },
+      "snapshotsRequested": 128,
+      "snapshotsCaptured": 23,
+      "stop": "Post-GC heapUsed + external exceeded the explicit cap; remaining captures were not attempted.",
+      "explicitGC": {
+        "callsPerBoundary": 3,
+        "eventLoopTurnsPerBoundary": 3
+      },
+      "hostCapBytes": 268435456,
+      "host": {
+        "empty": {
+          "rss": 101089280,
+          "heapTotal": 97619968,
+          "heapUsed": 29013624,
+          "external": 3897617,
+          "arrayBuffers": 220555
+        },
+        "live": {
+          "rss": 107642880,
+          "heapTotal": 97882112,
+          "heapUsed": 29136800,
+          "external": 13897657,
+          "arrayBuffers": 10220555
+        },
+        "retained": {
+          "rss": 339095552,
+          "heapTotal": 98930688,
+          "heapUsed": 30455544,
+          "external": 243897657,
+          "arrayBuffers": 240220555
+        },
+        "historyReleasedAfterRestoreChecks": {
+          "rss": 406548480,
+          "heapTotal": 97882112,
+          "heapUsed": 28021016,
+          "external": 13923814,
+          "arrayBuffers": 10220555
+        },
+        "allHeapsReleased": {
+          "rss": 406548480,
+          "heapTotal": 97882112,
+          "heapUsed": 27874104,
+          "external": 3923814,
+          "arrayBuffers": 220555
+        }
+      },
+      "progress": [
+        {
+          "snapshots": 1,
+          "host": {
+            "rss": 117735424,
+            "heapTotal": 97882112,
+            "heapUsed": 29253768,
+            "external": 23897657,
+            "arrayBuffers": 20220555
+          }
+        },
+        {
+          "snapshots": 16,
+          "host": {
+            "rss": 268709888,
+            "heapTotal": 98668544,
+            "heapUsed": 30116272,
+            "external": 173897657,
+            "arrayBuffers": 170220555
+          }
+        },
+        {
+          "snapshots": 23,
+          "host": {
+            "rss": 339095552,
+            "heapTotal": 98930688,
+            "heapUsed": 30455344,
+            "external": 243897657,
+            "arrayBuffers": 240220555
+          }
+        }
+      ],
+      "census": {
+        "uniqueSnapshotRecords": 2300,
+        "uniqueSnapshotTypedBackings": 2300,
+        "exactSnapshotTypedBackingBytes": 230000000,
+        "exactLiveAndSnapshotTypedBackingBytes": 240000000,
+        "uniqueLiveAndSnapshotTypedBackings": 2400,
+        "snapshotRecordIndexSlots": 2300,
+        "uniqueGenerationSlots": 100,
+        "ordinaryDataSlotsIncludingLive": 0,
+        "uniqueSnapshotManagedRecordBytes": 230073600,
+        "logicalSnapshotEstimateBytes": 230092800,
+        "slotEstimateBytes": 8,
+        "limitations": "Managed record sizes and eight-byte index slots are logical accounting, not V8 object sizes. String backing, ropes, object headers and Set/Map/Array overhead are measured only by post-GC host counters."
+      },
+      "restoreEquivalence": {
+        "equal": true,
+        "revisions": 23,
+        "comparedRestoredStateSHA256": "c009083ec5a4342ee353f7515d7b28142e845a3abcf24b4f1b948d4d654421cc",
+        "policy": "Every shared snapshot restored into detached mutable storage and compared byte-for-byte/field-for-field against a separately replayed full-copy snapshot. Full-copy reference versions are released each iteration."
+      },
+      "copiedRecords": 2300,
+      "reusedRecords": 0,
+      "captureWallMsIncludingExplicitGC": 585.974906,
+      "liveHostDelta": {
+        "rss": 6553600,
+        "heapTotal": 262144,
+        "heapUsed": 123176,
+        "external": 10000040,
+        "arrayBuffers": 10000000
+      },
+      "retainedHostDelta": {
+        "rss": 231452672,
+        "heapTotal": 1048576,
+        "heapUsed": 1318744,
+        "external": 230000000,
+        "arrayBuffers": 230000000
+      },
+      "totalLiveAndSnapshotHostDelta": {
+        "rss": 238006272,
+        "heapTotal": 1310720,
+        "heapUsed": 1441920,
+        "external": 240000040,
+        "arrayBuffers": 240000000
+      },
+      "unit": "bytes",
+      "additiveHostMetric": "heapUsed + external; arrayBuffers is already included in external and is not added again",
+      "environment": {
+        "node": "v24.19.0",
+        "v8": "13.6.233.17-node.51",
+        "platform": "linux",
+        "arch": "x64"
+      },
+      "assessment": {
+        "complete": false,
+        "assessmentBasis": "Snapshot increment over the live baseline; combined live-plus-history is separate.",
+        "hostSnapshotDeltaBytes": 231318744,
+        "hostSnapshotDeltaRatio": 23.124474568138197,
+        "hostCombinedDeltaBytes": 241441960,
+        "hostCombinedDeltaRatio": 24.136472328854765,
+        "hostUnderTwiceManagedHeap": null,
+        "exactSnapshotBackingRatioToManagedHeap": 22.992642354446577,
+        "logicalSnapshotRatio": 23.001919385796544,
+        "exactTypedPayloadRatio": 23,
+        "exactLiveAndSnapshotTypedPayloadRatio": 24,
+        "restoreEquivalent": true,
+        "status": "incomplete"
+      },
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "--max-old-space-size=512",
+        "--expose-gc",
+        "/workspace/scratch/42f7738360b9/a05-snapshots/bench/vm/snapshot-retention-worker.js",
+        "distributed-bytes",
+        "268435456"
+      ],
+      "traceSHA256": "cbd440a37a062872d7348af511d8f4297377d1f49a80e494a7d7a25e8f06ff1b",
+      "tracePath": "/workspace/scratch/42f7738360b9/a05-final-snapshot-retention-distributed-5909d54f2.json.distributed-bytes.log"
+    }
+  ],
+  "errors": [],
+  "unsupportedTargets": [
+    "Browser timing/host-memory: this Node harness does not qualify browsers",
+    "Native .NET throughput: no CLR executable is measured",
+    "Wasm tier: interpreter baseline options explicitly disable it"
+  ],
+  "format": "SharpForge.SnapshotRetention/1",
+  "unit": "bytes",
+  "acceptance": "workload-specific",
+  "limit": "The issue does not define a mutation unit or include/exclude the live heap. Record-fraction and byte-fraction workloads are reported separately; this probe grants no universal or cross-platform pass.",
+  "completedCommit": "5909d54f25ef9898c956c736c96db782e36978ff",
+  "completedWorktreeStatus": "",
+  "completedAt": "2026-10-04T15:33:43.184Z"
+}

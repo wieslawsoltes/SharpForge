@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {AssemblyInspector, verifyCilAssembly} from '@sharpforge/cil';
 import {CilVirtualMachine, RuntimeEventName} from '@sharpforge/runtime';
 import {managedFixture} from './managed-fixtures.js';
 
@@ -103,12 +104,27 @@ test('an explicit throw of a caught object is a new origin', () => {
 
 test('a rethrow outside a catch is rejected before runtime event execution', () => {
   const bytes = managedFixture({methods: [{name: 'Main', body: writer => writer.op('rethrow')}]});
+  const report = verifyCilAssembly(new AssemblyInspector(bytes));
+  assert.equal(report.success, false);
+  assert(report.issues.some(issue => issue.code === 'IL_EH_FLOW' && issue.diagnostic === 'CILCF0001'));
   assert.throws(() => new CilVirtualMachine(bytes, {runtimeEvents: true}), error => {
     assert.equal(error.name, 'CilError');
     assert.deepEqual(error.issues.map(({code, diagnostic, offset}) => ({code, diagnostic, offset})),
       [{code: 'IL_EH_FLOW', diagnostic: 'CILCF0001', offset: 0}]);
     return true;
   });
+});
+
+test('a host-edited invalid rethrow retains its runtime fault observation fallback', () => {
+  const malformed = new AssemblyInspector(managedFixture({methods: [{name: 'Main', body: writer => writer.op('rethrow')}]}));
+  const invalid = new CilVirtualMachine(managedFixture({methods: [{name: 'Main',
+    body: writer => writer.op('nop').op('ret')}]}), {runtimeEvents: true});
+  invalid.top.method = {...invalid.top.method, instructions: malformed.getMethod(malformed.pe.entryPoint).instructions};
+  try {
+    assert.equal(invalid.run().fault.name, 'InvalidProgramException');
+    assert.equal(events(invalid).length, 1);
+    assert.equal(events(invalid)[0].payload.name, 'InvalidProgramException');
+  } finally { invalid.stop(); }
 });
 
 test('finally continuation propagates a fault without emitting another origin', () => {

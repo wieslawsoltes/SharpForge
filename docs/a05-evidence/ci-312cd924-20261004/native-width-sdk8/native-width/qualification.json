@@ -1,0 +1,174 @@
+{
+  "task": "SF-A05-E04",
+  "fixture": "native-width",
+  "timestamp": "2026-10-04T18:36:31.747Z",
+  "revision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+  "platform": "win32",
+  "architecture": "x64",
+  "node": "v22.23.3",
+  "dotnetSdk": "8.0.425",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.31 [D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.31 [D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\shared\\Microsoft.NETCore.App]\nMicrosoft.WindowsDesktop.App 8.0.31 [D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\shared\\Microsoft.WindowsDesktop.App]",
+  "targetFramework": "net8.0",
+  "passed": true,
+  "status": "passed",
+  "qualification": "Same native source and output compared across Roslyn CIL and compiler source/reload/CIL routes",
+  "sources": [
+    {
+      "path": "tests\\fixtures\\a05\\native-width\\Program.cs",
+      "sha256": "b764599bc1399b0a3af0b53fa0a747a0abb811531c778cd2f1a56673bd1c3533"
+    }
+  ],
+  "expectedOutput": "4\n4\n1\n-256\n2147483647\nsigned-overflow\n-2147483648\nsigned-underflow\n4294967295\nunsigned-overflow\nconversion-overflow\n1\n0\n",
+  "assemblySha256": "e5c8b4b2d7ed7dc79321494ebe95083da2251ccf3f9bb8234cfcfb996a85dada",
+  "nativeRuntime": {
+    "scope": "Independent native process with identical fixture runtimeconfig, dotnet executable, cwd and environment; not guest instrumentation.",
+    "frameworkDescription": ".NET 8.0.31",
+    "environmentVersion": "8.0.31",
+    "runtimeIdentifier": "win-x86",
+    "nativeIntBits": 32,
+    "processArchitecture": "X86",
+    "runtimeConfig": {
+      "file": "Qualification.runtimeconfig.json",
+      "sha256": "28329cf08f6505e73806b17558b187c02f0c1c516fe47ebfb7a013d082aaa306",
+      "content": "{\r\n  \"runtimeOptions\": {\r\n    \"tfm\": \"net8.0\",\r\n    \"framework\": {\r\n      \"name\": \"Microsoft.NETCore.App\",\r\n      \"version\": \"8.0.0\"\r\n    },\r\n    \"configProperties\": {\r\n      \"System.Reflection.Metadata.MetadataUpdater.IsSupported\": false,\r\n      \"System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization\": false\r\n    }\r\n  }\r\n}"
+    },
+    "probe": {
+      "sourceSha256": "e71c8ef2c6af179c6c2e7cfc64e8f4193ad4110475875f729771938bd32bb1d7",
+      "assemblySha256": "47c31eb1d100b3c486bfc450959d73360fa4ab614d2d4c69c033bcb83aa528a4"
+    },
+    "command": {
+      "executable": "D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\dotnet.exe",
+      "arguments": [
+        "exec",
+        "--runtimeconfig",
+        "<temporary-project>\\bin\\Release\\net8.0\\Qualification.runtimeconfig.json",
+        "<temporary-project>\\runtime-probe\\bin\\Release\\net8.0\\RuntimeProbe.dll"
+      ]
+    },
+    "exitCode": 0,
+    "signal": null,
+    "output": ".NET 8.0.31\n8.0.31\nwin-x86\n4\nX86\n",
+    "stderr": ""
+  },
+  "native": {
+    "exitCode": 0,
+    "signal": null,
+    "output": "4\n4\n1\n-256\n2147483647\nsigned-overflow\n-2147483648\nsigned-underflow\n4294967295\nunsigned-overflow\nconversion-overflow\n1\n0\n",
+    "stderr": ""
+  },
+  "cil": {
+    "state": "terminated",
+    "exitCode": 0,
+    "output": "4\n4\n1\n-256\n2147483647\nsigned-overflow\n-2147483648\nsigned-underflow\n4294967295\nunsigned-overflow\nconversion-overflow\n1\n0\n",
+    "instructions": 107
+  },
+  "sourceRoutes": {
+    "nativeIntBits": 32,
+    "sourceSha256": "b764599bc1399b0a3af0b53fa0a747a0abb811531c778cd2f1a56673bd1c3533",
+    "assemblySha256": "2845d539c6d75445180d2e0077ceba81582e154e6c7da858f7e716f675204aa1",
+    "routes": [
+      {
+        "engine": "source",
+        "state": "terminated",
+        "exitCode": 0,
+        "output": "4\n4\n1\n-256\n2147483647\nsigned-overflow\n-2147483648\nsigned-underflow\n4294967295\nunsigned-overflow\nconversion-overflow\n1\n0\n",
+        "instructions": 192
+      },
+      {
+        "engine": "reloaded-source",
+        "state": "terminated",
+        "exitCode": 0,
+        "output": "4\n4\n1\n-256\n2147483647\nsigned-overflow\n-2147483648\nsigned-underflow\n4294967295\nunsigned-overflow\nconversion-overflow\n1\n0\n",
+        "instructions": 192
+      },
+      {
+        "engine": "compiled-cil",
+        "state": "terminated",
+        "exitCode": 0,
+        "output": "4\n4\n1\n-256\n2147483647\nsigned-overflow\n-2147483648\nsigned-underflow\n4294967295\nunsigned-overflow\nconversion-overflow\n1\n0\n",
+        "instructions": 335
+      }
+    ]
+  },
+  "commands": [
+    {
+      "command": "D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\dotnet.exe",
+      "arguments": [
+        "restore",
+        "Qualification.csproj",
+        "--configfile",
+        "NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\dotnet.exe",
+      "arguments": [
+        "build",
+        "Qualification.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\dotnet.exe",
+      "arguments": [
+        "restore",
+        "RuntimeProbe.csproj",
+        "--configfile",
+        "<temporary-project>\\NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>\\runtime-probe",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\dotnet.exe",
+      "arguments": [
+        "build",
+        "RuntimeProbe.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>\\runtime-probe",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\dotnet.exe",
+      "arguments": [
+        "exec",
+        "--runtimeconfig",
+        "<temporary-project>\\bin\\Release\\net8.0\\Qualification.runtimeconfig.json",
+        "<temporary-project>\\runtime-probe\\bin\\Release\\net8.0\\RuntimeProbe.dll"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\dotnet.exe",
+      "arguments": [
+        "<temporary-project>\\bin\\Release\\net8.0\\Qualification.dll"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    }
+  ]
+}

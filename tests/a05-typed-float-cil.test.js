@@ -9,8 +9,9 @@ function arithmetic(kind, operation, left, right) {
   return managedFixture({methods: [{name: 'Main', result: kind === 'r4' ? 'float' : 'double', maxStack: 2,
     body: writer => writer.op('ldc.' + kind, left).op('ldc.' + kind, right).op(operation).op('ret')} ]});
 }
-function loop() {
-  return managedFixture({methods: [{name: 'Main', result: 'double', maxStack: 2, locals: ['double', 'int'],
+function loop(referenceLocal = false) {
+  const locals = referenceLocal ? ['double', 'int', 'object'] : ['double', 'int'];
+  return managedFixture({methods: [{name: 'Main', result: 'double', maxStack: 2, locals,
     body(writer) {
       writer.op('ldc.r8', 0).op('stloc.0').integer(0).op('stloc.1').mark('loop');
       writer.op('ldloc.0').op('ldc.r8', 0.25).op('add').op('stloc.0');
@@ -103,10 +104,10 @@ test('host replacement arrays, descriptors and replaced code retain reference se
 });
 
 test('snapshot capture materializes plain arrays; replay restores tags and live reference roots', () => {
-  const vm = new CilVirtualMachine(loop(), {typedNumericStack: true});
+  const vm = new CilVirtualMachine(loop(true), {typedNumericStack: true});
   for (let index = 0; index < 6; index++) vm.step();
   const reference = vm.heap.string('only frame root');
-  vm.top.locals.push(reference);
+  vm.top.locals[2] = reference;
   vm.heap.collect();
   assert.equal(vm.heap.get(reference).data, 'only frame root');
   const saved = vm.snapshot();

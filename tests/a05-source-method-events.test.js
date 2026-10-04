@@ -121,7 +121,7 @@ for (const engine of ['source', 'reload']) {
     } finally { vm.stop(); }
   });
 
-  test(`${engine}: finally return and rethrow each produce a single real frame exit`, () => {
+  test(`${engine}: finally return exits once while unhandled rethrow stays open until stop`, () => {
     for (const [body, state, reason, output] of [
       ['try { return 42; } finally { Console.Write("finally"); }', 'terminated', 'return', 'finally42\n'],
       ['try { throw new Exception("bad"); } catch (Exception) { throw; }', 'faulted', 'exception', '']
@@ -132,7 +132,13 @@ for (const engine of ['source', 'reload']) {
         const result = vm.run();
         assert.equal(result.state, state, result.fault?.message);
         assert.equal(result.output, output);
-        assert.deepEqual(leaves(vm).filter(event => nameOf(vm, event) === 'Child').map(event => event.payload.reason), [reason]);
+        const childLeaves = () => leaves(vm).filter(event => nameOf(vm, event) === 'Child').map(event => event.payload.reason);
+        if (state === 'faulted') {
+          assert(vm.frames.some(frame => vm.image.methods[frame.methodId].name === 'Child'));
+          assert.deepEqual(childLeaves(), []);
+          vm.stop();
+          assert.deepEqual(childLeaves(), ['stop']);
+        } else assert.deepEqual(childLeaves(), [reason]);
         balanced(methodEvents(vm));
       } finally { vm.stop(); }
     }

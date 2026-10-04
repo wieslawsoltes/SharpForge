@@ -4,7 +4,8 @@ import {executionCodeState} from './code-version.js';
 import {invokeFrameworkObjectToString} from './framework-object-string.js';
 import {invokeManagedMethod, SYNCHRONOUS_CALL_CANCELED} from './synchronous-call.js';
 import {sourceObjectStringTarget} from './source-object-string.js';
-import {selectedCallOwner} from './generic-calls.js';
+import {objectCallOwner} from './object-call-owner.js';
+import {requireObjectStringResult} from './object-string-result.js';
 
 const profiles = new WeakMap();
 const unhandled = Object.freeze({handled: false});
@@ -28,11 +29,11 @@ function cilTarget(vm, record) {
   const plan = table.flags.valueType ? profile.objects.valuePlan(table.definitionToken)
     : profile.references.plan(table.definitionToken);
   if (plan) return plan.target;
-  // Unsupported layouts/generic owners without any possible override still retain the old type-name fallback.
+  // Unsupported layouts without any possible override still retain the old type-name fallback.
   for (let current = table; current; current = current.base) {
     const definition = vm.typeSystem.types.get(current.definitionToken);
     if (definition?.methods.some(method => profile.objects.virtualMethod(method))) {
-      throw new ManagedFault('NotSupportedException', 'Object.ToString callback requires an admitted nongeneric managed hierarchy or struct');
+      throw new ManagedFault('NotSupportedException', 'Object.ToString callback requires an admitted managed hierarchy or struct');
     }
   }
   return null;
@@ -61,11 +62,8 @@ export function invokeObjectToString(platform, receiver) {
   const value = invokeManagedMethod(platform, target, receiverFor(vm, record, receiver), [], {
     maxInstructions: vm.options.maxSynchronousInstructions ?? 20000,
     roots: [receiver],
-    ...(vm.inspector && record.kind !== 'box' ? {genericIdentity: selectedCallOwner(vm, target, receiver, null)} : {})
+    genericIdentity: objectCallOwner(vm, target, record.methodTable, receiver)
   });
   if (value === SYNCHRONOUS_CALL_CANCELED) return canceled;
-  if (value !== null && (!isReference(value) || platform.heap.get(value).kind !== 'string')) {
-    throw new ManagedFault('InvalidProgramException', 'Object.ToString override did not return a managed string or null');
-  }
-  return {handled: true, value};
+  return {handled: true, value: requireObjectStringResult(vm, value)};
 }

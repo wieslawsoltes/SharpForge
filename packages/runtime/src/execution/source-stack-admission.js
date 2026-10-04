@@ -1,8 +1,10 @@
+import {isFatalFault, markUnhandled} from './unhandled.js';
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {admitStackBytes, hasStackBudget, stackByteLimit, validateStackByteSnapshot} from './stack-budget.js';
 import {sourceStackSlots} from './source-stack-size.js';
 import {emitSourceException} from './source-exception-events.js';
+import {cancelObjectValueWork} from './object-value-state.js';
 
 const admissions = new WeakMap();
 const terminal = new Set(['completed', 'faulted', 'canceled']);
@@ -16,14 +18,15 @@ function admit(vm, frame) {
   if (!method) throw new ManagedFault('InvalidProgramException', 'Source frame has no verified method body');
   if (previous?.epoch === epoch && previous.limit === limit && previous.id === frame.id && previous.method === method &&
       previous.code === method.code && previous.handlers === method.handlers && previous.locals === method.locals &&
-      previous.localCount === frame.locals.length && previous.methods === vm.image.methods && hasStackBudget(vm)) return;
+      previous.localCount === frame.locals.length && previous.metadataLocalCount === method.locals.length &&
+      previous.methods === vm.image.methods && hasStackBudget(vm)) return;
   const capacity = sourceStackSlots(vm, method);
   if (!Number.isSafeInteger(frame.base) || frame.base < 0 || vm.stack.length < frame.base || vm.stack.length - frame.base > capacity) {
     throw new ManagedFault('InvalidProgramException', 'Frame exceeds its verified source stack bound');
   }
   admitStackBytes(vm, frame);
   admissions.set(frame, {epoch, limit, id: frame.id, method, code: method.code, handlers: method.handlers,
-    locals: method.locals, localCount: frame.locals.length, methods: vm.image.methods});
+    locals: method.locals, localCount: frame.locals.length, metadataLocalCount: method.locals.length, methods: vm.image.methods});
 }
 
 /** Quota rejection precedes pc/counter/profiler changes; ordinary managed faults keep their existing path. */
@@ -34,7 +37,7 @@ export function beginSourceStackInstruction(vm, frame) {
     return true;
   } catch (error) {
     vm.fault = vm.makeFault(error);
-    vm.state = 'faulted';
+    markUnhandled(vm, vm.fault);
     emitSourceException(vm, vm.fault, {frame, opcode: null, index: frame.pc, method: frame.methodId, frameId: frame.id}, true);
     return false;
   }
@@ -42,18 +45,15 @@ export function beginSourceStackInstruction(vm, frame) {
 
 /** Preserve the source interpreter's debugger/managed-exception adapter at the extracted seam. */
 export function handleSourceInstructionFault(vm, error, instruction) {
+  if (instruction.frame) cancelObjectValueWork(instruction.frame);
   const fault = vm.makeFault(error);
-  const fatal = fault.name === 'InstructionLimitException' || fault.fatal === true;
+  const fatal = isFatalFault(fault);
   emitSourceException(vm, fault, instruction, fatal);
   if (fatal) {
-    vm.fault = fault;
-    vm.state = 'faulted';
+    markUnhandled(vm, fault);
     return false;
   }
-  if (vm.onException?.(fault)) {
-    vm.pendingFault = fault;
-    vm.state = 'paused';
-  } else vm.handleFault(fault);
+  vm.handleFault(fault);
   return true;
 }
 
@@ -76,7 +76,6 @@ function validateContext(vm, frames, stack) {
 
 /** Validate shared-stack segments and VM-wide reserved capacities before any restore mutation. */
 export function validateSourceStackSnapshot(vm, snapshot) {
-  if (stackByteLimit(vm.options) === undefined) return;
   validateContext(vm, snapshot.frames, snapshot.stack);
   const scheduler = snapshot.scheduler;
   if (scheduler) {

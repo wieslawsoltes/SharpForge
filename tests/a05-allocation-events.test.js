@@ -41,7 +41,7 @@ test('guest allocation keeps output and instruction accounting identical with pr
         const actual = vm.run();
         assert.equal(actual.returnValue, expected.returnValue);
         assert.equal(actual.stats.instructions, expected.stats.instructions);
-        assert.deepEqual(ticks(vm).map(event => [event.instruction, event.payload.bytes, event.payload.growth]), [[2, 56, false]]);
+        assert.deepEqual(ticks(vm).map(event => [event.instruction, event.payload.bytes, event.payload.growth]), [[2, 44, false]]);
         assert.deepEqual(vm.runtimeEvents.read().map(event => event.name),
           ['MethodLoad', 'MethodEnter', 'AllocationTick', 'MethodLeave']);
         if (profile) assert.equal(instructionProfile(vm).allocations, 1);
@@ -54,17 +54,21 @@ test('positive storage growth records only its delta and does not invent another
   const vm = new CilVirtualMachine(fixture(), {runtimeEvents: true, profile: true});
   try {
     const array = vm.heap.array('int', 1);
+    assert(vm.heap.get(array).data instanceof Int32Array);
+    assert.equal(vm.heap.get(array).size, 32 + Int32Array.BYTES_PER_ELEMENT);
     vm.heap.replaceData(array, [1, 2, 3]);
+    assert(vm.heap.get(array).data instanceof Int32Array);
+    assert.equal(vm.heap.get(array).size, 32 + 3 * Int32Array.BYTES_PER_ELEMENT);
     vm.heap.replaceData(array, [3, 2, 1]);
     vm.heap.replaceData(array, [9]);
     assert.deepEqual(ticks(vm).map(event => event.payload), [
-      {bytes: 40, growth: false, allocations: 1, allocatedBytes: 40, liveBytes: 40},
-      {bytes: 16, growth: true, allocations: 1, allocatedBytes: 56, liveBytes: 56}
+      {bytes: 36, growth: false, allocations: 1, allocatedBytes: 36, liveBytes: 36},
+      {bytes: 8, growth: true, allocations: 1, allocatedBytes: 44, liveBytes: 44}
     ]);
-    assert.equal(vm.heap.stats.liveBytes, 40);
+    assert.equal(vm.heap.stats.liveBytes, 36);
     const profile = instructionProfile(vm);
     assert.equal(profile.allocations, 1);
-    assert.equal(profile.allocatedBytes, 56);
+    assert.equal(profile.allocatedBytes, 44);
   } finally { vm.stop(); }
 });
 

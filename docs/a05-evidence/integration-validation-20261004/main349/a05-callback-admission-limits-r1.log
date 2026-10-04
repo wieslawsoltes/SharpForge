@@ -1,0 +1,32 @@
+✔ CIL execution budgets do not become structural EH instruction limits (28.19006ms)
+✔ standalone structural instruction limits remain bounded and enforced (2.361113ms)
+✔ direct CIL heap quota does not limit the PE bytes and remains enforced from construction (19.726765ms)
+✔ explicit assembly byte limits are exact and independent of the smaller heap quota (2.080822ms)
+✔ nested structural decode limits remain independent from executed instruction limits (2.561047ms)
+✔ a pre-admitted inspector retains its own decoding limits (1.259487ms)
+✔ nested method-count limit rejects a new callback root before changing execution or the original proof (17.895319ms)
+✔ legacy method-count limit rejects a new callback root before changing execution or the original proof (2.74741ms)
+✔ nested override method-count limit rejects a new callback root before changing execution or the original proof (2.25018ms)
+✔ a callback with EH uses explicit structural limits without importing the enclosing execution quota (7.140183ms)
+✔ a callback structural allowance cannot raise the enclosing runtime instruction budget (3.803639ms)
+✔ synchronous callback source: caller control, dynamic roots and reentrant frames survive collection (187.382274ms)
+✔ synchronous callback source: fault restores preexisting pending state and releases callback frames (20.936548ms)
+✔ synchronous callback cil: caller control, dynamic roots and reentrant frames survive collection (29.157269ms)
+✔ synchronous callback cil: fault restores preexisting pending state and releases callback frames (6.834574ms)
+✔ synchronous CIL callback preserves mutable caller byrefs, GC roots and verified aggregate stack accounting (15.825487ms)
+✔ synchronous callbacks cannot leave paused execution or retain an abandoned pooled frame (18.131496ms)
+✔ synchronous call limits reject invalid budgets and include retained caller depth (17.806959ms)
+✔ synchronous callback instruction exhaustion restores the paused caller and frees abandoned frame storage (9.768095ms)
+✔ CIL constructor admission verifies the reachable Object.ToString override (6.714688ms)
+✔ synchronous CIL callback verification rejection preserves prior report and stack proof (6.212741ms)
+✔ direct host callback execution buffers subscriber delivery until an explicit host flush (32.773244ms)
+✔ nested synchronous calls share the managed frame-depth limit (35.812701ms)
+✔ callbacks preserve an already-suppressed scheduler and obey the enclosing instruction limit (3.309724ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4610.565857

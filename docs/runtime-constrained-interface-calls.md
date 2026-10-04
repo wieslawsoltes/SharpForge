@@ -1,5 +1,7 @@
 # Constrained calls on nongeneric structs
 
+> Historical increment: the current [A05 Object slot contract](a05-constrained-object-slots.md) supersedes the Object-call admission and source-support limits below. The original revision-specific validation remains historical evidence.
+
 The direct CIL engine accepts `constrained. <TypeDef>; callvirt <interface method>`
 for an owned managed address of a reference-free sequential user struct. Existing
 interface tables select implicit and explicit implementations. The selected body

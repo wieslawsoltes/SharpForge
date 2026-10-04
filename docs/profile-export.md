@@ -43,7 +43,7 @@ sampled elapsed durations, not CPU time or a chronological event timeline.
 The default instruction export ignores optional duration data, even if that
 unused data is malformed.
 
-The instruction-profiler dependency is included in this branch. Run:
+Run the integrated exporter examples:
 
 ```sh
 node examples/runtime/profile.mjs cil > profile.speedscope.json
@@ -54,17 +54,21 @@ node examples/runtime/profile.mjs cil duration > elapsed.speedscope.json
 
 Open the JSON in [Speedscope](https://www.speedscope.app/). Program output is sent
 to stderr; stdout contains only the profile. For allocation and call counters,
-save `vm.profiler.read()` directly. This increment does not associate the separate
-runtime event stream with profiler samples and does not export EventPipe or binary
-`.nettrace` data. Runtime trace JSON remains separate work, as do Studio view integration
-and browser qualification.
+save `vm.profiler.read()` directly. Structured runtime event JSON is provided by
+[`exportRuntimeTrace(log, {after, limit})`](runtime-trace-export.md), also exported
+by `@sharpforge/runtime`. It exports the existing `SharpForge.RuntimeEvents/1`
+event records with instruction counters, sequence cursors and dropped-event
+counts. Event export remains independent of profiler samples and duration capture.
+Binary EventPipe and `.nettrace` output are unsupported. This API documentation
+does not claim Studio view integration or browser qualification.
 
 | Capability | Source / reload | Direct CIL | Qualification |
 | --- | --- | --- | --- |
-| Instruction-weighted Speedscope JSON | Implemented | Implemented | Focused Node 24.21.0 tests passed |
-| Empty, recursive and capacity-overflow profiles | Supported input shapes | Supported input shapes | Focused tests passed |
-| Captured elapsed-millisecond Speedscope JSON | Implemented | Implemented | New focused cases authored; validation pending |
-| Runtime trace JSON / binary `.nettrace` output | Not provided | Not provided | Separate work / binary format unsupported |
+| Instruction-weighted Speedscope JSON | Implemented | Implemented | Historical 28-case focused run at `4314866a`; export cases also passed in the broader run described below |
+| Empty, recursive and capacity-overflow profiles | Supported input shapes | Supported input shapes | Schema and ownership regressions in the same exporter suites |
+| Captured elapsed-millisecond Speedscope JSON | Implemented | Implemented | Duration-export cases passed within the broader `3b482d83b` run; see its limits below |
+| Structured runtime trace JSON | `exportRuntimeTrace` accepts an enabled observer log | Same helper and event format | Bounded-export regressions passed within `3b482d83b`; [event export contract](runtime-trace-export.md) |
+| Binary EventPipe / `.nettrace` output | Unsupported | Unsupported | No native trace-tool import compatibility claim |
 
 The schema fixture is an unmodified copy retrieved from the official URL on
 2026-10-04. Tests exercise its required JSON shape as well as method/weight
@@ -75,13 +79,18 @@ All 28 focused tests passed serially with Node 24.21.0 at `4314866a`:
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-10-profile-export.test.js
 ```
 
-Speedscope application loading, browser qualification and performance measurements
-remain queued for the completed scope.
+Final-revision Speedscope application loading, browser qualification and measured
+profiler-overhead thresholds remain separate gates.
 
-`tests/a05-duration-profile-export.test.js` adds captured-duration schema cases,
+`tests/a05-duration-profile-export.test.js` covers captured-duration schema cases,
 rounding, zero/extreme boundaries, malformed/missing timing data, ownership and
 source/reload/direct-CIL fixtures with an injected clock. It shares the existing
-pinned-schema assertions with the instruction tests. These new cases have not
-been executed; the 28-test evidence above applies only to the earlier instruction
-export. No measured performance or browser import result is claimed for duration
-export.
+pinned-schema assertions with the instruction tests.
+
+The instruction, duration and runtime-trace exporter cases passed in the serial
+A05/preemption/security run at `3b482d83b`, recorded in `a05-main349-full-r1.log`. That broader
+run had **3,162 passes, 25 failures and zero skips across 3,187 tests**; it was not
+a passing full-integration result. Exporter assertions establish the tested JSON,
+ownership and captured-weight contracts. They do not establish measured profiler
+overhead, actual Speedscope application loading or browser qualification. The
+28-test result above remains attached to its original revision and scope.
