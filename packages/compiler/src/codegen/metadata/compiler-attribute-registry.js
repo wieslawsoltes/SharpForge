@@ -22,7 +22,8 @@ export class CompilerAttributeRegistry {
     const known = this.get(fullName);
     if (known) return known;
     const source = this.analysis.assembly.globalNamespace.lookupType(fullName, 0);
-    const imported = this.analysis.references?.manager?.getTypeByMetadataName(fullName);
+    const manager = this.analysis.references?.manager;
+    const imported = manager?.corLibrary ? manager.getTypeByMetadataName(fullName) : this.analysis.globalNamespace.lookupType(fullName, 0);
     // Internal embedded attributes in another assembly are intentionally private to that compilation.
     const existing = source ?? (imported && !imported.isErrorType?.() && imported.declaredAccessibility === Accessibility.Public ? imported : null);
     const contract = factory(this.analysis, existing, this);

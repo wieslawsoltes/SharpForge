@@ -1,5 +1,5 @@
 /** Complete compiler-owned attribute definitions, planned without mutating source namespaces or member lists. */
-import { NamedTypeSymbol, Accessibility, RefKind } from '../../symbols/types.js';
+import { NamedTypeSymbol, Accessibility, RefKind, TypeKind } from '../../symbols/types.js';
 import { NamespaceSymbol } from '../../symbols/namespaces.js';
 import { FieldSymbol, MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from '../../symbols/members.js';
 import { MetadataEmitError } from './type-tokens.js';
@@ -24,7 +24,10 @@ export function compilerAttributeType(analysis, fullName) {
 }
 
 /** Resolve the required signature on a real symbol; a malformed declared attribute is never replaced silently. */
-export function requiredAttributeConstructor(type, parameterTypes) {
+export function requiredAttributeConstructor(type, parameterTypes, attributeBase) {
+  if (type.typeKind !== TypeKind.Class || type.isAbstract || !type.isDerivedFrom(attributeBase)) {
+    throw new MetadataEmitError(`${type.toDisplayString()} must be a non-abstract class derived from System.Attribute`);
+  }
   const constructor = type.getMembers('.ctor').find(method => !method.isStatic && !method.arity &&
     method.declaredAccessibility === Accessibility.Public && method.parameters.length === parameterTypes.length &&
     method.parameters.every((parameter, index) => parameter.refKind === RefKind.None && parameter.type.equals(parameterTypes[index])));
@@ -47,7 +50,9 @@ export function compilerAttributeConstructor(type, core, parameters = []) {
 
 /** A parameterless marker such as EmbeddedAttribute or IsReadOnlyAttribute. */
 export function markerAttributeContract(analysis, existing, { fullName, usage = null }) {
-  if (existing) return { type: existing, constructor: requiredAttributeConstructor(existing, []), plan: null, bodies: new Map() };
+  if (existing) return {
+    type: existing, constructor: requiredAttributeConstructor(existing, [], analysis.core.attribute), plan: null, bodies: new Map(),
+  };
   const type = compilerAttributeType(analysis, fullName), constructor = compilerAttributeConstructor(type, analysis.core);
   const plan = planMembers(type, analysis.core, () => null);
   const bodies = new Map([[plan.methods.find(method => method.symbol === constructor), { kind: CompilerAttributeBody.Constructor }]]);
@@ -59,7 +64,7 @@ export function fieldAttributeContract(analysis, existing, options) {
   const { fullName, fieldName, fieldType, parameterName = '', propertyName = null,
     fieldAccessibility = Accessibility.Public, usage = null } = options;
   if (existing) return {
-    type: existing, constructor: requiredAttributeConstructor(existing, [fieldType]), plan: null, bodies: new Map(),
+    type: existing, constructor: requiredAttributeConstructor(existing, [fieldType], analysis.core.attribute), plan: null, bodies: new Map(),
   };
   const core = analysis.core, type = compilerAttributeType(analysis, fullName);
   const field = type.addMember(new FieldSymbol({
