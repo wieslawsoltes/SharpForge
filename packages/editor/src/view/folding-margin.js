@@ -27,12 +27,16 @@ export class FoldingMargin {
     button.className = 'sf-fold-hint';
     button.dataset.decorationOnly = 'true';
     button.textContent = ' … ';
-    const end = Math.min(region.endLine, region.startLine + 12);
-    const lines = [];
-    for (let line = region.startLine + 1; line <= end; line++) lines.push(editor.model.getLine(line).slice(0, 200));
-    button.title = lines.join('\n') + (end < region.endLine ? '\n…' : '');
+    button.title = this.hintText(region);
     button.setAttribute('aria-label', `Expand ${region.endLine - region.startLine} hidden lines`);
     button.onclick = () => editor.folding.toggle(region.startLine);
     element.append(button);
+  }
+
+  hintText(region) {
+    const end = Math.min(region.endLine, region.startLine + 12);
+    const lines = [];
+    for (let line = region.startLine + 1; line <= end; line++) lines.push(this.view.editor.model.getLine(line).slice(0, 200));
+    return lines.join('\n') + (end < region.endLine ? '\n…' : '');
   }
 }

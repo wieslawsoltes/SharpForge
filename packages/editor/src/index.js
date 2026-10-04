@@ -43,5 +43,4 @@ export {EditorAccessibility} from './a11y/aria.js';
 export {describeDiagnostic, navigateDiagnostic, announceLineState} from './a11y/diagnostics.js';
 export {accessibleWidget} from './a11y/widgets.js';
 export {commandAliases} from './core/command-map.js';
-export const escapeHtml = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;')
-  .replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+export {escapeHtml} from './html.js';

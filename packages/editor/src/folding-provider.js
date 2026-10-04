@@ -42,7 +42,8 @@ export class FoldingProvider {
     }
   }
 
-  dispose() { this.disposed = true; this.generation++; clearTimeout(this.timer); this.controller?.abort(); }
+  cancel() { this.generation++; clearTimeout(this.timer); this.timer = null; this.controller?.abort(); }
+  dispose() { this.disposed = true; this.cancel(); }
 }
 
 export function fallbackFolding(model, highlightIndex = null) {
