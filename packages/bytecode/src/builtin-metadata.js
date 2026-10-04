@@ -1,7 +1,7 @@
 /** Canonical declaring types for the stable core builtin table; shared by binding and metadata navigation. */
 export const builtinOwners = Object.freeze({
   Console: 'System.Console', Math: 'System.Math', GC: 'System.GC', int: 'System.Int32',
-  double: 'System.Double', Convert: 'System.Convert', string: 'System.String',
+  double: 'System.Double', decimal: 'System.Decimal', Convert: 'System.Convert', string: 'System.String',
   Array: 'System.Array', object: 'System.Object', Exception: 'System.Exception',
   Debug: 'System.Diagnostics.Debug', Environment: 'System.Environment',
   Enum: 'System.Enum', Type: 'System.Type'
@@ -13,6 +13,7 @@ const properties = new Set(['Exception.Message', 'Environment.TickCount', 'Type.
 
 /** Describe the source-visible member without changing its stable runtime ID or receiver-inclusive parameter table. */
 export function builtinMemberShape(builtin) {
+  if (builtin.decimal) return {name: builtin.decimal.name, instance: false, property: false};
   const separator = builtin.name.lastIndexOf('.');
   const name = builtin.name.slice(separator + 1);
   const prefix = builtin.name.slice(0, separator);

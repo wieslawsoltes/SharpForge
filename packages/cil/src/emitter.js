@@ -3,7 +3,7 @@ import { prepareEmission } from './emit/emission-context.js';
 import { emissionTypeDescriptors } from './emit/type-descriptors.js';
 import { debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
 import { EmitterSignatures } from './emitter-signatures.js';
-import { emitObjectBuiltin } from './object-builtin-mapping.js';
+import {emitBuiltin} from './builtin-emission.js';
 import { emitPropertyMetadata } from './emitter-properties.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
 import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins, numericTypeId } from '@sharpforge/bytecode';
@@ -110,25 +110,4 @@ function emitMethod(c,d) {
   for(const patch of patches){const target=patch.target==='return'?returnOffset:starts[patch.target];if(target===undefined)throw new CilError('Missing CIL branch target');w.patch32(patch.at,target-patch.end);}
   const nativeHandlers=handlers.map(h=>({start:starts[h.start],end:spans[h.end][0]+spans[h.end][1],target:prefixes.get(h.target),handlerEnd:prefixes.get(h.handlerEndPc)??starts[h.handlerEndPc]??returnOffset,catchType:h.kind==='finally'?0:c.resolveType('Exception'),...(h.kind==='finally'?{flags:2}:{})}));
   return {code:w.finish(),locals,maxStack:analysis.maxStack+Math.max(16,args+4),handlers:nativeHandlers,spans};
-}
-function emitBuiltin(c,w,id,count,types,adapt) {
-  const name=Builtins[id].name;let owner,member,result,params,instance=false,newObject=false,extra=false;
-  if(emitObjectBuiltin(c,w,name,types,adapt))return;
-  if(name.startsWith('Console.')){owner='System.Console';member=name.slice(8);result='void';params=count?[types[0]==='null'?'string':frameworkType(types[0])?.kind==='enum'?'object':isValue(types[0])||types[0]==='string'?types[0]:'object']:[];}
-  else if(name.startsWith('Math.')||name==='$Math.Abs.Int32'){owner='System.Math';member=name==='$Math.Abs.Int32'?'Abs':name.slice(5);const intResult=['Abs','Min','Max'].includes(member)&&types.every(t=>t==='int');result=intResult?'int':'double';params=types.map(()=>result);}
-  else if(name.startsWith('GC.')){owner='System.GC';member=name.slice(3);result=member==='Collect'?'void':member==='GetTotalMemory'?'long':'int';params=member==='Collect'?[]:member==='GetTotalMemory'?['bool']:['int'];if(member==='GetTotalMemory'&&!count){w.integer(0);extra=true;}}
-  else if(name==='int.Parse'||name==='double.Parse'){owner=name.startsWith('int')?'int':'double';member='Parse';result=owner;params=['string'];}
-  else if(name.startsWith('Convert.')){owner='System.Convert';member=name.slice(8);result={ToInt32:'int',ToDouble:'double',ToString:'string'}[member];params=[types[0]==='null'?'object':isValue(types[0])||types[0]==='string'?types[0]:'object'];}
-  else if(name.startsWith('Array.')){owner='Array';member=name.slice(6);result='void';params=['Array'];}
-  else if(name==='Type.Name'||name==='Type.FullName'){owner=name==='Type.Name'?'System.Reflection.MemberInfo':'System.Type';member='get_'+name.slice(5);result='string';params=[];instance=true;}
-  else if(name==='Enum.HasFlag'){adapt(types,['object','object']);w.op('callvirt',c.external('System.Enum','HasFlag','bool',['System.Enum'],false));return;}
-  else if(name==='string.get_Chars'){adapt(types,['string','int']);w.op('callvirt',c.external('string','get_Chars','char',['int'],false)).op('conv.i4');return;}
-  else if(name==='Exception.new'){owner='Exception';member='.ctor';result='void';params=['string'];instance=true;newObject=true;}
-  else if(name==='Exception.Message'){owner='Exception';member='get_Message';result='string';params=[];instance=true;}
-  else if(name==='Debug.Assert'){if(count===1)w.op('ldstr',0x70000000|c.metadata.userString('Assertion failed'));w.op('call',c.helperToken).op('ldnull');return;}
-  else if(name==='Environment.TickCount'){owner='System.Environment';member='get_TickCount';result='int';params=[];}
-  else if(name.startsWith('string.')){owner='string';member=name.slice(7);result=['Contains','StartsWith','EndsWith','IsNullOrEmpty'].includes(member)?'bool':member==='IndexOf'?'int':'string';instance=!['Concat','IsNullOrEmpty','Intern','IsInterned'].includes(member);params=member==='Concat'?['string','string']:['IsNullOrEmpty','Intern','IsInterned'].includes(member)?['string']:member==='Substring'?Array(count-1).fill('int'):['Contains','IndexOf','StartsWith','EndsWith'].includes(member)?['string']:member==='Replace'?['string','string']:[];}
-  else throw new CilError(`No CIL intrinsic mapping for ${name}`);
-  if(!extra)adapt(types,[...(instance&&!newObject?[owner]:[]),...params]);
-  w.op(newObject?'newobj':instance?'callvirt':'call',c.external(owner,member,result,params,!instance));if(result==='void'&&!newObject)w.op('ldnull');
 }
