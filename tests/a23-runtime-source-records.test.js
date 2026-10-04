@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {runtimeSourceRecords} from '../apps/studio/workers/runtime-sources.js';
 
+const source = (assemblyKey, text, extras = {}) => ({uri: 'sharpforge-assembly://' + assemblyKey + '/Shared.cs',
+  originalUri: 'Shared.cs', assemblyKey, text, ...extras});
+
 test('worker source publication retains graph provenance without transferring metadata tables', () => {
   const record = {...source('Library', 'code'), project: 'Library.csproj', contextId: 'net10', generated: true, internal: 'private'};
   const output = runtimeSourceRecords({vm: {image: {sources: [record]}}});
