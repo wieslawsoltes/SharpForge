@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createTracks, resolveTracks, distributeSpan, rect, twoPaneGeometry, computeWorldLayout, parallaxOffset } from '../packages/winui-controls/src/layout/index.js';
+import { createTracks, resolveTracks, distributeSpan, rect, twoPaneGeometry, ScrollViewerModel,
+  ScrollViewModel, nearestSnap, computeWorldLayout, parallaxOffset } from '../packages/winui-controls/src/layout/index.js';
 import { element, panel, layoutFixture } from './helpers/a16-layout.js';
 
 test('Grid distributes constrained stars after fixed and Auto demand, including spans', () => {
@@ -48,6 +49,36 @@ test('VariableSizedWrapGrid uses spans without probing first-child DOM geometry'
   assert.deepEqual(fixture.state('a').slot, rect(0, 0, 60, 20));
   assert.deepEqual(fixture.state('b').slot, rect(60, 0, 30, 20));
   assert.deepEqual(fixture.state('c').slot, rect(0, 20, 30, 20));
+});
+
+test('scroll models clamp offsets, preserve zoom anchors, sequence events and cancel pending callbacks', () => {
+  const events = [];
+  const scheduled = new Map();
+  let sequence = 0;
+  const model = new ScrollViewerModel({ onEvent: (name, args) => events.push([name, args]),
+    now: () => 0,
+    requestFrame: callback => { scheduled.set(++sequence, callback); return sequence; }, cancelFrame: id => scheduled.delete(id) });
+  model.setExtent({ width: 1000, height: 1000 }, { width: 100, height: 100 });
+  assert.equal(model.changeView(2000, 30, null, true), true);
+  assert.equal(model.horizontalOffset, 900);
+  assert.equal(events.at(-1)[1].IsIntermediate, false);
+  model.changeView(100, 100, 1, true);
+  model.zoomAt(2, { x: 50, y: 50 });
+  assert.equal(model.horizontalOffset, 125);
+  model.changeView(120, 120, null, false);
+  const [frame, callback] = scheduled.entries().next().value;
+  scheduled.delete(frame);
+  callback(90);
+  assert.equal(events.at(-1)[1].IsIntermediate, true);
+  model.dispose();
+  assert.equal(scheduled.size, 0);
+  assert.equal(model.changeView(0, 0, 1), false);
+  const modern = new ScrollViewModel();
+  modern.setExtent({ width: 1000, height: 1000 }, { width: 100, height: 100 });
+  modern.verticalSnapPoints = [0, 100, 200];
+  assert.equal(modern.scrollTo(0, 120, { animationMode: 'Disabled' }), 1);
+  assert.equal(modern.verticalOffset, 100);
+  assert.equal(nearestSnap(49, [{ offset: 0, interval: 20, start: 10, end: 100 }]), 40);
 });
 
 test('TwoPaneView thresholds and render-only transforms preserve layout sizes', () => {

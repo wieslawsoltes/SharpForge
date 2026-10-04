@@ -13,7 +13,10 @@ export class LayoutError extends Error {
   }
 }
 
-export function size(width = 0, height = 0) {
+/** Omitted dimensions default to zero; explicitly supplied values must be nonnegative numbers. */
+export function size(width, height) {
+  if (arguments.length === 0) width = 0;
+  if (arguments.length < 2) height = 0;
   if (typeof width !== 'number' || typeof height !== 'number' || Number.isNaN(width) || Number.isNaN(height) || width < 0 || height < 0) {
     throw new LayoutError('SFUI1601', 'Measure dimensions must be nonnegative numbers');
   }
