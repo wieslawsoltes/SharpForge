@@ -51,3 +51,4 @@ export { AssemblySymbolIndex } from './browser/index.js';
 export { AssemblyTypeHierarchy } from './browser/hierarchy.js';
 
 export { AssemblyUsageAnalysis } from './browser/analyzers.js';
+export { MetadataTableInspector } from './inspector-tables.js';
