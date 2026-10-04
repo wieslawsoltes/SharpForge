@@ -135,6 +135,8 @@ The opt-in [verifier type-system adapter](VERIFIER-TYPE-SYSTEM.md) resolves boun
 
 The opt-in [typed numeric verifier](VERIFIER-NUMERIC.md) propagates primitive stack
 types through decoded method blocks, with explicit rejected and unknown results.
+Its registered [indirect memory policies](VERIFIER-MEMORY.md) check primitive
+managed-pointer loads and stores while retaining storage-width distinctions.
 
 `formatSignatureType(node, metadata, options)` optionally accepts
 `formatType(node, formatChild)`, returning a display string or `undefined` to

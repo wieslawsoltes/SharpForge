@@ -70,9 +70,11 @@ test('assignment work has a lowering-only word budget and no allocation for init
   assert.equal(verify(fixture('StoredLoad'), { signal: AbortSignal.abort() }).status, 'unknown');
 });
 
-test('local assignment does not imply unsupported alias, instance or byref-return verification', () => {
+test('local assignment does not imply alias initialization, instance categories or byref-return verification', () => {
+  const alias = verify({ name: 'AliasWrite', body: writer => writer.op('ldloca.s', 0).op('ldc.i4.1').op('stind.i4').op('ret') });
+  assert.equal(alias.status, 'rejected');
+  assert.equal(alias.diagnostics[0].diagnostic, 'UninitializedLocal');
   const cases = [
-    { name: 'AliasWrite', body: writer => writer.op('ldloca.s', 0).op('ldc.i4.1').op('stind.i4').op('ret') },
     { name: 'InstanceMethod', static: false, body: writer => writer.op('ret') },
     { name: 'PointerEscape', result: 'int&', body: writer => writer.op('ldloca.s', 0).op('ret') },
   ];
