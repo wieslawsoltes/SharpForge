@@ -3,6 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validateFixtureSize } from './limits.js';
 
 export const editorBenchmarkSizes = Object.freeze([1024, 1024 ** 2, 10 * 1024 ** 2, 100 * 1024 ** 2]);
 export const rootDirectory = resolve(fileURLToPath(new URL('../../', import.meta.url)));
@@ -18,10 +19,8 @@ export function distribution(samples) {
 }
 
 export function validateOptions({ sizes = editorBenchmarkSizes, samples = 20, warmups = 3 } = {}) {
-  if (!Array.isArray(sizes) || !sizes.length || sizes.length > 8
-      || sizes.some(value => !Number.isSafeInteger(value) || value < 256 || value > 100 * 1024 ** 2)) {
-    throw new RangeError('Editor fixtures must contain 256 bytes through 100 MiB');
-  }
+  if (!Array.isArray(sizes) || !sizes.length || sizes.length > 8) throw new RangeError('Expected one through eight editor fixture sizes');
+  for (const size of sizes) validateFixtureSize(size);
   if (!Number.isSafeInteger(samples) || samples < 3 || samples > 1000 || !Number.isSafeInteger(warmups) || warmups < 0 || warmups > 100) {
     throw new RangeError('Invalid benchmark sample/warmup count');
   }
