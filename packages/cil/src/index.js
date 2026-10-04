@@ -24,3 +24,5 @@ export { readAssemblyModules } from './pe/module-reader.js';
 export { decodeBinaryPermissionSet, securityDiagnosticCatalog } from './metadata/security-declarations.js';
 export { VerificationKind, verificationType, verificationDiagnosticCatalog } from './verify/types.js';
 export { mergeVerificationTypes, mergeVerificationStacks } from './verify/type-relations.js';
+
+export {verifiedStackBound} from './verified-stack.js';
