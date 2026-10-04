@@ -1,0 +1,9 @@
+{
+  "runtime": ".NET 10.0.5",
+  "results": {
+    "Main": 42,
+    "Forward127": 7,
+    "Forward128": 8,
+    "Switch": 9
+  }
+}
