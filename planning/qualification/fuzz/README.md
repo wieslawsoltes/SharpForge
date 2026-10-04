@@ -91,20 +91,21 @@ imports and cannot be selected by a normal campaign.
 | Target / work item | Actual exercised APIs | Remaining acceptance |
 | --- | --- | --- |
 | `pe-loader` / #1144 | PE reader, metadata validator, assembly inspector and loader with row/code budgets | Ten-minute and cross-platform captures; broader external corpus |
-| `bytecode-image` / #1145 | Deserialization, verifier and actual scalar source VM with instruction/heap/stack budgets | Non-scalar verified programs return unsupported; no CIL or Rust execution claim |
+| `bytecode-image` / #1145 | Deserialization, verifier and [bounded managed source VM](bytecode-profile.md): static calls, storage, fixed objects and int arrays | Verified programs outside the closed profile return unsupported; no general-image, CIL or Rust execution claim |
 | `portable-pdb` / #1146 | Portable PDB builder/reader, locations and locals with reader budgets | Broader existing/native corpus and platform qualification |
 | `zip-archive` / #1147 | In-memory ZIP writer/reader and DEFLATE validation | Workspace import and filesystem extraction are not exercised |
 | `protocol` / #1148 | LSP/DAP message framing, Unicode and deterministic chunking | Semantic server dispatch and request sequences |
-| `il-document` / #1149 | Assemble, format, reassemble and compare all visible IL text | Exact `.image` idempotence is not met by the current append-only writer |
+| `il-document` / #1149 | Assemble, format, reassemble and compare the entire IL document, including `.image` | Cross-platform qualification; general ilasm and metadata editing remain outside this dialect |
 | `msbuild-xml` / #1149 | Project XML and condition parser; fixed in-memory Exists results | Native MSBuild and external filesystem evaluation |
 | `network` / #1150 | Outbound URL/header/grant policy and CSP generation | Native-host token, Origin and path checks are explicitly unsupported |
 
 Unexpected exceptions remain findings. An adapter rejects only identified input
 validation diagnostics. Errors while consuming its own generated canonical output
 are findings, not malformed user input. Existing product defects are assigned to
-their owning areas; this harness does not change production behavior to obtain a
-passing campaign. The IL result code `IL_DOCUMENT_VISIBLE_TEXT` names its narrower
-invariant and does not imply full serialized-document equality.
+their owning areas and require independently reviewed product corrections. The IL
+result code `IL_DOCUMENT_EXACT_ROUNDTRIP` names full serialized-document equality.
+Older retained `IL_DOCUMENT_VISIBLE_TEXT` results keep their original narrower
+meaning and cannot qualify the new exact-image invariant.
 
 ## Finding retention and normal-suite replay
 

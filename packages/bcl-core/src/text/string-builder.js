@@ -13,6 +13,9 @@ import {
 } from './string-builder-edit.js';
 import {removeBuilderRange} from './string-builder-remove.js';
 import {replaceBuilderStringRange} from './string-builder-replace-range.js';
+import {insertBuilderNumeric, insertBuilderString} from './string-builder-insert-values.js';
+import {insertBuilderArray} from './string-builder-insert-array.js';
+import {insertBuilderObject} from './string-builder-insert-object.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
@@ -222,7 +225,10 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       if (descriptor.parameters.length === 3) return insertBuilderRepeatedString(platform, reference, scalars, insertText);
       if (descriptor.parameters[1] === 'char') return insertBuilderCharacter(platform, reference, scalars, insertText);
       if (descriptor.parameters[1] === 'bool') return insertBuilderBoolean(platform, reference, scalars, insertText);
-      return insertText(platform, reference, scalars[0], scalars[1]);
+      if (descriptor.parameters[1] === 'char[]') return insertBuilderArray(platform, reference, values, insertText);
+      if (descriptor.parameters[1] === 'object') return insertBuilderObject(platform, reference, values, insertText);
+      if (descriptor.parameters[1] === 'string') return insertBuilderString(platform, reference, scalars, insertText);
+      return insertBuilderNumeric(platform, descriptor, reference, values, insertText);
     case 'Replace':
       if (descriptor.parameters[0] === 'char') return replaceBuilderCharacters(platform, reference, scalars);
       if (descriptor.parameters.length === 4) return replaceBuilderStringRange(platform, reference, scalars, bufferText, setBuffer);

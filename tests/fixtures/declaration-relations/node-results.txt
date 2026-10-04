@@ -1,0 +1,41 @@
+✔ A13 host declaration snapshot extends indexed queries and copies all retained records (14.23726ms)
+✔ A13 declaration diagnostics affect only their relation and preserve instruction coverage (2.954285ms)
+✔ A13 declaration snapshots reject module mismatches, malformed entries and duplicate relationships (13.323957ms)
+✔ A13 declaration snapshot budgets reject before reading records and cancellation remains observable (2.287044ms)
+✔ A13 local declaration relation sets equal independent CoreCLR base-definition and interface-map observations (21.638196ms)
+✔ A13 canonical class relations include each overridden ancestor and exclude newslot hiders (18.539047ms)
+✔ A13 interface maps distinguish inherited virtual slots, explicit implementations and reimplementation (4.482333ms)
+✔ A13 newly introduced contracts search ancestral public methods when no inherited interface entry exists (2.915568ms)
+✔ A13 explicit declarations resolve Module-scoped TypeRef aliases to canonical MethodDefs (2.557732ms)
+✔ A13 MemberRef implementation bodies resolve exactly while unsupported class-root classification stays explicit (2.980253ms)
+✔ A13 invalid MethodImpl bodies, canonical duplicate aliases and signature mismatches reject (6.947027ms)
+✔ A13 declaration budgets reject exact excess, invalid options and cancellation without reading bodies (3.425428ms)
+✔ A13 unsupported generic declaring types are diagnostics, with per-relation incomplete queries (2.894908ms)
+✔ A13 same-name methods with different canonical signatures never satisfy an interface declaration (1.710836ms)
+✔ A13 default and static virtual interface families stay explicit unsupported diagnostics (3.311881ms)
+✔ A13 unresolved base types cannot create guessed roots and remain retryable diagnostics (1.453879ms)
+✔ A13 declaration snapshots are immutable scalar data after the collectible context unloads (1.92346ms)
+✔ four instruction relations resolve exact local aliases and preserve occurrence order (14.682586ms)
+✔ external targets stay explicit instead of binding to guessed display names (2.408702ms)
+✔ owned pages and scalar indexes survive destruction of caller PE and metadata (2.030292ms)
+✔ aggregate body, instruction and occurrence budgets reject exact excess before expansion (4.354109ms)
+✔ invalid options/tokens, cancellation and metadata budget boundaries remain explicit (4.980204ms)
+✔ malformed IL or operand kinds reject; native method bodies are explicit incomplete input (5.015537ms)
+✔ legacy callGraph keeps exact calls, per-method errors and normal cache behavior (4.928459ms)
+✔ native reflection IL/token observations agree with all four usage relations (6.401254ms)
+✔ CLR class roots through explicit interfaces match independent CoreCLR GetBaseDefinition (45.620739ms)
+✔ CLR interface-only MethodImpl rows preserve implicit class roots and explicit interface body identity (19.613149ms)
+✔ CLR MemberRef interface declarations resolve assembly-scoped TypeRefs through host policy (1.797203ms)
+✔ CLR interface classification never hides class mappings or unsupported declaration/body parents (6.315536ms)
+✔ CLR malformed MethodImpl owners, body ownership, duplicate declarations and signature tokens fail explicitly (9.349697ms)
+✔ CLR MethodImpl declaration signatures reject oversized type RIDs before they alias local types (1.147157ms)
+✔ CLR MethodImpl classification bounds ownership and declaration signature allocation (19.039956ms)
+✔ CLR cancelled asynchronous interface classification can retry and cached roots survive unload (2.280052ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1957.034082

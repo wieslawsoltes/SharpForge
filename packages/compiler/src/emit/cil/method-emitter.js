@@ -51,6 +51,7 @@ import { PointerEmission } from './emit-pointers.js';
 import { FixedEmission } from './emit-fixed.js';
 import { InlineArrayEmission } from './emit-inline-arrays.js';
 import { UnionEmission } from './emit-unions.js';
+import { DynamicEmission } from './emit-dynamic.js';
 import { FunctionPointerEmission } from './emit-function-pointers.js';
 
 const families = [
@@ -102,6 +103,7 @@ const families = [
   FixedEmission,
   InlineArrayEmission,
   UnionEmission,
+  DynamicEmission,
   FunctionPointerEmission,
 ];
 

@@ -1,0 +1,46 @@
+✔ public-only method inspection retains original display shape/order and cache identity (10.403505ms)
+✔ typed-first decoding defers display work and public promotion evicts the interim raw entry (2.222999ms)
+✔ raw decoding never resolves token display and public formatting failures do not poison its cache (1.163591ms)
+✔ no-body methods retain complete public shape and invalid MethodDefs retain their diagnostic (0.893013ms)
+✔ typed numeric corpus follows ECMA operand, storage and branch tables (45.518282ms)
+✔ type confusion is rejected independently of the existing height-only admission (3.580375ms)
+✔ slot, underflow, maxstack and return diagnostics are explicit (3.402071ms)
+✔ unsupported metadata, bodies and opcodes cannot produce a typed proof (4.789882ms)
+✔ a local signature token cannot name a method StandAloneSig (0.838533ms)
+✔ bounded typed propagation checks cancellation, state-copy work and all dataflow limits (5.009906ms)
+✔ bytecode after a reachable terminator remains unsupported when its policy is missing (0.560644ms)
+✔ unreachable branches still require an instruction-boundary target (0.655824ms)
+✔ primitive storage addresses retain declared element identity and reject double addresses (1.667292ms)
+✔ all native observations retain exact bytes and explicit predeclared ILVerify differences (18.880429ms)
+✔ literal count and byte limits have explicit defaults, zero boundaries and hard ceilings (20.109276ms)
+✔ repeated loads of one token consume one record while distinct tokens consume distinct work (4.779818ms)
+✔ per-invocation literal budgets apply again after a successful cached-inspector verification (0.852203ms)
+✔ byte-work limits stop before scanning oversized text and before block propagation (50.179966ms)
+✔ pre-cancellation and cancellation during a long terminal-marker scan never qualify a method (1.715782ms)
+✔ ldstr requires a nonzero #US token and an in-range record start (17.413081ms)
+✔ empty, even-length, truncated and reserved compressed #US records reject (7.796433ms)
+✔ missing #US rejects only when a String literal actually needs the heap (2.728822ms)
+✔ every single-byte character follows the ECMA terminal-marker categories (174.807857ms)
+✔ high bytes and paired or lone surrogates preserve exact UTF-16 units (1.893664ms)
+✔ compressed length boundaries charge the complete one-, two- and four-byte record (3.14907ms)
+✔ only addressed records are inspected, including unreachable literal operands (0.991438ms)
+✔ pinned ILVerify String observations retain exact bytes, tool versions and policy boundaries (22.635128ms)
+✔ string transfers compose primitive storage, reference branches and field policies (35.683392ms)
+✔ literal preparation requires no nominal type authority or unrelated metadata budget (3.726809ms)
+✔ mixed field preparation keeps literal errors, offsets and limits independent of metadata authority (4.751656ms)
+✔ String stores retain definite-assignment rules and diagnose incompatible storage (4.786307ms)
+✔ literal peak stack and rejected IL offsets follow the actual transfer (1.574495ms)
+✔ raw verification avoids String display decoding and preserves later public cache identity (3.410344ms)
+✔ preexisting display decoding does not bypass later heap validation or literal budgets (2.227384ms)
+✔ unsupported object operations remain explicit even when preceded by a valid literal (0.571109ms)
+✔ numeric typed verification skips operand display and needs no resource preparation context (14.418348ms)
+✔ unreachable field operands retain strict canonical token checks after display decoding is omitted (9.364538ms)
+✔ missing policies stop before inspector-backed preparation is requested (1.105756ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2632.173205

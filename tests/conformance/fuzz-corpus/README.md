@@ -10,6 +10,15 @@ Portable PDB embedded-source DEFLATE stream observed at published commit
 source identity, finding and effective budgets are unchanged. An empty corpus
 still produces an explicit skip, which is not parser qualification.
 
+Two retained PE inputs preserve malformed UTF-8 metadata version strings from
+seed 1, cases 88 and 463, at published commit
+`bf85020e6024cdd679a0234d9f050ca7dedddf53`. The public loader and inspector originally
+threw `TypeError: The encoded data was not valid for encoding utf-8`. The corrected
+Node decoder rejects that exact native encoding failure through `CilError` with
+`Invalid UTF-8 text`. The original input bytes, source identity, finding, budgets
+and hash-named records are unchanged. These three production records are replayed
+by the normal manifest; their presence does not qualify other engines or inputs.
+
 Campaign findings are written under the explicitly selected `artifacts/fuzz`
 output, together with the exact source, literal input, original finding and
 effective budgets. Preserve the original report before preparing a product fix.
