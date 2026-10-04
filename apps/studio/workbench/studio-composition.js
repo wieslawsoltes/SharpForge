@@ -50,6 +50,7 @@ function mountSessionUi(context) {
     docking: context.docking,
     commands: context.commands,
     document: context.document,
+    uiCapabilities: context.uiCapabilities,
     state: () => context.state,
     stopAll: () => context.execution.stop({ all: true }),
     startNewInstance: (projectId, options) => context.execution.startNewInstance(projectId, options),
