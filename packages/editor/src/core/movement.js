@@ -10,12 +10,21 @@ export class EditorMovement {
     const selections = editor.getSelections().map((selection, index) => {
       const start = Math.min(selection.anchor, selection.active);
       const end = Math.max(selection.anchor, selection.active);
+      const virtual = selection.activeVirtualSpace ?? 0;
+      const position = editor.model.positionAt(selection.active);
+      const lineEnd = editor.model.getLine(position.line).length === position.character;
+      if (editor.options.virtualSpace && !options.word && !options.document && start === end && lineEnd) {
+        if (direction === 'right' || direction === 'left' && virtual > 0) {
+          const activeVirtualSpace = Math.max(0, virtual + (direction === 'right' ? 1 : -1));
+          return {...selection, activeVirtualSpace, anchorVirtualSpace: options.extend ? selection.anchorVirtualSpace : activeVirtualSpace};
+        }
+      }
       if (!options.extend && start !== end && ['left', 'right'].includes(direction)) {
         const active = direction === 'left' ? start : end;
         return {anchor: active, active};
       }
       const active = this.destination(selection.active, direction, options, index);
-      return {anchor: options.extend ? selection.anchor : active, active};
+      return {anchor: options.extend ? selection.anchor : active, active, activeVirtualSpace: 0, anchorVirtualSpace: 0};
     });
     editor.setSelections(selections);
     editor.view.reveal(selections[editor.primaryIndex ?? 0].active);
@@ -40,13 +49,19 @@ export class EditorMovement {
     }
     if (direction === 'end') return base + current.record.sliceStart + current.segment.end;
     const count = options.page ? Math.max(1, Math.floor(editor.view.viewport.clientHeight / editor.lineHeight) - 1) : 1;
-    const row = current.row + (direction === 'up' ? -count : count);
-    const next = editor.view.layout.map.lineAt(row);
-    const target = editor.view.layout.line(next.line);
+    const row = current.row - editor.view.layout.leadingRows + (direction === 'up' ? -count : count);
+    let next = editor.view.layout.map.lineAt(row);
+    let target = editor.view.layout.line(next.line);
+    if (next.continuation >= target.segments.length) {
+      const nextRow = direction === 'up' ? editor.view.layout.map.rowAt(next.line) + target.segments.length - 1
+        : editor.view.layout.map.rowAt(next.line + 1);
+      next = editor.view.layout.map.lineAt(nextRow);
+      target = editor.view.layout.line(next.line);
+    }
     const segment = target.segments[Math.min(next.continuation, target.segments.length - 1)];
     const x = this.preferredColumns.get(index) ?? current.x;
     this.preferredColumns.set(index, x);
-    const local = editor.view.metrics.offsetAt(target.layout, x - segment.indent + segment.x);
+    const local = editor.view.metrics.offsetAt(target.layout, x - segment.indent + segment.x - target.sliceStart * editor.view.metrics.charWidth);
     return target.start + target.sliceStart + Math.min(segment.end, Math.max(segment.start, local));
   }
 
@@ -62,10 +77,12 @@ export class EditorMovement {
       const current = editor.view.layout.position(offset);
       const row = editor.view.lines.elementFor(position.line, current.continuation);
       if (row) {
-        const boundaries = [0, ...graphemeSegments(row.textContent).map(segment => segment.end)];
-        const local = position.character - current.segment.start;
+        const sliceStart = current.record.sliceStart + current.segment.start;
+        const source = current.record.text.slice(current.segment.start, current.segment.end);
+        const boundaries = [0, ...graphemeSegments(source).map(segment => segment.end)];
+        const local = position.character - sliceStart;
         const next = editor.view.bidi.visualMove(row, local, forward ? 1 : -1, boundaries);
-        if (next !== local) return base + current.segment.start + next;
+        if (next !== local) return base + sliceStart + next;
       }
     } else {
       const operation = forward ? nextGraphemeOffset : previousGraphemeOffset;

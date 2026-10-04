@@ -9,7 +9,7 @@ export function navigateDiagnostic(editor, direction = 1) {
   const diagnostic = direction > 0
     ? diagnostics.find(item => item.start > editor.offset) ?? diagnostics[0]
     : diagnostics.findLast(item => item.start < editor.offset) ?? diagnostics.at(-1);
-  editor.goto(diagnostic.start, diagnostic.start + Math.max(0, diagnostic.length));
+  editor.goto(diagnostic.start, diagnostic.start + Math.max(0, diagnostic.length ?? 0));
   editor.accessibility.announce(describeDiagnostic(diagnostic));
   return diagnostic;
 }

@@ -1,6 +1,8 @@
 import {installTabEscape} from '../tab-focus.js';
 import {CompositionController} from './composition.js';
 import {dragTextEdits} from '../clipboard-ring.js';
+import {copySelections, pasteSelections, SELECTION_CLIPBOARD_MIME} from '../commands/multi-clipboard.js';
+import {modelForView} from './model-adapter.js';
 
 /** Explicit element adapter. Native textarea storage is a bounded context; the public value is the buffer. */
 export class HiddenInputController {
@@ -118,7 +120,7 @@ export class HiddenInputController {
 
   synchronize() {
     if (this.composition?.active || this.editor.disposed) return;
-    const caret = this.editor.offset;
+    const caret = this.editor.caretOffset;
     this.contextStart = Math.max(0, caret - 1024);
     const end = Math.min(this.editor.model.length, caret + 1024);
     this.context = this.editor.model.getText(this.contextStart, end);
@@ -147,15 +149,19 @@ export class HiddenInputController {
   }
 
   copy(event, cut) {
-    const selected = this.editor.getSelections().map(selection => this.editor.model.getText(
-      Math.min(selection.anchor, selection.active), Math.max(selection.anchor, selection.active)));
-    const text = selected.join(this.editor.options.endOfLine);
+    const payload = copySelections(modelForView(this.editor), {eol: this.editor.options.endOfLine});
+    const {text} = payload;
     if (!text || !event.clipboardData) return;
     event.preventDefault();
     event.clipboardData.setData('text/plain', text);
-    event.clipboardData.setData('application/x-sharpforge-selections', JSON.stringify(selected));
+    event.clipboardData.setData(SELECTION_CLIPBOARD_MIME, payload.metadata);
     this.editor.clipboardRing.push(text);
-    if (cut && !this.element.readOnly) this.editor.insertText('');
+    if (!cut || this.element.readOnly) return;
+    if (payload.kind !== 'line') return this.editor.insertText('', {source: 'cut', undoStop: true});
+    const lines = new Set(this.editor.getSelections().map(selection => this.editor.model.positionAt(selection.active).line));
+    const edits = [...lines].map(line => ({start: this.editor.model.getLineStart(line),
+      end: line + 1 < this.editor.model.lineCount ? this.editor.model.getLineStart(line + 1) : this.editor.model.length, text: ''}));
+    this.editor.applyEdits(edits, {source: 'cut-line', undoStop: true});
   }
 
   paste(event) {
@@ -163,7 +169,14 @@ export class HiddenInputController {
     event.preventDefault();
     const text = event.clipboardData.getData('text/plain');
     this.editor.clipboardRing.push(text);
-    this.editor.insertText(text, {source: 'paste', undoStop: true});
+    const model = modelForView(this.editor);
+    const options = {source: 'paste', undoStop: true, tabSize: this.editor.options.tabSize};
+    const metadata = event.clipboardData.getData(SELECTION_CLIPBOARD_MIME);
+    try { pasteSelections(model, text, {...options, metadata}); }
+    catch (error) {
+      if (!metadata || !(error instanceof TypeError || error instanceof RangeError)) throw error;
+      pasteSelections(model, text, options);
+    }
   }
 
   installDrag() {

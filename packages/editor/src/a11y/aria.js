@@ -25,7 +25,7 @@ export class EditorAccessibility {
 
   update() {
     const {editor} = this;
-    const position = editor.model.positionAt(editor.offset);
+    const position = editor.model.positionAt(editor.caretOffset);
     const key = `${editor.model.version}:${position.line}:${position.character}:${editor.input.selectionEnd}`;
     if (this.lastPosition === key) return;
     this.lastPosition = key;
@@ -33,7 +33,11 @@ export class EditorAccessibility {
     const first = Math.max(0, position.line - radius);
     const last = Math.min(editor.model.lineCount - 1, position.line + radius);
     const lines = [];
-    for (let line = first; line <= last; line++) lines.push(`${line + 1}: ${editor.model.getLine(line).slice(0, 1000)}`);
+    for (let line = first; line <= last; line++) {
+      const start = editor.model.getLineStart(line);
+      const end = Math.min(editor.model.getLineEnd(line), start + 1000);
+      lines.push(`${line + 1}: ${editor.model.getText(start, end)}`);
+    }
     this.buffer.textContent = lines.join('\n');
     const selected = editor.input.selectionEnd - editor.input.selectionStart;
     const description = `${editor.uri || 'Untitled'}, line ${position.line + 1} of ${editor.model.lineCount}, column ${position.character + 1}`;
