@@ -19,7 +19,10 @@
     "records": 10,
     "sdk": "10.0.201",
     "runtime": "10.0.5",
-    "nativeSHA256": "9862b5125d158219db8546fff58a474a31e25eabacf2d44717291bf46df4b5fa"
+    "nativeSHA256": "9862b5125d158219db8546fff58a474a31e25eabacf2d44717291bf46df4b5fa",
+    "file": "tests/fixtures/clr-method-base-modifiers/native-method-bases-initial.json",
+    "sourceHead": "7f4958b098ea7b3577f986e2c2c2d95dfa305d1d",
+    "purpose": "Original matching-only ten-method image used for the retained new-capability benchmark."
   },
   "validation": {
     "focusedPassed": 32,
@@ -31,7 +34,7 @@
     "browserManifestFiles": 37,
     "structureExisting": 271,
     "changedFileFindings": 0,
-    "reruns": 0
+    "initialReruns": 0
   },
   "methodology": [
     "One outer machine limiter ran install/native/focused/control-parent/control-head/new-fixture/check/structure sequentially.",
@@ -39,7 +42,8 @@
     "Cold samples time all fixture method queries after image loading; cached samples time 1000 queries each after ten warmup samples.",
     "Each checkout benchmark imports its own CLR through relative test fixtures. Baseline node_modules links candidate only for identical CIL/archive dependencies.",
     "Candidate benchmark adds an explicit CoreLib fixture option; existing default load behavior and timed workload are unchanged. Fixture loading is outside timed sections.",
-    "No causal, noise, statistical significance or speedup claim. Allocation counts, additional descriptor footprint, build size and peak memory were not measured."
+    "No causal, noise, statistical significance or speedup claim. Allocation counts, additional descriptor footprint, build size and peak memory were not measured.",
+    "After review, native coverage expanded to five independent mismatches. Only native capture and two affected modifier files ran again; the original measured image is retained separately and all performance samples remain untouched."
   ],
   "sharedTrees": {
     "cil": "e649d67e2e302e8c3bfdcf49b9abc0295b060a1c",
@@ -251,5 +255,27 @@
         }
       ]
     }
+  },
+  "nativeExtension": {
+    "sourceHead": "741df0a7256d3ca0e5f62812a240a2ed31e7a68e",
+    "records": 15,
+    "originalMatchingCases": 10,
+    "independentMismatchCases": 5,
+    "file": "tests/fixtures/clr-method-base-modifiers/native-method-bases.json",
+    "nativeSHA256": "5b4cf9b69f913e862636ebb78a549b7b91c89ecfdb1f952b2cb4c7d3d7a4184f",
+    "mismatchResults": {
+      "Kind": "Fixture.KindRoot",
+      "Identity": "Fixture.IdentityRoot",
+      "Order": "Fixture.OrderRoot",
+      "Omission": "Fixture.OmissionRoot",
+      "Placement": "Fixture.PlacementRoot"
+    },
+    "focusedPassed": 8,
+    "focusedFiles": 2,
+    "skipped": 0,
+    "failures": 0,
+    "productChanged": false,
+    "benchmarkRepeated": false,
+    "methodology": "Each independent Root(A) -> Middle(B,new-slot) -> Child(A,reuse-slot) chain proves the B difference is slot-significant without entering unsupported intrinsic Object slots. All five native results skip Middle and match Root; no TypeLoadException occurred."
   }
 }

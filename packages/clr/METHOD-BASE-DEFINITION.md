@@ -50,12 +50,17 @@ budget. Cancellation is checked after asynchronous binding and before publishing
 a complete signature key.
 
 The modifier increment passed 32/32 focused tests across eight files, with no
-skips, and ten independently emitted native roots on SDK 10.0.201/CoreCLR 10.0.5.
+skips, and ten independently emitted matching native roots on SDK 10.0.201/CoreCLR 10.0.5.
 Syntax/static checks passed 3,556/3,552 modules; manifests covered 961 Node and 37
 browser files with no errors. Structure reported 271 existing findings, none in
 changed files. One limiter ran all phases sequentially with concurrency 1 and a
-1 GiB Node heap; no failures or reruns occurred. Broader platform qualification
-remains staged.
+1 GiB Node heap; the initial sequence had no failures or reruns. Review then added
+five independent native mismatch chains for kind, identity, order, omission and
+return/parameter placement. Each Child(A) skips a Middle(B,new-slot) and resolves
+the Root(A) introduction, agreeing with the loader. That extension passed native
+15 plus 8/8 tests in the two affected files. Product code and benchmarks did not
+change; the initial measured ten-method capture is retained separately. Broader
+platform qualification remains staged.
 
 On the shared Apple M3 Pro/macOS 26.6/Node 24.21.0 host, existing 23-method cold
 median/p95 moved 145.167/302.875 → 149.666/347.917 µs. The +45.042 µs (+14.871%)
