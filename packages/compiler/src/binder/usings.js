@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {SymbolKind} from '../symbols/types.js';
 import {AliasSymbol} from '../symbols/namespaces.js';
 /**
@@ -66,7 +67,7 @@ export function resolveQualifiedName(globalNamespace,name){
   for(let i=0;i<parts.length;i++){
     const simple=parts[i];let next=null;
     if(current.kind===SymbolKind.Namespace)next=current.getNamespace(simple)??current.getTypeMembers(simple)[0]??null;else next=current.getTypeMembers(simple)[0]??null;
-    if(!next)return {error:i===0?{code:'CS0246',args:[simple]}:current.kind===SymbolKind.Namespace?{code:'CS0234',args:[simple,current.toDisplayString()]}:{code:'CS0426',args:[simple,current.toDisplayString()]}};
+    if(!next)return {error:i===0?{code:DiagnosticId.CS0246,args:[simple]}:current.kind===SymbolKind.Namespace?{code:DiagnosticId.CS0234,args:[simple,current.toDisplayString()]}:{code:DiagnosticId.CS0426,args:[simple,current.toDisplayString()]}};
     current=next;
   }
   return {symbol:current};
@@ -83,14 +84,14 @@ export function bindUsings(directives,{globalNamespace,report=()=>{},bindType=nu
     const node={uri:d.uri,start:d.nameStart??d.start,end:d.nameEnd??d.end},whole={uri:d.uri,start:d.start,end:d.end},plain=!/[<\[?]/.test(d.name),resolved=plain?resolveQualifiedName(globalNamespace,d.name):{};let target=resolved.symbol??null;
     if(!target&&d.kind!=='namespace'&&bindType)target=bindType(d.name,d);
     if(d.kind==='alias'){
-      if(usings.aliases.has(d.alias)){report(node,'CS1537',[d.alias]);continue;}
+      if(usings.aliases.has(d.alias)){report(node,DiagnosticId.CS1537,[d.alias]);continue;}
       if(!target||target.typeKind==='error'){if(reportMissing&&resolved.error)report(node,resolved.error.code,resolved.error.args);continue;}
       usings.aliases.set(d.alias,new AliasSymbol(d.alias,target,{isGlobal:d.isGlobal,syntax:whole,locations:[whole]}));usings.directives.push({...d,target});continue;
     }
     if(!target||target.typeKind==='error'){if(reportMissing&&resolved.error)report(node,resolved.error.code,resolved.error.args);continue;}
-    const key=d.kind+':'+d.name;if(seen.has(key)){report(node,'CS0105',[d.name]);continue;}seen.add(key);
-    if(d.kind==='static'){if(target.kind===SymbolKind.Namespace){report(node,'CS7007',[target.toDisplayString()]);continue;}usings.staticTypes.push(target);}
-    else{if(target.kind!==SymbolKind.Namespace){report(node,'CS0138',[target.toDisplayString()]);continue;}usings.namespaces.push(target);}
+    const key=d.kind+':'+d.name;if(seen.has(key)){report(node,DiagnosticId.CS0105,[d.name]);continue;}seen.add(key);
+    if(d.kind==='static'){if(target.kind===SymbolKind.Namespace){report(node,DiagnosticId.CS7007,[target.toDisplayString()]);continue;}usings.staticTypes.push(target);}
+    else{if(target.kind!==SymbolKind.Namespace){report(node,DiagnosticId.CS0138,[target.toDisplayString()]);continue;}usings.namespaces.push(target);}
     usings.directives.push({...d,target});
   }
   return usings;

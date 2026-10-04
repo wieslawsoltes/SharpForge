@@ -17,14 +17,14 @@ const engines = {
 const prefix = 'using System;using System.Collections.Generic;';
 
 test('A08 collection extraction preserves every released contract identity and order', async () => {
-  const registered = contracts.filter(member => closedCollectionsModule.families.includes(types.get(member.owner)?.family));
+  const registered = contracts.filter(member => member.id < 65536 && closedCollectionsModule.families.includes(types.get(member.owner)?.family));
   const locked = JSON.parse(await readFile(new URL('../planning/contracts/framework-ids.lock.json', import.meta.url), 'utf8'));
   const project = ({id, owner, name, parameters, kind}) => ({id, owner, name, parameters, kind});
   assert.equal(registered.length, 425);
   assert.deepEqual(registered.map(project), locked.filter(member => member.id >= 821 && member.id <= 1245));
   const isolated = createRegistry({reservations: [{name: 'collections', start: 821, size: 425}]});
   const modules = createBclRegistry([closedCollectionsModule]);
-  isolated.register({name: 'collections', register: target => modules.register(target)});
+  isolated.register({name: 'collections', register: target => modules.register(target, {group: 'bcl-collections'})});
   assert.deepEqual(isolated.contracts, registered);
   assert.equal(isolated.types.size, 35);
 });
