@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 2,
+  "sourceRevision": "34a28b52028b1d06839a35c082e56b0962d7e6e2",
+  "scope": "Studio and split release08–14 CSS only",
+  "comparison": "Ordered paint families, independent geometry declarations, quoted values and selector/context ancestry; known pre-existing fallback aliases normalized.",
+  "tokenCount": 350,
+  "tokenNamesSha256": "730198bce8607ec9560922c5f9b53ff52d4c49c2628654bb7c1f0c188a172900",
+  "declaredTokens": [
+    "--accent",
+    "--accent-bg",
+    "--accent-strong",
+    "--bg",
+    "--blue",
+    "--border",
+    "--bottom",
+    "--editor",
+    "--faint",
+    "--font",
+    "--green",
+    "--hover",
+    "--left",
+    "--line",
+    "--line-soft",
+    "--mono",
+    "--muted",
+    "--panel",
+    "--raised",
+    "--red",
+    "--right",
+    "--selection",
+    "--selection-inactive",
+    "--sf-accent",
+    "--sf-line",
+    "--sf-selection",
+    "--sf-subtle",
+    "--sf-surface",
+    "--surface",
+    "--surface2",
+    "--text",
+    "--yellow"
+  ],
+  "extractedAnimations": [
+    "@keyframes pulse"
+  ],
+  "extractedStyles": [
+    {
+      "source": "apps/studio/workbench/studio-chrome-colors.css",
+      "order": 1
+    },
+    {
+      "source": "apps/studio/workbench/studio-tools-colors.css",
+      "order": 2
+    }
+  ],
+  "files": [
+    {
+      "file": "apps/studio/studio.css",
+      "originalSha256": "fabfbbf8a27d4ab60e24e066551c9f0b56660107a972d746410aa93883a69871",
+      "paint": {
+        "count": 534,
+        "sha256": "acf43d0b7cd6ba013cd197c5e76cd0ee6032bc428b35fc04550f7adc3e0a3425"
+      },
+      "other": {
+        "count": 1588,
+        "sha256": "22f488ce4238a03269e323f3e6f967dcb305e776a86b325796d989f779d34a84"
+      }
+    },
+    {
+      "file": "apps/studio/styles/workbench-theme.css",
+      "originalSha256": "ce16fa629e4660e34aa0389fb4ba40cfd78ef285256c20ed9a7be2c0532c310c",
+      "paint": {
+        "count": 29,
+        "sha256": "13b25cf1f7ce68e8e1bdcd37c48bcd42b35c75e84944e7c15c98d6e38788980e"
+      },
+      "other": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    {
+      "file": "apps/studio/styles/solution-explorer.css",
+      "originalSha256": "60b7f14957980b29c06023f4271937e6e747f75885aa622b6cb5e597b5a3953a",
+      "paint": {
+        "count": 22,
+        "sha256": "1875ad6e3bb69883ea9e7eae9075148291acd4ea82bf3886692aaa4da218af23"
+      },
+      "other": {
+        "count": 39,
+        "sha256": "11a83df4caa04b79f0c7f4226fb782c1f0c1a9be6510e894ee0d66f4ac718860"
+      }
+    },
+    {
+      "file": "apps/studio/styles/context-menus.css",
+      "originalSha256": "375b1dd142cbe7200cf2be3ae04833eb8373f47adbcee8c6eae81f5b8cc65499",
+      "paint": {
+        "count": 11,
+        "sha256": "39c0b48d266995370b79ad759b3b1b4a5215ac62a7004d1f0f84578141d30ba6"
+      },
+      "other": {
+        "count": 8,
+        "sha256": "dc580fab0fb14091089d291d35704db6b10dda1b395c8117c36770c878cfedf9"
+      }
+    },
+    {
+      "file": "apps/studio/styles/docking.css",
+      "originalSha256": "a7028b40509dcb728649252d4eb5c19f41ca22f4236ef821b9f8732dd4c3dc88",
+      "paint": {
+        "count": 10,
+        "sha256": "818030e43d36b0ad72e00a9cd29aa8b0e709ad89f38c2891aba9ecb06b1b0ce1"
+      },
+      "other": {
+        "count": 5,
+        "sha256": "5ba1149d146ddae75f5647c3a01c4acb6a8193bea6dc5865cc9e8a64da53b41d"
+      }
+    },
+    {
+      "file": "apps/studio/styles/editor-theme.css",
+      "originalSha256": "02b11d909bfbf9ca7fd9cbbe956f50e9dfa75825bb965d95b815e8fcac4fb953",
+      "paint": {
+        "count": 33,
+        "sha256": "896f713a9f4a0e225ecfadae3bfb8d58026828ee40014e0ba27c91a974b77743"
+      },
+      "other": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    {
+      "file": "apps/studio/styles/status-bar.css",
+      "originalSha256": "60d80ed96bb9d1cff52827c1f332f56eaf62b597e76b1ba5311c6e564b0ebeba",
+      "paint": {
+        "count": 6,
+        "sha256": "a3bf495d100b3372bb400dc5fe07829d38e9dc523fc21ad46942ee0d92d820e3"
+      },
+      "other": {
+        "count": 3,
+        "sha256": "e24a83994f34923a8f7acdc943208856bf0955eda6487735d538ebc2ffeb51f6"
+      }
+    },
+    {
+      "file": "apps/studio/styles/property-grid.css",
+      "originalSha256": "74b2153dd41fecf9fc1feb2fe42a0b17ebe75376d9b0574664574212f7cce51a",
+      "paint": {
+        "count": 1,
+        "sha256": "7c894ec77ef0bc476f11c02668ee1508915cd723ec59b889cd1d948156b22465"
+      },
+      "other": {
+        "count": 6,
+        "sha256": "be00ed00d021fc5182c7e72d0958f9d9b1a252e13c28b903b46d9dbe464bf130"
+      }
+    },
+    {
+      "file": "apps/studio/styles/explorer-dialogs.css",
+      "originalSha256": "d322535b42a7ce0365139529b848139994f9da39718803f58a8c159b13f5459a",
+      "paint": {
+        "count": 3,
+        "sha256": "f76dfe6bdbd290126db817cb49e94e2725f2f2d87b08a7334d024a117c863e9b"
+      },
+      "other": {
+        "count": 8,
+        "sha256": "fee97391ae6842a74fc6a87d1c8c94ec059b714e2f87179ef480731c2292b430"
+      }
+    },
+    {
+      "file": "apps/studio/styles/settings.css",
+      "originalSha256": "aa49c45fc575e580746554c200221fc481481517e5949489d588816976a98d25",
+      "paint": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "other": {
+        "count": 3,
+        "sha256": "7dcb75c52e36e2856e19ba7c60f347f48b7f216f8de5da32aad73e564c1f43d5"
+      }
+    },
+    {
+      "file": "apps/studio/styles/editor-overlays.css",
+      "originalSha256": "6eabde6c38f340bc4c29e0a634a5109e22e8dab294db81479f47f6f919118eac",
+      "paint": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "other": {
+        "count": 5,
+        "sha256": "8908607143f1c348df1bc65e6daf074346a8d1dd9543eed9f4e152ef7b252558"
+      }
+    },
+    {
+      "file": "apps/studio/styles/workbench-responsive.css",
+      "originalSha256": "7839974e9129f1a144e3cb8a39258f5ff9879eb82de19a4c1b61b13db2e0074e",
+      "paint": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "other": {
+        "count": 5,
+        "sha256": "74854c37b20ccdffde65c05fe3cde20c30ac521ea65e64f8f98d0e4be76b877b"
+      }
+    },
+    {
+      "file": "apps/studio/styles/debugger.css",
+      "originalSha256": "0ebcf3c6f698c8e9aad099abccb8cb22174970335d41f7be6fb460c36aa801ec",
+      "paint": {
+        "count": 15,
+        "sha256": "183c444aee6e12dd20c3c874a97588f6e82673446ea3531775296aa8764c7fb3"
+      },
+      "other": {
+        "count": 53,
+        "sha256": "c3baec2809d610d53475201476cd635ce76d14758f8b3ff8d6e162d894e9fb3d"
+      }
+    },
+    {
+      "file": "apps/studio/styles/debugger-advanced.css",
+      "originalSha256": "d6c755d2cdf31ca3cb143f0d6fcd623d93e15bbedee34c3dc3fbecf73ab6cb6a",
+      "paint": {
+        "count": 6,
+        "sha256": "32590dccb12d24114b84af80cba85b4bcc09b20f48f721a7880073dfed5fe514"
+      },
+      "other": {
+        "count": 30,
+        "sha256": "eb445b82c431ddf0cfcf1672f0f28dcaad539b1ba93f29e615072a9ddbdf5400"
+      }
+    },
+    {
+      "file": "apps/studio/styles/debugger-parallel.css",
+      "originalSha256": "38d4b3b8d9c5941b0e1082d9d7612e1b2db175d3cbfc85cd1760f94c898f4cf6",
+      "paint": {
+        "count": 13,
+        "sha256": "e37e6c942be7d3e1036f983937756cb6970b70b6f582bcc5c43b67f9def67c19"
+      },
+      "other": {
+        "count": 22,
+        "sha256": "b219fdc94905d01a043880aaf10f2c05bfd9f48f874b3e136e23414b3a041e58"
+      }
+    },
+    {
+      "file": "apps/studio/styles/winui-app.css",
+      "originalSha256": "3bb445e005ac916e25176ea876d490cb51e195315b0383f37553557bd2cf0401",
+      "paint": {
+        "count": 6,
+        "sha256": "e0abc9012b4afb7f30044c1737628a8e878054bb2136370e367a3bf33c04e6b9"
+      },
+      "other": {
+        "count": 18,
+        "sha256": "34a8fd770176fd2a13fe0b80804dd442978ea6f520a77e84a0abbc6e1af2f1b0"
+      }
+    },
+    {
+      "file": "apps/studio/styles/symbols.css",
+      "originalSha256": "8e4f722e65a59ed9385759426aebcb83acb212ee6ea246b3eb784ec88e485079",
+      "paint": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "other": {
+        "count": 5,
+        "sha256": "56fe0686a8c93bd5695659e7f18f724c75de2fb2342095c9aa068b74bbb3f5bf"
+      }
+    },
+    {
+      "file": "apps/studio/styles/debugger-effects.css",
+      "originalSha256": "a7125d57e08b131518a1db29a1f9c22d59f1e07c1a62bab3cba8868429f209da",
+      "paint": {
+        "count": 1,
+        "sha256": "88ad17a45946f6c2a205654e13adf553538336e93b91398f6184bdb95d1348ff"
+      },
+      "other": {
+        "count": 9,
+        "sha256": "56c001942899ce364d91241eb05a2ecb37ef46edb365f9e0576eabcd198b62db"
+      }
+    },
+    {
+      "file": "apps/studio/styles/debugger-responsive.css",
+      "originalSha256": "f033b1660b128ec3c4e1f3701b58e78a39e407c6ef7a33b0e334a07ba5a54f9a",
+      "paint": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "other": {
+        "count": 5,
+        "sha256": "702ca6d6171d60a00e947d9b609b62c98f79c014b2cc15dc407ef41be96ebe85"
+      }
+    },
+    {
+      "file": "apps/studio/styles/project-wizard.css",
+      "originalSha256": "8b03ae715893f7d84113556ace12f10c07e5dcedbfa31b3b2d22c8fdc4858964",
+      "paint": {
+        "count": 41,
+        "sha256": "f8cc1270839043d5f6100a092fb4ae3761c584d660865d4ff070b3a7711e3f1b"
+      },
+      "other": {
+        "count": 149,
+        "sha256": "b65fed62dc7fc0572f06695d4cfef4c719f58782ecebf66fbc2ff373e815d4a5"
+      }
+    },
+    {
+      "file": "apps/studio/styles/designer.css",
+      "originalSha256": "e613bfab0b4ec664defafe0795380d8ccc91c45954144aa998816d30ccdaef93",
+      "paint": {
+        "count": 76,
+        "sha256": "a19cb1e30e1fcac79fb0a2526ba1b2b0c1b2680e5a1a1c910effb9b3f3638dbe"
+      },
+      "other": {
+        "count": 255,
+        "sha256": "9f05f75e01709f04eae282672a7c7fd2bd1c9e4d48e9fcca3d6dc4eff2813aba"
+      }
+    },
+    {
+      "file": "apps/studio/styles/workbench-density.css",
+      "originalSha256": "b15369cc32372f9763deff8ae1433512e9996352911b913d8cf23bfd81f138d8",
+      "paint": {
+        "count": 9,
+        "sha256": "3d53da37139eb7adc7feb23b51f124137614cbe460b62cbc4302e85274867631"
+      },
+      "other": {
+        "count": 10,
+        "sha256": "4b3cec845f43b60b78e392067d389e55379a112f0847f8bcde456f49d6b62a7b"
+      }
+    },
+    {
+      "file": "apps/studio/styles/designer-sync.css",
+      "originalSha256": "cca6e0db430f3113628309929f07309a81f499b4189513e4c4c6a5581bbfbd34",
+      "paint": {
+        "count": 110,
+        "sha256": "06d0b9657d25c5348cfffbb8a2c11b3c67e2673aa0c1b69a5e9b309fc21b362e"
+      },
+      "other": {
+        "count": 157,
+        "sha256": "9f7530c3e528d4b9820226018adf0bfb3af7ca00357f0d5e2d2bf782f94c3189"
+      }
+    },
+    {
+      "file": "apps/studio/styles/workbench-light.css",
+      "originalSha256": "f6b82592135a5f3cfec73ab28c40afdb04a13f186f6d8ecf015ac3462e188739",
+      "paint": {
+        "count": 4,
+        "sha256": "0f746a0d026679181049aa1c0c8e4cc5940fad08b3f9a526e8e389b96bd5e845"
+      },
+      "other": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    {
+      "file": "apps/studio/styles/designer-light.css",
+      "originalSha256": "8b385cc3826d8df72f0364acfc6cc8623f74129ed459bf356f064af66ef91bb3",
+      "paint": {
+        "count": 22,
+        "sha256": "d42fc83bc8f1d8af2636de32526f2cb3ca5613f73e9897918b851d9d718a239b"
+      },
+      "other": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    {
+      "file": "apps/studio/styles/runtime-settings.css",
+      "originalSha256": "df9e961033ab2e698945af0d85712621ba521ca3d999a66a196e43411c225460",
+      "paint": {
+        "count": 3,
+        "sha256": "b672c4dc2d253753ae5aa2439373e9dbfe7d772ea0d05c5a133eed63f1d20c9c"
+      },
+      "other": {
+        "count": 38,
+        "sha256": "41cc137ea6f96bb2ab2b80371d83d193e15c2aea6866c0fdaee7a9be1ba337c4"
+      }
+    }
+  ]
+}

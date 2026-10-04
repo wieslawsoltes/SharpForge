@@ -56,6 +56,7 @@ export class AnalysisCore {
       isFrameworkGap: (namespaceName, name) => this.isFrameworkGap(namespaceName, name),
       useFeature: (uri, node, feature) => this.gate(uri, node, feature),
       languageVersionAt: uri => this.versionOf(uri).number,
+      allowUnsafe: !!options.allowUnsafe,
       unknownUsing: () => {
         this.hasUnknownUsings = true;
       },

@@ -1,4 +1,6 @@
-# Docking workspace — 0.4.0
+# Docking workspace
+
+**Project 16 update:** [Current document groups, schema v2, window commands and platform contracts](a19-docking-workbench.md). Historical release notes below describe the earlier host; the linked capability inventory is authoritative for the new workbench.
 
 **0.8 update:** See [Explorer, menus, editor profiles and breakpoint workflows](explorer-keymaps.md) and [current validation](validation-0.8.0.md). Earlier feature sections below remain applicable within their stated limits.
 
@@ -20,9 +22,9 @@ This requires browser popup permission and an open main application. It is not i
 
 ## Layout persistence and small screens
 
-Window → Window Layouts includes coding/debugging/decompilation presets, layout undo, named layouts, and JSON import/export. The last valid tree and named snapshots use best-effort local storage. Restore validates panel identities and geometry before applying. A saved layout from a different set of source documents is rejected rather than silently dropping files.
+Window → Window Layouts includes coding/debugging/decompilation presets, layout undo, named layouts, and JSON import/export. The last valid tree and named snapshots use best-effort local storage. Restore validates panel identities and geometry before applying. Named window layouts now restore tool placement across document sets while keeping all currently open documents. Strict raw layout import still rejects invalid identities; persisted layout recovery reports dropped unknown identities.
 
-At widths at or below 700 CSS pixels, common left/right tools become auto-hide shelves; the prior desktop tree is restored when widening again. Floating windows clamp to the viewport. This is not touch-qualified, screen-reader-qualified or pixel-exact Visual Studio parity. Live split/tab/floating/popout interactions have browser acceptance tests; browser-native persistent storage and native filesystem permission UI were not qualified in the restricted local test environment.
+At widths at or below 700 CSS pixels, common left/right tools become auto-hide shelves; the temporarily auto-hidden tools return to their original identity anchors when widening, preserving document changes made in the meantime. Floating windows clamp to the viewport. This is not touch-qualified, screen-reader-qualified or pixel-exact Visual Studio parity. Live split/tab/floating/popout interactions have browser acceptance tests; browser-native persistent storage and native filesystem permission UI were not qualified in the restricted local test environment.
 
 ## Reuse
 
