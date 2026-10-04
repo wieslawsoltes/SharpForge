@@ -51,5 +51,7 @@ and a 512 MB old-space limit.
 Source and reloaded-source cases are in `tests/a05-source-context-events.test.js`.
 The source extension covers actual wait/wake, round-robin switch, freeze,
 cancellation, restore, disabled instrumentation and host callback failures.
-Source test execution and broader #1403 platform/performance qualification remain
-in the serial queue; no performance result is claimed.
+All 76 focused source/CIL context, source exception, source method and source
+method-load checks passed at `4eee89b7f`, using Node 24.21.0, one worker
+and a 512 MB old-space limit. Broader #1403 platform/performance qualification
+remains deferred; no performance result is claimed.
