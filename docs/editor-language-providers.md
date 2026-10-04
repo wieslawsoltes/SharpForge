@@ -19,7 +19,8 @@ document. Building the index is linear in bound nodes and declarations plus refe
 binary searches over prefix edit deltas, avoiding a scan of all edits for every reference.
 
 Language records now retain namespace, fully qualified owner/type names, base types/interfaces, declaration identity,
-source version, and read/write/declaration flags. Compound updates and `ref` are both reads and writes; `out` is write-only;
+source version, and read/write/declaration flags. `nameof` retains source identities without adding execution edges, and
+method-group references use the selected delegate conversion. Compound updates and `ref` are both reads and writes; `out` is write-only;
 receivers of written properties remain reads. Reference-result filters use these flags, including both sides of a compound
 update. Class View indexes qualified type owners, preserves partial declarations, and refreshes on source membership/edit
 events. Structured external-member hover targets come from bound symbols or the existing framework completion receiver.
@@ -31,6 +32,8 @@ Local explicit/implicit type actions expose stable `equivalenceKey` values and t
 edits together on detached syntax/binding state. Project scopes require `ownership.projects`, each containing an exact
 `id` and `documents: [{uri, version}]` list. Unknown families, stale source, overlapping edits, missing ownership, generated
 targets, anonymous inferred types, and introduced semantic errors are rejected.
+An implicit-type conversion is offered only when the bound initializer's natural type equals the declared type; it does
+not remove an implicit numeric conversion such as `double converted = 1`.
 
 `createWorkspaceLanguageActions({projects, documents, getProjectDocuments})` in
 `apps/studio/workbench/language-actions.js` provides `codeActions(params, options)` and `rename(params, options)`.
@@ -69,6 +72,9 @@ transaction, with a last source-identity/version/lock check before adoption. Exp
 
 Inline preview still uses a model checkpoint. Each provider request starts from the original source; Escape restores text,
 selection, version and undo state exactly. A changed host capability, destination, source version, or project stops commit.
+An intervening edit is rejected even if it reproduces the displayed bytes at a newer version. Switching the active editor
+model restores only the captured model and prevents another preview from being applied to the replacement document.
+The historical `LanguageService.rename()` edit-array API rejects resource intent and directs callers to `renamePlan()`.
 
 ## Inlay hints and CodeLens
 
@@ -100,7 +106,26 @@ LSP positions.
 | Whole resource plan delegation, dynamic capabilities, all-target validation, exact preview restoration and provider events | `tests/a20-provider-transactions.test.js` |
 | Existing worker and editor service compatibility | `tests/a20-editor-language-worker.test.js`, `tests/a20-editor-services.test.js` |
 | Pure safe Outline planner (shell-owned source) | `tests/a19-outline-reorder.test.js` |
+| `nameof` does not change execution/diagnostic semantics | `tests/compiler-binder-csharp6.test.js`, `tests/compiler-binder-csharp6-members.test.js` |
+| Actual editor + bound provider DOM flows | `tests/browser_a20_language_providers_test.py` (authored and syntax-checked; unrun) |
 | Test registry CodeLens and resource/Explorer adoption | Separate owner evidence in `docs/a20-test-code-lens.md` and `docs/a19-resource-rename.md` |
 
-The complete source was frozen before the focused Node batch. Results are recorded in the follow-up evidence commit;
-this source-ready commit makes no test-pass claim. Browser/native/oracle execution is pending.
+## Qualification results
+
+The complete source was frozen at `3f1d57b81dc95f45dd507f25fbd589af8c122cec` before the initial focused batch.
+That run completed 141 cases: 138 passed and three failed. The failures identified an Outline parser-recovery guard,
+an implicit numeric conversion changed by Fix All, and a preview fixture missing the real editor's value facade.
+The conversion/preview correction batch passed 26/26. Shell supplied Outline correction `a1153ceb`; the final corrective
+batch at source revision `ee32eebc846325b44b29716a9a28a179563a6c3e` passed 63/63, including every originally failing file,
+newer-version/model-switch preview guards, final solution-membership validation, `nameof`/delegate references and the
+existing C# 6 binder execution/diagnostic cases. The initial run has not been relabeled as an all-pass run.
+
+Exact commands, file counts, Work-ID coverage and independent owner evidence are in
+`docs/editor-language-provider-evidence.json`. Every test command used `node scripts/limited.js`. No dependency was added.
+No broad build or full repository suite was rerun for these corrections. The new browser fixture passed Python AST and
+JavaScript syntax checks but was not executed. Native and Visual Studio/Roslyn oracle qualification remain unrun here.
+
+The supported language profile still determines which expressions can be bound. Parameter hints omit failed overloads;
+metadata-only/generated source is read-only. Fix All covers its advertised explicit/implicit local-type families. File
+rename requires a matching type filename and the host's whole-plan resource transaction; unsupported native atomic moves
+remain disabled. These are explicit language/action/host boundaries, not claims of full Visual Studio parity.
