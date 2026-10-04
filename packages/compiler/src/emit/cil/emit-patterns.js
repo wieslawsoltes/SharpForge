@@ -11,6 +11,14 @@ import { describeKind } from './unsupported.js';
 import { frameworkType } from './framework-types.js';
 
 const isString = type => type?.specialType === 'System_String';
+/** The comparison operators System.Decimal declares, by C# operator. */
+const decimalOperators = Object.freeze({
+  '==': 'op_Equality',
+  '<': 'op_LessThan',
+  '>': 'op_GreaterThan',
+  '<=': 'op_LessThanOrEqual',
+  '>=': 'op_GreaterThanOrEqual',
+});
 /** `Span<char>` or `ReadOnlySpan<char>`. */
 const isCharSpan = type =>
   (type?.name === 'Span' || type?.name === 'ReadOnlySpan') &&
@@ -332,7 +340,16 @@ export const PatternEmission = Base =>
       }
       this.unboxedInput(input, value.type, fail);
       this.constantValue(constant, pattern.syntax);
+      if (constant.type === 'decimal') return this.decimalComparison('==', fail, pattern.syntax);
       return il.emit('ceq').emit('brfalse', fail);
+    }
+    /** Compares the two decimals on the stack with the operator of System.Decimal and leaves to `fail` when it is false. */
+    decimalComparison(operator, fail, syntax) {
+      const decimal = this.core.decimal,
+        method = decimal.getMembers(decimalOperators[operator]).find(member => member.kind === SymbolKind.Method && member.parameters.length === 2);
+      if (!method) return this.unsupported(`'${operator}' on 'decimal' in a pattern`, syntax);
+      this.callMethod(method, { syntax });
+      return this.il.emit('brfalse', fail);
     }
     stringEquality(fail) {
       const string = this.core.string,
@@ -344,6 +361,8 @@ export const PatternEmission = Base =>
     unboxedInput(input, type, fail) {
       const il = this.il;
       if (primitiveOf(input.type)) return il.emit('ldloc', input.slot);
+      // A struct compared in its own type (`decimal`): the value itself.
+      if (!isReference(input.type) && !isTypeParameter(input.type) && input.type.equals(type)) return il.emit('ldloc', input.slot);
       if (!isReference(input.type) && !isTypeParameter(input.type)) return this.unsupported('a constant pattern over a struct');
       const token = this.tokens.type(type);
       this.pushReference(input);
@@ -355,6 +374,7 @@ export const PatternEmission = Base =>
       const value = pattern.value;
       this.unboxedInput(input, value.type, fail);
       this.expression(value);
+      if (value.type?.specialType === 'System_Decimal') return this.decimalComparison(pattern.operator, fail, pattern.syntax);
       this.binaryInstruction({ operator: pattern.operator, left: { type: value.type }, right: value, syntax: pattern.syntax });
       return this.il.emit('brfalse', fail);
     }

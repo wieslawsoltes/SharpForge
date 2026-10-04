@@ -118,7 +118,7 @@ desktop CLR import stubs, aligned multi-section layouts and all PE/CLI data dire
 It accepts a `Uint8Array` of at most 128 MiB, preserves the input (including subarray boundaries), and returns
 an independent 32-byte digest. Invalid input types throw `TypeError`; oversized input throws `RangeError`.
 The browser/worker implementation uses no host crypto or asynchronous work. `@sharpforge/symbols` retains
-its existing `sha256` export as a reexport of this function; SHA-1 remains in the symbols package.
+its existing `sha256` export as a reexport of this function; shared `sha1` is documented below.
 Hashing reads complete 64-byte blocks directly from the input. Padding uses at most 128 bytes,
 with one reusable 256-byte schedule and 32-byte state, so scratch storage is independent of input size.
 
@@ -135,6 +135,8 @@ The opt-in [verifier type-system adapter](VERIFIER-TYPE-SYSTEM.md) resolves boun
 
 The opt-in [typed numeric verifier](VERIFIER-NUMERIC.md) propagates primitive stack
 types through decoded method blocks, with explicit rejected and unknown results.
+Its registered [indirect memory policies](VERIFIER-MEMORY.md) check primitive
+managed-pointer loads and stores while retaining storage-width distinctions.
 
 `formatSignatureType(node, metadata, options)` optionally accepts
 `formatType(node, formatChild)`, returning a display string or `undefined` to
@@ -300,3 +302,111 @@ criterion passed on Node and Chromium/Firefox/WebKit on macOS after the retained
 initial failure prompted an ASCII preflight optimization. Exact samples, host,
 reference checks and qualification limits are in `tests/fixtures/symbol-search/README.md`;
 these measurements do not imply an untested-platform or universal latency guarantee.
+
+
+`sha1(input)` reuses the existing symbols SHA-1 implementation and returns an owned
+20-byte digest without mutating the input. `@sharpforge/symbols` reexports that same
+function, preserving its byte-array/array-like input behavior and input-sized
+padding allocation. It does not impose a new byte limit or claim constant scratch
+space; bounded callers must preflight their inputs. The cross-assembly browser
+binder uses it to derive declared strong-name tokens; hashing a key does not verify
+an assembly signature. This extraction is implementation-ready, with focused
+vectors, padding boundaries and symbols compatibility tests pending the serial slot.
+
+### Cross-assembly type hierarchy
+
+`new AssemblyTypeHierarchy(index, inspectors, options)` builds an opt-in graph over
+an existing `AssemblySymbolIndex` and the same set of loaded `AssemblyInspector`
+modules. It reuses the index's MVID/token IDs and display records, while owning only
+resolved hierarchy edges and scalar diagnostics. No bodies are decoded, assemblies
+loaded, code executed, or PE/metadata views retained. Later inspector mutations do
+not change queries. The existing verifier's bounded exact UTF-8 name index and
+NestedClass validation are reused only during binding and then discarded.
+
+Assembly references match declared name/culture (case insensitive), exact four-part
+version, content type and public-key token. Full keys are bounded before deriving
+tokens with the shared SHA-1 helper. This is nominal metadata binding, not signature
+verification, weak-name version unification or a runtime loader policy. Duplicate
+matching assembly identities are ambiguous. Type names/namespaces use exact bytes
+and lexical enclosing tokens, not display-name concatenation; nested references
+can cross assembly boundaries. Duplicate candidate type names remain ambiguous.
+
+`hierarchy.tree(typeId, { direction: 'base' | 'derived' | 'implementers',
+maxQueryNodes, maxDepth, signal })` returns a fresh tree or null for an unknown ID.
+Each node has `{ symbol, relation, diagnostic, repeated, children }`. Known symbols
+are owned index records; unresolved nodes have `symbol: null` and an owned diagnostic
+`{ referenceId, name, reason }`. Base trees follow the direct base followed by direct
+interfaces; derived trees follow class bases or subinterfaces. Implementer trees
+require an interface root and include subinterfaces, implementing classes and their
+subclasses. Order follows input modules/TypeDefs and InterfaceImpl rows. A repeated
+DAG node retains its identity but has no expanded children; cycles are malformed.
+
+Missing assemblies, ambiguous identities/names and unresolved names produce dead
+nodes. Retargetable references, ModuleRef/netmodule binding, nil resolution scopes,
+ExportedType forwarding and TypeSpec/constructed-base substitution require policies
+not supplied here and remain explicit unresolved results. Open TypeDef declarations
+can appear as nodes; this graph does not claim constructed generic assignability,
+variance, access checks or whole-type validity. Malformed indices, ownership,
+cycles and class/interface edge kinds throw `CilError`.
+
+Construction budgets default to/hard-cap at 256 `maxAssemblies`, 100,000 `maxTypes`,
+300,000 `maxRows` across relevant tables, 200,000 `maxEdges` (one potential base per
+type plus every InterfaceImpl), 16 MiB `maxNameBytes` and 1 MiB `maxKeyBytes`.
+All row/count and every name/key occurrence charges are checked before retained
+records, names or digests are created, including aliased heap handles. Individual
+name components are limited to 1 KiB UTF-8 and keys to 16 KiB. The shared name index
+also bounds lexical nesting and reference scope chains to 64 levels. These budgets
+exclude earlier inspector/index construction and engine overhead.
+
+Query budgets default to/hard-cap at 10,000 `maxQueryNodes` and depth 256; both may
+be lowered at construction and again per query. Every returned occurrence, including
+a repeated or dead node, consumes the node budget. A query builds children one at
+a time with an iterative work stack and fails before exceeding its limit. `signal`
+cancels construction or a query. Invalid lowerable limits throw `CilError`.
+`hierarchy.storage` returns owned input count/byte charges, not retained heap size.
+Construction is linear in bounded metadata/name bytes plus resolved edges; queries
+visit each expanded type once and are bounded by returned occurrences. The feature
+and retained native reference are prepared but unvalidated; see
+`tests/fixtures/type-hierarchy/README.md` for the scheduled evidence plan.
+
+### Instruction usage analysis
+
+`new AssemblyUsageAnalysis(inspector, options)` snapshots instruction occurrences
+for one loaded module without executing it or retaining its PE, decoded bodies,
+inspector, signature ASTs or binding context. It reuses the existing bounded CIL
+member/type resolver and its caches. The legacy `inspector.callGraph()` keeps its
+complete list, method-error records and ordinary decorated-method cache behavior.
+
+`analysis.query(relation, token, { offset: 0, limit: 100, signal })` returns owned
+`{ entries, total, nextOffset, complete }` in physical MethodDef/IL order. Pages
+have at most1000 occurrences; zero-length/past-end pages have no continuation.
+There is no per-query whole-result scan/copy. Each entry contains source/operand/
+resolved-target tokens, stable source/target MVID token URIs, offset, opcode,
+resolution status/reason and an optional instantiated-type token. Local MemberRef
+aliases share canonical definition queries while their raw-token queries retain
+the exact encoded occurrences. Unsupported/external bindings retain raw identities
+and explicit `unknown` reasons, never a display-name match.
+
+Supported relations are `uses` (MethodDef's non-string token operands), `used-by`
+(reverse occurrences), `instantiated-by` (`newobj`'s declared type), and
+`assigned-by` (direct `stfld`/`stsfld` writes). `newarr` uses its element type but
+does not construct an element instance. Indirect writes, virtual dispatch targets,
+reflection and dynamic execution are not inferred. `overridden-by` and
+`implemented-by` remain unsupported pending a genuine host-provided canonical
+method-slot contract; issue #2573 remains open for those capabilities.
+
+Construction options independently lower hard maxima: `maxMethods:16384`,
+`maxCodeBytes:4194304` (all body occurrences, including shared RVAs),
+`maxMethodCodeBytes:1048576`, `maxInstructions:250000`, `maxUsages:100000`, plus
+`signal`. All method headers/code sizes are checked before IL or binding snapshots;
+only one method's decoded instructions are held at a time. Each occurrence has
+at most seven index entries. `metadataLimits` forwards lowerable limits to the
+existing verification context; its defaults bound rows, names/signatures and
+query depth independently. These are logical/count bounds, not measured heap
+ceilings. Invalid limits/metadata/IL throw `CilError`; unsupported non-CIL bodies
+produce owned `diagnostics`, and pages then report `complete:false`. Completeness
+covers CIL body scanning, not resolution of every external reference.
+
+[Focused fixtures and pending qualification](../../tests/fixtures/usage-relations/README.md)
+cover the initial four relations; broad execution/cross-platform coverage is not
+implied by metadata inspection.

@@ -245,6 +245,11 @@ export const ConversionBinding = Base =>
     /** A field whose reference is taken (`ref o.f`) may be written through the alias: it counts as assigned (no CS0649). */
     markAliased(e) {
       if (e.kind === 'FieldAccess') this.markWrite(e, null);
+      else if (e.kind === 'RefConditional') {
+        // `ref (c ? ref a.Left : ref a.Right)` aliases either field.
+        this.markAliased(e.whenTrue);
+        this.markAliased(e.whenFalse);
+      } else if (e.kind === 'Ref' && e.operand) this.markAliased(e.operand);
       return e;
     }
     /** Binds and converts to bool (conditions), accepting `operator true`. */

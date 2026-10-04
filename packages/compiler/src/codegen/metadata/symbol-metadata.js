@@ -256,6 +256,7 @@ export class SymbolMetadataWriter {
       written = new Map();
     const implementations = [...(type.interfaceImplementations ?? []), ...staticVirtualImplementations(type), ...interfaceReimplementations(type)];
     for (const [declaration, implementation] of implementations) {
+      this.writeFieldLikeEventImplementation(self, declaration, implementation, planned);
       for (const [declared, implementing] of accessorPairs(declaration, implementation)) {
         const method = planned.get(implementing);
         if (!method) continue;
@@ -267,6 +268,29 @@ export class SymbolMetadataWriter {
         written.set(method, (written.get(method) ?? new Set()).add(declared.originalDefinition ?? declared));
         this.builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: this.methodReference(declared) });
       }
+    }
+  }
+  /**
+   * `event D I.Changed { add ... remove ... }` for a field-like event of a source interface: the accessors of the
+   * interface event are synthesized methods without symbols, so the rows name them by their planned tokens.
+   */
+  writeFieldLikeEventImplementation(self, declaration, implementation, planned) {
+    if (declaration.kind !== SymbolKind.Event || declaration.addMethod || !explicitInterfaceOf(implementation)) return;
+    const owner = declaration.containingType,
+      definition = declaration.originalDefinition ?? declaration,
+      event = this.plans.get(owner.originalDefinition ?? owner)?.events.find(entry => entry.symbol === definition);
+    if (!event) return;
+    const pairs = [
+      [event.adder, implementation.addMethod],
+      [event.remover, implementation.removeMethod],
+    ];
+    for (const [declared, implementing] of pairs) {
+      const body = planned.get(implementing);
+      if (!declared || !body) continue;
+      const reference = needsTypeSpec(owner)
+        ? this.builder.member(this.tokens.typeToken(owner), declared.name, methodSignature(this.tokens, declared.shape))
+        : declared.token;
+      this.builder.addRow('MethodImpl', { Class: self, MethodBody: body.token, MethodDeclaration: reference });
     }
   }
   /** MethodDefOrRef token of a method declared here or elsewhere (a MemberRef on its containing type). */

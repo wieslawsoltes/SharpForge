@@ -1,5 +1,8 @@
 {"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
   "reduced-async/await-in-operands":{"hash":"ce7519120e551989","kind":"output","langVersion":"14.0","diagnostics":[],"output":"saved 3, name n  |, again 7, last 008\n10 n-5-3\n3,6,6,7 2 1\n15 30 6 -4\n6 (24, t123) 0 6\n"},
   "reduced-async/async-stream-cancellation":{"hash":"4fcbd8738ffec0d8","kind":"output","langVersion":"14.0","diagnostics":[],"output":"cancelled after 3\ncancelled after 3\ncancelled after 3\ncancelled after 3\ncompleted 5\n0,1,2,-1\n"},
-  "reduced-async/suspension-does-not-run-finally":{"hash":"e9e5d2bbab2622de","kind":"output","langVersion":"14.0","diagnostics":[],"output":"sum 84600\nfinally blocks 2320\ndisposed while suspended 0\n"}
+  "reduced-async/suspension-does-not-run-finally":{"hash":"e9e5d2bbab2622de","kind":"output","langVersion":"14.0","diagnostics":[],"output":"sum 84600\nfinally blocks 2320\ndisposed while suspended 0\n"},
+  "reduced-async/pattern-await-using":{"hash":"d1a084ad9773e0c0","kind":"output","langVersion":"14.0","diagnostics":[],"output":"pattern-body flushed:expr named-body flushed:named declared-body value-flushed flushed:declared null-ok\n"},
+  "reduced-async/async-lambda-to-valuetask-inference":{"hash":"13aeda839f94ab5c","kind":"output","langVersion":"14.0","diagnostics":[],"output":"n1,n4,n9\n2.5\n2\n12\n"},
+  "reduced-async/await-with-struct-receiver-on-stack":{"hash":"7bb5f32ee93af646","kind":"output","langVersion":"14.0","diagnostics":[],"output":"126.00\n3.00\n3 19 12\n0 007\n20\n23\n26\n"}
 }}

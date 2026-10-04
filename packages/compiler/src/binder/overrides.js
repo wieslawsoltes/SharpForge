@@ -13,7 +13,7 @@ import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind, Accessibility, TypeCompareKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain } from '../symbols/substitution.js';
-import { sameParameters } from './inheritance.js';
+import { sameParameters, signatureTypeText } from './inheritance.js';
 
 const accessWord = {
   [Accessibility.Public]: 'public',
@@ -121,7 +121,9 @@ const sameReturn = (a, b, x, y) => {
   if (x.equals(y, TypeCompareKind.IgnoreDynamic)) return true;
   const ia = (a.typeParameters ?? []).indexOf(x),
     ib = (b.typeParameters ?? []).indexOf(y);
-  return ia >= 0 && ia === ib;
+  if (ia >= 0 || ib >= 0) return ia === ib;
+  // A type built over the method's type parameters (`T?` of a struct T, `List<T>`): the same by position.
+  return !!a.typeParameters?.length && a.typeParameters.length === b.typeParameters?.length && signatureTypeText(a, x) === signatureTypeText(b, y);
 };
 /**
  * Abstract members a non-abstract class leaves unimplemented.

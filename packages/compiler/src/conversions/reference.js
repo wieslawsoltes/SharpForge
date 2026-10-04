@@ -23,6 +23,8 @@ export const isValue = t => t.isValueType === true;
  * implements `IEquatable<(int X, int Y)>` through the `IEquatable<ValueTuple<int, int>>` its definition lists.
  */
 const sameIgnoringTupleNames = (left, right) => left.equals(right, TypeCompareKind.IgnoreTupleNames);
+/** `nint` is `IntPtr` to the runtime: it implements `INumber<nint>` through the `INumber<IntPtr>` its definition lists. */
+const sameInterface = (left, right) => left.equals(right, TypeCompareKind.IgnoreTupleNames | TypeCompareKind.IgnoreNativeIntegers);
 
 /** Identity or implicit reference conversion (the test variance and array covariance use). */
 export function hasIdentityOrImplicitReference(from, to, core) {
@@ -101,7 +103,7 @@ export function hasBoxingConversion(from, to, core) {
   if (from.typeKind === TypeKind.Enum && to.equals(core.enumType)) return true;
   if (isInterface(to)) {
     const reference = (a, b) => hasIdentityOrImplicitReference(a, b, core);
-    return allInterfacesOf(from, core).some(i => sameIgnoringTupleNames(i, to) || hasVarianceConversion(i, to, reference));
+    return allInterfacesOf(from, core).some(i => sameInterface(i, to) || hasVarianceConversion(i, to, reference));
   }
   return false;
 }
@@ -152,7 +154,7 @@ export function hasExplicitReferenceConversion(from, to, core) {
   if (!isInterface(from) && isInterface(to)) return from.typeKind === TypeKind.Class && !from.isSealed;
   // Interface to class: allowed unless the class is sealed and does not implement the interface.
   if (isInterface(from) && !isInterface(to))
-    return to.typeKind === TypeKind.Class && (!to.isSealed || allInterfacesOf(to, core).some(i => i.equals(from)));
+    return to.typeKind === TypeKind.Class && (!to.isSealed || hasImplicitReferenceConversion(to, from, core));
   // Interface to interface that is not a base interface.
   return true;
 }

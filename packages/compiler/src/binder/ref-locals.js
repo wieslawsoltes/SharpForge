@@ -92,6 +92,9 @@ export function refReturnability(expression, context = {}) {
       }
       return 'returnable';
     }
+    case 'ImplicitIndexerAccess':
+      // `a[^1]` is returnable when the element or indexer result it stands for is.
+      return expression.accessKind === 'index' && expression.access ? refReturnability(expression.access, context) : { code: DiagnosticId.CS8156, args: [] };
     case 'RefConditional': {
       const a = refReturnability(expression.whenTrue, context);
       if (a !== 'returnable') return a;

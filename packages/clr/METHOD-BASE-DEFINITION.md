@@ -111,21 +111,70 @@ All [600 raw samples and source-resolution evidence](benchmarks/function-pointer
 are retained. No reruns, causal/noise attribution or general speedup claim;
 allocation totals and peak memory remain unmeasured.
 
-Strict (`CheckAccessOnOverride`) matches between top-level, nongeneric methods and
+Strict (`CheckAccessOnOverride`) matches between nongeneric methods and
 types in the same canonical assembly now validate both base accessibility and the
 child/base access widening relation. The existing ancestor walk supplies each
 matched edge: family-and-assembly, assembly, family, family-or-assembly and public
-base methods are accessible; private/private-scope bases reject. Narrowing or
+base methods are accessible; PrivateScope bases reject. Private bases require the
+enclosing/inheritance proof below. Narrowing or
 incompatible access changes reject, including family-or-assembly to family within
 one assembly. Reserved member-access masks report SFCLR005; inaccessible or
 unsupported strict edges report SFCLR012. New-slot boundaries still stop the walk.
 
 This follows [CoreCLR's access and widening checks](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/methodtablebuilder.cpp#L4333).
-Cross-assembly/friend access, nested types and generic owners/methods remain
+Cross-assembly/friend access and generic owners/methods remain
 explicitly unsupported for strict edges. Generic metadata row counts are bounded
 before owner-parameter expansion; existing traversal/cancellation limits still
 apply. No access registry or persistent cache is added, and non-strict paths retain
 their previous behavior. This does not certify full type loading or virtual dispatch.
+
+Nested strict access reuses canonical `TypeDesc.declaringType` and `baseType`
+identities. A private base is accessible only when every inheritance edge from
+the overriding owner to that base also has an enclosing parent, at any lexical
+depth. Merely placing the leaf inside the ultimate base does not suffice if an
+intermediate base does not enclose the leaf. This follows
+[CoreCLR's enclosing-base rule](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/methodtablebuilder.cpp#L4298).
+Once private access is established, all child access masks except PrivateScope
+can preserve or widen it. Ordinary public/family/assembly matching uses the same
+widening table for nested and top-level types; new slots still terminate matching.
+
+The proof walks existing immutable graphs with scalar depth/work counters, no
+name comparisons, duplicate resolver, cache or per-node allocations. Each successful
+inheritance step advances outward in lexical ownership, so a single private
+proof is linear in the visited enclosing chain. Context depth and metadata-work
+limits bound traversal; generic enclosing owners remain explicitly unsupported.
+Inconsistent NestedClass ownership/visibility reports SFCLR005. Cancellation is
+checked by the existing query before caching a root. Method bodies remain unread.
+
+The nested increment captured thirteen independent outcomes on SDK 10.0.201 and
+CoreCLR 10.0.5: eight accepted roots and five TypeLoadException failures match.
+Both initial and corrected-source qualification passed 21 focused tests with zero
+skips, including mandatory source/image provenance; the corrected run reused the
+unchanged native capture. Static/manifests passed (3,660 syntax/3,656 import modules,
+999 Node/37 browser files, zero errors); structure had 272 existing findings and
+none in changed files. All local jobs ran serially under one limiter, concurrency
+1 and a 1 GiB Node heap. Invocation and broader platform qualification stay open.
+
+The first eight-root strict control (`b0edfec2` → `2cb713df`) measured cold
+median/p95 230.542/889.458 → 389.959/1,408.792 µs and cached
+132.084/232.750 → 205.875/921.542 ns. The reviewer did not accept that comparison
+and requested a concrete fast path restoring ordinary top-level owner checks.
+After that source change (`5b3fd9fd`), one justified fresh pair measured cold
+189.416/452.292 → 185.292/2,536.250 µs and cached
+129.250/198.500 → 117.292/204.458 ns. The remaining cold p95 increase is
+2,083.958 µs (+460.755%). The root integration reviewer explicitly accepted this
+large cold strict-override tail tradeoff for bounded nested/enclosing correctness
+after reviewing the restored top-level fast path. Ordinary non-strict queries
+are unchanged and make no new performance claim. No further repeat ran.
+
+The final eight-root nested workload measured cold median/p95 178.084/501.917 µs
+and cached 123.917/190.583 ns. [All 1,200 raw samples, exact source heads, hashes,
+commands and both comparisons](benchmarks/nested-strict-overrides-node24.json)
+are retained. Each control imports its own CLR implementation; only byte-identical
+CIL/archive dependencies share workspace links. Measurements used Node 24.21.0 on
+a shared Apple M3 Pro/darwin-arm64 host. The cached root lookup code is unchanged;
+this fact does not establish a cause for the measurements. No noise, causality,
+significance, speedup or peak-memory claim is made; allocation totals are unmeasured.
 
 Six authored tests cover the complete 7×7 same-assembly mask matrix, canonical
 queries, cancellation/unload, intermediate edges, new slots, malformed masks,

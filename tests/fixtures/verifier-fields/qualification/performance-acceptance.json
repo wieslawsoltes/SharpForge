@@ -1,0 +1,23 @@
+{
+  "acceptedBy": "root Project6 owner",
+  "scope": "Existing Add_0_0 control regression",
+  "medianMsPer1000": {
+    "before": 2.40270799999999,
+    "after": 3.3545830000000194,
+    "difference": 0.9518750000000296,
+    "percent": 39.616757425373095
+  },
+  "p95MsPer1000": {
+    "before": 3.4529170000000136,
+    "after": 5.787499999999994,
+    "difference": 2.3345829999999808,
+    "percent": 67.6119061072123
+  },
+  "reason": "Accept quantified existing-control cost for bounded registered-transfer/canonical relation integration.",
+  "constraints": [
+    "All 120 chronological raw samples retained.",
+    "No rerun without concrete source defect.",
+    "No causal, noise, speedup or peak-memory claim.",
+    "New field workloads are candidate-only added capability costs."
+  ]
+}

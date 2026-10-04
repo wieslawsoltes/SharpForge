@@ -45,6 +45,7 @@ export const RecordEmission = Base =>
       return super.instanceInitializers(type);
     }
     exprWith(node) {
+      if (node.type?.isAnonymousType) return this.anonymousWith(node);
       const il = this.il,
         type = node.type,
         slot = this.temp(type),

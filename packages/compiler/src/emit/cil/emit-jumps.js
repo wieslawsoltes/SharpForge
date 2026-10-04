@@ -46,7 +46,7 @@ export const JumpEmission = Base =>
     usingDeclaration(node, statements, next) {
       const resources = node.declarations.map(declarator => {
         this.declare(declarator.local, declarator.value);
-        return { slot: this.slotOf(declarator.local), type: declarator.local.type };
+        return { slot: this.resourceSlot(declarator.local), type: declarator.local.type };
       });
       return this.disposeAround(resources, () => this.statementsFrom(statements, next), node);
     }

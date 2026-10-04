@@ -5,7 +5,6 @@ import { parseSignatureType } from './metadata/signature-parser.js';
 import { MetadataTypeNames } from './metadata/type-names.js';
 import { readUserString } from './metadata/user-strings.js';
 import {canonicalType} from '@sharpforge/framework';
-
 export { validateMetadata, metadataDiagnosticCatalog } from './metadata/validate.js';
 import { readMetadataTables, writeMetadataTables } from './metadata/table-stream.js';
 import { metadataList } from './metadata/pointer-tables.js';

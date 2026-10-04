@@ -78,7 +78,11 @@ export const TupleBinding = Base =>
      * for the element of a tuple value.
      */
     tupleEquality(syntax, operator, left, right) {
-      if ((operator !== '==' && operator !== '!=') || !isTupleOperand(left) || !isTupleOperand(right)) return null;
+      if (operator !== '==' && operator !== '!=') return null;
+      // `pair == default`: the literal is the default value of the tuple it is compared with.
+      if (right.literal === 'default' && isTupleType(left.type)) right = this.convert(right, left.type, right.syntax);
+      else if (left.literal === 'default' && isTupleType(right.type)) left = this.convert(left, right.type, left.syntax);
+      if (!isTupleOperand(left) || !isTupleOperand(right)) return null;
       const counts = [cardinalityOf(left), cardinalityOf(right)];
       if (counts[0] !== counts[1]) {
         this.report(syntax, DiagnosticId.CS8384, counts);

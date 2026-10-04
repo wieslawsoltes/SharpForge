@@ -48,8 +48,10 @@ SDK feed or changing an implementation flag cannot grant that evidence.
 ## Versions and deprecation
 
 Release tags are `vMAJOR.MINOR.PATCH` or explicit prerelease versions such as
-`v0.15.0-preview.1`. Root package.json, all 25 workspace versions and one nonempty
-CHANGELOG section must agree exactly. Build metadata aliases, duplicate release
+`v0.15.0-preview.1`. Root package.json, every workspace package selected by
+`packages/*` in the release checkout, and one nonempty CHANGELOG section must
+agree exactly. The workspace inventory must be nonempty; every package directory,
+manifest, unique name and version is checked. Build metadata aliases, duplicate release
 sections, leading-zero numeric versions and mismatched workspace versions fail
 `scripts/conformance/release/version-check.js` before reused CI starts.
 Prerelease tags create prereleases; stable tags never promote a preview capability.

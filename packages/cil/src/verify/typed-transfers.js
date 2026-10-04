@@ -2,6 +2,8 @@ import { numericTransfers } from './numeric-tables.js';
 import { transferNumericInstruction } from './ops-numeric.js';
 import { objectTransfers, transferObjectInstruction } from './ops-objects.js';
 import { literalTransfers, transferLiteralInstruction } from './ops-literals.js';
+import { memoryTransfers } from './memory-tables.js';
+import { transferMemoryInstruction } from './ops-memory.js';
 
 function registerTransfers(contributions) {
   const entries = {};
@@ -17,6 +19,7 @@ function registerTransfers(contributions) {
 /** Registered policies share one verifier and its invocation-owned stack/flow state. */
 export const typedTransfers = registerTransfers([
   [numericTransfers, transferNumericInstruction], [objectTransfers, transferObjectInstruction],
+  [memoryTransfers, transferMemoryInstruction],
   [literalTransfers, transferLiteralInstruction],
 ]);
 

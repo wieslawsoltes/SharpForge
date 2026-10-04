@@ -1,0 +1,1543 @@
+{
+  "configuration": {
+    "variants": {
+      "before": {
+        "directory": "/tmp/sharpforge-a13-hierarchy-qualification/baseline",
+        "sourceRevision": "440c4ade9b3dd5de527faa5d686eec4d697449fc"
+      },
+      "after": {
+        "directory": "/Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy",
+        "sourceRevision": "f64097ea176373e08d00c7f0f4220259d55c7437"
+      }
+    },
+    "parent": {
+      "directory": "/Users/wieslawsoltes/GitHub/SharpForge-a13-hierarchy-sha1",
+      "revision": "80adafc3d92fc50e3e49f6bc5554b92c1013e897"
+    },
+    "previousHierarchy": "d1fc86688bd1175d4d008fa723209b33b011bc88",
+    "sharedHashes": {
+      "package.json": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "package-lock.json": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "otherPackageTrees": "040000 tree 6451aced45878f841bb3343d46f19abb6ade87fb\tarchive\n040000 tree 71e38278536a6e9cbf19f12ac991cef100f7c82d\tbcl-collections\n040000 tree a60436110fed5effbcd23d43b7d79b04105cffaa\tbcl-core\n040000 tree a5272c86aac71fbfa274f45e093901858a21e794\tbytecode\n040000 tree 002bcc02120d57ece7db777e883117e2dfbd4c63\tclr\n040000 tree e1b4fa5f6c2549e6747137e6487b08d4d5850bc6\tcompiler\n040000 tree 0ba385b2754947d34e884b975fee619d6d2b71ec\tcompute\n040000 tree fe83d527755ba36794b73e0d34a90f94187055ba\tcontrols\n040000 tree fd17779feebc4ae7c9c202bdfad3e213a2c74d00\tdebugger\n040000 tree 0d1086a83afd08708b0537a1483ce2e17774a24d\tdesigner\n040000 tree aa39592ceb5254769301fe24a0ed64b48b221513\tdocking\n040000 tree 10f9244ea1843fb970479574725c7b78c7a1f964\teditor\n040000 tree 427b86e3d081c0895f4e7664111f21b4986df541\textensions\n040000 tree 108be42adb2197c11cb598c5e9257c030f172d40\tframework\n040000 tree 51eba0f53f80cf915307e84578a00e0f6632eea4\tlanguage\n040000 tree 3fb5a1ebc086c121907f2c6b2c76353630619783\tmsbuild\n040000 tree a0ff0f968d8fd9a04ede276e5a7c90f6317c22e5\tnetwork\n040000 tree bdfc9583047902789d8bedf0717e0e638582f3c0\tproject-system\n040000 tree 32463189d2d45a832d614d8e81b5924cac073965\tprotocol\n040000 tree 1ae684c57dba0709a30e4dcdbf78bf2815785f34\trefactoring\n040000 tree 1001e27e76a06ef54b8c07db72f3809ac8a5027b\truntime\n040000 tree 3795c80a55768bebce57209e360fed69420107fe\tsyntax\n040000 tree cd2c191bfb65843ea99448059521d44343b23552\ttemplates\n040000 tree e68012e1423ba4c7dcb5fcab453f22fa87ffda05\ttext\n040000 tree 6158f4499d0ed48e6780605ea05736a97ade3b29\twinui\n040000 tree 2ef61c563232e8ed2966421936e621d4d6466e82\tworkspace"
+    },
+    "dependencies": "Each variant owns changed CIL and symbols sources. Other packages/npm dependencies shared only after Git hash proof."
+  },
+  "host": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "release": "25.6.0",
+    "cpu": "Apple M3 Pro",
+    "node": "v24.21.0"
+  },
+  "sharedHost": true,
+  "protocol": {
+    "pairs": 20,
+    "warmupsPerVariantAndCase": 3,
+    "iterations": {
+      "sha1": 100,
+      "local": 100,
+      "nested": 100,
+      "construct": 1,
+      "tree": 1
+    },
+    "order": "before/after reversed on odd rounds; fixed cases",
+    "existing": "SHA-1 on 16KiB; existing local/nested adapter construction plus one resolution; same immutable input images",
+    "new": "20 modules, 971 TypeDefs including Module types; 950 derived classes. Prebuilt inspectors/index excluded.",
+    "limits": "Logical counters are not retained heap, peak memory or allocation measurements. No significance or causal claim."
+  },
+  "logicalStorage": {
+    "modules": 20,
+    "types": 971,
+    "rows": 1049,
+    "edges": 971,
+    "nameBytes": 20091,
+    "keyBytes": 0
+  },
+  "samples": [
+    {
+      "round": 0,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 18.52879200000001,
+      "perOperationMs": 0.1852879200000001,
+      "startOffsetMs": 4.422874999999976
+    },
+    {
+      "round": 0,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 17.712666000000013,
+      "perOperationMs": 0.17712666000000013,
+      "startOffsetMs": 27.545958999999982
+    },
+    {
+      "round": 0,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.1627079999999523,
+      "perOperationMs": 0.03162707999999952,
+      "startOffsetMs": 48.976084000000014
+    },
+    {
+      "round": 0,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.256458000000009,
+      "perOperationMs": 0.03256458000000009,
+      "startOffsetMs": 55.40495899999996
+    },
+    {
+      "round": 0,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.7550829999999564,
+      "perOperationMs": 0.03755082999999956,
+      "startOffsetMs": 62.15520900000001
+    },
+    {
+      "round": 0,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.9180840000000217,
+      "perOperationMs": 0.03918084000000022,
+      "startOffsetMs": 69.47862499999997
+    },
+    {
+      "round": 0,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.1791670000000067,
+      "perOperationMs": 2.1791670000000067,
+      "startOffsetMs": 77.56512499999997
+    },
+    {
+      "round": 0,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.7222089999999639,
+      "perOperationMs": 0.7222089999999639,
+      "startOffsetMs": 83.346
+    },
+    {
+      "round": 1,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 17.837291999999934,
+      "perOperationMs": 0.17837291999999935,
+      "startOffsetMs": 88.021792
+    },
+    {
+      "round": 1,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 17.943499999999972,
+      "perOperationMs": 0.1794349999999997,
+      "startOffsetMs": 109.70437500000003
+    },
+    {
+      "round": 1,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.1377499999999827,
+      "perOperationMs": 0.03137749999999983,
+      "startOffsetMs": 130.997167
+    },
+    {
+      "round": 1,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.289041999999995,
+      "perOperationMs": 0.03289041999999995,
+      "startOffsetMs": 137.97191699999996
+    },
+    {
+      "round": 1,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.2428749999999127,
+      "perOperationMs": 0.032428749999999125,
+      "startOffsetMs": 150.33779200000004
+    },
+    {
+      "round": 1,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 2.9938750000000027,
+      "perOperationMs": 0.029938750000000028,
+      "startOffsetMs": 157.32683399999996
+    },
+    {
+      "round": 1,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.744000000000028,
+      "perOperationMs": 2.744000000000028,
+      "startOffsetMs": 163.741625
+    },
+    {
+      "round": 1,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.5654160000000275,
+      "perOperationMs": 0.5654160000000275,
+      "startOffsetMs": 172.449834
+    },
+    {
+      "round": 2,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 19.55362500000001,
+      "perOperationMs": 0.1955362500000001,
+      "startOffsetMs": 179.50716699999998
+    },
+    {
+      "round": 2,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 19.056708999999955,
+      "perOperationMs": 0.19056708999999955,
+      "startOffsetMs": 203.49675000000002
+    },
+    {
+      "round": 2,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.302833000000078,
+      "perOperationMs": 0.03302833000000078,
+      "startOffsetMs": 226.90433399999995
+    },
+    {
+      "round": 2,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.001792000000023,
+      "perOperationMs": 0.040017920000000234,
+      "startOffsetMs": 234.395667
+    },
+    {
+      "round": 2,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 4.094249999999988,
+      "perOperationMs": 0.04094249999999988,
+      "startOffsetMs": 242.91391699999997
+    },
+    {
+      "round": 2,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.5479170000000977,
+      "perOperationMs": 0.035479170000000976,
+      "startOffsetMs": 251.61804199999995
+    },
+    {
+      "round": 2,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.252207999999996,
+      "perOperationMs": 2.252207999999996,
+      "startOffsetMs": 259.44908399999997
+    },
+    {
+      "round": 2,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.515625,
+      "perOperationMs": 0.515625,
+      "startOffsetMs": 265.799584
+    },
+    {
+      "round": 3,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 18.726249999999936,
+      "perOperationMs": 0.18726249999999936,
+      "startOffsetMs": 270.849917
+    },
+    {
+      "round": 3,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 18.595707999999945,
+      "perOperationMs": 0.18595707999999944,
+      "startOffsetMs": 293.48958400000004
+    },
+    {
+      "round": 3,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.7297920000000886,
+      "perOperationMs": 0.037297920000000886,
+      "startOffsetMs": 315.63029199999994
+    },
+    {
+      "round": 3,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.6447500000000446,
+      "perOperationMs": 0.036447500000000445,
+      "startOffsetMs": 323.58966699999996
+    },
+    {
+      "round": 3,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.6636250000000246,
+      "perOperationMs": 0.036636250000000245,
+      "startOffsetMs": 331.26208399999996
+    },
+    {
+      "round": 3,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.036583999999948,
+      "perOperationMs": 0.03036583999999948,
+      "startOffsetMs": 339.182
+    },
+    {
+      "round": 3,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.38408400000003,
+      "perOperationMs": 2.38408400000003,
+      "startOffsetMs": 347.11187499999994
+    },
+    {
+      "round": 3,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.8790419999999131,
+      "perOperationMs": 0.8790419999999131,
+      "startOffsetMs": 353.51525000000004
+    },
+    {
+      "round": 4,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 18.457042,
+      "perOperationMs": 0.18457042,
+      "startOffsetMs": 359.009542
+    },
+    {
+      "round": 4,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 18.377500000000055,
+      "perOperationMs": 0.18377500000000055,
+      "startOffsetMs": 381.56899999999996
+    },
+    {
+      "round": 4,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.1562079999999924,
+      "perOperationMs": 0.03156207999999992,
+      "startOffsetMs": 404.501667
+    },
+    {
+      "round": 4,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.6912079999999605,
+      "perOperationMs": 0.036912079999999604,
+      "startOffsetMs": 412.325917
+    },
+    {
+      "round": 4,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.2439580000000205,
+      "perOperationMs": 0.032439580000000204,
+      "startOffsetMs": 421.073042
+    },
+    {
+      "round": 4,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.046999999999912,
+      "perOperationMs": 0.03046999999999912,
+      "startOffsetMs": 428.63191700000004
+    },
+    {
+      "round": 4,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.513584000000037,
+      "perOperationMs": 2.513584000000037,
+      "startOffsetMs": 435.99412499999994
+    },
+    {
+      "round": 4,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.5568340000000944,
+      "perOperationMs": 0.5568340000000944,
+      "startOffsetMs": 442.89812499999994
+    },
+    {
+      "round": 5,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 18.63062500000001,
+      "perOperationMs": 0.1863062500000001,
+      "startOffsetMs": 448.21341699999994
+    },
+    {
+      "round": 5,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 18.378332999999998,
+      "perOperationMs": 0.18378332999999997,
+      "startOffsetMs": 470.88145899999995
+    },
+    {
+      "round": 5,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.8775829999999587,
+      "perOperationMs": 0.03877582999999959,
+      "startOffsetMs": 493.388417
+    },
+    {
+      "round": 5,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.9088329999999587,
+      "perOperationMs": 0.03908832999999959,
+      "startOffsetMs": 502.352209
+    },
+    {
+      "round": 5,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.3827079999999796,
+      "perOperationMs": 0.033827079999999794,
+      "startOffsetMs": 510.46504200000004
+    },
+    {
+      "round": 5,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.864667000000054,
+      "perOperationMs": 0.03864667000000054,
+      "startOffsetMs": 520.425625
+    },
+    {
+      "round": 5,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.3898339999999507,
+      "perOperationMs": 2.3898339999999507,
+      "startOffsetMs": 529.021375
+    },
+    {
+      "round": 5,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.5659999999999172,
+      "perOperationMs": 0.5659999999999172,
+      "startOffsetMs": 537.778
+    },
+    {
+      "round": 6,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 19.278791999999953,
+      "perOperationMs": 0.19278791999999953,
+      "startOffsetMs": 543.750167
+    },
+    {
+      "round": 6,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 18.48133299999995,
+      "perOperationMs": 0.1848133299999995,
+      "startOffsetMs": 566.836084
+    },
+    {
+      "round": 6,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 2.4777500000000146,
+      "perOperationMs": 0.024777500000000147,
+      "startOffsetMs": 591.056375
+    },
+    {
+      "round": 6,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.229791999999975,
+      "perOperationMs": 0.03229791999999975,
+      "startOffsetMs": 598.978667
+    },
+    {
+      "round": 6,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 4.061083000000053,
+      "perOperationMs": 0.040610830000000535,
+      "startOffsetMs": 606.604959
+    },
+    {
+      "round": 6,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.9294579999998405,
+      "perOperationMs": 0.03929457999999841,
+      "startOffsetMs": 614.9434590000001
+    },
+    {
+      "round": 6,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.521250000000009,
+      "perOperationMs": 2.521250000000009,
+      "startOffsetMs": 623.3886669999999
+    },
+    {
+      "round": 6,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.5671250000000327,
+      "perOperationMs": 0.5671250000000327,
+      "startOffsetMs": 630.7569169999999
+    },
+    {
+      "round": 7,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 19.411041999999952,
+      "perOperationMs": 0.19411041999999953,
+      "startOffsetMs": 637.1545000000001
+    },
+    {
+      "round": 7,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 19.354958000000124,
+      "perOperationMs": 0.19354958000000125,
+      "startOffsetMs": 661.4224589999999
+    },
+    {
+      "round": 7,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.217957999999953,
+      "perOperationMs": 0.04217957999999953,
+      "startOffsetMs": 685.0187920000001
+    },
+    {
+      "round": 7,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 4.059709000000112,
+      "perOperationMs": 0.04059709000000112,
+      "startOffsetMs": 694.40725
+    },
+    {
+      "round": 7,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.50908400000003,
+      "perOperationMs": 0.035090840000000297,
+      "startOffsetMs": 703.3995
+    },
+    {
+      "round": 7,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.3179159999999683,
+      "perOperationMs": 0.03317915999999968,
+      "startOffsetMs": 711.397459
+    },
+    {
+      "round": 7,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.609124999999949,
+      "perOperationMs": 2.609124999999949,
+      "startOffsetMs": 718.747292
+    },
+    {
+      "round": 7,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.5424170000001141,
+      "perOperationMs": 0.5424170000001141,
+      "startOffsetMs": 726.3409999999999
+    },
+    {
+      "round": 8,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 18.62041700000009,
+      "perOperationMs": 0.1862041700000009,
+      "startOffsetMs": 731.9765
+    },
+    {
+      "round": 8,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 18.61308299999996,
+      "perOperationMs": 0.1861308299999996,
+      "startOffsetMs": 754.940292
+    },
+    {
+      "round": 8,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.493208000000095,
+      "perOperationMs": 0.03493208000000095,
+      "startOffsetMs": 777.953542
+    },
+    {
+      "round": 8,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.8279999999999745,
+      "perOperationMs": 0.038279999999999745,
+      "startOffsetMs": 786.1544590000001
+    },
+    {
+      "round": 8,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.9132079999999405,
+      "perOperationMs": 0.0391320799999994,
+      "startOffsetMs": 794.881834
+    },
+    {
+      "round": 8,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.529457999999977,
+      "perOperationMs": 0.03529457999999977,
+      "startOffsetMs": 803.1492920000001
+    },
+    {
+      "round": 8,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.6139579999999114,
+      "perOperationMs": 2.6139579999999114,
+      "startOffsetMs": 811.311459
+    },
+    {
+      "round": 8,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.6022909999999229,
+      "perOperationMs": 0.6022909999999229,
+      "startOffsetMs": 818.631709
+    },
+    {
+      "round": 9,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 18.785666999999876,
+      "perOperationMs": 0.18785666999999875,
+      "startOffsetMs": 824.548792
+    },
+    {
+      "round": 9,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 18.917667000000165,
+      "perOperationMs": 0.18917667000000166,
+      "startOffsetMs": 848.4957919999999
+    },
+    {
+      "round": 9,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.2915830000001733,
+      "perOperationMs": 0.032915830000001735,
+      "startOffsetMs": 872.2466669999999
+    },
+    {
+      "round": 9,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.776540999999952,
+      "perOperationMs": 0.03776540999999952,
+      "startOffsetMs": 880.7603340000001
+    },
+    {
+      "round": 9,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.85349999999994,
+      "perOperationMs": 0.0385349999999994,
+      "startOffsetMs": 889.8864169999999
+    },
+    {
+      "round": 9,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.230250000000069,
+      "perOperationMs": 0.03230250000000069,
+      "startOffsetMs": 898.7416249999999
+    },
+    {
+      "round": 9,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 3.30279100000007,
+      "perOperationMs": 3.30279100000007,
+      "startOffsetMs": 906.532459
+    },
+    {
+      "round": 9,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.7280419999999594,
+      "perOperationMs": 0.7280419999999594,
+      "startOffsetMs": 914.721125
+    },
+    {
+      "round": 10,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 19.108249999999998,
+      "perOperationMs": 0.1910825,
+      "startOffsetMs": 922.7538340000001
+    },
+    {
+      "round": 10,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 18.376666999999998,
+      "perOperationMs": 0.18376666999999997,
+      "startOffsetMs": 946.4254169999999
+    },
+    {
+      "round": 10,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.524708000000146,
+      "perOperationMs": 0.03524708000000146,
+      "startOffsetMs": 969.6669589999999
+    },
+    {
+      "round": 10,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.302874999999858,
+      "perOperationMs": 0.03302874999999858,
+      "startOffsetMs": 977.8295
+    },
+    {
+      "round": 10,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.0682500000000346,
+      "perOperationMs": 0.030682500000000345,
+      "startOffsetMs": 986.8957499999999
+    },
+    {
+      "round": 10,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.328999999999951,
+      "perOperationMs": 0.03328999999999951,
+      "startOffsetMs": 994.4078340000001
+    },
+    {
+      "round": 10,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.8777500000001055,
+      "perOperationMs": 2.8777500000001055,
+      "startOffsetMs": 1002.7339999999999
+    },
+    {
+      "round": 10,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.559624999999869,
+      "perOperationMs": 0.559624999999869,
+      "startOffsetMs": 1010.047542
+    },
+    {
+      "round": 11,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 18.778375000000096,
+      "perOperationMs": 0.18778375000000097,
+      "startOffsetMs": 1015.261125
+    },
+    {
+      "round": 11,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 18.329291999999896,
+      "perOperationMs": 0.18329291999999897,
+      "startOffsetMs": 1038.563292
+    },
+    {
+      "round": 11,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.4421250000000327,
+      "perOperationMs": 0.03442125000000033,
+      "startOffsetMs": 1061.226167
+    },
+    {
+      "round": 11,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.3577080000000024,
+      "perOperationMs": 0.03357708000000002,
+      "startOffsetMs": 1069.309917
+    },
+    {
+      "round": 11,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.163000000000011,
+      "perOperationMs": 0.03163000000000011,
+      "startOffsetMs": 1082.442792
+    },
+    {
+      "round": 11,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 2.839082999999846,
+      "perOperationMs": 0.02839082999999846,
+      "startOffsetMs": 1090.776417
+    },
+    {
+      "round": 11,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.2527919999999995,
+      "perOperationMs": 2.2527919999999995,
+      "startOffsetMs": 1097.969042
+    },
+    {
+      "round": 11,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.5607919999999922,
+      "perOperationMs": 0.5607919999999922,
+      "startOffsetMs": 1105.213917
+    },
+    {
+      "round": 12,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 18.647625000000062,
+      "perOperationMs": 0.18647625000000062,
+      "startOffsetMs": 1111.26575
+    },
+    {
+      "round": 12,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 18.486833999999817,
+      "perOperationMs": 0.18486833999999816,
+      "startOffsetMs": 1134.3285
+    },
+    {
+      "round": 12,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 2.1232500000000982,
+      "perOperationMs": 0.021232500000000983,
+      "startOffsetMs": 1157.1484169999999
+    },
+    {
+      "round": 12,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.1202089999999316,
+      "perOperationMs": 0.031202089999999315,
+      "startOffsetMs": 1163.75025
+    },
+    {
+      "round": 12,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.9338749999999436,
+      "perOperationMs": 0.03933874999999944,
+      "startOffsetMs": 1171.307375
+    },
+    {
+      "round": 12,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.0099159999999756,
+      "perOperationMs": 0.030099159999999757,
+      "startOffsetMs": 1180.231209
+    },
+    {
+      "round": 12,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.196124999999938,
+      "perOperationMs": 2.196124999999938,
+      "startOffsetMs": 1187.242084
+    },
+    {
+      "round": 12,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.5631670000000213,
+      "perOperationMs": 0.5631670000000213,
+      "startOffsetMs": 1193.325625
+    },
+    {
+      "round": 13,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 19.094500000000153,
+      "perOperationMs": 0.19094500000000153,
+      "startOffsetMs": 1199.1947499999999
+    },
+    {
+      "round": 13,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 19.34745900000007,
+      "perOperationMs": 0.19347459000000072,
+      "startOffsetMs": 1223.037875
+    },
+    {
+      "round": 13,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.824000000000069,
+      "perOperationMs": 0.03824000000000069,
+      "startOffsetMs": 1247.45175
+    },
+    {
+      "round": 13,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.681874999999991,
+      "perOperationMs": 0.03681874999999991,
+      "startOffsetMs": 1256.023084
+    },
+    {
+      "round": 13,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 5.238083000000188,
+      "perOperationMs": 0.05238083000000188,
+      "startOffsetMs": 1270.6702089999999
+    },
+    {
+      "round": 13,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.235875000000078,
+      "perOperationMs": 0.03235875000000078,
+      "startOffsetMs": 1282.145417
+    },
+    {
+      "round": 13,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 3.204042000000072,
+      "perOperationMs": 3.204042000000072,
+      "startOffsetMs": 1290.9025
+    },
+    {
+      "round": 13,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.555417000000034,
+      "perOperationMs": 0.555417000000034,
+      "startOffsetMs": 1299.34825
+    },
+    {
+      "round": 14,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 19.73912499999983,
+      "perOperationMs": 0.1973912499999983,
+      "startOffsetMs": 1305.759334
+    },
+    {
+      "round": 14,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 19.47524999999996,
+      "perOperationMs": 0.1947524999999996,
+      "startOffsetMs": 1330.652625
+    },
+    {
+      "round": 14,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.4070420000000468,
+      "perOperationMs": 0.03407042000000047,
+      "startOffsetMs": 1355.436667
+    },
+    {
+      "round": 14,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.82487500000002,
+      "perOperationMs": 0.0382487500000002,
+      "startOffsetMs": 1364.47025
+    },
+    {
+      "round": 14,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.897292000000107,
+      "perOperationMs": 0.03897292000000107,
+      "startOffsetMs": 1373.13825
+    },
+    {
+      "round": 14,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.8979159999998956,
+      "perOperationMs": 0.03897915999999896,
+      "startOffsetMs": 1381.714459
+    },
+    {
+      "round": 14,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.4582920000000286,
+      "perOperationMs": 2.4582920000000286,
+      "startOffsetMs": 1390.442792
+    },
+    {
+      "round": 14,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.6165829999999914,
+      "perOperationMs": 0.6165829999999914,
+      "startOffsetMs": 1397.963917
+    },
+    {
+      "round": 15,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 19.21137500000009,
+      "perOperationMs": 0.1921137500000009,
+      "startOffsetMs": 1404.735125
+    },
+    {
+      "round": 15,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 19.282541000000037,
+      "perOperationMs": 0.19282541000000036,
+      "startOffsetMs": 1429.032584
+    },
+    {
+      "round": 15,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.752375000000029,
+      "perOperationMs": 0.03752375000000029,
+      "startOffsetMs": 1453.231542
+    },
+    {
+      "round": 15,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.6380420000000413,
+      "perOperationMs": 0.03638042000000041,
+      "startOffsetMs": 1461.009625
+    },
+    {
+      "round": 15,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.12824999999998,
+      "perOperationMs": 0.0412824999999998,
+      "startOffsetMs": 1469.2905
+    },
+    {
+      "round": 15,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.448957999999948,
+      "perOperationMs": 0.03448957999999948,
+      "startOffsetMs": 1478.215834
+    },
+    {
+      "round": 15,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 3.125208000000157,
+      "perOperationMs": 3.125208000000157,
+      "startOffsetMs": 1486.607417
+    },
+    {
+      "round": 15,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 1.060165999999981,
+      "perOperationMs": 1.060165999999981,
+      "startOffsetMs": 1494.265709
+    },
+    {
+      "round": 16,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 19.475625000000036,
+      "perOperationMs": 0.19475625000000035,
+      "startOffsetMs": 1499.8605
+    },
+    {
+      "round": 16,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 19.06925000000001,
+      "perOperationMs": 0.1906925000000001,
+      "startOffsetMs": 1523.8955
+    },
+    {
+      "round": 16,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 4.187125000000151,
+      "perOperationMs": 0.04187125000000151,
+      "startOffsetMs": 1547.508375
+    },
+    {
+      "round": 16,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.53387500000008,
+      "perOperationMs": 0.0353387500000008,
+      "startOffsetMs": 1557.459584
+    },
+    {
+      "round": 16,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 3.258666999999832,
+      "perOperationMs": 0.03258666999999832,
+      "startOffsetMs": 1566.673917
+    },
+    {
+      "round": 16,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.149708000000146,
+      "perOperationMs": 0.04149708000000146,
+      "startOffsetMs": 1575.269292
+    },
+    {
+      "round": 16,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.4135420000000067,
+      "perOperationMs": 2.4135420000000067,
+      "startOffsetMs": 1584.159667
+    },
+    {
+      "round": 16,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.6430409999998119,
+      "perOperationMs": 0.6430409999998119,
+      "startOffsetMs": 1592.210209
+    },
+    {
+      "round": 17,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 19.94445799999994,
+      "perOperationMs": 0.1994445799999994,
+      "startOffsetMs": 1599.016167
+    },
+    {
+      "round": 17,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 19.529584000000114,
+      "perOperationMs": 0.19529584000000114,
+      "startOffsetMs": 1623.9714999999999
+    },
+    {
+      "round": 17,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.42379099999971,
+      "perOperationMs": 0.0342379099999971,
+      "startOffsetMs": 1648.1559590000002
+    },
+    {
+      "round": 17,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 4.5775409999996555,
+      "perOperationMs": 0.045775409999996554,
+      "startOffsetMs": 1656.6112090000001
+    },
+    {
+      "round": 17,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.4525840000001153,
+      "perOperationMs": 0.034525840000001154,
+      "startOffsetMs": 1666.803625
+    },
+    {
+      "round": 17,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 2.8757080000000315,
+      "perOperationMs": 0.028757080000000313,
+      "startOffsetMs": 1674.823167
+    },
+    {
+      "round": 17,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.2539170000000013,
+      "perOperationMs": 2.2539170000000013,
+      "startOffsetMs": 1682.428542
+    },
+    {
+      "round": 17,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.6768750000001091,
+      "perOperationMs": 0.6768750000001091,
+      "startOffsetMs": 1689.0899169999998
+    },
+    {
+      "round": 18,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 19.088459000000057,
+      "perOperationMs": 0.19088459000000058,
+      "startOffsetMs": 1694.4625
+    },
+    {
+      "round": 18,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 20.125,
+      "perOperationMs": 0.20125,
+      "startOffsetMs": 1718.6969170000002
+    },
+    {
+      "round": 18,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 4.864292000000205,
+      "perOperationMs": 0.04864292000000205,
+      "startOffsetMs": 1743.896542
+    },
+    {
+      "round": 18,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 5.961084000000028,
+      "perOperationMs": 0.05961084000000028,
+      "startOffsetMs": 1754.2977500000002
+    },
+    {
+      "round": 18,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 2.920916000000034,
+      "perOperationMs": 0.029209160000000338,
+      "startOffsetMs": 1766.0933340000001
+    },
+    {
+      "round": 18,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 2.8298749999999018,
+      "perOperationMs": 0.02829874999999902,
+      "startOffsetMs": 1773.466
+    },
+    {
+      "round": 18,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.0995419999999285,
+      "perOperationMs": 2.0995419999999285,
+      "startOffsetMs": 1780.5569169999999
+    },
+    {
+      "round": 18,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.796291999999994,
+      "perOperationMs": 0.796291999999994,
+      "startOffsetMs": 1787.1283749999998
+    },
+    {
+      "round": 19,
+      "kind": "sha1",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 25.337875000000167,
+      "perOperationMs": 0.25337875000000165,
+      "startOffsetMs": 1792.994084
+    },
+    {
+      "round": 19,
+      "kind": "sha1",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 21.10283299999992,
+      "perOperationMs": 0.21102832999999918,
+      "startOffsetMs": 1823.1673340000002
+    },
+    {
+      "round": 19,
+      "kind": "local",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.6431659999998374,
+      "perOperationMs": 0.036431659999998374,
+      "startOffsetMs": 1848.349584
+    },
+    {
+      "round": 19,
+      "kind": "local",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 4.275542000000314,
+      "perOperationMs": 0.04275542000000314,
+      "startOffsetMs": 1856.2892499999998
+    },
+    {
+      "round": 19,
+      "kind": "nested",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 3.472291999999925,
+      "perOperationMs": 0.03472291999999925,
+      "startOffsetMs": 1865.903292
+    },
+    {
+      "round": 19,
+      "kind": "nested",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 2.7243750000002365,
+      "perOperationMs": 0.027243750000002363,
+      "startOffsetMs": 1873.588542
+    },
+    {
+      "round": 19,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 2.4607499999997344,
+      "perOperationMs": 2.4607499999997344,
+      "startOffsetMs": 1880.3790840000001
+    },
+    {
+      "round": 19,
+      "kind": "tree",
+      "variant": "after",
+      "iterations": 1,
+      "elapsedMs": 0.6376249999998436,
+      "perOperationMs": 0.6376249999998436,
+      "startOffsetMs": 1886.907834
+    }
+  ],
+  "summary": {
+    "sha1": {
+      "before": {
+        "medianMs": 0.19098354500000028,
+        "p95Ms": 0.1973912499999983
+      },
+      "after": {
+        "medianMs": 0.18782020999999988,
+        "p95Ms": 0.20125
+      }
+    },
+    "local": {
+      "before": {
+        "medianMs": 0.035813750000000935,
+        "p95Ms": 0.045775409999996554
+      },
+      "after": {
+        "medianMs": 0.03667186999999899,
+        "p95Ms": 0.04217957999999953
+      }
+    },
+    "nested": {
+      "before": {
+        "medianMs": 0.03251312499999926,
+        "p95Ms": 0.040610830000000535
+      },
+      "after": {
+        "medianMs": 0.03519271000000003,
+        "p95Ms": 0.04149708000000146
+      }
+    },
+    "construct": {
+      "after": {
+        "medianMs": 2.4595209999998815,
+        "p95Ms": 3.204042000000072
+      }
+    },
+    "tree": {
+      "after": {
+        "medianMs": 0.5847079999999778,
+        "p95Ms": 0.8790419999999131
+      }
+    }
+  },
+  "consumed": 308701122183
+}
