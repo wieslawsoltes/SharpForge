@@ -3,13 +3,11 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {compileToIL} from '@sharpforge/compiler';
-import {Op, frameworkBuiltin} from '@sharpforge/bytecode';
 import {findContracts} from '@sharpforge/framework';
 import {MAX} from '@sharpforge/bcl-core';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
-import {managedFixture} from './managed-fixtures.js';
-import {sourceImage} from './fixtures/a07/legacy-builtin-engines.js';
-import {writerPlatform, writerContract, writerType, parentType} from './fixtures/text-writer/engines.js';
+import {writerPlatform, writerContract} from './fixtures/text-writer/engines.js';
+import {sourceBufferWriter, bufferWriterAssembly} from './fixtures/text-writer/buffer-cases.js';
 
 const directory = new URL('../packages/bcl-io/reference/', import.meta.url);
 const native = JSON.parse(readFileSync(new URL('string-writer-buffer-net10.json', directory), 'utf8'));
@@ -17,62 +15,10 @@ const fullParameters = ['char[]'];
 const sliceParameters = ['char[]', 'int', 'int'];
 const units = value => value.split('').map(unit => unit.charCodeAt(0));
 
-function sourceWriter(row) {
-  const image = sourceImage({name: frameworkBuiltin(writerContract('Write', row.full ? fullParameters : sliceParameters)).name,
-    args: [], result: 'void'});
-  const code = [];
-  const emit = (op, first = 0, second = 0) => code.push(op, first, second);
-  const constant = value => emit(Op.CONST, image.constants.push(value) - 1);
-  const call = (name, parameters, count) => emit(Op.BUILTIN, frameworkBuiltin(writerContract(name, parameters)).id, count);
-  if (row.nullWriter) constant(null);
-  else call('.ctor', [], 0);
-  emit(Op.STSTATIC, 0); emit(Op.POP);
-  if (!row.nullWriter) {
-    emit(Op.LDSTATIC, 0); constant('seed|'); call('Write', ['string'], 2); emit(Op.POP);
-  }
-  if (row.disposed) { emit(Op.LDSTATIC, 0); call('Dispose', [], 1); emit(Op.POP); }
-  if (row.input === null) constant(null);
-  else { constant(row.input.length); emit(Op.NEWARR, image.constants.push('char') - 1); }
-  emit(Op.STSTATIC, 1); emit(Op.POP);
-  row.input?.forEach((value, index) => {
-    emit(Op.LDSTATIC, 1); constant(index); constant(value); emit(Op.STELEM); emit(Op.POP);
-  });
-  emit(Op.LDSTATIC, 0); emit(Op.LDSTATIC, 1);
-  if (!row.full) { constant(row.index); constant(row.count); }
-  call('Write', row.full ? fullParameters : sliceParameters, row.full ? 2 : 4); emit(Op.RET);
-  image.statics = [{name: 'Writer', type: row.baseView ? parentType : writerType, value: null},
-    {name: 'Buffer', type: 'char[]', value: null}];
-  image.methods[0].code = Int32Array.from(code);
-  return new VirtualMachine(image);
-}
-
-function writerAssembly(row) {
-  const owner = row.baseView ? parentType : writerType;
-  return managedFixture({fields: [{name: 'Writer', type: owner}, {name: 'Buffer', type: 'char[]'}],
-    methods: [{name: 'Main', result: 'void', maxStack: 4, body(w, c) {
-      const writer = 0x04000000 | c.fields.Writer, buffer = 0x04000000 | c.fields.Buffer;
-      const call = (name, parameters = []) => w.op('callvirt', c.member(owner, name, 'void', parameters, false));
-      if (row.nullWriter) w.op('ldnull');
-      else w.op('newobj', c.member(writerType, '.ctor', 'void', [], false)).op('castclass', c.resolve(owner));
-      w.op('stsfld', writer);
-      if (!row.nullWriter) {
-        w.op('ldsfld', writer).op('ldstr', 0x70000000 + c.md.userString('seed|')); call('Write', ['string']);
-      }
-      if (row.disposed) { w.op('ldsfld', writer); call('Dispose'); }
-      if (row.input === null) w.op('ldnull');
-      else w.op('ldc.i4', row.input.length).op('newarr', c.resolve('System.Char'));
-      w.op('stsfld', buffer);
-      row.input?.forEach((value, index) => w.op('ldsfld', buffer).op('ldc.i4', index).op('ldc.i4', value).op('stelem.i2'));
-      w.op('ldsfld', writer).op('ldsfld', buffer);
-      if (!row.full) w.op('ldc.i4', row.index).op('ldc.i4', row.count);
-      call('Write', row.full ? fullParameters : sliceParameters); w.op('ret');
-    }}]});
-}
-
 for (const engine of ['source', 'cil']) {
   test(`StringWriter buffer ${engine}: all native full/slice calls preserve text, input and faults`, () => {
     for (const row of native.rows) {
-      const vm = engine === 'source' ? sourceWriter(row) : new CilVirtualMachine(writerAssembly(row));
+      const vm = engine === 'source' ? sourceBufferWriter(row) : new CilVirtualMachine(bufferWriterAssembly(row));
       const field = index => engine === 'source' ? vm.statics[index] : vm.statics.get(0x04000001 + index);
       try {
         const result = vm.run();

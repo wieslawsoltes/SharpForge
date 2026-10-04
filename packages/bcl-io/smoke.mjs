@@ -17,8 +17,11 @@ export async function smoke({api}) {
   assert.equal(types.get('System.IO.StringReader').base, 'System.IO.TextReader');
   assert.equal(types.get('System.IO.TextWriter').isAbstract, true);
   assert.equal(types.get('System.IO.StringWriter').base, 'System.IO.TextWriter');
-  assert.equal(members.length, 24);
-  assert.deepEqual(members.slice(-2).map(member => member.parameters), [['char[]'], ['char[]', 'int', 'int']]);
+  assert.equal(members.length, 26);
+  assert.deepEqual(members.slice(-4).map(member => [member.name, member.parameters]), [
+    ['Write', ['char[]']], ['Write', ['char[]', 'int', 'int']],
+    ['WriteLine', ['char[]']], ['WriteLine', ['char[]', 'int', 'int']]
+  ]);
   assert.equal(members.filter(member => /System\.IO\.(TextReader|StringReader)$/.test(member.owner)).length, 9);
   assert(members.some(member => member.name === 'ReadLine' && member.result === 'string'));
   assert.equal(api.ioModules[0], api.stringReaderModule);

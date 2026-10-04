@@ -33,6 +33,14 @@ function setNewLine(platform, reference, value) {
   });
 }
 
+function requireOpen(platform, reference) {
+  if (platform.get(reference, '$disposed')) fail(platform, 'ObjectDisposedException', 'Cannot write to a closed TextWriter');
+}
+
+function appendNewLine(platform, builder, reference) {
+  appendWriterBuilder(platform, builder, platform.get(reference, '$newLine'));
+}
+
 function write(platform, descriptor, reference, value) {
   const builder = platform.get(reference, '$builder');
   if (descriptor.name === 'Write' && descriptor.parameters[0] === 'char') {
@@ -43,7 +51,7 @@ function write(platform, descriptor, reference, value) {
     if (value !== null) appendWriterBuilder(platform, builder, value);
   }
   // Keep these separate: a failed newline append retains an already-written value, as TextWriter does.
-  if (descriptor.name === 'WriteLine') appendWriterBuilder(platform, builder, platform.get(reference, '$newLine'));
+  if (descriptor.name === 'WriteLine') appendNewLine(platform, builder, reference);
   return null;
 }
 
@@ -52,8 +60,14 @@ export function invokeStringWriter(platform, descriptor, args) {
   if (descriptor.kind === 'constructor') return construct(platform, args);
   const reference = args[0];
   requireWriter(platform, reference);
-  if (descriptor.name === 'Write' && descriptor.parameters[0] === 'char[]') {
-    return writeStringBuffer(platform, reference, args, descriptor.parameters.length === 1);
+  if ((descriptor.name === 'Write' || descriptor.name === 'WriteLine') && descriptor.parameters[0] === 'char[]') {
+    writeStringBuffer(platform, reference, args, descriptor.parameters.length === 1);
+    if (descriptor.name === 'WriteLine') {
+      // Inherited buffer overloads call parameterless WriteLine after the completed buffer write.
+      requireOpen(platform, reference);
+      appendNewLine(platform, platform.get(reference, '$builder'), reference);
+    }
+    return null;
   }
   switch (descriptor.name) {
     case 'get_NewLine': return platform.get(reference, '$newLine');
@@ -67,7 +81,7 @@ export function invokeStringWriter(platform, descriptor, args) {
       return null;
     case 'Write':
     case 'WriteLine':
-      if (platform.get(reference, '$disposed')) fail(platform, 'ObjectDisposedException', 'Cannot write to a closed TextWriter');
+      requireOpen(platform, reference);
       return write(platform, descriptor, reference, args[1]);
     default: return fail(platform, 'MissingMethodException', descriptor.name);
   }

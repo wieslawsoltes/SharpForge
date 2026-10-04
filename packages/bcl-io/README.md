@@ -11,7 +11,8 @@ contracts, invoke}` protocol. Registration requires the standard `define`, `memb
 these contracts after JSON GetInt64 in A09, retaining all released IDs.
 Registration order is part of the ABI: the `bcl-io` base group registers reader
 slots 655361–655367 and writer slots 655368–655380, then the `extensions` group
-appends reader buffer slots 655381–655382 and writer buffer slots 655383–655384. Call `registerIoModules` for this canonical
+appends reader buffer slots 655381–655382, writer buffer slots 655383–655384 and
+writer buffer-line slots 655385–655386. Call `registerIoModules` for this canonical
 order; standalone core registration of a module still includes its own extension hook.
 
 This batch provides abstract TextReader metadata and StringReader construction,
@@ -86,8 +87,31 @@ string/character controls and new buffer paths separately, with setup excluded,
 one warmup, five samples and managed allocation/write counts. Copy the identical
 runner to baseline `b0521bbd`; unavailable buffer paths are explicitly skipped.
 
-The builder remains available and mutable after disposal, while every Write/WriteLine
-throws ObjectDisposedException, including null/empty writes. Flush and NewLine remain
+`WriteLine(char[])` and `WriteLine(char[], index, count)` first perform the same
+buffer write, then check disposal again and append the current NewLine separately.
+A null whole-array buffer still writes a newline; it faults after disposal even
+when NewLine is empty. Slice buffer/range validation still precedes disposal.
+NewLine changes during the completed buffer append are observed by the newline
+step. Disposal at that boundary faults while retaining the buffer text. A newline
+allocation or host-limit failure also retains the completed buffer; there is no
+combined-size precheck or transactional rollback. Existing WriteLine(string)
+retains its original single disposal check before writing.
+
+The new overloads reuse the bounded bulk conversion and builder append. Nonempty
+buffer text and newline each create one managed text chunk, plus existing backing
+growth when needed. No per-character managed strings are allocated. The separate
+.NET 10.0.5 capture has 86 ordinary rows and eight native-only subclass observations
+of the boundary between value and newline writes. Managed host-observer tests
+reproduce that sequencing without claiming executable custom subclasses. Tests
+also cover GC, snapshot restoration, input copying, newline failure and root cleanup.
+The static `scripts/benchmarks/a09-string-writer-line-buffer.mjs` runner reports
+existing string-line and separate buffer/newline controls alongside the two new
+overloads. Copy it unchanged to baseline `31f92ab5`; setup and final text checks
+are excluded, with one warmup, five samples and allocation/write counters.
+
+The builder remains available and mutable after disposal. String/character writes
+and every WriteLine throw ObjectDisposedException, including null/empty values;
+the full-buffer Write(null) exception is described above. Flush and NewLine remain
 usable after disposal. WriteLine writes the value and newline separately, preserving
 partial progress if appending the newline exceeds the host bound. All writer state
 lives in managed fields and survives snapshots and observer-triggered collections.
@@ -104,7 +128,7 @@ CIL and platform coverage. External `IDisposable.Dispose` invocation
 itself remains outside the CIL profile; metadata does not add a second dispatch path.
 Rust native/Wasm execution is not qualified by this batch.
 
-Issue #2723 remains open: span/memory reader APIs, writer WriteLine buffer overloads and async methods,
+Issue #2723 remains open: span/memory reader APIs, writer char/numeric/formatted WriteLine and async methods,
 Null/Synchronized wrappers, numeric/formatting/culture overloads, Encoding, and Console
 writer replacement remain separate batches. These APIs are not registered; unsupported
 source uses continue to fail compilation. User-defined TextReader/TextWriter subclasses
