@@ -1,0 +1,606 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "80bf964041a4d1ef128bc81a43411881e05ce8edb992b5206e95be378005d503",
+  "rows": [
+    {
+      "coefficient": "0",
+      "scale": 0,
+      "negative": false,
+      "bits": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "0",
+      "output": "seed|0",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "0",
+      "scale": 0,
+      "negative": true,
+      "bits": [
+        0,
+        0,
+        0,
+        -2147483648
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "0",
+      "output": "seed|0",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "0",
+      "scale": 2,
+      "negative": false,
+      "bits": [
+        0,
+        0,
+        0,
+        131072
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "0.00",
+      "output": "seed|0.00",
+      "length": 9,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "0",
+      "scale": 2,
+      "negative": true,
+      "bits": [
+        0,
+        0,
+        0,
+        -2147352576
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "0.00",
+      "output": "seed|0.00",
+      "length": 9,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "0",
+      "scale": 28,
+      "negative": false,
+      "bits": [
+        0,
+        0,
+        0,
+        1835008
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "0.0000000000000000000000000000",
+      "output": "seed|0.0000000000000000000000000000",
+      "length": 35,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "0",
+      "scale": 28,
+      "negative": true,
+      "bits": [
+        0,
+        0,
+        0,
+        -2145648640
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "0.0000000000000000000000000000",
+      "output": "seed|0.0000000000000000000000000000",
+      "length": 35,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1",
+      "scale": 0,
+      "negative": false,
+      "bits": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "1",
+      "output": "seed|1",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1",
+      "scale": 0,
+      "negative": true,
+      "bits": [
+        1,
+        0,
+        0,
+        -2147483648
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "-1",
+      "output": "seed|-1",
+      "length": 7,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1",
+      "scale": 1,
+      "negative": false,
+      "bits": [
+        1,
+        0,
+        0,
+        65536
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "0.1",
+      "output": "seed|0.1",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1",
+      "scale": 1,
+      "negative": true,
+      "bits": [
+        1,
+        0,
+        0,
+        -2147418112
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "-0.1",
+      "output": "seed|-0.1",
+      "length": 9,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1",
+      "scale": 4,
+      "negative": false,
+      "bits": [
+        1,
+        0,
+        0,
+        262144
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "0.0001",
+      "output": "seed|0.0001",
+      "length": 11,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1",
+      "scale": 4,
+      "negative": true,
+      "bits": [
+        1,
+        0,
+        0,
+        -2147221504
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "-0.0001",
+      "output": "seed|-0.0001",
+      "length": 12,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1",
+      "scale": 28,
+      "negative": false,
+      "bits": [
+        1,
+        0,
+        0,
+        1835008
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "0.0000000000000000000000000001",
+      "output": "seed|0.0000000000000000000000000001",
+      "length": 35,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1",
+      "scale": 28,
+      "negative": true,
+      "bits": [
+        1,
+        0,
+        0,
+        -2145648640
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "-0.0000000000000000000000000001",
+      "output": "seed|-0.0000000000000000000000000001",
+      "length": 36,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1234500",
+      "scale": 4,
+      "negative": false,
+      "bits": [
+        1234500,
+        0,
+        0,
+        262144
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "123.4500",
+      "output": "seed|123.4500",
+      "length": 13,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1234500",
+      "scale": 4,
+      "negative": true,
+      "bits": [
+        1234500,
+        0,
+        0,
+        -2147221504
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "-123.4500",
+      "output": "seed|-123.4500",
+      "length": 14,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "9007199254740993",
+      "scale": 0,
+      "negative": false,
+      "bits": [
+        1,
+        2097152,
+        0,
+        0
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "9007199254740993",
+      "output": "seed|9007199254740993",
+      "length": 21,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "9007199254740993",
+      "scale": 0,
+      "negative": true,
+      "bits": [
+        1,
+        2097152,
+        0,
+        -2147483648
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "-9007199254740993",
+      "output": "seed|-9007199254740993",
+      "length": 22,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "79228162514264337593543950335",
+      "scale": 0,
+      "negative": false,
+      "bits": [
+        -1,
+        -1,
+        -1,
+        0
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "79228162514264337593543950335",
+      "output": "seed|79228162514264337593543950335",
+      "length": 34,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "79228162514264337593543950335",
+      "scale": 0,
+      "negative": true,
+      "bits": [
+        -1,
+        -1,
+        -1,
+        -2147483648
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "-79228162514264337593543950335",
+      "output": "seed|-79228162514264337593543950335",
+      "length": 35,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "79228162514264337593543950335",
+      "scale": 28,
+      "negative": false,
+      "bits": [
+        -1,
+        -1,
+        -1,
+        1835008
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "7.9228162514264337593543950335",
+      "output": "seed|7.9228162514264337593543950335",
+      "length": 35,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "79228162514264337593543950335",
+      "scale": 28,
+      "negative": true,
+      "bits": [
+        -1,
+        -1,
+        -1,
+        -2145648640
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "-7.9228162514264337593543950335",
+      "output": "seed|-7.9228162514264337593543950335",
+      "length": 36,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "10000000000000000000000000000",
+      "scale": 0,
+      "negative": false,
+      "bits": [
+        268435456,
+        1042612833,
+        542101086,
+        0
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "10000000000000000000000000000",
+      "output": "seed|10000000000000000000000000000",
+      "length": 34,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "10000000000000000000000000000",
+      "scale": 0,
+      "negative": true,
+      "bits": [
+        268435456,
+        1042612833,
+        542101086,
+        -2147483648
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "-10000000000000000000000000000",
+      "output": "seed|-10000000000000000000000000000",
+      "length": 35,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1234567890123456789012345678",
+      "scale": 28,
+      "negative": false,
+      "bits": [
+        -1103563954,
+        1836677777,
+        66926059,
+        1835008
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "0.1234567890123456789012345678",
+      "output": "seed|0.1234567890123456789012345678",
+      "length": 35,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "1234567890123456789012345678",
+      "scale": 28,
+      "negative": true,
+      "bits": [
+        -1103563954,
+        1836677777,
+        66926059,
+        -2145648640
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "-0.1234567890123456789012345678",
+      "output": "seed|-0.1234567890123456789012345678",
+      "length": 36,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "4294967296",
+      "scale": 3,
+      "negative": false,
+      "bits": [
+        0,
+        1,
+        0,
+        196608
+      ],
+      "nullReceiver": false,
+      "initial": "seed|",
+      "text": "4294967.296",
+      "output": "seed|4294967.296",
+      "length": 16,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "0",
+      "scale": 28,
+      "negative": true,
+      "bits": [
+        0,
+        0,
+        0,
+        -2145648640
+      ],
+      "nullReceiver": true,
+      "initial": "seed|",
+      "text": "0.0000000000000000000000000000",
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "coefficient": "79228162514264337593543950335",
+      "scale": 0,
+      "negative": true,
+      "bits": [
+        -1,
+        -1,
+        -1,
+        -2147483648
+      ],
+      "nullReceiver": true,
+      "initial": "seed|",
+      "text": "-79228162514264337593543950335",
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "coefficient": "1",
+      "scale": 28,
+      "negative": false,
+      "bits": [
+        1,
+        0,
+        0,
+        1835008
+      ],
+      "nullReceiver": true,
+      "initial": "seed|",
+      "text": "0.0000000000000000000000000001",
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "coefficient": "12300",
+      "scale": 4,
+      "negative": false,
+      "bits": [
+        12300,
+        0,
+        0,
+        262144
+      ],
+      "nullReceiver": false,
+      "initial": "",
+      "text": "1.2300",
+      "output": "1.2300",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "0",
+      "scale": 2,
+      "negative": true,
+      "bits": [
+        0,
+        0,
+        0,
+        -2147352576
+      ],
+      "nullReceiver": false,
+      "initial": "",
+      "text": "0.00",
+      "output": "0.00",
+      "length": 4,
+      "same": true,
+      "fault": null
+    },
+    {
+      "coefficient": "79228162514264337593543950335",
+      "scale": 0,
+      "negative": true,
+      "bits": [
+        -1,
+        -1,
+        -1,
+        -2147483648
+      ],
+      "nullReceiver": false,
+      "initial": "",
+      "text": "-79228162514264337593543950335",
+      "output": "-79228162514264337593543950335",
+      "length": 30,
+      "same": true,
+      "fault": null
+    }
+  ],
+  "fluent": {
+    "output": "1.2300|0.000|42A",
+    "length": 16,
+    "same": true
+  }
+}

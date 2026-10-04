@@ -11,6 +11,45 @@ import { encodeSignature, token } from '@sharpforge/cil';
 import { genericCallFixture } from '../../support/generic-call-fixture.js';
 
 const toolchain=await resolveToolchain();
+test('native reader retains method definition headers and separates VARARG from ordinary contracts',async()=>{
+  const integer={kind:'primitive',name:'int'}, voidType={kind:'primitive',name:'void'};
+  // MethodDefSig contains the fixed parameters only; a call-site sentinel does not belong here (ECMA-335 II.23.2.1).
+  const cases=[
+    {name:'Static',isStatic:true,header:0},
+    {name:'VarargStatic',isStatic:true,header:5},
+    {name:'Instance',isStatic:false,header:0x20},
+    {name:'VarargInstance',isStatic:false,header:0x25},
+    {name:'GenericStatic',isStatic:true,genericArity:1,header:0x10},
+    {name:'GenericInstance',isStatic:false,genericArity:1,header:0x30},
+  ];
+  const assembly=genericCallFixture([
+    {name:'MethodApi',flags:0x100081,methods:cases.map(({name,isStatic,genericArity=0,header})=>({
+      name,static:isStatic,flags:isStatic?0x96:0x5c6,genericParameters:Array.from({length:genericArity},()=>({})),
+      signature:encodeSignature({kind:'method',hasThis:!isStatic,callingConvention:header&15,genericArity,returnType:voidType,parameters:[integer]}),
+      ...(isStatic?{body:writer=>writer.op('ret')}:{})}))},
+    {name:'Program',methods:[{name:'Main',body:writer=>writer.op('ret')}]},
+  ]);
+  const directory=await mkdtemp(path.join(os.tmpdir(),'sf-method-metadata-')),file=path.join(directory,'Methods.dll');
+  try {
+    await writeFile(file,assembly);
+    const reference=await extractNative('metadata',[file],{toolchain});
+    const methods=reference.rows.filter(row=>row.owner==='MethodApi'&&row.kind==='method');
+    assert.equal(methods.length,cases.length);
+    for(const {name,isStatic,genericArity=0,header} of cases) {
+      const member=methods.find(row=>row.name===name),vararg=(header&15)===5;
+      assert.equal(member.signatureHeader,header,name);
+      const ordinary=`MethodApi::${name}\`\`${genericArity}(System.Int32):System.Void ${isStatic?'static':'instance'}`;
+      assert.equal(member.signature,ordinary+(vararg?` [header=0x${header.toString(16).toUpperCase().padStart(2,'0')}]`:''));
+      const contract={id:1,owner:'MethodApi',kind:'method',name,isStatic,genericArity,result:'void',parameters:['int']};
+      for(const compare of [compareMembers,winuiApiDiff]) {
+        const result=compare({rows:[member]},{registryTypes:new Map(),registryContracts:[contract]});
+        assert.equal(result.rows[0].status,vararg?'missing':'implemented',name);
+        assert.equal(result.rows[0].key,`${compare===winuiApiDiff?'winui':'bcl'}:${member.assembly}:method:${member.signature}`);
+        assert.equal(compare({rows:[member]},{registryTypes:new Map(),registryContracts:[{...contract,signatureHeader:header}]}).rows[0].status,'implemented');
+      }
+    }
+  }finally{await rm(directory,{recursive:true,force:true});}
+});
 test('native reader retains nested function-pointer conventions, flags, generic arity and vararg boundaries',async()=>{
   const primitive=name=>({kind:'primitive',name}), integer=primitive('int'), voidType=primitive('void');
   const pointer=options=>({kind:'functionPointer',signature:{kind:'method',returnType:voidType,parameters:[integer,integer],...options}});

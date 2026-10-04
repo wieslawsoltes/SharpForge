@@ -51,11 +51,11 @@ test('protected instance receivers use accessor identity, not only the member ow
   }
 });
 
-test('nested types and interface family rules stay explicit unknown, including supplied receivers', () => {
+test('nested identities are accepted while interface family rules remain explicit unknown', () => {
   const { access, context, type, member } = fixture();
-  assert.equal(access('nested', 'Owner').reason, 'nested-member-access');
-  assert.equal(access('Instance6field', 'Nested').reason, 'nested-member-access');
-  assert.equal(access('Instance6method', 'Owner', 'Nested').reason, 'nested-member-access');
+  known(access('nested', 'Owner'), true);
+  known(access('Instance6field', 'Nested'), true);
+  known(access('Instance6method', 'Owner', 'Nested'), true);
   assert.equal(access('interface', 'Interface').reason, 'interface-family-access');
   assert.equal(access('Instance4method', 'Interface').reason, 'interface-family-access');
   assert.equal(access('Instance2field', 'Derived', 'Interface').reason, 'interface-family-access');
@@ -91,7 +91,7 @@ test('visibility/member snapshots own bytes and survive metadata and caller resu
   known(state.context.isMemberAccessible(target, state.type('Owner')), true);
   known(state.context.isMemberAccessible(target, state.type('Other')), false);
   assert.throws(() => { target.flags = 6; }, TypeError);
-  assert.equal(state.access('nested', 'Owner').reason, 'nested-member-access');
+  known(state.access('nested', 'Owner'), true);
 });
 
 test('existing type/member budgets and cancellation apply to snapshot and cached access queries', () => {

@@ -118,7 +118,8 @@ test('A02-T30 a typed catch clause names its exception type and try regions nest
 });
 
 test('A02-T30 a construct without an emitter is SF2200 naming it, never a wrong assembly', () => {
-  const pointer = emit('class C { static unsafe void Main() { int x = 1; int* p = &x; *p = 2; } }', { allowUnsafe: true });
+  // Function pointers have no emitter (data pointers have one since the unsafe-code batch).
+  const pointer = emit('class C { static int M(int x) { return x; } static unsafe void Main() { delegate*<int, int> f = &M; } }', { allowUnsafe: true });
   assert.equal(pointer.success, false);
   assert.equal(pointer.assembly, null);
   assert.deepEqual(

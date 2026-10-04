@@ -1,6 +1,6 @@
 import {decimalIntrinsicDefinitions} from '@sharpforge/bytecode';
 import {nullableMethodDefinition} from './nullable-profile.js';
-import {canonicalType,contracts,types} from '@sharpforge/framework';
+import {canonicalType,contracts,types,memberSignatureType} from '@sharpforge/framework';
 
 const aliases={decimal:'System.Decimal',object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean'};
 export const systemType=name=>aliases[name]??name;
@@ -59,6 +59,9 @@ add('System.String','IndexOf',['string'],'int',false,'stringSearch');
 add('System.String','Replace',['string','string'],'string',false,'stringReplace');
 for(const parameters of [['int'],['int','int']])add('System.String','Substring',parameters,'string',false,'stringSubstring');
 for(const name of ['Abs','Min','Max'])for(const type of ['int','double','long','float'])add('System.Math',name,Array(name==='Abs'?1:2).fill(type),type,true,'math');
+for (const type of ['sbyte', 'short', 'int', 'long', 'float', 'double']) {
+  add('System.Math', 'Sign', [type], 'int', true, 'mathSign');
+}
 for (const name of ['Min', 'Max']) {
   for (const type of ['uint', 'ulong']) add('System.Math', name, [type, type], type, true, 'unsignedMathExtremum');
 }
@@ -72,6 +75,13 @@ for(const type of primitive)add('System.Convert','ToString',[type],'string',true
 for(const [owner,result] of [['System.Int32','int'],['System.Double','double'],['System.Int64','long']])add(owner,'Parse',['string'],result,true,'parse');
 
 const builtinDefinitions=new Map(definitions),frameworkDefinitions=new Map();
+
+const frameworkSignatureType = type => memberSignatureType(canonicalType(type));
+function frameworkKey(descriptor) {
+  const signature = descriptor.signature;
+  return signatureKey(canonicalType(descriptor.owner), descriptor.name, signature.parameters.map(frameworkSignatureType),
+    frameworkSignatureType(signature.returnType), signature.isStatic);
+}
 
 // Expand inherited framework members once. Runtime lookup does not walk the type tree.
 // Preserve contractForMember's nearest declaration and registration-order preference.
@@ -87,11 +97,12 @@ for(const owner of new Set([...types.keys(),...declared.keys()])) {
     seenTypes.add(current);
     for(const contract of declared.get(current)??[]) {
       const result=contract.kind==='constructor'?'void':contract.result;
-      const key=intrinsicKey({owner,name:contract.name,signature:{parameters:contract.parameters,returnType:result,isStatic:contract.isStatic}});
+      const descriptor={owner,name:contract.name,signature:{parameters:contract.parameters,returnType:result,isStatic:contract.isStatic}};
+      const key=frameworkKey(descriptor);
       if(seenMembers.has(key))continue;
       seenMembers.add(key);
       add(owner,contract.name,contract.parameters,result,contract.isStatic,'framework',contract);
-      frameworkDefinitions.set(key,definitions.get(key));
+      frameworkDefinitions.set(key,definitions.get(intrinsicKey(descriptor)));
     }
     current=types.get(current)?.base;
   }
@@ -102,7 +113,7 @@ export function intrinsicDefinition(descriptor) {
   const signature=descriptor.signature;
   // Framework canonical aliases and built-in CLI aliases intentionally differ.
   // This preserves the verifier's previous contract-first selection policy.
-  const contract=frameworkDefinitions.get(signatureKey(canonicalType(descriptor.owner),descriptor.name,signature.parameters.map(canonicalType),canonicalType(signature.returnType),signature.isStatic));
+  const contract=frameworkDefinitions.get(frameworkKey(descriptor));
   if(contract)return contract;
   const nullable=nullableMethodDefinition(descriptor);if(nullable)return nullable;
   if(descriptor.genericArguments||signature.genericArity||signature.callingConvention)return null;

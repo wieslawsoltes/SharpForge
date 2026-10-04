@@ -6,5 +6,5 @@
   "dynamic/cs1965-cs1966-cs1967-cs1968-dynamic-in-declarations": ["diagnostics", "warnings"],
   "dynamic/cs1973-cs1976-cs1977-cs1978-arguments-of-a-dynamic-operation": ["diagnostics", "warnings"],
   "dynamic/late-bound-operations-are-not-checked": ["diagnostics", "warnings"],
-  "dynamic/values-stored-and-passed-as-objects": ["diagnostics", "warnings", "bytecode", "cil"]
+  "dynamic/values-stored-and-passed-as-objects": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }
