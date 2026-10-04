@@ -41,7 +41,7 @@ function* neighbors(node, direction, bases, interfaces, nodes) {
   for (const id of bases.get(node.id) ?? []) yield [id, 'derived'];
   if (node.isInterface) {
     for (const id of interfaces.get(node.id) ?? []) {
-      if (direction === 'implementers' || nodes.get(id).isInterface) yield [id, 'implementer'];
+      if (direction === 'implementers' || nodes.get(id).isInterface) yield [id, direction === 'derived' ? 'derived' : 'implementer'];
     }
   }
 }

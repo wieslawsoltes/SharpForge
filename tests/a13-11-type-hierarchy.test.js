@@ -20,6 +20,9 @@ test('cross-assembly base, derived and interface-implementer trees match explici
   assert.deepEqual(names(state.graph.tree(id(state, 0, t.base), { direction: 'derived' })), ['Hierarchy.Base', 'Hierarchy.Derived', 'Hierarchy.Further']);
   assert.deepEqual(names(state.graph.tree(id(state, 0, t.root), { direction: 'implementers' })),
     ['Hierarchy.IRoot', 'Hierarchy.IChild', 'Hierarchy.Derived', 'Hierarchy.Further']);
+  const subinterfaces = state.graph.tree(id(state, 0, t.root), { direction: 'derived' });
+  assert.deepEqual(names(subinterfaces), ['Hierarchy.IRoot', 'Hierarchy.IChild']);
+  assert.equal(subinterfaces.children[0].relation, 'derived');
   const nested = state.graph.tree(id(state, 1, t.nested));
   assert.equal(nested.children[0].symbol.id, id(state, 0, t.inner));
   assert.notEqual(nested.children[0].symbol.token, 0x02000007); // Same display spelling, different lexical owner.
