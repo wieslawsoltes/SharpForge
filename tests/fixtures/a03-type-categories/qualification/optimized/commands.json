@@ -1,0 +1,242 @@
+[
+  {
+    "label": "candidate-head",
+    "command": "git",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:01.073Z",
+    "completed": "2026-10-04T09:38:01.124Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "candidate-clean",
+    "command": "git",
+    "args": [
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:01.124Z",
+    "completed": "2026-10-04T09:38:01.324Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-head",
+    "command": "git",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/tmp/sharpforge-a03-type-categories-baseline",
+    "started": "2026-10-04T09:38:01.324Z",
+    "completed": "2026-10-04T09:38:01.362Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "focused-tests",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--test",
+      "--test-concurrency=1",
+      "tests/a03-type-categories.test.js",
+      "tests/a03-type-categories-native.test.js",
+      "tests/a03-07-nested-type-references.test.js",
+      "tests/a03-07-local-type-references.test.js",
+      "tests/a03-07-local-type-references-native.test.js",
+      "tests/a03-07-type-system.test.js",
+      "tests/a03-07-type-system-native.test.js",
+      "tests/a03-verification-types.test.js",
+      "tests/a03-07-members.test.js",
+      "tests/a03-07-members-inherited.test.js",
+      "tests/a03-07-type-access.test.js",
+      "tests/a03-07-nested-access.test.js",
+      "tests/a03-07-member-access.test.js",
+      "tests/a03-coded-index-bounds.test.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:01.410Z",
+    "completed": "2026-10-04T09:38:03.670Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "browser",
+    "command": "/tmp/sharpforge-bcl-browser-venv/bin/python",
+    "args": [
+      "/tmp/a03-type-categories-browser.py",
+      "/tmp/sharpforge-a03-object-field-transfers",
+      "/tmp/a03-type-categories-optimized-validation/browser"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:03.670Z",
+    "completed": "2026-10-04T09:38:08.258Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-categories-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-type-categories.mjs",
+      "/tmp/a03-type-categories-optimized-validation/baseline-categories-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-type-categories-baseline",
+    "started": "2026-10-04T09:38:08.258Z",
+    "completed": "2026-10-04T09:38:08.561Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-existing-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-verifier-types.mjs",
+      "/tmp/a03-type-categories-optimized-validation/baseline-existing-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-type-categories-baseline",
+    "started": "2026-10-04T09:38:08.562Z",
+    "completed": "2026-10-04T09:38:08.849Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-local-alias-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-local-type-references.mjs",
+      "/tmp/a03-type-categories-optimized-validation/baseline-local-alias-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-type-categories-baseline",
+    "started": "2026-10-04T09:38:08.849Z",
+    "completed": "2026-10-04T09:38:09.264Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "candidate-categories-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-type-categories.mjs",
+      "/tmp/a03-type-categories-optimized-validation/candidate-categories-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:09.264Z",
+    "completed": "2026-10-04T09:38:09.553Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "candidate-existing-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-verifier-types.mjs",
+      "/tmp/a03-type-categories-optimized-validation/candidate-existing-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:09.553Z",
+    "completed": "2026-10-04T09:38:09.827Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "candidate-local-alias-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-local-type-references.mjs",
+      "/tmp/a03-type-categories-optimized-validation/candidate-local-alias-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:09.827Z",
+    "completed": "2026-10-04T09:38:10.163Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "manifests",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "scripts/planning/check-test-manifests.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:10.163Z",
+    "completed": "2026-10-04T09:38:10.285Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "syntax",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "scripts/check.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:10.285Z",
+    "completed": "2026-10-04T09:38:11.148Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "static-imports",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "scripts/conformance/static/check-imports.js",
+      "--output",
+      "/tmp/a03-type-categories-optimized-validation/static-imports.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:11.148Z",
+    "completed": "2026-10-04T09:38:12.805Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "structure",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "scripts/quality/check-structure.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:12.805Z",
+    "completed": "2026-10-04T09:38:13.001Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "diff-check",
+    "command": "git",
+    "args": [
+      "diff",
+      "--check"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:13.001Z",
+    "completed": "2026-10-04T09:38:13.059Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "final-head",
+    "command": "git",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:38:13.066Z",
+    "completed": "2026-10-04T09:38:13.105Z",
+    "exitCode": 0,
+    "signal": null
+  }
+]

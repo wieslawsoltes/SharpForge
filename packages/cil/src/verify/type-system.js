@@ -1,9 +1,11 @@
 import { VerificationKind, verificationType, verificationError, requireVerificationType, isReference } from './types.js';
-import { typeSystemBudget, unknown, yes } from './metadata-types/results.js';
+import { typeSystemBudget, known, unknown, yes } from './metadata-types/results.js';
 import { snapshotTypes } from './metadata-types/snapshot.js';
 import { metadataHierarchy } from './metadata-types/hierarchy.js';
 
 export { verificationTypeSystemDiagnosticCatalog } from './metadata-types/results.js';
+
+const referenceCategory = known('reference');
 
 function requireKnown(result) {
   if (result.status === 'unknown') throw verificationError('CILV0003', `Unavailable verification relation: ${result.reason}`);
@@ -22,7 +24,7 @@ export function createMetadataVerificationTypeSystem(inspector, options = {}) {
 /** Internal composition seam: share any validated lexical forest without exposing it in public identities. */
 export function metadataTypeSystemState(inspector, options = {}) {
   const budget = typeSystemBudget(options);
-  const { snapshot, lexical } = snapshotTypes(inspector, budget);
+  const { snapshot, lexical } = snapshotTypes(inspector, budget, options.coreTypes);
   const hierarchy = metadataHierarchy(snapshot, budget);
   function reference(value) {
     requireVerificationType(value);
@@ -50,6 +52,10 @@ export function metadataTypeSystemState(inspector, options = {}) {
     interfaces: hierarchy.interfaces,
     isAssignable: hierarchy.isAssignable,
     commonBaseType: hierarchy.commonBaseType,
+    typeCategory(type) {
+      const record = hierarchy.requireType(type);
+      return record.category ?? (type.isInterface ? referenceCategory : unknown('unbound-type-category', type.token));
+    },
     relations,
   });
   return { types, lexical };
