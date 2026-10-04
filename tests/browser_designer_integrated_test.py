@@ -48,7 +48,7 @@ def wait_server(url, server):
     raise TimeoutError('The production Studio server did not become ready')
 
 
-def main():
+def main(driver='tests/browser_designer_integrated_gate.mjs'):
     node = os.getenv('NODE') or os.getenv('CODEX_PRIMARY_RUNTIME_NODE') or 'node'
     environment = dict(os.environ)
     module = playwright_module()
@@ -66,7 +66,7 @@ def main():
                 server = subprocess.Popen([node, 'scripts/serve.js'], cwd=ROOT,
                                           env={**environment, 'PORT': str(port)}, stdout=log, stderr=log)
                 wait_server(environment['SHARPFORGE_BROWSER_URL'], server)
-            completed = subprocess.run([node, 'tests/browser_designer_integrated_gate.mjs'], cwd=ROOT,
+            completed = subprocess.run([node, driver], cwd=ROOT,
                                        env=environment, timeout=1200, check=False)
             return completed.returncode
     finally:

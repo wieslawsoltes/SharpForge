@@ -4,6 +4,9 @@
     "a18:test:browser:geometry": {
       "steps": [{"command": "python", "args": ["tests/browser_designer_geometry_test.py"]}]
     },
+    "a18:test:browser:canvas-translation": {
+      "steps": [{"command": "python", "args": ["tests/browser_designer_canvas_translation_test.py"]}]
+    },
     "a18:test:browser": {
       "description": "Completed designer scope; browser sessions run sequentially.",
       "steps": [
@@ -12,6 +15,7 @@
         {"command": "python", "args": ["tests/browser_release12_test.py"]},
         {"command": "python", "args": ["tests/browser_release13_test.py"]},
         {"command": "python", "args": ["tests/browser_designer_app_host_test.py"]},
+        {"task": "a18:test:browser:canvas-translation"},
         {"command": "python", "args": ["tests/browser_designer_integrated_test.py"]}
       ]
     }
