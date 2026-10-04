@@ -175,11 +175,12 @@ for (const pipeline of ['bound', 'legacy']) {
             Console.WriteLine(calls); Console.WriteLine(object.ReferenceEquals(builder, returned));
             string output = builder.ToString();
             for (int index = 0; index < output.Length; index++) Console.WriteLine((int)output[index]);
-            builder.Append("", int.MaxValue, 0); builder.Append(null, 0, 0); Console.WriteLine(builder.Length);
-            try { builder.Append(null, -1, -1); } catch (Exception e) { Console.WriteLine(e.GetType().Name); }
-            try { builder.Append(null, 0, 1); } catch (Exception e) { Console.WriteLine(e.GetType().Name); }
+            string missingValue = null;
+            builder.Append("", int.MaxValue, 0); builder.Append(missingValue, 0, 0); Console.WriteLine(builder.Length);
+            try { builder.Append(missingValue, -1, -1); } catch (Exception e) { Console.WriteLine(e.GetType().Name); }
+            try { builder.Append(missingValue, 0, 1); } catch (Exception e) { Console.WriteLine(e.GetType().Name); }
             StringBuilder missing = null;
-            try { missing.Append(null, -1, -1); } catch (Exception e) { Console.WriteLine(e.GetType().Name); }
+            try { missing.Append(missingValue, -1, -1); } catch (Exception e) { Console.WriteLine(e.GetType().Name); }
           }
         }`, {pipeline});
       assert.equal(program.success, true, JSON.stringify(program.diagnostics));
