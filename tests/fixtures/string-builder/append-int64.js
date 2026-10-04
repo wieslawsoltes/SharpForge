@@ -15,4 +15,6 @@ export function builderInt64Assembly(row) {
     }}]});
 }
 
-export const int64Literal = row => row.input + (row.type === 'ulong' ? 'UL' : 'L');
+// The existing constant folder rejects the positive token in -9223372036854775808L before applying unary minus.
+export const int64Literal = row => row.type === 'long' && row.input === '-9223372036854775808'
+  ? 'long.MinValue' : row.input + (row.type === 'ulong' ? 'UL' : 'L');
