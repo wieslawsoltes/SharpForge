@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-0a713ecd92ff4591d55f",
+  "kind": "spec",
+  "sourceText": "class Base\n{\n    internal readonly int Field;\n    internal int Property\n    {\n        get => Field;\n        init => Field = value; // Okay\n    }\n\n    internal int OtherProperty { get; init; }\n}\n\nclass Derived : Base\n{\n    internal readonly int DerivedField;\n    internal int DerivedProperty\n    {\n        get => DerivedField;\n        init\n        {\n            DerivedField = 42;  // Okay\n            Property = 0;       // Okay\n            Field = 13;         // Error Field is readonly\n        }\n    }\n\n    public Derived()\n    {\n        Property = 42;  // Okay \n        Field = 13;     // Error Field is readonly\n    }\n}",
+  "sourceSHA256": "fb33f22e5c1de4dc2c2108300232c82e8d5d00aa6dbb3bd22a4021eaf2ef7c80",
+  "target": "library",
+  "featureId": "csharp-9-0-init-only-setters",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/init.md",
+    "sha256": "299746635180451088968dc21830e0e4ef886be903357c63780a90434b5034e5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/init.md",
+    "license": "NOASSERTION",
+    "offset": 4481
+  }
+}

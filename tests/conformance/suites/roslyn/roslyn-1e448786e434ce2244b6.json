@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1e448786e434ce2244b6",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\n\n[assembly: ComCompatibleVersionAttribute(\"str\", 0)]\n",
+  "sourceSHA256": "d110d9e20cb135f227d99b30cd500dd5251765e277be3a9ac69a5e6b9d05c02a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestComCompatibleVersionAttribute_Invalid_02",
+    "offset": 215694
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7036",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,12): error CS7036: There is no argument given that corresponds to the required parameter 'build' of 'System.Runtime.InteropServices.ComCompatibleVersionAttribute.ComCompatibleVersionAttribute(int, int, int, int)'\n                // [assembly: ComCompatibleVersionAttribute(\"str\", 0)]\n                Diagnostic(ErrorCode.ERR_NoCorrespondingArgument, @\"ComCompatibleVersionAttribute(\"\"str\"\", 0)\").WithArguments(\"build\", \"System.Runtime.InteropServices.ComCompatibleVersionAttribute.ComCompatibleVersionAttribute(int, int, int, int)\").WithLocation(4, 12)",
+  "unsupported": []
+}

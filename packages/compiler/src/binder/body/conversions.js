@@ -70,6 +70,8 @@ export const ConversionBinding = Base =>
         isExplicit,
         isImplicitIdentity: c.kind === ConversionKind.Identity,
       });
+      // A constant string converted to ReadOnlySpan<char> by the C# 14 span conversion has no side effect (CS0219 applies).
+      if (c.kind === ConversionKind.ImplicitSpan && e.constantValue) result.isCompileTimeValue = true;
       if (e.constantValue) {
         const target = type.typeKind === TypeKind.Enum ? type : keywordOf(stripNullable(type));
         if (target && !isNullableType(type)) {

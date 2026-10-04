@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-035c7cbf1a9f0bdc04e1",
+  "kind": "diagnostics",
+  "sourceText": "using System;\npublic class A : Attribute \n{\n  public A(object[] a, object[] b) {}\n}\n\n[A(new object[] { default(E), default(E) }, new object[] { default(E), default(E) })]\nclass C<T, U> { public enum E {} }",
+  "sourceSHA256": "c82e9a5f99c1a1a71138746828da0c98c26e5f40ea34c7bde5af6775ebee2a6c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeDiagnosticsForEachArgument02",
+    "offset": 292217
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,19): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [A(new object[] { default(E), default(E) }, new object[] { default(E), default(E) })]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"default(E)\").WithLocation(7, 19),\n                // (7,31): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [A(new object[] { default(E), default(E) }, new object[] { default(E), default(E) })]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"default(E)\").WithLocation(7, 31),\n                // (7,60): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [A(new object[] { default(E), default(E) }, new object[] { default(E), default(E) })]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"default(E)\").WithLocation(7, 60),\n                // (7,72): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [A(new object[] { default(E), default(E) }, new object[] { default(E), default(E) })]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"default(E)\").WithLocation(7, 72)\n                ",
+  "unsupported": []
+}

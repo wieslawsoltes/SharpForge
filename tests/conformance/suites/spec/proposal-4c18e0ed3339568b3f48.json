@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-4c18e0ed3339568b3f48",
+  "kind": "spec",
+  "sourceText": "// Assembly1\n\nvoid Foo(string bar); // V1\nvoid Foo(string bar, string barExpression = \"not provided\"); // V2\nvoid Foo(string bar, [CallerArgumentExpression(\"bar\")] string barExpression = \"not provided\"); // V3\n\n// Assembly2\n\nFoo(a); // V1: Compiles to Foo(a), V2, V3: Compiles to Foo(a, \"not provided\")\nFoo(a, \"provided\"); // V2, V3: Compiles to Foo(a, \"provided\")\n\n// Assembly3\n\n[assembly: EnableCallerArgumentExpression]\n\nFoo(a); // V1: Compiles to Foo(a), V2: Compiles to Foo(a, \"not provided\"), V3: Compiles to Foo(a, \"a\")\nFoo(a, \"provided\"); // V2, V3: Compiles to Foo(a, \"provided\")",
+  "sourceSHA256": "fb09139931b88f5c559e374642cad4c1a08954642a7d11ffe88e79e5890e54ec",
+  "target": "library",
+  "featureId": "csharp-10-0-callerargumentexpression",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/caller-argument-expression.md",
+    "sha256": "3382a8fb87efebf49fa27820b08a3cbdba61bcc72e54120bf4d6a8623ac7ae01",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/caller-argument-expression.md",
+    "license": "NOASSERTION",
+    "offset": 8472
+  }
+}

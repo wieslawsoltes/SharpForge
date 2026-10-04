@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-bfe0d3f08a77e7be0436",
+  "kind": "spec",
+  "sourceText": "// Unmanaged type\nstruct Point \n{ \n    int X;\n    int Y {get; set;}\n}\n\n// Not an unmanaged type\nstruct Student \n{ \n    string FirstName;\n    string LastName;\n}",
+  "sourceSHA256": "e529a2d63fcb45dd5f08ab8fc9e3ed3a6a29d41c35130e38d790b1279348e2ad",
+  "target": "library",
+  "featureId": "csharp-7-3-enum-delegate-unmanaged-constraints",
+  "langVersion": "7.3",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.3/blittable.md",
+    "sha256": "b4e487f453bc07bc46640486ab48bb96516e752bd5a411250472fc3dba6146f6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/blittable.md",
+    "license": "NOASSERTION",
+    "offset": 2957
+  }
+}

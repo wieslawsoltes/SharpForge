@@ -32,7 +32,7 @@ const notGated = {
       'EmbeddedInteropTypes IndexedProperties CallerInfoAttributes AwaitExpression AwaitInCatchAndFinally ExtensionAddMethods ' +
       'ParameterlessStructInitializers Deconstruction GeneralizedAsyncReturnTypes IsPatternExpression CaseGuards OverrideWithConstraints ' +
       'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective WithExpressions ' +
-      'UnmanagedCallingConventions AsyncMethodBuilderOverride CallerArgumentExpression ExtendedNameofScope NumericIntPtr ScopedRef ' +
+      'UnmanagedCallingConventions AsyncMethodBuilderOverride CallerArgumentExpression ExtendedNameofScope NumericIntPtr ' +
       'SlicePattern ExperimentalAttribute SpreadElement'
     )
       .split(' ')
@@ -40,6 +40,7 @@ const notGated = {
   ),
   // ---- features that need binding the compiler does not do for the gate ----
   Dynamic: 'below C# 4 Roslyn reports CS0246 for the type name `dynamic`, not a language-version diagnostic (pinned)',
+  ScopedRef: "Roslyn has no feature of this name: it reports `scoped` as 'ref fields' (CS8936 at the keyword); the walker does the same (pinned)",
   InferredTupleNames: 'Roslyn reports CS8306 where an inferred name is used, not a feature diagnostic; the binder does the same',
   NonTrailingNamedArguments: 'Roslyn reports CS1738 on the positional argument, naming the version; the binder does the same (pinned)',
   GenericPatternMatching: 'below C# 7.1 Roslyn reports CS8314 for the pattern, naming the version; the binder does the same (pinned)',
@@ -53,7 +54,6 @@ const notGated = {
   ImprovedInterpolatedStrings: 'needs interpolated string handler conversions, which are not bound yet (SF-A02-T75)',
   AutoDefaultStructs: 'below C# 11 Roslyn reports CS0171 for the unassigned field, not a language-version diagnostic; the binder does the same (pinned)',
   CacheStaticMethodGroupConversion: 'only changes code generation in Roslyn; there is no diagnostic',
-  InlineArrays: 'Roslyn gates the use of an inline array (element access, conversion to a span), which is not bound yet (SF-A02-T80)',
   LockObject: 'needs System.Threading.Lock in the framework registry (the type is unknown: CS0246)',
   FirstClassSpan: 'Roslyn reports nothing for the snippet below C# 14 (the conversion exists as a user-defined one); pinned',
   ExpressionOptionalAndNamedArguments:
@@ -91,7 +91,7 @@ test('A02-B01 every catalog row has exactly one snippet and is either gated or l
     assert(notGated[id].length > 10, `${id} needs a reason`);
   }
   const gated = languageFeatures.filter(row => row.version > 1 && !(row.id in notGated));
-  assert(gated.length >= 173, `only ${gated.length} rows are gated`);
+  assert(gated.length >= 174, `only ${gated.length} rows are gated`);
 });
 
 for (const row of languageFeatures) {

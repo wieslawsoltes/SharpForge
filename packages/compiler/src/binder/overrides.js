@@ -9,7 +9,7 @@
  * CS0112, CS0113, CS0238, CS0549, CS0106.
  * `isVirtualCall` says whether a call binds to a virtual slot (callvirt through the vtable) or directly.
  */
-import { TypeKind, SymbolKind, Accessibility } from '../symbols/types.js';
+import { TypeKind, SymbolKind, Accessibility, TypeCompareKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain } from '../symbols/substitution.js';
 import { sameParameters } from './inheritance.js';
@@ -107,7 +107,7 @@ export function bindOverrides(type, core, conversions) {
   return results;
 }
 const sameReturn = (a, b, x, y) => {
-  if (x.equals(y)) return true;
+  if (x.equals(y, TypeCompareKind.IgnoreDynamic)) return true;
   const ia = (a.typeParameters ?? []).indexOf(x),
     ib = (b.typeParameters ?? []).indexOf(y);
   return ia >= 0 && ia === ib;

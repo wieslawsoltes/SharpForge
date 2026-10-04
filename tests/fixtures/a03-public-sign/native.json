@@ -1,0 +1,77 @@
+{
+  "runtime": ".NET 10.0.5",
+  "cases": [
+    {
+      "mode": "delaySign",
+      "platform": "anycpu",
+      "publicKeyToken": "b03f5f7f11d50a3a",
+      "publicKeyFlag": true,
+      "strongNameSigned": false,
+      "signatureSize": 128,
+      "zeroSignature": true
+    },
+    {
+      "mode": "delaySign",
+      "platform": "arm64",
+      "publicKeyToken": "b03f5f7f11d50a3a",
+      "publicKeyFlag": true,
+      "strongNameSigned": false,
+      "signatureSize": 128,
+      "zeroSignature": true
+    },
+    {
+      "mode": "delaySign",
+      "platform": "x64",
+      "publicKeyToken": "b03f5f7f11d50a3a",
+      "publicKeyFlag": true,
+      "strongNameSigned": false,
+      "signatureSize": 128,
+      "zeroSignature": true
+    },
+    {
+      "mode": "delaySign",
+      "platform": "x86",
+      "publicKeyToken": "b03f5f7f11d50a3a",
+      "publicKeyFlag": true,
+      "strongNameSigned": false,
+      "signatureSize": 128,
+      "zeroSignature": true
+    },
+    {
+      "mode": "publicSign",
+      "platform": "anycpu",
+      "publicKeyToken": "b03f5f7f11d50a3a",
+      "publicKeyFlag": true,
+      "strongNameSigned": true,
+      "signatureSize": 128,
+      "zeroSignature": true
+    },
+    {
+      "mode": "publicSign",
+      "platform": "arm64",
+      "publicKeyToken": "b03f5f7f11d50a3a",
+      "publicKeyFlag": true,
+      "strongNameSigned": true,
+      "signatureSize": 128,
+      "zeroSignature": true
+    },
+    {
+      "mode": "publicSign",
+      "platform": "x64",
+      "publicKeyToken": "b03f5f7f11d50a3a",
+      "publicKeyFlag": true,
+      "strongNameSigned": true,
+      "signatureSize": 128,
+      "zeroSignature": true
+    },
+    {
+      "mode": "publicSign",
+      "platform": "x86",
+      "publicKeyToken": "b03f5f7f11d50a3a",
+      "publicKeyFlag": true,
+      "strongNameSigned": true,
+      "signatureSize": 128,
+      "zeroSignature": true
+    }
+  ]
+}

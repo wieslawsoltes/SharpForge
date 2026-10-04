@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-47ab5102b264ce99243a",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class A\n{\n    readonly int _value;\n\n    public A (int value)\n    {\n        _value = value;\n    }\n\n    public static A operator +(A x, A y)\n    {\n        return new A(x._value + y._value);\n    }\n\n    public static A operator *(A x, A y)\n    {\n        return new A(x._value * y._value);\n    }\n\n    public static A operator -(A x)\n    {\n        return new A(-x._value);\n    }\n\n    public static A operator +(A x)\n    {\n        return new A(+x._value);\n    }\n}\n\nclass C\n{\n    static void Main()\n    {\n        bool b = false;\n        double d = 100;\n        A a1 = new A(0);\n        A a2 = new A(100);\n\n        b = !b;\n        d = d * 100;\n        a1 = a1 + a2;\n        a1 = -a2;\n   }\n}\n",
+  "sourceSHA256": "a8e2076261aed012a0362e679e5a392a6dd064d59e1a69c5c53aa03e6105089c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "UnaryBinaryOperatorsCSharp",
+    "offset": 56254
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

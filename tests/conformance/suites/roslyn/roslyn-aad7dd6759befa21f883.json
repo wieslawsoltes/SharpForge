@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-aad7dd6759befa21f883",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing N1;\nusing N2;\nnamespace N1\n{\n    class A : Attribute { }\n    class B : Attribute { }\n}\nnamespace N2\n{\n    class C : Attribute { }\n}\n[A]\n[B]\n[C]\nclass D\n{\n}",
+  "sourceSHA256": "98d56fe4449bc733a5d9d51e597065b25b8eeb980980f7dfc408d0af68b1af74",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AmbiguousClassNamespaceLookup_Container",
+    "offset": 336005
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { ref1 }, assemblyName: \"B\")",
+  "options": "(source2, references: new[] { ref1 }, assemblyName: \"B\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0436",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0104",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (14,2): warning CS0436: The type 'B' in '' conflicts with the imported type 'B' in 'A, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in ''.\n                // [B]\n                Diagnostic(ErrorCode.WRN_SameFullNameThisAggAgg, \"B\").WithArguments(\"\", \"N1.B\", \"A, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\", \"N1.B\").WithLocation(14, 2),\n                // (15,2): error CS0104: 'C' is an ambiguous reference between 'N2.C' and 'N1.C'\n                // [C]\n                Diagnostic(ErrorCode.ERR_AmbigContext, \"C\").WithArguments(\"C\", \"N2.C\", \"N1.C\").WithLocation(15, 2)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

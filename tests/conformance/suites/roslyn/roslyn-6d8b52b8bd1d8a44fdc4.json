@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6d8b52b8bd1d8a44fdc4",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass A : System.Attribute\n{\n    public A() { }\n    public A(object value) { }\n    public object Value;\n}\n[A((IntPtr)1)]\n[A(new IntPtr[0])]\n[A(Value = (IntPtr)3)]\n[A(Value = new[] { (IntPtr)4 })]\nclass B\n{\n}",
+  "sourceSHA256": "0b611b4fcfd2d29507f54e5ab05520c7cf0104dc36cca9c079e1780651f62b4f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "AttributeValue_01",
+    "offset": 129114
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source0, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,4): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [A((IntPtr)1)]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"(IntPtr)1\").WithLocation(8, 4),\n                // (9,4): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [A(new IntPtr[0])]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"new IntPtr[0]\").WithLocation(9, 4),\n                // (10,12): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [A(Value = (IntPtr)3)]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"(IntPtr)3\").WithLocation(10, 12),\n                // (11,12): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [A(Value = new[] { (IntPtr)4 })]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"new[] { (IntPtr)4 }\").WithLocation(11, 12)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

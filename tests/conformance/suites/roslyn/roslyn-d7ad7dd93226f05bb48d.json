@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d7ad7dd93226f05bb48d",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\n[AttributeUsage(AttributeTargets.All)]\npublic class Goo : Attribute\n{\n    public Goo(int sName) { }\n}\n\npublic class Class1 {\n    [field: Goo(((System.Func<int>)(() => 5))())]\n    public event EventHandler Click;\n\n    public static void Main()\n    {\n    }\n}\n",
+  "sourceSHA256": "1505b8d7d8301d454dc3719be590e51c587ac785d0b3b7ce5f5fd2ac5294323e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "LambdaInAttributeArg2",
+    "offset": 325889
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0067",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,17): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                //     [field: Goo(((System.Func<int>)(() => 5))())]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"((System.Func<int>)(() => 5))()\"),\n                // (12,31): warning CS0067: The event 'Class1.Click' is never used\n                //     public event EventHandler Click;\n                Diagnostic(ErrorCode.WRN_UnreferencedEvent, \"Click\").WithArguments(\"Class1.Click\")",
+  "unsupported": []
+}

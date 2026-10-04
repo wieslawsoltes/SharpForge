@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d0818fe28e271f287dc6",
+  "kind": "diagnostics",
+  "sourceText": "extern alias span1;\nnamespace System;\npublic readonly ref struct ReadOnlySpan<T>\n{\n    public static ReadOnlySpan<T> CastUp<TDerived>(span1::System.ReadOnlySpan<TDerived> other) where TDerived : class, T\n    {\n        Console.Write(\"Span2\");\n        return default;\n    }\n}",
+  "sourceSHA256": "8d4609f5df26f1e0a3b0ba99fc7daf8cb7697d85a023c627fff8a2bcd60aabaa",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "sha256": "99be7ba6d5e067485b6142b5e65214b7e83d1dbf3a681e7b98e309631ef90315",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "license": "MIT",
+    "method": "Conversion_ReadOnlySpan_ReadOnlySpan_Implicit_MultipleSpans_04",
+    "offset": 110519
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\"\"\"\n            extern alias span1;\n            namespace System;\n            public readonly ref struct ReadOnlySpan<T>\n            {\n                public static ReadOnlySpan<T> CastUp<TDerived>(span1::System.ReadOnlySpan<TDerived> other) where TDerived : class, T\n                {\n                    Console.Write(\"Span2\");\n                    return default;\n                }\n            }\n            \"\"\", [span1], assemblyName: \"Span2\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

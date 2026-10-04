@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-314fb9019eaa14eacf5b",
+  "kind": "spec",
+  "sourceText": "unsafe struct S\n{\n    public fixed int myFixedField[10];\n}\n\nclass Program\n{\n    static S s;\n\n    unsafe static void Main()\n    {\n        int* ptr = s.myFixedField; // taking a pointer explicitly still requires pinning.\n        int p = ptr[5];\n    }\n}",
+  "sourceSHA256": "9e4aca930182dddd89471d8334d73d78b233e7ce20a7d0503d8e793fd738c40e",
+  "target": "library",
+  "featureId": "csharp-7-3-indexing-movable-fixed-buffers",
+  "langVersion": "7.3",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.3/indexing-movable-fixed-fields.md",
+    "sha256": "f3cd0f1c51b61c82ccd4f496ed897a8471bdaf61b92c1de48e407ac9d6a1f77a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/indexing-movable-fixed-fields.md",
+    "license": "NOASSERTION",
+    "offset": 1028
+  }
+}
