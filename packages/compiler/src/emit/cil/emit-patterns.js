@@ -11,6 +11,12 @@ import { describeKind } from './unsupported.js';
 import { frameworkType } from './framework-types.js';
 
 const isString = type => type?.specialType === 'System_String';
+/** `Span<char>` or `ReadOnlySpan<char>`. */
+const isCharSpan = type =>
+  (type?.name === 'Span' || type?.name === 'ReadOnlySpan') &&
+  type.containingNamespace?.name === 'System' &&
+  type.typeArguments?.length === 1 &&
+  (type.typeArguments[0].type ?? type.typeArguments[0]).specialType === 'System_Char';
 const isTypeParameter = type => type?.typeKind === TypeKind.TypeParameter;
 
 /** Class mixin: type tests and patterns. */
@@ -308,6 +314,15 @@ export const PatternEmission = Base =>
         if (!isReference(input.type) && !isTypeParameter(input.type)) return this.unsupported('a null pattern over a value type', pattern.syntax);
         this.pushReference(input);
         return il.emit('brtrue', fail);
+      }
+      if (constant.type === 'string' && isCharSpan(input.type)) {
+        // C# 11: a span of characters matches a string constant when its characters are the constant's.
+        const toText = input.type.getMembers('ToString').find(member => member.kind === SymbolKind.Method && !member.isStatic && !member.parameters.length);
+        if (!toText) return this.unsupported('a string pattern over a span without ToString', pattern.syntax);
+        il.emit('ldloca', input.slot);
+        this.callMethod(toText, { receiver: { type: input.type } });
+        this.constantValue(constant, pattern.syntax);
+        return this.stringEquality(fail);
       }
       if (constant.type === 'string') {
         this.pushReference(input);
