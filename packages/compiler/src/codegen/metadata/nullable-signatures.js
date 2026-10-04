@@ -1,10 +1,16 @@
 /** Nullable type uses of planned signatures, including the public members synthesized for delegates and events. */
 import { RefKind, TypeKind, TypeWithAnnotations } from '../../symbols/types.js';
+import { specialTypeFromMetadataName } from '../../symbols/special-types.js';
+import { MetadataEmitError } from './type-tokens.js';
 
 /** A type use has an annotation even when a code-generation shape supplies only its bare type. */
 export function nullableTypeUse(type, core) {
   if (!type) return null;
-  if (typeof type === 'string') type = core.bridge.typeFromName(type);
+  if (typeof type === 'string') {
+    const id = specialTypeFromMetadataName(type);
+    if (!id) throw new MetadataEmitError(`unknown planned nullable signature type '${type}'`);
+    type = core.bridge.coreType(id);
+  }
   return TypeWithAnnotations.create(type);
 }
 
