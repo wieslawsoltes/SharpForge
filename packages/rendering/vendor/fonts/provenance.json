@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "license": "SIL Open Font License 1.1",
+  "purpose": "Pinned multilingual and variable/color font fixtures; applications may provide their own complete font chain.",
+  "fontToolsVersion": "4.61.1",
+  "reproduction": "python packages/rendering/tools/subset-font-fixtures.py SOURCE_DIRECTORY packages/rendering/vendor/fonts",
+  "fonts": [
+    {
+      "file": "NotoSans-Regular.ttf",
+      "family": "Noto Sans",
+      "weight": 400,
+      "style": "normal",
+      "license": "OFL.txt",
+      "sha256": "4c8d67001d3c2977e5d6bf0a4f8add80cd564bd1df60b7569fd23751e7dda02a",
+      "bytes": 556216,
+      "source": "https://raw.githubusercontent.com/harfbuzz/harfbuzzjs/b2ec00c97159ee8aa563691792aa3081adbc8a50/test/fonts/noto/NotoSans-Regular.ttf",
+      "sourceSha256": "4c8d67001d3c2977e5d6bf0a4f8add80cd564bd1df60b7569fd23751e7dda02a",
+      "transformation": null
+    },
+    {
+      "file": "NotoSansArabic-Variable.ttf",
+      "family": "Noto Sans Arabic",
+      "weight": [
+        100,
+        900
+      ],
+      "style": "normal",
+      "license": "OFL.txt",
+      "sha256": "ee489b994b3e62def9874c918145e32b133b625abaf98cec60502bdb40102c56",
+      "bytes": 765740,
+      "source": "https://raw.githubusercontent.com/harfbuzz/harfbuzzjs/b2ec00c97159ee8aa563691792aa3081adbc8a50/test/fonts/noto/NotoSansArabic-Variable.ttf",
+      "sourceSha256": "ee489b994b3e62def9874c918145e32b133b625abaf98cec60502bdb40102c56",
+      "transformation": null
+    },
+    {
+      "file": "NotoSansDevanagari-Regular.otf",
+      "family": "Noto Sans Devanagari",
+      "weight": 400,
+      "style": "normal",
+      "license": "OFL.txt",
+      "sha256": "4775b7eeee96cb61c42f66d9136d535a0aa728c2009ad0f4cd2bc970149d9ac7",
+      "bytes": 147112,
+      "source": "https://raw.githubusercontent.com/harfbuzz/harfbuzzjs/b2ec00c97159ee8aa563691792aa3081adbc8a50/test/fonts/noto/NotoSansDevanagari-Regular.otf",
+      "sourceSha256": "4775b7eeee96cb61c42f66d9136d535a0aa728c2009ad0f4cd2bc970149d9ac7",
+      "transformation": null
+    },
+    {
+      "file": "NotoSansHebrew-Regular.ttf",
+      "family": "Noto Sans Hebrew",
+      "weight": 400,
+      "style": "normal",
+      "license": "OFL.txt",
+      "sha256": "a7fa16fffb27bedb060a0866267c29e9859aeb9c21cc33f5b3aaf6eb062eca85",
+      "bytes": 26900,
+      "source": "https://raw.githubusercontent.com/notofonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansHebrew/NotoSansHebrew-Regular.ttf",
+      "sourceSha256": "a7fa16fffb27bedb060a0866267c29e9859aeb9c21cc33f5b3aaf6eb062eca85",
+      "transformation": null
+    },
+    {
+      "file": "SharpForgeSans-Variable.ttf",
+      "family": "SharpForge Sans Fixture",
+      "weight": [
+        100,
+        900
+      ],
+      "style": "normal",
+      "license": "NotoSans-Variable-OFL.txt",
+      "sha256": "d74c27145878d39fd619db868ac59c4414e1b59f83c6a124ca2f88e93ccc5c90",
+      "bytes": 821792,
+      "source": "https://raw.githubusercontent.com/google/fonts/9710da1eacb3be272583c3224dcb70f9da6eadbb/ofl/notosans/NotoSans%5Bwdth%2Cwght%5D.ttf",
+      "sourceSha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d",
+      "transformation": "Subset Latin, combining, Greek, Cyrillic and common punctuation/symbol ranges; preserve shaping and variation tables; rename modified family. Reproduce with tools/subset-font-fixtures.py."
+    },
+    {
+      "file": "SharpForgeSans-Italic-Variable.ttf",
+      "family": "SharpForge Sans Fixture",
+      "weight": [
+        100,
+        900
+      ],
+      "style": "italic",
+      "license": "NotoSans-Variable-OFL.txt",
+      "sha256": "49e1539bee4fdcbe2f5a7287815eaaa243c5f610f4d1c1852b59f226624006db",
+      "bytes": 935072,
+      "source": "https://raw.githubusercontent.com/google/fonts/9710da1eacb3be272583c3224dcb70f9da6eadbb/ofl/notosans/NotoSans-Italic%5Bwdth%2Cwght%5D.ttf",
+      "sourceSha256": "58e6e0ebd1931b29a365aa2d3e2ee9a9e831a3af7cf3ad1462d4e72154f0b291",
+      "transformation": "Subset Latin, combining, Greek, Cyrillic and common punctuation/symbol ranges; preserve shaping and variation tables; rename modified family. Reproduce with tools/subset-font-fixtures.py."
+    },
+    {
+      "file": "SharpForgeEmojiFixture.ttf",
+      "family": "SharpForge Emoji Fixture",
+      "weight": 400,
+      "style": "normal",
+      "color": true,
+      "license": "SharpForgeEmojiFixture-OFL.txt",
+      "sha256": "77595a308482bcf13502d875cbaf9bd7cd812892a4263673ff57af86d409f6dd",
+      "bytes": 165376,
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e/2D/fonts/NotoColorEmoji.ttf",
+      "sourceSha256": "15671215ab769fdc7162a045d56fd7d7e477c51b04e6b3c761d914d8fdd6cc44",
+      "transformation": "Subset the explicit emoji/ZWJ corpus with GSUB closure and CBDT/CBLC bitmap data; rename modified family. Reproduce with tools/subset-font-fixtures.py."
+    }
+  ]
+}
