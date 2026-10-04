@@ -8,7 +8,8 @@ export const sourceCallHandlers = Object.freeze({
     callSourceFromStack(vm,a,b);
   },
   [Op.BUILTIN](vm,frame,a,b) {
-    const args=vm.stack.splice(vm.stack.length-b,b),value=vm.builtin(a,args);
+    const args=vm.stack.splice(vm.stack.length-b,b),result=vm.builtin(a,args);
+    const value = vm.state === 'terminated' ? SUSPENDED : result;
     if(value!==SUSPENDED)vm.stack.push(value);
   },
   [Op.DELEGATE](vm,frame,a,b) {
