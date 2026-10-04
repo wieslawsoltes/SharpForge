@@ -2,6 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {compile, compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
+import {disposeMethod} from '../packages/compiler/src/codegen/semantic/dispose-method.js';
+import {RegistryBridge} from '../packages/compiler/src/symbols/registry-bridge.js';
+import {CoreTypes} from '../packages/compiler/src/symbols/core-types.js';
+import {Accessibility} from '../packages/compiler/src/symbols/types.js';
 
 // Marker forces semantic generation; StringContent is a released registry type and makes no network request.
 const source = `using System;
@@ -85,4 +89,38 @@ test('SF-A09-T03 prerequisite: registered resources without Dispose remain expli
   assert.equal(result.success, false);
   assert(result.diagnostics.some(item => item.code === 'SF2200' && item.message.includes('without a Dispose method')),
     JSON.stringify(result.diagnostics));
+});
+
+function registeredResource(overrides = {}) {
+  const parent = 'Fixture.Parent';
+  const child = 'Fixture.Child';
+  const contract = {id: 1, owner: parent, name: 'Dispose', kind: 'method', isStatic: false,
+    parameters: [], result: 'void', ...overrides};
+  const registry = new RegistryBridge({
+    types: new Map([[parent, {kind: 'bcl'}], [child, {kind: 'bcl', base: parent}]]),
+    contracts: [contract], builtins: []
+  });
+  const core = new CoreTypes(registry);
+  return {registry, core, type: registry.typeFromName(child), method: registry.typeFromName(parent).getMembers('Dispose')[0]};
+}
+
+test('SF-A09-T03 prerequisite: inherited fallback requires an executable public framework contract', () => {
+  const valid = registeredResource();
+  assert.equal(disposeMethod(valid.type, valid.core, valid.registry), valid.method);
+  assert.equal(disposeMethod(valid.type, valid.core, {registryName: () => null}), null, 'unregistered source is excluded');
+  for (const contract of [{isStatic: true}, {parameters: ['int']}, {result: 'int'}]) {
+    const candidate = registeredResource(contract);
+    assert.equal(disposeMethod(candidate.type, candidate.core, candidate.registry), null);
+  }
+  const mutations = [
+    method => { method.declaredAccessibility = Accessibility.Private; },
+    method => { method.declaredAccessibility = Accessibility.Protected; },
+    method => { method.typeParameters = [{}]; },
+    method => { method.contract = null; }
+  ];
+  for (const mutate of mutations) {
+    const candidate = registeredResource();
+    mutate(candidate.method);
+    assert.equal(disposeMethod(candidate.type, candidate.core, candidate.registry), null);
+  }
 });
