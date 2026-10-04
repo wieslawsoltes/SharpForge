@@ -1,0 +1,561 @@
+[
+  {
+    "target": "NullableMetadata.Base`1:generic:0:T",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Constraints`6::A(!0)",
+    "nullable": null,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.Constraints`6::B(!1)",
+    "nullable": null,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.Constraints`6::C(!2)",
+    "nullable": null,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.Constraints`6::D(!4)",
+    "nullable": null,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.Constraints`6:generic:0:TClass:constraint:NullableMetadata.Base`1<string>",
+    "nullable": [
+      1,
+      2
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Constraints`6:generic:1:TNullable:constraint:NullableMetadata.Base`1<string>",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Constraints`6:generic:2:TInterface:constraint:NullableMetadata.IContract`1<string>",
+    "nullable": [
+      1,
+      2
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Constraints`6:generic:3:TAnother:constraint:!0",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Constraints`6:generic:4:TNew",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Contexts::AnnotatedMethod(string)",
+    "nullable": null,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.Contexts::field:Enabled",
+    "nullable": 1,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Contexts::field:Optional",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.DisabledRecord::.ctor(NullableMetadata.DisabledRecord):parameter:1",
+    "nullable": 1,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.DisabledRecord::<Clone>$()",
+    "nullable": null,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.DisabledRecord::Equals(NullableMetadata.DisabledRecord)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.DisabledRecord::Equals(object)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.DisabledRecord::get_EqualityContract()",
+    "nullable": null,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.DisabledRecord::op_Equality(NullableMetadata.DisabledRecord,NullableMetadata.DisabledRecord)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.DisabledRecord::op_Inequality(NullableMetadata.DisabledRecord,NullableMetadata.DisabledRecord)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.DisabledRecord::PrintMembers(System.Text.StringBuilder)",
+    "nullable": null,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.DisabledRecord::property:EqualityContract",
+    "nullable": 1,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.DisabledRecord::ToString()",
+    "nullable": null,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord",
+    "nullable": 0,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord::.ctor(string,string):parameter:2",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord::Deconstruct(string&,string&):parameter:2",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord::Equals(NullableMetadata.EnabledRecord)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord::Equals(object)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord::field:<Optional>k__BackingField",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord::get_Optional()",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord::op_Equality(NullableMetadata.EnabledRecord,NullableMetadata.EnabledRecord)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord::op_Inequality(NullableMetadata.EnabledRecord,NullableMetadata.EnabledRecord)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord::property:Optional",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord::set_Optional(string)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.EnabledRecord:interface:System.IEquatable`1<NullableMetadata.EnabledRecord>",
+    "nullable": 0,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.GenericRecord`1",
+    "nullable": 0,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.GenericRecord`1::.ctor(NullableMetadata.GenericRecord`1<!0>):parameter:1",
+    "nullable": [
+      1,
+      0
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.GenericRecord`1::<Clone>$():return",
+    "nullable": [
+      1,
+      0
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.GenericRecord`1::Equals(NullableMetadata.GenericRecord`1<!0>):parameter:1",
+    "nullable": [
+      2,
+      0
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.GenericRecord`1::Equals(object)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.GenericRecord`1::op_Equality(NullableMetadata.GenericRecord`1<!0>,NullableMetadata.GenericRecord`1<!0>):parameter:1",
+    "nullable": [
+      2,
+      0
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.GenericRecord`1::op_Equality(NullableMetadata.GenericRecord`1<!0>,NullableMetadata.GenericRecord`1<!0>):parameter:2",
+    "nullable": [
+      2,
+      0
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.GenericRecord`1::op_Inequality(NullableMetadata.GenericRecord`1<!0>,NullableMetadata.GenericRecord`1<!0>):parameter:1",
+    "nullable": [
+      2,
+      0
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.GenericRecord`1::op_Inequality(NullableMetadata.GenericRecord`1<!0>,NullableMetadata.GenericRecord`1<!0>):parameter:2",
+    "nullable": [
+      2,
+      0
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.GenericRecord`1:generic:0:T",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.GenericRecord`1:interface:System.IEquatable`1<NullableMetadata.GenericRecord`1<!0>>",
+    "nullable": 0,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.IContract`1",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.NestedUses::field:Nested",
+    "nullable": [
+      2,
+      2,
+      1,
+      1,
+      2
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.NestedUses::field:Tuples",
+    "nullable": [
+      2,
+      1,
+      0,
+      2,
+      1
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Outer`1:generic:0:A",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Outer`1+Middle`1:generic:0:A",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Outer`1+Middle`1:generic:1:B",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Outer`1+Middle`1+Inner`1:generic:0:A",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Outer`1+Middle`1+Inner`1:generic:1:B",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Outer`1+Middle`1+Inner`1:generic:2:C",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.OverrideBase::Echo(!!0)",
+    "nullable": null,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.OverrideBase::Echo(!!0):generic:0:T",
+    "nullable": 0,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.OverrideBase::Echo(!!0):generic:0:T:constraint:NullableMetadata.IContract`1<string>",
+    "nullable": [
+      1,
+      2
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.OverrideDerived::Echo(!!0)",
+    "nullable": null,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.OverrideDerived::Echo(!!0):generic:0:T",
+    "nullable": 0,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.OverrideDerived::Echo(!!0):generic:0:T:constraint:NullableMetadata.IContract`1<string>",
+    "nullable": [
+      1,
+      2
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6",
+    "nullable": [
+      0,
+      1,
+      1,
+      2
+    ],
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.Surface`6::add_Changed(System.Action`1<string>)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.Surface`6::event:Changed",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::field:Changed",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::field:Field",
+    "nullable": [
+      2,
+      1,
+      2,
+      2
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::field:MaybeClassValue",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::field:Pair",
+    "nullable": [
+      0,
+      2
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::field:Pointer",
+    "nullable": [
+      0,
+      1,
+      2
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::field:ValueItem",
+    "nullable": 0,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::get_Item(string):return",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::Map(!!0,!!1):generic:1:V",
+    "nullable": 0,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::Map(!!0,!!1):generic:1:V:constraint:NullableMetadata.IContract`1<!!0>",
+    "nullable": [
+      1,
+      2
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::Map(!!0,!!1):parameter:1",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::Map(!!0,!!1):return",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::property:Item",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::Read(string,string,string&)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.Surface`6::Read(string,string,string&):parameter:1",
+    "nullable": 1,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6::remove_Changed(System.Action`1<string>)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.Surface`6::set_Item(string,string):parameter:2",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6:generic:2:TMaybe",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6:generic:3:TAny",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6:generic:4:TValue",
+    "nullable": 0,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6:generic:5:TConstraint",
+    "nullable": 0,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6:generic:5:TConstraint:constraint:NullableMetadata.IContract`1<string>",
+    "nullable": [
+      1,
+      2
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.Surface`6:interface:NullableMetadata.IContract`1<System.ValueTuple`2<string, string[]>>",
+    "nullable": [
+      0,
+      0,
+      2,
+      2,
+      1
+    ],
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.ValueRecord",
+    "nullable": 0,
+    "context": 1
+  },
+  {
+    "target": "NullableMetadata.ValueRecord::.ctor(string,string):parameter:2",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.ValueRecord::Deconstruct(string&,string&):parameter:2",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.ValueRecord::Equals(object)",
+    "nullable": null,
+    "context": 0
+  },
+  {
+    "target": "NullableMetadata.ValueRecord::field:<Optional>k__BackingField",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.ValueRecord::get_Optional()",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.ValueRecord::PrintMembers(System.Text.StringBuilder)",
+    "nullable": null,
+    "context": 0
+  },
+  {
+    "target": "NullableMetadata.ValueRecord::property:Optional",
+    "nullable": 2,
+    "context": null
+  },
+  {
+    "target": "NullableMetadata.ValueRecord::set_Optional(string)",
+    "nullable": null,
+    "context": 2
+  },
+  {
+    "target": "NullableMetadata.ValueRecord::ToString()",
+    "nullable": null,
+    "context": 0
+  },
+  {
+    "target": "NullableMetadata.ValueRecord:interface:System.IEquatable`1<NullableMetadata.ValueRecord>",
+    "nullable": 0,
+    "context": null
+  }
+]

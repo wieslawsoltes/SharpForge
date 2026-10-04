@@ -57,6 +57,8 @@ export class EmitterCore {
     this.assignmentTarget = null;
     /** The section labels of the enclosing switch statements, for `goto case`. */
     this.switchSections = new Map();
+    this.debug = program.debugInformation?.method(this) ?? null;
+    this.il.debug = this.debug;
   }
   /** The instruction stream of the body; a family that needs more than the plain stream supplies its own. */
   createInstructionStream() {
@@ -68,12 +70,17 @@ export class EmitterCore {
   /** Emits an expression whose value is used. */
   expression(node) {
     if (node.hasErrors) return this.unsupported('an expression the binder could not bind', node.syntax);
+    const point = this.debug?.beginExpression(node);
     const substitute = this.substitutions.get(node);
-    if (substitute) return substitute.value();
-    if (this.constant(node)) return undefined;
-    const handler = this['expr' + node.kind];
-    if (!handler) return this.unsupported(`${describeKind(node.kind)} expressions`, node.syntax);
-    return handler.call(this, node, true);
+    let result;
+    if (substitute) result = substitute.value();
+    else if (!this.constant(node)) {
+      const handler = this['expr' + node.kind];
+      if (!handler) return this.unsupported(`${describeKind(node.kind)} expressions`, node.syntax);
+      result = handler.call(this, node, true);
+    }
+    this.debug?.endExpression(point);
+    return result;
   }
   /**
    * Emits an expression for its side effects. A handler is called with `isUsed` false and returns false when it left
@@ -82,10 +89,12 @@ export class EmitterCore {
   effect(node) {
     if (node.hasErrors) return this.unsupported('an expression the binder could not bind', node.syntax);
     if (node.constantValue && node.kind !== 'Lambda') return undefined;
+    const point = this.debug?.beginExpression(node);
     const handler = this['expr' + node.kind];
     if (!handler) return this.unsupported(`${describeKind(node.kind)} expressions`, node.syntax);
     const leftValue = handler.call(this, node, false) !== false;
     if (leftValue && !isVoid(node.type)) this.il.emit('pop');
+    this.debug?.endExpression(point);
     return undefined;
   }
   statement(node) {
@@ -93,7 +102,11 @@ export class EmitterCore {
     if (!this.il.isReachable && !containsLabel(node)) return undefined;
     const handler = this['stmt' + node.kind];
     if (!handler) return this.unsupported(`${describeKind(node.kind)} statements`, node.syntax);
-    return handler.call(this, node);
+    if (!this.debug) return handler.call(this, node);
+    const entry = this.debug.beginStatement(node);
+    const result = handler.call(this, node);
+    this.debug.endStatement(entry);
+    return result;
   }
   /** A compiler temporary of the given type. */
   temp(type, options) {

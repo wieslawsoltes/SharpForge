@@ -15,6 +15,9 @@ import { MethodKind } from '../../symbols/members.js';
 import { isInheritedPositional } from '../../symbols/synthesized/records.js';
 import { fieldFlags, methodFlags, memberAccessFlags, parameterFlags } from './attribute-flags.js';
 import { covariantOverrideOf } from './covariant-overrides.js';
+import { explicitInterfaceOf, metadataMemberName } from './explicit-interface-names.js';
+
+export { explicitInterfaceOf } from './explicit-interface-names.js';
 
 const ENUM_VALUE_FIELD = 'value__';
 const ENUM_VALUE_FLAGS = FieldAttributes.Public | FieldAttributes.SpecialName | FieldAttributes.RTSpecialName;
@@ -36,11 +39,6 @@ function implementedBy(type, member) {
   return false;
 }
 
-/** The interface the declaration names when it is an explicit implementation (`void I.M()`), else null. */
-export function explicitInterfaceOf(method) {
-  return method.explicitInterfaceType ?? method.associatedSymbol?.explicitInterfaceType ?? null;
-}
-
 /**
  * An accessor of a static auto-property (`static int Count { get; private set; }`). In an interface it is the one
  * accessor without a written body that still has one: it reads or writes the property's backing field.
@@ -56,10 +54,13 @@ export function plannedMethod(type, method) {
     isAbstract = method.isAbstract || (inInterface && !method.hasBody && !isStaticAutoAccessor(method)),
     explicit = !!explicitInterfaceOf(method),
     overrides = covariantOverrideOf(type, method),
-    flags = methodFlags(method, { inInterface, implementsInterface: explicit || implementedBy(type, method) || implementedBy(type, method.associatedSymbol) });
+    // The binder maps property accessors individually: a getter-only interface does not make a private setter virtual.
+    implementsInterface = explicit || implementedBy(type, method) ||
+      (method.associatedSymbol?.kind === SymbolKind.Event && implementedBy(type, method.associatedSymbol)),
+    flags = methodFlags(method, { inInterface, implementsInterface });
   return {
     symbol: method,
-    name: method.metadataName,
+    name: metadataMemberName(method),
     // An override with a covariant return type has a slot of its own and names what it overrides (covariant-overrides.js).
     flags: overrides ? flags | MethodAttributes.NewSlot : flags,
     implFlags: MethodImplAttributes.IL,
@@ -75,6 +76,7 @@ function synthesizedEventAccessor(type, event, prefix, core) {
   const slot = event.isStatic ? MethodAttributes.Static : implementedBy(type, event) ? IMPLEMENTATION_FLAGS : 0;
   return {
     symbol: null,
+    associatedSymbol: event,
     name: prefix + event.name,
     flags: memberAccessFlags(event) | ACCESSOR_FLAGS | slot,
     implFlags: MethodImplAttributes.IL,
@@ -95,9 +97,13 @@ function fieldLikeEvent(type, event, core, plan) {
   if (type.typeKind === TypeKind.Interface) {
     for (const accessor of [adder, remover]) {
       accessor.flags |= DELEGATE_INVOKE_FLAGS | MethodAttributes.Abstract;
+      if (event.isStatic) accessor.flags &= ~MethodAttributes.NewSlot;
       accessor.hasBody = false;
     }
-  } else plan.fields.push({ symbol: null, name: event.name, flags: privateField(event), type: event.type, constant: null, isCompilerGenerated: true });
+  } else plan.fields.push({
+    symbol: null, associatedSymbol: event, name: event.name, flags: privateField(event), type: event.type,
+    constant: null, isCompilerGenerated: true,
+  });
   plan.methods.push(adder, remover);
   return { adder, remover };
 }
@@ -123,7 +129,9 @@ function delegateMethods(type, core) {
     constructor,
     { symbol: invoke, name: 'Invoke', flags: DELEGATE_INVOKE_FLAGS, implFlags: runtime, hasBody: false, parameters },
     member('BeginInvoke', DELEGATE_INVOKE_FLAGS, { isStatic: false, returnType: 'System.IAsyncResult', parameters: begin }, begin),
-    member('EndInvoke', DELEGATE_INVOKE_FLAGS, { isStatic: false, returnType: invoke.returnType, refKind: invoke.refKind, parameters: end }, end),
+    { ...member('EndInvoke', DELEGATE_INVOKE_FLAGS, {
+      isStatic: false, returnType: invoke.returnType, refKind: invoke.refKind, parameters: end,
+    }, end), returnAttributeSource: invoke },
   ];
 }
 
@@ -171,7 +179,7 @@ export function planMembers(type, core, constantOf) {
     if (member.kind === SymbolKind.Field) addField(member);
     else if (member.kind === SymbolKind.Method) {
       // A struct has no parameterless constructor in metadata unless the program declares one.
-      const implicitStructConstructor = isStruct && member.isImplicitlyDeclared && member.methodKind === MethodKind.Constructor;
+      const implicitStructConstructor = isStruct && member.isImplicitlyDeclared && member.methodKind === MethodKind.Constructor && !member.parameters.length;
       // A partial method that no part implements is removed from the type, with every call of it (C# 3).
       if (!implicitStructConstructor && !member.isUnimplementedPartial) addMethod(member);
     }

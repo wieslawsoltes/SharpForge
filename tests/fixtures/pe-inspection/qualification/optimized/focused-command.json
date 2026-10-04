@@ -1,0 +1,76 @@
+{
+  "format": "sharpforge.pe-inspection.qualification-command",
+  "version": 1,
+  "phase": "focused-node-optimized",
+  "attempt": 1,
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-pe-inspection",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a13-16-pe-headers.test.js",
+    "tests/a13-16-method-code.test.js",
+    "tests/a13-16-debug-directory.test.js",
+    "tests/a13-16-native-reference.test.js",
+    "tests/a13-04-unnamed-slots.test.js",
+    "tests/a13-11-usage-relations.test.js",
+    "tests/a13-11-inspector-navigation.test.js",
+    "tests/a13-01-debug-directory.test.js",
+    "tests/a13-01-embedded-compression.test.js",
+    "tests/managed-il.test.js"
+  ],
+  "sourceCommit": "135c4c0b151acc92b28b724b410e9db54066b29e",
+  "productRevision": "d72a9fe1684ba28064f83f4307721a1d00b13137",
+  "sourceSha256": {
+    "tests/a13-16-pe-headers.test.js": "af72087965399c8185f7c81987647325963c983721beb531491154fb62f2f637",
+    "tests/a13-16-method-code.test.js": "cda15f9e700159992afc9e5c2c02f76e04ace46c794be1663f6d7fe6d6c4e6cc",
+    "tests/a13-16-debug-directory.test.js": "bf991217ab620ef1a1fe320133e8848432cf1a8d2cf41e4d3df73ae9ef3751ce",
+    "tests/a13-16-native-reference.test.js": "b7d107c6cbb26a3d290c3d5426a73075847e73a4e2cbc483830d07a69dc2db40",
+    "tests/a13-04-unnamed-slots.test.js": "4c8abcfaf59f3435171dc11ff9956e531e302922e6ecccc3a59b2e9b1b504969",
+    "tests/a13-11-usage-relations.test.js": "daedcf7563356961241ee6d083bce908e8b01a4228c369f575945469212353c7",
+    "tests/a13-11-inspector-navigation.test.js": "0c5010c5bfe8fabc1c211172cc85217d79711647bb5d1051e00d6f4606aae1f0",
+    "tests/a13-01-debug-directory.test.js": "9f55e9bf0d672f40e209948a1c66496384f07328b0d18fef48fd983367649f63",
+    "tests/a13-01-embedded-compression.test.js": "816f67f4118c06fc1f9fda7af6823342d1753cf84ed318ae4924831b776634b5",
+    "tests/managed-il.test.js": "d75565df8aa2446994f64a3b6962915437a70aa294973d184336961d5ab0271b",
+    "tests/fixtures/pe-inspection/input.mjs": "3ef0a406a12d95fe7e9679bf2ef924ea1746b14f687282298dc6fe9fe5245dc1",
+    "packages/symbols/src/debug-directory-reader.js": "f1c9b380c3411a054a4b42afb2f931014bde865c70478e2c3d3144114105eb6e",
+    "packages/symbols/src/local-signatures.js": "ba711b0fee6da35465d50ae62cb9b6d398f1e1bdcb9ddaf8d1aa60117abd8c04",
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7"
+  },
+  "nativeSourceSha256": {
+    "packages/cil/src/inspector-pe.js": "759dad1c08c5dabb99b3188f4193d4bcf6c6754e0cb0a02c860897ce2df4a709",
+    "packages/cil/src/inspector.js": "e494966c52ba1c3f50943847c5568b6803b6ee287ef07d9374c6186f008b2055",
+    "packages/cil/src/inspector-method.js": "47955a5bba8529264aa9c4bf6e31c44a314549400494a62736d1c5625c62fdf7",
+    "packages/cil/src/browser/summary.js": "b525605a68fd3e4347a28ab47470cf8fffff2826486d93730ff0e85055de58d1",
+    "packages/cil/src/pe/reader.js": "aea8ec59504a333f05c8ff78d34a7023bf3bc57a27cbbc4c99ab88c25d1c9967",
+    "packages/cil/src/pe/optional-header.js": "2a4a81921ee4f377a92cb48b91ab251f9c8e60cc355ae5e7949fcfe48bdc8db6",
+    "packages/cil/src/pe/debug-directory.js": "c30f489d9f4394f7bc39e617d518da73f633ec710638bb9d03ed0b6c4ded14a9",
+    "packages/cil/src/pe/method-code.js": "0463d7e207a1c5a9a056778b5292fa4be4777b97e49b063053eaad577da26c1c",
+    "packages/cil/src/pe/method-header.js": "ebc4e51c9102ee07f4f565c11cdeb39d470940afe8d495b345027b59d8b1f62c",
+    "packages/cil/src/pe/method-body.js": "b4e35c9ead941fe231602847de1398f82a3fbc39ae5a1d30ec09d2dd3dbd1d17",
+    "packages/cil/src/pe/headers.js": "aab2f458c9d281418f51f1d94a38b0e0b68cd444c7eebf4bf1d93b3bf3b51eb4",
+    "tests/fixtures/pe-inspection/comparison.mjs": "bc34a9a8b0d9f76e9c9531f718a0af33aebc23de7959f2fb35cce7e7b0019316",
+    "tests/fixtures/pe-inspection/Program.cs": "88e65e09949ed19e188f43d984f8cad3ba5b9d3fe75bdfa947d8cfe3b6f9c5d7",
+    "tests/fixtures/pe-inspection/capture.mjs": "642d3426023b355e8aa3c9ff7849120ef2358281611f48eb6b67e327b4c43b0a"
+  },
+  "nativeFixtureSha256": "8cf9f13a29b3d74f4d6d395a521f130de5abf6d7482d16a8763109a3d0cd80f1",
+  "environment": {
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "teamHeavySlot": "exclusive",
+    "resourceWrapper": "node scripts/limited.js"
+  },
+  "status": "passed",
+  "startedAt": "2026-10-04T15:27:19.480569+00:00",
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T15:27:31.424569+00:00",
+  "sourceUnchanged": true,
+  "artifacts": [
+    {
+      "path": "focused-node.tap",
+      "bytes": 11015,
+      "sha256": "8b81f7b690389be7661beedf84391ce043a1bc63a8be492ab88584f55ec1acd0"
+    }
+  ],
+  "summary": {}
+}

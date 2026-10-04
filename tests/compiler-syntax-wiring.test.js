@@ -237,7 +237,7 @@ test('A02-T05.3 annotations encode to NullableAttribute bytes and round-trip', (
   assert.equal(annotate(string, true, false).nullableAnnotation, NullableAnnotation.Annotated);
   assert.deepEqual(encodeNullableFlags(annotate(string, true, true)), [2]);
   assert.deepEqual(encodeNullableFlags(annotate(int, false, true)), []);
-  assert.deepEqual(encodeNullableFlags(new TypeWithAnnotations(nullable.construct(int))), [0]);
+  assert.deepEqual(encodeNullableFlags(new TypeWithAnnotations(nullable.construct(int))), []);
   // IEnumerable<string?>[]? written in an enabled context: array annotated, IEnumerable not annotated, string annotated.
   const element = new TypeWithAnnotations(enumerable.construct(annotate(string, true, true)), NullableAnnotation.NotAnnotated),
     array = new TypeWithAnnotations(new ArrayTypeSymbol(element), NullableAnnotation.Annotated);

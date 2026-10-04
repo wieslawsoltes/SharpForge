@@ -1,0 +1,83 @@
+{
+  "testedSourceCommit": "ea25b45b24a3c7dc9b18e22c22e5f23cb3a59069",
+  "mergedMain": "e60b0764782f1122439e5b161cb9494c75724e32",
+  "capturedAt": "2026-10-04T16:19:51.149525+00:00",
+  "trackedAndUntrackedCleanBeforeAndAfter": true,
+  "toolchain": {
+    "sdk": "10.0.201",
+    "referencePack": "10.0.5",
+    "roslyn": "5.3.0.0"
+  },
+  "focused": {
+    "command": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/compiler-nullable-metadata-flags.test.js",
+      "tests/compiler-nullable-metadata.test.js",
+      "tests/compiler-nullable-metadata-native.test.js",
+      "tests/compiler-nullable-embedded.test.js",
+      "tests/compiler-nullable-embedded-native.test.js",
+      "tests/compiler-tuple-relation-metadata.test.js",
+      "tests/compiler-nullable-delegate-signatures.test.js",
+      "tests/compiler-attribute-targets.test.js",
+      "tests/compiler-attribute-emission.test.js",
+      "tests/compiler-pseudo-attributes.test.js",
+      "tests/compiler-attributes.test.js",
+      "tests/compiler-special-members.test.js",
+      "tests/compiler-parameter-default-metadata.test.js"
+    ],
+    "summary": {
+      "tests": 63,
+      "pass": 63,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "exitCode": 0
+  },
+  "additionalNative": {
+    "wrapper": [
+      "node",
+      "scripts/limited.js",
+      "bash",
+      "-c"
+    ],
+    "sequentialPrograms": [
+      [
+        "node",
+        "packages/compiler/test/cil-emission/verify-dotnet.mjs",
+        "--references",
+        "--only",
+        "attribute-targets"
+      ],
+      [
+        "node",
+        "packages/compiler/test/cil-emission/verify-dotnet.mjs",
+        "--references",
+        "--only",
+        "pseudo-attributes"
+      ]
+    ],
+    "result": "Each selected fixture printed the genuine Roslyn output on .NET; one of one for each invocation.",
+    "exitCode": 0
+  },
+  "logs": {
+    "main-merge-focused.log": {
+      "bytes": 6754,
+      "sha256": "78b1d2cb6f652b6e4faab30f6d7fbe4b9c4dac2f40e9b5e9b559827ffc713c07"
+    },
+    "main-merge-attribute-native.log": {
+      "bytes": 132,
+      "sha256": "4aa083bccd873225eab94390ab5b8bf9293fde9fc87ee3573d87de08a092c508"
+    },
+    "main-merge-interop-native.log": {
+      "bytes": 132,
+      "sha256": "db3bbe1c14bdb45b3127981bcede709d23fa8e7f184e7a9ef9e0f04ff244e3bd"
+    }
+  },
+  "performance": "The prior whole-revision benchmark is retained unchanged and is not relabeled as this integration replay."
+}

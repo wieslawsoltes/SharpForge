@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "testedHead": "b40e8f7b5b8f5d06ad992da4a0b7446d667a056e",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "compiler": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "platform": "linux",
+    "architecture": "x64"
+  },
+  "sourceSha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+  "inputs": {
+    "Program.cs": "2499feb153dc9612e4bd185bafb7c232b3fabcdd91e0f108117cbc3f4506eda9",
+    "SignatureNames.cs": "cd25e6e177724e570b04776628e0a980cb0fd6fc253b0e38acc42686e2223a20",
+    "AttributeTypes.cs": "1f4e8371add1c770cc521da24fb58f31c47c35145a9b25e79661b3c6617a359e",
+    "surface.cs": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+    "consumer.cs": "b946bed9db205d6dd65b7fdcf261c5ddaf3ba92ea9aa5d9130143a4d5e8c2716",
+    "positive-consumer.cs": "a46b46d6419d3af766ef37aaab82372fce83954e792a2f083eb72c24f85ff109",
+    "observer-enums.cs": "51508e5a7462f297a160228152f8fb418460fc3629790a6bcf69dc6622008f1e"
+  },
+  "focusedTests": {
+    "passed": 45,
+    "failed": 0,
+    "skipped": 0,
+    "command": "node scripts/limited.js node --test tests/a03-22-*.test.js tests/compiler-cil-emission-generic-fixed-buffers.test.js tests/compiler-attribute-emission.test.js"
+  },
+  "nativeCommand": "node scripts/limited.js node packages/cil/tools/capture-reference-assemblies.mjs --dotnet /workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet --output artifacts/a03-reference-assemblies-qualified-b40",
+  "metadataControlLoads": true,
+  "cases": [
+    {
+      "id": "public",
+      "sourceSha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+      "referenceSha256": "b5cacbfe214c0a4d8cb0124dc160ea8fdb4f5ca9f4901255f4bf18b84cbe90a8",
+      "emittedSha256": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "markerCount": 1,
+      "bodyCount": 20,
+      "allBodiesThrowNull": true,
+      "loadRejection": "BadImageFormatException",
+      "loadHResult": -2146234280,
+      "consumers": [
+        {
+          "id": "positive",
+          "status": 0,
+          "diagnostics": []
+        },
+        {
+          "id": "fixed-buffers",
+          "status": 1,
+          "diagnostics": [
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 16,
+                    "startColumn": 61,
+                    "endLine": 16,
+                    "endColumn": 72
+                  }
+                }
+              ]
+            },
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 17,
+                    "startColumn": 80,
+                    "endLine": 17,
+                    "endColumn": 91
+                  }
+                }
+              ]
+            },
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 18,
+                    "startColumn": 89,
+                    "endLine": 18,
+                    "endColumn": 100
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "friend-access",
+          "status": 1,
+          "diagnostics": [
+            {
+              "code": "CS1061",
+              "level": "error",
+              "message": "'Contract' does not contain a definition for 'Internal' and no accessible extension method 'Internal' accepting a first argument of type 'Contract' could be found (are you missing a using directive or an assembly reference?)",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///tmp/sharpforge-refout-5a4TpY/Friend.cs"
+                  },
+                  "region": {
+                    "startLine": 1,
+                    "startColumn": 70,
+                    "endLine": 1,
+                    "endColumn": 78
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "typeCount": 15,
+      "fullMetadataComparisonPassed": true
+    },
+    {
+      "id": "friend",
+      "sourceSha256": "8b862890765ad17317881406aace738ed71ab7d5beb5032e17e3e059335d7498",
+      "referenceSha256": "c8edaefecbd87dc584e5159a6ee62b99c5f11b0cfbff9d20654de7179f33527e",
+      "emittedSha256": "e3a2877c08724fb74a016ce71ba2114693f32b27703e2e24f5604505b085b405",
+      "markerCount": 1,
+      "bodyCount": 25,
+      "allBodiesThrowNull": true,
+      "loadRejection": "BadImageFormatException",
+      "loadHResult": -2146234280,
+      "consumers": [
+        {
+          "id": "positive",
+          "status": 0,
+          "diagnostics": []
+        },
+        {
+          "id": "fixed-buffers",
+          "status": 1,
+          "diagnostics": [
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 16,
+                    "startColumn": 61,
+                    "endLine": 16,
+                    "endColumn": 72
+                  }
+                }
+              ]
+            },
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 17,
+                    "startColumn": 80,
+                    "endLine": 17,
+                    "endColumn": 91
+                  }
+                }
+              ]
+            },
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 18,
+                    "startColumn": 89,
+                    "endLine": 18,
+                    "endColumn": 100
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "friend-access",
+          "status": 0,
+          "diagnostics": []
+        }
+      ],
+      "typeCount": 15,
+      "fullMetadataComparisonPassed": true
+    }
+  ]
+}

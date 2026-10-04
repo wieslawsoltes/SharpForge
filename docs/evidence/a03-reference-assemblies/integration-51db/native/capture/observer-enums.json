@@ -1,0 +1,258 @@
+{
+  "runtime": "10.0.5",
+  "surface": [
+    {
+      "name": "<Module>",
+      "flags": 0,
+      "baseType": "",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [],
+      "methods": [],
+      "properties": [],
+      "events": []
+    },
+    {
+      "name": "EnumObservation.ByteChoice",
+      "flags": 257,
+      "baseType": "System.Enum",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [
+        {
+          "name": "Maximum",
+          "flags": 32854,
+          "signature": "valuetype EnumObservation.ByteChoice",
+          "constant": {
+            "type": "Byte",
+            "bytes": "FF"
+          },
+          "attributes": []
+        },
+        {
+          "name": "value__",
+          "flags": 1542,
+          "signature": "Byte",
+          "constant": null,
+          "attributes": []
+        }
+      ],
+      "methods": [],
+      "properties": [],
+      "events": []
+    },
+    {
+      "name": "EnumObservation.EnumArgumentsAttribute",
+      "flags": 1048833,
+      "baseType": "System.Attribute",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [],
+      "methods": [
+        {
+          "name": ".ctor",
+          "flags": 6278,
+          "implFlags": 0,
+          "signature": "32:0:6:Void(valuetype EnumObservation.ByteChoice,valuetype EnumObservation.WideChoice,valuetype System.Diagnostics.DebuggerBrowsableState,Object,valuetype EnumObservation.ByteChoice[],class System.Type)",
+          "attributes": []
+        },
+        {
+          "name": "get_Choice",
+          "flags": 2182,
+          "implFlags": 0,
+          "signature": "32:0:0:valuetype EnumObservation.ByteChoice()",
+          "attributes": [
+            {
+              "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+              "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+              "arguments": [],
+              "named": []
+            }
+          ]
+        },
+        {
+          "name": "get_NullValues",
+          "flags": 2182,
+          "implFlags": 0,
+          "signature": "32:0:0:valuetype EnumObservation.ByteChoice[]()",
+          "attributes": [
+            {
+              "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+              "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+              "arguments": [],
+              "named": []
+            }
+          ]
+        },
+        {
+          "name": "set_Choice",
+          "flags": 2182,
+          "implFlags": 0,
+          "signature": "32:0:1:Void(valuetype EnumObservation.ByteChoice)",
+          "attributes": [
+            {
+              "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+              "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+              "arguments": [],
+              "named": []
+            }
+          ]
+        },
+        {
+          "name": "set_NullValues",
+          "flags": 2182,
+          "implFlags": 0,
+          "signature": "32:0:1:Void(valuetype EnumObservation.ByteChoice[])",
+          "attributes": [
+            {
+              "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+              "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+              "arguments": [],
+              "named": []
+            }
+          ]
+        }
+      ],
+      "properties": [
+        {
+          "name": "Choice",
+          "signature": "40:0:0:valuetype EnumObservation.ByteChoice()",
+          "getter": "EnumObservation.EnumArgumentsAttribute::get_Choice 32:0:0:valuetype EnumObservation.ByteChoice()",
+          "setter": "EnumObservation.EnumArgumentsAttribute::set_Choice 32:0:1:Void(valuetype EnumObservation.ByteChoice)",
+          "attributes": []
+        },
+        {
+          "name": "NullValues",
+          "signature": "40:0:0:valuetype EnumObservation.ByteChoice[]()",
+          "getter": "EnumObservation.EnumArgumentsAttribute::get_NullValues 32:0:0:valuetype EnumObservation.ByteChoice[]()",
+          "setter": "EnumObservation.EnumArgumentsAttribute::set_NullValues 32:0:1:Void(valuetype EnumObservation.ByteChoice[])",
+          "attributes": []
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "EnumObservation.Probe",
+      "flags": 1048833,
+      "baseType": "System.Object",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [
+        {
+          "name": "EnumObservation.EnumArgumentsAttribute",
+          "constructor": "EnumObservation.EnumArgumentsAttribute::.ctor 32:0:6:Void(valuetype EnumObservation.ByteChoice,valuetype EnumObservation.WideChoice,valuetype System.Diagnostics.DebuggerBrowsableState,Object,valuetype EnumObservation.ByteChoice[],class System.Type)",
+          "arguments": [
+            {
+              "type": "class EnumObservation.ByteChoice",
+              "value": 255
+            },
+            {
+              "type": "class EnumObservation.WideChoice",
+              "value": 4294967296
+            },
+            {
+              "type": "class System.Diagnostics.DebuggerBrowsableState",
+              "value": 0
+            },
+            {
+              "type": "EnumObservation.WideChoice",
+              "value": 4294967296
+            },
+            {
+              "type": "class EnumObservation.ByteChoice[]",
+              "value": [
+                {
+                  "type": "class EnumObservation.ByteChoice",
+                  "value": 255
+                }
+              ]
+            },
+            {
+              "type": "class System.Type",
+              "value": {
+                "name": "System.Int32",
+                "assemblyQualified": true,
+                "identityMatchesReference": true,
+                "resolvedIdentity": "System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"
+              }
+            }
+          ],
+          "named": [
+            {
+              "name": "Choice",
+              "kind": "Property",
+              "type": "EnumObservation.ByteChoice",
+              "value": 255
+            },
+            {
+              "name": "NullValues",
+              "kind": "Property",
+              "type": "EnumObservation.ByteChoice[]",
+              "value": null
+            }
+          ]
+        }
+      ],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [],
+      "methods": [
+        {
+          "name": ".ctor",
+          "flags": 6278,
+          "implFlags": 0,
+          "signature": "32:0:0:Void()",
+          "attributes": []
+        }
+      ],
+      "properties": [],
+      "events": []
+    },
+    {
+      "name": "EnumObservation.WideChoice",
+      "flags": 257,
+      "baseType": "System.Enum",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [
+        {
+          "name": "Large",
+          "flags": 32854,
+          "signature": "valuetype EnumObservation.WideChoice",
+          "constant": {
+            "type": "UInt64",
+            "bytes": "0000000001000000"
+          },
+          "attributes": []
+        },
+        {
+          "name": "value__",
+          "flags": 1542,
+          "signature": "UInt64",
+          "constant": null,
+          "attributes": []
+        }
+      ],
+      "methods": [],
+      "properties": [],
+      "events": []
+    }
+  ],
+  "markerCount": 1,
+  "bodyCount": 6,
+  "allBodiesThrowNull": true,
+  "loadRejection": "BadImageFormatException",
+  "loadHResult": -2146234280
+}

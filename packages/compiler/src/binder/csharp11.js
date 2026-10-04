@@ -195,7 +195,9 @@ export const CSharp11Rules = Base =>
     }
     findTypeForAttribute(name, arity, container, scope) {
       if (!container) return this.typeBinder.lookup(name, arity, scope, { all: true });
-      const members = (container.originalDefinition ?? container).getTypeMembers?.bind(container.originalDefinition ?? container);
+      const members = container.kind === SymbolKind.Namespace
+        ? (candidate, count) => this.typeBinder.namespaceTypes(container, candidate, count, scope)
+        : (container.originalDefinition ?? container).getTypeMembers?.bind(container.originalDefinition ?? container);
       if (!members) return null;
       const exact = members(name, arity)[0],
         other = exact ? null : members(name)[0];

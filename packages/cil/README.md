@@ -1,5 +1,15 @@
 # @sharpforge/cil
 
+Reference-assembly member policy and marker emission are available through `referenceAssemblyMemberIncluded` and
+`addReferenceAssemblyAttribute`. The compiler's `{ refout: true }` adapter, example and qualification commands are in
+[Reference assembly output](../../docs/reference-assembly-refout.md).
+
+`assemblyReferenceIdentity(builder, name)` returns the exact configured or framework fallback identity used by
+`builder.assemblyRef(name)`: `{ name, version, culture, flags, publicKeyOrToken }`. It does not add a metadata row,
+and each result owns copies of its four-part version and key bytes. Invalid names and missing required `net9`/`net10`
+reference identities raise `CilError`, as emission does. This lets consumers serialize assembly-qualified attribute
+type names without duplicating framework identity defaults.
+
 Genuine ECMA-335 PE/CLI emission, typed CIL lowering, bounded metadata/IL loading, canonical-profile verification and disassembly. JavaScript ESM. Version 0.6.0. MIT. Sibling dependencies: `@sharpforge/bytecode` and `@sharpforge/framework`.
 
 ```js
@@ -19,7 +29,57 @@ The browser loader supports the exact emitted `SharpForge.CIL/1` profile. It che
 
 The root source release includes the complete backend contract, public API examples, measurements, regression suite, independent .NET execution test harness and compatibility boundaries. The packages are local tarballs, not registry-published.
 
+The [decompiler API](DECOMPILER.md) exposes bounded immutable normal control-flow
+graphs and the conservative source reconstruction pipeline, including explicit
+IL fallbacks and exception-boundary metadata.
+Assembly results include a [physical metadata inventory](DECOMPILER-INVENTORY.md)
+with exact row accounting and explicit limits on source reconstruction.
+
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
+
+## PE inspection
+
+`inspectPE(bytes, options)` returns an owned, versioned, JSON-safe PE/CLI snapshot:
+COFF/optional headers, sections and data directories, CorFlags, raw debug records,
+strong-name facts, and ReadyToRun/mixed-mode classification. UInt64 header values
+are hexadecimal strings. Native code is explicitly not disassembled, and signing
+flags are separate from cryptographic verification. Input, debug-record/payload,
+and strong-name byte budgets support bounded inspection with cancellation.
+
+`AssemblyInspector.summary({ includePE: true, peOptions })` includes the same
+snapshot on full or paged summaries. Available CIL remains inspectable in
+ReadyToRun images even with ILOnly unset. Native, OPTIL, Runtime, and unmanaged IL
+method implementations retain metadata and explicit disassembly status without
+parsing their RVAs as CIL. `methodCodeKind(implFlags)` exposes the shared admission
+classification. `readPEDebugDirectory(parsedPE, options)` returns owned raw debug
+entries; the symbols package reuses it for existing semantic PDB decoding.
+See [PE-INSPECTION.md](PE-INSPECTION.md) for exact fields, limits, ownership,
+cancellation, and reference-evidence boundaries.
+
+## Parameterless Object construction
+
+`compile` and `compileToIL` support `new object()` and `new System.Object()` through
+the source allocation builtin `object.new`, appended at wire ID 1848 after the
+released scalar families. It creates one ordinary managed `System.Object` with
+zero fields. Existing framework contract IDs and source builtin IDs retain their
+meaning. The emitted assembly uses the real instance MemberRef
+`System.Object::.ctor(): void` with `newobj`; the canonical loader reconstructs
+the allocation with zero arguments. Ordinary base-constructor `call` instructions
+keep the direct-CIL runtime's existing initialization behavior.
+
+Constructor decoding checks its opcode, complete admitted call shape, raw
+top-level type identity, and approved signing token and neutral culture before
+the full canonical assembly check. It shares the readonly-field identity helper;
+each consumer keeps its own allowed facade names. Object construction retains
+the existing `mscorlib4` emission profile. Canonical replay by itself can preserve
+an input AssemblyRef identity, so it does not replace the constructor's explicit
+identity check.
+
+Focused coverage is in `tests/a05-source-object-construction.test.js` and
+`tests/a05-object-constructor-metadata.test.js`: both compiler pipelines, source
+and CIL execution, canonical reload, distinct identities, GC and snapshot roots,
+allocation failure, stopping from an allocation observer, derived constructors,
+and forged metadata.
 
 ## Registered external readonly fields
 
@@ -444,9 +504,8 @@ Supported relations are `uses` (MethodDef's non-string token operands), `used-by
 (reverse occurrences), `instantiated-by` (`newobj`'s declared type), and
 `assigned-by` (direct `stfld`/`stsfld` writes). `newarr` uses its element type but
 does not construct an element instance. Indirect writes, virtual dispatch targets,
-reflection and dynamic execution are not inferred. `overridden-by` and
-`implemented-by` remain unsupported pending a genuine host-provided canonical
-method-slot contract; issue #2573 remains open for those capabilities.
+reflection and dynamic execution are not inferred. A host can supply the canonical
+declaration snapshot described below to enable `overridden-by` and `implemented-by`.
 
 Construction options independently lower hard maxima: `maxMethods:16384`,
 `maxCodeBytes:4194304` (all body occurrences, including shared RVAs),
@@ -463,3 +522,40 @@ covers CIL body scanning, not resolution of every external reference.
 [Focused fixtures and pending qualification](../../tests/fixtures/usage-relations/README.md)
 cover the initial four relations; broad execution/cross-platform coverage is not
 implied by metadata inspection.
+
+### Canonical declaration relations
+
+The optional `methodRelations` construction option accepts an owned, versioned host
+snapshot. The CIL package consumes established method relationships; CLR loading and
+method-slot resolution stay in the higher layer. `createAssemblyMethodRelations`
+from `@sharpforge/clr` is the canonical provider. Without a snapshot the two declaration
+queries remain unsupported; instruction analysis still needs no CLR dependency.
+
+The snapshot has `format:'sharpforge.method-relations'`, `version:1`, `moduleVersionId`,
+`methodCount`, `typeCount`, `entries` and `diagnostics`. Each entry has `relation`
+(`overridden-by` or `implemented-by`), local MethodDef `sourceToken` and `targetToken`,
+local TypeDef `implementingTypeToken`, and `implementationKind` (`override`, `explicit`,
+`implicit` or `inherited`). The source is the overriding/implementing method; the target
+is the declaration being queried. Each interface implementation occurrence includes
+the type in whose map it appears, including inherited implementations. No IL offset
+or instruction is invented for these entries. Returned records add the same stable
+source/target URIs and known status as instruction records.
+
+`maxDeclarationRelations:100000` and `maxDeclarationDiagnostics:16384` are lowerable
+hard caps, checked before copying provider records. Module MVID, metadata extents,
+record kinds, local tokens and duplicate relationship identities are validated.
+The provider remains responsible for canonical semantics; a supplied snapshot is
+data from the host, not evidence obtained by inferring a runtime dispatch target.
+Only scalar copied records survive construction. `storage.declarationRelations` and
+`storage.declarationDiagnostics` are logical counts added when a provider is present.
+
+Declaration diagnostics contain `relation`, a local type/method `token`, stable `code`
+and bounded `reason`. `complete` is evaluated independently for each declaration
+relation. Their diagnostics do not change the instruction scan's completeness, and
+unsupported native method bodies do not invalidate established metadata relationships.
+
+The [declaration fixture and evidence](../../tests/fixtures/declaration-relations/README.md)
+retain 33 passing focused Node tests and exact comparison with 19 CoreCLR 10.0.5
+relationships, including corrected interface reimplementation precedence. The browser
+harness is prepared but was not launched successfully; browser and wider execution
+coverage remain pending. No benchmark or speedup is claimed for this batch.

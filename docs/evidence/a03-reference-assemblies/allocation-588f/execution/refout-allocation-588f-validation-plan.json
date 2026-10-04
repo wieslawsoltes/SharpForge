@@ -1,0 +1,137 @@
+{
+  "frozenHead": "588f2b271521f170f278a0d0f183f069bd71f41d",
+  "parentEvidenceHead": "4f80ef2a5bb952199b35cea7cf5ad83d1b87f6eb",
+  "priorQualifiedSource": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-emission",
+  "executed": false,
+  "status": "Prepared only. Root benchmark8523 owns the exclusive heavy slot. No new correctness or performance claim.",
+  "sourceScope": "Three metadata modules only: one canonical pseudo classifier before lazy writer allocation; allocation-free return-presence probe. Maps, rows and existing handlers preserved. One new public-API interleaving/return regression and documentation.",
+  "sourceSha256": {
+    "packages/compiler/src/codegen/metadata/pseudo-attributes.js": "e60e45b72ba838845ea9bc64fa23a966bd8370bc634e10ab78a68ad4dfa7bb92",
+    "packages/compiler/src/codegen/metadata/custom-attributes.js": "2e3d57b49bdfe5d308728914141eba90b8c4c270ad0c1aed37365775937ab5e0",
+    "packages/compiler/src/codegen/metadata/attribute-targets.js": "d002901a01a95fa65ebe73c7a1b31b9396e0d960fe30ae146882c626d1ed35fb",
+    "tests/a03-22-attribute-dispatch.test.js": "2ed2d45d22300463dfb57b11c1e0f5caef0e320d047ea6e56bc29d44edbdea16",
+    "packages/cil/tools/benchmark-reference-assemblies.mjs": "dccb1da876096c73d3f2424e707402415303fa38921890be62982cd8d9230996",
+    "packages/cil/tools/capture-reference-assemblies.mjs": "df431204fb80b90e8d8d78766491b2a31e2d2bf12f9693c7a033cb86116f23c9",
+    "packages/cil/tools/reference-consumers.mjs": "ec64cc2fc956da94df526729173b4746142e288be391c21ec9fb02a2af1afcad",
+    "tests/fixtures/a03-reference-assemblies/surface.cs": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88"
+  },
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+    "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet"
+  },
+  "focusedArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a03-22-*.test.js",
+    "tests/compiler-reference-assembly.test.js",
+    "tests/compiler-attribute-emission.test.js",
+    "tests/compiler-attribute-targets.test.js",
+    "tests/compiler-pseudo-attributes.test.js",
+    "tests/compiler-cil-emission-generic-fixed-buffers.test.js"
+  ],
+  "focusedNote": "Expand a03-22 glob in sorted order; it now includes the new dispatch regression. SDK environment prevents reference-pack skips. Prior cohort at51db passed66; no follow-up run has occurred.",
+  "focusedLog": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-tests.tap",
+  "nativeArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "packages/cil/tools/capture-reference-assemblies.mjs",
+    "--dotnet",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "--output",
+    "artifacts/a03-reference-assemblies-allocation-588f2b271"
+  ],
+  "nativeLog": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-native.log",
+  "mainNativeFixtures": [
+    {
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "packages/compiler/test/cil-emission/verify-dotnet.mjs",
+        "--references",
+        "--only",
+        "attribute-targets",
+        "--dotnet",
+        "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "--scratch",
+        "artifacts/a03-reference-allocation-588f2b271/attribute-targets"
+      ],
+      "log": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-attribute-targets.log",
+      "note": "Uses existing pinned Roslyn .out; no --update and no fixture rewrite. Separate scratch preserves both product images."
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "packages/compiler/test/cil-emission/verify-dotnet.mjs",
+        "--references",
+        "--only",
+        "pseudo-attributes",
+        "--dotnet",
+        "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "--scratch",
+        "artifacts/a03-reference-allocation-588f2b271/pseudo-attributes"
+      ],
+      "log": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-pseudo-attributes.log",
+      "note": "Uses existing pinned Roslyn .out; no --update and no fixture rewrite. Separate scratch preserves both product images."
+    }
+  ],
+  "postOptimizationMeasurement": {
+    "reason": "Shared attribute dispatch and return-presence scanning changed in the timed path; measure the narrow source follow-up separately without attributing the prior whole-main +22.2381% median to these allocations.",
+    "comparison": "Compare each mode once against retained51db same-mode results. Preserve all120 chronological samples, exclude first20 from summary. No historical baseline rerun or favorable-result selection.",
+    "outputByteStatus": "Unmeasured at588f; compare output SHA256 and PE lengths with51db, retaining any failure before diagnosis.",
+    "expectedPriorOutputSha256": {
+      "metadata": "203d976ebd713b519ee70fca5a3a7ad571413136d304870be3b083ec70be4d5d",
+      "refout": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66"
+    },
+    "environment": "Remove DOTNET_ROOT and DOTNET only for benchmark commands to match prior runs. Keep other relevant variables and default limited.js caps; record actual values in execution evidence.",
+    "commands": [
+      {
+        "argv": [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "packages/cil/tools/benchmark-reference-assemblies.mjs",
+          "--mode",
+          "metadata",
+          "--compiler",
+          "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/src/index.js",
+          "--output",
+          "artifacts/refout-allocation-588f2b271-metadata.json"
+        ],
+        "log": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-metadata.log"
+      },
+      {
+        "argv": [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "packages/cil/tools/benchmark-reference-assemblies.mjs",
+          "--mode",
+          "refout",
+          "--compiler",
+          "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/src/index.js",
+          "--output",
+          "artifacts/refout-allocation-588f2b271-refout.json"
+        ],
+        "log": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-refout.log"
+      }
+    ]
+  },
+  "order": [
+    "focused",
+    "native-public-and-friend",
+    "attribute-targets",
+    "pseudo-attributes",
+    "metadata",
+    "refout"
+  ],
+  "guard": "Require clean frozen HEAD; run sequentially only after explicit heavy-slot grant. Stop at any correctness failure; retain exact argv/env/status/log/source/output hashes. Fresh destinations must not already exist."
+}

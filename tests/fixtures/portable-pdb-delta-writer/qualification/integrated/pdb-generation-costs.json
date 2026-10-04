@@ -1,0 +1,6327 @@
+{
+  "schemaVersion": 2,
+  "scope": "New generation and snapshot API costs; no baseline speedup comparison",
+  "environment": {
+    "capturedAt": "2026-10-04T13:57:04.225Z",
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "arch": "x64",
+    "osRelease": "6.18.44",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "totalMemoryBytes": 10451464192,
+    "freeMemoryBytes": 6358683648,
+    "loadAverage": [
+      0.99,
+      1.45,
+      1.84
+    ],
+    "heapLimitBytes": 2348810240,
+    "gcExposed": true,
+    "execArgv": [
+      "--expose-gc"
+    ]
+  },
+  "benchmarkSources": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions/packages/symbols/benchmarks/pdb-generations.mjs",
+      "sha256": "356638ca826af1e47233abb007665b134c71cb75aa12a4a6ec95c60c2baf18cf"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions/scripts/benchmarks/pdb-context.mjs",
+      "sha256": "f8c9fb4c148a4df39dad17922e5dde2e31800e315242fd5204e14d1b80013265"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions/scripts/benchmarks/pdb-measure.mjs",
+      "sha256": "191a40434a9b117df98362e030834fa490d5f7111817e8abc9ff68f513d023ea"
+    }
+  ],
+  "libraries": [
+    {
+      "name": "current",
+      "root": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions",
+      "commit": "9cfd593809f85c197be89990bcceaa22bfd0f898",
+      "tree": "7563f9d17ea67672fd392ae2e4dd79c925c62dfc",
+      "packages": [
+        {
+          "name": "@sharpforge/symbols",
+          "entry": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions/packages/symbols/src/index.js",
+          "manifestSha256": "cc128e140a5f55859114083a1c029d57ea56fb6524d7ac2fe82bd20cb1109647",
+          "source": {
+            "sha256": "ce14eb214a0947f1d326cf38baf53e21c653ed569b570929eca4dceed2caadd8",
+            "files": 69,
+            "bytes": 220760,
+            "algorithm": "SHA-256 of sorted relative-path length, path, NUL, content SHA-256 and LF records"
+          }
+        },
+        {
+          "name": "@sharpforge/archive",
+          "entry": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions/packages/archive/src/index.js",
+          "manifestSha256": "e67cb79a2461944333ebe3f583705c2ba499dbc542f9ec34be8fa355e0264221",
+          "source": {
+            "sha256": "eac8f8c236c730046bf7e6f45c857b66545a037ce4893cec9a7e723c6107bb2c",
+            "files": 4,
+            "bytes": 21541,
+            "algorithm": "SHA-256 of sorted relative-path length, path, NUL, content SHA-256 and LF records"
+          }
+        },
+        {
+          "name": "@sharpforge/cil",
+          "entry": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions/packages/cil/src/index.js",
+          "manifestSha256": "6285282a5ce21823ef4a2e93e0e8173160503f857152bd546f638fa28f353429",
+          "source": {
+            "sha256": "f4b0e32ba83e360d5d7bc7539a29f05a3a35994144535d89491ca692a16dab8c",
+            "files": 196,
+            "bytes": 679971,
+            "algorithm": "SHA-256 of sorted relative-path length, path, NUL, content SHA-256 and LF records"
+          }
+        },
+        {
+          "name": "@sharpforge/bytecode",
+          "entry": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions/packages/bytecode/src/index.js",
+          "manifestSha256": "3a4815e50844cb30c392ba0e58266a8dc27ab39ce8897972a4cbf4354a65b27a",
+          "source": {
+            "sha256": "1b1639b5a0691d22dafb9e701b5676dcba120c2b5fa98b969abfb8cded61c82a",
+            "files": 31,
+            "bytes": 78287,
+            "algorithm": "SHA-256 of sorted relative-path length, path, NUL, content SHA-256 and LF records"
+          }
+        },
+        {
+          "name": "@sharpforge/framework",
+          "entry": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions/packages/framework/src/index.js",
+          "manifestSha256": "ee9eb72f27365f10d83bc1e3ac096ff939c125a5c0a01643c6e90637f57c21a3",
+          "source": {
+            "sha256": "faf95627a2ef0e34e4c84fde24e4605135d316cca2b515fda04fda1758792c6a",
+            "files": 18,
+            "bytes": 64373,
+            "algorithm": "SHA-256 of sorted relative-path length, path, NUL, content SHA-256 and LF records"
+          }
+        },
+        {
+          "name": "@sharpforge/bcl-collections",
+          "entry": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions/packages/bcl-collections/src/index.js",
+          "manifestSha256": "225ea8f0758022cd3c8c3217d224cdbea98602b7258de9f4c7d16387fc55041e",
+          "source": {
+            "sha256": "19bd2e4cba463e42291eafc45b4df9c1a316ee2c1d84ba9fe99f972a096b1a74",
+            "files": 18,
+            "bytes": 33983,
+            "algorithm": "SHA-256 of sorted relative-path length, path, NUL, content SHA-256 and LF records"
+          }
+        },
+        {
+          "name": "@sharpforge/bcl-core",
+          "entry": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions/packages/bcl-core/src/index.js",
+          "manifestSha256": "b5c0b3309973d0258ca62e584c34d98b0bbbd9e55802a368bc36388ca70ac253",
+          "source": {
+            "sha256": "f3853769e1e19dbaa9b549a60ac53531252a8df543791fea0750225046090ec6",
+            "files": 45,
+            "bytes": 142600,
+            "algorithm": "SHA-256 of sorted relative-path length, path, NUL, content SHA-256 and LF records"
+          }
+        }
+      ]
+    }
+  ],
+  "fixture": {
+    "referenceSha256": "22e8ad452e64a73c1eea722a9c3e4dcc366d946175241c68d081cc922bbd6f52",
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "compiler": "5.3.0.0",
+    "compilerSha256": "2e29a995bcee2351d2cc1bb1d3187b1a5d9170e300ef1c15a47a5e4d64c1bb1d",
+    "artifacts": [
+      {
+        "name": "baseline.cs",
+        "bytes": 267,
+        "sha256": "9e75caf0dd99bff57a3461b1e123d8e21beabbbd8d0483e26b2f13e4419b586a"
+      },
+      {
+        "name": "baseline.dll",
+        "bytes": 2560,
+        "sha256": "3ee1f7ecac5b03a334bf7f03f8adaf2c423bdb1de938d0feb664bdeb1a80dc9b"
+      },
+      {
+        "name": "baseline.pdb",
+        "bytes": 916,
+        "sha256": "bab3c90a4642d5aacddf22da352fd6b5b002ac075d4ff302c4cdffea129d2909"
+      },
+      {
+        "name": "delta1.cs",
+        "bytes": 269,
+        "sha256": "adc37377d68483f88d4869daed0ec8232aebd9c61f6f1b8218354a40799e60eb"
+      },
+      {
+        "name": "delta1.dil",
+        "bytes": 26,
+        "sha256": "e05701f490a0115fa77187b0ef5ccc0cbb79a1b8dac33e06097bfdeef58a7152"
+      },
+      {
+        "name": "delta1.dmeta",
+        "bytes": 448,
+        "sha256": "eb0e6bde4e41af126871204193acaa4e8c5f92b58cd0638b8644e3c12539065b"
+      },
+      {
+        "name": "delta1.pdb",
+        "bytes": 480,
+        "sha256": "e2c4fe2ac3463ac294d39067914a1d082ce67e26840f07330fee43737064de1c"
+      },
+      {
+        "name": "delta2.cs",
+        "bytes": 273,
+        "sha256": "ac0fd309fe727083e4534ed2443162f42c3ee20bb6aca2a65020cf4c39185a2d"
+      },
+      {
+        "name": "delta2.dil",
+        "bytes": 11,
+        "sha256": "34ab1b0b676e4b609772a0ccc1af6053869a8cef71259ac498f9f5f6d3e3d588"
+      },
+      {
+        "name": "delta2.dmeta",
+        "bytes": 488,
+        "sha256": "055f242824d42ab30849525848f495ebb77602028378b5fa063ea22acfc07fec"
+      },
+      {
+        "name": "delta2.pdb",
+        "bytes": 444,
+        "sha256": "d1175cd7119c6a4f084585957a87f813f67bddd1ffc1a2b0e97df1d0b2c7ddc4"
+      }
+    ],
+    "generations": 3,
+    "methodToken": 100663298,
+    "ilOffset": 0
+  },
+  "correctness": {
+    "nativeSymbolFacts": true,
+    "oldSnapshotSurvivesUpdatesAndProviderDisposal": true,
+    "methodRevisionAndLocation": true,
+    "hashesVerifiedBeforeTiming": true
+  },
+  "workloadNotes": {
+    "readAndAppend": "Construct baseline and append both deltas; disposal outside timing",
+    "firstCapture": "Construct a new revision map and capture with an empty cache; not process-cold",
+    "repeatedCapture": "Capture with the same map already held by another snapshot; disposal outside timing",
+    "historyLocation": "Query generation 1 in the retained three-generation history",
+    "snapshotLocation": "Query the retained generation-1 snapshot"
+  },
+  "qualification": "Retained Roslyn/SRM corpus comparison; no live native, browser or runtime ApplyUpdate execution",
+  "protocol": {
+    "measuredRounds": 100,
+    "warmupRounds": 20,
+    "operationsPerSample": 1,
+    "order": "Forward/reverse workload order alternates by round; paired libraries share one process and identical inputs",
+    "first": "First timed call after untimed correctness checks; not process-cold",
+    "timing": "Only operation() is timed; result consumption, assertions, disposal and memory observation are outside timing",
+    "allocation": "Observed per-operation heapUsed/ArrayBuffer deltas include GC noise; not total allocation counters"
+  },
+  "consumedChecksum": 119064,
+  "summary": [
+    {
+      "library": "current",
+      "workload": "readAndAppend",
+      "measuredSamples": 100,
+      "firstTimedMs": 2.2526510000000144,
+      "medianMs": 0.38525599999999827,
+      "p95Ms": 0.72250200000002,
+      "p99Ms": 1.021111000000019,
+      "medianHeapDeltaBytes": 258796,
+      "medianArrayBufferDeltaBytes": 2175
+    },
+    {
+      "library": "current",
+      "workload": "firstCapture",
+      "measuredSamples": 100,
+      "firstTimedMs": 0.08347300000002633,
+      "medianMs": 0.019733999999999696,
+      "p95Ms": 0.04654800000002979,
+      "p99Ms": 0.07081400000004123,
+      "medianHeapDeltaBytes": 4288,
+      "medianArrayBufferDeltaBytes": 0
+    },
+    {
+      "library": "current",
+      "workload": "repeatedCapture",
+      "measuredSamples": 100,
+      "firstTimedMs": 0.02157199999999193,
+      "medianMs": 0.004456500000003416,
+      "p95Ms": 0.00950399999999263,
+      "p99Ms": 0.05690399999997453,
+      "medianHeapDeltaBytes": 1240,
+      "medianArrayBufferDeltaBytes": 0
+    },
+    {
+      "library": "current",
+      "workload": "historyLocation",
+      "measuredSamples": 100,
+      "firstTimedMs": 0.011896999999976288,
+      "medianMs": 0.001287000000019134,
+      "p95Ms": 0.0030140000000073996,
+      "p99Ms": 0.004086000000029344,
+      "medianHeapDeltaBytes": 640,
+      "medianArrayBufferDeltaBytes": 0
+    },
+    {
+      "library": "current",
+      "workload": "snapshotLocation",
+      "measuredSamples": 100,
+      "firstTimedMs": 0.008102000000008047,
+      "medianMs": 0.0004899999999850024,
+      "p95Ms": 0.0015520000000037726,
+      "p99Ms": 0.0024930000000153996,
+      "medianHeapDeltaBytes": 488,
+      "medianArrayBufferDeltaBytes": 0
+    }
+  ],
+  "chronologicalSamples": [
+    {
+      "phase": "first",
+      "round": 0,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 2.2526510000000144,
+      "consumed": 8,
+      "heapDeltaBytes": 334712,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "first",
+      "round": 0,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.08347300000002633,
+      "consumed": 244,
+      "heapDeltaBytes": 7360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "first",
+      "round": 0,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.02157199999999193,
+      "consumed": 244,
+      "heapDeltaBytes": 1664,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "first",
+      "round": 0,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.011896999999976288,
+      "consumed": 244,
+      "heapDeltaBytes": 1048,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "first",
+      "round": 0,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.008102000000008047,
+      "consumed": 244,
+      "heapDeltaBytes": 1256,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 0,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.8246619999999893,
+      "consumed": 8,
+      "heapDeltaBytes": 274032,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 0,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.05928700000004028,
+      "consumed": 244,
+      "heapDeltaBytes": 7584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 0,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.013599999999996726,
+      "consumed": 244,
+      "heapDeltaBytes": 1408,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 0,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.003314999999986412,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 0,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0062590000000000146,
+      "consumed": 244,
+      "heapDeltaBytes": 1088,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 1,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0011109999999803222,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 1,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0020630000000210202,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 1,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.007420999999965261,
+      "consumed": 244,
+      "heapDeltaBytes": 1224,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 1,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.0470089999999459,
+      "consumed": 244,
+      "heapDeltaBytes": 5792,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 1,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5614249999999856,
+      "consumed": 8,
+      "heapDeltaBytes": 283264,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 2,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.6011329999999475,
+      "consumed": 8,
+      "heapDeltaBytes": 271520,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 2,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.07087400000000343,
+      "consumed": 244,
+      "heapDeltaBytes": 6400,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 2,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.010416000000020631,
+      "consumed": 244,
+      "heapDeltaBytes": 1544,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 2,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.004776999999990039,
+      "consumed": 244,
+      "heapDeltaBytes": 784,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 2,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0008420000000342043,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 3,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006809999999859428,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 3,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.002113000000008469,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 3,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004145999999991545,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 3,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.027992000000040207,
+      "consumed": 244,
+      "heapDeltaBytes": 4808,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 3,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5536740000000009,
+      "consumed": 8,
+      "heapDeltaBytes": 262928,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 4,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.567924000000005,
+      "consumed": 8,
+      "heapDeltaBytes": 268968,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 4,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.03476100000000315,
+      "consumed": 244,
+      "heapDeltaBytes": -48112,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 4,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005417000000022654,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 4,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0037459999999782667,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 4,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0008219999999710126,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 5,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005309999999667525,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 5,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0017830000000458313,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 5,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0036059999999906722,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 5,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.07665300000002162,
+      "consumed": 244,
+      "heapDeltaBytes": 57448,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 5,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.6585979999999836,
+      "consumed": 8,
+      "heapDeltaBytes": 232208,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 6,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.6124500000000239,
+      "consumed": 8,
+      "heapDeltaBytes": 269528,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 6,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.03570300000001225,
+      "consumed": 244,
+      "heapDeltaBytes": 4824,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 6,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004375999999979285,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 6,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.026078999999981534,
+      "consumed": 244,
+      "heapDeltaBytes": 1280,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 6,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0010519999999587526,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 7,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0017429999999762913,
+      "consumed": 244,
+      "heapDeltaBytes": 42640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 7,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.010536000000001877,
+      "consumed": 244,
+      "heapDeltaBytes": 912,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 7,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.007040000000017699,
+      "consumed": 244,
+      "heapDeltaBytes": -35224,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 7,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.019960000000025957,
+      "consumed": 244,
+      "heapDeltaBytes": 4600,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 7,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5908289999999852,
+      "consumed": 8,
+      "heapDeltaBytes": 267712,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 8,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.410712999999987,
+      "consumed": 8,
+      "heapDeltaBytes": 262480,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 8,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02817099999998618,
+      "consumed": 244,
+      "heapDeltaBytes": 4416,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 8,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005378000000007432,
+      "consumed": 244,
+      "heapDeltaBytes": 1392,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 8,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.004095999999947253,
+      "consumed": 244,
+      "heapDeltaBytes": 768,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 8,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0016820000000166146,
+      "consumed": 244,
+      "heapDeltaBytes": 616,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 9,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006210000000237414,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 9,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013620000000287291,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 9,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.003034000000013748,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 9,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.01396999999997206,
+      "consumed": 244,
+      "heapDeltaBytes": 4472,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 9,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.6033769999999663,
+      "consumed": 8,
+      "heapDeltaBytes": 272504,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 10,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5410660000000007,
+      "consumed": 8,
+      "heapDeltaBytes": 268976,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 10,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02380500000003849,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 10,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0043560000000297805,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 10,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.003134999999986121,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 10,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.000620999999966898,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 11,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005199999999945248,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 11,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0011719999999968422,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 11,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004838000000006559,
+      "consumed": 244,
+      "heapDeltaBytes": 23960,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 11,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.022532999999953063,
+      "consumed": 244,
+      "heapDeltaBytes": -109000,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 11,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.40341300000000047,
+      "consumed": 8,
+      "heapDeltaBytes": 262568,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 12,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.45303599999999733,
+      "consumed": 8,
+      "heapDeltaBytes": 363248,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 12,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.05123500000001968,
+      "consumed": 244,
+      "heapDeltaBytes": -353440,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 12,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.008743000000038137,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 12,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0034150000000181535,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 12,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006410000000300897,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 13,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005009999999856518,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 13,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0012220000000411346,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 13,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0034150000000181535,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 13,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.017345999999974993,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 13,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.7146700000000124,
+      "consumed": 8,
+      "heapDeltaBytes": 262544,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 14,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.32789200000001983,
+      "consumed": 8,
+      "heapDeltaBytes": 262600,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 14,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.021242000000029293,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 14,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.028542000000015832,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 14,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.00316400000002659,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 14,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006009999999605498,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 15,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005009999999856518,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 15,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013119999999844367,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 15,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0036050000000500404,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 15,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.013239999999996144,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 15,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5372500000000286,
+      "consumed": 8,
+      "heapDeltaBytes": 264120,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 16,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4071880000000192,
+      "consumed": 8,
+      "heapDeltaBytes": 262576,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 16,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.029152000000010503,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 16,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.008051000000023123,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 16,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0037149999999996908,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 16,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0014019999999845822,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 17,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0008809999999925822,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 17,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.002494000000012875,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 17,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.009973999999999705,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 17,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.025207000000023072,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 17,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.7583050000000071,
+      "consumed": 8,
+      "heapDeltaBytes": 619096,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 18,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.6118000000000166,
+      "consumed": 8,
+      "heapDeltaBytes": -603664,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "warmup",
+      "round": 18,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02489700000000994,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 18,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004587000000014996,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 18,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.004054999999993925,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 18,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.000661000000036438,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 19,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.000509999999962929,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 19,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013519999999971333,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 19,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004015999999978703,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 19,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.013308999999992466,
+      "consumed": 244,
+      "heapDeltaBytes": 328624,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "warmup",
+      "round": 19,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.52976799999999,
+      "consumed": 8,
+      "heapDeltaBytes": 262336,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 0,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.37402000000003,
+      "consumed": 8,
+      "heapDeltaBytes": 261328,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 0,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.022132999999996628,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 0,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0055880000000456675,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 0,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0025340000000255714,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 0,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0007210000000554828,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 1,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005009999999856518,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 1,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013210000000185573,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 1,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.002763999999956468,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 1,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.011817000000007738,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 1,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5563880000000268,
+      "consumed": 8,
+      "heapDeltaBytes": 261672,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 2,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.8243909999999914,
+      "consumed": 8,
+      "heapDeltaBytes": 308840,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 2,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02504700000002913,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 2,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.00449700000001485,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 2,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0027640000000133114,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 2,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006409999999732463,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 3,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005309999999667525,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 3,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.001282000000003336,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 3,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005067999999994299,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 3,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.01380100000000084,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 3,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.7289710000000014,
+      "consumed": 8,
+      "heapDeltaBytes": 263192,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 4,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.39341799999999694,
+      "consumed": 8,
+      "heapDeltaBytes": 260152,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 4,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.024045999999998457,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 4,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0044560000000046784,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 4,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.004086000000029344,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 4,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006409999999732463,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 5,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005009999999856518,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 5,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013619999999718857,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 5,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.006309999999984939,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 5,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.011777999999992517,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 5,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.37903799999998,
+      "consumed": 8,
+      "heapDeltaBytes": 260224,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 6,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.42683700000003455,
+      "consumed": 8,
+      "heapDeltaBytes": 260216,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 6,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02318400000001475,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 6,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.007039999999960855,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 6,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0027640000000133114,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 6,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.000620999999966898,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 7,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00047000000000707587,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 7,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0011509999999930187,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 7,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0028239999999755128,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 7,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.011907000000007884,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 7,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.6443669999999884,
+      "consumed": 8,
+      "heapDeltaBytes": 274168,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 8,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.38571699999999964,
+      "consumed": 8,
+      "heapDeltaBytes": 260152,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 8,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.023343999999951848,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 8,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004125999999985197,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 8,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0024740000000065265,
+      "consumed": 244,
+      "heapDeltaBytes": 218416,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 8,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0015520000000037726,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 9,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0010819999999966967,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 9,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0031549999999924694,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 9,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.008923000000038428,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 9,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.01826699999998027,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 9,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5187020000000189,
+      "consumed": 8,
+      "heapDeltaBytes": 260384,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 10,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.72250200000002,
+      "consumed": 8,
+      "heapDeltaBytes": 260488,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 10,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.023274000000014894,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 10,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004427000000021053,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 10,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0027140000000258624,
+      "consumed": 244,
+      "heapDeltaBytes": 744,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 10,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005909999999857973,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 11,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005709999999794491,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 11,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.001982999999995627,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 11,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.00648999999998523,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 11,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.014680999999995947,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 11,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 1.021111000000019,
+      "consumed": 8,
+      "heapDeltaBytes": 275192,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 12,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4466369999999529,
+      "consumed": 8,
+      "heapDeltaBytes": 260144,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 12,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02971399999995583,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 12,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.006099000000006072,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 12,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0028340000000071086,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 12,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005610000000046966,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 13,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.001852999999982785,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 13,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.001121000000011918,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 13,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004015999999978703,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 13,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.01243800000003148,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 13,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.7074700000000007,
+      "consumed": 8,
+      "heapDeltaBytes": 513616,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 14,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.6694439999999986,
+      "consumed": 8,
+      "heapDeltaBytes": 34088,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 14,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.023383999999964544,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 14,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004255999999998039,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 14,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.003364999999973861,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 14,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006409999999732463,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 15,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004900000000134241,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 15,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.000922000000002754,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 15,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.006019000000037522,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 15,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.011786999999969794,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 15,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5075759999999718,
+      "consumed": 8,
+      "heapDeltaBytes": 260160,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 16,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5064239999999813,
+      "consumed": 8,
+      "heapDeltaBytes": 500480,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 16,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.022402999999997064,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 16,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005637999999976273,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 16,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0016929999999888423,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 16,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005699999999819738,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 17,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00048099999997930354,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 17,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0018019999999978609,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 17,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.002843999999981861,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 17,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.04654800000002979,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 17,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5475549999999885,
+      "consumed": 8,
+      "heapDeltaBytes": 43312,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 18,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.47986600000001545,
+      "consumed": 8,
+      "heapDeltaBytes": 271120,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 18,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02397499999995034,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 18,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.031185999999991054,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 18,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0017129999999951906,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 18,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005010000000424952,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 19,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003810000000044056,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 19,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.001982999999995627,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 19,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0032249999999862666,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 19,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.025937999999996464,
+      "consumed": 244,
+      "heapDeltaBytes": 213536,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 19,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.37172600000002376,
+      "consumed": 8,
+      "heapDeltaBytes": 259088,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 20,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.44963100000001077,
+      "consumed": 8,
+      "heapDeltaBytes": 261792,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 20,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.023194000000046344,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 20,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0051170000000411164,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 20,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.001573000000007596,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 20,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00048100000003614696,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 21,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003510000000233049,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 21,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0007610000000113359,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 21,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004306999999982963,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 21,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.010806000000002314,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 21,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.33323000000001457,
+      "consumed": 8,
+      "heapDeltaBytes": 259072,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 22,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.37203599999998005,
+      "consumed": 8,
+      "heapDeltaBytes": 259504,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 22,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.021501999999998134,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 22,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0038259999999468164,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 22,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.001412000000016178,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 22,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004899999999565807,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 23,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003699999999753345,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 23,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0006810000000427863,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 23,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0035060000000157743,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 23,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.010214999999959673,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 23,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.32598899999999276,
+      "consumed": 8,
+      "heapDeltaBytes": 259056,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 24,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.37427999999999884,
+      "consumed": 8,
+      "heapDeltaBytes": 259056,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 24,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02125100000000657,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 24,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005288000000007287,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 24,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0024639999999749307,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 24,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.000440999999966607,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 25,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00032999999996263796,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 25,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.000711000000023887,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 25,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0037449999999807915,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 25,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.009844999999984339,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 25,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4270279999999502,
+      "consumed": 8,
+      "heapDeltaBytes": 259056,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 26,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.45943499999998494,
+      "consumed": 8,
+      "heapDeltaBytes": 259176,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 26,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.021861999999998716,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 26,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.003936000000010154,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 26,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013720000000034815,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 26,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004799999999818283,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 27,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003399999999942338,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 27,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.000711000000023887,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 27,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004096000000004096,
+      "consumed": 244,
+      "heapDeltaBytes": 1360,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 27,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.010154999999997472,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 27,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3533289999999738,
+      "consumed": 8,
+      "heapDeltaBytes": 259136,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 28,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.39836600000001,
+      "consumed": 8,
+      "heapDeltaBytes": 259064,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 28,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.021531999999979234,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 28,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0036949999999933425,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 28,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0015419999999721767,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 28,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.000490999999954056,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 29,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003510000000233049,
+      "consumed": 244,
+      "heapDeltaBytes": 584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 29,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0008010000000240325,
+      "consumed": 244,
+      "heapDeltaBytes": 736,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 29,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0025440000000003238,
+      "consumed": 244,
+      "heapDeltaBytes": 1240,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 29,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.01043600000002698,
+      "consumed": 244,
+      "heapDeltaBytes": 4384,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 29,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.36184199999996736,
+      "consumed": 8,
+      "heapDeltaBytes": 259848,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 30,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4370920000000069,
+      "consumed": 8,
+      "heapDeltaBytes": 261624,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 30,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.022041999999999007,
+      "consumed": 244,
+      "heapDeltaBytes": 4352,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 30,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005178000000000793,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 30,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0014219999999909305,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 30,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0018329999999764368,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 31,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003510000000233049,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 31,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0007309999999733918,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 31,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0026839999999879183,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 31,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.010314999999991414,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 31,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5682049999999776,
+      "consumed": 8,
+      "heapDeltaBytes": 270728,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 32,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3741200000000049,
+      "consumed": 8,
+      "heapDeltaBytes": 258760,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 32,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.021061000000031527,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 32,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004807999999968615,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 32,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0014419999999972788,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 32,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004710000000045511,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 33,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003600000000005821,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 33,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0007509999999797401,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 33,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004345999999998185,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 33,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.010324999999966167,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 33,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3825119999999629,
+      "consumed": 8,
+      "heapDeltaBytes": 258768,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 34,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.37226799999996274,
+      "consumed": 8,
+      "heapDeltaBytes": 258768,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 34,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.023694999999975153,
+      "consumed": 244,
+      "heapDeltaBytes": 194288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 34,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005098000000032243,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 34,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0014419999999972788,
+      "consumed": 244,
+      "heapDeltaBytes": 14352,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 34,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.001472000000035223,
+      "consumed": 244,
+      "heapDeltaBytes": -181584,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 35,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0007810000000176842,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 35,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0016030000000455402,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 35,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.00829199999998309,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 35,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.019588999999996304,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 35,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5408350000000155,
+      "consumed": 8,
+      "heapDeltaBytes": 259992,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 36,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.31633499999998094,
+      "consumed": 8,
+      "heapDeltaBytes": 258808,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 36,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.021190999999987525,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 36,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005469000000005053,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 36,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.002744000000006963,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 36,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005110000000172477,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 37,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005509999999731008,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 37,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.000841000000036729,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 37,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0037459999999782667,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 37,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.012629000000003998,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 37,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.38154099999997015,
+      "consumed": 8,
+      "heapDeltaBytes": 258848,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 38,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3096549999999638,
+      "consumed": 8,
+      "heapDeltaBytes": 258696,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 38,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.020801000000005843,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 38,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004877000000021781,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 38,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0012619999999969878,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 38,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00045999999997548,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 39,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003600000000005821,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 39,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0007310000000302352,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 39,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.003965999999991254,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 39,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.010154999999997472,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 39,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.9035579999999754,
+      "consumed": 8,
+      "heapDeltaBytes": -16356160,
+      "arrayBufferDeltaBytes": -128325
+    },
+    {
+      "phase": "measured",
+      "round": 40,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.30415699999997514,
+      "consumed": 8,
+      "heapDeltaBytes": 258688,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 40,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.06719900000001644,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 40,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.05690399999997453,
+      "consumed": 244,
+      "heapDeltaBytes": 172392,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 40,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0030750000000239197,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 40,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0010120000000028995,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 41,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0007009999999922911,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 41,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0011719999999968422,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 41,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.00739099999998416,
+      "consumed": 244,
+      "heapDeltaBytes": -163608,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 41,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.017925999999988562,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 41,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.38064000000002807,
+      "consumed": 8,
+      "heapDeltaBytes": 258752,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 42,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.23401400000000194,
+      "consumed": 8,
+      "heapDeltaBytes": 258728,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 42,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02007000000003245,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 42,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005718000000001666,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 42,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0014019999999845822,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 42,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00048099999997930354,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 43,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00037100000002965317,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 43,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0025739999999814245,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 43,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.028190999999992528,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 43,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.04034999999998945,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 43,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4513029999999958,
+      "consumed": 8,
+      "heapDeltaBytes": 265464,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 44,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.23197099999998727,
+      "consumed": 8,
+      "heapDeltaBytes": 258712,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 44,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.018497000000024855,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 44,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.003424999999992906,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 44,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.001201999999977943,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 44,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005009999999856518,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 45,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003900000000385262,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 45,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0006710000000111904,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 45,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004457000000002154,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 45,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.009093000000007123,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 45,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.34450700000002143,
+      "consumed": 8,
+      "heapDeltaBytes": 259816,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 46,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.2661209999999983,
+      "consumed": 8,
+      "heapDeltaBytes": 258784,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 46,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.019689000000028045,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 46,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.00341499999996131,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 46,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0012120000000095388,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 46,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005600000000072214,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 47,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00034999999996898623,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 47,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0006300000000010186,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 47,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.002093000000002121,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 47,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.008311999999989439,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 47,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.23637800000000198,
+      "consumed": 8,
+      "heapDeltaBytes": 650024,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 48,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4207979999999907,
+      "consumed": 8,
+      "heapDeltaBytes": 258584,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 48,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.020960999999999785,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 48,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005488000000013926,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 48,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013520000000539767,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 48,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004999999999881766,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 49,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003399999999942338,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 49,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0006410000000300897,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 49,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0022430000000213113,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 49,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.008913000000006832,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 49,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4183150000000069,
+      "consumed": 8,
+      "heapDeltaBytes": 262504,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 50,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.33041500000001633,
+      "consumed": 8,
+      "heapDeltaBytes": 258608,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 50,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.019428000000004886,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 50,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.008221999999989293,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 50,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0030140000000073996,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 50,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0008719999999584616,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 51,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.000390999999979158,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 51,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0007309999999733918,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 51,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.06890099999998256,
+      "consumed": 244,
+      "heapDeltaBytes": 11424,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 51,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.022482999999965614,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 51,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4314939999999865,
+      "consumed": 8,
+      "heapDeltaBytes": 258584,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 52,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.2401930000000334,
+      "consumed": 8,
+      "heapDeltaBytes": 258712,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 52,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.01957900000002155,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 52,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.003474999999980355,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 52,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0012620000000538312,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 52,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004610000000297987,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 53,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003810000000044056,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 53,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0006910000000175387,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 53,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0022030000000086147,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 53,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.008422999999993408,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 53,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5081069999999954,
+      "consumed": 8,
+      "heapDeltaBytes": 274408,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 54,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.2381199999999808,
+      "consumed": 8,
+      "heapDeltaBytes": 258408,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 54,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.019778999999971347,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 54,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005058000000019547,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 54,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0012419999999906395,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 54,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00045999999997548,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 55,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00040100000001075387,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 55,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0007310000000302352,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 55,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0025430000000028485,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 55,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.009073000000000775,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 55,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.244399000000044,
+      "consumed": 8,
+      "heapDeltaBytes": 258400,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 56,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.2640580000000341,
+      "consumed": 8,
+      "heapDeltaBytes": 258424,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 56,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.01862799999997833,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 56,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0036159999999654246,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 56,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0010809999999992215,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 56,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00042100000001710214,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 57,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003510000000233049,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 57,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0007609999999544925,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 57,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0034650000000056025,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 57,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.008072000000026947,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 57,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.33610399999997753,
+      "consumed": 8,
+      "heapDeltaBytes": 290064,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 58,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.2240189999999984,
+      "consumed": 8,
+      "heapDeltaBytes": 258384,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 58,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.018998000000010506,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 58,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0034150000000181535,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 58,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013420000000223808,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 58,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.000440999999966607,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 59,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00038000000000693035,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 59,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0007709999999860884,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 59,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0020830000000273685,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 59,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.007330999999965115,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 59,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5425880000000234,
+      "consumed": 8,
+      "heapDeltaBytes": 258352,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 60,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3139110000000187,
+      "consumed": 8,
+      "heapDeltaBytes": 266800,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 60,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.020610000000033324,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 60,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.00855300000000625,
+      "consumed": 244,
+      "heapDeltaBytes": 1296,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 60,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0014020000000414257,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 60,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004910000000108994,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 61,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00040999999998803105,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 61,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.000990999999999076,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 61,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.002494000000012875,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 61,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.00930399999998599,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 61,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.2956649999999854,
+      "consumed": 8,
+      "heapDeltaBytes": 258192,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 62,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3847949999999969,
+      "consumed": 8,
+      "heapDeltaBytes": 263392,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 62,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.019989000000009582,
+      "consumed": 244,
+      "heapDeltaBytes": 7080,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 62,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005528000000026623,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 62,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013020000000096843,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 62,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00043099999999185457,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 63,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004710000000045511,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 63,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.000670999999954347,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 63,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.003995000000031723,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 63,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.011215999999990345,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 63,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.33194800000001123,
+      "consumed": 8,
+      "heapDeltaBytes": 257984,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 64,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.37256700000000365,
+      "consumed": 8,
+      "heapDeltaBytes": 258240,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 64,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.028041999999970812,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 64,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.006220000000041637,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 64,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0018520000000421533,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 64,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0008109999999987849,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 65,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006609999999795946,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 65,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.03258800000003248,
+      "consumed": 244,
+      "heapDeltaBytes": -312088,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 65,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.00950399999999263,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 65,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.021852000000023963,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 65,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.44770799999997735,
+      "consumed": 8,
+      "heapDeltaBytes": 273216,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 66,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.48444200000000137,
+      "consumed": 8,
+      "heapDeltaBytes": 258008,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 66,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.021420999999975265,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 66,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.006248999999968419,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 66,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013420000000223808,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 66,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005109999999604042,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 67,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004109999999855063,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 67,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0007709999999860884,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 67,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0025440000000003238,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 67,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.009143999999992047,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 67,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4816479999999501,
+      "consumed": 8,
+      "heapDeltaBytes": 257888,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 68,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.2138739999999757,
+      "consumed": 8,
+      "heapDeltaBytes": 257912,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 68,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.019939999999962765,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 68,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0035750000000120963,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 68,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.001232000000015887,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 68,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004109999999855063,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 69,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005110000000172477,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 69,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0008009999999671891,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 69,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.003936000000010154,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 69,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.00922400000001744,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 69,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3536299999999528,
+      "consumed": 8,
+      "heapDeltaBytes": 257904,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 70,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3153429999999844,
+      "consumed": 8,
+      "heapDeltaBytes": 257928,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 70,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.021290999999962423,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 70,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.003555000000005748,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 70,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.001282000000003336,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 70,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00043099999999185457,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 71,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0015820000000417167,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 71,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0005810000000110449,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 71,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.003424999999992906,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 71,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.009934999999984484,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 71,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.33088599999996404,
+      "consumed": 8,
+      "heapDeltaBytes": 259392,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 72,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.35226799999998093,
+      "consumed": 8,
+      "heapDeltaBytes": 258160,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 72,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02019999999998845,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 72,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005037000000015723,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 72,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0012720000000285836,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 72,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005009999999856518,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 73,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00039100000003600144,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 73,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0007009999999922911,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 73,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0024139999999874817,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 73,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.009554000000036922,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 73,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4684689999999705,
+      "consumed": 8,
+      "heapDeltaBytes": 258768,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 74,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3797779999999875,
+      "consumed": 8,
+      "heapDeltaBytes": 262640,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 74,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.022812999999985095,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 74,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005198000000007141,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 74,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.001282000000003336,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 74,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005110000000172477,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 75,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00034999999996898623,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 75,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0006210000000237414,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 75,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0038160000000289074,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 75,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.010154999999997472,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 75,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3030350000000226,
+      "consumed": 8,
+      "heapDeltaBytes": 257976,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 76,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5450510000000008,
+      "consumed": 8,
+      "heapDeltaBytes": 257912,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 76,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.030474999999967167,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 76,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.007551000000034946,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 76,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0019229999999765823,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 76,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006809999999859428,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 77,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0024930000000153996,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 77,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013620000000287291,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 77,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.008071000000029471,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 77,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02159199999999828,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 77,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.6632950000000051,
+      "consumed": 8,
+      "heapDeltaBytes": 273464,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 78,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 1.0652049999999917,
+      "consumed": 8,
+      "heapDeltaBytes": 286624,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 78,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.04800000000000182,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 78,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.007169999999973697,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 78,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.002032999999983076,
+      "consumed": 244,
+      "heapDeltaBytes": -253872,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 78,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0009609999999611318,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 79,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.003004999999973279,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 79,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013920000000098298,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 79,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.008052000000020598,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 79,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.01886700000000019,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 79,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.6726490000000354,
+      "consumed": 8,
+      "heapDeltaBytes": 263464,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 80,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3603899999999953,
+      "consumed": 8,
+      "heapDeltaBytes": 257600,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 80,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.056492999999989024,
+      "consumed": 244,
+      "heapDeltaBytes": -243768,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 80,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.00788199999999506,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 80,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0015919999999596257,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 80,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006309999999984939,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 81,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00040100000001075387,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 81,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0006710000000111904,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 81,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004136000000016793,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 81,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.07669300000003432,
+      "consumed": 244,
+      "heapDeltaBytes": 8768,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 81,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.40780900000004294,
+      "consumed": 8,
+      "heapDeltaBytes": 96848,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 82,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5178210000000263,
+      "consumed": 8,
+      "heapDeltaBytes": 257368,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 82,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.07081400000004123,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 82,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.007550999999978103,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 82,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.002043000000014672,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 82,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0008310000000051332,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 83,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0007410000000049877,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 83,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0011920000000031905,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 83,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005538000000001375,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 83,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.0236850000000004,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 83,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5186419999999998,
+      "consumed": 8,
+      "heapDeltaBytes": 273624,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 84,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.3568740000000048,
+      "consumed": 8,
+      "heapDeltaBytes": 268344,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 84,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.024315999999998894,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 84,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005116999999984273,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 84,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0013419999999655374,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 84,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004910000000108994,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 85,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00036100000005490074,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 85,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0006410000000300897,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 85,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.002444000000025426,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 85,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.010806000000002314,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 85,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.29033699999996543,
+      "consumed": 8,
+      "heapDeltaBytes": 257064,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 86,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.26109400000001415,
+      "consumed": 8,
+      "heapDeltaBytes": 257072,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 86,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.018767999999965923,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 86,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0033249999999611646,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 86,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0010510000000181208,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 86,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0004199999999627835,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 87,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003700000000321779,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 87,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0005509999999731008,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 87,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.00472700000000259,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 87,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.009734000000037213,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 87,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4933550000000082,
+      "consumed": 8,
+      "heapDeltaBytes": 257048,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 88,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5350169999999821,
+      "consumed": 8,
+      "heapDeltaBytes": 257056,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 88,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02828199999999015,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 88,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005617999999969925,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 88,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0016320000000291657,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 88,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006910000000175387,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 89,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006609999999795946,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 89,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0010719999999651009,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 89,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.007010000000036598,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 89,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.01790699999997969,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 89,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.44778800000000274,
+      "consumed": 8,
+      "heapDeltaBytes": 257056,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 90,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.46134799999998677,
+      "consumed": 8,
+      "heapDeltaBytes": 257048,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 90,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02821199999999635,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 90,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.009914999999978136,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 90,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0019120000000043547,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 90,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0008310000000051332,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 91,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0006510000000048421,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 91,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0025239999999939755,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 91,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.003995999999972355,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 91,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.017405999999994037,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 91,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5078170000000455,
+      "consumed": 8,
+      "heapDeltaBytes": 257096,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 92,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.5082069999999703,
+      "consumed": 8,
+      "heapDeltaBytes": 260800,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 92,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.029353000000014617,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 92,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.00716099999999642,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 92,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0016329999999697975,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 92,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0005100000000197724,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 93,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00040100000001075387,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 93,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0007009999999922911,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 93,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0036949999999933425,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 93,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.01670400000000427,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 93,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.36679900000001453,
+      "consumed": 8,
+      "heapDeltaBytes": 255184,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 94,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.2789099999999962,
+      "consumed": 8,
+      "heapDeltaBytes": 255192,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 94,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.020159999999975753,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 94,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.003654999999980646,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 94,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0012920000000349319,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 94,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00048099999997930354,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 95,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003700000000321779,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 95,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0006809999999859428,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 95,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0023630000000025575,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 95,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.00997499999999718,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 95,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.2823349999999891,
+      "consumed": 8,
+      "heapDeltaBytes": 255184,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 96,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4109229999999684,
+      "consumed": 8,
+      "heapDeltaBytes": 255264,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 96,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.02062100000000555,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 96,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.005147999999962849,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 96,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0012120000000095388,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 96,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00045099999999820284,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 97,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003609999999980573,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 97,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0006809999999859428,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 97,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.002312999999958265,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 97,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.010595999999964079,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 97,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.28557999999998174,
+      "consumed": 8,
+      "heapDeltaBytes": 255264,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 98,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.2604430000000093,
+      "consumed": 8,
+      "heapDeltaBytes": 255168,
+      "arrayBufferDeltaBytes": 2175
+    },
+    {
+      "phase": "measured",
+      "round": 98,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.01838700000001836,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 98,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.004607000000021344,
+      "consumed": 244,
+      "heapDeltaBytes": 1144,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 98,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.001412000000016178,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 98,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.00042100000001710214,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 99,
+      "library": "current",
+      "workload": "snapshotLocation",
+      "elapsedMs": 0.0003609999999980573,
+      "consumed": 244,
+      "heapDeltaBytes": 488,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 99,
+      "library": "current",
+      "workload": "historyLocation",
+      "elapsedMs": 0.0006410000000300897,
+      "consumed": 244,
+      "heapDeltaBytes": 640,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 99,
+      "library": "current",
+      "workload": "repeatedCapture",
+      "elapsedMs": 0.0038559999999847605,
+      "consumed": 244,
+      "heapDeltaBytes": 1264,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 99,
+      "library": "current",
+      "workload": "firstCapture",
+      "elapsedMs": 0.012387999999987187,
+      "consumed": 244,
+      "heapDeltaBytes": 4288,
+      "arrayBufferDeltaBytes": 0
+    },
+    {
+      "phase": "measured",
+      "round": 99,
+      "library": "current",
+      "workload": "readAndAppend",
+      "elapsedMs": 0.4851929999999811,
+      "consumed": 8,
+      "heapDeltaBytes": 255248,
+      "arrayBufferDeltaBytes": 2175
+    }
+  ]
+}

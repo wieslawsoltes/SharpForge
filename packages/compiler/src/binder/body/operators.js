@@ -41,12 +41,7 @@ export const OperatorBinding = Base =>
         return this.bad(syntax);
       }
       if (c.isAmbiguous) {
-        this.report(syntax, DiagnosticId.CS0457, [
-          c.candidates[0].toDisplayString(),
-          c.candidates[1]?.toDisplayString() ?? '',
-          this.display(e.type),
-          this.display(type),
-        ]);
+        this.reportConversionFailure(e, type, syntax, c);
         return this.bad(syntax);
       }
       return this.applyConversion(e, type, this.checkedConversion(c), syntax, true);

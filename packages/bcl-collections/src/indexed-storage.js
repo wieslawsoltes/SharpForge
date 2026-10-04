@@ -1,10 +1,12 @@
 import {makeArray} from '@sharpforge/bcl-core';
+import {reserveHashSet} from './hash-set-capacity.js';
 import {
   ACTIVE_SLOT, count, data, change, reserve, write, writeArray, indexMap, keyOf, rememberIndex
 } from './legacy-storage.js';
 
 /** Payload widths stay unchanged; managed Int32 slots hold live markers or the next free position. */
 export function reserveIndexed(p, reference, needed, width) {
+  if (width === 1) return reserveHashSet(p, reference, needed);
   reserve(p, reference, needed, width);
   const capacity = data(p, reference).length / width;
   const previous = p.get(reference, '$slots');
@@ -29,7 +31,7 @@ export function insertIndexed(p, reference, values, map) {
   const width = values.length;
   const used = p.get(reference, '$used', count(p, reference));
   const free = p.get(reference, '$free', -1);
-  if (free < 0) reserveIndexed(p, reference, used + 1, width);
+  if (free < 0 && reserveIndexed(p, reference, used + 1, width) === false) return false;
   const storage = p.get(reference, '$slots');
   const position = free < 0 ? used : free;
   const next = p.heap.get(storage).data[position];

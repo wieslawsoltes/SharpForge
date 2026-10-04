@@ -1,27 +1,10 @@
-import { AssemblyInspector, tokenHex, ilLabel } from './inspector.js';
 import { parseILInteger as integer } from './il-document-body.js';
 import { rebuildILDocument } from './il-document-image.js';
 import { stripILComment } from './il-document-strings.js';
 import { CilError } from './binary.js';
-const encode64=bytes=>{let s='';for(let i=0;i<bytes.length;i+=16384)s+=String.fromCharCode(...bytes.subarray(i,i+16384));return btoa(s);};
+export { formatILDocument } from './il-document-format.js';
 const decode64=s=>{if(s.length>90_000_000||s.length%4!==0||!/^[A-Za-z0-9+/]*={0,2}$/.test(s))throw new CilError('Invalid or oversized image scaffold');const b=atob(s),bytes=new Uint8Array(b.length);for(let i=0;i<b.length;i++)bytes[i]=b.charCodeAt(i);return bytes;};
-/** Lossless editable IL workspace. .image retains metadata/resources, not an executable fallback.
- * The assembler requires and replaces EVERY method body from the visible instruction text.
- * This is a documented SharpForge dialect, not general Microsoft ilasm syntax. */
-export function formatILDocument(bytes){
-  const inspector=new AssemblyInspector(bytes),a=inspector.summary();
-  const lines=['// SharpForge.IL/1 — metadata-preserving IL workspace',
-    '// Every method body below is authoritative. Numeric metadata tokens reference .image.',
-    '// Editing declarations/signature tokens requires existing compatible metadata.',
-    `.image "${encode64(inspector.pe.bytes)}"`,`.assembly ${JSON.stringify(a.name)}`];
-  for(const m of a.methods){if(m.error)throw new CilError(`Cannot export method ${tokenHex(m.token)}: ${m.error}`);if(!m.hasBody)continue;
-    lines.push('',`// ${m.owner}::${m.name}(${m.signature.parameters.join(', ')}) -> ${m.signature.returnType}`,`.method ${tokenHex(m.token)}`,`{`,`  .maxstack ${m.maxStack}`,`  .locals ${tokenHex(m.localSignature??0)}`,`  .initlocals ${m.initLocals?1:0}`);
-    for(const i of m.instructions){const operand=i.operandKind==='token'?tokenHex(i.operand):i.operandKind==='switch'?'('+i.operand.map(ilLabel).join(', ')+')':i.operandKind.startsWith('br')?ilLabel(i.operand):i.operand===undefined?'':String(i.operand);lines.push(`  ${i.label}: ${i.name}${operand?' '+operand:''}${i.operandKind==='token'?' // '+i.operandText:''}`);}
-    for(const h of m.handlers)lines.push(`  .eh ${h.flags} ${ilLabel(h.start)} ${ilLabel(h.end)} ${ilLabel(h.target)} ${ilLabel(h.handlerEnd)} ${h.flags===1?ilLabel(h.catchType):tokenHex(h.catchType)}`);
-    lines.push('}');
-  }
-  return lines.join('\n')+'\n';
-}
+/** Require and compile every visible body; reuse original bytes only after complete body comparison. */
 export function assembleILDocument(source,{maxCharacters=128*1024*1024,relaxBranches=false,maxUserStringBytes}={}){
   if(typeof relaxBranches!=='boolean')throw new CilError('Invalid IL branch layout option');
   if(typeof source!=='string'||source.length>maxCharacters)throw new CilError('IL document size limit exceeded');
