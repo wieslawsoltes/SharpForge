@@ -1,4 +1,5 @@
 import {decodeCoded} from '@sharpforge/cil';
+import {frameworkType} from '@sharpforge/framework';
 import {ManagedFault, isReference} from '../heap.js';
 import {defaults, storage as numericStorage} from './numeric-ops.js';
 import {valueLayout} from './value-layout.js';
@@ -8,8 +9,8 @@ const plans = new WeakMap();
 const invalid = message => { throw new ManagedFault('InvalidProgramException', message); };
 const unsupported = name => { throw new ManagedFault('NotSupportedException', 'Struct storage is not implemented: ' + name); };
 export const isValueRecord = value => !!value?.valueType && Array.isArray(value.fields);
-export const isAggregateType = table => table.flags.valueType && !table.flags.dynamic && !table.flags.primitive && !table.flags.enum &&
-  table.name !== 'System.Decimal';
+export const isAggregateType = table => table.flags.valueType && !table.flags.primitive && !table.flags.enum &&
+  table.name !== 'System.Decimal' && !(table.flags.dynamic && frameworkType(table.name)?.kind === 'value');
 
 function cacheFor(vm) {
   const epoch = executionCodeState(vm);
