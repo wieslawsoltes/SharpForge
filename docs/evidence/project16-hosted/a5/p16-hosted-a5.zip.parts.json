@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "kind": "ordered-binary-artifact-parts",
+  "artifact": {
+    "name": "p16-hosted-a5.zip",
+    "id": 11294751991,
+    "runId": 37178840757,
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178840757/artifacts/11294751991",
+    "bytes": 13381803,
+    "sha256": "32adec6a970df1e08e44620bb4b7bb5b1067ce91b941dd004275bfdecdf2d9c9"
+  },
+  "parts": [
+    {
+      "name": "p16-hosted-a5.zip.part001",
+      "bytes": 7864320,
+      "sha256": "b1f9431cba4ecf3c18e74ce7ddd54e3a3a82be12d6771e288d6b017a96ef659b",
+      "base64Characters": 10485760
+    },
+    {
+      "name": "p16-hosted-a5.zip.part002",
+      "bytes": 5517483,
+      "sha256": "6695745325f07ff92ec5b3253bc0a0fd276af1e84a2365f768d8e9e51777bb5c",
+      "base64Characters": 7356644
+    }
+  ],
+  "reconstruction": {
+    "operation": "concatenate raw bytes in parts array order",
+    "output": "p16-hosted-a5.zip",
+    "verification": "Verify each part, then the complete output byte count and SHA-256 before extraction."
+  }
+}

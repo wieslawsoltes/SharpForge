@@ -1,0 +1,10 @@
+{
+  "suite": "editor-budgets",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.12.14/x64/bin/python",
+    "tests/browser_editor_budgets_test.py"
+  ],
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 20.174486985000044
+}
