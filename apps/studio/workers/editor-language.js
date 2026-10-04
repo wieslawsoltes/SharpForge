@@ -55,18 +55,25 @@ export function registerEditorLanguageHandlers(handlers, {workspace, language, r
     },
     references(parameters) {
       const source = sourceFor(workspace, parameters);
-      return language.references(parameters.uri, offsetFor(source, parameters.offset), parameters.includeDeclaration !== false);
+      return language.references(parameters.uri, offsetFor(source, parameters.offset), parameters.includeDeclaration !== false)
+        .map(reference => parameters.projectId ? {...reference, projectId: parameters.projectId} : reference);
     },
     rename(parameters) {
       const source = sourceFor(workspace, parameters);
-      if (parameters.includeComments || parameters.includeStrings || parameters.renameFile) {
-        failure('SFED1205', 'This bound rename provider does not rename comments, strings, or files');
+      const action = refactoring.rename(parameters.uri, offsetFor(source, parameters.offset), parameters.newName, parameters);
+      if (!action.resources.length) return action.edits;
+      const groups = new Map();
+      for (const edit of action.edits) {
+        if (!groups.has(edit.uri)) groups.set(edit.uri, []);
+        groups.get(edit.uri).push(edit);
       }
-      return refactoring.rename(parameters.uri, offsetFor(source, parameters.offset), parameters.newName).edits;
+      return {title: action.title, documentChanges: [...groups].map(([uri, edits]) => ({
+        textDocument: {uri, version: edits[0].version}, edits
+      })).concat(action.resources)};
     },
     symbols(parameters) {
       sourceFor(workspace, parameters);
-      return language.documentSymbols(parameters.uri);
+      return language.documentSymbols(parameters.uri).map(symbol => parameters.projectId ? {...symbol, projectId: parameters.projectId} : symbol);
     },
     referenceLenses(parameters) {
       sourceFor(workspace, parameters);
@@ -79,10 +86,31 @@ export function registerEditorLanguageHandlers(handlers, {workspace, language, r
     },
     codeActions(parameters) {
       const source = sourceFor(workspace, parameters);
-      if (parameters.scope) failure('SFED1205', 'Fix All is not supported by this refactoring provider');
+      if (parameters.scope) return [refactoring.fixAll(parameters)];
       const start = offsetFor(source, parameters.offset);
       const end = offsetFor(source, parameters.end ?? start);
       return refactoring.actions(parameters.uri, start, end);
+    },
+    resolveCodeAction(parameters) {
+      const source = sourceFor(workspace, parameters);
+      const action = parameters.action;
+      if (!action?.data || action.data.uri !== source.uri || action.data.version !== source.version) {
+        failure('SFED1202', 'Code action belongs to an older document');
+      }
+      const result = refactoring.actions(source.uri, action.data.start, action.data.end)
+        .find(item => item.equivalenceKey === action.equivalenceKey);
+      if (!result) failure('SFED1204', 'Code action is no longer available');
+      return result;
+    },
+    outlineReorder(parameters) {
+      sourceFor(workspace, parameters);
+      return refactoring.outlineReorder(parameters);
+    },
+    validateWorkspaceEdit(parameters) {
+      const source = sourceFor(workspace, parameters);
+      const rename = parameters.rename ? language.renamePlan(source.uri,
+        offsetFor(source, parameters.rename.offset), parameters.rename.newName) : undefined;
+      return refactoring.validateEdits(parameters.edits, {rename});
     },
     format(parameters) {
       sourceFor(workspace, parameters);
@@ -121,17 +149,16 @@ export function registerEditorLanguageHandlers(handlers, {workspace, language, r
     prepareRename(parameters) {
       const source = sourceFor(workspace, parameters);
       const offset = offsetFor(source, parameters.offset);
-      const symbol = language.symbolAt(parameters.uri, offset);
       const reference = language.reference(parameters.uri, offset);
-      if (!symbol || !reference || !workspace.documents.has(parameters.uri)) return null;
-      if (symbol.kind === 'class') failure('SFED1204', 'Type rename is not supported until all type syntax is bound');
-      return {start: reference.start, end: reference.end, placeholder: symbol.name, version: source.version};
+      if (!reference || !workspace.documents.has(parameters.uri)) return null;
+      return language.prepareRename(parameters.uri, offset);
     },
     documentHighlights(parameters) {
       const source = sourceFor(workspace, parameters);
       offsetFor(source, parameters.offset);
       return {version: source.version, items: language.references(parameters.uri, parameters.offset)
-        .filter(reference => reference.uri === parameters.uri).map(reference => ({...reference, kind: 1}))};
+        .filter(reference => reference.uri === parameters.uri)
+        .map(reference => ({...reference, kind: reference.write ? 3 : reference.read ? 2 : 1}))};
     },
     formatRange(parameters) { return rangeFormatting(workspace, parameters); },
     formatOnType(parameters) {

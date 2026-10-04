@@ -12,8 +12,11 @@ export function boundInlayHints(workspace, uri, range = {}) {
   for (let index = 0; index + 1 < tokens.length; index++) {
     if (tokens[index].kind === 'var') implicitStarts.add(tokens[index + 1].start);
   }
-  return workspace.compile().symbols.filter(symbol => symbol.uri === uri && symbol.kind === 'local' && symbol.type !== 'error' &&
+  const model = workspace.sourceModel();
+  const typeHints = (model?.symbols ?? []).filter(symbol => symbol.uri === uri && symbol.kind === 'local' && symbol.type !== 'error' &&
     symbol.start >= start && symbol.end <= end && implicitStarts.has(symbol.start)).map(symbol => ({
     position: source.positionAt(symbol.end), label: ': ' + symbol.type, kind: 1, paddingLeft: false, paddingRight: true
   }));
+  const parameterHints = (model?.hints ?? []).filter(hint => hint.uri === uri && hint.offset >= start && hint.offset <= end);
+  return [...typeHints, ...parameterHints].sort((a, b) => source.offsetAt(a.position) - source.offsetAt(b.position));
 }
