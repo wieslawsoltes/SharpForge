@@ -23,9 +23,9 @@ function notification(method, params = {}, checkState) {
   return { request: { jsonrpc: '2.0', method, params }, notification: true, checkState };
 }
 
-function invalidParameters(id, method, params) {
-  // These shapes have no dedicated parameter validator yet; the catch-all -32602 is not a validation oracle.
-  return { ...request(id, method, params), requireError: true };
+function invalidParameters(id, method, params, message) {
+  return { ...request(id, method, params), requireError: true,
+    acceptError: error => error.code === -32602 && error.message === message };
 }
 
 function invalidEnvelope(value) {
@@ -92,8 +92,9 @@ const operations = [
   (state, id) => ({ ...request(id, 'workspace/symbol', { query: 'count' }), checkResult: arrayResult }),
   (state, id) => ({ ...request(id, 'sharpforge/fuzz-unknown'), requireError: true,
     acceptError: error => error.code === -32601 && error.message === "Method 'sharpforge/fuzz-unknown' is not implemented" }),
-  (state, id) => invalidParameters(id, 'textDocument/hover', null),
-  (state, id) => invalidParameters(id, 'textDocument/hover', { position: { line: 0, character: 0 } }),
+  (state, id) => invalidParameters(id, 'textDocument/hover', null, 'params must be an object'),
+  (state, id) => invalidParameters(id, 'textDocument/hover', { position: { line: 0, character: 0 } },
+    'params.textDocument must be an object'),
   (state, id) => request(id, 'shutdown'),
   (state, id) => notification('$/cancelRequest', { id: Math.max(1, id - 1) }),
   () => invalidEnvelope(null),
