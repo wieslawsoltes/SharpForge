@@ -171,10 +171,14 @@ test('warm scalar field reads use canonical storage without concealing host edit
   assert.equal(read(), 42);
   assert.equal(conversions, 0);
   vm.heap.get(receiver).data[0] = 4294967297;
-  assert.equal(read(), 1);
+  // A host Number outside Int32 uses the existing floating conversion policy.
+  assert.equal(read(), 2147483647);
   assert.equal(conversions, 1);
+  vm.heap.get(receiver).data[0] = 3.75;
+  assert.equal(read(), 3);
+  assert.equal(conversions, 2);
   vm.options.scalarFieldLoads = false;
   vm.heap.get(receiver).data[0] = 42;
   assert.equal(read(), 42);
-  assert.equal(conversions, 2);
+  assert.equal(conversions, 3);
 });
