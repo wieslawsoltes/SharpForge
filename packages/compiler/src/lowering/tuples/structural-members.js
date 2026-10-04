@@ -9,13 +9,14 @@
  *
  * Operands are thunks that return a fresh lowered read of the value; an operation may read its operand several times.
  */
+import { numericTypeNames } from '@sharpforge/bytecode';
 import { findContracts } from '@sharpforge/framework';
 import { TypeKind } from '../../symbols/types.js';
 import { n } from '../../codegen/semantic/node-factory.js';
 
 const formatValue = () => findContracts('SharpForge.Runtime.Formatting', 'FormatValue', true)[0];
-const directlyCompared = new Set(['int', 'bool', 'string']);
-const formatted = new Set(['int', 'double', 'bool', 'string']);
+const directlyCompared = new Set([...numericTypeNames.filter(type => type !== 'float' && type !== 'double'), 'bool', 'string']);
+const formatted = new Set([...numericTypeNames, 'bool', 'string']);
 
 export class StructuralMembers {
   /** @param host the generator: `{types, isSource(symbol), methodOf(symbol, syntax), unsupported(construct, syntax)}` */
@@ -45,10 +46,10 @@ export class StructuralMembers {
     const imageType = this.host.types.imageType(type, syntax);
     if (directlyCompared.has(imageType) && type.typeKind !== TypeKind.Enum) return n.equals(left(), right());
     if (type.typeKind === TypeKind.Enum) return n.equals(left(), right());
-    if (imageType === 'double') {
+    if (imageType === 'double' || imageType === 'float') {
       const same = n.equals(left(), right());
       if (mode === 'operator') return same;
-      // Double.Equals treats NaN as equal to itself; `==` does not.
+      // Single/Double.Equals treat NaN as equal to itself; `==` does not.
       return n.logicalOr(same, n.logicalAnd(n.notEquals(left(), left()), n.notEquals(right(), right())));
     }
     if (type.typeKind === TypeKind.Delegate) return this.host.unsupported('comparing delegates member by member', syntax);
