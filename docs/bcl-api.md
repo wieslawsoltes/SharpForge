@@ -688,8 +688,9 @@ Registered families: <code>builder</code>.
 | 524326 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(short)</code> | implemented |
 | 524327 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(ushort)</code> | implemented |
 | 524328 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(uint)</code> | implemented |
+| 524330 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(float)</code> | implemented |
 
-Pinned reference: 47 implemented and 61 missing exact metadata rows.
+Pinned reference: 48 implemented and 60 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -724,7 +725,7 @@ Pinned reference: 47 implemented and 61 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Append``0(System.ReadOnlyMemory`1&lt;System.Char&gt;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.ReadOnlySpan`1&lt;System.Char&gt;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.SByte):System.Text.StringBuilder instance</code> | implemented | 524324 |
-| method | <code>System.Text.StringBuilder::Append``0(System.Single):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.Single):System.Text.StringBuilder instance</code> | implemented | 524330 |
 | method | <code>System.Text.StringBuilder::Append``0(System.String):System.Text.StringBuilder instance</code> | implemented | 807 |
 | method | <code>System.Text.StringBuilder::Append``0(System.String,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524319 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder):System.Text.StringBuilder instance</code> | implemented | 524323 |
