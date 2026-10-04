@@ -54,8 +54,10 @@ test('pending Studio analysis and another editor whole-project request publish c
   preview.show([{start: 6, end: 10, text: 'TemporaryLongName'}]);
   assert.notEqual(model.snapshot(), source);
   assert.equal((await pendingAnalysis()).success, true);
-  await projects.request('documentSymbols', {uri: 'B.cs'});
+  // Studio's documentSymbols provider maps to the compiler protocol's symbols request.
+  await projects.request('symbols', {uri: 'B.cs'});
   assert.equal(requests.length, 2);
+  assert.deepEqual(requests.map(request => request.method), ['analyze', 'symbols']);
   for (const request of requests) {
     const file = request.params.files.find(item => item.uri === 'A.cs');
     assert.equal(file.text, source.text);
@@ -76,11 +78,11 @@ test('real rename completion publishes its new version after lease release and r
   const preview = previewFor(model);
   const plan = prepareWorkspaceEdit(workspace, [{uri: 'A.cs', version: 1, start: 6, end: 10, newText: 'Renamed'}]);
   preview.show(plan.changes[0].edits);
-  await projects.request('documentSymbols', {uri: 'B.cs'});
+  await projects.request('symbols', {uri: 'B.cs'});
   assert.equal(compilerWorkspace.documents.get('A.cs').source.text, 'class Name {}');
   preview.release();
   await commitWorkspaceEdit(workspace, plan);
-  await projects.request('documentSymbols', {uri: 'B.cs'});
+  await projects.request('symbols', {uri: 'B.cs'});
   assert.equal(compilerWorkspace.documents.get('A.cs').source.text, 'class Renamed {}');
   assert.equal(compilerWorkspace.documents.get('A.cs').source.version, 2);
   assert.equal(documents.get('A.cs').dirty, true);

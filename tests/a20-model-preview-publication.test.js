@@ -9,7 +9,7 @@ import {TextBuffer} from '@sharpforge/text';
 
 function view(model) {
   return {model, uri: model.uri, get value() { return model.value; },
-    selections: model.selections, primaryIndex: 0, options: editorOptions(), optionsRevision: 0,
+    selections: model.selections, primaryIndex: 0, options: editorOptions(), optionsRevision: 0, endOfLineExplicit: false,
     notifyContributions() {}, refreshPreview() {}};
 }
 
