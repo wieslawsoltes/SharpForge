@@ -115,3 +115,69 @@ or native oracles are not established by these attempts.
 
 This evidence-only archival change ran no tests, builds, static gates, benchmarks
 or browsers. It modifies no earlier local qualification history or issue status.
+
+
+## Appended hosted attempt a4 — original completed outcome
+
+This later observation leaves every a1–a3 outcome and its historical cutoff
+above intact. [Run 37175293552](https://github.com/wieslawsoltes/SharpForge/actions/runs/37175293552)
+([job 111356550684](https://github.com/wieslawsoltes/SharpForge/actions/runs/37175293552/job/111356550684))
+completed the full selected scope on Ubuntu/Chromium 153.0.8010.12 at
+`8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557`, tree
+`dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b`.
+The [original summary](evidence/project16-hosted/a4/qualification-summary.json)
+records **15 outcomes: nine passed and six failed**. These are qualification
+outcomes, not test counts; no total is added across earlier or overlapping runs.
+
+| Selected outcome | Original result |
+|---|---|
+| Node A19 | Passed: 710 tests, 710 passed, zero failures or skips. |
+| Node A20 | Passed: 686 tests, 677 passed, nine skipped, zero failures. |
+| Browser workbench docking | Passed. |
+| Browser workbench shell | Passed. |
+| Browser workbench sessions | Failed: `Particle.cs` was still resolved by docking after leaving the document workspace. |
+| Browser workbench lazy tools | Passed. |
+| Browser HTTP workflows | Failed: project creation reported the same unavailable `Particle.cs`. |
+| Browser standalone workflows | Failed: actual `file:` navigation timed out waiting for non-null Studio metrics. Later workflow checks were not reached. |
+| Browser editor insights | Failed: eight scenario checks passed before the `Find in current file` textbox lookup timed out. |
+| Browser editor providers | Passed. |
+| Browser editor view | Passed. |
+| Performance capture | Passed its absolute assessment; generated-model 200 MiB event-to-paint p95 was approximately 32.3 ms against 50 ms. Relative regression verdict remains absent. |
+| Performance editor UI budgets | Failed: incomplete or erroneous capture; combined absolute assessment failed. |
+| Performance actual Studio large file | Failed: the driver encountered `Unregistered storage key sharpforge.watch-windows.v1` during the import wait. No successful 200 MiB ingress is established. |
+| Performance instrumentation | Passed the specified aggregate gate: approximately 0.1964165% overhead, below 1%, across 12 alternating pairs. |
+
+The [editor assessment](evidence/project16-hosted/a4/editor-assessment.json)
+measures input/keydown/scroll events through two animation-frame callbacks on a
+generated model. It is distinct from the failed real Studio File/Blob ingress
+case. Both configured baseline paths were empty, so capture success does not
+establish a relative regression result.
+The [instrumentation report](evidence/project16-hosted/a4/instrumentation-overhead.json)
+retains all samples and source/served-artifact identity. Its gate compares sums
+of the same measured workload: enabled 25,047.0 ms, disabled 24,997.9 ms,
+difference 49.1 ms. This bounded shared-host observation does not establish
+statistical certainty or qualification on other platforms.
+
+The [large-file report](evidence/project16-hosted/a4/a20-studio-large-file-results.json)
+retains the actual 209,715,200-byte synthetic input, expected source counts and
+failure. Read-only diagnosis located the unregistered key in Watch initialization
+before import: Studio surfaced its rejected storage read as an error toast,
+which the driver subsequently observed. The separate source correction
+`2f1d498c5c94a482a5a37f07691d1af4a1ec5cad` registers that existing v1 key and adds
+four production-storage/loader regression cases. Those cases are unexecuted at
+this cutoff, and the 200 MiB driver remains unchanged. The original failure is
+not rewritten as a pass.
+
+The exact [downloaded ZIP](evidence/project16-hosted/a4/p16-hosted-a4.zip)
+([artifact 11293386531](https://github.com/wieslawsoltes/SharpForge/actions/runs/37175293552/artifacts/11293386531))
+is **8,862,070 bytes**, SHA-256
+`f07f9ef776d60f070e8ac9614bc65233e77a75215fce3559f8cc02acf8a680c3`.
+The [job log](evidence/project16-hosted/a4/job.log), source, session, suite, scenario
+and performance JSON reports are archived unchanged with byte counts and hashes
+in the ledger. Screenshots and trace ZIPs stay inside the original archive;
+no duplicate extracted traces or screenshots are committed.
+
+The six failed outcomes remain pending corrected execution. Cross-platform and
+cross-engine coverage, native permissions, physical input/clipboard, IME,
+assistive behavior and external oracles remain separate obligations. Archiving
+a4 executed no tests, builds, gates, benchmarks or browsers and closed no issues.
