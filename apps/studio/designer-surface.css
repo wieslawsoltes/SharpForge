@@ -1,0 +1,224 @@
+/* SharpForge Designer: compact workbench chrome, independent dockable panels. */
+.sf-design-tool {
+  display: flex!important;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden!important;
+  background: var(--design-background);
+}
+.design-toolbar {
+  flex: none;
+  min-height: 30px;
+  height: auto!important;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 4px 7px!important;
+  font-size: 11px;
+  border-bottom: 1px solid var(--design-line);
+}
+.design-toolbar button,.design-toolbar select,.design-side button,.design-side input,.design-side select {
+  font: inherit;
+}
+.design-toolbar button,.design-side button {
+  min-height: 24px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  padding: 3px 7px;
+  background: transparent;
+  color: var(--design-foreground);
+  cursor: pointer;
+}
+.design-toolbar button:hover,.design-side button:hover {
+  background: var(--design-hover);
+  border-color: var(--design-line);
+}
+.design-toolbar button:focus-visible,.design-side button:focus-visible {
+  outline: 1px solid var(--design-focus);
+  outline-offset: -1px;
+}
+.design-toolbar button:disabled,.design-side button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+.design-toolbar select,.design-toolbar input,.design-side input,.design-side select,.design-side textarea {
+  background: var(--design-input);
+  color: var(--design-foreground);
+  border: 1px solid var(--design-line);
+  border-radius: 2px;
+  min-height: 25px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.design-toolbar label {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+  color: var(--design-muted);
+}
+.design-toolbar input {
+  width: 53px;
+  font: inherit;
+  padding: 2px 4px;
+}
+.design-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--design-line);
+  margin: 0 3px;
+}
+.design-status {
+  flex: none;
+  height: auto;
+  min-height: 24px;
+  padding: 5px 10px;
+  font-size: 11px;
+  color: var(--design-muted);
+  background: var(--design-panel);
+  border-top: 1px solid var(--design-line);
+  white-space: normal;
+}
+.design-scroll {
+  position: relative;
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  outline: none;
+  background-color: var(--design-background);
+  background-image: radial-gradient(var(--design-grid-dot) .6px,transparent .6px);
+  background-size: 16px 16px;
+  overscroll-behavior: contain;
+}
+.design-size {
+  position: relative;
+  margin: 36px 46px 60px 38px;
+  box-shadow: 0 4px 20px var(--design-shadow);
+  flex: none;
+}
+.design-stage {
+  position: relative;
+  transform-origin: top left;
+  isolation: isolate;
+  background: var(--design-stage-background);
+  touch-action: none;
+}
+.design-preview,.design-overlay {
+  position: absolute;
+  inset: 0;
+}
+.design-preview {
+  overflow: hidden;
+}
+.design-preview.sf-winui-host {
+  position: absolute;
+}
+.design-overlay {
+  pointer-events: none;
+  z-index: 10;
+  overflow: visible;
+}
+.design-stage:not(.interactive) .design-preview {
+  user-select: none;
+  cursor: default;
+}
+.design-stage.interactive .design-overlay {
+  display: none;
+}
+.design-stage.interactive {
+  touch-action: auto;
+}
+.design-selection {
+  position: absolute;
+  border: 1px solid var(--design-selection-border);
+  box-sizing: border-box;
+  pointer-events: none;
+  background: var(--design-selection-fill);
+}
+.design-selection.primary {
+  outline: 1px solid var(--design-shadow);
+}
+.design-measure {
+  position: absolute;
+  left: -1px;
+  bottom: 100%;
+  margin-bottom: 3px;
+  background: var(--design-primary);
+  color: var(--design-on-primary);
+  font: 10px/17px ui-monospace,Consolas,monospace;
+  padding: 0 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 1px 3px var(--design-shadow);
+}
+.design-handle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: var(--design-handle-background);
+  border: 1px solid var(--design-primary);
+  pointer-events: auto;
+  box-sizing: border-box;
+  z-index: 12;
+}
+.design-handle[data-resize=nw] {
+  left: -4px;
+  top: -4px;
+  cursor: nwse-resize;
+}
+.design-handle[data-resize=n] {
+  left: calc(50% - 3px);
+  top: -4px;
+  cursor: ns-resize;
+}
+.design-handle[data-resize=ne] {
+  right: -4px;
+  top: -4px;
+  cursor: nesw-resize;
+}
+.design-handle[data-resize=e] {
+  right: -4px;
+  top: calc(50% - 3px);
+  cursor: ew-resize;
+}
+.design-handle[data-resize=se] {
+  right: -4px;
+  bottom: -4px;
+  cursor: nwse-resize;
+}
+.design-handle[data-resize=s] {
+  left: calc(50% - 3px);
+  bottom: -4px;
+  cursor: ns-resize;
+}
+.design-handle[data-resize=sw] {
+  left: -4px;
+  bottom: -4px;
+  cursor: nesw-resize;
+}
+.design-handle[data-resize=w] {
+  left: -4px;
+  top: calc(50% - 3px);
+  cursor: ew-resize;
+}
+.design-ruler {
+  position: sticky;
+  z-index: 14;
+  pointer-events: none;
+  background-color: var(--design-panel);
+  color: var(--design-subtle);
+  border: 1px solid var(--design-line);
+}
+.design-ruler.horizontal {
+  top: 0;
+  left: 0;
+  height: 17px;
+  background-image: repeating-linear-gradient(90deg,transparent 0,transparent 15px,var(--design-subtle) 15px,var(--design-subtle) 16px);
+}
+.design-ruler.vertical {
+  left: 0;
+  top: 17px;
+  width: 17px;
+  height: 0;
+  background-image: repeating-linear-gradient(0deg,transparent 0,transparent 15px,var(--design-subtle) 15px,var(--design-subtle) 16px);
+}
