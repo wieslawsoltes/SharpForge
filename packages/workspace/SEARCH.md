@@ -24,3 +24,10 @@ Pending watch metadata probes share the entry-count bound. Replacement, deletion
 and disposal invalidate each path's pending status token before it can publish.
 Overlapping watch setup keeps only the latest subscription; aborted or superseded
 subscriptions are disposed as soon as setup returns. Disposal zeroes byte counters.
+
+Content streams capture each entry identity, invalidation generation and version before
+reading text, then recheck that identity before every result. A replacement or deletion
+emits SFSEARCH001 and stops that file. Each `findText` match includes the captured
+`version`; the LanguageService adapter retains it across asynchronous handoff.
+Default searches snapshot the bounded indexed path list once so a replaced path cannot
+be revisited and newly inserted paths wait for the next search. Content remains streamed.
