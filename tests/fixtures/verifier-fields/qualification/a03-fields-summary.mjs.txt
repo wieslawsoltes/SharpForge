@@ -1,0 +1,49 @@
+import assert from 'node:assert/strict';
+import { readFileSync, writeFileSync } from 'node:fs';
+import os from 'node:os';
+const directory = '/tmp/a03-fields-validation';
+const read = name => JSON.parse(readFileSync(`${directory}/${name}.json`));
+const proof = read('source-proof');
+assert.deepEqual(proof.sourceBefore, proof.sourceAfter);
+const controls = {};
+const capabilities = {};
+let rawSamples = 0;
+for (const mode of ['numeric', 'fields']) {
+  const before = read(`baseline-${mode}-performance`);
+  const after = read(`candidate-${mode}-performance`);
+  for (const [name, value] of Object.entries(before.results)) {
+    const next = after.results[name];
+    assert.equal(next.fixtureSHA256, value.fixtureSHA256);
+    assert.equal(next.expected, value.expected);
+    assert.equal(value.samples.length, 12);
+    assert.equal(next.samples.length, 12);
+    rawSamples += 24;
+    const change = key => ({ before: value[key], after: next[key], difference: next[key] - value[key],
+      percent: (next[key] / value[key] - 1) * 100 });
+    controls[name] = { iterations: value.iterations, medianMs: change('medianMs'), p95Ms: change('p95Ms') };
+  }
+  for (const [name, value] of Object.entries(after.results)) {
+    if (Object.hasOwn(before.results, name)) continue;
+    assert.equal(value.expected, 'verified');
+    assert.equal(value.samples.length, 12);
+    rawSamples += 12;
+    capabilities[name] = { iterations: value.iterations, medianMs: value.medianMs, p95Ms: value.p95Ms,
+      note: 'Added capability; no baseline supported operation or timing comparison.' };
+  }
+}
+assert.equal(rawSamples, 120);
+const native = read('native');
+const browsers = read('browser/report');
+for (const observation of native.observations) assert.equal(observation.oracle.accepted, observation.expectedNative);
+for (const engine of browsers.engines) assert.equal(engine.passed, true);
+const summary = { candidateHead: proof.correctedCandidateHead ?? proof.candidateHead, baselineHead: proof.baselineHead, node: process.version,
+  cpu: os.cpus()[0]?.model, os: os.release(), platform: os.platform(), architecture: os.arch(),
+  controls, capabilities, rawSamples, samplesPerWorkload: 12, excludedWarmupSamples: 3,
+  native: { count: native.observations.length, version: native.version,
+    unsupported: native.observations.filter(value => value.policyStatus === 'unknown').map(value => value.name),
+    differences: native.observations.filter(value => value.difference).map(value => value.name) },
+  browsers: browsers.engines.map(value => ({ engine: value.engine, version: value.version, checks: value.checks.length })),
+  retainedFirstAttempt: 'Expected-before baseline assertion succeeded on stderr; initial driver mistakenly checked stdout only.',
+  measurementLimits: 'Shared host. Batch timings per 1000 calls, not individual percentiles. Heap deltas are neither allocations nor peak memory.' };
+writeFileSync(`${directory}/summary.json`, JSON.stringify(summary, null, 2) + '\n');
+console.log(JSON.stringify(summary, null, 2));

@@ -1,7 +1,6 @@
 import { CilError } from '../binary.js';
 import { mergeVerificationStacks } from './type-relations.js';
 import { sameVerificationType } from './types.js';
-import { primitiveRelations } from './typed-signatures.js';
 import { localInitialization } from './initialization.js';
 
 const empty = Object.freeze([]);
@@ -12,7 +11,7 @@ function mergeStacks(incoming, stored, state, options) {
   let merged;
   try {
     merged = mergeVerificationStacks(incoming, stored, {
-      maxStack: state.method.maxStack, signal: options.signal, relations: primitiveRelations,
+      maxStack: state.method.maxStack, signal: options.signal, relations: state.relations,
     });
   } catch (error) {
     if (error instanceof CilError && error.code === 'CILV0002') state.fail('PathStackUnexpected');

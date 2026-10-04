@@ -1,0 +1,780 @@
+{
+  "inputSHA256": "6a003d7c4ca263d7a29ee0a2e2aa56791e3cdf08377dc3716eedd90e0faa30c8",
+  "observations": [
+    {
+      "name": "LoadOwner",
+      "assemblySHA256": "324cdcba6e7fa1c380ca3a0a9d0ff9e9d2acdc01e8907381da1a967a268931e6",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/LoadOwner.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 84.35929099999998
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LoadDerived",
+      "assemblySHA256": "3609188db586645ee8132fdf2d9aa6864a68a047dcbb3e6c8cdcff45c3074e01",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/LoadDerived.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.439459
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LoadWrongReceiver",
+      "assemblySHA256": "4703e7d5f19d14099d5274f2e347f2d0d2bf47ca5c1a558f859f07eb483a6764",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/LoadWrongReceiver.dll : Fixture.Host::LoadWrongReceiver([Fields_LoadWrongReceiver]Fixture.Other)][offset 0x00000001][found ref '[Fields_LoadWrongReceiver]Fixture.Other'][expected ref '[Fields_LoadWrongReceiver]Fixture.Owner'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/LoadWrongReceiver.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 84.42441599999995
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "LoadNumericReceiver",
+      "assemblySHA256": "92785693f086221f35f269ab1efbf50f2981c6f54ba7b8492968c6c994086fee",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/LoadNumericReceiver.dll : Fixture.Host::LoadNumericReceiver(int32)][offset 0x00000001][found Int32][expected ref '[Fields_LoadNumericReceiver]Fixture.Owner'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/LoadNumericReceiver.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 86.24895800000002
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "LoadReferenceAddress",
+      "assemblySHA256": "6528c5a025da784b3dd40fb1de9eed081e884c00ed012461bac0afbbdc659fe9",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/LoadReferenceAddress.dll : Fixture.Host::LoadReferenceAddress([Fields_LoadReferenceAddress]Fixture.Owner&)][offset 0x00000001][found address of '[Fields_LoadReferenceAddress]Fixture.Owner'][expected ref '[Fields_LoadReferenceAddress]Fixture.Owner'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/LoadReferenceAddress.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 104.40387500000008
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "LoadValueAddress",
+      "assemblySHA256": "07f2e49cd9e57d389226f3313c2bae910c915067798d72dbd84fcdb91f6b4062",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/LoadValueAddress.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.55658300000005
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LoadValueCopy",
+      "assemblySHA256": "1323355e75eaa14747130e25ca2e3faeb499c76889b318fc7ab8ad28b8785da7",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/LoadValueCopy.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 82.74645900000007
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LoadStaticThroughInstance",
+      "assemblySHA256": "04dcec4deda2f0270042478aa6266493382760aecd3c72f9ce16b36031163ec2",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/LoadStaticThroughInstance.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 78.766208
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LoadPrivateOutside",
+      "assemblySHA256": "d7594e366a2df9a7c11619c2a160ce7cef71eb4ad1f72c8f0f87376579ee6e55",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [FieldAccess]: [<temporary>/LoadPrivateOutside.dll : Fixture.Host::LoadPrivateOutside([Fields_LoadPrivateOutside]Fixture.Owner)][offset 0x00000001] Field is not visible.\n1 Error(s) Verifying <temporary>/LoadPrivateOutside.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 84.71166700000003
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "FieldAccess"
+        ]
+      }
+    },
+    {
+      "name": "LoadPrivateInside",
+      "assemblySHA256": "b4d10cef2f70eded14f07fc89720ef840c03c5c087a912a8d2396d5584748659",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/LoadPrivateInside.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 78.35904200000004
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LoadProtectedDerived",
+      "assemblySHA256": "33748e7dce11b02b1579e306300870422ae680527ad6c3e3c10a5a560345548f",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/LoadProtectedDerived.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.00462500000003
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LoadProtectedBaseReceiver",
+      "assemblySHA256": "9c916f7cebd65ea49134f176ad409e1866f4270b90632aa89ed22ffb36d31c36",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [FieldAccess]: [<temporary>/LoadProtectedBaseReceiver.dll : Fixture.Derived::LoadProtectedBaseReceiver([Fields_LoadProtectedBaseReceiver]Fixture.Owner)][offset 0x00000001] Field is not visible.\n1 Error(s) Verifying <temporary>/LoadProtectedBaseReceiver.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 84.91941700000007
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "FieldAccess"
+        ]
+      }
+    },
+    {
+      "name": "StoreOwner",
+      "assemblySHA256": "01c4ea2a2f77a1cc13d7189c74ac5c2de967568460ff4cfab8fc102ab55ebe4a",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StoreOwner.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 83.29920800000014
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StoreDerived",
+      "assemblySHA256": "b8a6bed53f9c57833042283d79e8388440e1bc3f0e595e8309dca9cae2e3e05f",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StoreDerived.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 86.1121250000001
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StoreWrongReceiver",
+      "assemblySHA256": "50693bb51feaaefca1c0aa722c7b596132a031b2bddbf48cf1bd3065b1a63533",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/StoreWrongReceiver.dll : Fixture.Host::StoreWrongReceiver([Fields_StoreWrongReceiver]Fixture.Other, int32)][offset 0x00000002][found ref '[Fields_StoreWrongReceiver]Fixture.Other'][expected ref '[Fields_StoreWrongReceiver]Fixture.Owner'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/StoreWrongReceiver.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 86.49408300000005
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "StoreWrongValue",
+      "assemblySHA256": "0a70db811bdaac2ae0552573e28e1acdefaa67a200cc6968cc963e989ae9b3f1",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/StoreWrongValue.dll : Fixture.Host::StoreWrongValue([Fields_StoreWrongValue]Fixture.Owner, float64)][offset 0x00000002][found Double][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/StoreWrongValue.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 88.970959
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "StoreReferenceDerived",
+      "assemblySHA256": "a2b55ef944870f8a09f4661c116b061b214dc9271b3022daabb3ae79eb6e2838",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StoreReferenceDerived.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 84.98345799999993
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StoreReferenceUnrelated",
+      "assemblySHA256": "7154e00b017417c62af40354c767a3b1b130742584460093dbba93218446ac2d",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/StoreReferenceUnrelated.dll : Fixture.Host::StoreReferenceUnrelated([Fields_StoreReferenceUnrelated]Fixture.Owner, [Fields_StoreReferenceUnrelated]Fixture.Other)][offset 0x00000002][found ref '[Fields_StoreReferenceUnrelated]Fixture.Other'][expected ref '[Fields_StoreReferenceUnrelated]Fixture.Owner'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/StoreReferenceUnrelated.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 88.31291699999997
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "StoreValueAddress",
+      "assemblySHA256": "1610ba62e6e57b287ca28adb82fc5e834c81e7c72861bde8224e0e5e0abbf38b",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StoreValueAddress.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.57983400000012
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StoreValueCopyUnknown",
+      "assemblySHA256": "22fbfa60b95bed8c1ee09a107adf274d95f922667d2e8fb9b1eef7010caea9b4",
+      "policyStatus": "unknown",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StoreValueCopyUnknown.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 77.80995899999994
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StoreInitOnlyOutside",
+      "assemblySHA256": "2a2986660b5d016545348d0422d26c168908feaafd82471dfeb8fa5315c693ab",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitOnly]: [<temporary>/StoreInitOnlyOutside.dll : Fixture.Host::StoreInitOnlyOutside([Fields_StoreInitOnlyOutside]Fixture.Owner, int32)][offset 0x00000002] Cannot change initonly field outside its .ctor.\n1 Error(s) Verifying <temporary>/StoreInitOnlyOutside.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 79.86712500000021
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitOnly"
+        ]
+      }
+    },
+    {
+      "name": "StoreInitOnlyNormalInstance",
+      "assemblySHA256": "1cdabbebdaf84541412a77ff45205d17497aa2e27c8060f662855ea4fa0f9f03",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitOnly]: [<temporary>/StoreInitOnlyNormalInstance.dll : Fixture.Owner::StoreInitOnlyNormalInstance(int32)][offset 0x00000002] Cannot change initonly field outside its .ctor.\n1 Error(s) Verifying <temporary>/StoreInitOnlyNormalInstance.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 80.6250829999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitOnly"
+        ]
+      }
+    },
+    {
+      "name": "StoreStaticThroughInstance",
+      "assemblySHA256": "c675b60e697706e8a8ecaf68f76327d7bf9074dbede76e24e1da42a8dc1f5466",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StoreStaticThroughInstance.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.51104099999975
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NormalThisLoad",
+      "assemblySHA256": "7f3e3b867b7a214634f3c999e0d5df2d8a7d2c362c34bcb1ae32613be0e6c54f",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NormalThisLoad.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.12812499999973
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ValueThisLoad",
+      "assemblySHA256": "3eb8d3d500be320e3e99de868d87e9342977901d920057df7c56b0246fb0be82",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ValueThisLoad.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 91.33187500000031
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NullReceiver",
+      "assemblySHA256": "52f0ccd154a42caa65b3f0e1b668c3e3525619723cdfbf8677cc68f6c0e8b52f",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NullReceiver.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 84.32574999999997
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LoadStatic",
+      "assemblySHA256": "02054e0bd08c7cac2915e86ebc3b8fffd42dbb9502edce3ffbb196e7b2bbca25",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/LoadStatic.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 84.89545799999996
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LoadStaticMismatch",
+      "assemblySHA256": "f6f1d7003fd08ee03c6a4cd96fbf315d5c6283e152f26212c0dca4c25f40e881",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedStaticField]: [<temporary>/LoadStaticMismatch.dll : Fixture.Host::LoadStaticMismatch()][offset 0x00000000] Expected static field.\n1 Error(s) Verifying <temporary>/LoadStaticMismatch.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 83.96424999999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedStaticField"
+        ]
+      }
+    },
+    {
+      "name": "StoreStatic",
+      "assemblySHA256": "12beff8a56926750e5252e89ac59e954089afd6f3a5a9d3a6ce476db155ec1f8",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StoreStatic.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 82.77762499999972
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StoreStaticWrongValue",
+      "assemblySHA256": "6ed61d569d5bd0b8a9993f5f290befd0a67d5bac90e2913bea23184165c12265",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/StoreStaticWrongValue.dll : Fixture.Host::StoreStaticWrongValue()][offset 0x00000009][found Double][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/StoreStaticWrongValue.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 94.35204200000044
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "StoreStaticInitOnlyOutside",
+      "assemblySHA256": "23944b393f324796472121b7dc39632d5460030649cddcc6c4fe4458952af714",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitOnly]: [<temporary>/StoreStaticInitOnlyOutside.dll : Fixture.Host::StoreStaticInitOnlyOutside()][offset 0x00000001] Cannot change initonly field outside its .ctor.\n1 Error(s) Verifying <temporary>/StoreStaticInitOnlyOutside.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 88.72433300000012
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitOnly"
+        ]
+      }
+    },
+    {
+      "name": "StoreStaticInitOnlyCctor",
+      "assemblySHA256": "ae2af0955dfdc9514490a617123da0e91c5fa0bce815d7686697e2be26260648",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StoreStaticInitOnlyCctor.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 90.12645799999973
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StoreStaticInitOnlyWrongCctor",
+      "assemblySHA256": "81c3b6e06061f6a324ccf61e509f2cc38efdc5aebceafdf2edfbc9c24b8c9fbb",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitOnly]: [<temporary>/StoreStaticInitOnlyWrongCctor.dll : Fixture.Host::.cctor()][offset 0x00000001] Cannot change initonly field outside its .ctor.\n1 Error(s) Verifying <temporary>/StoreStaticInitOnlyWrongCctor.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 94.2266669999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitOnly"
+        ]
+      }
+    },
+    {
+      "name": "AddressField",
+      "assemblySHA256": "a935b91d6d1a79db63166527a15c02cda97ea9ec1656a6ce67259dc1a6d1efe9",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/AddressField.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 90.45233299999973
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "AddressStatic",
+      "assemblySHA256": "dcd65492d9e192ee8519b96fe5246bb165b7466ca1dc1041b7ad4175fd88f131",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/AddressStatic.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 92.26275000000032
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "AddressInitOnly",
+      "assemblySHA256": "68ae728bc38b32b55d32b5ec33ffcca25cf2956159e0f9898372d013516a9e01",
+      "policyStatus": "rejected",
+      "expectedNative": true,
+      "difference": "ECMA III.4.11 prohibits init-only ldflda; ILVerify 10.0.5 leaves this check unimplemented.",
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/AddressInitOnly.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 94.33437499999991
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ReferenceReturn",
+      "assemblySHA256": "13e6f94d9568e82d86420567ec19ff52047de47f3b8425b63f40e8807d13912f",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ReferenceReturn.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 84.56345899999997
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "WrongReferenceReturn",
+      "assemblySHA256": "131cba4abb13339a07fbcada8eda8b84f4c14709f4d7ac3e8ab3d9d8f34bbe85",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/WrongReferenceReturn.dll : Fixture.Host::WrongReferenceReturn([Fields_WrongReferenceReturn]Fixture.Other)][offset 0x00000001][found ref '[Fields_WrongReferenceReturn]Fixture.Other'][expected ref '[Fields_WrongReferenceReturn]Fixture.Owner'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/WrongReferenceReturn.dll\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 92.17108400000006
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "ReferenceLocal",
+      "assemblySHA256": "fcc1a8d4a64a5c48580d8087d57f1d6a39c241a0077c79f3374667991bb797be",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ReferenceLocal.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 87.01250000000027
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ReferenceJoin",
+      "assemblySHA256": "b46ebb6a31c7c85c87f965ee32ca1dbde6f8069101b2228a4e0b9704eb922cbd",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ReferenceJoin.dll Verified.\nTypes found: 6\nTypes verified: 6\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 89.62404199999992
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    }
+  ],
+  "inputs": {
+    "input.js": "6a003d7c4ca263d7a29ee0a2e2aa56791e3cdf08377dc3716eedd90e0faa30c8",
+    "cases.js": "b9785cad4f11b0176173548ad24602e34734e466f8f2e5aa78a41fc7ad2a7088"
+  },
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  }
+}

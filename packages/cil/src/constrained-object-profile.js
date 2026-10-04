@@ -90,7 +90,11 @@ export class ConstrainedObjectProfile {
   }
 
   select(typeToken, descriptor) {
-    if (!this.declaration(descriptor)) return null;
+    return this.declaration(descriptor) ? this.valuePlan(typeToken) : null;
+  }
+
+  /** Metadata-only ordinary Object slot selection for an already identified concrete value type. */
+  valuePlan(typeToken) {
     if (this.plans.has(typeToken)) return this.plans.get(typeToken);
     const type = this.types.get(typeToken);
     if (!type || (type.flags & 0x18) !== 8 || type.flags & 0x20 || this.genericOwners.has(typeToken) ||

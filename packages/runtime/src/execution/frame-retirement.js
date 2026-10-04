@@ -1,6 +1,7 @@
 import {retirePooledFrame, flushFramePool, clearFramePool} from './frame-pool.js';
 import {releaseStackFrame, clearStackBudget} from './stack-budget.js';
 import {forgetContextSuspension} from './context-events.js';
+import {callbackFrames, clearCallbackStorage} from './callback-frames.js';
 
 /** Remove an exited frame; defer clearing until its return/unwind handler finishes. */
 export function popPooledFrame(vm) {
@@ -26,11 +27,13 @@ export function discardContextFrames(vm, context) {
 
 export function stopFramePool(vm) {
   for (const frame of vm.frames) retirePooledFrame(vm, frame);
+  for (const frame of callbackFrames(vm.scheduler)) retirePooledFrame(vm, frame);
   for (const context of vm.scheduler?.contexts.values() ?? []) {
     for (const frame of context.frames) retirePooledFrame(vm, frame);
   }
   clearFramePool(vm);
   clearStackBudget(vm);
+  clearCallbackStorage(vm.scheduler);
 }
 
 const terminal = new Set(['completed', 'faulted', 'canceled']);

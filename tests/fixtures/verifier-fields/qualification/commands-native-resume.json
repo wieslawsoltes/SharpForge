@@ -1,0 +1,86 @@
+[
+  {
+    "label": "candidate-head",
+    "command": "git",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:34:58.648Z",
+    "completed": "2026-10-04T10:34:58.689Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "candidate-clean",
+    "command": "git",
+    "args": [
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:34:58.690Z",
+    "completed": "2026-10-04T10:34:58.833Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-head",
+    "command": "git",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/tmp/sharpforge-a03-fields-baseline",
+    "started": "2026-10-04T10:34:58.833Z",
+    "completed": "2026-10-04T10:34:58.871Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "native",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/verifier-fields/capture.mjs",
+      "/tmp/a03-fields-validation/native.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:34:58.913Z",
+    "completed": "2026-10-04T10:35:02.763Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "focused-tests",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--test",
+      "--test-concurrency=1",
+      "tests/a03-field-transfers.test.js",
+      "tests/a03-field-ancestry.test.js",
+      "tests/a03-field-native.test.js",
+      "tests/a03-numeric-transfers.test.js",
+      "tests/a03-local-initialization.test.js",
+      "tests/a03-type-categories.test.js",
+      "tests/a03-type-categories-native.test.js",
+      "tests/a03-07-nested-type-references.test.js",
+      "tests/a03-07-local-type-references.test.js",
+      "tests/a03-07-local-type-references-native.test.js",
+      "tests/a03-07-type-system.test.js",
+      "tests/a03-07-type-system-native.test.js",
+      "tests/a03-verification-types.test.js",
+      "tests/a03-07-members.test.js",
+      "tests/a03-07-members-inherited.test.js",
+      "tests/a03-07-type-access.test.js",
+      "tests/a03-07-nested-access.test.js",
+      "tests/a03-07-member-access.test.js",
+      "tests/a03-coded-index-bounds.test.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:35:02.763Z",
+    "completed": "2026-10-04T10:35:06.155Z",
+    "exitCode": 1,
+    "signal": null
+  }
+]
