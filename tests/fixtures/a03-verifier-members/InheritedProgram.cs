@@ -17,7 +17,7 @@ static class Program
                     kind = member is FieldInfo ? "field" : "method",
                     flags = member is FieldInfo field ? (int)field.Attributes : (int)((MethodBase)member).Attributes,
                     error = "" };
-            } catch (MissingMemberException error) {
+            } catch (Exception error) when (error is MissingMemberException || error is ArgumentOutOfRangeException) {
                 return new { token, success = false, definition = 0, owner = 0, name = "", kind = "", flags = 0,
                     error = error.GetType().Name };
             }

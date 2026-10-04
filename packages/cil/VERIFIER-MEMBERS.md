@@ -14,8 +14,8 @@ resolved reference to it share the same record. AST tokens remain scoped to this
 context and are not normalized verification-stack types.
 
 Supported references have a local, non-generic TypeDef parent and exactly match
-the nearest declared field/method name and encoded signature along a local class
-base chain. Constructors and type initializers must be declared directly.
+a field name/signature declared directly, or the nearest exact method declaration
+along a local class base chain. Constructors and type initializers must also be declared directly.
 Interface inheritance and unresolved/generic ancestry remain explicit unknowns. Overloads are indexed by
 owner, name and signature, not searched linearly. Public and private definitions
 can both be resolved: accessibility is a separate query, not implied by symbol
@@ -87,17 +87,17 @@ hierarchy factory and query paths are unchanged.
 ## Inherited-reference increment (qualification pending)
 
 The isolated `codex/a03-inherited-member-references` increment adds nearest exact
-class declaration lookup; an ambiguous or compiler-controlled nearest match
+class method declaration lookup; an ambiguous or compiler-controlled nearest match
 never falls back to a base member. Resolution does not grant accessibility or
 perform receiver typing/dispatch. Unknown direct misses now retain the actual
 unresolved base result when traversal reaches one. Class metadata validity and
 value-type normalization remain separate from this bounded lookup service.
 
-Seven authored tests cover inherited fields/overloads, nearest hiding, private
+Seven authored tests cover direct-only fields and inherited method overloads, nearest hiding, private
 access separation, direct-only constructors, ambiguous/compiler-controlled
 barriers, unknown ancestry, budgets, cancellation and owned source snapshots.
 A ten-case native plan uses pinned SDK 10.0.201/CoreCLR 10.0.5 `Module.ResolveMember`:
-eight expected declaration agreements plus two explicit adapter unknowns where
+five expected declaration agreements plus five explicit adapter unknowns where
 native resolution is expected to throw. The existing reference harness seams
 retain tool/source/image hashes and raw output before assertions. No methods
 from the generated fixture are executed. Primary implementation evidence is
@@ -109,3 +109,20 @@ not run. They await the serial limiter slot, with concurrency 1 and a 1 GiB heap
 The exact existing `benchmark-verifier-members.mjs` controls will run once on
 the parent and candidate; all chronological samples and any failures will be
 retained. The wider engine/platform matrix remains staged.
+
+### Native correction before qualification
+
+The initial broader hypothesis allowed inherited field references. Pinned native
+`Module.ResolveMember` rejected the first such reference; its complete stopped
+output and original fixture bytes are retained in `inherited-native-initial-failure.json`.
+An independent two-class/one-field diagnostic confirms the declaring-owner
+reference resolves while the derived-owner reference fails, with native reflected
+base/field ownership in `inherited-field-diagnostic.json`. The pinned
+[CoreCLR FindField](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/memberload.cpp#L1378)
+searches only the supplied class, unlike FindMethod's recursive base search.
+[RuntimeModule](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/System.Private.CoreLib/src/System/Reflection/RuntimeModule.cs#L185)
+catches MissingFieldException and the literal-field fallback rejects these
+MemberRef tokens as ArgumentOutOfRangeException. This is a semantic correction,
+not unavailable oracle evidence. Product lookup now keeps fields direct-only;
+tests require all three derived-owner field references to remain unknown.
+No accessibility, receiver typing or dispatch support is implied.

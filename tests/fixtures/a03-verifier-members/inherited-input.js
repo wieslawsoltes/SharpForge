@@ -39,7 +39,11 @@ export function inheritedMemberFixture(decorate) {
 }
 
 export const inheritedKnownCases = Object.freeze({
-  baseField: 0x04000001, inheritedField: 0x04000001, hiddenField: 0x04000003,
-  stringField: 0x04000004, hiddenMethod: 0x06000005, inheritedOverload: 0x06000002,
+  baseField: 0x04000001, hiddenMethod: 0x06000005, inheritedOverload: 0x06000002,
   privateMethod: 0x06000003, directConstructor: 0x06000006,
+});
+
+export const inheritedUnknownCases = Object.freeze({
+  inheritedField: 'ArgumentOutOfRangeException', hiddenField: 'ArgumentOutOfRangeException',
+  stringField: 'ArgumentOutOfRangeException', inheritedConstructor: 'MissingMethodException', missing: 'MissingMethodException',
 });

@@ -12,9 +12,9 @@ export function memberLookup(snapshot, types, budget) {
       const record = snapshot.index.get(current.token)?.get(reference.name)?.get(reference.signature.key);
       if (record === null) return unknown('ambiguous-member', token);
       if (record) return record;
-      // Interface inheritance and initializer lookup are separate from class member inheritance.
+      // CoreCLR field resolution is declaration-only; methods may search class bases.
       const initializer = kind === 'method' && (reference.name === '.ctor' || reference.name === '.cctor');
-      if (current.isInterface || initializer) {
+      if (kind === 'field' || current.isInterface || initializer) {
         return unknown('unresolved-member-declaration', token);
       }
       if (depth >= budget.maxDepth || visited >= budget.maxQueryNodes) rejectMember('CILVM0002', 'member base lookup');
