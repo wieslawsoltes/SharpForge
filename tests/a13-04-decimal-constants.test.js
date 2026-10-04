@@ -116,6 +116,23 @@ test('same-name nested types, different namespaces and TypeSpec handles are not 
   }
 });
 
+test('a top-level TypeDef declaration uses the same exact decimal format', () => {
+  const heap = new TextEncoder().encode('\0Decimal\0System\0');
+  const metadata = {
+    counts: { 2: 1 },
+    row: () => [1, 1, 9],
+    streams: new Map([['#Strings', heap]]),
+    string: (index) => (index === 1 ? 'Decimal' : 'System'),
+  };
+  const constant = {
+    typeToken: 0x02000001,
+    signature: new Writer().u8(17).compressed(4).u8(1).u32(15).u32(0).u32(0).finish(),
+  };
+  bindConstantTypes([constant], metadata);
+  assert.equal(constant.value, '1.5');
+  assert.deepEqual(constant.decimal, { coefficient: 15n, scale: 1, negative: false });
+});
+
 test('bound decimal values own their scalar representation after PE/PDB mutation', () => {
   const peBytes = new Uint8Array(assembly),
     pdbBytes = new Uint8Array(pdb);
