@@ -76,11 +76,22 @@ macros are unsupported. Unknown Ex commands report their names. The behavioral
 suite lists unsupported features with reasons; it tests the native model rather
 than the retained third-party CodeMirror files.
 
+Visual blocks use the same visual-column geometry as native box editing. Partial
+tabs split into unselected spaces, wide graphemes remain whole, vertical motions
+retain their display column through short lines, and block registers keep their
+row fragments. Change, insert, append, replace, shift, yank and put operate on the
+selected rows as one history operation. `I` leaves rows before the block untouched;
+`A` pads them, while `$A` appends at each line end. Blocks are limited to 10,000
+rows and the configured register character budget. The reference for these
+semantics is [Vim's visual-block operator contract](https://vimhelp.org/visual.txt.html#blockwise-operators).
+
 Profile switches replace only the binding table and modal dispatch. Buffers,
 selections, folds, breakpoints, composition and undo history remain attached to
 the editor. Leaving Vim closes its explicit undo group without replacing the
 model or cancelling an IME composition. Switching documents clears pending
 chords and closes a group against the old document before changing models.
+Returning to an unfinished Vim insert/replace session opens a fresh explicit
+history group, so intervening edits made with another profile stay separate.
 
 ## Runnable example and validation
 
@@ -89,7 +100,8 @@ harness. The example creates one editor and switches all five profiles over that
 same document. Named commands can be invoked independently of keybindings.
 
 The focused suites are `tests/a20-07-keybindings.test.js`,
-`tests/a20-09-profiles.test.js` and `tests/editor-vim.test.js`. They use the real
+`tests/a20-09-profiles.test.js`, `tests/editor-vim.test.js`, and
+`tests/a20-vim-blocks.test.js`. They use the real
 native text model; view/provider seams in Node fixtures are not browser evidence.
 The editor benchmark scope records model timings separately from actual browser
 keystroke-to-paint latency. No native Visual Studio, Vim executable, NVDA or

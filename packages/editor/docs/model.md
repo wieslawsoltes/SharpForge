@@ -20,6 +20,8 @@ Selections use `{anchor,active}` UTF-16 offsets. `{anchor,head}` is an accepted 
 
 Multi-caret functions cover add/remove/collapse, next/all occurrences, and line-end carets. `replaceSelections` performs every caret edit in one transaction. Box selection records visual columns rather than treating columns as UTF-16 indices. Tab interiors expand into equivalent unselected spaces during editing; short rows retain virtual-space padding. Clipboard functions return plain text and optional versioned metadata; matching fragment counts distribute per caret, including fragments containing newlines. Rectangular paste grows missing lines in the same undo operation.
 
+`boxSelectionEdits` and `boxSelectionText` share the same geometry for editing and copying. Wide graphemes remain indivisible when a rectangle intersects only one of their visual cells. `padVirtualSpace:false` lets deletion leave short rows unchanged. Box insertion defaults to a 16 Mi-character combined payload budget, including tab splitting, virtual padding, and newly created clipboard rows; `maxInsertedCharacters` explicitly configures that budget up to one billion UTF-16 code units. Exceeding it rejects preparation before any model edit.
+
 ## Undo and dirty state
 
 `UndoStack` stores forward and inverse edits, selection snapshots, command identity, and a persistent linked sequence within each coalesced group. It never stores a complete document value. A 500 KB document can retain 1,000 one-character undo groups with 1,000 retained payload characters.
