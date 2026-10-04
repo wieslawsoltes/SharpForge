@@ -1,3 +1,4 @@
+import { applySceneCommands } from './scene-commands.js';
 import {XAML,CONTROLS,propertiesFor,eventsFor,frameworkType} from '@sharpforge/framework';
 import {RenderSurface,cssColor,parseColor,drawingPrimitives} from './surface.js';
 const suffix=t=>t.slice(t.lastIndexOf('.')+1);
@@ -18,20 +19,7 @@ export class WinUIHost {
     this.onKey=e=>{if(e.key==='Escape')this.hideFlyouts();};root.addEventListener('keydown',this.onKey);
   }
   setBackend(backend){if(!['auto','webgpu','canvas2d','dom'].includes(backend))throw new TypeError('Unknown renderer');if(this.backend===backend)return;this.backend=backend;for(const s of this.surfaces.values())s.dispose();this.surfaces.clear();this.schedule();}
-  apply(commands){if(!Array.isArray(commands))commands=[commands];if(commands.length>20000)throw new RangeError('UI command batch limit');for(const command of commands){if(!command||typeof command.op!=='string')throw new TypeError('Invalid UI command');
-    const c=command,n=this.nodes.get(c.id);
-    if(c.op==='reset'){this.load(c.snapshot);continue;}
-    if(c.op==='create'){if(typeof c.id!=='string'||!frameworkType(c.type))throw new TypeError('Unknown UI object');this.nodes.set(c.id,{id:c.id,type:c.type,properties:{...c.properties},events:[],collections:{}});}
-    else if(c.op==='set'&&n)n.properties[c.property]=c.value;
-    else if(c.op==='event'&&n){const set=new Set(n.events);if(c.enabled)set.add(c.event);else set.delete(c.event);n.events=[...set];}
-    else if(c.op==='collection'&&n)n.collections[c.property]=[...c.items];
-    else if(c.op==='draw'&&n)n.drawing=c.commands;
-    else if(c.op==='activate'){if(c.snapshot)this.merge(c.snapshot);if(!this.windows.includes(c.id))this.windows.push(c.id);}
-    else if(c.op==='close'){this.windows=this.windows.filter(id=>id!==c.id);}
-    else if(c.op==='focus')queueMicrotask(()=>{const e=this.elements.get(c.id);(e?.querySelector('input,textarea,select,button')??e)?.focus();});
-    else if(c.op==='flyout')this.pendingFlyouts.push(c);
-    if(this.nodes.size>20000)throw new RangeError('WinUI object limit');
-  }this.schedule();}
+  apply(commands) { applySceneCommands(this, commands); }
   merge(scene){if(scene?.version!==1||!Array.isArray(scene.nodes)||!Array.isArray(scene.windows)||scene.nodes.length>10000)throw new TypeError('Invalid WinUI scene');for(const n of scene.nodes){if(typeof n.id!=='string'||!frameworkType(n.type))throw new TypeError('Unknown scene node');this.nodes.set(n.id,{...n,properties:{...n.properties},collections:{...n.collections},events:[...(n.events??[])]});}}
   load(scene){this.openFlyouts.clear();this.nodes.clear();this.windows=[];if(scene){this.merge(scene);this.windows=[...scene.windows];}this.schedule();}
   schedule(){if(this.disposed||this.frame)return;const w=this.document.defaultView;this.frame=(w.requestAnimationFrame??(f=>setTimeout(f,16)))(()=>{this.frame=0;try{this.render();}catch(e){this.options.onError(e);}});}
