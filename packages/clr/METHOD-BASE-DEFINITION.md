@@ -37,15 +37,17 @@ optional modifiers are not discarded during implicit slot matching. This follows
 as used by its virtual-slot signature comparison. Equivalent references across
 modules resolve through the existing loader. This does not interpret modifier
 semantics or implement type equivalence, generic modifier expressions or class
-MethodImpl mappings. Modified outer generic arguments remain unsupported; the
-existing generic argument restrictions are preserved.
+MethodImpl mappings. Modifier-bearing generic argument subtrees remain unsupported,
+including beneath arrays and nested generic instances. A scalar context flag in
+the existing recursive key walk preserves this limit without an extra tree walk
+or per-node data allocation; existing generic argument restrictions are preserved.
 
 Modifier matching extends the existing cached signature keys; it introduces no
 persistent cache or descriptor fields. Signature depth/node limits apply before
 binding; generic metadata row limits apply before querying a resolved modifier's
 generic parameters, and modifier identities share the context's signature-identity
 budget. Cancellation is checked after asynchronous binding and before publishing
-a complete signature key. Qualification of this increment is pending: six
+a complete signature key. Qualification of this increment is pending: seven
 authored tests and one mandatory ten-record native oracle are prepared. Scheduled
 validation will retain parent/candidate base-definition controls and raw samples;
 no native, test, benchmark or static result is claimed yet.

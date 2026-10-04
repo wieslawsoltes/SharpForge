@@ -21,7 +21,8 @@ explicit test-host CoreLib resolver (ordinary benchmark defaults are preserved):
 node packages/clr/tools/benchmark-method-base-definition.mjs tests/fixtures/clr-method-base-modifiers/native-method-bases.json --corelib-intrinsics
 ```
 
-Kind/order/identity mismatches, malformed tokens, unsupported generic modifiers,
+Kind/order/identity mismatches, malformed tokens, unsupported generic modifier
+definitions and modifier-bearing generic argument subtrees,
 limits and cancellation are additionally covered by authored metadata tests.
 Opaque intrinsic-slot traversal, TypeSpec modifier resolution and generic base
 substitution remain unsupported by this increment.

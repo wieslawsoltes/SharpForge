@@ -118,6 +118,31 @@ test('CLR modifier row and identity limits apply before expanding generic descri
   await assert.rejects(bounded.key(ordinary.methodDefinition(0x06000007)), fails(LoadErrorCode.LimitExceeded));
 });
 
+test('CLR generic argument subtrees reject modifiers beneath arrays and nested generic instances', async () => {
+  const wrap = [
+    element => ({ kind: 'szarray', element }),
+    element => ({ kind: 'array', element, rank: 2, sizes: [], lowerBounds: [] }),
+    (element, box) => ({ kind: 'genericInstance', type: { kind: 'class', token: box },
+      arguments: [{ kind: 'szarray', element }] }),
+  ];
+  for (const kind of ['modreq', 'modopt']) {
+    for (const argument of wrap) {
+      let box;
+      const image = fixture((first, second, row, md) => {
+        if (!box) {
+          box = marker(md, 'Box`1');
+          md.add(42, [0, 0, codedIndex('TypeOrMethodDef', box), md.string('T')]);
+        }
+        return { kind: 'genericInstance', type: { kind: 'class', token: box },
+          arguments: [argument(modified(first, integer, kind), box)] };
+      });
+      const module = await load(baseContext(), image);
+      await assert.rejects(module.methodDefinition(0x06000007).getBaseDefinition(),
+        error => error.code === LoadErrorCode.TypeLoad && error.message.includes('argument subtrees'));
+    }
+  }
+});
+
 test('CLR cancelled external modifier binding can retry without a partially cached signature', async () => {
   const controller = new AbortController();
   let first = true;
