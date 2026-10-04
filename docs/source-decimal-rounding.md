@@ -254,8 +254,8 @@ reuse their existing declared-width contracts. Internal UInt32/UInt64 values
 keep the shared signed CLI bit-pattern carriers; their declared types govern
 widening and display. Each wire name is `decimal.ToName#1`, with append-only IDs
 and exact return-type validation. No new implicit operand or result conversions
-are admitted. ToSingle, ToDouble, GetBits and other unregistered Decimal members
-remain separate work.
+are admitted. The floating family below adds ToSingle/ToDouble separately;
+GetBits and other unregistered Decimal members remain separate work.
 
 `tests/a05-source-decimal-integral-conversions.test.js` authors three-engine
 coverage for every signed/unsigned width, fractional boundary truncation,
@@ -264,3 +264,34 @@ arrays, exact boxed types, unsigned formatting and Decimal widening. All 30 focu
 integral-conversion, sign, and Decimal-operation checks passed at `ebc2fea8`,
 using Node 24, one worker, and a 512 MB old-space limit. Native/platform/performance
 evidence remains staged; #1350/#1351 stay open.
+
+## Static floating conversions
+
+`float decimal.ToSingle(decimal d)` and `double decimal.ToDouble(decimal d)`
+append after the integral conversions. Their existing intrinsic returns the
+shared immutable `r4` and `r8` carriers. The registrations reuse the existing
+Decimal conversion, with no second algorithm or changed rounding policy.
+
+The pinned .NET 10.0.5
+[Decimal methods](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs#L703-L811)
+use the common
+[DecCalc implementation](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.DecCalc.cs#L1741-L1762):
+ToDouble combines the coefficient limbs and applies the decimal scale and sign;
+ToSingle narrows that result to binary32. Precision may be lost. Decimal's finite
+range fits both floating formats, and a negative Decimal zero retains its sign.
+The methods behave the same inside `checked` and `unchecked`.
+
+```csharp
+using System;
+Console.WriteLine(decimal.ToSingle(d: 16777217m)); // 16777216
+Console.WriteLine(decimal.ToDouble(d: 16777217m)); // 16777217
+```
+
+`tests/a05-source-decimal-floating-conversions.test.js` authors source, reloaded
+source and direct-CIL cases for actual stored carrier tags and IEEE bits,
+binary rounding boundaries, the full Decimal range, signed zero, named-argument
+evaluation, typed boxes, widening after Single rounding and rejected signatures.
+All 30 focused floating-conversion, integral-conversion, and Decimal-operation
+checks passed at `7a06ec21`, using Node 24, one worker, and a 512 MB old-space
+limit. Native/platform/performance evidence remains deferred; #1350/#1351 stay
+open.
