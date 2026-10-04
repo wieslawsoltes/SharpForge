@@ -4,6 +4,8 @@ import {AnimationClock} from '../packages/framework/src/animation-clock.js';
 import {Compositor} from '../packages/rendering/src/composition/compositor.js';
 import {ThemeTransition, ThemeTransitionCoordinator} from '../packages/rendering/src/animation/theme-transitions.js';
 import {ImplicitTransition, ImplicitTransitionCoordinator} from '../packages/rendering/src/animation/implicit-transitions.js';
+import {ConnectedAnimationService} from '../packages/rendering/src/animation/connected-animation.js';
+import {NavigationTransitionCoordinator} from '../packages/rendering/src/animation/navigation-transitions.js';
 
 const create = () => new Compositor({clockFactory: adapter => new AnimationClock(adapter)});
 
@@ -47,5 +49,37 @@ test('Scalar and Vector3 implicit transitions apply transient values and clear t
   scalar.Duration = -1;
   assert.throws(() => coordinator.propertyChanged(element, 'Opacity', 0, 1), /duration/);
   coordinator.dispose();
+  compositor.dispose();
+});
+
+test('ConnectedAnimation interpolates a retained snapshot, completes once and releases on navigation cancellation', () => {
+  const compositor = create();
+  let released = 0, now = 0, completed = 0;
+  const service = new ConnectedAnimationService(compositor, {
+    getBounds: value => value, capture: () => ({dispose() { released++; }}), now: () => now,
+    createOverlay: () => compositor.CreateSpriteVisual(), duration: 100
+  });
+  const source = {x: 0, y: 0, width: 20, height: 10}, destination = {x: 100, y: 50, width: 40, height: 20};
+  const animation = service.PrepareToAnimate('hero', source);
+  animation.add_Completed(() => completed++);
+  assert.equal(service.GetAnimation('hero'), animation);
+  assert.equal(animation.TryStart(destination), true);
+  compositor.advance(50);
+  assert.deepEqual(animation.overlay.Offset, [50, 25, 0]);
+  assert.deepEqual(animation.overlay.Scale, [1.5, 1.5, 1]);
+  compositor.advance(50);
+  assert.equal(released, 1);
+  assert.equal(completed, 1);
+  assert.equal(animation.TryStart(destination), false);
+  service.PrepareToAnimate('cancel', source);
+  const navigation = new NavigationTransitionCoordinator({}, {connectedAnimations: service});
+  navigation.cancelled();
+  assert.equal(service.GetAnimation('cancel'), null);
+  assert.equal(released, 2);
+  const expired = service.PrepareToAnimate('expired', source);
+  now = 3000;
+  assert.equal(expired.TryStart(destination), false);
+  assert.equal(released, 3);
+  service.dispose();
   compositor.dispose();
 });
