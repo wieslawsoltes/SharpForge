@@ -6,11 +6,11 @@ import {ownsHeapReference} from './heap-reference.js';
 const targets = new WeakMap();
 
 /** Validate all receiver facts while the original operands still own their roots. */
-export function requireInstanceCalliReceiver(vm, token, receiver) {
+export function requireInstanceCalliReceiver(vm, token, receiver, declaration = false) {
   const epoch = executionCodeState(vm);
   let profile = targets.get(epoch);
   if (!profile) targets.set(epoch, profile = new InstanceCalliTargets(vm.inspector));
-  if (!profile.accepts(token)) {
+  if (!(declaration ? profile.acceptsDeclaration(token) : profile.accepts(token))) {
     throw new ManagedFault('NotSupportedException', 'Instance calli requires a nongeneric internal reference-class method');
   }
   if (receiver === null) throw new ManagedFault('NullReferenceException', 'Null instance calli receiver');
@@ -27,4 +27,5 @@ export function requireInstanceCalliReceiver(vm, token, receiver) {
   if (!types.castCache.isAssignableFrom(owner, actual)) {
     throw new ManagedFault('InvalidProgramException', 'Instance calli receiver is incompatible with the selected method');
   }
+  return actual;
 }

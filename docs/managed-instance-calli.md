@@ -38,7 +38,8 @@ Normal frame limits, byte quotas, initialization rules, exception unwinding,
 root scanning, debugger offsets and method events continue through vm.call.
 In-memory snapshots preserve frozen pointer and receiver identities; restore
 invalidates derived metadata caches. No snapshot fields or dispatch loop are
-added. Typed instance-pointer storage, ldvirtftn, generic/value/interface targets,
+added. The [virtual-pointer follow-up](virtual-instance-calli.md) adds bounded
+`ldvirtftn` selection. Typed instance-pointer storage, generic/value/interface targets,
 generic receiver objects, external targets, tail., jmp and source-compiler
 lowering remain outside this increment of #1359. Portable snapshots, native and
 browser parity, and performance qualification remain pending.
