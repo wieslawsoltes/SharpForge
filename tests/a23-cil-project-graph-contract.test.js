@@ -75,7 +75,7 @@ test('public project graph rejects missing content, forged hashes and incorrect 
   wrongHash.externalReferences.assemblies[0].sha256 = '0'.repeat(64);
   assert.throws(() => loadProjectAssembly(emitAssembly(wrongHash), {dependencies: [fixture.assembly]}), {code: 'PRJ0003'});
   const wrongMethod = consumer(referenceFixture());
-  wrongMethod.externalReferences.methods[1].token = wrongMethod.externalReferences.methods[0].token;
+  wrongMethod.externalReferences.methods[1].token = 0x0600ffff;
   assert.throws(() => loadProjectAssembly(emitAssembly(wrongMethod), {dependencies: [fixture.assembly]}), {code: 'PRJ0005'});
 });
 
