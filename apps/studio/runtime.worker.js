@@ -1,21 +1,17 @@
 import {createWorkerProtocol,readWorkerRequest} from './workers/protocol.js';
 import {applyDesignPatch} from '@sharpforge/runtime';
-import {loadAssembly, equalBytes} from '@sharpforge/cil';
-import {createRuntimeLaunchCandidate} from './workers/runtime-launch.js';
+import {createRuntimeExecutable,createRuntimeLaunchCandidate} from './workers/runtime-launch.js';
+import {requireSingleAssemblyUpdate} from './workers/runtime-inputs.js';
+import {runtimeSourceRecords} from './workers/runtime-sources.js';
 import {RuntimeActivity} from './workers/runtime-activity.js';
-let session=null,uiCommands=[],output=[],loadedModule=null,sessionSerial=0;
+const executable=createRuntimeExecutable();
+let session=null,uiCommands=[],output=[],sessionSerial=0;
 const activity=new RuntimeActivity({getSession:()=>session,getSerial:()=>sessionSerial,flush,publishState:state,
   onError:error=>self.postMessage({event:'error',sessionId:sessionSerial,message:error.message})});
 function flush(){if(uiCommands.length){self.postMessage({event:'ui',sessionId:sessionSerial,commands:uiCommands});uiCommands=[];}if(output.length){self.postMessage({event:'output',sessionId:sessionSerial,text:output.join('')});output=[];}}
 function state(){activity.observeState();flush();if(session)self.postMessage({event:'state',sessionId:sessionSerial,...session.state(),assemblyLoad:session.assemblyLoad??null});}
 function schedule(){activity.schedule();}
 function scheduleAnimations(){activity.scheduleAnimations();}
-function executable(params){
-  if(!params.assembly)return {image:params.image,load:null};
-  const started=performance.now(),hit=loadedModule&&equalBytes(loadedModule.bytes,params.assembly);
-  if(!hit)loadedModule={bytes:params.assembly.slice(),image:loadAssembly(params.assembly)};
-  return {image:loadedModule.image,load:{format:'ECMA-335',cacheHit:!!hit,milliseconds:performance.now()-started,bytes:params.assembly.length}};
-}
 function launch(params){
   // Fully construct and bind a candidate first. A malformed replacement must not destroy a live session.
   const {candidate,capabilities}=createRuntimeLaunchCandidate(params,{
@@ -23,10 +19,10 @@ function launch(params){
     onUICommand:command=>{uiCommands.push(command);if(uiCommands.length>=1024)flush();}
   });
   activity.stop();session?.stop();session=candidate;sessionSerial++;output=[];uiCommands=[];self.postMessage({event:'ui',sessionId:sessionSerial,commands:[{op:'reset',snapshot:{version:1,windows:[],nodes:[]}}]});activity.start({manualAnimations:!!params.manualAnimations});
-  self.postMessage({event:'loaded',sessionId:sessionSerial,sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});
+  self.postMessage({event:'loaded',sessionId:sessionSerial,sources:runtimeSourceRecords(session)});
   state();schedule();
   return {started:true,sessionId:sessionSerial,capabilities,profile:params.managedIL?'SharpForge.ManagedIL/1':'SharpForge.CIL',
-    sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text,version:s.version}))};
+    sources:runtimeSourceRecords(session)};
 }
 const handlers=createWorkerProtocol('runtime');
 for(const method of ["launch"])handlers.registerHandler(method,(params,method)=>{let result;result=launch(params);return result;});
@@ -51,18 +47,20 @@ for(const method of ["gotoTargets"])handlers.registerHandler(method,(params,meth
 for(const method of ["setNextStatement"])handlers.registerHandler(method,(params,method)=>{let result;result=session.setNextStatement(params);state();return result;});
 for(const method of ["hotReload"])handlers.registerHandler(method,(params,method)=>{
   let result;
+  requireSingleAssemblyUpdate(session,'Hot reload');
   result=session.applyChanges(params.image??params.assembly,{expectedVersion:params.expectedVersion});
   self.postMessage({event:'loaded',sessionId:sessionSerial,
-    sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});
+    sources:runtimeSourceRecords(session)});
   state();
   return result;
 });
 for(const method of ["evaluateFunction"])handlers.registerHandler(method,(params,method)=>{let result;result=session.evaluateFunction(params.expression,{...params,allowSideEffects:params.allowSideEffects===true});state();return result;});
 for(const method of ["loadSymbols"])handlers.registerHandler(method,(params,method)=>{
   let result;
+  requireSingleAssemblyUpdate(session,'Symbol replacement');
   result=session.loadSymbols(params.pdb??null,params.sources??{});
   self.postMessage({event:'loaded',sessionId:sessionSerial,
-    sources:(session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});
+    sources:runtimeSourceRecords(session)});
   state();
   return result;
 });

@@ -39,7 +39,10 @@ identifies the graph and tags resources with their owning assembly. Resource
 payload inspection remains available through each original module inspector.
 
 Library entry modules remain libraries. A direct CIL host can select one of their
-static methods using the existing `methodToken` and `arguments` options. Direct CIL custom-method invocation keeps its explicit host argument contract.
+static methods using the existing `methodToken` and `arguments` options. Source
+launches retain `withSourceLaunchArguments` for the verified compiler startup;
+this preserves startup initialization. Direct CIL custom-method invocation keeps
+its explicit host argument contract.
 
 ## Type and source identities
 
@@ -52,11 +55,15 @@ bracket-delimited display representation to recover assembly scope.
 Source URI collisions use the graph loader's deterministic `module.sourceUris`
 mapping. Sequence points retain `originalUri`, `assemblyKey` and any supplied
 `project`/`contextId`. Both debuggers therefore refer to the same executable
-documents. The execution view publishes original module tokens and source-to-CIL offsets;
-generated adapters have no original physical token. Direct graph debug sessions
-use `autoLoadSymbols: false` and the verified source maps because a single entry
-PDB cannot describe remapped dependency tokens. Explicit stack-frame and Studio
-source-navigation composition follows in dependent debugger and worker layers.
+documents. Stack frames expose the same provenance and `originalMethodToken`,
+which identifies a MethodDef only inside that original assembly. The direct CIL
+frame's existing `methodToken` and instruction address remain tokens in the
+runtime execution view. Linked source frames retain original module tokens and
+source-to-CIL offsets; generated adapters have no original physical token.
+Direct graph debug sessions use `autoLoadSymbols: false` and the
+verified source maps; a single entry PDB cannot describe remapped dependency
+tokens. Studio retains those source identities when opening current workspace
+text or the existing read-only verified-source viewer.
 
 ## Admission, limits and updates
 
@@ -71,6 +78,12 @@ also bounds aggregate rows and the CLI token address space. Dependencies with th
 same full identity and different bytes are rejected, including conflicting TFM
 outputs. Every supplied artifact is validated, including an unused one.
 
+Studio's worker cache key covers all dependency bytes and project context data.
+A changed library never reuses a previously verified graph. A failed replacement
+launch preserves the existing running or paused session. Multi-module Hot Reload
+and external PDB replacement require a full relaunch with the complete graph and
+produce `SF_RUNTIME_GRAPH_UPDATE`; single-module behavior remains available.
+
 The compiler's initial closed profile supports canonical SharpForge nongeneric
 classes, constructors, ordinary methods, properties, indexers and fields. Its
 existing diagnostics reject unsupported external generic, virtual, abstract,
@@ -82,3 +95,19 @@ type initializer and caches the original managed fault without replaying its
 effects. Direct CIL retains its existing `TypeInitializationException` wrapper.
 The two engines agree on once-only initialization effects and failure propagation;
 this profile does not claim identical exception object types between them.
+
+
+## Worker activity lifecycle
+
+The browser worker composes the verified project loader with the existing
+`RuntimeActivity` lifecycle. Activity owns cooperative scheduling, animation clocks
+and execution metrics. Constructing and binding a new candidate succeeds before
+replacing the active session. Stopping a session also stops its scheduled activity.
+The same graph/source helpers serve load replies, launch results and the permitted
+single-assembly symbol/update paths, preserving document and assembly provenance.
+
+The shared worker protocol retains the named compiler and runtime operations,
+including `executionMetrics`. Closed graph hot reload and independent replacement
+symbols still require an explicit complete graph update contract and are rejected.
+The source/worker regression scope and upstream activity/occupancy regressions are
+qualified together by the integration coordinator.

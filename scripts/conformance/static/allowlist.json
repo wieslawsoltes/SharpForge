@@ -443,6 +443,13 @@
       "reason": "Parity fixture registry loads explicitly selected trusted fixture modules; fixture paths are host code, not managed input."
     },
     {
+      "path": "tests/support/runtime-project-worker.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "4161af84e673e3d284522f96d56318fc9417b1bc31938462c6b4a28428071a97",
+      "reason": "Node test transport installs self.postMessage then loads only the fixed checked-in production runtime worker; no user-selected executable input."
+    },
+    {
       "path": "tests/workspace-io.test.js",
       "operation": "dynamic-import",
       "count": 3,
