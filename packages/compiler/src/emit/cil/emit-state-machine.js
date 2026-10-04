@@ -47,10 +47,24 @@ export const StateMachineEmission = Base =>
      * field before this call has left its protected regions.
      */
     cacheState() {
+      const il = this.il,
+        from = il.instructions.length;
+      this.stateCache = { instructions: [], isRead: false };
+      // An iterator runs on the thread that calls MoveNext: nothing writes its state behind its back.
+      this.stateSlot = null;
+      if (this.machine.kind === 'iterator') return;
       this.stateSlot = this.temp(this.core.int);
       this.transientSlots.add(this.stateSlot);
       this.loadState();
-      this.il.emit('stloc', this.stateSlot);
+      il.emit('stloc', this.stateSlot);
+      /** The instructions that keep the cache, dropped when no finally block has a guard (`dropUnusedStateCache`). */
+      this.stateCache = { instructions: il.instructions.slice(from), isRead: false };
+    }
+    /** A machine without a guarded finally block does not read the cached state: it is not kept. */
+    dropUnusedStateCache() {
+      if (this.stateCache.isRead) return;
+      const dropped = new Set(this.stateCache.instructions);
+      this.il.instructions = this.il.instructions.filter(instruction => !dropped.has(instruction));
     }
     newDispatchScope(entry, parent) {
       return { first: this.nextState, labels: [], firstYield: this.nextYield, yieldLabels: [], entry, parent };
@@ -116,7 +130,12 @@ export const StateMachineEmission = Base =>
       this.il.emit('ldarg', 0).emit('ldfld', this.machine.fields.state.token);
     }
     storeState(state) {
-      this.il.emit('ldarg', 0).emit('ldc.i4', state).emit('dup').emit('stloc', this.stateSlot).emit('stfld', this.machine.fields.state.token);
+      const il = this.il,
+        from = il.instructions.length + 2;
+      il.emit('ldarg', 0).emit('ldc.i4', state);
+      if (this.stateSlot !== null) il.emit('dup').emit('stloc', this.stateSlot);
+      this.stateCache.instructions.push(...il.instructions.slice(from));
+      il.emit('stfld', this.machine.fields.state.token);
     }
     /** Marks the point a suspended method continues at; it is running again. */
     resumeAt(label) {
@@ -156,7 +175,10 @@ export const StateMachineEmission = Base =>
       const guardedFinally = () => {
         const suspending = il.newLabel(),
           from = il.instructions.length;
-        il.emit('ldloc', this.stateSlot).emit('ldc.i4', RUNNING).emit('bne.un', suspending);
+        this.stateCache.isRead = true;
+        if (this.stateSlot === null) this.loadState();
+        else il.emit('ldloc', this.stateSlot);
+        il.emit('ldc.i4', RUNNING).emit('bne.un', suspending);
         guard.push(...il.instructions.slice(from));
         emitFinally();
         il.mark(suspending);
@@ -167,6 +189,7 @@ export const StateMachineEmission = Base =>
     }
     /** Moves the slots that live across a suspension into fields of the machine. */
     hoistLocals() {
+      this.dropUnusedStateCache();
       const il = this.il,
         machine = this.machine,
         names = new Map([...this.slots].map(([local, slot]) => [slot, local.name])),
