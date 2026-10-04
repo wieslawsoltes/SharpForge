@@ -51,8 +51,8 @@ export class OverrideSignatures {
       return `m${node.index}`;
     }
     if (['byref', 'pointer', 'szarray', 'array'].includes(node.kind)) {
-      if (node.kind === 'array' && (node.sizes.length || node.lowerBounds.length)) {
-        throw fail('Explicit array bounds in override signatures require a later binding service');
+      if (node.kind === 'array' && (node.sizes.length || node.lowerBounds.some(bound => bound !== 0))) {
+        throw fail('Sized or nonzero-bound arrays in override signatures require a later binding service');
       }
       return `${node.kind}:${node.rank ?? 0}(${await this.#type(node.element, module, arity, signal)})`;
     }

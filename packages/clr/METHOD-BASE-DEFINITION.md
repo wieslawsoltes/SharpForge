@@ -12,7 +12,8 @@ nearest override. Results retain the base method's declaring type and module.
 The service reuses canonical type graphs, method ownership lists, signature ASTs
 and generic-parameter metadata. Matching uses canonical resolved type identities
 across modules, including primitive versus equivalent class/value encodings;
-byref, pointer, vector and unbounded multidimensional array shapes are structural.
+byref, pointer, vector and multidimensional array shapes are structural. Omitted
+and explicitly zero array lower bounds represent the same default shape.
 Unconstrained method generic parameters compare by position and arity. Return
 types participate in matching. A closer nonvirtual match or final virtual match
 is rejected. Static methods cannot match instance signatures. Type graphs and
@@ -21,8 +22,8 @@ signatures remain lazy; no executable body is read.
 This is an explicit partial GetBaseDefinition contract. Types with MethodImpl
 rows (including explicit interface or covariant overrides), strict access checks,
 generic base instantiation, constrained generic methods, type generic variables,
-generic-instance/modifier/function-pointer signature types and explicit array
-bounds require later services and fail with `SFCLR012` when traversal needs them.
+generic-instance/modifier/function-pointer signature types, array sizes and nonzero
+lower bounds require later services and fail with `SFCLR012` when traversal needs them.
 Opaque host intrinsics have no method metadata: reaching one before locating a
 slot introduction also fails, so an Object override cannot silently become its
 own root. A complete metadata chain with no matching ancestor introduces the

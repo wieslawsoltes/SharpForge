@@ -38,6 +38,22 @@ test('CLR static, nonvirtual and interface base queries are identity operations 
   assert.equal(module.methodBodyReadCount, 0);
 });
 
+test('CLR zero multidimensional lower bounds match omitted defaults while nonzero bounds remain explicit', async () => {
+  for (const lowerBounds of [[0, 0], [0, 1]]) {
+    const context = baseContext();
+    const module = await load(context, hierarchyFixture(({ md }) => {
+      for (const row of [0, 3, 6]) {
+        const type = { kind: 'array', element: { kind: 'primitive', name: 'int' }, rank: 2,
+          sizes: [], lowerBounds: row === 0 ? [] : lowerBounds };
+        md.rows[6][row][4] = md.blob(encodeSignature({ kind: 'method', hasThis: true, returnType: type, parameters: [type] }));
+      }
+    }));
+    const result = module.methodDefinition(0x06000007).getBaseDefinition();
+    if (lowerBounds[1]) await assert.rejects(result, typeLoad);
+    else assert.equal(await result, module.methodDefinition(0x06000001));
+  }
+});
+
 test('CLR base matching resolves equivalent TypeDef/TypeRef signatures across assembly boundaries', async () => {
   const base = managedFixture({ name: 'OverrideBase', methods: [{ name: 'M', flags: 0x1c6, static: false, noBody: true }],
     decorate({ md }) { md.rows[6][0][4] = md.blob(encodeSignature({ kind: 'method', hasThis: true,
