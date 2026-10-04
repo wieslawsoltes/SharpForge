@@ -2,12 +2,20 @@
   "schemaVersion": 1,
   "styles": [
     {
+      "source": "packages/git/styles/studio.css",
+      "order": 800
+    },
+    {
       "source": "packages/git/styles/collaboration.css",
       "order": 801
     },
     {
       "source": "packages/git/styles/editor.css",
       "order": 802
+    },
+    {
+      "source": "packages/git/styles/repository.css",
+      "order": 803
     }
   ],
   "workers": [],
