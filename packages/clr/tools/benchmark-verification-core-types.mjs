@@ -19,7 +19,7 @@ for (let sample = 0; sample < 23; sample++) {
 }
 const summary = Object.fromEntries(Object.entries(samples).map(([name, values]) => {
   const sorted = values.slice(3).sort((left, right) => left - right);
-  return [name, { median: sorted[10], p95: sorted[18] }];
+  return [name, { median: sorted[9], p95: sorted[18] }];
 }));
 const report = { node: process.version, platform: `${process.platform}-${process.arch}`, warmups: 3,
   selectedTokens: 3, preparedIterationsPerSample: 100, lookupIterationsPerSample: 100000,
