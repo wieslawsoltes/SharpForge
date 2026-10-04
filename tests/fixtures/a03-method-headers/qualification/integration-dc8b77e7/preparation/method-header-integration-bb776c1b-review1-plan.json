@@ -1,0 +1,952 @@
+{
+  "format": "sharpforge.method-header.integration-source-review-plan",
+  "version": 1,
+  "status": "Prepared and source-reviewed; no execution authorized by this artifact",
+  "preparedAt": "2026-10-04T22:13:39.406226+00:00",
+  "candidate": {
+    "path": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+    "head": "bb776c1b0a839edfc12cdb76bc707453b4c87aca",
+    "tree": "40dff4b239841c108264f94277f1157f069b953f",
+    "featureParent": "9188e28feb8ebc710bf708ce16aee9e309d76c1b",
+    "mainParent": "dc8b77e7c75ddf6abf63b9c65823ac051e6f9b4a"
+  },
+  "scope": "Source-only independent review of maxstack integration edges and smallest selected synthesized-body regression addition. No native/benchmark repeat merely for main merge.",
+  "findings": [],
+  "sourceReview": {
+    "originalFeaturePaths": 295,
+    "currentFeaturePaths": 294,
+    "alreadyByteIdenticalOnMain": [
+      "scripts/conformance/oracle/toolchain.js"
+    ],
+    "onlyOriginalFeaturePathsChangedByMain": [
+      "packages/cil/README.md",
+      "packages/cil/src/index.js",
+      "packages/compiler/src/emit/cil/assembly-emitter.js",
+      "scripts/conformance/static/allowlist.json"
+    ],
+    "index": "Union preserves all main exports plus analyzeMaxStack/maxStackDiagnosticCatalog/fixedStackEffect.",
+    "allowlist": "Both old71 and main80 exact entries are retained; method-header benchmark source/hash/count entry is unchanged.",
+    "assemblyEmitter": "Relative to main, only writeMethodBody auto-header/initLocals/dynamic-allocation options differ. Main attribute/extension installation, planned.emitBody priority, UTF8 data append, module startup and ordinary method dispatch remain intact.",
+    "stackEffects": "Contributed constructors/getter/throw-stub and zero-stack module calls supply required variable effects; fixed newarr/dup/stelem/stfld effects use canonical catalog. UTF8 FieldRVA is computed after all final method bodies.",
+    "gateSources": "All13original gate files are byte-identical to3ddd6460."
+  },
+  "historicalEvidence": {
+    "originalGate": {
+      "commit": "3ddd6460260d93f0a5258bd84ac62158e36dce10",
+      "tests": 79,
+      "passed": 79,
+      "failed": 0,
+      "skipped": 0,
+      "receipt": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-3ddd6460/steps/focused/execution.json"
+    },
+    "native": "Existing original capture remains scoped to3ddd6460 and its recorded tools; not current integration native evidence.",
+    "performance": "Original candidate3ddd6460/baselinee60b0764782f1122439e5b161cb9494c75724e32 evidence remains historical; no current integration performance claim.",
+    "notRepeated": [
+      "native capture",
+      "reference-output native capture",
+      "benchmarks"
+    ]
+  },
+  "additionalTests": [
+    {
+      "file": "tests/compiler-nullable-embedded.test.js",
+      "name": "A02-T05.3 both assembly APIs embed complete nullable attributes matching Roslyn",
+      "reason": "New local compiler-attribute constructor bodies, including byte-array construction, pass through final relaxed maxstack analysis and automatic headers."
+    },
+    {
+      "file": "tests/compiler-exported-extension-blocks.test.js",
+      "name": "A02-T83 executable and reference assemblies publish grouping and marker metadata with original implementations",
+      "reason": "New extension declaration throw stubs and embedded marker constructors/getter bodies use the contributed IlBuilder path while reference output retains its separate stub contract."
+    },
+    {
+      "file": "tests/compiler-cil-utf8-rva.test.js",
+      "name": "A02-T77 exact UTF-8 payloads, empty data and deduplication survive real PE layout",
+      "reason": "Automatic tiny/fat body lengths change subsequent section positions; FieldRVA payloads must retain exact bytes, final tokens and deterministic layout."
+    },
+    {
+      "file": "tests/compiler-cil-utf8-rva.test.js",
+      "name": "A02-T77 nested functions, initializer calls, generic methods and late state machines share planned data",
+      "reason": "UTF8 calls and planned fields interact with late emitted/generated bodies and final token/offset rewrites before graph analysis."
+    },
+    {
+      "file": "tests/compiler-cil-emission-delegates-refs.test.js",
+      "name": "A02-T30 module initializers run from <Module>::.cctor for every entry-point type shape",
+      "reason": "Main startup changes feed a zero-stack call/ret module constructor through the same header path and must not reintroduce duplicate Main calls."
+    }
+  ],
+  "commands": [
+    {
+      "id": "focused-original",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a03-05-decoding-limit-tags.test.js",
+        "tests/a03-05-maxstack.test.js",
+        "tests/a03-05-maxstack-eh.test.js",
+        "tests/a03-05-method-headers.test.js",
+        "tests/a03-05-compiler-method-headers.test.js",
+        "tests/a03-06-eh-encoding.test.js",
+        "tests/compiler-cil-portable-pdb.test.js",
+        "tests/a03-22-attribute-dispatch.test.js",
+        "tests/a03-22-reference-assemblies.test.js",
+        "tests/a03-22-reference-identity.test.js",
+        "tests/a03-22-reference-interface-members.test.js",
+        "tests/a03-22-reference-policy.test.js",
+        "tests/a03-22-reference-synthesized-metadata.test.js"
+      ],
+      "expected": {
+        "passed": 79,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "basis": "Original13files are byte-identical to tested3ddd6460; count expected, current integration has not executed."
+      },
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+      "timeoutSeconds": 600,
+      "maximumAttempts": 1,
+      "stdout": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.stdout.tap",
+      "stderr": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.stderr.log",
+      "receipt": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.execution.json"
+    },
+    {
+      "id": "focused-synthesized",
+      "after": "focused-original passed with all guards",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "--test-name-pattern=^(?:A02\\-T05\\.3\\ both\\ assembly\\ APIs\\ embed\\ complete\\ nullable\\ attributes\\ matching\\ Roslyn|A02\\-T83\\ executable\\ and\\ reference\\ assemblies\\ publish\\ grouping\\ and\\ marker\\ metadata\\ with\\ original\\ implementations|A02\\-T77\\ exact\\ UTF\\-8\\ payloads,\\ empty\\ data\\ and\\ deduplication\\ survive\\ real\\ PE\\ layout|A02\\-T77\\ nested\\ functions,\\ initializer\\ calls,\\ generic\\ methods\\ and\\ late\\ state\\ machines\\ share\\ planned\\ data|A02\\-T30\\ module\\ initializers\\ run\\ from\\ <Module>::\\.cctor\\ for\\ every\\ entry\\-point\\ type\\ shape)$",
+        "tests/compiler-nullable-embedded.test.js",
+        "tests/compiler-exported-extension-blocks.test.js",
+        "tests/compiler-cil-utf8-rva.test.js",
+        "tests/compiler-cil-emission-delegates-refs.test.js"
+      ],
+      "expected": {
+        "selectedPassed": 5,
+        "selectedNames": [
+          "A02-T05.3 both assembly APIs embed complete nullable attributes matching Roslyn",
+          "A02-T83 executable and reference assemblies publish grouping and marker metadata with original implementations",
+          "A02-T77 exact UTF-8 payloads, empty data and deduplication survive real PE layout",
+          "A02-T77 nested functions, initializer calls, generic methods and late state machines share planned data",
+          "A02-T30 module initializers run from <Module>::.cctor for every entry-point type shape"
+        ],
+        "failed": 0,
+        "cancelled": 0,
+        "selectedSkipped": 0,
+        "todo": 0,
+        "intentionalNonmatchingNames": [
+          "A02-T05.3 embedded attribute oracle has genuine Roslyn and reference-projection provenance",
+          "A02-T05.3 the temporary reference projection changes only two identifiers in a fresh copy",
+          "A02-T05.3 existing source constructors are reused independently for Nullable and NullableContext",
+          "A02-T05.3 malformed declared nullable contracts fail before an invalid custom attribute can be emitted",
+          "A02-T83 generic declarations retain marker names, mapped receiver slots and method constraints",
+          "A02-T83 grouping declarations preserve optional defaults, parameter names, properties and accessor marker attributes",
+          "A02-T83 static-only and property-only extension containers are marked at class and assembly scope",
+          "A02-T83 blocks with one CLR receiver share their group while exact receiver names retain distinct markers",
+          "A02-T83 grouping and marker names are stable under declaration reordering and source relocation",
+          "A02-T83 metadata planning does not mutate source declarations or their original parameter ownership",
+          "A02-T83 ordinary types and empty blocks do not receive extension marker types",
+          "A02-T83 an invalid explicitly provided marker constructor produces a metadata diagnostic",
+          "A02-T83 a marker contract must be a concrete attribute class",
+          "A02-T77 UTF-8 literals use static field addresses and the pointer span constructor without arrays",
+          "A02-T77 executable assemblies retain literal data; reference assemblies omit body-only storage",
+          "A02-T77 malformed UTF-16, language gates and non-literal operators remain C# diagnostics",
+          "A02-T77 the bytecode execution profile reports its unsupported span contract explicitly",
+          "A02-T30 a delegate over an extension method is closed over the receiver",
+          "A02-T30 a delegate over an extension method of a value type receiver stays CS1113",
+          "A02-T30 two delegates are compared by Delegate.op_Equality; null and object comparisons by reference",
+          "A02-T30 a delegate type synthesized for a lambda is a TypeDef of the assembly, one per signature",
+          "A02-T30 a program without module initializers declares nothing on <Module>",
+          "A02-T30 a constructed attribute class is named through its construction",
+          "A02-T30 a ref field is declared with a by-reference signature",
+          "A02-T30 a ref conditional denotes the chosen variable",
+          "A02-T30 stackalloc is localloc over an empty stack; operands evaluated before it are saved",
+          "A02-T30 stackalloc of a pointer type outside the cases the emitter covers is refused, never miscompiled"
+        ],
+        "exclusionPolicy": "Name-filter exclusions may be omitted or reported as skipped by the reporter. They are not passed qualification. Reject any matched selected test skipped, absent, failed or cancelled; do not force skipped=0 for excluded names."
+      },
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+      "timeoutSeconds": 600,
+      "maximumAttempts": 1,
+      "stdout": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-synthesized.stdout.tap",
+      "stderr": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-synthesized.stderr.log",
+      "receipt": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-synthesized.execution.json"
+    }
+  ],
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+    "TZ": "UTC",
+    "GIT_OPTIONAL_LOCKS": "0"
+  },
+  "environmentAdmission": {
+    "CI": "absent or empty",
+    "GITHUB_ACTIONS": "absent or empty",
+    "NODE_OPTIONS": "absent or empty before scripts/limited.js applies its limit",
+    "publicRecorded": [
+      "PATH",
+      "LANG",
+      "LC_ALL",
+      "TZ",
+      "TMPDIR",
+      "NODE_OPTIONS",
+      "CI",
+      "GITHUB_ACTIONS",
+      "DOTNET_ROOT",
+      "SHARPFORGE_MAX_PARALLEL_RUNS",
+      "SHARPFORGE_TEST_CONCURRENCY",
+      "SHARPFORGE_MAX_OLD_SPACE_MB"
+    ]
+  },
+  "requiredReferencePack": {
+    "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0",
+    "version": "10.0.5",
+    "files": 167,
+    "aggregateSha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362",
+    "algorithm": "SHA256(JSON.stringify(sorted [{name,sha256}]))",
+    "scope": "Read assembly bytes only for controlled missing-nullable contracts; no dotnet host or compiler invocation.",
+    "availableVersions": [
+      "10.0.5"
+    ]
+  },
+  "node": {
+    "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "bytes": 125989464,
+    "sha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12"
+  },
+  "packages": [
+    {
+      "name": "symbols",
+      "manifestSha256": "cc128e140a5f55859114083a1c029d57ea56fb6524d7ac2fe82bd20cb1109647",
+      "sourceGitTree": "9cbd835ac2a7b8f3bd8f092f1439127da9ef2509",
+      "aliasPath": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/node_modules/@sharpforge/symbols",
+      "aliasTarget": "../../packages/symbols",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/symbols"
+    },
+    {
+      "name": "archive",
+      "manifestSha256": "e67cb79a2461944333ebe3f583705c2ba499dbc542f9ec34be8fa355e0264221",
+      "sourceGitTree": "efc7f1f82e3401599f470905d812b398a7647280",
+      "aliasPath": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/node_modules/@sharpforge/archive",
+      "aliasTarget": "../../packages/archive",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/archive"
+    },
+    {
+      "name": "cil",
+      "manifestSha256": "e2aa3c40568d55dba9f1d681b89fa8498b1b23f1da89792ff36eb0b2858efc43",
+      "sourceGitTree": "dfd8a932b62fc657b5b47daa414c1da5ff6fb064",
+      "aliasPath": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/node_modules/@sharpforge/cil",
+      "aliasTarget": "../../packages/cil",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/cil"
+    },
+    {
+      "name": "framework",
+      "manifestSha256": "ee9eb72f27365f10d83bc1e3ac096ff939c125a5c0a01643c6e90637f57c21a3",
+      "sourceGitTree": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+      "aliasPath": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/node_modules/@sharpforge/framework",
+      "aliasTarget": "../../packages/framework",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/framework"
+    },
+    {
+      "name": "bcl-collections",
+      "manifestSha256": "225ea8f0758022cd3c8c3217d224cdbea98602b7258de9f4c7d16387fc55041e",
+      "sourceGitTree": "f1d1096869a82faaeaeefae45552544b147ba7ae",
+      "aliasPath": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/node_modules/@sharpforge/bcl-collections",
+      "aliasTarget": "../../packages/bcl-collections",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/bcl-collections"
+    },
+    {
+      "name": "bcl-core",
+      "manifestSha256": "b5c0b3309973d0258ca62e584c34d98b0bbbd9e55802a368bc36388ca70ac253",
+      "sourceGitTree": "60f0c837486308c9cb6c03445f4515f6067d67a2",
+      "aliasPath": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/node_modules/@sharpforge/bcl-core",
+      "aliasTarget": "../../packages/bcl-core",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/bcl-core"
+    },
+    {
+      "name": "bytecode",
+      "manifestSha256": "3a4815e50844cb30c392ba0e58266a8dc27ab39ce8897972a4cbf4354a65b27a",
+      "sourceGitTree": "e929355514cad0a058982101fa52f975a2ea1f55",
+      "aliasPath": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/node_modules/@sharpforge/bytecode",
+      "aliasTarget": "../../packages/bytecode",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/bytecode"
+    },
+    {
+      "name": "compiler",
+      "manifestSha256": "398f840f63ad46ee5ffae77390f5a2a8a922617bcbf70afc75d54400ea54fd02",
+      "sourceGitTree": "7eb39dd622e16ea87aeca294ad74e412896081e6",
+      "aliasPath": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/node_modules/@sharpforge/compiler",
+      "aliasTarget": "../../packages/compiler",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/compiler"
+    },
+    {
+      "name": "syntax",
+      "manifestSha256": "ac7a6c1df3e1cf25b9498a11a85821981fc646f9730672979c5f7e33d8e4607e",
+      "sourceGitTree": "2f9602d3e929781d0399653b03377226c00d3c16",
+      "aliasPath": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/node_modules/@sharpforge/syntax",
+      "aliasTarget": "../../packages/syntax",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/syntax"
+    },
+    {
+      "name": "text",
+      "manifestSha256": "7473f059108beba68d139dc08e0693f44745aa50f9fbfd5122fc0844c09decf8",
+      "sourceGitTree": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+      "aliasPath": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/node_modules/@sharpforge/text",
+      "aliasTarget": "../../packages/text",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/text"
+    }
+  ],
+  "focusedSourceFiles": [
+    {
+      "path": "package.json",
+      "bytes": 3136,
+      "sha256": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8",
+      "gitBlob": "118c0a9af4dc292d5df8f7c5e02121f8309957fe"
+    },
+    {
+      "path": "packages/cil/src/index.js",
+      "bytes": 4219,
+      "sha256": "1561a8ffd1ef63ad63a7d5aaa879a459627993193e278a77c9ca4e51a7b06a9e",
+      "gitBlob": "1887897949e0fbcae0d1d01db8626e7dd7cc3ce0"
+    },
+    {
+      "path": "packages/cil/src/maxstack.js",
+      "bytes": 8457,
+      "sha256": "b6eb32d3690435527009bd2eea2290b837420a4f55e24c3576a4e22914079804",
+      "gitBlob": "b5231cb7650a4b8255e67955f51fcc44ad585b91"
+    },
+    {
+      "path": "packages/cil/src/pe/method-header.js",
+      "bytes": 2385,
+      "sha256": "ebc4e51c9102ee07f4f565c11cdeb39d470940afe8d495b345027b59d8b1f62c",
+      "gitBlob": "b22704bd6cff0cc4f2ba5f5ced13d73babd57f3f"
+    },
+    {
+      "path": "packages/cil/src/stack-effects.js",
+      "bytes": 649,
+      "sha256": "8e740a382658c77bc849eca40da05906e1cfefc321b0120f7bc660d1ea937f45",
+      "gitBlob": "d0b288a7dfff5b95470ba84aae6a1a6aae5c792d"
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/assembly-emitter.js",
+      "bytes": 10769,
+      "sha256": "6dbabf4d6c480bf2cc89bcb643ad804ba0ae3acdcc30ca710e205d1b4f7b566c",
+      "gitBlob": "0b8b5433417fcaaeca6871078f00361e14f7906f"
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/compiler-attribute-bodies.js",
+      "bytes": 1714,
+      "sha256": "37587604fd6b322d8a0879a5e9c92eb59ebb65cfcece801eef2b74fdd808739a",
+      "gitBlob": "681cc71b9cdb6682e2da3511e9ac7322128d8f77"
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/extension-block-bodies.js",
+      "bytes": 851,
+      "sha256": "24559a1f831a623e7a0b5e11c6241e4c7a43ef1f323f8cfffdb905b17dc1a2f1",
+      "gitBlob": "03769dc2c343fe74503874880891106d60143a3e"
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/il-builder.js",
+      "bytes": 9610,
+      "sha256": "83b9d9dfc88d4fcf4328bd97efd32bcc47afd822f555bb768416e6aaac5ad412",
+      "gitBlob": "62c024139c8370990cc8b7e49af0613e70d0b0d8"
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/module-initializers.js",
+      "bytes": 1618,
+      "sha256": "c1229a95c5d6a118bce748b79474a7121347169b0d0c2a524b587a24ce169d47",
+      "gitBlob": "276bb40589909bd446204904688357b74f24139b"
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/synthesized-members.js",
+      "bytes": 10227,
+      "sha256": "29f65e3f1e92e62c53a3ae555a544871ad34c7392618a16c06e97b82f1e84d57",
+      "gitBlob": "4b71f99ff7bdc242b0c0ea13e553c4cb3145b6ef"
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/utf8-data-plan.js",
+      "bytes": 3872,
+      "sha256": "672818a96bab04fe5977d046d14af9763b1abeb746a65600ace7f5d45871c3b5",
+      "gitBlob": "ae93428709885536b6999b4886d7ea6d7dc515a9"
+    },
+    {
+      "path": "scripts/conformance/static/allowlist.json",
+      "bytes": 31422,
+      "sha256": "c9164f5a250c6151ed726a3980158d3b89947ec9094728605d80352c2910ea7b",
+      "gitBlob": "a82b776b8713ca800f81a8fa69bbdd74771711c4"
+    },
+    {
+      "path": "scripts/limited.js",
+      "bytes": 1280,
+      "sha256": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+      "gitBlob": "cecc071634fa4b4b738dfaa0a1ac516bf3e059dd"
+    },
+    {
+      "path": "scripts/planning/lib/resource-limits.js",
+      "bytes": 3850,
+      "sha256": "f70d0f2862ad4a5e0afce5e47ecf8e055cf82aefc44fefc96a3b4989293ee382",
+      "gitBlob": "71a9fb7d6879a2bf977a3f9a02a39e876038acca"
+    },
+    {
+      "path": "tests/a03-05-compiler-method-headers.test.js",
+      "bytes": 4561,
+      "sha256": "e024933e9d0a97c6efe596de1a9aad3c7f0a13c5d9e21caa9a61c48aac4c479c",
+      "gitBlob": "f2aecb11fdd069cd7d6fda7c12b20f68cebb0632"
+    },
+    {
+      "path": "tests/a03-05-decoding-limit-tags.test.js",
+      "bytes": 1561,
+      "sha256": "7dd7ecf90d557585c27a088970d00d59417663c32443dc7b0ebda0f6e37ba9ff",
+      "gitBlob": "8a2cddc1b049002e847df1f789a7221973746844"
+    },
+    {
+      "path": "tests/a03-05-maxstack-eh.test.js",
+      "bytes": 5441,
+      "sha256": "5a6c46edf41903e4be24c5ade084dab3e7ad0f12a3d051c94c11540e19ebe59c",
+      "gitBlob": "6cfcb12a66bc7259938e2429e25612eedc678c4f"
+    },
+    {
+      "path": "tests/a03-05-maxstack.test.js",
+      "bytes": 6563,
+      "sha256": "a2cdf1030472ac0efb6e775c696a5ac18916b6643f1bddd89e357893c66df147",
+      "gitBlob": "f10b2139a2cc7473c38121363584ae654a97eb00"
+    },
+    {
+      "path": "tests/a03-05-method-headers.test.js",
+      "bytes": 3552,
+      "sha256": "0773e20915488a83b998564ef57cebbe92170bb14a0a7ed745e1e136ae98149d",
+      "gitBlob": "2652eafd228c0345bc134b535445b57815fe2b0b"
+    },
+    {
+      "path": "tests/a03-06-eh-encoding.test.js",
+      "bytes": 6966,
+      "sha256": "cf229c4ea24cb7244cdb78fbabe802f46c828085547490371afb9266a852aa23",
+      "gitBlob": "51e39f90282b497d5c3291e7cb4ba77e53394434"
+    },
+    {
+      "path": "tests/a03-22-attribute-dispatch.test.js",
+      "bytes": 3857,
+      "sha256": "2ed2d45d22300463dfb57b11c1e0f5caef0e320d047ea6e56bc29d44edbdea16",
+      "gitBlob": "179de9b0bd0fb60015e96b967243b8dbd3e59fde"
+    },
+    {
+      "path": "tests/a03-22-reference-assemblies.test.js",
+      "bytes": 14326,
+      "sha256": "05e2d126198d4f512d195596b18920d007ba393c49303dfcc443ad258e273ef2",
+      "gitBlob": "c48d69d429dd8c38d7c02f8d4a64d36fdb602e46"
+    },
+    {
+      "path": "tests/a03-22-reference-identity.test.js",
+      "bytes": 3575,
+      "sha256": "71a3dd57ef990ffec396ca1eaf281c90f5394be9bf071118e96d9533014f0856",
+      "gitBlob": "7b562782c4141844c19254f6417d951268d79b39"
+    },
+    {
+      "path": "tests/a03-22-reference-interface-members.test.js",
+      "bytes": 7227,
+      "sha256": "fb0567ecfb43930037221116739794fe7f48d7688305d4fa85e1857738e67e17",
+      "gitBlob": "76e3c2e76ab62244dd25c1ffead16edc044766c1"
+    },
+    {
+      "path": "tests/a03-22-reference-policy.test.js",
+      "bytes": 4035,
+      "sha256": "cb506d65d9291fae8aca6ea41dc49bee9b65e1914bf7642de1f8739960e6046f",
+      "gitBlob": "dc1ae15c67ed23fae39deb1b6e28a13d45fb98b3"
+    },
+    {
+      "path": "tests/a03-22-reference-synthesized-metadata.test.js",
+      "bytes": 6444,
+      "sha256": "3476383842a4555c5ca674f5179404ee7cbafe875c90ea571311991a12a212cb",
+      "gitBlob": "f2ff2a0b37488eb04e637e0ae08c9381eaf158f3"
+    },
+    {
+      "path": "tests/compiler-cil-emission-delegates-refs.test.js",
+      "bytes": 11890,
+      "sha256": "98d059e5f3de5d44791d5b495bdc665cabe40803f289a47cf05354d137962310",
+      "gitBlob": "e16c45b0a95a5a43da0f014ff6031824698ec013"
+    },
+    {
+      "path": "tests/compiler-cil-portable-pdb.test.js",
+      "bytes": 16726,
+      "sha256": "49923bbfc80a90187f80e61d2fbb21b5d82a003311922bcb8d7a529ab8b230ea",
+      "gitBlob": "544c189d2335698432515961ea3dd91f0725723f"
+    },
+    {
+      "path": "tests/compiler-cil-utf8-rva.test.js",
+      "bytes": 5215,
+      "sha256": "cf99809dc9654c5110b98bf1b7db29fde83c92a6bad5167c2cece5a3105e1e50",
+      "gitBlob": "cce57b90bdfaf275cd7cc149ada1fc7ba269e572"
+    },
+    {
+      "path": "tests/compiler-exported-extension-blocks.test.js",
+      "bytes": 11163,
+      "sha256": "07b5a2ab669bdff15b539c7b987b7e48518207030f17e4912c10e9ce827bf7ec",
+      "gitBlob": "6cb693b4575f6e32696fb47cd4ce86f14bc6ca93"
+    },
+    {
+      "path": "tests/compiler-nullable-embedded.test.js",
+      "bytes": 6274,
+      "sha256": "0a9a7a75c2442103c3b73487372179c7cdbf831b46d44ac8ae4895c3ef683881",
+      "gitBlob": "36e6a1c2f1799f4a934d9a043a67cb21efb7fc15"
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-3ddd6460/steps/focused/execution.json",
+      "bytes": 4687,
+      "sha256": "c737823bb8da343e409fbc4b80304424ddbc42cc6122749042fa5287249d3791",
+      "gitBlob": "c34ca5d8402e78aa77434c327b62ea6ba6a14150"
+    },
+    {
+      "path": "tests/fixtures/imported-extension-blocks/ExtensionLibrary.cs",
+      "bytes": 1673,
+      "sha256": "6464ad27fb66371bbb7f05c39c1958d70b1827c3965924c244f1c393402daa21",
+      "gitBlob": "56149e72a67d30acb3535d0b32b20b347cc8d0db"
+    },
+    {
+      "path": "tests/fixtures/imported-extension-blocks/ExtensionLibrary.dll",
+      "bytes": 8192,
+      "sha256": "cd7bfd4a0bd2f8628398bb61c59d22d942b1042a6eb917a31aa62c05ad90a155",
+      "gitBlob": "94acb7b7254515b5f0320e750cc7408c126d8b39"
+    },
+    {
+      "path": "tests/fixtures/imported-extension-blocks/LegacyMarker.cs",
+      "bytes": 430,
+      "sha256": "c1c5262b5bba0399bf973b8212dd1a0b7c98f7a0eda30c5d1ce4a38c322a79da",
+      "gitBlob": "f6b6d1aab1a8ab905381fb9970341833b13af3ea"
+    },
+    {
+      "path": "tests/fixtures/imported-extension-blocks/README.md",
+      "bytes": 2012,
+      "sha256": "182fcc3e988ff6de66644ee1b0fc2eb136514064474d83b131a5f6c1b5ca0e96",
+      "gitBlob": "db282d302dc426a9e7b23166dfe9be880ea12e83"
+    },
+    {
+      "path": "tests/fixtures/imported-extension-blocks/generate.mjs",
+      "bytes": 2707,
+      "sha256": "aa1322683377a26e9962094dffb82b24416361213b31a3209636fad39da20f8b",
+      "gitBlob": "c30c0e6fef86d350a46cdc7b372614d3f36bbe98"
+    },
+    {
+      "path": "tests/fixtures/imported-extension-blocks/provenance.json",
+      "bytes": 1286,
+      "sha256": "2f2803e5a283f7bd7b8014e7565cd5f3fee20f8bc258e2da3a3dbd8e522da319",
+      "gitBlob": "212b2b3d6073d991ed445599cb4b941e03761a49"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/ConstraintConsumer.cs",
+      "bytes": 250,
+      "sha256": "8d0eed57034af042dd8426dadab0f3912439b78bb3ad44a919ab0e2003268438",
+      "gitBlob": "6d69daf67c76a072343c2f0d2c68379454c0645e"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/InspectEmbedded.cs",
+      "bytes": 2236,
+      "sha256": "ccfcfd5c612db15e4aabe9a317ebee033f8bdb47c2776390c564c45455a2ee5d",
+      "gitBlob": "8da553124a0c771c0bb48b9215739770b7d79698"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/InspectNullability.cs",
+      "bytes": 2467,
+      "sha256": "bf627c14a40578a1f11653d18ec46cdafb5780abcd55dc4a4ad06462e5e9cd38",
+      "gitBlob": "b72e020f3a17d563fac5395c67ac701b79588993"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/LegacyNullableMetadata.dll",
+      "bytes": 12288,
+      "sha256": "99faeb64a5ad3010c236501ae87b27674af911d43f130dcb4217a8c116eac393",
+      "gitBlob": "6eacb40d357c169c3549f492e6f5f77917dbacf6"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/NullableMetadata.cs",
+      "bytes": 2788,
+      "sha256": "9e8dc453b42ab455f378901e90aef0dd3d467d7df8bb1cdeb4fc499dedfc7eb7",
+      "gitBlob": "ebb75c2d5530d72713cf94ce8028d6fae097c1a9"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/NullableMetadata.dll",
+      "bytes": 11776,
+      "sha256": "8a4d59f13b93915f5ba66cb24f06e725254947cde53d5af5b476a81e7dfb4517",
+      "gitBlob": "f6fefcdaebdbc1cf7d698e0d91b070c2092b7c0c"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/README.md",
+      "bytes": 5629,
+      "sha256": "9dd909eabf50287d08373e1a5d1aa9185c97d9514a5b0f84d340f33bea615e2f",
+      "gitBlob": "84e208031ba2af295a8b5aacc46517c3026bcc83"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/TupleMetadata.cs",
+      "bytes": 495,
+      "sha256": "6334df8768ff00e0b24695fd68d93be36861dccaa4eebc938ceee4e2820c9b31",
+      "gitBlob": "7b27eb80c99388cb602568b4df59150a04f45b01"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/TupleMetadata.dll",
+      "bytes": 5120,
+      "sha256": "bc4c2b8a4f0137ec255f70fc55cdccf4b1e78c44ec3bbd14a5c26c9e85fde3c1",
+      "gitBlob": "32982ef7ba0b3aa59263581c8957684be4ed4afe"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/build-fixture.mjs",
+      "bytes": 3148,
+      "sha256": "7b29290e977286e17fc3f7329d6dfef4937f7f32218048a18c94e25ebaa29c09",
+      "gitBlob": "7d6f5c3ad461883ae99f23148d760d7b42ad5530"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/build-legacy-fixture.mjs",
+      "bytes": 4128,
+      "sha256": "b69670ddc3402a760aaedfc0ab06f8e218346131da20ac416f2b3e61ed324991",
+      "gitBlob": "e069997ac5581d515cdd610b00a193bfa055b556"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/inspect-metadata.mjs",
+      "bytes": 3846,
+      "sha256": "f664d3b8448761eec9d3ca5884d351963db8365eff7430921b4beb6bdfb8c65f",
+      "gitBlob": "5266baa23428bb2ac6e603d5f1b980f53e348faa"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/legacy-provenance.json",
+      "bytes": 1329,
+      "sha256": "8006120ad511c5834428fb8904ab7f7ce3b0a6ebe76b14eb4987037a4a4b633a",
+      "gitBlob": "64e35843fbc9d7b33c731fbf5904f22d8f85ac12"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/legacy-references.mjs",
+      "bytes": 1188,
+      "sha256": "7258e32a94591f2dfd102e60c9eb8914dd663f8838c2120273d99f2313da92ff",
+      "gitBlob": "4ea0cdceb6697520eb6f56923a2e19059c33fab5"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/provenance.json",
+      "bytes": 616,
+      "sha256": "3be77c1909f2264e64263d63f2939625ed55881ed203300014fd111ff9d92e41",
+      "gitBlob": "0b85c3a8eea561390857b6e3db890c4d22f6cdc6"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/qualification/isolated-focused.log",
+      "bytes": 3059,
+      "sha256": "5e0314a2217d5f6547d027963bc1d84e2f66c2b3c88e861de63a3d980e536db5",
+      "gitBlob": "bc3d087857883a8547f9e172246b070977f62de4"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/qualification/isolated-results.json",
+      "bytes": 420,
+      "sha256": "325a2ce72dc4367b7ad7091517579f17d8ef0ec6ee9c93bca301690687f3b672",
+      "gitBlob": "cc7fc36b01119e935f2a758320f3adb7d44f8893"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/qualification/main-merge-attribute-native.log",
+      "bytes": 132,
+      "sha256": "4aa083bccd873225eab94390ab5b8bf9293fde9fc87ee3573d87de08a092c508",
+      "gitBlob": "7c3ae69123c01788397c1157ce86cf9fab7cbe69"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/qualification/main-merge-focused.log",
+      "bytes": 6754,
+      "sha256": "78b1d2cb6f652b6e4faab30f6d7fbe4b9c4dac2f40e9b5e9b559827ffc713c07",
+      "gitBlob": "38d1f332b2ceccf49dc15982dd9d2ca754ecb274"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/qualification/main-merge-interop-native.log",
+      "bytes": 132,
+      "sha256": "db3bbe1c14bdb45b3127981bcede709d23fa8e7f184e7a9ef9e0f04ff244e3bd",
+      "gitBlob": "2c654bb9a582b4fe9ef80870e22252f8ba19c676"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/qualification/main-merge-results.json",
+      "bytes": 2527,
+      "sha256": "51af6bf02bb6ad1302566ae7ca407d7945ffd6a4eb6031d2b7f9d5869c81892c",
+      "gitBlob": "729505b461d54e48fdd0a3e3c1f1878f0a863d9e"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/reference-without-nullable.mjs",
+      "bytes": 1492,
+      "sha256": "29773a3fb02ddf0b762ba10f41a61014aeabf311ef94f32073091538f7060025",
+      "gitBlob": "8ca7927e048fd45ec35a450b9ba76283816a1c77"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/roslyn-attributes.json",
+      "bytes": 12900,
+      "sha256": "baded60e615e04766b34c0c4b8200f1f04722db979909403f43521ac8fce16d4",
+      "gitBlob": "3416b79baee2a5c351222db62fb4406d4d03d6c2"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/roslyn-embedded-definitions.json",
+      "bytes": 4104,
+      "sha256": "beab91ab5f303e6840e66896f53b4885c4573ee842df01e83ac3530a4f2db9a8",
+      "gitBlob": "eb02f839aa71989b35794a21ec4de2803bc5b56b"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/roslyn-legacy-attributes.json",
+      "bytes": 12900,
+      "sha256": "baded60e615e04766b34c0c4b8200f1f04722db979909403f43521ac8fce16d4",
+      "gitBlob": "3416b79baee2a5c351222db62fb4406d4d03d6c2"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/roslyn-tuple-attributes.json",
+      "bytes": 1608,
+      "sha256": "2faed5d88a76742b2f6dd6a6f736e951c8af8c72b45cfd665198f139383bd89b",
+      "gitBlob": "1fedfd55c32b9ad58604b6bb6164ebb5a102bd75"
+    },
+    {
+      "path": "tests/fixtures/nullable-metadata/tuple-provenance.json",
+      "bytes": 616,
+      "sha256": "aaa32b7dd73721e20219c9fed2d0ca19bcffb27bc6e00bb3b5b3f1c4eee8f7bc",
+      "gitBlob": "5b8774b37310692ea4acbeb8c826ce1e77ba217a"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/InspectUtf8.cs",
+      "bytes": 2464,
+      "sha256": "daaf90047987a9c931a33630c7263e518579304ed26844cbba3eae2699aaf353",
+      "gitBlob": "94cf620afe2938cf673dc76f794e3d02e7ee1592"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/README.md",
+      "bytes": 9164,
+      "sha256": "d98f5e08c113045d56547a5404f472c5ee6d9c6b777c18bce07537a57df6f981",
+      "gitBlob": "018036a36cd15b5ed5c2f5163b2f3030f9eaad14"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/Utf8Literals.cs",
+      "bytes": 1597,
+      "sha256": "c7624a9c2b37cfa37155bf7e46f1a4f1c5241ac490fbcdd7939fec66cf9851ea",
+      "gitBlob": "9e761c15d0ebfdd34a5216993df833def4becf9f"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/Utf8Literals.dll",
+      "bytes": 7680,
+      "sha256": "c42e6f38a27e74c8e98c6ef8eb4c865642c078b523b2be59689fc5befd92d120",
+      "gitBlob": "c49098c412af012b574b44cd93d3f30a4cd6e50c"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/benchmark/README.md",
+      "bytes": 5637,
+      "sha256": "ef2c5a41163160e86b27ebe6c1ede0267d97aa55642b5ebcd5b346f048aeaf17",
+      "gitBlob": "d550f9ea9e5d39ebb325ce0e7074eaf08d52cfe9"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/benchmark/summary.json",
+      "bytes": 5744,
+      "sha256": "e68818bd89f4e471d4cca07c05f44088d1def0d62654a4539e927a31def53b54",
+      "gitBlob": "ac2d27d4b589d6e6087d7783c3d7bce22e28345e"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/benchmark/utf8-benchmark-aliases-after.json",
+      "bytes": 7151,
+      "sha256": "3e68c0fd39b58dd2e06902a55379c7aa33e2e2d35514b642d3eeeaa57e2c82b7",
+      "gitBlob": "627a3b7e133a821c07de08aa8e71f14c7f1f46f7"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/benchmark/utf8-benchmark-aliases-before.json",
+      "bytes": 7151,
+      "sha256": "3e68c0fd39b58dd2e06902a55379c7aa33e2e2d35514b642d3eeeaa57e2c82b7",
+      "gitBlob": "627a3b7e133a821c07de08aa8e71f14c7f1f46f7"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/benchmark/utf8-benchmark-node-resolution.json",
+      "bytes": 7866,
+      "sha256": "41a8ab2d47dec1e8195fdb2f62c6e9c83910a555de1afdbfc5cddbc5525010c8",
+      "gitBlob": "e60d34f283135c5334dd2bdba8ebb7c66a4b59d6"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/benchmark/utf8-benchmark-raw.json",
+      "bytes": 50221,
+      "sha256": "cc2fad44c115f4d0162bfb958fbae0e71ceb1f09ec684de095ae0ffe31859db5",
+      "gitBlob": "bec110858c914a207db72e8a5ca92b8bba3a168f"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/benchmark/utf8-benchmark.log",
+      "bytes": 2276,
+      "sha256": "d38a8739a9abd05df03cc44695db1a3a7c9bcf32a0242a172cceca5cb5d2dde1",
+      "gitBlob": "d222ac9eb411fee9233d76e3d0f0dc4cb293b59e"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/build-fixture.mjs",
+      "bytes": 5637,
+      "sha256": "bc8598dc562139d6a4a258d89c347ed678404e78a366c6cb365021b5de5da788",
+      "gitBlob": "b03c6bcb0d9c43bfc739ef710bb3671b6e31b919"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/contracts.mjs",
+      "bytes": 424,
+      "sha256": "259183adeb2b9b16db5e1182a6da3c6e248fb7275d44bc446bf667c769d22bea",
+      "gitBlob": "2eedc31e4c7973eb794bcec99445d76d4e2c26dd"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/fallback.out",
+      "bytes": 443,
+      "sha256": "d6fbe07d8423b00c7a3426c9f769fcf51b8c049b407b88c874c4cf5d670c88c8",
+      "gitBlob": "068f3625c8a5e7b7fd2aed3d878829cd96da8c87"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/metadata.mjs",
+      "bytes": 3723,
+      "sha256": "729a14472eaa376a7b7251073dc365c37c0e1a962d902893689ad68d8b83fe1c",
+      "gitBlob": "1f31422f94f685b48e1458d0a8ab27b907b377ff"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/missing-constructor.json",
+      "bytes": 95,
+      "sha256": "c4ef610a1773f4755e715b1bd263f3e1e01371bd853c949184dfa67ef7d6f63a",
+      "gitBlob": "4f4153401da5330298d989d8d0b91f19d7293a83"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/missing-constructor.locations.json",
+      "bytes": 297,
+      "sha256": "ffa66fd820d695b01d07c7723dd4b82e953f3365689d3941fd52d2fc4e7f712d",
+      "gitBlob": "b75c5f5737f6900dc89d5c77a900de2ec2c37c45"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/modern.out",
+      "bytes": 436,
+      "sha256": "49e0d179b5b70eb92400970c18714fc3116f366ad86aa096567dd4277fc47155",
+      "gitBlob": "eff0fb4813f152f22018eec404b49a598b1ea592"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/native.mjs",
+      "bytes": 3226,
+      "sha256": "41bed1d470468a9b20ee4eff24ab35187540c524c3fa41cbc88360b01640ea71",
+      "gitBlob": "8b941a263bfc636db40ea827acaa2b8faa5720b0"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/provenance.json",
+      "bytes": 4329,
+      "sha256": "3da65669c12708bf5e198c93e6c842d35a1abe15f423c6345637b6eed8496952",
+      "gitBlob": "56bcbb52b60f75fb4636e4c94f81023135a81c7d"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/repeated-missing-constructor.json",
+      "bytes": 187,
+      "sha256": "7ec44b88db141f19c01c8419711c428b427dff1c52a3bc32d56379796f89abfd",
+      "gitBlob": "fc1230953a67f6072821c02fbc0f832edfb58ece"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/repeated-missing-constructor.locations.json",
+      "bytes": 593,
+      "sha256": "4544aa994682896aae4a3017b5f51e39090fb938f416a431a1ebf2d51cea3178",
+      "gitBlob": "fd8b19550b85783cdf13a6709a299a417057e56b"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/publication-2026-10-04/README.md",
+      "bytes": 3587,
+      "sha256": "1bc3e3f0afba805cbd60b0bf6f8c943298bcf6bd9c579a471ab04098f716b227",
+      "gitBlob": "8206698cded12636f09a7f687ca0882697311cf7"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/publication-2026-10-04/aliases-after.json",
+      "bytes": 19922,
+      "sha256": "ea90a73655693b4ced637ecb98237706f41d2bb3642e41a6d72aa2578dbb9af3",
+      "gitBlob": "cabb7d2b4b1f26f30b97083cddfeb304d0e258f2"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/publication-2026-10-04/aliases-before.json",
+      "bytes": 19922,
+      "sha256": "102fb4f4feabdaf938fefb0b8289f8640d74ff6bfeda503343c16615e3798103",
+      "gitBlob": "fcfa7b5a728f5933a7ff3521730e50a5ea3a138a"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/publication-2026-10-04/node-resolution.json",
+      "bytes": 1323,
+      "sha256": "78e5429422bff2b57dbb55dad561e18ae10877cd87e129394ea34296d8037596",
+      "gitBlob": "eda11252914cdc38901b506a3089dd0f9c4c1592"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/publication-2026-10-04/replay.log",
+      "bytes": 1673,
+      "sha256": "d8a5d8e7d4dd2d8bfb961196cc2aa325919bda5f43f4905bcce63bc3cb107866",
+      "gitBlob": "ba7f6767fb7240300c5d59abc8357e4351d6be61"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/publication-2026-10-04/source-imports.json",
+      "bytes": 802,
+      "sha256": "e8e050529d98394f11410e4e5530ecac8be3e14588c019332b6eac25e207bd02",
+      "gitBlob": "7e9834b69e8e21a834acc008234809265300475d"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/publication-2026-10-04/summary.json",
+      "bytes": 2809,
+      "sha256": "8db18836f027caba56bd968708c3b538ea8d14882b5381932e0a8d0ff36db4a5",
+      "gitBlob": "8a58e51b92f248f38f1facd5664838011c90f8c1"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/utf8-adjacent-span.log",
+      "bytes": 1463,
+      "sha256": "8570b5268210bf36a791d6a9029beb9c3c2950ee9db751deda37f2cc37948a6b",
+      "gitBlob": "30eff5a75875032c689ac202aa32238f8150c7c5"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/utf8-final-focused.log",
+      "bytes": 1669,
+      "sha256": "2ecc21de4486a4dfcb9bfd840a00b8363c0a50c19cf72d2edbf3cd23b324c40d",
+      "gitBlob": "4952c1e501f161cac002a15673a28abfd14efe17"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/utf8-first-focused.log",
+      "bytes": 14044,
+      "sha256": "2b1ec93147154be23fac96bfe92dd8b794ac36731ea138831f31b5540bafb098",
+      "gitBlob": "879506dd8fdfefc4a0fc25b6b956fd7cbdbb2669"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/utf8-oracle-capture.log",
+      "bytes": 1170,
+      "sha256": "8d7d0a521842226380135ba3a5580ae7e4a17a11785686326a07b802577c6fd8",
+      "gitBlob": "b284220b2283ae4d8afdd144f7973820e8e55f91"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/utf8-oracle-with-locations.log",
+      "bytes": 2978,
+      "sha256": "1386cbca5b1927436704374224a691743844f68a2beb32ce03290057f69a28d8",
+      "gitBlob": "779a3e7900171cc2a5420e341541140a6627579b"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/utf8-prefixed-baseline.log",
+      "bytes": 1646,
+      "sha256": "398ae776b44f21468a701a69ccb9ff2613c9246a9924b2c470aaa68ebf71d1af",
+      "gitBlob": "8b38149713e9d33941100cf67b5e1de32ccf16ef"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/utf8-second-focused.log",
+      "bytes": 2788,
+      "sha256": "645b905db18036c7e9e57e60bfef8dc215553a808400942af3d7c56d3c35c2f2",
+      "gitBlob": "e0120ea737657f4d2b5ae091d5847233d464667b"
+    },
+    {
+      "path": "tests/fixtures/utf8-rva/validation/utf8-third-focused.log",
+      "bytes": 3492,
+      "sha256": "4d7a4104a3fca5a98c828c1e20b7523c0125db7961d4b24cf7c7acfbbbb3180e",
+      "gitBlob": "671c2b7f2cd3f793f3a40c4f1a9d344aff8f8515"
+    }
+  ],
+  "admissionAndRetention": {
+    "executionDirectory": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b",
+    "minimumFreeBytes": 134217728,
+    "before": [
+      "Sole scheduled slot explicitly granted.",
+      "Exact candidate HEAD and tree; clean tracked and untracked nonignored source.",
+      "Verify all actual package source/manifests against pinned Git objects; required files physically present.",
+      "Verify own package aliases, Node executable hash, reference pack aggregate, this plan hash and fresh output directory.",
+      "Persist exact argv, cwd, public environment, source/alias/tool identities and UTC start in exclusively created receipt before launch."
+    ],
+    "sequential": "Run focused-original once, inspect complete raw results, then focused-synthesized once only if original fully passed and source remains frozen.",
+    "stdoutStderr": "Open fresh raw output files exclusively; preserve all bytes including failures/cancellations and partial output. No synthetic replacement or overwrites.",
+    "failure": "First nonzero exit, signal, timeout, missing selected result, unexpected skip, source/alias/tool mismatch or evidence error stops all later phases. Preserve primary failure, argv, return code/signal, timestamps, raw logs and their hashes. No retry or source change under this plan.",
+    "cancel": "Use an outer process group and SIGINT/SIGTERM handlers; record interruption before forwarding SIGTERM to the wrapper, wait/reap, escalate whole group to SIGKILL after bounded10seconds if still live, and mark failure even if child exits0. Do not swallow cancellation during final receipt write.",
+    "after": "Recheck actual source/alias/tool identities and exact HEAD/tree, inventory/hash raw files, parse TAP actual counters and selected identities; write status only after all evidence checks. Keep failures and first attempt.",
+    "harness": "Scratch source-pinned recorder reuses scripts/limited.js; runs only the two approved argv arrays sequentially and guards all initial/intermediate/final saves, preserving primary error, secondary inspections, partial atomic-write files and a failure sidecar/stderr fallback."
+  },
+  "limits": "No source edit, alias installation, product/test/native/build/benchmark execution or remote mutation occurred during preparation. Node gate is proposed, not passed; core CI still separately required.",
+  "recorder": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b-run.py",
+    "bytes": 16362,
+    "sha256": "76ed52cb4cd871df0b391dfe723364b06c821cfd6ba5855a21a1fd1dd57f7ece"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "id": "focused-original",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a03-05-decoding-limit-tags.test.js",
+    "tests/a03-05-maxstack.test.js",
+    "tests/a03-05-maxstack-eh.test.js",
+    "tests/a03-05-method-headers.test.js",
+    "tests/a03-05-compiler-method-headers.test.js",
+    "tests/a03-06-eh-encoding.test.js",
+    "tests/compiler-cil-portable-pdb.test.js",
+    "tests/a03-22-attribute-dispatch.test.js",
+    "tests/a03-22-reference-assemblies.test.js",
+    "tests/a03-22-reference-identity.test.js",
+    "tests/a03-22-reference-interface-members.test.js",
+    "tests/a03-22-reference-policy.test.js",
+    "tests/a03-22-reference-synthesized-metadata.test.js"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+  "status": "passed",
+  "startedUtc": "2026-10-04T22:37:29.361911+00:00",
+  "exitCode": 0,
+  "signal": null,
+  "outputs": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-original.stdout.tap",
+      "bytes": 19696,
+      "sha256": "dcf9cd44dd15b72508e101c8504228d6917e70d6bd3f8e7a008ac32e3f16a683"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-original.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "availableDiskBefore": 346222592,
+  "sourceBefore": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-original.source-before.json",
+    "bytes": 271753,
+    "sha256": "aad49f3eb0202eef52b9a5ffea1673b066c08e885e29748cce3f0bfe93f59be7"
+  },
+  "pid": 46,
+  "result": {
+    "tests": 79,
+    "pass": 79,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "sourceAfter": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-original.source-after.json",
+    "bytes": 271753,
+    "sha256": "aad49f3eb0202eef52b9a5ffea1673b066c08e885e29748cce3f0bfe93f59be7"
+  },
+  "finishedUtc": "2026-10-04T22:37:40.567882+00:00"
+}

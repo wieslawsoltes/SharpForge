@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: A02-T30 module initializers run from <Module>::.cctor for every entry-point type shape
+ok 1 - A02-T30 module initializers run from <Module>::.cctor for every entry-point type shape
+  ---
+  duration_ms: 117.439094
+  type: 'test'
+  ...
+# Subtest: A02-T77 exact UTF-8 payloads, empty data and deduplication survive real PE layout
+ok 2 - A02-T77 exact UTF-8 payloads, empty data and deduplication survive real PE layout
+  ---
+  duration_ms: 194.362199
+  type: 'test'
+  ...
+# Subtest: A02-T77 nested functions, initializer calls, generic methods and late state machines share planned data
+ok 3 - A02-T77 nested functions, initializer calls, generic methods and late state machines share planned data
+  ---
+  duration_ms: 42.4234
+  type: 'test'
+  ...
+# Subtest: A02-T83 executable and reference assemblies publish grouping and marker metadata with original implementations
+ok 4 - A02-T83 executable and reference assemblies publish grouping and marker metadata with original implementations
+  ---
+  duration_ms: 251.263891
+  type: 'test'
+  ...
+# Subtest: A02-T05.3 both assembly APIs embed complete nullable attributes matching Roslyn
+ok 5 - A02-T05.3 both assembly APIs embed complete nullable attributes matching Roslyn
+  ---
+  duration_ms: 263.146558
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4670.854124

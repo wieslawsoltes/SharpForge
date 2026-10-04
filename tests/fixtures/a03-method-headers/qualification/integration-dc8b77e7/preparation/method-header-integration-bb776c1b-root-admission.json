@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "reviewedAt": "2026-10-04T22:26:54.532978+00:00",
+  "reviewer": "root automated source review",
+  "candidate": {
+    "path": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+    "head": "bb776c1b0a839edfc12cdb76bc707453b4c87aca",
+    "tree": "40dff4b239841c108264f94277f1157f069b953f",
+    "featureParent": "9188e28feb8ebc710bf708ce16aee9e309d76c1b",
+    "mainParent": "dc8b77e7c75ddf6abf63b9c65823ac051e6f9b4a"
+  },
+  "planSha256": "db67dc41bed5fec3e00a9089bae4c44d5bbc71955dbcfa5308dfa2f60c6b40cc",
+  "recorderSha256": "e3d7929945337718ed678e738e9f04fe7c1b4c25786d6c0fadba5673ec80fb62",
+  "status": "source-reviewed, execution admitted only at original128MiB floor",
+  "findings": [],
+  "review": [
+    "Two sequential scripts/limited.js commands match original13-file79 gate plus exact5 existing synthesized-body assertions; native-probing registration excluded and name exclusions are not qualification passes.",
+    "Before/after full10-package Git source/manifest/alias checks,103focused hashes,Node,167referencepack,plan/self and cleanHEAD/tree checks inspected.",
+    "Fresh exclusive raw output/receipt paths, initial/intermediate/final guarded atomic writes, separate primary/secondary errors, bounded cancellation/reaping and actual terminal child result inspected.",
+    "First failed command or admission/write/identity discrepancy stops later commands; no retry/source substitution.",
+    "Historical native/bench evidence remains scoped to3ddd/e60, not claimed for integratedbb."
+  ],
+  "availableBytesObserved": 240103424,
+  "minimumFreeBytes": 134217728,
+  "grant": "run-two-focused-commands-once",
+  "heavySlot": "root exclusive; no remote ref/CI/native/build/bench activity admitted concurrently"
+}
