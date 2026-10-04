@@ -22,3 +22,12 @@ export function endHeapCollection(heap, result) {
     liveBytes: result.liveBytes, liveObjects: result.liveObjects,
     freedObjects: result.freedThisCollection, freedBytes: result.bytesThisCollection}, observer.vm.instructions);
 }
+
+/** A completed allocation or positive storage growth, measured in logical managed bytes. */
+export function emitHeapAllocation(heap, bytes, growth = false) {
+  const observer = observers.get(heap);
+  if (!observer || observer.vm.heap !== heap) return;
+  observer.log.emit(RuntimeEventName.AllocationTick, {bytes, growth,
+    allocations: heap.stats.allocations, allocatedBytes: heap.stats.allocatedBytes,
+    liveBytes: heap.stats.liveBytes}, observer.vm.instructions);
+}
