@@ -3,7 +3,7 @@ import { CilOpcodes } from './opcodes/catalog.js';
 import { decodeInstructionBytes } from './opcodes/decoder.js';
 
 function prefixOpcode(name) {
-  return Object.hasOwn(CilOpcodes, name) && CilOpcodes[name].opCodeType === 'Prefix';
+  return typeof name === 'string' && Object.hasOwn(CilOpcodes, name) && CilOpcodes[name].opCodeType === 'Prefix';
 }
 
 function validatePrefix(prefix) {
@@ -65,7 +65,9 @@ export function decodeInstructionGroups(bytes, { maxInstructions = 1_000_000, ma
 
 /** Internal writer seam; validate the entire prefix sequence before emitting any bytes. */
 export function emitInstructionGroup(writer, name, operand, prefixes = []) {
-  if (!Object.hasOwn(CilOpcodes, name) || prefixOpcode(name)) throw new CilError('Expected a CIL group target instruction');
+  if (typeof name !== 'string' || !Object.hasOwn(CilOpcodes, name) || prefixOpcode(name)) {
+    throw new CilError('Expected a CIL group target instruction');
+  }
   if (!Array.isArray(prefixes) || prefixes.length > 64) throw new CilError('CIL prefix chain limit exceeded');
   for (const prefix of prefixes) validatePrefix(prefix);
   for (const prefix of prefixes) writer.op(prefix.name, prefix.operand);

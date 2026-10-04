@@ -33,11 +33,17 @@ test('all standard prefix operands preserve binary data and reject invalid domai
     const bytes = new CilWriter().group('callvirt', 0x0a000001, [{ name: 'constrained.', operand }]).finish();
     assert.equal(decodeInstructionGroups(bytes)[0].prefixes[0].operand, operand);
   }
+  for (const name of [null, Symbol('nop'), { toString() { throw new Error('Must not coerce'); } }]) {
+    const writer = new CilWriter();
+    assert.throws(() => writer.group(name), error => error.name === 'CilError');
+    assert.equal(writer.length, 0);
+  }
   for (const prefix of [
     { name: 'unaligned.', operand: 0 }, { name: 'unaligned.', operand: 3 },
     { name: 'no.', operand: 8 }, { name: 'no.', operand: -1 }, { name: 'no.', operand: 1.5 },
     { name: 'volatile.', operand: 1 }, { name: 'constrained.', operand: 0 },
     { name: 'constrained.', operand: 0x06000001 }, { name: 'constrained.', operand: 1n }, { name: 'nop' }, null,
+    { name: Symbol('volatile.') }, { name: { toString() { throw new Error('Must not coerce'); } } },
   ]) {
     const writer = new CilWriter().op('nop');
     assert.throws(() => writer.group('nop', undefined, [prefix]), error => error.name === 'CilError');
