@@ -2,6 +2,7 @@
  * The state of one semantic analysis: files, options, core types, resolvers, the diagnostics sink and the
  * policies for the parts of the framework the closed registry does not model.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { diagnostic } from '@sharpforge/text';
 import { languageVersion as parseVersion } from '@sharpforge/syntax';
 import { TypeKind } from '../symbols/types.js';
@@ -24,6 +25,7 @@ import { definedSymbols } from '../binder/csharp2-misc.js';
 import { isBclNamespace } from '../symbols/bcl-namespaces.js';
 import { bindAllUsings } from '../binder/using-directives.js';
 import { checkGlobalUsingPlacement } from '../binder/global-usings.js';
+import { builtinOwners } from '../symbols/registry-builtins.js';
 
 export class AnalysisCore {
   /**
@@ -54,6 +56,8 @@ export class AnalysisCore {
       tolerateNamespace: (name, options) => this.tolerateNamespace(name, options),
       isFrameworkGap: (namespaceName, name) => this.isFrameworkGap(namespaceName, name),
       useFeature: (uri, node, feature) => this.gate(uri, node, feature),
+      languageVersionAt: uri => this.versionOf(uri).number,
+      allowUnsafe: !!options.allowUnsafe,
       unknownUsing: () => {
         this.hasUnknownUsings = true;
       },
@@ -159,6 +163,11 @@ export class AnalysisCore {
     }
     return false;
   }
+  /** Profile-only receiver aliases, consulted after lexical names and using-static members. */
+  executionBuiltin(name) {
+    if (!this.options.executionBuiltinAliases || this.references.hasCoreLibrary || !Object.hasOwn(builtinOwners, name)) return null;
+    return this.references.coreLibrary.bridge.typeFromName(builtinOwners[name]);
+  }
   /** True when every base class of `type` is declared in source (or is one of the fully modelled roots), so a missing member really is missing. */
   closedHierarchy(type) {
     if (this.hasUnknownUsings) return false;
@@ -192,8 +201,9 @@ export class AnalysisCore {
     if (!source || this.diagnostics.length >= 400) return;
     const s = spanOf(node),
       start = s.start ?? 0,
-      length = Math.max(code === 'CS0162' || s.end > start ? (s.end ?? start) - start : 1, s.end === start ? 0 : 1);
-    if (this.diagnostics.some(d => d.code === code && d.uri === source.uri && d.start === start && d.message === message)) return;
+      length = Math.max(code === DiagnosticId.CS0162 || s.end > start ? (s.end ?? start) - start : 1, s.end === start ? 0 : 1);
+    const sameSpan = d => d.start === start && d.length === (length || 1);
+    if (this.diagnostics.some(d => d.code === code && d.uri === source.uri && sameSpan(d) && d.message === message)) return;
     this.diagnostics.push(diagnostic(source, start, length || 1, code, message, severity));
   }
   /**

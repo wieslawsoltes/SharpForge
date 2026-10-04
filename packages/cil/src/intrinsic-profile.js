@@ -1,6 +1,7 @@
+import {decimalIntrinsicDefinitions} from '@sharpforge/bytecode';
 import {canonicalType,contracts,types} from '@sharpforge/framework';
 
-const aliases={object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean'};
+const aliases={decimal:'System.Decimal',object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean'};
 export const systemType=name=>aliases[name]??name;
 /** Include return type and staticness: parameter-only keys can accept invalid MemberRefs. */
 function signatureKey(owner,name,parameters,result,isStatic) {
@@ -16,7 +17,10 @@ function add(owner,name,parameters,returnType,isStatic,implementation,contract=n
   const key=intrinsicKey(descriptor);
   definitions.set(key,Object.freeze({key,descriptor,implementation,contract}));
 }
-const primitive=['int','uint','long','ulong','double','float','bool','char','string','object'];
+for(const [name,parameter,result] of [['SingleToInt32Bits','float','int'],['DoubleToInt64Bits','double','long'],['Int32BitsToSingle','int','float'],['Int64BitsToDouble','long','double']])add('System.BitConverter',name,[parameter],result,true,'bitConverter');
+for(const owner of ['System.IntPtr','System.UIntPtr'])add(owner,'get_Size',[],'int',true,'nativeSize');
+for(const descriptor of decimalIntrinsicDefinitions)add(descriptor.owner,descriptor.name,descriptor.parameters,descriptor.returnType,descriptor.isStatic,'decimal');
+const primitive=['System.Decimal','int','uint','long','ulong','double','float','bool','char','string','object'];
 for(const name of ['Write','WriteLine'])for(const type of primitive)add('System.Console',name,[type],'void',true,'console');
 add('System.Console','WriteLine',[],'void',true,'console');
 add('System.Object','.ctor',[],'void',false,'objectCtor');
@@ -97,5 +101,5 @@ export function intrinsicDefinition(descriptor) {
   const contract=frameworkDefinitions.get(signatureKey(canonicalType(descriptor.owner),descriptor.name,signature.parameters.map(canonicalType),canonicalType(signature.returnType),signature.isStatic));
   if(contract)return contract;
   if(descriptor.genericArguments||signature.genericArity||signature.callingConvention)return null;
-  return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters.map(type=>type==='Array'?'System.Array':type),signature.returnType,signature.isStatic))??null;
+  return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters.map(type=>type==='Array'?'System.Array':type.replace(/^decimal(?=&|$)/,'System.Decimal')),signature.returnType==='decimal'?'System.Decimal':signature.returnType,signature.isStatic))??null;
 }

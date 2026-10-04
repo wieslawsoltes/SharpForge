@@ -12,6 +12,7 @@
  * `a?.b++` and `--a?.b` are not assignments in the grammar: they are an increment of a conditional access, which
  * is not a variable (CS1059, reported by the increment binder).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { checkWritable } from './ref-kinds.js';
 
 /** True when `target` is a member of the value the conditional access tests (`s?.X` for a `Nullable<S>` receiver). */
@@ -28,8 +29,8 @@ export const ConditionalAssignmentBinding = Base =>
       const left = this.whenNotNull(syntax.left, receiver);
       // The value of a nullable struct receiver is a copy: its members are not variables (Roslyn reports CS0131, not CS1612).
       const writable = left.hasErrors ? null : checkWritable(left, 'assignment', this.variableContext);
-      if (writable?.code === 'CS1612' && isMemberOfReceiverValue(left)) {
-        this.report(syntax.left, 'CS0131');
+      if (writable?.code === DiagnosticId.CS1612 && isMemberOfReceiverValue(left)) {
+        this.report(syntax.left, DiagnosticId.CS0131);
         this.markWrite(left, null);
         this.value(syntax.right);
         return this.bad(syntax);

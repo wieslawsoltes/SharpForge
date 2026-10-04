@@ -160,6 +160,8 @@ export const memberMethods = {
     const typeParameters = this.at('<') ? this.typeParameterList() : null,
       parameters = this.parameterList(),
       constraints = this.constraintClauses();
+    // Roslyn reports an async method at its name.
+    if (modifiers.some(m => m.kind === 'AsyncKeyword')) this.feature('Async', this.memberName);
     const [body, expressionBody, semicolon] = this.asyncBody(modifiers, () => this.functionBody('ExpressionBodiedMethod'));
     this.memberForm(this.memberName, !!(body || expressionBody));
     return this.n(
