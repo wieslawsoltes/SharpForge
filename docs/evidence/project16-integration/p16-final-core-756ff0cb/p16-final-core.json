@@ -1,0 +1,89 @@
+{
+  "sourceCommit": "756ff0cbeb6c8560ee104c53627f5464de8572a1",
+  "sourceTree": "cb63907e70a2a14cef2bb1efabe2c3b2c532c449",
+  "capturedMain": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+  "startedAt": "2026-10-04T01:59:16.595905+00:00",
+  "untrackedPreservedOutsideCheckout": [
+    "packages/clr/src/type-system/metadata-method-definitions.js"
+  ],
+  "steps": [
+    {
+      "name": "check",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 4.903005550000671,
+      "log": "/workspace/scratch/6b99131ca908/p16-final-check.log"
+    },
+    {
+      "name": "review",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--input-type=module",
+        "-e",
+        "import {reviewGates} from './scripts/planning/review-gates.js'; const result=reviewGates({event:{pull_request:{base:{sha:'9ac2d74d2b3992e80eb697474178e58269b17ce5'},head:{sha:'756ff0cbeb6c8560ee104c53627f5464de8572a1'},labels:[]}},eventName:'pull_request',expectedSha:'756ff0cbeb6c8560ee104c53627f5464de8572a1'});console.log(JSON.stringify({...result,evidenceKind:'local immutable snapshot review; not a hosted PR event'},null,2));if(!result.passed)process.exitCode=1;"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.3806553940012236,
+      "log": "/workspace/scratch/6b99131ca908/p16-final-review.log"
+    },
+    {
+      "name": "quarantine",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/flaky/detect.js",
+        "--check-quarantine"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.13190729699999793,
+      "log": "/workspace/scratch/6b99131ca908/p16-final-quarantine.log"
+    },
+    {
+      "name": "build",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 6.465732480999577,
+      "log": "/workspace/scratch/6b99131ca908/p16-final-build.log"
+    },
+    {
+      "name": "standalone",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/standalone.js"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.7552534210008162,
+      "log": "/workspace/scratch/6b99131ca908/p16-final-standalone.log"
+    },
+    {
+      "name": "checkout",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/clean-checkout.js"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 0.16650342000139062,
+      "log": "/workspace/scratch/6b99131ca908/p16-final-checkout.log"
+    }
+  ],
+  "finishedAt": "2026-10-04T01:59:30.401244+00:00"
+}

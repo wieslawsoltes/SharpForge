@@ -11,7 +11,8 @@ import {CallScopedInference} from './binder/inference-cache.js';
 class CoreMethodCompiler {
   constructor(compilation,method){this.c=compilation;this.m=method;this.code=[];this.locals=[];this.scopes=[new Map()];this.assigned=new Set();this.loops=[];this.handlers=[];this.catchDepth=0;this.finallyScopes=[];this.checkedContext=null;this.constantDiagnostics=new Set();
     if(!method.isStatic)this.local('this',method.owner.name,method.node,true,true);
-    for(const p of method.parameters)this.local(p.name,p.type,p,true);
+    // Compiler-synthesized parameters keep their slot and debug name but have no IDE symbol, matching the bound pipeline.
+    for(const p of method.parameters)this.local(p.name,p.type,p,true,false,!!p.hidden);
   }
   get pc(){return this.code.length/3;}
   emit(op,a=0,b=0){const at=this.pc;this.code.push(op,a,b);return at;}
@@ -19,9 +20,9 @@ class CoreMethodCompiler {
   emitConstant(value,type){this.emit(Op.CONST,this.c.constant(value),type==='double'?1:0);}
   clear(slot){if(!isReference(this.locals[slot].type))return;this.emitConstant(null);this.emit(Op.STLOC,slot);this.emit(Op.POP);}
   temp(type='object'){const slot=this.locals.length;this.locals.push({name:`$t${slot}`,type,slot,hidden:true});return slot;}
-  local(name,type,node,assigned=false,hidden=false){
+  local(name,type,node,assigned=false,hidden=false,noSymbol=false){
     if(this.scopes.some(s=>s.has(name)))this.c.report(node,DiagnosticId.CS0136,[name]);
-    const slot=this.locals.length,symbol=hidden?null:this.c.symbol({...node,name},'local',type,{method:this.m.qualifiedName,scopeStart:this.scopeNode?.start??this.m.node.start,scopeEnd:this.scopeNode?.end??this.m.node.end});
+    const slot=this.locals.length,symbol=hidden||noSymbol?null:this.c.symbol({...node,name},'local',type,{method:this.m.qualifiedName,scopeStart:this.scopeNode?.start??this.m.node.start,scopeEnd:this.scopeNode?.end??this.m.node.end});
     const local={name,type,slot,symbol,hidden,scopeStartPc:this.pc,isConst:node.isConst??false,isUsing:node.isUsing??false,isIteration:node.isIteration??false,declaredAt:node.start,scopeEnd:this.scopeNode?.end??this.m.node.end};this.locals.push(local);this.scopes.at(-1).set(name,local);if(assigned)this.assigned.add(slot);return local;
   }
   closeScope(){const scope=this.scopes.pop();for(const l of scope.values())l.scopeEndPc=this.pc;return scope;}

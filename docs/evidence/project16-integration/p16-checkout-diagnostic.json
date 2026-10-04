@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "756ff0cbeb6c8560ee104c53627f5464de8572a1",
+  "startedAt": "2026-10-04T02:03:07.615946+00:00",
+  "steps": [
+    {
+      "name": "check",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 0,
+      "deletedUpstreamFileExists": false,
+      "status": ""
+    },
+    {
+      "name": "checkout",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/clean-checkout.js"
+      ],
+      "exitCode": 0,
+      "deletedUpstreamFileExists": false,
+      "status": ""
+    }
+  ],
+  "preservedSha256": "ab4a8f43b35beebe5623e553ce19b51dde5385b939b1149f45a58b95fd6bf666",
+  "existsImmediatelyAfterPreserving": false,
+  "initialStatus": "",
+  "finishedAt": "2026-10-04T02:03:12.428768+00:00"
+}

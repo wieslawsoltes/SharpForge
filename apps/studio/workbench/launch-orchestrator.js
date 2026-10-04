@@ -14,8 +14,10 @@ export class LaunchOrchestrator {
 
   subscribe(listener, options) { return this.events.subscribe(listener, options); }
 
-  async start({ debug = true, currentProjectId, entries, signal, activate = true, ...overrides } = {}) {
+  /** shouldActivate(session) synchronously guards first-app selection after launch; it never enters worker launch options. */
+  async start({ debug = true, currentProjectId, entries, signal, activate = true, shouldActivate = () => true, ...overrides } = {}) {
     if (this.operations.size >= 128) throw workbenchError('LAUNCH_QUEUE_LIMIT', 'Launch operation limit reached');
+    if (typeof shouldActivate !== 'function') throw new TypeError('Launch activation guard must be a function');
     const targets = entries ?? this.startup.resolve({
       debug, currentProjectId, currentProfileId: this.profiles.selected.get(currentProjectId) ?? 'default'
     });
@@ -53,7 +55,7 @@ export class LaunchOrchestrator {
           if (controller.signal.aborted) throw abortError(controller.signal.reason);
           const application = await this.launchBuilt(target, buildResults.get(target.projectId), { ...overrides, debug, signal: controller.signal });
           result.started.push(application.id);
-          if (activate && result.started.length === 1) this.sessions.setActive(application.id);
+          if (activate && result.started.length === 1 && shouldActivate(application)) this.sessions.setActive(application.id);
         } catch (error) {
           const failure = { projectId: target.projectId, error };
           if (controller.signal.aborted || error.name === 'AbortError') result.cancelled.push(target.projectId);

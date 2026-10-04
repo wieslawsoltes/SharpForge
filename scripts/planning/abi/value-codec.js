@@ -38,7 +38,10 @@ export function validateEnvelope(doc){
     if(h.data.length>1_000_000)fail('ABI_LIMIT','Heap record length exceeds limit');
   }
   const check=v=>{validateValue(v);if(v.kind==='ref'&&records.get(v.value.h)?.g!==v.value.g)fail('ABI_STALE_HANDLE','Unknown or stale handle');if(v.kind==='struct')v.value.fields.forEach(check);};
-  doc.slots.forEach(check);for(const h of doc.handles)if(h.kind!=='string')h.data.forEach(check);return doc;
+  // Missing array entries have no value tag; do not let array iteration skip them.
+  for(const value of doc.slots)check(value);
+  for(const h of doc.handles)if(h.kind!=='string')for(const value of h.data)check(value);
+  return doc;
 }
 export function encode(doc){
   validateEnvelope(doc);const extension=[];

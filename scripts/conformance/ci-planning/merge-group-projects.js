@@ -1,5 +1,5 @@
 import { resolveTask } from '../../planning/lib/task-ref.js';
-import { claimedIdentity } from './gates.js';
+import { claimedIdentity } from './claim-identity.js';
 
 const query = `query ClaimProjects($owner:String!,$repo:String!,$issue:Int!,$after:String) {
   repository(owner:$owner,name:$repo) { issue(number:$issue) {
@@ -75,3 +75,6 @@ export async function groupClaimedIdentity(client, pullRequest, now = Date.now()
   const identity = await claimedIdentity(pinned, pullRequest, now);
   return { ...identity, project: items[0].project, issue: claim.issue };
 }
+
+// The same claim lookup applies to an individually dispatched PR.
+export { groupClaimedIdentity as projectClaimedIdentity };

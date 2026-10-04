@@ -1,5 +1,5 @@
 {
   "default-literal/default-literal-in-7-0": ["diagnostics", "warnings"],
   "default-literal/needs-a-target-type": ["diagnostics", "warnings"],
-  "default-literal/takes-the-type-it-is-converted-to": ["diagnostics", "warnings", "bytecode", "cil"]
+  "default-literal/takes-the-type-it-is-converted-to": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

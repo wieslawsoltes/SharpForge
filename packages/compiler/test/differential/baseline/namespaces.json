@@ -1,5 +1,5 @@
 {
-  "namespaces/alias-and-namespace-of-the-same-target": ["diagnostics", "warnings", "bytecode", "cil"],
+  "namespaces/alias-and-namespace-of-the-same-target": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "namespaces/cs0101-duplicate-in-namespace": ["diagnostics", "warnings"],
   "namespaces/cs0104-ambiguous-reference": ["diagnostics", "warnings"],
   "namespaces/cs0104-framework-ambiguity": ["warnings"],
@@ -26,8 +26,9 @@
   "namespaces/cs1529-using-after-declaration": ["diagnostics", "warnings"],
   "namespaces/cs1537-duplicate-alias": ["diagnostics", "warnings"],
   "namespaces/cs7007-using-static-a-namespace": ["diagnostics", "warnings"],
-  "namespaces/nested-and-qualified": ["diagnostics", "warnings", "bytecode", "cil"],
-  "namespaces/same-name-different-namespaces": ["diagnostics", "warnings", "bytecode", "cil"],
-  "namespaces/using-alias-and-static": ["diagnostics", "warnings", "bytecode", "cil"],
-  "namespaces/using-bcl-namespaces-outside-the-registry": ["diagnostics", "warnings", "bytecode", "cil"]
+  "namespaces/file-scoped": ["directCil"],
+  "namespaces/nested-and-qualified": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "namespaces/same-name-different-namespaces": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "namespaces/using-alias-and-static": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "namespaces/using-bcl-namespaces-outside-the-registry": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

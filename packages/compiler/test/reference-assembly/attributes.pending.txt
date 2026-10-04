@@ -1,0 +1,4 @@
+  [assembly: [System.Runtime.CompilerServices.CompilationRelaxationsAttribute((Int32)8)]]
+  [assembly: [System.Runtime.CompilerServices.RuntimeCompatibilityAttribute(WrapNonExceptionThrows = True)]]
+  [assembly: [System.Diagnostics.DebuggableAttribute((System.Diagnostics.DebuggableAttribute+DebuggingModes)2)]]
+  [assembly: [System.Runtime.Versioning.TargetFrameworkAttribute(".NETCoreApp,Version=v10.0", FrameworkDisplayName = ".NET 10.0")]]
