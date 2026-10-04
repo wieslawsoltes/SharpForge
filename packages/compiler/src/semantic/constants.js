@@ -30,6 +30,7 @@ export const ConstantBinding = Base =>
     /** The constant value of a const field or enum member (bound on demand; circular definitions are CS0110). */
     constantOf(field) {
       if (field.isEnumMember) {
+        if (field.constantValueObject) return field.constantValueObject;
         if (field.constantValue === undefined) {
           const type = field.containingType;
           bindEnumMembers(

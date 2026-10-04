@@ -70,6 +70,7 @@ export const ConversionBinding = Base =>
         operand: e,
         conversion: c,
         isExplicit,
+        isChecked: this.checked,
         isImplicitIdentity: c.kind === ConversionKind.Identity,
       });
       // A constant string converted to ReadOnlySpan<char> by the C# 14 span conversion has no side effect (CS0219 applies).

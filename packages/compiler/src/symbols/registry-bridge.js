@@ -3,10 +3,15 @@ import {types as frameworkTypes,contracts as frameworkContracts,canonicalType} f
 import {Builtins} from '@sharpforge/bytecode';
 import {builtinOwners, builtinMemberShape, builtinParameterType} from './registry-builtins.js';
 import {NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,TypeWithAnnotations,TypeKind,Accessibility} from './types.js';
-import {MethodSymbol,FieldSymbol,PropertySymbol,EventSymbol,ParameterSymbol,MethodKind,DeclarationModifiers} from './members.js';
+import {MethodSymbol,PropertySymbol,EventSymbol,ParameterSymbol,MethodKind,DeclarationModifiers} from './members.js';
 import {NamespaceSymbol,NamespaceExtent} from './namespaces.js';
 import {attachOpenMembers} from './registry-open-members.js';
-import {registryParameter,registryContractMethod} from './registry-contracts.js';
+import {registryMethodSymbol,registryParameter} from './registry-method-symbol.js';
+import {isParamsParameter} from './registry-params.js';
+import {registryNullableType} from './registry-nullable.js';
+import {withManagedExceptionTypes} from './registry-exceptions.js';
+import {addRegistryIndexers} from './registry-indexers.js';
+import {registryEnumFields} from './registry-enum-symbols.js';
 import {declareCoreTypes,TypeProvider,specialTypeFromKeyword,coreTypeDescriptor,specialTypeIds} from './special-types.js';
 /**
  * Bridges the closed framework registry (packages/framework) and the bytecode builtin table to read-only,
@@ -33,7 +38,7 @@ class RegistryConstructedType extends ConstructedNamedTypeSymbol {
 export class RegistryBridge {
   /** @param {object} registry `{types:Map,contracts:[],builtins:[]}`; defaults to the live framework registry and builtin table. */
   constructor(registry={}){
-    this.types=registry.types??frameworkTypes;this.contracts=registry.contracts??frameworkContracts;this.builtins=registry.builtins??Builtins.filter(b=>!b.contract&&!b.name.startsWith('$'));
+    this.types=withManagedExceptionTypes(registry.types??frameworkTypes);this.contracts=registry.contracts??frameworkContracts;this.builtins=registry.builtins??Builtins.filter(b=>!b.contract&&!b.name.startsWith('$'));
     this.module=Object.freeze({name:'SharpForge.Framework',kind:'registry'});this.globalNamespace=new NamespaceSymbol('',null,NamespaceExtent.Metadata,this.module);
     declareCoreTypes(this.globalNamespace,coreIds);this.typeProvider=new TypeProvider(this.globalNamespace);
     this.byName=new Map();this.names=new Map();this.arrays=new Map();this.contractSymbols=new Map();this.builtinSymbols=new Map();this.byOwner=new Map();this.builtinsByOwner=new Map();
@@ -71,23 +76,34 @@ export class RegistryBridge {
   /** The registry instantiation matching a definition and type arguments, or null. */
   closedInstance(definition,typeArguments){return definition.instances?.find(t=>t.typeArguments.length===typeArguments.length&&t.typeArguments.every((a,i)=>a.type.equals(typeArguments[i].type)))??null;}
   baseOf(registryName){const entry=this.types.get(registryName),base=entry?.base;if(!base)return this.objectType;return this.typeFromName(base==='object'?'object':base)??this.objectType;}
+  interfacesOf(name){return (this.types.get(name)?.interfaces??[]).map(type=>this.typeFromName(type)).filter(Boolean);}
   /**
    * Resolves a registry type name: keywords (int), canonical registry names, arrays (X[]), 'Exception',
    * and unqualified registry aliases (List<int>). Returns null when the name is not a framework type.
    */
   typeFromName(name){
     if(typeof name!=='string')return null;let type=this.byName.get(name);if(type)return type;if(this.types.has(name))return this.declare(name);
+    if(name.endsWith('&'))return this.typeFromName(name.slice(0,-1));
+    type=registryNullableType(this,name);if(type)return type;
     if(name.endsWith('[]')){if(this.arrays.has(name))return this.arrays.get(name);const element=this.typeFromName(name.slice(0,-2));if(!element)return null;type=new ArrayTypeSymbol(element,1,{baseType:()=>this.typeProvider.getCoreType('System_Array')});this.arrays.set(name,type);return type;}
     const canonical=canonicalType(name);if(canonical!==name)return this.typeFromName(canonical);
     return null;
   }
   /** The registry (legacy) name of a bridged type, or null. */
   registryName(type){if(type instanceof ArrayTypeSymbol){const element=this.registryName(type.elementType);return element?element+'[]':null;}return this.keywords.get(type)??this.names.get(type)??null;}
-  parameter(typeName,index,isParams=false){return registryParameter(this,typeName,index,isParams);}
+  parameter(typeName,index,modeOrParams=false){
+    const parameter=registryParameter(this,typeName,index,modeOrParams);
+    parameter.isParams=modeOrParams===true;
+    return parameter;
+  }
   /** Builds the member symbols of a registry type from its contracts, registry properties and builtins. */
   membersOf(registryName,owner){
     const entry=this.types.get(registryName),members=[...(owner._nested??[])],properties=new Map(),events=new Map(),pub={declaredAccessibility:Accessibility.Public,containingSymbol:owner};
-    const method=(contract,kind)=>registryContractMethod(this,contract,kind,pub);
+    const method=(contract,kind)=>{
+      const symbol=registryMethodSymbol(this,contract,owner,kind);
+      for(const [index,parameter] of symbol.parameters.entries())parameter.isParams=isParamsParameter(contract,index);
+      return symbol;
+    };
     for(const c of this.byOwner.get(registryName)??[]){
       if(c.kind==='constructor')members.push(method(c,MethodKind.Constructor));
       else if(c.kind==='get'||c.kind==='set'){const p=properties.get(c.property)??{};p[c.kind]=method(c,c.kind==='get'?MethodKind.PropertyGet:MethodKind.PropertySet);p.isStatic=c.isStatic;properties.set(c.property,p);}
@@ -97,9 +113,8 @@ export class RegistryBridge {
     for(const [name,p] of properties){const type=p.get?.returnType??p.set.parameters[0].type;members.push(new PropertySymbol({...pub,name,type,getMethod:p.get??null,setMethod:p.set??null,modifiers:p.isStatic?DeclarationModifiers.Static:0}),...[p.get,p.set].filter(Boolean));}
     for(const [name,e] of events){const type=this.typeFromName(entry?.events?.[name])??e.eventAdd?.parameters[0].type??this.objectType;members.push(new EventSymbol({...pub,name,type,addMethod:e.eventAdd??null,removeMethod:e.eventRemove??null}),...[e.eventAdd,e.eventRemove].filter(Boolean));}
     // Indexers surface as this[...] over the get_Item/set_Item contracts.
-    const getters=members.filter(m=>m.kind==='Method'&&m.name==='get_Item'&&!m.isStatic);
-    for(const getter of getters){const setter=members.find(m=>m.kind==='Method'&&m.name==='set_Item'&&m.parameters.length===getter.parameters.length+1&&getter.parameters.every((p,i)=>p.type.equals(m.parameters[i].type)))??null,indexer=new PropertySymbol({...pub,name:'this[]',type:getter.returnType,parameters:getter.parameters.map((p,i)=>new ParameterSymbol({name:p.name,type:p.type,ordinal:i}))});indexer.getMethod=getter;indexer.setMethod=setter;members.push(indexer);}
-    if(entry?.kind==='enum')for(const [name,value] of Object.entries(entry.values??{}))members.push(new FieldSymbol({...pub,name,type:owner,modifiers:DeclarationModifiers.Const,constantValue:{value}}));
+    addRegistryIndexers(members,pub);
+    if(entry?.kind==='enum')members.push(...registryEnumFields(owner,entry.values));
     for(const b of this.builtinsByOwner.get(registryName)??[]){
       const {name: short, instance, property} = builtinMemberShape(b);
       const result = b.result === 'numeric' ? 'double' : b.result;
