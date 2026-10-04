@@ -40,6 +40,7 @@ var cases = new (int Source, int? Length, int Destination, int Count)[] {
     (-1, 9, -1, -1), (-1, 9, 0, -1), (0, 9, -1, -1),
     (8, 9, -1, 1), (-1, 9, 10, 1), (6, 9, 8, 2),
     (-1, 0, 0, 1), (8, 9, 10, 0), (8, 9, 0, int.MaxValue),
+    (0, 9, 10, -1), (-1, 9, 10, -1), (0, 0, 1, -1),
     (0, null, 0, 0), (-1, null, -1, -1), (int.MaxValue, null, int.MaxValue, int.MaxValue)
 };
 for (var index = 0; index < cases.Length; index++) Capture("range-" + index, cases[index]);
