@@ -1,0 +1,39 @@
+# Optional small Int64 operand lanes
+
+`new CilVirtualMachine(assembly, {smallLongs: true})` stores Int64 values within
+`[-Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER]` as tagged Numbers in the
+existing private typed-frame plane. Ordinary Array reads, descriptors, iteration,
+debugger callbacks, calls and snapshot values continue to expose BigInt. Plain
+Number writes remain ordinary Number values; they never implicitly become Int64.
+
+The option is independent of `typedNumericStack` and `specializeNumericHandlers`.
+All three reuse the existing bounded `numericPlanTypes` analysis and code-epoch
+invalidation. With all options omitted, no numeric plane or category analysis is
+created. No public carrier, wire opcode or snapshot schema changes are introduced.
+
+The raw path supports Int64 constants, long/ulong local and argument loads/stores,
+dup/pop, negation, add/subtract/multiply (including checked forms), and comparisons
+and branches. Arithmetic accepts a Number result only when it is a safe integer.
+Unsigned checked operations also require nonnegative operands and result. Every
+declined operation uses its original operands in the existing BigInt handler,
+before the raw handler consumes anything. A later exact safe result can re-enter
+the lane through the ordinary Array write adapter.
+
+Division, remainder, bitwise operations, shifts, conversions, wide operands and
+unknown verifier categories retain the existing handlers. Host-edited tags, Array
+replacement, custom descriptors and frozen/sealed arrays also preserve fallback.
+Write observers keep the regular BigInt notification path. The existing reference
+plane, pool clearing, stack admission and restore adapters serve both numeric kinds;
+saved frames remain ordinary arrays and shared local-array aliases are preserved.
+
+This is a partial product increment for #1397, limited to direct CIL. Source and
+reloaded-source interpreters retain their existing representation. The required
+10-million-operation differential run, all-platform qualification and at-least-3x
+counter-loop benchmark remain pending. All 97 focused boundary, lifecycle, float/Int64 coexistence,
+frame-pool, root-visitor and quota tests passed at `f32fde87`. Required PR checks
+follow this serial local validation; no builds or benchmarks ran in implementation.
+
+No zero-allocation or throughput claim is made. Plan/plane/proxy setup allocates;
+BigInt is materialized at public boundaries and generic fallback. The focused loop
+regression inspects private lane use as a functional storage invariant, not as an
+allocation measurement or benchmark result.

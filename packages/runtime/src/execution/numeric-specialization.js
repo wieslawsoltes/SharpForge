@@ -3,6 +3,7 @@ import {executionCodeState} from './code-version.js';
 import {numericStackTypes} from './numeric-stack-types.js';
 import {specializedInt32Handler} from './handlers/arith-specialized.js';
 import {specializedInt64Handler} from './handlers/int64-specialized.js';
+import {smallLongHandler} from './small-long-handlers.js';
 
 const analyses = new WeakMap();
 
@@ -35,14 +36,20 @@ export function numericPlanTypes(vm, method, offsets) {
 
 /** Mutate the existing decode-plan handler array before it is frozen; no analysis when disabled. */
 export function specializeNumericPlan(vm, method, offsets, handlers) {
-  if (vm.options.specializeNumericHandlers !== true) return null;
+  const integer = vm.options.specializeNumericHandlers === true;
+  const smallLongs = vm.options.smallLongs === true;
+  if (!integer && !smallLongs) return null;
   const states = numericPlanTypes(vm, method, offsets);
   if (!states) return null;
   const ids = Array(handlers.length).fill(null);
   for (let index = 0; index < handlers.length; index++) {
-    const name = method.instructions[index].name;
-    const selected = specializedInt32Handler(name, states[index], handlers[index]) ??
-      specializedInt64Handler(name, states[index], handlers[index]);
+    const instruction = method.instructions[index];
+    const name = instruction.name;
+    let selected = integer ? specializedInt32Handler(name, states[index], handlers[index]) ??
+      specializedInt64Handler(name, states[index], handlers[index]) : null;
+    if (smallLongs) {
+      selected = smallLongHandler(method, instruction, states[index], selected?.handler ?? handlers[index]) ?? selected;
+    }
     if (!selected) continue;
     handlers[index] = selected.handler;
     ids[index] = selected.id;
@@ -53,10 +60,12 @@ export function specializeNumericPlan(vm, method, offsets, handlers) {
 /** Separate option key permits other decode contributions to keep their own opt-in switch. */
 export function numericPlanCurrent(vm, method, entry) {
   return entry.numericEnabled === (vm.options.specializeNumericHandlers === true) &&
-    (!entry.numericEnabled || current(vm, method, entry.numericIdentity));
+    entry.smallLongEnabled === (vm.options.smallLongs === true) &&
+    (!(entry.numericEnabled || entry.smallLongEnabled) || current(vm, method, entry.numericIdentity));
 }
 
 export function numericPlanIdentity(vm, method) {
   const numericEnabled = vm.options.specializeNumericHandlers === true;
-  return {numericEnabled, numericIdentity: numericEnabled ? identity(vm, method) : null};
+  const smallLongEnabled = vm.options.smallLongs === true;
+  return {numericEnabled, smallLongEnabled, numericIdentity: numericEnabled || smallLongEnabled ? identity(vm, method) : null};
 }
