@@ -1,4 +1,4 @@
-import { canonicalType, frameworkType } from '@sharpforge/framework';
+import { frameworkType } from '@sharpforge/framework';
 import { CilError } from '../binary.js';
 import { signaturePrimitives, signaturePrimitiveNodes, signatureAliases, signatureBudget } from './signature-types.js';
 
@@ -81,9 +81,11 @@ export function parseSignatureType(value, resolveToken, options = {}) {
   const budget = signatureBudget(options);
   function named(name, kind) {
     if (typeof resolveToken !== 'function') throw new CilError('Type token resolver is required');
+    const token = resolveToken(name);
     const base = name.replace(/`\d+$/, '');
-    const isValue = (/`\d+$/.test(name) && genericValues.has(base)) || ['enum', 'value'].includes(frameworkType(name)?.kind);
-    return { kind: kind ?? (isValue ? 'valuetype' : 'class'), token: resolveToken(name) };
+    const isValue = token >>> 24 !== 2 &&
+      ((/`\d+$/.test(name) && genericValues.has(base)) || ['enum', 'value'].includes(frameworkType(name)?.kind));
+    return { kind: kind ?? (isValue ? 'valuetype' : 'class'), token };
   }
   function parse(text, depth = 0) {
     budget(depth);
@@ -134,7 +136,8 @@ export function parseSignatureType(value, resolveToken, options = {}) {
     // Compiler-generated names such as <>AllocationToken and <Run>d__1 are atomic identifiers.
     const identifier = text.replace(/(^|[.+])<[^<>]*>(?=[\w])/g, '$1Generated');
     if (/[<>\[\](),&*\s]/.test(identifier)) throw new CilError('Invalid signature type name');
-    return named(canonicalType(text), kind);
+    // The caller resolves owned TypeDefs before applying aliases to external references.
+    return named(text, kind);
   }
   return typeof value === 'object' && value !== null ? value : parse(value);
 }

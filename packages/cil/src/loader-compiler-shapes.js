@@ -56,9 +56,10 @@ export function restoreCanonicalCompilerShapes(types, methods) {
     if (marker) restoreDelegate(type, ownedMethods.get(type.name) ?? [], marker[1]);
     if (!type.name.startsWith('<>Cell(')) continue;
     const field = type.fields[0];
-    if (type.base || type.fields.length !== 1 || field.name !== 'Value' || type.name !== '<>Cell(' + imageName(field.type) + ')') {
+    const valueType = primitiveAliases[field?.type] ?? field?.type;
+    if (type.base || type.fields.length !== 1 || field.name !== 'Value' || type.name !== '<>Cell(' + imageName(valueType) + ')') {
       throw new CilError('Invalid canonical reference-cell shape');
     }
-    type.referenceCell = {valueType: field.type, field: field.index};
+    type.referenceCell = {valueType, field: field.index};
   }
 }

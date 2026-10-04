@@ -24,24 +24,25 @@ export function splitTypeArguments(text) {
   if(depth!==0)throw new TypeError('Unbalanced runtime type name');
   result.push(text.slice(start).trim());return result;
 }
-export function runtimeTypeName(input) {
+export function runtimeTypeName(input, declared = null) {
   if(typeof input!=='string'||!input.trim())throw new TypeError('A runtime type name is required');
   const name=input.trim(),array=/^(.*)\[([^\[\]]*)\]$/.exec(name);
+  if(declared?.has(name))return name;
   if(array) {
     const shape=array[2],dimensions=shape.split(',');
     if(shape!==''&&shape!=='*'&&!dimensions.every(dimension=>dimension===''||/^-?\d+\.\.\.-?\d*$/.test(dimension)))throw new TypeError('Invalid runtime array shape');
     if(dimensions.length>32)throw new TypeError('Runtime array rank exceeds 32');
-    return runtimeTypeName(array[1])+(shape===''?'[]':dimensions.length===1?'[*]':'['+','.repeat(dimensions.length-1)+']');
+    return runtimeTypeName(array[1],declared)+(shape===''?'[]':dimensions.length===1?'[*]':'['+','.repeat(dimensions.length-1)+']');
   }
-  if(name.endsWith('?'))return 'System.Nullable`1<'+runtimeTypeName(name.slice(0,-1))+'>';
-  if(name.endsWith('&')||name.endsWith('*'))return runtimeTypeName(name.slice(0,-1))+name.at(-1);
+  if(name.endsWith('?'))return 'System.Nullable`1<'+runtimeTypeName(name.slice(0,-1),declared)+'>';
+  if(name.endsWith('&')||name.endsWith('*'))return runtimeTypeName(name.slice(0,-1),declared)+name.at(-1);
   const start=name.indexOf('<');
   if(start>=0) {
     if(!name.endsWith('>'))throw new TypeError('Unbalanced runtime type name');
     const arguments_=splitTypeArguments(name.slice(start+1,-1));
     let definition=name.slice(0,start).trim();
     if(!/`\d+$/.test(definition)){const short=definition.replace(/^System\.Collections\.Generic\./,'');definition+='`'+(genericNames.has(short)?short==='Dictionary'?2:1:arguments_.length);}
-    return runtimeTypeName(definition)+'<'+arguments_.map(argument=>argument?runtimeTypeName(argument):'').join(', ')+'>';
+    return runtimeTypeName(definition,declared)+'<'+arguments_.map(argument=>argument?runtimeTypeName(argument,declared):'').join(', ')+'>';
   }
   const stem=name.replace(/`\d+$/,'');
   if(/[<>\[\]]/.test(name))throw new TypeError('Unbalanced runtime type name');
@@ -122,7 +123,7 @@ export class MethodTableRegistry {
       if(!name)throw new TypeError('Unknown runtime type token: '+input);
       const table=this.get(name);this.tokens.set(input,table);return table;
     }
-    const name=this.descriptors.has(input)?input:runtimeTypeName(input);
+    const name=this.descriptors.has(input)?input:runtimeTypeName(input,this.descriptors);
     if(this.tables.has(name))return this.tables.get(name);
     if(this.building.size>=128)throw new TypeError('Runtime type nesting limit exceeded');
     let descriptor=this.descriptors.get(name),array=/^(.*)(\[(?:,*|\*)\])$/.exec(name);

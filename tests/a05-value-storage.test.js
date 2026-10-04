@@ -13,15 +13,23 @@ const holder = {name: 'Holder', fields: [{name: 'Value', type: 'valuetype Point'
     .op('call', context.member('System.Object', '.ctor', 'void', [], false)).op('ret')}
 ]};
 
-test('registered framework values retain their existing heap-backed storage representation', () => {
+test('registered framework values retain heap-backed storage with independent typed carrier copies', () => {
   const bytes = genericCallFixture([{name: 'Program', methods: [{name: 'Main',
     locals: ['Windows.Foundation.Point'], body: writer => writer.op('ret')}]}]);
   const vm = new CilVirtualMachine(bytes);
   try {
     assert.equal(vm.top.locals[0], null);
-    const point = vm.heap.allocate('host', 'Windows.Foundation.Point', [2, 3]);
+    const point = vm.heap.allocate('host', 'Windows.Foundation.Point', ['X', 2, 'Y', 3]);
     vm.dereference(vm.address('local', 0), true, point);
-    assert.equal(vm.top.locals[0], point);
+    const stored = vm.top.locals[0];
+    assert.notEqual(stored, point);
+    assert.equal(vm.heap.get(stored).kind, 'host');
+    assert.deepEqual(vm.heap.get(stored).data, ['X', 2, 'Y', 3]);
+    vm.heap.get(stored).data[1] = 9;
+    assert.equal(vm.heap.get(point).data[1], 2);
+    const malformed = vm.heap.allocate('host', 'Windows.Foundation.Point', [2, 3]);
+    assert.throws(() => vm.dereference(vm.address('local', 0), true, malformed), {name: 'InvalidProgramException'});
+    assert.equal(vm.top.locals[0], stored);
     vm.heap.methodTables.define({name: 'HostOnlyValue', base: 'System.ValueType', flags: {valueType: true, dynamic: true}});
     const table = vm.heap.methodTables.get('HostOnlyValue');
     const payload = Object.freeze({valueType: table, fields: Object.freeze([])});

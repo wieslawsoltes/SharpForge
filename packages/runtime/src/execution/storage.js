@@ -28,7 +28,7 @@ export function storageValue(vm,value,type,numericContext) {
   numericContext ??= vm.options;
   if(vm.inspector)type=resolveCallType(vm,type);
   if(nullableElementType(type))return requireNullable(vm,value,type);
-  if(isFrameworkValueType(type))return copyFrameworkValue(vm,value,type);
+  if(isFrameworkValueType(type,vm.heap.methodTables))return copyFrameworkValue(vm,value,type);
   const table=vm.inspector?vm.typeSystem.table(type):null;
   if(table&&isAggregateType(table)) {
     if(value===null)throw new ManagedFault('InvalidCastException','A struct value is required');
