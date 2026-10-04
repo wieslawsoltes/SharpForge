@@ -1,0 +1,20 @@
+{
+  "workIds": [
+    "SF-A23-T11",
+    "SF-A23-T28",
+    "SF-A23-T29",
+    "SF-A23-T30"
+  ],
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "test": "tests/a23-studio-tools-registration.test.js",
+  "caseCount": 3,
+  "qualification": {
+    "node22": "106/106 native UI scope passed",
+    "node26": "106/106 native UI scope passed"
+  },
+  "dependencies": [
+    "#3973 native controller",
+    "#3880 native renderer"
+  ],
+  "scope": "Exact tool definitions, stable automation contract, build layout helper and narrow workbench docking subclass. tools/core.js is delegated to root/evaluator; protected Studio entry is not modified."
+}
