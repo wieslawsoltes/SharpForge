@@ -9,6 +9,8 @@
   },
   "files": [
     "src",
+    "vendor",
+    "docs",
     "README.md",
     "LICENSE"
   ],

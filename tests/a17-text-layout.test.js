@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {TextLayoutService, caretRectangle, hitTestText, selectionRectangles, hybridTextInputPolicy}
   from '../packages/rendering/src/text/layout.js';
 import {BrowserTextProvider} from '../packages/rendering/src/text/browser-provider.js';
+import {GlyphAtlas} from '../packages/rendering/src/text/glyph-atlas.js';
 import {inlineRuns, paintTextLayout} from '../packages/rendering/src/text/rich-text.js';
 import {fitTextPrefix, sliceTextStyles, placeTrimmedLine} from '../packages/rendering/src/text/trimming.js';
 import {textInkBounds} from '../packages/rendering/src/text/ink-bounds.js';
@@ -110,6 +111,26 @@ test('native text painting keeps intact runs, spacing, colors and state restorat
   assert.equal(context.depth, 0);
   const unsupported = {...context}; delete unsupported.wordSpacing;
   assert.throws(() => paintTextLayout(unsupported, run), error => error.code === 'SFRENDER088');
+});
+
+test('atlas keeps pinned pages live, evicts old generations and bounds 5000 distinct glyph entries', () => {
+  const canvases = [], createCanvas = (width, height) => {
+    const canvas = {width, height, getContext: () => ({drawImage() {}, clearRect() {}})}; canvases.push(canvas); return canvas;
+  };
+  const atlas = new GlyphAtlas({createCanvas, size: 32, maxBytes: 4096, padding: 1}), image = {width: 14, height: 14};
+  const initial = atlas.add('first', image);
+  for (let index = 1; index < 4; index++) atlas.add(index, image);
+  initial.page.pins++;
+  assert.throws(() => atlas.add('blocked', image), error => error.code === 'SFRENDER086');
+  initial.page.pins--;
+  for (let index = 4; index < 5000; index++) assert.ok(atlas.valid(atlas.add(index, image)));
+  assert.equal(atlas.bytes, 4096); assert.equal(atlas.valid(initial), false);
+  assert.ok(atlas.entries.size <= 4);
+  assert.throws(() => atlas.add('negative', image, {width: -1}), error => error.code === 'SFRENDER086');
+  assert.throws(() => new GlyphAtlas({createCanvas, size: 32, padding: 16}), error => error.code === 'SFRENDER086');
+  atlas.dispose(); assert.equal(atlas.bytes, 0); assert.equal(canvases[0].width, 0);
+  assert.throws(() => atlas.get('disposed'), error => error.code === 'SFRENDER086');
+  assert.throws(() => atlas.add('disposed', image), error => error.code === 'SFRENDER086');
 });
 
 test('native ink metrics reserve italic and accent overhangs', () => {
