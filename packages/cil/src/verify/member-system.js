@@ -2,7 +2,7 @@ import { createMetadataVerificationTypeSystem } from './type-system.js';
 import { memberBudget } from './metadata-members/budget.js';
 import { snapshotMembers } from './metadata-members/snapshot.js';
 import { memberQueries } from './metadata-members/resolve.js';
-import { memberAccess } from './metadata-members/access.js';
+import { metadataAccess } from './metadata-members/access.js';
 
 export { verificationMemberDiagnosticCatalog } from './metadata-members/budget.js';
 
@@ -16,5 +16,5 @@ export function createMetadataVerificationContext(inspector, options = {}) {
   const snapshot = snapshotMembers(inspector, budget);
   const members = memberQueries(snapshot, types, budget);
   return Object.freeze({ ...types, resolveMember: members.resolveMember,
-    isMemberAccessible: memberAccess(snapshot, members, types, budget) });
+    ...metadataAccess(snapshot, members, types, budget) });
 }

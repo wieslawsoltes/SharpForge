@@ -20,7 +20,7 @@ export function accessScope(snapshot, types, budget) {
     if (receiver === undefined) return unknown('protected-receiver-required', token);
     return types.isAssignable(receiver, caller);
   }
-  function nestedQuery(member, caller, receiver) {
+  function nestedQuery(member, target, caller, receiver) {
     let remaining = maxAccessChecks;
     function accessible(target) {
       let current = caller;
@@ -38,9 +38,8 @@ export function accessScope(snapshot, types, budget) {
         current = enclosing.value;
       }
     }
-    let result = accessible(member);
+    let result = member ? accessible(member) : yes;
     if (result.status === 'known' && !result.value) return result;
-    let target = member.owner;
     while (parent(target)) {
       const enclosing = types.resolveType(0x02000000 + parent(target));
       if (enclosing.status === 'unknown') return result.status === 'unknown' ? result : enclosing;
@@ -54,6 +53,9 @@ export function accessScope(snapshot, types, budget) {
     return result;
   }
   // The lexical closure and scratch state are created only inside nestedQuery.
-  return (member, caller, receiver) => !parent(caller) && !parent(member.owner)
-    ? direct(member, caller, receiver) : nestedQuery(member, caller, receiver);
+  return {
+    member: (member, caller, receiver) => !parent(caller) && !parent(member.owner)
+      ? direct(member, caller, receiver) : nestedQuery(member, member.owner, caller, receiver),
+    type: (target, caller) => parent(target) ? nestedQuery(null, target, caller) : yes,
+  };
 }
