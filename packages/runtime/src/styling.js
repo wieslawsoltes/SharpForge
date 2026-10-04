@@ -1,43 +1,62 @@
-import {frameworkType,frameworkAssignable,canonicalType,propertiesFor,XAML,CONTROLS} from '@sharpforge/framework';
-import {isReference,ManagedFault} from './heap.js';
-const bad=m=>{throw new ManagedFault('InvalidOperationException',m);};
-const key=r=>`${r.h}:${r.g}`;
-function propertyName(p,dp){if(!isReference(dp)||p.record(dp).type!==XAML+'DependencyProperty')bad('A registered DependencyProperty is required');return p.native(p.get(dp,'Name'));}
-function boxedValue(p,value,type){if(p.vm.inspector&&(frameworkType(type)?.kind==='value'||frameworkType(type)?.kind==='enum'||['int','double','bool'].includes(type)))return p.heap.withRoots([value],()=>p.heap.allocate('box',type,[value]));return value;}
-function unbox(p,value,type){if(isReference(value)&&p.heap.get(value).kind==='box')value=p.heap.get(value).data[0];if(type==='double'&&typeof value==='number')return p.managed(value,'double');return value;}
-export function styleValues(p,style,type,seen=new Set()){
-  if(!style)return {};if(seen.has(key(style))||seen.size>64)bad('Style BasedOn cycle or depth limit');seen.add(key(style));if(p.record(style).type!==XAML+'Style')bad('Style required');
-  const target=p.native(p.get(style,'TargetTypeName'));if(target&&!frameworkAssignable(canonicalType(target),type))bad(`Style ${target} is not applicable to ${type}`);
-  const result=styleValues(p,p.get(style,'BasedOn'),type,seen),setters=p.get(style,'Setters');
-  for(const s of setters?p.items(setters):[]){const name=propertyName(p,p.get(s,'Property')),prop=propertiesFor(type)[name];if(!prop||prop.readOnly)bad(`Style property '${name}' is not writable on ${type}`);result[name]=unbox(p,p.get(s,'Value'),prop.type);}
-  return result;
+import {getResourceServices, styleModel, ValueSource} from '@sharpforge/winui-properties';
+import {propertiesFor, CONTROLS} from '@sharpforge/framework';
+import {ManagedFault} from './heap.js';
+
+/** Released styling entry points delegate to the shared property/template lifetime services. */
+export function styleValues(platform, reference, type) {
+  if (!reference) return {};
+  const style = styleModel(platform.ui, reference);
+  if (!platform.ui.properties.assignable(style.targetType, type)) {
+    throw new ManagedFault('ArgumentException', 'Style.TargetType is incompatible with the target');
+  }
+  return Object.fromEntries(style.compile(platform.ui.propertyRegistry).setters.map(setter =>
+    [setter.property.name, platform.ui.properties.toManaged(setter.value, setter.property.propertyType)]));
 }
 
-function templateValue(p,ref,name){const owner=p.get(ref,'$templateOwner');if(!owner)return {found:false};const raw=p.get(ref,'$bindings'),bindings=raw?JSON.parse(p.native(raw)):{};if(Object.hasOwn(bindings,name))return {found:true,value:p.get(owner,bindings[name])};const keys=p.get(ref,'$templateKeys');if(keys&&JSON.parse(p.native(keys)).includes(name))return {found:true,value:p.get(ref,'$template:'+name)};return {found:false};}
-export function refreshStyle(p,ref){
-  const type=p.record(ref).type,style=p.get(ref,'Style'),values=styleValues(p,style,type),last=p.get(ref,'$styleKeys'),old=last?JSON.parse(p.native(last)):[];
-  for(const [name,value]of Object.entries(values))p.validateProperty(ref,name,value);
-  for(const name of new Set([...old,...Object.keys(values)])){if(p.get(ref,'$local:'+name,false))continue;const prop=propertiesFor(type)[name];if(!prop)continue;const override=templateValue(p,ref,name),value=override.found?override.value:Object.hasOwn(values,name)?values[name]:p.managed(prop.value,prop.type);p.heap.withRoots([value],()=>p.set(ref,name,value));updateBindings(p,ref);p.command({op:'set',id:key(ref),property:name,value:p.exportValue(value)});}
-  const keys=p.heap.string(JSON.stringify(Object.keys(values)));p.heap.withRoots([keys],()=>p.set(ref,'$styleKeys',keys));
-  if(Object.hasOwn(values,'Template')||old.includes('Template'))applyTemplate(p,ref);updateBindings(p,ref);
+export function refreshStyle(platform, reference) {
+  return platform.styleMutation(() => {
+    const resources = getResourceServices(platform.ui);
+    resources.applyStyle(reference);
+    if (platform.ui.propertiesFor(platform.record(reference).type).Template) resources.templateChanged(reference);
+  });
 }
-export function refreshStyles(p){for(let h=0;h<p.heap.records.length;h++){const r=p.heap.records[h];if(!r||r.kind!=='host'||!propertiesFor(r.type).Style)continue;const ref={h,g:p.heap.generations[h]};if(p.get(ref,'Style'))refreshStyle(p,ref);}}
-export function clearProperty(p,ref,name){if(!p.styleDepth)return p.styleMutation(()=>clearProperty(p,ref,name));const prop=propertiesFor(p.record(ref).type)[name];if(!prop||prop.readOnly)bad('Property cannot be cleared');p.set(ref,'$local:'+name,false);const values=styleValues(p,p.get(ref,'Style'),p.record(ref).type),override=templateValue(p,ref,name),value=override.found?override.value:Object.hasOwn(values,name)?values[name]:p.managed(prop.value,prop.type);p.heap.withRoots([value],()=>p.set(ref,name,value));if(name==='Style')refreshStyle(p,ref);if(name==='Template')applyTemplate(p,ref);updateBindings(p,ref);p.command({op:'set',id:key(ref),property:name,value:p.exportValue(value)});}
-/** Templates clone data-only managed framework objects. Each owner gets its own namescope. */
-export function applyTemplate(p,owner){if(!p.styleDepth)return p.styleMutation(()=>applyTemplate(p,owner));const template=p.get(owner,'Template'),old=p.get(owner,'$appliedTemplate');if(template&&old&&key(template)===key(old)&&p.get(owner,'$templateRoot'))return true;if(!template){p.set(owner,'$templateRoot',null);p.set(owner,'$appliedTemplate',null);p.command({op:'reset',snapshot:p.scene()});return false;}
-  if(p.record(template).type!==CONTROLS+'ControlTemplate')bad('ControlTemplate required');const target=p.native(p.get(template,'TargetTypeName'));if(target&&!frameworkAssignable(canonicalType(target),p.record(owner).type))bad('Template target type mismatch');const prototype=p.get(template,'VisualTree');if(!prototype)bad('ControlTemplate.VisualTree is empty');
-  return p.heap.withRoots([owner,template,prototype],()=>{const map=new Map();let count=0;const clone=ref=>{if(!isReference(ref))return ref;const record=p.heap.get(ref);if(record.kind==='string'||record.kind==='box')return ref;if(map.has(key(ref)))return map.get(key(ref));if(++count>1000)bad('Template instance object limit');if(!['host','collection'].includes(record.kind))bad('Templates cannot clone application objects or delegates');if(['style','template','dependencyProperty'].includes(frameworkType(record.type)?.kind))return ref;const copy=p.make(record.type,{},record.kind);p.heap.pins.push(copy);map.set(key(ref),copy);
-      for(const [name,v]of p.propertyEntries(ref)){if(name.startsWith('$event:')||name.startsWith('$local:')||['$parent','$owner','$templateRoot','$appliedTemplate'].includes(name))continue;if(name==='$items'){const items=p.heap.get(v).data.map(clone),array=p.heap.allocate('array','object[]',items);p.heap.pins.push(array);p.set(copy,name,array);}else p.set(copy,name,clone(v));}
-      if(p.isElement(copy)){p.set(copy,'$templateOwner',owner);const keys=[];for(const [name,value]of p.propertyEntries(ref))if(name.startsWith('$local:')&&p.native(value)){const property=name.slice(7);keys.push(property);p.set(copy,'$template:'+property,p.get(copy,property));}const encoded=p.heap.string(JSON.stringify(keys));p.heap.pins.push(encoded);p.set(copy,'$templateKeys',encoded);}return copy;};
-    const root=clone(prototype);p.set(owner,'$templateRoot',root);p.set(owner,'$appliedTemplate',template);const names=new Set();for(const copy of map.values())if(p.isElement(copy)){const name=p.native(p.get(copy,'Name'));if(name&&names.has(name))bad('Duplicate name in template instance');if(name)names.add(name);}
-    updateBindings(p,owner);p.command({op:'reset',snapshot:p.scene()});return true;});
+
+/** Applied styles are sealed; mutation preflight is local to the referenced definition. */
+export function refreshStyles(platform, reference) {
+  if (reference) getResourceServices(platform.ui).refreshStyleModel(reference);
 }
-export function updateBindings(p,owner){const root=p.get(owner,'$templateRoot');if(!root)return;const seen=new Set(),queue=[root];while(queue.length){const ref=queue.pop();if(!isReference(ref)||seen.has(key(ref)))continue;seen.add(key(ref));const r=p.heap.get(ref);if(r.kind==='collection'){queue.push(...p.items(ref));continue;}if(r.kind!=='host')continue;const bindings=p.get(ref,'$bindings');if(bindings)for(const [target,source]of Object.entries(JSON.parse(p.native(bindings)))){if(p.get(ref,'$local:'+target,false))continue;const value=p.get(owner,source);p.set(ref,target,value);p.command({op:'set',id:key(ref),property:target,value:p.exportValue(value)});}for(const [name,v]of p.propertyEntries(ref))if(!name.startsWith('$')&&isReference(v))queue.push(v);}}
-export function invokeStyling(p,d,args){const ref=args[0],values=d.isStatic?args:args.slice(1);
-  if(d.owner===XAML+'DependencyObject'&&['GetValue','SetValue','ClearValue','ReadLocalValue'].includes(d.name)){const name=propertyName(p,values[0]),prop=propertiesFor(p.record(ref).type)[name];if(!prop)bad('Dependency property is not applicable');if(d.name==='GetValue')return {handled:true,value:boxedValue(p,p.get(ref,name),prop.type)};if(d.name==='ReadLocalValue')return {handled:true,value:p.get(ref,'$local:'+name)?boxedValue(p,p.animations.bases.has(p.animations.key(ref,name))?p.managed(p.animations.getBase(ref,name),prop.type):p.get(ref,name),prop.type):p.unsetValue()};if(d.name==='ClearValue'){clearProperty(p,ref,name);return {handled:true,value:null};}const value=unbox(p,values[1],prop.type);p.setProperty(ref,{owner:p.record(ref).type,property:name},value);return {handled:true,value:null};}
-  if(d.name==='ApplyTemplate')return {handled:true,value:p.managed(applyTemplate(p,ref),'bool')};
-  if(d.name==='GetTemplateChild'){const root=p.get(ref,'$templateRoot'),name=p.native(values[0]),queue=[root],seen=new Set();while(queue.length){const item=queue.pop();if(!isReference(item)||seen.has(key(item)))continue;seen.add(key(item));const r=p.heap.get(item);if(r.kind==='collection'){queue.push(...p.items(item));continue;}if(r.kind!=='host')continue;if(p.native(p.get(item,'Name'))===name)return {handled:true,value:item};for(const [k,v]of p.propertyEntries(item))if(!k.startsWith('$')&&isReference(v))queue.push(v);}return {handled:true,value:null};}
-  if(d.owner===CONTROLS+'ControlTemplate'&&d.name==='Bind'){const [part,targetProperty,dp]=values,name=p.native(targetProperty),source=propertyName(p,dp);if(!propertiesFor(p.record(part).type)[name])bad('Unknown template target property');const previous=p.get(part,'$bindings'),map=previous?JSON.parse(p.native(previous)):{};map[name]=source;const json=p.heap.string(JSON.stringify(map));p.heap.withRoots([json],()=>p.set(part,'$bindings',json));return {handled:true,value:null};}
-  if(d.owner===CONTROLS+'ContentDialog'&&['Show','Hide'].includes(d.name)){p.setProperty(ref,{owner:d.owner,property:'IsOpen'},p.managed(d.name==='Show','bool'));return {handled:true,value:null};}
-  return {handled:false};
+
+export function clearProperty(platform, reference, nameOrProperty) {
+  return platform.styleMutation(() => {
+    const property = typeof nameOrProperty === 'string'
+      ? platform.ui.properties.lookup(reference, nameOrProperty) : platform.ui.propertyRegistry.resolve(nameOrProperty);
+    if (property.readOnly) throw new ManagedFault('InvalidOperationException', 'A read-only property cannot be cleared');
+    platform.set(reference, '$local:' + property.name, false);
+    platform.ui.properties.clearSource(reference, property, ValueSource.Local);
+    if (property.name === 'Style') refreshStyle(platform, reference);
+    if (property.name === 'Template') templateChanged(platform, reference);
+  });
+}
+
+export function applyTemplate(platform, owner) {
+  return getResourceServices(platform.ui).applyTemplate(owner);
+}
+
+export function templateChanged(platform, owner) {
+  return getResourceServices(platform.ui).templateChanged(owner);
+}
+
+/** TemplateBinding follows store subscriptions; no visual-tree scan is required after a setter. */
+export function updateBindings(platform, owner, property) {
+  if (!property) return;
+  const store = platform.ui.storeFor(owner);
+  platform.ui.bindings.notifyTargetChanged(store, property, store.getValue(property));
+}
+
+export function invokeStyling(platform, descriptor, args) {
+  if (descriptor.owner === CONTROLS + 'ContentDialog' && ['Show', 'Hide'].includes(descriptor.name)) {
+    platform.setProperty(args[0], {owner: descriptor.owner, property: 'IsOpen'}, platform.managed(descriptor.name === 'Show', 'bool'));
+    return {handled: true, value: null};
+  }
+  return {handled: false};
 }
