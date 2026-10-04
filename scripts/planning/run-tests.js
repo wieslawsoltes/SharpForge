@@ -39,17 +39,38 @@ export function runProcess(command, args, {cwd, timeout}) {
     if (timeout > 0) timer = setTimeout(() => forward('SIGTERM', 124), timeout);
   });
 }
+function areaNodeArgs(args, area, multipleAreas) {
+  const result = [...args], flag = '--test-reporter-destination';
+  for (let index = 0; index < result.length; index++) {
+    const inline = result[index].startsWith(flag + '=');
+    if (!inline && result[index] !== flag) continue;
+    const destination = inline ? result[index].slice(flag.length + 1) : result[++index];
+    if (!destination) throw new Error('Missing value for ' + flag);
+    // Node opens reporter files with truncation, so sharing one path across invocations loses earlier results.
+    if (multipleAreas && !['stdout', 'stderr'].includes(destination) && !destination.includes('{area}')) {
+      throw new Error('Reporter file destinations for multiple areas must include {area}; use --area for one combined destination');
+    }
+    result[index] = (inline ? flag + '=' : '') + destination.replaceAll('{area}', area);
+  }
+  return result;
+}
 export async function runTests(options) {
   const manifests = selectManifests(await discoverManifests(options.root), options.area);
   if (options.list) {console.log(JSON.stringify(manifests, null, 2)); return 0;}
   const nodeFiles = manifests.flatMap(manifest => manifest.nodeFiles);
   console.error(`Discovered ${nodeFiles.length} Node test files and ${manifests.reduce((n, m) => n + m.browserScripts.length, 0)} Python suites in ${manifests.length} area manifests. Node reports executed test counts below.`);
-  // One serial Node runner retains aggregate counts without overlapping test files. Locally the run also waits for a
-  // machine-wide run slot and caps the heap of each process (lib/resource-limits.js); CI is not limited by those.
+  const nodeManifests = manifests.filter(manifest => manifest.nodeFiles.length);
+  // Prepare every command before execution so an invalid reporter destination cannot truncate an earlier report.
+  const commands = nodeManifests.map(manifest => ({area: manifest.area, args: serialTestArgs([
+    '--test', '--test-timeout=' + manifest.timeout,
+    ...areaNodeArgs(options.nodeArgs, manifest.area, nodeManifests.length > 1), ...manifest.nodeFiles,
+  ])}));
+  // Areas and their files execute serially, each with its own declared timeout. Node reports per-area counts.
+  // Locally, the run also waits for a machine-wide slot and caps each process's heap (lib/resource-limits.js).
   const release = await acquireRunSlot();
   try {
-    if (nodeFiles.length) {
-      const args = serialTestArgs(['--test', '--test-timeout=' + Math.max(...manifests.map(m => m.timeout)), ...options.nodeArgs, ...nodeFiles]);
+    for (const {area, args} of commands) {
+      console.error(`Running Node tests for ${area}.`);
       const status = await runProcess(process.execPath, args, {cwd: options.root});
       if (status) return status;
     }
