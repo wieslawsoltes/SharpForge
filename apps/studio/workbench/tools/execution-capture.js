@@ -37,7 +37,8 @@ export function validateExecutionBatch(batch, {sessionId, after = 0, limit = 256
 /** Serial bounded polling; late results and cancellation cannot retarget a replacement AppSession launch. */
 export class ExecutionCapture {
   constructor({sessions, model, intervalMs = 1000, requestLimit = 256, clock = () => performance.now(),
-    setTimer = setTimeout, clearTimer = clearTimeout, onError} = {}) {
+    setTimer = (callback, delay) => globalThis.setTimeout(callback, delay),
+    clearTimer = timer => globalThis.clearTimeout(timer), onError} = {}) {
     if (!sessions?.list || !model?.execution) throw new TypeError('Execution capture requires session and timeline services');
     if (!Number.isFinite(intervalMs) || intervalMs < 100 || intervalMs > 10_000) throw new RangeError('Invalid capture poll interval');
     if (!Number.isSafeInteger(requestLimit) || requestLimit < 1 || requestLimit > 2000) throw new RangeError('Invalid capture batch limit');
