@@ -47,8 +47,8 @@ decoding and 1,024 UTF-16 units afterward. These options also apply through
 `loadSymbols`. Native C# examples and offline reference data are in
 `interop/LocalConstants` and `tests/fixtures/portable-pdb-local-constants`.
 
-For bound symbols, `loadSymbols` recognizes a top-level `System.Decimal`
-TypeDef/TypeRef only when its declared assembly scope matches an invariant-culture
+For bound symbols, `loadSymbols` recognizes a top-level `System.Decimal` or
+`System.DateTime` TypeDef/TypeRef only when its declared assembly scope matches an invariant-culture
 framework identity: `System.Runtime` / `b03f5f7f11d50a3a`,
 `System.Private.CoreLib` / `7cec85d7bea7798e`, or `mscorlib` / `b77a5c561934e089`.
 AssemblyRef tokens and full public keys are supported; TypeDef requires its own
@@ -62,9 +62,21 @@ BigInt. Trailing fractional zeroes and the sign bit of zero are preserved withou
 floating-point conversion. Their complete signature, raw bytes and type token
 remain available. Payload length must be 13 bytes and scale must be 0–28.
 Standalone PDBs and explicitly unbound symbols remain unresolved. TypeSpec,
-nested same-name types, DateTime and other type-dependent payloads remain outside
+nested same-name types and other type-dependent payloads remain outside
 this binding increment. The native reference uses SRM `BlobReader.ReadDecimal`;
 constructed boundary cases test the full coefficient, scale and sign encoding.
+
+DateTime constants expose `type: 'datetime'`, exact BigInt ticks in `value`, and
+`dateTime: { ticks, kind: 'unspecified' }`. A tick is 100 nanoseconds from
+0001-01-01 in the Gregorian calendar. The payload must be exactly eight bytes;
+negative ticks and values above 3155378975999999999 fail explicitly. The
+representation preserves all ticks without converting to JavaScript Date or
+inferring UTC/local time. The same declared framework identity checks, owned raw
+signature, modifiers and unbound behavior apply. VB Date literals and SRM
+`BlobReader.ReadDateTime` are captured by
+`scripts/validate-pdb-datetime-constants.mjs`; offline tests read that corpus.
+Calendar formatting, time-zone conversion, DateTimeOffset and general type
+resolution are separate capabilities.
 
 Source documents accept `hashAlgorithm` and `language` GUIDs and a `hash`
 Uint8Array. SHA-1, SHA-256, SHA-384 and SHA-512 are computed synchronously when omitted;
