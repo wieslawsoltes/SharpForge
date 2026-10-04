@@ -41,12 +41,25 @@ arguments, status/stdout/stderr, source bytes/hashes, produced DLLs, native
 observations and product analysis results are retained, including on failure.
 The helper toolchain's independently pinned identity and environment are recorded.
 Root execution provenance additionally records the exact source/tool revision.
+The capture records all four toolchain probes and seven workload processes through
+the canonical native runner. Each admitted command is saved before launch, with
+public execution settings, bounds and timestamps. Separate output logs and hashes
+retain the runner's stdout/stderr strings, including the partial `error.result`
+returned on timeout or output overflow. Source copies precede the first probe.
+This recorder correction changes no product or fixture input bytes. Its focused
+failure-retention test is `tests/a03-05-header-capture.test.js`; native success
+remains unqualified until the actual capture completes.
 
 The existing reference-output public/friend native capture is a separate
 regression gate. It must preserve the refout contract and native/IL findings;
 it must not require unchanged header/RVA/PE bytes if an explicitly integrated
 header policy later changes their encoding. Default legacy emitter replay and
 IL-document no-change bytes remain exact requirements.
+That unchanged compatibility driver retains native observations and consumer
+compiler logs, but discards successful non-consumer subprocess stdout/stderr and
+deletes its temporary build workspace. The external recorder retains its outer
+process output and produced artifact directory; it cannot recover those discarded
+inner outputs or claim complete inner-process provenance for this compatibility gate.
 
 ## Performance preparation
 

@@ -5,20 +5,21 @@ import { fileURLToPath } from 'node:url';
 import { compileToAssembly } from '@sharpforge/compiler';
 import { analyzeMaxStack, readPE, readMethodHeader } from '@sharpforge/cil';
 import { pin, root, resolveToolchain, sha256 } from '../../../scripts/conformance/oracle/toolchain.js';
-import { runProcess } from '../../../scripts/conformance/oracle/process.js';
 import { boundaries, nativeSource, productBoundaries } from './input.js';
+import { createProcessRecorder } from './process-capture.mjs';
 
 const output = path.resolve(process.argv[2] ?? '');
 assert.ok(process.argv[2], 'Pass a NEW explicit capture directory; all inputs, assemblies and process observations are retained');
 await mkdir(path.dirname(output), { recursive: true });
 await mkdir(output); // An existing directory must never overwrite earlier or failed qualification.
 const fixture = fileURLToPath(new URL('./', import.meta.url));
-const capture = { schemaVersion: 1, commands: [], observations: {}, sourceSHA256: {}, qualified: false };
+const capture = { schemaVersion: 1, commands: [], observations: {}, sourceSHA256: {}, qualified: false,
+  startedAt: new Date().toISOString(), argv: [process.execPath, ...process.argv.slice(1)], cwd: process.cwd() };
 const save = () => writeFile(path.join(output, 'capture.json'), JSON.stringify(capture, null, 2) + '\n');
+const recordProcess = createProcessRecorder({ output, commands: capture.commands, save });
 async function run(executable, args) {
-  const result = await runProcess(executable, args, { cwd: output, timeoutMs: 60000 });
-  capture.commands.push({ executable, args, cwd: output, ...result });
-  await save();
+  const result = await recordProcess(executable, args, { cwd: output, timeoutMs: 60000 });
+  assert.equal(result.signal, null);
   assert.equal(result.exitCode, 0, `${executable}: ${result.stdout}\n${result.stderr}`);
   return result.stdout;
 }
@@ -64,7 +65,13 @@ async function observe(id, assembly, toolchain, observer) {
 }
 
 try {
-  const toolchain = await resolveToolchain();
+  for (const name of ['Program.cs', 'corpus.cs', 'capture.mjs', 'input.js', 'process-capture.mjs']) {
+    const bytes = await readFile(path.join(fixture, name));
+    capture.sourceSHA256[name] = sha256(bytes);
+    await writeFile(path.join(output, name), bytes, { flag: 'wx' });
+  }
+  await save();
+  const toolchain = await resolveToolchain({ processRunner: recordProcess });
   capture.toolchain = toolchain.actual;
   capture.environment = toolchain.environment;
   capture.environmentVariables = Object.fromEntries(['SHARPFORGE_ORACLE_DOTNET', 'SHARPFORGE_ILASM', 'DOTNET_ROOT']
@@ -78,11 +85,6 @@ try {
   assert.equal(pins.version, pin.runtime);
   assert.equal(sha256(await readFile(ilasm)), assembler.sha256);
   capture.assembler = { executable: ilasm, ...assembler };
-  for (const name of ['Program.cs', 'corpus.cs', 'capture.mjs', 'input.js']) {
-    const bytes = await readFile(path.join(fixture, name));
-    capture.sourceSHA256[name] = sha256(bytes);
-    await writeFile(path.join(output, name), bytes);
-  }
   const common = [toolchain.csc, '-nologo', '-noconfig', '-nostdlib+', '-warn:0', '-deterministic+', '-unsafe+',
     '-optimize+', '-langversion:latest', ...toolchain.references.map(reference => '-r:' + reference)];
   const observer = path.join(output, 'Observer.dll');
@@ -126,8 +128,11 @@ try {
   await save();
   console.log(JSON.stringify({ qualified: true, observations: Object.keys(capture.observations) }));
 } catch (error) {
-  capture.failure = { name: error.name, message: error.message, stack: error.stack };
+  capture.failure = { name: error.name, message: error.message, stack: error.stack, result: error.result ?? null };
   if (error.actualToolchain) capture.actualToolchain = error.actualToolchain;
   await save();
   throw error;
+} finally {
+  capture.finishedAt = new Date().toISOString();
+  await save();
 }
