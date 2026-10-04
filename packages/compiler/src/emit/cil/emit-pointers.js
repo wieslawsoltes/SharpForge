@@ -11,7 +11,7 @@
  *
  * The `fixed` statement is in emit-fixed.js.
  */
-import { TypeKind } from '../../symbols/types.js';
+import { ConstructedNamedTypeSymbol, TypeKind } from '../../symbols/types.js';
 import { primitiveOf } from './type-facts.js';
 
 const isPointer = type => type?.typeKind === TypeKind.Pointer;
@@ -81,14 +81,16 @@ export const PointerEmission = Base =>
       const definition = node.kind === 'FieldAccess' ? (node.field.originalDefinition ?? node.field) : null;
       if (!definition?.isFixedSizeBuffer) return null;
       const buffer = this.program.fixedBuffers.get(definition);
-      // Not planned: a buffer of a generic struct (fixed-buffers.js), or a length that is not a constant.
+      // A non-constant or invalid length has no storage layout and must never reach a wrong field signature.
       if (!buffer || buffer.length === null) return this.unsupported('this fixed-size buffer', node.syntax);
       return buffer;
     }
     /** Pushes the managed address of element 0 of a fixed-size buffer: `&receiver.Buffer.FixedElementField`. */
     fixedBufferAddress(node, buffer) {
-      super.fieldLocation(node.field, node.receiver, buffer.type).address();
-      this.il.emit('ldflda', this.tokens.planned(buffer.elementField, buffer.type));
+      const owner = node.field.containingType;
+      const type = owner.isDefinition ? buffer.type : new ConstructedNamedTypeSymbol(buffer.type, [], owner);
+      super.fieldLocation(node.field, node.receiver, type).address();
+      this.il.emit('ldflda', this.tokens.planned(buffer.elementField, type));
     }
     /** Naming a fixed-size buffer yields a pointer to its first element. */
     exprFieldAccess(node) {
@@ -176,6 +178,7 @@ export const PointerEmission = Base =>
       return this.il.emit(node.operator === '++' ? 'add' : 'sub');
     }
     exprConversion(node) {
+      if (isPointer(node.type) && node.operand.literal === 'null') return this.defaultValue(node.type);
       const kind = node.conversion?.kind;
       if (!pointerConversions.has(kind)) return super.exprConversion(node);
       this.expression(node.operand);

@@ -1,5 +1,6 @@
 import { readPE } from './pe.js';
 import { assemblySummary } from './browser/summary.js';
+import { inspectorCallGraph } from './browser/analyzers-call-graph.js';
 import { metadataTokenUri, resolveMetadataUri } from './browser/navigation.js';
 import { readSignature, token, decodeCoded } from './metadata.js';
 import { decodeInstructions } from './opcodes.js';
@@ -81,6 +82,6 @@ export class AssemblyInspector {
   summary(options = {}) {
     return assemblySummary(this, options);
   }
-  callGraph(){const edges=[];for(const m of this.methods.values()){try{for(const i of this.getMethod(m.token).instructions)if(['call','callvirt','newobj','ldftn','ldvirtftn','jmp'].includes(i.name))edges.push({caller:m.token,callee:i.operand,offset:i.offset,kind:i.name});}catch(error){edges.push({caller:m.token,error:error.message});}}return edges;}
+  callGraph() { return inspectorCallGraph(this); }
 }
 export function inspectAssembly(bytes,options={}){return new AssemblyInspector(bytes,options).summary(options);}

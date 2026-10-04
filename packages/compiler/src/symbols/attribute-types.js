@@ -10,6 +10,7 @@ import { NamedTypeSymbol, TypeKind, Accessibility } from './types.js';
 import { MethodSymbol, PropertySymbol, FieldSymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
 import { ConstantValue } from '../constants/constant-value.js';
 import { modernAttributes } from './attribute-types-modern.js';
+import { declareFunctionPointerMarkers } from './function-pointer-markers.js';
 
 /** The values of System.AttributeTargets. */
 export const AttributeTargets = Object.freeze({
@@ -150,7 +151,8 @@ export function declareAttributeTypes(core) {
   const bridge = core.bridge.bridge ?? core.bridge;
   if (bridge.attributeTypesDeclared) return;
   bridge.attributeTypesDeclared = true;
-  const typeOf = { s: core.string, b: core.bool, i: core.int, t: core.type };
+  const typeOf = { s: core.string, b: core.bool, i: core.int, t: core.type, ta: core.arrayOf(core.type) };
+  declareFunctionPointerMarkers(bridge.globalNamespace, core);
   for (const [namespaceName, name, members] of enums)
     typeOf[name] = declareEnum(bridge.globalNamespace.ensureNamespace(namespaceName), name, members, core);
   if (!core.attribute.getMembers('.ctor').length)

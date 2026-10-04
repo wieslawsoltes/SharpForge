@@ -1,0 +1,165 @@
+[
+  {
+    "binary": "git",
+    "args": [
+      "-c",
+      "gc.auto=0",
+      "worktree",
+      "add",
+      "--detach",
+      "/tmp/sharpforge-project6-a03-indirect-transfers-baseline",
+      "8f7de2825158ee7dc2dbe8ee6ab30830da86ca81"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-indirect-transfers",
+    "name": "00-baseline",
+    "started": "2026-10-04T10:42:05.636Z",
+    "completed": "2026-10-04T10:42:07.823Z",
+    "status": 0,
+    "signal": null
+  },
+  {
+    "binary": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-indirect-transfers",
+    "name": "01-install-0",
+    "started": "2026-10-04T10:42:07.825Z",
+    "completed": "2026-10-04T10:42:08.272Z",
+    "status": 0,
+    "signal": null
+  },
+  {
+    "binary": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-indirect-transfers-baseline",
+    "name": "01-install-1",
+    "started": "2026-10-04T10:42:08.273Z",
+    "completed": "2026-10-04T10:42:08.511Z",
+    "status": 0,
+    "signal": null
+  },
+  {
+    "binary": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/verifier-memory/capture.mjs",
+      "tests/fixtures/verifier-memory/native.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-indirect-transfers",
+    "name": "02-native56",
+    "started": "2026-10-04T10:42:08.511Z",
+    "completed": "2026-10-04T10:42:14.346Z",
+    "status": 0,
+    "signal": null
+  },
+  {
+    "binary": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--test",
+      "--test-concurrency=1",
+      "tests/a03-indirect-transfers.test.js",
+      "tests/a03-numeric-transfers.test.js",
+      "tests/a03-local-initialization.test.js",
+      "tests/a03-field-transfers.test.js",
+      "tests/a03-field-ancestry.test.js",
+      "tests/a03-field-native.test.js",
+      "tests/a03-verification-types.test.js",
+      "tests/a03-verifier-dataflow.test.js"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-indirect-transfers",
+    "name": "03-focused",
+    "started": "2026-10-04T10:42:14.346Z",
+    "completed": "2026-10-04T10:42:15.835Z",
+    "status": 0,
+    "signal": null
+  },
+  {
+    "binary": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-numeric-verifier.mjs",
+      "/tmp/a03-memory-validation/before.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-indirect-transfers-baseline",
+    "name": "04-controls-before",
+    "started": "2026-10-04T10:42:15.835Z",
+    "completed": "2026-10-04T10:42:16.263Z",
+    "status": 0,
+    "signal": null
+  },
+  {
+    "binary": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-numeric-verifier.mjs",
+      "/tmp/a03-memory-validation/after.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-indirect-transfers",
+    "name": "05-controls-after",
+    "started": "2026-10-04T10:42:16.264Z",
+    "completed": "2026-10-04T10:42:16.630Z",
+    "status": 0,
+    "signal": null
+  },
+  {
+    "binary": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "packages/cil/tools/benchmark-memory-verifier.mjs",
+      "/tmp/a03-memory-validation/memory.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-indirect-transfers",
+    "name": "06-new-memory",
+    "started": "2026-10-04T10:42:16.630Z",
+    "completed": "2026-10-04T10:42:17.001Z",
+    "status": 0,
+    "signal": null
+  },
+  {
+    "binary": "/tmp/sharpforge-bcl-browser-venv/bin/python",
+    "args": [
+      "/tmp/a03-memory-browser.py",
+      "/tmp/sharpforge-project6-a03-indirect-transfers",
+      "/tmp/a03-memory-validation/browser"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-indirect-transfers",
+    "name": "07-browser",
+    "started": "2026-10-04T10:42:17.002Z",
+    "completed": "2026-10-04T10:42:24.177Z",
+    "status": 0,
+    "signal": null
+  },
+  {
+    "binary": "npm",
+    "args": [
+      "run",
+      "check"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-indirect-transfers",
+    "name": "08-check",
+    "started": "2026-10-04T10:42:24.178Z",
+    "completed": "2026-10-04T10:42:27.661Z",
+    "status": 0,
+    "signal": null
+  },
+  {
+    "binary": "npm",
+    "args": [
+      "run",
+      "check:structure"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-indirect-transfers",
+    "name": "09-structure",
+    "started": "2026-10-04T10:42:27.662Z",
+    "completed": "2026-10-04T10:42:28.697Z",
+    "status": 0,
+    "signal": null
+  }
+]

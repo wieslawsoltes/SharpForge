@@ -9,6 +9,7 @@
 import {tupleDisplay} from './tuple-elements.js';
 import {withTypeArgumentAnnotations} from './annotated-instantiations.js';
 import {membersNamed} from './member-index.js';
+import {normalizeCallingConventions,sameCallingConvention} from './function-pointer-conventions.js';
 export const SymbolKind=Object.freeze({Assembly:'Assembly',Namespace:'Namespace',NamedType:'NamedType',ArrayType:'ArrayType',PointerType:'PointerType',FunctionPointerType:'FunctionPointerType',DynamicType:'DynamicType',ErrorType:'ErrorType',TypeParameter:'TypeParameter',Method:'Method',Field:'Field',Property:'Property',Event:'Event',Parameter:'Parameter',Local:'Local',Label:'Label',Alias:'Alias',RangeVariable:'RangeVariable',Discard:'Discard'});
 export const TypeKind=Object.freeze({Class:'class',Struct:'struct',Interface:'interface',Enum:'enum',Delegate:'delegate',Array:'array',Pointer:'pointer',FunctionPointer:'functionPointer',TypeParameter:'typeParameter',Dynamic:'dynamic',Error:'error',Submission:'submission',Module:'module'});
 export const Accessibility=Object.freeze({NotApplicable:'notApplicable',Private:'private',ProtectedAndInternal:'privateProtected',Protected:'protected',Internal:'internal',ProtectedOrInternal:'protectedInternal',Public:'public'});
@@ -234,11 +235,11 @@ export class PointerTypeSymbol extends TypeSymbol {
 const refPrefix=kind=>kind&&kind!==RefKind.None?(kind===RefKind.RefReadOnlyParameter?'ref readonly':kind)+' ':'';
 /** delegate*<...>: `signature` is {callingConvention:'managed'|'unmanaged', unmanagedConventions:string[], returnType, returnRefKind, parameters:[{type,refKind}]}. */
 export class FunctionPointerTypeSymbol extends TypeSymbol {
-  constructor(signature){super(SymbolKind.FunctionPointerType,'');this.signature=Object.freeze({callingConvention:signature.callingConvention??'managed',unmanagedConventions:Object.freeze([...(signature.unmanagedConventions??[])]),returnType:twa(signature.returnType),returnRefKind:signature.returnRefKind??RefKind.None,parameters:Object.freeze((signature.parameters??[]).map(p=>Object.freeze({type:twa(p.type??p),refKind:p.refKind??RefKind.None})))});}
+  constructor(signature){super(SymbolKind.FunctionPointerType,'');this.signature=Object.freeze({callingConvention:signature.callingConvention??'managed',unmanagedConventions:normalizeCallingConventions(signature.unmanagedConventions),returnType:twa(signature.returnType),returnRefKind:signature.returnRefKind??RefKind.None,parameters:Object.freeze((signature.parameters??[]).map(p=>Object.freeze({type:twa(p.type??p),refKind:p.refKind??RefKind.None})))});}
   get typeKind(){return TypeKind.FunctionPointer;}
   substitute(map){const s=this.signature,returnType=s.returnType.substitute(map),parameters=s.parameters.map(p=>({type:p.type.substitute(map),refKind:p.refKind}));if(returnType===s.returnType&&parameters.every((p,i)=>p.type===s.parameters[i].type))return this;return new FunctionPointerTypeSymbol({...s,returnType,parameters});}
   equals(other,compare=TypeCompareKind.ConsiderEverything){if(this===other)return true;if(!(other instanceof FunctionPointerTypeSymbol))return false;const a=this.signature,b=other.signature;
-    return a.callingConvention===b.callingConvention&&a.unmanagedConventions.join()===b.unmanagedConventions.join()&&a.returnRefKind===b.returnRefKind&&a.returnType.equals(b.returnType,compare)&&a.parameters.length===b.parameters.length&&a.parameters.every((p,i)=>p.refKind===b.parameters[i].refKind&&p.type.equals(b.parameters[i].type,compare));}
+    return sameCallingConvention(a,b)&&a.returnRefKind===b.returnRefKind&&a.returnType.equals(b.returnType,compare)&&a.parameters.length===b.parameters.length&&a.parameters.every((p,i)=>p.refKind===b.parameters[i].refKind&&p.type.equals(b.parameters[i].type,compare));}
   toDisplayString(format=SymbolDisplayFormat.ErrorMessage){const s=this.signature,convention=s.callingConvention==='unmanaged'?' unmanaged'+(s.unmanagedConventions.length?'['+s.unmanagedConventions.join(', ')+']':''):'';
     return 'delegate*'+convention+'<'+[...s.parameters.map(p=>refPrefix(p.refKind)+p.type.toDisplayString(format)),refPrefix(s.returnRefKind)+s.returnType.toDisplayString(format)].join(', ')+'>';}
 }

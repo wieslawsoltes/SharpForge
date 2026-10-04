@@ -28,6 +28,7 @@ import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
 import { contractAssemblyOf } from './reference-contracts.js';
 import { explicitInterfaceOf, metadataPropertyName } from './explicit-interface-names.js';
+import { writeParameterAttributes } from './parameter-metadata.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const TYPE_DEF_TABLE = 2;
@@ -233,7 +234,7 @@ export class CustomAttributeWriter {
     for (const [index, parameter] of symbol.parameters.entries()) {
       const parameterToken = this.writer.parameterTokens.get(parameter);
       if (!parameterToken) continue;
-      if (parameter.isParams) this.wellKnown(parameterToken, 'System.ParamArrayAttribute');
+      writeParameterAttributes(this, parameterToken, parameter);
       this.tupleElementNames(parameterToken, parameter.type);
       this.dynamic(parameterToken, parameter.type, isByReference(parameter.refKind));
       this.applied(parameterToken, parameter);

@@ -10,7 +10,6 @@
  */
 import { FieldAttributes } from '@sharpforge/cil';
 import { NamedTypeSymbol, SymbolKind, TypeKind, Accessibility } from '../../symbols/types.js';
-import { allTypeParameters } from '../../codegen/generics.js';
 import { primitiveOf } from './type-facts.js';
 
 const BITS_PER_BYTE = 8;
@@ -25,8 +24,7 @@ const ELEMENT_FIELD = 'FixedElementField';
 export function planFixedBuffers(types, core) {
   const plan = { types: [], byField: new Map(), byType: new Map() };
   for (const owner of types) {
-    // A buffer of a generic struct would need a generic buffer struct; it is left undeclared and its use is refused.
-    if (allTypeParameters(owner).length) continue;
+    // Nested buffer types inherit their owner's generic parameters in metadata, even with arity zero of their own.
     for (const field of owner.getMembers()) {
       if (field.kind !== SymbolKind.Field || !field.isFixedSizeBuffer) continue;
       const elementType = field.type.pointedAtType,
