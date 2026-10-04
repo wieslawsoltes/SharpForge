@@ -6,6 +6,13 @@ export class TreeView {
   constructor(entries, include) {
     this.#entries = entries;
     this.#include = include;
+    if (!include) {
+      this.get = entries.get.bind(entries);
+      this.has = entries.has.bind(entries);
+      this.entries = entries.entries.bind(entries);
+      this.keys = entries.keys.bind(entries);
+      this.values = entries.values.bind(entries);
+    }
   }
   get size() {
     if (!this.#include) return this.#entries.size;
