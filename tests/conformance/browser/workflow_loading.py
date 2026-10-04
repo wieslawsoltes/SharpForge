@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 from browser_harness import complete_startup, load_application, wait_condition
 from conformance.browser.launch import ROOT
 from conformance.browser.matrix_common import policy
+from conformance.browser.workflow_diagnostics import capture_startup
 
 
 def workflow_mode(mode):
@@ -38,7 +39,11 @@ def observe_offline_requests(context, attempts):
 def load_workflow(page, mode, observation):
     workflow_mode(mode)
     if mode == 'http':
-        load_application(page)
+        try:
+            load_application(page)
+        except Exception:
+            capture_startup(page, observation)
+            raise
         if urlparse(page.url).scheme not in ('http', 'https'):
             raise AssertionError('Static workflow did not navigate to an HTTP application: ' + page.url)
         observation.update({'mode': mode, 'url': page.url, 'offline': False})
@@ -65,5 +70,9 @@ def load_workflow(page, mode, observation):
             Boolean(meta.compareDocumentPosition(script) & Node.DOCUMENT_POSITION_FOLLOWING));
     }'''):
         raise AssertionError('Standalone CSP must precede every script')
-    wait_condition(page, 'window.sharpforge && window.sharpforge.getState().metrics !== null')
+    try:
+        wait_condition(page, 'window.sharpforge && window.sharpforge.getState().metrics !== null')
+    except Exception:
+        capture_startup(page, observation)
+        raise
     complete_startup(page)

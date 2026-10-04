@@ -17,6 +17,7 @@ import { adapterPseudo } from '../../semantic-integration.js';
 import { SymbolMetadataWriter } from './symbol-metadata.js';
 import { CustomAttributeWriter } from './custom-attributes.js';
 import { MetadataEmitError } from './type-tokens.js';
+import { referenceIdentitiesOf } from './reference-identities.js';
 
 import { RecordPlan } from './record-plan.js';
 
@@ -30,7 +31,10 @@ const THROW_NULL = Uint8Array.of(0x14, 0x7a);
  * @returns {{bytes: Uint8Array, writer: SymbolMetadataWriter}} the image and the writer (definition tokens by symbol)
  */
 export function emitReferenceAssembly(analysis, options = {}) {
-  const builder = new MetadataBuilder(options.name ?? 'Application', { framework: options.framework ?? 'net8' });
+  const builder = new MetadataBuilder(options.name ?? 'Application', {
+    framework: options.framework ?? 'net8',
+    assemblyReferences: referenceIdentitiesOf(analysis),
+  });
   const section = new Writer().zero(CLI_HEADER_SIZE);
   // Every body is the same two instructions, so all methods share one body, as Roslyn shares identical small bodies.
   const bodyRva = TEXT_RVA + section.length;

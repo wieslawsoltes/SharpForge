@@ -5,6 +5,8 @@ import {prepareValueReceiver} from './value-calls.js';
 import {requireValueInterfaceTarget} from './value-dispatch.js';
 import {cachedTypeName, verifiedMethod} from './token-cache.js';
 import {resolveCallType} from './generic-calls.js';
+import {constrainedObjectPlan, invokeConstrainedObject} from './constrained-object.js';
+import {requireGenericStructArgument} from './generic-constraints.js';
 
 function closedConstraint(vm, caller, token) {
   if (token >>> 24 === 2) return vm.typeSystem.table(token);
@@ -18,7 +20,7 @@ function closedConstraint(vm, caller, token) {
   }
   const table = vm.typeSystem.table(resolved);
   if (table.flags.valueType) {
-    throw new ManagedFault('NotSupportedException', 'Constrained generic value receivers are not implemented');
+    requireGenericStructArgument(vm, caller.method.token, table);
   }
   return table;
 }
@@ -29,6 +31,7 @@ export function constrainedCallType(vm, caller, instruction, descriptor) {
   const prefix = caller.method.instructions[caller.pc - 2];
   if (prefix?.name !== 'constrained.') return null;
   const table = closedConstraint(vm, caller, prefix.operand);
+  if (prefix.operand >>> 24 === 2 && table.flags.valueType && constrainedObjectPlan(vm, table, descriptor)) return table;
   const declaration = vm.typeSystem.table(descriptor.ownerInstance ?? descriptor.ownerToken ?? descriptor.owner);
   if (table.flags.interface || table.genericArity || table.typeArguments.length || table.containsGenericParameters ||
       !vm.typeSystem.types.has(table.definitionToken) || !vm.typeSystem.types.has(declaration.definitionToken) ||
@@ -74,11 +77,13 @@ export function requireConstrainedReferenceTarget(vm, target) {
   }
 }
 
-/** Dispatch an admitted interface call on its original owned value address without allocating a box. */
-export function invokeConstrainedInterface(vm, caller, descriptor, table) {
+/** Dispatch an admitted value call after validating its exact owned address. */
+export function invokeConstrainedValue(vm, caller, descriptor, table) {
   const count = descriptor.signature.parameters.length + 1;
   const receiver = caller.stack[caller.stack.length - count];
-  receiverStorage(vm, receiver, table);
+  const current = receiverStorage(vm, receiver, table);
+  const plan = constrainedObjectPlan(vm, table, descriptor);
+  if (plan) return invokeConstrainedObject(vm, caller, descriptor, {table, plan, receiver, current});
   const declaredTarget = descriptor.resolvedToken ?? descriptor.token;
   const target = vm.typeSystem.dispatch.resolve(table.name, declaredTarget, descriptor.ownerInstance);
   requireValueInterfaceTarget(vm, descriptor, target, table);

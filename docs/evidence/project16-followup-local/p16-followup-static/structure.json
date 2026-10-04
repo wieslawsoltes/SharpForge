@@ -1,0 +1,393 @@
+{
+  "sourceSha": "80dfe3f5a7d18731915bf9b6b770f816911b4f0f",
+  "sourceTree": "b105d155bff6efd72967652fd340634f6444b8a9",
+  "base": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+  "reviewedFiles": 48,
+  "violations": [],
+  "rows": [
+    {
+      "path": "apps/studio/explorer-records.js",
+      "bytes": 5615,
+      "lines": 99,
+      "frozenAtBase": false,
+      "byteDelta": 92,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/settings/storage.js",
+      "bytes": 2099,
+      "lines": 23,
+      "frozenAtBase": false,
+      "byteDelta": 82,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/studio.js",
+      "bytes": 104451,
+      "lines": 746,
+      "frozenAtBase": true,
+      "byteDelta": -242,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/document-size.js",
+      "bytes": 2802,
+      "lines": 47,
+      "frozenAtBase": false,
+      "byteDelta": 208,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/document-source.js",
+      "bytes": 248,
+      "lines": 4,
+      "frozenAtBase": false,
+      "byteDelta": null,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/documents-ingress.js",
+      "bytes": 8985,
+      "lines": 185,
+      "frozenAtBase": false,
+      "byteDelta": 142,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/documents-reload.js",
+      "bytes": 9422,
+      "lines": 186,
+      "frozenAtBase": false,
+      "byteDelta": 133,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/documents-save.js",
+      "bytes": 1882,
+      "lines": 37,
+      "frozenAtBase": false,
+      "byteDelta": 115,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/documents-state.js",
+      "bytes": 1858,
+      "lines": 37,
+      "frozenAtBase": false,
+      "byteDelta": 68,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/documents.js",
+      "bytes": 21242,
+      "lines": 470,
+      "frozenAtBase": false,
+      "byteDelta": 222,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/editor-configuration.js",
+      "bytes": 3707,
+      "lines": 69,
+      "frozenAtBase": false,
+      "byteDelta": 277,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/layout-workspace.js",
+      "bytes": 13796,
+      "lines": 277,
+      "frozenAtBase": false,
+      "byteDelta": 1422,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/metadata/catalog.js",
+      "bytes": 6848,
+      "lines": 130,
+      "frozenAtBase": false,
+      "byteDelta": 96,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/search-service.js",
+      "bytes": 8033,
+      "lines": 159,
+      "frozenAtBase": false,
+      "byteDelta": 96,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/studio-diagnostics.js",
+      "bytes": 7681,
+      "lines": 157,
+      "frozenAtBase": false,
+      "byteDelta": 67,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/studio-recovery-store.js",
+      "bytes": 1342,
+      "lines": 31,
+      "frozenAtBase": false,
+      "byteDelta": 96,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/tabs/index.js",
+      "bytes": 11441,
+      "lines": 266,
+      "frozenAtBase": false,
+      "byteDelta": 284,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/watch-windows/state.js",
+      "bytes": 2602,
+      "lines": 64,
+      "frozenAtBase": false,
+      "byteDelta": 53,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/worker-client.js",
+      "bytes": 7159,
+      "lines": 167,
+      "frozenAtBase": false,
+      "byteDelta": 393,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/worker-failure.js",
+      "bytes": 1560,
+      "lines": 31,
+      "frozenAtBase": false,
+      "byteDelta": null,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/workspace-limits.js",
+      "bytes": 3614,
+      "lines": 73,
+      "frozenAtBase": false,
+      "byteDelta": 18,
+      "newLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/workspace-records.js",
+      "bytes": 1898,
+      "lines": 34,
+      "frozenAtBase": false,
+      "byteDelta": 175,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/docking/src/host/dock-host.js",
+      "bytes": 11167,
+      "lines": 258,
+      "frozenAtBase": false,
+      "byteDelta": 114,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/docking/src/host/popouts.js",
+      "bytes": 3373,
+      "lines": 75,
+      "frozenAtBase": false,
+      "byteDelta": 25,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/core/code-editor.js",
+      "bytes": 20366,
+      "lines": 398,
+      "frozenAtBase": false,
+      "byteDelta": 88,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/core/presentation.js",
+      "bytes": 7938,
+      "lines": 175,
+      "frozenAtBase": false,
+      "byteDelta": 1307,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/core/save-preparation.js",
+      "bytes": 2059,
+      "lines": 40,
+      "frozenAtBase": false,
+      "byteDelta": 292,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/features/analysis-decorations.js",
+      "bytes": 11799,
+      "lines": 246,
+      "frozenAtBase": false,
+      "byteDelta": -6,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/features/context.js",
+      "bytes": 4815,
+      "lines": 87,
+      "frozenAtBase": false,
+      "byteDelta": 520,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/features/cooperative-search.js",
+      "bytes": 8280,
+      "lines": 164,
+      "frozenAtBase": false,
+      "byteDelta": 73,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/features/insights.js",
+      "bytes": 9388,
+      "lines": 193,
+      "frozenAtBase": false,
+      "byteDelta": 70,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/features/rename-preview.js",
+      "bytes": 2376,
+      "lines": 70,
+      "frozenAtBase": false,
+      "byteDelta": 716,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/index.js",
+      "bytes": 2949,
+      "lines": 49,
+      "frozenAtBase": false,
+      "byteDelta": 51,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/model.js",
+      "bytes": 14476,
+      "lines": 287,
+      "frozenAtBase": false,
+      "byteDelta": 4276,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/services/async-guard.js",
+      "bytes": 2712,
+      "lines": 65,
+      "frozenAtBase": false,
+      "byteDelta": 241,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/services/model-workspace.js",
+      "bytes": 3286,
+      "lines": 66,
+      "frozenAtBase": false,
+      "byteDelta": 148,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/services/workspace-edit.js",
+      "bytes": 8951,
+      "lines": 159,
+      "frozenAtBase": false,
+      "byteDelta": 153,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/widgets/rename.js",
+      "bytes": 7893,
+      "lines": 163,
+      "frozenAtBase": false,
+      "byteDelta": 1610,
+      "newLongLines": []
+    },
+    {
+      "path": "packages/editor/src/worker-options.js",
+      "bytes": 519,
+      "lines": 9,
+      "frozenAtBase": false,
+      "byteDelta": null,
+      "newLongLines": []
+    },
+    {
+      "path": "scripts/bench-workbench-lazy-evaluation.js",
+      "bytes": 4965,
+      "lines": 72,
+      "frozenAtBase": false,
+      "byteDelta": null,
+      "newLongLines": []
+    },
+    {
+      "path": "scripts/bundling/standalone.js",
+      "bytes": 3413,
+      "lines": 63,
+      "frozenAtBase": false,
+      "byteDelta": 89,
+      "newLongLines": []
+    },
+    {
+      "path": "scripts/project16-qualification.js",
+      "bytes": 7829,
+      "lines": 124,
+      "frozenAtBase": false,
+      "byteDelta": 316,
+      "newLongLines": []
+    },
+    {
+      "path": "scripts/workbench-lazy-evaluation/assessment.js",
+      "bytes": 5761,
+      "lines": 86,
+      "frozenAtBase": false,
+      "byteDelta": null,
+      "newLongLines": []
+    },
+    {
+      "path": "scripts/workbench-lazy-evaluation/capture.js",
+      "bytes": 5440,
+      "lines": 116,
+      "frozenAtBase": false,
+      "byteDelta": null,
+      "newLongLines": []
+    },
+    {
+      "path": "scripts/workbench-lazy-evaluation/identity.js",
+      "bytes": 970,
+      "lines": 16,
+      "frozenAtBase": false,
+      "byteDelta": null,
+      "newLongLines": []
+    },
+    {
+      "path": "scripts/workbench-lazy-evaluation/protocol.js",
+      "bytes": 3828,
+      "lines": 69,
+      "frozenAtBase": false,
+      "byteDelta": null,
+      "newLongLines": []
+    },
+    {
+      "path": "scripts/workbench-lazy-evaluation/runner.js",
+      "bytes": 1298,
+      "lines": 27,
+      "frozenAtBase": false,
+      "byteDelta": null,
+      "newLongLines": []
+    },
+    {
+      "path": "scripts/workbench-lazy-evaluation/server.js",
+      "bytes": 4332,
+      "lines": 93,
+      "frozenAtBase": false,
+      "byteDelta": null,
+      "newLongLines": []
+    }
+  ]
+}

@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const output = resolve(process.argv[2] ?? join(root, 'artifacts/clr-method-base-definition'));
+const source = resolve(process.argv[3] ?? join(root, 'tests/fixtures/clr-method-base-definition/Program.cs'));
 const temporary = mkdtempSync(join(tmpdir(), 'sharpforge-method-base-'));
 const run = args => execFileSync('dotnet', args, {
   cwd: temporary, encoding: 'utf8', timeout: 120000, maxBuffer: 1024 * 1024,
@@ -17,7 +18,7 @@ try {
   writeFileSync(join(temporary, 'oracle.csproj'), `<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup>
     <TargetFramework>net10.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
     <OutputType>Exe</OutputType></PropertyGroup></Project>`);
-  copyFileSync(join(root, 'tests/fixtures/clr-method-base-definition/Program.cs'), join(temporary, 'Program.cs'));
+  copyFileSync(source, join(temporary, 'Program.cs'));
   const sdk = run(['--version']).trim();
   run(['build', '--configuration', 'Release', '--nologo', '--verbosity', 'quiet', '--disable-build-servers', '-m:1']);
   const image = join(temporary, 'bin/Release/net10.0/oracle.dll');

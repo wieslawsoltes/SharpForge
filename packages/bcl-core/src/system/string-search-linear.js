@@ -128,7 +128,7 @@ export function indexOfOrdinalIgnoreCase(source, needle, startIndex = 0, endInde
   return searchOrdinalIgnoreCase(source, needle, startIndex, endIndex, false);
 }
 
-/** Last match before a validated exclusive end; overlapping matches retain the continuing scan's period memory. */
-export function lastIndexOfOrdinalIgnoreCase(source, needle, endIndex = source.length) {
-  return searchOrdinalIgnoreCase(source, needle, 0, endIndex, true);
+/** Last match in validated UTF-16 bounds; preserve the existing end argument and optional lower bound. */
+export function lastIndexOfOrdinalIgnoreCase(source, needle, endIndex = source.length, startIndex = 0) {
+  return searchOrdinalIgnoreCase(source, needle, startIndex, endIndex, true);
 }

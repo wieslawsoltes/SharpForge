@@ -40,8 +40,9 @@ the host. No work is enabled by reading `vm.runtimeEvents` when the option is of
 calls, rejected admission, finally/catch/rethrow, pauses, fatal inspection,
 snapshot rejection/restart, parked cancellation/wake, disposal and overflow.
 The existing heap tests now filter their event family while preserving payload
-and ordering assertions. Tests have not been run here; serial validation is
-pending. [Source method-load events](runtime-source-method-load-events.md) now
-precede each metadata method's first observed admission. Source exception and
-scheduler event families and broader platform/performance qualification remain
-separate #1403 work.
+and ordering assertions. All 64 focused source-method, source-heap, CIL-method,
+frame-lifecycle, and ABI checks passed at `605905ee`, using Node 24, one worker,
+and a 512 MB old-space limit. [Source method-load events](runtime-source-method-load-events.md)
+now precede each metadata method's first observed admission. Source exception
+and scheduler event families and broader platform/performance qualification
+remain separate #1403 work.

@@ -1,0 +1,422 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-followup-local-qualification",
+  "scope": "Completed local09 correction evidence through the affected-file retry; no newly executed validation.",
+  "archiveBase": {
+    "sourceSha": "56add0e83ad85e65392f19af57535a97cad5d4ed",
+    "sourceTree": "c21b97fff6ed7ee2e76e84b2f83aecd90655862d"
+  },
+  "sourceIdentityKind": "Local Git commit/tree identities recorded by root; no GitHub publication identity is inferred.",
+  "closeIssues": [],
+  "evidenceRules": [
+    "Blocked discovery is not test execution and has no test counts.",
+    "Original failed full-area executions remain failed after a separate affected-file retry.",
+    "Counts from retries, different areas, Python contracts, and earlier ledgers are not summed into a synthetic total.",
+    "All nine A20 skips retain their exact names and reasons and do not count as passes.",
+    "A fixture payload printed by Python unit tests is not a real browser execution.",
+    "The 48-file source inspection is limited to its recorded source, comparison base, and row list.",
+    "Raw logs and reports are copied byte-for-byte with byte counts and SHA-256 hashes.",
+    "Archiving reads, parses and hashes existing evidence; it executes no test, build, benchmark or static gate."
+  ],
+  "attempts": [
+    {
+      "sourceSha": "6085a6ede46cc5f46ea9603d46c3e281b28ec65a",
+      "sourceTree": "6d0162f9eaa11930d30b98b90c4253b11434def0",
+      "trackedDirty": false,
+      "startedAt": "2026-10-04T04:45:36.158877+00:00",
+      "finishedAt": "2026-10-04T04:45:36.484524+00:00",
+      "status": "failed",
+      "id": "local09-discovery-blocked",
+      "evidence": "docs/evidence/project16-followup-local/p16-followup-local/node-summary.json",
+      "scopes": [
+        {
+          "area": "A19",
+          "command": [
+            "node",
+            "scripts/planning/run-tests.js",
+            "--area",
+            "A19"
+          ],
+          "status": "failed",
+          "exitCode": 1,
+          "startedAt": "2026-10-04T04:45:36.159041+00:00",
+          "finishedAt": "2026-10-04T04:45:36.325081+00:00",
+          "testExecutionStarted": false,
+          "counts": null,
+          "log": "docs/evidence/project16-followup-local/p16-followup-local/A19.log"
+        },
+        {
+          "area": "A20",
+          "command": [
+            "node",
+            "scripts/planning/run-tests.js",
+            "--area",
+            "A20"
+          ],
+          "status": "failed",
+          "exitCode": 1,
+          "startedAt": "2026-10-04T04:45:36.325430+00:00",
+          "finishedAt": "2026-10-04T04:45:36.484197+00:00",
+          "testExecutionStarted": false,
+          "counts": null,
+          "log": "docs/evidence/project16-followup-local/p16-followup-local/A20.log"
+        }
+      ],
+      "classification": "blocked_before_test_execution",
+      "failureMessage": "Unassigned test tests/conformance/browser/test_workflow_diagnostics.py",
+      "registrationCorrectionSha": "80dfe3f5a7d18731915bf9b6b770f816911b4f0f",
+      "registrationChange": "Register test_workflow_diagnostics.py ownership in tests/manifests/A29.json."
+    },
+    {
+      "sourceSha": "80dfe3f5a7d18731915bf9b6b770f816911b4f0f",
+      "sourceTree": "b105d155bff6efd72967652fd340634f6444b8a9",
+      "trackedDirty": false,
+      "startedAt": "2026-10-04T04:47:18.076476+00:00",
+      "finishedAt": "2026-10-04T04:48:38.805565+00:00",
+      "status": "failed",
+      "id": "local09-full-areas",
+      "evidence": "docs/evidence/project16-followup-local/p16-followup-local-r1/node-summary.json",
+      "scopes": [
+        {
+          "area": "A19",
+          "command": [
+            "node",
+            "scripts/planning/run-tests.js",
+            "--area",
+            "A19"
+          ],
+          "status": "failed",
+          "exitCode": 1,
+          "startedAt": "2026-10-04T04:47:18.076702+00:00",
+          "finishedAt": "2026-10-04T04:48:01.278659+00:00",
+          "testExecutionStarted": true,
+          "counts": {
+            "tests": 748,
+            "suites": 0,
+            "pass": 746,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": "docs/evidence/project16-followup-local/p16-followup-local-r1/A19.log"
+        },
+        {
+          "area": "A20",
+          "command": [
+            "node",
+            "scripts/planning/run-tests.js",
+            "--area",
+            "A20"
+          ],
+          "status": "failed",
+          "exitCode": 1,
+          "startedAt": "2026-10-04T04:48:01.280393+00:00",
+          "finishedAt": "2026-10-04T04:48:38.804355+00:00",
+          "testExecutionStarted": true,
+          "counts": {
+            "tests": 712,
+            "suites": 0,
+            "pass": 702,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 9,
+            "todo": 0
+          },
+          "log": "docs/evidence/project16-followup-local/p16-followup-local-r1/A20.log"
+        }
+      ],
+      "failureCases": [
+        {
+          "area": "A19",
+          "file": "tests/a19-preview-source-publication.test.js",
+          "line": 46,
+          "test": "pending Studio analysis and another editor whole-project request publish committed rename source only",
+          "code": "UNKNOWN_METHOD",
+          "message": "Unknown compiler request 'documentSymbols'"
+        },
+        {
+          "area": "A19",
+          "file": "tests/a19-preview-source-publication.test.js",
+          "line": 72,
+          "test": "real rename completion publishes its new version after lease release and remains one undo operation",
+          "code": "UNKNOWN_METHOD",
+          "message": "Unknown compiler request 'documentSymbols'"
+        },
+        {
+          "area": "A20",
+          "file": "tests/a20-model-preview-publication.test.js",
+          "line": 91,
+          "test": "saved markers survive preview cancellation and no-op save captures the committed root",
+          "code": "SFEDITOR_SAVE_STALE",
+          "message": "Finish or cancel the source preview before normalizing the saved document."
+        }
+      ],
+      "a20Skips": [
+        {
+          "test": "Unsupported target: shell commands and external filters",
+          "reason": "The browser editor has no shell or process-execution authority.",
+          "classification": "documented_capability_limit",
+          "status": "skipped"
+        },
+        {
+          "test": "Unsupported target: Vimscript and plugin loading",
+          "reason": "The native modal adapter is not a Vimscript interpreter or plugin runtime.",
+          "classification": "documented_capability_limit",
+          "status": "skipped"
+        },
+        {
+          "test": "Unsupported target: terminal buffers",
+          "reason": "Terminal emulation is outside the editor document and keymap scope.",
+          "classification": "documented_capability_limit",
+          "status": "skipped"
+        },
+        {
+          "test": "Unsupported target: native Vim regex extensions",
+          "reason": "Search uses the documented bounded regex engine rather than Vim magic expressions.",
+          "classification": "documented_capability_limit",
+          "status": "skipped"
+        },
+        {
+          "test": "Unsupported target: operating-system primary selection",
+          "reason": "The injected asynchronous clipboard API exposes ordinary clipboard text.",
+          "classification": "documented_capability_limit",
+          "status": "skipped"
+        },
+        {
+          "test": "Unsupported target: unlimited recursive macros",
+          "reason": "Native macros have explicit recursion, key-count and register-memory budgets.",
+          "classification": "documented_capability_limit",
+          "status": "skipped"
+        },
+        {
+          "test": "Unsupported target: desktop Vim executable parity",
+          "reason": "Node fixtures qualify this native model; no installed desktop Vim is used as an oracle.",
+          "classification": "desktop_oracle_not_executed",
+          "status": "skipped"
+        },
+        {
+          "test": "Unsupported target: browser key interception and assistive technology",
+          "reason": "Operating-system/browser key delivery and screen readers need browser/manual qualification.",
+          "classification": "browser_and_assistive_qualification_pending",
+          "status": "skipped"
+        },
+        {
+          "test": "default and explicit native segmentation retain Unicode 16.0 host compatibility",
+          "reason": "The native comparison is pinned to a Unicode 16.0 Intl runtime",
+          "classification": "pinned_native_unicode_reference_unavailable",
+          "status": "skipped"
+        }
+      ]
+    },
+    {
+      "sourceSha": "56add0e83ad85e65392f19af57535a97cad5d4ed",
+      "sourceTree": "c21b97fff6ed7ee2e76e84b2f83aecd90655862d",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "tests/a19-preview-source-publication.test.js",
+        "tests/a20-model-preview-publication.test.js"
+      ],
+      "scope": "Only the two files with failures in the completed area runs",
+      "startedAt": "2026-10-04T04:51:37.450573+00:00",
+      "finishedAt": "2026-10-04T04:51:38.800877+00:00",
+      "exitCode": 0,
+      "id": "local09-affected-retry",
+      "status": "passed",
+      "evidence": "docs/evidence/project16-followup-local/p16-followup-local-r2/summary.json",
+      "log": "docs/evidence/project16-followup-local/p16-followup-local-r2/affected-tests.log",
+      "counts": {
+        "tests": 22,
+        "suites": 0,
+        "pass": 22,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "files": [
+        "tests/a19-preview-source-publication.test.js",
+        "tests/a20-model-preview-publication.test.js"
+      ],
+      "overlaps": "The two complete files already ran in local09-full-areas; their 22 cases are not additional unique tests.",
+      "doesNotEstablish": "A new full-area A19 or A20 pass at the retry source."
+    }
+  ],
+  "fixtureCorrection": {
+    "sourceSha": "a179e686d81026ff19773147d060d9c879fae9cb",
+    "integratedSourceSha": "56add0e83ad85e65392f19af57535a97cad5d4ed",
+    "files": [
+      "tests/a19-preview-source-publication.test.js",
+      "tests/a20-model-preview-publication.test.js"
+    ],
+    "changes": [
+      "Use the actual compiler transport method symbols instead of the editor service name documentSymbols; retain source/version assertions and assert the analyze/symbols request sequence.",
+      "Set the no-normalization save fixture endOfLineExplicit:false, matching the real CodeEditor default; retain rejection of enabled normalization during an active preview."
+    ],
+    "productBehaviorWeakened": false,
+    "sourceExplanation": "docs/project16-preview-publication.md",
+    "qualification": "Only the two affected files were rerun: 22 passed, zero failed or skipped."
+  },
+  "additionalChecks": [
+    {
+      "sourceSha": "80dfe3f5a7d18731915bf9b6b770f816911b4f0f",
+      "sourceTree": "b105d155bff6efd72967652fd340634f6444b8a9",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/conformance/browser",
+        "-p",
+        "test_workflow_*.py"
+      ],
+      "startedAt": "2026-10-04T04:49:04.984076+00:00",
+      "finishedAt": "2026-10-04T04:49:05.282307+00:00",
+      "exitCode": 0,
+      "id": "local09-python-contracts",
+      "status": "passed",
+      "kind": "python_unit_contracts",
+      "tests": 12,
+      "passed": 12,
+      "failed": 0,
+      "evidence": "docs/evidence/project16-followup-local/p16-followup-python/summary.json",
+      "log": "docs/evidence/project16-followup-local/p16-followup-python/contracts.log",
+      "browserExecuted": false,
+      "intentionalFixtureOutput": {
+        "suite": "wrapper_standalone",
+        "browser": "fixture-browser",
+        "passed": false,
+        "failureMessage": "fixture failure",
+        "interpretation": "Expected failed payload printed by a passing unit fixture; no actual browser outcome."
+      },
+      "astParse": {
+        "status": "recorded_complete",
+        "files": [
+          "tests/browser_a20_insights_test.py",
+          "tests/conformance/browser/test_workflow_diagnostics.py",
+          "tests/conformance/browser/workflow_diagnostics.py",
+          "tests/conformance/browser/workflow_loading.py"
+        ],
+        "command": null,
+        "timestamp": null,
+        "methodReportedByRoot": "Inline Python ast.parse over the four named changed Python files.",
+        "metadataLimit": "The exact inline invocation and a separate AST timestamp were not captured durably."
+      }
+    },
+    {
+      "id": "local09-bounded-source-structure",
+      "kind": "bounded_changed_source_inspection",
+      "sourceSha": "80dfe3f5a7d18731915bf9b6b770f816911b4f0f",
+      "sourceTree": "b105d155bff6efd72967652fd340634f6444b8a9",
+      "comparisonBase": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+      "status": "no_new_violations",
+      "reviewedFiles": 48,
+      "violations": [],
+      "command": null,
+      "timestamp": null,
+      "evidence": "docs/evidence/project16-followup-local/p16-followup-static/structure.json",
+      "methodReportedByRoot": "Inline Python read git show blobs at the source and comparison base; checked 500 lines, 40960 bytes, new lines over 160 characters, and frozen files only shrinking.",
+      "metadataLimit": "The full inline invocation and timestamp were not captured in the supplied report; neither is reconstructed.",
+      "frozenStudio": {
+        "path": "apps/studio/studio.js",
+        "bytes": 104451,
+        "lines": 746,
+        "frozenAtBase": true,
+        "byteDelta": -242,
+        "newLongLines": []
+      },
+      "doesNotEstablish": "A whole-repository structure gate, final-head core pass, application build, or browser qualification."
+    }
+  ],
+  "pendingAtCutoff": [
+    "No new full-area A19 or A20 execution at source 56add0e8 is recorded here.",
+    "Actual corrected Studio browser and standalone workflows remain pending; earlier hosted failures are unchanged.",
+    "No application build after the source corrections is recorded in this supplied evidence set.",
+    "No native, assistive-technology, cross-platform, or real-browser performance acceptance is inferred."
+  ],
+  "separateEvidence": {
+    "modelPerformance": "Owned and archived separately by the text agent; no separate model-performance artifacts copied here.",
+    "previousLedgers": "Existing hosted and earlier local ledgers remain unchanged."
+  },
+  "archive": {
+    "directory": "docs/evidence/project16-followup-local",
+    "rawFileCount": 11,
+    "rawBytes": 160651,
+    "byteCopiesCompared": true,
+    "hashAlgorithm": "SHA-256",
+    "files": [
+      {
+        "path": "docs/evidence/project16-followup-local/p16-followup-local/A19.log",
+        "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-local/A19.log",
+        "bytes": 71,
+        "sha256": "84a9a7e3487bd801b021eb879de6cecd771314fcb71b769ae7801698245592b1"
+      },
+      {
+        "path": "docs/evidence/project16-followup-local/p16-followup-local/A20.log",
+        "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-local/A20.log",
+        "bytes": 71,
+        "sha256": "84a9a7e3487bd801b021eb879de6cecd771314fcb71b769ae7801698245592b1"
+      },
+      {
+        "path": "docs/evidence/project16-followup-local/p16-followup-local/node-summary.json",
+        "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-local/node-summary.json",
+        "bytes": 1124,
+        "sha256": "94e4ba98909f319d19e1989a2a374cea3cfc9085effe17455370ff979a6349b2"
+      },
+      {
+        "path": "docs/evidence/project16-followup-local/p16-followup-local-r1/A19.log",
+        "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-local-r1/A19.log",
+        "bytes": 80831,
+        "sha256": "c2503f9f8cd6686abb3be73f3a3f8a4982003bbb88ff2274d781ffe6b0c940b0"
+      },
+      {
+        "path": "docs/evidence/project16-followup-local/p16-followup-local-r1/A20.log",
+        "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-local-r1/A20.log",
+        "bytes": 63898,
+        "sha256": "046e65b2dc2609c597d164fedce21cbdf2e2fb3b21d88e41e7e280b8d7d66a30"
+      },
+      {
+        "path": "docs/evidence/project16-followup-local/p16-followup-local-r1/node-summary.json",
+        "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-local-r1/node-summary.json",
+        "bytes": 1130,
+        "sha256": "1698943f8ea35c7334057ca5469146d9414a98200d224296291a172709f37711"
+      },
+      {
+        "path": "docs/evidence/project16-followup-local/p16-followup-local-r2/affected-tests.log",
+        "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-local-r2/affected-tests.log",
+        "bytes": 2581,
+        "sha256": "608750c28f9e4457a9f0f96ac871222bdf06eeebd65a84627d47ff698c0c5f5b"
+      },
+      {
+        "path": "docs/evidence/project16-followup-local/p16-followup-local-r2/summary.json",
+        "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-local-r2/summary.json",
+        "bytes": 502,
+        "sha256": "efd1a3dcca84fe11b3edbb05105aea6acb24f0df3d74aacda00827856e4e4df2"
+      },
+      {
+        "path": "docs/evidence/project16-followup-local/p16-followup-python/contracts.log",
+        "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-python/contracts.log",
+        "bytes": 444,
+        "sha256": "54788a8c3fcf36988f3a955fcc1936919c528a56556ff820739565dda2f3d267"
+      },
+      {
+        "path": "docs/evidence/project16-followup-local/p16-followup-python/summary.json",
+        "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-python/summary.json",
+        "bytes": 675,
+        "sha256": "1122e5b18bc47675b3f6626f161a1d5c72a041e56d06b89fa347c432bf59c63f"
+      },
+      {
+        "path": "docs/evidence/project16-followup-local/p16-followup-static/structure.json",
+        "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-static/structure.json",
+        "bytes": 9324,
+        "sha256": "f080c6fa1447e18816dc451ac0f3018811a5caa2e7ef9244aae65ed8bf08b526"
+      }
+    ]
+  }
+}

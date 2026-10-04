@@ -1,3 +1,5 @@
+import { documentSource } from './document-source.js';
+
 function snapshot(value, uri) {
   return value && Object.isFrozen(value) && value.uri === uri && Number.isSafeInteger(value.version) && value.version >= 0
     && typeof value.getText === 'function';
@@ -6,7 +8,7 @@ function snapshot(value, uri) {
 /** Capture source and saved baseline for a validated same-workspace file operation, without retaining its live model. */
 export function captureDocumentState(owner, uri) {
   const record = owner.require(uri);
-  const source = owner.models.get(uri)?.snapshot() ?? record.text;
+  const source = documentSource(record, owner.models.get(uri)) ?? record.text;
   const dirty = owner.dirtyFiles.has(uri);
   return Object.freeze({
     uri, version: record.version, source,
