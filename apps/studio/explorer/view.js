@@ -7,6 +7,7 @@ import {ExplorerDiskServices} from './disk-services.js';
 import {createExplorerToolbar} from './toolbar.js';
 import {explorerViewPolicy} from './view-policy.js';
 import {ExplorerChildLoader} from './child-loader.js';
+import {revealExplorerPath} from './reveal.js';
 
 /** Keyed view state survives rebuilds and transaction renames; lazy children are admitted only through expansion. */
 export class SolutionExplorer {
@@ -137,6 +138,7 @@ export class SolutionExplorer {
     this.restoring = true;
     const saved = key !== this.key ? this.loadState(data, key) : null;
     const oldNodes = this.model.nodes;
+    const previousLazyTree = this.lazyTree?.model;
     const previous = this.model.snapshot();
     const scrollTop = this.tree.scrollTop;
     const files = data.records ?? data.files ?? [];
@@ -147,7 +149,8 @@ export class SolutionExplorer {
       if (force || identity !== this.lazyIdentity) {
         this.lazyTree?.model.dispose();
         this.lazyIdentity = identity;
-        this.lazyTree = buildLazyFolderTree({files, folders: data.folders, name: data.name, pageSize: 100, deferIndex: true});
+        this.lazyTree = buildLazyFolderTree({files, folders: data.folders, name: data.name, pageSize: 100, deferIndex: true,
+          caseSensitive: data.provider?.capabilities?.caseSensitive ?? true});
       }
       roots = this.lazyTree.roots;
     } else {
@@ -179,7 +182,9 @@ export class SolutionExplorer {
     this.viewButton.disabled = this.viewPolicy.large;
     this.viewButton.title = this.viewPolicy.reason ?? 'Switch Solution / Folder View';
     this.viewButton.setAttribute('aria-label', this.viewButton.title);
-    if (this.track && data.active !== this.lastActive) this.reveal(data.active, false);
+    if (this.track && (data.active !== this.lastActive || previousLazyTree !== this.lazyTree?.model)) {
+      this.safe(() => this.reveal(data.active, false));
+    }
     this.lastActive = data.active;
     for (const id of this.model.expanded) {
       const node = this.model.nodes.get(id);
@@ -216,17 +221,7 @@ export class SolutionExplorer {
     this.caption.title = [this.viewPolicy?.reason, detail].filter(Boolean).join(' ');
   }
 
-  reveal(path, focus = false) {
-    const nodes = [...this.model.nodes.values()];
-    const node = nodes.find(item => item.path === path && item.kind === 'source') ?? nodes.find(item => item.path === path && !item.branch);
-    if (!node) return false;
-    if (this.model.query) { this.search.value = ''; this.model.setFilter(''); }
-    this.model.reveal(node.id);
-    this.onProperties?.([node]);
-    this.control.ensureVisible();
-    if (focus) this.tree.focus();
-    return true;
-  }
+  reveal(path, focus = false) { return revealExplorerPath(this, path, focus); }
 
   scopeTo(node) { this.scope = node.id; this.render(true); this.tree.focus(); }
 

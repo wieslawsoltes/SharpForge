@@ -9,3 +9,4 @@ export {applyFileNesting} from './explorer/file-nesting.js';
 export {appendProjectExtras, buildUnloadedProject} from './explorer/tree-extras.js';
 export {buildSymbolChildren, attachLazySymbols} from './explorer/tree-symbols.js';
 export {explorerNodeId, remapExplorerState} from './explorer/node-identity.js';
+export {resolveLazyExplorerPath} from './explorer/reveal-path.js';

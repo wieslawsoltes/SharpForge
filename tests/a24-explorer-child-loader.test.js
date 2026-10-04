@@ -92,3 +92,16 @@ test('invalid duplicate pages leave the prior tree intact and aborted expansions
   assert.equal(aborted.model.nodes.has('late'), false);
   assert.equal(aborted.updates.length, 0);
 });
+
+test('a rejected retired loader is ignored while a current loader error remains visible', async () => {
+  const waiting = Promise.withResolvers();
+  const started = Promise.withResolvers();
+  const app = fixture(() => { started.resolve(); return waiting.promise; });
+  const pending = app.loader.expand(app.model.nodes.get('root'));
+  await started.promise;
+  app.model.setNodes([{id: 'root', loadChildren: async () => { throw new Error('current failure'); }}]);
+  waiting.reject(new Error('retired failure'));
+  await pending;
+  assert.equal(app.updates.length, 0);
+  await assert.rejects(app.loader.expand(app.model.nodes.get('root')), /current failure/);
+});
