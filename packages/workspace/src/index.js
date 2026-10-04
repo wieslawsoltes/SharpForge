@@ -6,3 +6,7 @@ export * from './transactions.js';
 export * from './file-history.js';
 export * from './coordination/locks.js';
 export * from './recovery/handles.js';
+export * from './recovery/schema.js';
+export * from './recovery/integrity.js';
+export * from './recovery/opfs-store.js';
+export * from './recovery/receipt-store.js';
