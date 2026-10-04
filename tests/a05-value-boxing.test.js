@@ -116,11 +116,11 @@ test('boxing preserves registered framework copies and rejects a foreign user-va
   const vm = new CilVirtualMachine(fixture(writer => writer.op('ret')));
   const otherVM = new CilVirtualMachine(fixture(writer => writer.op('ret')));
   try {
-    const original = vm.heap.allocate('host', 'Windows.Foundation.Point', [2, 3]);
-    const boxed = boxValue(vm, original, 'Windows.Foundation.Point');
-    const copied = unboxValue(vm, boxed, 'Windows.Foundation.Point');
+    const original = vm.heap.allocate('host', 'Microsoft.UI.Xaml.Thickness', [2, 3, 4, 5]);
+    const boxed = boxValue(vm, original, 'Microsoft.UI.Xaml.Thickness');
+    const copied = unboxValue(vm, boxed, 'Microsoft.UI.Xaml.Thickness');
     assert.notDeepEqual(copied, original);
-    assert.deepEqual(vm.heap.get(copied).data, [2, 3]);
+    assert.deepEqual(vm.heap.get(copied).data, [2, 3, 4, 5]);
     assert.throws(() => boxValue(vm, otherVM.top.locals[0], 'Point'), /identity/);
   } finally { vm.stop(); otherVM.stop(); }
 });
