@@ -10,10 +10,14 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 
 `DependencyPropertyRegistry` allocates immutable identities per owner and validates defaults before publishing them. Attached properties retain their declaring owner; inherited lookups reuse that identity. `PropertyMetadata` supplies callbacks, factory defaults and validation policy to the consuming host. Registry snapshots retain token identity and reject cross-registry tokens.
 
-## Compiled binding descriptors
+## Effective values
 
-Version 1 descriptors contain bounded metadata tokens and immutable expression data. Validation rejects accessors, executable values, foreign versions and malformed paths without invoking supplied getters. The shipped JSON schema describes the same data boundary.
+`PropertyStore` keeps the ordered value sources for one dependency object, applies inherited values, validates transactions before publication and emits effective changes through a bounded FIFO queue. Animation removal reveals the current underlying value. Snapshot and restore preserve callbacks and identity without replaying notifications. Read-only property writes require an injected host capability. `EffectiveValueEmitter` tracks weak consumers of mutable value nodes.
 
-## Typed expression compilation
+## Observable sources
 
-`Binding`, `RelativeSource` and `PropertyPath` retain explicit configuration and bounded parsed paths. `compileBindingDescriptor` resolves names through an injected symbol index and emits only actual metadata tokens. Paths, indexers, null-conditional access, casts, static/instance functions, event methods and BindBack use checked parameter/result types. Unknown tokens, types, arities and unsupported syntax fail without reflective fallback.
+`ObservableObject` publishes property changes and `ObservableVector` publishes indexed collection deltas. `SubscriptionLifetime` explicitly attaches and detaches subscriptions as owners load, unload and dispose. Listener snapshots restore saved subscription identity without invoking factories or replaying notifications.
+
+## Compiled token tracking
+
+The versioned descriptor compiler resolves typed expressions through an injected authoritative symbol table. `CompiledBindings` tracks every member/indexer and function argument, retargets changed intermediate objects and applies property/event bindings. Initialize, Update, StopTracking and Dispose have explicit subscription behavior. BindBack receives the target value and suppresses converter-feedback echoes; no reflective fallback is used.
