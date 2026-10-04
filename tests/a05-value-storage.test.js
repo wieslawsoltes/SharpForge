@@ -22,6 +22,10 @@ test('registered framework values retain their existing heap-backed storage repr
     const point = vm.heap.allocate('host', 'Windows.Foundation.Point', [2, 3]);
     vm.dereference(vm.address('local', 0), true, point);
     assert.equal(vm.top.locals[0], point);
+    vm.heap.methodTables.define({name: 'HostOnlyValue', base: 'System.ValueType', flags: {valueType: true, dynamic: true}});
+    const table = vm.heap.methodTables.get('HostOnlyValue');
+    const payload = Object.freeze({valueType: table, fields: Object.freeze([])});
+    assert.throws(() => vm.storage(payload, table.name), {name: 'NotSupportedException'});
   } finally { vm.stop(); }
 });
 
