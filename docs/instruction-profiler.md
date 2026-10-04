@@ -4,7 +4,9 @@ Construct a source or direct-CIL VM with `profile: true` to enable bounded
 instruction, call and managed-allocation counters. `vm.profiler` is `null` when
 disabled. `instructionProfile(vm)` (or `vm.profiler.read()`) returns an independent
 counter view with format `SharpForge.InstructionProfile/1` and clock
-`instructions`. No elapsed-time or sampling-frequency interpretation applies.
+`instructions`. Instruction weights do not represent elapsed time. Optional
+[elapsed durations](profiler-duration.md) add separate millisecond fields when
+`profile.duration` is `true`; the default counter view remains unchanged.
 
 ```js
 const vm = new CilVirtualMachine(assemblyBytes, {profile: {sampleBudget: 256}});
@@ -69,7 +71,8 @@ the allocation-accounting seam still execute; overhead has not been measured.
 | --- | --- |
 | Source IR, source reloaded from CIL, direct CIL counters | Implemented; focused Node 24.21.0 regressions passed |
 | Browser, native .NET, Rust/Wasm and cross-platform comparison | Not qualified |
-| Monotonic elapsed-duration clock and formatted profile export | Separate follow-ups |
+| Opt-in monotonic elapsed-duration clock | Implemented in a separate leaf; focused qualification pending |
+| Formatted profile export | Separate follow-up |
 | Off overhead below 1%, on overhead/latency/allocation evidence | Unmeasured; #1402 remains open |
 
 Runnable example: `node examples/runtime/instruction-profile.mjs`.

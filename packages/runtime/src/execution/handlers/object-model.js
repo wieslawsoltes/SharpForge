@@ -1,3 +1,4 @@
+import {executeFieldAccess} from '../value-fields.js';
 import {isDecimal} from '../decimal.js';
 import {loadFieldValue} from '../field-storage.js';
 import {castReference} from '../casting.js';
@@ -16,13 +17,7 @@ for(const name of ['ldsfld','stsfld','ldsflda'])handlers.set(name,(vm,frame,inst
   else vm.push(vm.address('static',slot.key));
   finishMemoryAccess(frame);
 });
-for(const name of ['ldfld','stfld','ldflda'])handlers.set(name,(vm,frame,instruction)=>{
-  const value=name==='stfld'?vm.pop():undefined,ref=vm.pop(),field=vm.field(instruction.operand,ref);
-  if(name==='stfld')vm.dereference(vm.address('field',field.index,ref),true,vm.storage(value,field.field.signature.type));
-  else if(name==='ldfld')vm.push(loadFieldValue(vm,field.field,field.record.data[field.index]));
-  else vm.push(vm.address('field',field.index,ref));
-  finishMemoryAccess(frame);
-});
+for(const name of ['ldfld','stfld','ldflda'])handlers.set(name,(vm,frame,instruction)=>executeFieldAccess(vm,frame,instruction,name));
 handlers.set('box',(vm,frame,instruction)=>{
   const value=vm.pop(),table=vm.typeSystem.table(instruction.operand),type=table.name;
   if(!table.flags.valueType){vm.push(castReference(vm.heap,value,table));return;}

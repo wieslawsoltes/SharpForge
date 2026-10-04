@@ -1,0 +1,27 @@
+{
+  "repository": "https://github.com/microsoft/fluentui-system-icons",
+  "license": "MIT",
+  "files": [
+    {
+      "path": "assets/Add/SVG/ic_fluent_add_24_regular.svg",
+      "file": "add.svg",
+      "sha": "5c8fc66a82d251813685640876071fb2b11ce0da"
+    },
+    {
+      "path": "assets/Dismiss/SVG/ic_fluent_dismiss_24_regular.svg",
+      "file": "dismiss.svg",
+      "sha": "e888b1b0e441fea07f47369a42b6cfc761f5665f"
+    },
+    {
+      "path": "assets/Checkmark/SVG/ic_fluent_checkmark_24_regular.svg",
+      "file": "checkmark.svg",
+      "sha": "4789d6236c09fb431d8da45e85951ddb5c212841"
+    },
+    {
+      "path": "LICENSE",
+      "file": "LICENSE",
+      "sha": "bc9c36b28f467f7006c4e5f1be4ca0a1a0b895f3"
+    }
+  ],
+  "transformation": "Only extract d attributes into paths.js; original SVG files are preserved."
+}

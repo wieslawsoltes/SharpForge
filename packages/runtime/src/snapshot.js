@@ -1,5 +1,6 @@
 import {validateCilStackSnapshot} from './execution/frame-stack.js';
 import {clearFramePool} from './execution/frame-pool.js';
+import {clearStackBudget} from './execution/stack-budget.js';
 import {ManagedFault} from './heap.js';
 import {invalidateExecutionCode} from './execution/code-version.js';
 
@@ -153,4 +154,5 @@ export function restoreVM(vm, snapshot, engine) {
   vm.platform.restore(snapshot.platform);
   if (engine === 'cil') invalidateExecutionCode(vm, 'snapshot-restore');
   clearFramePool(vm);
+  clearStackBudget(vm);
 }

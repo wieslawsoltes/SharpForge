@@ -22,6 +22,10 @@ Application-owned retained drawing services for SharpForge. The package register
 
 Scanbeam tessellation preserves holes and self-intersections. Strokes preserve dash seams, cap dots, joins and explicit work/vertex budgets. Painted bounds include transforms, stroke extent, glyph overhang and conservative shadow/effect expansion.
 
+## Independent path fixtures
+
+The path corpus includes100 distinct valid cases, malformed syntax boundaries and pinned licensed Fluent assets. Independent SVG/Path2D capture helpers provide browser references without calling the renderer tessellator. Their presence is not recorded as executed browser pixel qualification.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
