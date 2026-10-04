@@ -39,6 +39,7 @@ test('native reader retains nested function-pointer conventions, flags, generic 
     {name:'PointerApi',flags:0x100081,methods:cases.map(([name,type])=>({name,static:false,flags:0x5c6,
       signature:encodeSignature({kind:'method',hasThis:true,returnType:voidType,parameters:[type]})}))},
     {name:cdecl,methods:[]},{name:stdcall,methods:[]},
+    {name:'Program',methods:[{name:'Main',body:writer=>writer.op('ret')}]},
   ]);
   const directory=await mkdtemp(path.join(os.tmpdir(),'sf-pointer-metadata-')),file=path.join(directory,'Pointers.dll');
   try {
