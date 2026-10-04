@@ -7,6 +7,7 @@ import { initializationFixture, initializationCases } from '../../../tests/fixtu
 const output = process.argv[2];
 if (!output) throw new Error('Pass a result JSON path');
 const results = {};
+const options = Object.freeze({ localInitialization: 'definite-assignment' });
 for (const name of ['StoredLoad', 'DiamondBoth', 'WordBoundaries']) {
   const fixture = initializationCases.find(value => value.name === name);
   const bytes = initializationFixture(fixture);
@@ -21,7 +22,7 @@ for (const name of ['StoredLoad', 'DiamondBoth', 'WordBoundaries']) {
       const start = performance.now();
       for (let iteration = 0; iteration < iterations; iteration++) {
         if (verifyCilMethodTypes(mode === 'cold' ? new AssemblyInspector(bytes) : inspector, 0x06000001,
-          { localInitialization: 'definite-assignment' }).status !== expected) throw new Error(`Unexpected ${name} result`);
+          options).status !== expected) throw new Error(`Unexpected ${name} result`);
       }
       samples.push(performance.now() - start);
       heaps.push(process.memoryUsage().heapUsed - heapBefore);
