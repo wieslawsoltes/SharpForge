@@ -60,3 +60,91 @@ test('A00 floating constant hints and signature-directed widening stay typed',()
   for(const body of bodies){validate(schema,body);validateBody(body,{requireExecutable:true});}
   for(const encoding of ['bytecode','cil'])assert(bodies.filter(b=>b.encoding===encoding).some(b=>b.instructions.some(i=>i.opcode==='constant'&&i.operands[0]===1&&i.resultType==='f64')));
 });
+
+function serializedReturn(encoding,voidReturn=false){
+  const name=voidReturn?'native-callback':'parked-frame';
+  const bodies=JSON.parse(readFileSync(new URL('../planning/contracts/fixtures/schema/'+name+'.bodies.json',import.meta.url)));
+  const body=bodies.find(b=>b.encoding===encoding&&(b.returnType==='void')===voidReturn);
+  assert(body,'Retained body must cover '+encoding+' '+(voidReturn?'void':'value'));
+  const instruction=body.instructions.find(i=>i.opcode==='return');assert(instruction);
+  return {body,instruction};
+}
+const validateReturn=body=>{validate(schema,body);return validateBody(body,{requireExecutable:true});};
+
+test('A00 serialized returns preserve explicit source and CIL conventions',()=>{
+  for(const encoding of ['bytecode','cil'])for(const voidReturn of [false,true]){
+    const {body,instruction}=serializedReturn(encoding,voidReturn);validateReturn(body);
+    assert.deepEqual(instruction.outputTypes,[]);assert.deepEqual(instruction.stackOut,[]);
+    assert.deepEqual(instruction.inputTypes,instruction.stackIn);
+    const padding=encoding==='bytecode'&&voidReturn;
+    assert.deepEqual(instruction.operands,[{discardPadding:padding}]);
+    assert.equal(instruction.inputTypes.length,voidReturn&&!padding?0:1);
+    if(padding)assert.deepEqual(instruction.inputTypes,['null']);
+  }
+});
+
+test('A00 serialized returns reject retained stack values and synthesized outputs',()=>{
+  for(const encoding of ['bytecode','cil']){
+    const retained=serializedReturn(encoding);
+    retained.instruction.inputTypes=[];
+    retained.instruction.stackOut=[...retained.instruction.stackIn];
+    assert.throws(()=>validateReturn(retained.body),{code:'SCHEMA_INVALID',message:/complete stack without outputs/});
+    const produced=serializedReturn(encoding);
+    produced.instruction.outputTypes=['i32'];produced.instruction.stackOut=['i32'];produced.instruction.resultType='i32';
+    produced.body.maxStack=Math.max(produced.body.maxStack,1);
+    assert.throws(()=>validateReturn(produced.body),{code:'SCHEMA_INVALID',message:/complete stack without outputs/});
+  }
+});
+
+test('A00 serialized returns reject missing values and inconsistent void padding',()=>{
+  const missing=serializedReturn('cil',true);
+  missing.body.returnType='i32';missing.body.returnStorageType='System.Int32';
+  assert.throws(()=>validateReturn(missing.body),{code:'SCHEMA_INVALID',message:/Return arity/});
+  const unmarked=serializedReturn('bytecode',true);unmarked.instruction.operands=[{discardPadding:false}];
+  assert.throws(()=>validateReturn(unmarked.body),{code:'SCHEMA_INVALID',message:/Return arity/});
+  const absent=serializedReturn('cil',true);absent.instruction.operands=[{discardPadding:true}];
+  assert.throws(()=>validateReturn(absent.body),{code:'SCHEMA_INVALID',message:/Return arity/});
+  for(const encoding of ['bytecode','cil']){
+    const nonvoid=serializedReturn(encoding);nonvoid.instruction.operands=[{discardPadding:true}];
+    assert.throws(()=>validateReturn(nonvoid.body),{code:'SCHEMA_INVALID',message:/padding must be one null/});
+    const nonnull=serializedReturn(encoding);
+    assert.deepEqual(nonnull.instruction.inputTypes,['ref:System.Threading.Tasks.Task'],'Select the produced Task return before the dead null epilogue');
+    nonnull.body.returnType='void';nonnull.body.returnStorageType='System.Void';
+    nonnull.instruction.operands=[{discardPadding:true}];
+    assert.throws(()=>validateReturn(nonnull.body),{code:'SCHEMA_INVALID',message:/padding must be one null/});
+  }
+});
+
+test('A00 serialized returns require an explicit well-formed padding operand',()=>{
+  for(const operands of [[],[null],[{}],[{discardPadding:0}],[{discardPadding:false,extra:true}],[{discardPadding:false},false]]){
+    const {body,instruction}=serializedReturn('cil');instruction.operands=operands;
+    assert.throws(()=>validateReturn(body),{code:'SCHEMA_INVALID',message:/explicit void padding/});
+  }
+});
+
+test('A00 serialized method entry rejects a return value without a producer',()=>{
+  for(const encoding of ['bytecode','cil']){
+    const {body,instruction}=serializedReturn(encoding);validateReturn(body);
+    body.returnType='i32';body.returnStorageType='System.Int32';
+    body.instructions=[{...instruction,offset:0,sourceOffset:0,inputTypes:['i32'],stackIn:['i32']}];
+    body.exceptionRegions=[];body.safepoints=[];body.maxStack=1;
+    // The return consumes its entire stack and produces nothing, but no instruction supplied its value.
+    validate(schema,body);
+    assert.throws(()=>validateBody(body,{requireExecutable:true}),{code:'SCHEMA_INVALID',message:/Method entry stack must be empty/});
+  }
+});
+
+test('A00 serialized method entry stays empty while catch entries retain their conventions',()=>{
+  const bodies=JSON.parse(readFileSync(new URL('../planning/contracts/fixtures/schema/nested-finally.bodies.json',import.meta.url)));
+  const encodings=new Set();
+  for(const body of bodies){
+    const catches=body.exceptionRegions.filter(region=>region.kind==='catch');
+    if(!catches.length)continue;
+    encodings.add(body.encoding);assert.deepEqual(body.instructions[0].stackIn,[]);validateReturn(body);
+    for(const region of catches){
+      assert(region.handlerStart>0);
+      assert.deepEqual(body.instructions[region.handlerStart].stackIn,body.encoding==='cil'?[region.catchType]:[]);
+    }
+  }
+  assert.deepEqual([...encodings].sort(),['bytecode','cil']);
+});

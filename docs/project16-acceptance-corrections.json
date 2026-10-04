@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-acceptance-corrections",
+  "recordedDate": "2026-10-04",
+  "scope": "Local completed-scope correction evidence after hosted a3; original failed outcomes and affected retries. No additional execution was performed to create this archive.",
+  "closeIssues": [],
+  "latestObservedProduct": {
+    "sourceCommit": "0858f721e8e737e6bcca1365748409cb6b0b5f35",
+    "sourceTree": "543ac1fd0f99e60bd7be5319ecad1590ba1eeccd",
+    "browserQualified": false
+  },
+  "identityNote": "Source identities are the local execution identities recorded by the supplied reports; no published commit equivalence is inferred.",
+  "evidenceRules": [
+    "All initial failures now have affected passing evidence; this is not a new all-in-one full-scope pass on the latest source.",
+    "Overlapping tests and file-level import failures are not added into a synthetic aggregate total.",
+    "Every original failed outcome and all nine A20 skips remain unchanged.",
+    "Python contract tests use fixtures and do not launch or qualify a real browser. Python AST parsing is syntax-only evidence.",
+    "Changed-scope structure review is not a global strict-gate pass.",
+    "Browser, standalone runtime, platform, native, assistive, physical input and performance acceptance are not established by this archive.",
+    "Raw supplied reports and logs are archived byte-for-byte with SHA-256; historical qualification ledgers are untouched."
+  ],
+  "nodeObservations": [
+    {
+      "id": "A19",
+      "scope": "Complete A19 initial scope",
+      "sourceCommit": "c2c69a1ae200c239060e087cfa3f5167ac6eb21b",
+      "sourceTree": "44fe8d2f5a58097c81d170706f4b20c389979077",
+      "status": "failed",
+      "exitCode": 1,
+      "startedAt": "2026-10-04T03:26:52.989555+00:00",
+      "finishedAt": "2026-10-04T03:27:08.358576+00:00",
+      "elapsedMs": 15369.027562002884,
+      "counts": {
+        "tests": 477,
+        "passed": 441,
+        "failed": 36,
+        "skipped": 0
+      },
+      "interpretation": "36 file-import failures: missing upstream @sharpforge/bcl-collections workspace link.",
+      "report": "docs/evidence/project16-acceptance/p16-acceptance-A19.json",
+      "log": "docs/evidence/project16-acceptance/p16-acceptance-A19.log"
+    },
+    {
+      "id": "A20",
+      "scope": "Complete A20 initial scope",
+      "sourceCommit": "c2c69a1ae200c239060e087cfa3f5167ac6eb21b",
+      "sourceTree": "44fe8d2f5a58097c81d170706f4b20c389979077",
+      "status": "failed",
+      "exitCode": 1,
+      "startedAt": "2026-10-04T03:27:08.360075+00:00",
+      "finishedAt": "2026-10-04T03:27:34.173311+00:00",
+      "elapsedMs": 25813.248719998228,
+      "counts": {
+        "tests": 573,
+        "passed": 551,
+        "failed": 13,
+        "skipped": 9
+      },
+      "interpretation": "13 file-import failures: the same missing upstream workspace link. Nine skips remain skipped.",
+      "report": "docs/evidence/project16-acceptance/p16-acceptance-A20.json",
+      "log": "docs/evidence/project16-acceptance/p16-acceptance-A20.log"
+    },
+    {
+      "id": "node-retry",
+      "scope": "49 initially blocked files plus two new instrumentation test files; 51 files",
+      "sourceCommit": "d5df3806275715b8faea78bb93b697b2cf91897b",
+      "sourceTree": "1e2db8ef4c6196f0257c61e94a1a030758a592b7",
+      "status": "failed",
+      "exitCode": 1,
+      "startedAt": "2026-10-04T03:43:45.235515+00:00",
+      "finishedAt": "2026-10-04T03:44:23.600633+00:00",
+      "elapsedMs": 38365.10193700087,
+      "counts": {
+        "tests": 402,
+        "passed": 390,
+        "failed": 12,
+        "skipped": 0
+      },
+      "interpretation": "Workspace imports restored. All 12 failures are in the constructor-bypassing first-run fixture, which omitted its real metrics instance.",
+      "report": "docs/evidence/project16-acceptance/p16-acceptance-node-retry.json",
+      "log": "docs/evidence/project16-acceptance/p16-acceptance-node-retry.log"
+    },
+    {
+      "id": "first-run-retry",
+      "scope": "First-run schemes and shell commands; two files",
+      "sourceCommit": "0858f721e8e737e6bcca1365748409cb6b0b5f35",
+      "sourceTree": "543ac1fd0f99e60bd7be5319ecad1590ba1eeccd",
+      "status": "passed",
+      "exitCode": 0,
+      "startedAt": "2026-10-04T03:45:13.573256+00:00",
+      "finishedAt": "2026-10-04T03:45:14.220580+00:00",
+      "elapsedMs": 647.3043940022762,
+      "counts": {
+        "tests": 23,
+        "passed": 23,
+        "failed": 0,
+        "skipped": 0
+      },
+      "interpretation": "Fixture now supplies real WorkbenchPerformance. Also covers the direct shell-command performance consumer after the mark lifecycle change.",
+      "report": "docs/evidence/project16-acceptance/p16-acceptance-first-run-retry.json",
+      "log": "docs/evidence/project16-acceptance/p16-acceptance-first-run-retry.log"
+    }
+  ],
+  "dependencyRepair": {
+    "provenance": "Integration owner report; no separate install log was supplied for this archive.",
+    "command": [
+      "npm",
+      "ci",
+      "--ignore-scripts",
+      "--offline",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "result": "Added 28 workspace packages, restoring the upstream @sharpforge/bcl-collections link.",
+    "sourceChanges": false,
+    "lockfileChanges": false
+  },
+  "pythonContracts": {
+    "sourceCommit": "581ce369b235c0de21acd593a99b3566bf64a52b",
+    "sourceTree": null,
+    "sourceTreeNote": "Not recorded in the supplied Python report.",
+    "command": [
+      "node",
+      "scripts/limited.js",
+      "python",
+      "-m",
+      "unittest",
+      "conformance.browser.test_workflow_loading",
+      "conformance.browser.test_launch"
+    ],
+    "priorAttempt": {
+      "status": "failed",
+      "testsReported": 6,
+      "errors": 1,
+      "cause": "playwright Python package absent; test_workflow_loading import failed"
+    },
+    "dependencySetup": "Pinned tests/requirements.txt installed with required hashes into /tmp/p16-python-deps; no browser download",
+    "status": "passed",
+    "tests": 13,
+    "passed": 13,
+    "failed": 0,
+    "exitCode": 0,
+    "elapsedMs": 234.63758399884682,
+    "report": "docs/evidence/project16-acceptance/p16-acceptance-python-contracts.json",
+    "log": "docs/evidence/project16-acceptance/p16-acceptance-python-contracts.log",
+    "interpretation": "The embedded fixture-browser passed:false payload is an intentional failure-path fixture; unittest reports 13 tests and OK. It is not a real browser run.",
+    "priorEvidenceNote": "The prior missing-Playwright failure is preserved in the report priorAttempt object; no separate original attempt log was supplied."
+  },
+  "pythonSyntax": {
+    "sourceCommit": "581ce369b235c0de21acd593a99b3566bf64a52b",
+    "files": 12,
+    "errors": 0,
+    "scope": "Changed Python files parsed as AST; no browser execution.",
+    "report": "docs/evidence/project16-acceptance/p16-acceptance-python-ast.json"
+  },
+  "changedSourceStructure": {
+    "sourceCommit": "0858f721e8e737e6bcca1365748409cb6b0b5f35",
+    "baseCommit": "e4629f443b59bfc2d7494b731be19afc5974b7b1",
+    "files": 20,
+    "introducedProblems": 0,
+    "scope": "Changed-source size and introduced long-line review only.",
+    "inheritedException": "Frozen scripts/build.js is 2116 bytes with a 170-character maximum line; the 170-character line is unchanged inherited text.",
+    "report": "docs/evidence/project16-acceptance/p16-acceptance-structure.json"
+  },
+  "rawArtifacts": [
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-A19.json",
+      "bytes": 616,
+      "sha256": "872de27c1dddc6a48cb1b3430918477556bcd96389e133d11b668e15e90a97a9"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-A19.log",
+      "bytes": 90942,
+      "sha256": "a6b3377680abfb596ae1f25116d86a7aa23cf005f96ff2aa1819018fdb396b45"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-A20.json",
+      "bytes": 616,
+      "sha256": "7caf321e6be8099d9c4ce5be31c4869ec88eecbf332d14753b19b8b8e5988d3e"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-A20.log",
+      "bytes": 64485,
+      "sha256": "57ba5cd1bb08e13bd5e622ab660327fc8a2589c466aac375a535df159127c98b"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-node-retry.json",
+      "bytes": 5473,
+      "sha256": "e73dd279685cafb972034c45debb253d07b083a9bc218be7a2fcfbd1064bce86"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-node-retry.log",
+      "bytes": 70931,
+      "sha256": "32b105465c2e5b62a5bd062e7960bbd5f956a1c2602412bfd7d23946b0a52427"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-first-run-retry.json",
+      "bytes": 963,
+      "sha256": "ac5aed4a7186cdef04d8cca5b9567798c92a8f9af26b99c82ba7d924dae72800"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-first-run-retry.log",
+      "bytes": 2548,
+      "sha256": "872589dec27b22bf32ce34169278f8163b77bd07446378e0cfe2ec64225001b1"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-python-contracts.json",
+      "bytes": 712,
+      "sha256": "23b0c25977c6910c11f3295dba9474b87b23215bdf122d67f06f1c0d1b4cd9f7"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-python-contracts.log",
+      "bytes": 445,
+      "sha256": "f5cc812f40e1b7826c2629203aa9755c5826d5251c08dc49702edce9d525a708"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-python-ast.json",
+      "bytes": 691,
+      "sha256": "ad246c6652355bc25649370b0a2d64161e9983b720b40ba0a3d9b2551235eec5"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-retry-files.json",
+      "bytes": 2155,
+      "sha256": "f77f0365e5d018644ed95d77d30767d6550c9be8583c4bbef770916681a5644d"
+    },
+    {
+      "path": "docs/evidence/project16-acceptance/p16-acceptance-structure.json",
+      "bytes": 4022,
+      "sha256": "aa88b1af1055078259b1ea56663589dc3bc45b534c765f08d937927d5dd9b33f"
+    }
+  ]
+}

@@ -22,7 +22,7 @@ export function builderPair(engine, destination = ['seed|'], source = ['ab', '\0
   return {...builder, input};
 }
 
-function emitBuilder(writer, context, field, segments) {
+export function emitBuilder(writer, context, field, segments) {
   if (segments === null) writer.op('ldnull');
   else writer.op('newobj', context.member(builderType, '.ctor', 'void', [], false));
   writer.op('stsfld', field);

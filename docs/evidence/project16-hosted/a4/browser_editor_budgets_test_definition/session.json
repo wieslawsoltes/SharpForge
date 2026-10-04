@@ -1,0 +1,11 @@
+{
+  "suite": "browser_editor_budgets_test_definition",
+  "passed": false,
+  "engine": "chromium",
+  "cspViolations": [],
+  "browser": "153.0.8010.12",
+  "executable": "playwright-managed",
+  "mode": "http",
+  "seconds": 3.7321309679999786,
+  "diagnosticErrors": []
+}

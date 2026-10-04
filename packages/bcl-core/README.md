@@ -292,6 +292,40 @@ five samples cover ordinary inputs plus 1024-unit repeated-prefix misses, late
 hits and all overlapping matches with 64-unit needles, reporting median/p95 and
 managed allocation counts outside setup and result checks.
 
+`StringBuilder.Replace(char, char)` and `Replace(char, char, int, int)` occupy
+A07 slots `524334` and `524335`, after builder-range Append `524333`. They replace
+raw UTF-16 units, including isolated surrogates, within the selected half-open
+range. Native validation checks `startIndex` before `count`, including equal-unit
+and empty-range calls. A valid call returns the same builder; length, capacity,
+chunk count and unaffected chunk handles remain unchanged.
+
+The implementation stages one managed string per changed chunk before writing.
+An allocation failure leaves live builder slots untouched. It scans chunk prefixes
+and affected text in linear time without flattening the builder or cloning its
+backing array. Temporary host records/strings and roots scale with changed chunks
+and their text; no-match, same-unit and empty-range calls allocate no managed data.
+This immutable-string storage still copies a changed chunk, even for a one-unit
+edit; the rope/capacity redesign in #2636 remains separate.
+
+All staged old/new references and each live backing array used during a callback
+remain rooted. After a callback, a scheduled slot is edited only if it still holds
+the original generation-qualified reference. Thus reentrant Clear or indexer edits
+win, while Append growth can retain untouched scheduled slots. A throwing observer
+stops further writes without rolling back already-notified edits, matching the
+existing indexer observer contract. Normal completion stamps the builder version
+once; underlying array writes keep existing heap/snapshot notifications.
+
+The frozen .NET 10.0.5 / SDK 10.0.201 reference has 266 cases. Focused tests cover
+both compiler pipelines and VMs, independent CIL, exact range/fault precedence,
+allocation failure, forced callback GC, snapshots and a 10,000-step char/range
+replacement trace against a UTF-16 oracle. The unchanged static runner
+`scripts/benchmarks/a07-string-builder-replace-char.mjs` compares released Length
+and string Replace controls separately from new character edit costs, including
+256 chunks and a small range. One warmup/five samples report median/p95 and managed
+allocations; setup and verification are outside timing. Qualification is pending
+in the root serial queue. Native/Wasm runtime execution is outside this batch.
+#2638 remains open for Insert families, ranged string Replace and Remove edge cases.
+
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch
 routes. Its streaming fold reuses the pinned simple-uppercase table without
@@ -344,6 +378,25 @@ values. The fifty-value .NET 10.0.5 fixture in `reference/double-format-net10.js
 qualifies binary64 default, general and round-trip output; it does not qualify
 Single or Decimal formatting. Runtime display adapters reuse this helper while
 retaining their engine-specific object, enum and typed integer handling.
+
+`formatSingleDefault(value)` formats invariant default Single text. Its input is
+a raw JavaScript number already rounded to IEEE binary32 (for example,
+`Math.fround(value)`); runtime callers unwrap their existing CLI carriers before
+calling it. It preserves signed zero and accepts NaNs and infinities. It does
+not coerce carriers or arbitrary binary64 values to Single. The helper retains
+the existing search over at most nine significant digits for the shortest
+binary32 round trip, then uses Single's nine-digit notation boundary instead
+of Double's seventeen-digit boundary. Thus exact Single `1e9` renders `1E+09`,
+while the explicitly widened Double remains `1000000000`.
+
+Single and Double share only pure default notation. Common fixed output avoids
+scientific digit records, and default formatting does not enter explicit-
+precision BigInt rounding. The forty exact-bit values plus four null-receiver
+controls in `reference/string-builder-append-single-net10.json` retain pinned
+.NET 10.0.5 output and source provenance. These cover existing default Single
+display paths and the separately registered `Append(float)` overload below.
+Explicit Single format strings and configurable culture are not qualified here.
+The pure helper creates bounded host text and no managed objects.
 
 `StringBuilder.Append(char)` and `Append(char, int)` preserve individual UTF-16
 units, return the same builder, and append one managed chunk per nonzero call.
@@ -417,6 +470,40 @@ locals assert selection of the exact new builtin IDs on both compiler pipelines
 and execute on both VMs. GC, snapshots and allocation-limit controls exercise
 the reused append path; no per-value formatter or new culture API is added.
 
+`StringBuilder.Append(float)` appends at ID 524330 after comparer equality.
+It reuses the typed default Single formatter and the existing bounded chunk
+append without a new runtime path. Exact binary32 carriers preserve signed zero,
+subnormal values, finite endpoints, NaNs and infinities; a Single `1e9` produces
+`1E+09`, while the existing Double overload retains `1000000000`.
+
+The pinned 44-case reference above also covers null receivers and fluent
+identity. Independent CIL constructs every input from its exact bits; compiled
+typed locals assert the chosen contract and stored binary32 bits through both
+compiler pipelines and VMs. Managed GC, snapshots, observer faults and host
+limits follow the existing append protocol, including partial progress on a
+throwing write observer. Each default value produces bounded host text and one
+managed string chunk, plus existing amortized storage growth. Configurable
+culture, explicit Single formats and remaining builder APIs stay outside this
+increment under #2637.
+
+`StringBuilder.Append(decimal)` appends at ID 524332 after typed builder equality.
+It reuses the existing exact Decimal carrier, invariant default formatter and
+bounded chunk append. The coefficient never passes through JavaScript Number;
+scale and trailing zeros are retained. A negative zero keeps its stored sign
+but omits that sign in the formatted text, matching the native reference.
+Default Decimal text uses at most 31 UTF-16 units, with existing amortized
+storage growth and host formatting temporaries outside managed heap counters.
+
+The pinned .NET 10.0.5 reference contains 33 cases and a mixed fluent Int32/Char
+control, including signed limits, scale boundaries, signed zeros, values beyond
+Number's exact integer range and null receivers. Source-platform tests check
+carrier words before and after appending; independent CIL constructs the exact
+96-bit values through the native Decimal constructor signature. Compiled typed
+literals assert native output and the chosen contract through both pipelines
+and VMs. GC, snapshots and allocation-limit controls exercise the reused append
+path. No formatter, compiler or runtime implementation changes are introduced;
+configurable culture and remaining builder APIs stay separate under #2637.
+
 `StringBuilder.Append(string, int, int)` appends at ID 524319. Its 52-case pinned
 .NET 10.0.5 reference records negative `startIndex`, then negative `count`, then
 null validation. A null string is accepted only for `(0, 0)`. For non-null strings,
@@ -451,6 +538,25 @@ are retained. The array source is fully converted before write callbacks run.
 The unchanged native oracle runs through source-platform and independent CIL
 calls; compiled typed arrays cover both pipelines and both VMs. Other builder
 overloads remain separate work under #2637.
+
+`StringBuilder.Append(StringBuilder, int, int)` appends at ID 524333. Its 68-case
+pinned .NET 10.0.5 reference validates negative `startIndex`, then negative
+`count`, then null input. Null succeeds only for `(0, 0)`; nonnull zero counts
+skip upper bounds, including `Int32.MaxValue`, with no source scan, writes or
+managed allocations. Nonempty invalid ranges name `startIndex`.
+
+The remaining host output budget is checked before traversing source chunks.
+One forward traversal skips the prefix, collects only selected UTF-16 segments
+and stops at the range end. The selected host text is complete before one
+existing chunk append begins, preserving self append and source edits during
+destination callbacks. Neither the whole source nor the destination is
+flattened. Cost is O(visited chunks + count) time and O(selected segments +
+count) host temporaries, plus one managed text chunk and existing amortized
+storage growth. Platform invocation roots both builders; the existing append
+helper roots the new chunk. Observer faults retain the released partial-progress
+policy without a rollback or native concurrency guarantee. Source-platform,
+independent CIL and both compiled pipelines cover the exact overload; the
+remaining Span/Memory and chunk-enumeration APIs stay open under #2637.
 
 `StringBuilder.Append(StringBuilder)` appends at ID 524323. Null and empty sources
 return the same destination without writes or managed allocations. Nonempty
@@ -708,6 +814,36 @@ equal-case, final-unit mismatch and differing-length cases. It reports one warmu
 five samples and managed allocations; validation and timing are queued serially.
 Comparer equality interfaces, object overloads, hashing, culture comparers and
 native/Wasm execution remain outside this batch; #2621 stays open.
+
+`StringBuilder.Equals(StringBuilder)` appends A07 contract `524331` after
+Single Append `524330`. It compares exact UTF-16 content independently of chunk
+arrangement and capacity. The shared builder dispatcher still validates the
+receiver before a null argument returns false; self and empty/length shortcuts
+avoid reading chunks. Distinct equal-length builders stream their live chunk
+prefixes from the end, loading each visited chunk once. No case folding,
+normalization, ToString call, substring, joined text, copied array or cursor
+record is used. Work is O(text units + chunks visited), with constant auxiliary
+space, no writes and no new managed allocations.
+
+The [pinned native reference](reference/string-builder-equals/README.md) records
+35 .NET 10.0.5 / SDK 10.0.201 cases, including null receiver/source, identity,
+different append segmentation, raw surrogate boundaries, cleared/truncated/grown
+histories and unequal capacities. It confirms equal content ignores Capacity and
+MaxCapacity. Thirty-one supported constructor profiles run through both compiler
+pipelines/VMs and independent CIL. Four rows requiring the unsupported
+`StringBuilder(int, int)` constructor remain native evidence only; this batch
+does not implement that constructor or change existing capacity-growth behavior.
+
+Native inherited Object.Equals distinguishes identity from typed content
+equality. SharpForge's pre-existing Object.Equals execution guard remains in
+place; it is not redirected to this overload. Existing Object.ReferenceEquals
+controls retain identity semantics. No equality interface, hash or span overload
+is added. Tests check no writes/allocations at an exhausted managed heap budget,
+once-per-chunk reads with forced collection, snapshots and subsequent mutation.
+The static `scripts/benchmarks/a07-string-builder-equals.mjs` runner separates
+released Length/Capacity controls from new equality costs, including 256 live
+chunks versus one chunk. Validation/timing are pending in the serial queue;
+native/Wasm execution and the remaining #2637 APIs stay outside this batch.
 
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null

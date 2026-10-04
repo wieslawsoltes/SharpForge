@@ -1,0 +1,11 @@
+text 42 1.5 c two 3
+2 True text none
+4 7 2
+Value Object 1
+Items Object[] 01
+Map Dictionary`2 001
+Nested List`1 001
+Plain Object -
+Other 1 1
+All 01 Object:1 Object&:01 Int32:- Object[]:01
+ctor 1 Unwrap -

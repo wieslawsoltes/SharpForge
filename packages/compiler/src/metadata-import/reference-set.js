@@ -8,13 +8,16 @@
  *
  * The set is an explicit object owned by the caller: there is no process-wide cache. Imported symbols resolve their
  * cross-assembly references through the set they were bound in, so one set must always be used as a whole; build a
- * second set for a different combination of assemblies.
+ * second set for a different combination of assemblies. The set also keeps the result of binding its assemblies to
+ * each other (identity unification, type forwarders, the merged namespaces), which is the same for every compilation.
  */
 import { CilError } from '@sharpforge/cil';
 import { importAssembly } from './pe-symbols.js';
 
 /** A reference set never holds more assemblies than this; a larger input is a host error, not a program. */
 export const MAX_REFERENCE_ASSEMBLIES = 4096;
+
+const BINDING = Symbol('SharpForge.referenceSetBinding');
 
 const isImageError = error => error instanceof CilError || error instanceof RangeError || error instanceof TypeError;
 
@@ -32,7 +35,21 @@ export function createReferenceSet(entries) {
   if (list.length > MAX_REFERENCE_ASSEMBLIES) {
     throw new RangeError(`A reference set holds at most ${MAX_REFERENCE_ASSEMBLIES} assemblies, not ${list.length}`);
   }
-  return Object.freeze(list.map(importEntry));
+  const set = list.map(importEntry);
+  // The assemblies of a set are bound to each other once, by the first compilation that uses it (`boundReferenceSet`).
+  Object.defineProperty(set, BINDING, { value: { bound: null }, enumerable: false });
+  return Object.freeze(set);
+}
+
+/**
+ * The binding of a reference set - what binding its assemblies to each other produced - computed by `bind` on first
+ * use and kept on the set. Any other list of references is bound on every call.
+ * @param {object[]} references the `references` option of a compilation  @param {() => object} bind
+ */
+export function boundReferenceSet(references, bind) {
+  const holder = references[BINDING];
+  if (!holder) return bind();
+  return (holder.bound ??= bind());
 }
 
 function importEntry(entry, index) {

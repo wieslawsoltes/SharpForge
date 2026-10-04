@@ -1,21 +1,24 @@
-import {decodeCoded} from './metadata.js';
 import {resolveExecutionMethod} from './call-profile.js';
 import {verifyGenericType} from './generic-profile.js';
 import {validateTypePrefixes} from './verify/prefix-constrained.js';
+import {ConstrainedObjectProfile} from './constrained-object-profile.js';
+import {ConstrainedReferenceObjectProfile} from './constrained-reference-object-profile.js';
 
 const supported = new Set(['volatile.', 'constrained.']);
 const memoryTargets = new Set(['ldfld', 'stfld', 'ldsfld', 'stsfld', 'ldobj', 'stobj']);
 
 /** Executable prefix groups retain their flat debugger offsets and may only be entered at the prefix. */
 export class ExecutionPrefixProfile {
-  constructor(inspector) {
+  constructor(inspector, dispatch) {
     this.inspector = inspector;
-    this.types = new Map(inspector.types.map(type => [type.token, type]));
-    this.genericOwners = new Set((inspector.metadata.rows?.[42] ?? [])
-      .map(row => decodeCoded('TypeOrMethodDef', row[2])));
+    this.objects = new ConstrainedObjectProfile(inspector);
+    this.types = this.objects.types;
+    this.genericOwners = this.objects.genericOwners;
+    this.dispatch = dispatch;
+    this.references = null;
   }
 
-  constrained(prefix, next, context) {
+  constrained(prefix, next, context, reachable, method) {
     if (next?.name !== 'callvirt') return 'constrained. must immediately precede callvirt';
     const name = this.inspector.metadata.typeName(prefix.operand);
     const parameter = prefix.operand >>> 24 === 27 && /^!!?\d+$/.test(name);
@@ -26,6 +29,21 @@ export class ExecutionPrefixProfile {
       return 'constrained. execution requires a nongeneric class or user-struct TypeDef';
     }
     const declaration = resolveExecutionMethod(this.inspector, next.operand, context);
+    const object = !parameter && this.objects.select(prefix.operand, declaration);
+    if (object) {
+      if (object.target) reachable.push(object.target);
+      reachable.push(...object.initializers);
+      return null;
+    }
+    if (this.objects.declaration(declaration)) {
+      this.references ??= new ConstrainedReferenceObjectProfile(this.inspector, this.objects, this.dispatch);
+      const bound = parameter ? this.references.genericBound(method, prefix.operand) : prefix.operand;
+      if (bound && this.references.select(bound, declaration)) {
+        for (const target of this.references.targets(bound)) reachable.push(target);
+        return null;
+      }
+      if (parameter) return 'Generic Object.ToString requires one concrete nongeneric internal base-class bound';
+    }
     const owner = this.types.get(declaration.ownerToken);
     if (!owner || this.genericOwners.has(owner.token) ||
         declaration.signature.isStatic || declaration.signature.genericArity || declaration.methodArguments?.length) {
@@ -42,7 +60,7 @@ export class ExecutionPrefixProfile {
     return null;
   }
 
-  verify(method, context, issue) {
+  verify(method, context, issue, reachable) {
     if (method.instructions.some(instruction => instruction.name === 'constrained.')) {
       try {
         // Reuse the lexical verifier without changing its broader inspection profile.
@@ -60,7 +78,7 @@ export class ExecutionPrefixProfile {
       if (next) tails.add(next.offset);
       try {
         let error;
-        if (prefix.name === 'constrained.') error = this.constrained(prefix, next, context);
+        if (prefix.name === 'constrained.') error = this.constrained(prefix, next, context, reachable, method);
         else if (!next || !memoryTargets.has(next.name) && !next.name.startsWith('ldind.') && !next.name.startsWith('stind.')) {
           error = 'volatile. must precede a supported memory instruction';
         }

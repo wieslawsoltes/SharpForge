@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-editor-regression",
+  "passed": false,
+  "threshold": 0.05,
+  "environmentChanges": [],
+  "baselineCommit": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+  "currentCommit": "80dfe3f5a7d18731915bf9b6b770f816911b4f0f",
+  "rows": [
+    {
+      "id": "node-model/1024/model.edit",
+      "baselineP95Ms": 0.06041099999998778,
+      "currentP95Ms": 0.03010600000001773,
+      "relativeChange": -0.5016470510333578,
+      "threshold": 0.05,
+      "passed": true
+    },
+    {
+      "id": "node-model/1024/model.paste64KiB",
+      "baselineP95Ms": 0.548057,
+      "currentP95Ms": 0.6322730000000263,
+      "relativeChange": 0.15366284893729354,
+      "threshold": 0.05,
+      "passed": false
+    },
+    {
+      "id": "node-model/1024/model.undo64KiB",
+      "baselineP95Ms": 0.0277709999999729,
+      "currentP95Ms": 0.04090099999996255,
+      "relativeChange": 0.4727953620684333,
+      "threshold": 0.05,
+      "passed": false
+    },
+    {
+      "id": "node-model/1024/model.findLiteral",
+      "baselineP95Ms": 0.0826940000000036,
+      "currentP95Ms": 0.09586400000000594,
+      "relativeChange": 0.1592618569666695,
+      "threshold": 0.05,
+      "passed": false
+    },
+    {
+      "id": "node-model/1024/model.viewportQuery60Lines",
+      "baselineP95Ms": 0.06250500000004422,
+      "currentP95Ms": 0.039158999999983735,
+      "relativeChange": -0.37350611951114265,
+      "threshold": 0.05,
+      "passed": true
+    },
+    {
+      "id": "node-model/1048576/model.edit",
+      "baselineP95Ms": 0.02739099999996597,
+      "currentP95Ms": 0.04832299999998213,
+      "relativeChange": 0.7641926180147554,
+      "threshold": 0.05,
+      "passed": false
+    },
+    {
+      "id": "node-model/1048576/model.paste64KiB",
+      "baselineP95Ms": 0.6148869999999533,
+      "currentP95Ms": 0.5084770000000276,
+      "relativeChange": -0.17305618755955776,
+      "threshold": 0.05,
+      "passed": true
+    },
+    {
+      "id": "node-model/1048576/model.undo64KiB",
+      "baselineP95Ms": 0.022173000000009324,
+      "currentP95Ms": 0.018658000000016273,
+      "relativeChange": -0.15852613538950855,
+      "threshold": 0.05,
+      "passed": true
+    },
+    {
+      "id": "node-model/1048576/model.findLiteral",
+      "baselineP95Ms": 18.10062300000004,
+      "currentP95Ms": 27.890755000000013,
+      "relativeChange": 0.5408726539412454,
+      "threshold": 0.05,
+      "passed": false
+    },
+    {
+      "id": "node-model/1048576/model.viewportQuery60Lines",
+      "baselineP95Ms": 0.09047600000030798,
+      "currentP95Ms": 0.0632450000002791,
+      "relativeChange": -0.30097484415686127,
+      "threshold": 0.05,
+      "passed": true
+    }
+  ]
+}

@@ -10,6 +10,8 @@ import { initializeExecutionProfiler } from './profiler.js';
 import { initializeSourceNumbers, sourceInitialValue } from './source-numbers.js';
 import { installRootProvider } from './frame-roots.js';
 import { stackByteLimit } from './stack-budget.js';
+import { initializeSourceRuntimeEvents } from './source-runtime-events.js';
+import { initializeHeapEvents } from './heap-events.js';
 
 /** Initialize each source runtime's heap, state and entry frame from independent host options. */
 export function initializeSourceVM(vm, image, options) {
@@ -48,6 +50,8 @@ export function initializeSourceVM(vm, image, options) {
   vm.onException = null;
   vm.onWrite = null;
   initializeExecutionProfiler(vm, options.profile);
+  initializeSourceRuntimeEvents(vm, options.runtimeEvents);
+  initializeHeapEvents(vm);
   vm.platform = new ManagedPlatform(vm, options);
   vm.scheduler = new CooperativeScheduler(vm, options);
   vm.call(image.entryPoint, sourceEntryArguments(vm, options));

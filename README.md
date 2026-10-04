@@ -45,13 +45,15 @@ SharpForge lets you write, build, run, debug and design C# applications entirely
 
 | Feature | Status |
 |---|---|
-| Lossless, incremental C# parser (trivia-preserving, error-recovering) covering C# 1–14 syntax | **Preview** |
-| Language-version gating (`LangVersion` 1–14, `preview`) with Roslyn diagnostic ids | **Preview** |
+| Lossless, incremental C# parser (trivia-preserving, error-recovering) covering C# 1–14 syntax, checked against Roslyn syntax trees | **Available** |
+| Language-version gating (`LangVersion` 1–14, `preview`) with Roslyn diagnostic ids and spans | **Available** |
 | Semantic model: symbols, namespaces, overload and conversion resolution, flow analysis, nullable analysis | **Preview** |
 | Classes, properties, methods, arrays, exceptions, `using`, checked arithmetic, async/await, collection expressions | **Available** |
-| Delegates, lambdas, closures, local functions, events, iterators | **Preview** |
-| Generics, inheritance and interfaces, structs, full numeric types, patterns, tuples, records, LINQ queries | **WIP** — binds and type-checks; execution arrives with the runtime work |
-| C# 15 preview features (unions, closed hierarchies, extension indexers) | **WIP** |
+| Delegates, lambdas, closures, local functions, events, iterators, async/await, query expressions, tuples, records, patterns | **Preview** |
+| Generics, inheritance and interfaces, structs, `Nullable<T>`, full numeric types, `ref` locals and returns, expression trees | **Preview** — compiled to real .NET assemblies that run on .NET; execution in the built-in runtime is **WIP** |
+| Direct .NET assembly output (`compileToAssembly`): real IL method bodies and metadata, verified by running the output on .NET | **Preview** |
+| Binding against real .NET reference assemblies (LINQ, spans, the full BCL surface) | **Preview** |
+| C# 15 preview features (closed hierarchies, extension indexers, memory-safety rules; unions not yet) | **WIP** — follows the published proposals; no reference compiler exists yet |
 | ECMA-335 PE/CLI emit, Portable PDB, IL assembler, disassembler and decompiler | **Preview** |
 | Roslyn-compatible analyzers and source generators | **Planned** (trusted JavaScript analyzers and generators are **Available**) |
 
@@ -158,6 +160,9 @@ npm start          # builds and serves Studio at http://127.0.0.1:4173
 node apps/cli/main.js run Program.cs                 # compile and run
 node apps/cli/main.js compile Program.cs -o app.dll  # emit a .NET assembly
 node apps/cli/main.js exec app.dll                   # run an assembly
+node apps/cli/main.js compile Program.cs --format dotnet -o app.dll && dotnet app.dll
+                                                     # a real .NET assembly, bound against the installed
+                                                     # SDK's reference pack, run by the .NET runtime
 node apps/cli/main.js decompile library.dll          # inspect any assembly
 node apps/cli/main.js new console --name Hello -o ./Hello
 node apps/cli/main.js --help
@@ -224,7 +229,7 @@ SharpForge 0.14 is a **development preview**. It implements a documented, growin
 
 | Area | Today | Target | Board |
 |---|---|---|---|
-| C# compiler | C# 1–14 syntax; semantic model; a growing executable subset | C# 1–14 and 15 preview, Roslyn-equivalent | [C# Compiler](https://github.com/users/wieslawsoltes/projects/5) |
+| C# compiler | C# 1–14 syntax; Roslyn-matched diagnostics on most of a 1,350-program corpus; direct .NET assembly output whose results match .NET on 481 of 498 corpus programs | C# 1–14 and 15 preview, Roslyn-equivalent | [C# Compiler](https://github.com/users/wieslawsoltes/projects/5) |
 | CLR, IL and symbols | Emit and read ECMA-335; executes its own output and a subset of ordinary assemblies | Full ECMA-335 loading, verification, reflection | [CLR, IL & Symbols](https://github.com/users/wieslawsoltes/projects/6) |
 | Runtime | Two interpreters, cooperative scheduler | Full CLR execution semantics, tiered execution | [JS Runtime](https://github.com/users/wieslawsoltes/projects/7) |
 | Garbage collector | Precise mark-and-sweep | Generational, incremental, compacting | [Garbage Collector](https://github.com/users/wieslawsoltes/projects/8) |

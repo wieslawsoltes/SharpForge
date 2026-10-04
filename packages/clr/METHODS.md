@@ -143,3 +143,5 @@ resolves implicit virtual override roots with explicit diagnostics for unsupport
 slot families. Full MethodInfo/ConstructorInfo and ParameterInfo facades, defaults,
 overload resolution, virtual dispatch and invocation remain separate increments. Source VM, direct CIL and Rust native/Wasm execution are
 not qualified by this host metadata API.
+
+Method and constructor signature strings are documented in [METHOD-DISPLAY.md](METHOD-DISPLAY.md).

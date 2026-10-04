@@ -1,3 +1,5 @@
+import { storageKeys } from '../../settings/storage.js';
+
 const MAX_STORAGE = 2 * 1024 * 1024;
 
 export function validateWatchState(value) {
@@ -17,7 +19,7 @@ export function validateWatchState(value) {
 
 /** Persist expressions and the selected application, never evaluated values or runtime capabilities. */
 export class WatchWindowState {
-  constructor({ storage, key = 'sharpforge.watch-windows.v1', onError = () => {} } = {}) {
+  constructor({ storage, key = storageKeys.watchWindows, onError = () => {} } = {}) {
     this.storage = storage;
     this.key = key;
     this.entries = {};

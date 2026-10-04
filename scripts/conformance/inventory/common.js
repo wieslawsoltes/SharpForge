@@ -38,7 +38,16 @@ export function normalizeType(value) {
   return value.replace(/System\.[A-Za-z][A-Za-z0-9]*/g, word => aliases[word] ?? word).replaceAll(', ', ',');
 }
 
-export function signatureKey(row) {
-  return [row.owner, row.name, row.isStatic ? 'static' : 'instance', row.genericArity ?? 0,
+export function signatureKey(row, { requireHeader = false } = {}) {
+  const key = [row.owner, row.name, row.isStatic ? 'static' : 'instance', row.genericArity ?? 0,
     row.parameters.map(normalizeType).join(','), normalizeType(row.name === '.ctor' ? 'System.Void' : row.result)].join('|');
+  if (!Object.hasOwn(row, 'signatureHeader')) {
+    // Historical native rows omitted this evidence; they cannot establish an exact match.
+    if (requireHeader) throw new TypeError('Native method signature header unavailable; historical metadata requires recapture');
+    return key; // Existing registry contracts describe ordinary managed methods.
+  }
+  const header = row.signatureHeader;
+  if (!Number.isInteger(header) || header < 0 || header > 255) throw new TypeError('Method signature header must be a byte');
+  const ordinaryHeader = (row.isStatic ? 0 : 0x20) | ((row.genericArity ?? 0) > 0 ? 0x10 : 0);
+  return header === ordinaryHeader ? key : `${key}|header=0x${header.toString(16).toUpperCase().padStart(2, '0')}`;
 }

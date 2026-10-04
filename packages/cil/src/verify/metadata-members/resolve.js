@@ -42,5 +42,9 @@ export function memberQueries(snapshot, types, budget) {
     cache.set(token, result);
     return result;
   }
-  return { resolveMember };
+  return { resolveMember, requireMember(member) {
+    budget.check();
+    if (!member || cache.get(member.token)?.value !== member) rejectMember('CILVM0004');
+    return member;
+  } };
 }

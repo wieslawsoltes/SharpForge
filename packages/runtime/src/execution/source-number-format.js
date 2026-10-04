@@ -1,14 +1,5 @@
 import {numericTypeName, number, nativeIntegerBits} from '@sharpforge/bytecode';
-import {formatDoubleDefault} from '@sharpforge/bcl-core';
-
-function singleText(value) {
-  if (!Number.isFinite(value) || value === 0) return formatDoubleDefault(value);
-  for (let precision = 1; precision <= 9; precision++) {
-    const rounded = Number(value.toPrecision(precision));
-    if (Math.fround(rounded) === value) return formatDoubleDefault(rounded);
-  }
-  return formatDoubleDefault(value);
-}
+import {formatDoubleDefault, formatSingleDefault} from '@sharpforge/bcl-core';
 
 /** Format stack bit patterns using declared signedness; return null for nonnumeric values. */
 export function formatSourceNumber(vm, value, declaredType) {
@@ -19,5 +10,5 @@ export function formatSourceNumber(vm, value, declaredType) {
   if (type === 'nuint') return String(BigInt.asUintN(nativeIntegerBits(vm.options), BigInt(raw)));
   if (typeof raw === 'bigint') return String(raw);
   if (typeof raw !== 'number') return null;
-  return type === 'float' || value?.float === 'r4' ? singleText(raw) : formatDoubleDefault(raw);
+  return type === 'float' || value?.float === 'r4' ? formatSingleDefault(raw) : formatDoubleDefault(raw);
 }

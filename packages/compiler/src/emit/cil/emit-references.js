@@ -8,7 +8,8 @@ import { RefKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { isReference } from './type-facts.js';
 
-const returnsByReference = method => !!method?.refKind && method.refKind !== RefKind.None;
+const isByReferenceKind = refKind => !!refKind && refKind !== RefKind.None;
+const returnsByReference = method => isByReferenceKind(method?.refKind);
 
 /** A variable reached through a managed pointer that an expression produces (the result of a ref-returning call). */
 class IndirectLocation {
@@ -68,8 +69,25 @@ export const ReferenceEmission = Base =>
         this.returningReference = outer;
       }
     }
+    /** `c ? ref a : ref b` denotes one of two variables: the address of the chosen one is on the stack. */
+    refConditionalAddress(node) {
+      const il = this.il,
+        otherwise = il.newLabel(),
+        end = il.newLabel();
+      this.branchOn(node.condition, otherwise, false);
+      this.address(node.whenTrue);
+      il.emit('br', end);
+      il.mark(otherwise);
+      this.address(node.whenFalse);
+      il.mark(end);
+    }
+    exprRefConditional(node) {
+      this.refConditionalAddress(node);
+      this.loadIndirect(node.type);
+    }
     address(node) {
       if (node.kind === 'Ref') return this.address(node.operand);
+      if (node.kind === 'RefConditional') return this.refConditionalAddress(node);
       if (this.isReferenceCall(node)) return this.referenceCall(node);
       if ((node.kind === 'PropertyAccess' || node.kind === 'IndexerAccess') && returnsByReference(node.property)) {
         return this.propertyLocation(node).address();
@@ -85,7 +103,14 @@ export const ReferenceEmission = Base =>
       if (!returnsByReference(node.property)) return accessors;
       return new IndirectLocation(this, () => accessors.load(), node.type);
     }
+    /** A `ref` field (C# 11) holds a managed pointer: the variable it denotes is read and written through it. */
+    fieldLocation(field, receiver, type) {
+      const storage = super.fieldLocation(field, receiver, type);
+      if (!isByReferenceKind(field.refKind)) return storage;
+      return new IndirectLocation(this, () => storage.load(), type);
+    }
     location(node) {
+      if (node.kind === 'RefConditional') return new IndirectLocation(this, () => this.refConditionalAddress(node), node.type);
       if (this.isReferenceCall(node)) return new IndirectLocation(this, () => this.referenceCall(node), node.type);
       // `this = value` in a struct stores the whole value through the managed pointer the method received.
       if (node.kind === 'This' && !this.frame.isStatic && !isReference(this.frame.containingType) && !this.frame.function?.closure) {
@@ -97,10 +122,18 @@ export const ReferenceEmission = Base =>
     exprRefAssignment(node, isUsed) {
       const target = node.left,
         il = this.il;
-      this.address(node.right);
-      if (target.kind === 'Local') il.emit('stloc', this.slotOf(target.local));
-      else if (target.kind === 'Parameter') il.emit('starg', this.argumentIndexOf(target.parameter, node.syntax));
-      else return this.unsupported('ref assignment to this target', node.syntax);
+      if (target.kind === 'FieldAccess' && isByReferenceKind(target.field.refKind)) {
+        // The field itself is assigned: the pointer is stored where the field is, not through what it held.
+        const storage = super.fieldLocation(target.field, target.receiver, target.type);
+        storage.beginStore();
+        this.address(node.right);
+        storage.endStore();
+      } else {
+        this.address(node.right);
+        if (target.kind === 'Local') il.emit('stloc', this.slotOf(target.local));
+        else if (target.kind === 'Parameter') il.emit('starg', this.argumentIndexOf(target.parameter, node.syntax));
+        else return this.unsupported('ref assignment to this target', node.syntax);
+      }
       if (isUsed) this.expression(target);
       return isUsed ? undefined : false;
     }
