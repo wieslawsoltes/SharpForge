@@ -92,6 +92,15 @@ commandRegistry.registerContributions(services.windows.descriptors());
 
 The document adapter contract is `get`, `open`, `activate`, `save`, `close`, `subscribe`, `getViewState`, `restoreViewState` and optional `setTabs`. Buffer records provide `uri`, `text`, `version` and `dirty`. `close(uri,{discard:true})` represents an explicit user's discard choice. `createDocument(uri,{viewId,panelId})` must create a view over the service's existing buffer; multiple views have independent caret/scroll state and a common editing/undo model.
 
+After committing a replacement workspace, Studio calls `docking.resetDocumentViews()` before `docking.sync(files, tabs, active)`.
+Reset returns source popouts without reopening or rendering, releases editor views through the attached document service,
+and clears source content caches. Tool and application content remain owned by their existing hosts.
+`sync` reconciles all primary and secondary source panels in one `syncDocuments` layout transaction with `history:false`.
+Subscribers see the completed document set; removed source entries are also forgotten by closed-tab and MRU navigation.
+An unchanged layout still renders after reset so same-URI replacement displays the new model in every retained view position.
+Incremental updates preserving editor ownership call `sync` directly. Content-provider and subscriber failures remain observable.
+The source and pending regression evidence are described in [project16-workspace-layout.md](project16-workspace-layout.md).
+
 ### Watch instances
 
 Install `installWatchWindows({docking,sessions,commands,storage,onError})` from

@@ -1,0 +1,23 @@
+{
+  "sourceCommit": "581ce369b235c0de21acd593a99b3566bf64a52b",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "python",
+    "-m",
+    "unittest",
+    "conformance.browser.test_workflow_loading",
+    "conformance.browser.test_launch"
+  ],
+  "startedAt": "2026-10-04T03:34:03.159968+00:00",
+  "dependencySetup": "Pinned tests/requirements.txt installed with required hashes into /tmp/p16-python-deps; no browser download",
+  "priorAttempt": {
+    "status": "failed",
+    "testsReported": 6,
+    "errors": 1,
+    "cause": "playwright Python package absent; test_workflow_loading import failed"
+  },
+  "exitCode": 0,
+  "elapsedMs": 234.63758399884682,
+  "finishedAt": "2026-10-04T03:34:03.394627+00:00"
+}

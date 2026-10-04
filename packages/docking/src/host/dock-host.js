@@ -237,6 +237,7 @@ export class DockHost {
 
   popout(id) { return openPopout(this, id); }
   reattachClosedPopout(id) { return reattachPopout(this, id); }
+  /** Returns retained content; render:false delegates rendering to the caller's completed layout transaction. */
   returnPopout(id, options = {}) { return reattachPopout(this, id, { close: true, ...options }); }
   maximize(groupId = null) { this.maximizedGroup = this.maximizedGroup ? null : groupId ?? this.mainGroup(); this.render(); }
 

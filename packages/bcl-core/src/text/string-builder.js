@@ -1,12 +1,19 @@
 import {MAX, array, bclScalar, bounded, fail, integer, makeArray, string, text} from '../host.js';
 import {appendCompositeFormat} from '../formatting/composite-format.js';
+import {appendBuilderCharacter} from './string-builder-append.js';
+import {accessBuilderCharacter} from './string-builder-indexer.js';
+import {copyBuilderCharacters} from './string-builder-copy.js';
+import {appendBuilderRange} from './string-builder-append-range.js';
+import {appendBuilderArray} from './string-builder-append-array.js';
+import {appendBuilderValue} from './string-builder-append-builder.js';
+import {builderEquals} from './string-builder-equality.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
 
 /** Register StringBuilder in its released ABI order with the .NET default MaxCapacity. */
 export function registerStringBuilder({define, member, ctor, prop}) {
-  define(owner, {kind: 'bcl', family: 'builder'});
+  define(owner, {kind: 'bcl', family: 'builder', defaultMember: 'Chars'});
   for (const parameters of [[], ['int'], ['string'], ['string', 'int']]) ctor(owner, parameters);
   prop(owner, 'Length', 'int', 0);
   prop(owner, 'Capacity', 'int', 16);
@@ -178,6 +185,9 @@ function appendFormat(platform, descriptor, reference, values) {
 
 function invokeMember(platform, descriptor, reference, values, scalars) {
   switch (descriptor.name) {
+    case 'CopyTo': return copyBuilderCharacters(platform, reference, values, scalars);
+    case 'get_Chars':
+    case 'set_Chars': return accessBuilderCharacter(platform, reference, scalars);
     case 'get_Length': return platform.get(reference, '$length', 0);
     case 'get_Capacity': return platform.get(reference, '$capacity', 16);
     case 'get_MaxCapacity': return maximumCapacity;
@@ -185,7 +195,13 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       capacity(platform, scalars[0], platform.get(reference, '$length', 0));
       platform.set(reference, '$capacity', scalars[0]);
       return null;
-    case 'Append': return appendText(platform, reference, text(platform, values[0], descriptor.parameters[0]));
+    case 'Append':
+      if (descriptor.parameters[0] === 'char[]') return appendBuilderArray(platform, reference, values, scalars, appendText);
+      if (descriptor.parameters[0] === owner) return appendBuilderValue(platform, reference, values[0], bufferText, appendText);
+      if (descriptor.parameters.length === 3) return appendBuilderRange(platform, reference, scalars, appendText);
+      return descriptor.parameters[0] === 'char'
+        ? appendBuilderCharacter(platform, reference, scalars, appendText)
+        : appendText(platform, reference, text(platform, values[0], descriptor.parameters[0]));
     case 'AppendLine': return appendText(platform, reference, (values.length ? text(platform, values[0]) : '') + '\n');
     case 'AppendFormat': return appendFormat(platform, descriptor, reference, values);
     case 'EnsureCapacity':
@@ -198,6 +214,7 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       const length = values.length ? integer(platform, scalars[1], 0, value.length - start) : value.length;
       return platform.heap.string(value.slice(start, start + length));
     }
+    case 'Equals': return builderEquals(platform, reference, values[0]);
     default: return mutateBuffer(platform, reference, descriptor.name, values, scalars);
   }
 }

@@ -31,6 +31,10 @@ export const VariableEmission = Base =>
       return new VariableLocation(this, { type: local.type, isArgument: false, index: this.slotOf(local), isByReference: byReference });
     }
     parameterLocation(parameter, syntax) {
+      return this.ownParameterLocation(parameter, syntax);
+    }
+    /** Where a parameter of this method arrives: its argument slot (in a state machine, the field that holds it). */
+    ownParameterLocation(parameter, syntax) {
       return new VariableLocation(this, {
         type: parameter.type,
         isArgument: true,
@@ -70,10 +74,17 @@ export const VariableEmission = Base =>
     exprParameter(node) {
       this.parameterLocation(node.parameter, node.syntax).load();
     }
+    /**
+     * Pushes what an instance method receives as its first argument: the object it runs on, or a managed pointer to
+     * the value for a method of a struct. A state machine keeps it in a field (emit-state-machine.js).
+     */
+    pushFrameObject() {
+      this.il.emit('ldarg', 0);
+    }
     /** `this` as a value: the reference itself in a class, a copy of the value in a struct. */
     exprThis(node) {
       if (this.frame.isStatic) return this.unsupported('this in a static context', node.syntax);
-      this.il.emit('ldarg', 0);
+      this.pushFrameObject();
       if (!isReference(this.frame.containingType)) this.loadIndirect(this.frame.containingType);
       return undefined;
     }
@@ -94,7 +105,7 @@ export const VariableEmission = Base =>
       if (substitute?.address) return substitute.address();
       if (node.kind === 'This' || node.kind === 'Base') {
         if (isReference(this.frame.containingType)) return this.spill(node);
-        this.il.emit('ldarg', 0);
+        this.pushFrameObject();
         return undefined;
       }
       if (variableKinds.has(node.kind) && !node.constantValue) {

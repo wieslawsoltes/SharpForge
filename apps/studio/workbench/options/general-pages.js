@@ -22,7 +22,8 @@ export function registerGeneralOptions(options) {
       ['Color theme', 'environment', 'theme', 'select', ['dark', 'light', 'blue', 'high-contrast', 'system']],
       ['Density', 'environment', 'density', 'select', ['compact', 'comfortable']],
       ['Environment font', 'environment', 'fontFamily', 'text'], ['Environment font size', 'environment', 'fontSize', 'number'],
-      ['Show Start window', 'environment', 'showStartWindow', 'boolean']
+      ['Show Start window', 'environment', 'showStartWindow', 'boolean'],
+      ['Record workbench performance traces', 'environment', 'performanceTracing', 'boolean']
     ]),
     page('Projects and Solutions', 'General', [
       ['Default configuration', 'projects', 'configuration', 'select', ['Debug', 'Release']],

@@ -1,0 +1,542 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "3fafe12ebcf009fada7523d1fc7a4cb9ec640c841664bbdeb0d3a8406af4f5fe",
+  "rows": [
+    {
+      "type": "sbyte",
+      "input": "-128",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-128",
+      "length": 9,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "sbyte",
+      "input": "-127",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-127",
+      "length": 9,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "sbyte",
+      "input": "-42",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-42",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "sbyte",
+      "input": "-1",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-1",
+      "length": 7,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "sbyte",
+      "input": "0",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|0",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "sbyte",
+      "input": "1",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|1",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "sbyte",
+      "input": "42",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|42",
+      "length": 7,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "sbyte",
+      "input": "126",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|126",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "sbyte",
+      "input": "127",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|127",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "sbyte",
+      "input": "127",
+      "nullReceiver": true,
+      "initial": "seed|",
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "type": "sbyte",
+      "input": "-128",
+      "nullReceiver": false,
+      "initial": "",
+      "output": "-128",
+      "length": 4,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "byte",
+      "input": "0",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|0",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "byte",
+      "input": "1",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|1",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "byte",
+      "input": "42",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|42",
+      "length": 7,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "byte",
+      "input": "127",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|127",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "byte",
+      "input": "128",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|128",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "byte",
+      "input": "254",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|254",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "byte",
+      "input": "255",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|255",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "byte",
+      "input": "255",
+      "nullReceiver": true,
+      "initial": "seed|",
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "type": "byte",
+      "input": "0",
+      "nullReceiver": false,
+      "initial": "",
+      "output": "0",
+      "length": 1,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "-32768",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-32768",
+      "length": 11,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "-32767",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-32767",
+      "length": 11,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "-129",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-129",
+      "length": 9,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "-128",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-128",
+      "length": 9,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "-1",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-1",
+      "length": 7,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "0",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|0",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "1",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|1",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "127",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|127",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "128",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|128",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "32766",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|32766",
+      "length": 10,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "32767",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|32767",
+      "length": 10,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "short",
+      "input": "32767",
+      "nullReceiver": true,
+      "initial": "seed|",
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "type": "short",
+      "input": "-32768",
+      "nullReceiver": false,
+      "initial": "",
+      "output": "-32768",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ushort",
+      "input": "0",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|0",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ushort",
+      "input": "1",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|1",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ushort",
+      "input": "255",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|255",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ushort",
+      "input": "256",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|256",
+      "length": 8,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ushort",
+      "input": "32767",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|32767",
+      "length": 10,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ushort",
+      "input": "32768",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|32768",
+      "length": 10,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ushort",
+      "input": "65534",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|65534",
+      "length": 10,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ushort",
+      "input": "65535",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|65535",
+      "length": 10,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ushort",
+      "input": "65535",
+      "nullReceiver": true,
+      "initial": "seed|",
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "type": "ushort",
+      "input": "0",
+      "nullReceiver": false,
+      "initial": "",
+      "output": "0",
+      "length": 1,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "uint",
+      "input": "0",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|0",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "uint",
+      "input": "1",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|1",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "uint",
+      "input": "65535",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|65535",
+      "length": 10,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "uint",
+      "input": "65536",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|65536",
+      "length": 10,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "uint",
+      "input": "2147483647",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|2147483647",
+      "length": 15,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "uint",
+      "input": "2147483648",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|2147483648",
+      "length": 15,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "uint",
+      "input": "4294967294",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|4294967294",
+      "length": 15,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "uint",
+      "input": "4294967295",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|4294967295",
+      "length": 15,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "uint",
+      "input": "4294967295",
+      "nullReceiver": true,
+      "initial": "seed|",
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "type": "uint",
+      "input": "0",
+      "nullReceiver": false,
+      "initial": "",
+      "output": "0",
+      "length": 1,
+      "same": true,
+      "fault": null
+    }
+  ],
+  "fluent": {
+    "output": "-128|255|-32768|65535|4294967295|42A",
+    "length": 36,
+    "same": true
+  }
+}

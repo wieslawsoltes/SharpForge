@@ -1,0 +1,631 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "version": "10.0.5",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "ilasmSHA256": "b7b5215b41d27bfad0fd9bd7d6bb2e64486f98cfd53cbe639127d6ad15817042",
+  "verifierSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "observations": [
+    {
+      "kind": "field",
+      "access": "public",
+      "accessor": "Other",
+      "receiver": "Owner",
+      "accepted": true,
+      "query": true,
+      "name": "Access0",
+      "sourceSHA256": "0a57cb66608331f54b1c9f3ceb4471a9a85cad8ab1b18a07809b121a9c7cb2cf",
+      "assemblySHA256": "1e2e5bc2452bed179c771a242aa5290dbf7c23b1bc39a70683c286fdfa8b960c",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access0.il'  to DLL --> '<temporary>/Access0.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\t\nClass 3\t\nClass 4\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 6.088624999999979
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access0.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.553292
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "access": "private",
+      "accessor": "Owner",
+      "receiver": "Owner",
+      "accepted": true,
+      "query": true,
+      "name": "Access1",
+      "sourceSHA256": "7b7695d7b4c229bae498f3bf4b3ac8dbd000cebad2e760f7ae77b6cdfdd27f38",
+      "assemblySHA256": "f4777a5019b437d7c2a756a193b7390d4c0e030aae5a9ea84cdcdfd9e8d1af4c",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access1.il'  to DLL --> '<temporary>/Access1.dll'\nSource file is UTF-8\n\nAssembled method Owner::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\tMethods: 1;\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.21629200000001
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access1.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.46795800000001
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "access": "private",
+      "accessor": "Other",
+      "receiver": "Owner",
+      "accepted": false,
+      "query": false,
+      "name": "Access2",
+      "sourceSHA256": "33f9ee4bd810fde95450bbb3b661d9e9ac82683ddc0c97b1203508390614a6a2",
+      "assemblySHA256": "75e42ff30bae8f94f1ec9511deaea68f5186d7241f3d56120fe40edd90d220f8",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access2.il'  to DLL --> '<temporary>/Access2.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\t\nClass 3\t\nClass 4\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.122333000000026
+      },
+      "verify": {
+        "stdout": "[IL]: Error [FieldAccess]: [<temporary>/Access2.dll : Other::Test([Access2]Owner)][offset 0x00000001] Field is not visible.\n1 Error(s) Verifying <temporary>/Access2.dll\nTypes found: 0\nTypes verified: 5\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 81.27095800000001
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "FieldAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "kind": "field",
+      "access": "assembly",
+      "accessor": "Other",
+      "receiver": "Owner",
+      "accepted": true,
+      "query": true,
+      "name": "Access3",
+      "sourceSHA256": "248e86b8e6b59e74c8c9bc2d921f7d97b27752873cde1d2c2b91a2982ee407fc",
+      "assemblySHA256": "7046ef633875974e70e42a359642e8f2793f65a2357077f811d19f0378dcf8d9",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access3.il'  to DLL --> '<temporary>/Access3.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\t\nClass 3\t\nClass 4\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.006209000000013
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access3.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.27087500000005
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "access": "famorassem",
+      "accessor": "Other",
+      "receiver": "Owner",
+      "accepted": true,
+      "query": true,
+      "name": "Access4",
+      "sourceSHA256": "418384aa929b1e9e344da2126b14a60b3822dcfcd364b697b28a85a3ef78d50b",
+      "assemblySHA256": "511d5318af34ade5ac67495265ea5ef6e6c0801bec719f97aa91c50605166cf2",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access4.il'  to DLL --> '<temporary>/Access4.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\t\nClass 3\t\nClass 4\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.936125000000061
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access4.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.97195799999997
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "access": "family",
+      "accessor": "Derived",
+      "receiver": "Derived",
+      "accepted": true,
+      "query": true,
+      "name": "Access5",
+      "sourceSHA256": "6e593c5225d496c05ff64a56e83be6375a62453796075b38397abc3bdbeb8924",
+      "assemblySHA256": "6ac5558787ffb2c18f8b93e528b8a9daa517c0e8a9fc12099f1f32ad8123cb64",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access5.il'  to DLL --> '<temporary>/Access5.dll'\nSource file is UTF-8\n\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.000249999999937
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access5.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.78379200000006
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "access": "family",
+      "accessor": "Derived",
+      "receiver": "Owner",
+      "accepted": false,
+      "query": "unknown",
+      "name": "Access6",
+      "sourceSHA256": "ce1ac7b709d89eb6235eb2432699621d9015a0ae2ac49a06ca342dd9746ab66b",
+      "assemblySHA256": "e33542f97683447de3d964429b9f3b4129a4c4f3b41b00258d622be2697a2902",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access6.il'  to DLL --> '<temporary>/Access6.dll'\nSource file is UTF-8\n\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.1805839999999534
+      },
+      "verify": {
+        "stdout": "[IL]: Error [FieldAccess]: [<temporary>/Access6.dll : Derived::Test([Access6]Owner)][offset 0x00000001] Field is not visible.\n1 Error(s) Verifying <temporary>/Access6.dll\nTypes found: 0\nTypes verified: 5\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 81.37495799999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "FieldAccess"
+        ]
+      },
+      "result": {
+        "status": "unknown",
+        "reason": "unresolved-type-reference",
+        "token": 16777217
+      }
+    },
+    {
+      "kind": "field",
+      "access": "famandassem",
+      "accessor": "Derived",
+      "receiver": "Further",
+      "accepted": true,
+      "query": true,
+      "name": "Access7",
+      "sourceSHA256": "fa9ad877270e862bad7a3abbff060d37371bc48271a4f72a2af88f6a42dd9a7e",
+      "assemblySHA256": "b1e6a9b153fa39b982bd56580024531d576f7416657335da6f202e1ab22cae0a",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access7.il'  to DLL --> '<temporary>/Access7.dll'\nSource file is UTF-8\n\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.237500000000068
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access7.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.11083299999996
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "access": "family",
+      "accessor": "Derived",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "isStatic": true,
+      "name": "Access8",
+      "sourceSHA256": "6561e021390cb1d427b1e3a7cbcd894c6539cc8ebac11205032b0d505c5963a1",
+      "assemblySHA256": "02174158f66ec94fd7a7c998eb115215e4e68790daf95b09eea924008141fb26",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access8.il'  to DLL --> '<temporary>/Access8.dll'\nSource file is UTF-8\n\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.1121669999999995
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access8.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.89675
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "access": "public",
+      "accessor": "Other",
+      "receiver": "Owner",
+      "accepted": true,
+      "query": true,
+      "name": "Access9",
+      "sourceSHA256": "d69ed5798b86e023d8cba63e5ea3d6a261df4e22f6058d475d954d40702584f6",
+      "assemblySHA256": "c5ad7f306ec988bafd73a491fa806fd854a9c6de1625e31e1c78ba547abdaa55",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access9.il'  to DLL --> '<temporary>/Access9.dll'\nSource file is UTF-8\n\nAssembled method Owner::Target\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\t\nClass 3\t\nClass 4\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.161665999999968
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access9.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.36008300000003
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "access": "private",
+      "accessor": "Owner",
+      "receiver": "Owner",
+      "accepted": true,
+      "query": true,
+      "name": "Access10",
+      "sourceSHA256": "b3a057ccebee6bdcbfd1491a9699907d266b2e6785b4d956379f8d1b4cd50095",
+      "assemblySHA256": "e9f89f67d5902a653c8de4ce6ff39c71fa64797b762654c170a3307fca2a8bfa",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access10.il'  to DLL --> '<temporary>/Access10.dll'\nSource file is UTF-8\n\nAssembled method Owner::Target\nAssembled method Owner::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 2;\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.17899999999986
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access10.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 83.1997080000001
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "access": "private",
+      "accessor": "Other",
+      "receiver": "Owner",
+      "accepted": false,
+      "query": false,
+      "name": "Access11",
+      "sourceSHA256": "af2d2ad6d8f7a464392961adedfbc2481ddb76551b0a137d5f6bf30f71973629",
+      "assemblySHA256": "8936156f13f190e533417268a8ef26366c42a0d1684d5b9f0ad6a2424a23af01",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access11.il'  to DLL --> '<temporary>/Access11.dll'\nSource file is UTF-8\n\nAssembled method Owner::Target\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\t\nClass 3\t\nClass 4\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.166000000000167
+      },
+      "verify": {
+        "stdout": "[IL]: Error [MethodAccess]: [<temporary>/Access11.dll : Other::Test([Access11]Owner)][offset 0x00000001] Method is not visible.\n1 Error(s) Verifying <temporary>/Access11.dll\nTypes found: 0\nTypes verified: 5\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 84.22595799999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "MethodAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "kind": "method",
+      "access": "assembly",
+      "accessor": "Other",
+      "receiver": "Owner",
+      "accepted": true,
+      "query": true,
+      "name": "Access12",
+      "sourceSHA256": "e61089519aa7af57730da52f6adf7e370ba703663b311f2b75610abb14328564",
+      "assemblySHA256": "5b8e3d21b6f9c67d522859a1d969516266fd1f75286ae8c0335e904a12f474ee",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access12.il'  to DLL --> '<temporary>/Access12.dll'\nSource file is UTF-8\n\nAssembled method Owner::Target\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\t\nClass 3\t\nClass 4\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.137000000000171
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access12.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.44524999999999
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "access": "famorassem",
+      "accessor": "Other",
+      "receiver": "Owner",
+      "accepted": true,
+      "query": true,
+      "name": "Access13",
+      "sourceSHA256": "5f1718c4e65a1f5a17e0890eccdc3c5a6696140afac9a4e2edf2a4c03457d72f",
+      "assemblySHA256": "9a63ecb1e63adcd4798d0467e6660be1c5d0167322c63c2ee6c4bda93818a8a5",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access13.il'  to DLL --> '<temporary>/Access13.dll'\nSource file is UTF-8\n\nAssembled method Owner::Target\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\t\nClass 3\t\nClass 4\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.944208000000117
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access13.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.87112500000012
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "access": "family",
+      "accessor": "Derived",
+      "receiver": "Derived",
+      "accepted": true,
+      "query": true,
+      "name": "Access14",
+      "sourceSHA256": "60d2a72dd5b442ee6d328f5e60831d1fad98d565084a56d9e9ddc729701f45d3",
+      "assemblySHA256": "ee1fbe0107a341438d3120df5900abc9b30af3a175df3695a6c7499df88c6e39",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access14.il'  to DLL --> '<temporary>/Access14.dll'\nSource file is UTF-8\n\nAssembled method Owner::Target\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.048874999999953
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access14.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.8330410000001
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "access": "family",
+      "accessor": "Derived",
+      "receiver": "Owner",
+      "accepted": false,
+      "query": "unknown",
+      "name": "Access15",
+      "sourceSHA256": "ddd76853a72780ef1db6c53442b1508c32d4a3157f398b9ab7226b349ae0f58e",
+      "assemblySHA256": "9e5221b59ebfc7849aae8b25cf190ec583d4f24ea7844769f0389cf553056f30",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access15.il'  to DLL --> '<temporary>/Access15.dll'\nSource file is UTF-8\n\nAssembled method Owner::Target\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.454291000000012
+      },
+      "verify": {
+        "stdout": "[IL]: Error [MethodAccess]: [<temporary>/Access15.dll : Derived::Test([Access15]Owner)][offset 0x00000001] Method is not visible.\n1 Error(s) Verifying <temporary>/Access15.dll\nTypes found: 0\nTypes verified: 5\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 81.80074999999988
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "MethodAccess"
+        ]
+      },
+      "result": {
+        "status": "unknown",
+        "reason": "unresolved-type-reference",
+        "token": 16777217
+      }
+    },
+    {
+      "kind": "method",
+      "access": "famandassem",
+      "accessor": "Derived",
+      "receiver": "Further",
+      "accepted": true,
+      "query": true,
+      "name": "Access16",
+      "sourceSHA256": "a19fbfcca129272d5925c682742baa71db991fdf6a93629ac5e74734b2317ab1",
+      "assemblySHA256": "f75d025f2aa0b6879f2438fae70019402440d8eaa58e3660dbac5912cca8a62f",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access16.il'  to DLL --> '<temporary>/Access16.dll'\nSource file is UTF-8\n\nAssembled method Owner::Target\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.515166000000136
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access16.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.11266599999999
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "access": "family",
+      "accessor": "Derived",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "isStatic": true,
+      "name": "Access17",
+      "sourceSHA256": "eecc5d469297e38bb3d3064ddc6451b2af1531e5840ba779f38bb9446e870c20",
+      "assemblySHA256": "a96aa5bae70c6ebb64a63f076ad6535d828a5054e3fec0f2c6ea1b1aec6a684e",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Access17.il'  to DLL --> '<temporary>/Access17.dll'\nSource file is UTF-8\n\nAssembled method Owner::Target\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOwner\nClass 2:\tDerived\nClass 3:\tFurther\nClass 4:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.165707999999995
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Access17.dll Verified.\nTypes found: 0\nTypes verified: 5\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.89258400000017
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    }
+  ]
+}
