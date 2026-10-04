@@ -44,7 +44,7 @@ export const CallEmission = Base =>
       // A struct is sealed: a virtual method it overrides is called on the value itself, without a box.
       const structOverride = receiver.type?.typeKind === TypeKind.Struct ? this.sourceOverride(method, receiver.type) : null;
       if (structOverride) {
-        this.receiver(receiver);
+        this.callReceiver(node);
         this.arguments(node, method);
         return this.callMethod(structOverride, { receiver, syntax: node.syntax });
       }
@@ -64,9 +64,20 @@ export const CallEmission = Base =>
         this.arguments(node, method);
         return this.callMethod(boxedTarget, { receiver: { type: this.core.object }, syntax: node.syntax });
       }
-      this.receiver(receiver);
+      this.callReceiver(node);
       this.arguments(node, method);
       return this.callMethod(this.nearestOverride(method, receiver.type), { receiver, syntax: node.syntax });
+    }
+    /**
+     * The receiver of an instance call. A struct in a read-only variable (an `in` parameter, a readonly field, a
+     * `ref readonly` local) called through a member that may mutate it is copied first: the call acts on the copy.
+     */
+    callReceiver(node) {
+      const receiver = node.receiver;
+      if (node.receiverPassing !== 'copy') return this.receiver(receiver);
+      const copy = this.temp(receiver.type);
+      this.expression(receiver);
+      return this.il.emit('stloc', copy).emit('ldloca', copy);
     }
     /**
      * A virtual method of a framework class (`object.ToString`) called on a source class is named by the override
