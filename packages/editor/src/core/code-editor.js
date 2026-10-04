@@ -179,8 +179,11 @@ export class CodeEditor {
     this.cursor();
   }
 
+  prepareViewState() { this.insights?.cancelRename?.(); }
+
   saveViewState() {
     if (!this.uri || this.disposed) return;
+    this.prepareViewState();
     // The session owns model registration. An old view cannot reclaim a removed or replaced document.
     if (this.models.get(this.uri) !== this.model) {
       if (this.viewStates.get(this.uri)?.model === this.model) this.viewStates.delete(this.uri);

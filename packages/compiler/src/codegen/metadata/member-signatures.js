@@ -11,6 +11,7 @@ const HAS_THIS = 0x20;
 const GENERIC = 0x10;
 const BY_REFERENCE = 0x10;
 const CMOD_REQUIRED = 0x1f;
+const CMOD_OPTIONAL = 0x20;
 const IS_EXTERNAL_INIT = 'System.Runtime.CompilerServices.IsExternalInit';
 
 const isByReference = refKind => !!refKind && refKind !== RefKind.None;
@@ -20,8 +21,22 @@ function typeBytes(types, type) {
   return typeof type === 'string' ? types.frameworkClassSignature(type) : types.signature(type);
 }
 
-function passed(types, type, refKind) {
-  return isByReference(refKind) ? [BY_REFERENCE, ...typeBytes(types, type)] : typeBytes(types, type);
+/** `modreq(T)` / `modopt(T)` entries (ECMA-335 II.23.2.7) for modifiers `{isOptional, type}` read from metadata. */
+function customModifiers(types, modifiers) {
+  return (modifiers ?? []).flatMap(modifier => [
+    modifier.isOptional ? CMOD_OPTIONAL : CMOD_REQUIRED,
+    ...typeDefOrRefEncoded(types.definitionToken(modifier.type)),
+  ]);
+}
+
+/**
+ * One parameter or return slot: `CustomMod* [BYREF] CustomMod* Type`.
+ * @param modifiers the slot's imported custom modifiers `{outer, inner}`, or null (see metadata-import/signature-modifiers.js)
+ */
+function passed(types, type, refKind, modifiers = null) {
+  const outer = customModifiers(types, modifiers?.outer),
+    inner = customModifiers(types, modifiers?.inner);
+  return isByReference(refKind) ? [...outer, BY_REFERENCE, ...inner, ...typeBytes(types, type)] : [...outer, ...typeBytes(types, type)];
 }
 
 /** `modreq(T)` before a type (ECMA-335 II.23.2.7); `modifier` is the full metadata name of a framework class, or null. */
@@ -29,9 +44,11 @@ function requiredModifier(types, modifier) {
   return modifier ? [CMOD_REQUIRED, ...typeDefOrRefEncoded(types.builder.typeRef(modifier))] : [];
 }
 
-function returned(types, type, refKind, modifier = null) {
-  if (type.specialType === 'System_Void') return [...requiredModifier(types, modifier), ElementType.Void];
-  return [...requiredModifier(types, modifier), ...passed(types, type, refKind)];
+function returned(types, type, refKind, modifier = null, modifiers = null) {
+  // An imported method carries its modifiers itself (an `init` accessor's `IsExternalInit` among them).
+  const named = modifiers ? [] : requiredModifier(types, modifier);
+  if (type.specialType === 'System_Void') return [...named, ...customModifiers(types, modifiers?.outer), ElementType.Void];
+  return [...named, ...passed(types, type, refKind, modifiers)];
 }
 
 /** FieldSig: `FIELD type`. */
@@ -52,8 +69,8 @@ export function methodSignature(types, shape) {
     convention,
     ...(arity ? compressUnsigned(arity) : []),
     ...compressUnsigned(shape.parameters.length),
-    ...returned(types, shape.returnType, shape.refKind, shape.returnModifier),
-    ...shape.parameters.flatMap(parameter => passed(types, parameter.type, parameter.refKind)),
+    ...returned(types, shape.returnType, shape.refKind, shape.returnModifier, shape.returnCustomModifiers),
+    ...shape.parameters.flatMap(parameter => passed(types, parameter.type, parameter.refKind, parameter.customModifiers)),
   ]);
 }
 
@@ -66,6 +83,7 @@ export function methodSymbolSignature(types, method) {
     refKind: method.refKind,
     // An `init` accessor is a setter only compilers that know the feature may call.
     returnModifier: method.isInitOnly ? IS_EXTERNAL_INIT : null,
+    returnCustomModifiers: method.returnCustomModifiers ?? null,
     parameters: method.parameters,
   });
 }

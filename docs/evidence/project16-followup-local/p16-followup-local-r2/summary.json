@@ -1,0 +1,16 @@
+{
+  "sourceSha": "56add0e83ad85e65392f19af57535a97cad5d4ed",
+  "sourceTree": "c21b97fff6ed7ee2e76e84b2f83aecd90655862d",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a19-preview-source-publication.test.js",
+    "tests/a20-model-preview-publication.test.js"
+  ],
+  "scope": "Only the two files with failures in the completed area runs",
+  "startedAt": "2026-10-04T04:51:37.450573+00:00",
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T04:51:38.800877+00:00"
+}

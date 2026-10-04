@@ -1,0 +1,12 @@
+{
+  "target": "production-studio-real-workers",
+  "status": "failed",
+  "engine": "chromium",
+  "checks": [],
+  "failure": {
+    "type": "Error",
+    "message": "Page.evaluate: WorkbenchError: Document 'Particle.cs' is not open in this workspace\n    at workbenchError (http://127.0.0.1:59601/workbench/state-events.js:58:17)\n    at DocumentService.require (http://127.0.0.1:59601/workbench/documents.js:50:24)\n    at DocumentService.createDocument (http://127.0.0.1:59601/workbench/documents.js:280:25)\n    at StudioDocking.createSourceDocument [as createDocument] (http://127.0.0.1:59601/studio.js:150:79)\n    at StudioDocking.resolve (http://127.0.0.1:59601/workbench/layout-workspace.js:91:26)\n    at DockHost.resolveContent (http://127.0.0.1:59601/workbench/layout-workspace.js:45:78)\n    at DockHost.content (http://127.0.0.1:59601/packages/docking/src/host/dock-host.js:78:38)\n    at createGroupView (http://127.0.0.1:59601/packages/docking/src/host/groups.js:121:26)\n    at createNodeView (http://127.0.0.1:59601/packages/docking/src/host/groups.js:146:37)\n    at createNodeView (http://127.0.0.1:59601/packages/docking/src/host/groups.js:153:16)"
+  },
+  "pageErrors": [],
+  "milliseconds": 4086.34
+}

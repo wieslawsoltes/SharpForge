@@ -63,7 +63,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       for(const type of m.signature.parameters.concat(m.locals,m.signature.returnType))verifyGenericType(inspector,type,context);
     } catch(error) {issue(m,null,'IL_SIGNATURE',error.message);continue;}
     const map=new Map(m.instructions.map((i,index)=>[i.offset,index]));
-    prefixes.verify(m,context,issue);
+    prefixes.verify(m,context,issue,pending);
     for(const h of m.handlers)if(h.flags===1)issue(m,null,'IL_FILTER','Exception filters are inspection-only');
     for(const i of m.instructions){
       if(!isExecutableOpcode(i.name)){issue(m,i,'IL_OPCODE',`Opcode '${i.name}' is inspection-only`);continue;}
