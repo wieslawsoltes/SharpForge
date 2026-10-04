@@ -74,8 +74,26 @@ and `Module.ResolveType` results. Capture it without package sources using:
 ```sh
 node scripts/limited.js node packages/clr/tools/capture-forwarders.mjs artifacts/clr-forwarders
 node scripts/limited.js node --test tests/clr-types-forwarders.test.js tests/clr-types-forwarders-reference.test.js
-node scripts/limited.js node packages/clr/tools/benchmark-forwarders.mjs
+node scripts/limited.js node packages/clr/tools/benchmark-forwarders.mjs artifacts/project6-resume/forwarders-feature.json
 ```
+
+The [retained qualification record](../../artifacts/project6-resume/forwarders-evidence.md)
+keeps the integrated 8-test result, the preceding 21-test result, the ten native
+observations, and every original before/after benchmark cohort. Initial cohorts
+whose `TypeDesc.token` guard compared undefined values are explicitly unqualified.
+The later 100-sample cold cohort has a true median of 235.35997 -> 257.93217
+microseconds, a 9.59050% increase; the driver's original upper-middle summaries
+are retained too. This exceeds the 5% regression budget and requires explicit
+justification and PR sign-off. A lower p95 does not establish that the median
+regression passed the budget.
+
+The forwarder-specific benchmark checks every returned canonical `Fixture.Widget`
+descriptor, keeps chronological samples from 100 measured batches after 20 warm
+batches, uses a true median and nearest-rank percentiles, and records source,
+fixture, and environment provenance. Its first retained run passed every-result
+identity checks: cold median/p95 259.81190/553.61580 microseconds, warm forwarded
+0.745495/1.68778, and warm direct 0.908390/4.32005. These measure the host JavaScript
+loader and do not replace the separate existing-path regression comparison.
 
 The named lookup consumes exact metadata names; it does not parse reflection
 type-name syntax, assembly-qualified names, generic argument lists or escaped

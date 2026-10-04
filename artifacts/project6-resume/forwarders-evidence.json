@@ -1,0 +1,766 @@
+{
+  "format": "sharpforge.clr-forwarders-evidence",
+  "version": 1,
+  "integrationHead": "5fb495f73",
+  "benchmarkToolHead": "ae5ee23b785269928577425576e17e520928d06c",
+  "retainedRootArtifactCount": 26,
+  "retained": [
+    {
+      "path": "artifacts/project6-resume/forwarders-after-1.json",
+      "source": "workspace-root/forwarders-after-1.json",
+      "bytes": 1884,
+      "sha256": "47893838276eccb3b34afed7e3b4e98bfef6e338720bfb63eba68f7d393dec14"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-after-1.log",
+      "source": "workspace-root/forwarders-after-1.log",
+      "bytes": 463,
+      "sha256": "86378a4f1fd0e6aebdaa50eca7da1fdc9058b76c2e5ee1056d767058406dedce"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-after-2.json",
+      "source": "workspace-root/forwarders-after-2.json",
+      "bytes": 1880,
+      "sha256": "cd5025ad73c2b03eafbe1e2b2c3e848bd6e3214ff96ff56c16f17889005406c0"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-after-2.log",
+      "source": "workspace-root/forwarders-after-2.log",
+      "bytes": 466,
+      "sha256": "e3bf7d3fe067726aeb12aa9246ced2f045798915872354f20c2deef37833d80c"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-before-1.json",
+      "source": "workspace-root/forwarders-before-1.json",
+      "bytes": 1887,
+      "sha256": "4f63c4c72cb119ee7cfb859644a5490af6882044ba4b21c5c00346af775439fa"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-before-1.log",
+      "source": "workspace-root/forwarders-before-1.log",
+      "bytes": 469,
+      "sha256": "21bca000ea9e07147fe6185220f26f68dc53cef09a60364539a65251b1721b6c"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-before-2.json",
+      "source": "workspace-root/forwarders-before-2.json",
+      "bytes": 1880,
+      "sha256": "2dcbe9740a504a2d18ce6beda5177c4c67861f5cf70be33a58ba285e8cb4358e"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-before-2.log",
+      "source": "workspace-root/forwarders-before-2.log",
+      "bytes": 466,
+      "sha256": "06ba574fbf103f2dd43ad261bc6ddc145db0da6c865f521945e19ff898088f4b"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-cold100-after.json",
+      "source": "workspace-root/forwarders-cold100-after.json",
+      "bytes": 3220,
+      "sha256": "0eca0883ca4fcfd7f717ff09bb2e654ae7acfe5c151f09f1ecf4132cace58986"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-cold100-after.log",
+      "source": "workspace-root/forwarders-cold100-after.log",
+      "bytes": 210,
+      "sha256": "dfb0d0276441e968be5403ccf74fef93b32edcffb0ea2f6ec9fd4d0778af2ef9"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-cold100-before.json",
+      "source": "workspace-root/forwarders-cold100-before.json",
+      "bytes": 3210,
+      "sha256": "2d68b2d1298762aa6959251d46aa143da0d1e22b66f790dee991f882da51e044"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-cold100-before.log",
+      "source": "workspace-root/forwarders-cold100-before.log",
+      "bytes": 210,
+      "sha256": "cc4bd5bee1f397ecd776e73434cb98dc4129ec836112b08be77f20377f6b7710"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-comparison.json",
+      "source": "workspace-root/forwarders-comparison.json",
+      "bytes": 951,
+      "sha256": "923f11182f96948acd11fe92feb92287fb57c300d508b3c0ecad3eb4117ef734"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-fixed-after.json",
+      "source": "workspace-root/forwarders-fixed-after.json",
+      "bytes": 1887,
+      "sha256": "3bb3b82ad370707db9af559b6bd9b01fc8a679cc75a0ca82aace6453383f1855"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-fixed-after.log",
+      "source": "workspace-root/forwarders-fixed-after.log",
+      "bytes": 466,
+      "sha256": "6e2c81710489438589bba869771162400fb7ad1d98efc2b312e026a3d2f2588b"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-fixed-before.json",
+      "source": "workspace-root/forwarders-fixed-before.json",
+      "bytes": 1880,
+      "sha256": "df146f7b6f4b309bb681e9d7a5029e0aac24f2070c0a6469bc593f8f25c93479"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-fixed-before.log",
+      "source": "workspace-root/forwarders-fixed-before.log",
+      "bytes": 466,
+      "sha256": "1f1d4915fd50adb2a8ca27ba7932fe3f1b67660184d30549b8690c58bfecbddd"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-fixed-comparison.json",
+      "source": "workspace-root/forwarders-fixed-comparison.json",
+      "bytes": 1222,
+      "sha256": "f4d51e6667ef0e9b8f05a3ce1e4177a67908cdac86c4bc422994797c7f3babe6"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-lazy-after.json",
+      "source": "workspace-root/forwarders-lazy-after.json",
+      "bytes": 2154,
+      "sha256": "7e09f6b2420d95da220b5c8588c8349b4ab632b408df81b93ac969e4c8f5521d"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-lazy-after.log",
+      "source": "workspace-root/forwarders-lazy-after.log",
+      "bytes": 472,
+      "sha256": "f28f6326b7c213b5337e3dc87d43313f85619bffb701471b82b543504bff769b"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-lazy-before.json",
+      "source": "workspace-root/forwarders-lazy-before.json",
+      "bytes": 2148,
+      "sha256": "42f2520fd64b9e66057ed037ddf2f79d87bd3d03ad56eaacbaa08dbd215ed208"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-lazy-before.log",
+      "source": "workspace-root/forwarders-lazy-before.log",
+      "bytes": 469,
+      "sha256": "ecc6f6e4f11bba94280ade57b2c9f3bafe243480a4cabe3750c43681f7212e63"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-steady-after.json",
+      "source": "workspace-root/forwarders-steady-after.json",
+      "bytes": 2157,
+      "sha256": "00e3a3f9877c5ad36668e543ca18d0a67c38240daf05ebb7891e4400f7c6ac8c"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-steady-after.log",
+      "source": "workspace-root/forwarders-steady-after.log",
+      "bytes": 469,
+      "sha256": "2077a1d44958bd0c26d6696faffc5052635c3943dfcbf30dfccfe7360e645ed4"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-steady-before.json",
+      "source": "workspace-root/forwarders-steady-before.json",
+      "bytes": 2122,
+      "sha256": "0a54b0127aad01fb778bb5e18e8daa3fdf0bbb8a65abb4933a4df3107d117cee"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-steady-before.log",
+      "source": "workspace-root/forwarders-steady-before.log",
+      "bytes": 462,
+      "sha256": "3881d7a4e1004537c37f1a1e1496e21d8d5af4b9e602195e3b4578da7e18ec36"
+    },
+    {
+      "path": "artifacts/project6-resume/benchmark-clr-lookup-cold100.mjs.txt",
+      "source": "workspace-root/benchmark-clr-lookup-cold100.mjs",
+      "bytes": 2910,
+      "sha256": "5ac809391d46d4bcf70662c3946e6c3607e2710d55ee68c8527af2ff9050b1cc",
+      "qualification": "Current correctness-repaired driver snapshot. The original pre-repair driver is not reconstructed."
+    },
+    {
+      "path": "artifacts/project6-resume/benchmark-clr-lookup-steady.mjs.txt",
+      "source": "workspace-root/benchmark-clr-lookup-steady.mjs",
+      "bytes": 2863,
+      "sha256": "05b39b667e6a29c81180ccff18b93e57e1a418423611c992a82c656524bca371",
+      "qualification": "Current correctness-repaired driver snapshot. The original pre-repair driver is not reconstructed."
+    },
+    {
+      "path": "artifacts/project6-resume/benchmark-clr-lookup.mjs.txt",
+      "source": "workspace-root/benchmark-clr-lookup.mjs",
+      "bytes": 2850,
+      "sha256": "3f2122a302cbf2757ce2f624a7a394e24fbc33f6ca5106e0e1828e6e1d23e409",
+      "qualification": "Current correctness-repaired driver snapshot. The original pre-repair driver is not reconstructed."
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-feature.json",
+      "source": "integration-owner first feature benchmark run",
+      "bytes": 72827,
+      "sha256": "f66cf77509f10ebcf14501f160cb0effceddec88b64aacc696cf4f5999888165"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-feature.log",
+      "source": "integration-owner first feature benchmark run",
+      "bytes": 982,
+      "sha256": "90f95bc7fd14c5244fe4cb61bb3a3d66b2235ad52bd50c747450b1ff35784c9a"
+    }
+  ],
+  "cohorts": [
+    {
+      "id": "original-1",
+      "before": "forwarders-before-1.json",
+      "after": "forwarders-after-1.json",
+      "baseline": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "candidate": "473632fc2e236d75bcfb02cc1ff92f9e0ab880b1",
+      "guardQualification": "unqualified",
+      "guard": "Obsolete TypeDesc.token comparison: both compared properties were undefined; identity was not validated",
+      "warmupBatches": 3,
+      "retainedDriver": "unretained original driver",
+      "statistics": [
+        {
+          "name": "warm token lookup",
+          "before": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.36098574999999755,
+            "trueMedian": 0.36098574999999755,
+            "driverP95": 0.4662204999999915,
+            "nearestRankP95": 0.4662204999999915
+          },
+          "after": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.386868750000005,
+            "trueMedian": 0.386868750000005,
+            "driverP95": 0.6320795000000032,
+            "nearestRankP95": 0.6320795000000032
+          },
+          "trueMedianChangePercent": 7.170089124018775,
+          "driverMedianChangePercent": 7.170089124018775,
+          "p95ChangePercent": 35.57522674357194
+        },
+        {
+          "name": "warm name lookup",
+          "before": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.49029575000000136,
+            "trueMedian": 0.49029575000000136,
+            "driverP95": 0.5433539999999937,
+            "nearestRankP95": 0.5433539999999937
+          },
+          "after": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.51583825000003,
+            "trueMedian": 0.51583825000003,
+            "driverP95": 0.5723814999999774,
+            "nearestRankP95": 0.5723814999999774
+          },
+          "trueMedianChangePercent": 5.209610729856129,
+          "driverMedianChangePercent": 5.209610729856129,
+          "p95ChangePercent": 5.342281459229925
+        },
+        {
+          "name": "cold context and inheritance graph",
+          "before": {
+            "samples": 12,
+            "iterations": 20,
+            "driverMedian": 264.76824999999735,
+            "trueMedian": 264.76824999999735,
+            "driverP95": 326.55714999999645,
+            "nearestRankP95": 326.55714999999645
+          },
+          "after": {
+            "samples": 12,
+            "iterations": 20,
+            "driverMedian": 288.03795000000036,
+            "trueMedian": 288.03795000000036,
+            "driverP95": 345.3942999999981,
+            "nearestRankP95": 345.3942999999981
+          },
+          "trueMedianChangePercent": 8.788704839044437,
+          "driverMedianChangePercent": 8.788704839044437,
+          "p95ChangePercent": 5.768408378135903
+        }
+      ]
+    },
+    {
+      "id": "original-2",
+      "before": "forwarders-before-2.json",
+      "after": "forwarders-after-2.json",
+      "baseline": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "candidate": "473632fc2e236d75bcfb02cc1ff92f9e0ab880b1",
+      "guardQualification": "unqualified",
+      "guard": "Obsolete TypeDesc.token comparison: both compared properties were undefined; identity was not validated",
+      "warmupBatches": 3,
+      "retainedDriver": "unretained original driver",
+      "statistics": [
+        {
+          "name": "warm token lookup",
+          "before": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.39157050000000027,
+            "trueMedian": 0.39157050000000027,
+            "driverP95": 0.6616730000000075,
+            "nearestRankP95": 0.6616730000000075
+          },
+          "after": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.6483704999999986,
+            "trueMedian": 0.6483704999999986,
+            "driverP95": 0.7201589999999953,
+            "nearestRankP95": 0.7201589999999953
+          },
+          "trueMedianChangePercent": 65.58205993556669,
+          "driverMedianChangePercent": 65.58205993556669,
+          "p95ChangePercent": 8.83910934857357
+        },
+        {
+          "name": "warm name lookup",
+          "before": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.6049592500000074,
+            "trueMedian": 0.6049592500000074,
+            "driverP95": 0.8354130000000168,
+            "nearestRankP95": 0.8354130000000168
+          },
+          "after": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.7600047499999931,
+            "trueMedian": 0.7600047499999931,
+            "driverP95": 0.9848125000000039,
+            "nearestRankP95": 0.9848125000000039
+          },
+          "trueMedianChangePercent": 25.629081628222707,
+          "driverMedianChangePercent": 25.629081628222707,
+          "p95ChangePercent": 17.883310410537547
+        },
+        {
+          "name": "cold context and inheritance graph",
+          "before": {
+            "samples": 12,
+            "iterations": 20,
+            "driverMedian": 295.5487750000003,
+            "trueMedian": 295.5487750000003,
+            "driverP95": 409.2516000000046,
+            "nearestRankP95": 409.2516000000046
+          },
+          "after": {
+            "samples": 12,
+            "iterations": 20,
+            "driverMedian": 276.67000000000144,
+            "trueMedian": 276.67000000000144,
+            "driverP95": 330.0927999999999,
+            "nearestRankP95": 330.0927999999999
+          },
+          "trueMedianChangePercent": -6.3877019960576265,
+          "driverMedianChangePercent": -6.3877019960576265,
+          "p95ChangePercent": -19.342331221186136
+        }
+      ]
+    },
+    {
+      "id": "fixed",
+      "before": "forwarders-fixed-before.json",
+      "after": "forwarders-fixed-after.json",
+      "baseline": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "candidate": "1e9d57f57649e728c945a2c296432f92c6f3f125",
+      "guardQualification": "qualified",
+      "guard": "metadataToken and fullName checked against the native fixture",
+      "warmupBatches": 3,
+      "retainedDriver": "benchmark-clr-lookup.mjs.txt",
+      "statistics": [
+        {
+          "name": "warm token lookup",
+          "before": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.3519402500000126,
+            "trueMedian": 0.3519402500000126,
+            "driverP95": 0.43181999999998766,
+            "nearestRankP95": 0.43181999999998766
+          },
+          "after": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.4715810000000147,
+            "trueMedian": 0.4715810000000147,
+            "driverP95": 0.5375505000000089,
+            "nearestRankP95": 0.5375505000000089
+          },
+          "trueMedianChangePercent": 33.994619825381655,
+          "driverMedianChangePercent": 33.994619825381655,
+          "p95ChangePercent": 24.484854800616993
+        },
+        {
+          "name": "warm name lookup",
+          "before": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.554397999999992,
+            "trueMedian": 0.554397999999992,
+            "driverP95": 0.8257639999999924,
+            "nearestRankP95": 0.8257639999999924
+          },
+          "after": {
+            "samples": 12,
+            "iterations": 2000,
+            "driverMedian": 0.549745999999999,
+            "trueMedian": 0.549745999999999,
+            "driverP95": 0.5977189999999837,
+            "nearestRankP95": 0.5977189999999837
+          },
+          "trueMedianChangePercent": -0.8391083661905441,
+          "driverMedianChangePercent": -0.8391083661905441,
+          "p95ChangePercent": -27.61624386628756
+        },
+        {
+          "name": "cold context and inheritance graph",
+          "before": {
+            "samples": 12,
+            "iterations": 20,
+            "driverMedian": 282.78515000000084,
+            "trueMedian": 282.78515000000084,
+            "driverP95": 390.5068500000027,
+            "nearestRankP95": 390.5068500000027
+          },
+          "after": {
+            "samples": 12,
+            "iterations": 20,
+            "driverMedian": 279.13017500000024,
+            "trueMedian": 279.13017500000024,
+            "driverP95": 438.02259999999933,
+            "nearestRankP95": 438.02259999999933
+          },
+          "trueMedianChangePercent": -1.2924918440733513,
+          "driverMedianChangePercent": -1.2924918440733513,
+          "p95ChangePercent": 12.167712294930633
+        }
+      ]
+    },
+    {
+      "id": "steady",
+      "before": "forwarders-steady-before.json",
+      "after": "forwarders-steady-after.json",
+      "baseline": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "candidate": "1e9d57f57649e728c945a2c296432f92c6f3f125",
+      "guardQualification": "qualified",
+      "guard": "metadataToken and fullName checked against the native fixture",
+      "warmupBatches": 5,
+      "retainedDriver": "benchmark-clr-lookup-steady.mjs.txt",
+      "statistics": [
+        {
+          "name": "warm token lookup",
+          "before": {
+            "samples": 15,
+            "iterations": 50000,
+            "driverMedian": 0.31238866000000143,
+            "trueMedian": 0.31238866000000143,
+            "driverP95": 0.6190218800000002,
+            "nearestRankP95": 0.6190218800000002
+          },
+          "after": {
+            "samples": 15,
+            "iterations": 50000,
+            "driverMedian": 0.2139950599999997,
+            "trueMedian": 0.2139950599999997,
+            "driverP95": 0.2803854200000001,
+            "nearestRankP95": 0.2803854200000001
+          },
+          "trueMedianChangePercent": -31.497174065153732,
+          "driverMedianChangePercent": -31.497174065153732,
+          "p95ChangePercent": -54.70508732259998
+        },
+        {
+          "name": "warm name lookup",
+          "before": {
+            "samples": 15,
+            "iterations": 50000,
+            "driverMedian": 0.4237667400000009,
+            "trueMedian": 0.4237667400000009,
+            "driverP95": 0.5892769599999974,
+            "nearestRankP95": 0.5892769599999974
+          },
+          "after": {
+            "samples": 15,
+            "iterations": 50000,
+            "driverMedian": 0.23485632000000123,
+            "trueMedian": 0.23485632000000123,
+            "driverP95": 0.249056599999999,
+            "nearestRankP95": 0.249056599999999
+          },
+          "trueMedianChangePercent": -44.57886902591724,
+          "driverMedianChangePercent": -44.57886902591724,
+          "p95ChangePercent": -57.735221821671075
+        },
+        {
+          "name": "cold context and inheritance graph",
+          "before": {
+            "samples": 15,
+            "iterations": 100,
+            "driverMedian": 194.29081,
+            "trueMedian": 194.29081,
+            "driverP95": 221.91691999999875,
+            "nearestRankP95": 221.91691999999875
+          },
+          "after": {
+            "samples": 15,
+            "iterations": 100,
+            "driverMedian": 215.97573999999895,
+            "trueMedian": 215.97573999999895,
+            "driverP95": 394.1814699999987,
+            "nearestRankP95": 394.1814699999987
+          },
+          "trueMedianChangePercent": 11.161068297568445,
+          "driverMedianChangePercent": 11.161068297568445,
+          "p95ChangePercent": 77.62569433642143
+        }
+      ]
+    },
+    {
+      "id": "lazy",
+      "before": "forwarders-lazy-before.json",
+      "after": "forwarders-lazy-after.json",
+      "baseline": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "candidate": "d5b9e365f2b8fc4d05c7f35b4e9eaef8dcb992bf",
+      "guardQualification": "qualified",
+      "guard": "metadataToken and fullName checked against the native fixture",
+      "warmupBatches": 5,
+      "retainedDriver": "benchmark-clr-lookup-steady.mjs.txt",
+      "statistics": [
+        {
+          "name": "warm token lookup",
+          "before": {
+            "samples": 15,
+            "iterations": 50000,
+            "driverMedian": 0.2975654600000007,
+            "trueMedian": 0.2975654600000007,
+            "driverP95": 0.4834868800000004,
+            "nearestRankP95": 0.4834868800000004
+          },
+          "after": {
+            "samples": 15,
+            "iterations": 50000,
+            "driverMedian": 0.2470593199999996,
+            "trueMedian": 0.2470593199999996,
+            "driverP95": 0.35948939999999996,
+            "nearestRankP95": 0.35948939999999996
+          },
+          "trueMedianChangePercent": -16.973119124780478,
+          "driverMedianChangePercent": -16.973119124780478,
+          "p95ChangePercent": -25.646503582475777
+        },
+        {
+          "name": "warm name lookup",
+          "before": {
+            "samples": 15,
+            "iterations": 50000,
+            "driverMedian": 0.3782906200000025,
+            "trueMedian": 0.3782906200000025,
+            "driverP95": 0.4140309399999978,
+            "nearestRankP95": 0.4140309399999978
+          },
+          "after": {
+            "samples": 15,
+            "iterations": 50000,
+            "driverMedian": 0.28678611999999704,
+            "trueMedian": 0.28678611999999704,
+            "driverP95": 0.3717646200000013,
+            "nearestRankP95": 0.3717646200000013
+          },
+          "trueMedianChangePercent": -24.188942353369715,
+          "driverMedianChangePercent": -24.188942353369715,
+          "p95ChangePercent": -10.208493114064543
+        },
+        {
+          "name": "cold context and inheritance graph",
+          "before": {
+            "samples": 15,
+            "iterations": 100,
+            "driverMedian": 214.0467099999978,
+            "trueMedian": 214.0467099999978,
+            "driverP95": 245.02529000000098,
+            "nearestRankP95": 245.02529000000098
+          },
+          "after": {
+            "samples": 15,
+            "iterations": 100,
+            "driverMedian": 215.68140999999966,
+            "trueMedian": 215.68140999999966,
+            "driverP95": 444.96111000000155,
+            "nearestRankP95": 444.96111000000155
+          },
+          "trueMedianChangePercent": 0.7637118085122019,
+          "driverMedianChangePercent": 0.7637118085122019,
+          "p95ChangePercent": 81.59803422740556
+        }
+      ]
+    },
+    {
+      "id": "cold100",
+      "before": "forwarders-cold100-before.json",
+      "after": "forwarders-cold100-after.json",
+      "baseline": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "candidate": "d5b9e365f2b8fc4d05c7f35b4e9eaef8dcb992bf",
+      "guardQualification": "qualified",
+      "guard": "metadataToken and fullName checked against the native fixture",
+      "warmupBatches": 10,
+      "retainedDriver": "benchmark-clr-lookup-cold100.mjs.txt",
+      "statistics": [
+        {
+          "name": "cold context and inheritance graph",
+          "before": {
+            "samples": 100,
+            "iterations": 100,
+            "driverMedian": 235.37207000000308,
+            "trueMedian": 235.35997000000407,
+            "driverP95": 373.1722599999921,
+            "nearestRankP95": 373.1722599999921
+          },
+          "after": {
+            "samples": 100,
+            "iterations": 100,
+            "driverMedian": 258.3096099999966,
+            "trueMedian": 257.93216999999913,
+            "driverP95": 361.89297000000806,
+            "nearestRankP95": 361.89297000000806
+          },
+          "trueMedianChangePercent": 9.590500882539498,
+          "driverMedianChangePercent": 9.745225931009237,
+          "p95ChangePercent": -3.0225424580016425
+        }
+      ]
+    }
+  ],
+  "testRuns": [
+    {
+      "path": "artifacts/project6-resume/forwarders.tap",
+      "sha256": "f616f771023aac4c08dc19876910839088f10f8161f2701395c5bebcbc3405ef",
+      "summary": {
+        "tests": 18,
+        "pass": 18,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "Earlier retained run; exact execution HEAD is not embedded in this log"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-final.tap",
+      "sha256": "3ad65fbffc77a07e7d613c04f19338de4e3fe5d2be14a0cd54ba75c8649d37e2",
+      "summary": {
+        "tests": 19,
+        "pass": 19,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "Earlier retained run; exact execution HEAD is not embedded in this log"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-optimized.tap",
+      "sha256": "2d647c19f7a9ebaeb14672861cb57d8af831d7d6c228567550c144a0ba2066d4",
+      "summary": {
+        "tests": 21,
+        "pass": 21,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "Earlier retained run; exact execution HEAD is not embedded in this log"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders-integrated-tests.tap",
+      "sha256": "721c085d94f22e3ce277549aca3a15e58c08ab7d19b4358cd59ae5eac757a3db",
+      "summary": {
+        "tests": 8,
+        "pass": 8,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "5fb495f73 (execution reported by integration owner)"
+    }
+  ],
+  "native": {
+    "path": "tests/fixtures/clr-forwarders/native-forwarders.json",
+    "sha256": "63d0da17f1b105f27c5cd89e113b241fe9e3238dd40a40cf930e9e93faf82146",
+    "sdk": "10.0.201",
+    "runtime": ".NET 10.0.5",
+    "cases": 10,
+    "qualification": "Retained native observation replay; no new native execution during evidence preparation"
+  },
+  "newFeatureBenchmark": {
+    "status": "passed",
+    "tool": "packages/clr/tools/benchmark-forwarders.mjs",
+    "results": "artifacts/project6-resume/forwarders-feature.json",
+    "log": "artifacts/project6-resume/forwarders-feature.log",
+    "sourceCommit": "ae5ee23b785269928577425576e17e520928d06c",
+    "startedAt": "2026-10-04T14:04:32.051Z",
+    "finishedAt": "2026-10-04T14:04:32.466Z",
+    "environment": {
+      "node": "v24.19.0",
+      "v8": "13.6.233.17-node.51",
+      "platform": "linux",
+      "arch": "x64",
+      "osRelease": "6.18.44",
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "logicalCpus": 9,
+      "execArgv": [],
+      "sharedMachine": true,
+      "concurrentActivity": "not measured",
+      "forcedGc": false
+    },
+    "qualification": "First retained feature measurement with every-result canonical identity guard; not a regression-budget sign-off",
+    "summary": [
+      {
+        "name": "cold context, image admission and two forwarding hops",
+        "warmupBatches": 20,
+        "measuredBatches": 100,
+        "iterations": 5,
+        "validatedOperations": 600,
+        "checksum": 2952791816,
+        "median": 259.8118999999997,
+        "p95": 553.6158000000114,
+        "p99": 1431.3580000000002,
+        "recomputedMedian": 259.8118999999997,
+        "recomputedNearestRankP95": 553.6158000000114
+      },
+      {
+        "name": "warm two-hop forwarded type lookup",
+        "warmupBatches": 20,
+        "measuredBatches": 100,
+        "iterations": 100,
+        "validatedOperations": 12000,
+        "checksum": 3221261472,
+        "median": 0.7454949999998917,
+        "p95": 1.6877799999997478,
+        "p99": 7.170039999999744,
+        "recomputedMedian": 0.7454949999998917,
+        "recomputedNearestRankP95": 1.6877799999997478
+      },
+      {
+        "name": "warm direct definition name lookup",
+        "warmupBatches": 20,
+        "measuredBatches": 100,
+        "iterations": 100,
+        "validatedOperations": 12000,
+        "checksum": 3221261472,
+        "median": 0.9083900000001677,
+        "p95": 4.3200500000000375,
+        "p99": 17.287319999999227,
+        "recomputedMedian": 0.9083900000001677,
+        "recomputedNearestRankP95": 4.3200500000000375
+      }
+    ]
+  },
+  "performanceSignOff": {
+    "status": "pending",
+    "policy": "CONTRIBUTING.md section 4: more than 5% slower requires explicit justification and PR sign-off",
+    "qualifiedColdMedianChangePercent": 9.590500882539498,
+    "driverColdMedianChangePercent": 9.745225931009237
+  },
+  "limits": [
+    "All historical benchmark cohorts identify a shared machine; allocation counts were not measured.",
+    "The retained original comparison is unqualified because its source cohorts had an ineffective identity guard.",
+    "Current driver snapshots cannot retroactively add source or fixture hashes to earlier runs.",
+    "The existing-path cold100 candidate is d5b9e365, before integration merge 5fb495f73; exact source commits are retained.",
+    "True medians were recomputed from the same retained raw samples without changing original files or conducting another benchmark.",
+    "A lower p95 or mean does not establish that the measured median regression satisfies the performance budget."
+  ]
+}
