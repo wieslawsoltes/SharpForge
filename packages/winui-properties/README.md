@@ -41,3 +41,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Typed styles and transactional setters
 
 `Style`, `Setter` and `StyleApplication` validate complete setter plans before changing any store. Typed styles seal transitively, preserve higher-precedence local/binding/animation values and track implicit/theme resources without rebuilding unrelated consumers. Definition factories can explicitly select the released `legacyMutable` profile: its weak observer leases revalidate and update all applications transactionally, with at most 1024 consumers per mutation. The actual Style(string) ABI opt-in arrives with resource adapters. BindingBase and PropertyPath definitions are carried unchanged from their independent prerequisite branch; binding execution is separate.
+
+## Visual state lifetimes
+
+`VisualStateManager` owns per-group transitions, named setter targets and trigger subscriptions. State changes use the dedicated property source slot and validate all affected stores before committing. Adaptive and custom trigger activation, animation completion/cancellation and snapshot restoration share explicit lifetimes. Native input, layout sizes and the public framework methods are injected by the later host adapters.
