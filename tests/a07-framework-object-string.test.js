@@ -37,7 +37,9 @@ test('framework Object.ToString: pinned source hash and exact override opt-ins',
   const source = readFileSync(new URL('object-string/Program.cs', directory));
   assert.equal(createHash('sha256').update(source).digest('hex'), reference.sourceSha256);
   const overrides = contracts.filter(value => value.objectToStringOverride);
-  assert.deepEqual(overrides.map(value => value.owner).sort(), ['System.Diagnostics.Stopwatch', 'System.Text.StringBuilder', 'System.Uri']);
+  assert.deepEqual(overrides.map(value => value.owner).sort(), [
+    'System.Diagnostics.Stopwatch', 'System.IO.StringWriter', 'System.Text.StringBuilder', 'System.Uri'
+  ]);
   assert.equal(member('System.Text.StringBuilder', 'ToString').id, 812);
   assert.equal(member('System.Uri', 'ToString').id, 1542);
   for (const descriptor of overrides) {
