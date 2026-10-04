@@ -32,6 +32,8 @@ import { CompilerAttributeRegistry } from './compiler-attribute-registry.js';
 import { valueTypeConstraintToken, planUnmanagedAttributes } from './unmanaged-metadata.js';
 import { declarationRefSafetyVersion, hasReadonlyReturn, planRefDeclarationAttributes } from './ref-declaration-metadata.js';
 import { hasReturnAttributes } from './attribute-targets.js';
+import { NullableMetadataPlan } from './nullable-plan.js';
+import { prepareNullableAttributes } from './nullable-attribute-contracts.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
 const SEMANTICS = Object.freeze({ Setter: 1, Getter: 2, AddOn: 8, RemoveOn: 16 });
@@ -88,6 +90,8 @@ export class SymbolMetadataWriter {
       this.extensions.plans.get(type) ?? planMembers(type, this.core, field => analysis.constantOf(field)),
     ]));
     if (synthesized) for (const type of this.types) synthesized.extend(type, this.plans.get(type));
+    this.nullableMetadata = new NullableMetadataPlan(this, analysis);
+    prepareNullableAttributes(this);
     planRefDeclarationAttributes(this.compilerAttributes, this.plans, this.refSafetyRulesVersion);
     planUnmanagedAttributes(this.compilerAttributes, this.plans);
     const definitions = this.compilerAttributes.definitions;
@@ -208,11 +212,11 @@ export class SymbolMetadataWriter {
           ParamList: nextParameter,
         });
         const returned = method.symbol?.returnType;
-        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned) ||
-          hasReturnAttributes(method.symbol) || hasReadonlyReturn(method.symbol))) {
+        if ((returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned))) ||
+          hasReturnAttributes(method.symbol) || hasReadonlyReturn(method.symbol) || this.nullableMetadata.needsReturn(method)) {
           // The return value has a Param row (sequence 0) only when an attribute is written on it.
           method.returnParameterToken = this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' });
-          this.returnParameterTokens.set(method.symbol, method.returnParameterToken);
+          if (method.symbol) this.returnParameterTokens.set(method.symbol, method.returnParameterToken);
           nextParameter++;
         }
         method.parameterTokens = [];

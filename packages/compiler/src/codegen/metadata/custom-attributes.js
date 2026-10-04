@@ -34,6 +34,8 @@ import { writeExtensionBlockAttributes } from './extension-block-attributes.js';
 import { writeUnmanagedAttributes } from './unmanaged-metadata.js';
 import { writeRefSafetyRulesAttribute, writeReadonlyReturnAttribute } from './ref-declaration-metadata.js';
 import { writeCompilerAttributeDefinitions } from './compiler-attribute-definitions.js';
+import { writeNullableAttributes } from './nullable-attributes.js';
+import { writeTupleRelationAttributes } from './tuple-relation-attributes.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const TYPE_DEF_TABLE = 2;
@@ -145,6 +147,8 @@ export class CustomAttributeWriter {
     writeExtensionBlockAttributes(this, declaresExtensions);
     writeUnmanagedAttributes(this);
     writeRefSafetyRulesAttribute(this);
+    writeNullableAttributes(this);
+    writeTupleRelationAttributes(this);
     writeCompilerAttributeDefinitions(this);
   }
   method(planned) {
