@@ -9,3 +9,4 @@ export * from './templates/index.js';
 export * from './contracts/property.js';
 export * from './styles/index.js';
 export * from './adapters/context-resources.js';
+export * from './items/index.js';

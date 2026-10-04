@@ -57,3 +57,7 @@ The complete binding and deferred-construction branch now shares the typed style
 ## Resource and object adapter capabilities
 
 Resource dictionaries, collection views, typed/legacy style definitions and selector callbacks use owner-scoped models. `initializeResourceContext` connects resource ancestry to injected application/tree/environment services. `registerObjectModelAdapters` exposes the dispatcher and shared logical/visual tree contracts; a valid detached object has no parent or visual children. Registrations do not activate framework metadata or construct an application by themselves.
+
+## Item generator prerequisites
+
+The reviewed item source, collection-view and recycling models now share typed styles and resource adapters. The eight item-only modules/tests are copied unchanged from the secondary branch. This is an explicit integration commit with both branch heads as parents; it does not construct containers or change source mutation behavior.
