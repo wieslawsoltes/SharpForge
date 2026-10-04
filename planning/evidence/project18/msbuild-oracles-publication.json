@@ -1,0 +1,350 @@
+{
+  "schemaVersion": 1,
+  "workItems": [
+    "SF-A23-T10",
+    "SF-A23-T11",
+    "SF-A23-T12",
+    "SF-A23-T35",
+    "SF-A23-T36",
+    "SF-A23-T37",
+    "SF-A23-T38",
+    "SF-A23-T39"
+  ],
+  "publicationPurpose": "Reproduce real solution mapping and optional installed-framework comparisons using existing public native/portable APIs.",
+  "originalProductSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "nativeCaptureSource": "7dd9f8c9e5c956f3474da96973ccaf6140234f5d",
+  "dependencyBase": {
+    "branch": "codex/p18-msbuild-oracles-base",
+    "commit": "6b58a7da151a5b9bd6fe126e976cdcce4842304c",
+    "orderedParents": [
+      "cde580cba3b5183098e63190ed8d6af835c992be",
+      "42ab679e87e56412ad540f59314ead3e51bca6dc",
+      "81e9ae2e0c6d424d5a45c29c5779f80eee6878c2"
+    ],
+    "features": [
+      "T12 evaluation corpus #4129",
+      "complete native/portable testing transport #3903",
+      "solution configuration model #3703"
+    ]
+  },
+  "files": {
+    "tests/msbuild-differential/frameworks.mjs": {
+      "originalGitBlob": "a8c6b40e524ac1aa8a2c37b90007daa4923e40ce",
+      "originalSha256": "eaaa9aa11ab7b839d2c5d5bafa2e59e1473cf49ceccefa1102c478e45029682a",
+      "projectionSha256": "ecf393ba802a0d90a55285171c1b604af808f3133a4af71b71c778f486ad1b87"
+    },
+    "tests/msbuild-differential/solutions.mjs": {
+      "originalGitBlob": "86a67a9886cf2ef3b6ca737e557fb7bce4b3c92a",
+      "originalSha256": "59c19420b9b0979e9b5102d0cf2a5cb2ce4e292885fcb110e69a07a6f6c3ab58",
+      "projectionSha256": "87160dfd52aceed3b62ba93e6abc18c273dc522732b46279bd7f4a30fb2f6b35"
+    },
+    "tests/msbuild-differential/framework-fixtures.js": {
+      "originalGitBlob": "ac087a86e776d1fd53dc7231bf525e95b98ed972",
+      "originalSha256": "a1afc7c859bd7b148a52737c4888c808d57efb0c6594887be494cc3c2e0d4014",
+      "projectionSha256": "a1afc7c859bd7b148a52737c4888c808d57efb0c6594887be494cc3c2e0d4014"
+    }
+  },
+  "projectionChanges": [
+    "Two portable-testing imports now use @sharpforge/msbuild.",
+    "Two solution harness expressions were wrapped below 160 columns with identical source text/arguments.",
+    "The actual dependency already supplies the unchanged framework fixtures; no duplicate fixture is added."
+  ],
+  "solutionQualification": {
+    "capture": {
+      "path": "planning/evidence/project18/testing/solutions-native.json",
+      "source": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+      "sha256": "a11dfb937bcf807c2173147cd99cc1009a2383248c5e4748af8bdfca38c14444",
+      "bytes": 16413
+    },
+    "reference": {
+      "sdk": "10.0.201",
+      "msbuild": "18.3.0.15422",
+      "node": "v22.23.3",
+      "platform": "linux"
+    },
+    "success": true,
+    "counts": {
+      "solutionBuilds": 16,
+      "mappedProjectBuilds": 3,
+      "portableEffectiveConfigurations": 3,
+      "total": 22,
+      "passed": 22
+    },
+    "cases": [
+      {
+        "id": "default-clr-slnx-Debug_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "default-clr-slnx-Release_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "default-clr-sln-Debug_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "default-clr-sln-Release_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "default-clr-project-context",
+        "success": true
+      },
+      {
+        "id": "default-clr-single-project",
+        "success": true
+      },
+      {
+        "id": "mixed-defaults-slnx-Debug_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "mixed-defaults-slnx-Release_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "mixed-defaults-sln-Debug_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "mixed-defaults-sln-Release_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "mixed-defaults-project-context",
+        "success": true
+      },
+      {
+        "id": "mixed-defaults-single-project",
+        "success": true
+      },
+      {
+        "id": "explicit-rules-slnx-Debug_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "explicit-rules-slnx-Debug_x64",
+        "success": true
+      },
+      {
+        "id": "explicit-rules-slnx-Release_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "explicit-rules-slnx-Release_x64",
+        "success": true
+      },
+      {
+        "id": "explicit-rules-sln-Debug_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "explicit-rules-sln-Debug_x64",
+        "success": true
+      },
+      {
+        "id": "explicit-rules-sln-Release_Any_CPU",
+        "success": true
+      },
+      {
+        "id": "explicit-rules-sln-Release_x64",
+        "success": true
+      },
+      {
+        "id": "explicit-rules-project-context",
+        "success": true
+      },
+      {
+        "id": "explicit-rules-single-project",
+        "success": true
+      }
+    ],
+    "scope": "Custom package-free MSBuild targets record effective globals and participation; .vcxproj entries do not exercise a C++ toolchain."
+  },
+  "frameworkQualification": {
+    "capture": {
+      "path": "planning/evidence/project18/testing/frameworks-portable.json",
+      "source": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+      "sha256": "2a56e16ce7b6d030bbc401f2e806fe2fdc2ef6f4541ecf64c20be91616752cde",
+      "bytes": 42879
+    },
+    "reference": {
+      "sdk": "10.0.401",
+      "msbuild": null,
+      "node": "v22.23.3",
+      "platform": "linux"
+    },
+    "success": false,
+    "cases": [
+      {
+        "framework": "xunit",
+        "nativeExecuted": false,
+        "status": "native-unavailable",
+        "success": false,
+        "packages": [
+          {
+            "name": "Microsoft.NET.Test.Sdk",
+            "version": "17.13.0"
+          },
+          {
+            "name": "coverlet.collector",
+            "version": "6.0.4"
+          },
+          {
+            "name": "xunit",
+            "version": "2.9.3"
+          },
+          {
+            "name": "xunit.runner.visualstudio",
+            "version": "3.0.2"
+          }
+        ],
+        "portable": {
+          "source": {
+            "outcomes": {
+              "skipped": 1,
+              "passed": 6,
+              "failed": 1
+            },
+            "diagnosticCount": 0
+          },
+          "cil": {
+            "outcomes": {
+              "skipped": 1,
+              "passed": 6,
+              "failed": 1
+            },
+            "diagnosticCount": 0
+          }
+        }
+      },
+      {
+        "framework": "nunit",
+        "nativeExecuted": false,
+        "status": "native-unavailable",
+        "success": false,
+        "packages": [
+          {
+            "name": "Microsoft.NET.Test.Sdk",
+            "version": "17.13.0"
+          },
+          {
+            "name": "coverlet.collector",
+            "version": "6.0.4"
+          },
+          {
+            "name": "NUnit",
+            "version": "4.3.2"
+          },
+          {
+            "name": "NUnit3TestAdapter",
+            "version": "5.0.0"
+          }
+        ],
+        "portable": {
+          "source": {
+            "outcomes": {
+              "skipped": 1,
+              "passed": 4,
+              "failed": 1
+            },
+            "diagnosticCount": 0
+          },
+          "cil": {
+            "outcomes": {
+              "skipped": 1,
+              "passed": 4,
+              "failed": 1
+            },
+            "diagnosticCount": 0
+          }
+        }
+      },
+      {
+        "framework": "mstest",
+        "nativeExecuted": false,
+        "status": "native-unavailable",
+        "success": false,
+        "packages": [
+          {
+            "name": "Microsoft.NET.Test.Sdk",
+            "version": "17.13.0"
+          },
+          {
+            "name": "coverlet.collector",
+            "version": "6.0.4"
+          },
+          {
+            "name": "MSTest.TestFramework",
+            "version": "3.8.3"
+          },
+          {
+            "name": "MSTest.TestAdapter",
+            "version": "3.8.3"
+          }
+        ],
+        "portable": {
+          "source": {
+            "outcomes": {
+              "skipped": 1,
+              "passed": 4,
+              "failed": 1
+            },
+            "diagnosticCount": 0
+          },
+          "cil": {
+            "outcomes": {
+              "skipped": 1,
+              "passed": 4,
+              "failed": 1
+            },
+            "diagnosticCount": 0
+          }
+        }
+      }
+    ],
+    "intentionalOutcomes": "Each fixture has one expected failing test and one skipped test; these are comparison inputs.",
+    "nativeUnavailable": [
+      "The shared pinned framework restore reached its 50-second bound (exit 124).",
+      "The log contained only Determining projects to restore; the cache was empty.",
+      "No further package restore was attempted."
+    ],
+    "restore": {
+      "sdk": "10.0.401",
+      "timeoutSeconds": 50,
+      "exitCode": 124,
+      "cacheEmpty": true,
+      "source": "https://api.nuget.org/v3/index.json",
+      "log": "  Determining projects to restore...\n",
+      "attempts": 1,
+      "diagnosis": "The retained log does not establish the cause of the timeout."
+    }
+  },
+  "retainedUnitEvidence": {
+    "source": "bbaedef515c6c7ec052f8469dd471e88cdcce7d2",
+    "node22": {
+      "version": "22.23.3",
+      "tests": 135,
+      "passed": 135
+    },
+    "node26": {
+      "version": "26.10.0",
+      "tests": 135,
+      "passed": 135
+    },
+    "scope": "Completed owned testing/project-edit/solution/differential scope; not a fresh publication or installed-framework run."
+  },
+  "publicationValidation": {
+    "localTestsRun": false,
+    "localBuildRun": false,
+    "nativeRestoreRun": false,
+    "reason": "Reuse completed scope captures; the coordinator owns the next complete integrated qualification."
+  },
+  "remainingAcceptance": [
+    "Actual installed xUnit/NUnit/MSTest discovery, TRX and coverage parity remain unqualified.",
+    "Windows and macOS solution/framework oracle runs are not available.",
+    "The custom solution target does not qualify native C++ or F# compilation.",
+    "These fixtures do not establish complete portable/native MSBuild or test-framework equivalence."
+  ]
+}

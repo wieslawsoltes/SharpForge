@@ -50,3 +50,57 @@ scope; neither a missing SDK nor a missing native run is reported as success.
 The retained Linux SDK 10.0.201 / MSBuild 18.3.0.15422 capture has five matches,
 ten enforced portable boundaries and zero divergences. Its provenance and source
 hashes are recorded in `planning/evidence/project18/evaluation-corpus-publication.json`.
+
+
+## Solution configuration oracle
+
+`tests/msbuild-differential/solutions.mjs` compares the mapping model with real
+MSBuild builds of `.slnx` and serialized `.sln` files. The fixtures cover default
+CLR mappings, mixed managed/native solution entries, wildcard configuration and
+platform overrides, build participation, stable project GUIDs, mapped project
+requests and portable effective configuration values.
+
+```sh
+SHARPFORGE_DOTNET=/path/to/dotnet SHARPFORGE_SDK=10.0.201 \
+  node scripts/limited.js node tests/msbuild-differential/solutions.mjs --output solutions-native.json
+```
+
+Each fixture uses a package-free custom `Build` target that writes its observed
+`Configuration|Platform`. Native commands have a 30-second limit, use one MSBuild
+node and disable node reuse. The runner closes its engine and deletes only its
+owned temporary workspace. A `.vcxproj` filename checks solution participation;
+it does not invoke or qualify a C++ compiler. The retained Linux capture passes
+16 solution builds, three mapped project builds and three portable context checks.
+
+## Installed test-framework oracle
+
+`tests/msbuild-differential/frameworks.mjs` consumes the same checked-in xUnit,
+NUnit and MSTest fixtures as the portable runner tests. It discovers names and
+runs each fixture through Source VM and direct CIL, then uses `NativeTestAdapter`
+to compare actual native discovery and TRX outcomes. Native execution requests
+coverage and each discovery/run command has a 120-second limit. The SDK and the
+fixture's pinned packages must be available; a restore or adapter error remains
+an unsuccessful, explicitly unqualified report.
+
+```sh
+SHARPFORGE_DOTNET=/path/to/dotnet SHARPFORGE_SDK=10.0.401 \
+  node scripts/limited.js node tests/msbuild-differential/frameworks.mjs --output frameworks-native.json
+```
+
+The fixtures intentionally include one failing test and one skipped test per
+framework. Their comparison report succeeds only when actual native names and
+outcomes match both portable engines without native diagnostics. Expected
+fixture failures must not be relabelled as successful test outcomes.
+
+If an already established native prerequisite is unavailable, explicitly set
+`SHARPFORGE_NATIVE_TESTS_UNAVAILABLE` to its observed reason. The runner then
+records portable outcomes, `nativeExecuted: false`, `success: false` and exit code
+1. This option never substitutes portable results for native reference results.
+
+The retained portable capture has xUnit six passed / one failed / one skipped,
+and NUnit and MSTest four passed / one failed / one skipped, on both engines.
+The only shared native package restore reached its 50-second bound with an empty
+cache and no diagnostic beyond `Determining projects to restore...`. Its cause
+was not established. Native framework, coverage and cross-platform parity remain
+unqualified. Exact source/capture hashes, reference versions and case identities
+are in `planning/evidence/project18/msbuild-oracles-publication.json`.
