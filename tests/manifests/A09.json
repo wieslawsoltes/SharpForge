@@ -8,7 +8,8 @@
     "tests/a09-json-int64.test.js",
     "tests/a09-string-reader.test.js",
     "tests/a09-string-writer.test.js",
-    "tests/a09-string-reader-buffer.test.js"
+    "tests/a09-string-reader-buffer.test.js",
+    "tests/a09-string-writer-object.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],
