@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "sharpforge-project16-hosted-qualification",
   "recordedAt": "2026-10-04T03:23:40.533200+00:00",
-  "scope": "Initial hosted attempts a1–a3; immutable failed outcomes plus source-known correction status. No later qualification is inferred.",
+  "scope": "Initial hosted attempts a1\u2013a3; immutable failed outcomes plus source-known correction status. No later qualification is inferred.",
   "closeIssues": [],
   "evidenceRules": [
     "A YAML parse failure with zero jobs is not a test execution.",
@@ -292,7 +292,7 @@
             "evidence": "docs/evidence/project16-hosted/a3/suite-workbench-sessions.json",
             "failure": {
               "observed": "Page.evaluate: AggregateError: Workbench event listeners failed",
-              "detail": "DocumentService.setProjectMembership → StudioProjects.removeMembership/sync → renderWorkspace → finishWorkspace.",
+              "detail": "DocumentService.setProjectMembership \u2192 StudioProjects.removeMembership/sync \u2192 renderWorkspace \u2192 finishWorkspace.",
               "evidence": "docs/evidence/project16-hosted/a3/a19-multi-session-results.json"
             }
           },
@@ -362,6 +362,196 @@
         "sessionCsp": "All eight retained sessions record empty cspViolations arrays; this does not turn failed behavior into passes."
       },
       "performance": "not_selected"
+    },
+    {
+      "id": "a4",
+      "runId": 37175293552,
+      "jobId": 111356550684,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175293552",
+      "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175293552/job/111356550684",
+      "source": {
+        "sourceSha": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+        "sourceTree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+        "trigger": "create",
+        "triggerRef": "refs/heads/codex/project16/qualify-ubuntu-chromium-all-20261004-a4",
+        "triggerNonce": "20261004-a4",
+        "captureOnly": true,
+        "workflowRunId": "37175293552",
+        "stage": "all",
+        "engine": "chromium",
+        "runner": "Linux",
+        "runnerLabel": "ubuntu-latest",
+        "editorBaseline": null,
+        "workbenchBaseline": null
+      },
+      "status": "failed",
+      "exitCode": 1,
+      "startedAt": "2026-10-04T03:53:03.628Z",
+      "finishedAt": "2026-10-04T04:03:26.402Z",
+      "counts": {
+        "selected": 15,
+        "passed": 9,
+        "failed": 6
+      },
+      "countInterpretation": "Fifteen qualification outcomes, not fifteen tests. Counts are not added to earlier runs or overlapping scenarios.",
+      "artifact": {
+        "id": 11293386531,
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175293552/artifacts/11293386531",
+        "path": "docs/evidence/project16-hosted/a4/p16-hosted-a4.zip",
+        "bytes": 8862070,
+        "sha256": "f07f9ef776d60f070e8ac9614bc65233e77a75215fce3559f8cc02acf8a680c3"
+      },
+      "node": [
+        {
+          "area": "A19",
+          "tests": 710,
+          "passed": 710,
+          "failed": 0,
+          "skipped": 0,
+          "logLine": 1335
+        },
+        {
+          "area": "A20",
+          "tests": 686,
+          "passed": 677,
+          "failed": 0,
+          "skipped": 9,
+          "logLine": 2040
+        }
+      ],
+      "outcomes": [
+        {
+          "id": "node:A19",
+          "phase": "node",
+          "status": "passed"
+        },
+        {
+          "id": "node:A20",
+          "phase": "node",
+          "status": "passed"
+        },
+        {
+          "id": "browser:workbench-docking",
+          "phase": "browser",
+          "status": "passed"
+        },
+        {
+          "id": "browser:workbench-shell",
+          "phase": "browser",
+          "status": "passed"
+        },
+        {
+          "id": "browser:workbench-sessions",
+          "phase": "browser",
+          "status": "failed",
+          "boundary": "Document 'Particle.cs' is not open in this workspace, through StudioDocking.resolve after workspace replacement."
+        },
+        {
+          "id": "browser:workbench-lazy",
+          "phase": "browser",
+          "status": "passed"
+        },
+        {
+          "id": "browser:workbench-workflows",
+          "phase": "browser",
+          "status": "failed",
+          "boundary": "Project creation reports the same missing Particle.cs document."
+        },
+        {
+          "id": "browser:workbench-workflows-standalone",
+          "phase": "browser",
+          "status": "failed",
+          "boundary": "Actual file-mode navigation timed out waiting for non-null Studio metrics; later workflow checks did not run."
+        },
+        {
+          "id": "browser:editor-insights",
+          "phase": "browser",
+          "status": "failed",
+          "boundary": "Eight scenario checks passed before Find in current file textbox lookup timed out; suite remains failed."
+        },
+        {
+          "id": "browser:editor-providers",
+          "phase": "browser",
+          "status": "passed"
+        },
+        {
+          "id": "browser:editor-view",
+          "phase": "browser",
+          "status": "passed"
+        },
+        {
+          "id": "performance",
+          "phase": "performance",
+          "status": "passed"
+        },
+        {
+          "id": "performance:editor-budgets",
+          "phase": "performance",
+          "status": "failed",
+          "boundary": "Incomplete or erroneous browser capture; combined absolute assessment failed and regressionVerdict is null."
+        },
+        {
+          "id": "performance:studio-large-file",
+          "phase": "performance",
+          "status": "failed",
+          "boundary": "Existing startup error toast: Unregistered storage key sharpforge.watch-windows.v1; the driver reports this during import. No successful 200 MiB ingress is established."
+        },
+        {
+          "id": "performance:instrumentation",
+          "phase": "performance",
+          "status": "passed"
+        }
+      ],
+      "browser": {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "runner": "ubuntu-latest",
+        "modes": [
+          "http",
+          "file"
+        ],
+        "interpretation": "Original sessions retain actual CSP/diagnostic arrays; empty arrays do not override failed functional assertions."
+      },
+      "performance": {
+        "editorCapture": {
+          "mode": "capture",
+          "absolutePassed": true,
+          "largeFile": {
+            "sizeBytes": 209715200,
+            "measuredP95Ms": 32.29999999998836,
+            "budgetMs": 50,
+            "measurement": "input/keydown/scroll event to two requestAnimationFrame callbacks"
+          },
+          "regressionVerdict": null
+        },
+        "editorCaptureInterpretation": "Generated-model event-to-paint capture passed its absolute 200 MiB latency budget; this does not qualify File-input ingestion or a relative baseline comparison.",
+        "instrumentation": {
+          "passed": true,
+          "budgetPercent": 1,
+          "overheadPercent": 0.19641649896905353,
+          "enabledMs": 25046.99999999616,
+          "disabledMs": 24997.900000000373,
+          "deltaMs": 49.099999995785765,
+          "gate": "ratio of paired sums of the identical measured workload; strictly less than 1%",
+          "interpretation": "One bounded shared-host observation; not statistical proof. All raw samples retained."
+        },
+        "instrumentationPairCount": 12,
+        "instrumentationEvidence": "docs/evidence/project16-hosted/a4/instrumentation-overhead.json",
+        "editorUiBudgetAssessment": {
+          "absolutePassed": false,
+          "error": "Incomplete or erroneous browser capture",
+          "regressionVerdict": null
+        }
+      },
+      "summaryEvidence": "docs/evidence/project16-hosted/a4/qualification-summary.json",
+      "sourceEvidence": "docs/evidence/project16-hosted/a4/source.json",
+      "jobEvidence": "docs/evidence/project16-hosted/a4/job.log",
+      "postRunCorrection": {
+        "localCommit": "2f1d498c5c94a482a5a37f07691d1af4a1ec5cad",
+        "status": "source_committed_tests_authored_not_executed",
+        "detail": "Register existing Watch v1 key in production storage and consume canonical entry. Four production-storage/loader regressions authored; 200 MiB browser fixture unchanged.",
+        "evidence": "docs/project16-watch-storage-correction.md"
+      }
     }
   ],
   "sourceKnownCorrections": [
@@ -602,6 +792,284 @@
       "kind": "derived bounded publication projection",
       "bytes": 6671,
       "sha256": "f0500aec8c5b980bf94738454cb86fdb664a7596f70edb4300994e44a72f0d83"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/p16-hosted-a4.zip",
+      "kind": "exact downloaded artifact ZIP",
+      "bytes": 8862070,
+      "sha256": "f07f9ef776d60f070e8ac9614bc65233e77a75215fce3559f8cc02acf8a680c3"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/job.log",
+      "kind": "original hosted job log",
+      "bytes": 293531,
+      "sha256": "2f3c07813e427290bf16227726639ab9a9192d3b4a5cc667f05dcc11ae55e1c1"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/a19-multi-session-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 1218,
+      "sha256": "280066dd75e781f1d6cfbd815e3d3a6eaff4ef9dbf47210714bd705d4e35f4c4"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/a19-shell-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 3053,
+      "sha256": "d59f6db9c5aa08179176b75f0da1a1ed97427f29e694a385f8a126d7ec705aa4"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/a20-editor-insights.json",
+      "kind": "original artifact JSON",
+      "bytes": 849,
+      "sha256": "84be6b6e6d6763609da113d8f11d08463c23b072040ed4fcfdc9e6d82a239465"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/a20-editor-view.json",
+      "kind": "original artifact JSON",
+      "bytes": 905,
+      "sha256": "72cc67c52f5264de2ca6e4a3b50895ce16e185e7f99d0a3b2b19247a07b97093"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/a20-language-providers.json",
+      "kind": "original artifact JSON",
+      "bytes": 376,
+      "sha256": "f179ec3b9150fed5f05b7f6eebf5f5ca2d55c90c398f28707b6f4393d82caf6a"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/a20-studio-large-file-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 1181,
+      "sha256": "73adfef93a222c0dfff209141527d1557151206e7ac85de1c9b5e7840c10565e"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_a19_docking_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 252,
+      "sha256": "92a94a0ca494965817ee9c52d6024aa03f6e13adcadb12a0da00c90e1e459e70"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_a19_lazy_tools_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 255,
+      "sha256": "80361b51800565b54f9f92e7582b9d5b06eb1f11d6e5ce4ae9b82d9d215b4cd3"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_a19_shell_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 249,
+      "sha256": "3858aa51ce3edd4892e1364a5595f41259aac03fa997963f7cd46a425f621142"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_a20_insights_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 253,
+      "sha256": "e95fd17671366273e2bd728af3267fdad72f52fd84fce3ff41c8ad96446e40af"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_a20_language_providers_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 263,
+      "sha256": "ba0e1ab468437d2227c14ea203f1701e5399d8cdc70c1628956bd69464ee9ef8"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_a20_studio_large_file_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 263,
+      "sha256": "78aa07219094d23ff22994e6625216ef580eb8f7f5ec2e1f6e5c5ea6e3d57bea"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_a20_view_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 249,
+      "sha256": "bf1fa92b52d1655e1e2a8a8d5bdba6c4c6407f39b332227cb9e5de8a8e12ea80"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_editor_budgets_test_definition/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 267,
+      "sha256": "a701a0efe9ba318734b36dbf9a97ef7d54857288994065ff2f0cd96b7a312367"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_editor_budgets_test_overview/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 263,
+      "sha256": "769ca2d6e4ab6552739919ce80172d0f9975c658de34510c37d449a10af3c37e"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_multi_session_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 254,
+      "sha256": "9dd5bc760423ce78433c5f013313523e2dc66def12169ab0022bd7fd4976e0a4"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_vs_workflows_standalone_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 265,
+      "sha256": "98d66edea26ad0969b10d3248e4632694dfe0689160d8015b3d5ff53b9452a8c"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_vs_workflows_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 253,
+      "sha256": "5f9f90e653e6c3ca6f88025a756a5fc97b187848dff6bc2b0fcfed484a3ee751"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/browser_workbench_perf_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 255,
+      "sha256": "66d52ecac4a3e28f5df768044b39a7ff23821a715d4cb6abffd8a55dee5afea6"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/editor-assessment.json",
+      "kind": "original artifact JSON",
+      "bytes": 276,
+      "sha256": "40f71fd612c52bdd0d9350fe65005a18a4e3c5b905c7ed1af475a590996b3ec9"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/editor-browser.json",
+      "kind": "original artifact JSON",
+      "bytes": 38091,
+      "sha256": "b831db30471b70da07b6a82f22e925f4b2046bf005e683b5481dcc0b1a2d80a3"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/editor-memory.json",
+      "kind": "original artifact JSON",
+      "bytes": 19206,
+      "sha256": "d474116ab3f18267e5d7a1d4c69af4247ac868ffc132fef37e1753dba1349860"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/editor-model.json",
+      "kind": "original artifact JSON",
+      "bytes": 24125,
+      "sha256": "dfe56217797e17dc4042a3cb0f93511bd386708d38b254cb52bbcf749613145e"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/editor-ui-budgets.json",
+      "kind": "original artifact JSON",
+      "bytes": 291297,
+      "sha256": "3fd076e813abbd5eb192308f165801b516c6600a1e7e3bb308f27a20cfd6f03e"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/instrumentation-overhead.json",
+      "kind": "original artifact JSON",
+      "bytes": 2701516,
+      "sha256": "8d5bee8d7bf463d19395c4b119d912b7f892778e6a1956b5894f01107075a5f8"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/qualification-summary.json",
+      "kind": "original artifact JSON",
+      "bytes": 8244,
+      "sha256": "3bb260555d08d874d0e6570ba5de972df3fbf2fdebd738a0c48fa7a4b53484da"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/source.json",
+      "kind": "original artifact JSON",
+      "bytes": 473,
+      "sha256": "a7bd9e034ab18bb2963ce7483e31566b25206cc546ca44d89982c2109d086cfc"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-editor-budgets.json",
+      "kind": "original artifact JSON",
+      "bytes": 223,
+      "sha256": "6a96b2d9ceefc172e733dec379438077b7c9e32efe083677399d62cc356d4b54"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-editor-insights.json",
+      "kind": "original artifact JSON",
+      "bytes": 223,
+      "sha256": "1b7aa8e1019c9f5cbee7a6fc550ae63c16bb54a50bc589f5456c292ae1efba0d"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-editor-providers.json",
+      "kind": "original artifact JSON",
+      "bytes": 233,
+      "sha256": "67581d899a77bb3b4a1269b5f29678b4d6c685fef017909dd6411f21520b93e7"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-editor-view.json",
+      "kind": "original artifact JSON",
+      "bytes": 214,
+      "sha256": "7c88f030aebf2f2bd8bda41288958f2f89757d355836837fc403540611e81344"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-studio-large-file.json",
+      "kind": "original artifact JSON",
+      "bytes": 233,
+      "sha256": "ad0a5b1cc7c6b8d62a2404f54b74060e40241620b45b5bf8dad2d0dcede1874c"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-workbench-docking.json",
+      "kind": "original artifact JSON",
+      "bytes": 224,
+      "sha256": "228ed659aa1a32327284489db211aaef64868fa271cbfec245394273d3ecdb2d"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-workbench-lazy.json",
+      "kind": "original artifact JSON",
+      "bytes": 223,
+      "sha256": "f90e7375d8c4ee288c79f44020f6544175d7f3d789abc9688f82efadc81a55a8"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-workbench-performance.json",
+      "kind": "original artifact JSON",
+      "bytes": 231,
+      "sha256": "ca726ed6937c131b00c579743647b9a8f3e5039e620feddbadf2b6c626179751"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-workbench-sessions.json",
+      "kind": "original artifact JSON",
+      "bytes": 227,
+      "sha256": "6303f85b17aa46a31163fb22ad7559961f350635f5efeb2e5e097883a0413b38"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-workbench-shell.json",
+      "kind": "original artifact JSON",
+      "bytes": 218,
+      "sha256": "0331bece0f2b277dd523041982412f51ce03245419e7c170bc2d4de49e90ca7e"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-workbench-workflows-standalone.json",
+      "kind": "original artifact JSON",
+      "bytes": 249,
+      "sha256": "43d016a51fc863aba5a5a91662bc4d415e0f250a9a7af2e8d16af1b1ca7b985e"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/suite-workbench-workflows.json",
+      "kind": "original artifact JSON",
+      "bytes": 226,
+      "sha256": "4149abd39cf59d05868f2dfd2a8629e069870193a3b595c8e4c35fc32b8ececc"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/vs-workflow-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 736,
+      "sha256": "2151a265d5b2ac444af011fabb92251f4d7275c580e9b9563dcdbdbbe9f3d8d5"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/vs-workflow-standalone-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 1199,
+      "sha256": "bb489a6360ae9446a959e6f9cbff975222ee75e2a71a710028a06e769bf2779c"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/workbench-large-trace.json",
+      "kind": "original artifact JSON",
+      "bytes": 29344,
+      "sha256": "da39cb454e54b63b38477e71cbcba86b756600b5c5643a54863c72e9ed1ffa3a"
+    }
+  ],
+  "appendices": [
+    {
+      "id": "a4",
+      "recordedDate": "2026-10-04",
+      "historyNote": "Initial a1\u2013a3 outcomes, source-known correction statuses and remaining-qualification text retain their original cutoff. The a4 entry records later observations without rewriting failed runs.",
+      "remainingQualification": [
+        "Complete corrected scope is not passing: a4 selected 15 outcomes, nine passed and six failed.",
+        "Affected sessions, HTTP/standalone workflows, editor insights, editor UI budgets and actual Studio 200 MiB ingress require corrected execution.",
+        "Generated-model editor latency capture has no relative regression verdict because no compatible baseline was supplied.",
+        "The 12-pair instrumentation observation passes its specified aggregate below-1% gate on this Ubuntu/Chromium host; it does not establish other platforms or statistical certainty.",
+        "Windows/macOS and Firefox/WebKit, physical keyboard/clipboard, native permissions, IME/assistive behavior and external oracles remain separate qualification."
+      ]
     }
   ]
 }

@@ -108,6 +108,10 @@ export function overloadPriority(member) {
     const attribute = (symbol?.boundAttributes ?? []).find(bound => fullNameOf(bound.attributeClass) === overloadPriorityAttribute),
       value = attribute?.arguments?.[0]?.constantValue?.value;
     if (typeof value === 'number' || typeof value === 'bigint') return Number(value);
+    // A member read from metadata carries the decoded attribute instead of a bound one.
+    const imported = symbol?.metadataToken ? symbol.attributes?.find(decoded => decoded.attributeClassName === overloadPriorityAttribute) : null,
+      importedValue = imported?.constructorArguments?.[0]?.value;
+    if (typeof importedValue === 'number' || typeof importedValue === 'bigint') return Number(importedValue);
   }
   return 0;
 }

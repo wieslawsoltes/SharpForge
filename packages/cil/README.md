@@ -147,3 +147,5 @@ The opt-in [verifier member context](VERIFIER-MEMBERS.md) adds bounded, canonica
 It validates raw MethodDef tokens, RVA/header/code extents and never decodes IL
 or exception sections. Invalid input throws `CilError`. `pe.methodBody` shares
 the same header parser and retains its existing result shape.
+
+Runtime admission checks [reachable try-entry stack heights](VERIFIER-HANDLER-ENTRY.md) before granting stack-capacity proofs.

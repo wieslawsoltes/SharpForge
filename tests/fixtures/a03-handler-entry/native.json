@@ -1,0 +1,278 @@
+{
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "inputSHA256": "9304f74af0c75b14d515648781aad8af5691995dff2abe08747dedc5eb7b292c",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "observations": [
+    {
+      "name": "catch-empty",
+      "assemblySHA256": "02a488b7ffb2eb456db82ba37b73a0e21c76995ccf07342cdfdcd43150706424",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/catch-empty.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.14616699999999
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "catch-nonempty",
+      "assemblySHA256": "e0b66fe7f07acb847986b823377d930732e81fdd06213e1caaa22a31da8eafeb",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [TryNonEmptyStack]: [<temporary>/catch-nonempty.dll : Fixture.Program::Main()][offset 0x00000000] Attempt to enter a try block with nonempty stack.\n1 Error(s) Verifying <temporary>/catch-nonempty.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 80.43591700000002
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TryNonEmptyStack"
+        ]
+      }
+    },
+    {
+      "name": "finally-empty",
+      "assemblySHA256": "00959e0cc9503d2e3fee67e466141c52150fbebf6bcaf6be2bb55125423b04f8",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/finally-empty.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 77.27091699999994
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "finally-nonempty",
+      "assemblySHA256": "a08104b180e9e2af6c891f8cbc4d41c20adc66b412a2ef2151fb0e53a78fed6a",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [TryNonEmptyStack]: [<temporary>/finally-nonempty.dll : Fixture.Program::Main()][offset 0x00000000] Attempt to enter a try block with nonempty stack.\n1 Error(s) Verifying <temporary>/finally-nonempty.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 79.96558399999992
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TryNonEmptyStack"
+        ]
+      }
+    },
+    {
+      "name": "fault-empty",
+      "assemblySHA256": "1e7435a6d710d9802b40acb956c438083af3bc63e6a4a3a0a8d011984b16df2f",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/fault-empty.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 77.89041699999996
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "fault-nonempty",
+      "assemblySHA256": "8ebe31760e03ab0a35c1c5def76a86a54dd4bc3954abc94e6af8a730a460514d",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [TryNonEmptyStack]: [<temporary>/fault-nonempty.dll : Fixture.Program::Main()][offset 0x00000000] Attempt to enter a try block with nonempty stack.\n1 Error(s) Verifying <temporary>/fault-nonempty.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 80.320875
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TryNonEmptyStack"
+        ]
+      }
+    },
+    {
+      "name": "branch-empty",
+      "assemblySHA256": "ea5116905e2061cd3e351f66e3a46ca564bf549492a092ab54e7b9c260651460",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/branch-empty.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 82.27075000000002
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "branch-nonempty",
+      "assemblySHA256": "3ad21791c1695dd2d095063616b71668a676cb34b401649c1ce7b73cb3d39fee",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [TryNonEmptyStack]: [<temporary>/branch-nonempty.dll : Fixture.Program::Main()][offset 0x00000001] Attempt to enter a try block with nonempty stack.\n1 Error(s) Verifying <temporary>/branch-nonempty.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 84.12116600000002
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TryNonEmptyStack"
+        ]
+      }
+    },
+    {
+      "name": "shared-empty",
+      "assemblySHA256": "eeabaf7fc23465a51461ee259ad7affb8d0ab693b230532a2aa53e7f5a79ea29",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/shared-empty.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.15541599999995
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "shared-nonempty",
+      "assemblySHA256": "5f5e097206904ce43f0cffc1b4cd458cd36cd0f36ba95ba52a096e900e3cc866",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [TryNonEmptyStack]: [<temporary>/shared-nonempty.dll : Fixture.Program::Main()][offset 0x00000000] Attempt to enter a try block with nonempty stack.\n1 Error(s) Verifying <temporary>/shared-nonempty.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 81.84695800000009
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TryNonEmptyStack"
+        ]
+      }
+    },
+    {
+      "name": "nested-catch-consumed",
+      "assemblySHA256": "cbc79ffc464c43a8445059dc472c6f353a5f5911df38e283b1576c5046ef2b2d",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/nested-catch-consumed.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 77.96320800000012
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "nested-catch-seed",
+      "assemblySHA256": "c65a25900f86968c1a802b339a74b0ea02f63c33986df90340a3b10eb561589a",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/nested-catch-seed.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 78.21441699999991
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "nested-catch-delayed",
+      "assemblySHA256": "bfe85e06d8d8cc8fcbd2f7899f52e36c9bed5e93cf47a5bc125c4d93ea8b40bc",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [TryNonEmptyStack]: [<temporary>/nested-catch-delayed.dll : Fixture.Program::Main()][offset 0x00000002] Attempt to enter a try block with nonempty stack.\n1 Error(s) Verifying <temporary>/nested-catch-delayed.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 85.48279200000002
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TryNonEmptyStack"
+        ]
+      }
+    },
+    {
+      "name": "nested-catch-reentry",
+      "assemblySHA256": "f6d4c6d4e15426e428034ed7727f1034fd9671698e37d9a1fc96d1d2b0132e8b",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/nested-catch-reentry.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.00212499999998
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "nested-catch-external-reentry",
+      "assemblySHA256": "6cae80928d7c2687aeb2c1ed411bfdced47fb3d9247e653223ae4fab608b9b6d",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/nested-catch-external-reentry.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.23116699999991
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    }
+  ]
+}

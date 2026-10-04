@@ -1,4 +1,5 @@
 import { directoryName } from '@sharpforge/project-system';
+import { documentSource } from './document-source.js';
 
 function diagnostic(item, uri, source, severity = 'error') {
   const start = Math.max(0, item.start ?? item.span?.start ?? 0);
@@ -94,7 +95,7 @@ export class StudioDiagnostics {
     return Object.freeze({ uri, record, version: record?.version, projectIds: Object.freeze(projectIds),
       memberships: Object.freeze(this.services.documents.projectsFor(uri)),
       system: state.projectSystem, epoch: state.workspaceEpoch,
-      source: this.services.documents.models.get(uri)?.snapshot() });
+      source: documentSource(record, this.services.documents.models.get(uri)) });
   }
 
   current(target) {

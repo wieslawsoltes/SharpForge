@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -13,9 +14,18 @@ using System.Text.Json;
 
 internal sealed class Types : ISignatureTypeProvider<string, object?>
 {
-    public string GetArrayType(string element, ArrayShape shape) => element + "[" + new string(',', shape.Rank - 1) + "]";
+    public string GetArrayType(string element, ArrayShape shape) {
+        // Omitted shape vectors are different from explicit zero bounds/sizes.
+        if (shape.Sizes.IsEmpty && shape.LowerBounds.IsEmpty)
+            return element + "[" + (shape.Rank == 1 ? "*" : new string(',', shape.Rank - 1)) + "]";
+        string sizes = string.Join(",", shape.Sizes.Select(value => value.ToString(CultureInfo.InvariantCulture)));
+        string lower = string.Join(",", shape.LowerBounds.Select(value => value.ToString(CultureInfo.InvariantCulture)));
+        return element + FormattableString.Invariant($"[rank={shape.Rank};sizes=({sizes});lower=({lower})]");
+    }
     public string GetByReferenceType(string element) => element + "&";
-    public string GetFunctionPointerType(MethodSignature<string> signature) => "method " + signature.ReturnType + " *(" + string.Join(",", signature.ParameterTypes) + ")";
+    // Preserve the calling convention/flags and the vararg boundary, including inside other types.
+    public string GetFunctionPointerType(MethodSignature<string> signature) => FormattableString.Invariant(
+        $"method[header=0x{signature.Header.RawValue:X2};generic={signature.GenericParameterCount};required={signature.RequiredParameterCount}] {signature.ReturnType} *({string.Join(",", signature.ParameterTypes)})");
     public string GetGenericInstantiation(string generic, ImmutableArray<string> arguments) => generic + "<" + string.Join(",", arguments) + ">";
     public string GetGenericMethodParameter(object? context, int index) => "!!" + index;
     public string GetGenericTypeParameter(object? context, int index) => "!" + index;
@@ -85,8 +95,12 @@ internal static class Program
                     if (!PublicMethod(reader, methodHandle)) continue;
                     var method = reader.GetMethodDefinition(methodHandle); var signature = method.DecodeSignature(provider, (object?)null); string name = reader.GetString(method.Name);
                     bool isStatic = (method.Attributes & MethodAttributes.Static) != 0;
-                    rows.Add(new { assembly, owner, kind = "method", name, isStatic, result = signature.ReturnType, parameters = signature.ParameterTypes.ToArray(), genericArity = signature.GenericParameterCount,
-                        signature = owner + "::" + name + "``" + signature.GenericParameterCount + "(" + string.Join(",", signature.ParameterTypes) + "):" + signature.ReturnType + (isStatic ? " static" : " instance") });
+                    int signatureHeader = signature.Header.RawValue;
+                    int ordinaryHeader = (isStatic ? 0 : 0x20) | (signature.GenericParameterCount > 0 ? 0x10 : 0);
+                    // Keep ordinary gap identities stable; retain every non-default MethodDefSig header bit (II.23.2.1).
+                    string headerSuffix = signatureHeader == ordinaryHeader ? "" : FormattableString.Invariant($" [header=0x{signatureHeader:X2}]");
+                    rows.Add(new { assembly, owner, kind = "method", name, isStatic, result = signature.ReturnType, parameters = signature.ParameterTypes.ToArray(), genericArity = signature.GenericParameterCount, signatureHeader,
+                        signature = owner + "::" + name + "``" + signature.GenericParameterCount + "(" + string.Join(",", signature.ParameterTypes) + "):" + signature.ReturnType + (isStatic ? " static" : " instance") + headerSuffix });
                 }
                 foreach (var fieldHandle in type.GetFields()) {
                     var field = reader.GetFieldDefinition(fieldHandle); if ((field.Attributes & FieldAttributes.FieldAccessMask) != FieldAttributes.Public) continue;

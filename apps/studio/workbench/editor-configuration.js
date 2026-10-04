@@ -1,3 +1,5 @@
+import { documentSource } from './document-source.js';
+
 export const editorConfigurationLimits = Object.freeze({
   records: 20000, files: 64, charactersPerFile: 1_000_000, totalCharacters: 2_000_000, pathCharacters: 4096
 });
@@ -42,6 +44,11 @@ export function editorConfigFilesForDocument(uri, records, {models = null} = {})
 function configurationText(record, uri, sharedModel) {
   const model = sharedModel ?? record.model;
   const maximum = editorConfigurationLimits.charactersPerFile;
+  const source = documentSource(record, model);
+  if (source) {
+    if (source.length > maximum) throw new RangeError(`EditorConfig '${uri}' exceeds the character limit`);
+    return source.getText(0, source.length);
+  }
   if (model && Number.isSafeInteger(model.length) && typeof model.getText === 'function') {
     if (model.length > maximum) throw new RangeError(`EditorConfig '${uri}' exceeds the character limit`);
     return model.getText(0, model.length);

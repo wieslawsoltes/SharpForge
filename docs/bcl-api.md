@@ -688,8 +688,10 @@ Registered families: <code>builder</code>.
 | 524326 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(short)</code> | implemented |
 | 524327 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(ushort)</code> | implemented |
 | 524328 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(uint)</code> | implemented |
+| 524330 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(float)</code> | implemented |
+| 524331 | <code>bool System.Text.StringBuilder::Equals(System.Text.StringBuilder)</code> | implemented |
 
-Pinned reference: 47 implemented and 61 missing exact metadata rows.
+Pinned reference: 49 implemented and 59 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -724,7 +726,7 @@ Pinned reference: 47 implemented and 61 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Append``0(System.ReadOnlyMemory`1&lt;System.Char&gt;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.ReadOnlySpan`1&lt;System.Char&gt;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.SByte):System.Text.StringBuilder instance</code> | implemented | 524324 |
-| method | <code>System.Text.StringBuilder::Append``0(System.Single):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.Single):System.Text.StringBuilder instance</code> | implemented | 524330 |
 | method | <code>System.Text.StringBuilder::Append``0(System.String):System.Text.StringBuilder instance</code> | implemented | 807 |
 | method | <code>System.Text.StringBuilder::Append``0(System.String,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524319 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder):System.Text.StringBuilder instance</code> | implemented | 524323 |
@@ -767,7 +769,7 @@ Pinned reference: 47 implemented and 61 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::CopyTo``0(System.Int32,System.Span`1&lt;System.Char&gt;,System.Int32):System.Void instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::EnsureCapacity``0(System.Int32):System.Int32 instance</code> | implemented | 817 |
 | method | <code>System.Text.StringBuilder::Equals``0(System.ReadOnlySpan`1&lt;System.Char&gt;):System.Boolean instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Equals``0(System.Text.StringBuilder):System.Boolean instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Equals``0(System.Text.StringBuilder):System.Boolean instance</code> | implemented | 524331 |
 | method | <code>System.Text.StringBuilder::GetChunks``0():System.Text.StringBuilder+ChunkEnumerator instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Boolean):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Byte):System.Text.StringBuilder instance</code> | missing | — |
