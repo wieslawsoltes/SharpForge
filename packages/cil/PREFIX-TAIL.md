@@ -32,8 +32,24 @@ records or ancestry searches are allocated per tail after decoding. The tree's
 boundary decode and the separate group decode are each performed once.
 
 Reference: [ECMA-335, sixth edition, III.2.4 and I.12.4.2.8](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf).
-Authored tests cover legal targets, six illegal lexical patterns, all EH kinds,
-branch boundaries, cursor expiry, limits and cancellation. A pinned ILVerify
-capture and one real CoreCLR tail-call execution are prepared. Their capture,
-focused tests, benchmark and checks are pending the serial validation slot.
+The scheduled local run passed all 65 focused tail/group/EH tests, including
+legal targets, six illegal lexical patterns, all EH kinds, branch boundaries,
+cursor expiry, limits and cancellation. Pinned ILVerify 10.0.5 agrees with all
+six native observations (one accepted, five rejected); the CoreCLR entry point
+tail-called its target and returned 42. Raw output and source/tool/image/reference
+hashes are retained in `tests/fixtures/a03-prefix-tail/native.json`. SDK 10.0.201,
+CoreCLR 10.0.5, macOS ARM64; no new native compiler build was needed.
 Source VM, browser and Rust execution support is not claimed.
+
+All jobs ran sequentially through the limiter with both concurrency settings 1.
+Static/manifests checks passed: 2,760 syntax modules and 2,756 static modules,
+zero errors. Structure reported 270 existing findings and none in changed files.
+
+New-API measurements on Node 24.21.0 / Apple M3 Pro, shared host: 3 warmups and
+9 chronological GC-separated samples, one validation per sample. Median/p95 ms:
+1,000 tail calls 1.737375/2.603958; 5,000 calls 4.981167/6.507833.
+[Raw samples and commands](benchmarks/prefix-tail.json) retain heap deltas, which
+are not allocations, retained memory or peak RSS. The synthetic workload is
+lexical-only. No historical-equivalent or general speedup claim is made. The
+existing placement handler's body and dispatch behavior are unchanged; it is
+only renamed and exported internally for reuse.
