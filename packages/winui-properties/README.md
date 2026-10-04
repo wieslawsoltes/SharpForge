@@ -29,3 +29,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## XAML syntax and literals
 
 `XamlXmlReader` reads positioned, namespace-aware XML with independent byte, node, depth and text budgets. `XamlSchema` provides a closed registered type/member allowlist and explicit namespace aliases. `convertXamlValue` converts documented scalar, enum and UI value literals and delegates optional geometry conversion to the host. Object construction, markup extensions and serialization are added by subsequent XAML writer batches.
+
+## Observable bindings
+
+`BindingOperations` installs OneTime, OneWay and TwoWay bindings into PropertyStore source slots. Nested member/indexer paths subscribe only to the affected suffix; DataContext, ElementName, Self and templated parents share that tracker. PropertyChanged, LostFocus and explicit source updates preserve converter/ConvertBack and null/fallback rules. TemplateBinding uses the same engine. Unload/dispose release observers; snapshots restore subscriptions without replaying source getters, converters or diagnostics. SFB001–010 errors are bounded and redact values.
