@@ -12,7 +12,7 @@ extension-language acceptance in #664.
 
 The real implementation remains the original static `MethodDef` on its original
 container. Public nested grouping declarations describe extension methods,
-properties, indexers and operators; their skeleton bodies throw
+properties and operators; their skeleton bodies throw
 `NotImplementedException`. Marker types and `ExtensionMarkerAttribute` connect the
 metadata declarations to their source receiver. Roslyn clients are checked to call
 the original implementations, including when compiled against the reference
@@ -121,11 +121,14 @@ node scripts/limited.js node --test --test-concurrency=1 \
 ```
 
 Native coverage includes implementation and reference assemblies, actual call
-targets, property/indexer/operator invocation, unmanaged constraint rejection,
+targets, property/operator invocation, unmanaged constraint rejection,
 marker throw bodies, static/property-only containers, attributes visible through
 reflection, and entry-point selection. Existing source extension tests cover the
-adjacent source-VM behavior. This checkpoint does not claim new CIL-VM reflection,
-Rust or Wasm qualification.
+adjacent source-VM behavior. The native consumer's `get_Item`/`set_Item` calls
+belong to an ordinary property named `Item`, not C# 15 extension indexer syntax.
+The existing preview indexer tests are adjacent source-VM/image-path checks;
+this checkpoint does not claim native Roslyn extension indexer interoperability,
+new CIL-VM reflection, Rust or Wasm qualification.
 
 `git diff --check` passed. The advisory structure checker exited zero while
 reporting 273 repository problems; it is not a clean strict structure-gate result.
