@@ -34,7 +34,12 @@ the assembly declares `InternalsVisibleTo`. The following semantic exceptions al
 
 Roslyn reference output omits the generated fixed-buffer storage TypeDefs. Their field signatures retain nested
 TypeRefs scoped to the current module, with inherited generic arguments; `FixedBufferAttribute` supplies the element
-type and length used by a consuming compiler. Executable output retains its storage TypeDefs and layout rows.
+type and length. Its serialized element type is qualified with the same canonical AssemblyRef identity the emitter
+uses. Executable output retains its storage TypeDefs and layout rows.
+The captured Roslyn `/refonly` image itself does not support consuming those fixed-buffer fields: SDK 10.0.201 reports
+`CS0648` for ordinary, generic and nested generic accesses because the generated storage definition is absent.
+Reference output follows that native shape. Its non-buffer API surface remains consumable, including ordinary fields
+on the generic owning structs. The original full consumer is retained as a negative diagnostic-parity fixture.
 Retained auto-property and primary-constructor backing fields carry `DebuggerBrowsable(Never)`, and instance struct
 auto-property getters carry `IsReadOnlyAttribute`. These reference-contract attributes leave the historical
 metadata-only profile unchanged.
@@ -77,6 +82,7 @@ to executable compilation. Reference output contains no source debug data, PDB, 
 | --- | --- |
 | `referenceAssemblyMemberIncluded(table, flags, context)` | Constant-time policy over `TableId.Field` or `TableId.MethodDef`, unsigned 16-bit flags and boolean `includesInternals`, `isStruct`, `isAttributeConstructor`, `isExplicitImplementation` facts. Invalid values throw `CilError`. |
 | `addReferenceAssemblyAttribute(builder, assembly?)` | Add the standard zero-argument marker through an explicit contract assembly or the builder's framework default. Identical calls are idempotent. A missing Assembly row fails before mutation. Source-defined markers are retained by their caller. |
+| `assemblyReferenceIdentity(builder, name)` | Resolve the configured or fallback identity used for AssemblyRef emission without adding a row. Returned version and key bytes are owned copies; invalid names and missing required profile identities fail exactly as emission does. |
 
 The compiler applies the policy through `SymbolMetadataWriter`'s existing synthesized-member planning seam before token
 allocation. No completed metadata image is rewritten and no token-remapping pass is introduced. Member filtering is
@@ -86,7 +92,7 @@ uncached base links; the cache is released with the compilation. There are no pr
 ## Verification
 
 Focused tests are `tests/a03-22-reference-assemblies.test.js`, `tests/a03-22-reference-interface-members.test.js`,
-`tests/a03-22-reference-synthesized-metadata.test.js` and `tests/a03-22-reference-policy.test.js`.
+`tests/a03-22-reference-synthesized-metadata.test.js`, `tests/a03-22-reference-identity.test.js` and `tests/a03-22-reference-policy.test.js`.
 The source and native observer are in `tests/fixtures/a03-reference-assemblies/`.
 
 ```sh
@@ -98,11 +104,14 @@ node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-
 The native capture uses the installed SDK's Roslyn `csc.dll` and reference pack directly, without package restore. It
 compares public and friend-assembly metadata through System.Reflection.Metadata: declarations, signatures, constants,
 layout, base/interface relations, custom attributes, MethodImpl and accessor associations. The public and friend
-corpora include fixed buffers in generic and nested generic structs, and the independent consumer accesses both
-storage forms from closed instantiations. It checks concrete method
-bodies, compiles an independent consumer against the SharpForge image, verifies friend access, and compares CoreCLR's
-reference-loading HRESULT against Roslyn while a marker-free control loads successfully. Serialized `typeof` values
-are compared by type name because the reference contract versions differ. Attribute decoding retains native metadata
+corpora include fixed buffers in generic and nested generic structs. Both images are consumed independently: a positive
+consumer uses the supported API, the original full consumer retains all three fixed-buffer accesses and compares native
+diagnostic codes, text and exact source spans, and a friend consumer verifies visibility. Compiler commands, raw output
+and SARIF diagnostics are retained. It checks concrete method bodies and compares CoreCLR's reference-loading HRESULT
+against Roslyn while a marker-free control loads successfully. Serialized `typeof` values retain whether an assembly
+identity was supplied, require that identity to match an AssemblyRef, and compare the resolved native runtime identity.
+This preserves qualification differences even when CoreCLR forwards two contract versions to the same runtime type.
+Attribute decoding retains native metadata
 identities: source enums use their `value__` storage signatures, and external enums resolve their exact AssemblyRef
 through the CLR, including framework forwarders. An independent Roslyn observer probe exercises byte and unsigned
 64-bit source enums, an external enum, boxed and array enum values, named arguments and null arrays before comparison.
@@ -115,7 +124,11 @@ The source was named `Source.cs` during capture; file-local name hashes are comp
 passed 40 tests at `e14947ea`; four separate parameter-default reference-pack tests skipped because their SDK path was
 not configured. The native observer probe passed at `b939cb00`; the first complete public comparison identified
 missing synthesized attributes, virtual/event flag differences and unnecessary fixed-buffer storage TypeDefs.
-Those captured differences drive the focused regressions; the corrected native comparison and performance are pending.
+Those captured differences drive the focused regressions. At `1435807c`, the 40-test focused gate passed without skips
+and the full public metadata comparison passed. The subsequent both-image consumer probe disproved the original blanket
+consumer-success assumption: native output rejected the three fixed buffers with `CS0648`, while the missing serialized
+element identity in SharpForge caused `CS0570`. The qualified-identity correction, both-image positive/negative consumer
+checks, friend comparison and performance remain pending.
 Browser, Rust-native and Wasm execution are not qualified by these checks: the output is a compile-time reference
 assembly and its marker deliberately prevents execution loading.
 
@@ -130,3 +143,5 @@ Canonical explicit interface names and precise accessor flags apply to the share
 point, parser, executable instruction lowering or runtime dispatcher changes. Type references to omitted synthesized
 nested declarations now form a valid local TypeRef chain, and method flags preserve internal virtual override access
 checks while static interface event accessors do not allocate instance virtual slots.
+The compiler's fixed-buffer attribute writer imports the public CIL identity resolver and reuses its existing
+`AssemblyIdentity` formatter; it does not duplicate fallback versions or public-key token computation.

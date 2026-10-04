@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { execFileSync, spawnSync } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdtempSync, readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync, realpathSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -7,6 +7,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { compileToReferenceAssembly } from '@sharpforge/compiler';
 import { locateReferencePack } from '@sharpforge/compiler/node';
+import { compareReferenceConsumers } from './reference-consumers.mjs';
 
 const args = process.argv.slice(2);
 const option = name => args.includes(name) ? args[args.indexOf(name) + 1] : undefined;
@@ -37,7 +38,7 @@ try {
   const oracleSources = ['Program.cs', 'SignatureNames.cs', 'AttributeTypes.cs'];
   writeJson(join(output, 'capture-inputs.json'), { sdk, compiler, referencePack: pack.version,
     platform: process.platform, architecture: process.arch,
-    files: Object.fromEntries([...oracleSources, 'surface.cs', 'consumer.cs', 'observer-enums.cs']
+    files: Object.fromEntries([...oracleSources, 'surface.cs', 'consumer.cs', 'positive-consumer.cs', 'observer-enums.cs']
       .map(name => [name, hash(readFileSync(join(fixture, name)))])) });
   run([...common, '-target:exe', '-out:' + oracle, ...oracleSources.map(name => join(fixture, name))]);
   writeJson(join(temporary, 'Oracle.runtimeconfig.json'), {
@@ -50,9 +51,12 @@ try {
   writeJson(join(output, 'observer-enums.json'), enumObservation);
   const enumAttribute = enumObservation.surface.find(type => type.name === 'EnumObservation.Probe').attributes
     .find(attribute => attribute.name === 'EnumObservation.EnumArgumentsAttribute');
-  assert.deepEqual(enumAttribute.arguments.map(argument => Array.isArray(argument.value)
-    ? argument.value.map(element => element.value) : argument.value), [255, 4294967296, 0, 4294967296, [255], 'System.Int32']);
+  assert.deepEqual(enumAttribute.arguments.slice(0, 5).map(argument => Array.isArray(argument.value)
+    ? argument.value.map(element => element.value) : argument.value), [255, 4294967296, 0, 4294967296, [255]]);
   assert.equal(enumAttribute.arguments[4].value[0].type, enumAttribute.arguments[0].type);
+  assert.equal(enumAttribute.arguments[5].value.name, 'System.Int32');
+  assert.equal(enumAttribute.arguments[5].value.assemblyQualified, true);
+  assert.equal(enumAttribute.arguments[5].value.identityMatchesReference, true);
   assert.deepEqual(enumAttribute.named.map(argument => [argument.name, argument.value]), [['Choice', 255], ['NullValues', null]]);
   const source = readFileSync(join(fixture, 'surface.cs'), 'utf8');
   const control = compileToReferenceAssembly(source, { name: 'MetadataControl', allowUnsafe: true });
@@ -64,7 +68,6 @@ try {
   writeJson(join(output, 'metadata-control.json'), controlObservation);
   assert.equal(controlObservation.markerCount, 0);
   assert.equal(controlObservation.loadRejection, 'none', 'Marker-free metadata-only control must load successfully');
-  const consumer = join(fixture, 'consumer.cs');
   const cases = [];
   for (const friends of [false, true]) {
     const id = friends ? 'friend' : 'public';
@@ -92,20 +95,11 @@ try {
     assert.equal(observed.markerCount, 1);
     assert.equal(observed.allBodiesThrowNull, true);
     assert.equal(observed.loadRejection, 'BadImageFormatException');
-    run([...common, '-target:library', '-r:' + emitted, '-out:' + join(temporary, 'Consumer.dll'), consumer]);
-    const friendConsumer = join(temporary, 'Friend.cs');
-    writeFileSync(friendConsumer, 'public class FriendUse { public int Read(RefSurface.Contract c) => c.Internal(); }');
-    const friendArgs = [...common, '-target:library', '-r:' + emitted, '-out:' + join(temporary, 'Friend.dll'), friendConsumer];
-    const attempt = spawnSync(dotnet, friendArgs, {
-      cwd: temporary, env: environment, encoding: 'utf8', timeout: 60_000, maxBuffer: 1024 * 1024,
-    });
-    if (attempt.error) throw attempt.error;
-    assert.equal(attempt.status === 0, friends, 'csc friend access must follow InternalsVisibleTo');
-    if (!friends) assert.match(attempt.stdout + attempt.stderr, /CS1061|CS0122/);
+    const consumers = compareReferenceConsumers({ dotnet, common, temporary, output, environment }, { id, native, emitted, friends, fixture });
     const referenceName = id + '-roslyn.dll';
     cases.push({ id, sourceSha256: hash(text), referenceFile: referenceName,
       referenceSha256: hash(readFileSync(native)), emittedSha256: hash(compiled.assembly),
-      consumerCompiled: true, friendConsumerCompiled: friends, ...expected });
+      consumerCompiled: true, friendConsumerCompiled: friends, consumers, ...expected });
   }
   const result = { schemaVersion: 1, sdk, compiler, runtime: cases[0].runtime, referencePack: pack.version,
     platform: process.platform, architecture: process.arch, metadataControlLoads: true,

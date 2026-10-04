@@ -84,8 +84,16 @@ test('A03-T22 fixed-buffer attributes preserve element types and lengths when st
   ]) {
     const field = declared(inspector, owner).fields.find(field => field.name === 'Data');
     assert.deepEqual(attributes(inspector, field.token).map(attribute => [attribute.name, attribute.arguments]),
-      [['System.Runtime.CompilerServices.FixedBufferAttribute', [element, length]]]);
+      [['System.Runtime.CompilerServices.FixedBufferAttribute',
+        [element + ', System.Runtime, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a', length]]]);
   }
+});
+
+test('A03-T22 serialized fixed-buffer element identity follows the selected framework contract', () => {
+  const inspector = emit('public unsafe struct S { public fixed byte Data[1]; }', { framework: 'mscorlib4' });
+  const field = declared(inspector, 'S').fields[0];
+  assert.deepEqual(attributes(inspector, field.token)[0].arguments,
+    ['System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089', 1]);
 });
 
 test('A03-T22 legacy metadata-only output keeps its existing synthesized attribute profile', () => {

@@ -39,7 +39,7 @@ object? Value(object? value) => value switch
 {
     ImmutableArray<CustomAttributeTypedArgument<AttributeType>> array =>
         array.IsDefault ? null : array.Select(item => new { type = item.Type.Name, value = Value(item.Value) }).ToArray(),
-    AttributeType type => type.Name,
+    AttributeType type => attributeTypes.SerializedTypeValue(type),
     _ => value,
 };
 object[] Attributes(CustomAttributeHandleCollection handles) => handles.Select(handle =>

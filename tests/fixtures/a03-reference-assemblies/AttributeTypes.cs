@@ -6,7 +6,7 @@ using System.Reflection.Metadata;
 
 // Display names deliberately omit contract versions; decoding retains the native identity separately.
 sealed record AttributeType(string Name, MetadataReader? Reader = null, EntityHandle Handle = default,
-    string? SerializedName = null);
+    string? SerializedName = null, AssemblyName? SerializedAssembly = null);
 
 sealed class AttributeTypes : ICustomAttributeTypeProvider<AttributeType>
 {
@@ -46,7 +46,24 @@ sealed class AttributeTypes : ICustomAttributeTypeProvider<AttributeType>
         var assemblyName = separator < 0 ? null : new AssemblyName(name[(separator + 1)..].Trim());
         var local = assemblyName == null || assemblyName.FullName == metadata.GetAssemblyDefinition().GetAssemblyName().FullName;
         return local && definitions.TryGetValue(fullName, out var handle)
-            ? new(fullName, metadata, handle) : new(fullName, SerializedName: name);
+            ? new(fullName, metadata, handle, name, assemblyName)
+            : new(fullName, SerializedName: name, SerializedAssembly: assemblyName);
+    }
+
+    public object SerializedTypeValue(AttributeType type)
+    {
+        var local = type.Reader != null && type.Handle.Kind == HandleKind.TypeDefinition;
+        var assemblyQualified = type.SerializedAssembly != null;
+        var declared = local ? metadata.GetAssemblyDefinition().GetAssemblyName() : null;
+        var identityMatchesReference = assemblyQualified && (local
+            ? type.SerializedAssembly!.FullName == declared!.FullName
+            : metadata.AssemblyReferences.Select(handle => metadata.GetAssemblyReference(handle).GetAssemblyName())
+                .Any(identity => identity.FullName == type.SerializedAssembly!.FullName));
+        // Compare the resolved runtime identity, but also preserve qualification and its agreement with AssemblyRef.
+        // Unqualified System.Int32 resolves in CoreCLR yet fails importing a FixedBuffer attribute through facade references.
+        var resolvedIdentity = local ? type.Name + ", " + declared!.FullName
+            : Type.GetType(type.SerializedName ?? type.Name, throwOnError: true)!.AssemblyQualifiedName;
+        return new { name = type.Name, assemblyQualified, identityMatchesReference, resolvedIdentity };
     }
 
     public PrimitiveTypeCode GetUnderlyingEnumType(AttributeType type)

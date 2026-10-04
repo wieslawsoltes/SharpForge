@@ -29,6 +29,7 @@ import { dynamicTransformFlags } from './dynamic-flags.js';
 import { contractAssemblyOf } from './reference-contracts.js';
 import { explicitInterfaceOf, metadataPropertyName } from './explicit-interface-names.js';
 import { writeParameterAttributes } from './parameter-metadata.js';
+import { fixedBufferTypeName } from './fixed-buffer-type-name.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const TYPE_DEF_TABLE = 2;
@@ -312,7 +313,8 @@ export class CustomAttributeWriter {
   fixedBuffer(parent, { elementType, length }) {
     const shape = { isStatic: false, returnType: this.core.void, parameters: [{ type: this.core.type }, { type: this.core.int }] },
       constructor = this.builder.member(this.builder.typeRef(FIXED_BUFFER), '.ctor', methodSignature(this.types, shape));
-    this.add(parent, constructor, encodeCustomAttribute(['System.Type', 'int'], [serializedTypeName(elementType), length]));
+    const name = fixedBufferTypeName(this.types, elementType, serializedTypeName(elementType));
+    this.add(parent, constructor, encodeCustomAttribute(['System.Type', 'int'], [name, length]));
   }
   /**
    * The TypeRef of a framework attribute that is not in the core library's contract: through the reference that
