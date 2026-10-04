@@ -26,6 +26,10 @@ These public models and injectable renderer contributions are imported through `
 
 `ResourceLoader`, `ResourceManager`, `ResourceMap`, `ResourceContext`, `importResw` and `languageFallbacks` own language refresh and resource lookup. `DataPackage`, `ClipboardService` and `LauncherService` retain explicit caller-supplied backends and origin/grant policy. Denied clipboard operations return a reason and denied launches return false; no global fallback clipboard is fabricated.
 
+## Command geometry and text operations
+
+`registerCommandLayouts` and `registerMenuLayouts` arrange the same partitioned commands used by native renderers. `TextCommandController` and `textCommandLabels` provide selection/history-aware actions. Paste first waits for its cancellable event, then applies the approved edit; unsupported clipboard capabilities produce an explicit result.
+
 ## Qualification
 
 The complete A16 scope gate ran at d91e0817: 373 tests, 339 passed and 34 failed. Each publication manifest identifies its recorded cases and subsequent repairs; failures remain visible. Required core is pending on each exact publication tree. Native WinUI oracle, browser IME, codec, OS permission and performance evidence are separate qualifications. No speedup or native parity is claimed without a recorded measurement.
