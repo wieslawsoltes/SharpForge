@@ -1,0 +1,59 @@
+{
+  "sources": {
+    "schemaVersion": 1,
+    "bidi": {
+      "repository": "https://github.com/lojjic/bidi-js",
+      "commit": "953d75cb176f0693aa77d60cdf3afde5f2a0927a",
+      "unicodeVersion": "13.0.0",
+      "transforms": [
+        "named ESM imports and semicolons",
+        "L1 trailing whitespace uses line-relative index"
+      ]
+    },
+    "linebreak": {
+      "repository": "https://github.com/cto-af/linebreak",
+      "commit": "088ff02569c5f213951e819a0578f164455f1075",
+      "unicodeVersion": "17.0.0",
+      "transforms": [
+        "preinflate generated immutable trie data; eliminate runtime gzip dependency",
+        "inject optional per-step work callback into forward/backward codepoint iteration",
+        "replace host-version Unicode regex properties with the pinned Unicode17 lookup"
+      ]
+    },
+    "trie": {
+      "repository": "https://github.com/cto-af/unicode-trie",
+      "tree": "5523d847380ebea9896e3a4f406fdaf134cf27ad",
+      "transforms": [
+        "retain original get/getString; accept pre-parsed data only"
+      ]
+    },
+    "unicode": {
+      "repository": "https://github.com/unicode-org/unicodetools",
+      "version": "17.0.0",
+      "blobs": {
+        "Scripts.txt": "5574fdd6ae35ddc074397fdc60fbe2e27e795713",
+        "GraphemeBreakProperty.txt": "19b13571f347af21a499eeb5ac0f27fc4602dacd",
+        "emoji-data.txt": "450252c4df3fc9477f6df6635f7b4aaf61db5a0f",
+        "DerivedCoreProperties.txt": "f327784bf3956436efeb85e213fc637d7b3c0207",
+        "PropertyValueAliases.txt": "b92662eda2867baed56e55440e5187d52c1cb341",
+        "DerivedGeneralCategory.txt": "41996d6348fdcd7f1a88127766b7e6b21b6159e3"
+      },
+      "transforms": [
+        "sort/merge equal property ranges; map script long names to ISO15924 tags; retain selected InCB/default-ignorable properties"
+      ]
+    }
+  },
+  "sha256": {
+    "LICENSE.txt": "49d4d143fed599deb502a0fe6e02f49832f87e9a3a4cd0502e469596d50faa6d",
+    "src/brackets.js": "6adb011e5b6bacb036c62332d059e6c7ac3d90ab07ca6f1b1c618138bc395923",
+    "src/charTypes.js": "f3aff65854d9c07bd6f037b840222ca8c925a71534f74cc19555d7922abc2a89",
+    "src/data/bidiBrackets.data.js": "6a06f0eaf55634954079f29ae7e16d99b413e1be8bc8b34414b62cdf75f36487",
+    "src/data/bidiCharTypes.data.js": "a2798db1cb0e47904c582f76b32dd97783b09f44750f7beee96592f3453cee52",
+    "src/data/bidiMirroring.data.js": "c08d5d27327319990e6560545e70e19cf762a713843ba67f6aac44ea4e63ff4f",
+    "src/embeddingLevels.js": "f8da4abdc0b73dfc5413eef3c5a151578c44e5f7172d05b5c8db2460efd5520d",
+    "src/index.js": "06c5c56e04e8dd109a74edd7823207f1b0cc16a9fb302e614cb0d97dc196b649",
+    "src/mirroring.js": "9d15b9aa08a20cf34585e8ecffb0959172a67ac94ac1993707eeea576b34dab6",
+    "src/reordering.js": "eb00f8a1f9166b7c0345adb4024a3f5c2023fdea48e12d8e293742d889e498ae",
+    "src/util/parseCharacterMap.js": "c9cbba2103272afe4b810e9cf0e14e9eb24580ae1279ea47947e382962b6400a"
+  }
+}
