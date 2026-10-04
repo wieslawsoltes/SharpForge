@@ -65,3 +65,7 @@ Visual-state collections, current-state events, adaptive/custom triggers and tra
 ## Template application and default recipes
 
 `getResourceServices` applies styles and templates through the host transaction and reconciles owner roots after mutation. Initial template construction belongs to explicit ApplyTemplate or layout; live invalidations refresh an initialized template. `installDefaultTemplateCatalog` consumes the controls package's injected real-part recipes. Failed factories disconnect bindings/resources before destroying target stores and preserve the original validation error.
+
+## XAML writer integration prerequisites
+
+The approved object writer, serializer, markup extensions and registered namespace projection are joined from their reviewed branch. The full resource/XAML fixture replaces its earlier property-only prefix only after all its imports exist. Newer property/binding and construction lifetime files stay in place.
