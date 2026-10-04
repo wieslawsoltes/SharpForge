@@ -129,3 +129,17 @@ test('A00 schema input walk is bounded and retains newer-version error precedenc
   assert.throws(()=>validate({unsupportedKeyword:true},{}),{code:'SCHEMA_DEFINITION'});
   assert.throws(()=>validate({$ref:'#/missing'},{}),{code:'SCHEMA_DEFINITION'});
 });
+test('A00 schema string bounds count Unicode characters across inclusive boundaries',()=>{
+  for(const [value,length] of [['',0],['abc',3],['𝄞',1],['A😀B',3],['e\u0301',2],['👩‍💻',3],['\0',1]]){
+    validate({type:'string',minLength:length,maxLength:length},value);
+    assert.throws(()=>validate({minLength:length+1},value),{code:'SCHEMA_INVALID'});
+    if(length)assert.throws(()=>validate({maxLength:length-1},value),{code:'SCHEMA_INVALID'});
+  }
+});
+test('A00 schema Unicode string bounds compose with patterns and nested paths',()=>{
+  const contract={properties:{names:{items:{type:'string',minLength:1,maxLength:1,pattern:'^.$'}}}};
+  validate(contract,{names:['a','𝄞','😀']});
+  assert.throws(()=>validate(contract,{names:['a','😀😀']}),{code:'SCHEMA_INVALID',path:'$.names[1]'});
+  assert.throws(()=>validate({minLength:1,maxLength:1,pattern:'^[a-z]$'},'😀'),{code:'SCHEMA_INVALID'});
+  for(const value of [null,0,true,[],{}])validate({minLength:2,maxLength:3},value);
+});
