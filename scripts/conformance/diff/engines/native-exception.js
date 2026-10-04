@@ -21,5 +21,8 @@ export function splitNativeException(raw, platform = process.platform) {
   const marker = line => /^[ \t]*--- End of (?:inner exception stack trace|stack trace from previous location) ---$/.test(line);
   // Unrecognised text interleaved after frames may be application output, so do not hide it.
   if (!lines.slice(firstFrame).every(line => line === '' || frame(line) || marker(line))) return absent;
-  return { exception: { type: header[1], message: header[2] ?? '' }, exceptionDiagnostic: diagnostic };
+  // Multiline messages precede the first stack frame and remain observable as exception text.
+  const stackStart=diagnostic.search(/^[ \t]+at /m), beforeStack=diagnostic.slice(0,stackStart).replace(/\r?\n$/,'');
+  const message=(header[2]??'')+beforeStack.slice(header[0].replace(/\r$/,'').length);
+  return { exception: { type: header[1], message }, exceptionDiagnostic: diagnostic };
 }

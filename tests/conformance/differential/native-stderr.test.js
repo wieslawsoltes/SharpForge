@@ -85,3 +85,13 @@ test('only explicit native diagnostic suffixes may be removed during normalizati
     result('clr-sharpforge', { stderr: diagnostic, exceptionDiagnostic: diagnostic }),
   ]) assert.throws(() => normalise(record, fixture), /Malformed native exception diagnostic/);
 });
+
+
+test('multiline native exception messages remain observable when stack diagnostics are separated', () => {
+  const stderr='prefix\nUnhandled exception. System.Exception: first\r\nsecond\nthird\r\n   at Program.Main()\r\n';
+  const split=splitNativeException({...raw(),stderr},'linux');
+  assert.deepEqual(split.exception,{type:'System.Exception',message:'first\r\nsecond\nthird'});
+  const record=result('clr-roslyn',{stderr,...split,status:'runtime-error',exitCode:null});
+  assert.equal(normalise(record,fixture).stderr,'prefix\n');
+  assert.equal(normalise(record,fixture).exception.message,'first\nsecond\nthird');
+});
