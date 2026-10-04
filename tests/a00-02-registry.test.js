@@ -10,7 +10,13 @@ const contribution=(name,type)=>({name,register:r=>{r.define(type);r.ctor(type);
 test('released framework and bytecode IDs are unchanged',async()=>{const framework=JSON.parse(await readFile(new URL('../planning/contracts/framework-ids.lock.json',import.meta.url))),bytecode=JSON.parse(await readFile(new URL('../planning/contracts/bytecode-ids.lock.json',import.meta.url)));assert(checkContractIds({framework,bytecode},snapshotContractIds()));for(const d of contracts)assert.equal(frameworkBuiltin(d).contract,d);});
 test('golden checker reports the first changed id and accepts appends',()=>{const expected=snapshotContractIds(),changed=structuredClone(expected);changed.framework[3].name+='Changed';assert.throws(()=>checkContractIds(expected,changed),/id 3/);const op=structuredClone(expected);op.bytecode.Op.SEQ++;assert.throws(()=>checkContractIds(expected,op),/Op numbering/);const offset=structuredClone(expected);offset.bytecode.contractOffset++;assert.throws(()=>checkContractIds(expected,offset),/offset/);const appended=structuredClone(expected);appended.framework.push({id:99999});appended.bytecode.Op.APPENDED=999;assert(checkContractIds(expected,appended));});
 test('reserved contributions have the same IDs in either load order',()=>{const a=make(),b=make();a.registerAll([contribution('one','First'),contribution('two','Second')]);b.registerAll([contribution('two','Second'),contribution('one','First')]);assert.deepEqual(a.contracts,b.contracts);assert.equal(a.contracts[3].id,200);assert.equal(a.types.size,2);});
-test('legacy contribution modules validate as a single transaction',()=>{const r=createRegistry({reservations:idReservations});r.registerAll(contributionManifest);assert.equal(r.validate(),true);assert.equal(r.contracts.length,contracts.length);});
+test('legacy contribution modules validate as a single transaction',()=>{
+  const registry=createRegistry({reservations:idReservations});
+  registry.registerAll(contributionManifest);
+  assert.equal(registry.validate(),true);
+  const released=contracts.filter(contract=>contributionManifest.some(range=>contract.id>=range.start&&contract.id<range.start+range.size));
+  assert.deepEqual(registry.contracts,released);
+});
 for(const [name,register,pattern]of [
  ['duplicate type',r=>{r.define('A');r.define('A');},/Duplicate type/],
  ['duplicate member',r=>{r.define('A');r.member('A','M',[],'void');r.member('A','M',[],'void');},/Duplicate member/],

@@ -264,8 +264,9 @@ const Members = Base =>
     /** `<startup>` calls the entry point and awaits a task-returning one; the result is the exit code. */
     startup(entry) {
       const result = asyncResultType(entry.returnType) ?? entry.returnType,
-        method = this.program.addMethod(null, '<startup>', { isStatic: true, returnType: result, parameters: [] });
-      const args = entry.parameters.length ? [n.newArray('string', n.literal(0, 'int'))] : [];
+        parameters = entry.parameters.map((parameter, index) => n.newParameter(parameter.name, parameter.type, index)),
+        method = this.program.addMethod(null, '<startup>', { isStatic: true, returnType: result, parameters });
+      const args = parameters.map(parameter => n.parameter(parameter));
       const call = n.call(entry, null, args),
         invocation = result === entry.returnType ? call : this.awaitTask(call);
       const statement = result === 'void' ? n.expressionStatement(invocation) : n.returnStatement(invocation);
