@@ -485,6 +485,39 @@ raw-prefix optimization so their effects are not attributed to this overload.
 Culture support and other search overloads remain tracked by #2621; this batch
 does not qualify native/Wasm execution.
 
+`String.LastIndexOf(string, int startIndex, StringComparison)` appends contract
+`524314` after the StringBuilder indexer accessors `524312`/`524313`. The start
+index is the last UTF-16 unit included in the searched prefix. A nonempty receiver
+accepts `0..Length`; `Length` aliases the final unit. An empty receiver accepts
+both -1 and 0. The normalized exclusive end is `min(startIndex + 1, Length)`;
+empty values return that end. Null receiver/value, invalid enum and invalid start
+retain native precedence before the explicit guard for culture modes 0–3.
+
+The [pinned .NET 10.0.5 capture](reference/string-lastindexof-comparison-start/README.md)
+contains 990 unchanged native rows, including the 246 whole-string controls,
+empty-receiver aliases, inclusive endpoints, every small prefix, overlapping
+matches, surrogate cuts and periodic clipped matches. Valid culture outputs
+remain in the oracle even though the profile deliberately rejects those modes.
+
+Ordinal limits its native `lastIndexOf` starting position to the final complete
+candidate (`end - value.Length`) after empty/length checks. Ordinal-ignore-case
+reuses the existing continuing Two-Way scan with the exclusive end; it retains
+period memory after matches and rejected raw endpoints. No substring, transformed
+copy, options object or callback is introduced. Both return absolute offsets;
+no candidate can cross the prefix end. The ignore-case fold can inspect adjacent
+surrogate units outside the prefix for classification, as in the existing window
+search. Its read bound is O(prefix.Length + value.Length), with constant space
+and two host factorization records for eligible nonempty folded cores. Successful
+calls allocate no managed strings or arrays.
+
+Tests cover both compiler pipelines and VMs, independent CIL, managed collection,
+exhaustive prefixes, empty/end normalization and counted overlap reads. The static
+benchmark `scripts/benchmarks/a07-string-lastindexof-comparison-start.mjs` compares
+unchanged first/last controls against integrated parent `310410b2`, then reports
+the new ordinal and ignore-case prefix routes separately. It includes 8/9/64-unit
+needles, excluded suffixes and all-overlap inputs. Other LastIndexOf overloads,
+culture support and native/Wasm execution remain outside this batch under #2621.
+
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null
 first, then compares exact UTF-16 code units without normalization, case folding
