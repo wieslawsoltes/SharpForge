@@ -23,7 +23,7 @@ Reference decoding checks the context identity, unique paths, at most 512
 references, 8 MiB per reference, and 32 MiB total by default. It validates Base64,
 declared byte counts, and SHA-256 when supplied. Large Base64 payloads are decoded
 in bounded chunks with cancellation and event-loop yields. Hydration also bounds
-the source set to 20,000 records and 32 MiB of source text.
+the source set to 20,000 records and 32 × 1,024 × 1,024 UTF-16 code units of text.
 
 `settings.js` retains the existing native request, delay, action-reporting and
 artifact-download helpers so the context model and later controller share one
