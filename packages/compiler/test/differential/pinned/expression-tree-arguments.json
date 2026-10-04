@@ -1,0 +1,4 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "expression-tree-arguments/cs0854-cs0853-below-csharp-14":{"hash":"d4247944f8a58957","kind":"diagnostics","langVersion":"13.0","diagnostics":[["CS0854",354,4,"error"],["CS0854",415,7,"error"],["CS0853",468,13,"error"],["CS0854",581,10,"error"],["CS0854",645,6,"error"],["CS0853",705,13,"error"]]},
+  "expression-tree-arguments/cs9307-only-from-csharp-14":{"hash":"ec734ba93ab27c4e","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS9307",705,13,"error"]]}
+}}

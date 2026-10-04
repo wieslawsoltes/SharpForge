@@ -7,7 +7,8 @@ export const legacyBuiltinCases = Object.freeze([
   ['int.Parse', ['-2147483648'], 'int', -2147483648],
   ['int.Parse', ['2147483647'], 'int', 2147483647],
   ['int.Parse', [''], 'int', 'FormatException'],
-  ['int.Parse', [null], 'int', 'FormatException'],
+  // SF-A07-B04: null is an argument error, not malformed numeric text.
+  ['int.Parse', [null], 'int', 'ArgumentNullException'],
   ['int.Parse', ['1.5'], 'int', 'FormatException'],
   ['int.Parse', ['0x10'], 'int', 'FormatException'],
   ['int.Parse', ['2147483648'], 'int', 'OverflowException'],

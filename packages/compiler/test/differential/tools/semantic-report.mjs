@@ -23,7 +23,8 @@ export function semanticRow(fixture, pinned) {
   );
   let result;
   try {
-    result = analyze([file], fixture.langVersion ? { langVersion: fixture.langVersion } : {});
+    // The same options the harness and the pinning tool compile a fixture with.
+    result = analyze([file], { ...(fixture.langVersion ? { langVersion: fixture.langVersion } : {}), ...(fixture.allowUnsafe ? { allowUnsafe: true } : {}) });
   } catch (error) {
     return { id: fixture.id, crash: String(error.stack).split('\n').slice(0, 4).join(' | ') };
   }

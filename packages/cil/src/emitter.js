@@ -1,9 +1,12 @@
+import { emissionPEOptions, debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
+import { EmitterSignatures } from './emitter-signatures.js';
+import { emitPropertyMetadata } from './emitter-properties.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
 import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins } from '@sharpforge/bytecode';
 import { Writer, CilError, align, utf8 } from './binary.js';
-import { MetadataBuilder, token, codedIndex, cliSystemName, methodSignature, localSignature, fieldSignature } from './metadata.js';
+import { MetadataBuilder, token, codedIndex, cliSystemName } from './metadata.js';
 import { CilWriter } from './opcodes.js';
-import { TEXT_RVA, writeMethodBody, writePE } from './pe.js';
+import { TEXT_RVA, writeMethodBody } from './pe.js';
 import { analyzeMethod, constantType, validateInput } from './analysis.js';
 const markerName='SharpForge.<>AllocationToken';
 const isValue=t=>['int','long','double','bool'].includes(t)||['enum','value'].includes(frameworkType(t)?.kind);
@@ -11,13 +14,16 @@ const binaryCodes={'+':'add','-':'sub','*':'mul','/':'div','%':'rem','&':'and','
 function safeName(name) { if(typeof name!=='string'||!name||name.length>512||/[\0/\\]/.test(name))throw new CilError('Invalid assembly name');return name.replace(/\.dll$/i,''); }
 /** Emits genuine PE/CLI metadata and CIL bodies. No JS source, host eval or embedded executable bytecode. */
 export function emitAssembly(image,options={}) { return emitAssemblyDetailed(image,options).bytes; }
-export function emitAssemblyDetailed(image,{name=image.name??'Application',framework='net8',embedSources=true,includeDebug=true}={}) {
+export function emitAssemblyDetailed(image,options={}) {
+  let {name=image.name??'Application',framework='net8',embedSources=true,includeDebug=true}=options;
+  const peOptions=emissionPEOptions(image,options,framework);
   validateInput(image);if(!['net8','mscorlib4'].includes(framework))throw new CilError('Supported reference profiles: net8, mscorlib4');name=safeName(name);const started=performance.now(),metadata=new MetadataBuilder(name,{framework});
   const context={image,metadata,framework,typeTokens:new Map(),methodTokens:new Map(),fieldTokens:new Map(),staticTokens:[],allocTokens:new Map(),descriptors:[],helperToken:0};
   context.resolveType=t=>context.typeTokens.get(t)??metadata.typeRef(cliSystemName(t));
   const objectToken=context.resolveType('object');
   const typeDescriptors=[{name:'<Module>',namespace:'',flags:0,original:null},{name:'<>Program',namespace:'SharpForge',flags:0x100181,original:null,program:true},{name:'<>AllocationToken',namespace:'SharpForge',flags:0x100101,original:null,marker:true},...image.types.map(t=>({name:t.name,namespace:'',flags:image.outputKind==='library'?0x000001:0x100001,original:t}))];
   typeDescriptors.forEach((t,index)=>{t.token=token(2,index+1);if(t.original)context.typeTokens.set(t.original.name,t.token);if(t.marker)context.typeTokens.set(markerName,t.token);});
+  context.signatures=new EmitterSignatures(context.typeTokens,context.resolveType);
   // Preallocate all definition tokens before signatures or bodies can reference them.
   let nextMethod=1,nextField=1;
   for(const type of typeDescriptors){type.fieldStart=nextField;type.methodStart=nextMethod;type.fields=[];type.methods=[];
@@ -28,25 +34,18 @@ export function emitAssemblyDetailed(image,{name=image.name??'Application',frame
     if(type.original){const raw={token:token(6,nextMethod++),name:'.ctor',parameters:[{name:'allocation',type:markerName}],returnType:'void',isStatic:false,flags:0x1883,helper:'allocate',type};context.allocTokens.set(type.original.id,raw.token);type.methods.push(raw);context.descriptors.push(raw);
       const ctors=originals.filter(m=>m.name==='.ctor');for(const ctor of ctors.length?ctors:[null]){const d={token:token(6,nextMethod++),name:'.ctor',parameters:ctor?.parameters??[],returnType:'void',isStatic:false,flags:0x1886,helper:'constructor',ctor,type};type.methods.push(d);context.descriptors.push(d);}}
   }
-  for(const t of typeDescriptors){metadata.add(2,[t.flags,metadata.string(t.name),metadata.string(t.namespace),t.name==='<Module>'?0:codedIndex('TypeDefOrRef',objectToken),t.fieldStart,t.methodStart]);for(const f of t.fields)metadata.add(4,[(f.isStatic?0x10:0)|(f.backing?1:6),metadata.string(f.name),metadata.blob(fieldSignature(f.type,context.resolveType))]);}
+  for(const t of typeDescriptors){metadata.add(2,[t.flags,metadata.string(t.name),metadata.string(t.namespace),t.name==='<Module>'?0:codedIndex('TypeDefOrRef',objectToken),t.fieldStart,t.methodStart]);for(const f of t.fields)metadata.add(4,[(f.isStatic?0x10:0)|(f.backing?1:6),metadata.string(f.name),metadata.blob(context.signatures.field(f.type))]);}
   for(const t of typeDescriptors)for(const name of t.original?.interfaces??[])metadata.add(9,[t.token&0xffffff,codedIndex('TypeDefOrRef',context.resolveType(name))]);
-  let paramRow=1;for(const d of context.descriptors){d.row=metadata.add(6,[0,0,d.flags,metadata.string(d.name),metadata.blob(methodSignature(d.returnType,d.parameters.map(p=>p.type),d.isStatic,context.resolveType)),paramRow]);if(d.row!==d.token)throw new CilError('Method token allocation mismatch');for(let i=0;i<d.parameters.length;i++){metadata.add(8,[0,i+1,metadata.string(d.parameters[i].name)]);paramRow++;}}
-  for(const descriptor of typeDescriptors){const properties=descriptor.original?.properties??[];if(!properties.length)continue;
-    metadata.add(21,[descriptor.token&0xffffff,(metadata.rows[23]?.length??0)+1]);
-    for(const property of properties){const signature=methodSignature(property.type,[],property.isStatic,context.resolveType);signature[0]|=8;
-      const pt=metadata.add(23,[0,metadata.string(property.name),metadata.blob(signature)]);
-      if(property.get!==null)metadata.add(24,[2,context.methodTokens.get(property.get)&0xffffff,codedIndex('HasSemantics',pt)]);
-      if(property.set!==null)metadata.add(24,[1,context.methodTokens.get(property.set)&0xffffff,codedIndex('HasSemantics',pt)]);
-    }
-  }
-  context.external=(owner,name,returnType,parameters,isStatic=true)=>metadata.member(context.resolveType(owner),name,methodSignature(returnType,parameters,isStatic,context.resolveType));
+  let paramRow=1;for(const d of context.descriptors){d.row=metadata.add(6,[0,0,d.flags,metadata.string(d.name),metadata.blob(context.signatures.method(d.returnType,d.parameters.map(p=>p.type),d.isStatic)),paramRow]);if(d.row!==d.token)throw new CilError('Method token allocation mismatch');for(let i=0;i<d.parameters.length;i++){metadata.add(8,[0,i+1,metadata.string(d.parameters[i].name)]);paramRow++;}}
+  emitPropertyMetadata(typeDescriptors, context);
+  context.external=(owner,name,returnType,parameters,isStatic=true)=>metadata.member(context.resolveType(owner),name,context.signatures.method(returnType,parameters,isStatic));
   const section=new Writer().zero(72),debugMethods=[];let ilBytes=0;
-  for(const d of context.descriptors){section.pad();const rva=TEXT_RVA+section.length;metadata.rows[6][(d.token&0xffffff)-1][0]=rva;const body=d.original?emitMethod(context,d):emitHelper(context,d);d.body=body;ilBytes+=body.code.length;const sig=body.locals.length?metadata.add(17,[metadata.blob(localSignature(body.locals,context.resolveType))]):0;section.bytes(writeMethodBody(body.code,sig,body.maxStack,body.handlers));
+  for(const d of context.descriptors){section.pad();const rva=TEXT_RVA+section.length;metadata.rows[6][(d.token&0xffffff)-1][0]=rva;const body=d.original?emitMethod(context,d):emitHelper(context,d);d.body=body;ilBytes+=body.code.length;const sig=body.locals.length?metadata.add(17,[metadata.blob(context.signatures.locals(body.locals))]):0;section.bytes(writeMethodBody(body.code,sig,body.maxStack,body.handlers));
     if(d.original)debugMethods.push({...(d.original.asyncRole?{asyncRole:d.original.asyncRole,asyncOrigin:d.original.asyncOrigin}:{}),id:d.original.id,token:d.token,name:d.original.name,qualifiedName:d.original.qualifiedName,...(d.original.sourceRange?{sourceRange:d.original.sourceRange}:{}),...(d.original.accessor?{accessor:d.original.accessor}:{}),locals:d.original.locals.map(({type,...local})=>local),spans:body.spans});
   }
-  debugMethods.sort((a,b)=>a.id-b.id);const debug={format:'SharpForge.CIL',version:1,framework,name,entry:image.entryPoint,...(image.outputKind==='library'?{outputKind:'library'}:{}),types:image.types.map(t=>({id:t.id,token:context.typeTokens.get(t.name),initializer:t.initializer})),statics:context.staticTokens,methods:debugMethods,sequencePoints:image.sequencePoints.map(p=>({...p,ilOffset:debugMethods[p.methodId].spans[p.offset][0],methodToken:context.methodTokens.get(p.methodId)})),sources:image.sources.map(s=>embedSources?s:({uri:s.uri,version:s.version}))};
-  section.pad();const metadataOffset=section.length,md=metadata.finish(includeDebug?debug:null,section.finish());section.bytes(md);const bytes=writePE(section.finish(),metadataOffset,md.length,image.outputKind==='library'?0:context.methodTokens.get(image.entryPoint));
-  return {bytes,debug:includeDebug?debug:null,symbolData:{...debug,sources:image.sources},metrics:{emitIlMs:performance.now()-started,assemblyBytes:bytes.length,ilBytes,metadataBytes:md.length,methods:context.descriptors.length},framework};
+  debugMethods.sort((a,b)=>a.id-b.id);const debug={format:'SharpForge.CIL',version:1,framework,name,...debugPEOptions(peOptions),entry:image.entryPoint,...(image.outputKind==='library'?{outputKind:'library'}:{}),types:image.types.map(t=>({id:t.id,token:context.typeTokens.get(t.name),initializer:t.initializer})),statics:context.staticTokens,methods:debugMethods,sequencePoints:image.sequencePoints.map(p=>({...p,ilOffset:debugMethods[p.methodId].spans[p.offset][0],methodToken:context.methodTokens.get(p.methodId)})),sources:image.sources.map(s=>embedSources?s:({uri:s.uri,version:s.version}))};
+  const {bytes,metadataBytes}=finishEmittedPE({section,metadata,debug,includeDebug,entryToken:image.outputKind==='library'?0:context.methodTokens.get(image.entryPoint),options:peOptions});
+  return {bytes,debug:includeDebug?debug:null,symbolData:{...debug,sources:image.sources},metrics:{emitIlMs:performance.now()-started,assemblyBytes:bytes.length,ilBytes,metadataBytes,methods:context.descriptors.length},framework};
 }
 function emitHelper(c,d) {
   const w=new CilWriter(),objectCtor=c.external('object','.ctor','void',[],false);let maxStack=2;

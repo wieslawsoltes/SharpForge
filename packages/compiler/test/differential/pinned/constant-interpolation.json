@@ -1,0 +1,6 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "constant-interpolation/constants-fold-in-fields-locals-labels-and-patterns":{"hash":"0ffe0eb2b349b539","kind":"output","langVersion":"14.0","diagnostics":[],"output":"ab\n<aba!>\na?\nhit\nTrue\n"},
+  "constant-interpolation/cs0133-holes-must-be-constant-strings":{"hash":"2c39be02c36b2416","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0133",84,6,"error"],["CS0133",113,8,"error"],["CS0133",144,8,"error"],["CS0133",175,9,"error"],["CS0134",207,6,"error"],["CS0134",236,6,"error"],["CS0133",329,6,"error"]]},
+  "constant-interpolation/constant-interpolation-in-csharp-9":{"hash":"da4c0f4dfd5a884a","kind":"diagnostics","langVersion":"9.0","diagnostics":[["CS8773",63,7,"error"]]},
+  "constant-interpolation/doubled-braces-are-one-brace":{"hash":"9d141c6e6cf2ab6e","kind":"output","langVersion":"14.0","diagnostics":[],"output":"{n}\n{1}\na\\{b}1\ntab\t{}1\n{ 1 }\n"}
+}}
