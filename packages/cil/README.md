@@ -132,3 +132,5 @@ Opt-in [type-prefix validation](PREFIX-CONSTRAINED.md) checks constrained/readon
 
 The source-image emitter uses [nested exception-region layout](EMITTER-EXCEPTION-REGIONS.md) for catch/finally clause ordering and indexed transfers.
 The opt-in [verifier type-system adapter](VERIFIER-TYPE-SYSTEM.md) resolves bounded local hierarchy relations and reports missing metadata as unknown.
+
+The opt-in [verifier member context](VERIFIER-MEMBERS.md) adds bounded, canonical local field/method declaration resolution to type relations.
