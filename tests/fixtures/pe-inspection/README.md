@@ -113,6 +113,13 @@ do not execute these inspection fixtures.
 
 ## Validation status
 
+The original source qualification below remains historical evidence. The three
+construction changes at `d72a9fe1684ba28064f83f4307721a1d00b13137` require one
+fresh two-image capture and the same focused gate; both are pending. The strict
+live-source identity assertions remain unchanged. All original native and Node
+artifacts are retained byte-for-byte in
+[qualification/performance-first](qualification/performance-first/independent-review.md).
+
 Native and focused Node qualification completed on **2026-10-04** at integrated
 revision `bf0d9470e4dc50cfdcafb0a6532cea0892b753d6`. The integration preserved the
 reviewed PE/method/symbols source seams and the incoming literal cache correction.

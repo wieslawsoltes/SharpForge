@@ -24,6 +24,25 @@ whose runtime source is the tested integration
 main revision `d64188af91f03d02041316bdde2ee64fd0634be0`. Evidence retention
 does not change product source or qualify an optimized candidate.
 
+## Pending construction candidate
+
+Product revision `d72a9fe1684ba28064f83f4307721a1d00b13137` contains only the
+three reviewed construction changes: build each directory record once, append
+the optional summary PE field conditionally, and populate implementation facts
+into fresh method destinations. Field order, fresh nested disassembly records,
+classification, cancellation, and bounds remain intact. No performance effect
+has been measured for this candidate.
+
+Its native capture, focused Node gate, and second benchmark cohort are pending.
+The original `native.json` and qualification receipts remain byte-exact in the
+first cohort's archive. The offline test and benchmark retain strict current
+source-hash checks; the old capture cannot qualify the changed source. Run one
+fresh capture with the unchanged pinned observer/tools/images, review and retain
+its exact output, then run the same ten-file Node gate. Before one new benchmark
+cohort, pin the new native fixture and source revision and update only the exact
+allowlist source hash. Keep all workload definitions, counts, order, guards,
+baseline, and inputs unchanged. Use a new output path for every command.
+
 ## Source review before measurement
 
 The ordinary `readPE` path now decodes every optional-header scalar, including

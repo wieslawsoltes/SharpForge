@@ -96,7 +96,7 @@
       "path": "packages/cil/tools/benchmark-pe-inspection.mjs",
       "operation": "dynamic-import",
       "count": 2,
-      "sha256": "aba99974dcba471f0dedbad18054719b9eb56d083817bca1d0d567c4d9955d58",
+      "sha256": "ab8628de1beef080a8fae0e306bca7f6b7d1a7b6a39af0b651a07abb361ace3e",
       "reason": "Reviewed developer-only PE benchmark imports the exact pre-PE baseline public CIL entry from a trusted local checkout and the fixed adjacent benchmark module. Before import it verifies the exact baseline commit, frozen candidate source, own public package aliases and the retained native/source fixture hashes. Image bytes are data and never select executable modules. This source-hash/count entry adds no product dynamic-code surface."
     },
     {
