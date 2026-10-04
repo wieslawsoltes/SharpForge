@@ -181,6 +181,7 @@ advancedTools=new DebuggerExtensions({state,docking,sessions:workbenchServices.s
 
 
 const lazyFeatures=createStudioLazyFeatures({state,docking,runtime,compiler,documents:workbenchServices.documents,
+ designerDiagnostics:projectServices.diagnostics,
  commands:commandRegistry,$,toast,download,explorerContext,chooseExplorer,openFile,applyEdits,requestCompiler,
  renderTree,saveLocal,loadDiskRecords,launch,stopQuietly,resetEditors,renderWorkspace,status,nativeSourceChanges,
  renderTabs,refreshEngineIndicators,setEditorDecorations,renderPanel,openDecompilerFile,setPanel,invokeAssembly,

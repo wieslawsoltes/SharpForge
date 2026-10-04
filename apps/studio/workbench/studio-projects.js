@@ -1,3 +1,5 @@
+import { StudioDiagnostics } from './studio-diagnostics.js';
+
 /** Maps the loaded project system onto isolated compiler services without selecting background work. */
 export class StudioProjects {
   constructor(services, { state, onError = () => {} }) {
@@ -7,6 +9,7 @@ export class StudioProjects {
     this.signatures = new Map();
     this.workspace = null;
     this.epoch = null;
+    this.diagnostics = new StudioDiagnostics(services, state);
   }
 
   get selectedId() {
@@ -45,7 +48,7 @@ export class StudioProjects {
       files: state.files.filter(file => uris.has(file.uri)).map(file => ({ uri: file.uri, text: file.text, version: file.version })),
       compilationOptions, assemblyName: project?.name ?? state.name, extensions: state.extensionConfig,
       outputKind: project?.outputType?.toLowerCase() === 'library' ? 'library' : 'exe',
-      loadingDiagnostics: (state.projectDiagnostics ?? []).filter(item => !item.project || item.project === projectId)
+      loadingDiagnostics: this.diagnostics.forProject(projectId)
     };
   }
 
@@ -85,6 +88,7 @@ export class StudioProjects {
         this.signatures.set(project.id, signature);
       }
     }
+    this.diagnostics.sync();
     this.services.builds.setActive(valid.has(this.selectedId) ? this.selectedId : definitions[0]?.id ?? null);
     const existing = this.services.startup.entries.filter(entry => valid.has(entry.projectId));
     const runnable = definitions.find(project => project.id === this.selectedId && project.outputType.toLowerCase() !== 'library')
@@ -127,4 +131,6 @@ export class StudioProjects {
       this.services.breakpoints.projects.set(projectId, new Map([...uris].map(uri => [uri, (source[uri] ?? []).map(value => ({ ...value }))])));
     }
   }
+
+  dispose() { this.diagnostics.dispose(); }
 }
