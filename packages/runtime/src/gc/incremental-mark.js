@@ -169,20 +169,50 @@ export class IncrementalMarker {
     return this.cursor !== null || this.work.length !== 0;
   }
 
+  beginObject(handle) {
+    this.cursor = this.cursorStorage;
+    this.cursor.handle = handle;
+    this.cursor.identity = this.identities[handle];
+    this.cursor.next = 0;
+    this.cursor.remembered = this.generation < 2 && this.remembered.has(handle);
+    this.cursor.ownerGeneration = this.heap.records[handle]?.gcGeneration ?? 0;
+    this.cursor.hasYounger = false;
+    this.cursor.cardRevision = this.cursor.remembered ? this.cards?.revision(this.blocks.slots[handle]) ?? 0 : 0;
+    this.statistics.scannedObjects++;
+  }
+
+  /** Full-generation, single-slot tracing bypasses the range visitor while preserving the resumable owner. */
+  scanSingleReference(handle) {
+    const record = this.heap.records[handle];
+    const identity = this.identities[handle];
+    if (!record || this.heap.generations[handle] !== identity) return false;
+    const descriptor = record.descriptor;
+    if (descriptor.storageFor !== this.heap.descriptors.storageFor) return false;
+    const slot = descriptor.scan === 'bitmap' && descriptor.referenceSlots.length === 1 ? descriptor.referenceSlots[0]
+      : descriptor.scan === 'all' && record.storage?.length === 1 ? 0 : -1;
+    if (slot < 0) return false;
+    const binding = this.heap.spaces.canonicalSlots(record);
+    if (!binding) return false;
+    // Even a canonical slot may contain a host-wrapped reference. Its identity
+    // getter can collect or throw, so the owner must remain visible throughout.
+    this.beginObject(handle);
+    this.mark(binding.arena.values[binding.block.offset / 8 + slot]);
+    this.statistics.edgesScanned++;
+    this.colors[handle] = MarkColor.Black;
+    this.cursor = null;
+    return true;
+  }
+
   step(budget) {
     let work = 0;
     while (work < budget && this.pending) {
       if (!this.cursor) {
         const handle = this.work.pop();
-        this.cursor = this.cursorStorage;
-        this.cursor.handle = handle;
-        this.cursor.identity = this.identities[handle];
-        this.cursor.next = 0;
-        this.cursor.remembered = this.generation < 2 && this.remembered.has(handle);
-        this.cursor.ownerGeneration = this.heap.records[handle]?.gcGeneration ?? 0;
-        this.cursor.hasYounger = false;
-        this.cursor.cardRevision = this.cursor.remembered ? this.cards?.revision(this.blocks.slots[handle]) ?? 0 : 0;
-        this.statistics.scannedObjects++;
+        if (this.generation === 2 && budget - work >= 2 && this.scanSingleReference(handle)) {
+          work += 2;
+          continue;
+        }
+        this.beginObject(handle);
         work++;
         if (work === budget) break;
       }
