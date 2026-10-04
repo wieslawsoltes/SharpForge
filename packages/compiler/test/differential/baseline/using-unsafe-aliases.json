@@ -1,0 +1,4 @@
+{
+  "using-unsafe-aliases/alias-rules-with-unsafe": ["diagnostics", "warnings"],
+  "using-unsafe-aliases/alias-rules-without-unsafe": ["diagnostics", "warnings"]
+}

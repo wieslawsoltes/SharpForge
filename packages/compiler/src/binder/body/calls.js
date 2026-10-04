@@ -39,7 +39,10 @@ export const CallBinding = Base =>
         !this.lookupLocal('_')
       )
         e = this.node('Discard', a.expression, null, { isOutVarOrDiscard: true });
-      else e = this.expression(a.expression);
+      else {
+        if (refKind !== RefKind.None) this.reportReservedVarPattern(a.expression);
+        e = this.expression(a.expression);
+      }
       if (e.kind === 'TypeExpression' || e.kind === 'NamespaceExpression') e = this.asValue(e);
       else if (refKind === RefKind.Out) this.markWrite(e, null);
       else this.markRead(e);
@@ -48,6 +51,17 @@ export const CallBinding = Base =>
         e.methodGroup = { returnTypeFor: types => this.groupReturnType(e, types) };
       }
       return Object.assign(e.hasErrors ? { ...e } : e, { refKind: refKind === RefKind.None ? null : refKind, name, argumentSyntax: a });
+    }
+    /**
+     * `M(out var (a, b))` parses as a call of something named `var`. Unless the program declares that, Roslyn
+     * reports the name (CS0103) and that the syntax is reserved as an lvalue (CS8199).
+     */
+    reportReservedVarPattern(syntax) {
+      const target = syntax.kind === 'InvocationExpression' ? syntax.expression : null;
+      if (target?.kind !== 'IdentifierName' || target.identifier.valueText !== 'var' || this.lookupLocal('var')) return;
+      for (let type = this.c.containingType; type; type = type.containingType) if (type.getMembers('var').length) return;
+      this.report(target, DiagnosticId.CS0103, ['var']);
+      this.report(syntax, DiagnosticId.CS8199);
     }
     arguments(list) {
       return (list?.arguments ?? []).map(a => this.argument(a));
