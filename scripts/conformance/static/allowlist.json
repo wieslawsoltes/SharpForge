@@ -448,6 +448,13 @@
       "count": 3,
       "sha256": "62dca80988a0899c6e2c93143435f7da4a1644d49db94ce1c7225a172d93e979",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "packages/project-system/examples/archive-benchmark.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "dcc153e0bcfba418d32f0bb1050824e5d302fa7ab9d6562db4ec3458ed873f99",
+      "reason": "Developer benchmark imports archive source from an explicitly selected trusted Git revision into a temporary module; it is not part of the browser product."
     }
   ]
 }

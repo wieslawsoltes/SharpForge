@@ -7,7 +7,7 @@
     "tests/workspace-io.test.js",
     "tests/workspace-grammar-options.test.js",
     "tests/release08-explorer.test.js",
-    "tests/a24-workspace-search.test.js"
+    "tests/a24-*.test.js"
   ],
   "browserScripts": [
     "tests/browser_workspace_test.py",
