@@ -33,6 +33,10 @@ rejects more than 5,000 targets, more than 128 properties on a target, an invali
 label, missing controls, unknown or read-only properties, and invalid values.
 It checks document disposal, read-only capability, and the expected revision
 before publication. Any validation failure leaves the candidate unpublished.
+Normalized values must contain complete JSON data; sparse arrays and undefined
+compound fields are rejected. Fingerprints are also prepared before history,
+current values, or indexes change, so cache publication cannot discover a late
+data-validation error.
 
 The optional `canEdit(id, property)` predicate is rechecked for every requested
 property at commit time. A false result produces `SFD1840`. Geometry sessions
@@ -92,6 +96,9 @@ runtime ID of zero. They revalidate when mutable data differs from the trusted
 baseline. Invalid restored data is rejected before either history stack or
 the current document changes. Generic history also owns detached snapshots;
 restoring one makes a fresh mutable current document.
+Property-value history resolves control identities from current document data
+before using an index. Replacing a target with another type or `projectType`
+rejects undo/redo atomically even when an old indexed node still exists.
 
 Entry and byte bounds apply to both property and complete-document records.
 The byte count covers the stored forward and inverse data. When a limit drops
@@ -114,7 +121,8 @@ rebuild used by `change()`. Generic and uncertain cases retain those operations.
 
 Focused qualification is prepared in
 `tests/a18-model-property-patches.test.js` and
-`tests/a18-model-property-delta.test.js`. It covers atomic failures, permissions,
+`tests/a18-model-property-delta.test.js`, with publication regressions in
+`tests/a18-model-property-atomicity.test.js`. They cover atomic failures, permissions,
 normalization, undo/redo aliases and runtime identity, custom validators,
 external changes, history limits, gesture staging, exact event keys, and
 equivalence with the complete validator on a 5,000-control document.

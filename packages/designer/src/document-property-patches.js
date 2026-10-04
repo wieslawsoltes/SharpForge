@@ -16,9 +16,12 @@ function canIncrement(document, entries) {
 }
 
 function capturedValues(node, properties) {
-  return {id: node.id, type: node.type, properties: properties.map(name => ({name,
-    present: Object.hasOwn(node.properties, name),
-    ...(Object.hasOwn(node.properties, name) ? {value: structuredClone(node.properties[name])} : {})}))};
+  const values = properties.map(name => {
+    const present = Object.hasOwn(node.properties, name);
+    return {name, present, ...(present ? {value: structuredClone(node.properties[name])} : {})};
+  });
+  return {id: node.id, type: node.type, ...(node.projectType === undefined ? {} : {projectType: node.projectType}),
+    properties: values};
 }
 
 function prepareIncrement(document, entries) {
@@ -41,7 +44,7 @@ function prepareIncrement(document, entries) {
   }
   const nodes = document.value.nodes.slice();
   for (const {index, node} of updates) nodes[index] = node;
-  return {value: {...document.value, nodes}, updates, target, reverse,
+  return {value: {...document.value, nodes}, updates, target, reverse, baseline: document.propertyBaseline.prepare(updates),
     changes: immutableDesignData({kind: 'properties', nodes: updates.map(({node, properties}) => ({id: node.id, properties}))})};
 }
 
@@ -65,7 +68,7 @@ function publish(document, prepared) {
   document.value = prepared.value;
   if (prepared.updates) {
     for (const {node} of prepared.updates) document.nodesById.set(node.id, node);
-    document.propertyBaseline.advance(prepared.updates);
+    document.propertyBaseline.commit(prepared.baseline);
   } else {
     document.reindex();
     document.propertyBaseline.reset(document.value);
@@ -110,9 +113,16 @@ export function patchDocumentProperties(document, input, {label = 'Edit properti
 }
 
 function historyInputs(document, entry) {
+  let currentNodes;
   return entry.target.map(target => {
-    const node = document.node(target.id);
-    if (!node || node.type !== target.type) throw new Error('Design changed; a property history target is missing or has another type');
+    let node = document.value.nodes[document.nodePositions.get(target.id)];
+    if (node?.id !== target.id) {
+      currentNodes ??= new Map(document.value.nodes.map(item => [item.id, item]));
+      node = currentNodes.get(target.id);
+    }
+    if (!node || node.type !== target.type || node.projectType !== target.projectType) {
+      throw new Error('Design changed; a property history target is missing or has another type');
+    }
     return [target.id, target.properties.map(property => [property.name,
       property.present ? structuredClone(property.value) : undefined])];
   });

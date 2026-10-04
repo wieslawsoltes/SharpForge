@@ -54,17 +54,27 @@ export class DesignerPropertyBaseline {
     }
   }
 
-  advance(updates) {
-    if (!this.nodes) return;
+  prepare(updates) {
+    if (!this.nodes) return null;
+    const entries = [];
+    let characters = this.characters;
     for (const {index, node} of updates) {
       const text = fingerprint(node);
-      this.characters += text.length - this.nodes[index].length;
-      this.nodes[index] = text;
+      characters += text.length - this.nodes[index].length;
+      entries.push({index, text});
     }
-    if (this.characters > this.maxCharacters) {
+    return characters > this.maxCharacters ? null : {entries, characters};
+  }
+
+  /** Publication consumes already validated text; it cannot discover malformed model data after a commit starts. */
+  commit(prepared) {
+    if (!prepared) {
       this.nodes = null;
       this.header = null;
       this.characters = 0;
+      return;
     }
+    for (const {index, text} of prepared.entries) this.nodes[index] = text;
+    this.characters = prepared.characters;
   }
 }

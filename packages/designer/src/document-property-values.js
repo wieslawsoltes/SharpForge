@@ -41,7 +41,9 @@ export function normalizedPropertyInputs(node, entries, contracts) {
     if (Object.hasOwn(node.templatePropertyBindings ?? {}, key)) {
       authoringError('SFD1840', `${key} is controlled by a template binding.`);
     }
-    return [key, value === undefined ? undefined : contracts.normalize(node.type, key, value)];
+    const normalized = value === undefined ? undefined : contracts.normalize(node.type, key, value);
+    if (normalized !== undefined) cleanDesignData(normalized, 0, true);
+    return [key, normalized];
   });
 }
 
