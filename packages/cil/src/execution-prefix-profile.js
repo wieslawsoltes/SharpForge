@@ -1,5 +1,7 @@
 import {decodeCoded} from './metadata.js';
 import {resolveExecutionMethod} from './call-profile.js';
+import {verifyGenericType} from './generic-profile.js';
+import {validateTypePrefixes} from './verify/prefix-constrained.js';
 
 const supported = new Set(['volatile.', 'constrained.']);
 const memoryTargets = new Set(['ldfld', 'stfld', 'ldsfld', 'stsfld', 'ldobj', 'stobj']);
@@ -15,9 +17,12 @@ export class ExecutionPrefixProfile {
 
   constrained(prefix, next, context) {
     if (next?.name !== 'callvirt') return 'constrained. must immediately precede callvirt';
+    const name = this.inspector.metadata.typeName(prefix.operand);
+    const parameter = prefix.operand >>> 24 === 27 && /^!!?\d+$/.test(name);
+    if (parameter) verifyGenericType(this.inspector, name, context);
     const type = this.types.get(prefix.operand);
     const base = type?.baseToken ? this.inspector.metadata.typeName(type.baseToken) : null;
-    if (!type || !base || type.flags & 0x20 || base === 'System.Enum' || this.genericOwners.has(type.token)) {
+    if (!parameter && (!type || !base || type.flags & 0x20 || base === 'System.Enum' || this.genericOwners.has(type.token))) {
       return 'constrained. execution requires a nongeneric class or user-struct TypeDef';
     }
     const declaration = resolveExecutionMethod(this.inspector, next.operand, context);
@@ -38,6 +43,15 @@ export class ExecutionPrefixProfile {
   }
 
   verify(method, context, issue) {
+    if (method.instructions.some(instruction => instruction.name === 'constrained.')) {
+      try {
+        // Reuse the lexical verifier without changing its broader inspection profile.
+        validateTypePrefixes(this.inspector.pe.methodBody(method.token).code, this.inspector.metadata);
+      } catch (error) {
+        issue(method, null, 'IL_PREFIX', error.message);
+        return;
+      }
+    }
     const tails = new Set();
     for (let index = 0; index < method.instructions.length; index++) {
       const prefix = method.instructions[index];

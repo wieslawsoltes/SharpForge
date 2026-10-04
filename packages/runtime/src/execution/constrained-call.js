@@ -3,16 +3,34 @@ import {framePool} from './frame-pool.js';
 import {inspectManagedAddress} from './managed-address.js';
 import {prepareValueReceiver} from './value-calls.js';
 import {requireValueInterfaceTarget} from './value-dispatch.js';
-import {verifiedMethod} from './token-cache.js';
+import {cachedTypeName, verifiedMethod} from './token-cache.js';
+import {resolveCallType} from './generic-calls.js';
+
+function closedConstraint(vm, caller, token) {
+  if (token >>> 24 === 2) return vm.typeSystem.table(token);
+  const name = cachedTypeName(vm, token);
+  if (token >>> 24 !== 27 || !/^!!?\d+$/.test(name)) {
+    throw new ManagedFault('NotSupportedException', 'A constrained TypeSpec must identify one generic parameter');
+  }
+  const resolved = resolveCallType(vm, name, caller);
+  if (resolved.includes('!')) {
+    throw new ManagedFault('InvalidProgramException', 'Constrained generic parameter requires a closed frame context');
+  }
+  const table = vm.typeSystem.table(resolved);
+  if (table.flags.valueType) {
+    throw new ManagedFault('NotSupportedException', 'Constrained generic value receivers are not implemented');
+  }
+  return table;
+}
 
 /** The verified instruction pair defines the constraint without mutable frame state. */
 export function constrainedCallType(vm, caller, instruction, descriptor) {
   if (instruction.name !== 'callvirt') return null;
   const prefix = caller.method.instructions[caller.pc - 2];
   if (prefix?.name !== 'constrained.') return null;
-  const table = vm.typeSystem.table(prefix.operand);
+  const table = closedConstraint(vm, caller, prefix.operand);
   const declaration = vm.typeSystem.table(descriptor.ownerInstance ?? descriptor.ownerToken ?? descriptor.owner);
-  if (prefix.operand >>> 24 !== 2 || table.flags.interface || table.genericArity || table.typeArguments.length ||
+  if (table.flags.interface || table.genericArity || table.typeArguments.length || table.containsGenericParameters ||
       !vm.typeSystem.types.has(table.definitionToken) || !vm.typeSystem.types.has(declaration.definitionToken) ||
       declaration.genericArity || descriptor.signature.isStatic || descriptor.signature.genericArity ||
       descriptor.methodArguments?.length || (table.flags.valueType ? !declaration.flags.interface : declaration.flags.valueType)) {
