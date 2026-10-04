@@ -51,9 +51,9 @@ function returned(types, type, refKind, modifier = null, modifiers = null) {
   return [...named, ...passed(types, type, refKind, modifiers)];
 }
 
-/** FieldSig: `FIELD type`. */
-export function fieldSignature(types, type) {
-  return Uint8Array.from([FIELD, ...types.signature(type)]);
+/** FieldSig: `FIELD [BYREF] type`; a `ref` field (C# 11) of a ref struct holds a managed pointer. */
+export function fieldSignature(types, type, refKind = null) {
+  return Uint8Array.from([FIELD, ...(isByReference(refKind) ? [BY_REFERENCE] : []), ...types.signature(type)]);
 }
 
 /**

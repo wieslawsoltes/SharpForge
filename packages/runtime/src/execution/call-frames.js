@@ -5,6 +5,7 @@ import {framePool} from './frame-pool.js';
 import {methodOffsets} from './method-offsets.js';
 import {storageDefault} from './storage.js';
 import {initializeFloatFrame} from './typed-float-frame.js';
+import {enterSourceMethod} from './source-runtime-events.js';
 
 /** Copy normalized arguments into owned storage; call scratch buffers never escape. */
 export function cilCallFrame(vm, method, args, extra) {
@@ -60,6 +61,7 @@ export function callSourceFrame(vm, methodId, args) {
     throw error;
   }
   vm.profiler?.enter(frame);
+  enterSourceMethod(vm, frame);
 }
 
 export function callSourceFromStack(vm, methodId, count) {
