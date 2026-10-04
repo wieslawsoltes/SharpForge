@@ -38,8 +38,9 @@ same-underlying enum pairs, wrong width/sign/kind, null, preserved box identity,
 both VM ABI settings, managed writes, GC, same-VM snapshot replay and disposal.
 Four integration cases cover exact/null Nullable enum boxes and reject the
 three compatible-but-inexact enum/underlying combinations.
-No tests, builds or native commands were run during implementation. The root
-agent owns the serial validation slot.
+Serial Node 24 validation at `95183e8c` passed all 65 focused enum, Nullable,
+struct-boxing, string/enum and cast-integration tests. Broad native/browser and
+performance qualification remains deferred.
 
 Queued focused command:
 
