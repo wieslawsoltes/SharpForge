@@ -252,4 +252,8 @@ test('only unresolved custom-pattern, direct-Value and inherited-access question
     { public U(int value) { } public object? Value => 1; public bool TryGetValue(out string? value) { value = null; return false; } }
     class C { void M(U value) { if (value.TryGetValue(out string? text)) value.Value.ToString(); } }`;
   assert.ok(relevant(nullableQuery, ['SF2202']).some(diagnostic => /non-case out type/.test(diagnostic.message)));
+  const definite = `[System.Runtime.CompilerServices.Union] struct U
+    { private U(int value) { } public object Value => 1; } class C { bool M(U value) => value is int; }`;
+  assert.deepEqual(relevant(definite, ['SF2202']), [], 'a specified public-API violation is SF2203, not an unresolved question');
+  assert.ok(relevant(definite, ['SF2203']).length);
 });

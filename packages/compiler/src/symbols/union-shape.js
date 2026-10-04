@@ -11,6 +11,13 @@ import { attributesNamed, fullNameOf } from '../binder/bound-attributes.js';
 
 export const UNION_ATTRIBUTE = 'System.Runtime.CompilerServices.UnionAttribute';
 export const UNION_INTERFACE = 'System.Runtime.CompilerServices.IUnion';
+export const unionShapeRules = Object.freeze({
+  creationAccessibility: 'a union creation member must be public',
+  creationRefKind: 'a union creation parameter must be by-value or in',
+  valueAccessibility: 'the union Value property and its getter must be public',
+  accessAccessibility: 'a union non-boxing access member and its getter must be public',
+  provider: 'IUnionMembers must be a public interface implemented by its containing union type',
+});
 
 /** The exact framework contract from source or references, without creating a replacement. */
 export function unionContract(namespace, name) {

@@ -6,21 +6,13 @@ import { previewStampText } from '@sharpforge/syntax';
 import { DiagnosticId } from '../diagnostics/codes.js';
 import { Accessibility, SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
-import { unionContract, unionShapeOf, UNION_ATTRIBUTE } from '../symbols/union-shape.js';
+import { unionContract, unionShapeOf, unionShapeRules, UNION_ATTRIBUTE } from '../symbols/union-shape.js';
 import { attributesNamed } from './bound-attributes.js';
 import { isAccessible } from './accessibility.js';
 import { AttributeTargets } from '../symbols/attribute-types.js';
 import { describeTargets } from './attribute-targets.js';
 import { effectiveAccessibility, isAtLeastAsAccessible } from './inheritance.js';
 export { UnionBinding } from './unions/pattern-binding.js';
-
-const memberRules = Object.freeze({
-  creationAccessibility: 'a union creation member must be public',
-  creationRefKind: 'a union creation parameter must be by-value or in',
-  valueAccessibility: 'the union Value property and its getter must be public',
-  accessAccessibility: 'a union non-boxing access member and its getter must be public',
-  provider: 'IUnionMembers must be a public interface implemented by its containing union type',
-});
 
 function declarationProblems(type) {
   const problems = [];
@@ -63,7 +55,7 @@ export const UnionRules = Base => class extends Base {
         if (problem === 'basicPattern') {
           // Open question "custom union declarations ... missing the minimal set of APIs", lines 818-829.
           this.unionRule(type, type.syntax.identifier, 'custom unions missing the mandatory creation or Value API', true);
-        } else this.unionRule(type, type.syntax.identifier, memberRules[problem]);
+        } else this.unionRule(type, type.syntax.identifier, unionShapeRules[problem]);
       }
     }
   }

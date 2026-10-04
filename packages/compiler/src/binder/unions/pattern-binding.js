@@ -7,7 +7,7 @@ import { isNullableType, stripNullable } from '../../conversions/nullable.js';
 import { typeTestOutcome } from '../../conversions/reference.js';
 import { RefKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
-import { isUnionType, unionShapeOf } from '../../symbols/union-shape.js';
+import { isUnionType, unionShapeOf, unionShapeRules } from '../../symbols/union-shape.js';
 import { narrowedTypeOf } from '../body/patterns.js';
 import { checkUnionSwitchArms } from '../../flow/union-pattern-spaces.js';
 
@@ -56,11 +56,19 @@ export const UnionBinding = Base => class extends Base {
     const shape = unionShapeOf(type, this.core);
     if (!shape) return null;
     if (!shape.valid || shape.hasUnresolvedAccessPattern) {
-      const detail = shape.valid ? 'inherited, hidden or read-write non-boxing union API lookup' : 'custom unions missing the basic union pattern';
-      this.report(syntax, DiagnosticId.SF2202, [detail, previewStampText('Unions')]);
+      const unresolved = shape.hasUnresolvedAccessPattern || shape.problems.includes('basicPattern');
+      const detail = shape.hasUnresolvedAccessPattern ? 'inherited, hidden or read-write non-boxing union API lookup'
+        : unresolved ? 'custom unions missing the basic union pattern' : unionShapeRules[shape.problems[0]];
+      this.report(syntax, unresolved ? DiagnosticId.SF2202 : DiagnosticId.SF2203, [detail, previewStampText('Unions')]);
       return null;
     }
     return shape;
+  }
+  bindType(syntax, options) {
+    const result = super.bindType(syntax, options);
+    const shape = this.version.preview ? unionShapeOf(result.type, this.core) : null;
+    if (shape && !shape.valid) this.unionShape(result.type, syntax);
+    return result;
   }
   applyConversion(expression, type, conversion, syntax = expression.syntax, isExplicit = false) {
     if (!isUnionConversion(conversion)) return super.applyConversion(expression, type, conversion, syntax, isExplicit);

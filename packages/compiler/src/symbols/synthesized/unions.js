@@ -43,11 +43,12 @@ function caseConstructor(type, property, caseType, { part, syntax }, core) {
 export const UnionSymbolBuilder = Base => class extends Base {
   resolveBases(type) {
     super.resolveBases(type);
-    if (type._baseState !== 2 || type.unionBasesResolved || !declarationsOf(type).length) return;
+    if (type._baseState !== 2 || type.unionBasesResolved) return;
     type.unionBasesResolved = true;
+    const part = type.declarations.find(declaration => declaration.syntax.kind === 'UnionDeclaration');
+    if (!part) return;
     type.isUnionDeclaration = true;
     const contract = unionContract(this.merged, 'IUnion');
-    const part = declarationsOf(type)[0];
     if (!contract) this.report(part.uri, part.syntax.identifier, DiagnosticId.CS0518, [UNION_INTERFACE]);
     else if (contract.typeKind !== TypeKind.Interface) this.unionDeclarationError(part, part.syntax.identifier, 'IUnion must be an interface');
     else if (!type._declaredInterfaces.some(iface => iface.equals(contract))) type._declaredInterfaces.push(contract);

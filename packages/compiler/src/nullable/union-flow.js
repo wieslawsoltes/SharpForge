@@ -100,7 +100,7 @@ export const NullableUnionFlow = Base => class extends Base {
     if (shape?.tryGetValues.some(member => member.equals(node.method))) {
       const slot = this.unionValueSlot(node.receiver, shape);
       if (slot) branches.whenTrue?.set(slot, NOT_NULL);
-    } else if (shape && node.method.name === 'TryGetValue' && node.method.returnType.specialType === 'System_Boolean' &&
+    } else if (shape && node.method?.name === 'TryGetValue' && node.method.returnType.specialType === 'System_Boolean' &&
       node.method.parameters.length === 1 && node.method.parameters[0].refKind === RefKind.Out &&
       !shape.caseTypes.some(type => type.equals(node.method.parameters[0].type))) {
       // Open question "TryGetValue and nullable analysis", pinned lines 1019-1030: only the case APIs are specified.
