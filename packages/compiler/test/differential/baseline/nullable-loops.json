@@ -6,5 +6,6 @@
   "nullable-loops/cs8602-foreach": ["diagnostics", "warnings"],
   "nullable-loops/cs8602-nested-loops": ["diagnostics", "warnings"],
   "nullable-loops/cs8602-switch-and-try-in-loop": ["diagnostics", "warnings"],
-  "nullable-loops/cs8602-while-assigns-null-later": ["diagnostics", "warnings"]
+  "nullable-loops/cs8602-while-assigns-null-later": ["diagnostics", "warnings"],
+  "nullable-loops/valid-loops-keep-not-null-state": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

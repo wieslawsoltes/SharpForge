@@ -1,5 +1,5 @@
 {
-  "member-constructors/chained-constructors-and-initializers": ["diagnostics", "warnings", "bytecode", "cil"],
+  "member-constructors/chained-constructors-and-initializers": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-constructors/constructor-errors": ["diagnostics", "warnings"],
-  "member-constructors/static-constructor-timing": ["diagnostics", "warnings", "bytecode", "cil"]
+  "member-constructors/static-constructor-timing": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }
