@@ -1,0 +1,31 @@
+.git-collab-presence {
+  color: var(--fg, CanvasText);
+  background: var(--panel, Canvas);
+  border: 1px solid var(--border, GrayText);
+  border-radius: 6px;
+  padding: 12px;
+  font: inherit;
+}
+.git-collab-presence-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.git-collab-state { margin-left: auto; font-size: 0.9em; opacity: 0.8; }
+.git-collab-presence[data-state="synchronized"] .git-collab-state { color: var(--success, #17834b); opacity: 1; }
+.git-collab-detail { margin: 8px 0; font-size: 0.9em; opacity: 0.8; }
+.git-collab-peers { display: flex; flex-direction: column; gap: 6px; list-style: none; padding: 0; margin: 8px 0; }
+.git-collab-peers li { display: flex; gap: 8px; align-items: center; min-width: 0; }
+.git-collab-avatar { display: grid; place-items: center; border-radius: 50%; width: 24px; height: 24px; color: white; font-weight: 600; }
+.git-collab-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.git-collab-activity { margin-left: auto; font-size: 0.85em; opacity: 0.7; }
+.git-collab-error { color: var(--error, #b3261e); font-size: 0.9em; overflow-wrap: anywhere; }
+.git-collab-retry { border: 1px solid var(--border, GrayText); border-radius: 4px; padding: 5px 10px; color: inherit; background: transparent; }
+.git-collab-retry:focus-visible { outline: 2px solid var(--accent, Highlight); outline-offset: 2px; }
+.git-collab-presence [hidden] { display: none; }
+.git-collab-setup { color: var(--fg, CanvasText); background: var(--panel, Canvas); border: 1px solid var(--border, GrayText); }
+.git-collab-setup { border-radius: 8px; max-width: min(460px, 90vw); width: 100%; padding: 20px; }
+.git-collab-setup::backdrop { background: #0008; }
+.git-collab-setup h2 { font-size: 1.15em; margin: 0 0 12px; }
+.git-collab-setup form { display: grid; gap: 10px; }
+.git-collab-setup label { display: flex; flex-direction: column; gap: 4px; font-size: 0.95em; }
+.git-collab-setup input { padding: 7px; border: 1px solid var(--border, GrayText); border-radius: 4px; color: inherit; background: inherit; }
+.git-collab-setup .git-collab-checkbox { flex-direction: row; align-items: center; }
+.git-collab-setup-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 6px; }
+.git-collab-setup button { padding: 6px 14px; border: 1px solid var(--border, GrayText); border-radius: 4px; }

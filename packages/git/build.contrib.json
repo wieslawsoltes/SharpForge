@@ -2,6 +2,10 @@
   "schemaVersion": 1,
   "styles": [
     {
+      "source": "packages/git/styles/collaboration.css",
+      "order": 801
+    },
+    {
       "source": "packages/git/styles/editor.css",
       "order": 802
     }
