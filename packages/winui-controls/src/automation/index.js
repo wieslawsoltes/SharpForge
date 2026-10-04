@@ -17,3 +17,4 @@ export * from './member-adapters.js';
 export * from './virtual-item-peer.js';
 export * from './visibility.js';
 export * from './state-transport.js';
+export * from './managed-actions.js';
