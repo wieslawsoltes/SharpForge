@@ -835,8 +835,10 @@ Registered families: <code>string</code>.
 | 524299 | <code>static bool System.String::Equals(string, string, System.StringComparison)</code> | implemented |
 | 524300 | <code>bool System.String::Equals(string, System.StringComparison)</code> | implemented |
 | 524301 | <code>static int System.String::Compare(string, string, System.StringComparison)</code> | implemented |
+| 524302 | <code>bool System.String::StartsWith(string, System.StringComparison)</code> | implemented |
+| 524303 | <code>bool System.String::EndsWith(string, System.StringComparison)</code> | implemented |
 
-Pinned reference: 40 implemented and 146 missing exact metadata rows.
+Pinned reference: 42 implemented and 144 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -895,7 +897,7 @@ Pinned reference: 40 implemented and 146 missing exact metadata rows.
 | method | <code>System.String::EndsWith``0(System.Char):System.Boolean instance</code> | missing | — |
 | method | <code>System.String::EndsWith``0(System.String):System.Boolean instance</code> | implemented | 1263 |
 | method | <code>System.String::EndsWith``0(System.String,System.Boolean,System.Globalization.CultureInfo):System.Boolean instance</code> | missing | — |
-| method | <code>System.String::EndsWith``0(System.String,System.StringComparison):System.Boolean instance</code> | missing | — |
+| method | <code>System.String::EndsWith``0(System.String,System.StringComparison):System.Boolean instance</code> | implemented | 524303 |
 | method | <code>System.String::EnumerateRunes``0():System.Text.StringRuneEnumerator instance</code> | missing | — |
 | method | <code>System.String::Equals``0(System.Object):System.Boolean instance</code> | missing | — |
 | method | <code>System.String::Equals``0(System.String):System.Boolean instance</code> | missing | — |
@@ -1000,7 +1002,7 @@ Pinned reference: 40 implemented and 146 missing exact metadata rows.
 | method | <code>System.String::StartsWith``0(System.Char):System.Boolean instance</code> | missing | — |
 | method | <code>System.String::StartsWith``0(System.String):System.Boolean instance</code> | implemented | 1262 |
 | method | <code>System.String::StartsWith``0(System.String,System.Boolean,System.Globalization.CultureInfo):System.Boolean instance</code> | missing | — |
-| method | <code>System.String::StartsWith``0(System.String,System.StringComparison):System.Boolean instance</code> | missing | — |
+| method | <code>System.String::StartsWith``0(System.String,System.StringComparison):System.Boolean instance</code> | implemented | 524302 |
 | method | <code>System.String::Substring``0(System.Int32):System.String instance</code> | implemented | 1256 |
 | method | <code>System.String::Substring``0(System.Int32,System.Int32):System.String instance</code> | implemented | 1257 |
 | method | <code>System.String::ToCharArray``0():System.Char[] instance</code> | missing | — |
