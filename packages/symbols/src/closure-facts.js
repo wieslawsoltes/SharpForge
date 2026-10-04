@@ -1,3 +1,4 @@
+import { decodeCoded } from '@sharpforge/cil';
 import { PdbGuids, fail } from './contracts.js';
 import { metadataMemberOwners, metadataName } from './metadata-facts.js';
 
@@ -16,7 +17,7 @@ export const unavailableClosure = (methodToken, reason) => ({
 function preflight(metadata, custom, limit) {
   let entries = custom.length;
   let hasMaps = false;
-  for (const table of [2, 3, 4, 5, 6, 41]) entries += metadata.counts[table] ?? 0;
+  for (const table of [2, 3, 4, 5, 6, 41, 42]) entries += metadata.counts[table] ?? 0;
   if (entries > limit) fail('Closure entry limit exceeded');
   for (const record of custom) {
     if (record.kind !== PdbGuids.encLambdas) continue;
@@ -120,6 +121,8 @@ export function snapshotClosureFacts(metadata, custom, limit) {
     metadataMemberOwners(metadata, 4, 'FieldList', 'closure field');
   }
   const maps = lambdaMaps(metadata, custom, owners);
+  const genericOwners = new Set();
+  for (const row of metadata.rows[42] ?? []) genericOwners.add(decodeCoded('TypeOrMethodDef', row[2]));
   const facts = [];
   for (const [type, parent] of nestedTypes(metadata)) {
     const name = metadataName(metadata, metadata.row(type)[1], 'Closure metadata');
@@ -127,9 +130,14 @@ export function snapshotClosureFacts(metadata, custom, limit) {
     const match = displayClassName.exec(name);
     const methodOrdinal = Number(match?.[1]);
     const closureOrdinal = Number(match?.[2]);
-    const supported = Number.isSafeInteger(methodOrdinal) && Number.isSafeInteger(closureOrdinal);
-    const map = supported ? maps.get(key(parent, methodOrdinal)) : null;
-    const fields = map ? capturedFields(metadata, type) : null;
+    const map = maps.get(key(parent, methodOrdinal));
+    const supported =
+      Number.isSafeInteger(methodOrdinal) &&
+      Number.isSafeInteger(closureOrdinal) &&
+      !genericOwners.has(type) &&
+      !genericOwners.has(parent) &&
+      !genericOwners.has(map?.containingMethod);
+    const fields = supported && map ? capturedFields(metadata, type) : null;
     for (const methodToken of metadata.list(type, 'MethodList')) {
       const methodName = metadataName(metadata, metadata.row(methodToken)[3], 'Closure metadata');
       if (!methodName.includes('>b__')) continue;

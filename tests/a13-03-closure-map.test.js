@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { readPE } from '@sharpforge/cil';
+import { readPE, codedIndex } from '@sharpforge/cil';
 import { loadSymbols, emitPortablePdb, attachPortablePdb, PdbGuids } from '@sharpforge/symbols';
 import { createClosureLookup } from '../packages/symbols/src/closure-map.js';
 import { createHoistedLocalLookup } from '../packages/symbols/src/hoisted-locals.js';
@@ -33,6 +33,7 @@ const cases = fixture.native.types.flatMap((type) => {
 
 function changedMaps(change) {
   const custom = structuredClone(load().custom.filter((record) => record.kind === PdbGuids.encLambdas));
+  for (const record of custom) delete record.bytes;
   const bytes = emitPortablePdb(assembly, { custom: change(custom) }).bytes;
   return loadSymbols(attachPortablePdb(assembly, bytes), bytes);
 }
@@ -96,6 +97,22 @@ test('unsupported display-class naming variants and capture links are not guesse
   assert.equal(link.closureInfo(cases[0].methodToken).reason, 'unsupported-capture-field');
 });
 
+test('generic owners are unsupported even when generated names have no arity suffix', () => {
+  const pe = readPE(assembly, { inspection: true });
+  for (const owner of [cases[0].closureType, fixture.native.types[0].enclosingType, cases[0].containingMethod]) {
+    const rows = [...(pe.metadata.rows[42] ?? []), [0, 0, codedIndex('TypeOrMethodDef', owner), 0]];
+    const metadata = {
+      ...pe.metadata,
+      rows: { ...pe.metadata.rows, 42: rows },
+      counts: { ...pe.metadata.counts, 42: rows.length },
+    };
+    assert.equal(
+      createClosureLookup({ metadata }, load())(cases[0].methodToken).reason,
+      'unsupported-closure-convention',
+    );
+  }
+});
+
 test('lookup owns metadata and PDB facts before first use and returns independent captured fields', () => {
   const bytes = new Uint8Array(assembly);
   const pdbBytes = new Uint8Array(pdb);
@@ -118,7 +135,7 @@ test('aggregate limits, unbound inspection and invalid queries stay explicit', (
   const original = load();
   const counts = readPE(assembly, { inspection: true }).metadata.counts;
   let entries = original.custom.length;
-  for (const table of [2, 3, 4, 5, 6, 41]) entries += counts[table] ?? 0;
+  for (const table of [2, 3, 4, 5, 6, 41, 42]) entries += counts[table] ?? 0;
   for (const record of original.custom)
     if (record.kind === PdbGuids.encLambdas) entries += record.closures.length + record.lambdas.length;
   assert.throws(() => load({ maxClosureEntries: entries }), /Closure entry limit exceeded/);
