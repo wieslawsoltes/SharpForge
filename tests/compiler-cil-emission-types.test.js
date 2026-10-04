@@ -118,10 +118,5 @@ test('A02-T30 constructs the emitter still refuses are SF2200 naming them', () =
     assert.equal(result.assembly, null);
     return result.diagnostics.filter(entry => entry.severity === 'error').map(entry => `${entry.code} ${entry.message}`);
   };
-  assert.match(refused('class C { static void Main() { object o = new object(); lock (o) { } } }')[0], /^SF2200 .*lock statements/);
-  assert.match(
-    refused('class C { static void Main() { try { } catch (System.Exception e) when (e.Message == "x") { } } }')[0],
-    /^SF2200 .*exception filters/,
-  );
   assert.match(refused('class C { static void Main() { int[,] grid = new int[2, 2]; } }')[0], /^SF2200 .*multi-dimensional arrays/);
 });

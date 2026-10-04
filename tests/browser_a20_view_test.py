@@ -22,6 +22,7 @@ try:
         assert response and response.status == 200
         policy(response.headers)
         wait(page, "window.editor !== undefined")
+        undo_shortcut = "Meta+z" if page.evaluate("/Mac|iPhone|iPad/.test(navigator.platform)") else "Control+z"
 
         def setup(text, options=None):
             page.evaluate("args => setupView(args)", {"text": text, "options": options or {}})
@@ -33,7 +34,7 @@ try:
         assert page.evaluate("editor.value") == "ab\n中\tx"
         page.keyboard.type("Z")
         assert page.evaluate("editor.value") == "aZb\n中\tx"
-        page.keyboard.press("Control+z")
+        page.keyboard.press(undo_shortcut)
         assert page.evaluate("editor.value") == "ab\n中\tx"
         passed.append("native keydown/beforeinput edits the authoritative model and preserves graphemes")
 

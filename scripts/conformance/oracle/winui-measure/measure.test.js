@@ -31,6 +31,7 @@ const resolve = async () => ({ dotnet: 'fake-dotnet', actual: { fixture: true },
 
 test('WinUI input binds fixture bytes, viewport, native sources and pinned project files', async () => {
   const input = await loadInput();
+  assert.equal(input.fixtures.length, 20);
   assert(input.fixtures.some(row => row.id === 'button-default'));
   assert.equal(new Set(input.fixtures.map(row => row.id)).size, input.fixtures.length);
   assert(input.materials.some(row => row.name === 'native/packages.lock.json'));
@@ -55,7 +56,8 @@ test('WinUI catalog fails before building when IDs, paths or viewports are inval
     await cp(sourceRoot, temporary, { recursive: true });
     const catalogPath = path.join(temporary, 'fixtures/index.json'), original = JSON.parse(await readFile(catalogPath, 'utf8'));
     for (const change of [value => { value.fixtures[0].viewport.width = 2049; }, value => { value.fixtures[0].file = '../Program.cs'; },
-      value => value.fixtures.push(value.fixtures[0]), value => { value.fixtures[0].expected = 'invented'; }]) {
+      value => { value.fixtures[1] = value.fixtures[0]; }, value => { value.fixtures[0].expected = 'invented'; },
+      value => value.fixtures.pop()]) {
       const value = structuredClone(original); change(value); await writeFile(catalogPath, JSON.stringify(value));
       await assert.rejects(loadInput(temporary));
     }
@@ -78,4 +80,17 @@ test('WinUI capture uses three serial fake processes and fails third-run instabi
 test('non-Windows WinUI capture is explicitly unsupported without native resolution', async () => {
   const result = await captureWinUI({ target: 'darwin-arm64', resolve: async () => { throw new Error('Must not resolve native host'); } });
   assert.equal(result.status, 'unsupported'); assert.equal(result.attempts.length, 0); assert.equal(result.unsupported.length, 1);
+});
+
+test('intentional XAML failures retain native type and HRESULT and cannot become silent successes', async () => {
+  const input = await loadInput(), result = dump(input);
+  const negatives = input.fixtures.map((row, index) => row.expected === 'load-error' ? index : -1).filter(index => index >= 0);
+  assert.equal(negatives.length, 2);
+  for (const index of negatives) {
+    assert.equal(validateDump(result, input).observations[index].exception, 'Fixture.XamlError');
+    for (const patch of [{ exception: null }, { hresult: null }, { status: 'loaded' }]) {
+      const changed = structuredClone(result); Object.assign(changed.observations[index], patch);
+      assert.throws(() => validateDump(changed, input));
+    }
+  }
 });
