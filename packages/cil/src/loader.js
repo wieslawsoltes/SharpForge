@@ -2,6 +2,7 @@ import {loadedImageMethod} from './load/image-method.js';
 import {decodeScalarSpan,profileOpcodes} from './scalar-loading.js';
 import { canonicalEmissionOptions } from './pe/canonical-options.js';
 import {decodeCallSpan, profileShortTypes as shortTypes} from './load/call-span.js';
+import {decodeFieldSpan} from './load/field-span.js';
 import { canonicalWithSymbols } from './pe/canonical-symbols.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
 import { Op, Binary, Unary, EnumConvertBase, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
@@ -67,7 +68,7 @@ function decodeSpan(span,c) {
   if(names.includes('ldftn')){const functionToken=span.find(i=>i.name==='ldftn').operand,method=c.methodByToken.get(functionToken),constructor=c.resolveCall(call.operand);if(!method||frameworkType(constructor.owner)?.kind!=='delegate')throw new CilError('Invalid delegate construction');return emit(Op.DELEGATE,method.id,c.intern(constructor.owner));}
   if(call)return decodeCallSpan(span,call,c);
   if(names.includes('box')&&names.includes('unbox.any')){const t=c.metadata.typeName(span.find(i=>i.name==='box').operand),id=enumTypes.indexOf(t);if(id>=0){if(['conv.i4','conv.ovf.i4'].includes(span[0].name))return emit(Op.CONVERT,EnumConvertBase+id,span[0].name==='conv.ovf.i4'?1:0);return emit(Op.ENUM,id,constant(span[0],c.metadata));}}
-  const field=span.find(i=>['ldfld','stfld','ldsfld','stsfld'].includes(i.name));if(field){if(field.name.endsWith('sfld')){const index=c.staticByToken.get(field.operand);if(index===undefined)throw new CilError('Unknown static field token');return emit(field.name==='ldsfld'?Op.LDSTATIC:Op.STSTATIC,index);}const f=c.fieldByToken.get(field.operand);if(!f)throw new CilError('Unknown field token');return emit(field.name==='ldfld'?Op.LDFLD:Op.STFLD,f.index);}
+  const field=decodeFieldSpan(span,c);if(field)return field;
   const array=span.find(i=>['newarr','ldelem','stelem','ldlen'].includes(i.name));if(array){if(array.name==='newarr')return emit(Op.NEWARR,c.intern(shortTypes[c.metadata.typeName(array.operand)]??c.metadata.typeName(array.operand)));return emit({ldelem:Op.LDELEM,stelem:Op.STELEM,ldlen:Op.LENGTH}[array.name]);}
   if(names.includes('ret'))return emit(Op.RET);if(names.includes('endfinally'))return emit(Op.ENDFINALLY);
   if(names.includes('throw'))return emit(Op.THROW);if(names.includes('rethrow'))return emit(Op.RETHROW);

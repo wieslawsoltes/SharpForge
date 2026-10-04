@@ -1,18 +1,26 @@
 import {ManagedFault,isReference} from '../heap.js';
+import {initializeLiteral} from './string-initialization.js';
+
+function findInterned(heap, entries, text) {
+  const reference=entries.get(text);
+  if(!reference)return null;
+  try { if(heap.get(reference).kind==='string')return reference; }
+  catch(error) { if(error.name!=='InvalidReferenceException')throw error; }
+  entries.delete(text);return null;
+}
 
 /** A managed-handle pool: weak entries never root their referents or retain host objects. */
 export class StringInternPool {
-  constructor(heap,entries=new Map(),{weak=false}={}) { this.heap=heap;this.entries=entries;this.weak=weak; }
-  find(text) {
-    const reference=this.entries.get(text);
-    if(!reference)return null;
-    try { if(this.heap.get(reference).kind==='string')return reference; }
-    catch(error) { if(error.name!=='InvalidReferenceException')throw error; }
-    this.entries.delete(text);return null;
+  constructor(heap, entries = new Map(), {weak = false, vm = null} = {}) {
+    this.heap = heap;
+    this.entries = entries;
+    this.weak = weak;
+    this.vm = vm;
   }
+  find(text) { return findInterned(this.heap,this.entries,text); }
   literal(text) {
     const existing=this.find(text);if(existing)return existing;
-    const reference=this.heap.string(text);this.entries.set(text,reference);return reference;
+    return initializeLiteral(this,text);
   }
   intern(reference) {
     const text=stringData(this.heap,reference),existing=this.find(text);
@@ -30,11 +38,14 @@ function stringData(heap,reference) {
   if(record.kind!=='string')throw new ManagedFault('ArgumentException','A managed string is required');
   return record.data;
 }
-function pool(vm) { return new StringInternPool(vm.heap,vm.strings,{weak:!!vm.options?.weakStringInterning}); }
-export function literalString(vm,text) { return pool(vm).literal(text); }
-export function internString(vm,reference) { return pool(vm).intern(reference); }
-export function isInternedString(vm,reference) { return pool(vm).isInterned(reference); }
-export function* stringRoots(vm) { yield* pool(vm).roots(); }
+export function stringPool(vm) { return new StringInternPool(vm.heap,vm.strings,{weak:!!vm.options?.weakStringInterning,vm}); }
+export function literalString(vm,text) {
+  const existing=findInterned(vm.heap,vm.strings,text);if(existing)return existing;
+  return initializeLiteral(stringPool(vm),text);
+}
+export function internString(vm,reference) { return stringPool(vm).intern(reference); }
+export function isInternedString(vm,reference) { return stringPool(vm).isInterned(reference); }
+export function* stringRoots(vm) { yield* stringPool(vm).roots(); }
 export function clearStrings(vm) { vm.strings.clear();vm.constantValues?.clear(); }
 export function referenceEquals(left,right) {
   return left===null&&right===null||isReference(left)&&isReference(right)&&left.h===right.h&&left.g===right.g;

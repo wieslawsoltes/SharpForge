@@ -54,8 +54,11 @@ Boolean values use a JSON boolean. Fixed-width integers (`sbyte`, `byte`, `short
 `double`) use a scalar object whose type matches the field and whose value is a
 decimal string; IEEE special values use `NaN`, `Infinity`, or `-Infinity` strings.
 Integral values are checked against their declared width before registration.
-Reference values, callbacks, native integers, and new Decimal field descriptors
-are outside this seam.
+String fields use a primitive JSON string, bounded to 1,000,000 UTF-16 code units;
+empty strings, null characters, and unpaired surrogates preserve their code units.
+Other reference values, callbacks, native integers, and new Decimal field
+descriptors are outside this seam. Strings are materialized lazily into retained
+managed field storage; they are not substituted by ordinary weak literals.
 
 Field maps have at most 256 entries. Registration copies and freezes each map,
 descriptor, scalar payload, and assembly list. All stored data remain JSON safe.
@@ -73,3 +76,10 @@ Assembly versions remain intact and are deliberately flexible for facade
 compatibility. Other assembly names are rejected. `addressable` defaults to
 `false`; enabling it permits readable managed addresses while writes remain
 rejected. Existing Decimal field address behavior is unchanged.
+
+The Boolean `TrueString` and `FalseString` module exercises this string extension
+without method IDs. See [readonly string fields](../../docs/readonly-string-fields.md)
+for source provenance, allocating initialization, observer/cancellation rules, and
+the pending external source-schema and typed-body contract prerequisites. The
+legacy `mscorlib4` source emitter explicitly rejects readonly-string loads because
+its assembly identity policy cannot emit the required approved facade.

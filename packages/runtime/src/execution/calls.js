@@ -73,7 +73,9 @@ export function invoke(vm,instruction) {
       if(value.handled){caller.stack.push(value.value);return;}
     }
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]') {
-      caller.stack.push(stringFromChars(vm,args[0]));return;
+      const value=stringFromChars(vm,args[0]);
+      if(vm.state!=='terminated')caller.stack.push(value);
+      return;
     }
     if(instruction.name==='newobj'&&contract) {
       const value=vm.platform.invoke(contract,args);

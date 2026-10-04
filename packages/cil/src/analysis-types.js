@@ -4,6 +4,7 @@ import {CilError} from './binary.js';
 
 /** Types of source constants, including lossless JSON scalar carriers. */
 export function constantType(value, flags = 0) {
+  if (value !== null && typeof value === 'object' && Object.hasOwn(value, 'readonlyField')) return 'string';
   if (value?.scalar) return numericTypeName(value.scalar);
   if (value === null) return 'null';
   if (typeof value === 'boolean') return 'bool';

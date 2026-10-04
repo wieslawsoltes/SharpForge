@@ -1,9 +1,13 @@
 import {enumTypes} from '@sharpforge/framework';
 import {numericTypeNames, isNumericMode, decodeNumericMode, integerType} from './numeric-types.js';
 import {decodeScalar} from './scalar-codec.js';
+import {verifyReadonlyFieldConstant} from '../readonly-field-constants.js';
 
 /** Reject malformed scalar wire data before executing a source image. ABI-specific limits apply at load. */
 export function verifyScalarConstant(value) {
+  if (value !== null && (typeof value === 'object' || typeof value === 'function') && 'readonlyField' in value) {
+    return verifyReadonlyFieldConstant(value);
+  }
   if (value === null || typeof value !== 'object' || !Object.hasOwn(value, 'scalar')) return true;
   try {
     decodeScalar(value, {nativeIntBits: 64});

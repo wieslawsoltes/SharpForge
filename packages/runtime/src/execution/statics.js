@@ -1,6 +1,6 @@
 import {decodeCoded,genericTypeParts,executionFieldAccessError} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
-import {initialStaticFieldValue} from './external-field-values.js';
+import {initializeStaticFieldSlot} from './external-field-values.js';
 
 const threadFields = new WeakMap();
 function threadStaticFields(inspector) {
@@ -31,7 +31,7 @@ export function staticSlot(vm, token, frame = vm.top, opcode = 'ldsfld') {
   const genericIdentity = instance===null?null:vm.typeSystem.table(instance).name;
   const context = threadStaticFields(vm.inspector).has(field.resolvedToken) ? vm.scheduler?.currentId ?? 1 : null;
   const key = genericIdentity !== null || context !== null ? JSON.stringify([field.resolvedToken, genericIdentity, context]) : field.resolvedToken;
-  if (!vm.statics.has(key)) vm.statics.set(key, initialStaticFieldValue(vm,field));
+  if (!vm.statics.has(key) && !initializeStaticFieldSlot(vm, key, field)) return null;
   return {key, field, typeToken: field.ownerToken, genericIdentity, context};
 }
 
