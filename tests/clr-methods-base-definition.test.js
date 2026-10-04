@@ -78,7 +78,7 @@ test('CLR base matching resolves equivalent TypeDef/TypeRef signatures across as
 test('CLR invalid and unsupported override families fail explicitly rather than inventing roots', async () => {
   const cases = [
     md => { md.rows[6][0][2] |= 0x20; },
-    md => { md.rows[6][0][2] |= 0x200; },
+    md => { md.rows[6][0][2] = (md.rows[6][0][2] & ~7) | 0x201; },
     md => { md.rows[6][3][2] &= ~0x40; },
     md => { md.add(25, [2, 2, 2]); },
     md => { md.rows[6][6][3] = md.string('MissingIntrinsicSlot'); },

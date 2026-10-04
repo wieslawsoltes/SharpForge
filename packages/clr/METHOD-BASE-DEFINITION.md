@@ -20,7 +20,7 @@ is rejected. Static methods cannot match instance signatures. Type graphs and
 signatures remain lazy; no executable body is read.
 
 This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
-slot mappings, strict access checks,
+slot mappings, strict access outside the bounded same-assembly policy below,
 generic base instantiation, type generic variables,
 TypeSpec/open-generic modifier definitions, unsupported function-pointer headers, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
@@ -110,6 +110,28 @@ median 300.750 µs / p95 1,009.250 µs and cached median 190.750 ns / p95 1,209.
 All [600 raw samples and source-resolution evidence](benchmarks/function-pointer-overrides-node24.json)
 are retained. No reruns, causal/noise attribution or general speedup claim;
 allocation totals and peak memory remain unmeasured.
+
+Strict (`CheckAccessOnOverride`) matches between top-level, nongeneric methods and
+types in the same canonical assembly now validate both base accessibility and the
+child/base access widening relation. The existing ancestor walk supplies each
+matched edge: family-and-assembly, assembly, family, family-or-assembly and public
+base methods are accessible; private/private-scope bases reject. Narrowing or
+incompatible access changes reject, including family-or-assembly to family within
+one assembly. Reserved member-access masks report SFCLR005; inaccessible or
+unsupported strict edges report SFCLR012. New-slot boundaries still stop the walk.
+
+This follows [CoreCLR's access and widening checks](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/methodtablebuilder.cpp#L4333).
+Cross-assembly/friend access, nested types and generic owners/methods remain
+explicitly unsupported for strict edges. Generic metadata row counts are bounded
+before owner-parameter expansion; existing traversal/cancellation limits still
+apply. No access registry or persistent cache is added, and non-strict paths retain
+their previous behavior. This does not certify full type loading or virtual dispatch.
+
+Six authored tests cover the complete 7×7 same-assembly mask matrix, canonical
+queries, cancellation/unload, intermediate edges, new slots, malformed masks,
+limits and unsupported boundaries. The mandatory native fixture has twelve pairs
+(eight positive/four negative) with exact source/image provenance. Native capture,
+focused qualification, paired controls and checks are pending the serial slot.
 
 Constrained generic methods now follow the same implicit class-slot walk. Each
 matched override edge compares method GenericParam constraints separately from
