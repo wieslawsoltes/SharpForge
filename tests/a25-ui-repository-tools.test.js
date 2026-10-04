@@ -1,0 +1,92 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { renderGitRepositoryTools } from '../apps/studio/git-repository-tools.js';
+import { configureRepositorySparse, runRepositoryMaintenance } from '../apps/studio/git-repository-tool-actions.js';
+import { parseLfsPointer, lfsObjectKey } from '../packages/git/src/lfs.js';
+import { commitFiles, text, decode } from './git-adjuncts/fixture.js';
+import { toolsWorkbench } from './git-tools/fixture.js';
+import { toolsDocument, descendants } from './git-tools/dom.js';
+
+test('repository tools show actual storage, missing LFS and ignored policy while preserving literal file names', async t => {
+  const workbench = await toolsWorkbench(t);
+  await commitFiles(workbench.repo, { '.gitattributes': '*.bin filter=lfs -text\n', 'asset&copy;.bin': Uint8Array.of(0, 1, 255) });
+  const pointer = parseLfsPointer((await workbench.service.request('readFile', { path: 'asset&copy;.bin', revision: 'HEAD' })).data);
+  await workbench.repo.store.delete(lfsObjectKey(pointer.oid));
+  workbench.repo.config.set('core.hookspath', '/ignored/command');
+  await workbench.repo.config.save();
+  await workbench.repo.loadRules();
+  const document = toolsDocument();
+  const root = document.createElement('main');
+  const dispose = await renderGitRepositoryTools(root, workbench);
+  assert.match(root.textContent, /Content missing/u);
+  assert.match(root.textContent, /asset&copy;\.bin/u);
+  assert.match(root.textContent, /core\.hooksPath/u);
+  assert.equal(descendants(root).some(element => element.tagName === 'IMG'), false);
+  const download = descendants(root).find(element => element.getAttribute('aria-label') === 'Download LFS asset&copy;.bin');
+  assert.equal(download.disabled, true);
+  const fsck = descendants(root).find(element => element.tagName === 'BUTTON' && element.textContent === 'Check Integrity');
+  await fsck.emit('click');
+  await workbench.lastAction;
+  assert.equal(workbench.repositoryToolsResult.ok, true);
+  dispose();
+  const next = await renderGitRepositoryTools(root, workbench);
+  assert.match(root.textContent, /Repository integrity/u);
+  assert.match(root.textContent, /0 errors/u);
+  next();
+});
+
+test('sparse UI actions protect dirty files and buffers, then adopt the real sparse and restored worktrees', async t => {
+  const workbench = await toolsWorkbench(t);
+  await commitFiles(workbench.repo, { 'root.txt': 'root', 'src/a.txt': 'source', 'docs/a.txt': 'documentation' });
+  await workbench.repo.worktree.write('docs/a.txt', text('unsaved repository edit'));
+  await assert.rejects(configureRepositorySparse(workbench, { directories: 'src' }), { code: 'Conflict' });
+  assert.equal(decode((await workbench.repo.worktree.read('docs/a.txt')).data), 'unsaved repository edit');
+  assert.equal(workbench.events.some(event => event.type === 'adopt'), false);
+  await workbench.repo.worktree.write('docs/a.txt', text('documentation'));
+  workbench.state.nativeMode = true;
+  workbench.state.dirtyFiles.add('src/a.txt');
+  await assert.rejects(configureRepositorySparse(workbench, { directories: 'src' }), { code: 'Conflict' });
+  workbench.state.nativeMode = false;
+  workbench.state.membershipDirty = true;
+  await configureRepositorySparse(workbench, { directories: 'src\nsrc\n' });
+  assert.equal(await workbench.repo.worktree.read('docs/a.txt'), null);
+  assert.deepEqual(workbench.adopted.map(file => file.path), ['root.txt', 'src/a.txt']);
+  assert.equal(workbench.repositoryToolsResult.needsAdoption, false);
+  await configureRepositorySparse(workbench, { disable: true });
+  assert.equal(decode((await workbench.repo.worktree.read('docs/a.txt')).data), 'documentation');
+  assert.equal(workbench.state.membershipDirty, true);
+  assert.equal(workbench.state.dirtyFiles.has('src/a.txt'), true);
+});
+
+test('native project buffers use the host save baseline while browser recovery flags do not block tools', async t => {
+  const workbench = await toolsWorkbench(t);
+  await commitFiles(workbench.repo, { 'src/a.txt': 'source', 'docs/a.txt': 'documentation' });
+  workbench.state.nativeMode = true;
+  workbench.host.hasUnsavedNativeChanges = () => true;
+  await assert.rejects(configureRepositorySparse(workbench, { directories: 'src' }), { code: 'Conflict' });
+  assert.equal(workbench.events.some(event => event.type === 'synchronize'), false);
+  assert.equal(decode((await workbench.repo.worktree.read('docs/a.txt')).data), 'documentation');
+  workbench.state.dirtyFiles.add('saved.csproj');
+  workbench.state.membershipDirty = true;
+  workbench.host.hasUnsavedNativeChanges = () => false;
+  await configureRepositorySparse(workbench, { directories: 'src' });
+  assert.deepEqual(workbench.adopted.map(file => file.path), ['src/a.txt']);
+});
+
+test('maintenance repacks without pruning and requires fresh confirmation for each garbage collection', async t => {
+  const workbench = await toolsWorkbench(t);
+  await commitFiles(workbench.repo, { 'file.txt': 'tracked' });
+  const unreachable = await workbench.repo.odb.write('blob', text('retain through repack'));
+  await runRepositoryMaintenance(workbench, 'repack');
+  assert.equal(await workbench.repo.odb.has(unreachable), true);
+  assert.equal(workbench.events.find(event => event.method === 'repack').params.prune, false);
+  const previous = workbench.repositoryToolsResult;
+  assert.equal(await runRepositoryMaintenance(workbench, 'gc', { confirm: () => false }), null);
+  assert.equal(workbench.repositoryToolsResult, previous);
+  assert.equal(workbench.events.some(event => event.method === 'gc'), false);
+  let prompt;
+  await runRepositoryMaintenance(workbench, 'gc', { confirm: value => { prompt = value; return true; } });
+  assert.match(prompt, /14-day/u);
+  assert.equal(workbench.events.find(event => event.method === 'gc').params.includeReflogs, true);
+  assert.equal((await workbench.service.request('fsck')).ok, true);
+});
