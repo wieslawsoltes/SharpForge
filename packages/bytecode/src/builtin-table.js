@@ -27,6 +27,11 @@ const sourceDecimalExtrema = ['Min', 'Max'].map(name => sourceDecimal([
   name, ['System.Decimal', 'System.Decimal'], ['val1', 'val2'], 'System.Decimal', 'System.Math'
 ]));
 
+const sourceDecimalModes = [
+  ['Round', ['System.Decimal', 'System.MidpointRounding'], ['d', 'mode']],
+  ['Round', ['System.Decimal', 'int', 'System.MidpointRounding'], ['d', 'decimals', 'mode']]
+].map(row => ({...sourceDecimal(row), wireSuffix: ':MidpointRounding'}));
+
 function sourceDecimal([name, parameters, parameterNames, returnType = 'System.Decimal', owner = 'System.Decimal']) {
   const descriptor = decimalIntrinsicDefinitions.find(candidate => candidate.owner === owner &&
     candidate.isStatic && candidate.name === name && candidate.returnType === returnType &&
@@ -35,11 +40,11 @@ function sourceDecimal([name, parameters, parameterNames, returnType = 'System.D
   return {descriptor, parameterNames: Object.freeze(parameterNames)};
 }
 
-function decimalBuiltin(id, {descriptor, parameterNames}) {
+function decimalBuiltin(id, {descriptor, parameterNames, wireSuffix = ''}) {
   const params = Object.freeze(descriptor.parameters.map(type => type === 'System.Decimal' ? 'decimal' : type));
   const math = descriptor.owner === 'System.Math';
   return Object.freeze({
-    id, name: (math ? 'Math.' : 'decimal.') + descriptor.name + '#' + params.length + (math ? ':Decimal' : ''),
+    id, name: (math ? 'Math.' : 'decimal.') + descriptor.name + '#' + params.length + (math ? ':Decimal' : '') + wireSuffix,
     min: params.length, max: params.length,
     result: descriptor.returnType === 'System.Decimal' ? 'decimal' : descriptor.returnType, params, decimal: descriptor,
     parameterNames
@@ -75,6 +80,10 @@ export function createBuiltinTable(definitions, contracts, releasedRanges) {
     entries[id] = Object.freeze({...builtin, id});
   }
   for (const source of sourceDecimalExtrema) {
+    const id = runtimeId++;
+    entries[id] = decimalBuiltin(id, source);
+  }
+  for (const source of sourceDecimalModes) {
     const id = runtimeId++;
     entries[id] = decimalBuiltin(id, source);
   }
