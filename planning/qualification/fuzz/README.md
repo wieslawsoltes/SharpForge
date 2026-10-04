@@ -33,12 +33,6 @@ completed successfully; `1` means a finding or harness/integrity failure; `2`
 means unsupported, cancelled or incomplete work. Earlier failures are never
 overwritten by a rerun.
 
-The summary also retains reproduction commands as argv arrays, including the seed,
-effective CLI limits and literal finding-directory paths. Run them from the
-repository root at the recorded source commit and environment. They choose new
-output subdirectories so the original observation remains intact; choose another
-new output path when repeating a reproduction.
-
 ## Fixed execution contract
 
 The public orchestration API lives in `scripts/conformance/fuzz/harness.js`:

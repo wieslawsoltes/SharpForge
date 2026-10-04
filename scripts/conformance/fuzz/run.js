@@ -7,7 +7,6 @@ import { normalizeBudgets } from './budgets.js';
 import { runCampaign, replayCorpus } from './harness.js';
 import { targetIds, requireTargetId } from './target-ids.js';
 import { campaignStatus, campaignExitCode, writeCampaignReport } from './campaign-report.js';
-import { reproductionCommands } from './reproduction.js';
 
 const repository = fileURLToPath(new URL('../../../', import.meta.url));
 
@@ -113,7 +112,6 @@ export async function run(args = process.argv.slice(2)) {
       targets: captured.results.map(result => ({ targetId: result.targetId, status: result.status,
         requestedCases: result.requestedCases, completedCases: result.completedCases, counts: result.counts })),
       reports: captured.reports,
-      reproduction: reproductionCommands(options, repository, captured.results),
       limitations: [
         'Only the recorded cases and Node adapter profiles were exercised; mutation campaigns cannot prove parser safety.',
         'V8 heap limits and sampled RSS guards are not an operating-system memory or network sandbox.',
