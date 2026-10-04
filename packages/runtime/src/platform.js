@@ -1,7 +1,11 @@
+import {updatePlatformLayout,enqueuePlatformEvent} from './platform-layout.js';
 import {getAttachedProperty,setAttachedProperty} from './dependency-properties.js';
 import {exportPlatformScene} from './platform-scene.js';
 import {initializeBclHost,invokeBclPlatform} from './bcl-adapter.js';
-import {boundDelegatesEqual,constructBoundDelegate} from './execution/delegate-targets.js';
+import {boundDelegatesEqual} from './execution/delegate-targets.js';
+import {constructPlatformObject} from './platform-construction.js';
+import {validateGradientProperty,refreshExportedFrameworkValue} from './platform-brushes.js';
+import {replacePlatformItems,invokePlatformCollection} from './platform-collections.js';
 import {HostOperations} from './host-operations.js';
 import {invokeAnimation,createManagedAnimationClock,advanceManagedAnimations} from './animation.js';
 import {refreshStyle,refreshStyles,applyTemplate,updateBindings,invokeStyling} from './styling.js';
@@ -45,21 +49,7 @@ export class ManagedPlatform {
     try{const result=callback();if(!existing)this.commitTransaction(t);return result;}catch(error){this.heap.restore(heap);this.restore(platform);this.vm.pendingWrite=pending;if(existing)existing.length=offset;else this.rollbackTransaction(t);throw error;}finally{this.styleDepth--;}}
   delegate(type,method,receiver){return this.make(type,{method,receiver},'delegate');}
   delegateEquals(a,b){return boundDelegatesEqual(this.vm,a,b);}
-  construct(type,args){
-    const t=frameworkType(type);if(!t)throw new ManagedFault('TypeLoadException',`Unknown framework type ${type}`);
-    if(t.kind==='delegate')return constructBoundDelegate(this.vm,type,args[0],args[1]);
-    if(type===THREAD)return this.vm.scheduler.createThread(args[0]);
-    const values={};const ps=propertiesFor(type);for(const [key,p]of Object.entries(ps))if(!p.isStatic&&p.value!==null){values[key]=this.managed(p.value,p.type);if(isReference(values[key]))this.heap.pins.push(values[key]);}
-    const n=args.map(v=>this.native(v));
-    if(type===XAML+'Thickness'||type===XAML+'CornerRadius'){const slots=t.slots;slots.forEach((key,i)=>values[key]=this.managed(args.length===1?n[0]:n[i],'double'));}
-    if(type===XAML+'GridLength'){if(!Number.isFinite(n[0])||n[0]<0)throw new ManagedFault('ArgumentException','GridLength must be finite and nonnegative');values.Value=this.managed(n[0],'double');values.GridUnitType=n[1]??1;}
-    if(type===MEDIA+'SolidColorBrush')values.Color=args[0]??null;
-    if(type===XAML+'Setter'&&args.length){values.Property=args[0];values.Value=args[1];}
-    if(type===XAML+'Style'&&args.length)values.TargetTypeName=args[0];
-    const ref=this.make(type,values);this.heap.pins.push(ref);
-    if(t.kind==='application'){if(this.application)throw new ManagedFault('InvalidOperationException','An application already exists');this.application=ref;}
-    this.command({op:'create',id:identity(ref),type,properties:this.exportProperties(ref)});return ref;
-  }
+  construct(type,args){return constructPlatformObject(this,type,args);}
   getProperty(ref,d){
     if(d.isStatic){
       if(d.owner===XAML+'DependencyProperty'&&d.property==='UnsetValue')return this.unsetValue();
@@ -87,29 +77,21 @@ export class ManagedPlatform {
     if(['Opacity'].includes(key)&&(!Number.isFinite(v)||v<0||v>1))throw new ManagedFault('ArgumentOutOfRangeException','Opacity must be between zero and one');
     if(['Width','Height','MinWidth','MinHeight','MaxWidth','MaxHeight','FontSize','Spacing','RowSpacing','ColumnSpacing','ItemWidth','ItemHeight'].includes(key)&&v<0)throw new ManagedFault('ArgumentOutOfRangeException',`${key} cannot be negative`);
     if(frameworkType(p.type)?.kind==='enum'&&!Object.values(frameworkType(p.type).values).includes(v))throw new ManagedFault('ArgumentOutOfRangeException',`Invalid ${p.type}`);
+    validateGradientProperty(this,ref,key,value);
   }
   setProperty(ref,d,value){if(ref?.byref)ref=this.vm.dereference(ref);if(d.owner===THREAD)return this.vm.scheduler.invoke(d,[ref,value]);this.validateProperty(ref,d.property,value);
     if(!this.styleDepth&&(['Style','Template'].includes(d.property)||['style','setter','template'].includes(frameworkType(this.record(ref).type)?.kind)||this.animations.bases.has(this.animations.key(ref,d.property))))return this.styleMutation(()=>this.setProperty(ref,d,value));
     const old=this.get(ref,d.property);if(['Child','Content'].includes(d.property)&&!equal(old,value)){if(isReference(value)&&this.isElement(value))this.parent(value,ref);if(isReference(old)&&this.isElement(old))this.set(old,'$parent',null);}
     this.set(ref,'$local:'+d.property,true);this.set(ref,d.property,value);if(d.property==='Style')refreshStyle(this,ref);if(d.property==='Template')applyTemplate(this,ref);updateBindings(this,ref);if(['style','setter'].includes(frameworkType(this.record(ref).type)?.kind))refreshStyles(this);this.command({op:'set',id:identity(ref),property:d.property,value:this.exportValue(value)});
-    // Brushes and value objects are exported by value. Refresh their live consumers.
-    if(frameworkType(this.record(ref).type)?.kind==='value'||this.record(ref).type===MEDIA+'SolidColorBrush')this.command({op:'reset',snapshot:this.scene()});
+    refreshExportedFrameworkValue(this,ref);
     if(d.property==='SelectedIndex'){const list=this.get(ref,this.record(ref).type===CONTROLS+'NavigationView'?'MenuItems':this.record(ref).type===CONTROLS+'TabView'?'TabItems':'Items'),items=list?this.items(list):[],index=this.native(value);this.set(ref,'SelectedItem',index>=0&&index<items.length?items[index]:null);}
     return null;
   }
   isElement(ref){let type=this.heap.get(ref).type;const seen=new Set();while(frameworkType(type)&&!seen.has(type)){if(type===XAML+'UIElement')return true;seen.add(type);type=frameworkType(type).base;}return false;}
   parent(child,owner){const previous=this.get(child,'$parent');if(previous&&!equal(previous,owner))throw new ManagedFault('InvalidOperationException','UIElement already belongs to another parent');let at=owner;for(let n=0;at&&n<1024;n++){if(equal(at,child))throw new ManagedFault('InvalidOperationException','Visual tree cycle');at=this.get(at,'$parent');}this.set(child,'$parent',owner);}
   items(ref){const data=this.get(ref,'$items');return data?this.heap.get(data).data:[];}
-  replaceItems(ref,items){if(items.length>10000)throw new ManagedFault('OutOfMemoryException','UI collection item limit exceeded');const data=this.heap.allocate('array','object[]',[...items]);this.heap.withRoots([data],()=>this.set(ref,'$items',data));const owner=this.get(ref,'$owner');if(owner)this.command({op:'collection',id:identity(owner),property:this.get(ref,'$property'),items:items.map(v=>this.exportValue(v))});}
-  collection(ref,name,args){if(!this.styleDepth&&this.record(ref).type===XAML+'SetterBaseCollection'&&name!=='get_Item')return this.styleMutation(()=>this.collection(ref,name,args));const items=[...this.items(ref)],owner=this.get(ref,'$owner');let index,removed=[];
-    if(name==='get_Item'){index=Number(this.native(args[0]));if(!Number.isInteger(index)||index<0||index>=items.length)throw new ManagedFault('ArgumentOutOfRangeException','Collection index');return items[index];}
-    if(name==='Add'||name==='Insert'){index=name==='Add'?items.length:Number(this.native(args[0]));const value=args.at(-1);if(!Number.isInteger(index)||index<0||index>items.length)throw new ManagedFault('ArgumentOutOfRangeException','Collection index');if(owner&&isReference(value)&&this.isElement(value)){if(items.some(x=>equal(x,value)))throw new ManagedFault('InvalidOperationException','Duplicate UIElement');this.parent(value,owner);}items.splice(index,0,value);}
-    else if(name==='Clear')removed=items.splice(0);
-    else if(name==='Remove'||name==='RemoveAt'){index=name==='Remove'?items.findIndex(x=>equal(x,args[0])):Number(this.native(args[0]));if(index<0&&name==='Remove')return this.managed(false,'bool');if(!Number.isInteger(index)||index<0||index>=items.length)throw new ManagedFault('ArgumentOutOfRangeException','Collection index');removed=items.splice(index,1);}
-    else throw new ManagedFault('MissingMethodException',name);
-    for(const value of removed)if(isReference(value)&&this.isElement(value))this.set(value,'$parent',null);
-    this.replaceItems(ref,items);if(this.record(ref).type===XAML+'SetterBaseCollection')refreshStyles(this);return name==='Remove'?this.managed(true,'bool'):null;
-  }
+  replaceItems(ref,items){return replacePlatformItems(this,ref,items);}
+  collection(ref,name,args){return invokePlatformCollection(this,ref,name,args);}
   color(css){const hex=css.replace('#',''),n=parseInt(hex,16);return this.make('Windows.UI.Color',{A:hex.length===8?n&255:255,R:hex.length===8?n>>>24:n>>>16&255,G:hex.length===8?n>>>16&255:n>>>8&255,B:hex.length===8?n>>>8&255:n&255});}
   advanceAnimations(delta){return advanceManagedAnimations(this,delta);}
   invoke(d,args){return this.heap.withRoots(args,()=>{
@@ -142,7 +124,7 @@ export class ManagedPlatform {
   exportValue(value, depth = 0) { return exportPlatformValue(this, value, depth); }
   exportProperties(ref){const p={};for(const[k,v]of this.propertyEntries(ref))if(!k.startsWith('$'))p[k]=this.exportValue(v);return p;}
   scene(){return exportPlatformScene(this);}
-  updateLayout(changes){if(!Array.isArray(changes)||changes.length>10000)throw new RangeError('Layout update limit');const visible=new Set(this.scene().nodes.map(n=>n.id));for(const c of changes){if(!visible.has(c.id)||!Number.isFinite(c.width)||!Number.isFinite(c.height)||c.width<0||c.height<0||c.width>100000||c.height>100000)throw new TypeError('Invalid visual layout measurement');}for(const c of changes){const [h,g]=c.id.split(':').map(Number),ref=Object.freeze({h,g});for(const [name,value]of [['ActualWidth',c.width],['ActualHeight',c.height]])if(Object.hasOwn(propertiesFor(this.record(ref).type),name))this.set(ref,name,this.managed(value,'double'));}return changes.length;}
+  updateLayout(changes){return updatePlatformLayout(this,changes);}
   closeAll(){this.hostOperations.dispose();this.httpTransport?.dispose();this.computePool?.dispose();this.windows.clear();this.pending=[];this.command({op:'reset',snapshot:{version:1,windows:[],nodes:[]}});}
   dispatchEvent(id,event,payload={}){if(typeof id!=='string'||typeof event!=='string'||!payload||typeof payload!=='object')throw new TypeError('Invalid UI event');const [h,g]=id.split(':').map(Number),ref=Object.freeze({h,g}),r=this.record(ref),known=eventsFor(r.type);if(!Object.hasOwn(known,event))throw new ManagedFault('InvalidOperationException','Unregistered event');const visible=this.scene().nodes.some(n=>n.id===id);if(!visible)throw new ManagedFault('InvalidOperationException','Event target is not in an active visual tree');if(this.native(this.get(ref,'IsEnabled',true))===false||this.native(this.get(ref,'IsEnabled',true))===0||this.native(this.get(ref,'IsHitTestVisible',true))===false||this.native(this.get(ref,'IsHitTestVisible',true))===0)return [];
     if((r.type===CONTROLS+'InfoBar'&&event==='Closed')||(r.type===CONTROLS+'ContentDialog'&&event.endsWith('ButtonClick')))this.set(ref,'IsOpen',this.managed(false,'bool'));
@@ -151,8 +133,7 @@ export class ManagedPlatform {
     return this.enqueueEvent(ref,event);
   }
   raiseLifecycle(ref,event){const visit=(current,seen=new Set())=>{if(!isReference(current)||seen.has(identity(current)))return;seen.add(identity(current));const r=this.heap.get(current);if(!frameworkType(r.type))return;if(eventsFor(r.type)[event])this.enqueueEvent(current,event);for(const [key,value]of this.propertyEntries(current)){if(key.startsWith('$')||!isReference(value))continue;const entry=this.heap.get(value);if(entry.kind==='collection'){for(const child of this.items(value))if(isReference(child))visit(child,seen);}else if(this.isElement(value))visit(value,seen);}};visit(ref);}
-  enqueueEvent(ref,event){
-    const r=this.record(ref),list=this.get(ref,'$event:'+event),handlers=list?[...this.heap.get(list).data]:[];const ids=[];this.heap.withRoots([ref,...handlers],()=>{const args=this.make(XAML+'RoutedEventArgs',{OriginalSource:ref,Handled:false});this.heap.pins.push(args);for(const handler of handlers)ids.push(this.vm.scheduler.enqueue(handler,[ref,args],{name:r.type.split('.').at(-1)+'.'+event,kind:'ui'}));});return ids;
-  }
+  enqueueEvent(ref,event){return enqueuePlatformEvent(this,ref,event);}
+
 
 }
