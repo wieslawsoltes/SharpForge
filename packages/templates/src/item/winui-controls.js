@@ -1,16 +1,6 @@
 import { parseXml } from '@sharpforge/project-system';
-import { definition, joinPath, TemplateError } from '../common.js';
-import { nativeXamlOptions, xamlNamespace } from './winui-xaml.js';
-
-export const winuiControlTemplates = Object.freeze([
-  ['winui-templated-control', 'Templated Control', 'CustomControl.cs'],
-  ['winui-resource-dictionary', 'Resource Dictionary', 'Resources.xaml'],
-  ['winui-style', 'Button Style', 'ButtonStyle.xaml'],
-  ['winui-control-template', 'Control Template', 'ButtonTemplate.xaml'],
-  ['winui-data-template', 'Data Template', 'ItemTemplate.xaml']
-].map(([id, name, fileName]) => definition(id, name, 'Native WinUI resources with unique keys and supported markup.', 'WinUI XAML', {
-  ...nativeXamlOptions, fileName, generate: generateControlItem
-})));
+import { joinPath, TemplateError } from '../common.js';
+import { xamlNamespace } from './winui-xaml.js';
 
 function resourceBody(id, key) {
   if (id === 'winui-resource-dictionary') return `  <SolidColorBrush x:Key="${key}AccentBrush" Color="#2563EB" />\n`;
