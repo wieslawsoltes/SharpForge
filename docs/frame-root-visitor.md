@@ -30,7 +30,7 @@ iterable provider behavior. Collection omits null/uninitialized values but never
 clears a local or treats it as dead after its last use.
 
 No 3x timing improvement is claimed. The 500-frame timing target and last-use
-liveness acceptance in #1400 remain open. Focused retention, snapshot, opt-out and
-three-engine regressions are staged for serial validation; no tests, builds or
-benchmarks have been run for this change. Native/Rust/Wasm qualification remains
-outside this increment.
+liveness acceptance in #1400 remain open. Serial Node 24.21.0 validation at `3c077c19` passed all 86 focused root, GC,
+resumed-fault, pooled-frame, argument-buffer and profiler regressions, including
+source, reloaded-source and direct-CIL coverage. Core static/build validation is
+recorded on the PR. Benchmarks and native/Rust/Wasm qualification remain open.
