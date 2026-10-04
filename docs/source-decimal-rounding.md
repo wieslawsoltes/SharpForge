@@ -142,7 +142,8 @@ Overflow and division/remainder by zero retain their managed faults, including
 inside `unchecked`. The source family returns the same immutable Decimal carrier
 for ordinary storage and boxing. Invalid arities or incompatible parameter and
 return types remain rejected. Compare/Equals and other library families are not
-registered by this increment.
+registered by this arithmetic increment; the following comparison family adds
+only their two static Decimal signatures.
 
 `tests/a05-source-decimal-arithmetic.test.js` compares static methods and operators
 across source, reloaded source and direct CIL, including exact scale, large values,
@@ -151,3 +152,37 @@ arithmetic, integral-rounding, Round/Truncate and Decimal-operation tests passed
 at `352d3ce1`, using Node 24, one worker and a 512 MB old-space limit. No fresh
 native execution, platform or performance evidence is claimed; #1350/#1351
 remain open.
+
+## Static comparison methods
+
+`decimal.Compare(decimal d1, decimal d2)` returns Int32 -1, 0 or 1;
+`decimal.Equals(decimal d1, decimal d2)` returns Boolean. Their IDs append after
+the arithmetic family as `decimal.Compare#2` and `decimal.Equals#2`.
+
+Each private registration row selects its exact expected result type as well as
+owner, staticness and parameter types. Existing rows keep their Decimal result.
+The builtin result metadata uses that selected descriptor; it does not invent an
+operand or result conversion or admit additional profile members. The existing
+intrinsic keeps Boolean values in source execution and the CLI Boolean stack
+representation in direct CIL. Emission and reload retain the exact signature.
+
+Comparison ignores representational scale and the sign of zero, while preserving
+the full Decimal coefficient. Named arguments `d1`/`d2` keep source evaluation
+order. Instance Equals/CompareTo and object overloads remain outside this source
+family.
+
+```csharp
+using System;
+int order = decimal.Compare(1.00m, 2m); // -1
+bool same = decimal.Equals(1.0m, 1.00m); // true
+Console.WriteLine(order);
+Console.WriteLine(same);
+```
+
+`tests/a05-source-decimal-comparison.test.js` authors source/reloaded/direct-CIL
+cases for scale, signed zero, close large values, typed result arrays and boxes,
+branching, named-argument effects and rejected operand/result signatures.
+All 39 focused comparison, arithmetic, rounding, and Decimal-operation checks
+passed at `ace585df2a8a693ea7a45b43fd0535b364972801`, using Node 24, one worker,
+and a 512 MB old-space limit. Platform/performance qualification remains deferred;
+no new native evidence or completion of #1350/#1351 is claimed.
