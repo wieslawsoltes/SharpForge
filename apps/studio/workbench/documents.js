@@ -210,7 +210,8 @@ export class DocumentService {
       result = await this.coordinateSave({ snapshot, prepare, isCurrent });
       snapshot = result?.snapshot ?? snapshot;
     } else {
-      snapshot = await prepare();
+      const prepared = prepare();
+      snapshot = prepared && typeof prepared.then === 'function' ? await prepared : prepared;
       result = await this.saveDocument(snapshot);
     }
     if (result === false || result?.ok === false) return false;
