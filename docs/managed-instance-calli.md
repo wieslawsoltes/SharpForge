@@ -9,9 +9,10 @@ object; it does not perform virtual redispatch.
 
 This leaf supports pointers on the evaluation stack and in native-int locals,
 including compatible control-flow joins. Existing managed static typed-pointer
-storage, parameters, results and fields retain their behavior. Instance typed
-function-pointer signatures in those positions remain rejected by the lossless
-AST adapter before inspection formatting can erase HasThis. ExplicitThis,
+storage, parameters, results and fields retain their behavior. A subsequent
+[typed-local increment](runtime-typed-instance-pointer-locals.md) admits direct
+ordinary instance-pointer locals. Instance typed parameters, results and fields
+remain rejected before inspection formatting can erase HasThis. ExplicitThis,
 varargs and unmanaged conventions are rejected explicitly.
 
 `InstanceCalliTargets(inspector).accepts(methodDefToken)` is a shared metadata
@@ -39,7 +40,7 @@ root scanning, debugger offsets and method events continue through vm.call.
 In-memory snapshots preserve frozen pointer and receiver identities; restore
 invalidates derived metadata caches. No snapshot fields or dispatch loop are
 added. The [virtual-pointer follow-up](virtual-instance-calli.md) adds bounded
-`ldvirtftn` selection. Typed instance-pointer storage, generic/value/interface targets,
+`ldvirtftn` selection. Typed instance-pointer parameters/results/fields, generic/value/interface targets,
 generic receiver objects, external targets, tail., jmp and source-compiler
 lowering remain outside this increment of #1359. Portable snapshots, native and
 browser parity, and performance qualification remain pending.

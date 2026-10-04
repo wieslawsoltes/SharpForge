@@ -4,6 +4,8 @@ import {parseFunctionPointerType} from './function-pointer-signature.js';
 import {functionPointerExecutionSignature, requireManagedCalli} from './function-pointer-execution-signature.js';
 import {InstanceCalliTargets} from './instance-calli-targets.js';
 import {VirtualPointerProfile} from './virtual-pointer-profile.js';
+import {readExecutionSignatureAst, signatureSlotType} from './metadata/execution-signature.js';
+import {instancePointerLocalSignature} from './instance-pointer-local.js';
 
 const pointerKey = type => {
   const signature = parseFunctionPointerType(type);
@@ -39,11 +41,22 @@ export class FunctionPointerProfile {
     this.signatures = new Map();
     this.instanceTargets = null;
     this.instanceKeys = new Set();
+    this.localPointers = new Map();
   }
 
   signature(token) {
     if (!this.signatures.has(token)) this.signatures.set(token, functionPointerExecutionSignature(this.inspector, token));
     return this.signatures.get(token);
+  }
+
+  localPointer(method, index) {
+    if (!method.localSignature) return null;
+    if (!this.localPointers.has(method.localSignature)) {
+      const ast = readExecutionSignatureAst(this.inspector.metadata, method.localSignature);
+      this.localPointers.set(method.localSignature, ast.types.map((_, slot) =>
+        instancePointerLocalSignature(this.inspector.metadata, signatureSlotType(ast, 'local', slot))));
+    }
+    return this.localPointers.get(method.localSignature)[index] ?? null;
   }
 
   indirect(instruction) {
@@ -114,7 +127,7 @@ export class FunctionPointerProfile {
         throw new CilError('Invalid function-pointer storage slot');
       }
       const type = argument ? method.signature.parameters[index - (method.signature.isStatic ? 0 : 1)] : method.locals[index];
-      const declared = type && parseFunctionPointerType(type);
+      const declared = (!argument && this.localPointer(method, index)) || type && parseFunctionPointerType(type);
       if (declared) this.check(value, declared, instruction, fail);
       const unproven = escaped[argument ? 'args' : 'locals'].has(index) || argument && this.instanceKeys.has(value);
       (argument ? state.args : state.locals)[index] = unproven ? null : value;
@@ -178,6 +191,9 @@ export class FunctionPointerProfile {
       if (/^ld(loc|arg)a(\.s)?$/.test(instruction.name)) {
         const kind = instruction.name.includes('loc') ? 'locals' : 'args', index = slotIndex(instruction);
         const limit = kind === 'locals' ? method.locals.length : method.signature.parameters.length + (method.signature.isStatic ? 0 : 1);
+        if (kind === 'locals' && this.localPointer(method, index)) {
+          fail(instruction, 'Addresses of typed instance function-pointer locals are not implemented');
+        }
         if (index >= 0 && index < limit) escaped[kind].add(index);
       }
     }

@@ -1,6 +1,7 @@
 import {CilError} from './binary.js';
 import {readExecutionSignatureAst} from './metadata/execution-signature.js';
 import {formatSignature} from './metadata/signature-format.js';
+import {instancePointerLocalSignature} from './instance-pointer-local.js';
 
 function unsupported(signature, message) {
   return Object.assign(new CilError(message), {code: signature.callingConvention ? 'IL_UNMANAGED' : 'IL_CALLI',
@@ -29,7 +30,11 @@ export function functionPointerExecutionSignature(inspector, token) {
   if (token >>> 24 === 17 && signature.kind === 'method' && signature.explicitThis) {
     throw unsupported(signature, 'ExplicitThis calli signatures are not implemented');
   }
-  validatePointers(signature);
+  if (signature.kind === 'locals') {
+    for (const type of signature.types) {
+      if (!instancePointerLocalSignature(metadata, type)) validatePointers(type);
+    }
+  } else validatePointers(signature);
   return formatSignature(signature, metadata);
 }
 
