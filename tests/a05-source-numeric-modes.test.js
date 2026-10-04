@@ -208,3 +208,16 @@ test('source images reject malformed scalar wire values before creating a VM', (
   assert(verifyImage(image).some(error => error.includes('Invalid scalar constant')));
   assert.throws(() => new VirtualMachine(image), /Invalid scalar constant/);
 });
+
+for (const [name, source] of [
+  ['generic receiver', 'Console.WriteLine(new A<int>().Get(42)); class A<T> { public T Get(T value) => value; }'],
+  ['init property', 'Console.WriteLine(new A { X = 42 }.X); class A { public int X { get; init; } }'],
+]) test(`profile Console fallback executes ${name} through semantic lowering`, () => {
+  const result = compileToIL(source);
+  assert.equal(result.success, true, JSON.stringify(result.diagnostics));
+  for (const vm of engines(result)) {
+    const actual = vm.run();
+    assert.equal(actual.state, 'terminated', actual.fault?.stack);
+    assert.equal(actual.output, '42\n');
+  }
+});
