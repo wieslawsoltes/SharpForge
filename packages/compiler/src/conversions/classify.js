@@ -16,6 +16,7 @@ import { hasImplicitReferenceConversion, hasBoxingConversion, hasExplicitReferen
 import { resolveUserDefinedConversion } from './user-defined.js';
 import { hasImplicitSpanConversion, hasExplicitSpanConversion } from './span.js';
 import { pointerConversionKind } from './pointer.js';
+import { isInterpolatedStringHandlerType } from './interpolated-string-handler.js';
 
 export const ConversionKind = Object.freeze(
   Object.fromEntries(
@@ -34,6 +35,7 @@ export const ConversionKind = Object.freeze(
       'ImplicitTuple',
       'ImplicitTupleLiteral',
       'InterpolatedString',
+      'InterpolatedStringHandler',
       'MethodGroup',
       'AnonymousFunction',
       'ImplicitThrow',
@@ -74,6 +76,7 @@ const implicitKinds = new Set([
   'ImplicitTuple',
   'ImplicitTupleLiteral',
   'InterpolatedString',
+  'InterpolatedStringHandler',
   'MethodGroup',
   'AnonymousFunction',
   'ImplicitThrow',
@@ -93,6 +96,8 @@ export class Conversion {
     this.candidates = extra.candidates ?? null;
     this.error = extra.error ?? null;
     this.steps = extra.steps ?? null;
+    // The bound handler pattern of an interpolated string handler conversion (binder/interpolated-string-handlers.js).
+    this.handler = extra.handler ?? null;
     Object.freeze(this);
   }
   get exists() {
@@ -304,6 +309,7 @@ export class Conversions {
       case 'interpolatedString':
         if (['FormattableString', 'IFormattable'].includes(to.name) && to.containingNamespace?.name === 'System')
           return simple.InterpolatedString;
+        if (isInterpolatedStringHandlerType(to)) return simple.InterpolatedStringHandler;
         break;
     }
     const from = expression.type;

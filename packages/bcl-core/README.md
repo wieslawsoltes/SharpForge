@@ -124,9 +124,10 @@ both managed platforms without claiming unsupported source syntax support.
 Independent CIL fixtures execute every captured vector operation through the
 non-generic interface, including boxing and opaque-object construction; typed
 catches and the actual InnerException getter cover all three wrapped failures.
-Compiled source covers eleven direct StringComparer operations. Source interface
-conversions, custom implementations, object construction and NaN field access
-are not silently treated as successful execution by the reference harness.
+Compiled source covers eleven direct StringComparer operations. Registered
+implicit interface conversions are supported; custom implementations, object
+construction and NaN field access are not silently treated as successful
+execution by the reference harness.
 
 `scripts/benchmarks/a08-array-search.mjs` measures the released typed/default
 BinarySearch and reports the new explicit ordinal path separately. Copy the same
@@ -142,9 +143,11 @@ The host `fault(type, message, reference = null)` service and public
 managed exception reference. Callers root that reference during fault creation;
 the runtime's ordinary exception frames retain it afterward. Existing calls
 without a reference keep their previous behavior.
-Compiled source supports direct `StringComparer.Ordinal.Compare` calls. Interface
-locals/conversions, interface `is` expressions and custom comparer implementations
-remain guarded by the current source profile; registered interface metadata does
-not imply that those source constructs execute. Independently assembled CIL
-exercises interface Compare, List.Sort, castclass and isinst without bypassing the
-runtime call or cast paths. The source-negative tests retain the existing guards.
+Compiled source supports direct `StringComparer.Ordinal.Compare` calls and
+registry-proven implicit interface conversions, including `IComparer<string>`
+locals, parameters and returns. These conversions keep the same managed reference
+and dispatch through existing contracts. Interface `is` expressions, casts needing
+runtime checks and custom comparer implementations remain guarded. Independently
+assembled CIL exercises interface Compare, List.Sort, castclass and isinst without
+bypassing runtime call or cast paths. Source-negative tests retain the remaining
+guards; this does not enable arbitrary source interface implementations.

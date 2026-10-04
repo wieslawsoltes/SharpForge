@@ -114,8 +114,11 @@ corpus comparisons but differs on five additional normalization boundary pairs.
 **#829/#2619/#2621 remain open** for an exact backend and managed culture APIs;
 #2655 tracks general comparer dispatch. Explicit Ordinal remains UTF-16 based.
 Both VM platforms consume the full original capture without assuming a stable
-order for culturally equal keys. Compiled source exercises direct StringComparer calls; source interface
-locals/conversions and custom implementations remain explicitly diagnosed.
+order for culturally equal keys. Compiled source supports direct StringComparer
+calls and registered interface upcasts, including
+`values.Sort(StringComparer.Ordinal)` and comparer locals/parameters/returns.
+Custom implementations, interface type tests and casts needing runtime checks
+remain explicitly diagnosed.
 Independently assembled CIL exercises interface Compare/List.Sort and runtime
 casts. Unsupported custom comparer objects are checked through both platforms,
 including an empty List. Browser and Rust native/Wasm qualification is pending.

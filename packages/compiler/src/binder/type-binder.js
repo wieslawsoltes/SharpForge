@@ -25,6 +25,7 @@ import { bindUsingDirectives, bindAliasTarget } from './using-directives.js';
 import { constructType } from '../symbols/substitution.js';
 import { tupleNameProblems, tupleTypeOf } from './tuples.js';
 import { bindFunctionPointerType } from './function-pointers.js';
+import { isRefLike } from './ref-struct.js';
 
 export class Scope {
   /** @param {'unit'|'namespace'|'type'|'typeParameters'} kind */
@@ -380,6 +381,8 @@ export class TypeBinder {
         let element = this.bindType(syntax.elementType, scope, elementOptions(options));
         if (element.type.isStatic && element.type.kind === SymbolKind.NamedType)
           this.report(scope, syntax.elementType, DiagnosticId.CS0719, [element.type.toDisplayString()]);
+        // A ref struct lives on the stack: it cannot be the element of an array, wherever the array type is written.
+        if (isRefLike(element.type)) this.report(scope, syntax.elementType, DiagnosticId.CS0611, [element.type.toDisplayString()]);
         // Rank specifiers read left to right from the outside in: int[][,] is an array of int[,].
         for (const rank of [...syntax.rankSpecifiers].reverse()) element = plain(this.core.arrayOf(element, rank.sizes.length || 1));
         return element;

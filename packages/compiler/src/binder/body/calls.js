@@ -325,6 +325,8 @@ export const CallBinding = Base =>
         local = this.newLocal(name, type, designation.identifier, LocalDeclarationKind.Out);
       local.writes++;
       local.isOutVar = true;
+      // The nullable analysis checks what the callee stores against the declared type (`out string s`); `var` takes any state.
+      local.declaredAnnotation = bound.isVar ? null : bound.nullableAnnotation;
       this.declare(name, local, designation.identifier);
       return this.node('DeclarationExpression', syntax, bound.isVar ? null : type, { local, isOutVarOrDiscard: true });
     }

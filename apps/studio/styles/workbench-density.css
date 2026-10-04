@@ -1,3 +1,28 @@
 /* Consistent IDE density and a focused designer workbench. All colors are theme tokens. */
-:root{--sf-accent:#4aa9ed;--sf-subtle:#a9b4c4;--sf-line:#3a414b;--sf-surface:#20252d;--sf-selection:#173f5d}
-.panel-tools{gap:6px!important;align-items:center;box-sizing:border-box}.panel-tools button{border-radius:3px}.panel-tools button:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--sf-accent);outline-offset:-2px}button:disabled{cursor:not-allowed}.dock-tab{font-weight:400}.dock-tab.active{font-weight:500}.tool-page{line-height:1.55}.tool-page h2{font-size:17px;margin:12px 0}.tool-page p{max-width:100ch}.sf-context-menu{box-shadow:0 6px 24px #0008}
+:root {
+  --sf-accent: var(--designer-palette-accent);
+  --sf-subtle: var(--designer-palette-subtle);
+  --sf-line: var(--designer-palette-line);
+  --sf-surface: var(--designer-palette-surface);
+  --sf-selection: var(--designer-palette-selection);
+}
+.panel-tools {
+  gap: 6px!important;
+  align-items: center;
+  box-sizing: border-box;
+}
+.panel-tools button { border-radius: 3px; }
+.panel-tools button:focus-visible,button:focus-visible,select:focus-visible {
+  outline: 2px solid var(--sf-accent);
+  outline-offset: -2px;
+}
+button:disabled { cursor: not-allowed; }
+.dock-tab { font-weight: 400; }
+.dock-tab.active { font-weight: 500; }
+.tool-page { line-height: 1.55; }
+.tool-page h2 {
+  font-size: 17px;
+  margin: 12px 0;
+}
+.tool-page p { max-width: 100ch; }
+.sf-context-menu { box-shadow: 0 6px 24px var(--shadow-floating); }

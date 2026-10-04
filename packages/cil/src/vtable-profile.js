@@ -24,5 +24,11 @@ export function indexDispatchTable(table, resolveSlot) {
     slotIndexes.set(initial, targets.length);
     targets.push(target);
   }
-  return Object.assign(table, {slotIndexes, targets: Object.freeze(targets)});
+  const declarationsByToken = new Map();
+  for (const declaration of table.declarationDetails.values()) {
+    let owners = declarationsByToken.get(declaration.token);
+    if (!owners) declarationsByToken.set(declaration.token, owners = new Map());
+    owners.set(declaration.owner, slotIndexes.get(declaration.slot));
+  }
+  return Object.assign(table, {slotIndexes, targets: Object.freeze(targets), declarationsByToken});
 }

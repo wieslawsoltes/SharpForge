@@ -1,3 +1,4 @@
+import {popPooledFrame} from './frame-retirement.js';
 import {ManagedFault} from '../heap.js';
 import {exceptionMatches} from './exception-types.js';
 
@@ -38,7 +39,7 @@ export function finalizers(vm, frame, source, target = Infinity) {
 
 export function finishReturn(vm, frame, value) {
   vm.stack.length = frame.base;
-  vm.frames.pop();
+  popPooledFrame(vm);
   if (vm.frames.length) vm.stack.push(value);
   else {
     vm.returnValue = value;
@@ -78,7 +79,7 @@ export function resumeUnwind(vm, frame) {
     vm.fault = null;
     return;
   }
-  vm.frames.pop();
+  popPooledFrame(vm);
   vm.stack.length = frame.base;
   vm.handleFault(unwind.error);
 }
@@ -130,7 +131,7 @@ export function handleFault(vm, error) {
       vm.fault = null;
       return;
     }
-    vm.frames.pop();
+    popPooledFrame(vm);
   }
   vm.state = 'faulted';
 }

@@ -1,6 +1,11 @@
 {
   "schemaVersion": 1,
-  "styles": [],
+  "styles": [
+    {
+      "source": "packages/docking/src/host/workbench.css",
+      "order": 1999
+    }
+  ],
   "workers": [],
   "assets": [
     {

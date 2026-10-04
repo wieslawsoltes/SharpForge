@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SharpForge docking example</title>
+  <link rel="stylesheet" href="../src/style.css">
+  <link rel="stylesheet" href="./example.css">
+</head>
+<body>
+  <header>
+    <h1>Docking workbench</h1>
+    <button id="auto-hide">Auto Hide All</button>
+    <button id="float-group">Float Watch + Output</button>
+    <button id="restore">Reset</button>
+    <button id="undo">Undo Layout</button>
+    <button id="redo">Redo Layout</button>
+  </header>
+  <div id="workspace"></div>
+  <p id="status" role="status">Drag tabs onto the nine explicit targets; Escape cancels a pointer drag.</p>
+  <script type="module" src="./workbench.js"></script>
+</body>
+</html>
