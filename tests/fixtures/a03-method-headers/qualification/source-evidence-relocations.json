@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "kind": "archived source evidence path relocations",
+  "recordedAt": "2026-10-04T22:51:36.063093+00:00",
+  "previousRevision": "110f8696edbe86ac9f04d0c0d7255e7c619ae589",
+  "previousPublicRevision": "8534d7739d78bde71255b4aa97998ca21baf632a",
+  "sourceReview": "Root and independent assembly-agent review; current checkout source consumers inspected, original eight retention receipt entries verified. Incomplete remote/lazy-history search is not used as evidence.",
+  "cause": {
+    "workflowRun": 37241108120,
+    "job": 111549841478,
+    "status": "failed",
+    "stage": "npm run check / static import scan",
+    "result": "Eight archived executable-looking names retained original fixture-relative imports; checker correctly could not resolve those imports from the archive location.",
+    "rawLog": {
+      "path": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/core-first-37241108120.log",
+      "bytes": 280011,
+      "sha256": "6f6ce0edc122d6dc5823ce09c630d58d24f07ba2cd030a6fad5e3f88619a2d20"
+    }
+  },
+  "relocations": [
+    {
+      "historicalRetainAs": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-3ddd6460/native-first/capture.mjs",
+      "currentRetainedPath": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-3ddd6460/native-first/capture.mjs.txt",
+      "bytes": 8493,
+      "sha256": "550ecfb8cc8382aced1a90c6bc48e3332ff181527a9ae819d34e52ec0b65a7c7",
+      "gitBlob": "4c0c55420438f6fc1f449a3984a5bbf15ccdd2de",
+      "reason": "Captured source preserves its original relative imports and is text evidence at this archived location."
+    },
+    {
+      "historicalRetainAs": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-3ddd6460/native-first/process-capture.mjs",
+      "currentRetainedPath": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-3ddd6460/native-first/process-capture.mjs.txt",
+      "bytes": 2766,
+      "sha256": "376cf307467c9ccca6407019f0cd76078b48a30b1686b970ee50679adb3a0fef",
+      "gitBlob": "2d5dbc51b7e763305ad3be69990ed153083e4100",
+      "reason": "Captured source preserves its original relative imports and is text evidence at this archived location."
+    },
+    {
+      "historicalRetainAs": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-c0e3352e/native-first/capture.mjs",
+      "currentRetainedPath": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-c0e3352e/native-first/capture.mjs.txt",
+      "bytes": 8418,
+      "sha256": "6e6d6c858bd7e29d6940228469df5cba227a25004cf25197d9004d37aa8e79a6",
+      "gitBlob": "891ec47a6b539e374ba4c5a930a886f380e5ecff",
+      "reason": "Captured source preserves its original relative imports and is text evidence at this archived location."
+    },
+    {
+      "historicalRetainAs": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-c0e3352e/native-first/process-capture.mjs",
+      "currentRetainedPath": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-c0e3352e/native-first/process-capture.mjs.txt",
+      "bytes": 2766,
+      "sha256": "376cf307467c9ccca6407019f0cd76078b48a30b1686b970ee50679adb3a0fef",
+      "gitBlob": "2d5dbc51b7e763305ad3be69990ed153083e4100",
+      "reason": "Captured source preserves its original relative imports and is text evidence at this archived location."
+    },
+    {
+      "historicalRetainAs": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-e10cb80d/native-first/capture.mjs",
+      "currentRetainedPath": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-e10cb80d/native-first/capture.mjs.txt",
+      "bytes": 8493,
+      "sha256": "550ecfb8cc8382aced1a90c6bc48e3332ff181527a9ae819d34e52ec0b65a7c7",
+      "gitBlob": "4c0c55420438f6fc1f449a3984a5bbf15ccdd2de",
+      "reason": "Captured source preserves its original relative imports and is text evidence at this archived location."
+    },
+    {
+      "historicalRetainAs": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-e10cb80d/native-first/process-capture.mjs",
+      "currentRetainedPath": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-e10cb80d/native-first/process-capture.mjs.txt",
+      "bytes": 2766,
+      "sha256": "376cf307467c9ccca6407019f0cd76078b48a30b1686b970ee50679adb3a0fef",
+      "gitBlob": "2d5dbc51b7e763305ad3be69990ed153083e4100",
+      "reason": "Captured source preserves its original relative imports and is text evidence at this archived location."
+    },
+    {
+      "historicalRetainAs": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-f261715f/native-first/capture.mjs",
+      "currentRetainedPath": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-f261715f/native-first/capture.mjs.txt",
+      "bytes": 8418,
+      "sha256": "6e6d6c858bd7e29d6940228469df5cba227a25004cf25197d9004d37aa8e79a6",
+      "gitBlob": "891ec47a6b539e374ba4c5a930a886f380e5ecff",
+      "reason": "Captured source preserves its original relative imports and is text evidence at this archived location."
+    },
+    {
+      "historicalRetainAs": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-f261715f/native-first/process-capture.mjs",
+      "currentRetainedPath": "tests/fixtures/a03-method-headers/qualification/method-header-qualification-f261715f/native-first/process-capture.mjs.txt",
+      "bytes": 2766,
+      "sha256": "376cf307467c9ccca6407019f0cd76078b48a30b1686b970ee50679adb3a0fef",
+      "gitBlob": "2d5dbc51b7e763305ad3be69990ed153083e4100",
+      "reason": "Captured source preserves its original relative imports and is text evidence at this archived location."
+    }
+  ],
+  "bytesUnchanged": true,
+  "historicalManifestsUnchanged": [
+    {
+      "path": "tests/fixtures/a03-method-headers/qualification/retention-receipt-3ddd6460.json",
+      "sha256": "9f9e94a4d8ff382f26f4c0f930d5b30f3e9839b85e023c08bb9f2a81bd55fd44"
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/qualification/method-header-retention-manifest-3ddd6460.json",
+      "sha256": "34ee5bffbca8088cb98ee77f3e48d2be86692a16332262961835079baccc4414"
+    }
+  ],
+  "activeSourceAndCheckerUnchanged": [
+    {
+      "path": "tests/fixtures/a03-method-headers/capture.mjs",
+      "sha256": "550ecfb8cc8382aced1a90c6bc48e3332ff181527a9ae819d34e52ec0b65a7c7"
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/process-capture.mjs",
+      "sha256": "376cf307467c9ccca6407019f0cd76078b48a30b1686b970ee50679adb3a0fef"
+    },
+    {
+      "path": "tests/a03-05-header-capture.test.js",
+      "sha256": "35f43aadc18c1929622061ba47c0a0a216093d879a34573cce6b8cb2bcc10db2"
+    },
+    {
+      "path": "scripts/conformance/static/check-imports.js",
+      "sha256": "3a99b2fe662fb283a0131b52582b8f6311e3fb752ca2bf1f129fadab5ca40d86"
+    },
+    {
+      "path": "scripts/conformance/static/allowlist.json",
+      "sha256": "c9164f5a250c6151ed726a3980158d3b89947ec9094728605d80352c2910ea7b"
+    }
+  ],
+  "interpretation": "Original retainAs values describe the historical retention layout. This additive map gives current repository locations. Source bytes, sizes and Git blobs are identical. The .mjs.txt suffix follows existing repository evidence conventions. These copies require the original source layout/dependencies for execution; they are not runnable modules at the archive location.",
+  "validation": "No product/test/assertion/checker/allowlist change. The79+5 integration results remain tied to56671d1b; evidence packaging is to be checked by the PR requiredcore gate."
+}
