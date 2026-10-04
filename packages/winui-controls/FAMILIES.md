@@ -1,115 +1,190 @@
 # Control families and application services
 
-These public models and injectable renderer contributions are imported through `@sharpforge/winui-controls`. Managed host integration is supplied by later declared predecessors and never inferred from a pure model test.
+This package supplies control models, renderer contributions and managed API
+adapters. The framework registers the API contracts; the JS application and VM
+own managed values, tasks, collections and model lifetime. The retained host owns
+DOM elements, layout, input and accessibility. Applications import the package
+entry point, `@sharpforge/winui-controls`.
 
-## Family registration policy
+The Project 14 family implementation and its regression fixtures passed their
+cases in the completed combined Node gate described below. Native WinUI behavior
+and the browser matrix remain separate qualifications. The issue-level evidence
+and remaining acceptance work are recorded in
+[ACCEPTANCE.md](ACCEPTANCE.md). Metadata differences remain visible in
+[parity/deviations.json](parity/deviations.json) and the generated API matrix.
 
-`defaultControlTemplates`, `defaultControlTemplate`, `materializeDefaultControlStyle` and `controlVisualStates` describe actual named visuals, template bindings and per-instance states. Button style padding is applied once by managed layout. Unknown controls receive no fabricated template. Renderer registration preserves caller ownership and explicit override policy; capability requests remain host-owned.
+## Registration and ownership
 
-## Application and window lifetime
+| Public contribution | Consumer and responsibility |
+|---|---|
+| `registerControlFamilyContracts(registry)` | Framework registration within the reserved A16 contract range. Adds missing types and members while preserving released IDs and binary signatures. |
+| `controlFamilyEventContracts` | Exact declaring owner/event mapping to the concrete event-argument type. A released delegate signature is not replaced by this mapping. |
+| `registerControlFamilyAdapters(registry)` | Pure operations in the shared UI extension registry. Receives the host's managed context; asynchronous services return `context.task(...)`. |
+| `registerControlFamilies(registry)` | Renderer registration after legacy extraction. Uses the renderer registry's explicit override option. |
+| `registerNavigationLayouts`, `registerCommandLayouts`, `registerMenuLayouts` | Shared layout contributions. Managed Arrange and native parts use the same geometry. |
+| `createControlServices(options)` | Creates session-owned resources, application/activation services, permission policy, clipboard, launcher and interaction leases. |
+| `getControlFamilyModel(context, receiver, kind)` | Shares the authoritative `selection`, `tree`, `text`, `richText`, `range`, `calendar`, `navigation` or `pane` model with managed operations and automation. Returns no password model. |
+| `applyControlFamilyInput(context, receiver, event, payload, options)` | Reconciles structured host input with managed model state before application handlers. `emit: false` suppresses a duplicate notification. |
+| `defaultControlTemplates`, `defaultControlTemplate`, `materializeDefaultControlStyle` | Immutable recipes and an injected materializer for actual managed default styles/templates. |
 
-`ApplicationSession`, `WindowSession`, `VisibilityLifecycle` and `ActivationService` own independent app/window state and events. Closing waits for cancellation and deferral decisions before finalization. Snapshot restoration does not replay external activation or device effects. Deadline clocks and platform services are injected.
+The managed context supplies object identity/type lookup, property reads/writes,
+collection projection, allocation, owner-scoped state, event dispatch, managed
+task creation and virtual method invocation. Models are stored under the owning
+managed object. `retainedValues()` enumerates references that its GC must trace;
+the model map does not independently root every owner. `snapshot()` and
+`restore(snapshot)` capture authoritative model state without replaying future
+events. DOM caches are recreated as needed.
 
-## Localization and data transfer
+Default templates create named `Grid`, `Border`, `ContentPresenter` and other
+managed nodes. Most families mount their native behavior in `PART_BehaviorRoot`;
+`HeaderPresenter` and `PanePresenter` retain separate visual ownership where
+needed. `ScrollView` instead has a real `PART_ScrollPresenter`. Content templates,
+item templates and generated containers come from the shared A15 materializer.
+The family layer does not create a competing managed item generator.
 
-`ResourceLoader`, `ResourceManager`, `ResourceMap`, `ResourceContext`, `importResw` and `languageFallbacks` own language refresh and resource lookup. `DataPackage`, `ClipboardService` and `LauncherService` retain explicit caller-supplied backends and origin/grant policy. Denied clipboard operations return a reason and denied launches return false; no global fallback clipboard is fabricated.
+## Models and control behavior
 
-## Managed application adapters
+The JavaScript model APIs use the names below. Managed WinUI-style members use
+their registered PascalCase names and signatures; these are separate interfaces.
 
-`managedDataPackage` and `createDataPackageView` expose the same authoritative data-transfer state used by drag/drop and clipboard operations. Application/window and resource adapters register through the caller-owned UI extension registry. Windows finalize only after their managed Closed decision commits; the host supplies windowClosed/applicationExited and task/permission services.
+| Family | Public model APIs and implemented behavior |
+|---|---|
+| Items and selectors | `SelectionModel`, `SelectionMode`, `ViewportItemSource`, `ViewportSelectionModel`, `TreeViewModel`, `GroupedItemIndex`, `ViewportGroupIndex`, `SemanticZoomModel`. Selection tracks duplicate occurrences, ranges, current item and collection changes. List/Grid/ItemsView share virtual placement and the generated containers; ComboBox, FlipView, PipsPager, RadioButtons, SelectorBar and BreadcrumbBar supply family behavior. |
+| Text editing | `TextBuffer` provides UTF-16 selection, replacement, typing-run undo/redo, composition, casing and length limits. TextBox changes its native editor when `AcceptsReturn` changes while preserving the model, caret and focus. AutoSuggestBox owns the active suggestion and emits native reason values. |
+| Passwords | `PasswordBuffer` holds a private value and length-only snapshots. Reveal modes affect the private input element. Secret changes use the host private-input channel; public scene state, ordinary events and automation text/value patterns never carry the password. |
+| Rich text and display | `RichTextDocument`, rich text overflow, inline elements and typography use the shared text/formatting models. Microsoft.UI.Text document/range/selection contracts include typed format enums and out-string operations. Native text layout and browser font metrics still require platform qualification. |
+| Buttons | Repeat timing, ClickMode, tri-state toggles, radio scopes, split/dropdown actions and hyperlink command/launch policy are shared with keyboard and automation invocation. `RepeatController` accepts an injected clock. |
+| Navigation | `NavigationFrame` commits history/cache changes after synchronous cancellation and page callbacks. `PaneState` and shared navigation geometry implement adaptive NavigationView and four SplitView modes. TabView preserves collection order during reordering; Pivot honors locked navigation. |
+| Overlays | `OverlayManager`, `DeferralGroup`, `dispatchDeferred` and `placeOverlay` provide root-relative portals, opposite-edge flipping, aligned placement, LIFO dismissal, modal focus containment and bounded deferrals. ContentDialog rejects a second pending `ShowAsync`; tooltip descriptions follow the open lifetime without moving focus. |
+| Commands | `XamlUICommand`, `StandardUICommand`, `KeyboardAcceleratorRouter` and `TextCommandController` share CanExecute, selected text and history. Menus implement nested keyboard traversal, radio groups and MenuBar Alt/F10 entry. Command overflow preserves source collections and moves equal explicit priority groups together. |
+| Values and status | `NumericRange`, `CultureNumberFormatter`, `CalendarModel`, date/time helpers and RGB/HSV conversion implement validation, clamping, stepping, selected dates, blackout dates and status changes. Nullable selected date/time APIs preserve missing values separately from zero. |
+| Application and windows | `ApplicationSession`, `WindowSession`, `VisibilityLifecycle` and `ActivationService` own application events, independent logical roots, cancellable/deferrable close, visibility, suspend/resume and activation policy. Root finalization occurs after a committed close. |
+| Resources and transfer | `ResourceLoader`, `ResourceManager`, `ResourceMap`, `ResourceContext`, `importResw`, `DataPackage`, `ClipboardService` and `LauncherService` use explicit per-application services. UID bindings refresh when the selected language changes and missing keys return an empty string. |
+| Media | `BitmapImage`, `WriteableBitmap`, `WebViewSession`, `MediaPlayerSession`, `PlatformControlSession` and `InkStrokeModel` share explicit resource and capability policy. WriteableBitmap uses the rendering package's authoritative pixel buffer. Playback uses an actual HTML media element. |
 
-## Items and sparse selection
+`SelectionModel` reconciles a materialized collection in O(n), with O(1)
+occurrence lookup and membership. Large host scenes use the sparse `$items`
+projection: count, source revision, stable occurrence keys and at most 2,048
+realized records. They do not transmit one million placeholder items during
+scrolling. Shared virtualization owns variable-size indexing and element reuse.
+The managed source remains authoritative for off-screen values and selection.
+Group headers and the materialized ItemsPanel are managed scene references.
 
-`SelectionModel` and `SelectionMode` track current selection and stable duplicate occurrences. `ViewportItemSource` and `ViewportSelectionModel` consume count/revision plus bounded realized records; `GroupedItemIndex`, `ViewportGroupIndex` and `SemanticZoomModel` retain group identity. `visibleItemRange`, `navigationIndex` and `sourceItems` expose bounded source helpers. Materialized reconciliation is O(n); lookup and membership are indexed. Performance timings remain unmeasured.
+Limits are explicit: materialized selection sources allow at most 1,000,000
+items; tree models bound node traversal; AutoSuggestBox allows 2,048 suggestions;
+command collections allow 10,000 entries; text is capped at 16 Mi UTF-16 code
+units, with at most 1,000 configured history entries. A pending acknowledged
+editor queue allows 128 operations. History and long-lived references count
+toward the application's runtime memory limits.
 
-## Navigation models and geometry
+## Events, cancellation and deferrals
 
-`NavigationFrame` commits cached/history state only after navigation succeeds. `PaneState` and `registerNavigationLayouts` share adaptive NavigationView and four SplitView modes with the renderer. Superseded pane decisions cannot close a newer state. Menus retain source identity and expansion state.
+Notifications use the normal event channel. Decisions use
+`context.requestEvent(node, name, payload, { signal })`, which waits for managed
+or JS handlers and their deferrals before applying the default action. The host
+limits request count and duration and aborts requests when their target or root
+is removed. Native-only hosts retain an in-process fallback.
 
-## Commands, accelerators and icons
+| Decision | Outcome consumed by the family |
+|---|---|
+| `BeforeTextChanging` | `Cancel`; `NewText` is normalized before dispatch. |
+| `Paste` | `Handled` or `Cancel`; an approved paste then passes through text validation. |
+| `PasswordChanging` | `Cancel`; the transported payload contains `Length`, never secret text. |
+| `PaneClosing` / pane transitions | `Cancel`; a superseded response cannot change a newer pane state. |
+| `ContextRequested`, `AccessKeyInvoked`, accelerator `Invoked` | `Handled`; the native browser default is prevented while waiting. |
+| Dialog button / overlay closing | `Cancel` and explicit `GetDeferral` completion. |
+| `RefreshRequested` | Deferrals finish before the refresh operation returns to idle. |
+| `InfoBar.Closing` | `Cancel` and close reason. |
 
-`XamlUICommand`, `StandardUICommand`, `commandCanExecute` and `executeCommand` share command policy. `KeyboardAcceleratorRouter` waits for Handled decisions before default invocation. `partitionCommandBar` and `commandBarGeometry` preserve source order and explicit priority groups. Icon elements/sources validate glyphs and use the declared font fallback policy.
+Worker messages contain structured data and managed references. DOM events,
+AbortSignal objects, functions and private password text never form event
+payloads. Deferrals complete exactly once and have a deadline. Pending external
+operations cannot be silently snapshotted; the model reports an explicit
+diagnostic when it cannot restore their side effects.
 
-## Popup, dialog and tooltip ownership
+Released events that already use `RoutedEventHandler` keep that ABI. The runtime
+constructs concrete argument objects, but C# handlers need an explicit cast to
+access newly added fields or `GetDeferral`. That source-inference difference is
+recorded as `A16-RELEASED-EVENT-DELEGATES`, not counted as an exact native match.
 
-`OverlayManager`, `DeferralGroup`, `dispatchDeferred` and `placeOverlay` own root-relative placement and close lifetimes. Opposite-edge flipping preserves alignment. Modal overlays contain focus and restore it on close; tooltips update aria-describedby without moving focus. A second pending ContentDialog.ShowAsync fails explicitly.
+## Host services and platform policy
 
-## Text and password models
+`createControlServices` accepts injected `permissionPolicy`, `clipboard`,
+`ClipboardItem`, `Blob`, `open`, `platform`, `windowPlatform`, resource/language
+options, `document`, `window`, activation URL and launch queue. Existing service
+instances can be supplied for explicit shared ownership. Call `dispose()` when
+the owning application ends. Injected objects remain owned by their caller.
 
-`TextBuffer` owns selection, composition, replacement and undo/redo; offsets use UTF-16 code units and surrogate boundaries are preserved. `PasswordBuffer` exposes length-only snapshots and the exported `redactPasswordProperties` preserves the private-value boundary. `RichTextDocument` supports plain text and bounded formatting. Typography helpers retain explicit inheritance and typed weight/style values.
+Constructing controls does not request a platform grant. Origins must be allowed
+before image, media, hyperlink or embedded-page navigation. Clipboard and launch
+operations also consult the explicit capability request callback. A denied
+clipboard operation returns `{ ok: false, reason }`; a denied launcher returns
+`false`. No process-global clipboard replaces a denied or absent browser API.
 
-## Command geometry and text operations
+| Surface | Supported profile and remaining limit |
+|---|---|
+| Images | Granted HTTP(S), bounded raster data URIs and blob URLs. Missing/failed resources raise failure events. Pixel buffers use exact RGBA data. Native decoder/metric comparisons require evidence. |
+| Clipboard | Text, HTML and URI formats through the actual injected backend. Drop StorageItems is an opaque, separately authorized capability; file handles never enter ordinary scene snapshots. Clipboard bitmap transfer is not declared supported. |
+| Activation | Launch and HTTP(S) protocol URL/query activation. Browser launchQueue file activation requires a file-activation grant. Native activation kinds unavailable to the browser report an explicit diagnostic. |
+| AppWindow | Logical size, position, visibility and events are session-local. Fullscreen/compact-overlay presenters require host adapters; missing presenters report `SFUI16A8`. Multi-process native window APIs are not fabricated. |
+| WebView2 | Sandboxed iframe navigation with an origin policy. Native CoreWebView2/process APIs are unavailable; `ExecuteScriptAsync` reports `SFUI16B5`. Cross-origin iframe failure observation has browser limits. |
+| MediaPlayerElement | Actual video playback, pause, seek and native transport controls. Codec availability, autoplay policy, DRM and devices remain browser/platform-specific. Unsupported MediaSource kinds raise MediaFailed. |
+| Map/Capture/animated visuals | Explicit host adapters and grants are required. Unsupported managed Map/Capture construction reports `SFUI1633`; a missing native attachment adapter reports `SFUI16B9`. Animated visuals display declared fallback content when the adapter is absent. InkCanvas supports bounded pointer strokes, not native handwriting recognition. |
+| Typography | CSS font features and an explicit Segoe UI Variable / Segoe UI / system-ui fallback stack. Metric equivalence is unverified without licensed fonts and a Windows reference. |
+| Calendar | Gregorian UTC date arithmetic and culture-specific fields. Other calendar systems report `SFUI1686`. |
 
-`registerCommandLayouts` and `registerMenuLayouts` arrange the same partitioned commands used by native renderers. `TextCommandController` and `textCommandLabels` provide selection/history-aware actions. Paste first waits for its cancellable event, then applies the approved edit; unsupported clipboard capabilities produce an explicit result.
+The released Orientation encoding remains Vertical=0 / Horizontal=1 even though
+native WinUI uses the reverse numeric values. Released string signatures for
+Image.Source, Control.FontFamily and some date/time properties remain compatible;
+typed companions are separate, explicitly documented additions. NavigationView's
+Top mode currently scrolls its top items horizontally rather than implementing a
+native overflow dropdown. Native TabView dragstart cannot wait for a worker
+cancellation response; in-process cancellation and collection reordering do not
+qualify that worker scenario.
 
-## TreeView model
+Clearing `SelectedDate` or `SelectedTime` represents absence in the nullable
+selection property and its selected-value event. The non-nullable `DateValue`
+and `TimeValue` companions retain their last/default typed value. An absent
+selection displays the picker placeholder even when that companion is present;
+midnight remains a present zero-valued TimeSpan.
 
-`TreeViewModel` traverses iteratively, rejects cyclic or multiply owned children, computes mixed ancestors and preserves graph state across snapshots. Collapsing or disposing a node invalidates pending expansion work. Renderer registration is explicit; virtualization and automation qualification remain staged.
+## Examples and qualification
 
-## Virtual item families
+The executable [family-models.mjs](examples/family-models.mjs) demonstrates stable
+selection, text cancellation/history, frame caching, numeric range changes,
+language refresh and an explicitly denied clipboard operation without a browser.
+It imports only the public package entry point:
 
-Virtual list/grid/item views consume stable occurrence keys and at most 2,048 realized sparse records. Shared layouts own extent/realization and generated managed containers own item templates/styles. Group headers, empty groups and ItemsPanelTemplate roots are retained references. `getSelectionModel` and `scrollItemIntoView` expose the renderer state to input/automation services.
+```sh
+node packages/winui-controls/examples/family-models.mjs
+```
 
-## Selector contributions
+The retained-scene gallery is authored in `tests/helpers/a16-family-scenes.js`.
+The consolidated browser runner consumes the command, overlay and media helpers
+in `tests/helpers/a16-family-*-browser.js`; the media test uses the local synthetic
+MP4 with real transport controls. Injected clipboard evidence is labeled as such.
+The browser fixture is not Windows oracle output or real IME qualification.
 
-`registerItemsRenderers` registers the complete item family over shared selection/realization models. Editable ComboBox keeps its edit field and selected item distinct; paging and breadcrumb/selector controls use bounded source navigation and emit structured selection/item notifications.
+The combined A15/A16/A17 Node gate at
+`a41a1767e16761f6f28cff0a611b885b2209d08c` ran 1,338 tests: 1,320 passed and 18
+failed in other shared scopes. Every A16 case passed, including nullable picker,
+tri-state boxing, inherited inline typography and bitmap boundary regressions.
+The generated log is
+`artifacts/results/project14/complete-repaired-epics-gate.log`. This result does
+not qualify the actual browser fixture or native Windows behavior.
 
-## Managed selection and tree state
+Subsequent verification should address a concrete remaining failure or the
+separately scheduled browser/native matrix. Run targeted family/service cases
+through the repository limiter when a new change requires them; keep heavyweight
+jobs serialized:
 
-Managed adapters use context-owned `SelectionModel`/`TreeViewModel`, authoritative source collections and ICollectionView current-position updates. Selected items, graph contents and deferred source references are traced through retainedValues; snapshot restoration does not replay input events.
+```sh
+node scripts/limited.js node --test tests/a16-family-*.test.js tests/a16-services-*.test.js
+```
 
-## Inline display and rich overflow
-
-`getRichTextDocument`, `applyTypography` and `renderRichDocument` consume immutable formatting spans and shared text metrics. Linked overflow fragments preserve UTF-16 ranges, selection and source-document identity. Typography and bidi geometry follow the injected renderer/font provider.
-
-## Editor and document contributions
-
-`registerTextRenderers` and managed text adapters share TextBuffer/RichTextDocument. BeforeTextChanging and Paste decisions finish before editing; stale completions and disposal cannot mutate a newer editor. Secret text is absent from scene properties, ordinary events and password automation. Rich document contracts expose the bounded Microsoft.UI.Text profile, including explicit out-string writes.
-
-## Numeric, calendar and color values
-
-`NumericRange`, `CultureNumberFormatter` and `evaluateNumericExpression` validate bounded input and share clamping/NaN policy. `CalendarModel`, `dateValue`, `dateText`, `timeValue`, `dateFieldOrder` and `dateFromFields` use Gregorian UTC arithmetic. RGB/HSV and ARGB helpers preserve channel values and explicit alpha.
-
-## Value and status renderers
-
-`registerValueRenderers`, `getRangeModel` and `getCalendarModel` share clamping, snapping, calendar bounds and selected state with managed input. Nullable selection displays a placeholder even when a non-nullable DateValue/TimeValue companion retains its last typed value; midnight remains present zero.
-
-## Typed picker and range adapters
-
-Clearing SelectedDate/SelectedTime changes the nullable selection and event payload; non-nullable DateValue/TimeValue keep their last/default typed value. Explicit null in a host event wins over stale companion data. Range input preserves NaN policy, clamping and indeterminate state.
-
-## Navigation control contributions
-
-`registerNavigationRenderers` mounts TabView/Pivot, NavigationView/SplitView and Frame/Page behavior. Tab reorder mutates the authoritative collection; pane transitions preserve the acknowledged cancellation decision and named template ownership. History commits only after successful page navigation.
-
-## Menus and interaction routing
-
-`registerCommandsRenderers` registers nested menus, command bars, text flyouts and gesture controls. `RefreshController` deduplicates outstanding requests and propagates rejected handlers. Context and access key bindings share owner-scoped teardown and wait for Handled before the native default action.
-
-## Button behavior
-
-`RepeatController` accepts a manual clock and disposes outstanding timers. Button/toggle/check/radio, repeat, split/dropdown and hyperlink renderers share enabled/command policy, selected/indeterminate states and root-scoped radio ownership. Native behavior receives the existing managed template/content parts.
-
-## Managed command and checked-state ABI
-
-Synchronous command adapters invoke managed overrides through the supplied virtual-call seam. Checked state distinguishes true/false/null, preserves the released bool IsChecked property via the explicit indeterminate flag and boxes the object-valued GetChecked result.
-
-## Media and platform policy
-
-`MediaPlayerSession`, `WebViewSession`, `PlatformControlSession` and `InkStrokeModel` own playback/navigation epochs and release late device attachments. Playback uses an actual media element; WebView2 is a sandboxed iframe profile. Map/capture/animated visuals require explicit adapters and grants.
-
-## Image sources and bitmap identity
-
-`BitmapImage`, `resolveImageSource`, `drawNineGrid` and `personInitials` share image intent and decoding policy. `WriteableBitmap` is the rendering package class itself. Its dimension range diagnostic is SFRENDER001, while invalid pixel budgets or byte lengths use SFRENDER063; managed SetPixels retains its own SFUI16B2 boundary.
-
-## Managed media adapters
-
-Managed media properties and methods reuse the same player/web/platform model state as host rendering. SetPixels writes the rendering-owned RGBA buffer and updates an existing managed PixelBuffer view without replacing its identity. Unsupported native platform operations fail through the declared capability policy.
-
-## Complete portable family registration
-
-`registerControlFamilies`, `registerControlFamilyContracts` and `registerControlFamilyAdapters` expose the complete family contribution. `applyControlFamilyInput` updates text/composition, private passwords, selection/tree, panes, nullable pickers, ranges and toggle state before managed event handlers. `getControlFamilyModel` shares the same authoritative state with managed automation. The public host and default framework startup are activated by their later explicit integration stages.
-
-## Qualification
-
-The complete A16 scope gate ran at d91e0817: 373 tests, 339 passed and 34 failed. Each publication manifest identifies its recorded cases and subsequent repairs; failures remain visible. Required core is pending on each exact publication tree. Native WinUI oracle, browser IME, codec, OS permission and performance evidence are separate qualifications. No speedup or native parity is claimed without a recorded measurement.
+Exact test commands, integrated commits, engine/browser versions, allocation and
+latency measurements must accompany qualification. Per-control allocation and
+latency measurements are not claimed here. Metadata import and matrix generation
+use the separate procedure in [parity/METADATA.md](parity/METADATA.md).
+The inventory denominator includes missing and mismatched WinUI members; BCL and
+SharpForge-only extensions are excluded from WinUI coverage counts.
