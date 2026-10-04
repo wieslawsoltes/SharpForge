@@ -36,16 +36,47 @@ for(const method of ["assembleIL"])handlers.registerHandler(method,(params,metho
 for(const method of ["verifyIL"])handlers.registerHandler(method,(params,method)=>{let result;result=verifyCilAssembly(inspection(params),{methodToken:params.token,arguments:params.arguments??[]});return result;});
 for(const method of ["findInFiles"])handlers.registerHandler(method,(params,method)=>{let result;result=language.findInFiles(params.query,params.options);return result;});
 for(const method of ["replaceAll"])handlers.registerHandler(method,(params,method)=>{let result;result=refactoring.replaceAll(params.query,params.replacement,params.options);return result;});
-for(const method of ["validateRefactoring"])handlers.registerHandler(method,(params,method)=>{let result;{const candidate=createCompilerWorkspace({compilationOptions:workspace.compilationOptions,extensions:workspace.extensions,extensionOptions:workspace.extensionOptions,additionalFiles:workspace.additionalFiles});for(const [uri,d]of workspace.documents)candidate.update(uri,d.source.text,d.source.version);result=new RefactoringEngine(candidate,new LanguageService(candidate)).apply(params.action);return result;}});
-for(const method of ["validateDesigner"])handlers.registerHandler(method,(params,method)=>{let result;{
-      const candidate=createCompilerWorkspace({compilationOptions:workspace.compilationOptions,extensions:workspace.extensions,extensionOptions:workspace.extensionOptions,additionalFiles:workspace.additionalFiles});for(const [uri,d]of workspace.documents)candidate.update(uri,d.source.text,d.source.version);
+handlers.registerHandler("validateRefactoring", (params, method) => {
+  let result;
+  {
+    const candidate = createCompilerWorkspace({
+      compilationOptions: workspace.compilationOptions, extensions: workspace.extensions,
+      extensionOptions: workspace.extensionOptions, additionalFiles: workspace.additionalFiles
+    });
+    for (const [uri,d] of workspace.documents) candidate.update(uri, d.source.text, d.source.version);
+    result = new RefactoringEngine(candidate, new LanguageService(candidate)).apply(params.action);
+    return result;
+  }
+});
+handlers.registerHandler("validateDesigner", (params, method) => {
+  let result;
+  {
+    const candidate = createCompilerWorkspace({
+      compilationOptions: workspace.compilationOptions, extensions: workspace.extensions,
+      extensionOptions: workspace.extensionOptions, additionalFiles: workspace.additionalFiles
+    });
+    for (const [uri,d] of workspace.documents) candidate.update(uri, d.source.text, d.source.version);
       new RefactoringEngine(candidate,new LanguageService(candidate)).apply(params.action,{validate:false});const compiled=candidate.compile();if(!compiled.success)throw new Error('Designer changes do not compile: '+compiled.diagnostics.filter(d=>d.severity==='error').slice(0,10).map(d=>d.message).join('; '));result={success:true};return result;
-    }});
+  }
+});
 for(const method of ["configureExtensions"])handlers.registerHandler(method,(params,method)=>{let result;result=configureExtensions(params.extensions??params);return result;});
 for(const method of ["importAssembly"])handlers.registerHandler(method,(params,method)=>{let result;{
       const image=loadAssembly(params.assembly);result={success:true,image,assembly:params.assembly,format:'cil',diagnostics:[],symbols:[],references:[],metrics:{compileMs:0,files:image.sources.length,methods:image.methods.length,instructions:image.methods.reduce((n,m)=>n+m.code.length/3,0),errors:0,assemblyBytes:params.assembly.length,loadMs:image.il.loadMs}};return result;
     }});
-self.onmessage=event=>{const id=event.data?.id;try{const {method,params}=readWorkerRequest(event.data);handlers.assertMethod(method);syncCompilerSources(workspace,params.files);const options=params.compilationOptions??(params.outputKind?{outputKind:params.outputKind}:null);if(options&&JSON.stringify(options)!==JSON.stringify(workspace.compilationOptions)){workspace.compilationOptions=options;workspace.result=null;}if(Object.hasOwn(params,'extensions')&&JSON.stringify(params.extensions??null)!==extensionKey)configureExtensions(params.extensions);let result;
+self.onmessage = event => {
+  const id = event.data?.id;
+  try {
+    const {method,params} = readWorkerRequest(event.data);
+    handlers.assertMethod(method);
+    syncCompilerSources(workspace, params.files);
+    const options = params.compilationOptions ?? (params.outputKind ? {outputKind: params.outputKind} : null);
+    if (options && JSON.stringify(options) !== JSON.stringify(workspace.compilationOptions)) {
+      workspace.compilationOptions = options;
+      workspace.result = null;
+    }
+    if (Object.hasOwn(params, 'extensions') && JSON.stringify(params.extensions ?? null) !== extensionKey)
+      configureExtensions(params.extensions);
+    let result;
   result=handlers.dispatch(method,params);
   self.postMessage({id,result,revision:params.revision});
 }catch(error){self.postMessage({id,error:{message:error.message,name:error.name,code:error.code}});}};
