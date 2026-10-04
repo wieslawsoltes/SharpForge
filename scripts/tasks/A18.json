@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "tasks": {
+    "a18:test:browser:geometry": {
+      "steps": [{"command": "python", "args": ["tests/browser_designer_geometry_test.py"]}]
+    },
+    "a18:test:browser:canvas-translation": {
+      "steps": [{"command": "python", "args": ["tests/browser_designer_canvas_translation_test.py"]}]
+    },
+    "a18:test:browser:gradient": {
+      "steps": [{"command": "python", "args": ["tests/browser_designer_gradient_test.py"]}]
+    },
+    "a18:test:browser": {
+      "description": "Completed designer scope; browser sessions run sequentially.",
+      "steps": [
+        {"command": "python", "args": ["tests/browser_designer_documents_test.py"]},
+        {"task": "a18:test:browser:geometry"},
+        {"command": "python", "args": ["tests/browser_release12_test.py"]},
+        {"command": "python", "args": ["tests/browser_release13_test.py"]},
+        {"command": "python", "args": ["tests/browser_designer_app_host_test.py"]},
+        {"task": "a18:test:browser:canvas-translation"},
+        {"task": "a18:test:browser:gradient"},
+        {"command": "python", "args": ["tests/browser_designer_integrated_test.py"]}
+      ]
+    }
+  }
+}
