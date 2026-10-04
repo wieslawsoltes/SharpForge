@@ -45,8 +45,20 @@ Authored cases cover new-slot boundaries, overloads, skipped ancestors, canonica
 cross-assembly identity, lazy identity paths, unsupported mappings, final/nonvirtual
 collisions, complete metadata roots, limits, cancellation and unload. The independent
 C# fixture compares actual CoreCLR roots for ordinary, overloaded, generic,
-array/ref, abstract and sealed overrides. Native capture, focused tests, raw-sample
-benchmark and checks are pending the scheduled serial slot.
+array/ref, abstract and sealed overrides. SDK 10.0.201/CoreCLR 10.0.5 captured 23
+records. The initial focused run passed 35/36 and exposed C# multidimensional
+arrays encoding default zero lower bounds. After accepting those default bounds
+and adding an authored regression, all 8 base-definition tests pass; the 29 other
+Method/graph regressions passed initially. The unchanged native capture was
+reused. The [first failing run](benchmarks/method-base-first-focused.txt) is retained.
+Node 24.21.0 syntax/static checks pass (3,089/3,085 modules); structure reports 268
+existing findings, none in changed files. All local jobs ran serially.
+
+On shared Apple M3 Pro/darwin-arm64, cold queries over 23 fixture methods measured
+median 144.208 µs / p95 412.625 µs; cached asynchronous root lookup measured
+0.120584 µs / p95 0.151958 µs. All 200 raw samples and exact source/fixture hashes
+are retained in [benchmark evidence](benchmarks/method-base-definition-node24.json).
+There is no prior equivalent API, allocation total or general speed claim.
 
 ```sh
 node scripts/limited.js node packages/clr/tools/capture-method-base-definition.mjs tests/fixtures/clr-method-base-definition
