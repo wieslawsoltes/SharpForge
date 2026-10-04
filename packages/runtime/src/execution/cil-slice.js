@@ -18,6 +18,7 @@ function raiseInstructionFault(vm, error) {
 export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, onInstruction = null} = {}) {
   let started;
   try {
+    vm.gcRuntime.beforeSlice();
     vm.scheduler.beforeSlice();
     if (vm.state === 'ready') vm.state = 'running';
     if (vm.state !== 'running') return vm.state;
@@ -49,6 +50,9 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
       }
       vm.scheduler.afterInstruction();
     }
+    vm.elapsedMs += performance.now() - started;
+    started = undefined;
+    vm.gcRuntime.afterSlice();
     return vm.state;
   } finally {
     if (started !== undefined) vm.elapsedMs += performance.now() - started;

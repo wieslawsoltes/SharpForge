@@ -1,0 +1,89 @@
+import {ManagedFault} from './fault.js';
+import {readStoredSlot, writeStoredSlot} from './spatial-payload.js';
+
+function arrayIndex(property) {
+  if (typeof property !== 'string' || property === '') return -1;
+  const index = Number(property);
+  return Number.isInteger(index) && index >= 0 && index < 0xffffffff && String(index) === property ? index : -1;
+}
+
+function createHandler() {
+  return Object.freeze({
+    get(array, property, receiver) {
+      const index = arrayIndex(property);
+      if (index >= 0) {
+        const binding = this.binding;
+        return index < binding.length ? readStoredSlot(binding, index) : undefined;
+      }
+      return Reflect.get(array, property, receiver);
+    },
+    set(array, property, value, receiver) {
+      const binding = this.binding;
+      const index = arrayIndex(property);
+      if (index >= 0) return writeStoredSlot(binding, index, value);
+      if (property === 'length') {
+        if (value === binding.length) return true;
+        throw new ManagedFault('NotSupportedException', 'Managed array length is fixed');
+      }
+      return Reflect.set(array, property, value, receiver);
+    },
+    has(array, property) {
+      const index = arrayIndex(property);
+      return index >= 0 ? index < this.binding.length : Reflect.has(array, property);
+    },
+    ownKeys(array) {
+      const binding = this.binding;
+      const keys = Array.from({length: binding.length}, (_, index) => String(index));
+      return keys.concat(Reflect.ownKeys(array));
+    },
+    getOwnPropertyDescriptor(array, property) {
+      const index = arrayIndex(property);
+      const binding = this.binding;
+      if (index >= 0 && index < binding.length) {
+        return {value: readStoredSlot(binding, index), writable: !binding.readOnly, enumerable: true, configurable: true};
+      }
+      return Reflect.getOwnPropertyDescriptor(array, property);
+    },
+    defineProperty(array, property, descriptor) {
+      const binding = this.binding;
+      const index = arrayIndex(property);
+      if (index >= 0) {
+        if (!Object.hasOwn(descriptor, 'value') || descriptor.configurable === false || descriptor.writable === false) {
+          throw new ManagedFault('NotSupportedException', 'Managed element descriptors cannot be reconfigured');
+        }
+        return writeStoredSlot(binding, index, descriptor.value);
+      }
+      if (property === 'length' && descriptor.value !== undefined && descriptor.value !== binding.length) {
+        throw new ManagedFault('NotSupportedException', 'Managed array length is fixed');
+      }
+      return Reflect.defineProperty(array, property, descriptor);
+    },
+    deleteProperty(array, property) {
+      if (arrayIndex(property) >= 0) throw new ManagedFault('NotSupportedException', 'Managed elements cannot be deleted');
+      return Reflect.deleteProperty(array, property);
+    },
+    preventExtensions() {
+      throw new ManagedFault('NotSupportedException', 'Managed array views cannot be sealed by the host');
+    }
+  });
+}
+
+/** Per-heap owner: trap methods are shared; each Proxy retains its own binding. */
+export class SpatialArrayViews {
+  constructor() {
+    this.handler = createHandler();
+  }
+
+  create(binding) {
+    const target = new Array(binding.length);
+    // Proxy invokes inherited traps with the handler as `this`, independently
+    // of the public receiver. No target lookup or per-view closures are needed.
+    const handler = {__proto__: this.handler, binding};
+    return new Proxy(target, handler);
+  }
+}
+
+/** Standalone compatible view; callers allocating many views pass their explicit owner. */
+export function createSpatialArrayView(binding, owner = new SpatialArrayViews()) {
+  return owner.create(binding);
+}

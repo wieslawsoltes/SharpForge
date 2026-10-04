@@ -46,10 +46,17 @@ function* liveFrames(vm) {
     if (id === current && !vm.scheduler.parked || terminalContexts.has(context.status)) continue;
     yield* context.frames;
   }
+  for (const runner of vm.gcRuntime?.finalizerRunners ?? []) {
+    if (!runner.done) yield* runner.execution?.frames ?? [];
+    if (runner.interrupted) yield* runner.interrupted.frames;
+  }
 }
 
 /** Cancellation may discard a parked stack without executing ret or exceptional unwind. */
 export function flushCilMethodEvents(vm) {
+  // Nested finalizers and synchronous callbacks temporarily replace the visible VM stack.
+  // Deliver observations only after the interrupted execution has been restored.
+  if (vm.gcRuntime?.executingFinalizer) return;
   const observer = observers.get(vm);
   if (!observer) return;
   const live = new Set();
