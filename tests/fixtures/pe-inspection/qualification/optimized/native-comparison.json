@@ -1,0 +1,142 @@
+{
+  "format": "sharpforge.pe-inspection.fresh-native-comparison",
+  "schemaVersion": 1,
+  "originalCaptureSha256": "bdb094d3714b593bf70a1bac84bb456def0052c0019dc0ecedf1d4b8b2e298e4",
+  "optimizedCaptureSha256": "8cf9f13a29b3d74f4d6d395a521f130de5abf6d7482d16a8763109a3d0cd80f1",
+  "originalCapture": "../performance-first/original-native.json",
+  "optimizedCapture": "../../native.json",
+  "originalCaptureSource": "bf0d9470e4dc50cfdcafb0a6532cea0892b753d6",
+  "optimizedCaptureHead": "b29dd68de7d0d20eea64ef9b3ce29c80ebefabac",
+  "optimizedProductRevision": "d72a9fe1684ba28064f83f4307721a1d00b13137",
+  "manifestAndToolchainExactlyEqual": true,
+  "allLiveSourceHashesMatch": true,
+  "observations": [
+    {
+      "id": "r2r",
+      "nativeFactsExactlyEqual": true,
+      "comparisonExactlyEqual": true,
+      "comparison": {
+        "comparisons": [
+          {
+            "field": "imageKind",
+            "status": "pass"
+          },
+          {
+            "field": "headers",
+            "status": "pass"
+          },
+          {
+            "field": "sections",
+            "status": "pass"
+          },
+          {
+            "field": "directories",
+            "status": "pass"
+          },
+          {
+            "field": "cli",
+            "status": "pass"
+          },
+          {
+            "field": "debugDirectory",
+            "status": "pass"
+          },
+          {
+            "field": "strongName",
+            "status": "pass"
+          },
+          {
+            "field": "methods",
+            "status": "pass"
+          }
+        ],
+        "counts": {
+          "methods": 224,
+          "availableCil": 205,
+          "unavailableCil": 0,
+          "nonCil": 0
+        },
+        "differences": []
+      },
+      "nativeFactsSha256": "faccd5417e43fa8d963d95e258469dc1b7864d45aaffc5af1d2d8f835a7cac92"
+    },
+    {
+      "id": "mixed",
+      "nativeFactsExactlyEqual": true,
+      "comparisonExactlyEqual": true,
+      "comparison": {
+        "comparisons": [
+          {
+            "field": "imageKind",
+            "status": "pass"
+          },
+          {
+            "field": "headers",
+            "status": "pass"
+          },
+          {
+            "field": "sections",
+            "status": "pass"
+          },
+          {
+            "field": "directories",
+            "status": "pass"
+          },
+          {
+            "field": "cli",
+            "status": "pass"
+          },
+          {
+            "field": "debugDirectory",
+            "status": "pass"
+          },
+          {
+            "field": "strongName",
+            "status": "pass"
+          },
+          {
+            "field": "methods",
+            "status": "pass"
+          }
+        ],
+        "counts": {
+          "methods": 90,
+          "availableCil": 77,
+          "unavailableCil": 0,
+          "nonCil": 11
+        },
+        "differences": []
+      },
+      "nativeFactsSha256": "38a14123a87675cb62d422f2e33af257dba55b3e7ec50b3dcfc5f7adbd8e3ebc"
+    }
+  ],
+  "allRawDifferences": [
+    {
+      "path": "/sourceSha256/packages/cil/src/inspector-method.js",
+      "original": "39b3dd4fe16d812c8a374b56d0052e03b9413788c6156348433bd0f5e0491730",
+      "optimized": "47955a5bba8529264aa9c4bf6e31c44a314549400494a62736d1c5625c62fdf7"
+    },
+    {
+      "path": "/sourceSha256/packages/cil/src/browser/summary.js",
+      "original": "d28dd5e805fa8dc3b5e0991a07c1d9c3b196ecf71ad4ae470b96cd8b8e85bc8e",
+      "optimized": "b525605a68fd3e4347a28ab47470cf8fffff2826486d93730ff0e85055de58d1"
+    },
+    {
+      "path": "/sourceSha256/packages/cil/src/pe/optional-header.js",
+      "original": "8996dd48b4614057a2adaee80152e6a3669e420b1663d8b2a7c8ca5f682a7fa4",
+      "optimized": "2a4a81921ee4f377a92cb48b91ab251f9c8e60cc355ae5e7949fcfe48bdc8db6"
+    },
+    {
+      "path": "/observations/0/execution/elapsedMs",
+      "original": 116.91295500000001,
+      "optimized": 108.49898299999995
+    },
+    {
+      "path": "/observations/1/execution/elapsedMs",
+      "original": 112.2048450000002,
+      "optimized": 137.2240270000002
+    }
+  ],
+  "qualificationKind": "Fresh PEReader/SRM observer execution for both images; no input execution. Original native facts and comparisons are exactly unchanged.",
+  "scope": "One capture, unchanged observer/tools/images/comparison helper, no source-binding exception and no test/benchmark run yet."
+}

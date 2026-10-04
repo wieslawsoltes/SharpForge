@@ -10,3 +10,5 @@ export { readManagedResources, writeManagedResources, ManifestResourceVisibility
 export { writeWin32Resources } from './pe/win32-resources.js';
 export { readWin32Resources } from './pe/win32-reader.js';
 export { readMethodHeader } from './pe/method-header.js';
+export { readPEDebugDirectory } from './pe/debug-directory.js';
+export { methodCodeKind } from './pe/method-code.js';

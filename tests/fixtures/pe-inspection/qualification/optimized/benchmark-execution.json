@@ -1,0 +1,36 @@
+{
+  "startedAt": "2026-10-04T15:31:10.342614+00:00",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-pe-inspection",
+  "head": "6c3e8a7ecfcf2df8148b1ed25ef4796d43139eba",
+  "productRevision": "d72a9fe1684ba28064f83f4307721a1d00b13137",
+  "sourceAndFixtureRevision": "135c4c0b151acc92b28b724b410e9db54066b29e",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "packages/cil/tools/benchmark-pe-inspection.mjs",
+    "--baseline",
+    "/workspace/scratch/7e3d2a445c44/sf6-pe-baseline-d64188af",
+    "--r2r",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll",
+    "--mixed",
+    "/workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe",
+    "--output",
+    "/workspace/scratch/7e3d2a445c44/project6-pe-performance-optimized.json"
+  ],
+  "log": "/workspace/scratch/7e3d2a445c44/project6-pe-performance-optimized.log",
+  "output": "/workspace/scratch/7e3d2a445c44/project6-pe-performance-optimized.json",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": null,
+    "SHARPFORGE_TEST_CONCURRENCY": null,
+    "SHARPFORGE_MAX_OLD_SPACE_MB": null,
+    "CI": null
+  },
+  "teamHeavySlot": "exclusive; native capture and focused tests completed sequentially",
+  "status": "passed",
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T15:31:26.203408+00:00",
+  "logSha256": "e76faffaa8dffe32d22fa9ccd2d0b16c227c61fd73d5cf933b2aa9e6d718afa6",
+  "outputSha256": "d171288f90b9918d62fdfab8b005df86a8b6c3d355bcff55d203c870c4763ee4",
+  "sourceUnchanged": true
+}

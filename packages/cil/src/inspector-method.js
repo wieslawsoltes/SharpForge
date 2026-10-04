@@ -1,7 +1,27 @@
 import { decodeInstructions } from './opcodes.js';
 import { CilError } from './binary.js';
+import { methodCodeKind, hasCilMethodBody } from './pe/method-code.js';
 
 export const ilLabel = offset => 'IL_' + offset.toString(16).padStart(4, '0');
+
+/** Keep MethodDef admission separate from decoding so declarations survive unsupported body kinds. */
+export function inspectorMethodDefinition(metadata, token, owner, pe) {
+  const row = metadata.row(token);
+  return { token, owner: owner.name, ownerToken: owner.token, name: metadata.string(row[3]), flags: row[2],
+    implFlags: row[1], rva: row[0], hasBody: hasCilMethodBody(row[0], row[1]),
+    isEntryPoint: !pe.nativeEntryPoint && token === pe.entryPoint };
+}
+
+/** Populate a fresh caller-owned result, validating implementation kind and creating owned disassembly facts. */
+export function methodCodeFacts(definition, result = {}) {
+  const codeKind = methodCodeKind(definition.implFlags);
+  result.codeKind = codeKind;
+  result.disassembly = {
+    status: definition.hasBody ? 'available' : codeKind === 'CIL' ? 'absent' : 'not-disassembled',
+    reason: codeKind === 'CIL' ? null : `${codeKind} implementation is not CIL`,
+  };
+  return result;
+}
 
 function operandText(instruction, inspector) {
   if (instruction.operandKind === 'token') return inspector.describeToken(instruction.operand);
@@ -23,8 +43,12 @@ function decodeMethod(inspector, token, describeOperands = false) {
   const info = inspector.debug?.methods?.find(method => method.token === token);
   const points = new Map((inspector.debug?.sequencePoints ?? []).filter(point => point.methodToken === token)
     .map(point => [point.ilOffset, point]));
-  const method = { ...definition, signature, parameters, id: info?.id ?? null,
-    locals: [], instructions: [], handlers: [], codeSize: 0, maxStack: 0 };
+  const method = methodCodeFacts(definition, { ...definition, signature, parameters, id: info?.id ?? null });
+  method.locals = [];
+  method.instructions = [];
+  method.handlers = [];
+  method.codeSize = 0;
+  method.maxStack = 0;
   if (!definition.hasBody) return method;
   const body = inspector.pe.methodBody(token);
   const locals = body.localSignature ? inspector.signature(body.localSignature).types : [];

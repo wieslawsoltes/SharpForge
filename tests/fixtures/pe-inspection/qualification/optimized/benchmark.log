@@ -1,0 +1,186 @@
+{
+  "output": "/workspace/scratch/7e3d2a445c44/project6-pe-performance-optimized.json",
+  "status": "pass",
+  "results": {
+    "ordinary": [
+      {
+        "workload": "readPE",
+        "iterationsPerBatch": 200,
+        "statistics": {
+          "baseline": {
+            "nanosecondsPerCall": {
+              "count": 100,
+              "median": 19654.120000000148,
+              "p95": 35137.65499999863,
+              "p99": 44991.23999999938,
+              "min": 15122.199999996155,
+              "max": 47973.62500000417
+            },
+            "resultSha256": "36bb73230da8ce0ffe01d8a2fb720cf3e8188ef5fc280597bd4bd0f46adcc44d",
+            "observedHeap": {
+              "minDeltaBytes": -53288576,
+              "maxDeltaBytes": 6321136,
+              "maxEndHeapUsedBytes": 276179880
+            }
+          },
+          "candidate": {
+            "nanosecondsPerCall": {
+              "count": 100,
+              "median": 18917.459999997845,
+              "p95": 38420.68000000381,
+              "p99": 44457.50500000031,
+              "min": 16469.41500000139,
+              "max": 54319.210000003295
+            },
+            "resultSha256": "1ddb23abb1d9e2aa7eb65ee187ffd8f69d8dd19e1732aefe55e2c126db6c5a5a",
+            "observedHeap": {
+              "minDeltaBytes": -52029720,
+              "maxDeltaBytes": 7232768,
+              "maxEndHeapUsedBytes": 275894104
+            }
+          }
+        },
+        "changePercent": {
+          "median": -3.748119987067833,
+          "p95": 9.343324134764575,
+          "p99": -1.1863087125384308
+        },
+        "medianOverFivePercent": false
+      },
+      {
+        "workload": "coldSummary",
+        "iterationsPerBatch": 100,
+        "statistics": {
+          "baseline": {
+            "nanosecondsPerCall": {
+              "count": 100,
+              "median": 40831.049999987954,
+              "p95": 93545.51999998876,
+              "p99": 114155.1199999958,
+              "min": 33470.51000000647,
+              "max": 132069.31000000623
+            },
+            "resultSha256": "98120b8f095309efc8a07bd7ce85d5a8d6d2559c510bfaeaea86d84d6174dce4",
+            "observedHeap": {
+              "minDeltaBytes": -52229072,
+              "maxDeltaBytes": 7191312,
+              "maxEndHeapUsedBytes": 287698216
+            }
+          },
+          "candidate": {
+            "nanosecondsPerCall": {
+              "count": 100,
+              "median": 48277.419999999445,
+              "p95": 106229.27999998866,
+              "p99": 125394.35000000594,
+              "min": 36440.50999999308,
+              "max": 174566.53000000186
+            },
+            "resultSha256": "5438dbc83138902f4d4a2fbe521ee0d396ad7603204cc3b69346e60e35f1f4dd",
+            "observedHeap": {
+              "minDeltaBytes": -198404264,
+              "maxDeltaBytes": 7749880,
+              "maxEndHeapUsedBytes": 280137264
+            }
+          }
+        },
+        "changePercent": {
+          "median": 18.237027948126936,
+          "p95": 13.558917626414857,
+          "p99": 9.845576790607868
+        },
+        "medianOverFivePercent": true
+      },
+      {
+        "workload": "warmMetadataSummary",
+        "iterationsPerBatch": 500,
+        "statistics": {
+          "baseline": {
+            "nanosecondsPerCall": {
+              "count": 100,
+              "median": 1043.5939999997572,
+              "p95": 1907.8059999992547,
+              "p99": 7425.296000001254,
+              "min": 941.0439999992377,
+              "max": 10975.655999998708
+            },
+            "resultSha256": "eb5e832fce3dc1cd07a185ddeaf511086af44d35d317e09638ea6ee2978f5ae6",
+            "observedHeap": {
+              "minDeltaBytes": -205645136,
+              "maxDeltaBytes": 2630352,
+              "maxEndHeapUsedBytes": 278409232
+            }
+          },
+          "candidate": {
+            "nanosecondsPerCall": {
+              "count": 100,
+              "median": 1075.2730000003794,
+              "p95": 4406.920000001265,
+              "p99": 9344.50999999899,
+              "min": 984.628000001976,
+              "max": 9435.851999998704
+            },
+            "resultSha256": "e2b446d949ceeba941da558db80bd63c5941ff7ea170ddb7e9424d208ed68dd7",
+            "observedHeap": {
+              "minDeltaBytes": -57010072,
+              "maxDeltaBytes": 2968680,
+              "maxEndHeapUsedBytes": 286663848
+            }
+          }
+        },
+        "changePercent": {
+          "median": 3.0355674717015946,
+          "p95": 130.99413672055684,
+          "p99": 25.84696960225441
+        },
+        "medianOverFivePercent": false
+      }
+    ],
+    "newFeature": [
+      {
+        "workload": "inspectPE-r2r",
+        "iterationsPerBatch": 25,
+        "statistics": {
+          "candidate": {
+            "nanosecondsPerCall": {
+              "count": 100,
+              "median": 177173.17999999068,
+              "p95": 373683.75999998534,
+              "p99": 446262.04000000143,
+              "min": 139271.11999997578,
+              "max": 509610.7599999959
+            },
+            "resultSha256": "b4016374b00c6a4629132147b8926ffc60104d67d33530152ed6d071de30ed6f",
+            "observedHeap": {
+              "minDeltaBytes": -193667808,
+              "maxDeltaBytes": 8092720,
+              "maxEndHeapUsedBytes": 278205392
+            }
+          }
+        }
+      },
+      {
+        "workload": "inspectPE-mixed",
+        "iterationsPerBatch": 25,
+        "statistics": {
+          "candidate": {
+            "nanosecondsPerCall": {
+              "count": 100,
+              "median": 116879.47999998869,
+              "p95": 244347.60000000097,
+              "p99": 298445.52000002295,
+              "min": 93442.55999996678,
+              "max": 300626.7200000002
+            },
+            "resultSha256": "091af21a6910cb6a452eac04c7897b827aa459989bd74b4681b4c9eac3329aba",
+            "observedHeap": {
+              "minDeltaBytes": -51728416,
+              "maxDeltaBytes": 5220880,
+              "maxEndHeapUsedBytes": 276552768
+            }
+          }
+        }
+      }
+    ]
+  }
+}
