@@ -92,6 +92,30 @@ The document adapter contract is `get`, `open`, `activate`, `save`, `close`, `su
 
 The host offers `menuProvider`, `requestClose`, `onPopoutDocument` and `onWindowFocus` callbacks. Studio uses these seams rather than replacing host methods. Global popout shortcuts are forwarded only if the event was not already handled locally.
 
+### Shared Studio navigation
+
+`StudioNavigation({docking,getEditor,onChanged})` bridges synchronous `openFile`
+activation to `docking.navigation`. It owns no second history. Pair
+`beforeOpen({uri,offset,view})` with `afterJump(token)` in `finally`; use
+`afterJump(token,{record:false})` when opening fails. The outer operation captures
+the departing editor before activation and the actual destination after `goto`.
+Nested activation callbacks and workbench history replay cannot append duplicate
+entries. Ordinary caret movement does not create a navigation stop.
+
+The adapter exposes `capture`, `back`, `forward`, `menu(x,y)`, `clear`, `snapshot`,
+`history`, `canBack` and `canForward`. Toolbar actions and command aliases call
+these methods. The history dropdown uses the same workbench menu, including
+original group/view/popout identity. `WorkbenchNavigation.subscribe` observes
+both adapter calls and direct Window-management shortcuts; `update` and `clear`
+are explicit service operations. Dispose the Studio adapter to remove its
+listener, and clear history when replacing the workspace.
+
+`tests/a19-studio-navigation.test.js` covers departure capture while docking is
+ahead of editor activation, nested opens, failed opens, replay suppression,
+shared dropdown state, clear and disposal. These are model/service checks; the
+actual Studio toolbar and native browser shortcut path require integrated
+browser qualification.
+
 ## Platform behavior and qualification
 
 Browser popouts use a real same-origin child window. The original panel DOM is adopted into that document and reattached on pagehide/beforeunload/observed close. They require a live opener and browser popup permission. A popup's native screen coordinates are not persisted; the model clamps its in-page floating geometry when the host viewport changes. Existing popout identities in navigation history focus the matching live child; after that child has closed, the location is restored in the main workspace without recreating an unsolicited popup.

@@ -7,8 +7,28 @@ export class WorkbenchNavigation {
     this.host = host;
     this.history = history;
     this.onChanged = onChanged;
+    this.listeners = new Set();
     this.replaying = false;
   }
+
+  /** Subscribe to the shared history used by toolbar, menu and direct window shortcuts. */
+  subscribe(listener) {
+    if (typeof listener !== 'function') throw new TypeError('Navigation listener must be a function');
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  }
+
+  changed() {
+    const snapshot = this.history.snapshot();
+    this.onChanged(snapshot);
+    for (const listener of this.listeners) listener(snapshot);
+  }
+
+  update(location = this.capture()) {
+    if (!this.replaying && location) { this.history.update(location); this.changed(); }
+  }
+
+  clear() { this.history.clear(); this.changed(); }
 
   capture(id = this.tabs.layout.state.activePanel) {
     const view = this.tabs.metadata(id);
@@ -21,7 +41,7 @@ export class WorkbenchNavigation {
   }
 
   record(location = this.capture()) {
-    if (!this.replaying && location) { this.history.push(location); this.onChanged(this.history.snapshot()); }
+    if (!this.replaying && location) { this.history.push(location); this.changed(); }
   }
 
   async replay(location) {
@@ -47,7 +67,7 @@ export class WorkbenchNavigation {
       const popout = this.host.popouts.get(id);
       if (location.windowId !== 'main' && popout?.identity === location.windowId) popout.window.focus();
       else this.host.focusPanel(id);
-      this.onChanged(this.history.snapshot());
+      this.changed();
       return id;
     } finally { this.replaying = false; }
   }
