@@ -1,0 +1,3 @@
+# Source fixtures include deliberate CRLF and missing final newline cases.
+corpus/**/*.cs -text
+corpus/04-crlf/View.cs whitespace=cr-at-eol

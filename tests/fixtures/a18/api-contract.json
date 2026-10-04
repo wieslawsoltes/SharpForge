@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "contract": "SF-A18 source/design/runtime qualification v1",
+  "baselineRevision": "eb41313a12346c882b359a7d41b6571981ed57db",
+  "referenceKind": "repository public API regression inventory",
+  "nativeWinUIReference": null,
+  "packages": [
+    {
+      "name": "@sharpforge/designer",
+      "entry": "packages/designer/src/index.js",
+      "signatures": [
+        "analyzeDesignSources(sources: SourceFile[], options?: DesignSourceOptions): DesignSourceAnalysis",
+        "readDesignSource(text: string, options?: DesignSourceOptions): DesignSourceAnalysis",
+        "planDesignSourceUpdate(base: DesignSourceAnalysis, design: DesignDocumentValue, current?: string | SourceFile[], options?: PlanOptions): DesignSourcePlan",
+        "designSourceSnapshot(analysis: DesignSourceAnalysis): SerializableDesignSourceSnapshot",
+        "new CSharpDesignSession(text: string, options?: DesignSourceOptions)",
+        "new DesignDocument(value: DesignDocumentValue)",
+        "DesignDocument.add(type: string, parentId: string, properties?: object): string",
+        "DesignDocument.move(id: string, parentId: string, index?: number): boolean",
+        "DesignDocument.remove(ids: string[]): boolean",
+        "DesignDocument.setProperty(name: string, value: unknown, ids?: string[]): boolean",
+        "DesignDocument.dispose(): void"
+      ]
+    },
+    {
+      "name": "@sharpforge/compiler",
+      "entry": "packages/compiler/src/index.js",
+      "signatures": [
+        "compileToIL(source: string | SourceFile[], options?: object): CompilationResult"
+      ]
+    },
+    {
+      "name": "@sharpforge/runtime",
+      "entry": "packages/runtime/src/index.js",
+      "signatures": [
+        "new VirtualMachine(image: ProgramImage, options?: object)",
+        "new CilVirtualMachine(assembly: Uint8Array, options?: object)",
+        "VirtualMachine.run(): ExecutionResult",
+        "CilVirtualMachine.run(): ExecutionResult",
+        "vm.platform.scene(): {version: 1, windows: string[], nodes: RuntimeSceneNode[]}",
+        "vm.heap.collect(): CollectionStatistics"
+      ]
+    }
+  ],
+  "sourceProtocol": {
+    "spanUnits": "UTF-16 code units",
+    "currentSnapshot": "All source versions and bytes must match the analysis baseline before planning or committing.",
+    "noOp": "Zero edits and byte-identical source files.",
+    "scalarDiffBudget": "At most two changed lexer tokens: one removed and one inserted literal token.",
+    "moveIndex": "Insertion position after removing the moved child from its old parent.",
+    "atomicFailure": "Keep source and preview unchanged on cancellation, disposal, stale snapshot, unsupported ownership, or malformed input."
+  }
+}

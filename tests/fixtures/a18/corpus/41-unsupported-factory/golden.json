@@ -1,0 +1,121 @@
+{
+  "accepted": true,
+  "category": "protected",
+  "compilationSucceeded": true,
+  "diagnostics": [],
+  "document": {
+    "height": 480,
+    "name": "View",
+    "nodes": [
+      {
+        "children": [],
+        "events": {},
+        "id": "root",
+        "properties": {
+          "Height": 480,
+          "Name": "Root",
+          "Width": 640
+        },
+        "type": "Microsoft.UI.Xaml.Controls.Canvas"
+      },
+      {
+        "children": [
+          "root"
+        ],
+        "events": {},
+        "id": "window",
+        "properties": {},
+        "type": "Microsoft.UI.Xaml.Window"
+      }
+    ],
+    "root": "window",
+    "styles": {},
+    "templates": {},
+    "version": 1,
+    "width": 640
+  },
+  "entry": {
+    "className": "View",
+    "methodName": "Create",
+    "uri": "View.cs"
+  },
+  "fixture": "41-unsupported-factory",
+  "identity": [
+    {
+      "declaration": {
+        "end": 241,
+        "start": 237,
+        "uri": "View.cs"
+      },
+      "designId": "root",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "root"
+    },
+    {
+      "declaration": {
+        "end": 205,
+        "start": 199,
+        "uri": "View.cs"
+      },
+      "designId": "window",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "window"
+    }
+  ],
+  "ownership": {
+    "designer": 4,
+    "handwritten": 4
+  },
+  "protectedStatements": 4,
+  "sources": [
+    {
+      "sha256": "c53af6e822c5af768119c5571c2f6a8fc399ef6e9ebf277749479e9b41b9eec9",
+      "uri": "View.cs"
+    }
+  ],
+  "structuralEditable": false,
+  "unsupportedConstructs": [
+    {
+      "kind": "handwritten",
+      "message": "Custom statement is preserved; structural regeneration is disabled",
+      "span": {
+        "end": 339,
+        "start": 309
+      },
+      "syntaxKind": "Local",
+      "uri": "View.cs"
+    },
+    {
+      "kind": "handwritten",
+      "message": "Custom statement is preserved; structural regeneration is disabled",
+      "span": {
+        "end": 375,
+        "start": 348
+      },
+      "syntaxKind": "ExpressionStatement",
+      "uri": "View.cs"
+    },
+    {
+      "kind": "handwritten",
+      "message": "Custom statement is preserved; structural regeneration is disabled",
+      "span": {
+        "end": 410,
+        "start": 384
+      },
+      "syntaxKind": "ExpressionStatement",
+      "uri": "View.cs"
+    },
+    {
+      "kind": "handwritten",
+      "message": "Custom statement is preserved; structural regeneration is disabled",
+      "span": {
+        "end": 445,
+        "start": 419
+      },
+      "syntaxKind": "ExpressionStatement",
+      "uri": "View.cs"
+    }
+  ]
+}
