@@ -1,5 +1,8 @@
 # @sharpforge/msbuild
 
+The opt-in [native testing contribution](docs/test-native-adapter.md) exposes
+trusted discovery, cancellable run sessions, reports and retained artifacts.
+
 Native test discovery, TRX/Cobertura parsing and runner argument contracts are
 documented in [docs/test-native-formats.md](docs/test-native-formats.md).
 
