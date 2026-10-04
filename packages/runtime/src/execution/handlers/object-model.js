@@ -14,7 +14,9 @@ for(const name of ['ldsfld','stsfld','ldsflda'])handlers.set(name,(vm,frame,inst
   else vm.push(vm.address('static',slot.key));
   finishMemoryAccess(frame);
 });
-for(const name of ['ldfld','stfld','ldflda'])handlers.set(name,executeFieldAccess);
+for (const name of ['ldfld', 'stfld', 'ldflda']) {
+  handlers.set(name, (vm, frame, instruction) => executeFieldAccess(vm, frame, instruction, name));
+}
 handlers.set('box', (vm, frame, instruction) => vm.push(boxValue(vm, vm.pop(), instruction.operand)));
 for (const name of ['unbox', 'unbox.any']) {
   handlers.set(name, (vm, frame, instruction) => vm.push(unboxValue(vm, vm.pop(), instruction.operand, name === 'unbox')));
