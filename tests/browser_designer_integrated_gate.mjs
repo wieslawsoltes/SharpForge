@@ -23,7 +23,9 @@ const cases = [
 ];
 const requested = [...new Set(process.env.SHARPFORGE_DESIGNER_CASES?.split(',').map(id => id.trim()).filter(Boolean) ?? cases.map(([id]) => id))];
 assert(requested.length && requested.every(id => cases.some(([name]) => name === id)), 'Unknown or empty SHARPFORGE_DESIGNER_CASES.');
-const gate = await createGate();
+const measuresInput = requested.some(id => ['source-latency', 'performance'].includes(id));
+const captureMode = process.env.SHARPFORGE_DESIGNER_CAPTURE ?? (measuresInput ? 'measurement' : 'diagnostic');
+const gate = await createGate({captureMode});
 gate.report.requestedCases = requested;
 gate.report.completeMatrix = requested.length === cases.length;
 let failure;
