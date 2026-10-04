@@ -110,7 +110,7 @@
       "path": "packages/editor/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
-      "sha256": "20b3a66c4097d7b1e6362d590e2f8d8f75503f5a5611dab4c0d82bce70586569",
+      "sha256": "c0f304de1c912208ffdbaab3e6a7ca1eae6730e8ed3ff724c5015e9277a21766",
       "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
     },
     {
