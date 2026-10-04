@@ -282,13 +282,6 @@
       "reason": "Qualification adapter loads fixed compiler/build package entry points from the explicitly selected trusted checkout."
     },
     {
-      "path": "scripts/bench-pdb.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "b2bbde05d24b6b3348409d97635fce6bc19989844e2ae0bf84918f7bae8c6b80",
-      "reason": "PDB benchmark imports the symbols package from an explicitly selected trusted baseline checkout."
-    },
-    {
       "path": "scripts/bench/a03-metadata.js",
       "operation": "dynamic-import",
       "count": 1,
@@ -308,6 +301,13 @@
       "count": 1,
       "sha256": "87827deddeda04d6fdb6b055ff7448c3d8fe221759a5accf87ca6ab301ce5a3c",
       "reason": "Trusted operator-selected checkout loads five fixed local modules via tracked package/host paths; no source-data or remote module selectors."
+    },
+    {
+      "path": "scripts/benchmarks/pdb-context.mjs",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "f8c9fb4c148a4df39dad17922e5dde2e31800e315242fd5204e14d1b80013265",
+      "reason": "PDB benchmarks import fixed public symbols, CIL and compiler entries from trusted operator-selected local checkouts. Realpath, exact baseline commit, clean tracked source and dependency-closure alias guards precede imports; no product, metadata or remote code selectors."
     },
     {
       "path": "scripts/build-managed-examples.js",
