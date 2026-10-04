@@ -1,5 +1,6 @@
 import {registryAssignable} from './registry-assignability.js';
 import {validateRegistry} from './registry-validation.js';
+import {normalizeReadonlyFields} from './readonly-fields.js';
 /** A closed, versioned ABI. Unlisted members never fall through to host JavaScript. */
 export const ABI_VERSION = 1;
 export const XAML = 'Microsoft.UI.Xaml.';
@@ -18,6 +19,7 @@ function define(name, options = {}) {
   if (types.has(name)) throw failure('Duplicate type '+name);
   if (Object.hasOwn(options,'name')) throw failure('Type name cannot be overridden');
   const t = {name, base: 'object', properties: {}, events: {}, ...options};
+  if (t.fields !== undefined) t.fields = normalizeReadonlyFields(name, t.fields);
   types.set(name, t); aliases.set(name, name);
   const short = name.slice(name.lastIndexOf('.') + 1);
   if (!aliases.has(short)) aliases.set(short, name);

@@ -1,0 +1,4953 @@
+{
+  "format": "sharpforge.decompiler-cfg-benchmark",
+  "version": 1,
+  "timestamp": "2026-10-04T13:33:25.120Z",
+  "revisions": {
+    "baseline": {
+      "root": "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "commit": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "tree": "a622d9bddf0b233ffe6f753e9c44e4716d9b4b10",
+      "sourceRevision": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "trackedChanges": []
+    },
+    "candidate": {
+      "root": "/workspace/scratch/7e3d2a445c44/sf6-decompiler",
+      "commit": "c3d5c4c6f136c5544fa1cf41baa3032610353d88",
+      "tree": "bd0680c387af6713b230f670c58e35d818717f45",
+      "sourceRevision": "b86dc79001c68d8d7558487f35984e2682c8f1d3",
+      "trackedChanges": []
+    }
+  },
+  "workspaceAliases": {
+    "baseline": {
+      "@sharpforge/cil": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/src/index.js",
+      "@sharpforge/bytecode": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/bytecode/src/index.js",
+      "@sharpforge/framework": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/framework/src/index.js"
+    },
+    "candidate": {
+      "@sharpforge/cil": "/workspace/scratch/7e3d2a445c44/sf6-decompiler/packages/cil/src/index.js",
+      "@sharpforge/bytecode": "/workspace/scratch/7e3d2a445c44/sf6-decompiler/packages/bytecode/src/index.js",
+      "@sharpforge/framework": "/workspace/scratch/7e3d2a445c44/sf6-decompiler/packages/framework/src/index.js"
+    }
+  },
+  "driverSha256": "991308fe80164c4fd7efd012a4dded700a8d73c47044d7678936a3b6249bfe53",
+  "nativeFixtureSha256": "bfcaf0f930c76cdfd133565ffd5779f5e85258034f1fd2f21051a868d6a3cfc1",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "osRelease": "6.18.44",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "totalMemoryBytes": 10451464192,
+    "sharedHost": true
+  },
+  "configuration": {
+    "warmupBatchesPerCaseAndVariant": 20,
+    "measuredSamplesPerCaseAndVariant": 100,
+    "iterationsPerBatch": 200,
+    "clock": "performance.now",
+    "variantOrder": "alternates each round",
+    "caseOrder": "rotates each round",
+    "median": "mean of the two central samples",
+    "p95": "nearest rank",
+    "inspector": "separate cached inspector from each library; method lookup prewarmed outside timing"
+  },
+  "interpretation": "Candidate cost includes constructing the new CFG output; this is not a same-result speedup comparison.",
+  "limitations": [
+    "Shared host: scheduling, GC and concurrent load can affect samples.",
+    "No allocation counter, forced GC or isolated opcode measurement is used.",
+    "The Finally fallback includes the existing IL-formatting work performed inside decompileMethod.",
+    "Inspector construction, initial method lookup, equality checks and result summarization are outside timing."
+  ],
+  "allocationCounter": null,
+  "checksum": 66096000,
+  "results": [
+    {
+      "name": "ArithmeticAdd",
+      "token": 100663297,
+      "imageSha256": "8d17b75da73afa2031fb40903cbdbe88e7d9cf42df65c6aab5a8f3d7c8506c15",
+      "language": "csharp",
+      "complete": true,
+      "sourceSha256": "2a465627f6cfb526c818363c28c5c24abb6212bf3f09b5fe5784e41907002ea3",
+      "sourceCharacters": 247,
+      "legacyEqualityBeforeAndAfter": true,
+      "candidateGraph": {
+        "codeBytes": 4,
+        "instructions": 4,
+        "blocks": 1,
+        "edges": 0,
+        "exceptionClauses": 0
+      },
+      "baseline": {
+        "samples": 100,
+        "medianNanosecondsPerCall": 2884.5449999971606,
+        "p95NanosecondsPerCall": 5717.91000002122
+      },
+      "candidate": {
+        "samples": 100,
+        "medianNanosecondsPerCall": 5143.637499986653,
+        "p95NanosecondsPerCall": 9817.140000013751
+      },
+      "medianFeatureCostPercent": 78.31711760404903
+    },
+    {
+      "name": "NativeLoop",
+      "token": 100663327,
+      "imageSha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3",
+      "language": "csharp",
+      "complete": true,
+      "sourceSha256": "8b1859d0d9ff68652b984f30e72d19d47abcc1a76c826f311f9a0db9508a5b26",
+      "sourceCharacters": 491,
+      "legacyEqualityBeforeAndAfter": true,
+      "candidateGraph": {
+        "codeBytes": 19,
+        "instructions": 16,
+        "blocks": 4,
+        "edges": 4,
+        "exceptionClauses": 0
+      },
+      "baseline": {
+        "samples": 100,
+        "medianNanosecondsPerCall": 6692.467500015482,
+        "p95NanosecondsPerCall": 15151.084999997693
+      },
+      "candidate": {
+        "samples": 100,
+        "medianNanosecondsPerCall": 10482.545000013488,
+        "p95NanosecondsPerCall": 20409.214999999676
+      },
+      "medianFeatureCostPercent": 56.631989621006575
+    },
+    {
+      "name": "NativeFinally",
+      "token": 100663329,
+      "imageSha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3",
+      "language": "cil",
+      "complete": false,
+      "sourceSha256": "29a79e93529a4a40893efd8c305bcaeb07c8fd2e04d4c42f77a9b7f16bb00e28",
+      "sourceCharacters": 637,
+      "legacyEqualityBeforeAndAfter": true,
+      "candidateGraph": {
+        "codeBytes": 21,
+        "instructions": 12,
+        "blocks": 3,
+        "edges": 1,
+        "exceptionClauses": 1
+      },
+      "baseline": {
+        "samples": 100,
+        "medianNanosecondsPerCall": 1297793.9624999817,
+        "p95NanosecondsPerCall": 1582885.5349999957
+      },
+      "candidate": {
+        "samples": 100,
+        "medianNanosecondsPerCall": 1271563.162500006,
+        "p95NanosecondsPerCall": 1650063.90999999
+      },
+      "medianFeatureCostPercent": -2.0211836977147457
+    }
+  ],
+  "chronologicalSamples": [
+    {
+      "sequence": 0,
+      "round": 0,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.7245140000013635,
+      "nanosecondsPerCall": 3622.5700000068173
+    },
+    {
+      "sequence": 1,
+      "round": 0,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.086234999998851,
+      "nanosecondsPerCall": 5431.174999994255
+    },
+    {
+      "sequence": 2,
+      "round": 0,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.7415280000004714,
+      "nanosecondsPerCall": 8707.640000002357
+    },
+    {
+      "sequence": 3,
+      "round": 0,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.2929069999991043,
+      "nanosecondsPerCall": 11464.53499999552
+    },
+    {
+      "sequence": 4,
+      "round": 0,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 292.04426199999943,
+      "nanosecondsPerCall": 1460221.3099999973
+    },
+    {
+      "sequence": 5,
+      "round": 0,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 262.58220699999947,
+      "nanosecondsPerCall": 1312911.0349999974
+    },
+    {
+      "sequence": 6,
+      "round": 1,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.1675629999990633,
+      "nanosecondsPerCall": 10837.814999995315
+    },
+    {
+      "sequence": 7,
+      "round": 1,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.358564000000115,
+      "nanosecondsPerCall": 11792.820000000575
+    },
+    {
+      "sequence": 8,
+      "round": 1,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 291.65299699999923,
+      "nanosecondsPerCall": 1458264.9849999961
+    },
+    {
+      "sequence": 9,
+      "round": 1,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 301.7523920000003,
+      "nanosecondsPerCall": 1508761.9600000016
+    },
+    {
+      "sequence": 10,
+      "round": 1,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0776050000004034,
+      "nanosecondsPerCall": 5388.025000002016
+    },
+    {
+      "sequence": 11,
+      "round": 1,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6741320000000997,
+      "nanosecondsPerCall": 3370.6600000004983
+    },
+    {
+      "sequence": 12,
+      "round": 2,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 261.8977620000005,
+      "nanosecondsPerCall": 1309488.8100000026
+    },
+    {
+      "sequence": 13,
+      "round": 2,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 304.3523290000012,
+      "nanosecondsPerCall": 1521761.645000006
+    },
+    {
+      "sequence": 14,
+      "round": 2,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6893639999998413,
+      "nanosecondsPerCall": 3446.8199999992066
+    },
+    {
+      "sequence": 15,
+      "round": 2,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 3.97163399999954,
+      "nanosecondsPerCall": 19858.1699999977
+    },
+    {
+      "sequence": 16,
+      "round": 2,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.678459999999177,
+      "nanosecondsPerCall": 8392.299999995885
+    },
+    {
+      "sequence": 17,
+      "round": 2,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.1442950000000565,
+      "nanosecondsPerCall": 10721.475000000282
+    },
+    {
+      "sequence": 18,
+      "round": 3,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0256900000003952,
+      "nanosecondsPerCall": 5128.450000001976
+    },
+    {
+      "sequence": 19,
+      "round": 3,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6919889999990119,
+      "nanosecondsPerCall": 3459.9449999950593
+    },
+    {
+      "sequence": 20,
+      "round": 3,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0997800000004645,
+      "nanosecondsPerCall": 10498.900000002324
+    },
+    {
+      "sequence": 21,
+      "round": 3,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.6093280000004597,
+      "nanosecondsPerCall": 8046.640000002298
+    },
+    {
+      "sequence": 22,
+      "round": 3,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 269.7118989999999,
+      "nanosecondsPerCall": 1348559.4949999994
+    },
+    {
+      "sequence": 23,
+      "round": 3,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 316.57710699999916,
+      "nanosecondsPerCall": 1582885.5349999957
+    },
+    {
+      "sequence": 24,
+      "round": 4,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.6153169999997772,
+      "nanosecondsPerCall": 8076.584999998886
+    },
+    {
+      "sequence": 25,
+      "round": 4,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.255859999999302,
+      "nanosecondsPerCall": 11279.29999999651
+    },
+    {
+      "sequence": 26,
+      "round": 4,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 239.80149300000085,
+      "nanosecondsPerCall": 1199007.4650000043
+    },
+    {
+      "sequence": 27,
+      "round": 4,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 290.99410199999875,
+      "nanosecondsPerCall": 1454970.5099999937
+    },
+    {
+      "sequence": 28,
+      "round": 4,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.7691319999994448,
+      "nanosecondsPerCall": 3845.659999997224
+    },
+    {
+      "sequence": 29,
+      "round": 4,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.069063000000824,
+      "nanosecondsPerCall": 5345.315000004121
+    },
+    {
+      "sequence": 30,
+      "round": 5,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 293.6611009999997,
+      "nanosecondsPerCall": 1468305.5049999985
+    },
+    {
+      "sequence": 31,
+      "round": 5,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 302.4785659999998,
+      "nanosecondsPerCall": 1512392.829999999
+    },
+    {
+      "sequence": 32,
+      "round": 5,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.1755799999991723,
+      "nanosecondsPerCall": 5877.899999995861
+    },
+    {
+      "sequence": 33,
+      "round": 5,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5501189999995404,
+      "nanosecondsPerCall": 2750.594999997702
+    },
+    {
+      "sequence": 34,
+      "round": 5,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.2311829999998736,
+      "nanosecondsPerCall": 11155.914999999366
+    },
+    {
+      "sequence": 35,
+      "round": 5,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2875739999999496,
+      "nanosecondsPerCall": 6437.869999999749
+    },
+    {
+      "sequence": 36,
+      "round": 6,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.571060000000216,
+      "nanosecondsPerCall": 2855.3000000010798
+    },
+    {
+      "sequence": 37,
+      "round": 6,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.126618000000235,
+      "nanosecondsPerCall": 5633.090000001176
+    },
+    {
+      "sequence": 38,
+      "round": 6,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2862029999996594,
+      "nanosecondsPerCall": 6431.014999998297
+    },
+    {
+      "sequence": 39,
+      "round": 6,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.1778249999988475,
+      "nanosecondsPerCall": 10889.124999994237
+    },
+    {
+      "sequence": 40,
+      "round": 6,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 278.05729600000086,
+      "nanosecondsPerCall": 1390286.4800000042
+    },
+    {
+      "sequence": 41,
+      "round": 6,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 271.0460490000005,
+      "nanosecondsPerCall": 1355230.2450000024
+    },
+    {
+      "sequence": 42,
+      "round": 7,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.7042709999986982,
+      "nanosecondsPerCall": 18521.35499999349
+    },
+    {
+      "sequence": 43,
+      "round": 7,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.24456199999986,
+      "nanosecondsPerCall": 11222.8099999993
+    },
+    {
+      "sequence": 44,
+      "round": 7,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 263.25406399999883,
+      "nanosecondsPerCall": 1316270.3199999942
+    },
+    {
+      "sequence": 45,
+      "round": 7,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 320.52899699999944,
+      "nanosecondsPerCall": 1602644.9849999973
+    },
+    {
+      "sequence": 46,
+      "round": 7,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.7203710000012506,
+      "nanosecondsPerCall": 8601.855000006253
+    },
+    {
+      "sequence": 47,
+      "round": 7,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.9474239999999554,
+      "nanosecondsPerCall": 4737.119999999777
+    },
+    {
+      "sequence": 48,
+      "round": 8,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 310.49707600000147,
+      "nanosecondsPerCall": 1552485.3800000073
+    },
+    {
+      "sequence": 49,
+      "round": 8,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 251.29463499999838,
+      "nanosecondsPerCall": 1256473.174999992
+    },
+    {
+      "sequence": 50,
+      "round": 8,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5690169999979844,
+      "nanosecondsPerCall": 2845.084999989922
+    },
+    {
+      "sequence": 51,
+      "round": 8,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0726690000010421,
+      "nanosecondsPerCall": 5363.345000005211
+    },
+    {
+      "sequence": 52,
+      "round": 8,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2773399999969115,
+      "nanosecondsPerCall": 6386.6999999845575
+    },
+    {
+      "sequence": 53,
+      "round": 8,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.108892999996897,
+      "nanosecondsPerCall": 10544.464999984484
+    },
+    {
+      "sequence": 54,
+      "round": 9,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.4535690000011527,
+      "nanosecondsPerCall": 7267.845000005764
+    },
+    {
+      "sequence": 55,
+      "round": 9,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5925119999992603,
+      "nanosecondsPerCall": 2962.5599999963015
+    },
+    {
+      "sequence": 56,
+      "round": 9,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.065580000002228,
+      "nanosecondsPerCall": 10327.900000011141
+    },
+    {
+      "sequence": 57,
+      "round": 9,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.265982000000804,
+      "nanosecondsPerCall": 6329.91000000402
+    },
+    {
+      "sequence": 58,
+      "round": 9,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 242.11446699999942,
+      "nanosecondsPerCall": 1210572.3349999972
+    },
+    {
+      "sequence": 59,
+      "round": 9,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 276.5126080000009,
+      "nanosecondsPerCall": 1382563.0400000045
+    },
+    {
+      "sequence": 60,
+      "round": 10,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.8281800000004296,
+      "nanosecondsPerCall": 9140.900000002148
+    },
+    {
+      "sequence": 61,
+      "round": 10,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.988115000000107,
+      "nanosecondsPerCall": 9940.575000000536
+    },
+    {
+      "sequence": 62,
+      "round": 10,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 290.1895000000004,
+      "nanosecondsPerCall": 1450947.500000002
+    },
+    {
+      "sequence": 63,
+      "round": 10,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 261.08738900000026,
+      "nanosecondsPerCall": 1305436.9450000012
+    },
+    {
+      "sequence": 64,
+      "round": 10,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6657889999987674,
+      "nanosecondsPerCall": 3328.944999993837
+    },
+    {
+      "sequence": 65,
+      "round": 10,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0233740000003309,
+      "nanosecondsPerCall": 5116.870000001654
+    },
+    {
+      "sequence": 66,
+      "round": 11,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 233.82487499999843,
+      "nanosecondsPerCall": 1169124.374999992
+    },
+    {
+      "sequence": 67,
+      "round": 11,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 227.6874119999993,
+      "nanosecondsPerCall": 1138437.0599999966
+    },
+    {
+      "sequence": 68,
+      "round": 11,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9912569999978587,
+      "nanosecondsPerCall": 4956.284999989293
+    },
+    {
+      "sequence": 69,
+      "round": 11,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5858619999999064,
+      "nanosecondsPerCall": 2929.309999999532
+    },
+    {
+      "sequence": 70,
+      "round": 11,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9649680000002263,
+      "nanosecondsPerCall": 9824.840000001132
+    },
+    {
+      "sequence": 71,
+      "round": 11,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.7414199999984703,
+      "nanosecondsPerCall": 13707.099999992352
+    },
+    {
+      "sequence": 72,
+      "round": 12,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5632079999995767,
+      "nanosecondsPerCall": 2816.0399999978836
+    },
+    {
+      "sequence": 73,
+      "round": 12,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.014591000002838,
+      "nanosecondsPerCall": 5072.95500001419
+    },
+    {
+      "sequence": 74,
+      "round": 12,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2753450000018347,
+      "nanosecondsPerCall": 6376.7250000091735
+    },
+    {
+      "sequence": 75,
+      "round": 12,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.006109000001743,
+      "nanosecondsPerCall": 10030.545000008715
+    },
+    {
+      "sequence": 76,
+      "round": 12,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 242.46954999999798,
+      "nanosecondsPerCall": 1212347.7499999898
+    },
+    {
+      "sequence": 77,
+      "round": 12,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 290.44293800000014,
+      "nanosecondsPerCall": 1452214.6900000006
+    },
+    {
+      "sequence": 78,
+      "round": 13,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9642370000001392,
+      "nanosecondsPerCall": 9821.185000000696
+    },
+    {
+      "sequence": 79,
+      "round": 13,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3033250000007683,
+      "nanosecondsPerCall": 6516.625000003842
+    },
+    {
+      "sequence": 80,
+      "round": 13,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 225.53083299999707,
+      "nanosecondsPerCall": 1127654.1649999854
+    },
+    {
+      "sequence": 81,
+      "round": 13,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 255.7318860000014,
+      "nanosecondsPerCall": 1278659.430000007
+    },
+    {
+      "sequence": 82,
+      "round": 13,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0386369999978342,
+      "nanosecondsPerCall": 5193.184999989171
+    },
+    {
+      "sequence": 83,
+      "round": 13,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5412759999999253,
+      "nanosecondsPerCall": 2706.3799999996263
+    },
+    {
+      "sequence": 84,
+      "round": 14,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 279.8953440000005,
+      "nanosecondsPerCall": 1399476.7200000023
+    },
+    {
+      "sequence": 85,
+      "round": 14,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 234.5983529999976,
+      "nanosecondsPerCall": 1172991.764999988
+    },
+    {
+      "sequence": 86,
+      "round": 14,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.546212999997806,
+      "nanosecondsPerCall": 2731.06499998903
+    },
+    {
+      "sequence": 87,
+      "round": 14,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.00572800000009,
+      "nanosecondsPerCall": 5028.6400000004505
+    },
+    {
+      "sequence": 88,
+      "round": 14,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 3.776581999998598,
+      "nanosecondsPerCall": 18882.90999999299
+    },
+    {
+      "sequence": 89,
+      "round": 14,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.2092679999987013,
+      "nanosecondsPerCall": 11046.339999993506
+    },
+    {
+      "sequence": 90,
+      "round": 15,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9558849999993981,
+      "nanosecondsPerCall": 4779.424999996991
+    },
+    {
+      "sequence": 91,
+      "round": 15,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5505690000027244,
+      "nanosecondsPerCall": 2752.8450000136218
+    },
+    {
+      "sequence": 92,
+      "round": 15,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.18625400000019,
+      "nanosecondsPerCall": 10931.27000000095
+    },
+    {
+      "sequence": 93,
+      "round": 15,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2795609999993758,
+      "nanosecondsPerCall": 6397.804999996879
+    },
+    {
+      "sequence": 94,
+      "round": 15,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 235.81761499999993,
+      "nanosecondsPerCall": 1179088.0749999997
+    },
+    {
+      "sequence": 95,
+      "round": 15,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 225.71514300000126,
+      "nanosecondsPerCall": 1128575.7150000064
+    },
+    {
+      "sequence": 96,
+      "round": 16,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2126530000023195,
+      "nanosecondsPerCall": 6063.265000011597
+    },
+    {
+      "sequence": 97,
+      "round": 16,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0026340000003984,
+      "nanosecondsPerCall": 10013.170000001992
+    },
+    {
+      "sequence": 98,
+      "round": 16,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 285.6292680000006,
+      "nanosecondsPerCall": 1428146.3400000029
+    },
+    {
+      "sequence": 99,
+      "round": 16,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 251.89297699999952,
+      "nanosecondsPerCall": 1259464.8849999977
+    },
+    {
+      "sequence": 100,
+      "round": 16,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6083749999997963,
+      "nanosecondsPerCall": 3041.8749999989814
+    },
+    {
+      "sequence": 101,
+      "round": 16,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.1235520000009274,
+      "nanosecondsPerCall": 5617.760000004637
+    },
+    {
+      "sequence": 102,
+      "round": 17,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 291.08093799999915,
+      "nanosecondsPerCall": 1455404.6899999958
+    },
+    {
+      "sequence": 103,
+      "round": 17,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 241.14138599999933,
+      "nanosecondsPerCall": 1205706.9299999967
+    },
+    {
+      "sequence": 104,
+      "round": 17,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.064193999998679,
+      "nanosecondsPerCall": 5320.969999993395
+    },
+    {
+      "sequence": 105,
+      "round": 17,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 2.074529999998049,
+      "nanosecondsPerCall": 10372.649999990244
+    },
+    {
+      "sequence": 106,
+      "round": 17,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.079187000003003,
+      "nanosecondsPerCall": 10395.935000015015
+    },
+    {
+      "sequence": 107,
+      "round": 17,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.3318770000005316,
+      "nanosecondsPerCall": 11659.38500000266
+    },
+    {
+      "sequence": 108,
+      "round": 18,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.9754440000033355,
+      "nanosecondsPerCall": 4877.220000016678
+    },
+    {
+      "sequence": 109,
+      "round": 18,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.7189680000010412,
+      "nanosecondsPerCall": 8594.840000005206
+    },
+    {
+      "sequence": 110,
+      "round": 18,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.183420000001206,
+      "nanosecondsPerCall": 10917.10000000603
+    },
+    {
+      "sequence": 111,
+      "round": 18,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.4024219999992056,
+      "nanosecondsPerCall": 17012.109999996028
+    },
+    {
+      "sequence": 112,
+      "round": 18,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 272.3111820000013,
+      "nanosecondsPerCall": 1361555.9100000062
+    },
+    {
+      "sequence": 113,
+      "round": 18,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 307.0248250000004,
+      "nanosecondsPerCall": 1535124.125000002
+    },
+    {
+      "sequence": 114,
+      "round": 19,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.1758719999997993,
+      "nanosecondsPerCall": 10879.359999998996
+    },
+    {
+      "sequence": 115,
+      "round": 19,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.7489629999981844,
+      "nanosecondsPerCall": 8744.814999990922
+    },
+    {
+      "sequence": 116,
+      "round": 19,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 233.57573899999988,
+      "nanosecondsPerCall": 1167878.6949999994
+    },
+    {
+      "sequence": 117,
+      "round": 19,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 241.36186299999827,
+      "nanosecondsPerCall": 1206809.3149999913
+    },
+    {
+      "sequence": 118,
+      "round": 19,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0121699999981502,
+      "nanosecondsPerCall": 5060.849999990751
+    },
+    {
+      "sequence": 119,
+      "round": 19,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5962870000003022,
+      "nanosecondsPerCall": 2981.435000001511
+    },
+    {
+      "sequence": 120,
+      "round": 20,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 290.4212860000007,
+      "nanosecondsPerCall": 1452106.4300000037
+    },
+    {
+      "sequence": 121,
+      "round": 20,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 325.54261899999983,
+      "nanosecondsPerCall": 1627713.094999999
+    },
+    {
+      "sequence": 122,
+      "round": 20,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.603478000000905,
+      "nanosecondsPerCall": 3017.390000004525
+    },
+    {
+      "sequence": 123,
+      "round": 20,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9809229999991658,
+      "nanosecondsPerCall": 4904.614999995829
+    },
+    {
+      "sequence": 124,
+      "round": 20,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.4315459999997984,
+      "nanosecondsPerCall": 7157.729999998992
+    },
+    {
+      "sequence": 125,
+      "round": 20,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.1973739999993995,
+      "nanosecondsPerCall": 15986.869999996996
+    },
+    {
+      "sequence": 126,
+      "round": 21,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.353501999998116,
+      "nanosecondsPerCall": 6767.50999999058
+    },
+    {
+      "sequence": 127,
+      "round": 21,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6773370000009891,
+      "nanosecondsPerCall": 3386.6850000049453
+    },
+    {
+      "sequence": 128,
+      "round": 21,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 4.898317000002862,
+      "nanosecondsPerCall": 24491.58500001431
+    },
+    {
+      "sequence": 129,
+      "round": 21,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.520967999997083,
+      "nanosecondsPerCall": 7604.8399999854155
+    },
+    {
+      "sequence": 130,
+      "round": 21,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 251.38523599999826,
+      "nanosecondsPerCall": 1256926.1799999913
+    },
+    {
+      "sequence": 131,
+      "round": 21,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 311.27215299999807,
+      "nanosecondsPerCall": 1556360.7649999904
+    },
+    {
+      "sequence": 132,
+      "round": 22,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2764979999992647,
+      "nanosecondsPerCall": 6382.489999996324
+    },
+    {
+      "sequence": 133,
+      "round": 22,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.014063000002352,
+      "nanosecondsPerCall": 10070.31500001176
+    },
+    {
+      "sequence": 134,
+      "round": 22,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 268.22843999999895,
+      "nanosecondsPerCall": 1341142.1999999948
+    },
+    {
+      "sequence": 135,
+      "round": 22,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 230.37291600000026,
+      "nanosecondsPerCall": 1151864.5800000012
+    },
+    {
+      "sequence": 136,
+      "round": 22,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5514309999998659,
+      "nanosecondsPerCall": 2757.1549999993294
+    },
+    {
+      "sequence": 137,
+      "round": 22,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9959149999995134,
+      "nanosecondsPerCall": 4979.574999997567
+    },
+    {
+      "sequence": 138,
+      "round": 23,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 232.9447489999984,
+      "nanosecondsPerCall": 1164723.7449999922
+    },
+    {
+      "sequence": 139,
+      "round": 23,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 272.09946599999967,
+      "nanosecondsPerCall": 1360497.3299999982
+    },
+    {
+      "sequence": 140,
+      "round": 23,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0344519999998738,
+      "nanosecondsPerCall": 5172.259999999369
+    },
+    {
+      "sequence": 141,
+      "round": 23,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5640399999974761,
+      "nanosecondsPerCall": 2820.1999999873806
+    },
+    {
+      "sequence": 142,
+      "round": 23,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.098788000002969,
+      "nanosecondsPerCall": 10493.940000014845
+    },
+    {
+      "sequence": 143,
+      "round": 23,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3261310000016238,
+      "nanosecondsPerCall": 6630.655000008119
+    },
+    {
+      "sequence": 144,
+      "round": 24,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5682659999984025,
+      "nanosecondsPerCall": 2841.3299999920127
+    },
+    {
+      "sequence": 145,
+      "round": 24,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0169270000005781,
+      "nanosecondsPerCall": 5084.635000002891
+    },
+    {
+      "sequence": 146,
+      "round": 24,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 3.020484000000579,
+      "nanosecondsPerCall": 15102.420000002894
+    },
+    {
+      "sequence": 147,
+      "round": 24,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 5.777800000003481,
+      "nanosecondsPerCall": 28889.000000017408
+    },
+    {
+      "sequence": 148,
+      "round": 24,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 254.48314899999968,
+      "nanosecondsPerCall": 1272415.7449999982
+    },
+    {
+      "sequence": 149,
+      "round": 24,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 246.79777100000138,
+      "nanosecondsPerCall": 1233988.855000007
+    },
+    {
+      "sequence": 150,
+      "round": 25,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.016897000001336,
+      "nanosecondsPerCall": 10084.48500000668
+    },
+    {
+      "sequence": 151,
+      "round": 25,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.204171999997925,
+      "nanosecondsPerCall": 6020.859999989625
+    },
+    {
+      "sequence": 152,
+      "round": 25,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 235.0708080000004,
+      "nanosecondsPerCall": 1175354.040000002
+    },
+    {
+      "sequence": 153,
+      "round": 25,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 292.13502399999925,
+      "nanosecondsPerCall": 1460675.1199999962
+    },
+    {
+      "sequence": 154,
+      "round": 25,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.1780629999993835,
+      "nanosecondsPerCall": 5890.314999996917
+    },
+    {
+      "sequence": 155,
+      "round": 25,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6367459999964922,
+      "nanosecondsPerCall": 3183.729999982461
+    },
+    {
+      "sequence": 156,
+      "round": 26,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 274.5475080000033,
+      "nanosecondsPerCall": 1372737.5400000163
+    },
+    {
+      "sequence": 157,
+      "round": 26,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 310.25043300000107,
+      "nanosecondsPerCall": 1551252.1650000054
+    },
+    {
+      "sequence": 158,
+      "round": 26,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5793620000004012,
+      "nanosecondsPerCall": 2896.810000002006
+    },
+    {
+      "sequence": 159,
+      "round": 26,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.1533769999987271,
+      "nanosecondsPerCall": 5766.884999993636
+    },
+    {
+      "sequence": 160,
+      "round": 26,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.318608999998105,
+      "nanosecondsPerCall": 6593.044999990525
+    },
+    {
+      "sequence": 161,
+      "round": 26,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.017997999999352,
+      "nanosecondsPerCall": 10089.98999999676
+    },
+    {
+      "sequence": 162,
+      "round": 27,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 2.5341369999987364,
+      "nanosecondsPerCall": 12670.68499999368
+    },
+    {
+      "sequence": 163,
+      "round": 27,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5426879999977245,
+      "nanosecondsPerCall": 2713.4399999886227
+    },
+    {
+      "sequence": 164,
+      "round": 27,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9372299999995448,
+      "nanosecondsPerCall": 9686.149999997724
+    },
+    {
+      "sequence": 165,
+      "round": 27,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2084880000002158,
+      "nanosecondsPerCall": 6042.440000001079
+    },
+    {
+      "sequence": 166,
+      "round": 27,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 387.56040100000246,
+      "nanosecondsPerCall": 1937802.0050000122
+    },
+    {
+      "sequence": 167,
+      "round": 27,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 294.5540829999991,
+      "nanosecondsPerCall": 1472770.4149999956
+    },
+    {
+      "sequence": 168,
+      "round": 28,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 3.571481999999378,
+      "nanosecondsPerCall": 17857.40999999689
+    },
+    {
+      "sequence": 169,
+      "round": 28,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 4.081842999999935,
+      "nanosecondsPerCall": 20409.214999999676
+    },
+    {
+      "sequence": 170,
+      "round": 28,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 450.02458300000217,
+      "nanosecondsPerCall": 2250122.9150000107
+    },
+    {
+      "sequence": 171,
+      "round": 28,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 288.63407599999846,
+      "nanosecondsPerCall": 1443170.3799999922
+    },
+    {
+      "sequence": 172,
+      "round": 28,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.781209000000672,
+      "nanosecondsPerCall": 3906.0450000033597
+    },
+    {
+      "sequence": 173,
+      "round": 28,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.1885780000011437,
+      "nanosecondsPerCall": 5942.890000005718
+    },
+    {
+      "sequence": 174,
+      "round": 29,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 310.9968950000002,
+      "nanosecondsPerCall": 1554984.4750000013
+    },
+    {
+      "sequence": 175,
+      "round": 29,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 265.3887489999979,
+      "nanosecondsPerCall": 1326943.7449999896
+    },
+    {
+      "sequence": 176,
+      "round": 29,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.035613000000012,
+      "nanosecondsPerCall": 5178.0650000000605
+    },
+    {
+      "sequence": 177,
+      "round": 29,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5700580000011541,
+      "nanosecondsPerCall": 2850.2900000057707
+    },
+    {
+      "sequence": 178,
+      "round": 29,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.3155659999974887,
+      "nanosecondsPerCall": 11577.829999987443
+    },
+    {
+      "sequence": 179,
+      "round": 29,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3561049999989336,
+      "nanosecondsPerCall": 6780.524999994668
+    },
+    {
+      "sequence": 180,
+      "round": 30,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5491179999989981,
+      "nanosecondsPerCall": 2745.5899999949906
+    },
+    {
+      "sequence": 181,
+      "round": 30,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9847980000013195,
+      "nanosecondsPerCall": 4923.990000006597
+    },
+    {
+      "sequence": 182,
+      "round": 30,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3634149999998044,
+      "nanosecondsPerCall": 6817.074999999022
+    },
+    {
+      "sequence": 183,
+      "round": 30,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9742539999970177,
+      "nanosecondsPerCall": 9871.269999985088
+    },
+    {
+      "sequence": 184,
+      "round": 30,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 324.8736339999996,
+      "nanosecondsPerCall": 1624368.1699999978
+    },
+    {
+      "sequence": 185,
+      "round": 30,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 249.02532799999972,
+      "nanosecondsPerCall": 1245126.6399999987
+    },
+    {
+      "sequence": 186,
+      "round": 31,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.2670340000004217,
+      "nanosecondsPerCall": 11335.17000000211
+    },
+    {
+      "sequence": 187,
+      "round": 31,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.4762310000005527,
+      "nanosecondsPerCall": 7381.155000002764
+    },
+    {
+      "sequence": 188,
+      "round": 31,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 235.59036800000104,
+      "nanosecondsPerCall": 1177951.8400000052
+    },
+    {
+      "sequence": 189,
+      "round": 31,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 229.63698799999838,
+      "nanosecondsPerCall": 1148184.939999992
+    },
+    {
+      "sequence": 190,
+      "round": 31,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0349920000007842,
+      "nanosecondsPerCall": 5174.960000003921
+    },
+    {
+      "sequence": 191,
+      "round": 31,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5419170000022859,
+      "nanosecondsPerCall": 2709.5850000114297
+    },
+    {
+      "sequence": 192,
+      "round": 32,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 235.55919899999935,
+      "nanosecondsPerCall": 1177795.9949999966
+    },
+    {
+      "sequence": 193,
+      "round": 32,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 307.4631580000023,
+      "nanosecondsPerCall": 1537315.7900000117
+    },
+    {
+      "sequence": 194,
+      "round": 32,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6898350000010396,
+      "nanosecondsPerCall": 3449.175000005198
+    },
+    {
+      "sequence": 195,
+      "round": 32,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.417765000001964,
+      "nanosecondsPerCall": 7088.82500000982
+    },
+    {
+      "sequence": 196,
+      "round": 32,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2957060000007914,
+      "nanosecondsPerCall": 6478.530000003957
+    },
+    {
+      "sequence": 197,
+      "round": 32,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.1281200000012177,
+      "nanosecondsPerCall": 10640.600000006089
+    },
+    {
+      "sequence": 198,
+      "round": 33,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9710579999991751,
+      "nanosecondsPerCall": 4855.289999995875
+    },
+    {
+      "sequence": 199,
+      "round": 33,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5336850000021514,
+      "nanosecondsPerCall": 2668.425000010757
+    },
+    {
+      "sequence": 200,
+      "round": 33,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0908550000021933,
+      "nanosecondsPerCall": 10454.275000010966
+    },
+    {
+      "sequence": 201,
+      "round": 33,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.9123929999987013,
+      "nanosecondsPerCall": 14561.964999993506
+    },
+    {
+      "sequence": 202,
+      "round": 33,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 236.63559100000202,
+      "nanosecondsPerCall": 1183177.95500001
+    },
+    {
+      "sequence": 203,
+      "round": 33,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 220.8174579999977,
+      "nanosecondsPerCall": 1104087.2899999886
+    },
+    {
+      "sequence": 204,
+      "round": 34,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2815340000015567,
+      "nanosecondsPerCall": 6407.6700000077835
+    },
+    {
+      "sequence": 205,
+      "round": 34,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0051889999995183,
+      "nanosecondsPerCall": 10025.944999997591
+    },
+    {
+      "sequence": 206,
+      "round": 34,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 224.0280500000008,
+      "nanosecondsPerCall": 1120140.250000004
+    },
+    {
+      "sequence": 207,
+      "round": 34,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 230.33542500000112,
+      "nanosecondsPerCall": 1151677.1250000056
+    },
+    {
+      "sequence": 208,
+      "round": 34,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5799729999998817,
+      "nanosecondsPerCall": 2899.8649999994086
+    },
+    {
+      "sequence": 209,
+      "round": 34,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.01509299999816,
+      "nanosecondsPerCall": 5075.4649999908
+    },
+    {
+      "sequence": 210,
+      "round": 35,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 287.055214,
+      "nanosecondsPerCall": 1435276.07
+    },
+    {
+      "sequence": 211,
+      "round": 35,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 262.853320000002,
+      "nanosecondsPerCall": 1314266.6000000099
+    },
+    {
+      "sequence": 212,
+      "round": 35,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0067409999974188,
+      "nanosecondsPerCall": 5033.704999987094
+    },
+    {
+      "sequence": 213,
+      "round": 35,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.8141470000009576,
+      "nanosecondsPerCall": 4070.735000004788
+    },
+    {
+      "sequence": 214,
+      "round": 35,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.00463800000216,
+      "nanosecondsPerCall": 10023.1900000108
+    },
+    {
+      "sequence": 215,
+      "round": 35,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3709060000001045,
+      "nanosecondsPerCall": 6854.530000000523
+    },
+    {
+      "sequence": 216,
+      "round": 36,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5990510000010545,
+      "nanosecondsPerCall": 2995.2550000052724
+    },
+    {
+      "sequence": 217,
+      "round": 36,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9726800000025833,
+      "nanosecondsPerCall": 4863.400000012916
+    },
+    {
+      "sequence": 218,
+      "round": 36,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2687970000006317,
+      "nanosecondsPerCall": 6343.985000003158
+    },
+    {
+      "sequence": 219,
+      "round": 36,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9683550000008836,
+      "nanosecondsPerCall": 9841.775000004418
+    },
+    {
+      "sequence": 220,
+      "round": 36,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 252.86724400000094,
+      "nanosecondsPerCall": 1264336.2200000046
+    },
+    {
+      "sequence": 221,
+      "round": 36,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 297.9180120000019,
+      "nanosecondsPerCall": 1489590.0600000096
+    },
+    {
+      "sequence": 222,
+      "round": 37,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.2454649999999674,
+      "nanosecondsPerCall": 16227.324999999837
+    },
+    {
+      "sequence": 223,
+      "round": 37,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 3.728195000003325,
+      "nanosecondsPerCall": 18640.975000016624
+    },
+    {
+      "sequence": 224,
+      "round": 37,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 270.06199600000036,
+      "nanosecondsPerCall": 1350309.9800000018
+    },
+    {
+      "sequence": 225,
+      "round": 37,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 266.48551999999836,
+      "nanosecondsPerCall": 1332427.5999999917
+    },
+    {
+      "sequence": 226,
+      "round": 37,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.631119999998191,
+      "nanosecondsPerCall": 8155.5999999909545
+    },
+    {
+      "sequence": 227,
+      "round": 37,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 1.0070620000005874,
+      "nanosecondsPerCall": 5035.310000002937
+    },
+    {
+      "sequence": 228,
+      "round": 38,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 251.83947400000034,
+      "nanosecondsPerCall": 1259197.3700000017
+    },
+    {
+      "sequence": 229,
+      "round": 38,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 230.33589799999754,
+      "nanosecondsPerCall": 1151679.4899999879
+    },
+    {
+      "sequence": 230,
+      "round": 38,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6222060000000056,
+      "nanosecondsPerCall": 3111.030000000028
+    },
+    {
+      "sequence": 231,
+      "round": 38,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9786600000006729,
+      "nanosecondsPerCall": 4893.300000003364
+    },
+    {
+      "sequence": 232,
+      "round": 38,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.289136999999755,
+      "nanosecondsPerCall": 6445.684999998775
+    },
+    {
+      "sequence": 233,
+      "round": 38,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0228160000042408,
+      "nanosecondsPerCall": 10114.080000021204
+    },
+    {
+      "sequence": 234,
+      "round": 39,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9787600000054226,
+      "nanosecondsPerCall": 4893.800000027113
+    },
+    {
+      "sequence": 235,
+      "round": 39,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5948250000001281,
+      "nanosecondsPerCall": 2974.1250000006403
+    },
+    {
+      "sequence": 236,
+      "round": 39,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.1018630000035046,
+      "nanosecondsPerCall": 10509.315000017523
+    },
+    {
+      "sequence": 237,
+      "round": 39,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3255500000013853,
+      "nanosecondsPerCall": 6627.750000006927
+    },
+    {
+      "sequence": 238,
+      "round": 39,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 339.3999729999996,
+      "nanosecondsPerCall": 1696999.864999998
+    },
+    {
+      "sequence": 239,
+      "round": 39,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 302.2945749999999,
+      "nanosecondsPerCall": 1511472.8749999993
+    },
+    {
+      "sequence": 240,
+      "round": 40,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3403810000017984,
+      "nanosecondsPerCall": 6701.905000008992
+    },
+    {
+      "sequence": 241,
+      "round": 40,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.682692999995197,
+      "nanosecondsPerCall": 18413.464999975986
+    },
+    {
+      "sequence": 242,
+      "round": 40,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 226.11344700000336,
+      "nanosecondsPerCall": 1130567.2350000169
+    },
+    {
+      "sequence": 243,
+      "round": 40,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 239.21361899999465,
+      "nanosecondsPerCall": 1196068.0949999734
+    },
+    {
+      "sequence": 244,
+      "round": 40,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6098669999992126,
+      "nanosecondsPerCall": 3049.334999996063
+    },
+    {
+      "sequence": 245,
+      "round": 40,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.5315110000010463,
+      "nanosecondsPerCall": 7657.555000005232
+    },
+    {
+      "sequence": 246,
+      "round": 41,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 234.8863380000039,
+      "nanosecondsPerCall": 1174431.6900000193
+    },
+    {
+      "sequence": 247,
+      "round": 41,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 258.35413400000107,
+      "nanosecondsPerCall": 1291770.6700000053
+    },
+    {
+      "sequence": 248,
+      "round": 41,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0289019999981974,
+      "nanosecondsPerCall": 5144.509999990987
+    },
+    {
+      "sequence": 249,
+      "round": 41,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5612650000039139,
+      "nanosecondsPerCall": 2806.3250000195694
+    },
+    {
+      "sequence": 250,
+      "round": 41,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.1838799999968614,
+      "nanosecondsPerCall": 10919.399999984307
+    },
+    {
+      "sequence": 251,
+      "round": 41,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.623565999994753,
+      "nanosecondsPerCall": 8117.829999973765
+    },
+    {
+      "sequence": 252,
+      "round": 42,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5408249999964028,
+      "nanosecondsPerCall": 2704.124999982014
+    },
+    {
+      "sequence": 253,
+      "round": 42,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0708939999967697,
+      "nanosecondsPerCall": 5354.4699999838485
+    },
+    {
+      "sequence": 254,
+      "round": 42,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.204291000001831,
+      "nanosecondsPerCall": 6021.455000009155
+    },
+    {
+      "sequence": 255,
+      "round": 42,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.920363000004727,
+      "nanosecondsPerCall": 9601.815000023635
+    },
+    {
+      "sequence": 256,
+      "round": 42,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 224.16336600000068,
+      "nanosecondsPerCall": 1120816.8300000033
+    },
+    {
+      "sequence": 257,
+      "round": 42,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 262.41108800000075,
+      "nanosecondsPerCall": 1312055.4400000037
+    },
+    {
+      "sequence": 258,
+      "round": 43,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 4.3161850000033155,
+      "nanosecondsPerCall": 21580.925000016578
+    },
+    {
+      "sequence": 259,
+      "round": 43,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2171089999974356,
+      "nanosecondsPerCall": 6085.544999987178
+    },
+    {
+      "sequence": 260,
+      "round": 43,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 270.2304720000029,
+      "nanosecondsPerCall": 1351152.3600000145
+    },
+    {
+      "sequence": 261,
+      "round": 43,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 286.0850059999939,
+      "nanosecondsPerCall": 1430425.0299999693
+    },
+    {
+      "sequence": 262,
+      "round": 43,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0162539999946603,
+      "nanosecondsPerCall": 5081.269999973301
+    },
+    {
+      "sequence": 263,
+      "round": 43,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5175510000044596,
+      "nanosecondsPerCall": 2587.755000022298
+    },
+    {
+      "sequence": 264,
+      "round": 44,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 278.8852390000029,
+      "nanosecondsPerCall": 1394426.1950000145
+    },
+    {
+      "sequence": 265,
+      "round": 44,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 241.25962599999912,
+      "nanosecondsPerCall": 1206298.1299999955
+    },
+    {
+      "sequence": 266,
+      "round": 44,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5568189999976312,
+      "nanosecondsPerCall": 2784.094999988156
+    },
+    {
+      "sequence": 267,
+      "round": 44,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9763549999988754,
+      "nanosecondsPerCall": 4881.774999994377
+    },
+    {
+      "sequence": 268,
+      "round": 44,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.6009940000003553,
+      "nanosecondsPerCall": 8004.9700000017765
+    },
+    {
+      "sequence": 269,
+      "round": 44,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.978267999998934,
+      "nanosecondsPerCall": 9891.33999999467
+    },
+    {
+      "sequence": 270,
+      "round": 45,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9848879999990459,
+      "nanosecondsPerCall": 4924.439999995229
+    },
+    {
+      "sequence": 271,
+      "round": 45,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5215259999968112,
+      "nanosecondsPerCall": 2607.6299999840558
+    },
+    {
+      "sequence": 272,
+      "round": 45,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9482940000016242,
+      "nanosecondsPerCall": 9741.470000008121
+    },
+    {
+      "sequence": 273,
+      "round": 45,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2902160000012373,
+      "nanosecondsPerCall": 6451.080000006186
+    },
+    {
+      "sequence": 274,
+      "round": 45,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 290.085407999999,
+      "nanosecondsPerCall": 1450427.039999995
+    },
+    {
+      "sequence": 275,
+      "round": 45,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 306.1283040000053,
+      "nanosecondsPerCall": 1530641.5200000266
+    },
+    {
+      "sequence": 276,
+      "round": 46,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.643668999997317,
+      "nanosecondsPerCall": 13218.344999986584
+    },
+    {
+      "sequence": 277,
+      "round": 46,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.2432709999993676,
+      "nanosecondsPerCall": 16216.354999996838
+    },
+    {
+      "sequence": 278,
+      "round": 46,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 265.146514,
+      "nanosecondsPerCall": 1325732.57
+    },
+    {
+      "sequence": 279,
+      "round": 46,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 275.50275800000236,
+      "nanosecondsPerCall": 1377513.790000012
+    },
+    {
+      "sequence": 280,
+      "round": 46,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5980500000005122,
+      "nanosecondsPerCall": 2990.250000002561
+    },
+    {
+      "sequence": 281,
+      "round": 46,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.1242229999988922,
+      "nanosecondsPerCall": 5621.114999994461
+    },
+    {
+      "sequence": 282,
+      "round": 47,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 248.8170820000014,
+      "nanosecondsPerCall": 1244085.410000007
+    },
+    {
+      "sequence": 283,
+      "round": 47,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 226.13311900000554,
+      "nanosecondsPerCall": 1130665.5950000277
+    },
+    {
+      "sequence": 284,
+      "round": 47,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0528989999947953,
+      "nanosecondsPerCall": 5264.4949999739765
+    },
+    {
+      "sequence": 285,
+      "round": 47,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5579209999996237,
+      "nanosecondsPerCall": 2789.6049999981187
+    },
+    {
+      "sequence": 286,
+      "round": 47,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9412060000031488,
+      "nanosecondsPerCall": 9706.030000015744
+    },
+    {
+      "sequence": 287,
+      "round": 47,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.384846999993897,
+      "nanosecondsPerCall": 6924.234999969485
+    },
+    {
+      "sequence": 288,
+      "round": 48,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5336150000002817,
+      "nanosecondsPerCall": 2668.0750000014086
+    },
+    {
+      "sequence": 289,
+      "round": 48,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9561969999995199,
+      "nanosecondsPerCall": 4780.9849999975995
+    },
+    {
+      "sequence": 290,
+      "round": 48,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.251630999999179,
+      "nanosecondsPerCall": 6258.154999995895
+    },
+    {
+      "sequence": 291,
+      "round": 48,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.064896999996563,
+      "nanosecondsPerCall": 10324.484999982815
+    },
+    {
+      "sequence": 292,
+      "round": 48,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 224.37789700000576,
+      "nanosecondsPerCall": 1121889.4850000287
+    },
+    {
+      "sequence": 293,
+      "round": 48,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 233.13338599999406,
+      "nanosecondsPerCall": 1165666.9299999704
+    },
+    {
+      "sequence": 294,
+      "round": 49,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9944029999969644,
+      "nanosecondsPerCall": 9972.014999984822
+    },
+    {
+      "sequence": 295,
+      "round": 49,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.27143100000103,
+      "nanosecondsPerCall": 6357.15500000515
+    },
+    {
+      "sequence": 296,
+      "round": 49,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 230.9292640000058,
+      "nanosecondsPerCall": 1154646.320000029
+    },
+    {
+      "sequence": 297,
+      "round": 49,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 253.67742700000235,
+      "nanosecondsPerCall": 1268387.135000012
+    },
+    {
+      "sequence": 298,
+      "round": 49,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 3.1487819999965723,
+      "nanosecondsPerCall": 15743.909999982861
+    },
+    {
+      "sequence": 299,
+      "round": 49,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6507569999957923,
+      "nanosecondsPerCall": 3253.7849999789614
+    },
+    {
+      "sequence": 300,
+      "round": 50,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 223.55897800000093,
+      "nanosecondsPerCall": 1117794.8900000046
+    },
+    {
+      "sequence": 301,
+      "round": 50,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 308.79565800000273,
+      "nanosecondsPerCall": 1543978.2900000138
+    },
+    {
+      "sequence": 302,
+      "round": 50,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5796529999934137,
+      "nanosecondsPerCall": 2898.2649999670684
+    },
+    {
+      "sequence": 303,
+      "round": 50,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9857199999969453,
+      "nanosecondsPerCall": 4928.599999984726
+    },
+    {
+      "sequence": 304,
+      "round": 50,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2507100000002538,
+      "nanosecondsPerCall": 6253.550000001269
+    },
+    {
+      "sequence": 305,
+      "round": 50,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9251319999966654,
+      "nanosecondsPerCall": 9625.659999983327
+    },
+    {
+      "sequence": 306,
+      "round": 51,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9768670000048587,
+      "nanosecondsPerCall": 4884.335000024294
+    },
+    {
+      "sequence": 307,
+      "round": 51,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.559573000005912,
+      "nanosecondsPerCall": 2797.86500002956
+    },
+    {
+      "sequence": 308,
+      "round": 51,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9368299999987357,
+      "nanosecondsPerCall": 9684.149999993679
+    },
+    {
+      "sequence": 309,
+      "round": 51,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.5543170000019018,
+      "nanosecondsPerCall": 7771.585000009509
+    },
+    {
+      "sequence": 310,
+      "round": 51,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 233.63124900000548,
+      "nanosecondsPerCall": 1168156.2450000274
+    },
+    {
+      "sequence": 311,
+      "round": 51,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 258.5312480000066,
+      "nanosecondsPerCall": 1292656.2400000328
+    },
+    {
+      "sequence": 312,
+      "round": 52,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.352169000005233,
+      "nanosecondsPerCall": 6760.8450000261655
+    },
+    {
+      "sequence": 313,
+      "round": 52,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.1049960000018473,
+      "nanosecondsPerCall": 10524.980000009236
+    },
+    {
+      "sequence": 314,
+      "round": 52,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 249.64501000000018,
+      "nanosecondsPerCall": 1248225.050000001
+    },
+    {
+      "sequence": 315,
+      "round": 52,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 226.98957900000096,
+      "nanosecondsPerCall": 1134947.8950000047
+    },
+    {
+      "sequence": 316,
+      "round": 52,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 1.9452909999963595,
+      "nanosecondsPerCall": 9726.454999981797
+    },
+    {
+      "sequence": 317,
+      "round": 52,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9737220000024536,
+      "nanosecondsPerCall": 4868.610000012268
+    },
+    {
+      "sequence": 318,
+      "round": 53,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 239.6832310000027,
+      "nanosecondsPerCall": 1198416.1550000135
+    },
+    {
+      "sequence": 319,
+      "round": 53,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 286.237503999997,
+      "nanosecondsPerCall": 1431187.519999985
+    },
+    {
+      "sequence": 320,
+      "round": 53,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.9899569999979576,
+      "nanosecondsPerCall": 9949.784999989788
+    },
+    {
+      "sequence": 321,
+      "round": 53,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 1.1790040000050794,
+      "nanosecondsPerCall": 5895.020000025397
+    },
+    {
+      "sequence": 322,
+      "round": 53,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.8746899999969173,
+      "nanosecondsPerCall": 19373.449999984587
+    },
+    {
+      "sequence": 323,
+      "round": 53,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.5810869999986608,
+      "nanosecondsPerCall": 12905.434999993304
+    },
+    {
+      "sequence": 324,
+      "round": 54,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 1.143582000004244,
+      "nanosecondsPerCall": 5717.91000002122
+    },
+    {
+      "sequence": 325,
+      "round": 54,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.9634280000027502,
+      "nanosecondsPerCall": 9817.140000013751
+    },
+    {
+      "sequence": 326,
+      "round": 54,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.5984219999954803,
+      "nanosecondsPerCall": 12992.109999977401
+    },
+    {
+      "sequence": 327,
+      "round": 54,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.848942000004172,
+      "nanosecondsPerCall": 19244.71000002086
+    },
+    {
+      "sequence": 328,
+      "round": 54,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 362.2205729999987,
+      "nanosecondsPerCall": 1811102.8649999935
+    },
+    {
+      "sequence": 329,
+      "round": 54,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 283.7132760000022,
+      "nanosecondsPerCall": 1418566.380000011
+    },
+    {
+      "sequence": 330,
+      "round": 55,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.1208610000030603,
+      "nanosecondsPerCall": 15604.305000015302
+    },
+    {
+      "sequence": 331,
+      "round": 55,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 3.0302169999995385,
+      "nanosecondsPerCall": 15151.084999997693
+    },
+    {
+      "sequence": 332,
+      "round": 55,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 349.1918900000019,
+      "nanosecondsPerCall": 1745959.4500000093
+    },
+    {
+      "sequence": 333,
+      "round": 55,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 312.18825300000026,
+      "nanosecondsPerCall": 1560941.2650000013
+    },
+    {
+      "sequence": 334,
+      "round": 55,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.7638829999996233,
+      "nanosecondsPerCall": 8819.414999998116
+    },
+    {
+      "sequence": 335,
+      "round": 55,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.9854990000021644,
+      "nanosecondsPerCall": 4927.495000010822
+    },
+    {
+      "sequence": 336,
+      "round": 56,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 294.22844199999963,
+      "nanosecondsPerCall": 1471142.209999998
+    },
+    {
+      "sequence": 337,
+      "round": 56,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 274.7118000000046,
+      "nanosecondsPerCall": 1373559.000000023
+    },
+    {
+      "sequence": 338,
+      "round": 56,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 1.0121080000026268,
+      "nanosecondsPerCall": 5060.540000013134
+    },
+    {
+      "sequence": 339,
+      "round": 56,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.6712770000012824,
+      "nanosecondsPerCall": 8356.385000006412
+    },
+    {
+      "sequence": 340,
+      "round": 56,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 4.206634000001941,
+      "nanosecondsPerCall": 21033.170000009704
+    },
+    {
+      "sequence": 341,
+      "round": 56,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.3890420000025188,
+      "nanosecondsPerCall": 16945.210000012594
+    },
+    {
+      "sequence": 342,
+      "round": 57,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.6657689999992726,
+      "nanosecondsPerCall": 8328.844999996363
+    },
+    {
+      "sequence": 343,
+      "round": 57,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.9724500000011176,
+      "nanosecondsPerCall": 4862.250000005588
+    },
+    {
+      "sequence": 344,
+      "round": 57,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.2974170000015874,
+      "nanosecondsPerCall": 16487.085000007937
+    },
+    {
+      "sequence": 345,
+      "round": 57,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.191742000002705,
+      "nanosecondsPerCall": 10958.710000013525
+    },
+    {
+      "sequence": 346,
+      "round": 57,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 261.24857399999746,
+      "nanosecondsPerCall": 1306242.8699999873
+    },
+    {
+      "sequence": 347,
+      "round": 57,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 229.69444899999507,
+      "nanosecondsPerCall": 1148472.2449999754
+    },
+    {
+      "sequence": 348,
+      "round": 58,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2884350000022096,
+      "nanosecondsPerCall": 6442.175000011048
+    },
+    {
+      "sequence": 349,
+      "round": 58,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9688759999989998,
+      "nanosecondsPerCall": 9844.379999994999
+    },
+    {
+      "sequence": 350,
+      "round": 58,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 225.86612900000182,
+      "nanosecondsPerCall": 1129330.645000009
+    },
+    {
+      "sequence": 351,
+      "round": 58,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 225.65082200000325,
+      "nanosecondsPerCall": 1128254.1100000162
+    },
+    {
+      "sequence": 352,
+      "round": 58,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.585932000001776,
+      "nanosecondsPerCall": 2929.66000000888
+    },
+    {
+      "sequence": 353,
+      "round": 58,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9928199999994831,
+      "nanosecondsPerCall": 4964.099999997416
+    },
+    {
+      "sequence": 354,
+      "round": 59,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 228.14394799999718,
+      "nanosecondsPerCall": 1140719.7399999858
+    },
+    {
+      "sequence": 355,
+      "round": 59,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 218.88000199999806,
+      "nanosecondsPerCall": 1094400.0099999902
+    },
+    {
+      "sequence": 356,
+      "round": 59,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.035502999999153,
+      "nanosecondsPerCall": 5177.514999995765
+    },
+    {
+      "sequence": 357,
+      "round": 59,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5504199999995762,
+      "nanosecondsPerCall": 2752.0999999978812
+    },
+    {
+      "sequence": 358,
+      "round": 59,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.781542000004265,
+      "nanosecondsPerCall": 18907.710000021325
+    },
+    {
+      "sequence": 359,
+      "round": 59,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.261015000003681,
+      "nanosecondsPerCall": 6305.075000018405
+    },
+    {
+      "sequence": 360,
+      "round": 60,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5617459999994026,
+      "nanosecondsPerCall": 2808.729999997013
+    },
+    {
+      "sequence": 361,
+      "round": 60,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.963196999997308,
+      "nanosecondsPerCall": 4815.98499998654
+    },
+    {
+      "sequence": 362,
+      "round": 60,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.318078999996942,
+      "nanosecondsPerCall": 6590.39499998471
+    },
+    {
+      "sequence": 363,
+      "round": 60,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9549950000000536,
+      "nanosecondsPerCall": 9774.975000000268
+    },
+    {
+      "sequence": 364,
+      "round": 60,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 250.77964899999643,
+      "nanosecondsPerCall": 1253898.2449999822
+    },
+    {
+      "sequence": 365,
+      "round": 60,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 285.3587750000006,
+      "nanosecondsPerCall": 1426793.875000003
+    },
+    {
+      "sequence": 366,
+      "round": 61,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0233270000026096,
+      "nanosecondsPerCall": 10116.635000013048
+    },
+    {
+      "sequence": 367,
+      "round": 61,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.5690879999965546,
+      "nanosecondsPerCall": 7845.439999982773
+    },
+    {
+      "sequence": 368,
+      "round": 61,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 234.13927200000035,
+      "nanosecondsPerCall": 1170696.3600000017
+    },
+    {
+      "sequence": 369,
+      "round": 61,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 232.37561000000278,
+      "nanosecondsPerCall": 1161878.0500000138
+    },
+    {
+      "sequence": 370,
+      "round": 61,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.6996599999984028,
+      "nanosecondsPerCall": 8498.299999992014
+    },
+    {
+      "sequence": 371,
+      "round": 61,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 1.028041999998095,
+      "nanosecondsPerCall": 5140.209999990475
+    },
+    {
+      "sequence": 372,
+      "round": 62,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 260.1153419999973,
+      "nanosecondsPerCall": 1300576.7099999867
+    },
+    {
+      "sequence": 373,
+      "round": 62,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 303.0180090000067,
+      "nanosecondsPerCall": 1515090.0450000337
+    },
+    {
+      "sequence": 374,
+      "round": 62,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5471550000002026,
+      "nanosecondsPerCall": 2735.775000001013
+    },
+    {
+      "sequence": 375,
+      "round": 62,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 3.2895489999937126,
+      "nanosecondsPerCall": 16447.744999968563
+    },
+    {
+      "sequence": 376,
+      "round": 62,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2090580000003683,
+      "nanosecondsPerCall": 6045.290000001842
+    },
+    {
+      "sequence": 377,
+      "round": 62,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0601109999988694,
+      "nanosecondsPerCall": 10300.554999994347
+    },
+    {
+      "sequence": 378,
+      "round": 63,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9696960000001127,
+      "nanosecondsPerCall": 4848.480000000563
+    },
+    {
+      "sequence": 379,
+      "round": 63,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5405549999995856,
+      "nanosecondsPerCall": 2702.774999997928
+    },
+    {
+      "sequence": 380,
+      "round": 63,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9559569999983069,
+      "nanosecondsPerCall": 9779.784999991534
+    },
+    {
+      "sequence": 381,
+      "round": 63,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.1768410000004224,
+      "nanosecondsPerCall": 5884.205000002112
+    },
+    {
+      "sequence": 382,
+      "round": 63,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 299.62369200000103,
+      "nanosecondsPerCall": 1498118.460000005
+    },
+    {
+      "sequence": 383,
+      "round": 63,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 263.2838180000035,
+      "nanosecondsPerCall": 1316419.0900000175
+    },
+    {
+      "sequence": 384,
+      "round": 64,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.8450339999981225,
+      "nanosecondsPerCall": 9225.169999990612
+    },
+    {
+      "sequence": 385,
+      "round": 64,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.2505400000009104,
+      "nanosecondsPerCall": 11252.700000004552
+    },
+    {
+      "sequence": 386,
+      "round": 64,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 258.7402499999953,
+      "nanosecondsPerCall": 1293701.2499999765
+    },
+    {
+      "sequence": 387,
+      "round": 64,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 275.31818499999645,
+      "nanosecondsPerCall": 1376590.9249999821
+    },
+    {
+      "sequence": 388,
+      "round": 64,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.7100239999999758,
+      "nanosecondsPerCall": 3550.119999999879
+    },
+    {
+      "sequence": 389,
+      "round": 64,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.3178380000026664,
+      "nanosecondsPerCall": 6589.190000013332
+    },
+    {
+      "sequence": 390,
+      "round": 65,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 266.63224400000036,
+      "nanosecondsPerCall": 1333161.2200000018
+    },
+    {
+      "sequence": 391,
+      "round": 65,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 252.57733400000143,
+      "nanosecondsPerCall": 1262886.6700000071
+    },
+    {
+      "sequence": 392,
+      "round": 65,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.6519100000004983,
+      "nanosecondsPerCall": 8259.550000002491
+    },
+    {
+      "sequence": 393,
+      "round": 65,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5988209999995888,
+      "nanosecondsPerCall": 2994.104999997944
+    },
+    {
+      "sequence": 394,
+      "round": 65,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0150740000026417,
+      "nanosecondsPerCall": 10075.370000013208
+    },
+    {
+      "sequence": 395,
+      "round": 65,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3800200000041514,
+      "nanosecondsPerCall": 6900.100000020757
+    },
+    {
+      "sequence": 396,
+      "round": 66,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5776299999997718,
+      "nanosecondsPerCall": 2888.149999998859
+    },
+    {
+      "sequence": 397,
+      "round": 66,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9884240000028512,
+      "nanosecondsPerCall": 4942.120000014256
+    },
+    {
+      "sequence": 398,
+      "round": 66,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2592829999994137,
+      "nanosecondsPerCall": 6296.414999997069
+    },
+    {
+      "sequence": 399,
+      "round": 66,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.5704419999965467,
+      "nanosecondsPerCall": 17852.209999982733
+    },
+    {
+      "sequence": 400,
+      "round": 66,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 301.9694380000001,
+      "nanosecondsPerCall": 1509847.1900000004
+    },
+    {
+      "sequence": 401,
+      "round": 66,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 248.25327400000242,
+      "nanosecondsPerCall": 1241266.370000012
+    },
+    {
+      "sequence": 402,
+      "round": 67,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.311501000003773,
+      "nanosecondsPerCall": 16557.505000018864
+    },
+    {
+      "sequence": 403,
+      "round": 67,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.2044930000047316,
+      "nanosecondsPerCall": 11022.465000023658
+    },
+    {
+      "sequence": 404,
+      "round": 67,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 241.48285000000033,
+      "nanosecondsPerCall": 1207414.2500000016
+    },
+    {
+      "sequence": 405,
+      "round": 67,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 288.33550800000376,
+      "nanosecondsPerCall": 1441677.5400000187
+    },
+    {
+      "sequence": 406,
+      "round": 67,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0600090000007185,
+      "nanosecondsPerCall": 5300.045000003593
+    },
+    {
+      "sequence": 407,
+      "round": 67,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6317199999975855,
+      "nanosecondsPerCall": 3158.5999999879277
+    },
+    {
+      "sequence": 408,
+      "round": 68,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 321.66396299999906,
+      "nanosecondsPerCall": 1608319.8149999953
+    },
+    {
+      "sequence": 409,
+      "round": 68,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 245.29046100000414,
+      "nanosecondsPerCall": 1226452.3050000207
+    },
+    {
+      "sequence": 410,
+      "round": 68,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5636989999984507,
+      "nanosecondsPerCall": 2818.4949999922537
+    },
+    {
+      "sequence": 411,
+      "round": 68,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0035270000007586,
+      "nanosecondsPerCall": 5017.635000003793
+    },
+    {
+      "sequence": 412,
+      "round": 68,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.288355999997293,
+      "nanosecondsPerCall": 6441.779999986466
+    },
+    {
+      "sequence": 413,
+      "round": 68,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.6545550000009825,
+      "nanosecondsPerCall": 13272.775000004913
+    },
+    {
+      "sequence": 414,
+      "round": 69,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0401600000041071,
+      "nanosecondsPerCall": 5200.800000020536
+    },
+    {
+      "sequence": 415,
+      "round": 69,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5761879999990924,
+      "nanosecondsPerCall": 2880.939999995462
+    },
+    {
+      "sequence": 416,
+      "round": 69,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.6658319999987725,
+      "nanosecondsPerCall": 18329.159999993863
+    },
+    {
+      "sequence": 417,
+      "round": 69,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2503990000041085,
+      "nanosecondsPerCall": 6251.995000020543
+    },
+    {
+      "sequence": 418,
+      "round": 69,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 261.6254389999958,
+      "nanosecondsPerCall": 1308127.194999979
+    },
+    {
+      "sequence": 419,
+      "round": 69,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 280.9005279999983,
+      "nanosecondsPerCall": 1404502.6399999917
+    },
+    {
+      "sequence": 420,
+      "round": 70,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3597889999946347,
+      "nanosecondsPerCall": 6798.944999973173
+    },
+    {
+      "sequence": 421,
+      "round": 70,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.2952430000004824,
+      "nanosecondsPerCall": 11476.215000002412
+    },
+    {
+      "sequence": 422,
+      "round": 70,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 241.4746690000029,
+      "nanosecondsPerCall": 1207373.3450000144
+    },
+    {
+      "sequence": 423,
+      "round": 70,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 241.16093399999954,
+      "nanosecondsPerCall": 1205804.6699999978
+    },
+    {
+      "sequence": 424,
+      "round": 70,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5728719999970053,
+      "nanosecondsPerCall": 2864.3599999850267
+    },
+    {
+      "sequence": 425,
+      "round": 70,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9684740000011516,
+      "nanosecondsPerCall": 4842.370000005758
+    },
+    {
+      "sequence": 426,
+      "round": 71,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 233.64584200000536,
+      "nanosecondsPerCall": 1168229.2100000267
+    },
+    {
+      "sequence": 427,
+      "round": 71,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 228.5695459999988,
+      "nanosecondsPerCall": 1142847.729999994
+    },
+    {
+      "sequence": 428,
+      "round": 71,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0151629999963916,
+      "nanosecondsPerCall": 5075.814999981958
+    },
+    {
+      "sequence": 429,
+      "round": 71,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5437999999994645,
+      "nanosecondsPerCall": 2718.9999999973224
+    },
+    {
+      "sequence": 430,
+      "round": 71,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9745120000006864,
+      "nanosecondsPerCall": 9872.560000003432
+    },
+    {
+      "sequence": 431,
+      "round": 71,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3920260000013513,
+      "nanosecondsPerCall": 6960.130000006757
+    },
+    {
+      "sequence": 432,
+      "round": 72,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6149739999964368,
+      "nanosecondsPerCall": 3074.869999982184
+    },
+    {
+      "sequence": 433,
+      "round": 72,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9784279999948922,
+      "nanosecondsPerCall": 4892.139999974461
+    },
+    {
+      "sequence": 434,
+      "round": 72,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 4.488507000001846,
+      "nanosecondsPerCall": 22442.53500000923
+    },
+    {
+      "sequence": 435,
+      "round": 72,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 4.528185999995912,
+      "nanosecondsPerCall": 22640.929999979562
+    },
+    {
+      "sequence": 436,
+      "round": 72,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 252.7921639999986,
+      "nanosecondsPerCall": 1263960.819999993
+    },
+    {
+      "sequence": 437,
+      "round": 72,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 252.3916950000057,
+      "nanosecondsPerCall": 1261958.4750000285
+    },
+    {
+      "sequence": 438,
+      "round": 73,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0871879999976954,
+      "nanosecondsPerCall": 10435.939999988477
+    },
+    {
+      "sequence": 439,
+      "round": 73,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.553422999997565,
+      "nanosecondsPerCall": 7767.114999987825
+    },
+    {
+      "sequence": 440,
+      "round": 73,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 233.96305899999425,
+      "nanosecondsPerCall": 1169815.2949999713
+    },
+    {
+      "sequence": 441,
+      "round": 73,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 287.9028499999986,
+      "nanosecondsPerCall": 1439514.2499999928
+    },
+    {
+      "sequence": 442,
+      "round": 73,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0290329999988899,
+      "nanosecondsPerCall": 5145.164999994449
+    },
+    {
+      "sequence": 443,
+      "round": 73,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5882350000028964,
+      "nanosecondsPerCall": 2941.175000014482
+    },
+    {
+      "sequence": 444,
+      "round": 74,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 264.77954200000386,
+      "nanosecondsPerCall": 1323897.7100000193
+    },
+    {
+      "sequence": 445,
+      "round": 74,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 330.01278199999797,
+      "nanosecondsPerCall": 1650063.90999999
+    },
+    {
+      "sequence": 446,
+      "round": 74,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5759460000044783,
+      "nanosecondsPerCall": 2879.7300000223913
+    },
+    {
+      "sequence": 447,
+      "round": 74,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9850679999944987,
+      "nanosecondsPerCall": 4925.339999972493
+    },
+    {
+      "sequence": 448,
+      "round": 74,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.239821999995911,
+      "nanosecondsPerCall": 6199.109999979555
+    },
+    {
+      "sequence": 449,
+      "round": 74,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9475230000025476,
+      "nanosecondsPerCall": 9737.615000012738
+    },
+    {
+      "sequence": 450,
+      "round": 75,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9838459999955376,
+      "nanosecondsPerCall": 4919.229999977688
+    },
+    {
+      "sequence": 451,
+      "round": 75,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5482960000008461,
+      "nanosecondsPerCall": 2741.4800000042305
+    },
+    {
+      "sequence": 452,
+      "round": 75,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9524600000004284,
+      "nanosecondsPerCall": 9762.300000002142
+    },
+    {
+      "sequence": 453,
+      "round": 75,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.248424999997951,
+      "nanosecondsPerCall": 6242.124999989755
+    },
+    {
+      "sequence": 454,
+      "round": 75,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 274.0047410000043,
+      "nanosecondsPerCall": 1370023.7050000215
+    },
+    {
+      "sequence": 455,
+      "round": 75,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 254.9524289999972,
+      "nanosecondsPerCall": 1274762.144999986
+    },
+    {
+      "sequence": 456,
+      "round": 76,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2785490000023856,
+      "nanosecondsPerCall": 6392.745000011928
+    },
+    {
+      "sequence": 457,
+      "round": 76,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.093306999995548,
+      "nanosecondsPerCall": 10466.534999977739
+    },
+    {
+      "sequence": 458,
+      "round": 76,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 246.062963999997,
+      "nanosecondsPerCall": 1230314.8199999852
+    },
+    {
+      "sequence": 459,
+      "round": 76,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 257.0938010000027,
+      "nanosecondsPerCall": 1285469.0050000136
+    },
+    {
+      "sequence": 460,
+      "round": 76,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6054500000027474,
+      "nanosecondsPerCall": 3027.250000013737
+    },
+    {
+      "sequence": 461,
+      "round": 76,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9815030000027036,
+      "nanosecondsPerCall": 4907.515000013518
+    },
+    {
+      "sequence": 462,
+      "round": 77,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 281.7068999999974,
+      "nanosecondsPerCall": 1408534.499999987
+    },
+    {
+      "sequence": 463,
+      "round": 77,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 269.59702200000174,
+      "nanosecondsPerCall": 1347985.1100000087
+    },
+    {
+      "sequence": 464,
+      "round": 77,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0159639999983483,
+      "nanosecondsPerCall": 5079.8199999917415
+    },
+    {
+      "sequence": 465,
+      "round": 77,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5642700000025798,
+      "nanosecondsPerCall": 2821.350000012899
+    },
+    {
+      "sequence": 466,
+      "round": 77,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.972660999999789,
+      "nanosecondsPerCall": 9863.304999998945
+    },
+    {
+      "sequence": 467,
+      "round": 77,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2516510000059498,
+      "nanosecondsPerCall": 6258.255000029749
+    },
+    {
+      "sequence": 468,
+      "round": 78,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5497890000042389,
+      "nanosecondsPerCall": 2748.9450000211946
+    },
+    {
+      "sequence": 469,
+      "round": 78,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9528520000021672,
+      "nanosecondsPerCall": 4764.260000010836
+    },
+    {
+      "sequence": 470,
+      "round": 78,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2491979999977048,
+      "nanosecondsPerCall": 6245.989999988524
+    },
+    {
+      "sequence": 471,
+      "round": 78,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9190230000021984,
+      "nanosecondsPerCall": 9595.115000010992
+    },
+    {
+      "sequence": 472,
+      "round": 78,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 221.10189899999386,
+      "nanosecondsPerCall": 1105509.4949999694
+    },
+    {
+      "sequence": 473,
+      "round": 78,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 245.31866500000615,
+      "nanosecondsPerCall": 1226593.3250000307
+    },
+    {
+      "sequence": 474,
+      "round": 79,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9806430000026012,
+      "nanosecondsPerCall": 9903.215000013006
+    },
+    {
+      "sequence": 475,
+      "round": 79,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.6218359999984386,
+      "nanosecondsPerCall": 8109.179999992193
+    },
+    {
+      "sequence": 476,
+      "round": 79,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 231.56609999999637,
+      "nanosecondsPerCall": 1157830.4999999818
+    },
+    {
+      "sequence": 477,
+      "round": 79,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 259.00224299999536,
+      "nanosecondsPerCall": 1295011.2149999768
+    },
+    {
+      "sequence": 478,
+      "round": 79,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.3881620000029216,
+      "nanosecondsPerCall": 6940.810000014608
+    },
+    {
+      "sequence": 479,
+      "round": 79,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5533439999999246,
+      "nanosecondsPerCall": 2766.719999999623
+    },
+    {
+      "sequence": 480,
+      "round": 80,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 293.07321399999637,
+      "nanosecondsPerCall": 1465366.069999982
+    },
+    {
+      "sequence": 481,
+      "round": 80,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 286.36694900000293,
+      "nanosecondsPerCall": 1431834.7450000145
+    },
+    {
+      "sequence": 482,
+      "round": 80,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 1.3921180000033928,
+      "nanosecondsPerCall": 6960.590000016964
+    },
+    {
+      "sequence": 483,
+      "round": 80,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.6902569999947445,
+      "nanosecondsPerCall": 8451.284999973723
+    },
+    {
+      "sequence": 484,
+      "round": 80,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.7909440000003087,
+      "nanosecondsPerCall": 8954.720000001544
+    },
+    {
+      "sequence": 485,
+      "round": 80,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9539850000001024,
+      "nanosecondsPerCall": 9769.925000000512
+    },
+    {
+      "sequence": 486,
+      "round": 81,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0231050000002142,
+      "nanosecondsPerCall": 5115.525000001071
+    },
+    {
+      "sequence": 487,
+      "round": 81,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5443599999998696,
+      "nanosecondsPerCall": 2721.799999999348
+    },
+    {
+      "sequence": 488,
+      "round": 81,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9364589999968302,
+      "nanosecondsPerCall": 9682.294999984151
+    },
+    {
+      "sequence": 489,
+      "round": 81,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2988709999990533,
+      "nanosecondsPerCall": 6494.354999995267
+    },
+    {
+      "sequence": 490,
+      "round": 81,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 256.6668270000009,
+      "nanosecondsPerCall": 1283334.1350000047
+    },
+    {
+      "sequence": 491,
+      "round": 81,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 295.531584999997,
+      "nanosecondsPerCall": 1477657.9249999851
+    },
+    {
+      "sequence": 492,
+      "round": 82,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.1708440000002156,
+      "nanosecondsPerCall": 10854.220000001078
+    },
+    {
+      "sequence": 493,
+      "round": 82,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.713271000000532,
+      "nanosecondsPerCall": 13566.355000002659
+    },
+    {
+      "sequence": 494,
+      "round": 82,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 286.7900709999958,
+      "nanosecondsPerCall": 1433950.354999979
+    },
+    {
+      "sequence": 495,
+      "round": 82,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 275.23224600000685,
+      "nanosecondsPerCall": 1376161.2300000342
+    },
+    {
+      "sequence": 496,
+      "round": 82,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5330939999985276,
+      "nanosecondsPerCall": 2665.469999992638
+    },
+    {
+      "sequence": 497,
+      "round": 82,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0080329999982496,
+      "nanosecondsPerCall": 5040.164999991248
+    },
+    {
+      "sequence": 498,
+      "round": 83,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 253.3433090000035,
+      "nanosecondsPerCall": 1266716.5450000174
+    },
+    {
+      "sequence": 499,
+      "round": 83,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 221.31008499999734,
+      "nanosecondsPerCall": 1106550.4249999868
+    },
+    {
+      "sequence": 500,
+      "round": 83,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0410610000035376,
+      "nanosecondsPerCall": 5205.305000017688
+    },
+    {
+      "sequence": 501,
+      "round": 83,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.518302999997104,
+      "nanosecondsPerCall": 2591.5149999855203
+    },
+    {
+      "sequence": 502,
+      "round": 83,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9481659999946714,
+      "nanosecondsPerCall": 9740.829999973357
+    },
+    {
+      "sequence": 503,
+      "round": 83,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2548360000000685,
+      "nanosecondsPerCall": 6274.180000000342
+    },
+    {
+      "sequence": 504,
+      "round": 84,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5022289999978966,
+      "nanosecondsPerCall": 2511.144999989483
+    },
+    {
+      "sequence": 505,
+      "round": 84,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9550349999990431,
+      "nanosecondsPerCall": 4775.174999995215
+    },
+    {
+      "sequence": 506,
+      "round": 84,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.1732850000043982,
+      "nanosecondsPerCall": 5866.425000021991
+    },
+    {
+      "sequence": 507,
+      "round": 84,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.225453999999445,
+      "nanosecondsPerCall": 11127.269999997225
+    },
+    {
+      "sequence": 508,
+      "round": 84,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 220.4689670000007,
+      "nanosecondsPerCall": 1102344.8350000037
+    },
+    {
+      "sequence": 509,
+      "round": 84,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 255.2819559999989,
+      "nanosecondsPerCall": 1276409.7799999944
+    },
+    {
+      "sequence": 510,
+      "round": 85,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.375474000000395,
+      "nanosecondsPerCall": 11877.370000001974
+    },
+    {
+      "sequence": 511,
+      "round": 85,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2180920000027982,
+      "nanosecondsPerCall": 6090.460000013991
+    },
+    {
+      "sequence": 512,
+      "round": 85,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 238.17251699999906,
+      "nanosecondsPerCall": 1190862.5849999953
+    },
+    {
+      "sequence": 513,
+      "round": 85,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 224.59168499999942,
+      "nanosecondsPerCall": 1122958.424999997
+    },
+    {
+      "sequence": 514,
+      "round": 85,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.054881000003661,
+      "nanosecondsPerCall": 5274.405000018305
+    },
+    {
+      "sequence": 515,
+      "round": 85,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5207049999953597,
+      "nanosecondsPerCall": 2603.5249999767984
+    },
+    {
+      "sequence": 516,
+      "round": 86,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 230.1893429999982,
+      "nanosecondsPerCall": 1150946.714999991
+    },
+    {
+      "sequence": 517,
+      "round": 86,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 237.97720000000118,
+      "nanosecondsPerCall": 1189886.0000000058
+    },
+    {
+      "sequence": 518,
+      "round": 86,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5499189999973169,
+      "nanosecondsPerCall": 2749.5949999865843
+    },
+    {
+      "sequence": 519,
+      "round": 86,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9688539999988279,
+      "nanosecondsPerCall": 4844.26999999414
+    },
+    {
+      "sequence": 520,
+      "round": 86,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.202648999998928,
+      "nanosecondsPerCall": 6013.24499999464
+    },
+    {
+      "sequence": 521,
+      "round": 86,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0630939999973634,
+      "nanosecondsPerCall": 10315.469999986817
+    },
+    {
+      "sequence": 522,
+      "round": 87,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9796900000001187,
+      "nanosecondsPerCall": 4898.450000000594
+    },
+    {
+      "sequence": 523,
+      "round": 87,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5312409999969532,
+      "nanosecondsPerCall": 2656.204999984766
+    },
+    {
+      "sequence": 524,
+      "round": 87,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.164403000002494,
+      "nanosecondsPerCall": 10822.01500001247
+    },
+    {
+      "sequence": 525,
+      "round": 87,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.181097000000591,
+      "nanosecondsPerCall": 5905.485000002955
+    },
+    {
+      "sequence": 526,
+      "round": 87,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 276.8500919999933,
+      "nanosecondsPerCall": 1384250.4599999667
+    },
+    {
+      "sequence": 527,
+      "round": 87,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 251.71862200000032,
+      "nanosecondsPerCall": 1258593.1100000017
+    },
+    {
+      "sequence": 528,
+      "round": 88,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.0013830000025337,
+      "nanosecondsPerCall": 10006.915000012668
+    },
+    {
+      "sequence": 529,
+      "round": 88,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.417996000003768,
+      "nanosecondsPerCall": 12089.98000001884
+    },
+    {
+      "sequence": 530,
+      "round": 88,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 251.49775200000295,
+      "nanosecondsPerCall": 1257488.7600000147
+    },
+    {
+      "sequence": 531,
+      "round": 88,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 251.8417530000006,
+      "nanosecondsPerCall": 1259208.765000003
+    },
+    {
+      "sequence": 532,
+      "round": 88,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.7495619999972405,
+      "nanosecondsPerCall": 3747.8099999862025
+    },
+    {
+      "sequence": 533,
+      "round": 88,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9829449999961071,
+      "nanosecondsPerCall": 4914.724999980535
+    },
+    {
+      "sequence": 534,
+      "round": 89,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 262.2699629999988,
+      "nanosecondsPerCall": 1311349.8149999941
+    },
+    {
+      "sequence": 535,
+      "round": 89,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 258.8843530000013,
+      "nanosecondsPerCall": 1294421.7650000064
+    },
+    {
+      "sequence": 536,
+      "round": 89,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0429740000035963,
+      "nanosecondsPerCall": 5214.8700000179815
+    },
+    {
+      "sequence": 537,
+      "round": 89,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.7504230000049574,
+      "nanosecondsPerCall": 3752.115000024787
+    },
+    {
+      "sequence": 538,
+      "round": 89,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0877009999967413,
+      "nanosecondsPerCall": 10438.504999983707
+    },
+    {
+      "sequence": 539,
+      "round": 89,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3366060000043944,
+      "nanosecondsPerCall": 6683.030000021972
+    },
+    {
+      "sequence": 540,
+      "round": 90,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5247519999975339,
+      "nanosecondsPerCall": 2623.7599999876693
+    },
+    {
+      "sequence": 541,
+      "round": 90,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9775470000022324,
+      "nanosecondsPerCall": 4887.735000011162
+    },
+    {
+      "sequence": 542,
+      "round": 90,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.254655000004277,
+      "nanosecondsPerCall": 6273.2750000213855
+    },
+    {
+      "sequence": 543,
+      "round": 90,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9250509999983478,
+      "nanosecondsPerCall": 9625.25499999174
+    },
+    {
+      "sequence": 544,
+      "round": 90,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 216.32021199999872,
+      "nanosecondsPerCall": 1081601.0599999935
+    },
+    {
+      "sequence": 545,
+      "round": 90,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 345.6123030000017,
+      "nanosecondsPerCall": 1728061.5150000087
+    },
+    {
+      "sequence": 546,
+      "round": 91,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.0090950000012526,
+      "nanosecondsPerCall": 10045.475000006263
+    },
+    {
+      "sequence": 547,
+      "round": 91,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.4267879999970319,
+      "nanosecondsPerCall": 7133.939999985159
+    },
+    {
+      "sequence": 548,
+      "round": 91,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 276.6708690000014,
+      "nanosecondsPerCall": 1383354.3450000072
+    },
+    {
+      "sequence": 549,
+      "round": 91,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 256.4968980000049,
+      "nanosecondsPerCall": 1282484.4900000244
+    },
+    {
+      "sequence": 550,
+      "round": 91,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0180770000006305,
+      "nanosecondsPerCall": 5090.3850000031525
+    },
+    {
+      "sequence": 551,
+      "round": 91,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6482240000041202,
+      "nanosecondsPerCall": 3241.120000020601
+    },
+    {
+      "sequence": 552,
+      "round": 92,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 216.33844900000258,
+      "nanosecondsPerCall": 1081692.245000013
+    },
+    {
+      "sequence": 553,
+      "round": 92,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 222.54044900000008,
+      "nanosecondsPerCall": 1112702.2450000003
+    },
+    {
+      "sequence": 554,
+      "round": 92,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.6226660000029369,
+      "nanosecondsPerCall": 3113.3300000146846
+    },
+    {
+      "sequence": 555,
+      "round": 92,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9862300000022515,
+      "nanosecondsPerCall": 4931.150000011257
+    },
+    {
+      "sequence": 556,
+      "round": 92,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2455820000031963,
+      "nanosecondsPerCall": 6227.9100000159815
+    },
+    {
+      "sequence": 557,
+      "round": 92,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9250499999980093,
+      "nanosecondsPerCall": 9625.249999990046
+    },
+    {
+      "sequence": 558,
+      "round": 93,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0256379999991623,
+      "nanosecondsPerCall": 5128.189999995811
+    },
+    {
+      "sequence": 559,
+      "round": 93,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5247020000024349,
+      "nanosecondsPerCall": 2623.5100000121747
+    },
+    {
+      "sequence": 560,
+      "round": 93,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.915315999998711,
+      "nanosecondsPerCall": 9576.579999993555
+    },
+    {
+      "sequence": 561,
+      "round": 93,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.1878260000012233,
+      "nanosecondsPerCall": 5939.1300000061165
+    },
+    {
+      "sequence": 562,
+      "round": 93,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 248.27083600000333,
+      "nanosecondsPerCall": 1241354.1800000167
+    },
+    {
+      "sequence": 563,
+      "round": 93,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 224.96269600000232,
+      "nanosecondsPerCall": 1124813.4800000116
+    },
+    {
+      "sequence": 564,
+      "round": 94,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.369103000004543,
+      "nanosecondsPerCall": 6845.515000022715
+    },
+    {
+      "sequence": 565,
+      "round": 94,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.094230000002426,
+      "nanosecondsPerCall": 10471.15000001213
+    },
+    {
+      "sequence": 566,
+      "round": 94,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 300.8152839999966,
+      "nanosecondsPerCall": 1504076.419999983
+    },
+    {
+      "sequence": 567,
+      "round": 94,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 230.44870800000353,
+      "nanosecondsPerCall": 1152243.5400000177
+    },
+    {
+      "sequence": 568,
+      "round": 94,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5535240000026533,
+      "nanosecondsPerCall": 2767.6200000132667
+    },
+    {
+      "sequence": 569,
+      "round": 94,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 0.9658899999994901,
+      "nanosecondsPerCall": 4829.4499999974505
+    },
+    {
+      "sequence": 570,
+      "round": 95,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 233.3284829999975,
+      "nanosecondsPerCall": 1166642.4149999875
+    },
+    {
+      "sequence": 571,
+      "round": 95,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 248.33279700000276,
+      "nanosecondsPerCall": 1241663.9850000136
+    },
+    {
+      "sequence": 572,
+      "round": 95,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0222030000004452,
+      "nanosecondsPerCall": 5111.015000002226
+    },
+    {
+      "sequence": 573,
+      "round": 95,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5446010000014212,
+      "nanosecondsPerCall": 2723.005000007106
+    },
+    {
+      "sequence": 574,
+      "round": 95,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.1221110000042245,
+      "nanosecondsPerCall": 10610.555000021122
+    },
+    {
+      "sequence": 575,
+      "round": 95,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2462329999980284,
+      "nanosecondsPerCall": 6231.164999990142
+    },
+    {
+      "sequence": 576,
+      "round": 96,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5605850000065402,
+      "nanosecondsPerCall": 2802.925000032701
+    },
+    {
+      "sequence": 577,
+      "round": 96,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.7558119999957853,
+      "nanosecondsPerCall": 8779.059999978926
+    },
+    {
+      "sequence": 578,
+      "round": 96,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.644458000002487,
+      "nanosecondsPerCall": 8222.290000012435
+    },
+    {
+      "sequence": 579,
+      "round": 96,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 3.843752000000677,
+      "nanosecondsPerCall": 19218.760000003385
+    },
+    {
+      "sequence": 580,
+      "round": 96,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 260.6452370000043,
+      "nanosecondsPerCall": 1303226.1850000212
+    },
+    {
+      "sequence": 581,
+      "round": 96,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 241.2095730000001,
+      "nanosecondsPerCall": 1206047.8650000005
+    },
+    {
+      "sequence": 582,
+      "round": 97,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 1.9914390000049025,
+      "nanosecondsPerCall": 9957.195000024512
+    },
+    {
+      "sequence": 583,
+      "round": 97,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.2649899999960326,
+      "nanosecondsPerCall": 6324.949999980163
+    },
+    {
+      "sequence": 584,
+      "round": 97,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 236.85730099999637,
+      "nanosecondsPerCall": 1184286.5049999817
+    },
+    {
+      "sequence": 585,
+      "round": 97,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 295.30261299999984,
+      "nanosecondsPerCall": 1476513.064999999
+    },
+    {
+      "sequence": 586,
+      "round": 97,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.0285529999964638,
+      "nanosecondsPerCall": 5142.764999982319
+    },
+    {
+      "sequence": 587,
+      "round": 97,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5360180000061519,
+      "nanosecondsPerCall": 2680.0900000307593
+    },
+    {
+      "sequence": 588,
+      "round": 98,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 256.29030500000226,
+      "nanosecondsPerCall": 1281451.5250000113
+    },
+    {
+      "sequence": 589,
+      "round": 98,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 335.5504030000011,
+      "nanosecondsPerCall": 1677752.0150000053
+    },
+    {
+      "sequence": 590,
+      "round": 98,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 5.024821000006341,
+      "nanosecondsPerCall": 25124.1050000317
+    },
+    {
+      "sequence": 591,
+      "round": 98,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.9423770000066725,
+      "nanosecondsPerCall": 9711.885000033362
+    },
+    {
+      "sequence": 592,
+      "round": 98,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 2.6251109999939217,
+      "nanosecondsPerCall": 13125.554999969609
+    },
+    {
+      "sequence": 593,
+      "round": 98,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 5.804528000000573,
+      "nanosecondsPerCall": 29022.64000000287
+    },
+    {
+      "sequence": 594,
+      "round": 99,
+      "case": "ArithmeticAdd",
+      "variant": "candidate",
+      "elapsedMs": 1.5945749999955297,
+      "nanosecondsPerCall": 7972.874999977648
+    },
+    {
+      "sequence": 595,
+      "round": 99,
+      "case": "ArithmeticAdd",
+      "variant": "baseline",
+      "elapsedMs": 0.5474959999992279,
+      "nanosecondsPerCall": 2737.4799999961397
+    },
+    {
+      "sequence": 596,
+      "round": 99,
+      "case": "NativeLoop",
+      "variant": "candidate",
+      "elapsedMs": 2.1868069999982254,
+      "nanosecondsPerCall": 10934.034999991127
+    },
+    {
+      "sequence": 597,
+      "round": 99,
+      "case": "NativeLoop",
+      "variant": "baseline",
+      "elapsedMs": 1.3334719999984372,
+      "nanosecondsPerCall": 6667.359999992186
+    },
+    {
+      "sequence": 598,
+      "round": 99,
+      "case": "NativeFinally",
+      "variant": "candidate",
+      "elapsedMs": 248.35659500000475,
+      "nanosecondsPerCall": 1241782.9750000236
+    },
+    {
+      "sequence": 599,
+      "round": 99,
+      "case": "NativeFinally",
+      "variant": "baseline",
+      "elapsedMs": 277.57748600000195,
+      "nanosecondsPerCall": 1387887.43000001
+    }
+  ]
+}

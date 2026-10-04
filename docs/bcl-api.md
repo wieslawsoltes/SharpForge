@@ -697,8 +697,23 @@ Registered families: <code>builder</code>.
 | 524336 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, char)</code> | implemented |
 | 524337 | <code>System.Text.StringBuilder System.Text.StringBuilder::Replace(string, string, int, int)</code> | implemented |
 | 524338 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, bool)</code> | implemented |
+| 524339 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, string, int)</code> | implemented |
+| 524340 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, sbyte)</code> | implemented |
+| 524341 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, byte)</code> | implemented |
+| 524342 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, short)</code> | implemented |
+| 524343 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, ushort)</code> | implemented |
+| 524344 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, int)</code> | implemented |
+| 524345 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, uint)</code> | implemented |
+| 524346 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, long)</code> | implemented |
+| 524347 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, ulong)</code> | implemented |
+| 524348 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, float)</code> | implemented |
+| 524349 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, double)</code> | implemented |
+| 524350 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, decimal)</code> | implemented |
+| 524351 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, object)</code> | implemented |
+| 524352 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, char[])</code> | implemented |
+| 524353 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, char[], int, int)</code> | implemented |
 
-Pinned reference: 55 implemented and 53 missing exact metadata rows.
+Pinned reference: 71 implemented and 37 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -723,7 +738,7 @@ Pinned reference: 55 implemented and 53 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Append``0(System.Char,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524310 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Char[]):System.Text.StringBuilder instance</code> | implemented | 524320 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Char[],System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524321 |
-| method | <code>System.Text.StringBuilder::Append``0(System.Decimal):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.Decimal):System.Text.StringBuilder instance</code> | implemented | 524332 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Double):System.Text.StringBuilder instance</code> | implemented | 805 |
 | method | <code>System.Text.StringBuilder::Append``0(System.IFormatProvider,System.Text.StringBuilder+AppendInterpolatedStringHandler&amp;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Int16):System.Text.StringBuilder instance</code> | implemented | 524326 |
@@ -779,24 +794,24 @@ Pinned reference: 55 implemented and 53 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Equals``0(System.Text.StringBuilder):System.Boolean instance</code> | implemented | 524331 |
 | method | <code>System.Text.StringBuilder::GetChunks``0():System.Text.StringBuilder+ChunkEnumerator instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Boolean):System.Text.StringBuilder instance</code> | implemented | 524338 |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Byte):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Byte):System.Text.StringBuilder instance</code> | implemented | 524341 |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Char):System.Text.StringBuilder instance</code> | implemented | 524336 |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Char[]):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Char[],System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Decimal):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Double):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Int16):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Int64):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Object):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Char[]):System.Text.StringBuilder instance</code> | implemented | 524352 |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Char[],System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524353 |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Decimal):System.Text.StringBuilder instance</code> | implemented | 524350 |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Double):System.Text.StringBuilder instance</code> | implemented | 524349 |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Int16):System.Text.StringBuilder instance</code> | implemented | 524342 |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524344 |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Int64):System.Text.StringBuilder instance</code> | implemented | 524346 |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Object):System.Text.StringBuilder instance</code> | implemented | 524351 |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.ReadOnlySpan`1&lt;System.Char&gt;):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.SByte):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Single):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.SByte):System.Text.StringBuilder instance</code> | implemented | 524340 |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Single):System.Text.StringBuilder instance</code> | implemented | 524348 |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.String):System.Text.StringBuilder instance</code> | implemented | 814 |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.String,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.UInt16):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.UInt32):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.UInt64):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.String,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524339 |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.UInt16):System.Text.StringBuilder instance</code> | implemented | 524343 |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.UInt32):System.Text.StringBuilder instance</code> | implemented | 524345 |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.UInt64):System.Text.StringBuilder instance</code> | implemented | 524347 |
 | method | <code>System.Text.StringBuilder::Remove``0(System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 815 |
 | method | <code>System.Text.StringBuilder::Replace``0(System.Char,System.Char):System.Text.StringBuilder instance</code> | implemented | 524334 |
 | method | <code>System.Text.StringBuilder::Replace``0(System.Char,System.Char,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524335 |

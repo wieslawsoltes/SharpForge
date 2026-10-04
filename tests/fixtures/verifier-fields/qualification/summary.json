@@ -1,0 +1,117 @@
+{
+  "candidateHead": "b79c8b9aec47f549d513f1b1afe88bdc36c63669",
+  "baselineHead": "594085da988a5b9439625f0577b958a166121666",
+  "node": "v24.21.0",
+  "cpu": "Apple M3 Pro",
+  "os": "25.6.0",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "controls": {
+    "Add_0_0": {
+      "iterations": 1000,
+      "medianMs": {
+        "before": 2.40270799999999,
+        "after": 3.3545830000000194,
+        "difference": 0.9518750000000296,
+        "percent": 39.616757425373095
+      },
+      "p95Ms": {
+        "before": 3.4529170000000136,
+        "after": 5.787499999999994,
+        "difference": 2.3345829999999808,
+        "percent": 67.6119061072123
+      }
+    },
+    "Diamond": {
+      "iterations": 1000,
+      "medianMs": {
+        "before": 2.6115000000000066,
+        "after": 2.1630830000000003,
+        "difference": -0.4484170000000063,
+        "percent": -17.170859659199888
+      },
+      "p95Ms": {
+        "before": 4.327625000000012,
+        "after": 3.9207090000000164,
+        "difference": -0.4069159999999954,
+        "percent": -9.40275555298794
+      }
+    },
+    "MixedJoin": {
+      "iterations": 1000,
+      "medianMs": {
+        "before": 14.920958999999982,
+        "after": 13.194792000000007,
+        "difference": -1.7261669999999754,
+        "percent": -11.568740320243343
+      },
+      "p95Ms": {
+        "before": 17.390999999999963,
+        "after": 14.19987500000002,
+        "difference": -3.1911249999999427,
+        "percent": -18.349289862572306
+      }
+    },
+    "existingAuthorityConstruction": {
+      "iterations": 1000,
+      "medianMs": {
+        "before": 4.749416999999994,
+        "after": 4.799709000000007,
+        "difference": 0.050292000000013104,
+        "percent": 1.0589089145049524
+      },
+      "p95Ms": {
+        "before": 7.2535000000000025,
+        "after": 6.639834000000008,
+        "difference": -0.6136659999999949,
+        "percent": -8.460274350313568
+      }
+    }
+  },
+  "capabilities": {
+    "LoadOwner": {
+      "iterations": 1000,
+      "medianMs": 17.373207999999977,
+      "p95Ms": 19.564625000000035,
+      "note": "Added capability; no baseline supported operation or timing comparison."
+    },
+    "StoreReferenceDerived": {
+      "iterations": 1000,
+      "medianMs": 15.91116599999998,
+      "p95Ms": 20.891415999999936,
+      "note": "Added capability; no baseline supported operation or timing comparison."
+    }
+  },
+  "rawSamples": 120,
+  "samplesPerWorkload": 12,
+  "excludedWarmupSamples": 3,
+  "native": {
+    "count": 40,
+    "version": "10.0.5",
+    "unsupported": [
+      "StoreValueCopyUnknown"
+    ],
+    "differences": [
+      "AddressInitOnly"
+    ]
+  },
+  "browsers": [
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.12",
+      "checks": 46
+    },
+    {
+      "engine": "firefox",
+      "version": "155.0",
+      "checks": 46
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "checks": 46
+    }
+  ],
+  "retainedFirstAttempt": "Expected-before baseline assertion succeeded on stderr; initial driver mistakenly checked stdout only.",
+  "measurementLimits": "Shared host. Batch timings per 1000 calls, not individual percentiles. Heap deltas are neither allocations nor peak memory."
+}

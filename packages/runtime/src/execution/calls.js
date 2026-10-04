@@ -6,7 +6,7 @@ import {constrainedCallType, invokeConstrainedValue, constrainedReferenceReceive
 import {instantiatedMethod} from './generics.js';
 import {callDescriptor, selectedCallOwner} from './generic-calls.js';
 import {constructIntrinsicValue} from './value-intrinsics.js';
-import {invokeIntrinsic} from './intrinsics.js';
+import {pushIntrinsicCallResult} from './intrinsic-call-result.js';
 import {stringFromChars} from './strings.js';
 import {cilCallFrame} from './call-frames.js';
 import {framePool} from './frame-pool.js';
@@ -43,7 +43,8 @@ export function prepareCall(vm,frame=vm.top) {
   frame.needsInitialization=false;return true;
 }
 export function invoke(vm,instruction) {
-  const caller=vm.top,descriptor=callDescriptor(vm,instruction.operand,caller),target=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
+  const caller=vm.top,descriptor=callDescriptor(vm,instruction.operand,caller);
+  const target=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
   const constraint=constrainedCallType(vm,caller,instruction,descriptor);
   if(constraint?.flags.valueType){invokeConstrainedValue(vm,caller,descriptor,constraint);return;}
   const count=descriptor.signature.parameters.length+(instruction.name!=='newobj'&&!descriptor.signature.isStatic?1:0);
@@ -71,31 +72,40 @@ export function invoke(vm,instruction) {
       const value=constructIntrinsicValue(vm,intrinsic,descriptor,args);
       if(value.handled){caller.stack.push(value.value);return;}
     }
-    if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
-    if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
+    if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]') {
+      caller.stack.push(stringFromChars(vm,args[0]));return;
+    }
+    if(instruction.name==='newobj'&&contract) {
+      const value=vm.platform.invoke(contract,args);
+      if(vm.state!=='terminated')caller.stack.push(value);
+      return;
+    }
     if(instruction.name==='newobj'&&valueType){constructUserValue(vm,descriptor,valueType,args);return;}
     if(instruction.name==='newobj') {
       let ref;
-      if(target){const layout=vm.layout(genericIdentity??descriptor.ownerToken);ref=vm.heap.object(layout.methodTable,layout.fields.map(field=>storageDefault(vm,field.type)));}
+      if(target) {
+        const layout=vm.layout(genericIdentity??descriptor.ownerToken);
+        ref=vm.heap.object(layout.methodTable,layout.fields.map(field=>storageDefault(vm,field.type)));
+      }
       else if(systemType(descriptor.owner)==='System.Object'&&args.length===0)ref=vm.heap.object(vm.typeSystem.table('System.Object'),[]);
       else if(systemType(descriptor.owner)==='System.Exception')ref=vm.heap.allocate('exception','System.Exception',[args[0]??null]);
       else throw new ManagedFault('NotSupportedException','External object construction is unavailable');
+      if(vm.state==='terminated')return;
       args.unshift(ref);vm.heap.pins.push(ref);
-      if(target)vm.call(target,args,{returnObject:ref,genericIdentity,methodArguments:descriptor.methodArguments});else {vm.intrinsic(descriptor,args);caller.stack.push(ref);}
+      if(target)vm.call(target,args,{returnObject:ref,genericIdentity,methodArguments:descriptor.methodArguments});
+      else {vm.intrinsic(descriptor,args);caller.stack.push(ref);}
       return;
     }
     if(instruction.name==='callvirt'&&args[0]===null)throw new ManagedFault('NullReferenceException','Null virtual receiver');
-    const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?resolveVirtualTarget(vm,caller,instruction,descriptor,args[0]):target;
+    const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)
+      ?resolveVirtualTarget(vm,caller,instruction,descriptor,args[0]):target;
     if(dispatch) {
       if(!verifiedMethod(vm,dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
       if(constraint)requireConstrainedReferenceTarget(vm,dispatch);
       const owner=descriptor.signature.isStatic||valueType?genericIdentity:selectedCallOwner(vm,dispatch,args[0],genericIdentity);
       if(instruction.name==='callvirt')args[0]=boxedInterfaceReceiver(vm,descriptor,dispatch,args[0]);
       vm.call(dispatch,args,{genericIdentity:owner,methodArguments:descriptor.methodArguments});
-    } else {
-      const value=invokeIntrinsic(vm,descriptor,args,instruction.name==='callvirt');
-      if(descriptor.signature.returnType!=='void'&&value!==SUSPENDED)caller.stack.push(value);
-    }
+    } else pushIntrinsicCallResult(vm,caller,descriptor,args,instruction.name==='callvirt');
   });
   } finally {
     if (pool) pool.releaseArguments(args);

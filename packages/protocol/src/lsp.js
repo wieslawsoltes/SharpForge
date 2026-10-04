@@ -2,8 +2,7 @@ import {renameWorkspaceEdit,prepareRename,workspaceSymbols} from './lsp-source.j
 import { RefactoringEngine, formatDocument, foldingRanges, selectionRanges } from '@sharpforge/refactoring';
 import { Workspace } from '@sharpforge/workspace';
 import { LanguageService } from '@sharpforge/language';
-const tokenTypes=['namespace','class','method','field','variable','keyword','string','number','operator','property'];
-const symbolKinds={property:7,class:5,struct:23,interface:11,enum:10,delegate:12,method:6,field:8,event:24,local:13};
+import { tokenTypes, symbolKinds, isRequest, invalidRequest, validateParameters, encodeSemanticTokens } from './lsp-wire.js';
 /** Transport-independent LSP 3.17 subset. Feed JSON-RPC messages; send emitted notifications on your transport. */
 export class LanguageServer {
   constructor({workspace=new Workspace(),send=()=>{}}={}){this.workspace=workspace;this.language=new LanguageService(workspace);this.refactoring=new RefactoringEngine(workspace,this.language);this.send=send;this.shutdown=false;}
@@ -13,9 +12,11 @@ export class LanguageServer {
   callItem(item){return {name:item.name,kind:6,detail:item.owner??'',uri:item.uri,range:this.location(item).range,selectionRange:this.location({...item,start:item.selectionStart,end:item.selectionEnd}).range,data:item};}
   publish(){const r=this.workspace.compile();for(const [uri,d]of this.workspace.documents)this.send({jsonrpc:'2.0',method:'textDocument/publishDiagnostics',params:{uri,version:d.source.version,diagnostics:r.diagnostics.filter(x=>x.uri===uri).map(x=>({range:x.range,severity:({error:1,warning:2,info:3,hint:4}[x.severity]??2),code:x.code,source:'SharpForge',message:x.message}))}});}
   async handle(message){
+    if (!isRequest(message)) return invalidRequest(message);
     const {id,method,params:p={}}=message;let result=null;
     try{
       if(this.shutdown&&method!=='exit')return id===undefined?null:{jsonrpc:'2.0',id,error:{code:-32600,message:'The language server has shut down'}};
+      validateParameters(method, p);
       switch(method){
         case 'initialize':this.documentChanges=!!p.capabilities?.workspace?.workspaceEdit?.documentChanges;result={serverInfo:{name:'SharpForge Language Server',version:'0.6.0'},capabilities:{positionEncoding:'utf-16',textDocumentSync:2,completionProvider:{triggerCharacters:['.']},hoverProvider:true,definitionProvider:true,referencesProvider:true,renameProvider:{prepareProvider:true},documentHighlightProvider:true,workspaceSymbolProvider:true,foldingRangeProvider:true,selectionRangeProvider:true,documentFormattingProvider:true,codeActionProvider:{codeActionKinds:['refactor.rewrite','refactor.extract','refactor.inline']},inlayHintProvider:true,documentSymbolProvider:true,callHierarchyProvider:true,codeLensProvider:{resolveProvider:false},signatureHelpProvider:{triggerCharacters:['(',',']},semanticTokensProvider:{legend:{tokenTypes,tokenModifiers:[]},full:true}}};break;
         case 'initialized':break;
@@ -42,10 +43,9 @@ export class LanguageServer {
         case 'textDocument/codeLens':result=this.language.referenceLenses(p.textDocument.uri).map(l=>({range:this.location(l).range,command:{title:`${l.count} reference${l.count===1?'':'s'}`,command:'sharpforge.showReferences',arguments:[l.uri,this.source(l.uri).positionAt(l.start),this.language.references(l.uri,l.start,false).map(r=>this.location(r))]}}));break;
         case 'textDocument/documentSymbol':result=this.language.documentSymbols(p.textDocument.uri).map(s=>({name:s.name,detail:s.detail,kind:symbolKinds[s.kind]??13,range:this.location(s).range,selectionRange:this.location(s).range}));break;
         case 'textDocument/signatureHelp':result=this.language.signatureHelp(p.textDocument.uri,this.offset(p));break;
-        case 'textDocument/semanticTokens/full':{
-          const source=this.source(p.textDocument.uri),tokens=this.language.semanticTokens(p.textDocument.uri),data=[];let previousLine=0,previousStart=0;
-          for(const t of tokens){let at=t.start;while(at<t.end){const pos=source.positionAt(at),end=Math.min(t.end,(source.lineStarts[pos.line+1]??source.length));let length=end-at;while(length>0&&/[\r\n]/.test(source.text[at+length-1]))length--;if(length>0){const lineDelta=pos.line-previousLine;data.push(lineDelta,lineDelta===0?pos.character-previousStart:pos.character,length,Math.max(0,tokenTypes.indexOf(t.kind==='local'?'variable':t.kind)),0);previousLine=pos.line;previousStart=pos.character;}at=end;}}
-          result={data};break;}
+        case 'textDocument/semanticTokens/full':
+          result = { data: encodeSemanticTokens(this.source(p.textDocument.uri), this.language.semanticTokens(p.textDocument.uri)) };
+          break;
         case '$/cancelRequest':break; // Cooperative cancellation is enforced by the host before synchronous dispatch.
         default:if(id!==undefined)return {jsonrpc:'2.0',id,error:{code:-32601,message:`Method '${method}' is not implemented`}};
       }

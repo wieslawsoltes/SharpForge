@@ -75,6 +75,7 @@ function synthesizedEventAccessor(type, event, prefix, core) {
   const slot = event.isStatic ? MethodAttributes.Static : implementedBy(type, event) ? IMPLEMENTATION_FLAGS : 0;
   return {
     symbol: null,
+    associatedSymbol: event,
     name: prefix + event.name,
     flags: memberAccessFlags(event) | ACCESSOR_FLAGS | slot,
     implFlags: MethodImplAttributes.IL,
@@ -97,7 +98,10 @@ function fieldLikeEvent(type, event, core, plan) {
       accessor.flags |= DELEGATE_INVOKE_FLAGS | MethodAttributes.Abstract;
       accessor.hasBody = false;
     }
-  } else plan.fields.push({ symbol: null, name: event.name, flags: privateField(event), type: event.type, constant: null, isCompilerGenerated: true });
+  } else plan.fields.push({
+    symbol: null, associatedSymbol: event, name: event.name, flags: privateField(event), type: event.type,
+    constant: null, isCompilerGenerated: true,
+  });
   plan.methods.push(adder, remover);
   return { adder, remover };
 }
@@ -123,7 +127,9 @@ function delegateMethods(type, core) {
     constructor,
     { symbol: invoke, name: 'Invoke', flags: DELEGATE_INVOKE_FLAGS, implFlags: runtime, hasBody: false, parameters },
     member('BeginInvoke', DELEGATE_INVOKE_FLAGS, { isStatic: false, returnType: 'System.IAsyncResult', parameters: begin }, begin),
-    member('EndInvoke', DELEGATE_INVOKE_FLAGS, { isStatic: false, returnType: invoke.returnType, refKind: invoke.refKind, parameters: end }, end),
+    { ...member('EndInvoke', DELEGATE_INVOKE_FLAGS, {
+      isStatic: false, returnType: invoke.returnType, refKind: invoke.refKind, parameters: end,
+    }, end), returnAttributeSource: invoke },
   ];
 }
 
@@ -171,7 +177,7 @@ export function planMembers(type, core, constantOf) {
     if (member.kind === SymbolKind.Field) addField(member);
     else if (member.kind === SymbolKind.Method) {
       // A struct has no parameterless constructor in metadata unless the program declares one.
-      const implicitStructConstructor = isStruct && member.isImplicitlyDeclared && member.methodKind === MethodKind.Constructor;
+      const implicitStructConstructor = isStruct && member.isImplicitlyDeclared && member.methodKind === MethodKind.Constructor && !member.parameters.length;
       // A partial method that no part implements is removed from the type, with every call of it (C# 3).
       if (!implicitStructConstructor && !member.isUnimplementedPartial) addMethod(member);
     }

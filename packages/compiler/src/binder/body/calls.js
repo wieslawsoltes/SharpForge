@@ -136,7 +136,7 @@ export const CallBinding = Base =>
           const e = r.error;
           // A wrong argument count is reported on the invoked expression (the member name of `a.b`), as Roslyn does.
           const invoked = syntax.expression?.kind === 'SimpleMemberAccessExpression' ? syntax.expression.name : syntax.expression,
-            isCount = e.code === 'CS1593' || e.code === 'CS7036';
+            isCount = e.code === DiagnosticId.CS1593 || e.code === DiagnosticId.CS7036;
           this.report(isCount && invoked ? invoked : this.errorNode(e, args, syntax), e.code, e.args);
           return this.bad(syntax);
         }
@@ -298,11 +298,13 @@ export const CallBinding = Base =>
         }
         // A typeless target-typed argument (`new()`, a conditional or switch expression, a collection expression) gets its type
         // here, and so do a `default` literal (unconverted it would be passed as a null reference), a method group and
-        // a `null` for a parameter of a nullable value type, which is a value (`default(int?)`) and not a reference.
+        // a `null` for a nullable value or pointer parameter, which requires a typed zero instead of an object reference.
         // A tuple literal without a type of its own (`(1, null)`, `(key, x => x)`) converts element by element.
         // (So is a `null` that reaches the parameter through a user-defined conversion operator.)
-        const nullToNullable = a.literal === 'null' && (!!result.parameterTypes[i]?.isNullableValueType || !!conversion?.isUserDefined),
-          typeless = a.materialize || a.literal === 'default' || a.kind === 'MethodGroup' || a.form === 'tupleLiteral' || nullToNullable,
+        const target = result.parameterTypes[i],
+          nullToValue = a.literal === 'null' && (target?.isNullableValueType || conversion?.isUserDefined ||
+            target?.typeKind === TypeKind.Pointer || target?.typeKind === TypeKind.FunctionPointer),
+          typeless = a.materialize || a.literal === 'default' || a.kind === 'MethodGroup' || a.form === 'tupleLiteral' || nullToValue,
           converts = conversion && !a.hasErrors && (a.type || typeless);
         const value = converts ? this.applyConversion(a, result.parameterTypes[i], conversion, a.syntax) : a;
         if (a.form === 'lambda' && !a.hasErrors) this.finishLambda(a, result.parameterTypes[i]);

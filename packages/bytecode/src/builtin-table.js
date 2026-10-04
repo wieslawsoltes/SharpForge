@@ -100,5 +100,9 @@ export function createBuiltinTable(definitions, contracts, releasedRanges) {
     const id = runtimeId++;
     entries[id] = Object.freeze({...builtin, id});
   }
+  // Source allocation follows every released family without consuming a framework contract ID.
+  const objectId = runtimeId++;
+  entries[objectId] = Object.freeze({id: objectId, name: 'object.new', min: 0, max: 0,
+    result: 'object', params: Object.freeze([])});
   return Object.freeze(entries);
 }

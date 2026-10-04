@@ -1,12 +1,11 @@
 import { VerificationKind as Kind } from './types.js';
 import { isVerificationAssignable } from './type-relations.js';
 import { numericIndex, integerValue, numericResult, numericComparable } from './numeric-tables.js';
-import { primitiveRelations } from './typed-signatures.js';
 
 const conditionKinds = new Set([Kind.Null, Kind.Object, Kind.ManagedPointer]);
 
-function assignable(source, target) {
-  return isVerificationAssignable(source, target, primitiveRelations);
+function assignable(source, target, state) {
+  return isVerificationAssignable(source, target, state.relations);
 }
 
 function requireNumeric(value, floating, state) {
@@ -32,7 +31,7 @@ const handlers = Object.freeze({
   load(descriptor, instruction, state) { state.push(storage(descriptor, instruction, state).value); },
   store(descriptor, instruction, state) {
     const target = storage(descriptor, instruction, state).value;
-    if (!assignable(state.pop(), target)) state.fail('StackUnexpected');
+    if (!assignable(state.pop(), target, state)) state.fail('StackUnexpected');
     if (!descriptor.argument && state.initialization) state.initialization.assign(descriptor.index ?? instruction.operand);
   },
   address(descriptor, instruction, state) {
@@ -99,7 +98,7 @@ const handlers = Object.freeze({
     } else {
       if (!state.length) state.fail('ReturnMissing');
       if (state.length !== 1) state.fail('ReturnEmpty');
-      if (!assignable(state.pop(), expected)) state.fail('StackUnexpected');
+      if (!assignable(state.pop(), expected, state)) state.fail('StackUnexpected');
     }
     state.ended = true;
   },

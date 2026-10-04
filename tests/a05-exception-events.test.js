@@ -92,18 +92,23 @@ test('restoring a catch before rethrow still uses the captured canonical fault i
   } finally { vm.stop(); }
 });
 
-test('an explicit throw of a caught object is a new origin while invalid rethrow is a new fault', () => {
+test('an explicit throw of a caught object is a new origin', () => {
   const vm = new CilVirtualMachine(rethrowFixture(true), {runtimeEvents: true});
-  const invalid = new CilVirtualMachine(managedFixture({methods: [{name: 'Main',
-    body: writer => writer.op('rethrow')}]}), {runtimeEvents: true});
   try {
     assert.equal(vm.run().returnValue, 7);
     assert.equal(events(vm).length, 2);
     assert(events(vm).every(event => event.payload.exceptionType === 'System.NullReferenceException'));
-    assert.equal(invalid.run().fault.name, 'InvalidProgramException');
-    assert.equal(events(invalid).length, 1);
-    assert.equal(events(invalid)[0].payload.name, 'InvalidProgramException');
-  } finally { vm.stop(); invalid.stop(); }
+  } finally { vm.stop(); }
+});
+
+test('a rethrow outside a catch is rejected before runtime event execution', () => {
+  const bytes = managedFixture({methods: [{name: 'Main', body: writer => writer.op('rethrow')}]});
+  assert.throws(() => new CilVirtualMachine(bytes, {runtimeEvents: true}), error => {
+    assert.equal(error.name, 'CilError');
+    assert.deepEqual(error.issues.map(({code, diagnostic, offset}) => ({code, diagnostic, offset})),
+      [{code: 'IL_EH_FLOW', diagnostic: 'CILCF0001', offset: 0}]);
+    return true;
+  });
 });
 
 test('finally continuation propagates a fault without emitting another origin', () => {

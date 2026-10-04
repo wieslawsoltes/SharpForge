@@ -1,0 +1,9 @@
+file:///private/tmp/sharpforge-a03-normal-instance-fields/tests/helpers/verifier-case-capture.mjs:21
+  if (!tools.supported) throw new Error(tools.reason);
+                              ^
+
+Error: Set SHARPFORGE_ILASM and SHARPFORGE_ILVERIFY to pinned tools.
+    at captureVerifierCases (file:///private/tmp/sharpforge-a03-normal-instance-fields/tests/helpers/verifier-case-capture.mjs:21:31)
+    at async file:///private/tmp/sharpforge-a03-normal-instance-fields/tests/fixtures/verifier-fields/capture.mjs:6:17
+
+Node.js v24.21.0

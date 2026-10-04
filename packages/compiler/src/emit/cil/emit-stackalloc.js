@@ -36,6 +36,7 @@ export const StackAllocEmission = Base =>
         const argumentTypes = this.frame.isStatic ? [] : [null];
         for (const parameter of this.frame.parameters) argumentTypes.push(parameter.refKind ? null : parameter.type);
         this.il = new TypedIlBuilder(this.core, argumentTypes);
+        this.il.debug = this.debug;
         this.savesOperands = true;
       }
       return super.body(bound, prologue);

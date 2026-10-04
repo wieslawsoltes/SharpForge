@@ -1,6 +1,7 @@
 import { CilOpcodes, CilWriter, decodeInstructions } from './opcodes.js';
 import { Writer, CilError } from './binary.js';
 import { ilLabel } from './inspector.js';
+import { originalNaNInstructions } from './il-document-preservation.js';
 
 const operandSizes = Object.freeze({ u8: 1, i8: 1, br8: 1, u16: 2, i32: 4, token: 4, br32: 4, f32: 4, f64: 8, i64: 8 });
 
@@ -93,11 +94,22 @@ function encodeBody(method, code, handlers) {
 
 /** Compile visible IL body text; optional layout maps this body's existing EH labels explicitly. */
 export function compileILBody(method, options = {}) {
+  return compileILBodyDetails(method, options).bytes;
+}
+
+/** Internal compile result exposes exact body facts so the image writer can prove a no-change rewrite. */
+export function compileILBodyDetails(method, options = {}) {
   const { relaxBranches = false } = options;
   const target = instructionLabels(method), writer = new CilWriter();
+  const originalNaNs = originalNaNInstructions(options.original);
   for (const instruction of method.instructions) {
     if (relaxBranches) writer.mark(instruction.label);
-    writer.op(instruction.name, readOperand(instruction, target, options));
+    const operand = readOperand(instruction, target, options);
+    const original = originalNaNs.get(instruction.label);
+    writer.op(instruction.name, operand);
+    if (Number.isNaN(operand) && original?.name === instruction.name) {
+      writer.buffer.set(original.operandBytes, writer.length - original.operandBytes.length);
+    }
   }
   const layout = relaxBranches ? writer.finishWithLayout() : { code: writer.finish(), offsetMap: null };
   decodeInstructions(layout.code);
@@ -110,5 +122,12 @@ export function compileILBody(method, options = {}) {
     target: relocatedTarget(handler.target), handlerEnd: relocatedTarget(handler.handlerEnd, true),
     catchType: handler.flags === 1 ? relocatedTarget(handler.catchType) : parseILInteger(handler.catchType, 0, 0xffffffff),
   }));
-  return encodeBody(method, layout.code, handlers);
+  return {
+    bytes: encodeBody(method, layout.code, handlers),
+    code: layout.code,
+    handlers,
+    maxStack: method.maxStack,
+    localSignature: method.localSignature,
+    initLocals: method.initLocals,
+  };
 }
