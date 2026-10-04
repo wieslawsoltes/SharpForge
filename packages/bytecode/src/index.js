@@ -2,18 +2,13 @@ import {verifyNumericInstruction,verifyScalarConstant} from './numeric/source-pr
 import {enumTypes,frameworkType} from '@sharpforge/framework';
 export {smallInteger, smallIntegerIndirect} from './numeric/small-int.js';
 export {managedExceptionTypes, exceptionTypeName, exceptionBaseType, exceptionHResult, exceptionMatches} from './exception-types.js';
-/** Versioned, structured-cloneable stack bytecode. Each instruction is three signed 32-bit words. */
-export const FORMAT_VERSION = 2;
-// Numeric conversion IDs occupy the low range; enum targets retain declared identity.
-export const EnumConvertBase = 65536;
-export const Op = Object.freeze(Object.fromEntries(['SEQ','CONST','LDLOC','STLOC','LDSTATIC','STSTATIC','LDFLD','STFLD','DUP','POP','BINARY','UNARY','JUMP','JFALSE','JTRUE','CALL','BUILTIN','RET','NEWOBJ','NEWARR','LDELEM','STELEM','LENGTH','THROW','RETHROW','CONVERT','NOP','ENDFINALLY','DELEGATE','ENUM'].map((n,i)=>[n,i])));
-export const OpName = Object.freeze(Object.keys(Op));
-export const Binary = Object.freeze(Object.fromEntries(['+','-','*','/','%','==','!=','<','<=','>','>=','&','|','^','<<','>>','>>>'].map((n,i)=>[n,i])));
-export const BinaryName = Object.freeze(Object.keys(Binary));
-export const Unary = Object.freeze({ '-':0, '+':1, '!':2, '~':3 });
-export const UnaryName = Object.freeze(Object.keys(Unary));
+import {FORMAT_VERSION,Op,OpName,BinaryName,UnaryName} from './opcodes.js';
+export {FORMAT_VERSION,EnumConvertBase,Op,OpName,Binary,BinaryName,Unary,UnaryName} from './opcodes.js';
+import {recordSourceStacks,discardSourceStacks} from './source-stack-proof.js';
+export {verifiedSourceStackBound} from './source-stack-proof.js';
 import {Builtins} from './builtins.js';
 export {Builtins,BuiltinMap,frameworkBuiltin,CONTRACT_BUILTIN_OFFSET,createBuiltinRegistry} from './builtins.js';
+export {builtinOwners,builtinMemberShape,builtinParameterType} from './builtin-metadata.js';
 export function disassemble(image, methodId) {
   const methods=methodId===undefined?image.methods:[image.methods[methodId]];
   return methods.map(m=>({name:m.qualifiedName,id:m.id,instructions:Array.from({length:m.code.length/3},(_,i)=>({offset:i,op:OpName[m.code[i*3]],a:m.code[i*3+1],b:m.code[i*3+2],point:m.code[i*3]===Op.SEQ?image.sequencePoints[m.code[i*3+1]]:null}))}));
@@ -21,15 +16,15 @@ export function disassemble(image, methodId) {
 export function serializeImage(image) { return JSON.stringify(image, (key,value)=>value instanceof Int32Array?{$int32:[...value]}:value); }
 export function deserializeImage(text) { const image=JSON.parse(text,(key,value)=>value?.$int32?Int32Array.from(value.$int32):value);if(image.formatVersion!==FORMAT_VERSION)throw new Error('Unsupported SharpForge bytecode version');return image; }
 /** Structural and stack-height verification for compiler output and externally loaded images. */
-export function verifyImage(image){
-  const errors=[];
-  if(image?.formatVersion!==FORMAT_VERSION||!Array.isArray(image?.methods)||!Array.isArray(image?.constants)||!Array.isArray(image?.types)||!Array.isArray(image?.sequencePoints)||!Array.isArray(image?.statics))return ['Malformed or incompatible bytecode image'];
+export function verifyImage(image,{stackBounds=false}={}){
+  const errors=[],bounds=stackBounds?[]:null;
+  if(image?.formatVersion!==FORMAT_VERSION||!Array.isArray(image?.methods)||!Array.isArray(image?.constants)||!Array.isArray(image?.types)||!Array.isArray(image?.sequencePoints)||!Array.isArray(image?.statics)){discardSourceStacks(image);return ['Malformed or incompatible bytecode image'];}
   const fail=(m,pc,msg)=>{if(errors.length<100)errors.push(`${m?.qualifiedName??'<image>'}:${pc}: ${msg}`);};
   if(!image.constants.every(verifyScalarConstant)||!image.statics.every(s=>verifyScalarConstant(s.value)))fail(null,0,'Invalid scalar constant');
   if(image.outputKind==='library'?image.entryPoint!==null:!Number.isInteger(image.entryPoint)||!image.methods[image.entryPoint])fail(null,0,'Invalid entry point');
   for(const m of image.methods){
     if(!(m.code instanceof Int32Array)||m.code.length%3||m.code.length>3_000_000||!Array.isArray(m.locals)||!Array.isArray(m.handlers)){fail(m,0,'Invalid code or metadata');continue;}
-    const n=m.code.length/3,heights=new Map(),queue=[[0,0]];
+    const n=m.code.length/3,heights=new Map(),queue=[[0,0]];let peak=0;
     for(const h of m.handlers){if(h.start<0||h.end>n||h.start>=h.end||h.target<0||h.target>=n||(h.kind==='finally'?(!Number.isInteger(h.handlerEnd)||h.handlerEnd<=h.target||h.handlerEnd>n):(h.slot<0||h.slot>=m.locals.length)))fail(m,0,'Invalid exception handler');else queue.push([h.target,0]);}
     while(queue.length){const [pc,height]=queue.pop();if(pc<0||pc>=n){fail(m,pc,'Control flow leaves the method');continue;}if(heights.has(pc)){if(heights.get(pc)!==height)fail(m,pc,'Inconsistent stack height at join');continue;}heights.set(pc,height);
       const op=m.code[pc*3],a=m.code[pc*3+1],b=m.code[pc*3+2];let need=0,delta=0;
@@ -55,11 +50,14 @@ export function verifyImage(image){
         default:fail(m,pc,'Unknown opcode');continue;
       }
       if(height<need){fail(m,pc,'Stack underflow');continue;}
+      peak=Math.max(peak,height,height+delta);
       if(op===Op.RET||op===Op.THROW||op===Op.RETHROW||op===Op.ENDFINALLY)continue;
       if(op===Op.JUMP||op===Op.JFALSE||op===Op.JTRUE)queue.push([a,height+delta]);
       if(op!==Op.JUMP)queue.push([pc+1,height+delta]);
     }
+    bounds?.push([m,peak]);
   }
+  if(errors.length)discardSourceStacks(image);else if(bounds)recordSourceStacks(image,bounds);
   return errors;
 }
 

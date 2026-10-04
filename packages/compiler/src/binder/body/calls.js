@@ -98,7 +98,8 @@ export const CallBinding = Base =>
     errorNode(error, args, nameNode, offset = 0) {
       if (error.argument !== undefined && args[error.argument - offset]?.argumentSyntax) {
         const a = args[error.argument - offset].argumentSyntax;
-        return error.code === DiagnosticId.CS1739 || error.code === DiagnosticId.CS1740 || error.code === DiagnosticId.CS1744 || error.code === DiagnosticId.CS8323
+        return error.code === DiagnosticId.CS1739 || error.code === DiagnosticId.CS1740 ||
+          error.code === DiagnosticId.CS1744 || error.code === DiagnosticId.CS8323
           ? a.nameColon.name
           : error.code === DiagnosticId.CS1620 || error.code === DiagnosticId.CS1615
             ? a.expression
@@ -109,7 +110,9 @@ export const CallBinding = Base =>
     invocation(syntax) {
       const target = this.expression(syntax.expression, { invoked: true });
       const args = this.arguments(syntax.argumentList);
-      return this.invokeBound(target, args, syntax);
+      const result = this.invokeBound(target, args, syntax);
+      if (this.d.invocations && !this.quiet) this.d.recordInvocation(this.c, syntax, target, result);
+      return result;
     }
     /** Invokes an already bound target with bound arguments (binder/dynamic.js takes the late-bound calls from here). */
     invokeBound(target, args, syntax) {

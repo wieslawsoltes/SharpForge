@@ -79,8 +79,10 @@ test('released BCL groups keep module order and independent registries cannot le
     'environment', 'stringComparer', 'objectComparer', 'environmentDictionary'
   ]);
   assert.equal(findContracts('System.Environment', 'GetEnvironmentVariable', true)[0].id, 524289);
-  assert.equal(findContracts('System.Environment', 'GetEnvironmentVariables', true)[0].id, 524298);
-  assert.equal(findContracts('System.Environment', 'get_CurrentDirectory', true)[0].id, 524299);
+  assert.equal(findContracts('System.Environment', 'GetEnvironmentVariables', true)[0].id, 524311);
+  assert.equal(findContracts('System.Environment', 'get_CurrentDirectory', true)[0].id, 524312);
+  const appends = findContracts('System.Text.StringBuilder', 'Append').filter(member => member.parameters[0] === 'char');
+  assert.deepEqual(appends.map(member => [member.parameters, member.id]), [[['char'], 524309], [['char', 'int'], 524310]]);
 });
 
 test('BCL registry rejects async contracts and malformed invocation results', () => {

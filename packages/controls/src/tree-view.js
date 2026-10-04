@@ -1,3 +1,4 @@
+import {setTreeRowAttributes} from './tree-row.js';
 import {TreeModel} from './tree-model.js';
 const escape=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
 let treeId=0;
@@ -22,7 +23,7 @@ export class TreeView {
    const r=window[i],n=r.node,selected=this.model.selected.has(n.id),focus=this.model.focused===n.id,branch=this.model.isBranch(n.id),domId=this.id+'-'+(first+i),icon=n.icon??(branch?'▰':'◇');
    const el=existing.get(n.id)??this.element.ownerDocument.createElement('div');retained.add(el);
    el.id=domId;el.className=`sf-tree-row ${selected?'selected':''} ${focus?'focused':''} ${n.excluded?'excluded':''} ${n.startup?'startup':''}`;
-   for(const [name,value]of Object.entries({role:'treeitem','aria-level':r.level,'aria-posinset':r.pos,'aria-setsize':r.size,'aria-selected':selected,'data-tree-id':n.id,'data-node-kind':n.kind??'item',title:n.description??n.path??n.label}))el.setAttribute(name,String(value));
+   setTreeRowAttributes(el,r,selected);
    if(branch)el.setAttribute('aria-expanded',String(r.expanded));else el.removeAttribute('aria-expanded');
    if(n.path)el.dataset.file=n.path;else delete el.dataset.file;
    el.draggable=!!this.onDrop&&n.draggable!==false;
@@ -33,7 +34,6 @@ export class TreeView {
   }
   for(const el of [...this.canvas.children])if(!retained.has(el))el.remove();
   if(!rows.length){const empty=this.element.ownerDocument.createElement('div');empty.className='sf-tree-empty';empty.setAttribute('role','status');empty.textContent='No matching items';this.canvas.append(empty);}
-
   const focusedIndex=rows.findIndex(r=>r.id===this.model.focused);if(focusedIndex>=first&&focusedIndex<last)this.element.setAttribute('aria-activedescendant',this.id+'-'+focusedIndex);else this.element.removeAttribute('aria-activedescendant');
   this.rendered={first,last,total:rows.length,count:window.length};
  }

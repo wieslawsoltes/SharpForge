@@ -31,7 +31,7 @@ faults and collection behavior for both source and direct-CIL platforms.
 
 New environment contracts append after the released comparer slots: existing
 `GetEnvironmentVariable` remains 524289; `GetEnvironmentVariables` and
-`CurrentDirectory` use 524298 and 524299. Existing runtime builtin reservations
+`CurrentDirectory` use 524311 and 524312. Existing runtime builtin reservations
 remain fixed, and duplicate/overlapping reservations now fail explicitly.
 
 Two standalone interpreters: `VirtualMachine` for the original source-debugging profile and `CilVirtualMachine` for bounded direct managed CIL without #SF. Both share the explicit non-moving mark-and-sweep heap. The direct engine is a constrained allowlisted subset, not a complete CLR loader/type verifier or full BCL.

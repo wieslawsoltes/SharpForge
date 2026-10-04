@@ -1,13 +1,14 @@
 import {createNativeBuildSettings} from './workbench/lazy-features/native-settings.js';
-import { MSBuildClient, parsePropertyLines, inspectSlnx, createWorkspaceSlnx } from '../../packages/msbuild/src/index.js';
-import { escapeHtml as E } from '../../packages/editor/src/index.js';
-import { createCsproj } from '../../packages/project-system/src/index.js';
-const terminal=s=>['succeeded','failed','cancelled'].includes(s);
+import {runNativeOperation,acceptNativeJob,cancelNativeJob,disposeNativeOperations,
+ nativeJobTerminal as terminal} from './workbench/native-operation.js';
+import { MSBuildClient, parsePropertyLines, inspectSlnx, createWorkspaceSlnx } from '@sharpforge/msbuild';
+import { escapeHtml as E } from '@sharpforge/editor';
+import { createCsproj } from '@sharpforge/project-system';
 const formatBytes=n=>n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KiB':(n/1048576).toFixed(1)+' MiB';
 /** Native build UI has a separate lifecycle from the bounded browser compiler. */
 export class MSBuildTools {
- constructor({onAttach,onOpenSource,getSourceChanges,onSaved,onJob,onAssembly,onSelectPanel,onError,onWorkspace,settings,buffers}={}){
-  Object.assign(this,{onAttach,onOpenSource,getSourceChanges,onSaved,onJob,onAssembly,onSelectPanel,onError,onWorkspace});
+ constructor({onAttach,onOpenSource,getSourceChanges,onSaved,onJob,onJobFailure,onAssembly,onSelectPanel,onError,onWorkspace,settings,buffers}={}){
+  Object.assign(this,{onAttach,onOpenSource,getSourceChanges,onSaved,onJob,onJobFailure,onAssembly,onSelectPanel,onError,onWorkspace});
   this.client=null;this.capabilities=null;this.workspace=null;this.job=null;this.cursor=0;this.log='';this.buffers=buffers??new Map();this.sourcePath=null;this.hosts=new Map();this.inspection=null;this.attached=false;this.busy=false;this.disposed=false;this.settings=settings??createNativeBuildSettings();
  }
  async autoConnect(){let client;try{client=MSBuildClient.fromLocation();}catch(error){this.onError?.(error);return;}if(client){this.onSelectPanel?.('msbuild');try{await this.connect(client);}catch(error){this.onError?.(error);}}}
@@ -27,19 +28,9 @@ export class MSBuildTools {
  request(action){const s=this.settings;let args=[];if(s.arguments.trim()){args=JSON.parse(s.arguments);if(!Array.isArray(args))throw new Error('Advanced arguments must be a JSON string array');}
   return {action,project:s.project,configuration:s.configuration,platform:s.platform,framework:s.framework,runtime:s.runtime,properties:parsePropertyLines(s.properties),targets:s.targets.split(/[;,]/).map(x=>x.trim()).filter(Boolean),resultTargets:s.resultTargets.split(/[;,]/).map(x=>x.trim()).filter(Boolean),arguments:args,verbosity:s.verbosity,maxNodes:Number(s.maxNodes),restore:s.restore,binaryLog:s.binaryLog,graphBuild:s.graphBuild,trusted:s.trusted};
  }
- async run(action='build'){
-  if(this.busy)throw new Error('A native operation is already running');if(!this.client||!this.capabilities)throw new Error('Open Studio from the local MSBuild host URL');if(!this.capabilities.available)throw new Error(this.capabilities.error??'MSBuild is not installed');if(!this.capabilities.trusted||!this.settings.trusted)throw new Error('Enable native execution on the host and explicitly trust this workspace before running MSBuild, including evaluation.');
-  this.busy=true;this.renderBuild();
-  try{
-   const dirty=(this.getSourceChanges?.().length??0)+this.sourceChanges().length;if(dirty){if(!this.settings.save)throw new Error('Unsaved native editor changes. Save them, or enable Save before operation.');await this.save();}
-   this.log='';this.cursor=0;this.job=await this.client.start(this.request(action));this.accept(this.job);this.onSelectPanel?.('msbuild');
-   while(!terminal(this.job.status)&&!this.disposed){await new Promise(resolve=>setTimeout(resolve,200));this.accept(await this.client.job(this.job.id,this.cursor));}
-   if(this.job.status==='succeeded'&&this.job.result){this.inspection={project:this.job.request.project,action:this.job.request.action,result:this.job.result,jobId:this.job.id};this.renderInspector();if(['evaluate','preprocess','targets'].includes(action))this.onSelectPanel?.('msbuild-inspector');}
-   return this.job;
-  }finally{this.busy=false;this.renderBuild();}
- }
- accept(job){for(const event of job.events??[])if(event.cursor>this.cursor)this.log+=event.text;this.cursor=job.nextCursor;if(this.log.length>1048576)this.log=this.log.slice(-1048576);this.job={...job,events:[]};this.onJob?.(this.job);this.renderBuild();}
- async cancel(){if(this.job&&!terminal(this.job.status))this.accept(await this.client.cancel(this.job.id));}
+ run(action='build'){return runNativeOperation(this,action);}
+ accept(job,options){return acceptNativeJob(this,job,options);}
+ cancel(){return cancelNativeJob(this);}
  inspectSolution(){const buffer=this.buffers.get(this.sourcePath);if(!buffer||!/\.slnx$/i.test(buffer.path))throw new Error('Open a .slnx file first');this.inspection={project:buffer.path,action:'solution-structure',result:{Solution:inspectSlnx(buffer.text,{path:buffer.path})}};this.onSelectPanel?.('msbuild-inspector');this.renderInspector();return this.inspection;}
  async artifact(file,{inspect=false}={}){if(!this.job)throw new Error('No build output');const bytes=await this.client.artifact(this.job.id,file.path);if(inspect){await this.onAssembly?.(bytes,file.path);return;}const blob=new Blob([bytes],{type:'application/octet-stream'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=file.path.split('/').at(-1);a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
  render(panel,el){this.hosts.set(panel,el);if(panel==='msbuild')this.renderBuild();else if(panel==='msbuild-inspector')this.renderInspector();else if(panel==='project-source')this.renderSource();}
@@ -87,5 +78,5 @@ export class MSBuildTools {
   const b=this.buffers.get(this.sourcePath);el.querySelector('.native-source-status').textContent=b?`${b.path} · ${b.text!==b.baseline||b.hash===null?'unsaved changes':'matches loaded disk snapshot'}`:'No file selected.';
  }
  renderTree(el,query=''){const files=(this.workspace?.files??[]).filter(f=>f.path.toLowerCase().includes(query)).slice(0,500);el.innerHTML='<div class="native-tree-caption">LOCAL MSBUILD WORKSPACE</div>'+files.map(f=>`<button class="file-row" data-native-file="${E(f.path)}"><span class="file-icon">${f.kind==='source'?'C#':f.kind==='project'?'⚙':f.kind==='solution'?'◇':'≡'}</span><span>${E(f.path)}</span></button>`).join('')+(files.length===500?'<p>Showing 500 files. Use the filter to narrow the list.</p>':'');for(const b of el.querySelectorAll('[data-native-file]'))b.onclick=()=>this.open(b.dataset.nativeFile).catch(e=>this.onError?.(e));}
- dispose(){this.disposed=true;this.client?.disconnect();}
+ dispose(){return disposeNativeOperations(this);}
 }

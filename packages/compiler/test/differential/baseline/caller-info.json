@@ -1,9 +1,9 @@
 {
-  "caller-info/argument-expression-and-file-path": ["diagnostics", "warnings", "bytecode", "cil"],
-  "caller-info/constructors-indexers-and-operators": ["diagnostics", "warnings", "bytecode", "cil"],
+  "caller-info/argument-expression-and-file-path": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "caller-info/constructors-indexers-and-operators": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "caller-info/cs4017-cs4018-cs4019-which-parameter-types-take-caller-info": ["diagnostics", "warnings"],
   "caller-info/cs4017-cs4022-cs7081-cs8963-declaration-rules": ["diagnostics", "warnings"],
-  "caller-info/foreach-variable-is-fresh-per-iteration": ["diagnostics", "warnings", "bytecode", "cil"],
+  "caller-info/foreach-variable-is-fresh-per-iteration": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "caller-info/line-directives-remap-line-and-path-and-the-line-converts-to-double": ["diagnostics", "warnings", "bytecode", "cil"],
-  "caller-info/member-name-and-line-number": ["diagnostics", "warnings", "bytecode", "cil"]
+  "caller-info/member-name-and-line-number": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }
