@@ -80,7 +80,7 @@ for (const nativeIntBits of [32, 64]) {
   });
 }
 
-test('concrete generic method signatures determine Decimal argument and local charges', () => {
+test('concrete instantiated signatures determine Decimal argument and local charges', () => {
   const vm = new CilVirtualMachine(literal(), {maxStackBytes: 80, maxStackValues: 1});
   const original = vm.top.method;
   // Instantiated methods share their verified body but own concrete signature/local metadata.
@@ -205,3 +205,20 @@ test('admission while enqueue switches frame arrays still accounts the parent co
   vm.frames = parentFrames;
   vm.stop();
 });
+
+
+for (const changed of ['locals', 'signature', 'parameters']) {
+  test(`host replacement of ${changed} triggers byte admission before the next instruction`, () => {
+    const vm = new CilVirtualMachine(literal(), {maxStackBytes: 24});
+    vm.step();
+    if (changed === 'locals') vm.top.method.locals = ['decimal'];
+    else if (changed === 'signature') {
+      vm.top.method.signature = {...vm.top.method.signature, parameters: ['decimal']};
+    } else vm.top.method.signature.parameters = ['decimal'];
+    assert.throws(() => vm.step(), fault);
+    assert.throws(() => vm.push(7), fault);
+    assert.equal(vm.top.pc, 1);
+    assert.deepEqual(vm.top.stack, [42]);
+    vm.stop();
+  });
+}

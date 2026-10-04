@@ -1,4 +1,4 @@
-import {callStorageType, verifiedStackBound} from '@sharpforge/cil';
+import {normalizeCallType, verifiedStackBound} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 
@@ -22,7 +22,8 @@ function overflow() {
 }
 
 function storageBytes(vm, type) {
-  const name = callStorageType(type).replace(/\s+pinned$/, '');
+  // Custom modifiers affect access/call contracts, not physical storage width.
+  const name = normalizeCallType(type).replace(/\s+mod(?:req|opt)\([^)]*\)/g, '').replace(/\s+pinned$/, '');
   const table = vm.typeSystem.table(name);
   const bytes = table.flags.valueType ? table.valueSize : slotBytes;
   if (!Number.isSafeInteger(bytes) || bytes < 0) throw new TypeError('Invalid managed stack storage size');
@@ -37,7 +38,8 @@ function newBudget(vm) {
 function methodSize(vm, budget, method) {
   let entry = budget.methods.get(method);
   if (entry && entry.instructions === method.instructions && entry.handlers === method.handlers &&
-      entry.capacity === method.maxStack && entry.signature === method.signature && entry.locals === method.locals) return entry;
+      entry.capacity === method.maxStack && entry.signature === method.signature && entry.parameters === method.signature.parameters &&
+      entry.locals === method.locals) return entry;
   const bound = verifiedStackBound(vm.inspector, vm.report, method);
   // Replaced/unverified bodies can use the entire checked global limit.
   const capacity = bound ? Math.min(bound.capacity, budget.valueLimit) : budget.valueLimit;
@@ -48,7 +50,7 @@ function methodSize(vm, budget, method) {
   for (const type of method.locals) bytes += storageBytes(vm, type);
   if (!Number.isSafeInteger(bytes) || bytes < frameHeaderBytes) throw new TypeError('Invalid managed frame size');
   entry = {instructions: method.instructions, handlers: method.handlers, capacity: method.maxStack,
-    signature: method.signature, locals: method.locals, arguments: arguments_, bytes};
+    signature: method.signature, parameters: method.signature.parameters, locals: method.locals, arguments: arguments_, bytes};
   budget.methods.set(method, entry);
   return entry;
 }
