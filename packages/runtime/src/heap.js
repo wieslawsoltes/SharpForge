@@ -1,11 +1,12 @@
 import {collectHeap} from './heap-collection.js';
+import {isReference} from './heap-reference.js';
 import {MethodTableRegistry} from './execution/method-table.js';
 import {recordAllocation,replaceHeapData} from './execution/heap-allocation.js';
 /** A precise, non-moving tracing heap. Managed references are generation-checked handles, never raw JS object references. */
 export class ManagedFault extends Error {
   constructor(type,message,reference=null){super(message);this.name=type;this.reference=reference;}
 }
-export function isReference(value){return value!==null&&typeof value==='object'&&Number.isInteger(value.h)&&Number.isInteger(value.g);}
+export {isReference} from './heap-reference.js';
 const sizeOf=(kind,data)=>kind==='string'?24+data.length*2:32+data.length*8;
 export class ManagedHeap {
   constructor({maxBytes=32*1024*1024,initialThreshold=64*1024,methodTables=new MethodTableRegistry()}={}){
