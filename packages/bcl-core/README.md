@@ -91,6 +91,58 @@ controls are separate from the new Compare costs, with one warmup, five samples,
 median/p95 and managed allocation counts. This completes only this three-argument
 overload; #2621 remains open for culture support and the other comparison APIs.
 
+`String.StartsWith(string, StringComparison)` and `String.EndsWith(string,
+StringComparison)` append at `524302` and `524303`, after mode-aware Compare
+`524301`. Both support `Ordinal` and `OrdinalIgnoreCase`. Null receivers fail first;
+a null `value` raises `ArgumentNullException` naming `value` before mode validation.
+Invalid modes raise `ArgumentException` naming `comparisonType` before identity,
+empty-value or length shortcuts. Valid culture modes 0–3 explicitly raise
+`NotSupportedException` after null checks, including otherwise trivial matches.
+The existing one-argument contracts retain their released behavior.
+
+Ordinal-ignore-case affixes reuse the ordinal fold in a bounded UTF-16 loop. A high
+surrogate at a prefix endpoint stays isolated even when the original string has a
+following low surrogate; a suffix beginning at a low surrogate never reads the
+preceding high surrogate. No substrings or folded strings are allocated. Comparison
+takes O(value length) time and constant auxiliary space; the whole-string comparator
+is unchanged. The pinned 264-row native capture retains native culture controls and
+tests their deliberate profile differences separately, across both pipelines/VMs
+and independent CIL. It also covers scan-width boundaries, malformed UTF-16, casing,
+NUL, identity, longer values and fault precedence. See
+[the capture instructions](reference/string-affix-comparison/README.md).
+
+Run `node --expose-gc scripts/benchmarks/a07-string-affix-comparison.mjs` serially
+against Compare-only parent `f9292ef3` and this branch. The identical runner separates
+released one-argument controls from new mode-aware costs, with setup excluded,
+one warmup, five samples, median/p95 and managed allocation counters. No speedup
+is claimed; culture affixes and the rest of #2621 remain open.
+
+`String.Compare(string, int, string, int, int, StringComparison)` is appended at
+A07 slot `524304`, after the mode-aware affix overloads. `Ordinal` and
+`OrdinalIgnoreCase` compare independently clipped ranges without allocating
+substrings, folded strings or range objects. Invalid enum values are checked
+first; supported modes then order nulls before range validation. Non-null inputs
+validate length, negative indices and past-end indices before zero-length or
+same-range shortcuts. High surrogates pair only within each range's own end, and
+ranges beginning at a low surrogate do not read before their start. Only the
+comparison sign is specified.
+
+Culture modes 0–3 explicitly raise `NotSupportedException` before null, invalid
+range or identity shortcuts. The [292-row native reference](reference/string-compare-comparison-ranges/README.md)
+retains the actual .NET 10.0.5 / SDK 10.0.201 culture results and faults separately
+from this deliberate profile restriction. Tests cover both pipelines/VMs,
+independent CIL, all captured precedence/boundary cases, GC-rooted inputs and
+unchanged raw results/faults for the released 58-case CompareOrdinal range oracle.
+The original whole-string and affix loops remain unchanged.
+
+Comparison takes O(n) time in inspected UTF-16 units and constant auxiliary space.
+The identical bounded `scripts/benchmarks/a07-string-compare-comparison-ranges.mjs`
+runner on baseline `2a1c6007` and the candidate reports existing range and whole
+comparison controls separately from new overload costs, using one warmup and five
+samples per VM, median/p95 and managed allocation counters. #2621 remains open for
+culture support and remaining APIs; Boolean/culture overloads are outside this
+batch.
+
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch
 routes. Its streaming fold reuses the pinned simple-uppercase table without

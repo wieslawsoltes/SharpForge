@@ -3,7 +3,7 @@
   "sources": {
     "packages/runtime/src/heap.js": "eecd3fb6a26637b3feb810f233f377c799f05c119e93c71b4a971056529e5d6b",
     "packages/runtime/src/vm.js": "e698585e110a9d30335ee2ea4f86f4f041239a0a99f8a97becd783976f87c629",
-    "packages/runtime/src/cil-vm.js": "da17ef03afec2b6fc9e35d80edecbe2224beb0957d719e5f887ae9d94e0c0449",
+    "packages/runtime/src/cil-vm.js": "35d6cfb8c09251a39157ce1f1bf0124725faa14e0668a248cfc2cb5845528684",
     "packages/runtime/src/execution/delegate-targets.js": "ec19efa480e2d864ba35268cfee220015e7655d84213502d6d2fc4b95094ae5d",
     "packages/runtime/src/execution/source-ops.js": "d281c22b9072dc0151a2b0b3571c02b29bfe3074dbf783cf879269b6e5af9a22",
     "packages/runtime/src/execution/source-ops/load-store.js": "7a99bedd6eef6f44a618a9f905181df553fa01bb98ee6d9912be4936d87c8a3e",
@@ -17,7 +17,7 @@
     "packages/runtime/src/execution/source-builtins/collections.js": "7c29355d5d9e39fd29641ffb9d2bf0e0ee6b406b70d75829f5dfe57dad0508cc",
     "packages/runtime/src/execution/source-builtins/services.js": "b91d5a6acbd232e5d3e63e7a727e180ec4b7a4baff44ce82a6a51b1f6234cd8e",
     "packages/runtime/src/execution/source-builtins/index.js": "5f158f73b07154bad9b3a3c2602cdac4ef2203b7984f1ad464a8b22d06f8211e",
-    "packages/runtime/src/execution/storage.js": "d07039d0335c64ae69eccc3313e87b954d4b1c601667c61b392b7274699414ac",
+    "packages/runtime/src/execution/storage.js": "083780a6cbb3243541ef833c9508d40b480276606375235df35c24822a257db1",
     "packages/runtime/src/execution/numeric-ops.js": "407778ba5fa9b1b97d26e625874dac923b2de5c6e4f9a5a30d42f1b2da7ee2b2",
     "packages/runtime/src/execution/enums.js": "7235807aed0ec81512a186db091608087e4418b38dfbd1cb228cde697a46ff5c",
     "packages/bytecode/src/index.js": "3d06bc8813cdd608360f8744c6bd8b7006845af5ac5918ca730b182be04ab058",
@@ -68,10 +68,18 @@
     },
     "any": {
       "source": "number | bigint | boolean | null | undefined | {h,g} | enum | float | nativeInt | Decimal",
-      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer"
+      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields}"
     }
   },
   "additionalShapes": [
+    {
+      "shape": "{valueType:MethodTable,fields:frozen array}",
+      "meaning": "immutable VM-owned direct-CIL reference-free sequential struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data"
+    },
+    {
+      "shape": "{byref:true,vmOwner,kind,index,owner,frameId,path:frozen array}",
+      "meaning": "owned CIL address with immutable struct field indices; resolves live storage on access; rejects foreign VM and expired frames"
+    },
     {
       "shape": "{decimal:true, coefficient:bigint, scale:0..28, negative:boolean}",
       "meaning": "immutable System.Decimal value, unsigned 96-bit coefficient; exact source/CIL arithmetic, storage and boxing; not a portable wire value"

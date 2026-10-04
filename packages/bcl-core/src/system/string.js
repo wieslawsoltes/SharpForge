@@ -4,7 +4,8 @@ import {isNullOrWhiteSpace, trimWhiteSpace} from './whitespace.js';
 import {invariantCase} from './casing.js';
 import {compareOrdinalRange} from './string-compare.js';
 import {equalsWithComparison, registerStringEqualityExtensions} from './string-equality.js';
-import {compareWithComparison} from './string-comparison.js';
+import {compareWithComparison, compareRangeWithComparison} from './string-comparison.js';
+import {affixWithComparison, registerStringAffixExtensions} from './string-affix.js';
 
 const owner = 'System.String';
 
@@ -60,6 +61,8 @@ export function registerStringComparisonExtensions(registry) {
   member(owner, 'CompareOrdinal', ['string', 'int', 'string', 'int', 'int'], 'int', {isStatic: true});
   registerStringEqualityExtensions(registry);
   member(owner, 'Compare', ['string', 'string', 'System.StringComparison'], 'int', {isStatic: true});
+  registerStringAffixExtensions(registry);
+  member(owner, 'Compare', ['string', 'int', 'string', 'int', 'int', 'System.StringComparison'], 'int', {isStatic: true});
 }
 
 function splitString(platform, receiver, values, scalars) {
@@ -100,7 +103,8 @@ function staticString(platform, descriptor, values, scalars) {
     }
     case 'Equals': return scalars.length === 2 ? scalars[0] === scalars[1]
       : equalsWithComparison(platform, scalars[0], scalars[1], scalars[2]);
-    case 'Compare': return compareWithComparison(platform, scalars[0], scalars[1], scalars[2]);
+    case 'Compare': return scalars.length === 6 ? compareRangeWithComparison(platform, scalars)
+      : compareWithComparison(platform, scalars[0], scalars[1], scalars[2]);
     case 'CompareOrdinal':
       if (scalars.length === 5) return compareOrdinalRange(platform, scalars);
       if (scalars[0] === scalars[1]) return 0;
@@ -126,8 +130,10 @@ function instanceString(platform, name, receiver, values, scalars) {
       return receiver.slice(start, start + length);
     }
     case 'Contains': return receiver.includes(string(platform, values[0]));
-    case 'StartsWith': return receiver.startsWith(string(platform, values[0]));
-    case 'EndsWith': return receiver.endsWith(string(platform, values[0]));
+    case 'StartsWith': return scalars.length === 1 ? receiver.startsWith(string(platform, values[0]))
+      : affixWithComparison(platform, receiver, scalars[0], scalars[1], false);
+    case 'EndsWith': return scalars.length === 1 ? receiver.endsWith(string(platform, values[0]))
+      : affixWithComparison(platform, receiver, scalars[0], scalars[1], true);
     case 'IndexOf':
       return receiver.indexOf(string(platform, values[0]), values.length === 2 ? integer(platform, scalars[1], 0, receiver.length) : 0);
     case 'LastIndexOf': return receiver.lastIndexOf(string(platform, values[0]));
