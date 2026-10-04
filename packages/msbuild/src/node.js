@@ -8,3 +8,7 @@ export * from './process.js';
 export * from './trust.js';
 export * from './scheduler.js';
 export * from './workloads.js';
+export * from './sdk-discovery.js';
+export * from './global-json.js';
+export * from './service-registry.js';
+export * from './services-sdk.js';
