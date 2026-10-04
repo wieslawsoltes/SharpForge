@@ -8,7 +8,8 @@
  * Attributes the language adds itself are written the same way through `wellKnown`:
  *   DefaultMemberAttribute("Item")   on a type that declares an indexer
  *   ParamArrayAttribute              on a `params` parameter
- *   CompilerGeneratedAttribute       on the backing fields and accessors of auto-properties and field-like events
+ *   CompilerGeneratedAttribute       on the backing fields and accessors of auto-properties and field-like events,
+ *                                    and on the members a record synthesizes
  *   TupleElementNamesAttribute       on a field, parameter, return value or property whose type names tuple elements
  *   RequiredMemberAttribute          on a `required` member and its type; Obsolete + CompilerFeatureRequired on the
  *                                    constructors of such a type that are not marked [SetsRequiredMembers]
@@ -21,7 +22,7 @@ import { SymbolKind, TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { MetadataEmitError, namespaceOf, definitionNameOf } from './type-tokens.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
-import { tupleElementNamesOf } from './tuple-element-names.js';
+import { tupleElementNamesOf } from '../../binder/tuples.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const TYPE_DEF_TABLE = 2;
@@ -164,6 +165,7 @@ export class CustomAttributeWriter {
       for (const { symbol } of plan.properties) {
         this.applied(this.writer.propertyTokens.get(symbol), symbol);
         if (symbol.isRequired) this.wellKnown(this.writer.propertyTokens.get(symbol), REQUIRED_MEMBER);
+        if (symbol.isSynthesizedRecordMember) this.compilerGenerated(this.writer.propertyTokens.get(symbol));
         this.tupleElementNames(this.writer.propertyTokens.get(symbol), symbol.type);
       }
       for (const { symbol } of plan.events) this.applied(this.writer.eventTokens.get(symbol), symbol);
@@ -180,6 +182,8 @@ export class CustomAttributeWriter {
     this.applied(planned.token, symbol);
     if (planned.overrides) this.wellKnown(planned.token, 'System.Runtime.CompilerServices.PreserveBaseOverridesAttribute');
     if (owner?.kind === SymbolKind.Property && owner.isAutoProperty) this.compilerGenerated(planned.token);
+    // The members a record synthesizes, its copy constructor included.
+    if (symbol.recordMember || (symbol.isCopyConstructor && symbol.isImplicitlyDeclared)) this.compilerGenerated(planned.token);
     const returnToken = this.writer.returnParameterTokens.get(symbol);
     if (returnToken) this.tupleElementNames(returnToken, symbol.returnType);
     for (const [index, parameter] of symbol.parameters.entries()) {

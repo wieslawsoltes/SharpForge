@@ -373,6 +373,33 @@ Reads cost O(chunk count); writes cost O(chunk count + affected chunk length).
 The generated reference inventory still reports indexed-property metadata rows
 separately from the implemented accessor signatures.
 
+`StringBuilder.CopyTo(int, char[], int, int)` appends at ID 524315. Its 50-case
+pinned .NET 10.0.5 reference includes null/negative/zero-count precedence and
+the native array overload's unchecked Int32 subtraction. Validation completes
+before any destination write; a valid zero count returns before snapshotting.
+Nonempty copies snapshot and root only the live source chunk references plus
+the destination, then scan the chunks once and write individual UTF-16 units.
+There is no whole-builder flattening or per-unit managed string allocation.
+The operation costs O(live chunks + copied units) time and O(live chunks) host
+references, with zero managed allocations. Every completed destination write
+increments the heap revision and emits an array notification. If an observer
+throws, the completed prefix remains. If it changes the builder, the original
+chunk snapshot supplies the remaining copied units. These callback rules are
+the explicit host profile, not a native concurrency guarantee. CopyTo itself
+does not mutate the builder; the Span overload and remaining APIs stay open.
+
+`StringBuilder.Append(long)` and `Append(ulong)` append at IDs 524316–524317.
+They reuse the existing typed scalar formatter and one bounded chunk append,
+preserving all 64 bits, same-builder identity, managed roots and allocation
+faults. No JavaScript Number conversion is introduced. The pinned .NET 10.0.5
+reference contains 26 cases and a mixed fluent control; inputs are decimal
+strings so the oracle retains signed limits and the full unsigned upper half.
+Independent CIL tests use real Int64 stack bit patterns, and compiled typed
+locals run through both compiler pipelines and VMs. Formatting follows the
+existing invariant host profile; configurable culture and the remaining builder
+overloads remain separate work under #2637. Each value needs at most 20 decimal
+units, with the existing amortized chunk-storage growth and host text budget.
+
 StringBuilder reports the .NET default `MaxCapacity` of `Int32.MaxValue`
 (`2147483647`) in both metadata and execution. The host separately limits text
 and requested capacity to 1,000,000 UTF-16 code units. Exceeding that allocation

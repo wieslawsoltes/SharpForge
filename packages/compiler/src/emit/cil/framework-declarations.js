@@ -13,6 +13,7 @@ const declaredElsewhere = Object.freeze({
     Reset: { type: 'ienumerator' },
     Dispose: { type: 'idisposable' },
   },
+  iasyncEnumeratorT: { DisposeAsync: { type: 'iasyncDisposable' } },
   icollectionT: { GetEnumerator: { type: 'ienumerableT', isGeneric: true } },
   ilistT: {
     GetEnumerator: { type: 'ienumerableT', isGeneric: true },

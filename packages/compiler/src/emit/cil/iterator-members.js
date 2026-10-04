@@ -167,7 +167,7 @@ function moveNextBody(program, machine) {
  */
 export function declareIterator(plan, machine, shape) {
   const core = plan.core,
-    type = machine.type,
+    type = machine.definition,
     kickoff = machine.kickoff,
     methods = plan.additionsTo(type).methods,
     privateField = (name, fieldType) => plan.field(type, name, fieldType, FieldAttributes.Private),

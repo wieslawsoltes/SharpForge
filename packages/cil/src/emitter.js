@@ -3,10 +3,10 @@ import { prepareEmission } from './emit/emission-context.js';
 import { emissionTypeDescriptors } from './emit/type-descriptors.js';
 import { debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
 import { EmitterSignatures } from './emitter-signatures.js';
-import { emitObjectBuiltin } from './object-builtin-mapping.js';
+import {emitBuiltin} from './builtin-emission.js';
 import { emitPropertyMetadata } from './emitter-properties.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
-import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins, numericTypeId } from '@sharpforge/bytecode';
+import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins, numericTypeId, numericTypeName } from '@sharpforge/bytecode';
 import { Writer, CilError, align, utf8 } from './binary.js';
 import { token, codedIndex, cliSystemName } from './metadata.js';
 import { CilWriter } from './opcodes.js';
@@ -58,9 +58,9 @@ function emitHelper(c,d) {
 function handlerLayout(method) {return method.handlers.map(h=>{if(h.kind==='finally')return {...h,handlerEndPc:h.handlerEnd};const after=method.code[h.end*3]===Op.JUMP?method.code[h.end*3+1]:null;if(after===null)throw new CilError('Unsupported exception region layout');const siblings=method.handlers.filter(other=>other.start===h.start&&other.end===h.end&&other.target>h.target).sort((a,b)=>a.target-b.target);return {...h,handlerEndPc:siblings[0]?.target??after};});}
 function emitMethod(c,d) {
   const m=d.original,analysis=analyzeMethod(c.image,m),w=new CilWriter(),locals=m.locals.map(l=>l.type),scratch=new Map(),spans=[],starts=[],patches=[],prefixes=new Map(),handlers=handlerLayout(m),n=m.code.length/3;
-  const getScratch=(type,index=0)=>{type=type==='null'?'object':type;const key=type+':'+index;if(scratch.has(key))return scratch.get(key);const slot=locals.length;if(slot>=65535)throw new CilError('Scratch locals exceed CLI limit');locals.push(type);scratch.set(key,slot);return slot;};
+  const getScratch=(type,index=0)=>{type=type==='null'?'object':numericTypeName(type);const key=type+':'+index;if(scratch.has(key))return scratch.get(key);const slot=locals.length;if(slot>=65535)throw new CilError('Scratch locals exceed CLI limit');locals.push(type);scratch.set(key,slot);return slot;};
   const args=m.parameters.length+(m.isStatic?0:1);for(let i=0;i<args;i++)w.local('ldarg',i).local('stloc',i);
-  const needs=(from,to)=>from!==to&&((numericTypeId(to)!==undefined&&numericTypeId(from)!==undefined)||(to==='object'&&isValue(from)));
+  const needs=(from,to)=>numericTypeName(from)!==numericTypeName(to)&&((numericTypeId(to)!==undefined&&numericTypeId(from)!==undefined)||(to==='object'&&isValue(from)));
   function convert(from,to){if(from===to||from==='null')return;if(numericTypeId(to)!==undefined&&numericTypeId(from)!==undefined)emitScalarConversion(w,c,from,to);else if(to==='object'&&isValue(from))w.op('box',c.resolveType(from));}
   function adapt(from,to){if(from.length!==to.length)throw new CilError('Invalid conversion stack shape');if(!from.some((t,i)=>needs(t,to[i])))return;let lowest=from.findIndex((t,i)=>needs(t,to[i]));const slots=new Map();for(let i=from.length-1;i>lowest;i--){const slot=getScratch(from[i],i);slots.set(i,slot);w.local('stloc',slot);}convert(from[lowest],to[lowest]);for(let i=lowest+1;i<from.length;i++){w.local('ldloc',slots.get(i));convert(from[i],to[i]);}}
   function relative(name,target){const at=w.length;w.op(name,0);patches.push({at:at+1,end:at+5,target});}
@@ -93,7 +93,7 @@ function emitMethod(c,d) {
         const output=analysis.outputs[pc];if(output.some((t,i)=>needs(t,analysis.states[a]?.[i])))throw new CilError('Conditional edge requires an unsupported stack conversion');
         if(leaves(pc,a)){const skip=w.length;w.op(op===Op.JFALSE?'brtrue':'brfalse',5);relative('leave',a);}else relative(op===Op.JFALSE?'brfalse':'brtrue',a);break;}
       case Op.CALL:{const target=c.image.methods[a],from=input.slice(input.length-b),to=[...(target.isStatic?[]:[target.owner]),...target.parameters.map(p=>p.type)];adapt(from,to);w.op('call',c.methodTokens.get(a));if(target.returnType==='void')w.op('ldnull');break;}
-      case Op.BUILTIN:{const descriptor=Builtins[a]?.contract;if(descriptor){const from=input.slice(input.length-b),to=[...(!descriptor.isStatic&&descriptor.kind!=='constructor'?[descriptor.owner]:[]),...descriptor.parameters];adapt(from,to);if(!descriptor.isStatic&&descriptor.kind!=='constructor'&&frameworkType(descriptor.owner)?.kind==='value'){const slots=[];for(let j=to.length-1;j>=0;j--){const slot=getScratch(to[j],2000+j);slots[j]=slot;w.local('stloc',slot);}w.op('ldloca',slots[0]);for(let j=1;j<slots.length;j++)w.local('ldloc',slots[j]);}const ctor=descriptor.kind==='constructor';w.op(ctor?'newobj':descriptor.isStatic||frameworkType(descriptor.owner)?.kind==='value'?'call':'callvirt',c.external(descriptor.owner,descriptor.name,ctor?'void':descriptor.result,descriptor.parameters,descriptor.isStatic));if(!ctor&&descriptor.result==='void')w.op('ldnull');}else emitBuiltin(c,w,a,b,input.slice(input.length-b),adapt);break;}
+      case Op.BUILTIN:{const descriptor=Builtins[a]?.contract;if(descriptor){const from=input.slice(input.length-b),to=[...(!descriptor.isStatic&&descriptor.kind!=='constructor'?[descriptor.owner]:[]),...descriptor.parameters];adapt(from,to);if(!descriptor.isStatic&&descriptor.kind!=='constructor'&&frameworkType(descriptor.owner)?.kind==='value'){const slots=[];for(let j=to.length-1;j>=0;j--){const slot=getScratch(to[j],2000+j);slots[j]=slot;w.local('stloc',slot);}w.op('ldloca',slots[0]);for(let j=1;j<slots.length;j++)w.local('ldloc',slots[j]);}const ctor=descriptor.kind==='constructor';w.op(ctor?'newobj':descriptor.isStatic||frameworkType(descriptor.owner)?.kind==='value'?'call':'callvirt',c.external(descriptor.owner,descriptor.name,ctor?'void':descriptor.result,descriptor.parameters,descriptor.isStatic));if(!ctor&&descriptor.result==='void')w.op('ldnull');}else emitBuiltin(c,w,a,input.slice(input.length-b),adapt);break;}
       case Op.RET:{if(m.returnType==='void')w.op('pop');else convert(top,m.returnType);if(zones(pc).length){if(m.returnType!=='void')w.local('stloc',returnSlot);relative('leave','return');}else w.op('ret');terminal=true;break;}
       case Op.NEWOBJ:w.op('ldnull').op('newobj',c.allocTokens.get(a));break;
       case Op.NEWARR:w.op('newarr',c.resolveType(c.image.constants[a]));break;
@@ -110,25 +110,4 @@ function emitMethod(c,d) {
   for(const patch of patches){const target=patch.target==='return'?returnOffset:starts[patch.target];if(target===undefined)throw new CilError('Missing CIL branch target');w.patch32(patch.at,target-patch.end);}
   const nativeHandlers=handlers.map(h=>({start:starts[h.start],end:spans[h.end][0]+spans[h.end][1],target:prefixes.get(h.target),handlerEnd:prefixes.get(h.handlerEndPc)??starts[h.handlerEndPc]??returnOffset,catchType:h.kind==='finally'?0:c.resolveType('Exception'),...(h.kind==='finally'?{flags:2}:{})}));
   return {code:w.finish(),locals,maxStack:analysis.maxStack+Math.max(16,args+4),handlers:nativeHandlers,spans};
-}
-function emitBuiltin(c,w,id,count,types,adapt) {
-  const name=Builtins[id].name;let owner,member,result,params,instance=false,newObject=false,extra=false;
-  if(emitObjectBuiltin(c,w,name,types,adapt))return;
-  if(name.startsWith('Console.')){owner='System.Console';member=name.slice(8);result='void';params=count?[types[0]==='null'?'string':frameworkType(types[0])?.kind==='enum'?'object':isValue(types[0])||types[0]==='string'?types[0]:'object']:[];}
-  else if(name.startsWith('Math.')||name==='$Math.Abs.Int32'){owner='System.Math';member=name==='$Math.Abs.Int32'?'Abs':name.slice(5);const intResult=['Abs','Min','Max'].includes(member)&&types.every(t=>t==='int');result=intResult?'int':'double';params=types.map(()=>result);}
-  else if(name.startsWith('GC.')){owner='System.GC';member=name.slice(3);result=member==='Collect'?'void':member==='GetTotalMemory'?'long':'int';params=member==='Collect'?[]:member==='GetTotalMemory'?['bool']:['int'];if(member==='GetTotalMemory'&&!count){w.integer(0);extra=true;}}
-  else if(name==='int.Parse'||name==='double.Parse'){owner=name.startsWith('int')?'int':'double';member='Parse';result=owner;params=['string'];}
-  else if(name.startsWith('Convert.')){owner='System.Convert';member=name.slice(8);result={ToInt32:'int',ToDouble:'double',ToString:'string'}[member];params=[types[0]==='null'?'object':isValue(types[0])||types[0]==='string'?types[0]:'object'];}
-  else if(name.startsWith('Array.')){owner='Array';member=name.slice(6);result='void';params=['Array'];}
-  else if(name==='Type.Name'||name==='Type.FullName'){owner=name==='Type.Name'?'System.Reflection.MemberInfo':'System.Type';member='get_'+name.slice(5);result='string';params=[];instance=true;}
-  else if(name==='Enum.HasFlag'){adapt(types,['object','object']);w.op('callvirt',c.external('System.Enum','HasFlag','bool',['System.Enum'],false));return;}
-  else if(name==='string.get_Chars'){adapt(types,['string','int']);w.op('callvirt',c.external('string','get_Chars','char',['int'],false)).op('conv.i4');return;}
-  else if(name==='Exception.new'){owner='Exception';member='.ctor';result='void';params=['string'];instance=true;newObject=true;}
-  else if(name==='Exception.Message'){owner='Exception';member='get_Message';result='string';params=[];instance=true;}
-  else if(name==='Debug.Assert'){if(count===1)w.op('ldstr',0x70000000|c.metadata.userString('Assertion failed'));w.op('call',c.helperToken).op('ldnull');return;}
-  else if(name==='Environment.TickCount'){owner='System.Environment';member='get_TickCount';result='int';params=[];}
-  else if(name.startsWith('string.')){owner='string';member=name.slice(7);result=['Contains','StartsWith','EndsWith','IsNullOrEmpty'].includes(member)?'bool':member==='IndexOf'?'int':'string';instance=!['Concat','IsNullOrEmpty','Intern','IsInterned'].includes(member);params=member==='Concat'?['string','string']:['IsNullOrEmpty','Intern','IsInterned'].includes(member)?['string']:member==='Substring'?Array(count-1).fill('int'):['Contains','IndexOf','StartsWith','EndsWith'].includes(member)?['string']:member==='Replace'?['string','string']:[];}
-  else throw new CilError(`No CIL intrinsic mapping for ${name}`);
-  if(!extra)adapt(types,[...(instance&&!newObject?[owner]:[]),...params]);
-  w.op(newObject?'newobj':instance?'callvirt':'call',c.external(owner,member,result,params,!instance));if(result==='void'&&!newObject)w.op('ldnull');
 }

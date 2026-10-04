@@ -10,6 +10,7 @@ export function createInsightContext(editor, options) {
   const document = editor.element.ownerDocument;
   const lifetime = new WidgetLifetime();
   const guard = new AsyncRequestGuard(() => editorRevision(editor));
+  const requestSuspensions = new Set();
   const workspace = options.workspace ?? editorWorkspace(editor);
   const statusElement = node(document, 'div', {className: 'sf-insight-status', role: 'status', 'aria-live': 'polite'});
   editor.element.append(statusElement);
@@ -28,6 +29,7 @@ export function createInsightContext(editor, options) {
     },
     async request(method, parameters = {}, requestOptions = {}) {
       if (!services.supports(method)) return undefined;
+      for (const allowed of requestSuspensions) if (!allowed.has(method)) return undefined;
       const maximum = options.maxSemanticCharacters ?? 2_000_000;
       if (method !== 'readDocument' && !options.languageServicesInLargeFiles && (editor.model?.length ?? editor.value.length) > maximum) {
         return undefined;
@@ -36,6 +38,13 @@ export function createInsightContext(editor, options) {
       const validation = method === 'readDocument' ? {...requestOptions, validateResponseVersion: false} : requestOptions;
       const result = await guard.run(requestOptions.key ?? method, value => services.invoke(method, value), parameters, validation);
       return result ? {...result, versions} : undefined;
+    },
+    // Temporary model previews must never advance the host's monotonic semantic workspace.
+    suspendRequests(allowedMethods = []) {
+      const allowed = new Set(allowedMethods);
+      guard.cancelAll();
+      requestSuspensions.add(allowed);
+      return () => requestSuspensions.delete(allowed);
     },
     async navigate(location, navigationOptions = {}) {
       const uri = location.uri ?? location.targetUri;
