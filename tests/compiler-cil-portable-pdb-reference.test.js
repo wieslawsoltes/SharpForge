@@ -123,10 +123,13 @@ test('direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack
     const nativeReference = JSON.parse(run([reader, 'inspect', join(reference, 'bin', 'Reference.pdb'), join(reference, 'bin', 'Reference.dll')]));
     assert.ok(mappedSpans(nativeReference, 'view.cs').some(span => span[0] === 123));
     assert.deepEqual(mappedSpans(nativeReference, 'component.razor'), [[200, 5, 201, 9]]);
-    const catchKinds = asyncCatchKinds(nativeReference, new AssemblyInspector(readFileSync(join(reference, 'bin', 'Reference.dll'))));
+    const referencePe = new AssemblyInspector(readFileSync(join(reference, 'bin', 'Reference.dll')));
+    const catchKinds = asyncCatchKinds(nativeReference, referencePe);
     assert.equal(catchKinds.get('Fire'), true);
     assert.equal(catchKinds.get('Value'), false);
-    assert.equal(catchKinds.get('Main'), false);
+    assert.equal(catchKinds.get('Main'), true);
+    context.diagnostic(`Roslyn entry points: PE ${referencePe.methods.get(referencePe.pe.entryPoint).name}, ` +
+      `PDB ${referencePe.methods.get(nativeReference.entryPoint).name}; async catch entries ${JSON.stringify(Object.fromEntries(catchKinds))}`);
     for (const embeddedPdb of [false, true]) {
       const directory = join(scratch, embeddedPdb ? 'embedded' : 'sidecar');
       mkdirSync(directory);

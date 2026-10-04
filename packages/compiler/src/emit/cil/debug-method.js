@@ -71,8 +71,7 @@ export class CilMethodDebugInformation {
     this.kickoffMachine = machine;
   }
   asyncCatch(label) {
-    // Only async void routes an unhandled exception through the debugger's async catch entry.
-    if (isVoid(this.frame.returnType)) this.catchHandler = label;
+    this.catchHandler = label;
   }
   awaitPoint(resume) {
     this.awaits.push({ yield: this.marker(), resume });
@@ -89,8 +88,10 @@ export class CilMethodDebugInformation {
     }
     return [...events.values()].sort((left, right) => left.ilOffset - right.ilOffset);
   }
-  asyncSteps(layout, token) {
+  asyncSteps(layout, token, isEntryPoint = false) {
     const awaits = this.awaits.map(step => ({ yieldOffset: layout.get(step.yield), resumeOffset: layout.get(step.resume), resumeMethod: token }));
-    return { awaits, catchHandlerOffset: this.catchHandler ? layout.get(this.catchHandler) : -1 };
+    // Async void and the selected async entry point report unhandled exceptions at this compiler-generated catch.
+    const useCatch = isVoid(this.frame.returnType) || isEntryPoint;
+    return { awaits, catchHandlerOffset: useCatch && this.catchHandler ? layout.get(this.catchHandler) : -1 };
   }
 }

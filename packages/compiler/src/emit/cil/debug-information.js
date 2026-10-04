@@ -13,12 +13,17 @@ class CilDebugInformation {
     this.options = options;
     this.sources = new CilDebugSources(analysis.files);
     this.bodies = [];
+    this.entryPointKey = null;
   }
   method(emitter) {
     return new CilMethodDebugInformation(emitter, this.sources);
   }
   record(method, il, body) {
     if (il.debug) this.bodies.push({ method, debug: il.debug, body });
+  }
+  /** The selected source kickoff, including the bound top-level body; supplied by entry point selection. */
+  entryPoint(key) {
+    this.entryPointKey = key;
   }
   /** Resolve tokens only after all emitted methods and late state-machine fields have their final definitions. */
   symbolData() {
@@ -40,7 +45,7 @@ class CilDebugInformation {
       else if (machine.moveNext === method) {
         record.moveNext = token;
         if (hoistedScopes.length) custom.push({ parent: token, kind: PdbGuids.hoistedScopes, scopes: hoistedScopes });
-        if (machine.kind !== 'iterator') Object.assign(record, debug.asyncSteps(layout, token));
+        if (machine.kind !== 'iterator') Object.assign(record, debug.asyncSteps(layout, token, machine.kickoff.key === this.entryPointKey));
       }
     }
     return { sources: [...this.sources.documents.values()], methods, sequencePoints, stateMachines: [...machines.values()], custom };

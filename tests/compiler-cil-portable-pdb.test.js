@@ -279,6 +279,24 @@ class P {
   assert.equal(fire.steps.length, 1);
 });
 
+test('async catch entries identify the selected Main or top-level kickoff and exclude ordinary Task methods', () => {
+  const asyncMain = 'using System.Threading.Tasks; class P { static async Task Main() { await Task.Delay(1); } }';
+  const cases = [
+    { source: asyncMain, selected: true },
+    { source: asyncMain, options: { outputKind: 'library' }, selected: false },
+    { source: asyncMain + ' class Q { static void Main() { } }', selected: false },
+    { source: 'await System.Threading.Tasks.Task.Delay(1);', selected: true },
+  ];
+  for (const entry of cases) {
+    const { pe, pdb } = compile(entry.source, entry.options);
+    assert.equal(pdb.stateMachines.length, 1);
+    const moveNext = pdb.stateMachines[0].moveNext;
+    const steps = pdb.custom.find(record => record.parent === moveNext && record.kind === PdbGuids.asyncSteps);
+    if (entry.selected) assert.ok(pe.getMethod(moveNext).handlers.some(handler => handler.flags === 0 && handler.target === steps.catchHandlerOffset));
+    else assert.equal(steps.catchHandlerOffset, -1);
+  }
+});
+
 function flattenScopes(scope) {
   return [scope, ...scope.children.flatMap(flattenScopes)];
 }
