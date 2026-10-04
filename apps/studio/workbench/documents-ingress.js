@@ -1,4 +1,5 @@
 import { requireIdentifier, workbenchError, abortError } from './state-events.js';
+import { validateDocumentState } from './documents-state.js';
 
 function checkAbort(signal) {
   if (signal?.aborted) throw abortError(signal.reason);
@@ -59,8 +60,9 @@ export function documentRecord(input) {
 
 /** Preflight record/model/subscription ownership before any existing document or view is changed. */
 export class DocumentIngress {
-  constructor(owner, { signal, preserveEditors = false, preserveDirty = false } = {}) {
-    Object.assign(this, { owner, signal, preserveEditors, preserveDirty });
+  constructor(owner, { signal, preserveEditors = false, preserveDirty = false, documentStates = null } = {}) {
+    if (documentStates !== null && !(documentStates instanceof Map)) throw new TypeError('Restored document states must be a Map');
+    Object.assign(this, { owner, signal, preserveEditors, preserveDirty, documentStates });
     this.revision = owner.revision;
     this.records = new Map();
     this.models = new Map();
@@ -68,6 +70,7 @@ export class DocumentIngress {
     this.sources = new Map();
     this.preserved = new Set();
     this.staleSaves = new Set();
+    this.restoredDirty = new Set();
     this.subscriptions = new Map();
     this.created = new Set();
     this.savedCheckpoints = new Map();
@@ -81,6 +84,9 @@ export class DocumentIngress {
         const record = documentRecord(value);
         if (this.records.has(record.uri)) throw new TypeError(`Duplicate document '${record.uri}'`);
         this.records.set(record.uri, record);
+      }
+      for (const uri of this.documentStates?.keys() ?? []) {
+        if (!this.records.has(uri)) throw new TypeError('Restored state refers to a missing document');
       }
       for (const record of this.records.values()) {
         checkAbort(this.signal);
@@ -98,6 +104,17 @@ export class DocumentIngress {
         if (preserve) {
           this.preserved.add(record.uri);
           if (this.owner.staleSaves.has(record.uri)) this.staleSaves.add(record.uri);
+        }
+        const restored = this.documentStates?.get(record.uri);
+        if (this.documentStates?.has(record.uri)) {
+          validateDocumentState(restored, record, source);
+          this.baselines.set(record.uri, restored.dirty ? restored.baseline : source);
+          record.dirty = restored.dirty;
+          this.staleSaves.delete(record.uri);
+          if (restored.dirty) {
+            this.restoredDirty.add(record.uri);
+            if (restored.staleSave || restored.baseline !== null && !model?.isDirty) this.staleSaves.add(record.uri);
+          }
         }
         if (model) {
           this.sources.set(record.uri, source);
@@ -126,7 +143,8 @@ export class DocumentIngress {
   prepareSavedState() {
     try {
       this.checkCurrent();
-      for (const [uri, model] of this.models) if (!this.preserved.has(uri) && this.baselines.get(uri) !== null && model.isDirty) {
+      for (const [uri, model] of this.models) if ((!this.preserved.has(uri) || this.documentStates?.has(uri)) && !this.restoredDirty.has(uri)
+          && this.baselines.get(uri) !== null && model.isDirty) {
         if (typeof model.checkpoint !== 'function' || typeof model.restoreCheckpoint !== 'function') {
           throw new TypeError('Dirty document models must support checkpoint restoration');
         }
