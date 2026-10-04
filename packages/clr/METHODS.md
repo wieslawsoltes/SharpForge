@@ -36,9 +36,26 @@ virtual/final/abstract/special-name, implementation flags and calling convention
 including constructors, generic methods and static/instance varargs. Authored
 metadata covers all access-mask values, each bit independently, explicit-this and
 other decoder-supported conventions, malformed headers, oversized signatures and
-unload. Native capture, focused tests and a raw-sample benchmark are pending the
-scheduled serial validation slot. Full constructor classification, MethodInfo
+unload. SDK 10.0.201/CoreCLR 10.0.5 captured 18 records; all 26 focused Method
+tests pass on Node 24.21.0. Syntax/static checks pass (3,029/3,025 modules), and
+structure reports 267 existing findings, none in CLR/changed files. Every local
+job ran serially through the limiter. Full constructor classification, MethodInfo
 ToString, GetBaseDefinition and invocation remain separate capabilities.
+
+On a shared Apple M3 Pro/darwin-arm64, cold attributes/conventions for all 18
+records measured median 52.750 µs / p95 138.792 µs; cached convention+visibility
+queries measured 0.004479 µs / p95 0.026600 µs. All 200 measured samples are
+retained in collection order with exact sources/hashes in
+`benchmarks/method-attributes-node24.json`. There is no prior equivalent API or
+speed claim. Allocation totals were not measured. These added prototype getters
+do not change existing lookup/signature paths or descriptor layouts; no existing
+path benchmarks were rerun, as agreed with the root reviewer.
+
+```sh
+node scripts/limited.js node packages/clr/tools/capture-method-attributes.mjs tests/fixtures/clr-method-attributes
+node scripts/limited.js node --test --test-concurrency=1 tests/clr-methods-*.test.js
+node scripts/limited.js node packages/clr/tools/benchmark-method-attributes.mjs
+```
 
 The lazy `signature` getter uses the public CIL decoder and caches a deeply frozen
 signature AST. A malformed blob, a non-method signature or a receiver/static flag
