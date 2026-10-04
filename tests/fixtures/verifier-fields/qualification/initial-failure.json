@@ -1,0 +1,10 @@
+{
+  "stage": "baseline-red postcondition",
+  "kind": "harness-only",
+  "reason": "Expected Node assertion was retained on stderr; run() returned stdout only, so the postcondition regex received an empty string.",
+  "expectedBeforeExit": 1,
+  "actualBaselineOutcome": "unknown, assertion expected verified",
+  "benchmarksStarted": false,
+  "nativeStarted": false,
+  "productChanged": false
+}

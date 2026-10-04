@@ -1,0 +1,1 @@
+{"LoadInteger":{"medianMs":2.0448330000000112,"p95Ms":2.8505409999999927},"StoreStringInObject":{"medianMs":1.8669579999999826,"p95Ms":2.0522919999999942},"LocalAddressRoundtrip":{"medianMs":2.530083999999988,"p95Ms":4.011374999999987},"LoadWideInteger":{"medianMs":6.929500000000019,"p95Ms":29.476166999999975}}

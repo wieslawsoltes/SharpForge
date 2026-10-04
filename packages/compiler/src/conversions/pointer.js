@@ -6,7 +6,8 @@
  *   explicit   any pointer type to any other pointer type; sbyte, byte, short, ushort, int, uint, long, ulong (and the
  *              native integers) to any pointer type and back
  */
-import { TypeKind } from '../symbols/types.js';
+import { RefKind, TypeKind } from '../symbols/types.js';
+import { sameCallingConvention } from '../symbols/function-pointer-conventions.js';
 
 const integerKinds = new Set(['sbyte', 'byte', 'short', 'ushort', 'int', 'uint', 'long', 'ulong', 'nint', 'nuint']);
 
@@ -16,6 +17,29 @@ export const isPointerType = type => type?.typeKind === TypeKind.Pointer;
 export const isFunctionPointerType = type => type?.typeKind === TypeKind.FunctionPointer;
 /** True for `void*`. */
 export const isVoidPointer = type => isPointerType(type) && type.pointedAtType?.specialType === 'System_Void';
+
+/**
+ * Function-pointer variance preserves the ABI: value parameters are contravariant, the result covariant, and
+ * by-reference slots invariant. Only identity, reference and nested function-pointer conversions participate.
+ */
+export function hasImplicitFunctionPointerConversion(from, to, conversions) {
+  if (!isFunctionPointerType(from) || !isFunctionPointerType(to)) return false;
+  const source = from.signature;
+  const target = to.signature;
+  if (!sameCallingConvention(source, target) || source.parameters.length !== target.parameters.length) return false;
+  const compatible = (first, second, refKind) => {
+    if (conversions.isIdentity(first, second)) return true;
+    if (refKind !== RefKind.None) return false;
+    return conversions.hasIdentityOrReference(first, second) || hasImplicitFunctionPointerConversion(first, second, conversions);
+  };
+  if (source.returnRefKind !== target.returnRefKind || !compatible(source.returnType.type, target.returnType.type, source.returnRefKind)) {
+    return false;
+  }
+  return source.parameters.every((parameter, index) => {
+    const wanted = target.parameters[index];
+    return parameter.refKind === wanted.refKind && compatible(wanted.type.type, parameter.type.type, parameter.refKind);
+  });
+}
 
 /**
  * The pointer conversion from `from` to `to`, or null.

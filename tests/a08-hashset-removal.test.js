@@ -168,12 +168,13 @@ for (const engine of ['source', 'cil']) {
     const {vm, platform, reference, call} = createClosedCollection(engine, 'HashSet', 'int');
     const allocate = platform.heap.allocate;
     try {
-      for (let value = 0; value < 4; value++) call('Add', value);
+      // Fill native prime capacity seven so the next distinct values require slot growth.
+      for (let value = 0; value < 7; value++) call('Add', value);
       const revision = platform.get(reference, '$version');
       for (const method of ['UnionWith', 'IntersectWith', 'ExceptWith']) {
         assert.throws(() => call(method, null), {name: 'NullReferenceException'});
       }
-      const extra = platform.heap.allocate('array', 'int[]', [4, 5, 4]);
+      const extra = platform.heap.allocate('array', 'int[]', [7, 8, 7]);
       let reject = true;
       platform.heap.allocate = function(kind, type, ...args) {
         if (reject && type === 'int[]') {
@@ -183,11 +184,11 @@ for (const engine of ['source', 'cil']) {
         return allocate.call(this, kind, type, ...args);
       };
       assert.throws(() => call('UnionWith', extra), {name: 'OutOfMemoryException'});
-      assert.equal(call('get_Count'), 4);
+      assert.equal(call('get_Count'), 7);
       assert.equal(platform.get(reference, '$version'), revision);
-      assert.deepEqual([...hashSetValues(platform, reference)], [0, 1, 2, 3]);
+      assert.deepEqual([...hashSetValues(platform, reference)], [0, 1, 2, 3, 4, 5, 6]);
       call('UnionWith', extra);
-      assert.deepEqual([...hashSetValues(platform, reference)], [0, 1, 2, 3, 4, 5]);
+      assert.deepEqual([...hashSetValues(platform, reference)], [0, 1, 2, 3, 4, 5, 6, 7, 8]);
       assert.equal(platform.get(reference, '$version'), revision + 1);
     } finally {
       platform.heap.allocate = allocate;

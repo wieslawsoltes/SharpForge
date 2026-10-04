@@ -12,6 +12,7 @@
  * the emitter refuses instead of miscompiling.
  */
 import { SymbolKind, TypeKind, ArrayTypeSymbol, NamedTypeSymbol, PointerTypeSymbol } from '../symbols/types.js';
+import { encodeFunctionPointerSignature } from './function-pointer-signatures.js';
 
 /** ECMA-335 II.23.1.16 element types used by generic signatures. */
 export const ElementType = Object.freeze({
@@ -37,6 +38,7 @@ export const ElementType = Object.freeze({
   GenericInst: 0x15,
   IntPtr: 0x18,
   UIntPtr: 0x19,
+  FnPtr: 0x1b,
   Object: 0x1c,
   SZArray: 0x1d,
   MVar: 0x1e,
@@ -110,7 +112,7 @@ export function allTypeArguments(type) {
 /**
  * Encodes a type as a signature blob (without the leading calling convention).
  * @param type a TypeSymbol
- * @param {(definition: NamedTypeSymbol) => number} tokenOf TypeDef or TypeRef token of a type definition
+ * @param {(definition: NamedTypeSymbol|string) => number} tokenOf TypeDef/TypeRef of a symbol or modifier's full metadata name
  * @returns {number[]} signature bytes
  */
 export function encodeTypeSignature(type, tokenOf) {
@@ -121,6 +123,13 @@ export function encodeTypeSignature(type, tokenOf) {
   }
   if (type instanceof ArrayTypeSymbol) return encodeArraySignature(type, tokenOf);
   if (type instanceof PointerTypeSymbol) return [ElementType.Ptr, ...encodeTypeSignature(type.pointedAtType, tokenOf)];
+  if (type.typeKind === TypeKind.FunctionPointer) {
+    return [ElementType.FnPtr, ...encodeFunctionPointerSignature(type.signature, {
+      type: value => encodeTypeSignature(value, tokenOf),
+      count: compressUnsigned,
+      modifier: name => typeDefOrRefEncoded(tokenOf(name)),
+    })];
+  }
   // `dynamic` is `object` in metadata; a `[Dynamic]` attribute on the declaration says which objects are dynamic.
   if (type.typeKind === TypeKind.Dynamic) return [ElementType.Object];
   if (!(type instanceof NamedTypeSymbol)) throw new TypeError(`Cannot encode '${type.toDisplayString()}' in a signature`);
@@ -163,6 +172,7 @@ export function methodSpecBlob(method, tokenOf) {
 
 /** True when a type reference needs a TypeSpec row rather than a TypeDef/TypeRef token. */
 export function needsTypeSpec(type) {
+  if (type.typeKind === TypeKind.FunctionPointer) return true;
   if (type.kind === SymbolKind.TypeParameter || type instanceof ArrayTypeSymbol || type instanceof PointerTypeSymbol) return true;
   if (type.isAnonymousType) return needsTypeSpec(type.metadataForm());
   return type instanceof NamedTypeSymbol && !type.isDefinition && allTypeArguments(type).length > 0;

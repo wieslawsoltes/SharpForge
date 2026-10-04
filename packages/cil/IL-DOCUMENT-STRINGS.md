@@ -16,9 +16,10 @@ added values across methods. Existing #US offsets stay valid. The shared
 MetadataHeaps encoder supplies the CLI UTF-16 payload and special-character flag.
 An absent #US heap is added when the metadata stream count permits it. The image
 writer appends a new metadata root, preserving other streams and metadata rows
-except the method RVAs that the existing assembler already rewrites. Its current
-signature/custom-debug-map invalidation remains in effect. Numeric-only documents
-keep their previous metadata-root location and require no heap rebuild.
+except the RVAs of changed methods. Signature/custom-debug-map invalidation
+remains in effect for actual edits. Numeric-only documents keep their previous
+metadata-root location and require no heap rebuild. Fully unchanged images retain
+all original bytes as documented in IL-DOCUMENT-PRESERVATION.md.
 
 `maxUserStringBytes` can lower the final appended heap limit from 16 MiB down to
 zero. Zero disables new literals while allowing existing numeric tokens. The limit

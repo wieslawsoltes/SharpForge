@@ -1,0 +1,1 @@
+{"source":"8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c","results":[{"name":"cold context and inheritance graph","iterations":100,"unit":"microseconds/lookup","median":235.37207000000308,"p95":373.1722599999921}]}

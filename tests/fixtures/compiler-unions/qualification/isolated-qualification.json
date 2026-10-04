@@ -1,0 +1,14 @@
+{
+  "sourceCommit": "f18406f42fb1b0719228e560fd1646877eba1672",
+  "testResult": {
+    "passed": 55,
+    "failed": 0,
+    "skipped": 0
+  },
+  "focusedCommand": "DOTNET_ROOT=<sdk-root> DOTNET=<dotnet-host> node scripts/limited.js node --test tests/compiler-union-declarations.test.js tests/compiler-union-behaviors.test.js tests/compiler-union-boundaries.test.js tests/compiler-records.test.js tests/compiler-patterns.test.js tests/compiler-nullable-loops.test.js tests/compiler-semantic-model.test.js",
+  "nativeCommand": "SHARPFORGE_ORACLE_DOTNET=<dotnet-host> DOTNET_ROOT=<sdk-root> node scripts/limited.js node tests/fixtures/compiler-unions/capture-native.mjs <output.json>",
+  "benchmarkCommand": "node scripts/limited.js node --expose-gc packages/compiler/bench/unions-paired.bench.mjs --base-root <bf85020e-checkout> --base-revision bf85020e --candidate-root <f18406f4-checkout> --candidate-revision f18406f4 --pairs 20 --warmup 20 --units 12",
+  "benchmarkScriptSha256": "870f793b642673fb43ba8abe2acc047050c7da7f1cd5b15f5f9346baef4320a9",
+  "constructorRegression": "The first isolated run returned a default union for explicit new U(value) in an expression tree. Narrowing the parameterless synthesized-struct shortcut preserved arguments; the unchanged native assertion now prints 8.",
+  "scope": "Direct CIL/native proposal behavior. Native baseline is an explicit ordinary-C# lowering; no union-parser Roslyn parity or VM runtime completeness is claimed."
+}
