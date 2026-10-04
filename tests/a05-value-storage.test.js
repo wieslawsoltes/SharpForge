@@ -13,6 +13,18 @@ const holder = {name: 'Holder', fields: [{name: 'Value', type: 'valuetype Point'
     .op('call', context.member('System.Object', '.ctor', 'void', [], false)).op('ret')}
 ]};
 
+test('registered framework values retain their existing heap-backed storage representation', () => {
+  const bytes = genericCallFixture([{name: 'Program', methods: [{name: 'Main',
+    locals: ['Windows.Foundation.Point'], body: writer => writer.op('ret')}]}]);
+  const vm = new CilVirtualMachine(bytes);
+  try {
+    assert.equal(vm.top.locals[0], null);
+    const point = vm.heap.allocate('host', 'Windows.Foundation.Point', [2, 3]);
+    vm.dereference(vm.address('local', 0), true, point);
+    assert.equal(vm.top.locals[0], point);
+  } finally { vm.stop(); }
+});
+
 function fixture(body = writer => writer.op('ret'), {types = [point, outer, holder], decorate, locals} = {}) {
   return genericCallFixture([...types, {name: 'Program', fields: [{name: 'Saved', type: 'valuetype Point', flags: 0x16}],
     methods: [{name: 'Main', locals: locals ?? ['valuetype Point', 'valuetype Point', 'valuetype Outer', 'valuetype Point[]', 'Holder'], body}]
