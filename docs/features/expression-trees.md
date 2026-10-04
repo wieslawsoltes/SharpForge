@@ -167,3 +167,49 @@ commit `8d2c75f24c88ea99a01a8579ecb67e303d566670`:
 `DiagnosticsPass_ExpressionTrees.cs`, and `LocalRewriter_BinaryOperator.cs` in
 `Lowering/LocalRewriter`. The runtime factory overloads were checked against
 `System.Linq.Expressions` source and then exercised by the native comparisons.
+
+
+## Isolated publication qualification
+
+The isolated publication was replayed at
+`53486b05f79ce63c7d50339fc661655385bdc59c` with SDK 10.0.201, reference pack
+10.0.5 and Roslyn 5.3.0.0 on Linux x64. All **49 tests passed with zero failures
+and zero skips** across the native, restrictions, existing expression-tree and
+CIL factory/handle suites. This includes the eight native programs described
+above (55 printed trees), the 40 existing shape comparisons, and diagnostics
+checked against the genuine pins with registry and actual PE references. The
+checkout was clean before and after both the tests and benchmark. The isolated
+run includes the explicit synthesized-struct-constructor argument correction.
+
+A single-process paired benchmark compared exact baseline
+`4da7eede5f3e732169e850b9f81c365c7b10e23f` with that publication head. Each of
+two identical workloads on each revision received 80 warmups and 20 measured
+samples; compiler order alternated and workload order rotated. Medians are the
+arithmetic mean of the two middle values; p95 uses nearest rank. Reference
+loading, explicit collection and output hashing are outside the compilation
+timer. Both graphs use their own checked workspace aliases.
+
+| Registry workload | Median before | Median after | Change | p95 before | p95 after | PE bytes before/after |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Ordinary delegates | 11.681 ms | 11.438 ms | -2.08% | 16.194 ms | 15.350 ms | 3072 / 3072 |
+| Existing expression trees | 13.693 ms | 14.185 ms | +3.59% | 17.311 ms | 17.602 ms | 3584 / 3584 |
+
+Neither workload exceeded the 5% median or 10% PE-size budget in this bounded
+run. This shared-host observation does not establish a general speedup.
+Compilation is measured; runtime execution of compiled expression trees is not
+part of these timings. Both compiler graphs remain loaded, so RSS is a shared
+process observation. End-minus-start heap deltas may include collection and are
+not allocation counts; all raw timing, heap, RSS and exact output hashes remain
+in `tests/fixtures/expression-trees/qualification/paired-compile.json`.
+
+```sh
+node scripts/limited.js node --expose-gc packages/compiler/bench/expression-trees.bench.js \
+  --baseline /path/to/4da7eede --candidate /path/to/53486b05 \
+  --baseline-head 4da7eede5f3e732169e850b9f81c365c7b10e23f \
+  --candidate-head 53486b05f79ce63c7d50339fc661655385bdc59c --warmup 80 --rounds 20
+```
+
+The temporary baseline worktree was reused after measurement. The exact Git
+commit and local package links are sufficient to recreate it. Interpolated
+expression-tree lowering is a separate follow-up and is not included in this
+publication's tests or timings.
