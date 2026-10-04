@@ -83,6 +83,9 @@ async function visualState(page) {
   assert.equal(before.nodes.find(node => node.id === 'action').properties.Width, 160);
   const strip = resources.locator('.design-preview-strip');
   await expand(strip);
+  // Native details toggle dispatch triggers the lazy render after the summary click.
+  await strip.locator('figure[data-theme="light"]').first().waitFor({state: 'attached'});
+  await strip.locator('figure[data-theme="dark"]').first().waitFor({state: 'attached'});
   assert(await strip.locator('figure[data-theme="light"]').count() > 0);
   assert(await strip.locator('figure[data-theme="dark"]').count() > 0);
   return {group: 'CommonStates', state: 'PointerOver', previewWidth: 320, authoredWidth: 160, themeInstances: true};
