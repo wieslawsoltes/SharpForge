@@ -86,6 +86,13 @@ export function int32Operation(name) {
   return operations.get(name) ?? null;
 }
 
+/** Select the existing exact comparison predicate once for a canonical Int32 execution plan. */
+export function int32Comparison(name, unsigned = false) {
+  const comparison = comparisons[name];
+  if (!comparison) return null;
+  return unsigned ? (left, right) => comparison(left >>> 0, right >>> 0) : comparison;
+}
+
 /** Predecode selects width and operation once; host-edited noncanonical slots use the original handler. */
 export function specializedInt32Handler(name, state, generic) {
   if (!state || state.at(-1) !== StackCategory.i4) return null;

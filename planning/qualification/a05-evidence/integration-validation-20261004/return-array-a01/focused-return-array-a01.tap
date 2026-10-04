@@ -1,0 +1,1590 @@
+TAP version 13
+# Subtest: array proof reuses the exact canonical grid and vector fixtures without altering the T12 catalog
+ok 1 - array proof reuses the exact canonical grid and vector fixtures without altering the T12 catalog
+  ---
+  duration_ms: 1.124152
+  type: 'test'
+  ...
+# Subtest: rectangular/source: complete cold/warm array work retains exact result and scoped counters
+ok 2 - rectangular/source: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 366.96161
+  type: 'test'
+  ...
+# Subtest: rectangular/reloaded: complete cold/warm array work retains exact result and scoped counters
+ok 3 - rectangular/reloaded: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 182.098755
+  type: 'test'
+  ...
+# Subtest: rectangular/cil: complete cold/warm array work retains exact result and scoped counters
+ok 4 - rectangular/cil: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 304.102261
+  type: 'test'
+  ...
+# Subtest: vector/source: complete cold/warm array work retains exact result and scoped counters
+ok 5 - vector/source: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 397.895078
+  type: 'test'
+  ...
+# Subtest: vector/reloaded: complete cold/warm array work retains exact result and scoped counters
+ok 6 - vector/reloaded: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 430.47302
+  type: 'test'
+  ...
+# Subtest: vector/cil: complete cold/warm array work retains exact result and scoped counters
+ok 7 - vector/cil: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 4559.359765
+  type: 'test'
+  ...
+# Subtest: incorrect complete array result fails before any cold or warm sample is accepted
+ok 8 - incorrect complete array result fails before any cold or warm sample is accepted
+  ---
+  duration_ms: 75.009696
+  type: 'test'
+  ...
+# Subtest: array proof rejects unmeasured engines, invalid bounds and cancellation before guest construction
+ok 9 - array proof rejects unmeasured engines, invalid bounds and cancellation before guest construction
+  ---
+  duration_ms: 0.999008
+  type: 'test'
+  ...
+# Subtest: array proof refuses to overwrite retained evidence
+ok 10 - array proof refuses to overwrite retained evidence
+  ---
+  duration_ms: 0.945419
+  type: 'test'
+  ...
+# Subtest: source: byref latency retains complete cold/warm executions and exact result/counter scope
+ok 11 - source: byref latency retains complete cold/warm executions and exact result/counter scope
+  ---
+  duration_ms: 519.509731
+  type: 'test'
+  ...
+# Subtest: reloaded: byref latency retains complete cold/warm executions and exact result/counter scope
+ok 12 - reloaded: byref latency retains complete cold/warm executions and exact result/counter scope
+  ---
+  duration_ms: 444.253853
+  type: 'test'
+  ...
+# Subtest: cil: byref latency retains complete cold/warm executions and exact result/counter scope
+ok 13 - cil: byref latency retains complete cold/warm executions and exact result/counter scope
+  ---
+  duration_ms: 2072.501089
+  type: 'test'
+  ...
+# Subtest: byref latency rejects wrong guest output instead of publishing a measured row
+ok 14 - byref latency rejects wrong guest output instead of publishing a measured row
+  ---
+  duration_ms: 456.39149
+  type: 'test'
+  ...
+# Subtest: byref latency validates bounds and cancellation before constructing a guest
+ok 15 - byref latency validates bounds and cancellation before constructing a guest
+  ---
+  duration_ms: 1.470929
+  type: 'test'
+  ...
+# Subtest: T10.2 opt-in CIL method events preserve results and report calls in order
+ok 16 - T10.2 opt-in CIL method events preserve results and report calls in order
+  ---
+  duration_ms: 29.196841
+  type: 'test'
+  ...
+# Subtest: T10.2 unhandled first-pass inspection retains open method spans until stop
+ok 17 - T10.2 unhandled first-pass inspection retains open method spans until stop
+  ---
+  duration_ms: 5.077084
+  type: 'test'
+  ...
+# Subtest: T10.2 debugger pause flushes host events while keeping the live method open
+ok 18 - T10.2 debugger pause flushes host events while keeping the live method open
+  ---
+  duration_ms: 3.033554
+  type: 'test'
+  ...
+# Subtest: T10.2 callback failures escape after dispatch and are never managed faults
+ok 19 - T10.2 callback failures escape after dispatch and are never managed faults
+  ---
+  duration_ms: 3.102104
+  type: 'test'
+  ...
+# Subtest: T10.2 snapshots preserve host history and subscriptions while restored spans restart explicitly
+ok 20 - T10.2 snapshots preserve host history and subscriptions while restored spans restart explicitly
+  ---
+  duration_ms: 13.537996
+  type: 'test'
+  ...
+# Subtest: T10.2 stop closes open spans once and leaves shutdown complete if a subscriber throws
+ok 21 - T10.2 stop closes open spans once and leaves shutdown complete if a subscriber throws
+  ---
+  duration_ms: 1.671014
+  type: 'test'
+  ...
+# Subtest: T10.2 event capacity is honored and malformed opt-in values reject explicitly
+ok 22 - T10.2 event capacity is honored and malformed opt-in values reject explicitly
+  ---
+  duration_ms: 3.25553
+  type: 'test'
+  ...
+# Subtest: source: first-chance-policy follows pinned CoreCLR callback failure and notification order
+ok 23 - source: first-chance-policy follows pinned CoreCLR callback failure and notification order
+  ---
+  duration_ms: 20.338781
+  type: 'test'
+  ...
+# Subtest: source: first-chance-policy First callback preserves policy through local and portable restore
+ok 24 - source: first-chance-policy First callback preserves policy through local and portable restore
+  ---
+  duration_ms: 38.093729
+  type: 'test'
+  ...
+# Subtest: source: first-chance-policy Second callback preserves policy through local and portable restore
+ok 25 - source: first-chance-policy Second callback preserves policy through local and portable restore
+  ---
+  duration_ms: 25.309349
+  type: 'test'
+  ...
+# Subtest: source: unhandled-policy follows pinned CoreCLR callback failure and notification order
+ok 26 - source: unhandled-policy follows pinned CoreCLR callback failure and notification order
+  ---
+  duration_ms: 3.981877
+  type: 'test'
+  ...
+# Subtest: source: unhandled-policy First callback preserves policy through local and portable restore
+ok 27 - source: unhandled-policy First callback preserves policy through local and portable restore
+  ---
+  duration_ms: 12.925407
+  type: 'test'
+  ...
+# Subtest: source: unhandled-policy Second callback preserves policy through local and portable restore
+ok 28 - source: unhandled-policy Second callback preserves policy through local and portable restore
+  ---
+  duration_ms: 8.504787
+  type: 'test'
+  ...
+# Subtest: reload: first-chance-policy follows pinned CoreCLR callback failure and notification order
+ok 29 - reload: first-chance-policy follows pinned CoreCLR callback failure and notification order
+  ---
+  duration_ms: 19.751188
+  type: 'test'
+  ...
+# Subtest: reload: first-chance-policy First callback preserves policy through local and portable restore
+ok 30 - reload: first-chance-policy First callback preserves policy through local and portable restore
+  ---
+  duration_ms: 28.303134
+  type: 'test'
+  ...
+# Subtest: reload: first-chance-policy Second callback preserves policy through local and portable restore
+ok 31 - reload: first-chance-policy Second callback preserves policy through local and portable restore
+  ---
+  duration_ms: 28.417904
+  type: 'test'
+  ...
+# Subtest: reload: unhandled-policy follows pinned CoreCLR callback failure and notification order
+ok 32 - reload: unhandled-policy follows pinned CoreCLR callback failure and notification order
+  ---
+  duration_ms: 7.51227
+  type: 'test'
+  ...
+# Subtest: reload: unhandled-policy First callback preserves policy through local and portable restore
+ok 33 - reload: unhandled-policy First callback preserves policy through local and portable restore
+  ---
+  duration_ms: 17.597797
+  type: 'test'
+  ...
+# Subtest: reload: unhandled-policy Second callback preserves policy through local and portable restore
+ok 34 - reload: unhandled-policy Second callback preserves policy through local and portable restore
+  ---
+  duration_ms: 20.301096
+  type: 'test'
+  ...
+# Subtest: cil: first-chance-policy follows pinned CoreCLR callback failure and notification order
+ok 35 - cil: first-chance-policy follows pinned CoreCLR callback failure and notification order
+  ---
+  duration_ms: 30.597573
+  type: 'test'
+  ...
+# Subtest: cil: first-chance-policy First callback preserves policy through local and portable restore
+ok 36 - cil: first-chance-policy First callback preserves policy through local and portable restore
+  ---
+  duration_ms: 35.10403
+  type: 'test'
+  ...
+# Subtest: cil: first-chance-policy Second callback preserves policy through local and portable restore
+ok 37 - cil: first-chance-policy Second callback preserves policy through local and portable restore
+  ---
+  duration_ms: 26.772116
+  type: 'test'
+  ...
+# Subtest: cil: unhandled-policy follows pinned CoreCLR callback failure and notification order
+ok 38 - cil: unhandled-policy follows pinned CoreCLR callback failure and notification order
+  ---
+  duration_ms: 10.885803
+  type: 'test'
+  ...
+# Subtest: cil: unhandled-policy First callback preserves policy through local and portable restore
+ok 39 - cil: unhandled-policy First callback preserves policy through local and portable restore
+  ---
+  duration_ms: 27.494057
+  type: 'test'
+  ...
+# Subtest: cil: unhandled-policy Second callback preserves policy through local and portable restore
+ok 40 - cil: unhandled-policy Second callback preserves policy through local and portable restore
+  ---
+  duration_ms: 18.330042
+  type: 'test'
+  ...
+# Subtest: source: pooled frames release regions and pins on actual return
+ok 41 - source: pooled frames release regions and pins on actual return
+  ---
+  duration_ms: 106.684038
+  type: 'test'
+  ...
+# Subtest: source: restored frames release regions and pins on actual return
+ok 42 - source: restored frames release regions and pins on actual return
+  ---
+  duration_ms: 8.877624
+  type: 'test'
+  ...
+# Subtest: source: logical retirement revokes capabilities before pool storage is cleared
+ok 43 - source: logical retirement revokes capabilities before pool storage is cleared
+  ---
+  duration_ms: 1.677333
+  type: 'test'
+  ...
+# Subtest: source: cancellation releases parked pins and stop releases the inspectable fatal frame
+ok 44 - source: cancellation releases parked pins and stop releases the inspectable fatal frame
+  ---
+  duration_ms: 4.62421
+  type: 'test'
+  ...
+# Subtest: source: failed provisional admission releases child pins and preserves parent capabilities
+ok 45 - source: failed provisional admission releases child pins and preserves parent capabilities
+  ---
+  duration_ms: 1.640068
+  type: 'test'
+  ...
+# Subtest: cil: pooled frames release regions and pins on actual return
+ok 46 - cil: pooled frames release regions and pins on actual return
+  ---
+  duration_ms: 17.756776
+  type: 'test'
+  ...
+# Subtest: cil: restored frames release regions and pins on actual return
+ok 47 - cil: restored frames release regions and pins on actual return
+  ---
+  duration_ms: 4.823612
+  type: 'test'
+  ...
+# Subtest: cil: logical retirement revokes capabilities before pool storage is cleared
+ok 48 - cil: logical retirement revokes capabilities before pool storage is cleared
+  ---
+  duration_ms: 2.514361
+  type: 'test'
+  ...
+# Subtest: cil: cancellation releases parked pins and stop releases the inspectable fatal frame
+ok 49 - cil: cancellation releases parked pins and stop releases the inspectable fatal frame
+  ---
+  duration_ms: 5.12847
+  type: 'test'
+  ...
+# Subtest: cil: failed provisional admission releases child pins and preserves parent capabilities
+ok 50 - cil: failed provisional admission releases child pins and preserves parent capabilities
+  ---
+  duration_ms: 3.744247
+  type: 'test'
+  ...
+# Subtest: ldvirtftn binds the override and original receiver, PIC false
+ok 51 - ldvirtftn binds the override and original receiver, PIC false
+  ---
+  duration_ms: 55.835117
+  type: 'test'
+  ...
+# Subtest: ldvirtftn binds the override and original receiver, PIC true
+ok 52 - ldvirtftn binds the override and original receiver, PIC true
+  ---
+  duration_ms: 12.449458
+  type: 'test'
+  ...
+# Subtest: managed delegate null capture throws NullReferenceException
+ok 53 - managed delegate null capture throws NullReferenceException
+  ---
+  duration_ms: 45.17137
+  type: 'test'
+  ...
+# Subtest: managed delegate null invoke throws NullReferenceException
+ok 54 - managed delegate null invoke throws NullReferenceException
+  ---
+  duration_ms: 14.201525
+  type: 'test'
+  ...
+# Subtest: virtual delegate equality includes the selected body and receiver identity
+ok 55 - virtual delegate equality includes the selected body and receiver identity
+  ---
+  duration_ms: 9.401262
+  type: 'test'
+  ...
+# Subtest: managed Combine invokes ordered targets and returns the final result
+ok 56 - managed Combine invokes ordered targets and returns the final result
+  ---
+  duration_ms: 7.522184
+  type: 'test'
+  ...
+# Subtest: managed Remove removes the last matching subsequence
+ok 57 - managed Remove removes the last matching subsequence
+  ---
+  duration_ms: 5.552782
+  type: 'test'
+  ...
+# Subtest: managed Remove retains order after removing a final scalar occurrence and yields null for the full list
+ok 58 - managed Remove retains order after removing a final scalar occurrence and yields null for the full list
+  ---
+  duration_ms: 6.622573
+  type: 'test'
+  ...
+# Subtest: GetInvocationList returns an independent ordered array of equal single-target delegates
+ok 59 - GetInvocationList returns an independent ordered array of equal single-target delegates
+  ---
+  duration_ms: 8.143095
+  type: 'test'
+  ...
+# Subtest: Object.ToString source: return contract survives local and portable snapshots
+ok 60 - Object.ToString source: return contract survives local and portable snapshots
+  ---
+  duration_ms: 145.62318
+  type: 'test'
+  ...
+# Subtest: Object.ToString reloaded: return contract survives local and portable snapshots
+ok 61 - Object.ToString reloaded: return contract survives local and portable snapshots
+  ---
+  duration_ms: 65.05469
+  type: 'test'
+  ...
+# Subtest: Object.ToString cil: return contract survives local and portable snapshots
+ok 62 - Object.ToString cil: return contract survives local and portable snapshots
+  ---
+  duration_ms: 42.950138
+  type: 'test'
+  ...
+# Subtest: Object.ToString CIL: a tail-called body retains the string return contract
+ok 63 - Object.ToString CIL: a tail-called body retains the string return contract
+  ---
+  duration_ms: 10.670912
+  type: 'test'
+  ...
+# Subtest: default ValueType.Equals invokes managed field overrides through ordinary frames
+ok 64 - default ValueType.Equals invokes managed field overrides through ordinary frames
+  ---
+  duration_ms: 48.608031
+  type: 'test'
+  ...
+# Subtest: default ValueType.GetHashCode invokes managed field overrides through ordinary frames
+ok 65 - default ValueType.GetHashCode invokes managed field overrides through ordinary frames
+  ---
+  duration_ms: 10.81283
+  type: 'test'
+  ...
+# Subtest: an unhandled Equals field fault preserves inspection and releases work on stop
+ok 66 - an unhandled Equals field fault preserves inspection and releases work on stop
+  ---
+  duration_ms: 7.488007
+  type: 'test'
+  ...
+# Subtest: an unhandled GetHashCode field fault preserves inspection and releases work on stop
+ok 67 - an unhandled GetHashCode field fault preserves inspection and releases work on stop
+  ---
+  duration_ms: 5.479362
+  type: 'test'
+  ...
+# Subtest: Equals field and string work yields, charges instructions, replays and cancels
+ok 68 - Equals field and string work yields, charges instructions, replays and cancels
+  ---
+  duration_ms: 48.676853
+  type: 'test'
+  ...
+# Subtest: GetHashCode field and string work yields, charges instructions, replays and cancels
+ok 69 - GetHashCode field and string work yields, charges instructions, replays and cancels
+  ---
+  duration_ms: 28.838082
+  type: 'test'
+  ...
+# Subtest: ordinary return preserves null, undefined, scalar and reference values without continuation delivery
+ok 70 - ordinary return preserves null, undefined, scalar and reference values without continuation delivery
+  ---
+  duration_ms: 95.938441
+  type: 'test'
+  ...
+# Subtest: source return reads each continuation once, in order, independently and in combination
+ok 71 - source return reads each continuation once, in order, independently and in combination
+  ---
+  duration_ms: 3.318645
+  type: 'test'
+  ...
+# Subtest: CIL return reads each continuation once, in order, independently and in combination
+ok 72 - CIL return reads each continuation once, in order, independently and in combination
+  ---
+  duration_ms: 13.38453
+  type: 'test'
+  ...
+# Subtest: Object string validation precedes absence checks and sees continuation state installed during validation
+ok 73 - Object string validation precedes absence checks and sees continuation state installed during validation
+  ---
+  duration_ms: 1.795632
+  type: 'test'
+  ...
+# Subtest: delegate completion can install an exception continuation before its turn
+ok 74 - delegate completion can install an exception continuation before its turn
+  ---
+  duration_ms: 0.8124
+  type: 'test'
+  ...
+# Subtest: source: ordinary reference return preserves roots while revoking pins and stack regions
+ok 75 - source: ordinary reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 140.686899
+  type: 'test'
+  ...
+# Subtest: source: finally reference return preserves roots while revoking pins and stack regions
+ok 76 - source: finally reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 19.980628
+  type: 'test'
+  ...
+# Subtest: reload: ordinary reference return preserves roots while revoking pins and stack regions
+ok 77 - reload: ordinary reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 13.27533
+  type: 'test'
+  ...
+# Subtest: reload: finally reference return preserves roots while revoking pins and stack regions
+ok 78 - reload: finally reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 8.378251
+  type: 'test'
+  ...
+# Subtest: cil: ordinary reference return preserves roots while revoking pins and stack regions
+ok 79 - cil: ordinary reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 38.819403
+  type: 'test'
+  ...
+# Subtest: cil: finally reference return preserves roots while revoking pins and stack regions
+ok 80 - cil: finally reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 8.862031
+  type: 'test'
+  ...
+# Subtest: prepared virtual calls preserve managed events, exact instruction counts and GC boundaries
+ok 81 - prepared virtual calls preserve managed events, exact instruction counts and GC boundaries
+  ---
+  duration_ms: 51.136989
+  type: 'test'
+  ...
+# Subtest: prepared call failure keeps ordinary quota and frame behavior {"maxFrames":2}
+ok 82 - prepared call failure keeps ordinary quota and frame behavior {"maxFrames":2}
+  ---
+  duration_ms: 27.097981
+  type: 'test'
+  ...
+# Subtest: prepared call failure keeps ordinary quota and frame behavior {"maxStackBytes":192}
+ok 83 - prepared call failure keeps ordinary quota and frame behavior {"maxStackBytes":192}
+  ---
+  duration_ms: 17.947578
+  type: 'test'
+  ...
+# Subtest: prepared call failure keeps ordinary quota and frame behavior {"maxInstructions":24}
+ok 84 - prepared call failure keeps ordinary quota and frame behavior {"maxInstructions":24}
+  ---
+  duration_ms: 8.331423
+  type: 'test'
+  ...
+# Subtest: one-instruction slices expose the prepared callee and restored execution rebuilds the call setup
+ok 85 - one-instruction slices expose the prepared callee and restored execution rebuilds the call setup
+  ---
+  duration_ms: 14.369664
+  type: 'test'
+  ...
+# Subtest: prepared direct frame entry normalizes arguments while the caller stack retains receiver roots
+ok 86 - prepared direct frame entry normalizes arguments while the caller stack retains receiver roots
+  ---
+  duration_ms: 27.971191
+  type: 'test'
+  ...
+# Subtest: a own host call hook continues to observe every prepared virtual target
+ok 87 - a own host call hook continues to observe every prepared virtual target
+  ---
+  duration_ms: 18.225666
+  type: 'test'
+  ...
+# Subtest: a subclass host call hook continues to observe every prepared virtual target
+ok 88 - a subclass host call hook continues to observe every prepared virtual target
+  ---
+  duration_ms: 36.414588
+  type: 'test'
+  ...
+# Subtest: a prototype host call hook continues to observe every prepared virtual target
+ok 89 - a prototype host call hook continues to observe every prepared virtual target
+  ---
+  duration_ms: 13.967354
+  type: 'test'
+  ...
+# Subtest: Roslyn async regression consumes the exact SDK8 native-qualified DLL and source
+ok 90 - Roslyn async regression consumes the exact SDK8 native-qualified DLL and source
+  ---
+  duration_ms: 1.501541
+  type: 'test'
+  ...
+# Subtest: generic suffix parsing preserves generated CLI identifiers and nested argument lists
+ok 91 - generic suffix parsing preserves generated CLI identifiers and nested argument lists
+  ---
+  duration_ms: 2.099487
+  type: 'test'
+  ...
+# Subtest: generated generic method tables retain exact definitions, closed fields and argument limits
+ok 92 - generated generic method tables retain exact definitions, closed fields and argument limits
+  ---
+  duration_ms: 1.880426
+  type: 'test'
+  ...
+# Subtest: actual Roslyn generic iterator MethodImpl rows resolve specialized external slots
+ok 93 - actual Roslyn generic iterator MethodImpl rows resolve specialized external slots
+  ---
+  duration_ms: 63.748125
+  type: 'test'
+  ...
+# Subtest: actual Roslyn iterator still rejects a duplicated MethodImpl declaration
+ok 94 - actual Roslyn iterator still rejects a duplicated MethodImpl declaration
+  ---
+  duration_ms: 2.824891
+  type: 'test'
+  ...
+# Subtest: actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay
+ok 95 - actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay
+  ---
+  duration_ms: 364.977548
+  type: 'test'
+  ...
+# Subtest: source: one origin precedes debugger notification, catch and finally without retaining the fault
+ok 96 - source: one origin precedes debugger notification, catch and finally without retaining the fault
+  ---
+  duration_ms: 92.157257
+  type: 'test'
+  ...
+# Subtest: source: valid rethrow and restored catch state reuse the existing origin
+ok 97 - source: valid rethrow and restored catch state reuse the existing origin
+  ---
+  duration_ms: 16.804573
+  type: 'test'
+  ...
+# Subtest: source: debugger pending-fault resume and restore do not invent another throw
+ok 98 - source: debugger pending-fault resume and restore do not invent another throw
+  ---
+  duration_ms: 2.817199
+  type: 'test'
+  ...
+# Subtest: source: explicit throw of the same object is a new origin
+ok 99 - source: explicit throw of the same object is a new origin
+  ---
+  duration_ms: 8.532758
+  type: 'test'
+  ...
+# Subtest: source: invalid rethrow reports its new fault rather than suppressing by opcode alone
+ok 100 - source: invalid rethrow reports its new fault rather than suppressing by opcode alone
+  ---
+  duration_ms: 1.411238
+  type: 'test'
+  ...
+# Subtest: source: replaying the originating instruction creates a new chronological event
+ok 101 - source: replaying the originating instruction creates a new chronological event
+  ---
+  duration_ms: 2.076133
+  type: 'test'
+  ...
+# Subtest: source: runtime instruction quota and pre-dispatch stack quota each emit one fatal origin
+ok 102 - source: runtime instruction quota and pre-dispatch stack quota each emit one fatal origin
+  ---
+  duration_ms: 7.107178
+  type: 'test'
+  ...
+# Subtest: source: captured attempted location survives a host callback stopping and retiring its frame
+ok 103 - source: captured attempted location survives a host callback stopping and retiring its frame
+  ---
+  duration_ms: 4.539525
+  type: 'test'
+  ...
+# Subtest: source: subscriber failures escape after guest handlers and never become managed origins
+ok 104 - source: subscriber failures escape after guest handlers and never become managed origins
+  ---
+  duration_ms: 1.448053
+  type: 'test'
+  ...
+# Subtest: source: host handleFault stays outside the origin boundary and disabled observation stays off
+ok 105 - source: host handleFault stays outside the origin boundary and disabled observation stays off
+  ---
+  duration_ms: 4.691977
+  type: 'test'
+  ...
+# Subtest: reload: one origin precedes debugger notification, catch and finally without retaining the fault
+ok 106 - reload: one origin precedes debugger notification, catch and finally without retaining the fault
+  ---
+  duration_ms: 10.281071
+  type: 'test'
+  ...
+# Subtest: reload: valid rethrow and restored catch state reuse the existing origin
+ok 107 - reload: valid rethrow and restored catch state reuse the existing origin
+  ---
+  duration_ms: 10.908019
+  type: 'test'
+  ...
+# Subtest: reload: debugger pending-fault resume and restore do not invent another throw
+ok 108 - reload: debugger pending-fault resume and restore do not invent another throw
+  ---
+  duration_ms: 5.27359
+  type: 'test'
+  ...
+# Subtest: reload: explicit throw of the same object is a new origin
+ok 109 - reload: explicit throw of the same object is a new origin
+  ---
+  duration_ms: 3.625685
+  type: 'test'
+  ...
+# Subtest: reload: invalid rethrow reports its new fault rather than suppressing by opcode alone
+ok 110 - reload: invalid rethrow reports its new fault rather than suppressing by opcode alone
+  ---
+  duration_ms: 3.933656
+  type: 'test'
+  ...
+# Subtest: reload: replaying the originating instruction creates a new chronological event
+ok 111 - reload: replaying the originating instruction creates a new chronological event
+  ---
+  duration_ms: 5.758361
+  type: 'test'
+  ...
+# Subtest: reload: runtime instruction quota and pre-dispatch stack quota each emit one fatal origin
+ok 112 - reload: runtime instruction quota and pre-dispatch stack quota each emit one fatal origin
+  ---
+  duration_ms: 6.957549
+  type: 'test'
+  ...
+# Subtest: reload: captured attempted location survives a host callback stopping and retiring its frame
+ok 113 - reload: captured attempted location survives a host callback stopping and retiring its frame
+  ---
+  duration_ms: 2.734228
+  type: 'test'
+  ...
+# Subtest: reload: subscriber failures escape after guest handlers and never become managed origins
+ok 114 - reload: subscriber failures escape after guest handlers and never become managed origins
+  ---
+  duration_ms: 4.491974
+  type: 'test'
+  ...
+# Subtest: reload: host handleFault stays outside the origin boundary and disabled observation stays off
+ok 115 - reload: host handleFault stays outside the origin boundary and disabled observation stays off
+  ---
+  duration_ms: 6.335437
+  type: 'test'
+  ...
+# Subtest: T04 legacy: filtered catch emits initialized typed local and explicit body boundaries
+ok 116 - T04 legacy: filtered catch emits initialized typed local and explicit body boundaries
+  ---
+  duration_ms: 79.350385
+  type: 'test'
+  ...
+# Subtest: T04 bound: filtered catch emits initialized typed local and explicit body boundaries
+ok 117 - T04 bound: filtered catch emits initialized typed local and explicit body boundaries
+  ---
+  duration_ms: 15.290664
+  type: 'test'
+  ...
+# Subtest: T04 filter-local assignment is part of bound definite-assignment flow
+ok 118 - T04 filter-local assignment is part of bound definite-assignment flow
+  ---
+  duration_ms: 9.233415
+  type: 'test'
+  ...
+# Subtest: T04 bound-tree visitors retain and rewrite the filter expression
+ok 119 - T04 bound-tree visitors retain and rewrite the filter expression
+  ---
+  duration_ms: 6.157275
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: cross-frame filters precede cleanup
+ok 120 - T04 source filters source: cross-frame filters precede cleanup
+  ---
+  duration_ms: 101.412575
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: filter faults resume the original search after their own cleanup
+ok 121 - T04 source filters source: filter faults resume the original search after their own cleanup
+  ---
+  duration_ms: 35.835906
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: nonmatching typed filters have no side effects
+ok 122 - T04 source filters source: nonmatching typed filters have no side effects
+  ---
+  duration_ms: 30.286203
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: catch closures retain a fresh cell after the handler exits
+ok 123 - T04 source filters source: catch closures retain a fresh cell after the handler exits
+  ---
+  duration_ms: 31.27056
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: filter closures and the accepted body share the same catch cell
+ok 124 - T04 source filters source: filter closures and the accepted body share the same catch cell
+  ---
+  duration_ms: 16.844626
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: filters share captured locals and rethrow preserves exception identity
+ok 125 - T04 source filters source: filters share captured locals and rethrow preserves exception identity
+  ---
+  duration_ms: 16.815744
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: portable replay retains the suspended search and locals
+ok 126 - T04 source filters source: portable replay retains the suspended search and locals
+  ---
+  duration_ms: 40.436396
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: cross-frame filters precede cleanup
+ok 127 - T04 source filters reload: cross-frame filters precede cleanup
+  ---
+  duration_ms: 19.061713
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: filter faults resume the original search after their own cleanup
+ok 128 - T04 source filters reload: filter faults resume the original search after their own cleanup
+  ---
+  duration_ms: 27.771209
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: nonmatching typed filters have no side effects
+ok 129 - T04 source filters reload: nonmatching typed filters have no side effects
+  ---
+  duration_ms: 24.856516
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: catch closures retain a fresh cell after the handler exits
+ok 130 - T04 source filters reload: catch closures retain a fresh cell after the handler exits
+  ---
+  duration_ms: 16.57479
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: filter closures and the accepted body share the same catch cell
+ok 131 - T04 source filters reload: filter closures and the accepted body share the same catch cell
+  ---
+  duration_ms: 14.405714
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: filters share captured locals and rethrow preserves exception identity
+ok 132 - T04 source filters reload: filters share captured locals and rethrow preserves exception identity
+  ---
+  duration_ms: 6.815833
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: portable replay retains the suspended search and locals
+ok 133 - T04 source filters reload: portable replay retains the suspended search and locals
+  ---
+  duration_ms: 24.855364
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: cross-frame filters precede cleanup
+ok 134 - T04 source filters cil: cross-frame filters precede cleanup
+  ---
+  duration_ms: 33.261725
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: filter faults resume the original search after their own cleanup
+ok 135 - T04 source filters cil: filter faults resume the original search after their own cleanup
+  ---
+  duration_ms: 46.605036
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: nonmatching typed filters have no side effects
+ok 136 - T04 source filters cil: nonmatching typed filters have no side effects
+  ---
+  duration_ms: 21.607323
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: catch closures retain a fresh cell after the handler exits
+ok 137 - T04 source filters cil: catch closures retain a fresh cell after the handler exits
+  ---
+  duration_ms: 17.036338
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: filter closures and the accepted body share the same catch cell
+ok 138 - T04 source filters cil: filter closures and the accepted body share the same catch cell
+  ---
+  duration_ms: 14.756629
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: filters share captured locals and rethrow preserves exception identity
+ok 139 - T04 source filters cil: filters share captured locals and rethrow preserves exception identity
+  ---
+  duration_ms: 6.818217
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: portable replay retains the suspended search and locals
+ok 140 - T04 source filters cil: portable replay retains the suspended search and locals
+  ---
+  duration_ms: 18.516462
+  type: 'test'
+  ...
+# Subtest: source: successful calls emit ordered entries/exits with fresh pooled frame identities
+ok 141 - source: successful calls emit ordered entries/exits with fresh pooled frame identities
+  ---
+  duration_ms: 87.22355
+  type: 'test'
+  ...
+# Subtest: source: failed frame admission emits no entry or later synthetic leave
+ok 142 - source: failed frame admission emits no entry or later synthetic leave
+  ---
+  duration_ms: 1.087528
+  type: 'test'
+  ...
+# Subtest: source: finally runs before the exceptional leave and a local catch does not close its frame
+ok 143 - source: finally runs before the exceptional leave and a local catch does not close its frame
+  ---
+  duration_ms: 14.489566
+  type: 'test'
+  ...
+# Subtest: source: finally return exits once while unhandled rethrow stays open until stop
+ok 144 - source: finally return exits once while unhandled rethrow stays open until stop
+  ---
+  duration_ms: 11.819805
+  type: 'test'
+  ...
+# Subtest: source: successful restore restarts spans; rejected restore changes no observations
+ok 145 - source: successful restore restarts spans; rejected restore changes no observations
+  ---
+  duration_ms: 5.906487
+  type: 'test'
+  ...
+# Subtest: source: debugger pauses and fatal inspection retain open spans until final cleanup
+ok 146 - source: debugger pauses and fatal inspection retain open spans until final cleanup
+  ---
+  duration_ms: 0.735711
+  type: 'test'
+  ...
+# Subtest: source: parked cancellation emits inner-first exits only at the next host boundary
+ok 147 - source: parked cancellation emits inner-first exits only at the next host boundary
+  ---
+  duration_ms: 12.284937
+  type: 'test'
+  ...
+# Subtest: source: waking a parked invocation emits normal returns, including after snapshot restore
+ok 148 - source: waking a parked invocation emits normal returns, including after snapshot restore
+  ---
+  duration_ms: 3.561983
+  type: 'test'
+  ...
+# Subtest: source: stop disposes live frames before callbacks and emits no duplicate exits
+ok 149 - source: stop disposes live frames before callbacks and emits no duplicate exits
+  ---
+  duration_ms: 0.882907
+  type: 'test'
+  ...
+# Subtest: source: method events obey log capacity without keeping historical active frames
+ok 150 - source: method events obey log capacity without keeping historical active frames
+  ---
+  duration_ms: 0.810311
+  type: 'test'
+  ...
+# Subtest: reload: successful calls emit ordered entries/exits with fresh pooled frame identities
+ok 151 - reload: successful calls emit ordered entries/exits with fresh pooled frame identities
+  ---
+  duration_ms: 12.319519
+  type: 'test'
+  ...
+# Subtest: reload: failed frame admission emits no entry or later synthetic leave
+ok 152 - reload: failed frame admission emits no entry or later synthetic leave
+  ---
+  duration_ms: 3.118352
+  type: 'test'
+  ...
+# Subtest: reload: finally runs before the exceptional leave and a local catch does not close its frame
+ok 153 - reload: finally runs before the exceptional leave and a local catch does not close its frame
+  ---
+  duration_ms: 5.714715
+  type: 'test'
+  ...
+# Subtest: reload: finally return exits once while unhandled rethrow stays open until stop
+ok 154 - reload: finally return exits once while unhandled rethrow stays open until stop
+  ---
+  duration_ms: 7.058891
+  type: 'test'
+  ...
+# Subtest: reload: successful restore restarts spans; rejected restore changes no observations
+ok 155 - reload: successful restore restarts spans; rejected restore changes no observations
+  ---
+  duration_ms: 3.937905
+  type: 'test'
+  ...
+# Subtest: reload: debugger pauses and fatal inspection retain open spans until final cleanup
+ok 156 - reload: debugger pauses and fatal inspection retain open spans until final cleanup
+  ---
+  duration_ms: 2.882805
+  type: 'test'
+  ...
+# Subtest: reload: parked cancellation emits inner-first exits only at the next host boundary
+ok 157 - reload: parked cancellation emits inner-first exits only at the next host boundary
+  ---
+  duration_ms: 4.314509
+  type: 'test'
+  ...
+# Subtest: reload: waking a parked invocation emits normal returns, including after snapshot restore
+ok 158 - reload: waking a parked invocation emits normal returns, including after snapshot restore
+  ---
+  duration_ms: 5.070359
+  type: 'test'
+  ...
+# Subtest: reload: stop disposes live frames before callbacks and emits no duplicate exits
+ok 159 - reload: stop disposes live frames before callbacks and emits no duplicate exits
+  ---
+  duration_ms: 6.573617
+  type: 'test'
+  ...
+# Subtest: reload: method events obey log capacity without keeping historical active frames
+ok 160 - reload: method events obey log capacity without keeping historical active frames
+  ---
+  duration_ms: 2.081187
+  type: 'test'
+  ...
+# Subtest: source: retiring and reusing one frame keeps exact quota charges and idempotent release
+ok 161 - source: retiring and reusing one frame keeps exact quota charges and idempotent release
+  ---
+  duration_ms: 7.865334
+  type: 'test'
+  ...
+# Subtest: source: restore and epoch changes rebuild live charges after prior frame reuse
+ok 162 - source: restore and epoch changes rebuild live charges after prior frame reuse
+  ---
+  duration_ms: 5.187961
+  type: 'test'
+  ...
+# Subtest: source: a failed reentrant allocator releases only its own provisional reservation
+ok 163 - source: a failed reentrant allocator releases only its own provisional reservation
+  ---
+  duration_ms: 0.689342
+  type: 'test'
+  ...
+# Subtest: reloaded: retiring and reusing one frame keeps exact quota charges and idempotent release
+ok 164 - reloaded: retiring and reusing one frame keeps exact quota charges and idempotent release
+  ---
+  duration_ms: 8.320794
+  type: 'test'
+  ...
+# Subtest: reloaded: restore and epoch changes rebuild live charges after prior frame reuse
+ok 165 - reloaded: restore and epoch changes rebuild live charges after prior frame reuse
+  ---
+  duration_ms: 4.448115
+  type: 'test'
+  ...
+# Subtest: reloaded: a failed reentrant allocator releases only its own provisional reservation
+ok 166 - reloaded: a failed reentrant allocator releases only its own provisional reservation
+  ---
+  duration_ms: 3.188173
+  type: 'test'
+  ...
+# Subtest: cil: retiring and reusing one frame keeps exact quota charges and idempotent release
+ok 167 - cil: retiring and reusing one frame keeps exact quota charges and idempotent release
+  ---
+  duration_ms: 11.567093
+  type: 'test'
+  ...
+# Subtest: cil: restore and epoch changes rebuild live charges after prior frame reuse
+ok 168 - cil: restore and epoch changes rebuild live charges after prior frame reuse
+  ---
+  duration_ms: 3.414727
+  type: 'test'
+  ...
+# Subtest: cil: a failed reentrant allocator releases only its own provisional reservation
+ok 169 - cil: a failed reentrant allocator releases only its own provisional reservation
+  ---
+  duration_ms: 1.591277
+  type: 'test'
+  ...
+# Subtest: reservation scopes reuse inactive tickets with a bounded retained pool
+ok 170 - reservation scopes reuse inactive tickets with a bounded retained pool
+  ---
+  duration_ms: 1.690073
+  type: 'test'
+  ...
+# Subtest: an outstanding ticket cannot alter the replacement budget after epoch
+ok 171 - an outstanding ticket cannot alter the replacement budget after epoch
+  ---
+  duration_ms: 1.295954
+  type: 'test'
+  ...
+# Subtest: an outstanding ticket cannot alter the replacement budget after quota-disabled
+ok 172 - an outstanding ticket cannot alter the replacement budget after quota-disabled
+  ---
+  duration_ms: 0.93934
+  type: 'test'
+  ...
+# Subtest: an outstanding ticket cannot alter the replacement budget after restore
+ok 173 - an outstanding ticket cannot alter the replacement budget after restore
+  ---
+  duration_ms: 1.452083
+  type: 'test'
+  ...
+# Subtest: an outstanding ticket cannot alter the replacement budget after stop
+ok 174 - an outstanding ticket cannot alter the replacement budget after stop
+  ---
+  duration_ms: 1.057443
+  type: 'test'
+  ...
+# Subtest: source: a failed root-pin setup also closes its reservation scope
+ok 175 - source: a failed root-pin setup also closes its reservation scope
+  ---
+  duration_ms: 0.424253
+  type: 'test'
+  ...
+# Subtest: reloaded: a failed root-pin setup also closes its reservation scope
+ok 176 - reloaded: a failed root-pin setup also closes its reservation scope
+  ---
+  duration_ms: 2.452082
+  type: 'test'
+  ...
+# Subtest: a post-commit registration failure cannot cancel a reentrant reservation
+ok 177 - a post-commit registration failure cannot cancel a reentrant reservation
+  ---
+  duration_ms: 8.179651
+  type: 'test'
+  ...
+# Subtest: synchronous callback source: caller control, dynamic roots and reentrant frames survive collection
+ok 178 - synchronous callback source: caller control, dynamic roots and reentrant frames survive collection
+  ---
+  duration_ms: 150.161712
+  type: 'test'
+  ...
+# Subtest: synchronous callback source: fault restores preexisting pending state and releases callback frames
+ok 179 - synchronous callback source: fault restores preexisting pending state and releases callback frames
+  ---
+  duration_ms: 13.698717
+  type: 'test'
+  ...
+# Subtest: synchronous callback cil: caller control, dynamic roots and reentrant frames survive collection
+ok 180 - synchronous callback cil: caller control, dynamic roots and reentrant frames survive collection
+  ---
+  duration_ms: 17.191106
+  type: 'test'
+  ...
+# Subtest: synchronous callback cil: fault restores preexisting pending state and releases callback frames
+ok 181 - synchronous callback cil: fault restores preexisting pending state and releases callback frames
+  ---
+  duration_ms: 3.958702
+  type: 'test'
+  ...
+# Subtest: synchronous CIL callback preserves mutable caller byrefs, GC roots and verified aggregate stack accounting
+ok 182 - synchronous CIL callback preserves mutable caller byrefs, GC roots and verified aggregate stack accounting
+  ---
+  duration_ms: 12.648839
+  type: 'test'
+  ...
+# Subtest: synchronous callbacks cannot leave paused execution or retain an abandoned pooled frame
+ok 183 - synchronous callbacks cannot leave paused execution or retain an abandoned pooled frame
+  ---
+  duration_ms: 16.877021
+  type: 'test'
+  ...
+# Subtest: synchronous call limits reject invalid budgets and include retained caller depth
+ok 184 - synchronous call limits reject invalid budgets and include retained caller depth
+  ---
+  duration_ms: 11.231541
+  type: 'test'
+  ...
+# Subtest: synchronous callback instruction exhaustion restores the paused caller and frees abandoned frame storage
+ok 185 - synchronous callback instruction exhaustion restores the paused caller and frees abandoned frame storage
+  ---
+  duration_ms: 3.779069
+  type: 'test'
+  ...
+# Subtest: CIL constructor admission verifies the reachable Object.ToString override
+ok 186 - CIL constructor admission verifies the reachable Object.ToString override
+  ---
+  duration_ms: 1.924671
+  type: 'test'
+  ...
+# Subtest: synchronous CIL callback verification rejection preserves prior report and stack proof
+ok 187 - synchronous CIL callback verification rejection preserves prior report and stack proof
+  ---
+  duration_ms: 1.951841
+  type: 'test'
+  ...
+# Subtest: direct host callback execution buffers subscriber delivery until an explicit host flush
+ok 188 - direct host callback execution buffers subscriber delivery until an explicit host flush
+  ---
+  duration_ms: 7.267982
+  type: 'test'
+  ...
+# Subtest: nested synchronous calls share the managed frame-depth limit
+ok 189 - nested synchronous calls share the managed frame-depth limit
+  ---
+  duration_ms: 13.98677
+  type: 'test'
+  ...
+# Subtest: callbacks preserve an already-suppressed scheduler and obey the enclosing instruction limit
+ok 190 - callbacks preserve an already-suppressed scheduler and obey the enclosing instruction limit
+  ---
+  duration_ms: 3.205769
+  type: 'test'
+  ...
+# Subtest: legacy adapter preserves the exact ordinary catch shape: try { } catch { }
+ok 191 - legacy adapter preserves the exact ordinary catch shape: try { } catch { }
+  ---
+  duration_ms: 6.816411
+  type: 'test'
+  ...
+# Subtest: legacy adapter preserves the exact ordinary catch shape: try { } catch (Exception error) { } finally { }
+ok 192 - legacy adapter preserves the exact ordinary catch shape: try { } catch (Exception error) { } finally { }
+  ---
+  duration_ms: 1.258875
+  type: 'test'
+  ...
+# Subtest: legacy adapter preserves the exact ordinary catch shape: try { } catch (ArgumentException error) { } catch { }
+ok 193 - legacy adapter preserves the exact ordinary catch shape: try { } catch (ArgumentException error) { } catch { }
+  ---
+  duration_ms: 0.548344
+  type: 'test'
+  ...
+# Subtest: legacy adapter retains a written false filter and leaves the fallback catch unchanged
+ok 194 - legacy adapter retains a written false filter and leaves the fallback catch unchanged
+  ---
+  duration_ms: 1.088234
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: struct S { int a; }
+ok 195 - legacy adapter public compiler accepts supported syntax: struct S { int a; }
+  ---
+  duration_ms: 72.977338
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: interface I { void M(); }
+ok 196 - legacy adapter public compiler accepts supported syntax: interface I { void M(); }
+  ---
+  duration_ms: 5.453943
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: enum E { A }
+ok 197 - legacy adapter public compiler accepts supported syntax: enum E { A }
+  ---
+  duration_ms: 26.49351
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: delegate void D();
+ok 198 - legacy adapter public compiler accepts supported syntax: delegate void D();
+  ---
+  duration_ms: 4.155371
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: namespace N { struct S { } }
+ok 199 - legacy adapter public compiler accepts supported syntax: namespace N { struct S { } }
+  ---
+  duration_ms: 3.476736
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { class B { } }
+ok 200 - legacy adapter public compiler accepts supported syntax: class A { class B { } }
+  ---
+  duration_ms: 4.097615
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { struct B { } }
+ok 201 - legacy adapter public compiler accepts supported syntax: class A { struct B { } }
+  ---
+  duration_ms: 3.167423
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { void M(ref int x) { } }
+ok 202 - legacy adapter public compiler accepts supported syntax: class A { void M(ref int x) { } }
+  ---
+  duration_ms: 5.078754
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { int? x; }
+ok 203 - legacy adapter public compiler accepts supported syntax: class A { int? x; }
+  ---
+  duration_ms: 3.448525
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A<T> { }
+ok 204 - legacy adapter public compiler accepts supported syntax: class A<T> { }
+  ---
+  duration_ms: 2.673638
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { event System.Action E; }
+ok 205 - legacy adapter public compiler accepts supported syntax: class A { event System.Action E; }
+  ---
+  duration_ms: 3.05716
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { int this[int i] { get { return 0; } } }
+ok 206 - legacy adapter public compiler accepts supported syntax: class A { int this[int i] { get { return 0; } } }
+  ---
+  duration_ms: 4.87209
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { public static A operator +(A x, A y) { return x; } }
+ok 207 - legacy adapter public compiler accepts supported syntax: class A { public static A operator +(A x, A y) { return x; } }
+  ---
+  duration_ms: 4.302286
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { (int, int) t; }
+ok 208 - legacy adapter public compiler accepts supported syntax: class A { (int, int) t; }
+  ---
+  duration_ms: 2.87953
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: [System.Obsolete] class A { }
+ok 209 - legacy adapter public compiler accepts supported syntax: [System.Obsolete] class A { }
+  ---
+  duration_ms: 3.057872
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class C{public int X{get;init;}}
+ok 210 - legacy adapter public compiler accepts supported syntax: class C{public int X{get;init;}}
+  ---
+  duration_ms: 4.412457
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: object o = 1; var b = o is int;
+not ok 211 - legacy adapter public compiler accepts supported syntax: object o = 1; var b = o is int;
+  ---
+  duration_ms: 6.91229
+  type: 'test'
+  location: '/workspace/scratch/42f7738360b9/a05-integration/tests/syntax-legacy-adapter-profile.test.js:81:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    object o = 1; var b = o is int;
+    + actual - expected
+    
+    + [
+    +   {
+    +     code: 'SF2098',
+    +     length: 8,
+    +     message: "Expression 'IsExpression' is not implemented by this profile",
+    +     range: {
+    +       end: {
+    +         character: 52,
+    +         line: 0
+    +       },
+    +       start: {
+    +         character: 44,
+    +         line: 0
+    +       }
+    +     },
+    +     severity: 'error',
+    +     start: 44,
+    +     uri: 'Program.cs',
+    +     version: 1
+    +   },
+    +   {
+    +     code: 'SF2200',
+    +     length: 8,
+    +     message: 'The program is valid C# but is not executable on this runtime profile: it uses type tests that need a runtime type check',
+    +     range: {
+    +       end: {
+    +         character: 52,
+    +         line: 0
+    +       },
+    +       start: {
+    +         character: 44,
+    +         line: 0
+    +       }
+    +     },
+    +     severity: 'error',
+    +     start: 44,
+    +     uri: 'Program.cs',
+    +     version: 1
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      uri: 'Program.cs'
+      version: 1
+      start: 44
+      length: 8
+      code: 'SF2098'
+      message: "Expression 'IsExpression' is not implemented by this profile"
+      severity: 'error'
+      range:
+        start:
+          line: 0
+          character: 44
+        end:
+          line: 0
+          character: 52
+    1:
+      uri: 'Program.cs'
+      version: 1
+      start: 44
+      length: 8
+      code: 'SF2200'
+      message: 'The program is valid C# but is not executable on this runtime profile: it uses type tests that need a runtime type check'
+      severity: 'error'
+      range:
+        start:
+          line: 0
+          character: 44
+        end:
+          line: 0
+          character: 52
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/syntax-legacy-adapter-profile.test.js:83:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: object o = 1; var s = o as string;
+not ok 212 - legacy adapter public compiler accepts supported syntax: object o = 1; var s = o as string;
+  ---
+  duration_ms: 2.777281
+  type: 'test'
+  location: '/workspace/scratch/42f7738360b9/a05-integration/tests/syntax-legacy-adapter-profile.test.js:81:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    object o = 1; var s = o as string;
+    + actual - expected
+    
+    + [
+    +   {
+    +     code: 'SF2098',
+    +     length: 11,
+    +     message: "Expression 'AsExpression' is not implemented by this profile",
+    +     range: {
+    +       end: {
+    +         character: 55,
+    +         line: 0
+    +       },
+    +       start: {
+    +         character: 44,
+    +         line: 0
+    +       }
+    +     },
+    +     severity: 'error',
+    +     start: 44,
+    +     uri: 'Program.cs',
+    +     version: 1
+    +   },
+    +   {
+    +     code: 'SF2200',
+    +     length: 11,
+    +     message: 'The program is valid C# but is not executable on this runtime profile: it uses as expressions',
+    +     range: {
+    +       end: {
+    +         character: 55,
+    +         line: 0
+    +       },
+    +       start: {
+    +         character: 44,
+    +         line: 0
+    +       }
+    +     },
+    +     severity: 'error',
+    +     start: 44,
+    +     uri: 'Program.cs',
+    +     version: 1
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      uri: 'Program.cs'
+      version: 1
+      start: 44
+      length: 11
+      code: 'SF2098'
+      message: "Expression 'AsExpression' is not implemented by this profile"
+      severity: 'error'
+      range:
+        start:
+          line: 0
+          character: 44
+        end:
+          line: 0
+          character: 55
+    1:
+      uri: 'Program.cs'
+      version: 1
+      start: 44
+      length: 11
+      code: 'SF2200'
+      message: 'The program is valid C# but is not executable on this runtime profile: it uses as expressions'
+      severity: 'error'
+      range:
+        start:
+          line: 0
+          character: 44
+        end:
+          line: 0
+          character: 55
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/syntax-legacy-adapter-profile.test.js:83:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: var t = (1, 2);
+ok 213 - legacy adapter public compiler accepts supported syntax: var t = (1, 2);
+  ---
+  duration_ms: 2.953299
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: int i = 0; L: i++; goto L;
+ok 214 - legacy adapter public compiler accepts supported syntax: int i = 0; L: i++; goto L;
+  ---
+  duration_ms: 5.179501
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: void F() { int G() { return 1; } }
+ok 215 - legacy adapter public compiler accepts supported syntax: void F() { int G() { return 1; } }
+  ---
+  duration_ms: 3.117679
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: var x = 1.2f;
+ok 216 - legacy adapter public compiler accepts supported syntax: var x = 1.2f;
+  ---
+  duration_ms: 2.145615
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: var x = 1L;
+ok 217 - legacy adapter public compiler accepts supported syntax: var x = 1L;
+  ---
+  duration_ms: 1.554097
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: var x = 5000000000;
+ok 218 - legacy adapter public compiler accepts supported syntax: var x = 5000000000;
+  ---
+  duration_ms: 1.577072
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: int x = 1; var y = x switch { > 0 => 1, _ => 0 };
+ok 219 - legacy adapter public compiler accepts supported syntax: int x = 1; var y = x switch { > 0 => 1, _ => 0 };
+  ---
+  duration_ms: 4.949754
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: class A : Base { }
+ok 220 - legacy adapter public compiler preserves invalid-source diagnostics: class A : Base { }
+  ---
+  duration_ms: 2.125405
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: class A { Foo<int> x; }
+ok 221 - legacy adapter public compiler preserves invalid-source diagnostics: class A { Foo<int> x; }
+  ---
+  duration_ms: 2.635533
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: class A { int* p; }
+ok 222 - legacy adapter public compiler preserves invalid-source diagnostics: class A { int* p; }
+  ---
+  duration_ms: 1.839526
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: var f = x => x;
+ok 223 - legacy adapter public compiler preserves invalid-source diagnostics: var f = x => x;
+  ---
+  duration_ms: 2.011568
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: var f = delegate { };
+ok 224 - legacy adapter public compiler preserves invalid-source diagnostics: var f = delegate { };
+  ---
+  duration_ms: 1.352652
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: var q = from x in xs select x;
+ok 225 - legacy adapter public compiler preserves invalid-source diagnostics: var q = from x in xs select x;
+  ---
+  duration_ms: 2.315934
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler rejects a real runtime gap: class Base { } class Derived : Base { }
+ok 226 - legacy adapter public compiler rejects a real runtime gap: class Base { } class Derived : Base { }
+  ---
+  duration_ms: 1.797004
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler rejects a real runtime gap: class A { public virtual void M() { } }
+ok 227 - legacy adapter public compiler rejects a real runtime gap: class A { public virtual void M() { } }
+  ---
+  duration_ms: 1.997808
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler rejects a real runtime gap: var s = "x"u8;
+ok 228 - legacy adapter public compiler rejects a real runtime gap: var s = "x"u8;
+  ---
+  duration_ms: 2.166305
+  type: 'test'
+  ...
+# Subtest: legacy adapter: output is deep-equal to the pre-refactor parser for every recorded test source
+ok 229 - legacy adapter: output is deep-equal to the pre-refactor parser for every recorded test source
+  ---
+  duration_ms: 1712.638842
+  type: 'test'
+  ...
+# Subtest: legacy adapter: output is deep-equal for the repository examples and templates
+ok 230 - legacy adapter: output is deep-equal for the repository examples and templates
+  ---
+  duration_ms: 186.337711
+  type: 'test'
+  ...
+# Subtest: legacy adapter: result keeps the consumer-facing shape
+ok 231 - legacy adapter: result keeps the consumer-facing shape
+  ---
+  duration_ms: 1.139552
+  type: 'test'
+  ...
+# Subtest: legacy adapter: expressions match the pre-refactor parseExpression
+ok 232 - legacy adapter: expressions match the pre-refactor parseExpression
+  ---
+  duration_ms: 2.223573
+  type: 'test'
+  ...
+# Subtest: legacy adapter: newly accepted syntax that maps onto existing nodes compiles
+ok 233 - legacy adapter: newly accepted syntax that maps onto existing nodes compiles
+  ---
+  duration_ms: 74.46934
+  type: 'test'
+  ...
+1..233
+# tests 233
+# suites 0
+# pass 231
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 34723.039299

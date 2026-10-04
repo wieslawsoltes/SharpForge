@@ -1,0 +1,1898 @@
+TAP version 13
+# Subtest: PE bounds anycpu: valid
+ok 1 - PE bounds anycpu: valid
+  ---
+  duration_ms: 6.95959
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: headers-exact
+ok 2 - PE bounds anycpu: headers-exact
+  ---
+  duration_ms: 1.093165
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: header-at-64
+ok 3 - PE bounds anycpu: header-at-64
+  ---
+  duration_ms: 0.762239
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: headers-file-end
+ok 4 - PE bounds anycpu: headers-file-end
+  ---
+  duration_ms: 0.958277
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: reordered-sections
+ok 5 - PE bounds anycpu: reordered-sections
+  ---
+  duration_ms: 0.764392
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: bss
+ok 6 - PE bounds anycpu: bss
+  ---
+  duration_ms: 0.904067
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: empty
+ok 7 - PE bounds anycpu: empty
+  ---
+  duration_ms: 0.57157
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: empty-pointer-at-eof
+ok 8 - PE bounds anycpu: empty-pointer-at-eof
+  ---
+  duration_ms: 0.59903
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: raw-padding
+ok 9 - PE bounds anycpu: raw-padding
+  ---
+  duration_ms: 0.645458
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: rva-exclusive-end
+ok 10 - PE bounds anycpu: rva-exclusive-end
+  ---
+  duration_ms: 0.61305
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: touching-sections
+ok 11 - PE bounds anycpu: touching-sections
+  ---
+  duration_ms: 0.952118
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: pe-pointer-dos
+ok 12 - PE bounds anycpu: pe-pointer-dos
+  ---
+  duration_ms: 0.466965
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: pe-pointer-max
+ok 13 - PE bounds anycpu: pe-pointer-max
+  ---
+  duration_ms: 0.336945
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: pe-pointer-truncated
+ok 14 - PE bounds anycpu: pe-pointer-truncated
+  ---
+  duration_ms: 0.413948
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: optional-truncated
+ok 15 - PE bounds anycpu: optional-truncated
+  ---
+  duration_ms: 0.55171
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: section-table-truncated
+ok 16 - PE bounds anycpu: section-table-truncated
+  ---
+  duration_ms: 0.538711
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: headers-too-small
+ok 17 - PE bounds anycpu: headers-too-small
+  ---
+  duration_ms: 0.425245
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: headers-max
+ok 18 - PE bounds anycpu: headers-max
+  ---
+  duration_ms: 0.539592
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: raw-start-max
+ok 19 - PE bounds anycpu: raw-start-max
+  ---
+  duration_ms: 2.301159
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: raw-size-max
+ok 20 - PE bounds anycpu: raw-size-max
+  ---
+  duration_ms: 1.677102
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: virtual-size-max
+ok 21 - PE bounds anycpu: virtual-size-max
+  ---
+  duration_ms: 0.471192
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: rva-wrap
+ok 22 - PE bounds anycpu: rva-wrap
+  ---
+  duration_ms: 1.470299
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: raw-header-overlap
+ok 23 - PE bounds anycpu: raw-header-overlap
+  ---
+  duration_ms: 0.509197
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: virtual-header-overlap
+ok 24 - PE bounds anycpu: virtual-header-overlap
+  ---
+  duration_ms: 1.63394
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: raw-overlap
+ok 25 - PE bounds anycpu: raw-overlap
+  ---
+  duration_ms: 0.451153
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: virtual-overlap
+ok 26 - PE bounds anycpu: virtual-overlap
+  ---
+  duration_ms: 1.481415
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: bss-virtual-overlap
+ok 27 - PE bounds anycpu: bss-virtual-overlap
+  ---
+  duration_ms: 1.559771
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: padding-virtual-overlap
+ok 28 - PE bounds anycpu: padding-virtual-overlap
+  ---
+  duration_ms: 0.341711
+  type: 'test'
+  ...
+# Subtest: PE bounds anycpu: empty-pointer-past-eof
+ok 29 - PE bounds anycpu: empty-pointer-past-eof
+  ---
+  duration_ms: 1.881103
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: valid
+ok 30 - PE bounds x64: valid
+  ---
+  duration_ms: 0.40864
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: headers-exact
+ok 31 - PE bounds x64: headers-exact
+  ---
+  duration_ms: 0.351026
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: header-at-64
+ok 32 - PE bounds x64: header-at-64
+  ---
+  duration_ms: 0.744343
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: headers-file-end
+ok 33 - PE bounds x64: headers-file-end
+  ---
+  duration_ms: 0.289154
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: reordered-sections
+ok 34 - PE bounds x64: reordered-sections
+  ---
+  duration_ms: 0.295293
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: bss
+ok 35 - PE bounds x64: bss
+  ---
+  duration_ms: 0.357515
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: empty
+ok 36 - PE bounds x64: empty
+  ---
+  duration_ms: 1.785601
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: empty-pointer-at-eof
+ok 37 - PE bounds x64: empty-pointer-at-eof
+  ---
+  duration_ms: 2.093334
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: raw-padding
+ok 38 - PE bounds x64: raw-padding
+  ---
+  duration_ms: 0.529798
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: rva-exclusive-end
+ok 39 - PE bounds x64: rva-exclusive-end
+  ---
+  duration_ms: 3.503975
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: touching-sections
+ok 40 - PE bounds x64: touching-sections
+  ---
+  duration_ms: 0.414058
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: pe-pointer-dos
+ok 41 - PE bounds x64: pe-pointer-dos
+  ---
+  duration_ms: 0.316154
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: pe-pointer-max
+ok 42 - PE bounds x64: pe-pointer-max
+  ---
+  duration_ms: 0.412916
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: pe-pointer-truncated
+ok 43 - PE bounds x64: pe-pointer-truncated
+  ---
+  duration_ms: 0.323144
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: optional-truncated
+ok 44 - PE bounds x64: optional-truncated
+  ---
+  duration_ms: 0.288584
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: section-table-truncated
+ok 45 - PE bounds x64: section-table-truncated
+  ---
+  duration_ms: 0.370444
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: headers-too-small
+ok 46 - PE bounds x64: headers-too-small
+  ---
+  duration_ms: 0.373388
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: headers-max
+ok 47 - PE bounds x64: headers-max
+  ---
+  duration_ms: 0.35374
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: raw-start-max
+ok 48 - PE bounds x64: raw-start-max
+  ---
+  duration_ms: 0.33363
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: raw-size-max
+ok 49 - PE bounds x64: raw-size-max
+  ---
+  duration_ms: 0.355692
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: virtual-size-max
+ok 50 - PE bounds x64: virtual-size-max
+  ---
+  duration_ms: 0.307932
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: rva-wrap
+ok 51 - PE bounds x64: rva-wrap
+  ---
+  duration_ms: 0.267453
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: raw-header-overlap
+ok 52 - PE bounds x64: raw-header-overlap
+  ---
+  duration_ms: 0.255846
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: virtual-header-overlap
+ok 53 - PE bounds x64: virtual-header-overlap
+  ---
+  duration_ms: 0.238621
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: raw-overlap
+ok 54 - PE bounds x64: raw-overlap
+  ---
+  duration_ms: 0.276677
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: virtual-overlap
+ok 55 - PE bounds x64: virtual-overlap
+  ---
+  duration_ms: 3.169965
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: bss-virtual-overlap
+ok 56 - PE bounds x64: bss-virtual-overlap
+  ---
+  duration_ms: 2.704912
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: padding-virtual-overlap
+ok 57 - PE bounds x64: padding-virtual-overlap
+  ---
+  duration_ms: 0.235646
+  type: 'test'
+  ...
+# Subtest: PE bounds x64: empty-pointer-past-eof
+ok 58 - PE bounds x64: empty-pointer-past-eof
+  ---
+  duration_ms: 0.259421
+  type: 'test'
+  ...
+# Subtest: PE bounds sort private interval indexes and preserve public section order
+ok 59 - PE bounds sort private interval indexes and preserve public section order
+  ---
+  duration_ms: 0.416431
+  type: 'test'
+  ...
+# Subtest: PE bounds preserve exact header and raw-file end equality
+ok 60 - PE bounds preserve exact header and raw-file end equality
+  ---
+  duration_ms: 0.311087
+  type: 'test'
+  ...
+# Subtest: PE bounds admit the exact 2^32 exclusive RVA end without wrapping
+ok 61 - PE bounds admit the exact 2^32 exclusive RVA end without wrapping
+  ---
+  duration_ms: 0.30666
+  type: 'test'
+  ...
+# Subtest: PE bounds do not produce file addresses from BSS or empty raw sections
+ok 62 - PE bounds do not produce file addresses from BSS or empty raw sections
+  ---
+  duration_ms: 0.910357
+  type: 'test'
+  ...
+# Subtest: PE bounds preserve nonempty endpoint ambiguity and raw padding addressability
+ok 63 - PE bounds preserve nonempty endpoint ambiguity and raw padding addressability
+  ---
+  duration_ms: 3.141883
+  type: 'test'
+  ...
+# Subtest: PE RVA queries reject invalid arithmetic operands with CilError
+ok 64 - PE RVA queries reject invalid arithmetic operands with CilError
+  ---
+  duration_ms: 0.615945
+  type: 'test'
+  ...
+# Subtest: CIL execution budgets do not become structural EH instruction limits
+ok 65 - CIL execution budgets do not become structural EH instruction limits
+  ---
+  duration_ms: 21.504567
+  type: 'test'
+  ...
+# Subtest: standalone structural instruction limits remain bounded and enforced
+ok 66 - standalone structural instruction limits remain bounded and enforced
+  ---
+  duration_ms: 2.488734
+  type: 'test'
+  ...
+# Subtest: CIL opcode unknown.op retains its explicit fault with decodePlans=false
+ok 67 - CIL opcode unknown.op retains its explicit fault with decodePlans=false
+  ---
+  duration_ms: 16.126229
+  type: 'test'
+  ...
+# Subtest: CIL opcode no. retains its explicit fault with decodePlans=false
+ok 68 - CIL opcode no. retains its explicit fault with decodePlans=false
+  ---
+  duration_ms: 1.937435
+  type: 'test'
+  ...
+# Subtest: CIL opcode unknown.op retains its explicit fault with decodePlans=true
+ok 69 - CIL opcode unknown.op retains its explicit fault with decodePlans=true
+  ---
+  duration_ms: 2.272898
+  type: 'test'
+  ...
+# Subtest: CIL opcode no. retains its explicit fault with decodePlans=true
+ok 70 - CIL opcode no. retains its explicit fault with decodePlans=true
+  ---
+  duration_ms: 1.481536
+  type: 'test'
+  ...
+# Subtest: unknown inspected opcodes cannot acquire an execution verification proof
+ok 71 - unknown inspected opcodes cannot acquire an execution verification proof
+  ---
+  duration_ms: 1.967679
+  type: 'test'
+  ...
+# Subtest: CIL admission reuses normalized options when no runtime quota or assembly override needs removal
+ok 72 - CIL admission reuses normalized options when no runtime quota or assembly override needs removal
+  ---
+  duration_ms: 1.106334
+  type: 'test'
+  ...
+# Subtest: CIL admission removes each runtime-only quota without mutating caller options
+ok 73 - CIL admission removes each runtime-only quota without mutating caller options
+  ---
+  duration_ms: 1.364574
+  type: 'test'
+  ...
+# Subtest: explicit assembly quotas survive runtime filtering and override legacy structural settings
+ok 74 - explicit assembly quotas survive runtime filtering and override legacy structural settings
+  ---
+  duration_ms: 0.195517
+  type: 'test'
+  ...
+# Subtest: an explicit assembly-only override is flattened even without runtime quota properties
+ok 75 - an explicit assembly-only override is flattened even without runtime quota properties
+  ---
+  duration_ms: 0.124142
+  type: 'test'
+  ...
+# Subtest: CIL execution budget 1000001 admits and executes a real finally handler
+ok 76 - CIL execution budget 1000001 admits and executes a real finally handler
+  ---
+  duration_ms: 21.964923
+  type: 'test'
+  ...
+# Subtest: CIL execution budget 20000000 admits and executes a real finally handler
+ok 77 - CIL execution budget 20000000 admits and executes a real finally handler
+  ---
+  duration_ms: 3.152319
+  type: 'test'
+  ...
+# Subtest: CIL admission preserves an existing inspector and selected nested fault/catch method
+ok 78 - CIL admission preserves an existing inspector and selected nested fault/catch method
+  ---
+  duration_ms: 5.681763
+  type: 'test'
+  ...
+# Subtest: a small CIL execution budget admits the whole method and expires during execution
+ok 79 - a small CIL execution budget admits the whole method and expires during execution
+  ---
+  duration_ms: 2.498669
+  type: 'test'
+  ...
+# Subtest: direct CIL verification retains its static instruction ceiling and caller-supplied lower bound
+ok 80 - direct CIL verification retains its static instruction ceiling and caller-supplied lower bound
+  ---
+  duration_ms: 1.670253
+  type: 'test'
+  ...
+# Subtest: a large CIL execution budget still rejects malformed EH transfers before execution
+ok 81 - a large CIL execution budget still rejects malformed EH transfers before execution
+  ---
+  duration_ms: 1.539931
+  type: 'test'
+  ...
+# Subtest: CIL admission preserves explicit region limits and cancellation
+ok 82 - CIL admission preserves explicit region limits and cancellation
+  ---
+  duration_ms: 1.548384
+  type: 'test'
+  ...
+# Subtest: late CIL callback verification separates the execution budget and retains original stack proofs
+ok 83 - late CIL callback verification separates the execution budget and retains original stack proofs
+  ---
+  duration_ms: 3.435465
+  type: 'test'
+  ...
+# Subtest: late CIL callback verification retains region limits and preserves the prior report on rejection
+ok 84 - late CIL callback verification retains region limits and preserves the prior report on rejection
+  ---
+  duration_ms: 1.855454
+  type: 'test'
+  ...
+# Subtest: direct CIL heap quota does not limit the PE bytes and remains enforced from construction
+ok 85 - direct CIL heap quota does not limit the PE bytes and remains enforced from construction
+  ---
+  duration_ms: 21.970041
+  type: 'test'
+  ...
+# Subtest: explicit assembly byte limits are exact and independent of the smaller heap quota
+ok 86 - explicit assembly byte limits are exact and independent of the smaller heap quota
+  ---
+  duration_ms: 2.480853
+  type: 'test'
+  ...
+# Subtest: nested structural decode limits remain independent from executed instruction limits
+ok 87 - nested structural decode limits remain independent from executed instruction limits
+  ---
+  duration_ms: 2.5465
+  type: 'test'
+  ...
+# Subtest: a pre-admitted inspector retains its own decoding limits
+ok 88 - a pre-admitted inspector retains its own decoding limits
+  ---
+  duration_ms: 0.97325
+  type: 'test'
+  ...
+# Subtest: direct CIL async native reference: Completed
+ok 89 - direct CIL async native reference: Completed
+  ---
+  duration_ms: 2841.097843
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Suspended
+ok 90 - direct CIL async native reference: Suspended
+  ---
+  duration_ms: 2222.563821
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Exceptions
+ok 91 - direct CIL async native reference: Exceptions
+  ---
+  duration_ms: 2127.774439
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Retention
+ok 92 - direct CIL async native reference: Retention
+  ---
+  duration_ms: 2038.104767
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: WaitAndDelay
+ok 93 - direct CIL async native reference: WaitAndDelay
+  ---
+  duration_ms: 2181.669622
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Mutation
+ok 94 - direct CIL async native reference: Mutation
+  ---
+  duration_ms: 2204.527203
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async snapshot roots and exactly-once continuation: Retention
+ok 95 - direct CIL async snapshot roots and exactly-once continuation: Retention
+  ---
+  duration_ms: 2148.682576
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async snapshot roots and exactly-once continuation: Mutation
+ok 96 - direct CIL async snapshot roots and exactly-once continuation: Mutation
+  ---
+  duration_ms: 2004.968999
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async builder reachability rejects invalid MoveNext before execution
+ok 97 - direct CIL async builder reachability rejects invalid MoveNext before execution
+  ---
+  duration_ms: 1099.854242
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: CIL async ABI matcher requires complete generic and byref member signatures
+ok 98 - CIL async ABI matcher requires complete generic and byref member signatures
+  ---
+  duration_ms: 1.615032
+  type: 'test'
+  ...
+# Subtest: CIL async ABI generic awaiter result and real Yield type are exact
+ok 99 - CIL async ABI generic awaiter result and real Yield type are exact
+  ---
+  duration_ms: 0.392316
+  type: 'test'
+  ...
+# Subtest: CIL async matching preserves caller generic variables in an already substituted state-machine argument
+ok 100 - CIL async matching preserves caller generic variables in an already substituted state-machine argument
+  ---
+  duration_ms: 1.316644
+  type: 'test'
+  ...
+# Subtest: CIL async callbacks require trusted reference scope and matching MethodImpl declarations
+ok 101 - CIL async callbacks require trusted reference scope and matching MethodImpl declarations
+  ---
+  duration_ms: 22.988985
+  type: 'test'
+  ...
+# Subtest: CIL dispatch admits proved async callback implementations and still rejects malformed declarations
+ok 102 - CIL dispatch admits proved async callback implementations and still rejects malformed declarations
+  ---
+  duration_ms: 7.016222
+  type: 'test'
+  ...
+# Subtest: CIL async callback-only bodies remain mandatory verifier roots
+ok 103 - CIL async callback-only bodies remain mandatory verifier roots
+  ---
+  duration_ms: 1.759423
+  type: 'test'
+  ...
+# Subtest: nested method-count limit rejects a new callback root before changing execution or the original proof
+ok 104 - nested method-count limit rejects a new callback root before changing execution or the original proof
+  ---
+  duration_ms: 20.314539
+  type: 'test'
+  ...
+# Subtest: legacy method-count limit rejects a new callback root before changing execution or the original proof
+ok 105 - legacy method-count limit rejects a new callback root before changing execution or the original proof
+  ---
+  duration_ms: 2.579387
+  type: 'test'
+  ...
+# Subtest: nested override method-count limit rejects a new callback root before changing execution or the original proof
+ok 106 - nested override method-count limit rejects a new callback root before changing execution or the original proof
+  ---
+  duration_ms: 1.929773
+  type: 'test'
+  ...
+# Subtest: a callback with EH uses explicit structural limits without importing the enclosing execution quota
+ok 107 - a callback with EH uses explicit structural limits without importing the enclosing execution quota
+  ---
+  duration_ms: 6.460336
+  type: 'test'
+  ...
+# Subtest: a callback structural allowance cannot raise the enclosing runtime instruction budget
+ok 108 - a callback structural allowance cannot raise the enclosing runtime instruction budget
+  ---
+  duration_ms: 4.091667
+  type: 'test'
+  ...
+# Subtest: conversion-only capture accepts the retained exact native64 corpus without rewriting it
+ok 109 - conversion-only capture accepts the retained exact native64 corpus without rewriting it
+  ---
+  duration_ms: 10.52253
+  type: 'test'
+  ...
+# Subtest: conversion proof rejects invented width, missing operands, reordered rows, abnormal CLR exits and extra output
+ok 110 - conversion proof rejects invented width, missing operands, reordered rows, abnormal CLR exits and extra output
+  ---
+  duration_ms: 63.737449
+  type: 'test'
+  ...
+# Subtest: ABI32 replay compares native-style answers in all three engines including checked conversion failure
+ok 111 - ABI32 replay compares native-style answers in all three engines including checked conversion failure
+  ---
+  duration_ms: 271.119156
+  type: 'test'
+  ...
+# Subtest: a summary cannot qualify an omitted engine or a changed source tree
+ok 112 - a summary cannot qualify an omitted engine or a changed source tree
+  ---
+  duration_ms: 8.524797
+  type: 'test'
+  ...
+# Subtest: capture refuses evidence overwrite and finalization preserves a missing-run failure
+ok 113 - capture refuses evidence overwrite and finalization preserves a missing-run failure
+  ---
+  duration_ms: 10.850273
+  type: 'test'
+  ...
+# Subtest: a non-CLR executable cannot qualify and its actual command output remains available
+ok 114 - a non-CLR executable cannot qualify and its actual command output remains available
+  ---
+  duration_ms: 12.621707
+  type: 'test'
+  ...
+# Subtest: source: evaluation captures committed history before host publication and retains its result
+not ok 115 - source: evaluation captures committed history before host publication and retains its result
+  ---
+  duration_ms: 159.616783
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/a05-debugger-evaluation-transactions.test.js:63:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'suppressed')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    vm.platform.options.onUICommand (file:///tmp/a05-integration-42f7738360b9/tests/a05-debugger-evaluation-transactions.test.js:70:61)
+    commitPlatformTransaction (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/platform-transactions.js:23:68)
+    ManagedPlatform.commitTransaction (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/platform.js:36:39)
+    file:///tmp/a05-integration-42f7738360b9/packages/debugger/src/evaluation-transaction.js:113:36
+    ManagedHeap.withRoots (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/heap.js:16:116)
+    evaluateTransaction (file:///tmp/a05-integration-42f7738360b9/packages/debugger/src/evaluation-transaction.js:102:13)
+    evaluateFunction (file:///tmp/a05-integration-42f7738360b9/packages/debugger/src/evaluation.js:205:73)
+    DebugSession.evaluateFunction (file:///tmp/a05-integration-42f7738360b9/packages/debugger/src/index.js:54:47)
+    file:///tmp/a05-integration-42f7738360b9/tests/a05-debugger-evaluation-transactions.test.js:74:61
+    queueOnAllocation (file:///tmp/a05-integration-42f7738360b9/tests/a05-debugger-evaluation-transactions.test.js:44:12)
+  ...
+# Subtest: source: failed history preparation discards buffered effects and result leases
+ok 116 - source: failed history preparation discards buffered effects and result leases
+  ---
+  duration_ms: 19.63431
+  type: 'test'
+  ...
+# Subtest: source: command delivery failure preserves the already observable evaluation commit
+ok 117 - source: command delivery failure preserves the already observable evaluation commit
+  ---
+  duration_ms: 11.211082
+  type: 'test'
+  ...
+# Subtest: source: output delivery failure preserves the already observable evaluation commit
+ok 118 - source: output delivery failure preserves the already observable evaluation commit
+  ---
+  duration_ms: 9.343188
+  type: 'test'
+  ...
+# Subtest: source: rollback and cancellation keep the active-transaction snapshot guard
+ok 119 - source: rollback and cancellation keep the active-transaction snapshot guard
+  ---
+  duration_ms: 11.501919
+  type: 'test'
+  ...
+# Subtest: CIL: evaluation captures committed history before host publication and retains its result
+not ok 120 - CIL: evaluation captures committed history before host publication and retains its result
+  ---
+  duration_ms: 34.407682
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/a05-debugger-evaluation-transactions.test.js:63:3'
+  failureType: 'testCodeFailure'
+  error: 'Unverified virtual override; select its method directly'
+  code: 'ERR_TEST_FAILURE'
+  name: 'NotSupportedException'
+  stack: |-
+    file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:103:45
+    ManagedHeap.withRoots (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/heap.js:16:116)
+    invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:62:11)
+    CilVirtualMachine.invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:92:30)
+    file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/handlers/call.js:11:93
+    dispatchWasmCall (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js:135:12)
+    executeCilStep (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-step.js:38:12)
+    CilVirtualMachine.step (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:96:17)
+    runCilSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-slice.js:75:19)
+    CilVirtualMachine.runSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:97:28)
+  ...
+# Subtest: CIL: failed history preparation discards buffered effects and result leases
+not ok 121 - CIL: failed history preparation discards buffered effects and result leases
+  ---
+  duration_ms: 13.26017
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/a05-debugger-evaluation-transactions.test.js:98:3'
+  failureType: 'testCodeFailure'
+  error: 'Unverified virtual override; select its method directly'
+  code: 'ERR_TEST_FAILURE'
+  name: 'NotSupportedException'
+  stack: |-
+    file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:103:45
+    ManagedHeap.withRoots (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/heap.js:16:116)
+    invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:62:11)
+    CilVirtualMachine.invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:92:30)
+    file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/handlers/call.js:11:93
+    dispatchWasmCall (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js:135:12)
+    executeCilStep (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-step.js:38:12)
+    CilVirtualMachine.step (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:96:17)
+    runCilSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-slice.js:75:19)
+    CilVirtualMachine.runSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:97:28)
+  ...
+# Subtest: CIL: command delivery failure preserves the already observable evaluation commit
+not ok 122 - CIL: command delivery failure preserves the already observable evaluation commit
+  ---
+  duration_ms: 13.140274
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/a05-debugger-evaluation-transactions.test.js:130:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /delivery failed/. Input:
+    
+    'NotSupportedException: Unverified virtual override; select its method directly'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Unverified virtual override; select its method directly'
+  stack: |-
+    file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:103:45
+    ManagedHeap.withRoots (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/heap.js:16:116)
+    invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:62:11)
+    CilVirtualMachine.invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:92:30)
+    file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/handlers/call.js:11:93
+    dispatchWasmCall (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js:135:12)
+    executeCilStep (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-step.js:38:12)
+    CilVirtualMachine.step (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:96:17)
+    runCilSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-slice.js:75:19)
+    CilVirtualMachine.runSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:97:28)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/a05-debugger-evaluation-transactions.test.js:142:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: CIL: output delivery failure preserves the already observable evaluation commit
+not ok 123 - CIL: output delivery failure preserves the already observable evaluation commit
+  ---
+  duration_ms: 20.08075
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/a05-debugger-evaluation-transactions.test.js:130:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /delivery failed/. Input:
+    
+    'NotSupportedException: Unverified virtual override; select its method directly'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Unverified virtual override; select its method directly'
+  stack: |-
+    file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:103:45
+    ManagedHeap.withRoots (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/heap.js:16:116)
+    invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:62:11)
+    CilVirtualMachine.invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:92:30)
+    file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/handlers/call.js:11:93
+    dispatchWasmCall (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js:135:12)
+    executeCilStep (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-step.js:38:12)
+    CilVirtualMachine.step (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:96:17)
+    runCilSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-slice.js:75:19)
+    CilVirtualMachine.runSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:97:28)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/a05-debugger-evaluation-transactions.test.js:142:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: CIL: rollback and cancellation keep the active-transaction snapshot guard
+not ok 124 - CIL: rollback and cancellation keep the active-transaction snapshot guard
+  ---
+  duration_ms: 16.973964
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/a05-debugger-evaluation-transactions.test.js:159:3'
+  failureType: 'testCodeFailure'
+  error: 'Unverified virtual override; select its method directly'
+  code: 'ERR_TEST_FAILURE'
+  name: 'NotSupportedException'
+  stack: |-
+    file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:103:45
+    ManagedHeap.withRoots (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/heap.js:16:116)
+    invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:62:11)
+    CilVirtualMachine.invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:92:30)
+    file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/handlers/call.js:11:93
+    dispatchWasmCall (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js:135:12)
+    executeCilStep (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-step.js:38:12)
+    CilVirtualMachine.step (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:96:17)
+    runCilSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-slice.js:75:19)
+    CilVirtualMachine.runSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:97:28)
+  ...
+# Subtest: only the explicit option selects immutable Int32 ids in the existing decode plan
+ok 125 - only the explicit option selects immutable Int32 ids in the existing decode plan
+  ---
+  duration_ms: 35.088061
+  type: 'test'
+  ...
+# Subtest: option edits, copied reports and replaced bodies do not retain stale specializations
+ok 126 - option edits, copied reports and replaced bodies do not retain stale specializations
+  ---
+  duration_ms: 5.299792
+  type: 'test'
+  ...
+# Subtest: edited operand tags preserve fallback and snapshots replay through new epoch plans
+ok 127 - edited operand tags preserve fallback and snapshots replay through new epoch plans
+  ---
+  duration_ms: 7.422289
+  type: 'test'
+  ...
+# Subtest: instruction budgets, byte budgets and write notifications keep their existing adapters
+ok 128 - instruction budgets, byte budgets and write notifications keep their existing adapters
+  ---
+  duration_ms: 10.69269
+  type: 'test'
+  ...
+# Subtest: unproven in-place edits fall back while Int64 bodies use their own width
+ok 129 - unproven in-place edits fall back while Int64 bodies use their own width
+  ---
+  duration_ms: 3.790045
+  type: 'test'
+  ...
+# Subtest: Int32 and typed-float contributions coexist and retain independent option invalidation
+ok 130 - Int32 and typed-float contributions coexist and retain independent option invalidation
+  ---
+  duration_ms: 17.076684
+  type: 'test'
+  ...
+# Subtest: selected Int32 handlers match reference arithmetic on boundaries and deterministic random inputs
+ok 131 - selected Int32 handlers match reference arithmetic on boundaries and deterministic random inputs
+  ---
+  duration_ms: 95.250059
+  type: 'test'
+  ...
+# Subtest: signed division and remainder overflow, unsigned bounds and zero faults remain exact
+ok 132 - signed division and remainder overflow, unsigned bounds and zero faults remain exact
+  ---
+  duration_ms: 0.655473
+  type: 'test'
+  ...
+# Subtest: comparison branches preserve signed/unsigned ordering and integer result values
+ok 133 - comparison branches preserve signed/unsigned ordering and integer result values
+  ---
+  duration_ms: 0.888024
+  type: 'test'
+  ...
+# Subtest: host-edited noncanonical values retain generic numeric behavior
+ok 134 - host-edited noncanonical values retain generic numeric behavior
+  ---
+  duration_ms: 0.757672
+  type: 'test'
+  ...
+# Subtest: local construction identity: Button runs its field initializer and constructor body
+ok 135 - local construction identity: Button runs its field initializer and constructor body
+  ---
+  duration_ms: 167.294327
+  type: 'test'
+  ...
+# Subtest: local construction identity: Line runs its field initializer and constructor body
+ok 136 - local construction identity: Line runs its field initializer and constructor body
+  ---
+  duration_ms: 34.657627
+  type: 'test'
+  ...
+# Subtest: local construction identity: a user Button and a real framework Button keep separate constructor paths
+ok 137 - local construction identity: a user Button and a real framework Button keep separate constructor paths
+  ---
+  duration_ms: 28.711768
+  type: 'test'
+  ...
+# Subtest: local construction identity: a framework constructor and inherited property still execute without a local target
+ok 138 - local construction identity: a framework constructor and inherited property still execute without a local target
+  ---
+  duration_ms: 34.158539
+  type: 'test'
+  ...
+# Subtest: local construction identity: independent MethodDef metadata executes the resolved user constructor
+ok 139 - local construction identity: independent MethodDef metadata executes the resolved user constructor
+  ---
+  duration_ms: 5.698537
+  type: 'test'
+  ...
+# Subtest: local construction identity: independent MemberRef metadata executes the resolved user constructor
+ok 140 - local construction identity: independent MemberRef metadata executes the resolved user constructor
+  ---
+  duration_ms: 5.368622
+  type: 'test'
+  ...
+# Subtest: local construction identity: field and method receiver checks still reject a framework namesake
+ok 141 - local construction identity: field and method receiver checks still reject a framework namesake
+  ---
+  duration_ms: 3.16021
+  type: 'test'
+  ...
+# Subtest: local construction identity: a user delegate named Button keeps its managed constructor contract
+not ok 142 - local construction identity: a user delegate named Button keeps its managed constructor contract
+  ---
+  duration_ms: 20.450397
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/a05-local-constructor-identity.test.js:161:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    NotSupportedException: Unverified virtual override; select its method directly
+        at tryPreparedVirtualCall (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/prepared-virtual-call.js:66:13)
+        at invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:43:70)
+        at CilVirtualMachine.invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:92:30)
+        at file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/handlers/call.js:11:93
+        at dispatchWasmCall (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js:135:12)
+        at executeCilStep (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-step.js:38:12)
+        at CilVirtualMachine.step (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:96:17)
+        at runCilSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-slice.js:75:19)
+        at CilVirtualMachine.runSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:97:28)
+        at CilVirtualMachine.run (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:99:65)
+    + actual - expected
+    
+    + 'faulted'
+    - 'terminated'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'terminated'
+  actual: 'faulted'
+  operator: 'strictEqual'
+  stack: |-
+    tryPreparedVirtualCall (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/prepared-virtual-call.js:66:13)
+    invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/calls.js:43:70)
+    CilVirtualMachine.invoke (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:92:30)
+    file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/handlers/call.js:11:93
+    dispatchWasmCall (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js:135:12)
+    executeCilStep (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-step.js:38:12)
+    CilVirtualMachine.step (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:96:17)
+    runCilSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-slice.js:75:19)
+    CilVirtualMachine.runSlice (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:97:28)
+    CilVirtualMachine.run (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:99:65)
+    run (file:///tmp/a05-integration-42f7738360b9/tests/a05-local-constructor-identity.test.js:24:12)
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/a05-local-constructor-identity.test.js:168:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: verified arbitrary-name async values use bounded managed storage at 32 bits
+ok 143 - verified arbitrary-name async values use bounded managed storage at 32 bits
+  ---
+  duration_ms: 54.993156
+  type: 'test'
+  ...
+# Subtest: verified arbitrary-name async values use bounded managed storage at 64 bits
+ok 144 - verified arbitrary-name async values use bounded managed storage at 64 bits
+  ---
+  duration_ms: 10.597781
+  type: 'test'
+  ...
+# Subtest: managed state storage never makes auto-layout bytes, sizeof or unsafe unboxing available
+ok 145 - managed state storage never makes auto-layout bytes, sizeof or unsafe unboxing available
+  ---
+  duration_ms: 7.773824
+  type: 'test'
+  ...
+# Subtest: auto-layout state requires the supported interface slots and verified bodies
+ok 146 - auto-layout state requires the supported interface slots and verified bodies
+  ---
+  duration_ms: 9.05126
+  type: 'test'
+  ...
+# Subtest: managed state admission does not hide unsupported nested auto layouts or recursive value fields
+ok 147 - managed state admission does not hide unsupported nested auto layouts or recursive value fields
+  ---
+  duration_ms: 4.925742
+  type: 'test'
+  ...
+# Subtest: auto-layout logical bytes are reserved before managed frame allocation
+ok 148 - auto-layout logical bytes are reserved before managed frame allocation
+  ---
+  duration_ms: 20.464452
+  type: 'test'
+  ...
+# Subtest: native-width fixture preserves its authored 32-bit expectations across compiler routes
+ok 149 - native-width fixture preserves its authored 32-bit expectations across compiler routes
+  ---
+  duration_ms: 286.421312
+  type: 'test'
+  ...
+# Subtest: native-width fixture preserves its authored 64-bit expectations across compiler routes
+ok 150 - native-width fixture preserves its authored 64-bit expectations across compiler routes
+  ---
+  duration_ms: 59.112415
+  type: 'test'
+  ...
+# Subtest: width proof requires observed CLR process identity and every matching route
+ok 151 - width proof requires observed CLR process identity and every matching route
+  ---
+  duration_ms: 3.581699
+  type: 'test'
+  ...
+# Subtest: A05 numeric differential runs the same source through all three routes
+ok 152 - A05 numeric differential runs the same source through all three routes
+  ---
+  duration_ms: 161.248587
+  type: 'test'
+  ...
+# Subtest: A05 numeric differential includes engine, operands and output row on divergence
+ok 153 - A05 numeric differential includes engine, operands and output row on divergence
+  ---
+  duration_ms: 9.150946
+  type: 'test'
+  ...
+# Subtest: A05 numeric differential enforces execution and output quotas
+ok 154 - A05 numeric differential enforces execution and output quotas
+  ---
+  duration_ms: 10.93149
+  type: 'test'
+  ...
+# Subtest: A05 native oracle rejects path escape and tampered fixtures
+ok 155 - A05 native oracle rejects path escape and tampered fixtures
+  ---
+  duration_ms: 1.86625
+  type: 'test'
+  ...
+# Subtest: one bounded source batch crosses real managed calls and returns with cleared retired storage
+ok 156 - one bounded source batch crosses real managed calls and returns with cleared retired storage
+  ---
+  duration_ms: 17.406878
+  type: 'test'
+  ...
+# Subtest: source batches retain exact intermediate frames and quotas at every call/return boundary
+ok 157 - source batches retain exact intermediate frames and quotas at every call/return boundary
+  ---
+  duration_ms: 37.720044
+  type: 'test'
+  ...
+# Subtest: a fault in a later batched callee retains its executing method, frame, PC and partial stack
+ok 158 - a fault in a later batched callee retains its executing method, frame, PC and partial stack
+  ---
+  duration_ms: 4.973283
+  type: 'test'
+  ...
+# Subtest: a batched exception exits before a protected caller resumes catch and finally work
+ok 159 - a batched exception exits before a protected caller resumes catch and finally work
+  ---
+  duration_ms: 186.585213
+  type: 'test'
+  ...
+# Subtest: unprepared calls end a batch before the callee body even when its blocks are eligible
+ok 160 - unprepared calls end a batch before the callee body even when its blocks are eligible
+  ---
+  duration_ms: 0.615043
+  type: 'test'
+  ...
+# Subtest: bounded batches preserve live caller stack roots across an allocating callee constant
+ok 161 - bounded batches preserve live caller stack roots across an allocating callee constant
+  ---
+  duration_ms: 3.571615
+  type: 'test'
+  ...
+# Subtest: decoded integer operations share unsigned, shift, overflow and division fault semantics
+ok 162 - decoded integer operations share unsigned, shift, overflow and division fault semantics
+  ---
+  duration_ms: 198.303243
+  type: 'test'
+  ...
+# Subtest: decoded integer specialization defers carrier and noncanonical values to ordinary arithmetic
+ok 163 - decoded integer specialization defers carrier and noncanonical values to ordinary arithmetic
+  ---
+  duration_ms: 2.9082
+  type: 'test'
+  ...
+# Subtest: a decoded block preserves every small slice and sequence location through a call and return
+ok 164 - a decoded block preserves every small slice and sequence location through a call and return
+  ---
+  duration_ms: 5.820746
+  type: 'test'
+  ...
+# Subtest: source blocks preserve custom write transactions by declining fusion
+ok 165 - source blocks preserve custom write transactions by declining fusion
+  ---
+  duration_ms: 1.063351
+  type: 'test'
+  ...
+# Subtest: source blocks preserve host arithmetic and transfer adapters by declining fusion
+ok 166 - source blocks preserve host arithmetic and transfer adapters by declining fusion
+  ---
+  duration_ms: 1.308171
+  type: 'test'
+  ...
+# Subtest: prepared source integer predicates and arithmetic retain every operation, signedness and fault boundary
+ok 167 - prepared source integer predicates and arithmetic retain every operation, signedness and fault boundary
+  ---
+  duration_ms: 105.748896
+  type: 'test'
+  ...
+# Subtest: integer plan guards preserve carrier fallback and exclude checked or wider numeric modes
+ok 168 - integer plan guards preserve carrier fallback and exclude checked or wider numeric modes
+  ---
+  duration_ms: 0.291187
+  type: 'test'
+  ...
+# Subtest: integer plans retain original PCs and stack values at every bounded slice boundary
+ok 169 - integer plans retain original PCs and stack values at every bounded slice boundary
+  ---
+  duration_ms: 3.991841
+  type: 'test'
+  ...
+# Subtest: successful scalar blocks omit only an empty retirement flush
+ok 170 - successful scalar blocks omit only an empty retirement flush
+  ---
+  duration_ms: 9.040734
+  type: 'test'
+  ...
+# Subtest: an initial pending retirement survives as a root and flushes at the scalar block boundary
+ok 171 - an initial pending retirement survives as a root and flushes at the scalar block boundary
+  ---
+  duration_ms: 2.872798
+  type: 'test'
+  ...
+# Subtest: scalar block host edits flush the actual current pool, replacement=false
+ok 172 - scalar block host edits flush the actual current pool, replacement=false
+  ---
+  duration_ms: 0.879451
+  type: 'test'
+  ...
+# Subtest: scalar block host edits flush the actual current pool, replacement=true
+ok 173 - scalar block host edits flush the actual current pool, replacement=true
+  ---
+  duration_ms: 0.815537
+  type: 'test'
+  ...
+# Subtest: a failed scalar block always flushes and preserves its exact fault address
+ok 174 - a failed scalar block always flushes and preserves its exact fault address
+  ---
+  duration_ms: 2.442717
+  type: 'test'
+  ...
+# Subtest: call and return blocks keep unconditional retirement boundaries
+ok 175 - call and return blocks keep unconditional retirement boundaries
+  ---
+  duration_ms: 1.318476
+  type: 'test'
+  ...
+# Subtest: retirement elision preserves quota, pooling statistics and custom adapter boundaries
+ok 176 - retirement elision preserves quota, pooling statistics and custom adapter boundaries
+  ---
+  duration_ms: 10.412699
+  type: 'test'
+  ...
+# Subtest: a custom adapter that stops execution keeps the ordinary disposal boundary
+ok 177 - a custom adapter that stops execution keeps the ordinary disposal boundary
+  ---
+  duration_ms: 0.879271
+  type: 'test'
+  ...
+# Subtest: source fusion preserves every bounded slice, retained store value and local write count
+ok 178 - source fusion preserves every bounded slice, retained store value and local write count
+  ---
+  duration_ms: 16.541588
+  type: 'test'
+  ...
+# Subtest: faulting fused loads and arithmetic preserve the failing PC, partial stack and charge
+ok 179 - faulting fused loads and arithmetic preserve the failing PC, partial stack and charge
+  ---
+  duration_ms: 5.842388
+  type: 'test'
+  ...
+# Subtest: source fusion neither crosses the instruction limit nor suppresses stack admission
+ok 180 - source fusion neither crosses the instruction limit nor suppresses stack admission
+  ---
+  duration_ms: 10.855428
+  type: 'test'
+  ...
+# Subtest: source fusion cannot skip the 256-instruction wall-clock polling boundary
+ok 181 - source fusion cannot skip the 256-instruction wall-clock polling boundary
+  ---
+  duration_ms: 2.145831
+  type: 'test'
+  ...
+# Subtest: a branch entering a candidate interior prevents its fusion
+ok 182 - a branch entering a candidate interior prevents its fusion
+  ---
+  duration_ms: 0.440728
+  type: 'test'
+  ...
+# Subtest: preparation reports real work, remains private and follows code/owner/epoch replacement and stop
+ok 183 - preparation reports real work, remains private and follows code/owner/epoch replacement and stop
+  ---
+  duration_ms: 2.128645
+  type: 'test'
+  ...
+# Subtest: source fusion resumes after ordinary in-memory snapshot replay without serializing a plan
+ok 184 - source fusion resumes after ordinary in-memory snapshot replay without serializing a plan
+  ---
+  duration_ms: 4.139178
+  type: 'test'
+  ...
+# Subtest: debugger, writes, runtime events, profiler and cooperative contexts retain individual dispatch
+ok 185 - debugger, writes, runtime events, profiler and cooperative contexts retain individual dispatch
+  ---
+  duration_ms: 5.315265
+  type: 'test'
+  ...
+# Subtest: current typed source arithmetic retains scalar width, IEEE bits, Decimal scale and store identity
+ok 186 - current typed source arithmetic retains scalar width, IEEE bits, Decimal scale and store identity
+  ---
+  duration_ms: 4.67874
+  type: 'test'
+  ...
+# Subtest: source execution preserves output and exact sequence stops
+ok 187 - source execution preserves output and exact sequence stops
+  ---
+  duration_ms: 131.9356
+  type: 'test'
+  ...
+# Subtest: reloaded execution preserves output and exact sequence stops
+ok 188 - reloaded execution preserves output and exact sequence stops
+  ---
+  duration_ms: 37.728507
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods: implicit and explicit methods with distinct method arguments
+ok 189 - T02.2 source generic interface methods: implicit and explicit methods with distinct method arguments
+  ---
+  duration_ms: 213.386794
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods: closed receiver and method arguments are independent
+ok 190 - T02.2 source generic interface methods: closed receiver and method arguments are independent
+  ---
+  duration_ms: 44.831846
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods: generic default methods retain most-specific override selection
+ok 191 - T02.2 source generic interface methods: generic default methods retain most-specific override selection
+  ---
+  duration_ms: 41.521316
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods: implementations created after a generic interface demand become reachable
+ok 192 - T02.2 source generic interface methods: implementations created after a generic interface demand become reachable
+  ---
+  duration_ms: 21.304131
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods reject wrong method arity
+ok 193 - T02.2 source generic interface methods reject wrong method arity
+  ---
+  duration_ms: 6.63372
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods reject wrong implementation signature
+ok 194 - T02.2 source generic interface methods reject wrong implementation signature
+  ---
+  duration_ms: 2.933398
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods reject wrong receiver type
+ok 195 - T02.2 source generic interface methods reject wrong receiver type
+  ---
+  duration_ms: 4.287355
+  type: 'test'
+  ...
+# Subtest: T02.2 source verifier rejects malformed closed interface call arity
+ok 196 - T02.2 source verifier rejects malformed closed interface call arity
+  ---
+  duration_ms: 12.291458
+  type: 'test'
+  ...
+# Subtest: T02.2 a corrupted generic interface receiver cannot enter an unrelated method in any route
+ok 197 - T02.2 a corrupted generic interface receiver cannot enter an unrelated method in any route
+  ---
+  duration_ms: 17.492024
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: closed generic interface implementations retain their construction
+ok 198 - T02.2 source interface dispatch: closed generic interface implementations retain their construction
+  ---
+  duration_ms: 235.337529
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: implicit and explicit implementations
+ok 199 - T02.2 source interface dispatch: implicit and explicit implementations
+  ---
+  duration_ms: 29.092276
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: inherited default body and most specific diamond
+ok 200 - T02.2 source interface dispatch: inherited default body and most specific diamond
+  ---
+  duration_ms: 36.014269
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: class implementation dominates defaults
+ok 201 - T02.2 source interface dispatch: class implementation dominates defaults
+  ---
+  duration_ms: 21.063438
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: interface property and boxed struct receiver
+ok 202 - T02.2 source interface dispatch: interface property and boxed struct receiver
+  ---
+  duration_ms: 33.925472
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: null receiver throws before entering a default body
+ok 203 - T02.2 source interface dispatch: null receiver throws before entering a default body
+  ---
+  duration_ms: 35.120528
+  type: 'test'
+  ...
+# Subtest: T02.2 source rejects ambiguous default-interface diamonds with the C\# diagnostic
+ok 204 - T02.2 source rejects ambiguous default-interface diamonds with the C\# diagnostic
+  ---
+  duration_ms: 7.185841
+  type: 'test'
+  ...
+# Subtest: T02.2 ambiguous runtime metadata faults at the invoked interface declaration in every route
+ok 205 - T02.2 ambiguous runtime metadata faults at the invoked interface declaration in every route
+  ---
+  duration_ms: 24.325737
+  type: 'test'
+  ...
+# Subtest: prepared recursive calls preserve frame identities at every slice, reload=false
+ok 206 - prepared recursive calls preserve frame identities at every slice, reload=false
+  ---
+  duration_ms: 182.183263
+  type: 'test'
+  ...
+# Subtest: prepared calls preserve failed depth and stack-byte admission, reload=false
+ok 207 - prepared calls preserve failed depth and stack-byte admission, reload=false
+  ---
+  duration_ms: 14.875928
+  type: 'test'
+  ...
+# Subtest: prepared recursive calls preserve frame identities at every slice, reload=true
+ok 208 - prepared recursive calls preserve frame identities at every slice, reload=true
+  ---
+  duration_ms: 48.377327
+  type: 'test'
+  ...
+# Subtest: prepared calls preserve failed depth and stack-byte admission, reload=true
+ok 209 - prepared calls preserve failed depth and stack-byte admission, reload=true
+  ---
+  duration_ms: 9.202732
+  type: 'test'
+  ...
+# Subtest: prepared call descriptors invalidate when a callee storage shape is replaced
+ok 210 - prepared call descriptors invalidate when a callee storage shape is replaced
+  ---
+  duration_ms: 4.728172
+  type: 'test'
+  ...
+# Subtest: aggregate targets retain ordinary call preparation
+ok 211 - aggregate targets retain ordinary call preparation
+  ---
+  duration_ms: 65.663564
+  type: 'test'
+  ...
+# Subtest: source: filters precede pending task cleanup, including local and portable replay
+ok 212 - source: filters precede pending task cleanup, including local and portable replay
+  ---
+  duration_ms: 219.996727
+  type: 'test'
+  ...
+# Subtest: source: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+ok 213 - source: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+  ---
+  duration_ms: 23.929162
+  type: 'test'
+  ...
+# Subtest: source: debugger pending-fault resume delivers the completed task before another opcode
+ok 214 - source: debugger pending-fault resume delivers the completed task before another opcode
+  ---
+  duration_ms: 15.257621
+  type: 'test'
+  ...
+# Subtest: source: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+ok 215 - source: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+  ---
+  duration_ms: 8.920848
+  type: 'test'
+  ...
+# Subtest: cil: filters precede pending task cleanup, including local and portable replay
+ok 216 - cil: filters precede pending task cleanup, including local and portable replay
+  ---
+  duration_ms: 138.317423
+  type: 'test'
+  ...
+# Subtest: cil: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+ok 217 - cil: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+  ---
+  duration_ms: 41.015648
+  type: 'test'
+  ...
+# Subtest: cil: debugger pending-fault resume delivers the completed task before another opcode
+ok 218 - cil: debugger pending-fault resume delivers the completed task before another opcode
+  ---
+  duration_ms: 36.694243
+  type: 'test'
+  ...
+# Subtest: cil: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+ok 219 - cil: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+  ---
+  duration_ms: 16.444774
+  type: 'test'
+  ...
+# Subtest: limits source: documented heap policy and fault
+ok 220 - limits source: documented heap policy and fault
+  ---
+  duration_ms: 1046.84297
+  type: 'test'
+  ...
+# {"case":"heap","engine":"source","state":"faulted","fault":"OutOfMemoryException","instructions":45,"heapPeak":32000442,"bootstrapBytes":32,"guestArrayBytes":32000256,"runtimeRecordBytes":154,"peakRss":158322688}
+# Subtest: limits source: documented array policy and fault
+ok 221 - limits source: documented array policy and fault
+  ---
+  duration_ms: 1086.069334
+  type: 'test'
+  ...
+# {"case":"array","engine":"source","state":"faulted","fault":"OutOfMemoryException","instructions":5,"heapPeak":186,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":154,"peakRss":154587136}
+# Subtest: limits source: documented frames policy and fault
+ok 222 - limits source: documented frames policy and fault
+  ---
+  duration_ms: 1141.950305
+  type: 'test'
+  ...
+# {"case":"frames","engine":"source","state":"faulted","fault":"StackOverflowException","instructions":5104,"heapPeak":0,"bootstrapBytes":0,"guestArrayBytes":0,"runtimeRecordBytes":0,"peakRss":161435648}
+# Subtest: limits source: documented instructions policy and fault
+ok 223 - limits source: documented instructions policy and fault
+  ---
+  duration_ms: 3227.54474
+  type: 'test'
+  ...
+# {"case":"instructions","engine":"source","state":"faulted","fault":"InstructionLimitException","instructions":20000001,"heapPeak":32,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":0,"peakRss":162238464}
+# Subtest: limits source: documented output policy and fault
+ok 224 - limits source: documented output policy and fault
+  ---
+  duration_ms: 1078.624836
+  type: 'test'
+  ...
+# {"case":"output","engine":"source","state":"faulted","fault":"OutputLimitException","instructions":19018,"heapPeak":2056,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":2024,"peakRss":164040704}
+# Subtest: limits cil: documented heap policy and fault
+ok 225 - limits cil: documented heap policy and fault
+  ---
+  duration_ms: 1036.997022
+  type: 'test'
+  ...
+# {"case":"heap","engine":"cil","state":"faulted","fault":"OutOfMemoryException","instructions":57,"heapPeak":32000442,"bootstrapBytes":32,"guestArrayBytes":32000256,"runtimeRecordBytes":154,"peakRss":158547968}
+# Subtest: limits cil: documented array policy and fault
+ok 226 - limits cil: documented array policy and fault
+  ---
+  duration_ms: 968.701168
+  type: 'test'
+  ...
+# {"case":"array","engine":"cil","state":"faulted","fault":"OutOfMemoryException","instructions":9,"heapPeak":186,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":154,"peakRss":159428608}
+# Subtest: limits cil: documented frames policy and fault
+ok 227 - limits cil: documented frames policy and fault
+  ---
+  duration_ms: 1066.688459
+  type: 'test'
+  ...
+# {"case":"frames","engine":"cil","state":"faulted","fault":"StackOverflowException","instructions":6634,"heapPeak":0,"bootstrapBytes":0,"guestArrayBytes":0,"runtimeRecordBytes":0,"peakRss":163123200}
+# Subtest: limits cil: documented instructions policy and fault
+ok 228 - limits cil: documented instructions policy and fault
+  ---
+  duration_ms: 5138.414544
+  type: 'test'
+  ...
+# {"case":"instructions","engine":"cil","state":"faulted","fault":"InstructionLimitException","instructions":20000001,"heapPeak":32,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":0,"peakRss":229875712}
+# Subtest: limits cil: documented output policy and fault
+ok 229 - limits cil: documented output policy and fault
+  ---
+  duration_ms: 1156.1618
+  type: 'test'
+  ...
+# {"case":"output","engine":"cil","state":"faulted","fault":"OutputLimitException","instructions":23024,"heapPeak":2056,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":2024,"peakRss":172523520}
+# Subtest: limits heap: exact allocation boundary, one over, invalid length and rooted survival
+ok 230 - limits heap: exact allocation boundary, one over, invalid length and rooted survival
+  ---
+  duration_ms: 5.50274
+  type: 'test'
+  ...
+# Subtest: limits source: retained guest arrays meet the exact byte budget and fail one element over
+ok 231 - limits source: retained guest arrays meet the exact byte budget and fail one element over
+  ---
+  duration_ms: 112.234475
+  type: 'test'
+  ...
+# Subtest: limits source: explicit array length ceiling remains independent of available heap bytes
+ok 232 - limits source: explicit array length ceiling remains independent of available heap bytes
+  ---
+  duration_ms: 12.977946
+  type: 'test'
+  ...
+# Subtest: limits cil: retained guest arrays meet the exact byte budget and fail one element over
+ok 233 - limits cil: retained guest arrays meet the exact byte budget and fail one element over
+  ---
+  duration_ms: 37.378593
+  type: 'test'
+  ...
+# Subtest: limits cil: explicit array length ceiling remains independent of available heap bytes
+ok 234 - limits cil: explicit array length ceiling remains independent of available heap bytes
+  ---
+  duration_ms: 13.148786
+  type: 'test'
+  ...
+# Subtest: limits parser: nesting and diagnostics remain bounded
+ok 235 - limits parser: nesting and diagnostics remain bounded
+  ---
+  duration_ms: 29.608029
+  type: 'test'
+  ...
+# Subtest: limits workspace: document count, snapshot length and token-cache defaults
+ok 236 - limits workspace: document count, snapshot length and token-cache defaults
+  ---
+  duration_ms: 7.30736
+  type: 'test'
+  ...
+# Subtest: limits debugger: history count/bytes and watch node budget are bounded
+ok 237 - limits debugger: history count/bytes and watch node budget are bounded
+  ---
+  duration_ms: 29.916517
+  type: 'test'
+  ...
+# Subtest: source: explicit function calls preserve paused stack and control flow
+ok 238 - source: explicit function calls preserve paused stack and control flow
+  ---
+  duration_ms: 130.48922
+  type: 'test'
+  ...
+# Subtest: source: methods, constructors, initializers, getters and setters execute real target code
+ok 239 - source: methods, constructors, initializers, getters and setters execute real target code
+  ---
+  duration_ms: 22.548799
+  type: 'test'
+  ...
+# Subtest: source: effectful expression receiver/argument order and GC roots
+ok 240 - source: effectful expression receiver/argument order and GC roots
+  ---
+  duration_ms: 15.1124
+  type: 'test'
+  ...
+# Subtest: source: evaluation rollback restores target state, output and history
+ok 241 - source: evaluation rollback restores target state, output and history
+  ---
+  duration_ms: 25.840162
+  type: 'test'
+  ...
+# Subtest: source: throwing evaluation and instruction exhaustion roll back
+ok 242 - source: throwing evaluation and instruction exhaustion roll back
+  ---
+  duration_ms: 18.622273
+  type: 'test'
+  ...
+# Subtest: source: cancellation, syntax and budget failures are nonmutating
+ok 243 - source: cancellation, syntax and budget failures are nonmutating
+  ---
+  duration_ms: 10.318586
+  type: 'test'
+  ...
+# Subtest: source: checked expressions and short circuits apply to called results
+ok 244 - source: checked expressions and short circuits apply to called results
+  ---
+  duration_ms: 14.040986
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement skips a write and preserves live values
+ok 245 - source: Set Next Statement skips a write and preserves live values
+  ---
+  duration_ms: 6.944106
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement rejects another method and stale stop
+ok 246 - source: Set Next Statement rejects another method and stale stop
+  ---
+  duration_ms: 9.240088
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement cannot escape protected cleanup
+ok 247 - source: Set Next Statement cannot escape protected cleanup
+  ---
+  duration_ms: 9.167611
+  type: 'test'
+  ...
+# Subtest: source: Hot Reload replaces inactive bodies without restarting heap
+ok 248 - source: Hot Reload replaces inactive bodies without restarting heap
+  ---
+  duration_ms: 11.349745
+  type: 'test'
+  ...
+# Subtest: source: Hot Reload literal update in active method retains local values
+ok 249 - source: Hot Reload literal update in active method retains local values
+  ---
+  duration_ms: 7.281482
+  type: 'test'
+  ...
+# Subtest: source: rude edits reject without losing old program or breakpoints
+ok 250 - source: rude edits reject without losing old program or breakpoints
+  ---
+  duration_ms: 5.361702
+  type: 'test'
+  ...
+# Subtest: CIL: explicit function calls preserve paused stack and control flow
+ok 251 - CIL: explicit function calls preserve paused stack and control flow
+  ---
+  duration_ms: 39.407693
+  type: 'test'
+  ...
+# Subtest: CIL: methods, constructors, initializers, getters and setters execute real target code
+ok 252 - CIL: methods, constructors, initializers, getters and setters execute real target code
+  ---
+  duration_ms: 22.01163
+  type: 'test'
+  ...
+# Subtest: CIL: effectful expression receiver/argument order and GC roots
+ok 253 - CIL: effectful expression receiver/argument order and GC roots
+  ---
+  duration_ms: 20.970301
+  type: 'test'
+  ...
+# Subtest: CIL: evaluation rollback restores target state, output and history
+ok 254 - CIL: evaluation rollback restores target state, output and history
+  ---
+  duration_ms: 22.414041
+  type: 'test'
+  ...
+# Subtest: CIL: throwing evaluation and instruction exhaustion roll back
+ok 255 - CIL: throwing evaluation and instruction exhaustion roll back
+  ---
+  duration_ms: 22.745378
+  type: 'test'
+  ...
+# Subtest: CIL: cancellation, syntax and budget failures are nonmutating
+ok 256 - CIL: cancellation, syntax and budget failures are nonmutating
+  ---
+  duration_ms: 13.18553
+  type: 'test'
+  ...
+# Subtest: CIL: checked expressions and short circuits apply to called results
+ok 257 - CIL: checked expressions and short circuits apply to called results
+  ---
+  duration_ms: 17.41488
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement skips a write and preserves live values
+ok 258 - CIL: Set Next Statement skips a write and preserves live values
+  ---
+  duration_ms: 5.894956
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement rejects another method and stale stop
+ok 259 - CIL: Set Next Statement rejects another method and stale stop
+  ---
+  duration_ms: 10.582438
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement cannot escape protected cleanup
+ok 260 - CIL: Set Next Statement cannot escape protected cleanup
+  ---
+  duration_ms: 7.497909
+  type: 'test'
+  ...
+# Subtest: CIL: Hot Reload replaces inactive bodies without restarting heap
+ok 261 - CIL: Hot Reload replaces inactive bodies without restarting heap
+  ---
+  duration_ms: 21.042773
+  type: 'test'
+  ...
+# Subtest: CIL: Hot Reload literal update in active method retains local values
+ok 262 - CIL: Hot Reload literal update in active method retains local values
+  ---
+  duration_ms: 10.519356
+  type: 'test'
+  ...
+# Subtest: CIL: rude edits reject without losing old program or breakpoints
+ok 263 - CIL: rude edits reject without losing old program or breakpoints
+  ---
+  duration_ms: 8.613116
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement rejects skipped definite assignment
+ok 264 - source: Set Next Statement rejects skipped definite assignment
+  ---
+  duration_ms: 2.745471
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement rejects entering a nonempty-stack expression
+ok 265 - CIL: Set Next Statement rejects entering a nonempty-stack expression
+  ---
+  duration_ms: 4.404898
+  type: 'test'
+  ...
+# Subtest: debugger: entry, step over, step in and step out use source points
+ok 266 - debugger: entry, step over, step in and step out use source points
+  ---
+  duration_ms: 75.477114
+  type: 'test'
+  ...
+# Subtest: debugger: step over does not enter called method
+ok 267 - debugger: step over does not enter called method
+  ---
+  duration_ms: 4.409865
+  type: 'test'
+  ...
+# Subtest: debugger: bound breakpoints, conditions and hit counts
+ok 268 - debugger: bound breakpoints, conditions and hit counts
+  ---
+  duration_ms: 7.016703
+  type: 'test'
+  ...
+# Subtest: debugger: logpoints continue without pausing
+ok 269 - debugger: logpoints continue without pausing
+  ---
+  duration_ms: 2.986275
+  type: 'test'
+  ...
+# Subtest: debugger: invalid breakpoints report unverified locations
+ok 270 - debugger: invalid breakpoints report unverified locations
+  ---
+  duration_ms: 3.485698
+  type: 'test'
+  ...
+# Subtest: debugger: disabled breakpoints do not stop
+ok 271 - debugger: disabled breakpoints do not stop
+  ---
+  duration_ms: 3.467431
+  type: 'test'
+  ...
+# Subtest: debugger: function breakpoints stop in callee
+ok 272 - debugger: function breakpoints stop in callee
+  ---
+  duration_ms: 3.281448
+  type: 'test'
+  ...
+# Subtest: debugger: data breakpoint fires on local write
+ok 273 - debugger: data breakpoint fires on local write
+  ---
+  duration_ms: 2.249192
+  type: 'test'
+  ...
+# Subtest: debugger: side-effect-free watches cannot invoke or mutate
+ok 274 - debugger: side-effect-free watches cannot invoke or mutate
+  ---
+  duration_ms: 3.98382
+  type: 'test'
+  ...
+# Subtest: debugger: local edits affect continuation and validate types
+ok 275 - debugger: local edits affect continuation and validate types
+  ---
+  duration_ms: 3.243653
+  type: 'test'
+  ...
+# Subtest: debugger: const locals cannot be edited
+ok 276 - debugger: const locals cannot be edited
+  ---
+  duration_ms: 2.089718
+  type: 'test'
+  ...
+# Subtest: debugger: arrays and object children expose actual values
+ok 277 - debugger: arrays and object children expose actual values
+  ---
+  duration_ms: 7.999005
+  type: 'test'
+  ...
+# Subtest: debugger: exception break happens before catch and resumes into handler
+ok 278 - debugger: exception break happens before catch and resumes into handler
+  ---
+  duration_ms: 6.140917
+  type: 'test'
+  ...
+# Subtest: debugger: uncaught-only exception mode ignores caught exceptions
+ok 279 - debugger: uncaught-only exception mode ignores caught exceptions
+  ---
+  duration_ms: 3.504295
+  type: 'test'
+  ...
+# Subtest: debugger: reverse snapshots restore locals and output
+ok 280 - debugger: reverse snapshots restore locals and output
+  ---
+  duration_ms: 8.50605
+  type: 'test'
+  ...
+# Subtest: debugger: reverse snapshots retain objects across later collection
+ok 281 - debugger: reverse snapshots retain objects across later collection
+  ---
+  duration_ms: 7.298236
+  type: 'test'
+  ...
+# Subtest: debugger: recording is bounded and optional
+ok 282 - debugger: recording is bounded and optional
+  ---
+  duration_ms: 6.440787
+  type: 'test'
+  ...
+# Subtest: debugger: pause/stop are cooperative and invalidate frames
+ok 283 - debugger: pause/stop are cooperative and invalidate frames
+  ---
+  duration_ms: 2.124409
+  type: 'test'
+  ...
+1..283
+# tests 283
+# suites 0
+# pass 276
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 66668.970326

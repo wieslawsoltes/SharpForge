@@ -1,0 +1,81 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "focused-merge-9a4b",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a05-cil-async-toolchain.test.js",
+    "tests/a05-cil-async-native.test.js",
+    "tests/a05-cil-async-profile.test.js",
+    "tests/a05-cil-async-continuation-roots.test.js",
+    "tests/a05-29-async.test.js",
+    "tests/a05-roslyn-async-admission.test.js",
+    "tests/a05-seams-cil-intrinsics.test.js",
+    "tests/a05-merged-task-operations.test.js",
+    "tests/a05-merged-async-root-inventory.test.js",
+    "tests/a05-async-registration-retirement.test.js",
+    "tests/a05-merged-async-continuation-snapshots.test.js",
+    "tests/a05-ordinary-return-control.test.js",
+    "tests/a05-ordinary-return-lifetime.test.js",
+    "tests/a05-frame-memory-retirement.test.js",
+    "tests/a05-frame-pool-lifecycle.test.js",
+    "tests/a05-generic-aggregate-calls.test.js",
+    "tests/a05-value-storage.test.js",
+    "tests/a05-value-instance-calls.test.js",
+    "tests/a05-managed-delegate-protocol.test.js",
+    "tests/a05-delegate-targets.test.js",
+    "tests/a05-06-coherent-snapshot.test.js",
+    "tests/a05-06-portable-snapshot.test.js",
+    "tests/a05-06-snapshot-cow.test.js",
+    "tests/compiler-lowering-async.test.js",
+    "tests/compiler-lowering-async-streams.test.js",
+    "tests/compiler-cil-emission-async.test.js",
+    "tests/compiler-cil-emission-async-streams.test.js",
+    "tests/a05-hosted-reference-worker.test.js",
+    "tests/a05-hosted-qualification.test.js",
+    "tests/a05-evidence-packaging.test.js",
+    "tests/a05-evidence-origins.test.js",
+    "tests/a05-float-iteration-criterion.test.js",
+    "tests/a05-snapshot-retention-protocol.test.js",
+    "tests/conformance/supply/gates.test.js"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": "net10.0",
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "9a4b0aef663ee78ab8da487eb90e1cb11c911c9a",
+    "tree": "4d0164eaecb6a6ccf9bd5e6762fcdea17761f0b0",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T21:24:52.134521+00:00",
+  "completedUTC": "2026-10-04T21:25:43.059281+00:00",
+  "elapsedSeconds": 50.92452650099585,
+  "exitCode": 1,
+  "endIdentity": {
+    "commit": "9a4b0aef663ee78ab8da487eb90e1cb11c911c9a",
+    "tree": "4d0164eaecb6a6ccf9bd5e6762fcdea17761f0b0",
+    "status": ""
+  },
+  "artifact": {
+    "path": "focused-merge-9a4b.log",
+    "bytes": 75958,
+    "sha256": "b94e9c4bd15eeb9436d4d583f9d0b882dcdfa42dee49d95656a1d809cf5ab62d"
+  }
+}

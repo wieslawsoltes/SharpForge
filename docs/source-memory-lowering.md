@@ -73,7 +73,7 @@ The examples and `tests/a05-byref-call-scenarios.test.js` /
 and direct CIL at `d9453a979`. That focused cohort had 40 passes, zero failures and
 seven skipped existing compiler reference-binding cases requiring an unavailable
 .NET reference pack. The source ref-indexer case ran and passed. The
-[retained manifest and log](a05-evidence/integration-validation-20261004/README.md)
+[retained manifest and log](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/README.md)
 preserve the full revision, scope and digests.
 
 The negative indexer cases reject returning a local byref and passing a readonly

@@ -1,0 +1,28 @@
+{
+  "id": "exception-event-identity",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/exception-event-identity",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/exception-event-identity/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "exception-event-identity/evidence",
+  "report": "exception-event-identity/result.json",
+  "startedAt": "2026-10-04T20:30:24.971Z",
+  "durationMs": 2101.511624999999,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "exception-event-identity/stdout.log",
+  "stderr": "exception-event-identity/stderr.log",
+  "finishedAt": "2026-10-04T20:30:27.076Z"
+}

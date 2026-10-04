@@ -1,0 +1,4747 @@
+TAP version 13
+# Subtest: fault completion retains a managed delegate through every allocation and delivers it once
+ok 1 - fault completion retains a managed delegate through every allocation and delivers it once
+  ---
+  duration_ms: 32.961067
+  type: 'test'
+  ...
+# Subtest: managed TaskAwaiter.OnCompleted owns its callback through fault-completion collection
+ok 2 - managed TaskAwaiter.OnCompleted owns its callback through fault-completion collection
+  ---
+  duration_ms: 15.153049
+  type: 'test'
+  ...
+# Subtest: direct CIL async native reference: Completed
+ok 3 - direct CIL async native reference: Completed
+  ---
+  duration_ms: 2504.951045
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Suspended
+ok 4 - direct CIL async native reference: Suspended
+  ---
+  duration_ms: 2264.580399
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Exceptions
+ok 5 - direct CIL async native reference: Exceptions
+  ---
+  duration_ms: 2285.320507
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Retention
+ok 6 - direct CIL async native reference: Retention
+  ---
+  duration_ms: 2281.584307
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: WaitAndDelay
+ok 7 - direct CIL async native reference: WaitAndDelay
+  ---
+  duration_ms: 2199.268709
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Mutation
+ok 8 - direct CIL async native reference: Mutation
+  ---
+  duration_ms: 2167.152945
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async snapshot roots and exactly-once continuation: Retention
+ok 9 - direct CIL async snapshot roots and exactly-once continuation: Retention
+  ---
+  duration_ms: 2183.792094
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async snapshot roots and exactly-once continuation: Mutation
+ok 10 - direct CIL async snapshot roots and exactly-once continuation: Mutation
+  ---
+  duration_ms: 2218.430774
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async builder reachability rejects invalid MoveNext before execution
+ok 11 - direct CIL async builder reachability rejects invalid MoveNext before execution
+  ---
+  duration_ms: 1092.62373
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: CIL async ABI matcher requires complete generic and byref member signatures
+ok 12 - CIL async ABI matcher requires complete generic and byref member signatures
+  ---
+  duration_ms: 1.908604
+  type: 'test'
+  ...
+# Subtest: CIL async ABI generic awaiter result and real Yield type are exact
+ok 13 - CIL async ABI generic awaiter result and real Yield type are exact
+  ---
+  duration_ms: 0.495187
+  type: 'test'
+  ...
+# Subtest: CIL async matching preserves caller generic variables in an already substituted state-machine argument
+ok 14 - CIL async matching preserves caller generic variables in an already substituted state-machine argument
+  ---
+  duration_ms: 1.69505
+  type: 'test'
+  ...
+# Subtest: CIL async callbacks require trusted reference scope and matching MethodImpl declarations
+ok 15 - CIL async callbacks require trusted reference scope and matching MethodImpl declarations
+  ---
+  duration_ms: 28.26369
+  type: 'test'
+  ...
+# Subtest: CIL dispatch admits proved async callback implementations and still rejects malformed declarations
+ok 16 - CIL dispatch admits proved async callback implementations and still rejects malformed declarations
+  ---
+  duration_ms: 6.859126
+  type: 'test'
+  ...
+# Subtest: CIL async callback-only bodies remain mandatory verifier roots
+ok 17 - CIL async callback-only bodies remain mandatory verifier roots
+  ---
+  duration_ms: 2.408288
+  type: 'test'
+  ...
+# Subtest: source debugger pages numeric backing as ordinary variable descriptors
+ok 18 - source debugger pages numeric backing as ordinary variable descriptors
+  ---
+  duration_ms: 147.025325
+  type: 'test'
+  ...
+# Subtest: reload debugger pages numeric backing as ordinary variable descriptors
+ok 19 - reload debugger pages numeric backing as ordinary variable descriptors
+  ---
+  duration_ms: 30.273643
+  type: 'test'
+  ...
+# Subtest: cil debugger pages numeric backing as ordinary variable descriptors
+ok 20 - cil debugger pages numeric backing as ordinary variable descriptors
+  ---
+  duration_ms: 57.89514
+  type: 'test'
+  ...
+# Subtest: fault parity rejects a shared zero-exit regression even when every route agrees
+ok 21 - fault parity rejects a shared zero-exit regression even when every route agrees
+  ---
+  duration_ms: 5.701866
+  type: 'test'
+  ...
+# Subtest: successful parity retains zero as the default expected exit
+ok 22 - successful parity retains zero as the default expected exit
+  ---
+  duration_ms: 0.35398
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString source: "managed" is returned exactly
+ok 23 - managed Object.ToString source: "managed" is returned exactly
+  ---
+  duration_ms: 151.830358
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString source: "" is returned exactly
+ok 24 - managed Object.ToString source: "" is returned exactly
+  ---
+  duration_ms: 15.464298
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString source: null is returned exactly
+ok 25 - managed Object.ToString source: null is returned exactly
+  ---
+  duration_ms: 13.13795
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString source: mutation and nested object conversion preserve the live receiver
+ok 26 - managed Object.ToString source: mutation and nested object conversion preserve the live receiver
+  ---
+  duration_ms: 32.730031
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString source: an override fault enters the interrupted managed catch
+ok 27 - managed Object.ToString source: an override fault enters the interrupted managed catch
+  ---
+  duration_ms: 20.194447
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString source: plain formatting still uses its released profile
+ok 28 - managed Object.ToString source: plain formatting still uses its released profile
+  ---
+  duration_ms: 19.701262
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString source: infinite callbacks stop at the instruction boundary
+ok 29 - managed Object.ToString source: infinite callbacks stop at the instruction boundary
+  ---
+  duration_ms: 15.272966
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString roundtrip: "managed" is returned exactly
+ok 30 - managed Object.ToString roundtrip: "managed" is returned exactly
+  ---
+  duration_ms: 24.221753
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString roundtrip: "" is returned exactly
+ok 31 - managed Object.ToString roundtrip: "" is returned exactly
+  ---
+  duration_ms: 15.524475
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString roundtrip: null is returned exactly
+ok 32 - managed Object.ToString roundtrip: null is returned exactly
+  ---
+  duration_ms: 23.265768
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString roundtrip: mutation and nested object conversion preserve the live receiver
+ok 33 - managed Object.ToString roundtrip: mutation and nested object conversion preserve the live receiver
+  ---
+  duration_ms: 27.16125
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString roundtrip: an override fault enters the interrupted managed catch
+ok 34 - managed Object.ToString roundtrip: an override fault enters the interrupted managed catch
+  ---
+  duration_ms: 14.529665
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString roundtrip: plain formatting still uses its released profile
+ok 35 - managed Object.ToString roundtrip: plain formatting still uses its released profile
+  ---
+  duration_ms: 13.840753
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString roundtrip: infinite callbacks stop at the instruction boundary
+ok 36 - managed Object.ToString roundtrip: infinite callbacks stop at the instruction boundary
+  ---
+  duration_ms: 10.607203
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString cil: "managed" is returned exactly
+ok 37 - managed Object.ToString cil: "managed" is returned exactly
+  ---
+  duration_ms: 24.543364
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString cil: "" is returned exactly
+ok 38 - managed Object.ToString cil: "" is returned exactly
+  ---
+  duration_ms: 20.084124
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString cil: null is returned exactly
+ok 39 - managed Object.ToString cil: null is returned exactly
+  ---
+  duration_ms: 11.540954
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString cil: mutation and nested object conversion preserve the live receiver
+ok 40 - managed Object.ToString cil: mutation and nested object conversion preserve the live receiver
+  ---
+  duration_ms: 20.495077
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString cil: an override fault enters the interrupted managed catch
+ok 41 - managed Object.ToString cil: an override fault enters the interrupted managed catch
+  ---
+  duration_ms: 12.548584
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString cil: plain formatting still uses its released profile
+ok 42 - managed Object.ToString cil: plain formatting still uses its released profile
+  ---
+  duration_ms: 12.020088
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString cil: infinite callbacks stop at the instruction boundary
+ok 43 - managed Object.ToString cil: infinite callbacks stop at the instruction boundary
+  ---
+  duration_ms: 12.639929
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString CIL: actual inherited slots {"root":true,"leaf":true}
+ok 44 - managed Object.ToString CIL: actual inherited slots {"root":true,"leaf":true}
+  ---
+  duration_ms: 4.860791
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString CIL: actual inherited slots {"root":true,"leaf":false}
+ok 45 - managed Object.ToString CIL: actual inherited slots {"root":true,"leaf":false}
+  ---
+  duration_ms: 2.728207
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString CIL: actual inherited slots {"root":true,"middle":"newslot","leaf":true}
+ok 46 - managed Object.ToString CIL: actual inherited slots {"root":true,"middle":"newslot","leaf":true}
+  ---
+  duration_ms: 2.397923
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString CIL: actual inherited slots {"root":false,"middle":"newslot","leaf":true}
+ok 47 - managed Object.ToString CIL: actual inherited slots {"root":false,"middle":"newslot","leaf":true}
+  ---
+  duration_ms: 2.255754
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString CIL: actual inherited slots {"root":true,"middle":"hidden","leaf":false}
+ok 48 - managed Object.ToString CIL: actual inherited slots {"root":true,"middle":"hidden","leaf":false}
+  ---
+  duration_ms: 2.166673
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString CIL: actual inherited slots {"root":false,"middle":"hidden","leaf":false}
+ok 49 - managed Object.ToString CIL: actual inherited slots {"root":false,"middle":"hidden","leaf":false}
+  ---
+  duration_ms: 2.009753
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString CIL: boxed user struct mutates the existing box
+ok 50 - managed Object.ToString CIL: boxed user struct mutates the existing box
+  ---
+  duration_ms: 3.450659
+  type: 'test'
+  ...
+# Subtest: managed Object.ToString CIL rejects a structurally admitted non-string runtime result
+ok 51 - managed Object.ToString CIL rejects a structurally admitted non-string runtime result
+  ---
+  duration_ms: 3.19931
+  type: 'test'
+  ...
+# Subtest: verified arbitrary-name async values use bounded managed storage at 32 bits
+ok 52 - verified arbitrary-name async values use bounded managed storage at 32 bits
+  ---
+  duration_ms: 54.262288
+  type: 'test'
+  ...
+# Subtest: verified arbitrary-name async values use bounded managed storage at 64 bits
+ok 53 - verified arbitrary-name async values use bounded managed storage at 64 bits
+  ---
+  duration_ms: 9.483212
+  type: 'test'
+  ...
+# Subtest: managed state storage never makes auto-layout bytes, sizeof or unsafe unboxing available
+ok 54 - managed state storage never makes auto-layout bytes, sizeof or unsafe unboxing available
+  ---
+  duration_ms: 6.105269
+  type: 'test'
+  ...
+# Subtest: auto-layout state requires the supported interface slots and verified bodies
+ok 55 - auto-layout state requires the supported interface slots and verified bodies
+  ---
+  duration_ms: 10.48996
+  type: 'test'
+  ...
+# Subtest: managed state admission does not hide unsupported nested auto layouts or recursive value fields
+ok 56 - managed state admission does not hide unsupported nested auto layouts or recursive value fields
+  ---
+  duration_ms: 5.906186
+  type: 'test'
+  ...
+# Subtest: auto-layout logical bytes are reserved before managed frame allocation
+ok 57 - auto-layout logical bytes are reserved before managed frame allocation
+  ---
+  duration_ms: 15.960516
+  type: 'test'
+  ...
+# Subtest: Roslyn async regression consumes the exact SDK8 native-qualified DLL and source
+ok 58 - Roslyn async regression consumes the exact SDK8 native-qualified DLL and source
+  ---
+  duration_ms: 1.839863
+  type: 'test'
+  ...
+# Subtest: generic suffix parsing preserves generated CLI identifiers and nested argument lists
+ok 59 - generic suffix parsing preserves generated CLI identifiers and nested argument lists
+  ---
+  duration_ms: 2.839201
+  type: 'test'
+  ...
+# Subtest: generated generic method tables retain exact definitions, closed fields and argument limits
+ok 60 - generated generic method tables retain exact definitions, closed fields and argument limits
+  ---
+  duration_ms: 2.798632
+  type: 'test'
+  ...
+# Subtest: actual Roslyn generic iterator MethodImpl rows resolve specialized external slots
+ok 61 - actual Roslyn generic iterator MethodImpl rows resolve specialized external slots
+  ---
+  duration_ms: 74.656132
+  type: 'test'
+  ...
+# Subtest: actual Roslyn iterator still rejects a duplicated MethodImpl declaration
+ok 62 - actual Roslyn iterator still rejects a duplicated MethodImpl declaration
+  ---
+  duration_ms: 3.643542
+  type: 'test'
+  ...
+# Subtest: actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay
+ok 63 - actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay
+  ---
+  duration_ms: 331.449728
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods: implicit and explicit methods with distinct method arguments
+ok 64 - T02.2 source generic interface methods: implicit and explicit methods with distinct method arguments
+  ---
+  duration_ms: 205.300483
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods: closed receiver and method arguments are independent
+ok 65 - T02.2 source generic interface methods: closed receiver and method arguments are independent
+  ---
+  duration_ms: 37.364327
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods: generic default methods retain most-specific override selection
+ok 66 - T02.2 source generic interface methods: generic default methods retain most-specific override selection
+  ---
+  duration_ms: 39.075821
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods: implementations created after a generic interface demand become reachable
+ok 67 - T02.2 source generic interface methods: implementations created after a generic interface demand become reachable
+  ---
+  duration_ms: 21.820393
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods reject wrong method arity
+ok 68 - T02.2 source generic interface methods reject wrong method arity
+  ---
+  duration_ms: 5.863032
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods reject wrong implementation signature
+ok 69 - T02.2 source generic interface methods reject wrong implementation signature
+  ---
+  duration_ms: 3.322851
+  type: 'test'
+  ...
+# Subtest: T02.2 source generic interface methods reject wrong receiver type
+ok 70 - T02.2 source generic interface methods reject wrong receiver type
+  ---
+  duration_ms: 4.760703
+  type: 'test'
+  ...
+# Subtest: T02.2 source verifier rejects malformed closed interface call arity
+ok 71 - T02.2 source verifier rejects malformed closed interface call arity
+  ---
+  duration_ms: 15.435734
+  type: 'test'
+  ...
+# Subtest: T02.2 a corrupted generic interface receiver cannot enter an unrelated method in any route
+ok 72 - T02.2 a corrupted generic interface receiver cannot enter an unrelated method in any route
+  ---
+  duration_ms: 28.02647
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: closed generic interface implementations retain their construction
+ok 73 - T02.2 source interface dispatch: closed generic interface implementations retain their construction
+  ---
+  duration_ms: 225.764414
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: implicit and explicit implementations
+ok 74 - T02.2 source interface dispatch: implicit and explicit implementations
+  ---
+  duration_ms: 41.111241
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: inherited default body and most specific diamond
+ok 75 - T02.2 source interface dispatch: inherited default body and most specific diamond
+  ---
+  duration_ms: 24.651233
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: class implementation dominates defaults
+ok 76 - T02.2 source interface dispatch: class implementation dominates defaults
+  ---
+  duration_ms: 17.955285
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: interface property and boxed struct receiver
+ok 77 - T02.2 source interface dispatch: interface property and boxed struct receiver
+  ---
+  duration_ms: 27.807238
+  type: 'test'
+  ...
+# Subtest: T02.2 source interface dispatch: null receiver throws before entering a default body
+ok 78 - T02.2 source interface dispatch: null receiver throws before entering a default body
+  ---
+  duration_ms: 22.320488
+  type: 'test'
+  ...
+# Subtest: T02.2 source rejects ambiguous default-interface diamonds with the C\# diagnostic
+ok 79 - T02.2 source rejects ambiguous default-interface diamonds with the C\# diagnostic
+  ---
+  duration_ms: 9.351797
+  type: 'test'
+  ...
+# Subtest: T02.2 ambiguous runtime metadata faults at the invoked interface declaration in every route
+ok 80 - T02.2 ambiguous runtime metadata faults at the invoked interface declaration in every route
+  ---
+  duration_ms: 25.990369
+  type: 'test'
+  ...
+# Subtest: source: filters precede pending task cleanup, including local and portable replay
+ok 81 - source: filters precede pending task cleanup, including local and portable replay
+  ---
+  duration_ms: 166.503407
+  type: 'test'
+  ...
+# Subtest: source: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+ok 82 - source: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+  ---
+  duration_ms: 26.843588
+  type: 'test'
+  ...
+# Subtest: source: debugger pending-fault resume delivers the completed task before another opcode
+ok 83 - source: debugger pending-fault resume delivers the completed task before another opcode
+  ---
+  duration_ms: 12.335711
+  type: 'test'
+  ...
+# Subtest: source: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+ok 84 - source: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+  ---
+  duration_ms: 7.523732
+  type: 'test'
+  ...
+# Subtest: cil: filters precede pending task cleanup, including local and portable replay
+ok 85 - cil: filters precede pending task cleanup, including local and portable replay
+  ---
+  duration_ms: 114.585752
+  type: 'test'
+  ...
+# Subtest: cil: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+ok 86 - cil: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+  ---
+  duration_ms: 45.538057
+  type: 'test'
+  ...
+# Subtest: cil: debugger pending-fault resume delivers the completed task before another opcode
+ok 87 - cil: debugger pending-fault resume delivers the completed task before another opcode
+  ---
+  duration_ms: 36.147058
+  type: 'test'
+  ...
+# Subtest: cil: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+ok 88 - cil: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+  ---
+  duration_ms: 15.944102
+  type: 'test'
+  ...
+# Subtest: execution: generic declaration with profile Console
+ok 89 - execution: generic declaration with profile Console
+  ---
+  duration_ms: 115.017602
+  type: 'test'
+  ...
+# Subtest: execution: init declaration with profile Console
+ok 90 - execution: init declaration with profile Console
+  ---
+  duration_ms: 13.488945
+  type: 'test'
+  ...
+# Subtest: execution: long source mode
+ok 91 - execution: long source mode
+  ---
+  duration_ms: 14.108635
+  type: 'test'
+  ...
+# Subtest: execution: float source mode
+ok 92 - execution: float source mode
+  ---
+  duration_ms: 5.940567
+  type: 'test'
+  ...
+# Subtest: execution: decimal source mode
+ok 93 - execution: decimal source mode
+  ---
+  duration_ms: 5.607887
+  type: 'test'
+  ...
+# Subtest: execution: hello
+ok 94 - execution: hello
+  ---
+  duration_ms: 3.398722
+  type: 'test'
+  ...
+# Subtest: execution: precedence
+ok 95 - execution: precedence
+  ---
+  duration_ms: 3.677112
+  type: 'test'
+  ...
+# Subtest: execution: Int32 wrap
+ok 96 - execution: Int32 wrap
+  ---
+  duration_ms: 2.7911
+  type: 'test'
+  ...
+# Subtest: execution: Int32 multiplication
+ok 97 - execution: Int32 multiplication
+  ---
+  duration_ms: 2.733075
+  type: 'test'
+  ...
+# Subtest: execution: integer division
+ok 98 - execution: integer division
+  ---
+  duration_ms: 3.391021
+  type: 'test'
+  ...
+# Subtest: execution: floating division
+ok 99 - execution: floating division
+  ---
+  duration_ms: 2.510668
+  type: 'test'
+  ...
+# Subtest: execution: minimum int
+ok 100 - execution: minimum int
+  ---
+  duration_ms: 1.914572
+  type: 'test'
+  ...
+# Subtest: execution: bitwise
+ok 101 - execution: bitwise
+  ---
+  duration_ms: 3.949571
+  type: 'test'
+  ...
+# Subtest: execution: boolean
+ok 102 - execution: boolean
+  ---
+  duration_ms: 2.803337
+  type: 'test'
+  ...
+# Subtest: execution: short circuit
+ok 103 - execution: short circuit
+  ---
+  duration_ms: 3.578807
+  type: 'test'
+  ...
+# Subtest: execution: if else
+ok 104 - execution: if else
+  ---
+  duration_ms: 3.141145
+  type: 'test'
+  ...
+# Subtest: execution: for
+ok 105 - execution: for
+  ---
+  duration_ms: 4.176325
+  type: 'test'
+  ...
+# Subtest: execution: while continue break
+ok 106 - execution: while continue break
+  ---
+  duration_ms: 5.590943
+  type: 'test'
+  ...
+# Subtest: execution: do while
+ok 107 - execution: do while
+  ---
+  duration_ms: 3.095627
+  type: 'test'
+  ...
+# Subtest: execution: for continue
+ok 108 - execution: for continue
+  ---
+  duration_ms: 2.813303
+  type: 'test'
+  ...
+# Subtest: execution: ternary
+ok 109 - execution: ternary
+  ---
+  duration_ms: 2.240501
+  type: 'test'
+  ...
+# Subtest: execution: coalescing
+ok 110 - execution: coalescing
+  ---
+  duration_ms: 1.937856
+  type: 'test'
+  ...
+# Subtest: execution: array foreach
+ok 111 - execution: array foreach
+  ---
+  duration_ms: 4.395487
+  type: 'test'
+  ...
+# Subtest: execution: implicit array
+ok 112 - execution: implicit array
+  ---
+  duration_ms: 2.534543
+  type: 'test'
+  ...
+# Subtest: execution: default array
+ok 113 - execution: default array
+  ---
+  duration_ms: 2.534463
+  type: 'test'
+  ...
+# Subtest: execution: array assignment receiver evaluated once
+ok 114 - execution: array assignment receiver evaluated once
+  ---
+  duration_ms: 3.245668
+  type: 'test'
+  ...
+# Subtest: execution: postfix
+ok 115 - execution: postfix
+  ---
+  duration_ms: 2.170619
+  type: 'test'
+  ...
+# Subtest: execution: prefix
+ok 116 - execution: prefix
+  ---
+  duration_ms: 1.40924
+  type: 'test'
+  ...
+# Subtest: execution: method calls
+ok 117 - execution: method calls
+  ---
+  duration_ms: 10.948949
+  type: 'test'
+  ...
+# Subtest: execution: recursion
+ok 118 - execution: recursion
+  ---
+  duration_ms: 5.266597
+  type: 'test'
+  ...
+# Subtest: execution: expression body
+ok 119 - execution: expression body
+  ---
+  duration_ms: 2.740446
+  type: 'test'
+  ...
+# Subtest: execution: overloads
+ok 120 - execution: overloads
+  ---
+  duration_ms: 2.077592
+  type: 'test'
+  ...
+# Subtest: execution: objects constructor fields
+ok 121 - execution: objects constructor fields
+  ---
+  duration_ms: 4.534962
+  type: 'test'
+  ...
+# Subtest: execution: object initializer
+ok 122 - execution: object initializer
+  ---
+  duration_ms: 2.214864
+  type: 'test'
+  ...
+# Subtest: execution: static initializer dependency
+ok 123 - execution: static initializer dependency
+  ---
+  duration_ms: 1.889215
+  type: 'test'
+  ...
+# Subtest: execution: string value equality
+ok 124 - execution: string value equality
+  ---
+  duration_ms: 1.74262
+  type: 'test'
+  ...
+# Subtest: execution: object identity
+ok 125 - execution: object identity
+  ---
+  duration_ms: 1.717673
+  type: 'test'
+  ...
+# Subtest: execution: string library
+ok 126 - execution: string library
+  ---
+  duration_ms: 4.08446
+  type: 'test'
+  ...
+# Subtest: execution: length
+ok 127 - execution: length
+  ---
+  duration_ms: 2.304726
+  type: 'test'
+  ...
+# Subtest: execution: numeric parse
+ok 128 - execution: numeric parse
+  ---
+  duration_ms: 1.612299
+  type: 'test'
+  ...
+# Subtest: execution: round-to-even conversion
+ok 129 - execution: round-to-even conversion
+  ---
+  duration_ms: 1.355882
+  type: 'test'
+  ...
+# Subtest: execution: array sort
+ok 130 - execution: array sort
+  ---
+  duration_ms: 3.006035
+  type: 'test'
+  ...
+# Subtest: execution: caught division
+ok 131 - execution: caught division
+  ---
+  duration_ms: 4.743808
+  type: 'test'
+  ...
+# Subtest: execution: filtered catch declaration
+ok 132 - execution: filtered catch declaration
+  ---
+  duration_ms: 2.074297
+  type: 'test'
+  ...
+# Subtest: execution: filtered catch selection
+ok 133 - execution: filtered catch selection
+  ---
+  duration_ms: 7.672801
+  type: 'test'
+  ...
+# Subtest: execution: throw exception
+ok 134 - execution: throw exception
+  ---
+  duration_ms: 2.335921
+  type: 'test'
+  ...
+# Subtest: execution: cross-frame catch
+ok 135 - execution: cross-frame catch
+  ---
+  duration_ms: 2.948371
+  type: 'test'
+  ...
+# Subtest: execution: rethrow
+ok 136 - execution: rethrow
+  ---
+  duration_ms: 3.050832
+  type: 'test'
+  ...
+# Subtest: execution: Main args
+ok 137 - execution: Main args
+  ---
+  duration_ms: 2.332877
+  type: 'test'
+  ...
+# Subtest: execution: definite assignment both branches
+ok 138 - execution: definite assignment both branches
+  ---
+  duration_ms: 1.838821
+  type: 'test'
+  ...
+# Subtest: diagnostic: type mismatch
+ok 139 - diagnostic: type mismatch
+  ---
+  duration_ms: 3.602041
+  type: 'test'
+  ...
+# Subtest: diagnostic: unassigned
+ok 140 - diagnostic: unassigned
+  ---
+  duration_ms: 2.232389
+  type: 'test'
+  ...
+# Subtest: diagnostic: short circuit definite assignment
+ok 141 - diagnostic: short circuit definite assignment
+  ---
+  duration_ms: 4.810657
+  type: 'test'
+  ...
+# Subtest: diagnostic: branch definite assignment
+ok 142 - diagnostic: branch definite assignment
+  ---
+  duration_ms: 4.181853
+  type: 'test'
+  ...
+# Subtest: diagnostic: unknown name
+ok 143 - diagnostic: unknown name
+  ---
+  duration_ms: 2.493573
+  type: 'test'
+  ...
+# Subtest: diagnostic: duplicate type
+ok 144 - diagnostic: duplicate type
+  ---
+  duration_ms: 2.608402
+  type: 'test'
+  ...
+# Subtest: diagnostic: duplicate member
+ok 145 - diagnostic: duplicate member
+  ---
+  duration_ms: 2.727637
+  type: 'test'
+  ...
+# Subtest: diagnostic: multiple Main
+ok 146 - diagnostic: multiple Main
+  ---
+  duration_ms: 0.704695
+  type: 'test'
+  ...
+# Subtest: diagnostic: missing return
+ok 147 - diagnostic: missing return
+  ---
+  duration_ms: 5.103357
+  type: 'test'
+  ...
+# Subtest: diagnostic: break outside loop
+ok 148 - diagnostic: break outside loop
+  ---
+  duration_ms: 1.081589
+  type: 'test'
+  ...
+# Subtest: diagnostic: rethrow outside catch
+ok 149 - diagnostic: rethrow outside catch
+  ---
+  duration_ms: 0.843459
+  type: 'test'
+  ...
+# Subtest: diagnostic: unknown type
+ok 150 - diagnostic: unknown type
+  ---
+  duration_ms: 1.192221
+  type: 'test'
+  ...
+# Subtest: diagnostic: double to int
+ok 151 - diagnostic: double to int
+  ---
+  duration_ms: 1.454096
+  type: 'test'
+  ...
+# Subtest: diagnostic: const write
+ok 152 - diagnostic: const write
+  ---
+  duration_ms: 1.715149
+  type: 'test'
+  ...
+# Subtest: diagnostic: no entry
+ok 153 - diagnostic: no entry
+  ---
+  duration_ms: 0.279101
+  type: 'test'
+  ...
+# Subtest: diagnostic: invalid condition
+ok 154 - diagnostic: invalid condition
+  ---
+  duration_ms: 1.392766
+  type: 'test'
+  ...
+# Subtest: diagnostic: filter definite assignment
+ok 155 - diagnostic: filter definite assignment
+  ---
+  duration_ms: 2.294601
+  type: 'test'
+  ...
+# Subtest: profile: unsupported syntax blocks emission Console.WriteLine(1);class B{}class A:B{
+ok 156 - profile: unsupported syntax blocks emission Console.WriteLine(1);class B{}class A:B{
+  ---
+  duration_ms: 3.011714
+  type: 'test'
+  ...
+# Subtest: profile: unsupported syntax blocks emission class A{static async void Main(){}}
+ok 157 - profile: unsupported syntax blocks emission class A{static async void Main(){}}
+  ---
+  duration_ms: 2.166648
+  type: 'test'
+  ...
+# Subtest: compiler: references resolve across source files
+ok 158 - compiler: references resolve across source files
+  ---
+  duration_ms: 2.433795
+  type: 'test'
+  ...
+# Subtest: compiler: int Main exit code survives startup
+ok 159 - compiler: int Main exit code survives startup
+  ---
+  duration_ms: 1.017405
+  type: 'test'
+  ...
+# Subtest: bytecode: serialize and verify roundtrip
+ok 160 - bytecode: serialize and verify roundtrip
+  ---
+  duration_ms: 4.256733
+  type: 'test'
+  ...
+# Subtest: bytecode: rejects corrupt version and stack underflow
+ok 161 - bytecode: rejects corrupt version and stack underflow
+  ---
+  duration_ms: 1.588102
+  type: 'test'
+  ...
+# Subtest: bytecode: rejects invalid branch target
+ok 162 - bytecode: rejects invalid branch target
+  ---
+  duration_ms: 0.64682
+  type: 'test'
+  ...
+# Subtest: sample: particles
+ok 163 - sample: particles
+  ---
+  duration_ms: 15.448073
+  type: 'test'
+  ...
+# Subtest: sample: gc
+ok 164 - sample: gc
+  ---
+  duration_ms: 5.23439
+  type: 'test'
+  ...
+# Subtest: sample: recursion
+ok 165 - sample: recursion
+  ---
+  duration_ms: 9.938609
+  type: 'test'
+  ...
+# Subtest: sample: exceptions
+ok 166 - sample: exceptions
+  ---
+  duration_ms: 4.082597
+  type: 'test'
+  ...
+# Subtest: sample: arrays
+ok 167 - sample: arrays
+  ---
+  duration_ms: 7.153168
+  type: 'test'
+  ...
+# Subtest: sample: errors
+ok 168 - sample: errors
+  ---
+  duration_ms: 5.26259
+  type: 'test'
+  ...
+# Subtest: sample: partial
+ok 169 - sample: partial
+  ---
+  duration_ms: 3.693596
+  type: 'test'
+  ...
+# Subtest: sample: switch
+ok 170 - sample: switch
+  ---
+  duration_ms: 14.612075
+  type: 'test'
+  ...
+# Subtest: sample: conversions
+ok 171 - sample: conversions
+  ---
+  duration_ms: 10.866162
+  type: 'test'
+  ...
+# Subtest: sample: null-assignment
+ok 172 - sample: null-assignment
+  ---
+  duration_ms: 5.187291
+  type: 'test'
+  ...
+# Subtest: sample: call-hierarchy
+ok 173 - sample: call-hierarchy
+  ---
+  duration_ms: 2.271727
+  type: 'test'
+  ...
+# Subtest: sample: guarded-calls
+ok 174 - sample: guarded-calls
+  ---
+  duration_ms: 3.553721
+  type: 'test'
+  ...
+# Subtest: sample: short-circuit
+ok 175 - sample: short-circuit
+  ---
+  duration_ms: 3.224546
+  type: 'test'
+  ...
+# Subtest: sample: nameof
+ok 176 - sample: nameof
+  ---
+  duration_ms: 2.230167
+  type: 'test'
+  ...
+# Subtest: sample: properties
+ok 177 - sample: properties
+  ---
+  duration_ms: 5.804297
+  type: 'test'
+  ...
+# Subtest: sample: readonly-properties
+ok 178 - sample: readonly-properties
+  ---
+  duration_ms: 3.879098
+  type: 'test'
+  ...
+# Subtest: sample: finally
+ok 179 - sample: finally
+  ---
+  duration_ms: 4.028538
+  type: 'test'
+  ...
+# Subtest: sample: finally-loop
+ok 180 - sample: finally-loop
+  ---
+  duration_ms: 3.545448
+  type: 'test'
+  ...
+# Subtest: sample: structural-refactoring
+ok 181 - sample: structural-refactoring
+  ---
+  duration_ms: 4.078933
+  type: 'test'
+  ...
+# Subtest: sample: safe-watches
+ok 182 - sample: safe-watches
+  ---
+  duration_ms: 3.555162
+  type: 'test'
+  ...
+# Subtest: sample: analyzer-tasks
+ok 183 - sample: analyzer-tasks
+  ---
+  duration_ms: 1.997775
+  type: 'test'
+  ...
+# Subtest: sample: checked-arithmetic
+ok 184 - sample: checked-arithmetic
+  ---
+  duration_ms: 5.456726
+  type: 'test'
+  ...
+# Subtest: sample: using-resources
+ok 185 - sample: using-resources
+  ---
+  duration_ms: 6.842982
+  type: 'test'
+  ...
+# Subtest: sample: using-failure
+ok 186 - sample: using-failure
+  ---
+  duration_ms: 5.700734
+  type: 'test'
+  ...
+# Subtest: sample: constant-patterns
+ok 187 - sample: constant-patterns
+  ---
+  duration_ms: 8.093399
+  type: 'test'
+  ...
+# Subtest: sample: refactor-safe06
+ok 188 - sample: refactor-safe06
+  ---
+  duration_ms: 5.994145
+  type: 'test'
+  ...
+# Subtest: sample: immutable-schema
+ok 189 - sample: immutable-schema
+  ---
+  duration_ms: 6.420251
+  type: 'test'
+  ...
+# Subtest: sample: unreachable-analyzer
+ok 190 - sample: unreachable-analyzer
+  ---
+  duration_ms: 2.138731
+  type: 'test'
+  ...
+# Subtest: sample: reversible-storage
+ok 191 - sample: reversible-storage
+  ---
+  duration_ms: 3.851268
+  type: 'test'
+  ...
+# Subtest: sample: breakpoint-workbench
+ok 192 - sample: breakpoint-workbench
+  ---
+  duration_ms: 2.940349
+  type: 'test'
+  ...
+# Subtest: sample: editor-keymaps
+ok 193 - sample: editor-keymaps
+  ---
+  duration_ms: 1.645857
+  type: 'test'
+  ...
+# Subtest: sample: explorer-members
+ok 194 - sample: explorer-members
+  ---
+  duration_ms: 3.892388
+  type: 'test'
+  ...
+# Subtest: sample: debug-exact
+ok 195 - sample: debug-exact
+  ---
+  duration_ms: 1.936555
+  type: 'test'
+  ...
+# Subtest: sample: debug-callsite
+ok 196 - sample: debug-callsite
+  ---
+  duration_ms: 1.805632
+  type: 'test'
+  ...
+# Subtest: sample: debug-conditions
+ok 197 - sample: debug-conditions
+  ---
+  duration_ms: 1.879861
+  type: 'test'
+  ...
+# Subtest: sample: debug-function
+ok 198 - sample: debug-function
+  ---
+  duration_ms: 2.074447
+  type: 'test'
+  ...
+# Subtest: sample: debug-exception
+ok 199 - sample: debug-exception
+  ---
+  duration_ms: 2.780615
+  type: 'test'
+  ...
+# Subtest: sample: async-stacks
+ok 200 - sample: async-stacks
+  ---
+  duration_ms: 15.837525
+  type: 'test'
+  ...
+# Subtest: sample: logical-threads
+ok 201 - sample: logical-threads
+  ---
+  duration_ms: 5.385631
+  type: 'test'
+  ...
+# Subtest: sample: hot-reload
+ok 202 - sample: hot-reload
+  ---
+  duration_ms: 1.983619
+  type: 'test'
+  ...
+# Subtest: sample: set-next
+ok 203 - sample: set-next
+  ---
+  duration_ms: 1.723662
+  type: 'test'
+  ...
+# Subtest: sample: function-evaluation
+ok 204 - sample: function-evaluation
+  ---
+  duration_ms: 2.118072
+  type: 'test'
+  ...
+# Subtest: sample: portable-symbols
+ok 205 - sample: portable-symbols
+  ---
+  duration_ms: 2.959037
+  type: 'test'
+  ...
+# Subtest: sample: winui-counter
+ok 206 - sample: winui-counter
+  ---
+  duration_ms: 10.808066
+  type: 'test'
+  ...
+# Subtest: sample: winui-controls
+ok 207 - sample: winui-controls
+  ---
+  duration_ms: 18.267334
+  type: 'test'
+  ...
+# Subtest: sample: winui-graphics
+ok 208 - sample: winui-graphics
+  ---
+  duration_ms: 13.94827
+  type: 'test'
+  ...
+# Subtest: sample: winui-async
+ok 209 - sample: winui-async
+  ---
+  duration_ms: 6.31728
+  type: 'test'
+  ...
+# Subtest: sample: designer-canvas
+ok 210 - sample: designer-canvas
+  ---
+  duration_ms: 54.882045
+  type: 'test'
+  ...
+# Subtest: sample: designer-grid
+ok 211 - sample: designer-grid
+  ---
+  duration_ms: 29.772866
+  type: 'test'
+  ...
+# Subtest: sample: winui-shared-styles
+ok 212 - sample: winui-shared-styles
+  ---
+  duration_ms: 31.50529
+  type: 'test'
+  ...
+# Subtest: sample: winui-expanded-controls
+ok 213 - sample: winui-expanded-controls
+  ---
+  duration_ms: 10.730813
+  type: 'test'
+  ...
+# Subtest: sample: edit-continue-structure
+ok 214 - sample: edit-continue-structure
+  ---
+  duration_ms: 2.229145
+  type: 'test'
+  ...
+# Subtest: sample: designer-csharp-sync
+ok 215 - sample: designer-csharp-sync
+  ---
+  duration_ms: 14.52683
+  type: 'test'
+  ...
+# Subtest: sample: winui-storyboards
+ok 216 - sample: winui-storyboards
+  ---
+  duration_ms: 10.044134
+  type: 'test'
+  ...
+# Subtest: sample: winui-wrap-panels
+ok 217 - sample: winui-wrap-panels
+  ---
+  duration_ms: 9.854196
+  type: 'test'
+  ...
+# Subtest: sample: animation-style-precedence
+ok 218 - sample: animation-style-precedence
+  ---
+  duration_ms: 7.166247
+  type: 'test'
+  ...
+# Subtest: sample: bcl-collections
+ok 219 - sample: bcl-collections
+  ---
+  duration_ms: 8.178454
+  type: 'test'
+  ...
+# Subtest: sample: bcl-dictionary
+ok 220 - sample: bcl-dictionary
+  ---
+  duration_ms: 5.570072
+  type: 'test'
+  ...
+# Subtest: sample: bcl-stringbuilder
+ok 221 - sample: bcl-stringbuilder
+  ---
+  duration_ms: 4.897754
+  type: 'test'
+  ...
+# Subtest: sample: csharp-interpolation
+ok 222 - sample: csharp-interpolation
+  ---
+  duration_ms: 2.874453
+  type: 'test'
+  ...
+# Subtest: sample: csharp-modern-properties
+ok 223 - sample: csharp-modern-properties
+  ---
+  duration_ms: 18.442416
+  type: 'test'
+  ...
+# Subtest: sample: csharp-preview-collections
+ok 224 - sample: csharp-preview-collections
+  ---
+  duration_ms: 34.468308
+  type: 'test'
+  ...
+# Subtest: sample: bcl-json-document
+ok 225 - sample: bcl-json-document
+  ---
+  duration_ms: 6.819848
+  type: 'test'
+  ...
+# Subtest: sample: bcl-array-random
+ok 226 - sample: bcl-array-random
+  ---
+  duration_ms: 4.973265
+  type: 'test'
+  ...
+# Subtest: sample: simd-vector-math
+ok 227 - sample: simd-vector-math
+  ---
+  duration_ms: 8.232954
+  type: 'test'
+  ...
+# Subtest: sample: parallel-compute
+ok 228 - sample: parallel-compute
+  ---
+  duration_ms: 115.751204
+  type: 'test'
+  ...
+# Subtest: sample: network-http-client
+ok 229 - sample: network-http-client
+  ---
+  duration_ms: 20.636645
+  type: 'test'
+  ...
+# Subtest: sample: winui-compute-monitor
+ok 230 - sample: winui-compute-monitor
+  ---
+  duration_ms: 11.673388
+  type: 'test'
+  ...
+# Subtest: compiler: empty file set reports a missing entry point
+ok 231 - compiler: empty file set reports a missing entry point
+  ---
+  duration_ms: 0.607663
+  type: 'test'
+  ...
+# Subtest: limits source: documented heap policy and fault
+ok 232 - limits source: documented heap policy and fault
+  ---
+  duration_ms: 1211.230957
+  type: 'test'
+  ...
+# {"case":"heap","engine":"source","state":"faulted","fault":"OutOfMemoryException","instructions":45,"heapPeak":32000442,"bootstrapBytes":32,"guestArrayBytes":32000256,"runtimeRecordBytes":154,"peakRss":158240768}
+# Subtest: limits source: documented array policy and fault
+ok 233 - limits source: documented array policy and fault
+  ---
+  duration_ms: 1287.281289
+  type: 'test'
+  ...
+# {"case":"array","engine":"source","state":"faulted","fault":"OutOfMemoryException","instructions":5,"heapPeak":186,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":154,"peakRss":156536832}
+# Subtest: limits source: documented frames policy and fault
+ok 234 - limits source: documented frames policy and fault
+  ---
+  duration_ms: 1273.782882
+  type: 'test'
+  ...
+# {"case":"frames","engine":"source","state":"faulted","fault":"StackOverflowException","instructions":5104,"heapPeak":0,"bootstrapBytes":0,"guestArrayBytes":0,"runtimeRecordBytes":0,"peakRss":158785536}
+# Subtest: limits source: documented instructions policy and fault
+ok 235 - limits source: documented instructions policy and fault
+  ---
+  duration_ms: 3409.028293
+  type: 'test'
+  ...
+# {"case":"instructions","engine":"source","state":"faulted","fault":"InstructionLimitException","instructions":20000001,"heapPeak":32,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":0,"peakRss":161890304}
+# Subtest: limits source: documented output policy and fault
+ok 236 - limits source: documented output policy and fault
+  ---
+  duration_ms: 1219.134186
+  type: 'test'
+  ...
+# {"case":"output","engine":"source","state":"faulted","fault":"OutputLimitException","instructions":19018,"heapPeak":2056,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":2024,"peakRss":163749888}
+# Subtest: limits cil: documented heap policy and fault
+ok 237 - limits cil: documented heap policy and fault
+  ---
+  duration_ms: 1093.41187
+  type: 'test'
+  ...
+# {"case":"heap","engine":"cil","state":"faulted","fault":"OutOfMemoryException","instructions":57,"heapPeak":32000442,"bootstrapBytes":32,"guestArrayBytes":32000256,"runtimeRecordBytes":154,"peakRss":160088064}
+# Subtest: limits cil: documented array policy and fault
+ok 238 - limits cil: documented array policy and fault
+  ---
+  duration_ms: 1152.231985
+  type: 'test'
+  ...
+# {"case":"array","engine":"cil","state":"faulted","fault":"OutOfMemoryException","instructions":9,"heapPeak":186,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":154,"peakRss":156041216}
+# Subtest: limits cil: documented frames policy and fault
+ok 239 - limits cil: documented frames policy and fault
+  ---
+  duration_ms: 1398.236235
+  type: 'test'
+  ...
+# {"case":"frames","engine":"cil","state":"faulted","fault":"StackOverflowException","instructions":6634,"heapPeak":0,"bootstrapBytes":0,"guestArrayBytes":0,"runtimeRecordBytes":0,"peakRss":165523456}
+# Subtest: limits cil: documented instructions policy and fault
+ok 240 - limits cil: documented instructions policy and fault
+  ---
+  duration_ms: 6280.394684
+  type: 'test'
+  ...
+# {"case":"instructions","engine":"cil","state":"faulted","fault":"InstructionLimitException","instructions":20000001,"heapPeak":32,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":0,"peakRss":162799616}
+# Subtest: limits cil: documented output policy and fault
+ok 241 - limits cil: documented output policy and fault
+  ---
+  duration_ms: 1267.526776
+  type: 'test'
+  ...
+# {"case":"output","engine":"cil","state":"faulted","fault":"OutputLimitException","instructions":23024,"heapPeak":2056,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":2024,"peakRss":171646976}
+# Subtest: limits heap: exact allocation boundary, one over, invalid length and rooted survival
+ok 242 - limits heap: exact allocation boundary, one over, invalid length and rooted survival
+  ---
+  duration_ms: 7.022257
+  type: 'test'
+  ...
+# Subtest: limits source: retained guest arrays meet the exact byte budget and fail one element over
+ok 243 - limits source: retained guest arrays meet the exact byte budget and fail one element over
+  ---
+  duration_ms: 109.223829
+  type: 'test'
+  ...
+# Subtest: limits source: explicit array length ceiling remains independent of available heap bytes
+ok 244 - limits source: explicit array length ceiling remains independent of available heap bytes
+  ---
+  duration_ms: 12.988421
+  type: 'test'
+  ...
+# Subtest: limits cil: retained guest arrays meet the exact byte budget and fail one element over
+ok 245 - limits cil: retained guest arrays meet the exact byte budget and fail one element over
+  ---
+  duration_ms: 30.697187
+  type: 'test'
+  ...
+# Subtest: limits cil: explicit array length ceiling remains independent of available heap bytes
+ok 246 - limits cil: explicit array length ceiling remains independent of available heap bytes
+  ---
+  duration_ms: 19.606714
+  type: 'test'
+  ...
+# Subtest: limits parser: nesting and diagnostics remain bounded
+ok 247 - limits parser: nesting and diagnostics remain bounded
+  ---
+  duration_ms: 22.263526
+  type: 'test'
+  ...
+# Subtest: limits workspace: document count, snapshot length and token-cache defaults
+ok 248 - limits workspace: document count, snapshot length and token-cache defaults
+  ---
+  duration_ms: 8.433309
+  type: 'test'
+  ...
+# Subtest: limits debugger: history count/bytes and watch node budget are bounded
+ok 249 - limits debugger: history count/bytes and watch node budget are bounded
+  ---
+  duration_ms: 37.054216
+  type: 'test'
+  ...
+# Subtest: source: explicit function calls preserve paused stack and control flow
+ok 250 - source: explicit function calls preserve paused stack and control flow
+  ---
+  duration_ms: 160.101884
+  type: 'test'
+  ...
+# Subtest: source: methods, constructors, initializers, getters and setters execute real target code
+ok 251 - source: methods, constructors, initializers, getters and setters execute real target code
+  ---
+  duration_ms: 27.495394
+  type: 'test'
+  ...
+# Subtest: source: effectful expression receiver/argument order and GC roots
+ok 252 - source: effectful expression receiver/argument order and GC roots
+  ---
+  duration_ms: 22.340149
+  type: 'test'
+  ...
+# Subtest: source: evaluation rollback restores target state, output and history
+not ok 253 - source: evaluation rollback restores target state, output and history
+  ---
+  duration_ms: 32.861857
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/debugger-advanced.test.js:28:2'
+  failureType: 'testCodeFailure'
+  error: 'Cannot snapshot during an active platform transaction'
+  code: 'ERR_TEST_FAILURE'
+  name: 'InvalidOperationException'
+  stack: |-
+    snapshotPlatformState (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/snapshot-platform.js:7:11)
+    snapshotVM (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/snapshot.js:40:60)
+    VirtualMachine.snapshot (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/vm.js:53:21)
+    DebugSession.remember (file:///tmp/a05-integration-42f7738360b9/packages/debugger/src/index.js:318:23)
+    evaluateFunction (file:///tmp/a05-integration-42f7738360b9/packages/debugger/src/evaluation.js:227:59)
+    DebugSession.evaluateFunction (file:///tmp/a05-integration-42f7738360b9/packages/debugger/src/index.js:54:47)
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/debugger-advanced.test.js:28:409)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+  ...
+# Subtest: source: throwing evaluation and instruction exhaustion roll back
+ok 254 - source: throwing evaluation and instruction exhaustion roll back
+  ---
+  duration_ms: 26.948951
+  type: 'test'
+  ...
+# Subtest: source: cancellation, syntax and budget failures are nonmutating
+ok 255 - source: cancellation, syntax and budget failures are nonmutating
+  ---
+  duration_ms: 16.422246
+  type: 'test'
+  ...
+# Subtest: source: checked expressions and short circuits apply to called results
+ok 256 - source: checked expressions and short circuits apply to called results
+  ---
+  duration_ms: 18.670219
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement skips a write and preserves live values
+ok 257 - source: Set Next Statement skips a write and preserves live values
+  ---
+  duration_ms: 9.544522
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement rejects another method and stale stop
+ok 258 - source: Set Next Statement rejects another method and stale stop
+  ---
+  duration_ms: 14.762598
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement cannot escape protected cleanup
+ok 259 - source: Set Next Statement cannot escape protected cleanup
+  ---
+  duration_ms: 10.772726
+  type: 'test'
+  ...
+# Subtest: source: Hot Reload replaces inactive bodies without restarting heap
+ok 260 - source: Hot Reload replaces inactive bodies without restarting heap
+  ---
+  duration_ms: 20.538143
+  type: 'test'
+  ...
+# Subtest: source: Hot Reload literal update in active method retains local values
+ok 261 - source: Hot Reload literal update in active method retains local values
+  ---
+  duration_ms: 8.758126
+  type: 'test'
+  ...
+# Subtest: source: rude edits reject without losing old program or breakpoints
+ok 262 - source: rude edits reject without losing old program or breakpoints
+  ---
+  duration_ms: 8.25652
+  type: 'test'
+  ...
+# Subtest: CIL: explicit function calls preserve paused stack and control flow
+ok 263 - CIL: explicit function calls preserve paused stack and control flow
+  ---
+  duration_ms: 46.110901
+  type: 'test'
+  ...
+# Subtest: CIL: methods, constructors, initializers, getters and setters execute real target code
+ok 264 - CIL: methods, constructors, initializers, getters and setters execute real target code
+  ---
+  duration_ms: 24.194033
+  type: 'test'
+  ...
+# Subtest: CIL: effectful expression receiver/argument order and GC roots
+ok 265 - CIL: effectful expression receiver/argument order and GC roots
+  ---
+  duration_ms: 20.866044
+  type: 'test'
+  ...
+# Subtest: CIL: evaluation rollback restores target state, output and history
+not ok 266 - CIL: evaluation rollback restores target state, output and history
+  ---
+  duration_ms: 19.874298
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/debugger-advanced.test.js:28:2'
+  failureType: 'testCodeFailure'
+  error: 'Cannot snapshot during an active platform transaction'
+  code: 'ERR_TEST_FAILURE'
+  name: 'InvalidOperationException'
+  stack: |-
+    snapshotPlatformState (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/snapshot-platform.js:7:11)
+    snapshotVM (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/snapshot.js:40:60)
+    CilVirtualMachine.snapshot (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:83:21)
+    CilDebugSession.remember (file:///tmp/a05-integration-42f7738360b9/packages/debugger/src/cil-debugger.js:198:36)
+    evaluateFunction (file:///tmp/a05-integration-42f7738360b9/packages/debugger/src/evaluation.js:227:59)
+    CilDebugSession.evaluateFunction (file:///tmp/a05-integration-42f7738360b9/packages/debugger/src/cil-debugger.js:27:47)
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/debugger-advanced.test.js:28:409)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+  ...
+# Subtest: CIL: throwing evaluation and instruction exhaustion roll back
+ok 267 - CIL: throwing evaluation and instruction exhaustion roll back
+  ---
+  duration_ms: 30.736825
+  type: 'test'
+  ...
+# Subtest: CIL: cancellation, syntax and budget failures are nonmutating
+ok 268 - CIL: cancellation, syntax and budget failures are nonmutating
+  ---
+  duration_ms: 10.582947
+  type: 'test'
+  ...
+# Subtest: CIL: checked expressions and short circuits apply to called results
+ok 269 - CIL: checked expressions and short circuits apply to called results
+  ---
+  duration_ms: 21.858321
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement skips a write and preserves live values
+ok 270 - CIL: Set Next Statement skips a write and preserves live values
+  ---
+  duration_ms: 7.69863
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement rejects another method and stale stop
+ok 271 - CIL: Set Next Statement rejects another method and stale stop
+  ---
+  duration_ms: 14.608321
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement cannot escape protected cleanup
+ok 272 - CIL: Set Next Statement cannot escape protected cleanup
+  ---
+  duration_ms: 7.930681
+  type: 'test'
+  ...
+# Subtest: CIL: Hot Reload replaces inactive bodies without restarting heap
+ok 273 - CIL: Hot Reload replaces inactive bodies without restarting heap
+  ---
+  duration_ms: 11.910729
+  type: 'test'
+  ...
+# Subtest: CIL: Hot Reload literal update in active method retains local values
+ok 274 - CIL: Hot Reload literal update in active method retains local values
+  ---
+  duration_ms: 8.746119
+  type: 'test'
+  ...
+# Subtest: CIL: rude edits reject without losing old program or breakpoints
+ok 275 - CIL: rude edits reject without losing old program or breakpoints
+  ---
+  duration_ms: 7.570632
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement rejects skipped definite assignment
+ok 276 - source: Set Next Statement rejects skipped definite assignment
+  ---
+  duration_ms: 2.926749
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement rejects entering a nonempty-stack expression
+ok 277 - CIL: Set Next Statement rejects entering a nonempty-stack expression
+  ---
+  duration_ms: 4.616743
+  type: 'test'
+  ...
+# Subtest: debugger: entry, step over, step in and step out use source points
+ok 278 - debugger: entry, step over, step in and step out use source points
+  ---
+  duration_ms: 99.5243
+  type: 'test'
+  ...
+# Subtest: debugger: step over does not enter called method
+ok 279 - debugger: step over does not enter called method
+  ---
+  duration_ms: 6.093441
+  type: 'test'
+  ...
+# Subtest: debugger: bound breakpoints, conditions and hit counts
+ok 280 - debugger: bound breakpoints, conditions and hit counts
+  ---
+  duration_ms: 9.275157
+  type: 'test'
+  ...
+# Subtest: debugger: logpoints continue without pausing
+ok 281 - debugger: logpoints continue without pausing
+  ---
+  duration_ms: 7.537043
+  type: 'test'
+  ...
+# Subtest: debugger: invalid breakpoints report unverified locations
+ok 282 - debugger: invalid breakpoints report unverified locations
+  ---
+  duration_ms: 4.9487
+  type: 'test'
+  ...
+# Subtest: debugger: disabled breakpoints do not stop
+ok 283 - debugger: disabled breakpoints do not stop
+  ---
+  duration_ms: 4.068037
+  type: 'test'
+  ...
+# Subtest: debugger: function breakpoints stop in callee
+ok 284 - debugger: function breakpoints stop in callee
+  ---
+  duration_ms: 4.45851
+  type: 'test'
+  ...
+# Subtest: debugger: data breakpoint fires on local write
+ok 285 - debugger: data breakpoint fires on local write
+  ---
+  duration_ms: 4.340416
+  type: 'test'
+  ...
+# Subtest: debugger: side-effect-free watches cannot invoke or mutate
+ok 286 - debugger: side-effect-free watches cannot invoke or mutate
+  ---
+  duration_ms: 7.308207
+  type: 'test'
+  ...
+# Subtest: debugger: local edits affect continuation and validate types
+ok 287 - debugger: local edits affect continuation and validate types
+  ---
+  duration_ms: 5.995719
+  type: 'test'
+  ...
+# Subtest: debugger: const locals cannot be edited
+ok 288 - debugger: const locals cannot be edited
+  ---
+  duration_ms: 3.927139
+  type: 'test'
+  ...
+# Subtest: debugger: arrays and object children expose actual values
+ok 289 - debugger: arrays and object children expose actual values
+  ---
+  duration_ms: 13.352185
+  type: 'test'
+  ...
+# Subtest: debugger: exception break happens before catch and resumes into handler
+ok 290 - debugger: exception break happens before catch and resumes into handler
+  ---
+  duration_ms: 11.547164
+  type: 'test'
+  ...
+# Subtest: debugger: uncaught-only exception mode ignores caught exceptions
+ok 291 - debugger: uncaught-only exception mode ignores caught exceptions
+  ---
+  duration_ms: 3.874562
+  type: 'test'
+  ...
+# Subtest: debugger: reverse snapshots restore locals and output
+ok 292 - debugger: reverse snapshots restore locals and output
+  ---
+  duration_ms: 14.493542
+  type: 'test'
+  ...
+# Subtest: debugger: reverse snapshots retain objects across later collection
+ok 293 - debugger: reverse snapshots retain objects across later collection
+  ---
+  duration_ms: 8.044648
+  type: 'test'
+  ...
+# Subtest: debugger: recording is bounded and optional
+ok 294 - debugger: recording is bounded and optional
+  ---
+  duration_ms: 8.446328
+  type: 'test'
+  ...
+# Subtest: debugger: pause/stop are cooperative and invalidate frames
+ok 295 - debugger: pause/stop are cooperative and invalidate frames
+  ---
+  duration_ms: 3.156187
+  type: 'test'
+  ...
+# Subtest: engine parity discovers every catalog family
+ok 296 - engine parity discovers every catalog family
+  ---
+  duration_ms: 3.044743
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/array assignment receiver evaluated once
+ok 297 - engine parity: cil-fixtures/array assignment receiver evaluated once
+  ---
+  duration_ms: 143.980951
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/array foreach
+ok 298 - engine parity: cil-fixtures/array foreach
+  ---
+  duration_ms: 26.1811
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/array sort
+ok 299 - engine parity: cil-fixtures/array sort
+  ---
+  duration_ms: 35.229762
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/bitwise
+ok 300 - engine parity: cil-fixtures/bitwise
+  ---
+  duration_ms: 16.843613
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/boolean
+ok 301 - engine parity: cil-fixtures/boolean
+  ---
+  duration_ms: 12.635001
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/caught division
+ok 302 - engine parity: cil-fixtures/caught division
+  ---
+  duration_ms: 39.414109
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/coalescing
+ok 303 - engine parity: cil-fixtures/coalescing
+  ---
+  duration_ms: 9.494838
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/cross-frame catch
+ok 304 - engine parity: cil-fixtures/cross-frame catch
+  ---
+  duration_ms: 16.303861
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/default array
+ok 305 - engine parity: cil-fixtures/default array
+  ---
+  duration_ms: 13.981098
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/definite assignment both branches
+ok 306 - engine parity: cil-fixtures/definite assignment both branches
+  ---
+  duration_ms: 10.331567
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/do while
+ok 307 - engine parity: cil-fixtures/do while
+  ---
+  duration_ms: 9.459646
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/expression body
+ok 308 - engine parity: cil-fixtures/expression body
+  ---
+  duration_ms: 12.347077
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/floating division
+ok 309 - engine parity: cil-fixtures/floating division
+  ---
+  duration_ms: 11.776034
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/for
+ok 310 - engine parity: cil-fixtures/for
+  ---
+  duration_ms: 21.971461
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/for continue
+ok 311 - engine parity: cil-fixtures/for continue
+  ---
+  duration_ms: 15.649859
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/hello
+ok 312 - engine parity: cil-fixtures/hello
+  ---
+  duration_ms: 10.475048
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/if else
+ok 313 - engine parity: cil-fixtures/if else
+  ---
+  duration_ms: 11.292768
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/implicit array
+ok 314 - engine parity: cil-fixtures/implicit array
+  ---
+  duration_ms: 12.336092
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/Int32 multiplication
+ok 315 - engine parity: cil-fixtures/Int32 multiplication
+  ---
+  duration_ms: 10.487576
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/Int32 wrap
+ok 316 - engine parity: cil-fixtures/Int32 wrap
+  ---
+  duration_ms: 10.407158
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/integer division
+ok 317 - engine parity: cil-fixtures/integer division
+  ---
+  duration_ms: 9.789551
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/length
+ok 318 - engine parity: cil-fixtures/length
+  ---
+  duration_ms: 13.183306
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/Main args
+ok 319 - engine parity: cil-fixtures/Main args
+  ---
+  duration_ms: 32.66194
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/method calls
+ok 320 - engine parity: cil-fixtures/method calls
+  ---
+  duration_ms: 17.531313
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/minimum int
+ok 321 - engine parity: cil-fixtures/minimum int
+  ---
+  duration_ms: 10.76282
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/numeric parse
+ok 322 - engine parity: cil-fixtures/numeric parse
+  ---
+  duration_ms: 11.89263
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/object identity
+ok 323 - engine parity: cil-fixtures/object identity
+  ---
+  duration_ms: 17.755583
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/object initializer
+ok 324 - engine parity: cil-fixtures/object initializer
+  ---
+  duration_ms: 16.667985
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/objects constructor fields
+ok 325 - engine parity: cil-fixtures/objects constructor fields
+  ---
+  duration_ms: 17.251588
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/overloads
+ok 326 - engine parity: cil-fixtures/overloads
+  ---
+  duration_ms: 12.649202
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/postfix
+ok 327 - engine parity: cil-fixtures/postfix
+  ---
+  duration_ms: 24.708346
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/precedence
+ok 328 - engine parity: cil-fixtures/precedence
+  ---
+  duration_ms: 15.285755
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/prefix
+ok 329 - engine parity: cil-fixtures/prefix
+  ---
+  duration_ms: 20.30674
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/recursion
+ok 330 - engine parity: cil-fixtures/recursion
+  ---
+  duration_ms: 106.901027
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/rethrow
+ok 331 - engine parity: cil-fixtures/rethrow
+  ---
+  duration_ms: 28.919032
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/round-to-even conversion
+ok 332 - engine parity: cil-fixtures/round-to-even conversion
+  ---
+  duration_ms: 32.761455
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/short circuit
+ok 333 - engine parity: cil-fixtures/short circuit
+  ---
+  duration_ms: 17.543431
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/static initializer dependency
+ok 334 - engine parity: cil-fixtures/static initializer dependency
+  ---
+  duration_ms: 15.835503
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/string library
+ok 335 - engine parity: cil-fixtures/string library
+  ---
+  duration_ms: 12.188375
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/string value equality
+ok 336 - engine parity: cil-fixtures/string value equality
+  ---
+  duration_ms: 9.70069
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/ternary
+ok 337 - engine parity: cil-fixtures/ternary
+  ---
+  duration_ms: 9.204862
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/throw exception
+ok 338 - engine parity: cil-fixtures/throw exception
+  ---
+  duration_ms: 10.250798
+  type: 'test'
+  ...
+# Subtest: engine parity: cil-fixtures/while continue break
+ok 339 - engine parity: cil-fixtures/while continue break
+  ---
+  duration_ms: 12.034719
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/array assignment receiver
+ok 340 - engine parity: clr-fixtures/array assignment receiver
+  ---
+  duration_ms: 13.86642
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/array foreach
+ok 341 - engine parity: clr-fixtures/array foreach
+  ---
+  duration_ms: 14.481894
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/array of references
+ok 342 - engine parity: clr-fixtures/array of references
+  ---
+  duration_ms: 20.192593
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/bool array default
+ok 343 - engine parity: clr-fixtures/bool array default
+  ---
+  duration_ms: 11.815768
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/boolean bitwise
+ok 344 - engine parity: clr-fixtures/boolean bitwise
+  ---
+  duration_ms: 9.117243
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/break leaves try
+ok 345 - engine parity: clr-fixtures/break leaves try
+  ---
+  duration_ms: 17.424546
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/caught division
+ok 346 - engine parity: clr-fixtures/caught division
+  ---
+  duration_ms: 16.11991
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/continue and break
+ok 347 - engine parity: clr-fixtures/continue and break
+  ---
+  duration_ms: 13.372163
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/continue leaves try
+ok 348 - engine parity: clr-fixtures/continue leaves try
+  ---
+  duration_ms: 16.137506
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/cross-frame exception
+ok 349 - engine parity: clr-fixtures/cross-frame exception
+  ---
+  duration_ms: 17.392195
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/definite assignment
+ok 350 - engine parity: clr-fixtures/definite assignment
+  ---
+  duration_ms: 9.90942
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/do while
+ok 351 - engine parity: clr-fixtures/do while
+  ---
+  duration_ms: 8.65069
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/double literal division
+ok 352 - engine parity: clr-fixtures/double literal division
+  ---
+  duration_ms: 7.383429
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/double method arguments
+ok 353 - engine parity: clr-fixtures/double method arguments
+  ---
+  duration_ms: 11.186557
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/entry point
+ok 354 - engine parity: clr-fixtures/entry point
+  ---
+  duration_ms: 5.852189
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/for loop
+ok 355 - engine parity: clr-fixtures/for loop
+  ---
+  duration_ms: 16.065976
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/Int32 division
+ok 356 - engine parity: clr-fixtures/Int32 division
+  ---
+  duration_ms: 6.713605
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/Int32 division overflow
+ok 357 - engine parity: clr-fixtures/Int32 division overflow
+  ---
+  duration_ms: 7.367145
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/Int32 multiply
+ok 358 - engine parity: clr-fixtures/Int32 multiply
+  ---
+  duration_ms: 4.62117
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/Int32 wrap
+ok 359 - engine parity: clr-fixtures/Int32 wrap
+  ---
+  duration_ms: 5.330432
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/integer precedence
+ok 360 - engine parity: clr-fixtures/integer precedence
+  ---
+  duration_ms: 4.184038
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/Main string args
+ok 361 - engine parity: clr-fixtures/Main string args
+  ---
+  duration_ms: 5.319807
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/NaN comparisons
+ok 362 - engine parity: clr-fixtures/NaN comparisons
+  ---
+  duration_ms: 5.789096
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/nested object fields
+ok 363 - engine parity: clr-fixtures/nested object fields
+  ---
+  duration_ms: 7.41881
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/null coalescing
+ok 364 - engine parity: clr-fixtures/null coalescing
+  ---
+  duration_ms: 6.326646
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/numeric conditional
+ok 365 - engine parity: clr-fixtures/numeric conditional
+  ---
+  duration_ms: 5.044852
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/object constructor
+ok 366 - engine parity: clr-fixtures/object constructor
+  ---
+  duration_ms: 9.198316
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/object identity
+ok 367 - engine parity: clr-fixtures/object identity
+  ---
+  duration_ms: 6.430138
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/object initializer
+ok 368 - engine parity: clr-fixtures/object initializer
+  ---
+  duration_ms: 5.793813
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/overloads
+ok 369 - engine parity: clr-fixtures/overloads
+  ---
+  duration_ms: 6.418882
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/prefix and postfix
+ok 370 - engine parity: clr-fixtures/prefix and postfix
+  ---
+  duration_ms: 5.143046
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/recursion
+ok 371 - engine parity: clr-fixtures/recursion
+  ---
+  duration_ms: 15.487025
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/rethrow
+ok 372 - engine parity: clr-fixtures/rethrow
+  ---
+  duration_ms: 7.903293
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/return in catch
+ok 373 - engine parity: clr-fixtures/return in catch
+  ---
+  duration_ms: 7.10561
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/shift count masking
+ok 374 - engine parity: clr-fixtures/shift count masking
+  ---
+  duration_ms: 6.018292
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/short circuit
+ok 375 - engine parity: clr-fixtures/short circuit
+  ---
+  duration_ms: 10.083937
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/signed greater-or-equal
+ok 376 - engine parity: clr-fixtures/signed greater-or-equal
+  ---
+  duration_ms: 5.244286
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/signed less-or-equal
+ok 377 - engine parity: clr-fixtures/signed less-or-equal
+  ---
+  duration_ms: 19.780283
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/signed strict comparisons
+ok 378 - engine parity: clr-fixtures/signed strict comparisons
+  ---
+  duration_ms: 5.956112
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/static initializer
+ok 379 - engine parity: clr-fixtures/static initializer
+  ---
+  duration_ms: 5.245848
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/throw exception
+ok 380 - engine parity: clr-fixtures/throw exception
+  ---
+  duration_ms: 7.251725
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/try return
+ok 381 - engine parity: clr-fixtures/try return
+  ---
+  duration_ms: 6.495314
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/typed array assignment
+ok 382 - engine parity: clr-fixtures/typed array assignment
+  ---
+  duration_ms: 9.69157
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/typed assignment
+ok 383 - engine parity: clr-fixtures/typed assignment
+  ---
+  duration_ms: 5.788226
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/typed field assignment
+ok 384 - engine parity: clr-fixtures/typed field assignment
+  ---
+  duration_ms: 8.927131
+  type: 'test'
+  ...
+# Subtest: engine parity: clr-fixtures/UTF16 string length
+ok 385 - engine parity: clr-fixtures/UTF16 string length
+  ---
+  duration_ms: 6.685974
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/array assignment receiver evaluated once
+ok 386 - engine parity: compiler/array assignment receiver evaluated once
+  ---
+  duration_ms: 12.878794
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/array foreach
+ok 387 - engine parity: compiler/array foreach
+  ---
+  duration_ms: 11.302998
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/array sort
+ok 388 - engine parity: compiler/array sort
+  ---
+  duration_ms: 13.937689
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/bitwise
+ok 389 - engine parity: compiler/bitwise
+  ---
+  duration_ms: 13.996976
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/boolean
+ok 390 - engine parity: compiler/boolean
+  ---
+  duration_ms: 8.570963
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/caught division
+ok 391 - engine parity: compiler/caught division
+  ---
+  duration_ms: 11.891282
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/coalescing
+ok 392 - engine parity: compiler/coalescing
+  ---
+  duration_ms: 8.641251
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/cross-frame catch
+ok 393 - engine parity: compiler/cross-frame catch
+  ---
+  duration_ms: 8.62918
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/decimal source mode
+ok 394 - engine parity: compiler/decimal source mode
+  ---
+  duration_ms: 33.870107
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/default array
+ok 395 - engine parity: compiler/default array
+  ---
+  duration_ms: 9.409997
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/definite assignment both branches
+ok 396 - engine parity: compiler/definite assignment both branches
+  ---
+  duration_ms: 23.998071
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/branch definite assignment
+ok 397 - engine parity: compiler/diagnostic/branch definite assignment
+  ---
+  duration_ms: 12.142597
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/break outside loop
+ok 398 - engine parity: compiler/diagnostic/break outside loop
+  ---
+  duration_ms: 2.28618
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/const write
+ok 399 - engine parity: compiler/diagnostic/const write
+  ---
+  duration_ms: 3.409179
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/double to int
+ok 400 - engine parity: compiler/diagnostic/double to int
+  ---
+  duration_ms: 3.826072
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/duplicate member
+ok 401 - engine parity: compiler/diagnostic/duplicate member
+  ---
+  duration_ms: 10.44001
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/duplicate type
+ok 402 - engine parity: compiler/diagnostic/duplicate type
+  ---
+  duration_ms: 6.788996
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/filter definite assignment
+ok 403 - engine parity: compiler/diagnostic/filter definite assignment
+  ---
+  duration_ms: 10.54914
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/invalid condition
+ok 404 - engine parity: compiler/diagnostic/invalid condition
+  ---
+  duration_ms: 4.126964
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/missing return
+ok 405 - engine parity: compiler/diagnostic/missing return
+  ---
+  duration_ms: 9.048125
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/multiple Main
+ok 406 - engine parity: compiler/diagnostic/multiple Main
+  ---
+  duration_ms: 1.350424
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/no entry
+ok 407 - engine parity: compiler/diagnostic/no entry
+  ---
+  duration_ms: 0.474438
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/rethrow outside catch
+ok 408 - engine parity: compiler/diagnostic/rethrow outside catch
+  ---
+  duration_ms: 1.789369
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/short circuit definite assignment
+ok 409 - engine parity: compiler/diagnostic/short circuit definite assignment
+  ---
+  duration_ms: 13.09423
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/type mismatch
+ok 410 - engine parity: compiler/diagnostic/type mismatch
+  ---
+  duration_ms: 4.295832
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/unassigned
+ok 411 - engine parity: compiler/diagnostic/unassigned
+  ---
+  duration_ms: 3.762408
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/unknown name
+ok 412 - engine parity: compiler/diagnostic/unknown name
+  ---
+  duration_ms: 5.936673
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/diagnostic/unknown type
+ok 413 - engine parity: compiler/diagnostic/unknown type
+  ---
+  duration_ms: 3.195566
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/do while
+ok 414 - engine parity: compiler/do while
+  ---
+  duration_ms: 11.064257
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/expression body
+ok 415 - engine parity: compiler/expression body
+  ---
+  duration_ms: 8.117227
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/filtered catch declaration
+ok 416 - engine parity: compiler/filtered catch declaration
+  ---
+  duration_ms: 8.356929
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/filtered catch selection
+ok 417 - engine parity: compiler/filtered catch selection
+  ---
+  duration_ms: 12.779398
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/float source mode
+ok 418 - engine parity: compiler/float source mode
+  ---
+  duration_ms: 11.053171
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/floating division
+ok 419 - engine parity: compiler/floating division
+  ---
+  duration_ms: 5.902633
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/for
+ok 420 - engine parity: compiler/for
+  ---
+  duration_ms: 8.149053
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/for continue
+ok 421 - engine parity: compiler/for continue
+  ---
+  duration_ms: 7.920798
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/generic declaration with profile Console
+ok 422 - engine parity: compiler/generic declaration with profile Console
+  ---
+  duration_ms: 11.814059
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/hello
+ok 423 - engine parity: compiler/hello
+  ---
+  duration_ms: 5.263975
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/if else
+ok 424 - engine parity: compiler/if else
+  ---
+  duration_ms: 8.298463
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/implicit array
+ok 425 - engine parity: compiler/implicit array
+  ---
+  duration_ms: 9.973895
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/init declaration with profile Console
+ok 426 - engine parity: compiler/init declaration with profile Console
+  ---
+  duration_ms: 21.660026
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/Int32 multiplication
+ok 427 - engine parity: compiler/Int32 multiplication
+  ---
+  duration_ms: 8.733562
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/Int32 wrap
+ok 428 - engine parity: compiler/Int32 wrap
+  ---
+  duration_ms: 20.053245
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/integer division
+ok 429 - engine parity: compiler/integer division
+  ---
+  duration_ms: 8.382416
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/length
+ok 430 - engine parity: compiler/length
+  ---
+  duration_ms: 9.264263
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/long source mode
+ok 431 - engine parity: compiler/long source mode
+  ---
+  duration_ms: 15.66009
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/Main args
+ok 432 - engine parity: compiler/Main args
+  ---
+  duration_ms: 6.664142
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/method calls
+ok 433 - engine parity: compiler/method calls
+  ---
+  duration_ms: 8.027355
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/minimum int
+ok 434 - engine parity: compiler/minimum int
+  ---
+  duration_ms: 6.561251
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/numeric parse
+ok 435 - engine parity: compiler/numeric parse
+  ---
+  duration_ms: 6.746463
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/object identity
+ok 436 - engine parity: compiler/object identity
+  ---
+  duration_ms: 8.449655
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/object initializer
+ok 437 - engine parity: compiler/object initializer
+  ---
+  duration_ms: 7.580668
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/objects constructor fields
+ok 438 - engine parity: compiler/objects constructor fields
+  ---
+  duration_ms: 10.634045
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/overloads
+ok 439 - engine parity: compiler/overloads
+  ---
+  duration_ms: 7.527691
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/postfix
+ok 440 - engine parity: compiler/postfix
+  ---
+  duration_ms: 6.681968
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/precedence
+ok 441 - engine parity: compiler/precedence
+  ---
+  duration_ms: 6.056169
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/prefix
+ok 442 - engine parity: compiler/prefix
+  ---
+  duration_ms: 6.529945
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/recursion
+ok 443 - engine parity: compiler/recursion
+  ---
+  duration_ms: 54.446
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/rethrow
+ok 444 - engine parity: compiler/rethrow
+  ---
+  duration_ms: 16.512993
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/round-to-even conversion
+ok 445 - engine parity: compiler/round-to-even conversion
+  ---
+  duration_ms: 11.119048
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/short circuit
+ok 446 - engine parity: compiler/short circuit
+  ---
+  duration_ms: 26.228819
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/static initializer dependency
+ok 447 - engine parity: compiler/static initializer dependency
+  ---
+  duration_ms: 7.728956
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/string library
+ok 448 - engine parity: compiler/string library
+  ---
+  duration_ms: 7.970372
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/string value equality
+ok 449 - engine parity: compiler/string value equality
+  ---
+  duration_ms: 7.026415
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/ternary
+ok 450 - engine parity: compiler/ternary
+  ---
+  duration_ms: 6.568962
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/throw exception
+ok 451 - engine parity: compiler/throw exception
+  ---
+  duration_ms: 8.060054
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/unsupported/class A{static async void Main(){}}
+ok 452 - engine parity: compiler/unsupported/class A{static async void Main(){}}
+  ---
+  duration_ms: 3.020698
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/unsupported/Console.WriteLine(1);class B{}class A:B{}
+ok 453 - engine parity: compiler/unsupported/Console.WriteLine(1);class B{}class A:B{}
+  ---
+  duration_ms: 5.299446
+  type: 'test'
+  ...
+# Subtest: engine parity: compiler/while continue break
+ok 454 - engine parity: compiler/while continue break
+  ---
+  duration_ms: 7.986885
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/C\#15 capacity arguments
+ok 455 - engine parity: language14/C\#15 capacity arguments
+  ---
+  duration_ms: 17.559802
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/C\#15 labeled continue and break
+ok 456 - engine parity: language14/C\#15 labeled continue and break
+  ---
+  duration_ms: 25.889981
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/C\#15 labeled jumps execute finally
+ok 457 - engine parity: language14/C\#15 labeled jumps execute finally
+  ---
+  duration_ms: 23.189874
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/collection expression empty array and list
+ok 458 - engine parity: language14/collection expression empty array and list
+  ---
+  duration_ms: 15.482579
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/collection expression evaluation order
+ok 459 - engine parity: language14/collection expression evaluation order
+  ---
+  duration_ms: 23.558986
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/collection expressions spread array and lists
+ok 460 - engine parity: language14/collection expressions spread array and lists
+  ---
+  duration_ms: 36.056739
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/collection returns and arguments
+ok 461 - engine parity: language14/collection returns and arguments
+  ---
+  duration_ms: 19.723641
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/array with capacity disallowed
+ok 462 - engine parity: language14/diagnostic/array with capacity disallowed
+  ---
+  duration_ms: 5.038573
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/capacity requires preview
+ok 463 - engine parity: language14/diagnostic/capacity requires preview
+  ---
+  duration_ms: 6.629461
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/collection requires target
+ok 464 - engine parity: language14/diagnostic/collection requires target
+  ---
+  duration_ms: 2.847113
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/collection version
+ok 465 - engine parity: language14/diagnostic/collection version
+  ---
+  duration_ms: 3.019316
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/continue switch disallowed
+ok 466 - engine parity: language14/diagnostic/continue switch disallowed
+  ---
+  duration_ms: 6.008889
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/field local shadow rejected
+ok 467 - engine parity: language14/diagnostic/field local shadow rejected
+  ---
+  duration_ms: 7.450738
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/field version
+ok 468 - engine parity: language14/diagnostic/field version
+  ---
+  duration_ms: 5.172881
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/named jump requires preview
+ok 469 - engine parity: language14/diagnostic/named jump requires preview
+  ---
+  duration_ms: 2.003794
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/new requires target
+ok 470 - engine parity: language14/diagnostic/new requires target
+  ---
+  duration_ms: 3.003473
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/null assignment increment disallowed
+ok 471 - engine parity: language14/diagnostic/null assignment increment disallowed
+  ---
+  duration_ms: 5.5399
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/null conditional version
+ok 472 - engine parity: language14/diagnostic/null conditional version
+  ---
+  duration_ms: 4.393876
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/spread requires enumerable
+ok 473 - engine parity: language14/diagnostic/spread requires enumerable
+  ---
+  duration_ms: 4.054848
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/target new version
+ok 474 - engine parity: language14/diagnostic/target new version
+  ---
+  duration_ms: 4.059024
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/unknown capacity argument
+ok 475 - engine parity: language14/diagnostic/unknown capacity argument
+  ---
+  duration_ms: 3.384673
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/diagnostic/unknown jump
+ok 476 - engine parity: language14/diagnostic/unknown jump
+  ---
+  duration_ms: 2.958507
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/escape E C\#13
+ok 477 - engine parity: language14/escape E C\#13
+  ---
+  duration_ms: 9.142153
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/field escape resolves user field
+ok 478 - engine parity: language14/field escape resolves user field
+  ---
+  duration_ms: 26.456905
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/field-backed explicit getter and setter
+ok 479 - engine parity: language14/field-backed explicit getter and setter
+  ---
+  duration_ms: 23.128604
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/field-backed mixed accessors and initialization
+ok 480 - engine parity: language14/field-backed mixed accessors and initialization
+  ---
+  duration_ms: 36.236113
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/null conditional array skips index and RHS
+ok 481 - engine parity: language14/null conditional array skips index and RHS
+  ---
+  duration_ms: 26.336397
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/null conditional compound accessor order
+ok 482 - engine parity: language14/null conditional compound accessor order
+  ---
+  duration_ms: 17.805298
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/null conditional property skips receiver RHS
+ok 483 - engine parity: language14/null conditional property skips receiver RHS
+  ---
+  duration_ms: 10.844133
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/spread hash set preserves uniqueness
+ok 484 - engine parity: language14/spread hash set preserves uniqueness
+  ---
+  duration_ms: 22.801483
+  type: 'test'
+  ...
+# Subtest: engine parity: language14/target typed parameters returns and field initializers
+ok 485 - engine parity: language14/target typed parameters returns and field initializers
+  ---
+  duration_ms: 16.369102
+  type: 'test'
+  ...
+# Subtest: engine parity: parity/instruction budget boundary
+ok 486 - engine parity: parity/instruction budget boundary
+  ---
+  duration_ms: 11.41342
+  type: 'test'
+  ...
+# Subtest: engine parity: parity/maximum exit code
+ok 487 - engine parity: parity/maximum exit code
+  ---
+  duration_ms: 5.713385
+  type: 'test'
+  ...
+# Subtest: engine parity: parity/minimum exit code
+ok 488 - engine parity: parity/minimum exit code
+  ---
+  duration_ms: 4.79139
+  type: 'test'
+  ...
+# Subtest: engine parity: parity/multiple files
+ok 489 - engine parity: parity/multiple files
+  ---
+  duration_ms: 8.694775
+  type: 'test'
+  ...
+# Subtest: engine parity: parity/negative exit code
+ok 490 - engine parity: parity/negative exit code
+  ---
+  duration_ms: 6.613026
+  type: 'test'
+  ...
+# Subtest: engine parity: parity/output budget boundary
+ok 491 - engine parity: parity/output budget boundary
+  ---
+  duration_ms: 7.073384
+  type: 'test'
+  ...
+# Subtest: engine parity: parity/uncaught array boundary
+ok 492 - engine parity: parity/uncaught array boundary
+  ---
+  duration_ms: 8.663029
+  type: 'test'
+  ...
+# Subtest: engine parity: parity/uncaught checked overflow
+ok 493 - engine parity: parity/uncaught checked overflow
+  ---
+  duration_ms: 10.14777
+  type: 'test'
+  ...
+# Subtest: engine parity: parity/uncaught divide by zero
+ok 494 - engine parity: parity/uncaught divide by zero
+  ---
+  duration_ms: 15.137292
+  type: 'test'
+  ...
+# Subtest: engine parity: parity/uncaught user exception
+ok 495 - engine parity: parity/uncaught user exception
+  ---
+  duration_ms: 8.960847
+  type: 'test'
+  ...
+# Subtest: engine parity: parity/UTF16 output boundary
+ok 496 - engine parity: parity/UTF16 output boundary
+  ---
+  duration_ms: 6.614008
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/assignment results
+ok 497 - engine parity: release05/assignment results
+  ---
+  duration_ms: 15.883209
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/auto property
+ok 498 - engine parity: release05/auto property
+  ---
+  duration_ms: 13.340722
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/break finally
+ok 499 - engine parity: release05/break finally
+  ---
+  duration_ms: 7.318002
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/catch inside finally preserves return
+ok 500 - engine parity: release05/catch inside finally preserves return
+  ---
+  duration_ms: 13.514758
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/catch return runs final
+ok 501 - engine parity: release05/catch return runs final
+  ---
+  duration_ms: 10.26332
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/coalescing property
+ok 502 - engine parity: release05/coalescing property
+  ---
+  duration_ms: 12.855339
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/continue finally
+ok 503 - engine parity: release05/continue finally
+  ---
+  duration_ms: 9.665352
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/diagnostic/auto write-only
+ok 504 - engine parity: release05/diagnostic/auto write-only
+  ---
+  duration_ms: 5.168885
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/diagnostic/break exits finally
+ok 505 - engine parity: release05/diagnostic/break exits finally
+  ---
+  duration_ms: 2.377253
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/diagnostic/continue exits finally
+ok 506 - engine parity: release05/diagnostic/continue exits finally
+  ---
+  duration_ms: 1.72198
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/diagnostic/duplicate getter
+ok 507 - engine parity: release05/diagnostic/duplicate getter
+  ---
+  duration_ms: 3.210067
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/diagnostic/getter-only write
+ok 508 - engine parity: release05/diagnostic/getter-only write
+  ---
+  duration_ms: 3.488005
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/diagnostic/init-only write after construction
+ok 509 - engine parity: release05/diagnostic/init-only write after construction
+  ---
+  duration_ms: 3.604326
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/diagnostic/private setter
+ok 510 - engine parity: release05/diagnostic/private setter
+  ---
+  duration_ms: 3.216647
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/diagnostic/return exits finally
+ok 511 - engine parity: release05/diagnostic/return exits finally
+  ---
+  duration_ms: 2.899791
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/diagnostic/write-only read
+ok 512 - engine parity: release05/diagnostic/write-only read
+  ---
+  duration_ms: 5.600289
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/empty protected clauses
+ok 513 - engine parity: release05/empty protected clauses
+  ---
+  duration_ms: 6.994307
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/exception finally then catch
+ok 514 - engine parity: release05/exception finally then catch
+  ---
+  duration_ms: 7.636541
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/explicit accessors
+ok 515 - engine parity: release05/explicit accessors
+  ---
+  duration_ms: 19.334179
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/expression accessors
+ok 516 - engine parity: release05/expression accessors
+  ---
+  duration_ms: 10.701855
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/expression getter
+ok 517 - engine parity: release05/expression getter
+  ---
+  duration_ms: 10.814821
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/getter only constructor
+ok 518 - engine parity: release05/getter only constructor
+  ---
+  duration_ms: 10.012191
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/init-only declaration
+ok 519 - engine parity: release05/init-only declaration
+  ---
+  duration_ms: 15.606051
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/init-only initializer
+ok 520 - engine parity: release05/init-only initializer
+  ---
+  duration_ms: 20.789707
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/loop internal finally
+ok 521 - engine parity: release05/loop internal finally
+  ---
+  duration_ms: 11.20229
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/nameof property
+ok 522 - engine parity: release05/nameof property
+  ---
+  duration_ms: 8.32348
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/nested finally
+ok 523 - engine parity: release05/nested finally
+  ---
+  duration_ms: 7.986365
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/nested rethrow restores lexical exception
+ok 524 - engine parity: release05/nested rethrow restores lexical exception
+  ---
+  duration_ms: 10.44714
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/normal finally
+ok 525 - engine parity: release05/normal finally
+  ---
+  duration_ms: 6.231376
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/private setter inside owner
+ok 526 - engine parity: release05/private setter inside owner
+  ---
+  duration_ms: 11.513678
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/property receiver evaluated once
+ok 527 - engine parity: release05/property receiver evaluated once
+  ---
+  duration_ms: 23.481202
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/property setter finally
+ok 528 - engine parity: release05/property setter finally
+  ---
+  duration_ms: 12.055884
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/return preserves value
+ok 529 - engine parity: release05/return preserves value
+  ---
+  duration_ms: 8.098429
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/return reference remains rooted
+ok 530 - engine parity: release05/return reference remains rooted
+  ---
+  duration_ms: 12.381713
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/static auto initialization
+ok 531 - engine parity: release05/static auto initialization
+  ---
+  duration_ms: 10.011049
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/throw from finally overrides exception
+ok 532 - engine parity: release05/throw from finally overrides exception
+  ---
+  duration_ms: 9.336909
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/throw from finally overrides return
+ok 533 - engine parity: release05/throw from finally overrides return
+  ---
+  duration_ms: 8.260477
+  type: 'test'
+  ...
+# Subtest: engine parity: release05/try catch finally
+ok 534 - engine parity: release05/try catch finally
+  ---
+  duration_ms: 7.1808
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/checked add catch
+ok 535 - engine parity: release06/checked add catch
+  ---
+  duration_ms: 7.537055
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/checked compound array
+ok 536 - engine parity: release06/checked compound array
+  ---
+  duration_ms: 9.904153
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/checked conversion
+ok 537 - engine parity: release06/checked conversion
+  ---
+  duration_ms: 9.52142
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/checked conversion truncation
+ok 538 - engine parity: release06/checked conversion truncation
+  ---
+  duration_ms: 6.343381
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/checked multiply
+ok 539 - engine parity: release06/checked multiply
+  ---
+  duration_ms: 7.893538
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/checked negate
+ok 540 - engine parity: release06/checked negate
+  ---
+  duration_ms: 8.586857
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/checked nested
+ok 541 - engine parity: release06/checked nested
+  ---
+  duration_ms: 17.008487
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/checked nonoverflow
+ok 542 - engine parity: release06/checked nonoverflow
+  ---
+  duration_ms: 7.421254
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/checked setter not invoked on overflow
+ok 543 - engine parity: release06/checked setter not invoked on overflow
+  ---
+  duration_ms: 11.559936
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/checked subtract
+ok 544 - engine parity: release06/checked subtract
+  ---
+  duration_ms: 7.150306
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/const expression patterns
+ok 545 - engine parity: release06/const expression patterns
+  ---
+  duration_ms: 13.294745
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/const string patterns
+ok 546 - engine parity: release06/const string patterns
+  ---
+  duration_ms: 9.68463
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/diagnostic/checked constant in unchecked
+ok 547 - engine parity: release06/diagnostic/checked constant in unchecked
+  ---
+  duration_ms: 3.214763
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/diagnostic/constant divide zero
+ok 548 - engine parity: release06/diagnostic/constant divide zero
+  ---
+  duration_ms: 1.887353
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/diagnostic/default const overflow
+ok 549 - engine parity: release06/diagnostic/default const overflow
+  ---
+  duration_ms: 1.908975
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/diagnostic/duplicate constant switch
+ok 550 - engine parity: release06/diagnostic/duplicate constant switch
+  ---
+  duration_ms: 2.764231
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/diagnostic/missing Dispose
+ok 551 - engine parity: release06/diagnostic/missing Dispose
+  ---
+  duration_ms: 3.893991
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/diagnostic/missing using initializer
+ok 552 - engine parity: release06/diagnostic/missing using initializer
+  ---
+  duration_ms: 6.031883
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/diagnostic/multiple var
+ok 553 - engine parity: release06/diagnostic/multiple var
+  ---
+  duration_ms: 6.271304
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/diagnostic/nonconstant const
+ok 554 - engine parity: release06/diagnostic/nonconstant const
+  ---
+  duration_ms: 2.753256
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/diagnostic/not IDisposable
+ok 555 - engine parity: release06/diagnostic/not IDisposable
+  ---
+  duration_ms: 3.065625
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/diagnostic/private Dispose
+ok 556 - engine parity: release06/diagnostic/private Dispose
+  ---
+  duration_ms: 2.515566
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/diagnostic/using reassignment
+ok 557 - engine parity: release06/diagnostic/using reassignment
+  ---
+  duration_ms: 4.782958
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/fully qualified disposable
+ok 558 - engine parity: release06/fully qualified disposable
+  ---
+  duration_ms: 8.894619
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/int boundary literal
+ok 559 - engine parity: release06/int boundary literal
+  ---
+  duration_ms: 4.891588
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/outer resource disposed after inner dispose throws
+ok 560 - engine parity: release06/outer resource disposed after inner dispose throws
+  ---
+  duration_ms: 13.93766
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/unchecked constant
+ok 561 - engine parity: release06/unchecked constant
+  ---
+  duration_ms: 5.619787
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/unchecked nested
+ok 562 - engine parity: release06/unchecked nested
+  ---
+  duration_ms: 5.599979
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using break continue
+ok 563 - engine parity: release06/using break continue
+  ---
+  duration_ms: 17.433886
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using declaration
+ok 564 - engine parity: release06/using declaration
+  ---
+  duration_ms: 10.871464
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using declaration lifetimes
+ok 565 - engine parity: release06/using declaration lifetimes
+  ---
+  duration_ms: 11.02542
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using dispose throws
+ok 566 - engine parity: release06/using dispose throws
+  ---
+  duration_ms: 10.440441
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using exception
+ok 567 - engine parity: release06/using exception
+  ---
+  duration_ms: 11.270741
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using expression captures once
+ok 568 - engine parity: release06/using expression captures once
+  ---
+  duration_ms: 13.479946
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using GC protects captured resource
+ok 569 - engine parity: release06/using GC protects captured resource
+  ---
+  duration_ms: 11.374813
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using multiple resources
+ok 570 - engine parity: release06/using multiple resources
+  ---
+  duration_ms: 13.603037
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using null
+ok 571 - engine parity: release06/using null
+  ---
+  duration_ms: 8.385141
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using partial initializer failure
+ok 572 - engine parity: release06/using partial initializer failure
+  ---
+  duration_ms: 12.131155
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using return
+ok 573 - engine parity: release06/using return
+  ---
+  duration_ms: 28.202855
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using return reference survives cleanup GC
+ok 574 - engine parity: release06/using return reference survives cleanup GC
+  ---
+  duration_ms: 14.69355
+  type: 'test'
+  ...
+# Subtest: engine parity: release06/using statement
+ok 575 - engine parity: release06/using statement
+  ---
+  duration_ms: 12.603288
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/analyzer-tasks
+ok 576 - engine parity: sample/analyzer-tasks
+  ---
+  duration_ms: 6.718682
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/animation-style-precedence
+ok 577 - engine parity: sample/animation-style-precedence
+  ---
+  duration_ms: 30.443882
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/arrays
+ok 578 - engine parity: sample/arrays
+  ---
+  duration_ms: 14.401481
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/async-stacks
+ok 579 - engine parity: sample/async-stacks
+  ---
+  duration_ms: 35.040556
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/bcl-array-random
+ok 580 - engine parity: sample/bcl-array-random
+  ---
+  duration_ms: 27.795662
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/bcl-collections
+ok 581 - engine parity: sample/bcl-collections
+  ---
+  duration_ms: 23.349107
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/bcl-dictionary
+ok 582 - engine parity: sample/bcl-dictionary
+  ---
+  duration_ms: 30.288724
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/bcl-json-document
+ok 583 - engine parity: sample/bcl-json-document
+  ---
+  duration_ms: 31.640371
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/bcl-stringbuilder
+ok 584 - engine parity: sample/bcl-stringbuilder
+  ---
+  duration_ms: 16.003349
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/breakpoint-workbench
+ok 585 - engine parity: sample/breakpoint-workbench
+  ---
+  duration_ms: 21.515153
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/call-hierarchy
+ok 586 - engine parity: sample/call-hierarchy
+  ---
+  duration_ms: 8.939666
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/checked-arithmetic
+ok 587 - engine parity: sample/checked-arithmetic
+  ---
+  duration_ms: 12.324088
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/constant-patterns
+ok 588 - engine parity: sample/constant-patterns
+  ---
+  duration_ms: 17.235875
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/conversions
+ok 589 - engine parity: sample/conversions
+  ---
+  duration_ms: 8.359132
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/csharp-interpolation
+ok 590 - engine parity: sample/csharp-interpolation
+  ---
+  duration_ms: 11.490553
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/csharp-modern-properties
+ok 591 - engine parity: sample/csharp-modern-properties
+  ---
+  duration_ms: 24.239576
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/csharp-preview-collections
+ok 592 - engine parity: sample/csharp-preview-collections
+  ---
+  duration_ms: 28.410245
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/debug-callsite
+ok 593 - engine parity: sample/debug-callsite
+  ---
+  duration_ms: 6.769127
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/debug-conditions
+ok 594 - engine parity: sample/debug-conditions
+  ---
+  duration_ms: 14.035573
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/debug-exact
+ok 595 - engine parity: sample/debug-exact
+  ---
+  duration_ms: 7.45855
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/debug-exception
+ok 596 - engine parity: sample/debug-exception
+  ---
+  duration_ms: 9.560557
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/debug-function
+ok 597 - engine parity: sample/debug-function
+  ---
+  duration_ms: 8.213368
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/designer-canvas
+ok 598 - engine parity: sample/designer-canvas
+  ---
+  duration_ms: 156.560961
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/designer-csharp-sync
+ok 599 - engine parity: sample/designer-csharp-sync
+  ---
+  duration_ms: 78.353538
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/designer-grid
+ok 600 - engine parity: sample/designer-grid
+  ---
+  duration_ms: 80.127094
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/edit-continue-structure
+ok 601 - engine parity: sample/edit-continue-structure
+  ---
+  duration_ms: 9.326734
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/editor-keymaps
+ok 602 - engine parity: sample/editor-keymaps
+  ---
+  duration_ms: 7.54715
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/errors
+ok 603 - engine parity: sample/errors
+  ---
+  duration_ms: 6.334919
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/exceptions
+ok 604 - engine parity: sample/exceptions
+  ---
+  duration_ms: 13.324238
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/explorer-members
+ok 605 - engine parity: sample/explorer-members
+  ---
+  duration_ms: 17.535205
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/finally
+ok 606 - engine parity: sample/finally
+  ---
+  duration_ms: 13.61106
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/finally-loop
+ok 607 - engine parity: sample/finally-loop
+  ---
+  duration_ms: 12.94432
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/function-evaluation
+ok 608 - engine parity: sample/function-evaluation
+  ---
+  duration_ms: 11.574957
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/gc
+ok 609 - engine parity: sample/gc
+  ---
+  duration_ms: 18.47065
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/guarded-calls
+ok 610 - engine parity: sample/guarded-calls
+  ---
+  duration_ms: 15.709897
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/hot-reload
+ok 611 - engine parity: sample/hot-reload
+  ---
+  duration_ms: 6.717291
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/immutable-schema
+ok 612 - engine parity: sample/immutable-schema
+  ---
+  duration_ms: 14.947638
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/logical-threads
+ok 613 - engine parity: sample/logical-threads
+  ---
+  duration_ms: 16.124171
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/nameof
+ok 614 - engine parity: sample/nameof
+  ---
+  duration_ms: 7.388856
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/network-http-client
+ok 615 - engine parity: sample/network-http-client
+  ---
+  duration_ms: 53.018143
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/null-assignment
+ok 616 - engine parity: sample/null-assignment
+  ---
+  duration_ms: 18.889104
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/parallel-compute
+ok 617 - engine parity: sample/parallel-compute
+  ---
+  duration_ms: 273.429015
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/partial
+ok 618 - engine parity: sample/partial
+  ---
+  duration_ms: 9.674244
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/particles
+ok 619 - engine parity: sample/particles
+  ---
+  duration_ms: 32.989964
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/portable-symbols
+ok 620 - engine parity: sample/portable-symbols
+  ---
+  duration_ms: 8.358261
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/properties
+ok 621 - engine parity: sample/properties
+  ---
+  duration_ms: 14.770232
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/readonly-properties
+ok 622 - engine parity: sample/readonly-properties
+  ---
+  duration_ms: 11.692771
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/recursion
+ok 623 - engine parity: sample/recursion
+  ---
+  duration_ms: 34.216415
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/refactor-safe06
+ok 624 - engine parity: sample/refactor-safe06
+  ---
+  duration_ms: 18.712165
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/reversible-storage
+ok 625 - engine parity: sample/reversible-storage
+  ---
+  duration_ms: 13.063996
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/safe-watches
+ok 626 - engine parity: sample/safe-watches
+  ---
+  duration_ms: 11.727261
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/set-next
+ok 627 - engine parity: sample/set-next
+  ---
+  duration_ms: 6.153992
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/short-circuit
+ok 628 - engine parity: sample/short-circuit
+  ---
+  duration_ms: 8.56166
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/simd-vector-math
+ok 629 - engine parity: sample/simd-vector-math
+  ---
+  duration_ms: 19.214092
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/structural-refactoring
+ok 630 - engine parity: sample/structural-refactoring
+  ---
+  duration_ms: 12.860656
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/switch
+ok 631 - engine parity: sample/switch
+  ---
+  duration_ms: 14.901125
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/unreachable-analyzer
+ok 632 - engine parity: sample/unreachable-analyzer
+  ---
+  duration_ms: 7.293867
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/using-failure
+ok 633 - engine parity: sample/using-failure
+  ---
+  duration_ms: 40.492813
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/using-resources
+ok 634 - engine parity: sample/using-resources
+  ---
+  duration_ms: 18.549134
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/winui-async
+ok 635 - engine parity: sample/winui-async
+  ---
+  duration_ms: 29.13534
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/winui-compute-monitor
+ok 636 - engine parity: sample/winui-compute-monitor
+  ---
+  duration_ms: 30.780357
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/winui-controls
+ok 637 - engine parity: sample/winui-controls
+  ---
+  duration_ms: 65.795747
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/winui-counter
+ok 638 - engine parity: sample/winui-counter
+  ---
+  duration_ms: 71.535706
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/winui-expanded-controls
+ok 639 - engine parity: sample/winui-expanded-controls
+  ---
+  duration_ms: 51.775436
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/winui-graphics
+ok 640 - engine parity: sample/winui-graphics
+  ---
+  duration_ms: 38.793211
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/winui-shared-styles
+ok 641 - engine parity: sample/winui-shared-styles
+  ---
+  duration_ms: 50.405293
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/winui-storyboards
+ok 642 - engine parity: sample/winui-storyboards
+  ---
+  duration_ms: 63.894012
+  type: 'test'
+  ...
+# Subtest: engine parity: sample/winui-wrap-panels
+ok 643 - engine parity: sample/winui-wrap-panels
+  ---
+  duration_ms: 45.358588
+  type: 'test'
+  ...
+# Subtest: engine parity allowlist contains no stale divergences
+ok 644 - engine parity allowlist contains no stale divergences
+  ---
+  duration_ms: 0.272871
+  type: 'test'
+  ...
+# Subtest: engine parity automatically includes a newly added catalog and fixture row
+ok 645 - engine parity automatically includes a newly added catalog and fixture row
+  ---
+  duration_ms: 7.150056
+  type: 'test'
+  ...
+# Subtest: engine parity preserves explicit raw fault-name assertions after managed alias normalization
+ok 646 - engine parity preserves explicit raw fault-name assertions after managed alias normalization
+  ---
+  duration_ms: 1.531751
+  type: 'test'
+  ...
+# Subtest: engine parity canonicalizes known System exceptions while retaining user type identity
+ok 647 - engine parity canonicalizes known System exceptions while retaining user type identity
+  ---
+  duration_ms: 0.117864
+  type: 'test'
+  ...
+# Subtest: engine parity rejects a output difference
+ok 648 - engine parity rejects a output difference
+  ---
+  duration_ms: 1.319529
+  type: 'test'
+  ...
+# Subtest: engine parity rejects a exceptionType difference
+ok 649 - engine parity rejects a exceptionType difference
+  ---
+  duration_ms: 0.325298
+  type: 'test'
+  ...
+# Subtest: engine parity rejects a exitCode difference
+ok 650 - engine parity rejects a exitCode difference
+  ---
+  duration_ms: 0.236507
+  type: 'test'
+  ...
+# Subtest: engine parity rejects a state difference
+ok 651 - engine parity rejects a state difference
+  ---
+  duration_ms: 0.231971
+  type: 'test'
+  ...
+# Subtest: engine parity compares fault types even when both engines fault
+ok 652 - engine parity compares fault types even when both engines fault
+  ---
+  duration_ms: 0.32688
+  type: 'test'
+  ...
+# Subtest: engine parity allowances retain surrounding output, fault types and exit codes
+ok 653 - engine parity allowances retain surrounding output, fault types and exit codes
+  ---
+  duration_ms: 0.683835
+  type: 'test'
+  ...
+# Subtest: engine parity requires an owner, reason and exact fixture for every allowance
+ok 654 - engine parity requires an owner, reason and exact fixture for every allowance
+  ---
+  duration_ms: 0.438184
+  type: 'test'
+  ...
+# Subtest: engine parity observed heap allowances reject new values and unrelated changes
+ok 655 - engine parity observed heap allowances reject new values and unrelated changes
+  ---
+  duration_ms: 0.558631
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested rethrow restores lexical exception / IR
+ok 656 - 0.5 language: nested rethrow restores lexical exception / IR
+  ---
+  duration_ms: 93.946197
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested rethrow restores lexical exception / canonical CIL
+ok 657 - 0.5 language: nested rethrow restores lexical exception / canonical CIL
+  ---
+  duration_ms: 21.500584
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested rethrow restores lexical exception / direct CIL
+ok 658 - 0.5 language: nested rethrow restores lexical exception / direct CIL
+  ---
+  duration_ms: 25.960246
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested rethrow restores lexical exception / edited CIL
+ok 659 - 0.5 language: nested rethrow restores lexical exception / edited CIL
+  ---
+  duration_ms: 22.370031
+  type: 'test'
+  ...
+# Subtest: 0.5 language: auto property / IR
+ok 660 - 0.5 language: auto property / IR
+  ---
+  duration_ms: 15.553228
+  type: 'test'
+  ...
+# Subtest: 0.5 language: auto property / canonical CIL
+ok 661 - 0.5 language: auto property / canonical CIL
+  ---
+  duration_ms: 17.556431
+  type: 'test'
+  ...
+# Subtest: 0.5 language: auto property / direct CIL
+ok 662 - 0.5 language: auto property / direct CIL
+  ---
+  duration_ms: 33.065523
+  type: 'test'
+  ...
+# Subtest: 0.5 language: auto property / edited CIL
+ok 663 - 0.5 language: auto property / edited CIL
+  ---
+  duration_ms: 27.457614
+  type: 'test'
+  ...
+# Subtest: 0.5 language: init-only declaration / IR
+ok 664 - 0.5 language: init-only declaration / IR
+  ---
+  duration_ms: 47.726091
+  type: 'test'
+  ...
+# Subtest: 0.5 language: init-only declaration / canonical CIL
+ok 665 - 0.5 language: init-only declaration / canonical CIL
+  ---
+  duration_ms: 14.891605
+  type: 'test'
+  ...
+# Subtest: 0.5 language: init-only declaration / direct CIL
+ok 666 - 0.5 language: init-only declaration / direct CIL
+  ---
+  duration_ms: 13.531938
+  type: 'test'
+  ...
+# Subtest: 0.5 language: init-only declaration / edited CIL
+ok 667 - 0.5 language: init-only declaration / edited CIL
+  ---
+  duration_ms: 11.501575
+  type: 'test'
+  ...
+# Subtest: 0.5 language: init-only initializer / IR
+ok 668 - 0.5 language: init-only initializer / IR
+  ---
+  duration_ms: 20.610978
+  type: 'test'
+  ...
+# Subtest: 0.5 language: init-only initializer / canonical CIL
+ok 669 - 0.5 language: init-only initializer / canonical CIL
+  ---
+  duration_ms: 16.100181
+  type: 'test'
+  ...
+# Subtest: 0.5 language: init-only initializer / direct CIL
+ok 670 - 0.5 language: init-only initializer / direct CIL
+  ---
+  duration_ms: 20.191842
+  type: 'test'
+  ...
+# Subtest: 0.5 language: init-only initializer / edited CIL
+ok 671 - 0.5 language: init-only initializer / edited CIL
+  ---
+  duration_ms: 16.587447
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression getter / IR
+ok 672 - 0.5 language: expression getter / IR
+  ---
+  duration_ms: 9.221998
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression getter / canonical CIL
+ok 673 - 0.5 language: expression getter / canonical CIL
+  ---
+  duration_ms: 10.374229
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression getter / direct CIL
+ok 674 - 0.5 language: expression getter / direct CIL
+  ---
+  duration_ms: 10.494737
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression getter / edited CIL
+ok 675 - 0.5 language: expression getter / edited CIL
+  ---
+  duration_ms: 11.771723
+  type: 'test'
+  ...
+# Subtest: 0.5 language: explicit accessors / IR
+ok 676 - 0.5 language: explicit accessors / IR
+  ---
+  duration_ms: 7.137686
+  type: 'test'
+  ...
+# Subtest: 0.5 language: explicit accessors / canonical CIL
+ok 677 - 0.5 language: explicit accessors / canonical CIL
+  ---
+  duration_ms: 9.372538
+  type: 'test'
+  ...
+# Subtest: 0.5 language: explicit accessors / direct CIL
+ok 678 - 0.5 language: explicit accessors / direct CIL
+  ---
+  duration_ms: 10.711224
+  type: 'test'
+  ...
+# Subtest: 0.5 language: explicit accessors / edited CIL
+ok 679 - 0.5 language: explicit accessors / edited CIL
+  ---
+  duration_ms: 12.724332
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression accessors / IR
+ok 680 - 0.5 language: expression accessors / IR
+  ---
+  duration_ms: 14.549433
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression accessors / canonical CIL
+ok 681 - 0.5 language: expression accessors / canonical CIL
+  ---
+  duration_ms: 9.828528
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression accessors / direct CIL
+ok 682 - 0.5 language: expression accessors / direct CIL
+  ---
+  duration_ms: 9.286081
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression accessors / edited CIL
+ok 683 - 0.5 language: expression accessors / edited CIL
+  ---
+  duration_ms: 10.324647
+  type: 'test'
+  ...
+# Subtest: 0.5 language: getter only constructor / IR
+ok 684 - 0.5 language: getter only constructor / IR
+  ---
+  duration_ms: 6.128312
+  type: 'test'
+  ...
+# Subtest: 0.5 language: getter only constructor / canonical CIL
+ok 685 - 0.5 language: getter only constructor / canonical CIL
+  ---
+  duration_ms: 7.708224
+  type: 'test'
+  ...
+# Subtest: 0.5 language: getter only constructor / direct CIL
+ok 686 - 0.5 language: getter only constructor / direct CIL
+  ---
+  duration_ms: 7.414872
+  type: 'test'
+  ...
+# Subtest: 0.5 language: getter only constructor / edited CIL
+ok 687 - 0.5 language: getter only constructor / edited CIL
+  ---
+  duration_ms: 8.987082
+  type: 'test'
+  ...
+# Subtest: 0.5 language: static auto initialization / IR
+ok 688 - 0.5 language: static auto initialization / IR
+  ---
+  duration_ms: 6.924291
+  type: 'test'
+  ...
+# Subtest: 0.5 language: static auto initialization / canonical CIL
+ok 689 - 0.5 language: static auto initialization / canonical CIL
+  ---
+  duration_ms: 9.681432
+  type: 'test'
+  ...
+# Subtest: 0.5 language: static auto initialization / direct CIL
+ok 690 - 0.5 language: static auto initialization / direct CIL
+  ---
+  duration_ms: 8.755682
+  type: 'test'
+  ...
+# Subtest: 0.5 language: static auto initialization / edited CIL
+ok 691 - 0.5 language: static auto initialization / edited CIL
+  ---
+  duration_ms: 7.303779
+  type: 'test'
+  ...
+# Subtest: 0.5 language: assignment results / IR
+ok 692 - 0.5 language: assignment results / IR
+  ---
+  duration_ms: 5.815222
+  type: 'test'
+  ...
+# Subtest: 0.5 language: assignment results / canonical CIL
+ok 693 - 0.5 language: assignment results / canonical CIL
+  ---
+  duration_ms: 10.063984
+  type: 'test'
+  ...
+# Subtest: 0.5 language: assignment results / direct CIL
+ok 694 - 0.5 language: assignment results / direct CIL
+  ---
+  duration_ms: 9.764865
+  type: 'test'
+  ...
+# Subtest: 0.5 language: assignment results / edited CIL
+ok 695 - 0.5 language: assignment results / edited CIL
+  ---
+  duration_ms: 9.739037
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property receiver evaluated once / IR
+ok 696 - 0.5 language: property receiver evaluated once / IR
+  ---
+  duration_ms: 6.708585
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property receiver evaluated once / canonical CIL
+ok 697 - 0.5 language: property receiver evaluated once / canonical CIL
+  ---
+  duration_ms: 8.187217
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property receiver evaluated once / direct CIL
+ok 698 - 0.5 language: property receiver evaluated once / direct CIL
+  ---
+  duration_ms: 8.993852
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property receiver evaluated once / edited CIL
+ok 699 - 0.5 language: property receiver evaluated once / edited CIL
+  ---
+  duration_ms: 13.288571
+  type: 'test'
+  ...
+# Subtest: 0.5 language: coalescing property / IR
+ok 700 - 0.5 language: coalescing property / IR
+  ---
+  duration_ms: 7.806829
+  type: 'test'
+  ...
+# Subtest: 0.5 language: coalescing property / canonical CIL
+ok 701 - 0.5 language: coalescing property / canonical CIL
+  ---
+  duration_ms: 18.451625
+  type: 'test'
+  ...
+# Subtest: 0.5 language: coalescing property / direct CIL
+ok 702 - 0.5 language: coalescing property / direct CIL
+  ---
+  duration_ms: 10.780456
+  type: 'test'
+  ...
+# Subtest: 0.5 language: coalescing property / edited CIL
+ok 703 - 0.5 language: coalescing property / edited CIL
+  ---
+  duration_ms: 9.430062
+  type: 'test'
+  ...
+# Subtest: 0.5 language: private setter inside owner / IR
+ok 704 - 0.5 language: private setter inside owner / IR
+  ---
+  duration_ms: 4.274049
+  type: 'test'
+  ...
+# Subtest: 0.5 language: private setter inside owner / canonical CIL
+ok 705 - 0.5 language: private setter inside owner / canonical CIL
+  ---
+  duration_ms: 5.46577
+  type: 'test'
+  ...
+# Subtest: 0.5 language: private setter inside owner / direct CIL
+ok 706 - 0.5 language: private setter inside owner / direct CIL
+  ---
+  duration_ms: 5.419562
+  type: 'test'
+  ...
+# Subtest: 0.5 language: private setter inside owner / edited CIL
+ok 707 - 0.5 language: private setter inside owner / edited CIL
+  ---
+  duration_ms: 6.926915
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nameof property / IR
+ok 708 - 0.5 language: nameof property / IR
+  ---
+  duration_ms: 3.277164
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nameof property / canonical CIL
+ok 709 - 0.5 language: nameof property / canonical CIL
+  ---
+  duration_ms: 4.543625
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nameof property / direct CIL
+ok 710 - 0.5 language: nameof property / direct CIL
+  ---
+  duration_ms: 3.421596
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nameof property / edited CIL
+ok 711 - 0.5 language: nameof property / edited CIL
+  ---
+  duration_ms: 4.244425
+  type: 'test'
+  ...
+# Subtest: 0.5 language: normal finally / IR
+ok 712 - 0.5 language: normal finally / IR
+  ---
+  duration_ms: 2.964595
+  type: 'test'
+  ...
+# Subtest: 0.5 language: normal finally / canonical CIL
+ok 713 - 0.5 language: normal finally / canonical CIL
+  ---
+  duration_ms: 4.358453
+  type: 'test'
+  ...
+# Subtest: 0.5 language: normal finally / direct CIL
+ok 714 - 0.5 language: normal finally / direct CIL
+  ---
+  duration_ms: 3.8799
+  type: 'test'
+  ...
+# Subtest: 0.5 language: normal finally / edited CIL
+ok 715 - 0.5 language: normal finally / edited CIL
+  ---
+  duration_ms: 4.726903
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return preserves value / IR
+ok 716 - 0.5 language: return preserves value / IR
+  ---
+  duration_ms: 4.381627
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return preserves value / canonical CIL
+ok 717 - 0.5 language: return preserves value / canonical CIL
+  ---
+  duration_ms: 5.593106
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return preserves value / direct CIL
+ok 718 - 0.5 language: return preserves value / direct CIL
+  ---
+  duration_ms: 4.411941
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return preserves value / edited CIL
+ok 719 - 0.5 language: return preserves value / edited CIL
+  ---
+  duration_ms: 5.96335
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return reference remains rooted / IR
+ok 720 - 0.5 language: return reference remains rooted / IR
+  ---
+  duration_ms: 4.906768
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return reference remains rooted / canonical CIL
+ok 721 - 0.5 language: return reference remains rooted / canonical CIL
+  ---
+  duration_ms: 7.246835
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return reference remains rooted / direct CIL
+ok 722 - 0.5 language: return reference remains rooted / direct CIL
+  ---
+  duration_ms: 9.535108
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return reference remains rooted / edited CIL
+ok 723 - 0.5 language: return reference remains rooted / edited CIL
+  ---
+  duration_ms: 9.364246
+  type: 'test'
+  ...
+# Subtest: 0.5 language: exception finally then catch / IR
+ok 724 - 0.5 language: exception finally then catch / IR
+  ---
+  duration_ms: 3.892808
+  type: 'test'
+  ...
+# Subtest: 0.5 language: exception finally then catch / canonical CIL
+ok 725 - 0.5 language: exception finally then catch / canonical CIL
+  ---
+  duration_ms: 5.760101
+  type: 'test'
+  ...
+# Subtest: 0.5 language: exception finally then catch / direct CIL
+ok 726 - 0.5 language: exception finally then catch / direct CIL
+  ---
+  duration_ms: 5.437678
+  type: 'test'
+  ...
+# Subtest: 0.5 language: exception finally then catch / edited CIL
+ok 727 - 0.5 language: exception finally then catch / edited CIL
+  ---
+  duration_ms: 6.165578
+  type: 'test'
+  ...
+# Subtest: 0.5 language: try catch finally / IR
+ok 728 - 0.5 language: try catch finally / IR
+  ---
+  duration_ms: 3.203616
+  type: 'test'
+  ...
+# Subtest: 0.5 language: try catch finally / canonical CIL
+ok 729 - 0.5 language: try catch finally / canonical CIL
+  ---
+  duration_ms: 11.425765
+  type: 'test'
+  ...
+# Subtest: 0.5 language: try catch finally / direct CIL
+ok 730 - 0.5 language: try catch finally / direct CIL
+  ---
+  duration_ms: 4.820591
+  type: 'test'
+  ...
+# Subtest: 0.5 language: try catch finally / edited CIL
+ok 731 - 0.5 language: try catch finally / edited CIL
+  ---
+  duration_ms: 4.989841
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested finally / IR
+ok 732 - 0.5 language: nested finally / IR
+  ---
+  duration_ms: 2.865359
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested finally / canonical CIL
+ok 733 - 0.5 language: nested finally / canonical CIL
+  ---
+  duration_ms: 4.229994
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested finally / direct CIL
+ok 734 - 0.5 language: nested finally / direct CIL
+  ---
+  duration_ms: 3.640988
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested finally / edited CIL
+ok 735 - 0.5 language: nested finally / edited CIL
+  ---
+  duration_ms: 7.105538
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch inside finally preserves return / IR
+ok 736 - 0.5 language: catch inside finally preserves return / IR
+  ---
+  duration_ms: 4.725006
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch inside finally preserves return / canonical CIL
+ok 737 - 0.5 language: catch inside finally preserves return / canonical CIL
+  ---
+  duration_ms: 8.928887
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch inside finally preserves return / direct CIL
+ok 738 - 0.5 language: catch inside finally preserves return / direct CIL
+  ---
+  duration_ms: 6.573736
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch inside finally preserves return / edited CIL
+ok 739 - 0.5 language: catch inside finally preserves return / edited CIL
+  ---
+  duration_ms: 8.234146
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides return / IR
+ok 740 - 0.5 language: throw from finally overrides return / IR
+  ---
+  duration_ms: 5.633736
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides return / canonical CIL
+ok 741 - 0.5 language: throw from finally overrides return / canonical CIL
+  ---
+  duration_ms: 5.696749
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides return / direct CIL
+ok 742 - 0.5 language: throw from finally overrides return / direct CIL
+  ---
+  duration_ms: 5.85449
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides return / edited CIL
+ok 743 - 0.5 language: throw from finally overrides return / edited CIL
+  ---
+  duration_ms: 6.67823
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides exception / IR
+ok 744 - 0.5 language: throw from finally overrides exception / IR
+  ---
+  duration_ms: 3.442237
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides exception / canonical CIL
+ok 745 - 0.5 language: throw from finally overrides exception / canonical CIL
+  ---
+  duration_ms: 5.24173
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides exception / direct CIL
+ok 746 - 0.5 language: throw from finally overrides exception / direct CIL
+  ---
+  duration_ms: 4.396127
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides exception / edited CIL
+ok 747 - 0.5 language: throw from finally overrides exception / edited CIL
+  ---
+  duration_ms: 5.320987
+  type: 'test'
+  ...
+# Subtest: 0.5 language: break finally / IR
+ok 748 - 0.5 language: break finally / IR
+  ---
+  duration_ms: 3.590034
+  type: 'test'
+  ...
+# Subtest: 0.5 language: break finally / canonical CIL
+ok 749 - 0.5 language: break finally / canonical CIL
+  ---
+  duration_ms: 4.587219
+  type: 'test'
+  ...
+# Subtest: 0.5 language: break finally / direct CIL
+ok 750 - 0.5 language: break finally / direct CIL
+  ---
+  duration_ms: 3.907911
+  type: 'test'
+  ...
+# Subtest: 0.5 language: break finally / edited CIL
+ok 751 - 0.5 language: break finally / edited CIL
+  ---
+  duration_ms: 5.727103
+  type: 'test'
+  ...
+# Subtest: 0.5 language: continue finally / IR
+ok 752 - 0.5 language: continue finally / IR
+  ---
+  duration_ms: 4.243323
+  type: 'test'
+  ...
+# Subtest: 0.5 language: continue finally / canonical CIL
+ok 753 - 0.5 language: continue finally / canonical CIL
+  ---
+  duration_ms: 4.085352
+  type: 'test'
+  ...
+# Subtest: 0.5 language: continue finally / direct CIL
+ok 754 - 0.5 language: continue finally / direct CIL
+  ---
+  duration_ms: 4.941609
+  type: 'test'
+  ...
+# Subtest: 0.5 language: continue finally / edited CIL
+ok 755 - 0.5 language: continue finally / edited CIL
+  ---
+  duration_ms: 8.050932
+  type: 'test'
+  ...
+# Subtest: 0.5 language: loop internal finally / IR
+ok 756 - 0.5 language: loop internal finally / IR
+  ---
+  duration_ms: 3.901942
+  type: 'test'
+  ...
+# Subtest: 0.5 language: loop internal finally / canonical CIL
+ok 757 - 0.5 language: loop internal finally / canonical CIL
+  ---
+  duration_ms: 5.882351
+  type: 'test'
+  ...
+# Subtest: 0.5 language: loop internal finally / direct CIL
+ok 758 - 0.5 language: loop internal finally / direct CIL
+  ---
+  duration_ms: 6.299574
+  type: 'test'
+  ...
+# Subtest: 0.5 language: loop internal finally / edited CIL
+ok 759 - 0.5 language: loop internal finally / edited CIL
+  ---
+  duration_ms: 15.048616
+  type: 'test'
+  ...
+# Subtest: 0.5 language: empty protected clauses / IR
+ok 760 - 0.5 language: empty protected clauses / IR
+  ---
+  duration_ms: 4.897063
+  type: 'test'
+  ...
+# Subtest: 0.5 language: empty protected clauses / canonical CIL
+ok 761 - 0.5 language: empty protected clauses / canonical CIL
+  ---
+  duration_ms: 5.843454
+  type: 'test'
+  ...
+# Subtest: 0.5 language: empty protected clauses / direct CIL
+ok 762 - 0.5 language: empty protected clauses / direct CIL
+  ---
+  duration_ms: 11.043453
+  type: 'test'
+  ...
+# Subtest: 0.5 language: empty protected clauses / edited CIL
+ok 763 - 0.5 language: empty protected clauses / edited CIL
+  ---
+  duration_ms: 5.257844
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch return runs final / IR
+ok 764 - 0.5 language: catch return runs final / IR
+  ---
+  duration_ms: 3.60163
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch return runs final / canonical CIL
+ok 765 - 0.5 language: catch return runs final / canonical CIL
+  ---
+  duration_ms: 5.603562
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch return runs final / direct CIL
+ok 766 - 0.5 language: catch return runs final / direct CIL
+  ---
+  duration_ms: 10.160606
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch return runs final / edited CIL
+ok 767 - 0.5 language: catch return runs final / edited CIL
+  ---
+  duration_ms: 6.802744
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property setter finally / IR
+ok 768 - 0.5 language: property setter finally / IR
+  ---
+  duration_ms: 5.239076
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property setter finally / canonical CIL
+ok 769 - 0.5 language: property setter finally / canonical CIL
+  ---
+  duration_ms: 9.031357
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property setter finally / direct CIL
+ok 770 - 0.5 language: property setter finally / direct CIL
+  ---
+  duration_ms: 7.985921
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property setter finally / edited CIL
+ok 771 - 0.5 language: property setter finally / edited CIL
+  ---
+  duration_ms: 7.323168
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: getter-only write
+ok 772 - 0.5 diagnostic: getter-only write
+  ---
+  duration_ms: 4.914499
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: private setter
+ok 773 - 0.5 diagnostic: private setter
+  ---
+  duration_ms: 3.738582
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: write-only read
+ok 774 - 0.5 diagnostic: write-only read
+  ---
+  duration_ms: 4.585897
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: duplicate getter
+ok 775 - 0.5 diagnostic: duplicate getter
+  ---
+  duration_ms: 2.806953
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: auto write-only
+ok 776 - 0.5 diagnostic: auto write-only
+  ---
+  duration_ms: 2.322973
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: return exits finally
+ok 777 - 0.5 diagnostic: return exits finally
+  ---
+  duration_ms: 4.318434
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: break exits finally
+ok 778 - 0.5 diagnostic: break exits finally
+  ---
+  duration_ms: 2.253861
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: continue exits finally
+ok 779 - 0.5 diagnostic: continue exits finally
+  ---
+  duration_ms: 1.531389
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: init-only write after construction
+ok 780 - 0.5 diagnostic: init-only write after construction
+  ---
+  duration_ms: 3.089118
+  type: 'test'
+  ...
+# Subtest: 0.5 metadata: property maps and method semantics survive canonical loading
+ok 781 - 0.5 metadata: property maps and method semantics survive canonical loading
+  ---
+  duration_ms: 7.789272
+  type: 'test'
+  ...
+1..781
+# tests 781
+# suites 0
+# pass 779
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 67001.154921

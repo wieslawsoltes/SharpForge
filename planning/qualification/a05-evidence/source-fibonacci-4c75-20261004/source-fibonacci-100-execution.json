@@ -1,0 +1,65 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "source-fibonacci-100",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "bench/vm/qualification.js",
+    "--runner",
+    "a05-linux-x64-node24",
+    "--suite",
+    "targets",
+    "--target",
+    "source-fibonacci",
+    "--samples",
+    "100",
+    "--warmup",
+    "3",
+    "--native-bits",
+    "64",
+    "--seed",
+    "12012",
+    "--resamples",
+    "10000",
+    "--timeout-seconds",
+    "900",
+    "--out",
+    "/workspace/scratch/42f7738360b9/a05-priority-after-source-ops-4c75-20261004/source-fibonacci-100.json"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": null,
+    "DOTNET_ROOT": null,
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": null,
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "4c75ea43f5310e50594098076693d1582b49c7d3",
+    "tree": "bdcb5c1429bd01e2992388b5ed95c56303d05e63",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T22:31:45.867304+00:00",
+  "completedUTC": "2026-10-04T22:32:05.513154+00:00",
+  "elapsedSeconds": 19.645507032997557,
+  "exitCode": 2,
+  "endIdentity": {
+    "commit": "4c75ea43f5310e50594098076693d1582b49c7d3",
+    "tree": "bdcb5c1429bd01e2992388b5ed95c56303d05e63",
+    "status": ""
+  },
+  "artifact": {
+    "path": "source-fibonacci-100.log",
+    "bytes": 169,
+    "sha256": "41a9cc03bf780aabfdd5b899563c0200746fec19400f3f602aabc01acd2e7f7a"
+  }
+}

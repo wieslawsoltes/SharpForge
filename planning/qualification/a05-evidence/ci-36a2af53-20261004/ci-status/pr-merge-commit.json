@@ -1,0 +1,40 @@
+{
+  "sha": "edfa7cc8e11e05b9ceb0f6fdcb43fe071b24e11e",
+  "node_id": "C_kwDOU59Ms9oAKGVkZmE3Y2M4ZTExZTA1YjljZWIwZjZmZGNiNDNmZTA3MWIyNGUxMWU",
+  "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/edfa7cc8e11e05b9ceb0f6fdcb43fe071b24e11e",
+  "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/edfa7cc8e11e05b9ceb0f6fdcb43fe071b24e11e",
+  "author": {
+    "name": "Wiesław Šoltés",
+    "email": "wieslawsoltes@users.noreply.github.com",
+    "date": "2026-10-04T19:51:09Z"
+  },
+  "committer": {
+    "name": "GitHub",
+    "email": "noreply@github.com",
+    "date": "2026-10-04T19:51:09Z"
+  },
+  "tree": {
+    "sha": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+    "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/da3add4a11cce5ed887d2a093eac4b48a4c26754"
+  },
+  "message": "Merge 36a2af53287a563fd47d3a33b8e6e6382a726d35 into f009e2949f3311f0ca84a4a6bc694535140d130b",
+  "parents": [
+    {
+      "sha": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f009e2949f3311f0ca84a4a6bc694535140d130b",
+      "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/f009e2949f3311f0ca84a4a6bc694535140d130b"
+    },
+    {
+      "sha": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/36a2af53287a563fd47d3a33b8e6e6382a726d35",
+      "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/36a2af53287a563fd47d3a33b8e6e6382a726d35"
+    }
+  ],
+  "verification": {
+    "verified": true,
+    "reason": "valid",
+    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqwq4tCRC1aQ7uu5UhlAAAbBQQAAWnUfLJclrR+fIsThKGN0zL\nRvlvuDgNK4Ug+NH+xPNRtH4D3JbkWcJ6xatuRapvvQ5G5+7u/l4lPFtgyDRT2oQJ\nX/ICB4oAkLdVaelGIQ/LQFM/CzpW2SrFWNTYKZzZT1sOD2ZXsObZHHO8NcXigRD5\n8rSYHvPGZbuH4NgZx13dIhOxlSRhhTK9Vpil7BTZr94QeSDWattujY0f5KKFlspJ\nlU3JPrv33v9mZwH0xOYTunbK8UTfohf2kdWpIDvtOkDx+RhbXw3RieRyUguNyH0b\nY7rho2HXavojzXa9zcvhYP1jUfOChNrs1/Pw/fYqw8lZd5RKUeiDlkeo+9rF4YlS\nF5mGWeBV1P9KcAYPVzuHSbeQvTgUg/VJrIPtYKNvxo53Hwx0FtsyLBk3A+r99CFZ\nCuj9D4HiXYPvJ0f8wHYnJje9I0hetAWNjFEOatrwvRrYNnvKyIiOMaZHDyjtrY0t\nhyA+Gf8l1829UfYALwAHHvfQZE/x3q/r896Q3qlIUw1fScgGMlZCLiHbka2aPsOs\nWPOKkJ2WUwg5p0wTWh4n9ZfJ6D8GW5ftaygq0HqCdQi8qUuHI4bP8sgTHmmxpHXs\nOvP0/Xslnn9wnacYeJJpdsfCy2lVpfZ/Ytg+gCtswrj5oOcjH37iz0MnSKVwEHwf\noW4puUXwflRS53IucII1\n=liO6\n-----END PGP SIGNATURE-----\n",
+    "payload": "tree da3add4a11cce5ed887d2a093eac4b48a4c26754\nparent f009e2949f3311f0ca84a4a6bc694535140d130b\nparent 36a2af53287a563fd47d3a33b8e6e6382a726d35\nauthor Wiesław Šoltés <wieslawsoltes@users.noreply.github.com> 1791143469 +0000\ncommitter GitHub <noreply@github.com> 1791143469 +0000\n\nMerge 36a2af53287a563fd47d3a33b8e6e6382a726d35 into f009e2949f3311f0ca84a4a6bc694535140d130b\n",
+    "verified_at": "2026-10-04T19:51:09Z"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "suite": "speedscope-cil",
+  "passed": true,
+  "engine": "webkit",
+  "cspViolations": [],
+  "browser": "26.6",
+  "executable": "playwright-managed",
+  "launchOptions": {
+    "headless": true
+  },
+  "mode": "Official Speedscope UI file import",
+  "seconds": 0.6067231860000106,
+  "diagnosticErrors": []
+}

@@ -1,0 +1,430 @@
+{
+  "sourceCandidate": "4890736f2da1bf2b8bd9c4e40f2f727b4d09f4d1",
+  "rawFileCount": 52,
+  "rawBytes": 4225351,
+  "copies": [
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/dense96-baseline.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-baseline.job.json",
+      "bytes": 54431,
+      "sha256": "e7f88a02d18154ef6129b5204b75d81c0d34facc09011e46491239eb88c64229"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/dense96-baseline.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-baseline.result.json",
+      "bytes": 127466,
+      "sha256": "b2b55d9374e6129489b583d47798a695dfa522e346df7cb63c3d8d1bdf4a026b"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/dense96-baseline.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/dense96-baseline.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/dense96-candidate.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-candidate.job.json",
+      "bytes": 54419,
+      "sha256": "efc470806dbbc9e765537b3191fb12fede35b32a354d58a8d16b12e25b066968"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/dense96-candidate.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-candidate.result.json",
+      "bytes": 127475,
+      "sha256": "f7a2e93b3c0c2fb682218aa754763d82c459f1b5079c25166dc961a0295ee109"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/dense96-candidate.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/dense96-candidate.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/dense96.dll",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96.dll",
+      "bytes": 53760,
+      "sha256": "158655fc4906ce13c4dead823987de4b82ca8cbabfa6196f95d77a0429a75ac9"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/il-baseline.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-baseline.job.json",
+      "bytes": 50152,
+      "sha256": "430e96ad0493b93ecde39155eabf69adda0c1c41ba6da3ef96ee69506df71e94"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/il-baseline.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-baseline.result.json",
+      "bytes": 127407,
+      "sha256": "1a55d9e8e2df2d618ebc4442b7f8ba935e042e9a4e501e9b1ded13e4969bd6d8"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/il-baseline.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/il-baseline.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/il-candidate.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-candidate.job.json",
+      "bytes": 50140,
+      "sha256": "7789f2de61b1da92f68c158a382d7fcfa0717353f0903cfd7c7152b4beb90846"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/il-candidate.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-candidate.result.json",
+      "bytes": 127417,
+      "sha256": "e4c9ea04adb73d9b2c7ab7f947a40c12d8e480e6f54d7dd92f3f15d50755b3c1"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/il-candidate.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/il-candidate.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/il.dll",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il.dll",
+      "bytes": 11776,
+      "sha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/mixed-baseline.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-baseline.job.json",
+      "bytes": 50354,
+      "sha256": "3fe253849910b6ea2ea7ff68ff81c99610ccc393ed47f209b3481d721a76a9e3"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/mixed-baseline.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-baseline.result.json",
+      "bytes": 127376,
+      "sha256": "d8b218ecca2f3c7f07b6919732a205e13a55aad8d682af187e18a2996e5d3a61"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/mixed-baseline.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/mixed-baseline.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/mixed-candidate.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-candidate.job.json",
+      "bytes": 50342,
+      "sha256": "d109f332d5396e5f201664850964bb77855b9e4d60b0a945959eaeab4bdf8f65"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/mixed-candidate.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-candidate.result.json",
+      "bytes": 127403,
+      "sha256": "a455510d8cb00bc726c63833d166740886f59e84e176f41cc963b700f6766e19"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/mixed-candidate.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/mixed-candidate.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/prepare-baseline.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-baseline.job.json",
+      "bytes": 49790,
+      "sha256": "2c24668f0069fc359c5ed780a6151a5e4aa364efb27c712b746f4cb79b3d7bfc"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/prepare-baseline.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-baseline.result.json",
+      "bytes": 54688,
+      "sha256": "a02ba28a8189a5b060523e04b89d3e1834e4f7c9c7b714ee5da6484340d38327"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/prepare-baseline.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/prepare-baseline.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/prepare-candidate.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-candidate.job.json",
+      "bytes": 49778,
+      "sha256": "77178b435da13efb4d2de2ce8638e4256175f8d6c71ea0f2b118b34dfab673e5"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/prepare-candidate.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-candidate.result.json",
+      "bytes": 54692,
+      "sha256": "79c2538fec2ff201e0ce04a35213e16e243313ec9168d80fded154ba1142581b"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/prepare-candidate.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/prepare-candidate.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/r2r-baseline.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-baseline.job.json",
+      "bytes": 50186,
+      "sha256": "b7c7eb6630fcd9a75946a80a48457d302a63924ec1d1362036e77094060a013f"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/r2r-baseline.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-baseline.result.json",
+      "bytes": 127552,
+      "sha256": "c7bd20369c4eb1e66af44851571bcacc07d942267aecb52aa1cf5b11744e771b"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/r2r-baseline.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/r2r-baseline.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/r2r-candidate.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-candidate.job.json",
+      "bytes": 50174,
+      "sha256": "932b935e7349026cd150910953f7b2ea74c0a716bd04da99ce1f957a48a14306"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/r2r-candidate.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-candidate.result.json",
+      "bytes": 127555,
+      "sha256": "dbaa5367b627a44095e3136422830a5f76d58863eabaecb2a826abd2558dc7d9"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/r2r-candidate.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/r2r-candidate.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/report.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/report.json",
+      "bytes": 2162872,
+      "sha256": "920c854e84f33abf8f9a58f54dc85811812e744a736487831e4df09e8f28491c"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/small-baseline.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-baseline.job.json",
+      "bytes": 50164,
+      "sha256": "7d0a586a1afcd6654095504fb9bbe00ff0fd7295c01c44a5713b944289422ee6"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/small-baseline.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-baseline.result.json",
+      "bytes": 127757,
+      "sha256": "5e34718ff5edbff532a7dd3ca3d70651d13f160112fe2d2b127f6411319c9ee4"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/small-baseline.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/small-baseline.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/small-candidate.job.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-candidate.job.json",
+      "bytes": 50152,
+      "sha256": "68c331aecd896ad614466ad3aec9e3d79f3f25bc5a284d1b0845e7a161e32eef"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/small-candidate.result.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-candidate.result.json",
+      "bytes": 127785,
+      "sha256": "efd1ab0ef8fca59339380efc3eb04af59dd7de459bd51a57fb408e87aa6e1982"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/small-candidate.stderr.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/small-candidate.stdout.log",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first/small.dll",
+      "retained": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small.dll",
+      "bytes": 2048,
+      "sha256": "c5227292f8622ad667eeecb3abcd5ebd6cd92425c4dc97ea7170b72457dafe32"
+    },
+    {
+      "kind": "outer performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/performance.execution.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/performance.execution.json",
+      "bytes": 264549,
+      "sha256": "fffd15b90c0741bd2bf1ccecbcf2818e3821796971b6bb286eae1b2c03e6917f"
+    },
+    {
+      "kind": "outer performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/performance.stdout.txt",
+      "retained": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/performance.stdout.txt",
+      "bytes": 116,
+      "sha256": "1cdb67b32e7fd4f4ace13e5f84243dc434daf39fd3b7c8cefdf6f24047cfc8c6"
+    },
+    {
+      "kind": "outer performance",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/performance.stderr.txt",
+      "retained": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/performance.stderr.txt",
+      "bytes": 94,
+      "sha256": "efa2c0796767ca086f3d032d1bedc4a3002a555df65194f4ae54ff53a1291595"
+    },
+    {
+      "kind": "independent review",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-independent-review.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/independent-performance-review.json",
+      "bytes": 35232,
+      "sha256": "c01850bc2c11be88fb3dfee887a60a95836ce3095a20c74a7c9b3c7042b88d70"
+    },
+    {
+      "kind": "independent review",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-independent-review.py",
+      "retained": "tests/fixtures/pe-bounds/qualification/independent-performance-review.py.txt",
+      "bytes": 17458,
+      "sha256": "e2ffd6b624a4a24738e32e95690e94a9fa27d041b84092d62d73959cea29785b"
+    },
+    {
+      "kind": "independent review",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-independent-review-addendum.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/independent-performance-review-addendum.json",
+      "bytes": 1510,
+      "sha256": "87acc50f897cc42433ec89b4b866cce05f907a21e6c55a3b0f53e572c608187f"
+    }
+  ],
+  "existingExecutionFilesBefore": {
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-retained.stdout.txt": "3f97c01b84a6898e96ab69e5b67dae7d3a5ed0d42ccd553011efe7dd47f42910",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-retained.execution.json": "5fb69eda5d92338fb878e2168344117dac918d7d3b84fc71649b506fe2b51c44",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/focused.execution.json": "512b5e401bea8e8ab42294bd9f44874f9bcf1f78a9cc7e87d81270b71d696e2b",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-retained.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/retain-native.execution.json": "56d2c9abbc4cae14792ad925f5bd79f623b04af984f04a48a69f0c2f5185c641",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-external.stdout.txt": "3f97c01b84a6898e96ab69e5b67dae7d3a5ed0d42ccd553011efe7dd47f42910",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/native.stdout.txt": "9236a558451ba9da43ff9887d15a8c77c700a609ddcc2c7a04c760562811e2d9",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-external.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/focused.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/retention.json": "53919a5ba0c8e31fcd590f4534501d8f7cb3574401e10ea435bbb56393bad9e6",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/native.execution.json": "99b4fd664363840263e462ae9a73f8a647597cf1ce0776082a90ea83ac184dd3",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-external.execution.json": "42b3cc83aee35250a5d74a7e2beaa6eca7f8e91ef1b48564ca09aef42a6bb1c6",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/focused.stdout.txt": "e40dd7c30c68ea677c63740eedd9e3011e8ec6f7d23cc01e2910a575b829f324",
+    "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/native.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "existingExecutionFilesAfterUnchanged": true
+}

@@ -1,0 +1,991 @@
+TAP version 13
+# Subtest: A05 T04 caller filter observes state before callee finally executes
+ok 1 - A05 T04 caller filter observes state before callee finally executes
+  ---
+  duration_ms: 37.087979
+  type: 'test'
+  ...
+# Subtest: A05 T04 an escaping filter exception is false and preserves original search
+ok 2 - A05 T04 an escaping filter exception is false and preserves original search
+  ---
+  duration_ms: 7.939204
+  type: 'test'
+  ...
+# Subtest: A05 T04 filter helper can catch its own exception and accept original fault
+ok 3 - A05 T04 filter helper can catch its own exception and accept original fault
+  ---
+  duration_ms: 6.262631
+  type: 'test'
+  ...
+# Subtest: A05 T04 suspended filter search survives snapshot, collection and restore
+ok 4 - A05 T04 suspended filter search survives snapshot, collection and restore
+  ---
+  duration_ms: 11.564571
+  type: 'test'
+  ...
+# Subtest: A05 T04 fault executes only on exceptional exit and before selected catch
+ok 5 - A05 T04 fault executes only on exceptional exit and before selected catch
+  ---
+  duration_ms: 4.792931
+  type: 'test'
+  ...
+# Subtest: A05 T04 cleanup exception starts a fresh search after original filters
+ok 6 - A05 T04 cleanup exception starts a fresh search after original filters
+  ---
+  duration_ms: 3.066155
+  type: 'test'
+  ...
+# Subtest: A05 T04 nested catch rethrow preserves the original exception identity
+ok 7 - A05 T04 nested catch rethrow preserves the original exception identity
+  ---
+  duration_ms: 2.697784
+  type: 'test'
+  ...
+# Subtest: A05 T04 verifier rejects endfilter outside its lexical region
+ok 8 - A05 T04 verifier rejects endfilter outside its lexical region
+  ---
+  duration_ms: 0.838111
+  type: 'test'
+  ...
+# Subtest: A05 T04 verifier rejects endfinally outside its lexical region
+ok 9 - A05 T04 verifier rejects endfinally outside its lexical region
+  ---
+  duration_ms: 0.801238
+  type: 'test'
+  ...
+# Subtest: A05 T04 verifier rejects rethrow outside its lexical region
+ok 10 - A05 T04 verifier rejects rethrow outside its lexical region
+  ---
+  duration_ms: 0.575035
+  type: 'test'
+  ...
+# Subtest: A05 T04 verifier rejects branches into filters and handlers
+ok 11 - A05 T04 verifier rejects branches into filters and handlers
+  ---
+  duration_ms: 0.686939
+  type: 'test'
+  ...
+# Subtest: A05 T04 stop during a filter releases continuations and prevents cleanup resumption
+ok 12 - A05 T04 stop during a filter releases continuations and prevents cleanup resumption
+  ---
+  duration_ms: 2.951016
+  type: 'test'
+  ...
+# Subtest: async registration normal return cannot leak into a reused CIL frame
+ok 13 - async registration normal return cannot leak into a reused CIL frame
+  ---
+  duration_ms: 37.489038
+  type: 'test'
+  ...
+# Subtest: async registration unwind cannot leak into a reused CIL frame
+ok 14 - async registration unwind cannot leak into a reused CIL frame
+  ---
+  duration_ms: 6.611854
+  type: 'test'
+  ...
+# Subtest: source: default byte admission executes 10,000 recursive calls plus entry frames
+ok 15 - source: default byte admission executes 10,000 recursive calls plus entry frames
+  ---
+  duration_ms: 185.867203
+  type: 'test'
+  ...
+# Subtest: source: the default byte limit overflows fatally before an enclosing catch can run
+ok 16 - source: the default byte limit overflows fatally before an enclosing catch can run
+  ---
+  duration_ms: 978.285324
+  type: 'test'
+  ...
+# Subtest: source: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+ok 17 - source: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+  ---
+  duration_ms: 14.868174
+  type: 'test'
+  ...
+# Subtest: source: default admission preserves deep roots, snapshot replay and stop releases reservations
+ok 18 - source: default admission preserves deep roots, snapshot replay and stop releases reservations
+  ---
+  duration_ms: 71.449418
+  type: 'test'
+  ...
+# Subtest: reload: default byte admission executes 10,000 recursive calls plus entry frames
+ok 19 - reload: default byte admission executes 10,000 recursive calls plus entry frames
+  ---
+  duration_ms: 115.537506
+  type: 'test'
+  ...
+# Subtest: reload: the default byte limit overflows fatally before an enclosing catch can run
+ok 20 - reload: the default byte limit overflows fatally before an enclosing catch can run
+  ---
+  duration_ms: 1064.264793
+  type: 'test'
+  ...
+# Subtest: reload: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+ok 21 - reload: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+  ---
+  duration_ms: 18.392081
+  type: 'test'
+  ...
+# Subtest: reload: default admission preserves deep roots, snapshot replay and stop releases reservations
+ok 22 - reload: default admission preserves deep roots, snapshot replay and stop releases reservations
+  ---
+  duration_ms: 65.759536
+  type: 'test'
+  ...
+# Subtest: cil: default byte admission executes 10,000 recursive calls plus entry frames
+ok 23 - cil: default byte admission executes 10,000 recursive calls plus entry frames
+  ---
+  duration_ms: 870.743557
+  type: 'test'
+  ...
+# Subtest: cil: the default byte limit overflows fatally before an enclosing catch can run
+ok 24 - cil: the default byte limit overflows fatally before an enclosing catch can run
+  ---
+  duration_ms: 586.185484
+  type: 'test'
+  ...
+# Subtest: cil: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+ok 25 - cil: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+  ---
+  duration_ms: 35.085108
+  type: 'test'
+  ...
+# Subtest: cil: default admission preserves deep roots, snapshot replay and stop releases reservations
+ok 26 - cil: default admission preserves deep roots, snapshot replay and stop releases reservations
+  ---
+  duration_ms: 153.655206
+  type: 'test'
+  ...
+# Subtest: source fusion modes share the same default quota and deep-call result
+ok 27 - source fusion modes share the same default quota and deep-call result
+  ---
+  duration_ms: 111.536963
+  type: 'test'
+  ...
+# Subtest: first slice fault records scalar identity before debugger notification and defers subscribers
+ok 28 - first slice fault records scalar identity before debugger notification and defers subscribers
+  ---
+  duration_ms: 29.920439
+  type: 'test'
+  ...
+# Subtest: catch rethrow and cross-frame unwind do not duplicate the original event
+ok 29 - catch rethrow and cross-frame unwind do not duplicate the original event
+  ---
+  duration_ms: 11.336146
+  type: 'test'
+  ...
+# Subtest: restoring a catch before rethrow still uses the captured canonical fault identity
+ok 30 - restoring a catch before rethrow still uses the captured canonical fault identity
+  ---
+  duration_ms: 8.270231
+  type: 'test'
+  ...
+# Subtest: an explicit throw of a caught object is a new origin
+ok 31 - an explicit throw of a caught object is a new origin
+  ---
+  duration_ms: 5.42421
+  type: 'test'
+  ...
+# Subtest: a rethrow outside a catch is rejected before runtime event execution
+ok 32 - a rethrow outside a catch is rejected before runtime event execution
+  ---
+  duration_ms: 2.842496
+  type: 'test'
+  ...
+# Subtest: a host-edited invalid rethrow retains its runtime fault observation fallback
+ok 33 - a host-edited invalid rethrow retains its runtime fault observation fallback
+  ---
+  duration_ms: 2.951086
+  type: 'test'
+  ...
+# Subtest: finally continuation propagates a fault without emitting another origin
+ok 34 - finally continuation propagates a fault without emitting another origin
+  ---
+  duration_ms: 2.434257
+  type: 'test'
+  ...
+# Subtest: instruction admission limits are observed without changing raw diagnostic names
+ok 35 - instruction admission limits are observed without changing raw diagnostic names
+  ---
+  duration_ms: 1.321802
+  type: 'test'
+  ...
+# Subtest: subscriber failure stays outside guest EH and disposal cancels delivery
+ok 36 - subscriber failure stays outside guest EH and disposal cancels delivery
+  ---
+  duration_ms: 5.612005
+  type: 'test'
+  ...
+# Subtest: small logs preserve drop accounting and disabled/manual execution retains its boundary
+ok 37 - small logs preserve drop accounting and disabled/manual execution retains its boundary
+  ---
+  duration_ms: 9.100661
+  type: 'test'
+  ...
+# Subtest: source: first-chance failure policy validates exact values and preserves the default
+ok 38 - source: first-chance failure policy validates exact values and preserves the default
+  ---
+  duration_ms: 160.24017
+  type: 'test'
+  ...
+# Subtest: source: after-unwind runs callback cleanup and handles cleanup throws=false
+ok 39 - source: after-unwind runs callback cleanup and handles cleanup throws=false
+  ---
+  duration_ms: 4.741256
+  type: 'test'
+  ...
+# Subtest: source: after-unwind runs callback cleanup and handles cleanup throws=true
+ok 40 - source: after-unwind runs callback cleanup and handles cleanup throws=true
+  ---
+  duration_ms: 29.604461
+  type: 'test'
+  ...
+# Subtest: source: cleanup suspension preserves captured policy through local and portable restore
+ok 41 - source: cleanup suspension preserves captured policy through local and portable restore
+  ---
+  duration_ms: 47.509749
+  type: 'test'
+  ...
+# Subtest: source: older captured notifications without a policy retain before-unwind behavior
+ok 42 - source: older captured notifications without a policy retain before-unwind behavior
+  ---
+  duration_ms: 15.32086
+  type: 'test'
+  ...
+# Subtest: source: terminal diagnostic graphs survive GC and local/portable snapshots
+ok 43 - source: terminal diagnostic graphs survive GC and local/portable snapshots
+  ---
+  duration_ms: 11.671338
+  type: 'test'
+  ...
+# Subtest: source: malformed captured policies and failfast boundaries reject atomically
+ok 44 - source: malformed captured policies and failfast boundaries reject atomically
+  ---
+  duration_ms: 7.094593
+  type: 'test'
+  ...
+# Subtest: source: runtime resource failure during cleanup bypasses further unwinding and notifications
+ok 45 - source: runtime resource failure during cleanup bypasses further unwinding and notifications
+  ---
+  duration_ms: 2.60015
+  type: 'test'
+  ...
+# Subtest: source: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched
+ok 46 - source: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched
+  ---
+  duration_ms: 8.411068
+  type: 'test'
+  ...
+# Subtest: reload: first-chance failure policy validates exact values and preserves the default
+ok 47 - reload: first-chance failure policy validates exact values and preserves the default
+  ---
+  duration_ms: 86.662903
+  type: 'test'
+  ...
+# Subtest: reload: after-unwind runs callback cleanup and handles cleanup throws=false
+ok 48 - reload: after-unwind runs callback cleanup and handles cleanup throws=false
+  ---
+  duration_ms: 11.529446
+  type: 'test'
+  ...
+# Subtest: reload: after-unwind runs callback cleanup and handles cleanup throws=true
+ok 49 - reload: after-unwind runs callback cleanup and handles cleanup throws=true
+  ---
+  duration_ms: 14.032727
+  type: 'test'
+  ...
+# Subtest: reload: cleanup suspension preserves captured policy through local and portable restore
+ok 50 - reload: cleanup suspension preserves captured policy through local and portable restore
+  ---
+  duration_ms: 45.206458
+  type: 'test'
+  ...
+# Subtest: reload: older captured notifications without a policy retain before-unwind behavior
+ok 51 - reload: older captured notifications without a policy retain before-unwind behavior
+  ---
+  duration_ms: 49.590361
+  type: 'test'
+  ...
+# Subtest: reload: terminal diagnostic graphs survive GC and local/portable snapshots
+ok 52 - reload: terminal diagnostic graphs survive GC and local/portable snapshots
+  ---
+  duration_ms: 31.210055
+  type: 'test'
+  ...
+# Subtest: reload: malformed captured policies and failfast boundaries reject atomically
+ok 53 - reload: malformed captured policies and failfast boundaries reject atomically
+  ---
+  duration_ms: 13.926832
+  type: 'test'
+  ...
+# Subtest: reload: runtime resource failure during cleanup bypasses further unwinding and notifications
+ok 54 - reload: runtime resource failure during cleanup bypasses further unwinding and notifications
+  ---
+  duration_ms: 13.342263
+  type: 'test'
+  ...
+# Subtest: reload: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched
+ok 55 - reload: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched
+  ---
+  duration_ms: 9.405549
+  type: 'test'
+  ...
+# Subtest: cil: first-chance failure policy validates exact values and preserves the default
+ok 56 - cil: first-chance failure policy validates exact values and preserves the default
+  ---
+  duration_ms: 44.819379
+  type: 'test'
+  ...
+# Subtest: cil: after-unwind runs callback cleanup and handles cleanup throws=false
+ok 57 - cil: after-unwind runs callback cleanup and handles cleanup throws=false
+  ---
+  duration_ms: 15.832642
+  type: 'test'
+  ...
+# Subtest: cil: after-unwind runs callback cleanup and handles cleanup throws=true
+ok 58 - cil: after-unwind runs callback cleanup and handles cleanup throws=true
+  ---
+  duration_ms: 12.14204
+  type: 'test'
+  ...
+# Subtest: cil: cleanup suspension preserves captured policy through local and portable restore
+ok 59 - cil: cleanup suspension preserves captured policy through local and portable restore
+  ---
+  duration_ms: 31.054056
+  type: 'test'
+  ...
+# Subtest: cil: older captured notifications without a policy retain before-unwind behavior
+ok 60 - cil: older captured notifications without a policy retain before-unwind behavior
+  ---
+  duration_ms: 24.534908
+  type: 'test'
+  ...
+# Subtest: cil: terminal diagnostic graphs survive GC and local/portable snapshots
+ok 61 - cil: terminal diagnostic graphs survive GC and local/portable snapshots
+  ---
+  duration_ms: 20.174451
+  type: 'test'
+  ...
+# Subtest: cil: malformed captured policies and failfast boundaries reject atomically
+ok 62 - cil: malformed captured policies and failfast boundaries reject atomically
+  ---
+  duration_ms: 12.437232
+  type: 'test'
+  ...
+# Subtest: cil: runtime resource failure during cleanup bypasses further unwinding and notifications
+ok 63 - cil: runtime resource failure during cleanup bypasses further unwinding and notifications
+  ---
+  duration_ms: 8.781121
+  type: 'test'
+  ...
+# Subtest: cil: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched
+ok 64 - cil: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched
+  ---
+  duration_ms: 7.569301
+  type: 'test'
+  ...
+# Subtest: ordinary return preserves null, undefined, scalar and reference values without continuation delivery
+ok 65 - ordinary return preserves null, undefined, scalar and reference values without continuation delivery
+  ---
+  duration_ms: 107.915273
+  type: 'test'
+  ...
+# Subtest: source return reads each continuation once, in order, independently and in combination
+ok 66 - source return reads each continuation once, in order, independently and in combination
+  ---
+  duration_ms: 3.791781
+  type: 'test'
+  ...
+# Subtest: CIL return reads each continuation once, in order, independently and in combination
+ok 67 - CIL return reads each continuation once, in order, independently and in combination
+  ---
+  duration_ms: 15.776289
+  type: 'test'
+  ...
+# Subtest: Object string validation precedes absence checks and sees continuation state installed during validation
+ok 68 - Object string validation precedes absence checks and sees continuation state installed during validation
+  ---
+  duration_ms: 2.023703
+  type: 'test'
+  ...
+# Subtest: delegate completion can install an exception continuation before its turn
+ok 69 - delegate completion can install an exception continuation before its turn
+  ---
+  duration_ms: 0.811031
+  type: 'test'
+  ...
+# Subtest: source: ordinary reference return preserves roots while revoking pins and stack regions
+ok 70 - source: ordinary reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 161.38685
+  type: 'test'
+  ...
+# Subtest: source: finally reference return preserves roots while revoking pins and stack regions
+ok 71 - source: finally reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 21.83609
+  type: 'test'
+  ...
+# Subtest: reload: ordinary reference return preserves roots while revoking pins and stack regions
+ok 72 - reload: ordinary reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 13.056071
+  type: 'test'
+  ...
+# Subtest: reload: finally reference return preserves roots while revoking pins and stack regions
+ok 73 - reload: finally reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 8.74698
+  type: 'test'
+  ...
+# Subtest: cil: ordinary reference return preserves roots while revoking pins and stack regions
+ok 74 - cil: ordinary reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 23.96596
+  type: 'test'
+  ...
+# Subtest: cil: finally reference return preserves roots while revoking pins and stack regions
+ok 75 - cil: finally reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 11.928325
+  type: 'test'
+  ...
+# Subtest: source: one origin precedes debugger notification, catch and finally without retaining the fault
+ok 76 - source: one origin precedes debugger notification, catch and finally without retaining the fault
+  ---
+  duration_ms: 122.614173
+  type: 'test'
+  ...
+# Subtest: source: valid rethrow and restored catch state reuse the existing origin
+ok 77 - source: valid rethrow and restored catch state reuse the existing origin
+  ---
+  duration_ms: 17.718211
+  type: 'test'
+  ...
+# Subtest: source: debugger pending-fault resume and restore do not invent another throw
+ok 78 - source: debugger pending-fault resume and restore do not invent another throw
+  ---
+  duration_ms: 2.671565
+  type: 'test'
+  ...
+# Subtest: source: explicit throw of the same object is a new origin
+ok 79 - source: explicit throw of the same object is a new origin
+  ---
+  duration_ms: 8.275027
+  type: 'test'
+  ...
+# Subtest: source: invalid rethrow reports its new fault rather than suppressing by opcode alone
+ok 80 - source: invalid rethrow reports its new fault rather than suppressing by opcode alone
+  ---
+  duration_ms: 1.532181
+  type: 'test'
+  ...
+# Subtest: source: replaying the originating instruction creates a new chronological event
+ok 81 - source: replaying the originating instruction creates a new chronological event
+  ---
+  duration_ms: 2.023523
+  type: 'test'
+  ...
+# Subtest: source: runtime instruction quota and pre-dispatch stack quota each emit one fatal origin
+ok 82 - source: runtime instruction quota and pre-dispatch stack quota each emit one fatal origin
+  ---
+  duration_ms: 7.248689
+  type: 'test'
+  ...
+# Subtest: source: captured attempted location survives a host callback stopping and retiring its frame
+ok 83 - source: captured attempted location survives a host callback stopping and retiring its frame
+  ---
+  duration_ms: 4.725252
+  type: 'test'
+  ...
+# Subtest: source: subscriber failures escape after guest handlers and never become managed origins
+ok 84 - source: subscriber failures escape after guest handlers and never become managed origins
+  ---
+  duration_ms: 1.693779
+  type: 'test'
+  ...
+# Subtest: source: host handleFault stays outside the origin boundary and disabled observation stays off
+ok 85 - source: host handleFault stays outside the origin boundary and disabled observation stays off
+  ---
+  duration_ms: 4.755316
+  type: 'test'
+  ...
+# Subtest: reload: one origin precedes debugger notification, catch and finally without retaining the fault
+ok 86 - reload: one origin precedes debugger notification, catch and finally without retaining the fault
+  ---
+  duration_ms: 10.240095
+  type: 'test'
+  ...
+# Subtest: reload: valid rethrow and restored catch state reuse the existing origin
+ok 87 - reload: valid rethrow and restored catch state reuse the existing origin
+  ---
+  duration_ms: 7.818407
+  type: 'test'
+  ...
+# Subtest: reload: debugger pending-fault resume and restore do not invent another throw
+ok 88 - reload: debugger pending-fault resume and restore do not invent another throw
+  ---
+  duration_ms: 8.814861
+  type: 'test'
+  ...
+# Subtest: reload: explicit throw of the same object is a new origin
+ok 89 - reload: explicit throw of the same object is a new origin
+  ---
+  duration_ms: 6.648487
+  type: 'test'
+  ...
+# Subtest: reload: invalid rethrow reports its new fault rather than suppressing by opcode alone
+ok 90 - reload: invalid rethrow reports its new fault rather than suppressing by opcode alone
+  ---
+  duration_ms: 5.983591
+  type: 'test'
+  ...
+# Subtest: reload: replaying the originating instruction creates a new chronological event
+ok 91 - reload: replaying the originating instruction creates a new chronological event
+  ---
+  duration_ms: 7.217854
+  type: 'test'
+  ...
+# Subtest: reload: runtime instruction quota and pre-dispatch stack quota each emit one fatal origin
+ok 92 - reload: runtime instruction quota and pre-dispatch stack quota each emit one fatal origin
+  ---
+  duration_ms: 5.034606
+  type: 'test'
+  ...
+# Subtest: reload: captured attempted location survives a host callback stopping and retiring its frame
+ok 93 - reload: captured attempted location survives a host callback stopping and retiring its frame
+  ---
+  duration_ms: 2.959207
+  type: 'test'
+  ...
+# Subtest: reload: subscriber failures escape after guest handlers and never become managed origins
+ok 94 - reload: subscriber failures escape after guest handlers and never become managed origins
+  ---
+  duration_ms: 6.555111
+  type: 'test'
+  ...
+# Subtest: reload: host handleFault stays outside the origin boundary and disabled observation stays off
+ok 95 - reload: host handleFault stays outside the origin boundary and disabled observation stays off
+  ---
+  duration_ms: 6.143676
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: cross-frame filters precede cleanup
+ok 96 - T04 source filters source: cross-frame filters precede cleanup
+  ---
+  duration_ms: 172.319239
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: filter faults resume the original search after their own cleanup
+ok 97 - T04 source filters source: filter faults resume the original search after their own cleanup
+  ---
+  duration_ms: 47.379234
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: nonmatching typed filters have no side effects
+ok 98 - T04 source filters source: nonmatching typed filters have no side effects
+  ---
+  duration_ms: 39.123339
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: catch closures retain a fresh cell after the handler exits
+ok 99 - T04 source filters source: catch closures retain a fresh cell after the handler exits
+  ---
+  duration_ms: 32.46719
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: filter closures and the accepted body share the same catch cell
+ok 100 - T04 source filters source: filter closures and the accepted body share the same catch cell
+  ---
+  duration_ms: 21.237612
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: filters share captured locals and rethrow preserves exception identity
+ok 101 - T04 source filters source: filters share captured locals and rethrow preserves exception identity
+  ---
+  duration_ms: 20.642397
+  type: 'test'
+  ...
+# Subtest: T04 source filters source: portable replay retains the suspended search and locals
+ok 102 - T04 source filters source: portable replay retains the suspended search and locals
+  ---
+  duration_ms: 39.399615
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: cross-frame filters precede cleanup
+ok 103 - T04 source filters reload: cross-frame filters precede cleanup
+  ---
+  duration_ms: 37.752015
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: filter faults resume the original search after their own cleanup
+ok 104 - T04 source filters reload: filter faults resume the original search after their own cleanup
+  ---
+  duration_ms: 21.725909
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: nonmatching typed filters have no side effects
+ok 105 - T04 source filters reload: nonmatching typed filters have no side effects
+  ---
+  duration_ms: 22.501609
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: catch closures retain a fresh cell after the handler exits
+ok 106 - T04 source filters reload: catch closures retain a fresh cell after the handler exits
+  ---
+  duration_ms: 23.360831
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: filter closures and the accepted body share the same catch cell
+ok 107 - T04 source filters reload: filter closures and the accepted body share the same catch cell
+  ---
+  duration_ms: 18.349959
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: filters share captured locals and rethrow preserves exception identity
+ok 108 - T04 source filters reload: filters share captured locals and rethrow preserves exception identity
+  ---
+  duration_ms: 6.878196
+  type: 'test'
+  ...
+# Subtest: T04 source filters reload: portable replay retains the suspended search and locals
+ok 109 - T04 source filters reload: portable replay retains the suspended search and locals
+  ---
+  duration_ms: 29.534382
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: cross-frame filters precede cleanup
+ok 110 - T04 source filters cil: cross-frame filters precede cleanup
+  ---
+  duration_ms: 36.068972
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: filter faults resume the original search after their own cleanup
+ok 111 - T04 source filters cil: filter faults resume the original search after their own cleanup
+  ---
+  duration_ms: 17.145019
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: nonmatching typed filters have no side effects
+ok 112 - T04 source filters cil: nonmatching typed filters have no side effects
+  ---
+  duration_ms: 16.857997
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: catch closures retain a fresh cell after the handler exits
+ok 113 - T04 source filters cil: catch closures retain a fresh cell after the handler exits
+  ---
+  duration_ms: 21.306313
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: filter closures and the accepted body share the same catch cell
+ok 114 - T04 source filters cil: filter closures and the accepted body share the same catch cell
+  ---
+  duration_ms: 20.227117
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: filters share captured locals and rethrow preserves exception identity
+ok 115 - T04 source filters cil: filters share captured locals and rethrow preserves exception identity
+  ---
+  duration_ms: 9.278531
+  type: 'test'
+  ...
+# Subtest: T04 source filters cil: portable replay retains the suspended search and locals
+ok 116 - T04 source filters cil: portable replay retains the suspended search and locals
+  ---
+  duration_ms: 28.310663
+  type: 'test'
+  ...
+# Subtest: source: filters precede pending task cleanup, including local and portable replay
+ok 117 - source: filters precede pending task cleanup, including local and portable replay
+  ---
+  duration_ms: 183.322514
+  type: 'test'
+  ...
+# Subtest: source: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+ok 118 - source: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+  ---
+  duration_ms: 32.526007
+  type: 'test'
+  ...
+# Subtest: source: debugger pending-fault resume delivers the completed task before another opcode
+ok 119 - source: debugger pending-fault resume delivers the completed task before another opcode
+  ---
+  duration_ms: 14.103691
+  type: 'test'
+  ...
+# Subtest: source: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+ok 120 - source: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+  ---
+  duration_ms: 7.791838
+  type: 'test'
+  ...
+# Subtest: cil: filters precede pending task cleanup, including local and portable replay
+ok 121 - cil: filters precede pending task cleanup, including local and portable replay
+  ---
+  duration_ms: 119.665961
+  type: 'test'
+  ...
+# Subtest: cil: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+ok 122 - cil: an escaping await fault completes intermediate tasks and a finally fault replaces the original
+  ---
+  duration_ms: 41.992239
+  type: 'test'
+  ...
+# Subtest: cil: debugger pending-fault resume delivers the completed task before another opcode
+ok 123 - cil: debugger pending-fault resume delivers the completed task before another opcode
+  ---
+  duration_ms: 31.4938
+  type: 'test'
+  ...
+# Subtest: cil: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+ok 124 - cil: process, thread, suppressed callback and fatal faults preserve their first-pass frames
+  ---
+  duration_ms: 19.368877
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.4 an async iterator awaits between elements and await foreach consumes it
+ok 125 - SF-A02-T09.4 an async iterator awaits between elements and await foreach consumes it
+  ---
+  duration_ms: 273.248493
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.4 leaving await foreach early disposes the stream: its finally block runs, and may await
+ok 126 - SF-A02-T09.4 leaving await foreach early disposes the stream: its finally block runs, and may await
+  ---
+  duration_ms: 107.289774
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.4 MoveNextAsync and DisposeAsync of an async enumerator are tasks
+ok 127 - SF-A02-T09.4 MoveNextAsync and DisposeAsync of an async enumerator are tasks
+  ---
+  duration_ms: 93.898849
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.4 await foreach over the GetAsyncEnumerator pattern awaits MoveNextAsync and DisposeAsync
+ok 128 - SF-A02-T09.4 await foreach over the GetAsyncEnumerator pattern awaits MoveNextAsync and DisposeAsync
+  ---
+  duration_ms: 59.901922
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.4 await using and using declarations dispose in reverse order when the scope is left
+ok 129 - SF-A02-T09.4 await using and using declarations dispose in reverse order when the scope is left
+  ---
+  duration_ms: 82.272683
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.4 async-stream diagnostics
+ok 130 - SF-A02-T09.4 async-stream diagnostics
+  ---
+  duration_ms: 38.619499
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 an async method runs up to its first pending await, then completes its task
+ok 131 - SF-A02-T09.2 an async method runs up to its first pending await, then completes its task
+  ---
+  duration_ms: 287.622426
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 Task, Task<T>, ValueTask, ValueTask<T> and async void
+ok 132 - SF-A02-T09.2 Task, Task<T>, ValueTask, ValueTask<T> and async void
+  ---
+  duration_ms: 160.895607
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.3 operands evaluated before an await keep their values and their order
+ok 133 - SF-A02-T09.3 operands evaluated before an await keep their values and their order
+  ---
+  duration_ms: 93.803547
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 await inside try, catch and finally; a fault leaves through the awaiting caller
+ok 134 - SF-A02-T09.2 await inside try, catch and finally; a fault leaves through the awaiting caller
+  ---
+  duration_ms: 63.13833
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 async lambdas and local functions capture variables and the receiver
+ok 135 - SF-A02-T09.2 async lambdas and local functions capture variables and the receiver
+  ---
+  duration_ms: 100.439393
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 top-level statements with await run as an async entry point
+ok 136 - SF-A02-T09.2 top-level statements with await run as an async entry point
+  ---
+  duration_ms: 45.14709
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 a task without a registered numeric construction is named
+ok 137 - SF-A02-T09.2 a task without a registered numeric construction is named
+  ---
+  duration_ms: 8.408127
+  type: 'test'
+  ...
+# Subtest: SF-A02-T02.6 a task of a user class shares the runtime task over object
+ok 138 - SF-A02-T02.6 a task of a user class shares the runtime task over object
+  ---
+  duration_ms: 31.126865
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 async diagnostics: parameters, lock, return and await placement
+ok 139 - SF-A02-T09.2 async diagnostics: parameters, lock, return and await placement
+  ---
+  duration_ms: 29.259796
+  type: 'test'
+  ...
+# Subtest: debugger: entry, step over, step in and step out use source points
+ok 140 - debugger: entry, step over, step in and step out use source points
+  ---
+  duration_ms: 104.797623
+  type: 'test'
+  ...
+# Subtest: debugger: step over does not enter called method
+ok 141 - debugger: step over does not enter called method
+  ---
+  duration_ms: 16.932445
+  type: 'test'
+  ...
+# Subtest: debugger: bound breakpoints, conditions and hit counts
+ok 142 - debugger: bound breakpoints, conditions and hit counts
+  ---
+  duration_ms: 11.693575
+  type: 'test'
+  ...
+# Subtest: debugger: logpoints continue without pausing
+ok 143 - debugger: logpoints continue without pausing
+  ---
+  duration_ms: 13.05094
+  type: 'test'
+  ...
+# Subtest: debugger: invalid breakpoints report unverified locations
+ok 144 - debugger: invalid breakpoints report unverified locations
+  ---
+  duration_ms: 5.124086
+  type: 'test'
+  ...
+# Subtest: debugger: disabled breakpoints do not stop
+ok 145 - debugger: disabled breakpoints do not stop
+  ---
+  duration_ms: 3.350494
+  type: 'test'
+  ...
+# Subtest: debugger: function breakpoints stop in callee
+ok 146 - debugger: function breakpoints stop in callee
+  ---
+  duration_ms: 3.557318
+  type: 'test'
+  ...
+# Subtest: debugger: data breakpoint fires on local write
+ok 147 - debugger: data breakpoint fires on local write
+  ---
+  duration_ms: 4.051584
+  type: 'test'
+  ...
+# Subtest: debugger: side-effect-free watches cannot invoke or mutate
+ok 148 - debugger: side-effect-free watches cannot invoke or mutate
+  ---
+  duration_ms: 4.406225
+  type: 'test'
+  ...
+# Subtest: debugger: local edits affect continuation and validate types
+ok 149 - debugger: local edits affect continuation and validate types
+  ---
+  duration_ms: 3.301653
+  type: 'test'
+  ...
+# Subtest: debugger: const locals cannot be edited
+ok 150 - debugger: const locals cannot be edited
+  ---
+  duration_ms: 2.404995
+  type: 'test'
+  ...
+# Subtest: debugger: arrays and object children expose actual values
+not ok 151 - debugger: arrays and object children expose actual values
+  ---
+  duration_ms: 17.993538
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/debugger.test.js:24:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '2'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '2'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/debugger.test.js:24:384)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: debugger: exception break happens before catch and resumes into handler
+ok 152 - debugger: exception break happens before catch and resumes into handler
+  ---
+  duration_ms: 11.969971
+  type: 'test'
+  ...
+# Subtest: debugger: uncaught-only exception mode ignores caught exceptions
+ok 153 - debugger: uncaught-only exception mode ignores caught exceptions
+  ---
+  duration_ms: 5.788057
+  type: 'test'
+  ...
+# Subtest: debugger: reverse snapshots restore locals and output
+ok 154 - debugger: reverse snapshots restore locals and output
+  ---
+  duration_ms: 13.95584
+  type: 'test'
+  ...
+# Subtest: debugger: reverse snapshots retain objects across later collection
+not ok 155 - debugger: reverse snapshots retain objects across later collection
+  ---
+  duration_ms: 6.364073
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/debugger.test.js:28:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/debugger.test.js:28:331)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: debugger: recording is bounded and optional
+ok 156 - debugger: recording is bounded and optional
+  ---
+  duration_ms: 15.90849
+  type: 'test'
+  ...
+# Subtest: debugger: pause/stop are cooperative and invalidate frames
+ok 157 - debugger: pause/stop are cooperative and invalidate frames
+  ---
+  duration_ms: 2.889817
+  type: 'test'
+  ...
+1..157
+# tests 157
+# suites 0
+# pass 155
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 22513.270787

@@ -32,8 +32,8 @@ failed nine assertions after 78.451 seconds. It did **not** time out. Increasing
 the qualification allowance does not repair or reclassify those failures.
 
 The component timings remain in the
-[numeric replay archive](a05-evidence/numeric-independent-20261004/README.md),
-[final A05 validation archive](a05-evidence/integration-validation-20261004/native-repairs/final/README.md)
+[numeric replay archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/numeric-independent-20261004/README.md),
+[final A05 validation archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/native-repairs/final/README.md)
 and the actual core job log `a05-ci312-core-job111502749706.log` retained by the
 integration owner. Ordinary PR checks are neither broadened nor slowed by this
 qualification-only scheduling change.

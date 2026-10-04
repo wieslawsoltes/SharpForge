@@ -1,0 +1,29 @@
+{
+  "id": "native-width",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/native-width",
+      "--source-routes",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/native-width/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "native-width/evidence",
+  "report": "native-width/result.json",
+  "startedAt": "2026-10-04T20:29:36.759Z",
+  "durationMs": 3902.0957080000007,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "native-width/stdout.log",
+  "stderr": "native-width/stderr.log",
+  "finishedAt": "2026-10-04T20:29:40.664Z"
+}

@@ -1,0 +1,14 @@
+{
+  "suite": "speedscope-source",
+  "passed": true,
+  "engine": "chromium",
+  "cspViolations": [],
+  "browser": "153.0.8010.12",
+  "executable": "playwright-managed",
+  "launchOptions": {
+    "headless": true
+  },
+  "mode": "Official Speedscope UI file import",
+  "seconds": 0.5535514179999979,
+  "diagnosticErrors": []
+}

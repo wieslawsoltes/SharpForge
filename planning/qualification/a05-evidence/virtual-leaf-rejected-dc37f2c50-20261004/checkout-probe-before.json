@@ -1,0 +1,189 @@
+{
+  "status": "verified",
+  "verifiedAt": "2026-10-04T23:08:34.877826+00:00",
+  "productDirectory": "/tmp/a05-virtual-witness-42f7738360b9",
+  "revision": "dc37f2c50420d136a076e8bee046c999fa573303",
+  "fullTree": "39ee39ebbf2966a37183a2f7b1dfb269fedfd2d5",
+  "runtimeTree": "8fd06c5d6bcad619db5de30f672895dfa13a3cb9",
+  "harnessTree": "b85a4e8d47de5e918255831f7b50bf9f2c06e81c",
+  "worktreeStatus": "",
+  "trackedFilesInIndex": 18260,
+  "materializedTrackedFiles": 4670,
+  "materializedTrackedBytes": 26621780,
+  "materializedInventorySHA256": "e76089b394546e219d232b5f829e4182c22e6e85ea2102275e813d2b810118e9",
+  "allMaterializedTrackedBytesMatchGit": true,
+  "workspaceLinks": [
+    {
+      "name": "@sharpforge/archive",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/archive",
+      "relativeTarget": "../../packages/archive",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/archive"
+    },
+    {
+      "name": "@sharpforge/bcl-collections",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/bcl-collections",
+      "relativeTarget": "../../packages/bcl-collections",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/bcl-collections"
+    },
+    {
+      "name": "@sharpforge/bcl-core",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/bcl-core",
+      "relativeTarget": "../../packages/bcl-core",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/bcl-core"
+    },
+    {
+      "name": "@sharpforge/bytecode",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/bytecode",
+      "relativeTarget": "../../packages/bytecode",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/bytecode"
+    },
+    {
+      "name": "@sharpforge/cil",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/cil",
+      "relativeTarget": "../../packages/cil",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/cil"
+    },
+    {
+      "name": "@sharpforge/clr",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/clr",
+      "relativeTarget": "../../packages/clr",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/clr"
+    },
+    {
+      "name": "@sharpforge/compiler",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/compiler",
+      "relativeTarget": "../../packages/compiler",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/compiler"
+    },
+    {
+      "name": "@sharpforge/compute",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/compute",
+      "relativeTarget": "../../packages/compute",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/compute"
+    },
+    {
+      "name": "@sharpforge/controls",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/controls",
+      "relativeTarget": "../../packages/controls",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/controls"
+    },
+    {
+      "name": "@sharpforge/debugger",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/debugger",
+      "relativeTarget": "../../packages/debugger",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/debugger"
+    },
+    {
+      "name": "@sharpforge/designer",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/designer",
+      "relativeTarget": "../../packages/designer",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/designer"
+    },
+    {
+      "name": "@sharpforge/docking",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/docking",
+      "relativeTarget": "../../packages/docking",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/docking"
+    },
+    {
+      "name": "@sharpforge/editor",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/editor",
+      "relativeTarget": "../../packages/editor",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/editor"
+    },
+    {
+      "name": "@sharpforge/extensions",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/extensions",
+      "relativeTarget": "../../packages/extensions",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/extensions"
+    },
+    {
+      "name": "@sharpforge/framework",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/framework",
+      "relativeTarget": "../../packages/framework",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/framework"
+    },
+    {
+      "name": "@sharpforge/language",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/language",
+      "relativeTarget": "../../packages/language",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/language"
+    },
+    {
+      "name": "@sharpforge/msbuild",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/msbuild",
+      "relativeTarget": "../../packages/msbuild",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/msbuild"
+    },
+    {
+      "name": "@sharpforge/network",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/network",
+      "relativeTarget": "../../packages/network",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/network"
+    },
+    {
+      "name": "@sharpforge/project-system",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/project-system",
+      "relativeTarget": "../../packages/project-system",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/project-system"
+    },
+    {
+      "name": "@sharpforge/protocol",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/protocol",
+      "relativeTarget": "../../packages/protocol",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/protocol"
+    },
+    {
+      "name": "@sharpforge/refactoring",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/refactoring",
+      "relativeTarget": "../../packages/refactoring",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/refactoring"
+    },
+    {
+      "name": "@sharpforge/runtime",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/runtime",
+      "relativeTarget": "../../packages/runtime",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/runtime"
+    },
+    {
+      "name": "@sharpforge/symbols",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/symbols",
+      "relativeTarget": "../../packages/symbols",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/symbols"
+    },
+    {
+      "name": "@sharpforge/syntax",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/syntax",
+      "relativeTarget": "../../packages/syntax",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/syntax"
+    },
+    {
+      "name": "@sharpforge/templates",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/templates",
+      "relativeTarget": "../../packages/templates",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/templates"
+    },
+    {
+      "name": "@sharpforge/text",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/text",
+      "relativeTarget": "../../packages/text",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/text"
+    },
+    {
+      "name": "@sharpforge/winui",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/winui",
+      "relativeTarget": "../../packages/winui",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/winui"
+    },
+    {
+      "name": "@sharpforge/workspace",
+      "link": "/tmp/a05-virtual-witness-42f7738360b9/node_modules/@sharpforge/workspace",
+      "relativeTarget": "../../packages/workspace",
+      "resolvedTarget": "/tmp/a05-virtual-witness-42f7738360b9/packages/workspace"
+    }
+  ],
+  "sparsePatterns": "/.gitignore\n/.gitattributes\n/package.json\n/package-lock.json\n/CONTRIBUTING.md\n/packages/\n/bench/vm/\n/scripts/limited.js\n/scripts/planning/lib/resource-limits.js\n/scripts/planning/lib/run-slot-lease.js\n/scripts/planning/lib/run-slot-owner.js\n/scripts/perf-gate.js\n/tests/a05-prepared-virtual-calls.test.js\n/tests/a05-inline-cache.test.js\n/tests/a05-inline-cache-cursor.test.js\n/tests/a05-cil-prepared-frame-pool.test.js\n/tests/support/inline-cache-fixture.js\n",
+  "sparsePatternsSha256": "6a5548df19d44be16c02ff0ba37ad06f5d79e75889053b00fbd1507c2d4e3552",
+  "verifierSha256": "93e9ea98c3c57ae7fc728728e8fe3c0d0d6722e0183671895ce6f43270c0f6d9",
+  "scope": "Read-only checkout identity and own-package resolution; no runtime or performance execution."
+}

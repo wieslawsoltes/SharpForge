@@ -1,0 +1,35 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sharpforge@0.14.0 check
+> node scripts/run.js check
+
+{
+  "areas": 30,
+  "nodeFiles": 1360,
+  "browserScripts": 38,
+  "unassigned": 0,
+  "duplicate": 0
+}
+Checked 4830 JavaScript modules; 0 syntax errors.
+{
+  "passed": false,
+  "inspected": 4774,
+  "modules": 4821,
+  "errors": [
+    {
+      "path": "packages/debugger/src/evaluation.js",
+      "operation": "eval",
+      "sha256": "089fa9bff68f0bf1d76f09d50e1705e6df75e47d71990a4bec206d82ba21248f",
+      "count": 1,
+      "lines": [
+        126
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "packages/debugger/src/evaluation.js",
+      "operation": "eval",
+      "message": "Stale or mismatched allow-list entry"
+    }
+  ]
+}

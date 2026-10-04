@@ -1,0 +1,289 @@
+{
+  "focused": {
+    "totals": {
+      "tests": 30,
+      "pass": 30,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 2556.390442
+    },
+    "logSha256": "db12d67bf0dfdf1cde0027663aebd854a3b126ea9500b0f8a8ae276c5959b0a5",
+    "observations": []
+  },
+  "replay": {
+    "totals": {
+      "tests": 7,
+      "pass": 1,
+      "fail": 6,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 2324.069076
+    },
+    "logSha256": "f0635ad8bf6a93417473ff1b12322581fa29828d5c4673bc223a2437de5dbbe8",
+    "observations": [
+      {
+        "case": "canonical managed replay: source Shape and Button retain their user-defined construction and fields",
+        "observation": {
+          "phase": "execution",
+          "error": null,
+          "sourceSha256": "44d36ad19354b60c7bd8419a3c3c9dde55a3279d56236184106c52d04c515afa",
+          "success": true,
+          "diagnostics": [],
+          "assemblyBytes": 2048,
+          "assemblySha256": "fb8148ddb6c4fb4ab285a02cf5133ab04ccb1bb88a56def97235498bc46086ab",
+          "state": "faulted",
+          "output": "",
+          "fault": {
+            "name": "InvalidProgramException",
+            "message": "Field declaring type does not match the receiver",
+            "stack": "InvalidProgramException: Field declaring type does not match the receiver\n    at FieldResolutionCache.resolve (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/field-resolution-cache.js:52:29)\n    at CilTypeSystem.field (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/type-system.js:67:32)\n    at CilVirtualMachine.field (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/cil-vm.js:73:43)\n    at executeFieldAccess (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/value-fields.js:13:107)\n    at file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/handlers/object-model.js:18:50\n    at dispatchWasmCall (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/wasm/call-tier-state.js:135:12)\n    at executeCilStep (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/cil-step.js:38:12)\n    at CilVirtualMachine.step (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/cil-vm.js:90:17)\n    at runCilSlice (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/cil-slice.js:58:17)\n    at CilVirtualMachine.runSlice (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/cil-vm.js:91:28)",
+            "issues": null
+          }
+        },
+        "assemblyUnchangedFromOriginalFailure": true,
+        "oldEhInputFailure": false,
+        "currentEhFlowIssues": []
+      },
+      {
+        "case": "canonical managed replay: extension iterator, closure and chained extension properties execute together",
+        "observation": {
+          "phase": "admission",
+          "error": {
+            "name": "CilError",
+            "message": "Managed IL verification failed: Program::Main IL_6: External member 'System.Collections.Generic.IEnumerable`1<int>::GetEnumerator' is not implemented; Program::Main IL_f: External member 'System.Collections.Generic.IEnumerator`1<int>::get_Current' is not implemented; Program::Main IL_21: External member 'System.Collections.IEnumerator::MoveNext' is not implemented; Program::Main IL_2e: External member 'System.IDisposable::Dispose' is not implemented; E+<UpTo>d__1::.ctor IL_e: External member 'System.Environment::get_CurrentManagedThreadId' is not implemented",
+            "stack": "CilError: Managed IL verification failed: Program::Main IL_6: External member 'System.Collections.Generic.IEnumerable`1<int>::GetEnumerator' is not implemented; Program::Main IL_f: External member 'System.Collections.Generic.IEnumerator`1<int>::get_Current' is not implemented; Program::Main IL_21: External member 'System.Collections.IEnumerator::MoveNext' is not implemented; Program::Main IL_2e: External member 'System.IDisposable::Dispose' is not implemented; E+<UpTo>d__1::.ctor IL_e: External member 'System.Environment::get_CurrentManagedThreadId' is not implemented\n    at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/verification-error.js:16:13)\n    at initializeCilAdmission (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/cil-admission.js:15:3)\n    at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/cil-vm.js:37:5)\n    at managedReplayEvidence (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/tests/support/managed-replay-evidence.js:27:10)\n    at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/tests/compiler-canonical-managed-replay.test.js:67:22)\n    at Test.runInAsyncScope (node:async_hooks:227:14)\n    at Test.run (node:internal/test_runner/test:1382:25)\n    at Test.processPendingSubtests (node:internal/test_runner/test:960:18)\n    at Test.postRun (node:internal/test_runner/test:1522:19)\n    at Test.run (node:internal/test_runner/test:1447:12)",
+            "issues": [
+              {
+                "methodToken": 100663301,
+                "method": "Program::Main",
+                "offset": 6,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.Collections.Generic.IEnumerable`1<int>::GetEnumerator' is not implemented"
+              },
+              {
+                "methodToken": 100663301,
+                "method": "Program::Main",
+                "offset": 15,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.Collections.Generic.IEnumerator`1<int>::get_Current' is not implemented"
+              },
+              {
+                "methodToken": 100663301,
+                "method": "Program::Main",
+                "offset": 33,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.Collections.IEnumerator::MoveNext' is not implemented"
+              },
+              {
+                "methodToken": 100663301,
+                "method": "Program::Main",
+                "offset": 46,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.IDisposable::Dispose' is not implemented"
+              },
+              {
+                "methodToken": 100663315,
+                "method": "E+<UpTo>d__1::.ctor",
+                "offset": 14,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.Environment::get_CurrentManagedThreadId' is not implemented"
+              }
+            ]
+          },
+          "sourceSha256": "d01fd2b9b73b266a09fb08df9de87580b4f6a26baea913b749f6066ea6f4a0ae",
+          "success": true,
+          "diagnostics": [],
+          "assemblyBytes": 4608,
+          "assemblySha256": "9fee4adf09337ad5c49029001d793952463e26d0ee82cd7b074db71527566d04"
+        },
+        "assemblyUnchangedFromOriginalFailure": true,
+        "oldEhInputFailure": true,
+        "currentEhFlowIssues": []
+      },
+      {
+        "case": "canonical managed replay: generic extension property reads List<T>.Count",
+        "observation": {
+          "phase": "admission",
+          "error": {
+            "name": "CilError",
+            "message": "Managed IL verification failed: E::get_IsEmpty1 IL_1: External member 'System.Collections.Generic.List`1<!!0>::get_Count' is not implemented",
+            "stack": "CilError: Managed IL verification failed: E::get_IsEmpty1 IL_1: External member 'System.Collections.Generic.List`1<!!0>::get_Count' is not implemented\n    at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/verification-error.js:16:13)\n    at initializeCilAdmission (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/cil-admission.js:15:3)\n    at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/cil-vm.js:37:5)\n    at managedReplayEvidence (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/tests/support/managed-replay-evidence.js:27:10)\n    at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/tests/compiler-canonical-managed-replay.test.js:67:22)\n    at Test.runInAsyncScope (node:async_hooks:227:14)\n    at Test.run (node:internal/test_runner/test:1382:25)\n    at Test.processPendingSubtests (node:internal/test_runner/test:960:18)\n    at Test.postRun (node:internal/test_runner/test:1522:19)\n    at Test.run (node:internal/test_runner/test:1447:12)",
+            "issues": [
+              {
+                "methodToken": 100663297,
+                "method": "E::get_IsEmpty1",
+                "offset": 1,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.Collections.Generic.List`1<!!0>::get_Count' is not implemented"
+              }
+            ]
+          },
+          "sourceSha256": "ecf9c8c9d72b7060a5f8258793daee647260e383b73d304e26a8ab293e6eaf98",
+          "success": true,
+          "diagnostics": [],
+          "assemblyBytes": 3072,
+          "assemblySha256": "910373dac001e92bc257de379227f5ca84324f978f1204a5a90bbefe992f66a4"
+        },
+        "assemblyUnchangedFromOriginalFailure": true,
+        "oldEhInputFailure": false,
+        "currentEhFlowIssues": []
+      },
+      {
+        "case": "canonical managed replay: local iterator captures the receiver and mutable outer local and runs finally",
+        "observation": {
+          "phase": "admission",
+          "error": {
+            "name": "CilError",
+            "message": "Managed IL verification failed: Program::Main IL_b: External member 'System.Collections.Generic.IEnumerable`1<int>::GetEnumerator' is not implemented; Program::Main IL_14: External member 'System.Collections.Generic.IEnumerator`1<int>::get_Current' is not implemented; Program::Main IL_26: External member 'System.Collections.IEnumerator::MoveNext' is not implemented; Program::Main IL_33: External member 'System.IDisposable::Dispose' is not implemented; Program+<Scaled>d__1::.ctor IL_e: External member 'System.Environment::get_CurrentManagedThreadId' is not implemented",
+            "stack": "CilError: Managed IL verification failed: Program::Main IL_b: External member 'System.Collections.Generic.IEnumerable`1<int>::GetEnumerator' is not implemented; Program::Main IL_14: External member 'System.Collections.Generic.IEnumerator`1<int>::get_Current' is not implemented; Program::Main IL_26: External member 'System.Collections.IEnumerator::MoveNext' is not implemented; Program::Main IL_33: External member 'System.IDisposable::Dispose' is not implemented; Program+<Scaled>d__1::.ctor IL_e: External member 'System.Environment::get_CurrentManagedThreadId' is not implemented\n    at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/verification-error.js:16:13)\n    at initializeCilAdmission (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/cil-admission.js:15:3)\n    at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/cil-vm.js:37:5)\n    at managedReplayEvidence (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/tests/support/managed-replay-evidence.js:27:10)\n    at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/tests/compiler-canonical-managed-replay.test.js:67:22)\n    at Test.runInAsyncScope (node:async_hooks:227:14)\n    at Test.run (node:internal/test_runner/test:1382:25)\n    at Test.processPendingSubtests (node:internal/test_runner/test:960:18)\n    at Test.postRun (node:internal/test_runner/test:1522:19)\n    at Test.run (node:internal/test_runner/test:1447:12)",
+            "issues": [
+              {
+                "methodToken": 100663298,
+                "method": "Program::Main",
+                "offset": 11,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.Collections.Generic.IEnumerable`1<int>::GetEnumerator' is not implemented"
+              },
+              {
+                "methodToken": 100663298,
+                "method": "Program::Main",
+                "offset": 20,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.Collections.Generic.IEnumerator`1<int>::get_Current' is not implemented"
+              },
+              {
+                "methodToken": 100663298,
+                "method": "Program::Main",
+                "offset": 38,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.Collections.IEnumerator::MoveNext' is not implemented"
+              },
+              {
+                "methodToken": 100663298,
+                "method": "Program::Main",
+                "offset": 51,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.IDisposable::Dispose' is not implemented"
+              },
+              {
+                "methodToken": 100663305,
+                "method": "Program+<Scaled>d__1::.ctor",
+                "offset": 14,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.Environment::get_CurrentManagedThreadId' is not implemented"
+              }
+            ]
+          },
+          "sourceSha256": "f22cf22ff9e8d55ba2da0737498a4fdefc21377e9ec653138515e85887cb4d99",
+          "success": true,
+          "diagnostics": [],
+          "assemblyBytes": 5120,
+          "assemblySha256": "d2c241ca2d305b0d1659eef58bf00a9cb09815d196e5c7427ff8217c90aae386"
+        },
+        "assemblyUnchangedFromOriginalFailure": true,
+        "oldEhInputFailure": true,
+        "currentEhFlowIssues": []
+      },
+      {
+        "case": "independent direct-CIL replay: deconstruction/tuples-into-variables-and-swap",
+        "observation": {
+          "phase": "admission",
+          "error": {
+            "name": "CilError",
+            "message": "Managed IL verification failed: Program::Main IL_1a: External fields are inspection-only; Program::Main IL_22: External fields are inspection-only; Program::Main IL_12f: External fields are inspection-only; Program::Main IL_138: External fields are inspection-only; Program::Tally IL_1e: External member 'System.ValueTuple`2<int, int>::.ctor' is not implemented",
+            "stack": "CilError: Managed IL verification failed: Program::Main IL_1a: External fields are inspection-only; Program::Main IL_22: External fields are inspection-only; Program::Main IL_12f: External fields are inspection-only; Program::Main IL_138: External fields are inspection-only; Program::Tally IL_1e: External member 'System.ValueTuple`2<int, int>::.ctor' is not implemented\n    at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/verification-error.js:16:13)\n    at initializeCilAdmission (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/cil-admission.js:15:3)\n    at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/cil-vm.js:37:5)\n    at managedReplayEvidence (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/tests/support/managed-replay-evidence.js:27:10)\n    at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/tests/compiler-direct-cil-adjacent-replay.test.js:28:22)\n    at Test.runInAsyncScope (node:async_hooks:227:14)\n    at Test.run (node:internal/test_runner/test:1382:25)\n    at Test.start (node:internal/test_runner/test:1242:17)\n    at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)",
+            "issues": [
+              {
+                "methodToken": 100663298,
+                "method": "Program::Main",
+                "offset": 26,
+                "code": "IL_TOKEN",
+                "message": "External fields are inspection-only"
+              },
+              {
+                "methodToken": 100663298,
+                "method": "Program::Main",
+                "offset": 34,
+                "code": "IL_TOKEN",
+                "message": "External fields are inspection-only"
+              },
+              {
+                "methodToken": 100663298,
+                "method": "Program::Main",
+                "offset": 303,
+                "code": "IL_TOKEN",
+                "message": "External fields are inspection-only"
+              },
+              {
+                "methodToken": 100663298,
+                "method": "Program::Main",
+                "offset": 312,
+                "code": "IL_TOKEN",
+                "message": "External fields are inspection-only"
+              },
+              {
+                "methodToken": 100663297,
+                "method": "Program::Tally",
+                "offset": 30,
+                "code": "IL_REFERENCE",
+                "message": "External member 'System.ValueTuple`2<int, int>::.ctor' is not implemented"
+              }
+            ]
+          },
+          "sourceSha256": "ffc3bf257c1df4b65eb788f9e5aa2f3b9349a939dd27bb7c8ffb5a00f7102b5f",
+          "success": true,
+          "diagnostics": [],
+          "assemblyBytes": 2560,
+          "assemblySha256": "007a0e8c8adac36f440586512144142ddc4dd05e2ed28b6f5d5e76edcb946941"
+        },
+        "assemblyUnchangedFromOriginalFailure": true,
+        "oldEhInputFailure": false,
+        "currentEhFlowIssues": []
+      },
+      {
+        "case": "independent direct-CIL replay: by-reference/ref-out-in-parameters-share-the-variable",
+        "observation": {
+          "phase": "execution",
+          "error": null,
+          "sourceSha256": "9271ce1331abb0239529ddb66ccf2e46492b28620941a6fa07284318f6a9b6bb",
+          "success": true,
+          "diagnostics": [],
+          "assemblyBytes": 3072,
+          "assemblySha256": "41a1266099b6449f611df80891e2bbce080e5c69787685b8c75817c36ef2316d",
+          "state": "terminated",
+          "output": "21\n4\n14\n2\n2\n7\n3 4\nFalse\nafter5\nhello!5\n",
+          "fault": null
+        },
+        "assemblyUnchangedFromOriginalFailure": true,
+        "oldEhInputFailure": true,
+        "currentEhFlowIssues": []
+      },
+      {
+        "case": "independent direct-CIL replay: member-initializers/nested-object-initializer-reads-the-member-each-time",
+        "observation": {
+          "phase": "execution",
+          "error": null,
+          "sourceSha256": "31ee06f226de461a38c733a1db350ee4d86e314cf59254931be24e832fa917d3",
+          "success": true,
+          "diagnostics": [],
+          "assemblyBytes": 2560,
+          "assemblySha256": "19b0c702aeb5f034f1c0c83bf755930dee6d719dd00e42af37665d57fd7dc347",
+          "state": "faulted",
+          "output": "",
+          "fault": {
+            "name": "InvalidProgramException",
+            "message": "Call receiver has no matching declaring instance",
+            "stack": "InvalidProgramException: Call receiver has no matching declaring instance\n    at findCallOwner (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/generic-calls.js:58:33)\n    at selectedCallOwner (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/generic-calls.js:42:20)\n    at file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/calls.js:105:76\n    at ManagedHeap.withRoots (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/heap.js:16:116)\n    at invoke (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/calls.js:64:11)\n    at CilVirtualMachine.invoke (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/cil-vm.js:86:30)\n    at file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/handlers/call.js:10:93\n    at dispatchWasmCall (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/wasm/call-tier-state.js:135:12)\n    at executeCilStep (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/execution/cil-step.js:38:12)\n    at CilVirtualMachine.step (file:///workspace/scratch/1692a10afba9/p5-cil-admission-budget/packages/runtime/src/cil-vm.js:90:17)",
+            "issues": null
+          }
+        },
+        "assemblyUnchangedFromOriginalFailure": true,
+        "oldEhInputFailure": false,
+        "currentEhFlowIssues": []
+      }
+    ]
+  }
+}

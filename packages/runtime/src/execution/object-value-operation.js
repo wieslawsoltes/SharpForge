@@ -188,8 +188,7 @@ export function beginObjectHashCode(vm, value, options = {}) {
 }
 
 /** A normal managed field call resumes the same bounded operation after its ordinary retirement. */
-export function continueObjectValue(vm, frame, value) {
-  const state = frame.objectValueContinuation;
+export function continueObjectValue(vm, frame, value, state = frame.objectValueContinuation) {
   if (!state) return {handled: false, value};
   const owner = validateObjectValueState(vm, state, true);
   if (vm.top !== owner) invalid('Object field return reached a different calling frame');

@@ -1,0 +1,75 @@
+{
+  "task": "SF-A05-E04",
+  "fixture": "a05-statics",
+  "timestamp": "2026-10-04T19:52:27.671Z",
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "platform": "linux",
+  "architecture": "x64",
+  "node": "v22.23.3",
+  "dotnetSdk": "8.0.425",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.NETCore.App]",
+  "targetFramework": "net8.0",
+  "passed": true,
+  "status": "passed",
+  "qualification": "same Roslyn DLL executed by native .NET and CilVirtualMachine",
+  "sources": [
+    {
+      "path": "tests/fixtures/a05-statics/Program.cs",
+      "sha256": "2a5b9a994a9a80e115b5f11b66a6fef991ae83c17ecdffe63d5cef821a6b069d"
+    }
+  ],
+  "expectedOutput": "7\n42\n17\ngeneric\n31\n0\n23\n11\n",
+  "assemblySha256": "6e1d6c563f2e6749cddf4867fa5713b86e6bfa14b43eb523115b44e061c32e3c",
+  "native": {
+    "exitCode": 0,
+    "signal": null,
+    "output": "7\n42\n17\ngeneric\n31\n0\n23\n11\n",
+    "stderr": ""
+  },
+  "cil": {
+    "state": "terminated",
+    "exitCode": 0,
+    "output": "7\n42\n17\ngeneric\n31\n0\n23\n11\n",
+    "instructions": 40
+  },
+  "commands": [
+    {
+      "command": "dotnet",
+      "arguments": [
+        "restore",
+        "Qualification.csproj",
+        "--configfile",
+        "NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "build",
+        "Qualification.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "<temporary-project>/bin/Release/net8.0/Qualification.dll"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    }
+  ]
+}

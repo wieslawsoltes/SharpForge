@@ -121,8 +121,10 @@ export const intrinsicDefinitions=Object.freeze([...definitions.values()]);
 export function intrinsicDefinition(descriptor) {
   if(descriptor?.kind!=='method'||!descriptor.signature||!Array.isArray(descriptor.signature.parameters))return null;
   const signature=descriptor.signature;
+  // Metadata calls carry the owner token needed by async identity proof; registry
+  // descriptors retain their canonical static entry and handler identity.
   const async = asyncMethodDefinition(descriptor);
-  if (async) return async;
+  if (async) return descriptor.ownerToken ? async : frameworkDefinitions.get(frameworkKey(descriptor)) ?? async;
   if (isSynchronizationIntrinsic(descriptor)) {
     return builtinDefinitions.get(intrinsicKey(descriptor)) ?? {implementation:'synchronization',descriptor};
   }

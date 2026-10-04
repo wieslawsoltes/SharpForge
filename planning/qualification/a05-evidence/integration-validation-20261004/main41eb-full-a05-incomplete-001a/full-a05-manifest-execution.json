@@ -1,0 +1,36 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "full-a05-manifest",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/planning/run-tests.js",
+    "--area",
+    "A05",
+    "--",
+    "--expose-gc",
+    "--test-reporter=tap"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": "net10.0",
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "001a5ccc899ae517e430866d4d1ba03d89def346",
+    "tree": "9915d20c63a3ba9a9c81f1153a13dbcf6fbbc99b",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T21:45:16.855660+00:00"
+}

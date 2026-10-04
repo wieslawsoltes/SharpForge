@@ -58,7 +58,7 @@ stale authority, shared metadata, late fields, temporary roots, pin release,
 array identities and retention budgets. All seven new cases and the combined
 122-test pool/fusion/index run passed at `48c62243`. The unchanged Fibonacci
 measurements remain inconclusive against 1.5×; see the
-[retained 20- and 100-pair evidence](a05-evidence/source-fibonacci-2026-10-04/README.md).
+[retained 20- and 100-pair evidence](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/source-fibonacci-2026-10-04/README.md).
 
 The corresponding CIL pool suite adds
 signature/stack-capacity checks, changed-local rebinding with delayed retirement,

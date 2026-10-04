@@ -1,0 +1,1543 @@
+diff --git a/bench/vm/profiler-reference-transform.js b/bench/vm/profiler-reference-transform.js
+index d2ce707118c34c4606b9a815686acbe11da0910c..87e148754f87e264eb40fc9b386614369347a2c8 100644
+--- a/bench/vm/profiler-reference-transform.js
++++ b/bench/vm/profiler-reference-transform.js
+@@ -3,7 +3,7 @@ const requiredConsumers = new Set(['snapshot.js', 'execution/call-frames.js', 'e
+   'execution/initialize-source.js', 'execution/cil-instrumentation.js', 'execution/context-events.js',
+   'execution/stop.js']);
+ const consumers = new Set([...requiredConsumers, 'execution/cil-array-continuations.js', 'execution/source-array-continuations.js',
+-  'execution/numeric-blocks.js', 'execution/object-value-slice.js']);
++  'execution/numeric-blocks.js', 'execution/object-value-slice.js', 'execution/cil-leaf-window.js']);
+ const cilArrayProfilerBody = `  const profiler = vm.profiler;
+   let succeeded = false;
+   try {
+@@ -53,6 +53,9 @@ export function stripProfilerConsumer(path, source) {
+       source.split('const dispatch = instructionDispatcher(profiler);').length !== 2)) {
+     throw new Error('Unreviewed source profiling dispatcher in ' + path);
+   }
++  if (path === 'execution/cil-leaf-window.js' && source.split('vm.profiler || vm.options.profile || ').length !== 2) {
++    throw new Error('Unreviewed CIL leaf profiler guard in ' + path);
++  }
+   let changes = 0;
+   const rewrite = (pattern, replacement = '') => {
+     source = source.replace(pattern, (...arguments_) => {
+@@ -89,6 +92,7 @@ export function stripProfilerConsumer(path, source) {
+   }
+   if (path === 'execution/source-fusion.js') rewrite(/ \|\| vm\.profiler \|\| vm\.options\.profile/g);
+   if (path === 'execution/numeric-blocks.js') rewrite(/vm\.profiler \|\| vm\.options\.profile \|\| /g);
++  if (path === 'execution/cil-leaf-window.js') rewrite(/vm\.profiler \|\| vm\.options\.profile \|\| /g);
+   if (path === 'execution/context-events.js') {
+     rewrite(/if \(\(!log && !profiler\) \|\| previous === next\)/g, 'if (!log || previous === next)');
+   }
+diff --git a/docs/cil-inline-caches.md b/docs/cil-inline-caches.md
+index ca1cf71327decedc4977b4ab31b21bb0d8751230..7300d9c014a3ba9fbdb717c2febcbf505a0962eb 100644
+--- a/docs/cil-inline-caches.md
++++ b/docs/cil-inline-caches.md
+@@ -11,7 +11,7 @@ stored in the cache.
+ `inlineCacheSize` accepts integers from 1 through 16 and is validated when the
+ first virtual site executes. `inlineCaches: false` bypasses the cache. Null checks,
+ live heap-record validation, verified-target membership, argument normalization
+-and ordinary frame entry/return remain on their existing execution paths. Cache
++remain on their existing execution paths. The guarded constant-leaf path described below can omit physical frame entry/return. Cache
+ misses and megamorphic sites call `CilTypeSystem.virtualTarget`, preserving its
+ virtual-slot and interface-map rules, including any dispatcher-specific rejection.
+ 
+@@ -46,3 +46,44 @@ required 3× virtual-call benchmark speedup has not been measured or claimed.
+ Browser/native qualification and full T07 acceptance remain open. Source dispatch,
+ generic/constrained virtual calls and unsupported external virtual declarations
+ retain their existing limits.
++
++
++## Guarded constant-leaf calls
++
++`preparedLeafCalls` is a CIL VM option, enabled by default when inline caches are
++active. `preparedLeafCalls: false` preserves ordinary physical frame entry and
++return, skips leaf-plan construction and pool-proof branding, and provides the
++same-product reference for measuring this optimization. Changing the option to
++`false` during execution also disables eligibility. A VM constructed with the
++option disabled does not acquire leaf plans merely by changing it to `true`.
++`inlineCaches: false` also disables this path.
++
++The current eligible subset is a verified, parameterless instance method on a
++`beforefieldinit` owner returning Int32 or UInt32 with exactly an Int32 constant
++load followed by `ret`. It is selected by instruction and metadata proof, never
++by a method name, token or benchmark fixture. Argument returns, other scalar
++operations, supplied inspectors, subclasses, typed evaluation stacks and
++customized metadata or VM adapters keep ordinary execution. The logical call
++still admits the original depth and stack byte/value quotas, consumes the
++original monotonic frame identity and counts both callee instructions. All three
++instructions (call, load, return) must fit the current slice, instruction quota
++and 256-instruction clock boundary. A partial slice exposes the physical callee
++and its original instruction pointer.
++
++Profiling, runtime events, instruction observers, scheduler execution, per-opcode
++GC stress, Wasm ownership and relevant host overrides disable elision. A private
++pool proof authenticates factory-created storage before inspecting descriptors;
++retained fields, setters, foreign proxies, modified public pool maps, stale
++private bindings and live frame-index hooks require ordinary entry/retirement.
++Pristine pooled frames remain eligible after warm execution. Derived proof graphs
++are owned by the code epoch and are released by restore, stop or invalidation.
++They are never snapshot data.
++
++`executionCodeStatistics(vm)` includes `cilLeafCalls` (physical frames actually
++omitted) and `cilLeafInstructions` (original guest instructions executed by those
++calls), both reset with the code epoch. Existing frame-pool counters continue to
++report actual allocation/reuse/retirement; an elided call does not fabricate a
++physical reuse. The eligibility checks inspect live descriptors, so their cost
++and host allocations must be measured. This prototype has no speedup or 3×
++acceptance claim until focused correctness and the unchanged qualification
++protocol complete.
+diff --git a/packages/runtime/src/cil-vm.js b/packages/runtime/src/cil-vm.js
+index 5cde56214ef11b3b165f924fa7a56dbd15041246..7a293ca6455a08026796a452c13e1019bfd65096 100644
+--- a/packages/runtime/src/cil-vm.js
++++ b/packages/runtime/src/cil-vm.js
+@@ -1,4 +1,4 @@
+-import {registerScalarStoreAdapters} from './execution/scalar-slot-store.js';
++import {registerCilAdapters,initializeCilLeafCalls} from './execution/cil-leaf-window.js';
+ import {arrayVectorRecord} from './execution/arrays.js';
+ import {admitCilAssembly} from './execution/cil-admission.js';
+ import {admitCilAssemblyStacks,pushStackValue} from './execution/frame-stack.js';
+@@ -18,7 +18,6 @@ import { ManagedHeap, ManagedFault, isReference } from './heap.js';
+ import {compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
+ import {executeCilStep} from './execution/cil-step.js';
+ import {call,ensureInitialized,invoke} from './execution/calls.js';
+-import {registerCanonicalCilCall} from './execution/call-entry-guard.js';
+ import {CilTypeSystem} from './execution/type-system.js';
+ import {throwFault,continueUnwind,exceptionRoots} from './execution/eh.js';
+ import {runCilSlice} from './execution/cil-slice.js';
+@@ -34,8 +33,7 @@ import {executionOptions} from './execution/execution-options.js';
+ export class CilVirtualMachine {
+   #profiler = null;
+   constructor(bytes,options={}){
+-    registerCanonicalCilCall(this,canonicalCilCall);
+-    registerScalarStoreAdapters(this,canonicalScalarStoreAdapters);
++    registerCilAdapters(this,canonicalCilAdapters);
+     options=normalizeRuntimeLaunchOptions(options);
+     const started=performance.now();this.options=executionOptions(options);
+     bindNativeAbi(this.options);
+@@ -49,6 +47,7 @@ export class CilVirtualMachine {
+     for(const f of this.inspector.fields.values())if(f.isStatic)this.statics.set(f.token,storageDefault(this,resolveExecutionField(this.inspector,f.token).signature.type));
+     const args=cilEntryArguments(this,entry,options);
+     this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);startCilEntry(this,entry,args);
++    initializeCilLeafCalls(this,bytes);
+   }
+   *roots(){yield* rootValues(this);}
+   get top(){return this.frames.at(-1);}
+@@ -101,6 +100,6 @@ export class CilVirtualMachine {
+   stop(){stopExecution(this);}
+   statistics(){return {artifactFormat:'ECMA-335',profile:this.report.profile,instructions:this.instructions,elapsedMs:this.elapsedMs,frames:this.frames.length,assembly:{bytes:this.inspector.pe.bytes.length,loadMs:this.loadMs},heap:{...this.heap.stats,maxBytes:this.heap.maxBytes,threshold:this.heap.threshold}};}
+ }
+-const canonicalCilCall = CilVirtualMachine.prototype.call;
+-const canonicalScalarStoreAdapters = Object.freeze({address: CilVirtualMachine.prototype.address,
+-  dereference: CilVirtualMachine.prototype.dereference, storage: CilVirtualMachine.prototype.storage, pop: CilVirtualMachine.prototype.pop});
++const canonicalCilAdapters = Object.freeze({prototype: CilVirtualMachine.prototype,
++  descriptors: Object.getOwnPropertyDescriptors(CilVirtualMachine.prototype), scheduler: CooperativeScheduler.prototype,
++  schedulerDescriptors: Object.getOwnPropertyDescriptors(CooperativeScheduler.prototype)});
+diff --git a/packages/runtime/src/execution/calls.js b/packages/runtime/src/execution/calls.js
+index b2bd1f547041881147202a8387f3a2c03cd24093..47311c14047827066a4aaaea35e19c8f119882fe 100644
+--- a/packages/runtime/src/execution/calls.js
++++ b/packages/runtime/src/execution/calls.js
+@@ -1,3 +1,4 @@
++import {consumeCilLeafInvocation} from './cil-leaf-window.js';
+ import {userValueCallType, constructUserValue} from './value-calls.js';
+ import {boxedInterfaceReceiver} from './value-dispatch.js';
+ import {invokeConstrainedReferenceObject} from './constrained-reference-object.js';
+@@ -40,7 +41,8 @@ export function prepareCall(vm,frame=vm.top) {
+   frame.needsInitialization=false;return true;
+ }
+ export function invoke(vm,instruction) {
+-  if(instruction.name==='callvirt'&&vm.options.inlineCaches!==false&&tryPreparedVirtualCall(vm,vm.top,instruction))return;
++  const leaf = consumeCilLeafInvocation(vm, instruction);
++  if(instruction.name==='callvirt'&&vm.options.inlineCaches!==false&&tryPreparedVirtualCall(vm,vm.top,instruction,leaf))return;
+   const caller=vm.top,descriptor=callDescriptor(vm,instruction.operand,caller);
+   const target=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
+   const constraint=constrainedCallType(vm,caller,instruction,descriptor);
+diff --git a/packages/runtime/src/execution/cil-leaf-plan.js b/packages/runtime/src/execution/cil-leaf-plan.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..4b81d6549ded3607b59fbf6168e50c9c6d117e4a
+--- /dev/null
++++ b/packages/runtime/src/execution/cil-leaf-plan.js
+@@ -0,0 +1,66 @@
++import {verifiedStackBound} from '@sharpforge/cil';
++import {leafData, leafAbsent, leafPlainArray, leafPlainObject} from './leaf-data-proof.js';
++
++const integerTypes = new Set(['int', 'uint', 'System.Int32', 'System.UInt32']);
++const methodFields = ['token', 'ownerToken', 'name', 'instructions', 'handlers', 'maxStack', 'signature', 'locals', 'initLocals'];
++const instructionFields = ['name', 'offset', 'size', 'operandKind', 'operand'];
++const signatureFields = ['isStatic', 'genericArity', 'callingConvention', 'explicitThis', 'sentinel', 'returnType', 'parameters'];
++
++function capture(object, fields) {
++  const values = [];
++  for (const key of fields) {
++    const descriptor = Object.getOwnPropertyDescriptor(object, key);
++    if (descriptor && !Object.hasOwn(descriptor, 'value')) return null;
++    values.push(descriptor ? {value: descriptor.value} : null);
++  }
++  return values;
++}
++
++function current(object, fields, values) {
++  if (!leafPlainObject(object)) return false;
++  for (let index = 0; index < fields.length; index++) {
++    const expected = values[index];
++    if (expected ? !leafData(object, fields[index], expected.value) : !leafAbsent(object, fields[index])) return false;
++  }
++  return true;
++}
++
++function load(instruction) {
++  if (instruction.name === 'ldc.i4' || instruction.name === 'ldc.i4.s') return {argument: -1, value: instruction.operand};
++  if (instruction.name === 'ldc.i4.m1') return {argument: -1, value: -1};
++  if (/^ldc\.i4\.[0-8]$/.test(instruction.name)) return {argument: -1, value: Number(instruction.name.at(-1))};
++  return null;
++}
++
++/** Only two-instruction, parameterless Int32 constant leaves; no calls, branches, locals, conversions or EH. */
++export function prepareCilLeafPlan(vm, method, owner) {
++  const signature = method.signature, instructions = method.instructions;
++  if (!Array.isArray(instructions) || !Array.isArray(signature?.parameters) ||
++      instructions.length !== 2 || instructions[1].name !== 'ret' || method.handlers.length || method.locals.length ||
++      signature.isStatic || !integerTypes.has(signature.returnType) || signature.parameters.length || !(owner.flags & 0x100000)) return null;
++  const selected = load(instructions[0]);
++  if (!selected || !canonicalLeafInteger(selected.value) || !verifiedStackBound(vm.inspector, vm.report, method)) return null;
++  const methodValues = capture(method, methodFields), signatureValues = capture(signature, signatureFields);
++  const firstValues = capture(instructions[0], instructionFields), returnValues = capture(instructions[1], instructionFields);
++  if (!methodValues || !signatureValues || !firstValues || !returnValues) return null;
++  return {method, owner, ownerFlags: owner.flags, signature, instructions, parameters: [...signature.parameters],
++    first: instructions[0], last: instructions[1], methodValues, signatureValues, firstValues, returnValues, ...selected};
++}
++
++export function canonicalLeafInteger(value) {
++  return Number.isInteger(value) && value >= -2147483648 && value <= 2147483647 && !Object.is(value, -0);
++}
++
++/** Live data-descriptor checks retain fallback for edits, accessors and replaced code storage. */
++export function cilLeafPlanCurrent(plan) {
++  const {method, instructions, signature, parameters} = plan;
++  if (!current(method, methodFields, plan.methodValues) || !current(signature, signatureFields, plan.signatureValues) ||
++      !current(plan.first, instructionFields, plan.firstValues) || !current(plan.last, instructionFields, plan.returnValues) ||
++      !leafPlainArray(instructions, 2) || !leafData(instructions, '0', plan.first) || !leafData(instructions, '1', plan.last) ||
++      !leafPlainArray(method.handlers, 0) || !leafPlainArray(method.locals, 0) ||
++      !leafPlainArray(signature.parameters, parameters.length) || !leafData(plan.owner, 'flags', plan.ownerFlags)) return false;
++  for (let index = 0; index < parameters.length; index++) {
++    if (!leafData(signature.parameters, String(index), parameters[index])) return false;
++  }
++  return true;
++}
+diff --git a/packages/runtime/src/execution/cil-leaf-pool-proof.js b/packages/runtime/src/execution/cil-leaf-pool-proof.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..ace423d00a2184709f1931459bb4cd7dcbb99cda
+--- /dev/null
++++ b/packages/runtime/src/execution/cil-leaf-pool-proof.js
+@@ -0,0 +1,247 @@
++import {leafData, leafPlainArray, leafPlainObject, leafPrototypesCurrent} from './leaf-data-proof.js';
++
++const mapGet = Map.prototype.get;
++const weakGet = WeakMap.prototype.get;
++const weakSet = WeakMap.prototype.set;
++const weakSetAdd = WeakSet.prototype.add;
++const weakSetHas = WeakSet.prototype.has;
++const weakMapConstructor = WeakMap;
++const weakSetConstructor = WeakSet;
++const mapHas = Map.prototype.has;
++const weakHas = WeakMap.prototype.has;
++const mapMethods = Object.freeze({get: mapGet, set: Map.prototype.set});
++const weakMethods = Object.freeze({get: weakGet, set: WeakMap.prototype.set});
++const arrayFields = Object.freeze(['args', 'locals', 'stack', 'caught', 'unwinds']);
++const frameFields = new Set(['id', 'method', 'methodId', ...arrayFields, 'pc', 'lastOffset', 'offsets',
++  'base', 'point', 'exception', 'pending', 'needsInitialization', 'rootCaptures']);
++const preparedFields = new Set(['genericIdentity', 'methodArguments']);
++const statisticsFields = Object.freeze(['framesAllocated', 'arraysAllocated', 'reused', 'released', 'cachedFrames']);
++const poolObjects = Object.freeze(['buckets', 'entries', 'pending', 'buffers', 'capacities', 'statistics']);
++const identityFields = Object.freeze(['vm', 'owner', 'limit']);
++const collectionFields = Object.freeze(['buckets', 'entries', 'capacities']);
++const collectionMethods = Object.freeze(['get', 'set']);
++const retentionFields = Object.freeze(['framePooling', 'framePoolBytes', 'maxStackValues', 'inlineCaches', 'preparedLeafCalls']);
++const entryFields = Object.freeze(['bucket', 'retired', 'preparedStorage']);
++const bucketFields = Object.freeze(['args', 'locals', 'stack', 'bytes', 'free', 'current']);
++const bucketValues = Object.freeze(['args', 'locals', 'stack', 'bytes', 'free']);
++const bindingFields = Object.freeze(['plan', 'stack', 'bucket']);
++const poolFields = Object.freeze(['vm', 'owner', 'limit', ...poolObjects, 'bytes']);
++
++function ordinaryData(object, key, value) {
++  const descriptor = Object.getOwnPropertyDescriptor(object, key);
++  return descriptor !== undefined && Object.hasOwn(descriptor, 'value') && descriptor.value === value &&
++    descriptor.writable && descriptor.enumerable && descriptor.configurable;
++}
++
++function exactKeys(object, expected) {
++  const keys = Reflect.ownKeys(object);
++  if (keys.length !== expected.length) return false;
++  for (const key of keys) if (!expected.includes(key)) return false;
++  return true;
++}
++
++function ordinaryCollection(collection, prototype, methods) {
++  // Native internal-slot checks reject a foreign Proxy without executing its traps.
++  try {
++    (prototype === Map.prototype ? mapHas : weakHas).call(collection, collection);
++  } catch {
++    return false;
++  }
++  if (Object.getPrototypeOf(collection) !== prototype || Reflect.ownKeys(collection).length || !Object.isExtensible(collection)) return false;
++  for (const key of collectionMethods) {
++    if (!leafData(prototype, key, methods[key])) return false;
++  }
++  return true;
++}
++
++function ordinaryArray(array, length) {
++  if (!leafPlainArray(array, length) || Reflect.ownKeys(array).length !== length + 1) return false;
++  for (let index = 0; index < length; index++) {
++    const descriptor = Object.getOwnPropertyDescriptor(array, index);
++    if (!descriptor || !Object.hasOwn(descriptor, 'value') || !descriptor.writable ||
++        !descriptor.enumerable || !descriptor.configurable) return false;
++  }
++  return true;
++}
++
++/** Factory provenance remains private to the pool; exposed maps never authenticate their own contents. */
++export class CilLeafPoolProof {
++  #pool;
++  #prototype;
++  #adapters;
++  #adapterKeys;
++  #fields;
++  #options;
++  #methods = new weakSetConstructor();
++  #frames = new weakMapConstructor();
++  #collections = new weakMapConstructor();
++  #buckets = new weakMapConstructor();
++  #roles = new weakMapConstructor();
++  #bindings = new weakSetConstructor();
++
++  constructor(pool, {prototype, adapters, fields, options}) {
++    this.#pool = pool;
++    this.#prototype = prototype;
++    this.#adapters = adapters;
++    this.#adapterKeys = Reflect.ownKeys(adapters);
++    this.#fields = {vm: fields.vm, owner: fields.owner, limit: fields.limit};
++    for (const key of poolObjects) weakSet.call(this.#roles, fields[key], key);
++    this.#options = options;
++  }
++
++  collection(collection, method, argumentCount = null) {
++    weakSet.call(this.#collections, collection, {method, argumentCount});
++  }
++
++  binding(binding) {
++    weakSetAdd.call(this.#bindings, binding);
++  }
++
++  bucket(method, argumentCount, detail) {
++    weakSetAdd.call(this.#methods, method);
++    const bucket = detail.bucket;
++    weakSet.call(this.#buckets, bucket, {method, argumentCount, bucket, free: bucket.free,
++      args: bucket.args, locals: bucket.locals, stack: bucket.stack, bytes: bucket.bytes});
++  }
++
++  frame(frame, entry) {
++    weakSet.call(this.#frames, frame, {entry, args: frame.args, locals: frame.locals, stack: frame.stack,
++      caught: frame.caught, unwinds: frame.unwinds});
++  }
++
++  #ownedField(key) {
++    const descriptor = Object.getOwnPropertyDescriptor(this.#pool, key);
++    const value = descriptor?.value;
++    return value && ordinaryData(this.#pool, key, value) && weakGet.call(this.#roles, value) === key ? value : null;
++  }
++
++  #ownedCollection(collection, method, argumentCount) {
++    const record = weakGet.call(this.#collections, collection);
++    return record?.method === method && record.argumentCount === argumentCount &&
++      ordinaryCollection(collection, Map.prototype, mapMethods);
++  }
++
++  #poolCurrent() {
++    const pool = this.#pool;
++    if (Object.getPrototypeOf(pool) !== this.#prototype || !Object.isExtensible(pool) ||
++        !exactKeys(pool, poolFields)) return false;
++    for (const key of identityFields) {
++      if (!ordinaryData(pool, key, this.#fields[key])) return false;
++    }
++    for (const key of poolObjects) if (!this.#ownedField(key)) return false;
++    if (!exactKeys(this.#prototype, this.#adapterKeys)) return false;
++    for (const key of this.#adapterKeys) {
++      const descriptor = Object.getOwnPropertyDescriptor(this.#prototype, key);
++      const original = this.#adapters[key];
++      if (!descriptor || descriptor.value !== original.value || descriptor.get !== original.get || descriptor.set !== original.set ||
++          descriptor.writable !== original.writable || descriptor.enumerable !== original.enumerable ||
++          descriptor.configurable !== original.configurable) return false;
++    }
++    const bytes = Object.getOwnPropertyDescriptor(pool, 'bytes');
++    if (!bytes || !Number.isSafeInteger(bytes.value) || bytes.value < 0 || bytes.value > this.#fields.limit ||
++        !ordinaryData(pool, 'bytes', bytes.value)) return false;
++    for (const key of collectionFields) {
++      if (!ordinaryCollection(pool[key], WeakMap.prototype, weakMethods)) return false;
++    }
++    const bufferLength = Object.getOwnPropertyDescriptor(pool.buffers, 'length');
++    if (!ordinaryArray(pool.pending, 0) || !bufferLength || !Number.isSafeInteger(bufferLength.value) ||
++        !ordinaryArray(pool.buffers, bufferLength.value)) return false;
++    const statistics = pool.statistics;
++    if (!leafPlainObject(statistics) || !exactKeys(statistics, statisticsFields)) return false;
++    for (const key of statisticsFields) {
++      const descriptor = Object.getOwnPropertyDescriptor(statistics, key);
++      if (!descriptor || !Number.isSafeInteger(descriptor.value) || descriptor.value < 0 ||
++          !ordinaryData(statistics, key, descriptor.value)) return false;
++    }
++    return true;
++  }
++
++  #retentionCurrent(vm) {
++    if (!leafData(vm, 'options', this.#options) || !leafPlainObject(this.#options)) return false;
++    for (const key of retentionFields) {
++      const descriptor = Object.getOwnPropertyDescriptor(this.#options, key);
++      if (descriptor && (!Object.hasOwn(descriptor, 'value') || !descriptor.writable)) return false;
++    }
++    return this.#options.framePooling !== false && this.#options.inlineCaches !== false && this.#options.preparedLeafCalls !== false &&
++      (this.#options.framePoolBytes ?? 1024 * 1024) === this.#fields.limit;
++  }
++
++  /** The current caller must still use the exact ordinary Array created by this pool. */
++  #callerCurrent(caller) {
++    const record = weakGet.call(this.#frames, caller);
++    if (!record || !leafPlainObject(caller) || !ordinaryData(caller, 'stack', record.stack) ||
++        weakGet.call(this.#pool.entries, caller) !== record.entry || !leafPlainObject(record.entry) ||
++        !ordinaryData(record.entry, 'retired', false)) return false;
++    const length = Object.getOwnPropertyDescriptor(record.stack, 'length');
++    return length && Number.isSafeInteger(length.value) && ordinaryArray(record.stack, length.value);
++  }
++
++  #freeFrameCurrent(frame, bucket) {
++    const record = weakGet.call(this.#frames, frame);
++    if (!record || !leafPlainObject(frame) || weakGet.call(this.#pool.entries, frame) !== record.entry ||
++        !leafPlainObject(record.entry) || !exactKeys(record.entry, entryFields) ||
++        !ordinaryData(record.entry, 'bucket', bucket) || !ordinaryData(record.entry, 'retired', true)) return false;
++    const prepared = Object.getOwnPropertyDescriptor(record.entry, 'preparedStorage');
++    if (!prepared || typeof prepared.value !== 'boolean' || !ordinaryData(record.entry, 'preparedStorage', prepared.value)) return false;
++    const keys = Reflect.ownKeys(frame);
++    for (const key of frameFields) if (!keys.includes(key)) return false;
++    for (const key of keys) {
++      if (!frameFields.has(key) && !preparedFields.has(key)) return false;
++      if (arrayFields.includes(key)) {
++        if (!ordinaryData(frame, key, record[key]) || !ordinaryArray(record[key], 0)) return false;
++      } else if (!ordinaryData(frame, key, undefined)) return false;
++    }
++    return true;
++  }
++
++  #bucketCurrent(record) {
++    const bucket = record.bucket;
++    if (!leafPlainObject(bucket) || !exactKeys(bucket, bucketFields)) return false;
++    for (const key of bucketValues) {
++      if (!ordinaryData(bucket, key, record[key])) return false;
++    }
++    return ordinaryData(bucket, 'current', true);
++  }
++
++  /** Observe only authenticated objects; never allocate storage, bind a capability or alter pool counters. */
++  current(vm, plan, caller, bindings, capability) {
++    if (vm !== this.#fields.vm || !leafPrototypesCurrent() || !this.#poolCurrent() ||
++        !this.#retentionCurrent(vm) || !this.#callerCurrent(caller) ||
++        !ordinaryCollection(bindings, WeakMap.prototype, weakMethods)) return false;
++    if (!leafData(vm, 'inspector', plan.inspector) || !leafData(plan.method, 'signature', plan.signature) ||
++        !leafData(plan.signature, 'parameters', plan.parameters) || !leafData(plan.parameters, 'length', plan.parameterCount) ||
++        !leafData(plan.method, 'locals', plan.locals) || !leafData(plan.locals, 'length', plan.localCount) ||
++        !leafData(plan.method, 'maxStack', plan.maxStack)) return false;
++    const stack = Math.min(plan.maxStack, this.#options.maxStackValues ?? 65536);
++    if (!Number.isSafeInteger(plan.argumentCount) || plan.argumentCount < 0 ||
++        !Number.isSafeInteger(plan.localCount) || plan.localCount < 0 || !Number.isSafeInteger(stack) || stack < 0) return false;
++    const bytes = 128 + (plan.argumentCount + plan.localCount + stack) * 8;
++    const canRetainFresh = bytes <= this.#fields.limit - this.#pool.bytes;
++    const binding = weakGet.call(bindings, capability);
++    let boundBucket;
++    if (binding !== undefined) {
++      if (!weakSetHas.call(this.#bindings, binding) || !leafPlainObject(binding) ||
++          !exactKeys(binding, bindingFields) || !ordinaryData(binding, 'plan', plan) ||
++          !ordinaryData(binding, 'stack', stack)) return false;
++      boundBucket = Object.getOwnPropertyDescriptor(binding, 'bucket')?.value;
++      if (!ordinaryData(binding, 'bucket', boundBucket) || !weakGet.call(this.#buckets, boundBucket)) return false;
++    }
++    const sizes = weakGet.call(this.#pool.buckets, plan.method);
++    if (sizes === undefined) return binding === undefined && !weakSetHas.call(this.#methods, plan.method) && canRetainFresh;
++    if (!this.#ownedCollection(sizes, plan.method, null)) return false;
++    const capacities = mapGet.call(sizes, plan.argumentCount);
++    if (!this.#ownedCollection(capacities, plan.method, plan.argumentCount)) return false;
++    const bucket = mapGet.call(capacities, stack);
++    if (binding !== undefined && bucket !== boundBucket) return false;
++    const record = weakGet.call(this.#buckets, bucket);
++    if (!record || record.method !== plan.method || record.argumentCount !== plan.argumentCount ||
++        record.args !== plan.argumentCount || record.locals !== plan.localCount ||
++        record.stack !== stack || record.bytes !== bytes || !this.#bucketCurrent(record)) return false;
++    const length = Object.getOwnPropertyDescriptor(record.free, 'length');
++    if (!length || !Number.isSafeInteger(length.value) || !ordinaryArray(record.free, length.value)) return false;
++    // An empty existing bucket has already exposed frame storage: it cannot claim the never-materialized case.
++    if (length.value === 0) return false;
++    const frame = Object.getOwnPropertyDescriptor(record.free, length.value - 1).value;
++    return this.#freeFrameCurrent(frame, bucket);
++  }
++}
+diff --git a/packages/runtime/src/execution/cil-leaf-window.js b/packages/runtime/src/execution/cil-leaf-window.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..23df86e0839a1b94f0463f79704fadc1ceef1468
+--- /dev/null
++++ b/packages/runtime/src/execution/cil-leaf-window.js
+@@ -0,0 +1,171 @@
++import {AssemblyInspector} from '@sharpforge/cil';
++import {registerCanonicalCilCall} from './call-entry-guard.js';
++import {registerScalarStoreAdapters} from './scalar-slot-store.js';
++import {executionCodeState} from './code-version.js';
++import {prepareCilLeafPlan} from './cil-leaf-plan.js';
++import {leafAbsent, leafData, leafPlainArray, leafPlainObject, leafPrototypesCurrent} from './leaf-data-proof.js';
++import {wasmCallTierOwner} from './wasm/call-tier-state.js';
++
++const owners = new WeakMap();
++const storeAdapters = new WeakMap();
++const inspectorGetMethod = AssemblyInspector.prototype.getMethod;
++const mapGet = Map.prototype.get;
++const methods = ['call', 'invoke', 'step', 'push', 'pop', 'storage', 'slotType', 'ensureInitialized'];
++const getters = ['top', 'profiler', 'runtimeEvents', 'typeSystem'];
++const optionFields = ['maxFrames', 'maxInstructions', 'maxStackValues', 'maxStackBytes', 'inlineCaches', 'decodePlans',
++  'scalarSlotLoads', 'profile', 'wasmTiering', 'gcStress', 'preparedLeafCalls'];
++const ownerFields = ['options', 'inspector', 'report', 'frames', 'heap', 'scheduler'];
++const schedulerMethods = ['beforeInstruction', 'afterInstruction'];
++const scalarFields = ['instructions', 'frameId', 'state', 'pendingFault', 'fault', 'onException', 'onWrite'];
++
++/** Capture original adapter functions before a subclass or host can replace them. */
++export function registerCilAdapters(vm, canonical) {
++  const descriptors = canonical.descriptors;
++  registerCanonicalCilCall(vm, descriptors.call.value);
++  let stores = storeAdapters.get(canonical);
++  if (!stores) {
++    stores = {address: descriptors.address.value, dereference: descriptors.dereference.value,
++      storage: descriptors.storage.value, pop: descriptors.pop.value};
++    storeAdapters.set(canonical, stores);
++  }
++  registerScalarStoreAdapters(vm, stores);
++  owners.set(vm, {canonical, epoch: null});
++}
++
++/** Only runtime-decoded metadata is branded; supplied inspectors retain the general execution path. */
++export function initializeCilLeafCalls(vm, bytes) {
++  const owner = owners.get(vm);
++  if (!owner || vm.options.inlineCaches === false || vm.options.preparedLeafCalls === false || bytes instanceof AssemblyInspector ||
++      Object.getPrototypeOf(vm) !== owner.canonical.prototype ||
++      Object.getPrototypeOf(vm.inspector) !== AssemblyInspector.prototype || !leafAbsent(vm.inspector, 'getMethod') ||
++      !leafData(AssemblyInspector.prototype, 'getMethod', inspectorGetMethod)) return;
++  const plans = new WeakMap();
++  for (const token of vm.report.methods) {
++    const method = vm.inspector.getMethod(token);
++    const type = vm._typeSystem.types.get(method.ownerToken);
++    if (!type) continue;
++    const plan = prepareCilLeafPlan(vm, method, type);
++    if (plan) plans.set(method, plan);
++  }
++  const epoch = executionCodeState(vm);
++  epoch.cilLeaf = {canonical: owner.canonical, ready: true, active: false, remaining: 0, invocationAvailable: false, invocationCaller: null,
++    invocationInstruction: null, plans, epoch, result: null,
++    options: vm.options, inspector: vm.inspector, report: vm.report, frames: vm.frames,
++    heap: vm.heap, registry: vm.heap.methodTables, scheduler: vm.scheduler, typeSystem: vm._typeSystem,
++    types: vm._typeSystem.types};
++  owner.epoch = epoch;
++}
++
++function canonicalAdapters(vm, owner) {
++  const canonical = owner.canonical, prototype = canonical.prototype;
++  if (Object.getPrototypeOf(vm) !== prototype || !leafAbsent(vm, 'image') || !leafAbsent(prototype, 'image')) return false;
++  for (const key of methods) {
++    if (!leafAbsent(vm, key) || !leafData(prototype, key, canonical.descriptors[key].value)) return false;
++  }
++  for (const key of getters) {
++    const descriptor = Object.getOwnPropertyDescriptor(prototype, key);
++    if (!leafAbsent(vm, key) || descriptor?.get !== canonical.descriptors[key].get || descriptor?.set !== undefined) return false;
++  }
++  return true;
++}
++
++function dataFields(object, keys, required = false) {
++  for (const key of keys) {
++    const descriptor = Object.getOwnPropertyDescriptor(object, key);
++    if (!descriptor ? required : !Object.hasOwn(descriptor, 'value') || !descriptor.writable) return false;
++  }
++  return true;
++}
++
++function schedulerCurrent(owner) {
++  const {scheduler, canonical} = owner;
++  if (Object.getPrototypeOf(scheduler) !== canonical.scheduler ||
++      !leafData(scheduler, 'enabled', false) || !leafData(scheduler, 'suppressed', false)) return false;
++  for (const key of schedulerMethods) {
++    if (!leafAbsent(scheduler, key) || !leafData(canonical.scheduler, key, canonical.schedulerDescriptors[key].value)) return false;
++  }
++  return true;
++}
++
++/** A slice owns one scalar budget slot; nested host entry revokes the outer slot immediately. */
++export function openCilLeafWindow(vm, onInstruction, executor) {
++  const owner = owners.get(vm)?.epoch?.cilLeaf;
++  if (!owner?.ready) return null;
++  if (owner.active) {
++    owner.remaining = 0;
++    return null;
++  }
++  if (onInstruction || executor || !canonicalAdapters(vm, owner)) return null;
++  const values = Object.getOwnPropertyDescriptor(owner.options, 'maxStackValues');
++  const bytes = Object.getOwnPropertyDescriptor(owner.options, 'maxStackBytes');
++  if (values && !Object.hasOwn(values, 'value') || bytes && !Object.hasOwn(bytes, 'value')) return null;
++  owner.valueLimit = values?.value;
++  owner.byteLimit = bytes?.value;
++  owner.active = true;
++  return owner;
++}
++
++export function closeCilLeafWindow(vm) {
++  const owner = owners.get(vm)?.epoch?.cilLeaf;
++  if (owner) { owner.remaining = 0; owner.active = false; }
++}
++
++export function revokeCilLeafBudget(vm) {
++  const owner = owners.get(vm)?.epoch?.cilLeaf;
++  if (owner) owner.remaining = 0;
++}
++
++/** Only an actual call opcode may issue one allowance; direct host invoke remains a physical entry. */
++export function invokeCilLeafInstruction(vm, frame, instruction) {
++  const owner = owners.get(vm)?.epoch?.cilLeaf;
++  if (!owner?.remaining || owner.invocationInstruction || Object.getPrototypeOf(vm) !== owner.canonical.prototype ||
++      !leafAbsent(vm, 'invoke') || !leafData(owner.canonical.prototype, 'invoke', owner.canonical.descriptors.invoke.value)) {
++    return vm.invoke(instruction);
++  }
++  owner.invocationCaller = frame;
++  owner.invocationInstruction = instruction;
++  owner.invocationAvailable = true;
++  try { return vm.invoke(instruction); }
++  finally {
++    owner.invocationAvailable = false;
++    owner.invocationCaller = owner.invocationInstruction = null;
++  }
++}
++
++/** Consume before reading instruction metadata or resolving a receiver that can invoke host callbacks. */
++export function consumeCilLeafInvocation(vm, instruction) {
++  const owner = owners.get(vm)?.epoch?.cilLeaf;
++  if (!owner?.invocationAvailable || owner.invocationInstruction !== instruction) return null;
++  owner.invocationAvailable = false;
++  return owner;
++}
++
++/** Read the primitive result only after successful logical admission; no second eligibility evaluation. */
++export function takeCilLeafResult(vm) {
++  const owner = owners.get(vm)?.epoch?.cilLeaf;
++  const result = owner.result;
++  owner.result = null;
++  return result;
++}
++
++/** All read sites omitted by elision must remain plain, owned data with no host callbacks. */
++export function currentCilLeafWindow(vm, invocation, caller) {
++  const owner = owners.get(vm)?.epoch?.cilLeaf;
++  if (!owner?.ready || invocation !== owner || caller !== owner.invocationCaller || owner.remaining < 2 || !canonicalAdapters(vm, owner) || !leafPrototypesCurrent()) return null;
++  for (const key of ownerFields) {
++    if (!leafData(vm, key, owner[key])) return null;
++  }
++  if (!leafData(vm, '_typeSystem', owner.typeSystem) || !leafData(owner.typeSystem, 'types', owner.types) ||
++      Object.getPrototypeOf(owner.types) !== Map.prototype || !leafAbsent(owner.types, 'get') ||
++      !leafData(Map.prototype, 'get', mapGet) || !leafData(owner.heap, 'methodTables', owner.registry) ||
++      !leafPlainObject(owner.options) || !dataFields(owner.options, optionFields) || !dataFields(vm, scalarFields, true) ||
++      !schedulerCurrent(owner) || Object.getPrototypeOf(owner.inspector) !== AssemblyInspector.prototype ||
++      !leafAbsent(owner.inspector, 'getMethod') || !leafData(AssemblyInspector.prototype, 'getMethod', inspectorGetMethod)) return null;
++  if (vm.profiler || vm.options.profile || vm.runtimeEvents || vm.onException || vm.onWrite ||
++      vm.options.gcStress === 'instruction' || vm.options.wasmTiering || wasmCallTierOwner(vm) || vm.options.inlineCaches === false ||
++      vm.options.decodePlans === false || vm.options.scalarSlotLoads === false || vm.options.preparedLeafCalls === false || vm.state !== 'running' ||
++      vm.options.maxStackValues !== owner.valueLimit || vm.options.maxStackBytes !== owner.byteLimit ||
++      vm.pendingFault || vm.fault || vm.options.maxInstructions - vm.instructions < 2 ||
++      !leafPlainArray(owner.frames, owner.frames.length) || owner.epoch !== executionCodeState(vm)) return null;
++  return owner;
++}
+diff --git a/packages/runtime/src/execution/cil-slice.js b/packages/runtime/src/execution/cil-slice.js
+index b6fca9f51c2732d1ee916ed8f723e45705d6c937..873743b1a1444c522cd0c6e5ca8d07a7ead5cabd 100644
+--- a/packages/runtime/src/execution/cil-slice.js
++++ b/packages/runtime/src/execution/cil-slice.js
+@@ -8,6 +8,7 @@ import {flushCilMethodEvents} from './cil-method-events.js';
+ import {emitCilException} from './cil-exception-events.js';
+ import {cancelObjectValueWork} from './object-value-state.js';
+ import {executeCilNumericBlock} from './numeric-blocks.js';
++import {openCilLeafWindow, closeCilLeafWindow} from './cil-leaf-window.js';
+ 
+ const slicing = new WeakSet();
+ export const cilSliceActive = vm => slicing.has(vm);
+@@ -27,6 +28,7 @@ function raiseInstructionFault(vm, error, frame, instruction) {
+ /** Existing cooperative CIL loop, with host observer delivery outside managed fault dispatch. */
+ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, onInstruction = null} = {}, executor = null) {
+   let started;
++  let leafWindow;
+   const nested = slicing.has(vm);
+   slicing.add(vm);
+   try {
+@@ -34,6 +36,7 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
+     vm.scheduler.beforeSlice();
+     if (vm.state === 'ready') vm.state = 'running';
+     if (vm.state !== 'running') return vm.state;
++    leafWindow = openCilLeafWindow(vm, onInstruction, executor);
+     started = performance.now();
+     let count = 0;
+     if (vm.pendingFault) {
+@@ -72,7 +75,11 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
+             if (continuingObject) resumeCilObjectValueWork(vm, frame);
+             else resumeCilArrayContinuation(vm, frame);
+           } else if (executor) executor.step(vm);
+-          else vm.step();
++          else {
++            if (leafWindow) leafWindow.remaining = remaining - 1;
++            try { vm.step(); }
++            finally { if (leafWindow) leafWindow.remaining = 0; }
++          }
+         }
+       } catch (error) {
+         raiseInstructionFault(vm, error, frame, numeric && frame.pc !== firstPC ? frame.method.instructions[frame.pc - 1] : instruction);
+@@ -91,6 +98,7 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
+       flushCilMethodEvents(vm);
+       vm.profiler?.reportClockFailure();
+     } finally {
++      if (leafWindow) closeCilLeafWindow(vm);
+       if (!nested) slicing.delete(vm);
+     }
+   }
+diff --git a/packages/runtime/src/execution/cil-step.js b/packages/runtime/src/execution/cil-step.js
+index f959a84f6a878b602fa5035dc398acc340c7eda1..874ccde0d6d0b3d6c5a75e4246f4063727b51335 100644
+--- a/packages/runtime/src/execution/cil-step.js
++++ b/packages/runtime/src/execution/cil-step.js
+@@ -6,6 +6,7 @@ import {getDecodePlan} from './decode-plan.js';
+ import {cilHandlers} from './handlers/index.js';
+ import {dispatchWasmCall, observeWasmBackedge, selectWasmOsr} from './wasm/call-tier-state.js';
+ import {rejectCilOpcode} from './opcode-fault.js';
++import {revokeCilLeafBudget} from './cil-leaf-window.js';
+ 
+ const dispatching = new WeakMap();
+ export const cilStepActive = vm => dispatching.get(vm) === true;
+@@ -13,6 +14,7 @@ export const cilStepActive = vm => dispatching.get(vm) === true;
+ /** Execute exactly one existing debugger-visible CIL instruction. */
+ export function executeCilStep(vm, dispatcher = null) {
+   const nested = dispatching.get(vm) === true;
++  if (nested) revokeCilLeafBudget(vm);
+   dispatching.set(vm, true);
+   try {
+     const frame = vm.top;
+diff --git a/packages/runtime/src/execution/code-version.js b/packages/runtime/src/execution/code-version.js
+index eabbc2e09ff006ced9a920351b07c949ea598aba..b873025dc430afec49e80d037cbb8ef769e12052 100644
+--- a/packages/runtime/src/execution/code-version.js
++++ b/packages/runtime/src/execution/code-version.js
+@@ -14,13 +14,14 @@ function nextVersion(vm, owner, reason) {
+   if (previous) {
+     previous.wasmCalls?.invalidate();
+     previous.wasmCalls = null;
++    previous.cilLeaf = null;
+     previous.owner = null;
+     previous.registry = null;
+     previous.decode = previous.tokens = previous.fields = previous.inline = previous.generics = previous.calls = previous.source = null;
+   }
+   const state = {owner, registry: vm.heap?.methodTables, epoch, reason, decode: null, tokens: null, fields: null, inline: null, generics: null, calls: null,
+-    wasmCalls: null, source: null, statistics: {decodePlans: 0, decodedInstructions: 0, decodeMilliseconds: 0, offsetMapAllocations: 0,
+-      sourcePlans: 0, sourcePlanMilliseconds: 0, sourceFusionGroups: 0}};
++    wasmCalls: null, source: null, cilLeaf: null, statistics: {decodePlans: 0, decodedInstructions: 0, decodeMilliseconds: 0, offsetMapAllocations: 0,
++      sourcePlans: 0, sourcePlanMilliseconds: 0, sourceFusionGroups: 0, cilLeafCalls: 0, cilLeafInstructions: 0}};
+   versions.set(vm, state);
+   return state;
+ }
+diff --git a/packages/runtime/src/execution/frame-lifetimes.js b/packages/runtime/src/execution/frame-lifetimes.js
+index fe1f43a2474505417de0e16b08c11ec8372cd581..160c905838bb02cf9f043857fa503ad7597766a1 100644
+--- a/packages/runtime/src/execution/frame-lifetimes.js
++++ b/packages/runtime/src/execution/frame-lifetimes.js
+@@ -1,9 +1,13 @@
+ import {ManagedFault} from '../heap.js';
+ 
+ const indexes = new WeakMap();
++const mapGet = Map.prototype.get;
++const mapSet = Map.prototype.set;
++const mapDelete = Map.prototype.delete;
++const mapHas = Map.prototype.has;
+ const terminal = new Set(['completed', 'faulted', 'canceled']);
+ const invalid = message => { throw new ManagedFault('InvalidProgramException', message); };
+-const emptyIndex = () => ({frames: new Map(), containers: new WeakMap(), records: new WeakMap()});
++const emptyIndex = () => ({frames: new Map(), containers: new WeakMap(), records: new WeakMap(), exposed: false});
+ 
+ function containerFor(index, frames) {
+   let container = index.containers.get(frames);
+@@ -68,14 +72,20 @@ function collect(frames, scheduler) {
+ }
+ 
+ /** Rebuild derived identities after complete restore; fatal active frames remain inspectable. */
+-export function rebuildFrameIndex(vm) {
++function buildFrameIndex(vm) {
+   const index = collect(vm.frames, vm.scheduler);
+   indexes.set(vm, index);
++  return index;
++}
++
++export function rebuildFrameIndex(vm) {
++  const index = buildFrameIndex(vm);
++  index.exposed = true;
+   return index.frames;
+ }
+ 
+ function indexFor(vm) {
+-  if (!indexes.has(vm)) rebuildFrameIndex(vm);
++  if (!indexes.has(vm)) buildFrameIndex(vm);
+   return indexes.get(vm);
+ }
+ 
+@@ -88,6 +98,25 @@ export function nextFrameId(vm) {
+   return ++vm.frameId;
+ }
+ 
++/** Elided calls still consume and validate the same logical identity as an appended physical frame. */
++export function nextElidedFrameId(vm) {
++  const id = nextFrameId(vm);
++  if (indexFor(vm).frames.get(id)) invalid('Duplicate live frame identity');
++  return id;
++}
++
++/** The publicly inspectable identity map may not dispatch host hooks during logical admission. */
++export function canElideFrameIdentity(vm) {
++  const index = indexes.get(vm);
++  if (!index || index.exposed) return false;
++  try { mapHas.call(index.frames, 0); } catch { return false; }
++  return Object.getPrototypeOf(index.frames) === Map.prototype &&
++    !Object.hasOwn(index.frames, 'get') && !Object.hasOwn(index.frames, 'set') && !Object.hasOwn(index.frames, 'delete') &&
++    Object.getOwnPropertyDescriptor(Map.prototype, 'get')?.value === mapGet &&
++    Object.getOwnPropertyDescriptor(Map.prototype, 'set')?.value === mapSet &&
++    Object.getOwnPropertyDescriptor(Map.prototype, 'delete')?.value === mapDelete;
++}
++
+ /** Register an appended, fully constructed frame. Lookup never searches frame arrays. */
+ export function registerFrame(vm, frame) {
+   const position = vm.frames.length - 1;
+diff --git a/packages/runtime/src/execution/frame-pool.js b/packages/runtime/src/execution/frame-pool.js
+index 97a1db43f1f24863c48b2c66598f0d2f58d6bbb0..b3c1c71cb027b6620dfb937a140915167e45d39d 100644
+--- a/packages/runtime/src/execution/frame-pool.js
++++ b/packages/runtime/src/execution/frame-pool.js
+@@ -3,13 +3,22 @@ import {cilFramePreparation, cilFramePreparationCurrent} from './cil-frame-capab
+ import {scrubPreparedFrame} from './prepared-frame-scrub.js';
+ import {executionCodeState} from './code-version.js';
+ import {releaseFrameMemory} from './frame-memory-release.js';
++import {CilLeafPoolProof} from './cil-leaf-pool-proof.js';
+ 
+ const pools = new WeakMap();
++const factoryArrays = new WeakSet();
++const factoryArrayAdd = WeakSet.prototype.add;
++const factoryArrayHas = WeakSet.prototype.has;
++const arrayConstructor = Array;
++const mapConstructor = Map;
+ const ownerOf = vm => vm.inspector ? executionCodeState(vm) : vm.image;
+ const arrays = new Set(['args', 'locals', 'stack', 'caught', 'unwinds']);
+ 
+-function storage(capacity) {
+-  const values = new Array(capacity).fill(undefined);
++function storage(capacity, track = false) {
++  const constructor = Array;
++  const allocated = new constructor(capacity);
++  if (track && constructor === arrayConstructor) factoryArrayAdd.call(factoryArrays, allocated);
++  const values = allocated.fill(undefined);
+   values.length = 0;
+   return values;
+ }
+@@ -18,27 +27,50 @@ function storage(capacity) {
+ class FramePool {
+   #sourceBindings = new WeakMap();
+   #cilBindings = new WeakMap();
++  #leafProof;
+ 
+   constructor(vm) {
+-    const limit = vm.options.framePoolBytes ?? 1024 * 1024;
++    const options = vm.options;
++    const limit = options.framePoolBytes ?? 1024 * 1024;
+     if (!Number.isSafeInteger(limit) || limit < 0) throw new RangeError('Invalid framePoolBytes');
+     this.vm = vm;
+-    this.owner = ownerOf(vm);
++    const owner = ownerOf(vm);
++    this.owner = owner;
+     this.limit = limit;
+-    this.buckets = new WeakMap();
+-    this.entries = new WeakMap();
+-    this.pending = [];
+-    this.buffers = [];
+-    this.capacities = new WeakMap();
++    const buckets = new WeakMap();
++    this.buckets = buckets;
++    const entries = new WeakMap();
++    this.entries = entries;
++    const pending = [];
++    this.pending = pending;
++    const buffers = [];
++    this.buffers = buffers;
++    const capacities = new WeakMap();
++    this.capacities = capacities;
+     this.bytes = 0;
+-    this.statistics = {framesAllocated: 0, arraysAllocated: 0, reused: 0, released: 0, cachedFrames: 0};
++    const statistics = {framesAllocated: 0, arraysAllocated: 0, reused: 0, released: 0, cachedFrames: 0};
++    this.statistics = statistics;
++    const inlineCaches = Object.getOwnPropertyDescriptor(options, 'inlineCaches');
++    const leafCalls = Object.getOwnPropertyDescriptor(options, 'preparedLeafCalls');
++    const proofEnabled = (!inlineCaches || Object.hasOwn(inlineCaches, 'value') && inlineCaches.value !== false) &&
++      (!leafCalls || Object.hasOwn(leafCalls, 'value') && leafCalls.value !== false);
++    this.#leafProof = vm.inspector && proofEnabled ? new CilLeafPoolProof(this, {prototype: FramePool.prototype, adapters: poolAdapters,
++      fields: {vm, owner, limit, buckets, entries, pending, buffers, capacities, statistics}, options}) : null;
+   }
+ 
+   #bucketFor(method, argumentCount) {
+     let sizes = this.buckets.get(method);
+-    if (!sizes) this.buckets.set(method, sizes = new Map());
++    if (!sizes) {
++      const constructor = Map;
++      this.buckets.set(method, sizes = new constructor());
++      if (constructor === mapConstructor) this.#leafProof?.collection(sizes, method);
++    }
+     let capacities = sizes.get(argumentCount);
+-    if (!capacities) sizes.set(argumentCount, capacities = new Map());
++    if (!capacities) {
++      const constructor = Map;
++      sizes.set(argumentCount, capacities = new constructor());
++      if (constructor === mapConstructor) this.#leafProof?.collection(capacities, method, argumentCount);
++    }
+     const cil = !!this.vm.inspector;
+     const stack = cil ? Math.min(method.maxStack, this.vm.options.maxStackValues ?? 65536) : 0;
+     const locals = cil ? method.locals.length : Math.max(method.locals.length, argumentCount);
+@@ -57,6 +89,7 @@ class FramePool {
+         throw new TypeError('Invalid frame storage capacity');
+       }
+       bucket = {args, locals, stack, bytes: 128 + (args + locals + stack) * 8, free: [], current: true};
++      this.#leafProof?.bucket(method, argumentCount, {stack, bucket, sizes, capacities});
+       capacities.set(stack, bucket);
+     }
+     return bucket;
+@@ -97,11 +130,19 @@ class FramePool {
+     const stack = Math.min(plan.maxStack, this.vm.options.maxStackValues ?? 65536);
+     if (!binding || binding.stack !== stack || !binding.bucket.current) {
+       binding = {plan, stack, bucket: this.#bucketFor(plan.method, plan.argumentCount)};
++      this.#leafProof?.binding(binding);
+       this.#cilBindings.set(capability, binding);
+     }
+     return this.#acquireBucket(binding.bucket, true);
+   }
+ 
++  /** Read-only proof for omission of a separately verified scalar leaf call. */
++  canElideCil(vm, capability, caller) {
++    const plan = cilFramePreparation(capability);
++    return !!plan && this.#leafProof?.current(vm, plan, caller, this.#cilBindings, capability) === true &&
++      pools.get(vm) === this && this.owner === ownerOf(vm) && cilFramePreparationCurrent(vm.inspector, plan);
++  }
++
+   #acquireBucket(bucket, preparedStorage) {
+     let frame = bucket.free.pop();
+     if (frame) {
+@@ -112,11 +153,21 @@ class FramePool {
+       entry.retired = false;
+       entry.preparedStorage = preparedStorage;
+     } else {
+-      frame = {id: 0, method: undefined, methodId: undefined, args: storage(bucket.args),
+-        locals: storage(bucket.locals), stack: storage(bucket.stack), caught: [], unwinds: [],
++      const track = this.#leafProof !== null;
++      frame = {id: 0, method: undefined, methodId: undefined, args: storage(bucket.args, track),
++        locals: storage(bucket.locals, track), stack: storage(bucket.stack, track), caught: [], unwinds: [],
+         pc: 0, lastOffset: 0, offsets: undefined, base: 0, point: null, exception: null,
+         pending: null, needsInitialization: false, rootCaptures: null};
+-      this.entries.set(frame, {bucket, retired: false, preparedStorage});
++      const entry = {bucket, retired: false, preparedStorage};
++      if (track) {
++        factoryArrayAdd.call(factoryArrays, frame.caught);
++        factoryArrayAdd.call(factoryArrays, frame.unwinds);
++        if (factoryArrayHas.call(factoryArrays, frame.args) && factoryArrayHas.call(factoryArrays, frame.locals) &&
++            factoryArrayHas.call(factoryArrays, frame.stack)) {
++          this.#leafProof.frame(frame, entry);
++        }
++      }
++      this.entries.set(frame, entry);
+       this.statistics.framesAllocated++;
+       this.statistics.arraysAllocated += 5;
+     }
+@@ -183,6 +234,15 @@ class FramePool {
+   }
+ }
+ 
++const poolAdapters = Object.getOwnPropertyDescriptors(FramePool.prototype);
++const elisionQuery = FramePool.prototype.canElideCil;
++
++/** Query existing storage only; a missing or host-customized pool keeps ordinary call entry. */
++export function canElidePreparedCilFrame(vm, capability, caller) {
++  const pool = pools.get(vm);
++  return pool ? elisionQuery.call(pool, vm, capability, caller) : false;
++}
++
+ export function framePool(vm) {
+   let pool = pools.get(vm);
+   if (!pool || pool.owner !== ownerOf(vm)) pools.set(vm, pool = new FramePool(vm));
+diff --git a/packages/runtime/src/execution/handlers/call.js b/packages/runtime/src/execution/handlers/call.js
+index f2dc87f238eb2c5e937b0504722b9f362945f947..c153a14f7da4aeb790857149f3571017ca243c88 100644
+--- a/packages/runtime/src/execution/handlers/call.js
++++ b/packages/runtime/src/execution/handlers/call.js
+@@ -1,3 +1,4 @@
++import {invokeCilLeafInstruction} from '../cil-leaf-window.js';
+ import {continueControlReturn} from '../return-control.js';
+ import {finishAsyncRegistration} from '../async-continuations.js';
+ import {popPooledFrame} from '../frame-retirement.js';
+@@ -8,7 +9,7 @@ import {delegateMethodPointer} from '../delegate-targets.js';
+ import {valueCallResult} from '../value-calls.js';
+ 
+ const handlers=new Map();
+-for(const name of ['call','callvirt','newobj'])handlers.set(name,(vm,frame,instruction)=>vm.invoke(instruction));
++for(const name of ['call','callvirt','newobj'])handlers.set(name,invokeCilLeafInstruction);
+ handlers.set('ldftn',(vm,frame,instruction)=>{
+   vm.push(delegateMethodPointer(vm,instruction.operand));
+ });
+diff --git a/packages/runtime/src/execution/leaf-data-proof.js b/packages/runtime/src/execution/leaf-data-proof.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..4082a9ae1e73f9ec2c7a3ebdcc39408943a3af34
+--- /dev/null
++++ b/packages/runtime/src/execution/leaf-data-proof.js
+@@ -0,0 +1,38 @@
++const objectPrototype = Object.prototype;
++const arrayPrototype = Array.prototype;
++const objectKeys = Object.getOwnPropertyNames(objectPrototype);
++const arrayMethods = Object.freeze({push: Array.prototype.push, pop: Array.prototype.pop, at: Array.prototype.at,
++  fill: Array.prototype.fill, [Symbol.iterator]: Array.prototype[Symbol.iterator]});
++const arrayMethodKeys = Reflect.ownKeys(arrayMethods);
++
++/** Inspect data descriptors without invoking a host accessor. Callers must first authenticate object ownership. */
++export function leafData(object, key, expected, writable = false) {
++  const descriptor = Object.getOwnPropertyDescriptor(object, key);
++  return descriptor !== undefined && Object.hasOwn(descriptor, 'value') && descriptor.value === expected &&
++    (!writable || descriptor.writable);
++}
++
++export function leafAbsent(object, key) {
++  return Object.getOwnPropertyDescriptor(object, key) === undefined;
++}
++
++/** Fresh frame fields and array holes must not dispatch inherited host getters or setters. */
++export function leafPrototypesCurrent() {
++  if (Object.getPrototypeOf(objectPrototype) !== null || Object.getPrototypeOf(arrayPrototype) !== objectPrototype ||
++      !leafData(arrayPrototype, 'length', 0, true)) return false;
++  const keys = Object.getOwnPropertyNames(objectPrototype);
++  if (keys.length !== objectKeys.length) return false;
++  for (let index = 0; index < keys.length; index++) if (keys[index] !== objectKeys[index]) return false;
++  for (const key of arrayMethodKeys) if (!leafData(arrayPrototype, key, arrayMethods[key])) return false;
++  return true;
++}
++
++export function leafPlainArray(array, length) {
++  return Object.getPrototypeOf(array) === arrayPrototype && leafData(array, 'length', length, true) &&
++    Object.isExtensible(array) && leafAbsent(array, 'push') && leafAbsent(array, 'pop') && leafAbsent(array, 'at') &&
++    leafAbsent(array, 'fill') && leafAbsent(array, Symbol.iterator);
++}
++
++export function leafPlainObject(object) {
++  return Object.getPrototypeOf(object) === objectPrototype && Object.isExtensible(object);
++}
+diff --git a/packages/runtime/src/execution/prepared-cil-leaf.js b/packages/runtime/src/execution/prepared-cil-leaf.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..3b295ccd8236b0e78bbecce5f1cfab455c2e0897
+--- /dev/null
++++ b/packages/runtime/src/execution/prepared-cil-leaf.js
+@@ -0,0 +1,45 @@
++import {ManagedFault} from '../heap.js';
++import {currentCilLeafWindow} from './cil-leaf-window.js';
++import {cilLeafPlanCurrent} from './cil-leaf-plan.js';
++import {leafData, leafPlainArray} from './leaf-data-proof.js';
++import {canElidePreparedCilFrame} from './frame-pool.js';
++import {admitCilStack} from './frame-stack.js';
++import {reserveStackFrame, releaseStackReservation} from './stack-budget.js';
++import {canElideFrameIdentity, nextElidedFrameId} from './frame-lifetimes.js';
++
++function argumentResult(plan, stack, start, count) {
++  if (count !== plan.parameters.length + 1 || !leafPlainArray(stack, start + count)) return undefined;
++  for (let index = 0; index < count; index++) {
++    const descriptor = Object.getOwnPropertyDescriptor(stack, String(start + index));
++    if (!descriptor || !Object.hasOwn(descriptor, 'value') || !descriptor.writable || !descriptor.configurable ||
++        index > 0) return undefined;
++  }
++  return plan.value;
++}
++
++/** Elide physical storage only for an indivisible, callback-free leaf with full original quota admission. */
++export function tryPreparedCilLeaf(vm, prepared, caller, start, invocation) {
++  const window = currentCilLeafWindow(vm, invocation, caller);
++  const plan = window?.plans.get(prepared.method);
++  if (!plan || !cilLeafPlanCurrent(plan) || !leafData(window.frames, String(window.frames.length - 1), caller) ||
++      window.types.get(plan.method.ownerToken) !== plan.owner ||
++      !canElidePreparedCilFrame(vm, prepared.frameCapability, caller) || !canElideFrameIdentity(vm)) return false;
++  const result = argumentResult(plan, caller.stack, start, 1);
++  if (result === undefined) return false;
++  if (vm.frames.length >= vm.options.maxFrames) {
++    throw new ManagedFault('StackOverflowException', 'Managed call depth exceeded');
++  }
++  admitCilStack(vm, plan.method);
++  const ticket = reserveStackFrame(vm, plan.method, 1);
++  try {
++    nextElidedFrameId(vm);
++    // Both original instructions fit before the next slice, quota and 256-instruction polling boundary.
++    vm.instructions += 2;
++    window.result = result;
++    window.epoch.statistics.cilLeafCalls++;
++    window.epoch.statistics.cilLeafInstructions += 2;
++  } finally {
++    releaseStackReservation(ticket);
++  }
++  return true;
++}
+diff --git a/packages/runtime/src/execution/prepared-virtual-call.js b/packages/runtime/src/execution/prepared-virtual-call.js
+index 9063df81a52ea3ee001b24d8a0002d9a70b6c5c1..fb331e3024ab6351cea7dc036ef3eb553503e270 100644
+--- a/packages/runtime/src/execution/prepared-virtual-call.js
++++ b/packages/runtime/src/execution/prepared-virtual-call.js
+@@ -6,6 +6,9 @@ import {verifiedMethod} from './token-cache.js';
+ import {framePool} from './frame-pool.js';
+ import {preparedCilTarget, enterPreparedCilFrame} from './prepared-cil-frame.js';
+ import {hasCanonicalCilCall} from './call-entry-guard.js';
++import {supportedDelegateCall} from '@sharpforge/cil';
++import {tryPreparedCilLeaf} from './prepared-cil-leaf.js';
++import {takeCilLeafResult} from './cil-leaf-window.js';
+ 
+ const caches = new WeakMap();
+ 
+@@ -16,6 +19,7 @@ function build(vm, caller, instruction) {
+   if (!method || !(method.flags & 0x40) || method.flags & 0x10 || signature.isStatic || signature.callingConvention ||
+       signature.explicitThis || signature.sentinel != null || signature.genericArity || descriptor.methodArguments?.length ||
+       descriptor.ownerInstance || descriptor.genericIdentity) return null;
++  if (supportedDelegateCall(vm.inspector, descriptor)) return null;
+   const owner = vm.typeSystem.table(method.ownerToken);
+   if (owner.flags.valueType || owner.flags.interface || owner.genericArity || owner.containsGenericParameters) return null;
+   return {descriptor, count: signature.parameters.length + 1, targets: new WeakMap()};
+@@ -49,7 +53,7 @@ function planFor(vm, caller, instruction) {
+ }
+ 
+ /** Warm class callvirt sites reuse exact call setup while preserving normal frame admission and instruction boundaries. */
+-export function tryPreparedVirtualCall(vm, caller, instruction) {
++export function tryPreparedVirtualCall(vm, caller, instruction, leaf) {
+   if (instruction.name !== 'callvirt' || vm.options.inlineCaches === false ||
+       caller.method.instructions[caller.pc - 2]?.name.endsWith('.')) return false;
+   const plan = planFor(vm, caller, instruction);
+@@ -58,6 +62,7 @@ export function tryPreparedVirtualCall(vm, caller, instruction) {
+   if (vm.ensureInitialized(descriptor.ownerToken, 'instance-method', null)) { caller.pc--; return true; }
+   const stack = caller.stack, start = stack.length - plan.count;
+   if (start < 0) throw new TypeError('Invalid call argument count');
++  let elided = false;
+   try {
+     const receiver = stack[start];
+     if (receiver === null) throw new ManagedFault('NullReferenceException', 'Null virtual receiver');
+@@ -78,12 +83,16 @@ export function tryPreparedVirtualCall(vm, caller, instruction) {
+         maxStack: method.maxStack, prepared: preparedCilTarget(vm, entry.target, extra)};
+       plan.targets.set(entry, target);
+     }
+-    if (target.prepared && hasCanonicalCilCall(vm)) enterPreparedCilFrame(vm, target.prepared, stack, start, plan.count, target.extra);
++    if (target.prepared && hasCanonicalCilCall(vm)) {
++      elided = tryPreparedCilLeaf(vm, target.prepared, caller, start, leaf);
++      if (!elided) enterPreparedCilFrame(vm, target.prepared, stack, start, plan.count, target.extra);
++    }
+     else {
+       const pool = framePool(vm), args = pool.arguments(stack, plan.count);
+       try { vm.heap.withRoots(args, () => vm.call(entry.target, args, target.extra)); }
+       finally { pool.releaseArguments(args); }
+     }
+   } finally { stack.length = start; }
++  if (elided) vm.push(takeCilLeafResult(vm));
+   return true;
+ }
+diff --git a/tests/a05-prepared-leaf-elision.test.js b/tests/a05-prepared-leaf-elision.test.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..3193f2520eb5291d6ddd88c4237523ecd4c56573
+--- /dev/null
++++ b/tests/a05-prepared-leaf-elision.test.js
+@@ -0,0 +1,344 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {AssemblyInspector} from '@sharpforge/cil';
++import {CilVirtualMachine, executionCodeStatistics, framePoolStatistics} from '@sharpforge/runtime';
++import {inlineCacheFixture} from './support/inline-cache-fixture.js';
++import {invalidateExecutionCode, executionCodeState} from '../packages/runtime/src/execution/code-version.js';
++import {framePool, canElidePreparedCilFrame} from '../packages/runtime/src/execution/frame-pool.js';
++import {preparedCilTarget} from '../packages/runtime/src/execution/prepared-cil-frame.js';
++import {cilFrameCapability} from '../packages/runtime/src/execution/cil-frame-capability.js';
++import {rebuildFrameIndex} from '../packages/runtime/src/execution/frame-lifetimes.js';
++
++const bytes = inlineCacheFixture([0, 0, 0, 0, 0, 0]);
++const leafCalls = vm => executionCodeStatistics(vm).cilLeafCalls;
++
++function finish(vm, instructionBudget = 10000) {
++  let slices = 0;
++  while (vm.state === 'ready' || vm.state === 'running') {
++    assert(++slices < 1000);
++    vm.runSlice({instructionBudget, timeBudgetMs: Infinity});
++  }
++  return {state: vm.state, value: vm.returnValue, instructions: vm.instructions, frameId: vm.frameId,
++    fault: vm.fault?.name, frames: vm.frames.map(frame => [frame.id, frame.method.token, frame.pc, frame.lastOffset])};
++}
++
++function pause(vm, predicate) {
++  vm.runSlice({instructionBudget: 10000, timeBudgetMs: Infinity, onInstruction: predicate});
++  assert.equal(vm.state, 'paused');
++}
++
++for (const argument of [null, -17, 2147483647]) test(`constant elision or argument normalization fallback preserves execution: ${argument}`, () => {
++  const assembly = argument === null ? bytes : inlineCacheFixture([0, 1, 0, 1], {byteArgument: argument, argumentType: 'int'});
++  const results = [];
++  for (const inlineCaches of [false, true]) {
++    const vm = new CilVirtualMachine(assembly, {inlineCaches});
++    try {
++      results.push(finish(vm));
++      assert.equal(vm.state, 'terminated', vm.fault?.message);
++      if (inlineCaches && argument === null) {
++        assert(leafCalls(vm) > 0, 'The test must exercise actual physical-frame elision');
++        assert.equal(executionCodeStatistics(vm).cilLeafInstructions, leafCalls(vm) * 2);
++      } else assert.equal(leafCalls(vm), 0);
++    } finally { vm.stop(); }
++  }
++  assert.deepEqual(results[1], results[0]);
++});
++
++test('warm calls remain eligible after a pristine physical leaf has returned', () => {
++  const vm = new CilVirtualMachine(bytes);
++  try {
++    pause(vm, (instruction, frame) => frame.method.name === 'Value' && instruction.name === 'ret');
++    assert.equal(leafCalls(vm), 0);
++    vm.state = 'running';
++    const before = framePoolStatistics(vm);
++    assert.equal(finish(vm).value, 6);
++    assert(leafCalls(vm) > 0, 'A prior physical bucket must not disable every warmed call');
++    const after = framePoolStatistics(vm);
++    assert(after.framesAllocated >= before.framesAllocated);
++    assert(after.reused - before.reused < 5 * 5, 'Elided frames are not reported as physical frame reuse');
++  } finally { vm.stop(); }
++});
++
++for (const change of [
++  vm => { vm.options.maxFrames = 2; },
++  vm => { vm.options.maxStackBytes = 192; },
++  vm => { vm.frameId = 0; },
++  vm => { vm.frameId = Number.MAX_SAFE_INTEGER; }
++]) test('logical admission preserves quota/identity failures at the call instruction', () => {
++  const results = [];
++  for (const inlineCaches of [false, true]) {
++    const vm = new CilVirtualMachine(bytes, {inlineCaches});
++    try {
++      pause(vm, instruction => instruction.name === 'callvirt');
++      change(vm);
++      vm.state = 'running';
++      results.push(finish(vm));
++      assert.equal(vm.state, 'faulted');
++      assert.equal(leafCalls(vm), 0);
++    } finally { vm.stop(); }
++  }
++  assert.deepEqual(results[1], results[0]);
++});
++
++for (const allowance of [0, 1, 2, 3]) test(`instruction quota preserves partial leaf frames with ${allowance} instructions left`, () => {
++  const results = [];
++  for (const inlineCaches of [false, true]) {
++    const vm = new CilVirtualMachine(bytes, {inlineCaches});
++    try {
++      pause(vm, instruction => instruction.name === 'callvirt');
++      vm.options.maxInstructions = vm.instructions + allowance;
++      vm.state = 'running';
++      results.push(finish(vm));
++      assert.equal(vm.state, 'faulted');
++      assert.equal(leafCalls(vm), allowance >= 3 && inlineCaches ? 1 : 0);
++    } finally { vm.stop(); }
++  }
++  assert.deepEqual(results[1], results[0]);
++});
++
++test('one-instruction slices expose every leaf instruction and restore keeps ordinary execution', () => {
++  const vm = new CilVirtualMachine(bytes);
++  try {
++    let visited = 0;
++    while (vm.state === 'ready' || vm.state === 'running') {
++      const before = vm.instructions;
++      vm.runSlice({instructionBudget: 1, timeBudgetMs: Infinity});
++      assert.equal(vm.instructions, before + 1);
++      if (vm.top?.method.name === 'Value') visited++;
++    }
++    assert.equal(visited, 12);
++    assert.equal(leafCalls(vm), 0);
++  } finally { vm.stop(); }
++  const restored = new CilVirtualMachine(bytes);
++  try {
++    pause(restored, (instruction, frame) => frame.method.name === 'Value' && frame.pc === 0);
++    const oldEpoch = executionCodeState(restored);
++    assert.equal(oldEpoch.cilLeaf.frames, restored.frames);
++    const snapshot = restored.snapshot();
++    restored.state = 'running';
++    const expected = finish(restored);
++    restored.restore(snapshot);
++    assert.equal(oldEpoch.cilLeaf, null, 'Restore immediately releases the expired proof-owned frame graph');
++    assert.equal(restored.frameId, expected.frameId, 'Restore preserves the logical identity high-water mark');
++    restored.state = 'running';
++    const admittedCalls = expected.frameId - snapshot.frameId;
++    assert.deepEqual(finish(restored), {...expected, frameId: expected.frameId + admittedCalls});
++    assert.equal(leafCalls(restored), 0, 'Derived ownership does not survive restored frame publication');
++  } finally { restored.stop(); }
++});
++
++for (const options of [{profile: true}, {runtimeEvents: true}, {gcStress: 'instruction'},
++  {typedNumericStack: true}, {preparedLeafCalls: false}]) {
++  test(`observed or non-raw execution stays on the physical path: ${JSON.stringify(options)}`, () => {
++    const vm = new CilVirtualMachine(bytes, options);
++    try {
++      assert.equal(finish(vm).value, 6);
++      assert.equal(leafCalls(vm), 0);
++    } finally { vm.stop(); }
++  });
++}
++
++for (const key of ['call', 'step', 'push', 'pop', 'storage', 'slotType', 'ensureInitialized']) {
++  test(`a host ${key} override prevents physical-frame elision`, () => {
++    const vm = new CilVirtualMachine(bytes);
++    const original = vm[key];
++    vm[key] = function(...args) { return original.apply(this, args); };
++    try {
++      assert.equal(finish(vm).value, 6);
++      assert.equal(leafCalls(vm), 0);
++    } finally { vm.stop(); }
++  });
++}
++
++test('turning an observer off does not skip setters on a retained physical frame', () => {
++  const observations = [];
++  for (const inlineCaches of [false, true]) {
++    const vm = new CilVirtualMachine(bytes, {inlineCaches});
++    const writes = [];
++    try {
++      pause(vm, (instruction, frame) => frame.method.name === 'Value' && frame.pc === 0);
++      Object.defineProperty(vm.top, 'point', {enumerable: true, configurable: true,
++        get() { return null; }, set(value) { writes.push(value); }});
++      vm.state = 'running';
++      assert.equal(finish(vm).value, 6);
++      assert.equal(leafCalls(vm), 0);
++      assert(writes.length > 6);
++      observations.push(writes);
++    } finally { vm.stop(); }
++  }
++  assert.deepEqual(observations[1], observations[0]);
++});
++
++test('edited metadata, inspector adapters and execution epochs invalidate the original leaf proof', () => {
++  for (const edit of [
++    vm => { const getMethod = vm.inspector.getMethod; vm.inspector.getMethod = function(token) { return getMethod.call(this, token); }; },
++    vm => { invalidateExecutionCode(vm, 'leaf-negative'); },
++    vm => {
++      const method = vm.inspector.types.find(type => type.name === 'Receiver0').methods.find(method => method.name === 'Value');
++      const decoded = vm.inspector.getMethod(method.token);
++      decoded.instructions = [...decoded.instructions];
++    }
++  ]) {
++    const vm = new CilVirtualMachine(bytes);
++    try {
++      edit(vm);
++      assert.equal(finish(vm).value, 6);
++      assert.equal(leafCalls(vm), 0);
++    } finally { vm.stop(); }
++  }
++  const vm = new CilVirtualMachine(new AssemblyInspector(bytes));
++  try { assert.equal(finish(vm).value, 6); assert.equal(leafCalls(vm), 0); }
++  finally { vm.stop(); }
++});
++
++test('pool proof is read-only, remains warm with scratch buffers, and rejects retained storage customization', () => {
++  const vm = new CilVirtualMachine(bytes);
++  try {
++    const token = vm.inspector.types.find(type => type.name === 'Receiver0').methods.find(method => method.name === 'Value').token;
++    const prepared = preparedCilTarget(vm, token, {}), pool = framePool(vm);
++    const query = () => canElidePreparedCilFrame(vm, prepared.frameCapability, vm.top);
++    assert.equal(query(), true, 'Never-materialized exact method bucket');
++    const scratch = pool.arguments([], 0);
++    pool.releaseArguments(scratch);
++    const frame = pool.acquireCil(prepared.frameCapability);
++    pool.retire(frame);
++    assert.equal(query(), false, 'Pending retirement remains observable');
++    pool.flush();
++    const before = framePoolStatistics(vm);
++    assert.equal(query(), true, 'Pristine reused frame and nonempty scratch-buffer list');
++    assert.deepEqual(framePoolStatistics(vm), before);
++    let traps = 0;
++    for (const change of [
++      () => Object.defineProperty(frame, 'point', {get() { traps++; }, set() { traps++; }, configurable: true, enumerable: true}),
++      () => Object.defineProperty(frame, 'point', {value: undefined, writable: true, configurable: true, enumerable: false}),
++      () => { frame.lateHostMetadata = null; },
++      () => { frame.stack = new Proxy(frame.stack, {getOwnPropertyDescriptor() { traps++; throw new Error('Foreign proof'); }}); }
++    ]) {
++      const descriptors = Object.getOwnPropertyDescriptors(frame);
++      change();
++      assert.equal(query(), false);
++      assert.equal(traps, 0, 'Proof must reject customization without executing its accessors/traps');
++      for (const key of Reflect.ownKeys(frame)) if (!Object.hasOwn(descriptors, key)) delete frame[key];
++      Object.defineProperties(frame, descriptors);
++    }
++    const sizes = pool.buckets.get(prepared.method), capacity = sizes.get(1), bucket = capacity.get(prepared.method.maxStack);
++    bucket.free[bucket.free.length - 1] = new Proxy(frame, {getPrototypeOf() { traps++; throw new Error('Foreign frame'); }});
++    assert.equal(query(), false);
++    bucket.free[bucket.free.length - 1] = frame;
++    pool.buckets.set(prepared.method, new Proxy(sizes, {getPrototypeOf() { traps++; throw new Error('Foreign map'); }}));
++    assert.equal(query(), false);
++    pool.buckets.set(prepared.method, sizes);
++    assert.equal(traps, 0);
++    assert.equal(query(), true);
++  } finally { vm.stop(); }
++});
++
++test('inherited quota getters and exposed identity-map adapters retain the physical call path', () => {
++  for (const mode of ['option', 'identity-get', 'identity-delete']) {
++    const vm = new CilVirtualMachine(bytes);
++    let observed = 0;
++    try {
++      if (mode === 'option') {
++        delete vm.options.maxFrames;
++        Object.setPrototypeOf(vm.options, {get maxFrames() { observed++; return Infinity; }});
++      } else {
++        const index = rebuildFrameIndex(vm), key = mode === 'identity-get' ? 'get' : 'delete', original = index[key];
++        index[key] = function(value) { observed++; return original.call(this, value); };
++      }
++      assert.equal(finish(vm).value, 6);
++      assert.equal(leafCalls(vm), 0);
++      assert(observed > 0, 'The ordinary path still invokes the host adapter');
++    } finally { vm.stop(); }
++  }
++});
++
++
++test('a stale private prepared binding cannot authenticate a replacement public bucket', () => {
++  const vm = new CilVirtualMachine(bytes);
++  try {
++    const token = vm.inspector.types.find(type => type.name === 'Receiver0').methods.find(method => method.name === 'Value').token;
++    const prepared = preparedCilTarget(vm, token, {}), pool = framePool(vm);
++    const original = pool.acquireCil(prepared.frameCapability);
++    pool.retire(original);
++    pool.flush();
++    const capacities = pool.buckets.get(prepared.method).get(1), stack = prepared.method.maxStack;
++    const oldBucket = capacities.get(stack);
++    capacities.delete(stack);
++    const otherCapability = cilFrameCapability(vm.inspector, prepared.method, 1);
++    const replacement = pool.acquireCil(otherCapability);
++    pool.retire(replacement);
++    pool.flush();
++    assert.notEqual(capacities.get(stack), oldBucket);
++    assert.equal(oldBucket.current, true, 'The private original binding is still live');
++    assert.equal(canElidePreparedCilFrame(vm, otherCapability, vm.top), true, 'Replacement storage is genuinely owned and pristine');
++    assert.equal(canElidePreparedCilFrame(vm, prepared.frameCapability, vm.top), false, 'Public and private choices differ');
++  } finally { vm.stop(); }
++});
++
++test('leaf opt-out and code invalidation discard eligibility without fabricating physical counters', () => {
++  for (const options of [{preparedLeafCalls: false}, {}]) {
++    const vm = new CilVirtualMachine(bytes, options);
++    try {
++      vm.options.preparedLeafCalls = options.preparedLeafCalls === false;
++      assert.equal(finish(vm).value, 6);
++      assert.equal(leafCalls(vm), 0, 'Construction opt-out is not retroactively enabled; live opt-out remains effective');
++      const epoch = executionCodeState(vm);
++      vm.stop();
++      assert.equal(epoch.cilLeaf, null, 'Stop releases proof-owned metadata and frame storage immediately');
++    } finally { vm.stop(); }
++  }
++});
++
++
++test('retained exposed identity records keep their registration and retirement callbacks', () => {
++  const outputs = [];
++  for (const preparedLeafCalls of [false, true]) {
++    const vm = new CilVirtualMachine(bytes, {preparedLeafCalls});
++    const writes = [];
++    try {
++      pause(vm, (instruction, frame) => frame.method.name === 'Value' && frame.pc === 0);
++      const record = rebuildFrameIndex(vm).get(vm.top.id);
++      vm.state = 'running';
++      pause(vm, () => record.container === null);
++      for (const key of ['container', 'position']) {
++        let current = record[key];
++        Object.defineProperty(record, key, {configurable: true, enumerable: true,
++          get() { return current; }, set(value) { writes.push(key); current = value; }});
++      }
++      vm.state = 'running';
++      assert.equal(finish(vm).value, 6);
++      assert.equal(leafCalls(vm), 0);
++      assert(writes.length >= 4, 'Warm physical calls still write the retained identity record');
++      outputs.push(writes);
++    } finally { vm.stop(); }
++  }
++  assert.deepEqual(outputs[1], outputs[0]);
++});
++
++
++test('receiver callbacks cannot borrow or reuse an outer opcode allowance for direct invoke', () => {
++  const observations = [];
++  for (const preparedLeafCalls of [false, true]) {
++    const vm = new CilVirtualMachine(bytes, {preparedLeafCalls});
++    try {
++      pause(vm, instruction => instruction.name === 'callvirt');
++      const instruction = vm.top.method.instructions[vm.top.pc], get = vm.heap.get;
++      let observed;
++      vm.heap.get = function(reference) {
++        vm.heap.get = get;
++        const before = vm.instructions, frames = vm.frames.length;
++        vm.invoke(instruction);
++        observed = {instructions: vm.instructions - before, frames: vm.frames.length - frames,
++          method: vm.top.method.name, pc: vm.top.pc};
++        throw new Error('Nested direct invoke observed');
++      };
++      vm.state = 'running';
++      vm.runSlice({instructionBudget: 3, timeBudgetMs: Infinity});
++      assert.equal(vm.state, 'faulted');
++      assert.deepEqual(observed, {instructions: 0, frames: 1, method: 'Value', pc: 0});
++      assert.equal(leafCalls(vm), 0);
++      observations.push({observed, instructions: vm.instructions});
++    } finally { vm.stop(); }
++  }
++  assert.deepEqual(observations[1], observations[0]);
++});
+diff --git a/tests/a05-profiler-reference.test.js b/tests/a05-profiler-reference.test.js
+index 6ee55376b270b56fef9f5be829747cb4b437c720..5fb399f66e353eb9b71a8e5477f5575eb0d3e5c9 100644
+--- a/tests/a05-profiler-reference.test.js
++++ b/tests/a05-profiler-reference.test.js
+@@ -123,3 +123,17 @@ test('source dispatch reference removes only the exact reviewed profiling wrappe
+     assert.throws(() => stripProfilerConsumer(path, changed), /Unreviewed/);
+   }
+ });
++
++
++test('leaf-call reference removes exactly one profiler guard and preserves every other eligibility barrier', () => {
++  const path = 'execution/cil-leaf-window.js';
++  const source = readFileSync(new URL('../packages/runtime/src/' + path, import.meta.url), 'utf8');
++  const actual = stripProfilerConsumer(path, source);
++  assert.equal(actual.changes, 1);
++  assert.equal(actual.source, source.replace('vm.profiler || vm.options.profile || ', ''));
++  for (const changed of [source.replace('vm.options.profile', 'vm.options.other'),
++    source + '\nif (vm.profiler || vm.options.profile || vm.runtimeEvents) observe();\n',
++    source + '\nvm.profiler?.newHook();\n']) {
++    assert.throws(() => stripProfilerConsumer(path, changed), /Unreviewed/);
++  }
++});
+diff --git a/tests/support/inline-cache-fixture.js b/tests/support/inline-cache-fixture.js
+index 58c8cfac7a023530881080b9302de812418a4fde..dc5bfe075159f2e54d8f6edd78b0cb5fa01e8580 100644
+--- a/tests/support/inline-cache-fixture.js
++++ b/tests/support/inline-cache-fixture.js
+@@ -3,19 +3,20 @@ import {
+ } from '@sharpforge/cil';
+ 
+ /** Independent CLI metadata with one shared call site and several implementation types. */
+-export function inlineCacheFixture(sequence = [0, 0, 0, 0], {interfaceCall = false, delta = 0, byteArgument = null} = {}) {
++export function inlineCacheFixture(sequence = [0, 0, 0, 0],
++  {interfaceCall = false, delta = 0, byteArgument = null, argumentType = 'byte'} = {}) {
+   const constructor = base => ({name: '.ctor', result: 'void', flags: 0x1886,
+     body: (writer, context) => writer.op('ldarg.0').op('call',
+       base ? context.methods.get(base + '..ctor') : context.objectConstructor).op('ret')});
+   const types = [{name: 'Base', interface: interfaceCall, methods: [
+     ...(interfaceCall ? [] : [constructor()]),
+-    {name: 'Value', flags: interfaceCall ? 0x5c6 : 0x1c6, parameters: byteArgument === null ? [] : ['byte'],
++    {name: 'Value', flags: interfaceCall ? 0x5c6 : 0x1c6, parameters: byteArgument === null ? [] : [argumentType],
+       ...(interfaceCall ? {} : {body: writer => writer.op('ldc.i4.0').op('ret')})}
+   ]}];
+   const count = Math.max(6, ...sequence.map(index => index + 1));
+   for (let index = 0; index < count; index++) types.push({name: 'Receiver' + index,
+     base: interfaceCall ? null : 'Base', methods: [constructor(interfaceCall ? null : 'Base'),
+-      {name: 'Value', flags: interfaceCall ? 0x1c6 : 0xc6, parameters: byteArgument === null ? [] : ['byte'],
++      {name: 'Value', flags: interfaceCall ? 0x1c6 : 0xc6, parameters: byteArgument === null ? [] : [argumentType],
+         body: writer => (byteArgument === null ? writer.op('ldc.i4', index + 1 + delta) : writer.op('ldarg.1')).op('ret')}]
+   });
+   types.push({name: 'Program', methods: [

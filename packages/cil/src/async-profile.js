@@ -1,136 +1,116 @@
-import {
-  genericTypeParts
-} from './field-profile.js';
-import {
-  callSignatureKey,
-  instantiateSignature,
-  normalizeCallType
-} from './call-profile.js';
+import {genericTypeParts, normalizeCallType, substituteCallType} from './generic-signatures.js';
+import {asyncRuntimeMethodDefinition} from './async-runtime-profile.js';
+export {asyncTypeDefinition, reachableAsyncMethods, asyncIntrinsicDefinitions} from './async-runtime-profile.js';
 
-const C = 'System.Runtime.CompilerServices.',
-  T = 'System.Threading.Tasks.Task';
-const builderNames = new Set([C + 'AsyncTaskMethodBuilder', C + 'AsyncTaskMethodBuilder`1', C + 'AsyncVoidMethodBuilder']);
-const awaiterNames = new Set([C + 'TaskAwaiter', C + 'TaskAwaiter`1', C + 'YieldAwaitable+YieldAwaiter']);
-const records = [];
+export const asyncTypes = Object.freeze({
+  task: 'System.Threading.Tasks.Task',
+  builder: 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder',
+  voidBuilder: 'System.Runtime.CompilerServices.AsyncVoidMethodBuilder',
+  awaiter: 'System.Runtime.CompilerServices.TaskAwaiter',
+  yieldable: 'System.Runtime.CompilerServices.YieldAwaitable',
+  yieldAwaiter: 'System.Runtime.CompilerServices.YieldAwaitable+YieldAwaiter',
+  machine: 'System.Runtime.CompilerServices.IAsyncStateMachine',
+  notify: 'System.Runtime.CompilerServices.INotifyCompletion',
+  critical: 'System.Runtime.CompilerServices.ICriticalNotifyCompletion'
+});
 
-function add(owner, name, parameters, returnType, isStatic, operation, genericArity = 0) {
-  records.push(Object.freeze({
-    owner,
-    name,
-    signature: Object.freeze({
-      kind: 'method',
-      parameters: Object.freeze(parameters),
-      returnType,
-      isStatic,
-      genericArity
-    }),
-    operation
-  }));
-}
-for (const owner of builderNames) {
-  const generic = owner.endsWith('`1'),
-    voidBuilder = owner.endsWith('AsyncVoidMethodBuilder'),
-    self = generic ? owner + '<!0>' : owner;
-  add(owner, 'Create', [], self, true, 'builder-create');
-  add(owner, 'Start', ['!!0&'], 'void', false, 'builder-start', 1);
-  add(owner, 'SetStateMachine', [C + 'IAsyncStateMachine'], 'void', false, 'builder-set-state-machine');
-  add(owner, 'SetException', ['System.Exception'], 'void', false, 'builder-set-exception');
-  add(owner, 'SetResult', generic ? ['!0'] : [], 'void', false, 'builder-set-result');
-  for (const name of ['AwaitOnCompleted', 'AwaitUnsafeOnCompleted']) add(owner, name, ['!!0&', '!!1&'], 'void', false, 'builder-await', 2);
-  if (!voidBuilder) add(owner, 'get_Task', [], generic ? T + '`1<!0>' : T, false, 'builder-task');
-}
-for (const owner of awaiterNames) {
-  add(owner, 'get_IsCompleted', [], 'bool', false, 'awaiter-completed');
-  add(owner, 'GetResult', [], owner.endsWith('`1') ? '!0' : 'void', false, 'awaiter-result');
-  for (const name of ['OnCompleted', 'UnsafeOnCompleted']) add(owner, name, ['System.Action'], 'void', false, 'awaiter-continuation');
-}
-add(T, 'GetAwaiter', [], C + 'TaskAwaiter', false, 'task-awaiter');
-add(T + '`1', 'GetAwaiter', [], C + 'TaskAwaiter`1<!0>', false, 'task-awaiter');
-add(T, 'Yield', [], C + 'YieldAwaitable', true, 'task-yield');
-add(C + 'YieldAwaitable', 'GetAwaiter', [], C + 'YieldAwaitable+YieldAwaiter', false, 'yield-awaiter');
-add('System.Environment', 'get_CurrentManagedThreadId', [], 'int', true, 'logical-thread-id');
-export const asyncIntrinsicDefinitions = Object.freeze(records);
+const generic = (type, element) => element === null ? type : type + '`1<' + element + '>';
 
-/** Finite compiler infrastructure contracts. BCL Task scheduling stays with A11. */
-export function asyncMethodDefinition(descriptor) {
-  if (descriptor?.kind !== 'method' || !descriptor.signature || descriptor.signature.callingConvention) return null;
-  const parts = genericTypeParts(descriptor.ownerInstance ?? descriptor.owner),
-    methodArguments = descriptor.methodArguments ?? descriptor.genericArguments ?? [];
-  for (const definition of records) {
-    if (definition.owner !== parts.definition || definition.name !== descriptor.name || (definition.signature.genericArity ?? 0) !== (descriptor
-        .signature.genericArity ?? 0)) continue;
-    if ((definition.owner.endsWith('`1') ? 1 : 0) !== parts.arguments.length) continue;
-    if (definition.signature.genericArity && methodArguments.length !== definition.signature.genericArity) continue;
-    if (definition.operation === 'builder-await' && !awaiterNames.has(genericTypeParts(methodArguments[0]).definition) && !/^!!?\d+$/.test(
-        methodArguments[0])) continue;
-    const expected = instantiateSignature(definition.signature, parts.arguments, methodArguments);
-    if (callSignatureKey(expected) !== callSignatureKey(descriptor.signature)) continue;
-    return {
-      ...definition,
-      implementation: 'async',
-      owner: descriptor.ownerInstance ?? descriptor.owner,
-      ownerKind: builderNames.has(parts.definition) ? 'builder' : awaiterNames.has(parts.definition) ? 'awaiter' : 'infrastructure',
-      resultType: parts.arguments[0] ?? 'void',
-      signature: expected,
-      methodArguments
-    };
-  }
-  return null;
+// This is only a rejection filter. Matching names still require the full member and metadata identity proof.
+const methodOwners = new Set([
+  'System.Environment', asyncTypes.voidBuilder, asyncTypes.task, asyncTypes.task + '`1', asyncTypes.builder, asyncTypes.builder + '`1',
+  asyncTypes.awaiter, asyncTypes.awaiter + '`1', asyncTypes.yieldable, asyncTypes.yieldAwaiter
+]);
+
+function hasAsyncOwner(input) {
+  if (typeof input !== 'string') return false;
+  const genericStart = input.indexOf('<');
+  return methodOwners.has(genericStart < 0 ? input : input.slice(0, genericStart));
 }
 
-/** Pure MethodTable descriptors; private fields use the normal value-copy/GC path. */
-export function asyncTypeDefinition(name) {
-  if (builderNames.has(name) || awaiterNames.has(name) || name === C + 'YieldAwaitable') {
-    return {
-      name,
-      base: 'System.ValueType',
-      flags: {
-        valueType: true,
-        sealed: true,
-        runtimeValue: true
-      },
-      fields: [{
-        name: '$task',
-        type: 'object'
-      }],
-      interfaces: awaiterNames.has(name) ? [C + 'ICriticalNotifyCompletion'] : [],
-      ...(name.endsWith('`1') ? {
-        variance: [0]
-      } : {})
-    };
-  }
-  if (name === C + 'IAsyncStateMachine' || name === C + 'INotifyCompletion') return {
-    name,
-    base: null,
-    flags: {
-      interface: true
+/** Intrinsic ABI value identity, including open generic definitions used by MethodTables. */
+export function asyncValueType(input) {
+  const type = normalizeCallType(input), parts = genericTypeParts(type);
+  for (const kind of ['builder', 'awaiter']) {
+    if (parts.definition === asyncTypes[kind] && !parts.arguments.length) return {kind, type, element: null};
+    if (parts.definition === asyncTypes[kind] + '`1' && parts.arguments.length <= 1) {
+      return {kind, type, element: parts.arguments[0] ?? '!0'};
     }
-  };
-  if (name === C + 'ICriticalNotifyCompletion') return {
-    name,
-    base: null,
-    flags: {
-      interface: true
-    },
-    interfaces: [C + 'INotifyCompletion']
-  };
+  }
+  if (type === asyncTypes.voidBuilder) return {kind: 'builder', type, element: null};
+  if (type === asyncTypes.yieldable) return {kind: 'yieldable', type, element: null};
+  if (type === asyncTypes.yieldAwaiter) return {kind: 'yieldAwaiter', type, element: null};
   return null;
 }
 
-/** Start/Await call infrastructure reaches MoveNext without an explicit IL call. */
-export function reachableAsyncMethods(inspector, descriptor) {
-  const definition = asyncMethodDefinition(descriptor),
-    result = new Set();
-  if (!definition || !['builder-start', 'builder-await'].includes(definition.operation)) return result;
-  const argument = definition.methodArguments[definition.operation === 'builder-start' ? 0 : 1],
-    parts = genericTypeParts(argument),
-    open = /!!?\d+/.test(argument);
-  for (const type of inspector.types) {
-    if (!open && normalizeCallType(type.name) !== normalizeCallType(parts.definition)) continue;
-    if (!type.interfaces.some(token => inspector.metadata.typeName(token) === C + 'IAsyncStateMachine')) continue;
-    for (const method of type.methods)
-      if (method.hasBody && (method.name === 'MoveNext' || method.name.endsWith('.MoveNext') || method.name === 'SetStateMachine' || method.name
-          .endsWith('.SetStateMachine'))) result.add(method.token);
+function selectOperation(descriptor, owner, match) {
+  const {name} = descriptor;
+  const value = asyncValueType(owner);
+  if (value?.kind === 'builder') {
+    const task = generic(asyncTypes.task, value.element);
+    if (match('Create', [], owner, true)) return ['create', value];
+    if (owner !== asyncTypes.voidBuilder && match('get_Task', [], task)) return ['task', value];
+    if (match('SetResult', value.element === null ? [] : [value.element], 'void')) return ['result', value];
+    if (match('SetException', ['System.Exception'], 'void')) return ['exception', value];
+    if (match('SetStateMachine', [asyncTypes.machine], 'void')) return ['setMachine', value];
+    if (match('Start', ['!!0&'], 'void', false, 1)) return ['start', value];
+    if (['AwaitOnCompleted', 'AwaitUnsafeOnCompleted'].includes(name) && match(name, ['!!0&', '!!1&'], 'void', false, 2)) {
+      return ['await', value];
+    }
   }
-  return result;
+  if (value?.kind === 'awaiter' || value?.kind === 'yieldAwaiter') {
+    if (match('get_IsCompleted', [], 'bool')) return ['completed', value];
+    if (match('GetResult', [], value.element ?? 'void')) return ['getResult', value];
+    if (['OnCompleted', 'UnsafeOnCompleted'].includes(name) && match(name, ['System.Action'], 'void')) return ['notify', value];
+  }
+  if (value?.kind === 'yieldable' && match('GetAwaiter', [], asyncTypes.yieldAwaiter)) return ['yieldAwaiter', value];
+  const parts = genericTypeParts(owner);
+  const task = parts.definition === asyncTypes.task && !parts.arguments.length
+    || parts.definition === asyncTypes.task + '`1' && parts.arguments.length === 1;
+  if (!task) return null;
+  const element = parts.arguments[0] ?? null;
+  const shape = {kind: 'task', type: owner, element};
+  if (match('GetAwaiter', [], generic(asyncTypes.awaiter, element))) return ['getAwaiter', shape];
+  if (['get_IsCompleted', 'get_IsFaulted', 'get_IsCanceled'].includes(name) && match(name, [], 'bool')) return ['status', shape];
+  if (match('Wait', [], 'void')) return ['wait', shape];
+  if (element !== null && match('get_Result', [], element)) return ['getTaskResult', shape];
+  if (element !== null) return null;
+  if (match('get_CompletedTask', [], asyncTypes.task, true)) return ['completedTask', shape];
+  if (match('Delay', ['int'], asyncTypes.task, true)) return ['delay', shape];
+  if (match('Yield', [], asyncTypes.yieldable, true)) return ['yield', shape];
+  if (match('FromResult', ['!!0'], generic(asyncTypes.task, '!!0'), true, 1)) return ['fromResult', shape];
+  return null;
+}
+
+/** Exact substituted member contract; malformed overloads and unsupported async families stay unregistered. */
+export function asyncMethodDefinition(descriptor) {
+  const signature = descriptor?.signature;
+  if (descriptor?.kind !== 'method' || !signature || signature.callingConvention || descriptor.resolvedToken ||
+      descriptor.token >>> 24 === 6 || descriptor.definitionToken >>> 24 === 6) return null;
+  const ownerName = descriptor.ownerInstance ?? descriptor.owner;
+  if (!hasAsyncOwner(ownerName)) return null;
+  const owner = normalizeCallType(ownerName);
+  const ownerArguments = genericTypeParts(owner).arguments;
+  if (!ownerArguments.length && owner.endsWith('`1')) return null;
+  const arguments_ = descriptor.methodArguments ?? descriptor.genericArguments ?? [];
+  const arity = signature.genericArity ?? 0;
+  if (arguments_.length !== arity || arity && !descriptor.genericArguments) return null;
+  const close = type => {
+    const value = substituteCallType(type, ownerArguments, arguments_);
+    return value === 'Exception' ? 'System.Exception' : value;
+  };
+  // resolveExecutionMethod has already substituted the actual signature. A caller's
+  // surviving MVAR (for example Machine<!!0>) is not this intrinsic's method argument.
+  const parameters = signature.parameters.map(normalizeCallType), result = normalizeCallType(signature.returnType);
+  const match = (name, expected, returns, isStatic = false, genericArity = 0) =>
+    descriptor.name === name && signature.isStatic === isStatic && arity === genericArity &&
+    result === close(returns) && parameters.length === expected.length && parameters.every((type, index) => type === close(expected[index]));
+  const selected = selectOperation(descriptor, owner, match);
+  const runtime = asyncRuntimeMethodDefinition(descriptor);
+  if (!selected && runtime?.operation !== 'logical-thread-id') return null;
+  return {implementation: 'async', operation: selected?.[0] ?? runtime.operation,
+    ...(selected?.[1] ?? {kind: 'infrastructure', type: owner, element: null}), descriptor,
+    owner, ownerKind: runtime?.ownerKind ?? 'task', resultType: runtime?.resultType ?? genericTypeParts(owner).arguments[0] ?? 'void',
+    signature: {...signature, parameters, returnType: result}, runtimeOperation: runtime?.operation ?? selected[0],
+    methodArguments: arguments_, contract: null};
 }

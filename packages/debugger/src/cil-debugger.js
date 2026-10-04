@@ -7,6 +7,7 @@ import {sameBreakpointRule,validateBreakpointRule,evaluateBreakpointRule,formatL
 import {readDebugDirectory} from '@sharpforge/symbols';
 import { parseExpression } from '@sharpforge/syntax';
 import {pumpCilSession, pauseCilSession} from './cil-execution-control.js';
+import {cilObjectChildren} from './object-children.js';
 
 const address = (token, offset) => `il:${token.toString(16).padStart(8, '0')}:${offset.toString(16).padStart(8, '0')}`;
 const primitive = new Set(['int','uint','long','ulong','short','ushort','byte','sbyte','bool','char','float','double','nint','nuint']);
@@ -303,10 +304,7 @@ export class CilDebugSession {
   locals(frameId){return this.slots(this.frame(frameId));}
   statics(){return [...this.vm.inspector.fields.values()].filter(f=>f.isStatic).map(f=>this.variable(f.owner+'::'+f.name,this.vm.inspector.signature(f.token).type,this.vm.statics.get(f.token),{token:f.token}));}
   children(reference,start=0,count=100){
-    if(!Number.isInteger(start)||start<0||!Number.isInteger(count)||count<1||count>1000)throw new RangeError('Invalid object inspection page');
-    const record=this.vm.heap.get(reference);if(record.kind==='string')return [this.variable('Length','int',record.data.length)];
-    const td=this.vm.inspector.types.find(t=>t.name===record.type),fields=td?this.vm.layout(td.token).fields:[];
-    return record.data.slice(start,start+count).map((value,i)=>this.variable(record.kind==='array'?`[${start+i}]`:fields[start+i]?.name??(record.kind==='exception'?'Message':`Field ${start+i}`),fields[start+i]?.type??(record.kind==='array'?record.type.slice(0,-2):'object'),value));
+    return cilObjectChildren(this,reference,start,count);
   }
   parse(text){
     if(typeof text!=='string'||text.length>16384)throw new RangeError('Watch expression exceeds 16384 characters');

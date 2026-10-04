@@ -144,6 +144,12 @@ export function asyncFixture() {
             catchType: c.resolve('System.Exception')
           }
         ]
+      }, {
+        name: 'SetStateMachine',
+        static: false,
+        flags: 0x1e1,
+        parameters: [C + 'IAsyncStateMachine'],
+        body: w => w.op('ret')
       }]
     }
   ], {
@@ -154,6 +160,8 @@ export function asyncFixture() {
         ]) c.md.rows[4][(field(c, name) & 0xffffff) - 1][2] = c.md.blob(type(new Writer().u8(6), fieldType, c).finish());
       c.md.add(25, [c.types.get('Machine') & 0xffffff, codedIndex('MethodDefOrRef', c.methods.get('Machine.MoveNext')), codedIndex(
         'MethodDefOrRef', member(c, C + 'IAsyncStateMachine', 'MoveNext', 'void'))]);
+      c.md.add(25, [c.types.get('Machine') & 0xffffff, codedIndex('MethodDefOrRef', c.methods.get('Machine.SetStateMachine')),
+        codedIndex('MethodDefOrRef', member(c, C + 'IAsyncStateMachine', 'SetStateMachine', 'void', [C + 'IAsyncStateMachine']))]);
     }
   });
 }

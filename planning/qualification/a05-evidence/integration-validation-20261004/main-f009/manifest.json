@@ -1,0 +1,97 @@
+{
+  "format": "SharpForge.A05MergeCheckpoint/1",
+  "localRevision": "01745592db079b44f248ecc460ed09f0a01b9df5",
+  "publicRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "tree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+  "scope": "Public CIL export import smoke and Git merge reconciliation only; no full post-merge test/build/platform qualification",
+  "originalRecords": 6,
+  "files": [
+    {
+      "file": "a05-main-f009-cil-exports-journal.json",
+      "bytes": 840,
+      "sha256": "ac5df545f746595b0303bd8d87a76bf818457cad8187225a62ddb036987ece92",
+      "origin": "byte-for-byte supplied root record"
+    },
+    {
+      "file": "a05-main-f009-cil-exports.log",
+      "bytes": 54,
+      "sha256": "ff38cb6ba1eb563c3a7431934d30cfc0ffdd86945360e652b4125afb9217ca9b",
+      "origin": "byte-for-byte supplied root record"
+    },
+    {
+      "file": "a05-main-f009-commit.log",
+      "bytes": 128,
+      "sha256": "3bccd4456eb6eda134e125f18548deffec3b46d864f1ed5c82c84f0425a8baff",
+      "origin": "byte-for-byte supplied root record"
+    },
+    {
+      "file": "a05-main-f009-merge-tree.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "byte-for-byte supplied root record"
+    },
+    {
+      "file": "a05-main-f009-merge-tree.txt",
+      "bytes": 464,
+      "sha256": "fa079801ab356acdbdb3ea396eedbec72c16c507271bb3d546f6af26204ad7e2",
+      "origin": "byte-for-byte supplied root record"
+    },
+    {
+      "file": "a05-main-f009-merge.log",
+      "bytes": 260,
+      "sha256": "7b892f45f66f74f4f739267b3f6e0950c858e114a4e7eabad7efb4b11d207c8c",
+      "origin": "byte-for-byte supplied root record"
+    },
+    {
+      "file": "git-review.json",
+      "bytes": 28236,
+      "sha256": "d2365ea1130e1ee9dbb170c4cd934ed9eff2768922868163e2a47e2c0e30506d",
+      "origin": "independent read-only Git-object review"
+    },
+    {
+      "file": "resolved-index.diff",
+      "bytes": 569,
+      "sha256": "c8d5b105cd5d175f89d3e46d6f12d673352262d8d8f72388457a69acdfdf4b2d",
+      "origin": "independent read-only Git-object review"
+    }
+  ],
+  "exportSmoke": {
+    "command": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--input-type=module",
+      "-e",
+      "import assert from 'node:assert/strict'; import {readSourceTypeIdentities,MetadataGenerations,metadataGenerationDiagnosticCatalog} from '@sharpforge/cil'; assert.equal(typeof readSourceTypeIdentities,'function'); assert.equal(typeof MetadataGenerations,'function'); assert.ok(metadataGenerationDiagnosticCatalog); console.log('Both CIL public export additions import successfully.');"
+    ],
+    "environment": {
+      "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+      "SHARPFORGE_TEST_CONCURRENCY": "1",
+      "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+    },
+    "startedUnixSeconds": 1791143381.109714,
+    "finishedUnixSeconds": 1791143381.7256336,
+    "elapsedSeconds": 0.61592,
+    "exitCode": 0,
+    "assertions": [
+      "readSourceTypeIdentities is a function",
+      "MetadataGenerations is a function",
+      "metadataGenerationDiagnosticCatalog is truthy"
+    ],
+    "testCount": null,
+    "revisionAttribution": "Root supplied this as verification of the resolved merge. The original journal records parent and mergedMain, not the executed HEAD, cwd, tree or clean status. Committed tree equality is independently verified in git-review.json.",
+    "unrecordedEnvironment": [
+      "Node version",
+      "NODE_OPTIONS",
+      "effective V8 heap size",
+      "process cwd",
+      "tracked clean status"
+    ]
+  },
+  "limitations": [
+    "No metadata-generation or source-type-identity behavioral test executed by this smoke.",
+    "No new tests, builds, benchmarks, generators, browser or native work was run during this archive.",
+    "Full post-merge CI was pending at this checkpoint.",
+    "Eight whole-merge whitespace notices are root-reported, not retained raw or repeated here; the manually resolved index was independently checked."
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "name": "hosted-workflow-focused",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a05-hosted-qualification.test.js",
+    "tests/a05-wasm-latency.test.js",
+    "tests/a05-array-latency.test.js",
+    "tests/a05-byref-latency.test.js",
+    "tests/a05-qualification-options.test.js",
+    "tests/a05-float-iteration-criterion.test.js",
+    "tests/a05-snapshot-retention-protocol.test.js",
+    "tests/a05-profiler-reference-integration.test.js"
+  ],
+  "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "062b3b899d8dd36a696ee0e028e5951d86e98139",
+    "tree": "a48712f9873d7c4948619ed6e3654d7e53e81d63",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T20:42:06.280267+00:00",
+  "completedUTC": "2026-10-04T20:42:23.651465+00:00",
+  "elapsedSeconds": 17.37091186700127,
+  "exitCode": 0,
+  "endIdentity": {
+    "commit": "062b3b899d8dd36a696ee0e028e5951d86e98139",
+    "tree": "a48712f9873d7c4948619ed6e3654d7e53e81d63",
+    "status": ""
+  },
+  "artifact": {
+    "path": "focused.tap",
+    "bytes": 12836,
+    "sha256": "3e678029d9eb6e19be97e7df3c3a07ef3d8b896087c6e439ebc0c51f1be1a699"
+  }
+}

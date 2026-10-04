@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Retain the single completed nested-worker size-measurement regression run; no build or artifact-size qualification was performed.",
+  "testedCommit": "a3652c85aa6c0f1d4e697ec7efc6ff02f71fc4bd",
+  "testedTree": "24b5ef0324a8cac3d98942ef2a5537692fb2e991",
+  "integratedImplementationCommit": "54387b7c278991aa2c23acd5b0c3893a935e8e5c",
+  "result": {
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "exitCode": 0,
+    "runnerDurationMs": 319.978735,
+    "limiterElapsedSeconds": 0.46734303799894406
+  },
+  "outputFormat": "Node default spec reporter; --test-reporter=tap was not passed",
+  "files": [
+    {
+      "path": "journal.json",
+      "bytes": 1488,
+      "sha256": "a8d6103e0d4ff6112fad214ae911b54ca090996705b04c9614dfeeed8b7deb9e",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-nested-worker-size-validation-20261004/journal.json",
+      "byteIdentical": true
+    },
+    {
+      "path": "focused.log",
+      "bytes": 521,
+      "sha256": "560d9ad3982f66c41ee0dddec7ec020daf1bc9023799dfcc16b0a2846e1e58a7",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-nested-worker-size-validation-20261004/focused.log",
+      "byteIdentical": true
+    }
+  ],
+  "sourceProof": [
+    {
+      "path": "scripts/conformance/perf/size-budget.js",
+      "bytes": 3203,
+      "sha256": "85ddafdcd6b011e024c486f55ca484b93524e53b541b5c7ab6dd0e344955328e",
+      "testedBlob": "51af4baf26b28286a06ea2a43534ebc5e603f731",
+      "integratedBlob": "51af4baf26b28286a06ea2a43534ebc5e603f731"
+    },
+    {
+      "path": "planning/qualification/integration-performance/size/measure.mjs",
+      "bytes": 1570,
+      "sha256": "431b55d1751c5fda710454c45a02ef31fb594d029cff12d17cb371072ff819f3",
+      "testedBlob": "a1fd209cff2cc6b1b0963a9884131b2d340e8108",
+      "integratedBlob": "a1fd209cff2cc6b1b0963a9884131b2d340e8108"
+    },
+    {
+      "path": "tests/a29-nested-worker-sizes.test.js",
+      "bytes": 4584,
+      "sha256": "ab8d34d20f536154e80dde686ffe0780e632085534e21e5e58e0c59a40e9de4a",
+      "testedBlob": "91be58561bf4c1b50ee3b2d855a4da2f68fbae57",
+      "integratedBlob": "91be58561bf4c1b50ee3b2d855a4da2f68fbae57"
+    }
+  ],
+  "limitations": [
+    "Only the focused four-test measurement inventory suite ran.",
+    "The output is the original Node default spec reporter, not TAP; it has not been converted.",
+    "Historical absolute size maxima and missing-budget rejection are unchanged.",
+    "No dist, standalone, worker production bundle, or package archive size was measured.",
+    "No merged async/runtime validation or pinned-toolchain reproducible build is claimed."
+  ]
+}

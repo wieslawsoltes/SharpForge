@@ -1,0 +1,9 @@
+{
+  "verifiedAt": "2026-10-04T20:16:55.768317+00:00",
+  "referenceCommit": "6f26b84f46053b4aafd3ab8e77150cc793790d8d",
+  "fullTree": "0f987d136a2eca1c7302d3e5059cf5a0f9faa0c1",
+  "cleanWorktree": true,
+  "materializedBlobsVerified": 4620,
+  "materializedInventorySHA256": "26b99c55e9359016bd08706a6152050d68333f2b3c5b7392b06e3c7732e18817",
+  "protectedBranch": "codex/a05-profiler-reference-historical-36"
+}

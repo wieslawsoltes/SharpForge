@@ -1,0 +1,79 @@
+{
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "python3",
+    "/workspace/scratch/1692a10afba9/cil-admission-budget-performance-proposal/paired.py",
+    "--repository",
+    "/workspace/scratch/1692a10afba9/p5-cil-admission-budget",
+    "--baseline",
+    "41ebd76987aa912659310d4015607f46110358ab",
+    "--candidate",
+    "6f8da343a3df1105e7789e5a7201dd3ae4983855",
+    "--output",
+    "/workspace/scratch/1692a10afba9/cil-admission-budget-optimized-performance.json"
+  ],
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "exitCode": 0,
+  "wallSeconds": 7.244332911002857,
+  "before": {
+    "head": "6f8da343a3df1105e7789e5a7201dd3ae4983855",
+    "status": "",
+    "sourceInputs": 2313,
+    "staticGraphModules": 1543,
+    "sourceSnapshotSha256": "539684cbd655f249717ca244cc84226cb6c0f9c9e0dda61e98e363edfa8f927a",
+    "benchmarkFiles": [
+      {
+        "path": "README.md",
+        "bytes": 3883,
+        "lines": 68,
+        "sha256": "40db5af8734286ab6f2d4addc788e3c0b846492c51661e9bf2bd0959c9f24e7d"
+      },
+      {
+        "path": "callback.mjs",
+        "bytes": 3696,
+        "lines": 67,
+        "sha256": "cc4cd3c6db7e87b02c3c44e4b0c432a69088d50c568bf0cd22a332fbdef26b31"
+      },
+      {
+        "path": "paired.py",
+        "bytes": 8813,
+        "lines": 185,
+        "sha256": "e285ef1159e7420fd840a6091d4ca9a1f8da366c0d8deb2d51ff94669f3bbd19"
+      }
+    ]
+  },
+  "after": {
+    "head": "6f8da343a3df1105e7789e5a7201dd3ae4983855",
+    "status": "",
+    "sourceInputs": 2313,
+    "staticGraphModules": 1543,
+    "sourceSnapshotSha256": "539684cbd655f249717ca244cc84226cb6c0f9c9e0dda61e98e363edfa8f927a",
+    "benchmarkFiles": [
+      {
+        "path": "README.md",
+        "bytes": 3883,
+        "lines": 68,
+        "sha256": "40db5af8734286ab6f2d4addc788e3c0b846492c51661e9bf2bd0959c9f24e7d"
+      },
+      {
+        "path": "callback.mjs",
+        "bytes": 3696,
+        "lines": 67,
+        "sha256": "cc4cd3c6db7e87b02c3c44e4b0c432a69088d50c568bf0cd22a332fbdef26b31"
+      },
+      {
+        "path": "paired.py",
+        "bytes": 8813,
+        "lines": 185,
+        "sha256": "e285ef1159e7420fd840a6091d4ca9a1f8da366c0d8deb2d51ff94669f3bbd19"
+      }
+    ]
+  },
+  "sourceAndGraphUnchanged": true,
+  "logSha256": "1d3edd1739fad13a950117144a1ae14f48c345e7e6f8ff1bb8ba50b78fa3ff16"
+}

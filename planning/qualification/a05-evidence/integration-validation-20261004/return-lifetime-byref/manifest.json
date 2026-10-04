@@ -1,0 +1,128 @@
+{
+  "format": "SharpForge.A05ValidationCheckpoint/1",
+  "scope": "Local ordinary-return lifetime requalification with the existing byref GC-stress corpus; not whole-project/native/browser performance qualification",
+  "revision": "6cdd61291d79b609211e05624645225aeaa7d94c",
+  "tree": "009e3ad2814fd596b305129be724c0adc06fb66c",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/byref-gc-stress.test.js"
+  ],
+  "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null,
+    "SHARPFORGE_BYREF_STRESS_REPORT": "/workspace/scratch/42f7738360b9/a05-return-stress-20261004/byref-gc-stress.json"
+  },
+  "startedUTC": "2026-10-04T20:35:06.802500+00:00",
+  "completedUTC": "2026-10-04T20:35:14.811512+00:00",
+  "elapsedSeconds": 8.008802776996163,
+  "exitCode": 0,
+  "unchangedCleanStartAndEnd": true,
+  "files": [
+    {
+      "file": "execution.json",
+      "bytes": 1549,
+      "sha256": "7da523869339dbc3d9913999d16e4347a648bb4f44b8ac568fd562784169df44",
+      "source": "/workspace/scratch/42f7738360b9/a05-return-stress-20261004/execution.json",
+      "retention": "byte-for-byte"
+    },
+    {
+      "file": "byref-gc-stress.json",
+      "bytes": 655210,
+      "sha256": "a1cc510a787fb69de4bff4b62ecc80c93379cad9800d459c472faa6b6cebf650",
+      "source": "/workspace/scratch/42f7738360b9/a05-return-stress-20261004/byref-gc-stress.json",
+      "retention": "byte-for-byte"
+    },
+    {
+      "file": "byref-gc-stress.tap",
+      "bytes": 2637,
+      "sha256": "edeaee45095094f8fe608468e8a4cbb8b75288279d52c55e0a97e8f6e61cea8b",
+      "source": "/workspace/scratch/42f7738360b9/a05-return-stress-20261004/byref-gc-stress.tap",
+      "retention": "byte-for-byte"
+    }
+  ],
+  "result": {
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "tapDurationMs": 7831.351649
+  },
+  "corpus": {
+    "seed": "0x53464237",
+    "sha256": "18c91f4e6fabf4b7f28afd8e760ff33a3438ac301e1174811241c029f431f140",
+    "uniqueAssemblies": 1000,
+    "ownerCounts": {
+      "field": 334,
+      "array": 333,
+      "box": 333
+    },
+    "depths": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "directCILInstructions": 131341,
+    "directCILCollections": 131341,
+    "instructionCollectionsEqualInEveryRecordedCase": true,
+    "sourceSpecimens": 32,
+    "sourceCounterparts": 96,
+    "sourceEngines": [
+      "compiled-cil",
+      "reloaded-source",
+      "source"
+    ],
+    "generatorHashesVerifiedAgainstRevision": [
+      {
+        "path": "tests/byref-gc-stress.test.js",
+        "sha256": "773dfe99cb2e16ddf286759259b7301cd900121736569f43717118066f74b266",
+        "matchesCommittedBlob": true
+      },
+      {
+        "path": "tests/support/byref-stress-programs.js",
+        "sha256": "1712e2de28d63eea16f1b8257ff3229070fea1c968e078494324f420789caf13",
+        "matchesCommittedBlob": true
+      },
+      {
+        "path": "tests/support/byref-stress-runner.js",
+        "sha256": "ba873d445124fcc89d8f7c60e374690d48141f63b764e98411093552b2705b9f",
+        "matchesCommittedBlob": true
+      },
+      {
+        "path": "tests/support/generic-call-fixture.js",
+        "sha256": "8d7bba12fe3f4462cfd7d64ef2ffb58db1d4d31d771f7f1fb0d3fbc022031d3c",
+        "matchesCommittedBlob": true
+      }
+    ]
+  },
+  "negativeAndBoundaryCoverage": "TAP cases cover unknown stress modes/default disabled, each owner/root-provider negative control, array continuation units, observer pauses/manual steps/stopped machines, and generator seed/bounds.",
+  "unsupported": [
+    "Native/Rust/browser qualification is not established by this Node report.",
+    "Source bytecode cannot create an unbox interior; box ownership is exercised by independent direct CIL."
+  ],
+  "limitations": [
+    "The 131341 count applies to 1000 independent direct-CIL assemblies; the 96 source-route counterparts are separately retained.",
+    "No native CLR, Rust or browser qualification is established.",
+    "Source bytecode unbox interiors remain outside the source counterpart coverage; independent direct CIL covers box ownership.",
+    "No timing speedup is inferred from test duration.",
+    "Counts overlap historical corpus reruns and must not be added.",
+    "Only archival byte/hash/source inspection was performed for this checkpoint; no new execution."
+  ]
+}

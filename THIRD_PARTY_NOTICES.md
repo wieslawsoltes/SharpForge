@@ -45,3 +45,23 @@ YAML with a regular expression.
 ## Captured browser trace source licenses
 
 The exact Project16 trace archives recorded in `planning/qualification/supply/licenses.json` contain unchanged pyee 13.0.1 `base.py` and `asyncio.py` (MIT), CPython 3.12.14 `contextlib.py` (PSF-2.0), and SharpForge source and generated reports (MIT). The a4 archive also retains Unicode 16.0.0 grapheme tables in its generated language-worker bundle (Unicode-3.0). The complete source notices are retained in [trace-python.txt](planning/qualification/supply/licenses/trace-python.txt). These are recorded evidence archives; listing them does not assert that their captured test runs passed.
+
+## A05 browser qualification captures
+
+The 44 exact PNG captures listed in the supply catalog are retained qualification
+evidence. Thirty-six record, or attempted to record, the official Speedscope 1.24.0
+UI (MIT, copyright 2018 Jamie Wong) with repository profile data, and eight record
+the repository's MIT-licensed CSP fixture. Their original browser reports and
+sessions retain exact capture provenance and failed observations. The upstream MIT
+and Source Code Pro OFL notices are retained in the [source qualification area][a05-notices].
+No Speedscope application or font binaries are shipped with these captures; source
+licensing and evidence origin do not imply that a captured run passed.
+
+These grounded origin/license declarations are proposed maintainer-review material,
+explicitly marked `proposed-maintainer-review` in the catalog. Machine coverage and
+hash validation do not assert independent authorship discovery, human approval or
+release sign-off. The [origin review record][a05-review] explains the exact source
+licenses and the OFL's exception for documents created using the font.
+
+[a05-notices]: https://github.com/wieslawsoltes/SharpForge/tree/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence-relocations/licenses
+[a05-review]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence-relocations/png-origin-review.md

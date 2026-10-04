@@ -1,0 +1,867 @@
+{
+  "revision": "dc37f2c50420d136a076e8bee046c999fa573303",
+  "kind": "Bounded same-product leaf-guard diagnostic, not original target qualification",
+  "protocol": {
+    "samples": 8,
+    "warmup": 3,
+    "first": 1,
+    "alternatingOrder": true,
+    "nativeBits": 64,
+    "timeoutSeconds": 120,
+    "guestInstructionBudget": 10000,
+    "timeBudgetMs": 8,
+    "gcOutsideTimedInterval": true
+  },
+  "fixture": {
+    "id": "virtual",
+    "virtual": true,
+    "expectedReturn": 140000,
+    "iterations": 20000,
+    "dispatchByEngine": {
+      "source": "interface-callvirt",
+      "reloaded": "interface-callvirt",
+      "cil": "class-override-callvirt"
+    },
+    "source": "interface IValue { int Value() { return 0; } }\n      class Derived : IValue { public int Value() { return 7; } }\n      class Program { static int Main() { IValue value=new Derived(); int sum=0;\n        for(int i=0;i<20000;i++){sum+=value.Value();} return sum; } }"
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64",
+    "nodeOptions": "--max-old-space-size=512",
+    "heapSizeLimit": 738197504
+  },
+  "modes": {
+    "disabled": {
+      "options": {
+        "nativeIntBits": 64,
+        "maxInstructions": 1000000000,
+        "maxFrames": 512,
+        "sourceFusion": false,
+        "specializeNumericHandlers": false,
+        "smallLongs": false,
+        "typedNumericStack": false,
+        "scalarSlotLoads": true,
+        "inlineCaches": true,
+        "preciseRoots": true,
+        "preciseRootLiveness": false,
+        "framePooling": true,
+        "wasmTiering": false,
+        "profile": false,
+        "preparedLeafCalls": false
+      },
+      "constructionMs": 15.753355000000056,
+      "preparationMs": 0.6991760000000795,
+      "preparation": {
+        "status": "prepared",
+        "engine": "cil",
+        "methods": 5,
+        "numericHandlerCounts": {},
+        "statistics": {
+          "epoch": 1,
+          "reason": "type-system-replaced",
+          "decodePlans": 5,
+          "decodedInstructions": 30,
+          "decodeMilliseconds": 0.25353100000006634,
+          "offsetMapAllocations": 4,
+          "sourcePlans": 0,
+          "sourcePlanMilliseconds": 0,
+          "sourceFusionGroups": 0,
+          "cilLeafCalls": 0,
+          "cilLeafInstructions": 0
+        }
+      }
+    },
+    "enabled": {
+      "options": {
+        "nativeIntBits": 64,
+        "maxInstructions": 1000000000,
+        "maxFrames": 512,
+        "sourceFusion": false,
+        "specializeNumericHandlers": false,
+        "smallLongs": false,
+        "typedNumericStack": false,
+        "scalarSlotLoads": true,
+        "inlineCaches": true,
+        "preciseRoots": true,
+        "preciseRootLiveness": false,
+        "framePooling": true,
+        "wasmTiering": false,
+        "profile": false,
+        "preparedLeafCalls": true
+      },
+      "constructionMs": 3.3276700000001256,
+      "preparationMs": 0.12551400000006652,
+      "preparation": {
+        "status": "prepared",
+        "engine": "cil",
+        "methods": 5,
+        "numericHandlerCounts": {},
+        "statistics": {
+          "epoch": 1,
+          "reason": "type-system-replaced",
+          "decodePlans": 5,
+          "decodedInstructions": 30,
+          "decodeMilliseconds": 0.043855000000121436,
+          "offsetMapAllocations": 4,
+          "sourcePlans": 0,
+          "sourcePlanMilliseconds": 0,
+          "sourceFusionGroups": 0,
+          "cilLeafCalls": 0,
+          "cilLeafInstructions": 0
+        }
+      }
+    }
+  },
+  "observations": {
+    "disabled": [
+      {
+        "index": 0,
+        "phase": "first",
+        "executionMs": 234.04590599999983,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 161607680,
+          "heapUsed": 48379552,
+          "heapTotal": 118329344,
+          "external": 4557836,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 170471424,
+          "heapUsed": 73974496,
+          "heapTotal": 119115776,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 3,
+        "arraysAllocated": 16,
+        "physicalReuses": 19999,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 1,
+        "phase": "warmup",
+        "executionMs": 169.63225599999987,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172040192,
+          "heapUsed": 49803792,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172539904,
+          "heapUsed": 75078136,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 20002,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 2,
+        "phase": "warmup",
+        "executionMs": 160.0279800000003,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172539904,
+          "heapUsed": 49947432,
+          "heapTotal": 120426496,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172670976,
+          "heapUsed": 72855832,
+          "heapTotal": 120426496,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 20002,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 3,
+        "phase": "warmup",
+        "executionMs": 172.6262480000005,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172670976,
+          "heapUsed": 49971296,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172556288,
+          "heapUsed": 74296632,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 20002,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 4,
+        "phase": "measured",
+        "executionMs": 175.33934900000077,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172556288,
+          "heapUsed": 50001000,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 178446336,
+          "heapUsed": 72545520,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 20002,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 5,
+        "phase": "measured",
+        "executionMs": 207.34088699999938,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172711936,
+          "heapUsed": 50110792,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172711936,
+          "heapUsed": 72792456,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 20002,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 6,
+        "phase": "measured",
+        "executionMs": 178.87726999999995,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172711936,
+          "heapUsed": 50121216,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172810240,
+          "heapUsed": 73389192,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 20002,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 7,
+        "phase": "measured",
+        "executionMs": 215.1863659999999,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172810240,
+          "heapUsed": 50142272,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172683264,
+          "heapUsed": 73944872,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 20002,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 8,
+        "phase": "measured",
+        "executionMs": 159.1953450000001,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172683264,
+          "heapUsed": 50128000,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172883968,
+          "heapUsed": 74411072,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 20002,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 9,
+        "phase": "measured",
+        "executionMs": 209.11298800000077,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172883968,
+          "heapUsed": 50165768,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172822528,
+          "heapUsed": 73648256,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 20002,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 10,
+        "phase": "measured",
+        "executionMs": 200.68973900000128,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172822528,
+          "heapUsed": 50196536,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172822528,
+          "heapUsed": 73136400,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 20002,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 11,
+        "phase": "measured",
+        "executionMs": 179.57793599999968,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172953600,
+          "heapUsed": 50228208,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172953600,
+          "heapUsed": 73038416,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 0,
+        "leafInstructions": 0,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 20002,
+        "physicalRetirements": 20003,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      }
+    ],
+    "enabled": [
+      {
+        "index": 0,
+        "phase": "first",
+        "executionMs": 659.9146740000001,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 170471424,
+          "heapUsed": 49292576,
+          "heapTotal": 119377920,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172240896,
+          "heapUsed": 71486664,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 3,
+        "arraysAllocated": 16,
+        "physicalReuses": 155,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 1,
+        "phase": "warmup",
+        "executionMs": 514.9895040000001,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172240896,
+          "heapUsed": 49729216,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172040192,
+          "heapUsed": 52130760,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 158,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 2,
+        "phase": "warmup",
+        "executionMs": 516.010127,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172670976,
+          "heapUsed": 49964616,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172670976,
+          "heapUsed": 66902520,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 158,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 3,
+        "phase": "warmup",
+        "executionMs": 576.666487,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172670976,
+          "heapUsed": 49982392,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172670976,
+          "heapUsed": 76912312,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 158,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 4,
+        "phase": "measured",
+        "executionMs": 613.8924020000004,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 178577408,
+          "heapUsed": 50068760,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172707840,
+          "heapUsed": 71276624,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 158,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 5,
+        "phase": "measured",
+        "executionMs": 553.3080760000003,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172707840,
+          "heapUsed": 50060472,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172711936,
+          "heapUsed": 58258376,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 158,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 6,
+        "phase": "measured",
+        "executionMs": 496.3017829999999,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172810240,
+          "heapUsed": 50128976,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172810240,
+          "heapUsed": 70580400,
+          "heapTotal": 120164352,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 158,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 7,
+        "phase": "measured",
+        "executionMs": 581.7265539999999,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172810240,
+          "heapUsed": 50140224,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172810240,
+          "heapUsed": 71777256,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 158,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 8,
+        "phase": "measured",
+        "executionMs": 559.5260750000007,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172883968,
+          "heapUsed": 50155136,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172883968,
+          "heapUsed": 83496360,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 158,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 9,
+        "phase": "measured",
+        "executionMs": 557.5391259999997,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172883968,
+          "heapUsed": 50172096,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172883968,
+          "heapUsed": 73078224,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 158,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 10,
+        "phase": "measured",
+        "executionMs": 546.7184410000009,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172822528,
+          "heapUsed": 50202416,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172953600,
+          "heapUsed": 62482248,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 158,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      },
+      {
+        "index": 11,
+        "phase": "measured",
+        "executionMs": 598.4296949999989,
+        "outputVerified": true,
+        "hostBefore": {
+          "rss": 172953600,
+          "heapUsed": 50208888,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "hostAfter": {
+          "rss": 172953600,
+          "heapUsed": 74685904,
+          "heapTotal": 119902208,
+          "external": 4065662,
+          "arrayBuffers": 230023
+        },
+        "instructions": 280014,
+        "admittedCallIds": 20002,
+        "leafCalls": 19844,
+        "leafInstructions": 39688,
+        "framesAllocated": 0,
+        "arraysAllocated": 0,
+        "physicalReuses": 158,
+        "physicalRetirements": 159,
+        "managedAllocations": 1,
+        "managedAllocatedBytes": 32
+      }
+    ]
+  },
+  "status": "completed",
+  "summary": {
+    "disabled": {
+      "count": 8,
+      "minimum": 159.1953450000001,
+      "median": 190.13383750000048,
+      "p95": 213.0606837000002,
+      "p99": 214.76122953999996,
+      "maximum": 215.1863659999999,
+      "interquartileRange": 29.791122499999574,
+      "medianAbsoluteDeviation": 16.00076899999931
+    },
+    "enabled": {
+      "count": 8,
+      "minimum": 496.3017829999999,
+      "median": 558.5326005000002,
+      "p95": 608.4804545499999,
+      "p99": 612.8100125100003,
+      "maximum": 613.8924020000004,
+      "interquartileRange": 34.2416719999992,
+      "medianAbsoluteDeviation": 17.50405649999948
+    }
+  },
+  "ratioOfMediansDisabledOverEnabled": 0.3404167229089082,
+  "acceptance": "not-qualified-diagnostic-only"
+}

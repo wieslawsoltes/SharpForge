@@ -141,7 +141,7 @@ measured **1.48069×**, interval [1.34064, 1.60855]. A prespecified 100-pair rep
 at the same clean revision measured **1.47278×**, interval [1.41347, 1.52400]. Both
 are inconclusive against 1.5×, with point estimates below it. The benchmark
 reference, options and threshold are unchanged, and both reports are retained in
-[the evidence bundle](a05-evidence/source-fibonacci-2026-10-04/README.md).
+[the evidence bundle](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/source-fibonacci-2026-10-04/README.md).
 
 The subsequent CPU diagnostic at that exact revision still attributed 18.45%
 of candidate guest samples to prepared frame scrubbing, 10.80% to the pool flush

@@ -1,0 +1,772 @@
+{
+  "head": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "tree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+  "runId": 37229843622,
+  "artifacts": [
+    {
+      "id": 11313700006,
+      "name": "a05-browser-ubuntu-firefox",
+      "size_in_bytes": 655735,
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11313700006",
+      "archive_download_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11313700006/zip",
+      "expired": false,
+      "created_at": "2026-10-04T19:53:34Z",
+      "expires_at": "2026-10-18T19:53:33Z",
+      "updated_at": "2026-10-04T19:53:34Z",
+      "digest": "sha256:a23173c450427c0a3015101219343130f204f3691623aa51f876fb3c77ff8690",
+      "workflow_run": {
+        "id": 37229843622,
+        "repository_id": 1402948787,
+        "head_repository_id": 1402948787,
+        "head_branch": "codex/a05-e01-started-handoff-20261004",
+        "head_sha": "36a2af53287a563fd47d3a33b8e6e6382a726d35"
+      },
+      "jobId": 111517020990,
+      "verifiedZipSha256": "a23173c450427c0a3015101219343130f204f3691623aa51f876fb3c77ff8690",
+      "retainedFiles": [
+        {
+          "path": "firefox/csp-denied-fallback/console.log",
+          "originalPath": "a05-browser/csp-denied-fallback/console.log",
+          "bytes": 4356,
+          "sha256": "738f4b5ac0f6a133380bcebc52ca2d732f52f2e3a6f6b5b4b09b8814cbdab891"
+        },
+        {
+          "path": "firefox/csp-denied-fallback/runtime-observation.json",
+          "originalPath": "a05-browser/csp-denied-fallback/runtime-observation.json",
+          "bytes": 5048,
+          "sha256": "c804040dd9ddf25469b3b4335c331b02a79321887b9c2f99e23f06c5df3fce8a"
+        },
+        {
+          "path": "firefox/csp-denied-fallback/screenshot.png",
+          "originalPath": "a05-browser/csp-denied-fallback/screenshot.png",
+          "bytes": 10896,
+          "sha256": "7a1b8d3f02b1bbfd89dd249d1bee607fb281d6e81b463d3a5a934c8337bf677f"
+        },
+        {
+          "path": "firefox/csp-denied-fallback/session.json",
+          "originalPath": "a05-browser/csp-denied-fallback/session.json",
+          "bytes": 3292,
+          "sha256": "2c70f92e63a91b11930c6eca4efe844adaa652eeabdc80883751eb84fb8ca94f"
+        },
+        {
+          "path": "firefox/debugger-deopt/console.log",
+          "originalPath": "a05-browser/debugger-deopt/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "firefox/debugger-deopt/runtime-observation.json",
+          "originalPath": "a05-browser/debugger-deopt/runtime-observation.json",
+          "bytes": 1517,
+          "sha256": "7df58ec416c2c0dc62cdbfbc6aeb2c93310f34c7bd269442eb24d7896a67351d"
+        },
+        {
+          "path": "firefox/debugger-deopt/session.json",
+          "originalPath": "a05-browser/debugger-deopt/session.json",
+          "bytes": 308,
+          "sha256": "3754c75d66afe527dbad23dd5465546595df2811e913afcf63a915b54f8ec983"
+        },
+        {
+          "path": "firefox/profile-cil.speedscope.json",
+          "originalPath": "a05-browser/profile-cil.speedscope.json",
+          "bytes": 873,
+          "sha256": "ffab84c6b541899de599881726101e69b21219a983f50f213a263a1f3da9c488"
+        },
+        {
+          "path": "firefox/profile-exports/console.log",
+          "originalPath": "a05-browser/profile-exports/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "firefox/profile-exports/runtime-observation.json",
+          "originalPath": "a05-browser/profile-exports/runtime-observation.json",
+          "bytes": 12696,
+          "sha256": "fc4d6a9063843065447a3b96db3c880a571f1eb4d7a855cbdb2cf6f66437c98b"
+        },
+        {
+          "path": "firefox/profile-exports/session.json",
+          "originalPath": "a05-browser/profile-exports/session.json",
+          "bytes": 309,
+          "sha256": "05cbb378453aa4c7d04eabee8e7849e8edd317eecfd47fb8348efc2c0f8bbbd8"
+        },
+        {
+          "path": "firefox/profile-reload.speedscope.json",
+          "originalPath": "a05-browser/profile-reload.speedscope.json",
+          "bytes": 855,
+          "sha256": "683e2a6417ae3bf1dcf0514203859fb8d7574f60e59e2158a5011b7b5ca87f6a"
+        },
+        {
+          "path": "firefox/profile-source.speedscope.json",
+          "originalPath": "a05-browser/profile-source.speedscope.json",
+          "bytes": 855,
+          "sha256": "1ce4c85b3042640f221f889f0e429f92ed7824a8c79c4b932562d4a28728bcfc"
+        },
+        {
+          "path": "firefox/report.json",
+          "originalPath": "a05-browser/report.json",
+          "bytes": 40828,
+          "sha256": "be4567f06b6f98b5a5ab8228efa2965a7adb7f14fa6220e06fb51bbb5fc02156"
+        },
+        {
+          "path": "firefox/speedscope-cil/body.txt",
+          "originalPath": "a05-browser/speedscope-cil/body.txt",
+          "bytes": 254,
+          "sha256": "d4681ca6a7d1defd529a6268e3fd4c9b483408a36140df0f48a5b8f43f95eaf7"
+        },
+        {
+          "path": "firefox/speedscope-cil/console.log",
+          "originalPath": "a05-browser/speedscope-cil/console.log",
+          "bytes": 527,
+          "sha256": "e0bcee9a7841909666d174304c463ddadfb519ecadf774d138ad8b81ce7ace79"
+        },
+        {
+          "path": "firefox/speedscope-cil/dom.json",
+          "originalPath": "a05-browser/speedscope-cil/dom.json",
+          "bytes": 349,
+          "sha256": "86d651aa8ecb781c5b21be1b5ec8aff1630738d0b0c4f8f5cc97beee3fd0c14f"
+        },
+        {
+          "path": "firefox/speedscope-cil/graphics.json",
+          "originalPath": "a05-browser/speedscope-cil/graphics.json",
+          "bytes": 111,
+          "sha256": "77d5e45354b2cb5eac45481974b5926f2e3d3da028bd728d347e16dd37e59d12"
+        },
+        {
+          "path": "firefox/speedscope-cil/speedscope.png",
+          "originalPath": "a05-browser/speedscope-cil/speedscope.png",
+          "bytes": 23928,
+          "sha256": "fc1a8b07cce027fda9c5cdb33470a18fe48cd3ee621d1b8ef266e32f9603b270"
+        },
+        {
+          "path": "firefox/speedscope-cil/session.json",
+          "originalPath": "a05-browser/speedscope-cil/session.json",
+          "bytes": 311,
+          "sha256": "4016374b2ad73a7ab2d6734548b9cd6257bfe5f421e60e6ee0087ffd9a81258d"
+        },
+        {
+          "path": "firefox/speedscope-reload/body.txt",
+          "originalPath": "a05-browser/speedscope-reload/body.txt",
+          "bytes": 232,
+          "sha256": "166890dc4f837758dcf04dbb1d19dcd6645049b6da6dbf02d951e2bd1acaa62c"
+        },
+        {
+          "path": "firefox/speedscope-reload/console.log",
+          "originalPath": "a05-browser/speedscope-reload/console.log",
+          "bytes": 527,
+          "sha256": "e0bcee9a7841909666d174304c463ddadfb519ecadf774d138ad8b81ce7ace79"
+        },
+        {
+          "path": "firefox/speedscope-reload/dom.json",
+          "originalPath": "a05-browser/speedscope-reload/dom.json",
+          "bytes": 327,
+          "sha256": "d0e7b70dceaaa3242c6baf1a286c45cca8f52be34b244f97a67a3f32c39fce4d"
+        },
+        {
+          "path": "firefox/speedscope-reload/graphics.json",
+          "originalPath": "a05-browser/speedscope-reload/graphics.json",
+          "bytes": 111,
+          "sha256": "77d5e45354b2cb5eac45481974b5926f2e3d3da028bd728d347e16dd37e59d12"
+        },
+        {
+          "path": "firefox/speedscope-reload/session.json",
+          "originalPath": "a05-browser/speedscope-reload/session.json",
+          "bytes": 314,
+          "sha256": "a6f02431818120b238321302d60a49b76728af5e9e04113dee6c52eb24270922"
+        },
+        {
+          "path": "firefox/speedscope-reload/speedscope.png",
+          "originalPath": "a05-browser/speedscope-reload/speedscope.png",
+          "bytes": 23196,
+          "sha256": "a938a3e71ec894ab440bc01e85d5d89175381633ecc24ada0c7d3a736ea1f6bf"
+        },
+        {
+          "path": "firefox/speedscope-source/body.txt",
+          "originalPath": "a05-browser/speedscope-source/body.txt",
+          "bytes": 232,
+          "sha256": "e58f7a9c4db8d8412d572e2d0f7f1479469c3e3985e1a9965e4bb4ab068e34e1"
+        },
+        {
+          "path": "firefox/speedscope-source/console.log",
+          "originalPath": "a05-browser/speedscope-source/console.log",
+          "bytes": 527,
+          "sha256": "e0bcee9a7841909666d174304c463ddadfb519ecadf774d138ad8b81ce7ace79"
+        },
+        {
+          "path": "firefox/speedscope-source/dom.json",
+          "originalPath": "a05-browser/speedscope-source/dom.json",
+          "bytes": 327,
+          "sha256": "a2c34e8d2144efa03e4d3588793b2fccf7f2c33c13bd2c74a517fecf951e95e1"
+        },
+        {
+          "path": "firefox/speedscope-source/graphics.json",
+          "originalPath": "a05-browser/speedscope-source/graphics.json",
+          "bytes": 111,
+          "sha256": "77d5e45354b2cb5eac45481974b5926f2e3d3da028bd728d347e16dd37e59d12"
+        },
+        {
+          "path": "firefox/speedscope-source/session.json",
+          "originalPath": "a05-browser/speedscope-source/session.json",
+          "bytes": 314,
+          "sha256": "8c0209aa1a86818ef00f79fc463dea357e184a12a98ebe192a0cb5ac7faa8429"
+        },
+        {
+          "path": "firefox/speedscope-source/speedscope.png",
+          "originalPath": "a05-browser/speedscope-source/speedscope.png",
+          "bytes": 23133,
+          "sha256": "1a804b1ac4ea9933daf264194a33fdb1997b823063648d4eed311db5433978a1"
+        },
+        {
+          "path": "firefox/wasm-execution/console.log",
+          "originalPath": "a05-browser/wasm-execution/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "firefox/wasm-execution/session.json",
+          "originalPath": "a05-browser/wasm-execution/session.json",
+          "bytes": 307,
+          "sha256": "b210090fe0920d8e6a78caffced5172714b264d50693569fd5c1a11bd32dc980"
+        },
+        {
+          "path": "firefox/wasm-heap-bridge/console.log",
+          "originalPath": "a05-browser/wasm-heap-bridge/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "firefox/wasm-execution/runtime-observation.json",
+          "originalPath": "a05-browser/wasm-execution/runtime-observation.json",
+          "bytes": 723,
+          "sha256": "7446a8b99a16c98c0210a247fe6723ac6bfaf8c0b7cac6d5beb3af1671726113"
+        },
+        {
+          "path": "firefox/wasm-heap-bridge/runtime-observation.json",
+          "originalPath": "a05-browser/wasm-heap-bridge/runtime-observation.json",
+          "bytes": 13057,
+          "sha256": "afc9fdbd95c6a76c1fc85476ea16b7705ba62feecfff11afea63f60e0a595c31"
+        },
+        {
+          "path": "firefox/wasm-heap-bridge/session.json",
+          "originalPath": "a05-browser/wasm-heap-bridge/session.json",
+          "bytes": 310,
+          "sha256": "50b1a1effa74436350455605d427b6acb0ac3de482a94cb666f7923bf3234f0c"
+        },
+        {
+          "path": "firefox/assets-manifest.json",
+          "originalPath": "a05-browser-assets/manifest.json",
+          "bytes": 3096,
+          "sha256": "eb6ec67ab2493597ec987023fd44fc503dbf030115123cbc148381ba4ec640e7"
+        }
+      ]
+    },
+    {
+      "id": 11313164437,
+      "name": "a05-browser-ubuntu-webkit",
+      "size_in_bytes": 511603,
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11313164437",
+      "archive_download_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11313164437/zip",
+      "expired": false,
+      "created_at": "2026-10-04T19:54:50Z",
+      "expires_at": "2026-10-18T19:54:49Z",
+      "updated_at": "2026-10-04T19:54:50Z",
+      "digest": "sha256:ae2b67cddb4406b50cbf07a41bb87868ecf569449d04804822743b83deb8e516",
+      "workflow_run": {
+        "id": 37229843622,
+        "repository_id": 1402948787,
+        "head_repository_id": 1402948787,
+        "head_branch": "codex/a05-e01-started-handoff-20261004",
+        "head_sha": "36a2af53287a563fd47d3a33b8e6e6382a726d35"
+      },
+      "jobId": 111517021036,
+      "verifiedZipSha256": "ae2b67cddb4406b50cbf07a41bb87868ecf569449d04804822743b83deb8e516",
+      "retainedFiles": [
+        {
+          "path": "webkit/csp-denied-fallback/session.json",
+          "originalPath": "a05-browser/csp-denied-fallback/session.json",
+          "bytes": 310,
+          "sha256": "813efe85bfe706c346b4699678437f5c08fe5d6e7ca1b07150974f8dbcdcbf0f"
+        },
+        {
+          "path": "webkit/csp-denied-fallback/console.log",
+          "originalPath": "a05-browser/csp-denied-fallback/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "webkit/csp-denied-fallback/runtime-observation.json",
+          "originalPath": "a05-browser/csp-denied-fallback/runtime-observation.json",
+          "bytes": 3067,
+          "sha256": "925861ec10e557930575bd780627b7ebdc38c67364b240f1766b4dee6d8b1056"
+        },
+        {
+          "path": "webkit/debugger-deopt/console.log",
+          "originalPath": "a05-browser/debugger-deopt/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "webkit/debugger-deopt/runtime-observation.json",
+          "originalPath": "a05-browser/debugger-deopt/runtime-observation.json",
+          "bytes": 1516,
+          "sha256": "fc5896f7fa776407dcd324ce97deab326b92ed40730249a75ed99f6129ef0178"
+        },
+        {
+          "path": "webkit/debugger-deopt/session.json",
+          "originalPath": "a05-browser/debugger-deopt/session.json",
+          "bytes": 306,
+          "sha256": "d91b89a94326eafaf644caf352b6b1fcc0e0910bf83763394350037a1fd5e9ca"
+        },
+        {
+          "path": "webkit/profile-cil.speedscope.json",
+          "originalPath": "a05-browser/profile-cil.speedscope.json",
+          "bytes": 873,
+          "sha256": "ffab84c6b541899de599881726101e69b21219a983f50f213a263a1f3da9c488"
+        },
+        {
+          "path": "webkit/profile-exports/console.log",
+          "originalPath": "a05-browser/profile-exports/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "webkit/profile-exports/runtime-observation.json",
+          "originalPath": "a05-browser/profile-exports/runtime-observation.json",
+          "bytes": 12695,
+          "sha256": "bcb6b5369d52ab05227e8a619370f07b738bb1fd23be2ac8a91d80d0311e6452"
+        },
+        {
+          "path": "webkit/profile-exports/session.json",
+          "originalPath": "a05-browser/profile-exports/session.json",
+          "bytes": 305,
+          "sha256": "3dafcf4aaad7db520f80bfb7fa709e0444d52bd43bd25f488313c44f8d659821"
+        },
+        {
+          "path": "webkit/profile-reload.speedscope.json",
+          "originalPath": "a05-browser/profile-reload.speedscope.json",
+          "bytes": 855,
+          "sha256": "683e2a6417ae3bf1dcf0514203859fb8d7574f60e59e2158a5011b7b5ca87f6a"
+        },
+        {
+          "path": "webkit/profile-source.speedscope.json",
+          "originalPath": "a05-browser/profile-source.speedscope.json",
+          "bytes": 855,
+          "sha256": "1ce4c85b3042640f221f889f0e429f92ed7824a8c79c4b932562d4a28728bcfc"
+        },
+        {
+          "path": "webkit/report.json",
+          "originalPath": "a05-browser/report.json",
+          "bytes": 38644,
+          "sha256": "5691f245c63b0be8a24384f5bc75ded5f859db3460d1e631e1fa52460a667707"
+        },
+        {
+          "path": "webkit/speedscope-cil/body.txt",
+          "originalPath": "a05-browser/speedscope-cil/body.txt",
+          "bytes": 246,
+          "sha256": "7deb6bc3107108a0d4bc1a6df2e0ac29b5afd829e30789346347a3a811edff22"
+        },
+        {
+          "path": "webkit/speedscope-cil/console.log",
+          "originalPath": "a05-browser/speedscope-cil/console.log",
+          "bytes": 205,
+          "sha256": "7bd80d9fa54e097a78a03a0b96463959062b44e099343ae58b5e0c170a9bbe1d"
+        },
+        {
+          "path": "webkit/speedscope-cil/dom.json",
+          "originalPath": "a05-browser/speedscope-cil/dom.json",
+          "bytes": 349,
+          "sha256": "86d651aa8ecb781c5b21be1b5ec8aff1630738d0b0c4f8f5cc97beee3fd0c14f"
+        },
+        {
+          "path": "webkit/speedscope-cil/graphics.json",
+          "originalPath": "a05-browser/speedscope-cil/graphics.json",
+          "bytes": 102,
+          "sha256": "a98c669913ee9b08ea48ca169c7fcae0a3d724d0ae06ec1cc01f96273a0b4301"
+        },
+        {
+          "path": "webkit/speedscope-cil/session.json",
+          "originalPath": "a05-browser/speedscope-cil/session.json",
+          "bytes": 308,
+          "sha256": "5ad1ad930c7c3237f879001f07c98f688936fb1e8c191ee90c2603ff7681c3ac"
+        },
+        {
+          "path": "webkit/speedscope-cil/speedscope.png",
+          "originalPath": "a05-browser/speedscope-cil/speedscope.png",
+          "bytes": 24821,
+          "sha256": "bec1112b698b88dfa6a334cfd6ae2683c5f5a54b3987e053384709e88ca4a0f4"
+        },
+        {
+          "path": "webkit/speedscope-reload/body.txt",
+          "originalPath": "a05-browser/speedscope-reload/body.txt",
+          "bytes": 224,
+          "sha256": "1cfb9828cc37acbb03ec152b475f1899e1d035ad0ed2898b88a543dc52f11c3a"
+        },
+        {
+          "path": "webkit/speedscope-reload/console.log",
+          "originalPath": "a05-browser/speedscope-reload/console.log",
+          "bytes": 205,
+          "sha256": "6cb615d3a934d898486f971ccd7f2856aef03c43b0b32e316d49e452483fa77b"
+        },
+        {
+          "path": "webkit/speedscope-reload/dom.json",
+          "originalPath": "a05-browser/speedscope-reload/dom.json",
+          "bytes": 327,
+          "sha256": "d0e7b70dceaaa3242c6baf1a286c45cca8f52be34b244f97a67a3f32c39fce4d"
+        },
+        {
+          "path": "webkit/speedscope-reload/graphics.json",
+          "originalPath": "a05-browser/speedscope-reload/graphics.json",
+          "bytes": 102,
+          "sha256": "a98c669913ee9b08ea48ca169c7fcae0a3d724d0ae06ec1cc01f96273a0b4301"
+        },
+        {
+          "path": "webkit/speedscope-reload/session.json",
+          "originalPath": "a05-browser/speedscope-reload/session.json",
+          "bytes": 311,
+          "sha256": "cffbbf4cb2dcce51065b7320d96313c3110e6db40274cea8d2d6f0d2d5c20b59"
+        },
+        {
+          "path": "webkit/speedscope-source/body.txt",
+          "originalPath": "a05-browser/speedscope-source/body.txt",
+          "bytes": 224,
+          "sha256": "8effed648fde36262042637efd82810b9eca507a4e7df98da384fd3c0183982b"
+        },
+        {
+          "path": "webkit/speedscope-reload/speedscope.png",
+          "originalPath": "a05-browser/speedscope-reload/speedscope.png",
+          "bytes": 23806,
+          "sha256": "38488766417202e49fd2952e86da456e88d2d67f0d3e8eb4249fdce82ddbf971"
+        },
+        {
+          "path": "webkit/speedscope-source/console.log",
+          "originalPath": "a05-browser/speedscope-source/console.log",
+          "bytes": 205,
+          "sha256": "e9010b5f2968051dea42b1313c36dc1a92294c6336f7114ec29b0f43574ac10d"
+        },
+        {
+          "path": "webkit/speedscope-source/dom.json",
+          "originalPath": "a05-browser/speedscope-source/dom.json",
+          "bytes": 327,
+          "sha256": "a2c34e8d2144efa03e4d3588793b2fccf7f2c33c13bd2c74a517fecf951e95e1"
+        },
+        {
+          "path": "webkit/speedscope-source/graphics.json",
+          "originalPath": "a05-browser/speedscope-source/graphics.json",
+          "bytes": 102,
+          "sha256": "a98c669913ee9b08ea48ca169c7fcae0a3d724d0ae06ec1cc01f96273a0b4301"
+        },
+        {
+          "path": "webkit/speedscope-source/session.json",
+          "originalPath": "a05-browser/speedscope-source/session.json",
+          "bytes": 311,
+          "sha256": "955f0584baa8895f70adb655ec7441b04466bcb6c2669d64eaf56796dc38f7b3"
+        },
+        {
+          "path": "webkit/speedscope-source/speedscope.png",
+          "originalPath": "a05-browser/speedscope-source/speedscope.png",
+          "bytes": 23720,
+          "sha256": "a1de1c1ae06bbd93aab65ebc4a482f429620fc11049a9110fae8ebb9abf82e4d"
+        },
+        {
+          "path": "webkit/wasm-execution/console.log",
+          "originalPath": "a05-browser/wasm-execution/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "webkit/wasm-execution/runtime-observation.json",
+          "originalPath": "a05-browser/wasm-execution/runtime-observation.json",
+          "bytes": 722,
+          "sha256": "bc2ef19539e0bac95c7de20c470a3d19db082ef62211129fb11234755b7244d4"
+        },
+        {
+          "path": "webkit/wasm-execution/session.json",
+          "originalPath": "a05-browser/wasm-execution/session.json",
+          "bytes": 306,
+          "sha256": "57ea31f30c06ed0ac2474039c3c0f68385c4e2ef854b22abcbc085284236c63b"
+        },
+        {
+          "path": "webkit/wasm-heap-bridge/console.log",
+          "originalPath": "a05-browser/wasm-heap-bridge/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "webkit/wasm-heap-bridge/runtime-observation.json",
+          "originalPath": "a05-browser/wasm-heap-bridge/runtime-observation.json",
+          "bytes": 13056,
+          "sha256": "8fe831678b2b090e435a6b50b01b6faf3e1bb236af2c222580d4e39d4bc0d024"
+        },
+        {
+          "path": "webkit/assets-manifest.json",
+          "originalPath": "a05-browser-assets/manifest.json",
+          "bytes": 3096,
+          "sha256": "eb6ec67ab2493597ec987023fd44fc503dbf030115123cbc148381ba4ec640e7"
+        },
+        {
+          "path": "webkit/wasm-heap-bridge/session.json",
+          "originalPath": "a05-browser/wasm-heap-bridge/session.json",
+          "bytes": 307,
+          "sha256": "327930674856f0dfca256bb59074a949cf0253de242e72afd573a9c4951e5aab"
+        }
+      ]
+    },
+    {
+      "id": 11312849871,
+      "name": "a05-browser-ubuntu-chromium",
+      "size_in_bytes": 656930,
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11312849871",
+      "archive_download_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11312849871/zip",
+      "expired": false,
+      "created_at": "2026-10-04T19:52:12Z",
+      "expires_at": "2026-10-18T19:52:11Z",
+      "updated_at": "2026-10-04T19:52:12Z",
+      "digest": "sha256:cc5d491a2907c72e6e6919375a28e96cba259e96da9671fdcb987e1407a15656",
+      "workflow_run": {
+        "id": 37229843622,
+        "repository_id": 1402948787,
+        "head_repository_id": 1402948787,
+        "head_branch": "codex/a05-e01-started-handoff-20261004",
+        "head_sha": "36a2af53287a563fd47d3a33b8e6e6382a726d35"
+      },
+      "jobId": 111517020836,
+      "verifiedZipSha256": "cc5d491a2907c72e6e6919375a28e96cba259e96da9671fdcb987e1407a15656",
+      "retainedFiles": [
+        {
+          "path": "chromium/csp-denied-fallback/console.log",
+          "originalPath": "a05-browser/csp-denied-fallback/console.log",
+          "bytes": 1777,
+          "sha256": "b690fe57dc41faab3d8da61f817a86c6c0f1f767a46dbce133d9712986395452"
+        },
+        {
+          "path": "chromium/csp-denied-fallback/screenshot.png",
+          "originalPath": "a05-browser/csp-denied-fallback/screenshot.png",
+          "bytes": 8400,
+          "sha256": "becd6e165634ac5438292ec600b7cd557f113780568688303a8f63f357ae119a"
+        },
+        {
+          "path": "chromium/csp-denied-fallback/runtime-observation.json",
+          "originalPath": "a05-browser/csp-denied-fallback/runtime-observation.json",
+          "bytes": 4623,
+          "sha256": "1a42c872f2914e789875646e52af51dc6dca62e09ccbbb845f060e55e7760ae8"
+        },
+        {
+          "path": "chromium/csp-denied-fallback/session.json",
+          "originalPath": "a05-browser/csp-denied-fallback/session.json",
+          "bytes": 1799,
+          "sha256": "33de7c4ab715dc70beaaeb744044aef1a73d1ec272d779cfe54ad29b7051a1fc"
+        },
+        {
+          "path": "chromium/debugger-deopt/console.log",
+          "originalPath": "a05-browser/debugger-deopt/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "chromium/debugger-deopt/runtime-observation.json",
+          "originalPath": "a05-browser/debugger-deopt/runtime-observation.json",
+          "bytes": 1525,
+          "sha256": "67bd05413e5388344cb4ac6bf34d2108824e90382b9b5f0c8acac13a2c848959"
+        },
+        {
+          "path": "chromium/debugger-deopt/session.json",
+          "originalPath": "a05-browser/debugger-deopt/session.json",
+          "bytes": 316,
+          "sha256": "19018abd50fd7ff2151224ec05be21562089a359f6091939662e5ec69c62af29"
+        },
+        {
+          "path": "chromium/profile-cil.speedscope.json",
+          "originalPath": "a05-browser/profile-cil.speedscope.json",
+          "bytes": 873,
+          "sha256": "ffab84c6b541899de599881726101e69b21219a983f50f213a263a1f3da9c488"
+        },
+        {
+          "path": "chromium/profile-exports/console.log",
+          "originalPath": "a05-browser/profile-exports/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "chromium/profile-exports/runtime-observation.json",
+          "originalPath": "a05-browser/profile-exports/runtime-observation.json",
+          "bytes": 12704,
+          "sha256": "75da898587ff10b7dd9e1307885aeaf2c788db212fcbe85f5b5e66c3b0b3fcf5"
+        },
+        {
+          "path": "chromium/profile-exports/session.json",
+          "originalPath": "a05-browser/profile-exports/session.json",
+          "bytes": 317,
+          "sha256": "954a8fd12c1903ce21b96d51f85908e90d2758dbfa0975b9505195520ca0417b"
+        },
+        {
+          "path": "chromium/profile-reload.speedscope.json",
+          "originalPath": "a05-browser/profile-reload.speedscope.json",
+          "bytes": 855,
+          "sha256": "683e2a6417ae3bf1dcf0514203859fb8d7574f60e59e2158a5011b7b5ca87f6a"
+        },
+        {
+          "path": "chromium/profile-source.speedscope.json",
+          "originalPath": "a05-browser/profile-source.speedscope.json",
+          "bytes": 855,
+          "sha256": "1ce4c85b3042640f221f889f0e429f92ed7824a8c79c4b932562d4a28728bcfc"
+        },
+        {
+          "path": "chromium/report.json",
+          "originalPath": "a05-browser/report.json",
+          "bytes": 40435,
+          "sha256": "f470d37d6b26859d4569433179dceb21a3cc937b606003426323487b512c2694"
+        },
+        {
+          "path": "chromium/speedscope-cil/body.txt",
+          "originalPath": "a05-browser/speedscope-cil/body.txt",
+          "bytes": 254,
+          "sha256": "d4681ca6a7d1defd529a6268e3fd4c9b483408a36140df0f48a5b8f43f95eaf7"
+        },
+        {
+          "path": "chromium/speedscope-cil/console.log",
+          "originalPath": "a05-browser/speedscope-cil/console.log",
+          "bytes": 730,
+          "sha256": "ffa862298d288d85a818d9b5d1626438ea18a50cbcedc475adbc96de45b34f85"
+        },
+        {
+          "path": "chromium/speedscope-cil/dom.json",
+          "originalPath": "a05-browser/speedscope-cil/dom.json",
+          "bytes": 349,
+          "sha256": "86d651aa8ecb781c5b21be1b5ec8aff1630738d0b0c4f8f5cc97beee3fd0c14f"
+        },
+        {
+          "path": "chromium/speedscope-cil/graphics.json",
+          "originalPath": "a05-browser/speedscope-cil/graphics.json",
+          "bytes": 127,
+          "sha256": "66ef785c642adc2cac047df1e57ce3a6a383da9e2a2c7353a007c5244eb8a247"
+        },
+        {
+          "path": "chromium/speedscope-cil/session.json",
+          "originalPath": "a05-browser/speedscope-cil/session.json",
+          "bytes": 319,
+          "sha256": "1c3a1dfe0f258dc4e84ef258c6aeb8deb99f1bdc14a9364782e929c81b2da1cb"
+        },
+        {
+          "path": "chromium/speedscope-reload/body.txt",
+          "originalPath": "a05-browser/speedscope-reload/body.txt",
+          "bytes": 232,
+          "sha256": "166890dc4f837758dcf04dbb1d19dcd6645049b6da6dbf02d951e2bd1acaa62c"
+        },
+        {
+          "path": "chromium/speedscope-cil/speedscope.png",
+          "originalPath": "a05-browser/speedscope-cil/speedscope.png",
+          "bytes": 22556,
+          "sha256": "c6b8dc92b067983d7f355b85be7727957aac7f257379c1cd4479eca6fab9d7ef"
+        },
+        {
+          "path": "chromium/speedscope-reload/dom.json",
+          "originalPath": "a05-browser/speedscope-reload/dom.json",
+          "bytes": 327,
+          "sha256": "d0e7b70dceaaa3242c6baf1a286c45cca8f52be34b244f97a67a3f32c39fce4d"
+        },
+        {
+          "path": "chromium/speedscope-reload/console.log",
+          "originalPath": "a05-browser/speedscope-reload/console.log",
+          "bytes": 731,
+          "sha256": "dc4d3a529ad176273f9d01d94d48772fdb1e9b21e5461f40a6f680fbf4685c5f"
+        },
+        {
+          "path": "chromium/speedscope-reload/graphics.json",
+          "originalPath": "a05-browser/speedscope-reload/graphics.json",
+          "bytes": 127,
+          "sha256": "66ef785c642adc2cac047df1e57ce3a6a383da9e2a2c7353a007c5244eb8a247"
+        },
+        {
+          "path": "chromium/speedscope-reload/session.json",
+          "originalPath": "a05-browser/speedscope-reload/session.json",
+          "bytes": 322,
+          "sha256": "0b40278cf00fb566064378d834b7c93ad1e046463c8b4801521b0c683d21f9a9"
+        },
+        {
+          "path": "chromium/speedscope-reload/speedscope.png",
+          "originalPath": "a05-browser/speedscope-reload/speedscope.png",
+          "bytes": 21381,
+          "sha256": "5cdbc274cc05570adb3d894210a99dd2fdbe01058aa4a20f392bd28e119539a1"
+        },
+        {
+          "path": "chromium/speedscope-source/body.txt",
+          "originalPath": "a05-browser/speedscope-source/body.txt",
+          "bytes": 232,
+          "sha256": "e58f7a9c4db8d8412d572e2d0f7f1479469c3e3985e1a9965e4bb4ab068e34e1"
+        },
+        {
+          "path": "chromium/speedscope-source/console.log",
+          "originalPath": "a05-browser/speedscope-source/console.log",
+          "bytes": 730,
+          "sha256": "2b4fb6fe65cada17f24cfea0843b4d07a1903e2f151b1ff6bdc8a4c4b311307c"
+        },
+        {
+          "path": "chromium/speedscope-source/dom.json",
+          "originalPath": "a05-browser/speedscope-source/dom.json",
+          "bytes": 327,
+          "sha256": "a2c34e8d2144efa03e4d3588793b2fccf7f2c33c13bd2c74a517fecf951e95e1"
+        },
+        {
+          "path": "chromium/speedscope-source/graphics.json",
+          "originalPath": "a05-browser/speedscope-source/graphics.json",
+          "bytes": 127,
+          "sha256": "66ef785c642adc2cac047df1e57ce3a6a383da9e2a2c7353a007c5244eb8a247"
+        },
+        {
+          "path": "chromium/speedscope-source/session.json",
+          "originalPath": "a05-browser/speedscope-source/session.json",
+          "bytes": 322,
+          "sha256": "60c91e368666a36ebac3e89928f0dff61c9bed09f9d11d18c116310eb037d8a2"
+        },
+        {
+          "path": "chromium/wasm-execution/console.log",
+          "originalPath": "a05-browser/wasm-execution/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "chromium/wasm-execution/runtime-observation.json",
+          "originalPath": "a05-browser/wasm-execution/runtime-observation.json",
+          "bytes": 731,
+          "sha256": "43d13793e1fce2e86462de41ac28c80a675ebbb2ffee734c0a50259993d1485c"
+        },
+        {
+          "path": "chromium/speedscope-source/speedscope.png",
+          "originalPath": "a05-browser/speedscope-source/speedscope.png",
+          "bytes": 20895,
+          "sha256": "930ecf34bb5c58e5a2d8e7c9727e9125f42242a434cd045a0d9f91f3825dd65c"
+        },
+        {
+          "path": "chromium/wasm-execution/session.json",
+          "originalPath": "a05-browser/wasm-execution/session.json",
+          "bytes": 317,
+          "sha256": "1223b11d671121cbd4eb7eb2b6833612e50e242b2f3ebf5204f93d51cf1fc5d9"
+        },
+        {
+          "path": "chromium/wasm-heap-bridge/console.log",
+          "originalPath": "a05-browser/wasm-heap-bridge/console.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "chromium/wasm-heap-bridge/runtime-observation.json",
+          "originalPath": "a05-browser/wasm-heap-bridge/runtime-observation.json",
+          "bytes": 13065,
+          "sha256": "7da9edf9a6834a5b56be95f88307032172a5a41c3fd00c7ad2cd6bd882ce5ad8"
+        },
+        {
+          "path": "chromium/wasm-heap-bridge/session.json",
+          "originalPath": "a05-browser/wasm-heap-bridge/session.json",
+          "bytes": 319,
+          "sha256": "64bce48c06e9af942851eac991582a52b254fac7fb807c7d460ee30be145c031"
+        },
+        {
+          "path": "chromium/assets-manifest.json",
+          "originalPath": "a05-browser-assets/manifest.json",
+          "bytes": 3096,
+          "sha256": "eb6ec67ab2493597ec987023fd44fc503dbf030115123cbc148381ba4ec640e7"
+        }
+      ]
+    }
+  ]
+}

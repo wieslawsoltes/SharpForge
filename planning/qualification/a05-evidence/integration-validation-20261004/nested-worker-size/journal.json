@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "cwd": "/workspace/scratch/42f7738360b9/a05-memory",
+  "head": "a3652c85aa6c0f1d4e697ec7efc6ff02f71fc4bd",
+  "tree": "24b5ef0324a8cac3d98942ef2a5537692fb2e991",
+  "statusBefore": "",
+  "node": "v24.19.0",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/a29-nested-worker-sizes.test.js"
+  ],
+  "environment": {
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": "--max-old-space-size=512"
+  },
+  "ci": null,
+  "startedAt": "2026-10-04T20:54:30.990501+00:00",
+  "sourceSha256": {
+    "scripts/conformance/perf/size-budget.js": "85ddafdcd6b011e024c486f55ca484b93524e53b541b5c7ab6dd0e344955328e",
+    "planning/qualification/integration-performance/size/measure.mjs": "431b55d1751c5fda710454c45a02ef31fb594d029cff12d17cb371072ff819f3",
+    "tests/a29-nested-worker-sizes.test.js": "ab8d34d20f536154e80dde686ffe0780e632085534e21e5e58e0c59a40e9de4a"
+  },
+  "elapsedSeconds": 0.46734303799894406,
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T20:54:31.458872+00:00",
+  "statusAfter": "",
+  "rawLog": "focused.log",
+  "logSha256": "560d9ad3982f66c41ee0dddec7ec020daf1bc9023799dfcc16b0a2846e1e58a7",
+  "outputFormat": "Node default spec reporter; --test-reporter=tap was not passed"
+}

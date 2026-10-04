@@ -1,0 +1,47 @@
+TAP version 13
+# Subtest: gcStress rejects unknown modes and remains disabled by default
+ok 1 - gcStress rejects unknown modes and remains disabled by default
+  ---
+  duration_ms: 115.274655
+  type: 'test'
+  ...
+# Subtest: byref stress boundary and negative controls cover each owner and root-provider mode
+ok 2 - byref stress boundary and negative controls cover each owner and root-provider mode
+  ---
+  duration_ms: 88.133797
+  type: 'test'
+  ...
+# Subtest: gcStress observes each admitted source and CIL array continuation work unit
+ok 3 - gcStress observes each admitted source and CIL array continuation work unit
+  ---
+  duration_ms: 94.3507
+  type: 'test'
+  ...
+# Subtest: instruction collection respects observer pauses, manual CIL steps and stopped machines
+ok 4 - instruction collection respects observer pauses, manual CIL steps and stopped machines
+  ---
+  duration_ms: 9.818431
+  type: 'test'
+  ...
+# Subtest: 1,000 seeded distinct guest programs retain nested byref writes under instruction GC
+ok 5 - 1,000 seeded distinct guest programs retain nested byref writes under instruction GC
+  ---
+  duration_ms: 6168.636134
+  type: 'test'
+  ...
+# {"format":"SharpForge.ByrefGCStress/1","seed":"0x53464237","count":1000,"commit":"6cdd61291d79b609211e05624645225aeaa7d94c","trackedDirty":false,"environment":{"node":"v24.19.0","platform":"linux","arch":"x64"},"generator":{"tests/byref-gc-stress.test.js":"773dfe99cb2e16ddf286759259b7301cd900121736569f43717118066f74b266","tests/support/byref-stress-programs.js":"1712e2de28d63eea16f1b8257ff3229070fea1c968e078494324f420789caf13","tests/support/byref-stress-runner.js":"ba873d445124fcc89d8f7c60e374690d48141f63b764e98411093552b2705b9f","tests/support/generic-call-fixture.js":"8d7bba12fe3f4462cfd7d64ef2ffb58db1d4d31d771f7f1fb0d3fbc022031d3c"},"corpusSHA256":"18c91f4e6fabf4b7f28afd8e760ff33a3438ac301e1174811241c029f431f140","uniqueAssemblies":1000,"ownerCounts":{"field":334,"array":333,"box":333},"depths":[1,2,3,4,5],"instructions":131341,"collections":131341,"sourceCounterparts":{"count":96,"engines":["source","reloaded-source","compiled-cil"]},"nativeQualification":false,"unsupported":["Native/Rust/browser qualification is not established by this Node report.","Source bytecode cannot create an unbox interior; box ownership is exercised by independent direct CIL."]}
+# Subtest: stress generator bounds and seed are explicit and deterministic
+ok 6 - stress generator bounds and seed are explicit and deterministic
+  ---
+  duration_ms: 1.29341
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7831.351649

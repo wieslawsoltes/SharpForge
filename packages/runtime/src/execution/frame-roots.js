@@ -1,4 +1,5 @@
 import {visitFaultRoots} from './exception-event-failure.js';
+import {visitAsyncTaskRoots, visitAsyncFrameRoots} from './async-continuation-roots.js';
 import {scalarStorageGuard} from './scalar-storage-plan.js';
 import {isReference} from '../heap.js';
 import {visitRetiredFrames} from './frame-pool.js';
@@ -62,6 +63,7 @@ function slots(vm, frame, argument, visit, precise) {
 
 /** Continuations retain their values independent of declared slots or instruction position. */
 export function visitFrameContinuations(frame, visit, sourceOrder = false) {
+  visitAsyncFrameRoots(frame, visit);
   visitObjectValueRoots(frame, visit);
   offer(frame.asyncBuilderTask, visit);
   visitFaultRoots(frame.filterSearch?.error, visit);
@@ -138,6 +140,7 @@ export function visitSchedulerRoots(scheduler, visit, precise = true) {
   for (const task of scheduler.tasks.values()) {
     if (terminal.has(task.status)) continue;
     offer(task.ref, visit);
+    visitAsyncTaskRoots(task, visit);
     values(task.dependencies, visit);
     visitFaultRoots(task.error, visit);
     offer(task.asyncState?.machine, visit);

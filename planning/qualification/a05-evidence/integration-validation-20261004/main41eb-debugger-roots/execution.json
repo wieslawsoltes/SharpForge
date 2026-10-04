@@ -1,0 +1,42 @@
+{
+  "format": "SharpForge.A05ReadOnlyDiagnosis/1",
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "/workspace/scratch/42f7738360b9/a05-debugger-root-diagnosis-20261004/driver.mjs"
+  ],
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": "--max-old-space-size=512"
+  },
+  "startedUtc": "2026-10-04T21:42:34.490186+00:00",
+  "durationMs": 2065.491629000462,
+  "exitCode": 0,
+  "before": {
+    "revision": "867fc2493620de9c375f6f01bc6b3506f70f6168",
+    "tree": "2b7535d9daf5bd7653372bf633cfd50821929868",
+    "status": ""
+  },
+  "after": {
+    "revision": "867fc2493620de9c375f6f01bc6b3506f70f6168",
+    "tree": "2b7535d9daf5bd7653372bf633cfd50821929868",
+    "status": ""
+  },
+  "scope": "One source reverse-debugger reproduction, no product edits or suite run.",
+  "files": [
+    {
+      "path": "driver.mjs",
+      "bytes": 1373,
+      "sha256": "0f5817fb7666999f9d7085eb8d3966ac315ff2cbef7753c384b2b91a07689931"
+    },
+    {
+      "path": "roots.jsonl",
+      "bytes": 3288,
+      "sha256": "24715206cd871721cf233304a7dd0b35efff35132f4d5259c8f3e5f7671d488a"
+    }
+  ]
+}

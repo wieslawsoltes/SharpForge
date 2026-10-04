@@ -1,0 +1,76 @@
+{
+  "task": "SF-A05-E04",
+  "fixture": "value-layout-sizeof",
+  "timestamp": "2026-10-04T20:29:17.525Z",
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "node": "v22.23.2",
+  "dotnetSdk": "10.0.201",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.1 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.4 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.7 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.30 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.1 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.4 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.19 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.3 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.5 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.7 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.10 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.11 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.1 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.4 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.7 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.30 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.1 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.4 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.19 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.3 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.7 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.10 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.11 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.12 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]",
+  "targetFramework": "net10.0",
+  "passed": true,
+  "status": "passed",
+  "qualification": "same Roslyn DLL executed by native .NET and CilVirtualMachine",
+  "sources": [
+    {
+      "path": "tests/fixtures/a05/value-layout-sizeof/Program.cs",
+      "sha256": "f6f2e4fd40a0a2547f8401e6165a2a70ae6f6574563a5d90352e3b2734e81763"
+    }
+  ],
+  "expectedOutput": "8\n12\n5\n7\n2\n8\n16\n4\nTrue\n8\nTrue\n8\nTrue\nTrue\n",
+  "unsafe": true,
+  "assemblySha256": "61b1704af5b2222dc940b0c946cfc6d1eba06d3aa26acfd828fb8c10ddea389e",
+  "native": {
+    "exitCode": 0,
+    "signal": null,
+    "output": "8\n12\n5\n7\n2\n8\n16\n4\nTrue\n8\nTrue\n8\nTrue\nTrue\n",
+    "stderr": ""
+  },
+  "cil": {
+    "state": "terminated",
+    "exitCode": 0,
+    "output": "8\n12\n5\n7\n2\n8\n16\n4\nTrue\n8\nTrue\n8\nTrue\nTrue\n",
+    "instructions": 47
+  },
+  "commands": [
+    {
+      "command": "dotnet",
+      "arguments": [
+        "restore",
+        "Qualification.csproj",
+        "--configfile",
+        "NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "build",
+        "Qualification.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "<temporary-project>/bin/Release/net10.0/Qualification.dll"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    }
+  ]
+}

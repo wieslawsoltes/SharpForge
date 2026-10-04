@@ -1,0 +1,544 @@
+TAP version 13
+# Subtest: source: evaluation commits history with scheduler disabled
+ok 1 - source: evaluation commits history with scheduler disabled
+  ---
+  duration_ms: 106.572538
+  type: 'test'
+  ...
+# Subtest: source: evaluation commits history with scheduler enabled
+ok 2 - source: evaluation commits history with scheduler enabled
+  ---
+  duration_ms: 15.808089
+  type: 'test'
+  ...
+# Subtest: source: failed history preparation discards buffered effects and result leases
+ok 3 - source: failed history preparation discards buffered effects and result leases
+  ---
+  duration_ms: 11.930626
+  type: 'test'
+  ...
+# Subtest: source: command delivery failure preserves the already observable evaluation commit
+ok 4 - source: command delivery failure preserves the already observable evaluation commit
+  ---
+  duration_ms: 8.543303
+  type: 'test'
+  ...
+# Subtest: source: output delivery failure preserves the already observable evaluation commit
+ok 5 - source: output delivery failure preserves the already observable evaluation commit
+  ---
+  duration_ms: 8.251384
+  type: 'test'
+  ...
+# Subtest: source: rollback and cancellation keep the active-transaction snapshot guard
+ok 6 - source: rollback and cancellation keep the active-transaction snapshot guard
+  ---
+  duration_ms: 14.581819
+  type: 'test'
+  ...
+# Subtest: CIL: evaluation commits history with scheduler disabled
+ok 7 - CIL: evaluation commits history with scheduler disabled
+  ---
+  duration_ms: 31.33815
+  type: 'test'
+  ...
+# Subtest: CIL: evaluation commits history with scheduler enabled
+ok 8 - CIL: evaluation commits history with scheduler enabled
+  ---
+  duration_ms: 15.059841
+  type: 'test'
+  ...
+# Subtest: CIL: failed history preparation discards buffered effects and result leases
+ok 9 - CIL: failed history preparation discards buffered effects and result leases
+  ---
+  duration_ms: 13.220129
+  type: 'test'
+  ...
+# Subtest: CIL: command delivery failure preserves the already observable evaluation commit
+ok 10 - CIL: command delivery failure preserves the already observable evaluation commit
+  ---
+  duration_ms: 10.440699
+  type: 'test'
+  ...
+# Subtest: CIL: output delivery failure preserves the already observable evaluation commit
+ok 11 - CIL: output delivery failure preserves the already observable evaluation commit
+  ---
+  duration_ms: 9.328285
+  type: 'test'
+  ...
+# Subtest: CIL: rollback and cancellation keep the active-transaction snapshot guard
+ok 12 - CIL: rollback and cancellation keep the active-transaction snapshot guard
+  ---
+  duration_ms: 12.169557
+  type: 'test'
+  ...
+# Subtest: late debugger verification publishes a new membership set and rollback revokes the added methods
+ok 13 - late debugger verification publishes a new membership set and rollback revokes the added methods
+  ---
+  duration_ms: 136.560965
+  type: 'test'
+  ...
+# Subtest: failed late verification never publishes an executable method membership
+ok 14 - failed late verification never publishes an executable method membership
+  ---
+  duration_ms: 16.658738
+  type: 'test'
+  ...
+# Subtest: local construction identity: Button runs its field initializer and constructor body
+ok 15 - local construction identity: Button runs its field initializer and constructor body
+  ---
+  duration_ms: 135.727767
+  type: 'test'
+  ...
+# Subtest: local construction identity: Line runs its field initializer and constructor body
+ok 16 - local construction identity: Line runs its field initializer and constructor body
+  ---
+  duration_ms: 19.62335
+  type: 'test'
+  ...
+# Subtest: local construction identity: a user Button and a real framework Button keep separate constructor paths
+ok 17 - local construction identity: a user Button and a real framework Button keep separate constructor paths
+  ---
+  duration_ms: 22.105174
+  type: 'test'
+  ...
+# Subtest: local construction identity: a framework constructor and inherited property still execute without a local target
+ok 18 - local construction identity: a framework constructor and inherited property still execute without a local target
+  ---
+  duration_ms: 11.316745
+  type: 'test'
+  ...
+# Subtest: local construction identity: independent MethodDef metadata executes the resolved user constructor
+ok 19 - local construction identity: independent MethodDef metadata executes the resolved user constructor
+  ---
+  duration_ms: 4.453299
+  type: 'test'
+  ...
+# Subtest: local construction identity: independent MemberRef metadata executes the resolved user constructor
+ok 20 - local construction identity: independent MemberRef metadata executes the resolved user constructor
+  ---
+  duration_ms: 2.96974
+  type: 'test'
+  ...
+# Subtest: local construction identity: field and method receiver checks still reject a framework namesake
+ok 21 - local construction identity: field and method receiver checks still reject a framework namesake
+  ---
+  duration_ms: 2.511938
+  type: 'test'
+  ...
+# Subtest: local construction identity: a user delegate named Button keeps its managed constructor contract
+ok 22 - local construction identity: a user delegate named Button keeps its managed constructor contract
+  ---
+  duration_ms: 14.19503
+  type: 'test'
+  ...
+# Subtest: runtime delegate Invoke retains canonical dispatch without executable-body membership, caches false
+ok 23 - runtime delegate Invoke retains canonical dispatch without executable-body membership, caches false
+  ---
+  duration_ms: 21.939622
+  type: 'test'
+  ...
+# Subtest: runtime delegate Invoke retains canonical dispatch without executable-body membership, caches true
+ok 24 - runtime delegate Invoke retains canonical dispatch without executable-body membership, caches true
+  ---
+  duration_ms: 3.899015
+  type: 'test'
+  ...
+# Subtest: abstract virtual declarations still resolve to verified concrete override bodies
+ok 25 - abstract virtual declarations still resolve to verified concrete override bodies
+  ---
+  duration_ms: 21.247896
+  type: 'test'
+  ...
+# Subtest: runtime delegate null receiver still faults through the normal invocation contract
+ok 26 - runtime delegate null receiver still faults through the normal invocation contract
+  ---
+  duration_ms: 11.42939
+  type: 'test'
+  ...
+# Subtest: prepared virtual calls preserve managed events, exact instruction counts and GC boundaries
+ok 27 - prepared virtual calls preserve managed events, exact instruction counts and GC boundaries
+  ---
+  duration_ms: 43.376845
+  type: 'test'
+  ...
+# Subtest: prepared call failure keeps ordinary quota and frame behavior {"maxFrames":2}
+ok 28 - prepared call failure keeps ordinary quota and frame behavior {"maxFrames":2}
+  ---
+  duration_ms: 6.671275
+  type: 'test'
+  ...
+# Subtest: prepared call failure keeps ordinary quota and frame behavior {"maxStackBytes":192}
+ok 29 - prepared call failure keeps ordinary quota and frame behavior {"maxStackBytes":192}
+  ---
+  duration_ms: 11.855015
+  type: 'test'
+  ...
+# Subtest: prepared call failure keeps ordinary quota and frame behavior {"maxInstructions":24}
+ok 30 - prepared call failure keeps ordinary quota and frame behavior {"maxInstructions":24}
+  ---
+  duration_ms: 14.571784
+  type: 'test'
+  ...
+# Subtest: one-instruction slices expose the prepared callee and restored execution rebuilds the call setup
+ok 31 - one-instruction slices expose the prepared callee and restored execution rebuilds the call setup
+  ---
+  duration_ms: 12.374849
+  type: 'test'
+  ...
+# Subtest: prepared direct frame entry normalizes arguments while the caller stack retains receiver roots
+ok 32 - prepared direct frame entry normalizes arguments while the caller stack retains receiver roots
+  ---
+  duration_ms: 22.030614
+  type: 'test'
+  ...
+# Subtest: a own host call hook continues to observe every prepared virtual target
+ok 33 - a own host call hook continues to observe every prepared virtual target
+  ---
+  duration_ms: 9.269329
+  type: 'test'
+  ...
+# Subtest: a subclass host call hook continues to observe every prepared virtual target
+ok 34 - a subclass host call hook continues to observe every prepared virtual target
+  ---
+  duration_ms: 8.468563
+  type: 'test'
+  ...
+# Subtest: a prototype host call hook continues to observe every prepared virtual target
+ok 35 - a prototype host call hook continues to observe every prepared virtual target
+  ---
+  duration_ms: 8.062136
+  type: 'test'
+  ...
+# Subtest: field-heavy execution resolves no metadata tokens after its first loop iterations
+ok 36 - field-heavy execution resolves no metadata tokens after its first loop iterations
+  ---
+  duration_ms: 53.588537
+  type: 'test'
+  ...
+# Subtest: metadata descriptors are immutable and verification membership tracks replaced reports
+ok 37 - metadata descriptors are immutable and verification membership tracks replaced reports
+  ---
+  duration_ms: 3.248258
+  type: 'test'
+  ...
+# Subtest: closed field owners never share substituted signatures or thread-static slot identities
+ok 38 - closed field owners never share substituted signatures or thread-static slot identities
+  ---
+  duration_ms: 5.303045
+  type: 'test'
+  ...
+# Subtest: warm fields validate null, wrong, collected and foreign receivers on every access
+ok 39 - warm fields validate null, wrong, collected and foreign receivers on every access
+  ---
+  duration_ms: 4.57078
+  type: 'test'
+  ...
+# Subtest: metadata string caching never retains weak intern handles or aliases strings from another VM
+ok 40 - metadata string caching never retains weak intern handles or aliases strings from another VM
+  ---
+  duration_ms: 3.28986
+  type: 'test'
+  ...
+# Subtest: restore rebuilds field metadata while preserving live storage and rejecting invalid restore atomically
+ok 41 - restore rebuilds field metadata while preserving live storage and rejecting invalid restore atomically
+  ---
+  duration_ms: 7.70455
+  type: 'test'
+  ...
+# Subtest: inspector replacement, explicit unload and stop isolate identical tokens and drop metadata caches
+ok 42 - inspector replacement, explicit unload and stop isolate identical tokens and drop metadata caches
+  ---
+  duration_ms: 3.838555
+  type: 'test'
+  ...
+# Subtest: committed debugger Hot Reload replaces metadata caches; rejected changes retain their identity
+ok 43 - committed debugger Hot Reload replaces metadata caches; rejected changes retain their identity
+  ---
+  duration_ms: 90.61515
+  type: 'test'
+  ...
+# Subtest: source: explicit function calls preserve paused stack and control flow
+ok 44 - source: explicit function calls preserve paused stack and control flow
+  ---
+  duration_ms: 120.659315
+  type: 'test'
+  ...
+# Subtest: source: methods, constructors, initializers, getters and setters execute real target code
+ok 45 - source: methods, constructors, initializers, getters and setters execute real target code
+  ---
+  duration_ms: 21.875052
+  type: 'test'
+  ...
+# Subtest: source: effectful expression receiver/argument order and GC roots
+ok 46 - source: effectful expression receiver/argument order and GC roots
+  ---
+  duration_ms: 14.537641
+  type: 'test'
+  ...
+# Subtest: source: evaluation rollback restores target state, output and history
+ok 47 - source: evaluation rollback restores target state, output and history
+  ---
+  duration_ms: 23.756874
+  type: 'test'
+  ...
+# Subtest: source: throwing evaluation and instruction exhaustion roll back
+ok 48 - source: throwing evaluation and instruction exhaustion roll back
+  ---
+  duration_ms: 16.718853
+  type: 'test'
+  ...
+# Subtest: source: cancellation, syntax and budget failures are nonmutating
+ok 49 - source: cancellation, syntax and budget failures are nonmutating
+  ---
+  duration_ms: 8.623349
+  type: 'test'
+  ...
+# Subtest: source: checked expressions and short circuits apply to called results
+ok 50 - source: checked expressions and short circuits apply to called results
+  ---
+  duration_ms: 10.716392
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement skips a write and preserves live values
+ok 51 - source: Set Next Statement skips a write and preserves live values
+  ---
+  duration_ms: 6.371404
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement rejects another method and stale stop
+ok 52 - source: Set Next Statement rejects another method and stale stop
+  ---
+  duration_ms: 8.283921
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement cannot escape protected cleanup
+ok 53 - source: Set Next Statement cannot escape protected cleanup
+  ---
+  duration_ms: 6.49242
+  type: 'test'
+  ...
+# Subtest: source: Hot Reload replaces inactive bodies without restarting heap
+ok 54 - source: Hot Reload replaces inactive bodies without restarting heap
+  ---
+  duration_ms: 11.42399
+  type: 'test'
+  ...
+# Subtest: source: Hot Reload literal update in active method retains local values
+ok 55 - source: Hot Reload literal update in active method retains local values
+  ---
+  duration_ms: 5.477441
+  type: 'test'
+  ...
+# Subtest: source: rude edits reject without losing old program or breakpoints
+ok 56 - source: rude edits reject without losing old program or breakpoints
+  ---
+  duration_ms: 4.881385
+  type: 'test'
+  ...
+# Subtest: CIL: explicit function calls preserve paused stack and control flow
+ok 57 - CIL: explicit function calls preserve paused stack and control flow
+  ---
+  duration_ms: 32.162644
+  type: 'test'
+  ...
+# Subtest: CIL: methods, constructors, initializers, getters and setters execute real target code
+ok 58 - CIL: methods, constructors, initializers, getters and setters execute real target code
+  ---
+  duration_ms: 22.191346
+  type: 'test'
+  ...
+# Subtest: CIL: effectful expression receiver/argument order and GC roots
+ok 59 - CIL: effectful expression receiver/argument order and GC roots
+  ---
+  duration_ms: 14.56401
+  type: 'test'
+  ...
+# Subtest: CIL: evaluation rollback restores target state, output and history
+ok 60 - CIL: evaluation rollback restores target state, output and history
+  ---
+  duration_ms: 18.287876
+  type: 'test'
+  ...
+# Subtest: CIL: throwing evaluation and instruction exhaustion roll back
+ok 61 - CIL: throwing evaluation and instruction exhaustion roll back
+  ---
+  duration_ms: 19.293773
+  type: 'test'
+  ...
+# Subtest: CIL: cancellation, syntax and budget failures are nonmutating
+ok 62 - CIL: cancellation, syntax and budget failures are nonmutating
+  ---
+  duration_ms: 9.165565
+  type: 'test'
+  ...
+# Subtest: CIL: checked expressions and short circuits apply to called results
+ok 63 - CIL: checked expressions and short circuits apply to called results
+  ---
+  duration_ms: 16.089979
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement skips a write and preserves live values
+ok 64 - CIL: Set Next Statement skips a write and preserves live values
+  ---
+  duration_ms: 5.079316
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement rejects another method and stale stop
+ok 65 - CIL: Set Next Statement rejects another method and stale stop
+  ---
+  duration_ms: 8.342276
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement cannot escape protected cleanup
+ok 66 - CIL: Set Next Statement cannot escape protected cleanup
+  ---
+  duration_ms: 13.323089
+  type: 'test'
+  ...
+# Subtest: CIL: Hot Reload replaces inactive bodies without restarting heap
+ok 67 - CIL: Hot Reload replaces inactive bodies without restarting heap
+  ---
+  duration_ms: 11.575983
+  type: 'test'
+  ...
+# Subtest: CIL: Hot Reload literal update in active method retains local values
+ok 68 - CIL: Hot Reload literal update in active method retains local values
+  ---
+  duration_ms: 8.559095
+  type: 'test'
+  ...
+# Subtest: CIL: rude edits reject without losing old program or breakpoints
+ok 69 - CIL: rude edits reject without losing old program or breakpoints
+  ---
+  duration_ms: 7.357521
+  type: 'test'
+  ...
+# Subtest: source: Set Next Statement rejects skipped definite assignment
+ok 70 - source: Set Next Statement rejects skipped definite assignment
+  ---
+  duration_ms: 2.477977
+  type: 'test'
+  ...
+# Subtest: CIL: Set Next Statement rejects entering a nonempty-stack expression
+ok 71 - CIL: Set Next Statement rejects entering a nonempty-stack expression
+  ---
+  duration_ms: 7.594338
+  type: 'test'
+  ...
+# Subtest: debugger: entry, step over, step in and step out use source points
+ok 72 - debugger: entry, step over, step in and step out use source points
+  ---
+  duration_ms: 74.811722
+  type: 'test'
+  ...
+# Subtest: debugger: step over does not enter called method
+ok 73 - debugger: step over does not enter called method
+  ---
+  duration_ms: 4.503912
+  type: 'test'
+  ...
+# Subtest: debugger: bound breakpoints, conditions and hit counts
+ok 74 - debugger: bound breakpoints, conditions and hit counts
+  ---
+  duration_ms: 6.645225
+  type: 'test'
+  ...
+# Subtest: debugger: logpoints continue without pausing
+ok 75 - debugger: logpoints continue without pausing
+  ---
+  duration_ms: 2.918865
+  type: 'test'
+  ...
+# Subtest: debugger: invalid breakpoints report unverified locations
+ok 76 - debugger: invalid breakpoints report unverified locations
+  ---
+  duration_ms: 3.430756
+  type: 'test'
+  ...
+# Subtest: debugger: disabled breakpoints do not stop
+ok 77 - debugger: disabled breakpoints do not stop
+  ---
+  duration_ms: 3.517574
+  type: 'test'
+  ...
+# Subtest: debugger: function breakpoints stop in callee
+ok 78 - debugger: function breakpoints stop in callee
+  ---
+  duration_ms: 3.436244
+  type: 'test'
+  ...
+# Subtest: debugger: data breakpoint fires on local write
+ok 79 - debugger: data breakpoint fires on local write
+  ---
+  duration_ms: 2.258986
+  type: 'test'
+  ...
+# Subtest: debugger: side-effect-free watches cannot invoke or mutate
+ok 80 - debugger: side-effect-free watches cannot invoke or mutate
+  ---
+  duration_ms: 4.13458
+  type: 'test'
+  ...
+# Subtest: debugger: local edits affect continuation and validate types
+ok 81 - debugger: local edits affect continuation and validate types
+  ---
+  duration_ms: 3.184876
+  type: 'test'
+  ...
+# Subtest: debugger: const locals cannot be edited
+ok 82 - debugger: const locals cannot be edited
+  ---
+  duration_ms: 1.978885
+  type: 'test'
+  ...
+# Subtest: debugger: arrays and object children expose actual values
+ok 83 - debugger: arrays and object children expose actual values
+  ---
+  duration_ms: 7.553608
+  type: 'test'
+  ...
+# Subtest: debugger: exception break happens before catch and resumes into handler
+ok 84 - debugger: exception break happens before catch and resumes into handler
+  ---
+  duration_ms: 5.92674
+  type: 'test'
+  ...
+# Subtest: debugger: uncaught-only exception mode ignores caught exceptions
+ok 85 - debugger: uncaught-only exception mode ignores caught exceptions
+  ---
+  duration_ms: 3.002517
+  type: 'test'
+  ...
+# Subtest: debugger: reverse snapshots restore locals and output
+ok 86 - debugger: reverse snapshots restore locals and output
+  ---
+  duration_ms: 7.809164
+  type: 'test'
+  ...
+# Subtest: debugger: reverse snapshots retain objects across later collection
+ok 87 - debugger: reverse snapshots retain objects across later collection
+  ---
+  duration_ms: 6.754936
+  type: 'test'
+  ...
+# Subtest: debugger: recording is bounded and optional
+ok 88 - debugger: recording is bounded and optional
+  ---
+  duration_ms: 5.511621
+  type: 'test'
+  ...
+# Subtest: debugger: pause/stop are cooperative and invalidate frames
+ok 89 - debugger: pause/stop are cooperative and invalidate frames
+  ---
+  duration_ms: 2.388747
+  type: 'test'
+  ...
+1..89
+# tests 89
+# suites 0
+# pass 89
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8736.638346

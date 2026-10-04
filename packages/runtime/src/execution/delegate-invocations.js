@@ -113,8 +113,7 @@ export function invokeDelegate(vm, reference, args) {
 }
 
 /** Only the final delegate result reaches the original caller. */
-export function continueDelegate(vm, frame, result) {
-  const continuation = frame.delegateContinuation;
+export function continueDelegate(vm, frame, result, continuation = frame.delegateContinuation) {
   if (!continuation || continuation.next >= continuation.entries.length) return {
     continued: false,
     result

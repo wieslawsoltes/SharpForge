@@ -1,0 +1,16 @@
+{
+  "status": "validated",
+  "validatedAt": "2026-10-04T20:15:01.774Z",
+  "sourceCommit": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "referenceCommit": "6f26b84f46053b4aafd3ab8e77150cc793790d8d",
+  "patchSha256": "ed7fe69551c5b6fc78a5bfe7d2e95d6ee2e24c30ee5b9d05e4e46ef829a30ecd",
+  "transformSha256": "81239b61e2a3c39cd0a4f946011e15fcea717b0f58d867721197258121afc2ea",
+  "parentPatchDependenciesAndCleanlinessValidated": true,
+  "wrapper": "node scripts/limited.js node --input-type=module",
+  "resourceEnvironment": {
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": "--max-old-space-size=512"
+  }
+}

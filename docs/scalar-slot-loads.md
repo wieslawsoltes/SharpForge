@@ -23,7 +23,7 @@ typed evaluation stacks and compiler changes are outside this increment.
 The instruction-normalized >=30% timing target in #1398 is **met** for the
 same-host Linux x64 CIL qualification at `48c62243`: 100 measured pairs produced
 a 71.686% reduction, with a 95% paired interval of 70.380–72.616%. The exact
-[reports and wrapper provenance](a05-evidence/slots-virtual-48c62243/README.md)
+[reports and wrapper provenance](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/slots-virtual-48c62243/README.md)
 retain all observations and environment limits. Browser, native-platform and
 broader engine evidence remain pending. The source interpreter is unchanged.
 

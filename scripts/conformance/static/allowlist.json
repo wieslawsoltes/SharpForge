@@ -187,7 +187,7 @@
       "path": "packages/debugger/src/evaluation.js",
       "operation": "eval",
       "count": 1,
-      "sha256": "2f1e1254c9c7c801343770513f1851255037c9b60c8e411cf6de18358e4be944",
+      "sha256": "089fa9bff68f0bf1d76f09d50e1705e6df75e47d71990a4bec206d82ba21248f",
       "reason": "The interpreter method is named eval(n); it walks managed watch expressions and is not the JavaScript global eval."
     },
     {
@@ -326,9 +326,9 @@
     {
       "path": "planning/qualification/integration-performance/size/measure.mjs",
       "operation": "dynamic-import",
-      "sha256": "26851a5b20595deb28624b0f6888ed0f4bd271caf9ac6d389ab770d19dfb6681",
+      "sha256": "431b55d1751c5fda710454c45a02ef31fb594d029cff12d17cb371072ff819f3",
       "count": 2,
-      "reason": "Qualification adapter loads fixed compiler/build package entry points from the explicitly selected trusted checkout."
+      "reason": "Two fixed Node helper imports from the trusted checkout are unchanged; reviewed change preserves nested worker paths."
     },
     {
       "path": "scripts/bench/a03-metadata.js",
@@ -553,6 +553,13 @@
       "count": 1,
       "sha256": "5cbc987ea93b50396182046631c39c97a0956f2cbfebda9ed4a3fae4cbc8dc0b",
       "reason": "Developer benchmark imports an explicit operator-selected local compiler entry from a trusted checkout. The entry is supplied only by the developer running the benchmark; managed source and metadata cannot choose JavaScript modules. Historical benchmark bytes and hashes are preserved."
+    },
+    {
+      "path": "packages/cil/tools/pe-bounds-benchmark-worker.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "29e53dea4739c957476866d4a8b9ac9333c3b61ff499842c13f161e8d70474ce",
+      "reason": "Developer benchmark imports only the fixed public CIL entry of the operator-selected, clean, source-pinned checkout after verifying its own package aliases and complete source inventory. Input images never select executable source. This exact worker source/count requires review before qualification."
     }
   ]
 }

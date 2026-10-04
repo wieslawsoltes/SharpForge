@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "testedCommit": "37ce0e62c2b0180764970b63f58b742d383fe0cb",
+  "testedTree": "2ec8f359d3b66250425f999811f4100604349175",
+  "summary": {
+    "tests": 37,
+    "passed": 37,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "exitCode": 0,
+    "complete": true,
+    "durationMs": 5166.376966
+  },
+  "qualification": "Focused six-file regression, including execution of an existing native-captured SDK8 DLL; no fresh native process or whole-project claim",
+  "payloads": [
+    {
+      "path": "startup-rejection.log",
+      "bytes": 934,
+      "sha256": "4dfe8ad05e857e7537c713253a92ae9380f32a14417ccb0115058008391226e9",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-async-proof-repair-37ce0e62c.tap"
+    },
+    {
+      "path": "startup-journal.json",
+      "bytes": 2555,
+      "sha256": "139ab505941e509ef369cad67442faf5ac22a6860ea36cd2a79c03654d5b31ad",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-async-proof-repair-37ce0e62c.json"
+    },
+    {
+      "path": "focused.tap",
+      "bytes": 8736,
+      "sha256": "4107bea1ba8ca851741e806e954bafd2feea4c2f15f3636454d543d4e9376999",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-async-proof-repair-37ce0e62c-retry1.tap"
+    },
+    {
+      "path": "focused-journal.json",
+      "bytes": 2594,
+      "sha256": "212145b7ec96a22816c9f9fc242172403d4e3b3b8ba3490802d4113cf0be803f",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-async-proof-repair-37ce0e62c-retry1.json"
+    }
+  ]
+}

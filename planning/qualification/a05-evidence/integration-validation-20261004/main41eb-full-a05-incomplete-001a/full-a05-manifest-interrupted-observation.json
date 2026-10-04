@@ -1,0 +1,46 @@
+{
+  "format": "SharpForge.A05InterruptedCommandObservation/1",
+  "observedUTC": "2026-10-04T22:05:15.703643+00:00",
+  "completion": "incomplete",
+  "exitCode": null,
+  "reason": "Execution session20968 became unknown; wrapper, runner and active numeric child PIDs were independently observed absent. No final TAP summary or command completion was written. Cause is not established.",
+  "observedPids": [
+    {
+      "pid": 1011719,
+      "exists": false
+    },
+    {
+      "pid": 1011767,
+      "exists": false
+    },
+    {
+      "pid": 1011775,
+      "exists": false
+    },
+    {
+      "pid": 1011787,
+      "exists": false
+    },
+    {
+      "pid": 1034184,
+      "exists": false
+    }
+  ],
+  "currentIdentity": {
+    "commit": "001a5ccc899ae517e430866d4d1ba03d89def346",
+    "tree": "9915d20c63a3ba9a9c81f1153a13dbcf6fbbc99b",
+    "status": ""
+  },
+  "files": [
+    {
+      "path": "full-a05-manifest.log",
+      "bytes": 870057,
+      "sha256": "a546d095d17c2d026c025c538e76f9a6d88cce5d7782c8a23c1ef47ca87aef72"
+    },
+    {
+      "path": "full-a05-manifest-execution.json",
+      "bytes": 1131,
+      "sha256": "5f68df70b727b07b96f4455120eb3f967771f74d4b56ee2c60be9fdec1e0af64"
+    }
+  ]
+}

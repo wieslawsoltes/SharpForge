@@ -1,0 +1,6 @@
+tree 0f987d136a2eca1c7302d3e5059cf5a0f9faa0c1
+parent 36a2af53287a563fd47d3a33b8e6e6382a726d35
+author Codex <codex@openai.com> 1791144210 +0200
+committer Codex <codex@openai.com> 1791144210 +0200
+
+SF-A05-T10.1: isolate a recorded profiler-hook-free measurement reference

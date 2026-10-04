@@ -76,6 +76,8 @@ session.evaluateFunction('ledger.Add(2)', {allowSideEffects: true, commit: false
 
 The exact reusable entry points are exported from `@sharpforge/debugger`; Studio exposes `sharpforge.evaluateFunction`. Instruction/time limits and cancellation checks bound evaluation. Preview and failed/limited evaluation restore managed snapshots, and result handles are bounded and released on resume. Scene changes participate in rollback. Effects already delivered to external host callbacks cannot be recalled; callers should not equate managed rollback with an external transaction. Arbitrary native functions, unsupported C# syntax, blocking async evaluation, cross-process calls and every .NET framework API are not supported.
 
+Committed evaluation captures enabled history after closing its scene-command buffer and before delivering any host command or output. A failure during this preparation restores managed state, history and buffered scene changes. Once host delivery begins, a throwing UI or output callback is reported to the caller while the evaluated state and history remain committed; earlier delivered effects cannot be rolled back. Result references stay rooted through preparation and delivery. The VM continues to reject snapshots taken while a platform transaction is active.
+
 ## Set Next Statement
 
 At a pause, right-click a source location and choose Set Next Statement, use Ctrl+Shift+F10, or use the debugger API/DAP goto targets. Relocation changes the instruction position without rerunning preceding code or resetting locals. It is not equivalent to restarting the frame.

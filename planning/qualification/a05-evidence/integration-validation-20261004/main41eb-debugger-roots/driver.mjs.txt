@@ -1,0 +1,20 @@
+import {debug, stop} from '/tmp/a05-integration-42f7738360b9/tests/helpers.js';
+const source = 'var n=new N(){Value=11};\nn=null;\nGC.Collect();\nConsole.WriteLine(0);\nclass N{public int Value;}';
+const session = debug(source, {recordHistory:true}).start();
+const vm = session.vm;
+const value = item => item && typeof item === 'object' ? {h:item.h,g:item.g,byref:item.byref,kind:item.kind,owner:item.owner} : item;
+function capture(label) {
+  const method = vm.image.methods[vm.top.methodId];
+  console.log(JSON.stringify({label,state:vm.state,line:vm.currentPoint?.line,pc:vm.top.pc,
+    preciseRootLiveness:vm.options.preciseRootLiveness ?? null,
+    locals:method.locals.map((local,index)=>({index,name:local.name,type:local.type,hidden:local.hidden,value:value(vm.top.locals[index])})),
+    stack:vm.stack.map(value),roots:[...vm.roots()].map(value),
+    records:vm.heap.records.map((record,index)=>record?{index,generation:vm.heap.generations[index],kind:record.kind,type:record.type,data:record.data}:null),
+    stats:vm.heap.stats,historyLength:session.history.length}));
+}
+stop(session); capture('entry');
+stop(session,'next'); capture('after object initializer');
+console.log(JSON.stringify({evaluated:session.evaluate('n.Value').value}));
+stop(session,'next'); capture('after n=null');
+stop(session,'next'); capture('after explicit collection');
+session.stop();

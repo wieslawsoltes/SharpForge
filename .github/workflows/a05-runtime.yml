@@ -101,6 +101,9 @@ jobs:
           - {version: '8.0.425', framework: 'net8.0'}
           - {version: '10.0.201', framework: 'net10.0'}
     env:
+      SHARPFORGE_TEST_CONCURRENCY: 1
+      SHARPFORGE_MAX_PARALLEL_RUNS: 1
+      SHARPFORGE_MAX_OLD_SPACE_MB: 512
       DOTNET_CLI_TELEMETRY_OPTOUT: '1'
       DOTNET_NOLOGO: '1'
       DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: '1'
@@ -127,6 +130,18 @@ jobs:
         if: always()
         run: >-
           node scripts/a05/verify-native-width.js artifacts/a05-native-width 32 '${{ matrix.sdk.version }}'
+      - name: Capture and replay the exhaustive 32-bit conversion matrix
+        if: ${{ always() && matrix.sdk.version == '10.0.201' }}
+        run: >-
+          node scripts/limited.js node scripts/numeric/qualify-conversions.js
+          --native-bits 32 --sdk '${{ matrix.sdk.version }}' --dotnet "$DOTNET_PATH"
+          --output artifacts/a05-native-width/conversions
+      - name: Preserve missing or incomplete exhaustive conversion qualification
+        if: ${{ always() && matrix.sdk.version == '10.0.201' }}
+        run: >-
+          node scripts/limited.js node scripts/numeric/qualify-conversions.js --finalize
+          --native-bits 32 --sdk '${{ matrix.sdk.version }}'
+          --output artifacts/a05-native-width/conversions
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:

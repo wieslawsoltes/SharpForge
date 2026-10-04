@@ -1,0 +1,65 @@
+✔ generic virtual overrides execute with the selected declaring type and method arguments (35.750967ms)
+✔ explicit implementations of two closed interfaces with the same MethodDef stay distinct (15.032314ms)
+✔ closed static fields and initialization are independent even inside a generic caller (7.705254ms)
+✔ inherited generic fields use the declaring base context, including nested array substitutions (12.246563ms)
+✖ aggregate generic values and external generic methods keep explicit unsupported diagnostics (7.166554ms)
+✔ closed generic Decimal default and initobj retain the scalar storage contract (2.36988ms)
+✔ interface default selection is independent of InterfaceImpl order (false) (30.533189ms)
+✔ interface diamond-default selection is independent of InterfaceImpl order (false) (5.377456ms)
+✔ interface specific selection is independent of InterfaceImpl order (false) (18.418766ms)
+✔ interface implicit selection is independent of InterfaceImpl order (false) (4.422804ms)
+✔ interface explicit selection is independent of InterfaceImpl order (false) (4.141752ms)
+✔ interface default selection is independent of InterfaceImpl order (true) (3.219077ms)
+✔ interface diamond-default selection is independent of InterfaceImpl order (true) (2.702277ms)
+✔ interface specific selection is independent of InterfaceImpl order (true) (3.359924ms)
+✔ interface implicit selection is independent of InterfaceImpl order (true) (3.552557ms)
+✔ interface explicit selection is independent of InterfaceImpl order (true) (3.586106ms)
+✔ ambiguous diamonds are verifiable and fault only when their declaration is invoked (9.096877ms)
+✔ a private method cannot silently resolve an otherwise ambiguous interface slot (6.854115ms)
+✔ new interface declarations do not override a base declaration without MethodImpl (3.731079ms)
+✔ derived newslot changes interface mapping only with reimplementation (false) (2.118411ms)
+✔ derived newslot changes interface mapping only with reimplementation (true) (2.307438ms)
+✔ a more-specific abstract declaration suppresses an inherited default implementation (1.359987ms)
+✔ interface maps reference the existing slot vector and survive snapshot replay (5.11443ms)
+✔ initialization runs only for the selected interface body: class (2.756127ms)
+✔ initialization runs only for the selected interface body: derived (3.512208ms)
+✔ initialization runs only for the selected interface body: base (2.45824ms)
+✔ base calls and independent hiding slots through MethodDef (27.850321ms)
+✔ base calls and independent hiding slots through MemberRef (5.491673ms)
+✔ a sealed override remains callable while a derived newslot stays independent (3.699682ms)
+✔ MethodImpl alias chains are materialized once and follow the final overriding body (26.235189ms)
+✔ MemberRef declarations cache their canonical MethodDef without reparsing signatures on dispatch (5.70747ms)
+✔ abstract declarations remain verifiable through concrete implementations and fault when directly resolved (8.417409ms)
+✔ missing implementations and cyclic MethodImpl mappings remain verification failures (2.744259ms)
+✔ snapshot replay retains derived slot identity without serializing dispatch caches (6.05524ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 33
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1987.356699
+
+✖ failing tests:
+
+test at tests/a05-02-generic-dispatch.test.js:108:1
+✖ aggregate generic values and external generic methods keep explicit unsupported diagnostics (7.166554ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(verifyCilAssembly(bytes).issues.some(issue => /T03 value storage/.test(issue.message)))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-02-generic-dispatch.test.js:117:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

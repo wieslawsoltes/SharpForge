@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "candidate": "35e1914a2811681cd5aaac8ba0a7741fe4f441c5",
+  "baseline": "eadd85149b0740f337f7b8f3e92d259353892fdb",
+  "change": "Reviewed rejection-only async-owner filter, before signature normalization/substitution. Full known-owner signatures and trusted identities remain checked.",
+  "focused": {
+    "command": "env DOTNET_ROOT=/workspace/scratch/1692a10afba9/toolchain/dotnet DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet SHARPFORGE_ORACLE_DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet node scripts/limited.js node --test tests/a05-cil-async-profile.test.js tests/a05-cil-async-native.test.js tests/a05-cil-async-continuation-roots.test.js",
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 21380.684185,
+    "sdk": "10.0.201",
+    "referencePack": "10.0.5"
+  },
+  "pairedCommand": "env DOTNET_ROOT=/workspace/scratch/1692a10afba9/toolchain/dotnet DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet SHARPFORGE_ORACLE_DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet node scripts/limited.js python3 packages/runtime/bench/cil-async-paired.py benchmark --candidate 35e1914a2811681cd5aaac8ba0a7741fe4f441c5 --capture /workspace/scratch/1692a10afba9/cil-async-pre-fix-reference --output /workspace/scratch/1692a10afba9/cil-async-paired-owner-filter.json",
+  "node": "v24.19.0",
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "cpus": 9,
+    "loadAverage": [
+      2.97705078125,
+      3.0498046875,
+      2.64306640625
+    ]
+  },
+  "protocol": {
+    "repeatCount": 1,
+    "order": [
+      "A",
+      "B",
+      "B",
+      "A"
+    ],
+    "warmupsPerProcessCase": 80,
+    "samplesPerProcessCase": 24,
+    "pooledSamplesPerMeasuredRevisionCase": 48,
+    "sameRunnerAndFixtureHashes": true,
+    "sameAssemblyHashes": true,
+    "exportSourceHashesCheckedBeforeAndAfterEachRun": true,
+    "worktreeTrackedDiffBeforeAndAfter": "",
+    "selectedBeforeAndAfterHashesEqual": true
+  },
+  "ordinaryComparison": {
+    "name": "ordinary-no-async",
+    "metrics": {
+      "admissionMs": {
+        "baseline": {
+          "median": 0.4498710000000301,
+          "p95": 0.7502019999999447
+        },
+        "candidate": {
+          "median": 0.3850259999999821,
+          "p95": 0.600983000000042
+        },
+        "medianPercentChange": -14.414132051197715
+      },
+      "executionMs": {
+        "baseline": {
+          "median": 1.7046195000000353,
+          "p95": 3.2666100000000142
+        },
+        "candidate": {
+          "median": 1.6348219999999856,
+          "p95": 2.1461739999999736
+        },
+        "medianPercentChange": -4.094608796863364
+      },
+      "totalMs": {
+        "baseline": {
+          "median": 2.1929174999999645,
+          "p95": 3.7185140000000274
+        },
+        "candidate": {
+          "median": 2.0324114999999665,
+          "p95": 2.6271999999999025
+        },
+        "medianPercentChange": -7.319290397381595
+      },
+      "allocatedBytes": {
+        "baseline": {
+          "median": 0.0,
+          "p95": 0
+        },
+        "candidate": {
+          "median": 0.0,
+          "p95": 0
+        },
+        "medianPercentChange": null
+      },
+      "allocations": {
+        "baseline": {
+          "median": 0.0,
+          "p95": 0
+        },
+        "candidate": {
+          "median": 0.0,
+          "p95": 0
+        },
+        "medianPercentChange": null
+      }
+    }
+  },
+  "perProcessOrdinaryTotalMedianMs": [
+    {
+      "revision": "A",
+      "milliseconds": 2.306603999999993
+    },
+    {
+      "revision": "B",
+      "milliseconds": 1.9570355000000177
+    },
+    {
+      "revision": "B",
+      "milliseconds": 2.1144520000000284
+    },
+    {
+      "revision": "A",
+      "milliseconds": 2.0022464999999556
+    }
+  ],
+  "interpretation": "This single approved repeat showed no ordinary-control regression: pooled total median change -7.319290397381595%, with zero managed allocations/bytes on both revisions. This is a bounded measurement, not a broad speedup or causal attribution claim.",
+  "priorMeasurement": "performance-review.json and paired-performance.json retain the original +27.53824091050625% over-budget result and process variation unchanged.",
+  "asyncMeasurements": [
+    {
+      "name": "Completed-Debug",
+      "revision": "B",
+      "status": "measured",
+      "assemblySha256": "dfb903d6327f6e44c1e9c52e87fef1edb468c6b1fd02115df1f285670385cdef",
+      "sampleCount": 48,
+      "metrics": {
+        "admissionMs": {
+          "median": 6.845327499999939,
+          "p95": 12.544591999999966
+        },
+        "executionMs": {
+          "median": 3.776378500000078,
+          "p95": 5.723936000000094
+        },
+        "totalMs": {
+          "median": 11.257615500000043,
+          "p95": 17.86610900000005
+        },
+        "allocatedBytes": {
+          "median": 902.0,
+          "p95": 902
+        },
+        "allocations": {
+          "median": 13.0,
+          "p95": 13
+        }
+      }
+    },
+    {
+      "name": "Completed-Release",
+      "revision": "B",
+      "status": "measured",
+      "assemblySha256": "076875b4d147896811db27283c447032eaebb376118a735b2cd17aaa5730f53e",
+      "sampleCount": 48,
+      "metrics": {
+        "admissionMs": {
+          "median": 4.368393999999853,
+          "p95": 9.770625999999993
+        },
+        "executionMs": {
+          "median": 2.6366190000001097,
+          "p95": 5.599717999999939
+        },
+        "totalMs": {
+          "median": 7.015197500000113,
+          "p95": 14.738985000000412
+        },
+        "allocatedBytes": {
+          "median": 630.0,
+          "p95": 630
+        },
+        "allocations": {
+          "median": 9.0,
+          "p95": 9
+        }
+      }
+    },
+    {
+      "name": "Suspended-Debug",
+      "revision": "B",
+      "status": "measured",
+      "assemblySha256": "30d90096b766ba7631a5e2ba55c21fec4294039234801390d1ae41d2eb0fa3cd",
+      "sampleCount": 48,
+      "metrics": {
+        "admissionMs": {
+          "median": 2.9912100000001374,
+          "p95": 6.819439999999759
+        },
+        "executionMs": {
+          "median": 3.0236469999999827,
+          "p95": 4.429077000000234
+        },
+        "totalMs": {
+          "median": 6.482924500000081,
+          "p95": 10.320232999999917
+        },
+        "allocatedBytes": {
+          "median": 560.0,
+          "p95": 560
+        },
+        "allocations": {
+          "median": 9.0,
+          "p95": 9
+        }
+      }
+    },
+    {
+      "name": "Suspended-Release",
+      "revision": "B",
+      "status": "measured",
+      "assemblySha256": "21c107a1883185878d721643f7ad3e9ed5054678d90d24eea500aef30ad6547f",
+      "sampleCount": 48,
+      "metrics": {
+        "admissionMs": {
+          "median": 2.6498234999999113,
+          "p95": 8.77022500000021
+        },
+        "executionMs": {
+          "median": 2.89243899999974,
+          "p95": 7.647296000000097
+        },
+        "totalMs": {
+          "median": 5.59404399999994,
+          "p95": 13.547905000000355
+        },
+        "allocatedBytes": {
+          "median": 504.0,
+          "p95": 504
+        },
+        "allocations": {
+          "median": 9.0,
+          "p95": 9
+        }
+      }
+    }
+  ],
+  "asyncBaseline": "All four identical async images remain rejected on the baseline; no baseline timing was invented.",
+  "rawArtifacts": {
+    "paired-owner-filter.json": {
+      "sha256": "f88b74b09d0b949c40ccedfc735918caf80e7de5f21681f9ed67ee77993216e4",
+      "bytes": 468272
+    },
+    "logs/paired-owner-filter-launcher.txt": {
+      "sha256": "d13d163c56aa2a9a5930a742f72bf97551d00632b8685d7e2a82647d34f0ec0c",
+      "bytes": 166
+    },
+    "logs/owner-filter-focused.txt": {
+      "sha256": "4520def0b7c6404d580987a6d99a01229e29b606c222e2b1b83481f3e2f48484",
+      "bytes": 2295
+    },
+    "owner-filter-before.sha256": {
+      "sha256": "5b192c0ac769020ce2f97fd996145d9b9c46bb7315d31630f34bdd6c48965dd0",
+      "bytes": 628
+    },
+    "owner-filter-after.sha256": {
+      "sha256": "5b192c0ac769020ce2f97fd996145d9b9c46bb7315d31630f34bdd6c48965dd0",
+      "bytes": 628
+    }
+  },
+  "scope": "No broad tests or generic-native addenda were run in this slot. Browser/Rust/Wasm and generic boundary followups remain separate.",
+  "processStatus": "All processes completed; temporary exports removed and serialized validation slot released before writing evidence."
+}

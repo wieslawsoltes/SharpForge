@@ -15,7 +15,7 @@ export function checkSizes(actual,policy){
 export function committedJson(root,ref,path){if(!/^[a-zA-Z0-9_./-]+$/.test(path)||path.includes('..'))throw new Error('Unsafe policy path');return JSON.parse(git(root,'show',ref+':'+path));}
 export async function artifactSizes(root=repository){
  const artifacts=[{id:'dist',path:'dist'},{id:'standalone',path:'artifacts/SharpForge-standalone.html'}],contributions=await loadBuildContributions(root);
- for(const worker of contributions.workers)artifacts.push({id:'worker:'+worker.entry,path:'dist/'+worker.entry.split('/').at(-1)});
+ for(const worker of contributions.workers)artifacts.push({id:'worker:'+worker.entry,path:'dist/'+worker.entry});
  for(const pkg of await discoverPackages(root)){const manifest=JSON.parse(await readFile(join(root,pkg.directory,'package.json'),'utf8'));artifacts.push({id:'package:'+pkg.name,path:'artifacts/'+pkg.name.replace(/^@/,'').replaceAll('/','-')+'-'+manifest.version+'.tgz'});}
  const measured=[];for(const artifact of artifacts)measured.push({...artifact,bytes:await size(resolve(root,artifact.path))});return measured;
 }

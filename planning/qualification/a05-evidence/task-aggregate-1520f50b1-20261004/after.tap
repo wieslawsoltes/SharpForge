@@ -1,0 +1,28 @@
+TAP version 13
+# Subtest: merged CIL Task.Delay executes the infinite, zero, and full Int32 boundary contracts
+ok 1 - merged CIL Task.Delay executes the infinite, zero, and full Int32 boundary contracts
+  ---
+  duration_ms: 29.574397
+  type: 'test'
+  ...
+# Subtest: merged Task Wait and Result wrap the original fault while await preserves its reference
+ok 2 - merged Task Wait and Result wrap the original fault while await preserves its reference
+  ---
+  duration_ms: 12.57864
+  type: 'test'
+  ...
+# Subtest: merged completion keeps suspended state-machine waiters unwrapped beside aggregate-mode waiters
+ok 3 - merged completion keeps suspended state-machine waiters unwrapped beside aggregate-mode waiters
+  ---
+  duration_ms: 2.449186
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 660.750462

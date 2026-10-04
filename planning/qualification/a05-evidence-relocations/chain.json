@@ -1,0 +1,13 @@
+{
+  "format": "SharpForge.A05EvidenceRelocationChain/1",
+  "initial": {
+    "path": "planning/qualification/a05-evidence-relocations/initial-20261004.json",
+    "sha256": "939594cd47cf91d7548c1690913c36de51da00471d5afe3e6457b278117bdb0d"
+  },
+  "followups": [
+    {
+      "path": "planning/qualification/a05-evidence-relocations/archived-drivers-20261004.json",
+      "sha256": "4aaecfa9f5d700f480664b06c8d005e2bf73eb26a96f931e2ef585d836e473c1"
+    }
+  ]
+}

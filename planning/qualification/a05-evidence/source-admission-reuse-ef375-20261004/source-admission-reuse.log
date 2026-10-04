@@ -1,0 +1,244 @@
+TAP version 13
+# Subtest: reused source admission retains new-frame stack-shape validation, fusion=false
+ok 1 - reused source admission retains new-frame stack-shape validation, fusion=false
+  ---
+  duration_ms: 7.574749
+  type: 'test'
+  ...
+# Subtest: reused source admission retains live quota checks and recovery, fusion=false
+ok 2 - reused source admission retains live quota checks and recovery, fusion=false
+  ---
+  duration_ms: 1.00785
+  type: 'test'
+  ...
+# Subtest: reused source admission rechecks changed code, fusion=false, inPlace=false
+ok 3 - reused source admission rechecks changed code, fusion=false, inPlace=false
+  ---
+  duration_ms: 1.063022
+  type: 'test'
+  ...
+# Subtest: reused source admission rechecks changed code, fusion=false, inPlace=true
+ok 4 - reused source admission rechecks changed code, fusion=false, inPlace=true
+  ---
+  duration_ms: 0.614122
+  type: 'test'
+  ...
+# Subtest: reused source admission retains changed storage metadata, fusion=false
+ok 5 - reused source admission retains changed storage metadata, fusion=false
+  ---
+  duration_ms: 2.768397
+  type: 'test'
+  ...
+# Subtest: reused source admission retains new-frame stack-shape validation, fusion=true
+ok 6 - reused source admission retains new-frame stack-shape validation, fusion=true
+  ---
+  duration_ms: 0.412336
+  type: 'test'
+  ...
+# Subtest: reused source admission retains live quota checks and recovery, fusion=true
+ok 7 - reused source admission retains live quota checks and recovery, fusion=true
+  ---
+  duration_ms: 0.406708
+  type: 'test'
+  ...
+# Subtest: reused source admission rechecks changed code, fusion=true, inPlace=false
+ok 8 - reused source admission rechecks changed code, fusion=true, inPlace=false
+  ---
+  duration_ms: 0.419967
+  type: 'test'
+  ...
+# Subtest: reused source admission rechecks changed code, fusion=true, inPlace=true
+ok 9 - reused source admission rechecks changed code, fusion=true, inPlace=true
+  ---
+  duration_ms: 0.546844
+  type: 'test'
+  ...
+# Subtest: reused source admission retains changed storage metadata, fusion=true
+ok 10 - reused source admission retains changed storage metadata, fusion=true
+  ---
+  duration_ms: 1.124242
+  type: 'test'
+  ...
+# Subtest: prepared source integer predicates and arithmetic retain every operation, signedness and fault boundary
+ok 11 - prepared source integer predicates and arithmetic retain every operation, signedness and fault boundary
+  ---
+  duration_ms: 129.843585
+  type: 'test'
+  ...
+# Subtest: integer plan guards preserve carrier fallback and exclude checked or wider numeric modes
+ok 12 - integer plan guards preserve carrier fallback and exclude checked or wider numeric modes
+  ---
+  duration_ms: 0.518652
+  type: 'test'
+  ...
+# Subtest: integer plans retain original PCs and stack values at every bounded slice boundary
+ok 13 - integer plans retain original PCs and stack values at every bounded slice boundary
+  ---
+  duration_ms: 3.272267
+  type: 'test'
+  ...
+# Subtest: prepared recursive calls preserve frame identities at every slice, reload=false
+ok 14 - prepared recursive calls preserve frame identities at every slice, reload=false
+  ---
+  duration_ms: 165.250227
+  type: 'test'
+  ...
+# Subtest: prepared calls preserve failed depth and stack-byte admission, reload=false
+ok 15 - prepared calls preserve failed depth and stack-byte admission, reload=false
+  ---
+  duration_ms: 11.011228
+  type: 'test'
+  ...
+# Subtest: prepared recursive calls preserve frame identities at every slice, reload=true
+ok 16 - prepared recursive calls preserve frame identities at every slice, reload=true
+  ---
+  duration_ms: 38.619632
+  type: 'test'
+  ...
+# Subtest: prepared calls preserve failed depth and stack-byte admission, reload=true
+ok 17 - prepared calls preserve failed depth and stack-byte admission, reload=true
+  ---
+  duration_ms: 8.416736
+  type: 'test'
+  ...
+# Subtest: prepared call descriptors invalidate when a callee storage shape is replaced
+ok 18 - prepared call descriptors invalidate when a callee storage shape is replaced
+  ---
+  duration_ms: 4.538448
+  type: 'test'
+  ...
+# Subtest: aggregate targets retain ordinary call preparation
+ok 19 - aggregate targets retain ordinary call preparation
+  ---
+  duration_ms: 60.061064
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit 0 before frame allocation
+ok 20 - source rejects invalid byte limit 0 before frame allocation
+  ---
+  duration_ms: 1.391254
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit 15 before frame allocation
+ok 21 - source rejects invalid byte limit 15 before frame allocation
+  ---
+  duration_ms: 0.14266
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit -1 before frame allocation
+ok 22 - source rejects invalid byte limit -1 before frame allocation
+  ---
+  duration_ms: 0.091765
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit NaN before frame allocation
+ok 23 - source rejects invalid byte limit NaN before frame allocation
+  ---
+  duration_ms: 0.098114
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit Infinity before frame allocation
+ok 24 - source rejects invalid byte limit Infinity before frame allocation
+  ---
+  duration_ms: 0.117002
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit 24 before frame allocation
+ok 25 - source rejects invalid byte limit 24 before frame allocation
+  ---
+  duration_ms: 0.117793
+  type: 'test'
+  ...
+# Subtest: source entry reserves its verified peak and source arguments are counted only in locals
+ok 26 - source entry reserves its verified peak and source arguments are counted only in locals
+  ---
+  duration_ms: 8.530403
+  type: 'test'
+  ...
+# Subtest: construction failure rolls back source reservation before a subsequent call
+ok 27 - construction failure rolls back source reservation before a subsequent call
+  ---
+  duration_ms: 0.974362
+  type: 'test'
+  ...
+# Subtest: a source catch cannot turn byte-budget overflow into successful execution
+ok 28 - a source catch cannot turn byte-budget overflow into successful execution
+  ---
+  duration_ms: 1.519723
+  type: 'test'
+  ...
+# Subtest: source scalar local widths include Decimal and configured native ABI32
+ok 29 - source scalar local widths include Decimal and configured native ABI32
+  ---
+  duration_ms: 1.067929
+  type: 'test'
+  ...
+# Subtest: source scalar local widths include Decimal and configured native ABI64
+ok 30 - source scalar local widths include Decimal and configured native ABI64
+  ---
+  duration_ms: 0.93252
+  type: 'test'
+  ...
+# Subtest: host limit edits reject before pc, instruction count and profiler dispatch advance
+ok 31 - host limit edits reject before pc, instruction count and profiler dispatch advance
+  ---
+  duration_ms: 1.487525
+  type: 'test'
+  ...
+# Subtest: re-enabling the quota includes a context enqueued while admission was disabled
+ok 32 - re-enabling the quota includes a context enqueued while admission was disabled
+  ---
+  duration_ms: 1.958187
+  type: 'test'
+  ...
+# Subtest: new source bodies are reverified, and in-place edits use explicit code invalidation
+ok 33 - new source bodies are reverified, and in-place edits use explicit code invalidation
+  ---
+  duration_ms: 0.799214
+  type: 'test'
+  ...
+# Subtest: active shared-stack snapshot preflight is atomic and replay reconstructs the same reservations
+ok 34 - active shared-stack snapshot preflight is atomic and replay reconstructs the same reservations
+  ---
+  duration_ms: 6.325814
+  type: 'test'
+  ...
+# Subtest: source: typed calls and finally returns preserve output with logical byte admission
+ok 35 - source: typed calls and finally returns preserve output with logical byte admission
+  ---
+  duration_ms: 92.27912
+  type: 'test'
+  ...
+# Subtest: reload: typed calls and finally returns preserve output with logical byte admission
+ok 36 - reload: typed calls and finally returns preserve output with logical byte admission
+  ---
+  duration_ms: 15.413807
+  type: 'test'
+  ...
+# Subtest: cil: typed calls and finally returns preserve output with logical byte admission
+ok 37 - cil: typed calls and finally returns preserve output with logical byte admission
+  ---
+  duration_ms: 23.879255
+  type: 'test'
+  ...
+# Subtest: source: parked async frames participate in restore quotas and release on cancellation
+ok 38 - source: parked async frames participate in restore quotas and release on cancellation
+  ---
+  duration_ms: 18.752632
+  type: 'test'
+  ...
+# Subtest: reload: parked async frames participate in restore quotas and release on cancellation
+ok 39 - reload: parked async frames participate in restore quotas and release on cancellation
+  ---
+  duration_ms: 12.439086
+  type: 'test'
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4558.381664

@@ -1,0 +1,4 @@
+console.log: speedscope v1.24.0
+console.log: WebGL initialized. renderer: Apple GPU, vendor: Apple Inc., version: WebGL 1.0
+console.log: Importing as speedscope json file
+console.timeEnd: import: 10.802ms

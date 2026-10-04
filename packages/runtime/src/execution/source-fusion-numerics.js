@@ -1,6 +1,5 @@
-import {BinaryName, decodeNumericMode, isNumericMode, uint32Binary} from '@sharpforge/bytecode';
-import {compare} from './numeric-ops.js';
-import {sourceNumericContext} from './scalar-ops.js';
+import {BinaryName, decodeNumericMode, isNumericMode} from '@sharpforge/bytecode';
+import {int32Comparison, int32Operation} from './handlers/arith-specialized.js';
 
 export const sourceIntegerFallback = Symbol('source integer fallback');
 
@@ -23,17 +22,16 @@ export function prepareSourceInteger(operator, mode) {
   let operation = operations[name];
   if (!comparison && !operation) return null;
   if (unsigned && (name === '/' || name === '%' || name === '>>')) operation += '.un';
-  return Object.freeze({comparison, operation, unsigned});
+  const execute = comparison ? int32Comparison(comparison, unsigned) : int32Operation(operation);
+  return execute ? Object.freeze({execute}) : null;
 }
 
 function int32(value) {
   return typeof value === 'number' && (value | 0) === value && !Object.is(value, -0);
 }
 
-/** The same numeric primitives own faults, overflow, unsigned ordering and shift masking in both engines. */
+/** Canonical operands share the CIL Int32 primitives without decoding their opcode again at execution time. */
 export function executeSourceInteger(vm, prepared, left, right) {
   if (!int32(left) || !int32(right)) return sourceIntegerFallback;
-  const context = sourceNumericContext(vm);
-  return prepared.comparison ? compare(left, right, prepared.comparison, prepared.unsigned, context)
-    : uint32Binary(prepared.operation, left, right, context);
+  return prepared.execute(left, right);
 }

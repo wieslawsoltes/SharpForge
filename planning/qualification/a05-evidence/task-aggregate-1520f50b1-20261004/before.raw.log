@@ -1,0 +1,29 @@
+✔ merged CIL Task.Delay executes the infinite, zero, and full Int32 boundary contracts (33.676101ms)
+✖ merged Task Wait and Result wrap the original fault while await preserves its reference (7.972544ms)
+✔ merged completion keeps suspended state-machine waiters unwrapped beside aggregate-mode waiters (2.544456ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1100.452704
+
+✖ failing tests:
+
+test at tests/a05-merged-task-operations.test.js:38:1
+✖ merged Task Wait and Result wrap the original fault while await preserves its reference (7.972544ms)
+  NullReferenceException: Object reference not set to an instance of an object
+      at ManagedHeap.get (file:///workspace/scratch/42f7738360b9/a05-control/packages/runtime/src/heap.js:33:42)
+      at inputItems (file:///workspace/scratch/42f7738360b9/a05-control/packages/runtime/src/execution/aggregate-exception.js:15:26)
+      at exceptionListCall (file:///workspace/scratch/42f7738360b9/a05-control/packages/runtime/src/execution/aggregate-exception.js:86:16)
+      at file:///workspace/scratch/42f7738360b9/a05-control/tests/a05-merged-task-operations.test.js:54:22
+      at ManagedHeap.withRoots (file:///workspace/scratch/42f7738360b9/a05-control/packages/runtime/src/heap.js:16:116)
+      at Object.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-control/tests/a05-merged-task-operations.test.js:49:88)
+      at expectedException (node:assert:578:17)
+      at expectsError (node:assert:703:21)
+      at strict.throws (node:assert:759:3)
+      at file:///workspace/scratch/42f7738360b9/a05-control/tests/a05-merged-task-operations.test.js:49:14 {
+    reference: null
+  }

@@ -2,7 +2,7 @@ import {CilError} from '../binary.js';
 import {resolveExecutionMethod} from '../call-profile.js';
 import {verifyGenericCall} from '../generic-profile.js';
 import {verifyControlCall} from '../control-execution-profile.js';
-import {reachableAsyncMethods} from '../async-profile.js';
+import {asyncCallbackTargets} from '../async-state-machines.js';
 import {supportedDelegateCall} from '../delegate-profile.js';
 import {frameworkInterfaceDefinition} from '../framework-interface-profile.js';
 import {intrinsicDefinition} from '../intrinsic-profile.js';
@@ -13,7 +13,7 @@ export function verifyExecutionCall(inspector, method, instruction, context, {pe
     const descriptor = resolveExecutionMethod(inspector, instruction.operand, context);
     verifyGenericCall(inspector, descriptor, context);
     verifyControlCall(inspector, descriptor);
-    for (const target of reachableAsyncMethods(inspector, descriptor)) pending.push(target);
+    for (const target of asyncCallbackTargets(inspector, descriptor)) pending.push(target);
     if (descriptor.kind !== 'method') throw new CilError('Call operand is not a method');
     const target = descriptor.resolvedToken ?? (descriptor.token >>> 24 === 6 ? descriptor.token : null);
     if (supportedDelegateCall(inspector, descriptor)) {

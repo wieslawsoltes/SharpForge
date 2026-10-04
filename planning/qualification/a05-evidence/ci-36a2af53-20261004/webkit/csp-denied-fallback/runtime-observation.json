@@ -1,0 +1,67 @@
+{
+  "url": "http://127.0.0.1:46215/denied.html",
+  "result": {
+    "passed": true,
+    "nativeProbe": {
+      "moduleHex": "0061736d01000000",
+      "compiled": false,
+      "error": {
+        "name": "CompileError",
+        "message": "Refused to create a WebAssembly object because 'unsafe-eval' or 'wasm-unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: \"script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\".\n (evaluating 'WebAssembly.compile(bytes)')",
+        "nativeCompileError": true
+      }
+    },
+    "rejection": {
+      "code": "WASM_COMPILE",
+      "message": "WebAssembly instantiation failed: Refused to create a WebAssembly object because 'unsafe-eval' or 'wasm-unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: \"script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\".\n (evaluating 'backend.instantiate(bytes, imports)')",
+      "cause": "CompileError",
+      "causeMessage": "Refused to create a WebAssembly object because 'unsafe-eval' or 'wasm-unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: \"script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\".\n (evaluating 'backend.instantiate(bytes, imports)')"
+    },
+    "statistics": {
+      "enabled": true,
+      "epoch": 1,
+      "invalidated": false,
+      "activeCompilations": 0,
+      "compilationAttempts": 1,
+      "cancellations": 0,
+      "calls": 1,
+      "overflowCalls": 0,
+      "selectedCalls": 0,
+      "selectedInstructions": 0,
+      "osrTransitions": 0,
+      "osrRejectedEntries": 0,
+      "compiledBytes": 0,
+      "methods": [
+        {
+          "token": 100663297,
+          "name": "Fixture.Program::Main",
+          "calls": 1,
+          "status": "fallback",
+          "bytes": 0,
+          "reason": {
+            "code": "WASM_COMPILE",
+            "message": "WebAssembly instantiation failed: Refused to create a WebAssembly object because 'unsafe-eval' or 'wasm-unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: \"script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\".\n (evaluating 'backend.instantiate(bytes, imports)')"
+          },
+          "backedges": 5,
+          "hottestBackedge": 5,
+          "backedgeOverflow": 0,
+          "backedgeReason": null,
+          "backedgeSites": [
+            {
+              "fromOffset": 8,
+              "toOffset": 2,
+              "count": 5
+            }
+          ]
+        }
+      ]
+    },
+    "instructions": 46,
+    "hostArithmeticCalls": 4,
+    "result": 6,
+    "browserVersion": "26.6",
+    "csp": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+    "blockedRequests": []
+  },
+  "cspEvents": []
+}

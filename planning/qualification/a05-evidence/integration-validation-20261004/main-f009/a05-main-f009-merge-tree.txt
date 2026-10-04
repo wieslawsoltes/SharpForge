@@ -1,0 +1,9 @@
+698153f09271e65a287cf5713832859dd40112c6
+100644 3702153086f613f9bc77e38ba3c7174b72e0c43c 1	packages/cil/src/index.js
+100644 201d23cc0fc70510c789ecf2e214345c2c14556b 2	packages/cil/src/index.js
+100644 47de5946f7ce8f24aa415bdfcb705f4c8bce6472 3	packages/cil/src/index.js
+
+Auto-merging packages/cil/README.md
+Auto-merging packages/cil/src/index.js
+CONFLICT (content): Merge conflict in packages/cil/src/index.js
+Auto-merging scripts/conformance/static/allowlist.json

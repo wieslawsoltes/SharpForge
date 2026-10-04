@@ -1,0 +1,176 @@
+✖ direct CIL async native reference: Completed (1520.591907ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async native reference: Suspended (1356.405654ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async native reference: Exceptions (1191.184978ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async native reference: Retention (1318.572845ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async native reference: WaitAndDelay (1230.821396ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async native reference: Mutation (1353.196802ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async snapshot roots and exactly-once continuation: Retention (1427.63972ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async snapshot roots and exactly-once continuation: Mutation (1469.95026ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async builder reachability rejects invalid MoveNext before execution (1361.44477ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ CIL async ABI matcher requires complete generic and byref member signatures (2.4812ms)
+✔ CIL async ABI generic awaiter result and real Yield type are exact (0.593072ms)
+✔ CIL async callbacks require trusted reference scope and matching MethodImpl declarations (28.990902ms)
+✔ CIL async callback-only bodies remain mandatory verifier roots (2.185211ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 4
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14022.574938
+
+✖ failing tests:
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: Completed (1520.591907ms)
+  Error [CilError]: Managed IL verification failed: Program+<Main>d__3::MoveNext IL_182: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented; Program+<Text>d__2::MoveNext IL_90: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>::SetException' is not implemented; Program+<Number>d__1::MoveNext IL_8f: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<int>::SetException' is not implemented; Program+<Plain>d__0::MoveNext IL_88: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented
+      at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/verification-error.js:16:13)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:37:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    offset: undefined,
+    issues: [ { methodToken: 100663304, method: 'Program+<Main>d__3::MoveNext', offset: 386, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented" }, { methodToken: 100663313, method: 'Program+<Text>d__2::MoveNext', offset: 144, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>::SetException' is not implemented" }, { methodToken: 100663307, method: 'Program+<Number>d__1::MoveNext', offset: 143, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<int>::SetException' is not implemented" }, { methodToken: 100663310, method: 'Program+<Plain>d__0::MoveNext', offset: 136, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented" } ]
+  }
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: Suspended (1356.405654ms)
+  Error [CilError]: Managed IL verification failed: Program+<Main>d__1::MoveNext IL_c6: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented; Program+<Work>d__0::MoveNext IL_115: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<int>::SetException' is not implemented
+      at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/verification-error.js:16:13)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:37:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    offset: undefined,
+    issues: [ { methodToken: 100663302, method: 'Program+<Main>d__1::MoveNext', offset: 198, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented" }, { methodToken: 100663305, method: 'Program+<Work>d__0::MoveNext', offset: 277, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<int>::SetException' is not implemented" } ]
+  }
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: Exceptions (1191.184978ms)
+  Error [CilError]: Managed IL verification failed: Program+<Main>d__3::MoveNext IL_eb: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented; Program+<Observe>d__2::MoveNext IL_173: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented; Program+<Fail>d__1::MoveNext IL_a9: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented
+      at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/verification-error.js:16:13)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:37:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    offset: undefined,
+    issues: [ { methodToken: 100663306, method: 'Program+<Main>d__3::MoveNext', offset: 235, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented" }, { methodToken: 100663309, method: 'Program+<Observe>d__2::MoveNext', offset: 371, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented" }, { methodToken: 100663303, method: 'Program+<Fail>d__1::MoveNext', offset: 169, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented" } ]
+  }
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: Retention (1318.572845ms)
+  Error [CilError]: Managed IL verification failed: Program+<Main>d__2::MoveNext IL_a0: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented; Program+<Work>d__1::MoveNext IL_12c: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>::SetException' is not implemented
+      at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/verification-error.js:16:13)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:37:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    offset: undefined,
+    issues: [ { methodToken: 100663303, method: 'Program+<Main>d__2::MoveNext', offset: 160, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented" }, { methodToken: 100663306, method: 'Program+<Work>d__1::MoveNext', offset: 300, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>::SetException' is not implemented" } ]
+  }
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: WaitAndDelay (1230.821396ms)
+  Error [CilError]: Managed IL verification failed: Program+<Fail>d__1::MoveNext IL_84: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<int>::SetException' is not implemented
+      at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/verification-error.js:16:13)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:37:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    offset: undefined,
+    issues: [ { methodToken: 100663302, method: 'Program+<Fail>d__1::MoveNext', offset: 132, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<int>::SetException' is not implemented" } ]
+  }
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: Mutation (1353.196802ms)
+  Error [CilError]: Managed IL verification failed: Program+<Main>d__1::MoveNext IL_95: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented; Program+<Work>d__0::MoveNext IL_133: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>::SetException' is not implemented
+      at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/verification-error.js:16:13)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:37:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    offset: undefined,
+    issues: [ { methodToken: 100663303, method: 'Program+<Main>d__1::MoveNext', offset: 149, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented" }, { methodToken: 100663306, method: 'Program+<Work>d__0::MoveNext', offset: 307, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>::SetException' is not implemented" } ]
+  }
+
+test at tests/a05-cil-async-native.test.js:73:50
+✖ direct CIL async snapshot roots and exactly-once continuation: Retention (1427.63972ms)
+  Error [CilError]: Managed IL verification failed: Program+<Main>d__2::MoveNext IL_a0: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented; Program+<Work>d__1::MoveNext IL_12c: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>::SetException' is not implemented
+      at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/verification-error.js:16:13)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:37:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:79:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    offset: undefined,
+    issues: [ { methodToken: 100663303, method: 'Program+<Main>d__2::MoveNext', offset: 160, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented" }, { methodToken: 100663306, method: 'Program+<Work>d__1::MoveNext', offset: 300, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>::SetException' is not implemented" } ]
+  }
+
+test at tests/a05-cil-async-native.test.js:73:50
+✖ direct CIL async snapshot roots and exactly-once continuation: Mutation (1469.95026ms)
+  Error [CilError]: Managed IL verification failed: Program+<Main>d__1::MoveNext IL_95: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented; Program+<Work>d__0::MoveNext IL_133: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>::SetException' is not implemented
+      at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/verification-error.js:16:13)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:37:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:79:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    offset: undefined,
+    issues: [ { methodToken: 100663303, method: 'Program+<Main>d__1::MoveNext', offset: 149, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::SetException' is not implemented" }, { methodToken: 100663306, method: 'Program+<Work>d__0::MoveNext', offset: 307, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>::SetException' is not implemented" } ]
+  }
+
+test at tests/a05-cil-async-native.test.js:94:1
+✖ direct CIL async builder reachability rejects invalid MoveNext before execution (1361.44477ms)
+  AssertionError [ERR_ASSERTION]: [object Object],[object Object]
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:106:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

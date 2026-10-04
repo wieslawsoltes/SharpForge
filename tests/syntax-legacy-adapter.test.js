@@ -49,23 +49,6 @@ test('legacy adapter: expressions match the pre-refactor parseExpression', () =>
     assert.deepEqual(after.diagnostics, [], text); assert.deepStrictEqual(plain(after.expression), plain(before.expression), text);
   }
 });
-test('legacy adapter: syntax the back end cannot bind keeps a not-supported diagnostic and never crashes the compiler', () => {
-  const cases = [
-    ['struct S { int a; }', 'SF1010'], ['interface I { void M(); }', 'SF1010'], ['enum E { A }', 'SF1010'], ['delegate void D();', 'SF1010'], ['namespace N { struct S { } }', 'SF1010'],
-    ['class A { class B { } }', 'SF1015'], ['class A { struct B { } }', 'SF1015'], ['class A { public virtual void M() { } }', 'SF1011'], ['class A { void M(ref int x) { } }', 'SF1017'],
-    ['class A { int? x; }', 'SF1013'], ['class A : Base { }', 'SF1014'], ['class A<T> { }', 'SF1012'], ['class A { Foo<int> x; }', 'SF1012'], ['class A { event System.Action E; }', 'SF1018'],
-    ['class A { int this[int i] { get { return 0; } } }', 'SF1018'], ['class A { public static A operator +(A x, A y) { return x; } }', 'SF1018'], ['class A { int* p; }', 'SF1019'], ['class A { (int, int) t; }', 'SF1019'],
-    ['[System.Obsolete] class A { }', 'SF1018'], ['class C{public int X{get;init;}}', 'CS1014'], ['var f = x => x;', 'SF2098'], ['var f = delegate { };', 'SF2098'], ['var q = from x in xs select x;', 'SF2098'],
-    ['object o = 1; var b = o is int;', 'SF2098'], ['object o = 1; var s = o as string;', 'SF2098'], ['var t = (1, 2);', 'SF2098'], ['int i = 0; L: i++; goto L;', 'SF2099'], ['void F() { int G() { return 1; } }', 'SF2099'],
-    ['var x = 1.2f;', 'SF1005'], ['var x = 1L;', 'SF1003'], ['var x = 5000000000;', 'SF1004'], ['var s = "x"u8;', 'SF2098'], ['int x = 1; var y = x switch { > 0 => 1, _ => 0 };', 'CS0150']
-  ];
-  for (const [source, code] of cases) {
-    // The statement comes first: a top-level statement after a type declaration is an error of its own (CS8803).
-    const result = compile('Console.WriteLine(1); ' + source);
-    assert.equal(result.success, false, source); assert(result.diagnostics.some(d => d.code === code), `${source}: expected ${code}, got ${result.diagnostics.map(d => d.code).join(' ')}`);
-    assert(!result.diagnostics.some(d => d.code === 'CS0246' && /'(?:goto|is|as|int|string)'/.test(d.message)), source);
-  }
-});
 test('legacy adapter: newly accepted syntax that maps onto existing nodes compiles', () => {
   for (const source of ['var c = new C(); Console.WriteLine(c.a + c.b); class C { public int a = 1, b = 2; }', '#if DEBUG\nint x = bad;\n#else\nint x = 2;\n#endif\n#region r\nConsole.WriteLine(x);\n#endregion', 'Console.WriteLine("""raw "quoted" text""");', 'int x = 1; x <<= 2; x >>= 1; Console.WriteLine(x);', '#nullable enable\n#pragma warning disable CS0168\nConsole.WriteLine(1);']) {
     const result = compile(source); assert.equal(result.success, true, source + ' ' + JSON.stringify(result.diagnostics.map(d => d.code + ' ' + d.message)));

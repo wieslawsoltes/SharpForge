@@ -1,5 +1,6 @@
 import {
   asyncMethodDefinition,
+  asyncStateMachine,
   asyncTypeDefinition,
   genericTypeParts,
   normalizeCallType
@@ -23,6 +24,8 @@ import {
 import {
   boxValue
 } from './boxing.js';
+import {registerAsyncContinuation} from './async-continuations.js';
+import {invokeAsyncTaskOperation} from './async-task-operations.js';
 const createValue = (vm, type, fields) => createValueFromFields(vm, vm.typeSystem.table(type), fields);
 
 export {
@@ -104,20 +107,11 @@ function machineInfo(vm, pointer, expected) {
   const table = isReference(value) ? vm.heap.get(value).methodTable : type,
     iface = vm.typeSystem.table(C + 'IAsyncStateMachine');
   if (!vm.typeSystem.castCache.isAssignableFrom(iface, table)) throw invalid('State machine must implement IAsyncStateMachine');
-  const descriptor = {
-    kind: 'method',
-    owner: C + 'IAsyncStateMachine',
-    name: 'MoveNext',
-    signature: {
-      isStatic: false,
-      returnType: 'void',
-      parameters: []
-    }
-  };
-  const token = vm.typeSystem.dispatch.externalTarget(table.name, descriptor) ?? vm.typeSystem.types.get(table.definitionToken)?.methods.find(
-    method => method.name === 'MoveNext' && !vm.inspector.signature(method.token).isStatic && vm.inspector.signature(method.token).returnType ===
-    'void' && vm.inspector.signature(method.token).parameters.length === 0)?.token;
-  if (!token || !vm.report.methods.includes(token)) throw invalid('State-machine MoveNext must be verified');
+  const machine = asyncStateMachine(vm.inspector, table.name);
+  const token = machine?.moveNext;
+  if (!token || !vm.report.methods.includes(token) || !vm.report.methods.includes(machine.setStateMachine)) {
+    throw invalid('State-machine callbacks must be verified');
+  }
   return {
     table,
     value,
@@ -208,9 +202,7 @@ function finishBuilder(vm, task, result, error = null) {
   if (terminal.has(task.status)) throw new ManagedFault('InvalidOperationException', 'Async builder has already completed');
   const state = task.asyncState;
   if (error) vm.platform.set(task.ref, '$exception', error.reference);
-  vm.scheduler.complete(task, result, error, ['OperationCanceledException', 'TaskCanceledException', 'System.OperationCanceledException',
-    'System.TaskCanceledException'
-  ].includes(error?.name));
+  vm.scheduler.complete(task, result, error, !!error?.reference && vm.matches(error.reference, 'System.OperationCanceledException'));
   state.phase = error ? 'faulted' : 'completed';
   state.machine = null;
   state.awaitedTask = null;
@@ -236,7 +228,7 @@ export function invokeAsyncIntrinsic(vm, descriptor, args) {
     expected = parameters.length + (definition.signature.isStatic ? 0 : 1);
   if (args.length !== expected) throw invalid('Async infrastructure argument count mismatch');
   let value = null;
-  switch (definition.operation) {
+  switch (definition.runtimeOperation) {
     case 'builder-create':
       value = createValue(vm, definition.owner, [null]);
       break;
@@ -318,19 +310,14 @@ export function invokeAsyncIntrinsic(vm, descriptor, args) {
       const info = awaiter(vm, args[0], definition);
       if (args[1] === null) throw new ManagedFault('ArgumentNullException', 'continuation');
       const task = info.task ?? yieldingTask(vm);
-      vm.scheduler.enqueue(args[1], [], {
-        name: 'TaskAwaiter continuation',
-        kind: 'awaiter-continuation',
-        waitTask: task.ref,
-        propagateFault: false
-      });
+      registerAsyncContinuation(vm.scheduler, task, Object.freeze({kind: 'delegate', receiver: args[1]}));
       break;
     }
     case 'logical-thread-id':
       value = vm.scheduler.currentId;
       break;
     default:
-      throw invalid('Unknown async infrastructure operation');
+      value = invokeAsyncTaskOperation(vm, definition, args);
   }
   return {
     handled: true,

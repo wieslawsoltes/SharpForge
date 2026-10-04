@@ -1,0 +1,134 @@
+{
+  "utc": "2026-10-04T20:42:31.830349+00:00",
+  "scope": "PE integration performance preflight",
+  "quietTeam": [
+    "clr_services acknowledged",
+    "remaining_audit acknowledged",
+    "ssa_analysis acknowledged",
+    "workspace_capacity acknowledged",
+    "verifier_literals acknowledged",
+    "project6_reconcile turn interrupted by root after pause request; no subsequent task issued"
+  ],
+  "candidate": {
+    "head": "ddf3da105ace61ed61463a5704caf93c0c3dcf6f",
+    "tree": "32ab1602a897a5e1710b6bfaa0b04b0c1e359c29",
+    "status": ""
+  },
+  "baseline": {
+    "head": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+    "tree": "c4fdeccf5fefe11f21c801191b20e0fefd5708eb",
+    "status": ""
+  },
+  "files": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/validation-plan-integration-f009.json",
+      "bytes": 9793,
+      "sha256": "1a25e65ee38bef4d6eb98d0002dea0da4855b0a279348b68063f996afae26a6f"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/run-integration-f009.py",
+      "bytes": 12593,
+      "sha256": "c37ff300592461d91768dd8d1088bdbdf63ed24932a5c3cfa19d67c861873def"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference-integration-f009/native.json",
+      "bytes": 681757,
+      "sha256": "3180681b837454f9cefab3b3a7568517091d5b677d814e06c5b39657e141edd6"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/native.execution.json",
+      "bytes": 272381,
+      "sha256": "55de9a68f97191735b095c5396eda0eec9bdd5766cb1ffb1cf7b04b2e893ad9b"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/verify-external.execution.json",
+      "bytes": 272217,
+      "sha256": "a50ccf7426be8c844fc1055dd584531a65b750b5be963227aa2b2bbd2d059c48"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/retain-native.execution.json",
+      "bytes": 279126,
+      "sha256": "6dd28010c6f832ce72a375f2cd52c60b8fc01f1c23480a46003b0405162e7553"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/verify-retained.execution.json",
+      "bytes": 276552,
+      "sha256": "dd5817a2b4dffd5f486fae23478896f6b61e037d2b7d4655b667f62b4bc3656c"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/focused.execution.json",
+      "bytes": 276749,
+      "sha256": "b71985cfa7198f65bebf284939af23a6165f4a8d1ffcd99eb81d0d44f55f6167"
+    }
+  ],
+  "aliases": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/node_modules/@sharpforge/archive",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/archive",
+      "owned": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/node_modules/@sharpforge/bcl-collections",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/bcl-collections",
+      "owned": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/node_modules/@sharpforge/bcl-core",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/bcl-core",
+      "owned": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/node_modules/@sharpforge/bytecode",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/bytecode",
+      "owned": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/node_modules/@sharpforge/cil",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/cil",
+      "owned": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/node_modules/@sharpforge/framework",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/framework",
+      "owned": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/node_modules/@sharpforge/symbols",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/symbols",
+      "owned": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294/node_modules/@sharpforge/bcl-collections",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294/packages/bcl-collections",
+      "owned": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294/node_modules/@sharpforge/bcl-core",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294/packages/bcl-core",
+      "owned": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294/node_modules/@sharpforge/bytecode",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294/packages/bytecode",
+      "owned": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294/node_modules/@sharpforge/cil",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294/packages/cil",
+      "owned": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294/node_modules/@sharpforge/framework",
+      "target": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294/packages/framework",
+      "owned": true
+    }
+  ],
+  "processCandidates": [],
+  "freeBytes": 498348032,
+  "requiredBytes": 134217728,
+  "admitted": true,
+  "freshDestinations": [
+    "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009",
+    "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/performance.execution.json"
+  ]
+}

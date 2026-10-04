@@ -1,0 +1,198 @@
+{
+  "format": "SharpForge.A05ValidationArchive/1",
+  "scope": "Failed then passing static check; independently failed optional strict structure check and differential classification",
+  "rawArtifacts": [
+    {
+      "path": "static-check-3505.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/static-check-3505.log",
+      "bytes": 830,
+      "sha256": "c2d0fc9401779dcae17201e363248950d8643f3cd8db5b7f165f675b2953bb9d"
+    },
+    {
+      "path": "static-check-3505-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/static-check-3505-execution.json",
+      "bytes": 1289,
+      "sha256": "3596c195462ad5597dc04831297314482cd9bc841a10ee6df8c04cce9939b76d"
+    },
+    {
+      "path": "static-check-2a9b.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/static-check-2a9b.log",
+      "bytes": 382,
+      "sha256": "a305d2420419a43a03c56c59b60471a630f4c0c3e3617f17c147b0ba8562f55b"
+    },
+    {
+      "path": "static-check-2a9b-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/static-check-2a9b-execution.json",
+      "bytes": 1290,
+      "sha256": "068dfbd9753655806223614be9dff823c89382702b1b709ae14c1dac7c7a0673"
+    },
+    {
+      "path": "strict-structure-2a9b.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/strict-structure-2a9b.log",
+      "bytes": 21249,
+      "sha256": "2a15a280aadcf8ec9dc1162e13d97e2e42b8111cafc808aee07a2ca16e8ce9f2"
+    },
+    {
+      "path": "strict-structure-2a9b-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/strict-structure-2a9b-execution.json",
+      "bytes": 1398,
+      "sha256": "29cb8062eeb792534d6a7d8b905d114f5553ff7cc6140f1ff3900280608b6c6d"
+    }
+  ],
+  "runs": [
+    {
+      "name": "static-check-3505",
+      "testedIdentity": {
+        "commit": "3505b8a50d0f6e860c5a8b8eeebb239830eca6b0",
+        "tree": "290d3cb62d20dbba7347d23550e6b0acb4d6f4ae",
+        "status": ""
+      },
+      "exitCode": 1,
+      "wallSeconds": 7.16823500800092,
+      "executionRecord": "static-check-3505-execution.json"
+    },
+    {
+      "name": "static-check-2a9b",
+      "testedIdentity": {
+        "commit": "2a9b265292bc24a94f7d393f206d12caa135c021",
+        "tree": "9fd550a176b5878b4fa5994a643457c9f31ea27b",
+        "status": ""
+      },
+      "exitCode": 0,
+      "wallSeconds": 6.999676737003028,
+      "executionRecord": "static-check-2a9b-execution.json"
+    },
+    {
+      "name": "strict-structure-2a9b",
+      "testedIdentity": {
+        "commit": "2a9b265292bc24a94f7d393f206d12caa135c021",
+        "tree": "9fd550a176b5878b4fa5994a643457c9f31ea27b",
+        "status": ""
+      },
+      "exitCode": 1,
+      "wallSeconds": 5.25884050699824,
+      "executionRecord": "strict-structure-2a9b-execution.json"
+    }
+  ],
+  "static3505": {
+    "passed": false,
+    "syntaxModules": 4830,
+    "syntaxErrors": 0,
+    "dynamicInspected": 4774,
+    "dynamicModules": 4821,
+    "dynamicErrors": 2,
+    "reason": "Changed source hash for the existing allowed managed evaluator method eval(n), plus stale allow-list entry"
+  },
+  "static2a9b": {
+    "passed": true,
+    "syntaxModules": 4830,
+    "syntaxErrors": 0,
+    "dynamicInspected": 4774,
+    "dynamicModules": 4821,
+    "dynamicErrors": 0,
+    "manifestNodeFiles": 1360,
+    "manifestBrowserScripts": 38,
+    "manifestUnassigned": 0,
+    "manifestDuplicates": 0
+  },
+  "strict2a9b": {
+    "passed": false,
+    "diagnostics": 265
+  },
+  "differentialAssessment": {
+    "path": "strict-structure-classification-2a9b.json",
+    "bytes": 276783,
+    "sha256": "a62ec17faf58b7ef51a8c145ba92f1214634bc1b80a0696c390ebe01fc30f7e4",
+    "kind": "Derived read-only Git-object assessment, not a second checker execution",
+    "main": "aa74558ccae4851817b23d0a19c5fdfb1ef5a350",
+    "candidate": "2a9b265292bc24a94f7d393f206d12caa135c021",
+    "checkerAndBaselineByteIdentical": true,
+    "classificationPathCounts": {
+      "identical-main-source": 238,
+      "new-integration-file": 1,
+      "changed-source-no-worse-existing-violation": 26
+    },
+    "actionablePaths": [
+      {
+        "path": "packages/cil/src/async-runtime-profile.js",
+        "line": 91,
+        "metric": "lineLength",
+        "actual": 174,
+        "limit": 160,
+        "recommendation": "Wrap the asyncValue conditional without changing behavior or baseline."
+      }
+    ]
+  },
+  "sourceProof": [
+    {
+      "commit": "aa74558ccae4851817b23d0a19c5fdfb1ef5a350",
+      "path": "scripts/quality/check-structure.js",
+      "gitBlob": "fcf46cd1efeb4ca4d590ed11e92099d30f8dbf44",
+      "bytes": 2722,
+      "sha256": "03e92adea2c29b881459ee38f8470f0d7bf70ad5a2a07019f255118686c69f94"
+    },
+    {
+      "commit": "aa74558ccae4851817b23d0a19c5fdfb1ef5a350",
+      "path": "scripts/quality/structure-baseline.json",
+      "gitBlob": "c0386bebc22e559f89a2ed55d397e8be9a7c86d7",
+      "bytes": 15869,
+      "sha256": "b3ff90df9502985e3df99ec38db2396e1ba8d0af8415c96fd91978b82ecc7572"
+    },
+    {
+      "commit": "2a9b265292bc24a94f7d393f206d12caa135c021",
+      "path": "scripts/quality/check-structure.js",
+      "gitBlob": "fcf46cd1efeb4ca4d590ed11e92099d30f8dbf44",
+      "bytes": 2722,
+      "sha256": "03e92adea2c29b881459ee38f8470f0d7bf70ad5a2a07019f255118686c69f94"
+    },
+    {
+      "commit": "2a9b265292bc24a94f7d393f206d12caa135c021",
+      "path": "scripts/quality/structure-baseline.json",
+      "gitBlob": "c0386bebc22e559f89a2ed55d397e8be9a7c86d7",
+      "bytes": 15869,
+      "sha256": "b3ff90df9502985e3df99ec38db2396e1ba8d0af8415c96fd91978b82ecc7572"
+    },
+    {
+      "commit": "2a9b265292bc24a94f7d393f206d12caa135c021",
+      "path": "packages/cil/src/async-runtime-profile.js",
+      "gitBlob": "1fca4345d96fcdb68b18b9643eb48f10d702ee59",
+      "bytes": 6260,
+      "sha256": "1e64c93b0efb379dc7828897fd90ed67d8a975d322699d6794cf4941041a5b66"
+    },
+    {
+      "commit": "3505b8a50d0f6e860c5a8b8eeebb239830eca6b0",
+      "path": "packages/debugger/src/evaluation.js",
+      "gitBlob": "864668f0793596015153ab36a4512bca93852576",
+      "bytes": 19949,
+      "sha256": "089fa9bff68f0bf1d76f09d50e1705e6df75e47d71990a4bec206d82ba21248f"
+    },
+    {
+      "commit": "2a9b265292bc24a94f7d393f206d12caa135c021",
+      "path": "packages/debugger/src/evaluation.js",
+      "gitBlob": "864668f0793596015153ab36a4512bca93852576",
+      "bytes": 19949,
+      "sha256": "089fa9bff68f0bf1d76f09d50e1705e6df75e47d71990a4bec206d82ba21248f"
+    },
+    {
+      "commit": "3505b8a50d0f6e860c5a8b8eeebb239830eca6b0",
+      "path": "scripts/conformance/static/allowlist.json",
+      "gitBlob": "08a337db22ad9ee50349a10174359b07e1337731",
+      "bytes": 31239,
+      "sha256": "722c8f0065a645b7c389cbac58f075e2a89811a0b40df09098902a1f18a9fd42"
+    },
+    {
+      "commit": "2a9b265292bc24a94f7d393f206d12caa135c021",
+      "path": "scripts/conformance/static/allowlist.json",
+      "gitBlob": "a8b44784b5f857dc1c1d3b7e5ac7864c26b64533",
+      "bytes": 31239,
+      "sha256": "df466cda7493bb2760446759bb333cad77e81e95ffccbaa90fc2c1e7643a1bba"
+    }
+  ],
+  "limitations": [
+    "The global strict structure check failed and remains recorded as failed.",
+    "Classification covers exactly the265 paths in the actual strict log; no full main baseline run or count is claimed.",
+    "Strict checker new file means absent from its frozen baseline, not necessarily new relative to main.",
+    "No baseline inflation, product change, Node checker execution, test, build or benchmark occurred while preparing the archive.",
+    "The passing npm check does not imply a passing strict structure check or full release qualification."
+  ]
+}

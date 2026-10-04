@@ -1,0 +1,20 @@
+{
+  "parent": "9d46f4ad6f65bd7cbbed4a3a2f2e2abb9ddf763c",
+  "mergedMain": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--input-type=module",
+    "-e",
+    "import assert from 'node:assert/strict'; import {readSourceTypeIdentities,MetadataGenerations,metadataGenerationDiagnosticCatalog} from '@sharpforge/cil'; assert.equal(typeof readSourceTypeIdentities,'function'); assert.equal(typeof MetadataGenerations,'function'); assert.ok(metadataGenerationDiagnosticCatalog); console.log('Both CIL public export additions import successfully.');"
+  ],
+  "limits": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "started": 1791143381.109714,
+  "finished": 1791143381.7256336,
+  "exitCode": 0
+}

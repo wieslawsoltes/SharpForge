@@ -1,0 +1,5096 @@
+Discovered 76 Node test files and 0 Python suites in 1 area manifests. Node reports executed test counts below.
+Running Node tests for A01.
+TAP version 13
+# Subtest: T25 anonymous objects and implicitly typed arrays match Roslyn
+ok 1 - T25 anonymous objects and implicitly typed arrays match Roslyn
+  ---
+  duration_ms: 18.869183
+  type: 'test'
+  ...
+# Subtest: T25 anonymous object members are named or projected
+ok 2 - T25 anonymous object members are named or projected
+  ---
+  duration_ms: 1.99622
+  type: 'test'
+  ...
+# Subtest: T25 implicitly typed arrays keep their rank commas and nested initializers
+ok 3 - T25 implicitly typed arrays keep their rank commas and nested initializers
+  ---
+  duration_ms: 1.849856
+  type: 'test'
+  ...
+# Subtest: T25 both forms are rejected below C\# 3 and recover as Roslyn does
+ok 4 - T25 both forms are rejected below C\# 3 and recover as Roslyn does
+  ---
+  duration_ms: 4.264771
+  type: 'test'
+  ...
+# Subtest: T27 named arguments, argument modifiers and dynamic match Roslyn
+ok 5 - T27 named arguments, argument modifiers and dynamic match Roslyn
+  ---
+  duration_ms: 23.386885
+  type: 'test'
+  ...
+# Subtest: T27 named arguments may precede positional ones and carry ref, out and in
+ok 6 - T27 named arguments may precede positional ones and carry ref, out and in
+  ---
+  duration_ms: 2.166812
+  type: 'test'
+  ...
+# Subtest: T27 dynamic is an ordinary identifier used as a type name
+ok 7 - T27 dynamic is an ordinary identifier used as a type name
+  ---
+  duration_ms: 1.129098
+  type: 'test'
+  ...
+# Subtest: T27 named arguments are rejected below C\# 4
+ok 8 - T27 named arguments are rejected below C\# 4
+  ---
+  duration_ms: 1.613359
+  type: 'test'
+  ...
+# Subtest: T27 malformed argument lists recover as Roslyn does
+ok 9 - T27 malformed argument lists recover as Roslyn does
+  ---
+  duration_ms: 2.020416
+  type: 'test'
+  ...
+# Subtest: async functions at C\# 4 are reported over the spans Roslyn reports
+ok 10 - async functions at C\# 4 are reported over the spans Roslyn reports
+  ---
+  duration_ms: 11.581434
+  type: 'test'
+  ...
+# Subtest: an async method is reported at its name, also when the file has an await or an async lambda
+ok 11 - an async method is reported at its name, also when the file has an await or an async lambda
+  ---
+  duration_ms: 2.630231
+  type: 'test'
+  ...
+# Subtest: nothing is reported from C\# 5 on, and the feature is recorded once per function
+ok 12 - nothing is reported from C\# 5 on, and the feature is recorded once per function
+  ---
+  duration_ms: 1.104933
+  type: 'test'
+  ...
+# Subtest: T40 await foreach, await using and using declarations match Roslyn
+ok 13 - T40 await foreach, await using and using declarations match Roslyn
+  ---
+  duration_ms: 16.862092
+  type: 'test'
+  ...
+# Subtest: T40 the await keyword is a child of the statement it modifies
+ok 14 - T40 the await keyword is a child of the statement it modifies
+  ---
+  duration_ms: 1.227913
+  type: 'test'
+  ...
+# Subtest: T40 plain using and foreach forms keep their C\# 1 shapes
+ok 15 - T40 plain using and foreach forms keep their C\# 1 shapes
+  ---
+  duration_ms: 0.862116
+  type: 'test'
+  ...
+# Subtest: T40 each form is rejected below C\# 8
+ok 16 - T40 each form is rejected below C\# 8
+  ---
+  duration_ms: 2.57466
+  type: 'test'
+  ...
+# Subtest: T40 malformed headers recover as Roslyn does
+ok 17 - T40 malformed headers recover as Roslyn does
+  ---
+  duration_ms: 2.519028
+  type: 'test'
+  ...
+# Subtest: T28 async members, lambdas, anonymous methods and await match Roslyn
+ok 18 - T28 async members, lambdas, anonymous methods and await match Roslyn
+  ---
+  duration_ms: 22.317375
+  type: 'test'
+  ...
+# Subtest: T28 await is an operator inside async methods, lambdas and anonymous methods
+ok 19 - T28 await is an operator inside async methods, lambdas and anonymous methods
+  ---
+  duration_ms: 2.666405
+  type: 'test'
+  ...
+# Subtest: T28 await is an identifier in non-async methods
+ok 20 - T28 await is an identifier in non-async methods
+  ---
+  duration_ms: 1.850046
+  type: 'test'
+  ...
+# Subtest: T28 await before a token that cannot follow an identifier is still an operator
+ok 21 - T28 await before a token that cannot follow an identifier is still an operator
+  ---
+  duration_ms: 0.673569
+  type: 'test'
+  ...
+# Subtest: T28 async is a modifier only when a declaration follows
+ok 22 - T28 async is a modifier only when a declaration follows
+  ---
+  duration_ms: 1.807283
+  type: 'test'
+  ...
+# Subtest: T28 async functions are rejected below C\# 5
+ok 23 - T28 async functions are rejected below C\# 5
+  ---
+  duration_ms: 1.671884
+  type: 'test'
+  ...
+# Subtest: T28 an await without an operand recovers as Roslyn does
+ok 24 - T28 an await without an operand recovers as Roslyn does
+  ---
+  duration_ms: 2.321578
+  type: 'test'
+  ...
+# Subtest: `new T();` at compilation-unit level is an object-creation statement
+ok 25 - `new T();` at compilation-unit level is an object-creation statement
+  ---
+  duration_ms: 4.640933
+  type: 'test'
+  ...
+# Subtest: `new` stays a modifier before a member declaration in a type
+ok 26 - `new` stays a modifier before a member declaration in a type
+  ---
+  duration_ms: 1.632737
+  type: 'test'
+  ...
+# Subtest: a parenthesised multiplication is not a pointer declaration expression
+ok 27 - a parenthesised multiplication is not a pointer declaration expression
+  ---
+  duration_ms: 2.38356
+  type: 'test'
+  ...
+# Subtest: tuple deconstruction declarations still parse as declaration expressions
+ok 28 - tuple deconstruction declarations still parse as declaration expressions
+  ---
+  duration_ms: 1.025565
+  type: 'test'
+  ...
+# Subtest: a missing token is reported on the current token unless a line break follows the previous one
+ok 29 - a missing token is reported on the current token unless a line break follows the previous one
+  ---
+  duration_ms: 2.994676
+  type: 'test'
+  ...
+# Subtest: members with a block body and an expression body match Roslyn and report nothing
+ok 30 - members with a block body and an expression body match Roslyn and report nothing
+  ---
+  duration_ms: 19.823644
+  type: 'test'
+  ...
+# Subtest: a property or indexer keeps its accessor list and its expression body
+ok 31 - a property or indexer keeps its accessor list and its expression body
+  ---
+  duration_ms: 1.276194
+  type: 'test'
+  ...
+# Subtest: each form keeps both bodies and the semicolon
+ok 32 - each form keeps both bodies and the semicolon
+  ---
+  duration_ms: 1.5189
+  type: 'test'
+  ...
+# Subtest: one body alone is unchanged
+ok 33 - one body alone is unchanged
+  ---
+  duration_ms: 0.521766
+  type: 'test'
+  ...
+# Subtest: a missing semicolon after the expression body recovers as Roslyn does
+ok 34 - a missing semicolon after the expression body recovers as Roslyn does
+  ---
+  duration_ms: 3.490023
+  type: 'test'
+  ...
+# Subtest: the legacy AST has one body per member, so parse() reports the form as outside its profile
+ok 35 - the legacy AST has one body per member, so parse() reports the form as outside its profile
+  ---
+  duration_ms: 1.668119
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep parentheses terminate without a stack overflow
+ok 36 - budget: 100,000-deep parentheses terminate without a stack overflow
+  ---
+  duration_ms: 375.535469
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep generics terminate without a stack overflow
+ok 37 - budget: 100,000-deep generics terminate without a stack overflow
+  ---
+  duration_ms: 373.114715
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep blocks terminate without a stack overflow
+ok 38 - budget: 100,000-deep blocks terminate without a stack overflow
+  ---
+  duration_ms: 357.307286
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep patterns terminate without a stack overflow
+ok 39 - budget: 100,000-deep patterns terminate without a stack overflow
+  ---
+  duration_ms: 3666.508392
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep lambdas terminate without a stack overflow
+ok 40 - budget: 100,000-deep lambdas terminate without a stack overflow
+  ---
+  duration_ms: 290.221247
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep initializers terminate without a stack overflow
+ok 41 - budget: 100,000-deep initializers terminate without a stack overflow
+  ---
+  duration_ms: 186.579676
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep tupleTypes terminate without a stack overflow
+ok 42 - budget: 100,000-deep tupleTypes terminate without a stack overflow
+  ---
+  duration_ms: 159.272988
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep unary terminate without a stack overflow
+ok 43 - budget: 100,000-deep unary terminate without a stack overflow
+  ---
+  duration_ms: 54.578697
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep casts terminate without a stack overflow
+ok 44 - budget: 100,000-deep casts terminate without a stack overflow
+  ---
+  duration_ms: 223.012601
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep conditionals terminate without a stack overflow
+ok 45 - budget: 100,000-deep conditionals terminate without a stack overflow
+  ---
+  duration_ms: 927.24657
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep calls terminate without a stack overflow
+ok 46 - budget: 100,000-deep calls terminate without a stack overflow
+  ---
+  duration_ms: 391.691573
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep ifs terminate without a stack overflow
+ok 47 - budget: 100,000-deep ifs terminate without a stack overflow
+  ---
+  duration_ms: 589.943223
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep types terminate without a stack overflow
+ok 48 - budget: 100,000-deep types terminate without a stack overflow
+  ---
+  duration_ms: 760.045087
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep namespaces terminate without a stack overflow
+ok 49 - budget: 100,000-deep namespaces terminate without a stack overflow
+  ---
+  duration_ms: 817.861893
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep arrayRanks terminate without a stack overflow
+ok 50 - budget: 100,000-deep arrayRanks terminate without a stack overflow
+  ---
+  duration_ms: 575.186118
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep binaryChain terminate without a stack overflow
+ok 51 - budget: 100,000-deep binaryChain terminate without a stack overflow
+  ---
+  duration_ms: 1064.044516
+  type: 'test'
+  ...
+# Subtest: budget: 100,000-deep memberChain terminate without a stack overflow
+ok 52 - budget: 100,000-deep memberChain terminate without a stack overflow
+  ---
+  duration_ms: 654.162766
+  type: 'test'
+  ...
+# Subtest: budget: 2,000-deep interpolations terminate without a stack overflow
+ok 53 - budget: 2,000-deep interpolations terminate without a stack overflow
+  ---
+  duration_ms: 62.346739
+  type: 'test'
+  ...
+# Subtest: budget: the limit is the shared budget and nesting below it is untouched
+ok 54 - budget: the limit is the shared budget and nesting below it is untouched
+  ---
+  duration_ms: 36.129366
+  type: 'test'
+  ...
+# <--- Last few GCs --->
+# [121:0x21a04000]     3737 ms: Scavenge (interleaved) 507.1 (510.8) -> 506.2 (510.8) MB, pooled: 0 MB, 3.12 / 0.00 ms  (average mu = 0.116, current mu = 0.068) allocation failure; 
+# [121:0x21a04000]     3920 ms: Mark-Compact (reduce) 508.0 (511.8) -> 507.0 (510.5) MB, pooled: 0 MB, 173.18 / 0.00 ms  (+ 0.2 ms in 14 steps since start of marking, biggest step 0.1 ms, walltime since start of marking 178 ms) (average mu = 0.125, current 
+# FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+# ----- Native stack trace -----
+#  1: 0x75356c node::OOMErrorHandler(char const*, v8::OOMDetails const&) [/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node]
+#  2: 0xc52cd0  [/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node]
+#  3: 0xc52dbf  [/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node]
+#  4: 0xef6695  [/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node]
+#  5: 0xef66c2  [/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node]
+#  6: 0xef69ba  [/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node]
+#  7: 0xf076ba  [/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node]
+#  8: 0xf0ba60  [/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node]
+#  9: 0x199e0d1  [/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node]
+# Subtest: tests/syntax-cancellation.test.js
+not ok 9 - tests/syntax-cancellation.test.js
+  ---
+  duration_ms: 3962.494579
+  type: 'test'
+  location: '/workspace/scratch/42f7738360b9/a05-integration/tests/syntax-cancellation.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: ~
+  signal: 'SIGABRT'
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: T48 collection expressions and their ambiguities match Roslyn
+ok 56 - T48 collection expressions and their ambiguities match Roslyn
+  ---
+  duration_ms: 28.285076
+  type: 'test'
+  ...
+# Subtest: T48 [1, ..xs] and [..a, ..b] have element and spread nodes
+ok 57 - T48 [1, ..xs] and [..a, ..b] have element and spread nodes
+  ---
+  duration_ms: 6.093197
+  type: 'test'
+  ...
+# Subtest: T48 (T)[...] is a cast only when T must be a type or is generic
+ok 58 - T48 (T)[...] is a cast only when T must be a type or is generic
+  ---
+  duration_ms: 2.695639
+  type: 'test'
+  ...
+# Subtest: T48 a bracket is an element access after an operand and an attribute list before a declaration
+ok 59 - T48 a bracket is an element access after an operand and an attribute list before a declaration
+  ---
+  duration_ms: 1.039176
+  type: 'test'
+  ...
+# Subtest: T48 the legacy adapter still gives the compiler its collection nodes
+ok 60 - T48 the legacy adapter still gives the compiler its collection nodes
+  ---
+  duration_ms: 1.844739
+  type: 'test'
+  ...
+# Subtest: T48 collection expressions are rejected below C\# 12 and recover as Roslyn does
+ok 61 - T48 collection expressions are rejected below C\# 12 and recover as Roslyn does
+  ---
+  duration_ms: 5.010588
+  type: 'test'
+  ...
+# Subtest: T31 null-conditional chains match Roslyn
+ok 62 - T31 null-conditional chains match Roslyn
+  ---
+  duration_ms: 23.52783
+  type: 'test'
+  ...
+# Subtest: T31 everything after a ? belongs to that conditional access
+ok 63 - T31 everything after a ? belongs to that conditional access
+  ---
+  duration_ms: 1.788596
+  type: 'test'
+  ...
+# Subtest: T31 the chain ends at operators that are not part of a primary expression
+ok 64 - T31 the chain ends at operators that are not part of a primary expression
+  ---
+  duration_ms: 2.166121
+  type: 'test'
+  ...
+# Subtest: T31 ? followed by . or [ is still a conditional operator where it must be
+ok 65 - T31 ? followed by . or [ is still a conditional operator where it must be
+  ---
+  duration_ms: 1.188335
+  type: 'test'
+  ...
+# Subtest: T31 the legacy adapter still gives the compiler its flat conditional nodes
+ok 66 - T31 the legacy adapter still gives the compiler its flat conditional nodes
+  ---
+  duration_ms: 2.975484
+  type: 'test'
+  ...
+# Subtest: T31 conditional access is rejected below C\# 6 and recovers as Roslyn does
+ok 67 - T31 conditional access is rejected below C\# 6 and recovers as Roslyn does
+  ---
+  duration_ms: 4.019292
+  type: 'test'
+  ...
+# Subtest: lambdas as operands of the conditional operator match Roslyn
+ok 68 - lambdas as operands of the conditional operator match Roslyn
+  ---
+  duration_ms: 21.993206
+  type: 'test'
+  ...
+# Subtest: `b ? () => 1 : null` is a conditional expression with a lambda in the middle
+ok 69 - `b ? () => 1 : null` is a conditional expression with a lambda in the middle
+  ---
+  duration_ms: 3.036138
+  type: 'test'
+  ...
+# Subtest: nested conditionals and a conditional inside the lambda body pair their colons
+ok 70 - nested conditionals and a conditional inside the lambda body pair their colons
+  ---
+  duration_ms: 1.255253
+  type: 'test'
+  ...
+# Subtest: without a colon after the lambda, `T? (...) =>` is a lambda with a nullable return type
+ok 71 - without a colon after the lambda, `T? (...) =>` is a lambda with a nullable return type
+  ---
+  duration_ms: 1.646849
+  type: 'test'
+  ...
+# Subtest: a ref-returning lambda in a conditional branch is a lambda, not a ref expression
+ok 72 - a ref-returning lambda in a conditional branch is a lambda, not a ref expression
+  ---
+  duration_ms: 0.979558
+  type: 'test'
+  ...
+# Subtest: the ambiguous forms recover as Roslyn does
+ok 73 - the ambiguous forms recover as Roslyn does
+  ---
+  duration_ms: 6.831662
+  type: 'test'
+  ...
+# Subtest: contextual: fields, locals, types and methods named safe, union or closed parse like any other identifier
+ok 74 - contextual: fields, locals, types and methods named safe, union or closed parse like any other identifier
+  ---
+  duration_ms: 144.823248
+  type: 'test'
+  ...
+# Subtest: contextual: zero behaviour change for LangVersion 14 and lower
+ok 75 - contextual: zero behaviour change for LangVersion 14 and lower
+  ---
+  duration_ms: 50.35081
+  type: 'test'
+  ...
+# Subtest: contextual: the words become keywords only in the new declaration positions
+ok 76 - contextual: the words become keywords only in the new declaration positions
+  ---
+  duration_ms: 2.392173
+  type: 'test'
+  ...
+# Subtest: T13 goto, labeled statements, goto case and goto default match Roslyn
+ok 77 - T13 goto, labeled statements, goto case and goto default match Roslyn
+  ---
+  duration_ms: 17.668815
+  type: 'test'
+  ...
+# Subtest: T14 lock, checked/unchecked and full switch sections match Roslyn
+ok 78 - T14 lock, checked/unchecked and full switch sections match Roslyn
+  ---
+  duration_ms: 11.424567
+  type: 'test'
+  ...
+# Subtest: T15 typed catch clauses and full try forms match Roslyn
+ok 79 - T15 typed catch clauses and full try forms match Roslyn
+  ---
+  duration_ms: 8.44416
+  type: 'test'
+  ...
+# Subtest: T16 typeof, sizeof, default, is and as take type operands and match Roslyn
+ok 80 - T16 typeof, sizeof, default, is and as take type operands and match Roslyn
+  ---
+  duration_ms: 11.077006
+  type: 'test'
+  ...
+# Subtest: T17 array creation, rank specifiers and initialisers match Roslyn
+ok 81 - T17 array creation, rank specifiers and initialisers match Roslyn
+  ---
+  duration_ms: 7.482087
+  type: 'test'
+  ...
+# Subtest: T18 multi-declarator locals, const locals and for-loop lists match Roslyn
+ok 82 - T18 multi-declarator locals, const locals and for-loop lists match Roslyn
+  ---
+  duration_ms: 7.300251
+  type: 'test'
+  ...
+# Subtest: T19 property and indexer accessor declarations match Roslyn
+ok 83 - T19 property and indexer accessor declarations match Roslyn
+  ---
+  duration_ms: 6.492244
+  type: 'test'
+  ...
+# Subtest: T20 iterator statements match Roslyn; `yield` stays an identifier
+ok 84 - T20 iterator statements match Roslyn; `yield` stays an identifier
+  ---
+  duration_ms: 3.784157
+  type: 'test'
+  ...
+# Subtest: T21 generic methods and explicit type-argument invocations match Roslyn
+ok 85 - T21 generic methods and explicit type-argument invocations match Roslyn
+  ---
+  duration_ms: 7.302163
+  type: 'test'
+  ...
+# Subtest: T22 extern alias, the namespace alias qualifier and global:: match Roslyn
+ok 86 - T22 extern alias, the namespace alias qualifier and global:: match Roslyn
+  ---
+  duration_ms: 5.966187
+  type: 'test'
+  ...
+# Subtest: T23 static classes, partial types of all kinds and nullable coalescing match Roslyn
+ok 87 - T23 static classes, partial types of all kinds and nullable coalescing match Roslyn
+  ---
+  duration_ms: 4.374915
+  type: 'test'
+  ...
+# Subtest: T45 lambda attributes and return types, mixed deconstruction and struct members match Roslyn
+ok 88 - T45 lambda attributes and return types, mixed deconstruction and struct members match Roslyn
+  ---
+  duration_ms: 31.632381
+  type: 'test'
+  ...
+# Subtest: T45 attributes come first, then modifiers, then the return type
+ok 89 - T45 attributes come first, then modifiers, then the return type
+  ---
+  duration_ms: 3.261479
+  type: 'test'
+  ...
+# Subtest: T45 a bracket that no lambda follows is still a collection expression
+ok 90 - T45 a bracket that no lambda follows is still a collection expression
+  ---
+  duration_ms: 2.002441
+  type: 'test'
+  ...
+# Subtest: T45 a deconstruction may mix declarations with existing variables
+ok 91 - T45 a deconstruction may mix declarations with existing variables
+  ---
+  duration_ms: 0.832563
+  type: 'test'
+  ...
+# Subtest: T45 the 10.0 gates fire where Roslyn reports them
+ok 92 - T45 the 10.0 gates fire where Roslyn reports them
+  ---
+  duration_ms: 7.833533
+  type: 'test'
+  ...
+# Subtest: T45 features that need the binder are in the catalog without a parser gate
+ok 93 - T45 features that need the binder are in the catalog without a parser gate
+  ---
+  duration_ms: 0.626039
+  type: 'test'
+  ...
+# Subtest: T45 malformed lambdas and deconstructions recover as Roslyn does
+ok 94 - T45 malformed lambdas and deconstructions recover as Roslyn does
+  ---
+  duration_ms: 2.688858
+  type: 'test'
+  ...
+# Subtest: T46 generic attributes, file types, static abstract members and checked operators match Roslyn
+ok 95 - T46 generic attributes, file types, static abstract members and checked operators match Roslyn
+  ---
+  duration_ms: 26.999998
+  type: 'test'
+  ...
+# Subtest: T46 an attribute name may carry type arguments
+ok 96 - T46 an attribute name may carry type arguments
+  ---
+  duration_ms: 0.879832
+  type: 'test'
+  ...
+# Subtest: T46 file is a type modifier, in any position among the modifiers
+ok 97 - T46 file is a type modifier, in any position among the modifiers
+  ---
+  duration_ms: 1.430701
+  type: 'test'
+  ...
+# Subtest: T46 file stays an identifier elsewhere
+ok 98 - T46 file stays an identifier elsewhere
+  ---
+  duration_ms: 4.968687
+  type: 'test'
+  ...
+# Subtest: T46 static abstract and static virtual interface members, including operators
+ok 99 - T46 static abstract and static virtual interface members, including operators
+  ---
+  duration_ms: 0.95993
+  type: 'test'
+  ...
+# Subtest: T46 the 11.0 gates fire where Roslyn reports them
+ok 100 - T46 the 11.0 gates fire where Roslyn reports them
+  ---
+  duration_ms: 6.809359
+  type: 'test'
+  ...
+# Subtest: T46 malformed generic attributes and file declarations recover as Roslyn does
+ok 101 - T46 malformed generic attributes and file declarations recover as Roslyn does
+  ---
+  duration_ms: 1.819622
+  type: 'test'
+  ...
+# Subtest: T49 type aliases and lambda parameters with defaults and params match Roslyn
+ok 102 - T49 type aliases and lambda parameters with defaults and params match Roslyn
+  ---
+  duration_ms: 29.274619
+  type: 'test'
+  ...
+# Subtest: T49 a using alias may name any type
+ok 103 - T49 a using alias may name any type
+  ---
+  duration_ms: 1.295933
+  type: 'test'
+  ...
+# Subtest: T49 lambda parameters take default values and params
+ok 104 - T49 lambda parameters take default values and params
+  ---
+  duration_ms: 2.436093
+  type: 'test'
+  ...
+# Subtest: T49 the 12.0 gates fire where Roslyn reports them
+ok 105 - T49 the 12.0 gates fire where Roslyn reports them
+  ---
+  duration_ms: 6.786076
+  type: 'test'
+  ...
+# Subtest: T49 inline arrays have no syntax of their own
+ok 106 - T49 inline arrays have no syntax of their own
+  ---
+  duration_ms: 0.487716
+  type: 'test'
+  ...
+# Subtest: T49 malformed aliases and lambda parameters recover as Roslyn does
+ok 107 - T49 malformed aliases and lambda parameters recover as Roslyn does
+  ---
+  duration_ms: 4.558909
+  type: 'test'
+  ...
+# Subtest: T50 params collections, allows ref struct and ^ index initializers match Roslyn
+ok 108 - T50 params collections, allows ref struct and ^ index initializers match Roslyn
+  ---
+  duration_ms: 26.333846
+  type: 'test'
+  ...
+# Subtest: T50 params takes any parameter type; the syntax is that of a params array
+ok 109 - T50 params takes any parameter type; the syntax is that of a params array
+  ---
+  duration_ms: 1.319417
+  type: 'test'
+  ...
+# Subtest: T50 allows ref struct is an anti-constraint that follows the other constraints
+ok 110 - T50 allows ref struct is an anti-constraint that follows the other constraints
+  ---
+  duration_ms: 0.708981
+  type: 'test'
+  ...
+# Subtest: T50 [^1] = v is an index initializer whose key is an index expression
+ok 111 - T50 [^1] = v is an index initializer whose key is an index expression
+  ---
+  duration_ms: 1.768777
+  type: 'test'
+  ...
+# Subtest: T50 the 13.0 gates fire where Roslyn reports them
+ok 112 - T50 the 13.0 gates fire where Roslyn reports them
+  ---
+  duration_ms: 5.549149
+  type: 'test'
+  ...
+# Subtest: T50 malformed params and allows clauses recover as Roslyn does
+ok 113 - T50 malformed params and allows clauses recover as Roslyn does
+  ---
+  duration_ms: 3.181211
+  type: 'test'
+  ...
+# Subtest: T52 null-conditional assignment, unbound nameof and lambda parameter modifiers match Roslyn
+ok 114 - T52 null-conditional assignment, unbound nameof and lambda parameter modifiers match Roslyn
+  ---
+  duration_ms: 18.700181
+  type: 'test'
+  ...
+# Subtest: T52 a?.b = c assigns inside the conditional access
+ok 115 - T52 a?.b = c assigns inside the conditional access
+  ---
+  duration_ms: 1.912458
+  type: 'test'
+  ...
+# Subtest: T52 nameof takes an unbound generic type
+ok 116 - T52 nameof takes an unbound generic type
+  ---
+  duration_ms: 0.998156
+  type: 'test'
+  ...
+# Subtest: T52 implicitly typed lambda parameters take modifiers
+ok 117 - T52 implicitly typed lambda parameters take modifiers
+  ---
+  duration_ms: 1.895514
+  type: 'test'
+  ...
+# Subtest: T52 the 14.0 gates fire where Roslyn reports them
+ok 118 - T52 the 14.0 gates fire where Roslyn reports them
+  ---
+  duration_ms: 7.461197
+  type: 'test'
+  ...
+# Subtest: T52 malformed forms recover as Roslyn does
+ok 119 - T52 malformed forms recover as Roslyn does
+  ---
+  duration_ms: 2.663261
+  type: 'test'
+  ...
+# Subtest: T30 using static, exception filters and index initializers match Roslyn
+ok 120 - T30 using static, exception filters and index initializers match Roslyn
+  ---
+  duration_ms: 18.293864
+  type: 'test'
+  ...
+# Subtest: T30 using static keeps its target as a name
+ok 121 - T30 using static keeps its target as a name
+  ---
+  duration_ms: 0.525151
+  type: 'test'
+  ...
+# Subtest: T30 an exception filter follows a catch declaration or a general catch
+ok 122 - T30 an exception filter follows a catch declaration or a general catch
+  ---
+  duration_ms: 0.909065
+  type: 'test'
+  ...
+# Subtest: T30 index initializers are members of an object initializer
+ok 123 - T30 index initializers are members of an object initializer
+  ---
+  duration_ms: 1.456919
+  type: 'test'
+  ...
+# Subtest: T30 an initializer is an object initializer when it is empty or holds an assignment, as in Roslyn
+ok 124 - T30 an initializer is an object initializer when it is empty or holds an assignment, as in Roslyn
+  ---
+  duration_ms: 3.624312
+  type: 'test'
+  ...
+# Subtest: T30 LangVersion 5 rejects each form
+ok 125 - T30 LangVersion 5 rejects each form
+  ---
+  duration_ms: 2.426073
+  type: 'test'
+  ...
+# Subtest: T30 malformed forms recover as Roslyn does
+ok 126 - T30 malformed forms recover as Roslyn does
+  ---
+  duration_ms: 3.427884
+  type: 'test'
+  ...
+# Subtest: T37 field-targeted attributes, 7.3 constraints and expression variables match Roslyn
+ok 127 - T37 field-targeted attributes, 7.3 constraints and expression variables match Roslyn
+  ---
+  duration_ms: 21.998113
+  type: 'test'
+  ...
+# Subtest: T37 [field: Attr] on an auto-property is an attribute list with a field target
+ok 128 - T37 [field: Attr] on an auto-property is an attribute list with a field target
+  ---
+  duration_ms: 0.797181
+  type: 'test'
+  ...
+# Subtest: T37 unmanaged, System.Enum and System.Delegate are type constraints
+ok 129 - T37 unmanaged, System.Enum and System.Delegate are type constraints
+  ---
+  duration_ms: 1.532991
+  type: 'test'
+  ...
+# Subtest: T37 the 7.3 gates fire where Roslyn reports them
+ok 130 - T37 the 7.3 gates fire where Roslyn reports them
+  ---
+  duration_ms: 6.177451
+  type: 'test'
+  ...
+# Subtest: T37 expression variables in method bodies and lambdas need no 7.3
+ok 131 - T37 expression variables in method bodies and lambdas need no 7.3
+  ---
+  duration_ms: 1.193513
+  type: 'test'
+  ...
+# Subtest: T43 target-typed new, nint/nuint, static anonymous functions and lambda discards match Roslyn
+ok 132 - T43 target-typed new, nint/nuint, static anonymous functions and lambda discards match Roslyn
+  ---
+  duration_ms: 25.429314
+  type: 'test'
+  ...
+# Subtest: T43 new() is an ImplicitObjectCreation with arguments and an optional initializer
+ok 133 - T43 new() is an ImplicitObjectCreation with arguments and an optional initializer
+  ---
+  duration_ms: 2.6907
+  type: 'test'
+  ...
+# Subtest: T43 nint and nuint are identifiers used as type names
+ok 134 - T43 nint and nuint are identifiers used as type names
+  ---
+  duration_ms: 1.465612
+  type: 'test'
+  ...
+# Subtest: T43 static lambdas and anonymous methods keep the modifier; several `_` parameters are discards
+ok 135 - T43 static lambdas and anonymous methods keep the modifier; several `_` parameters are discards
+  ---
+  duration_ms: 1.704232
+  type: 'test'
+  ...
+# Subtest: T43 the 9.0 gates fire where Roslyn reports them
+ok 136 - T43 the 9.0 gates fire where Roslyn reports them
+  ---
+  duration_ms: 5.862317
+  type: 'test'
+  ...
+# Subtest: T43 malformed target-typed new and static lambdas recover as Roslyn does
+ok 137 - T43 malformed target-typed new and static lambdas recover as Roslyn does
+  ---
+  duration_ms: 2.263173
+  type: 'test'
+  ...
+# Subtest: T32 out variables, discards and designations match Roslyn
+ok 138 - T32 out variables, discards and designations match Roslyn
+  ---
+  duration_ms: 18.515985
+  type: 'test'
+  ...
+# Subtest: T32 `out var x`, `out T x` and `out var _` are declaration expressions
+ok 139 - T32 `out var x`, `out T x` and `out var _` are declaration expressions
+  ---
+  duration_ms: 1.978975
+  type: 'test'
+  ...
+# Subtest: T32 an out argument that is not a type followed by a name stays an expression
+ok 140 - T32 an out argument that is not a type followed by a name stays an expression
+  ---
+  duration_ms: 1.465822
+  type: 'test'
+  ...
+# Subtest: T32 discards in assignments and deconstructions
+ok 141 - T32 discards in assignments and deconstructions
+  ---
+  duration_ms: 0.64698
+  type: 'test'
+  ...
+# Subtest: T32 out variables are rejected below C\# 7
+ok 142 - T32 out variables are rejected below C\# 7
+  ---
+  duration_ms: 1.611697
+  type: 'test'
+  ...
+# Subtest: T32 malformed out arguments recover as Roslyn does
+ok 143 - T32 malformed out arguments recover as Roslyn does
+  ---
+  duration_ms: 1.877717
+  type: 'test'
+  ...
+# Subtest: T35 the default literal, async Main and patterns on open types match Roslyn
+ok 144 - T35 the default literal, async Main and patterns on open types match Roslyn
+  ---
+  duration_ms: 21.101185
+  type: 'test'
+  ...
+# Subtest: T35 `default` without parentheses is a literal; with them it is the C\# 2 operator
+ok 145 - T35 `default` without parentheses is a literal; with them it is the C\# 2 operator
+  ---
+  duration_ms: 2.807091
+  type: 'test'
+  ...
+# Subtest: T35 `int x = default;` parses at 7.1 and reports CS8107 at 7.0
+ok 146 - T35 `int x = default;` parses at 7.1 and reports CS8107 at 7.0
+  ---
+  duration_ms: 2.704801
+  type: 'test'
+  ...
+# Subtest: T35 async Main and generic pattern matching are gated by the binder, not the parser
+ok 147 - T35 async Main and generic pattern matching are gated by the binder, not the parser
+  ---
+  duration_ms: 0.947661
+  type: 'test'
+  ...
+# Subtest: designer sync: incomplete C\# blocks the source read with SFSYNC_PARSE
+ok 148 - designer sync: incomplete C\# blocks the source read with SFSYNC_PARSE
+  ---
+  duration_ms: 31.293063
+  type: 'test'
+  ...
+# Subtest: designer sync: a leading-dot real literal is valid source and reads as a number
+ok 149 - designer sync: a leading-dot real literal is valid source and reads as a number
+  ---
+  duration_ms: 16.397534
+  type: 'test'
+  ...
+# Subtest: a \#line span directive at C\# 9 reports nothing, as in Roslyn
+ok 150 - a \#line span directive at C\# 9 reports nothing, as in Roslyn
+  ---
+  duration_ms: 7.572829
+  type: 'test'
+  ...
+# Subtest: a malformed \#line span is still reported at every version
+ok 151 - a malformed \#line span is still reported at every version
+  ---
+  duration_ms: 0.573813
+  type: 'test'
+  ...
+# Subtest: \#: outside a file-based program is CS9298 on the colon at C\# 13, as in Roslyn, and not a language-version diagnostic
+ok 152 - \#: outside a file-based program is CS9298 on the colon at C\# 13, as in Roslyn, and not a language-version diagnostic
+  ---
+  duration_ms: 2.945455
+  type: 'test'
+  ...
+# Subtest: \#: in a file-based program reports nothing at any version
+ok 153 - \#: in a file-based program reports nothing at any version
+  ---
+  duration_ms: 0.465423
+  type: 'test'
+  ...
+# Subtest: neither directive is recorded as a feature use; the catalog rows remain
+ok 154 - neither directive is recorded as a feature use; the catalog rows remain
+  ---
+  duration_ms: 0.435329
+  type: 'test'
+  ...
+# Subtest: \#pragma and misplaced-using diagnostics have the codes, severities and spans Roslyn reports
+ok 155 - \#pragma and misplaced-using diagnostics have the codes, severities and spans Roslyn reports
+  ---
+  duration_ms: 8.172238
+  type: 'test'
+  ...
+# Subtest: \#pragma warning enable is not a pragma: CS1634 at the word
+ok 156 - \#pragma warning enable is not a pragma: CS1634 at the word
+  ---
+  duration_ms: 0.997245
+  type: 'test'
+  ...
+# Subtest: CS1529 covers the whole misplaced using directive
+ok 157 - CS1529 covers the whole misplaced using directive
+  ---
+  duration_ms: 0.475198
+  type: 'test'
+  ...
+# Subtest: await using records asynchronous using, await foreach records async streams
+ok 158 - await using records asynchronous using, await foreach records async streams
+  ---
+  duration_ms: 3.830193
+  type: 'test'
+  ...
+# Subtest: doc comments: structures match the pinned Roslyn trees, including cref forms
+ok 159 - doc comments: structures match the pinned Roslyn trees, including cref forms
+  ---
+  duration_ms: 29.51944
+  type: 'test'
+  ...
+# Subtest: doc comments: cref syntax covers generic, operator, conversion, indexer and parameter-list forms
+ok 160 - doc comments: cref syntax covers generic, operator, conversion, indexer and parameter-list forms
+  ---
+  duration_ms: 5.95349
+  type: 'test'
+  ...
+# Subtest: doc comments: malformed XML reports CS1570 and malformed crefs CS1584 without losing text
+ok 161 - doc comments: malformed XML reports CS1570 and malformed crefs CS1584 without losing text
+  ---
+  duration_ms: 5.793356
+  type: 'test'
+  ...
+# Subtest: doc comments: every character of 3000 mutated comments stays in the structure
+ok 162 - doc comments: every character of 3000 mutated comments stays in the structure
+  ---
+  duration_ms: 33.561024
+  type: 'test'
+  ...
+# Subtest: doc comments: structure is cached per green trivia and positioned in the tree
+ok 163 - doc comments: structure is cached per green trivia and positioned in the tree
+  ---
+  duration_ms: 1.310184
+  type: 'test'
+  ...
+# Subtest: T29 expression bodies and auto-property initializers match Roslyn
+ok 164 - T29 expression bodies and auto-property initializers match Roslyn
+  ---
+  duration_ms: 25.620991
+  type: 'test'
+  ...
+# Subtest: T29 an expression body replaces the block or the accessor list
+ok 165 - T29 an expression body replaces the block or the accessor list
+  ---
+  duration_ms: 1.224849
+  type: 'test'
+  ...
+# Subtest: T29 methods, properties, indexers, operators and initializers need C\# 6
+ok 166 - T29 methods, properties, indexers, operators and initializers need C\# 6
+  ---
+  duration_ms: 2.109377
+  type: 'test'
+  ...
+# Subtest: T29 accessors, constructors and destructors need C\# 7
+ok 167 - T29 accessors, constructors and destructors need C\# 7
+  ---
+  duration_ms: 1.248462
+  type: 'test'
+  ...
+# Subtest: T29 a missing expression or semicolon recovers as Roslyn does
+ok 168 - T29 a missing expression or semicolon recovers as Roslyn does
+  ---
+  duration_ms: 2.11174
+  type: 'test'
+  ...
+# Subtest: extension blocks at C\# 13 report CS9260 over the spans Roslyn reports
+ok 169 - extension blocks at C\# 13 report CS9260 over the spans Roslyn reports
+  ---
+  duration_ms: 10.982344
+  type: 'test'
+  ...
+# Subtest: the constructor-shaped form is reported once, over the declaration, and not as a method without a return type
+ok 170 - the constructor-shaped form is reported once, over the declaration, and not as a method without a return type
+  ---
+  duration_ms: 2.990721
+  type: 'test'
+  ...
+# Subtest: C\# 14 accepts the block; a type named extension keeps its constructors at every version
+ok 171 - C\# 14 accepts the block; a type named extension keeps its constructors at every version
+  ---
+  duration_ms: 1.014179
+  type: 'test'
+  ...
+# Subtest: extension receivers with a default value match Roslyn and report nothing
+ok 172 - extension receivers with a default value match Roslyn and report nothing
+  ---
+  duration_ms: 12.597225
+  type: 'test'
+  ...
+# Subtest: the default is the EqualsValueClause of the receiver parameter, with or without a name
+ok 173 - the default is the EqualsValueClause of the receiver parameter, with or without a name
+  ---
+  duration_ms: 1.63498
+  type: 'test'
+  ...
+# Subtest: a missing default expression recovers as Roslyn does
+ok 174 - a missing default expression recovers as Roslyn does
+  ---
+  duration_ms: 2.309771
+  type: 'test'
+  ...
+# Subtest: T08.1 extension blocks: instance and static forms match Roslyn and round-trip
+ok 175 - T08.1 extension blocks: instance and static forms match Roslyn and round-trip
+  ---
+  duration_ms: 19.64366
+  type: 'test'
+  ...
+# Subtest: T08.1 extension blocks: LangVersion 13 rejects them and `extension` stays an identifier elsewhere
+ok 176 - T08.1 extension blocks: LangVersion 13 rejects them and `extension` stays an identifier elsewhere
+  ---
+  duration_ms: 10.248497
+  type: 'test'
+  ...
+# Subtest: T08.2 extension operators and user-defined compound assignment operators match Roslyn; older versions reject
+ok 177 - T08.2 extension operators and user-defined compound assignment operators match Roslyn; older versions reject
+  ---
+  duration_ms: 12.973122
+  type: 'test'
+  ...
+# Subtest: T08.3 extension indexers parse under preview with a revision stamp; LangVersion 14 reports the preview diagnostic
+ok 178 - T08.3 extension indexers parse under preview with a revision stamp; LangVersion 14 reports the preview diagnostic
+  ---
+  duration_ms: 3.372371
+  type: 'test'
+  ...
+# Subtest: misplaced extern aliases in a compilation unit and a namespace are reported where Roslyn reports them
+ok 179 - misplaced extern aliases in a compilation unit and a namespace are reported where Roslyn reports them
+  ---
+  duration_ms: 6.914882
+  type: 'test'
+  ...
+# Subtest: the same holds in a file-scoped namespace
+ok 180 - the same holds in a file-scoped namespace
+  ---
+  duration_ms: 1.336823
+  type: 'test'
+  ...
+# Subtest: `extern alias` after `global using` is CS0439 on the keyword; before it there is no diagnostic
+ok 181 - `extern alias` after `global using` is CS0439 on the keyword; before it there is no diagnostic
+  ---
+  duration_ms: 2.45893
+  type: 'test'
+  ...
+# Subtest: an extern method or type is not an extern alias
+ok 182 - an extern method or type is not an extern alias
+  ---
+  duration_ms: 1.69587
+  type: 'test'
+  ...
+# Subtest: features: catalog has unique ids, a version on every row and at least 250 rows
+ok 183 - features: catalog has unique ids, a version on every row and at least 250 rows
+  ---
+  duration_ms: 1.561873
+  type: 'test'
+  ...
+# Subtest: features: every Roslyn MessageID feature is catalogued with the same required version
+ok 184 - features: every Roslyn MessageID feature is catalogued with the same required version
+  ---
+  duration_ms: 1.865289
+  type: 'test'
+  ...
+# Subtest: features: compiler and syntax share one LangVersion parser and table
+ok 185 - features: compiler and syntax share one LangVersion parser and table
+  ---
+  duration_ms: 101.673785
+  type: 'test'
+  ...
+# Subtest: langversion: all Roslyn spellings map correctly and minor versions are distinct
+ok 186 - langversion: all Roslyn spellings map correctly and minor versions are distinct
+  ---
+  duration_ms: 0.451363
+  type: 'test'
+  ...
+# Subtest: langversion: invalid values report CS1617
+ok 187 - langversion: invalid values report CS1617
+  ---
+  duration_ms: 1.417151
+  type: 'test'
+  ...
+# Subtest: feature gate: code depends on the selected version and matches the catalog row
+ok 188 - feature gate: code depends on the selected version and matches the catalog row
+  ---
+  duration_ms: 1.282674
+  type: 'test'
+  ...
+# Subtest: feature gate: checkFeature reports the node span and checkFeatures the recorded uses
+ok 189 - feature gate: checkFeature reports the node span and checkFeatures the recorded uses
+  ---
+  duration_ms: 2.141845
+  type: 'test'
+  ...
+# Subtest: feature gate: every feature id recorded by the lexer and parser is catalogued
+ok 190 - feature gate: every feature id recorded by the lexer and parser is catalogued
+  ---
+  duration_ms: 3.692672
+  type: 'test'
+  ...
+# Subtest: preview: every preview feature carries a revision stamp and diagnostics print it
+ok 191 - preview: every preview feature carries a revision stamp and diagnostics print it
+  ---
+  duration_ms: 0.967741
+  type: 'test'
+  ...
+# Subtest: T51 field in property accessors matches Roslyn
+ok 192 - T51 field in property accessors matches Roslyn
+  ---
+  duration_ms: 25.032272
+  type: 'test'
+  ...
+# Subtest: T51 field is the keyword only inside the accessors and expression body of a property
+ok 193 - T51 field is the keyword only inside the accessors and expression body of a property
+  ---
+  duration_ms: 2.023901
+  type: 'test'
+  ...
+# Subtest: T51 inside an accessor, a member access, an escaped name and a declared name stay identifiers
+ok 194 - T51 inside an accessor, a member access, an escaped name and a declared name stay identifiers
+  ---
+  duration_ms: 3.159579
+  type: 'test'
+  ...
+# Subtest: T51 LangVersion 13 treats field as an identifier
+ok 195 - T51 LangVersion 13 treats field as an identifier
+  ---
+  duration_ms: 5.506275
+  type: 'test'
+  ...
+# Subtest: T51 the keyword warns (CS9258) when the type declares a member named field
+ok 196 - T51 the keyword warns (CS9258) when the type declares a member named field
+  ---
+  duration_ms: 2.086723
+  type: 'test'
+  ...
+# Subtest: T51 a local or parameter named field inside an accessor reports CS9273
+ok 197 - T51 a local or parameter named field inside an accessor reports CS9273
+  ---
+  duration_ms: 1.63482
+  type: 'test'
+  ...
+# Subtest: T51 an incremental parse gives the same warnings as a full parse
+ok 198 - T51 an incremental parse gives the same warnings as a full parse
+  ---
+  duration_ms: 2.67686
+  type: 'test'
+  ...
+# Subtest: T51 the legacy AST still names the backing field `field`, and the back end keeps its own checks
+ok 199 - T51 the legacy AST still names the backing field `field`, and the back end keeps its own checks
+  ---
+  duration_ms: 2.129587
+  type: 'test'
+  ...
+# Subtest: T44 global usings and a file-scoped namespace match Roslyn
+ok 200 - T44 global usings and a file-scoped namespace match Roslyn
+  ---
+  duration_ms: 13.364101
+  type: 'test'
+  ...
+# Subtest: T44 `namespace X;` holds the rest of the file
+ok 201 - T44 `namespace X;` holds the rest of the file
+  ---
+  duration_ms: 1.093165
+  type: 'test'
+  ...
+# Subtest: T44 file-scoped namespace placement reports CS8954, CS8955 and CS8956 at the name
+ok 202 - T44 file-scoped namespace placement reports CS8954, CS8955 and CS8956 at the name
+  ---
+  duration_ms: 9.455593
+  type: 'test'
+  ...
+# Subtest: T44 a file-scoped namespace inside braces ends at the enclosing brace, as in Roslyn
+ok 203 - T44 a file-scoped namespace inside braces ends at the enclosing brace, as in Roslyn
+  ---
+  duration_ms: 1.152022
+  type: 'test'
+  ...
+# Subtest: T44 both forms are rejected below C\# 10, at the keyword as in Roslyn
+ok 204 - T44 both forms are rejected below C\# 10, at the keyword as in Roslyn
+  ---
+  duration_ms: 2.599997
+  type: 'test'
+  ...
+# Subtest: T44 malformed directives and namespaces recover as Roslyn does
+ok 205 - T44 malformed directives and namespaces recover as Roslyn does
+  ---
+  duration_ms: 1.340218
+  type: 'test'
+  ...
+# Subtest: mutate: seeded token swaps, deletions and duplications parse, round-trip and stay within the time budget
+ok 206 - mutate: seeded token swaps, deletions and duplications parse, round-trip and stay within the time budget
+  ---
+  duration_ms: 7065.553295
+  type: 'test'
+  ...
+# Subtest: truncate: every corpus file cut at every token boundary parses, round-trips and stays within the time budget
+ok 207 - truncate: every corpus file cut at every token boundary parses, round-trips and stays within the time budget
+  ---
+  duration_ms: 22788.813146
+  type: 'test'
+  ...
+# Subtest: truncate: cuts inside tokens (strings, comments, directives, interpolations) also round-trip
+ok 208 - truncate: cuts inside tokens (strings, comments, directives, interpolations) also round-trip
+  ---
+  duration_ms: 2678.847465
+  type: 'test'
+  ...
+# Subtest: incremental bench: the committed baseline covers a million characters and meets the 5 percent bound
+ok 209 - incremental bench: the committed baseline covers a million characters and meets the 5 percent bound
+  ---
+  duration_ms: 4.431537
+  type: 'test'
+  ...
+# Subtest: incremental bench: a keystroke in a 250,000-character document costs under 5 percent of a full parse
+ok 210 - incremental bench: a keystroke in a 250,000-character document costs under 5 percent of a full parse
+  ---
+  duration_ms: 759.434811
+  type: 'test'
+  ...
+# Subtest: blender: a single-statement edit in a 5,000-line file reuses at least 95% of member nodes by identity
+ok 211 - blender: a single-statement edit in a 5,000-line file reuses at least 95% of member nodes by identity
+  ---
+  duration_ms: 455.560326
+  type: 'test'
+  ...
+# Subtest: blender: nodes are only reused in the context they were parsed in
+ok 212 - blender: nodes are only reused in the context they were parsed in
+  ---
+  duration_ms: 7.57295
+  type: 'test'
+  ...
+# Subtest: blender: feature uses inside reused nodes follow the text and stay gated
+ok 213 - blender: feature uses inside reused nodes follow the text and stay gated
+  ---
+  duration_ms: 3.313986
+  type: 'test'
+  ...
+# Subtest: blender: 6,000 structure-preserving edits match full parses with eager and lazy token views
+ok 214 - blender: 6,000 structure-preserving edits match full parses with eager and lazy token views
+  ---
+  duration_ms: 22646.215791
+  type: 'test'
+  ...
+# Subtest: incremental fuzz: 50,000 seeded edits produce trees identical to full parses
+ok 215 - incremental fuzz: 50,000 seeded edits produce trees identical to full parses
+  ---
+  duration_ms: 54810.868714
+  type: 'test'
+  ...
+# Subtest: incremental fuzz: versions are compared with a full parse at the same source version and several changes at once
+ok 216 - incremental fuzz: versions are compared with a full parse at the same source version and several changes at once
+  ---
+  duration_ms: 1178.450205
+  type: 'test'
+  ...
+# Subtest: relex: the relexed stream equals a full lex across 10,000 seeded edits and reuses tokens outside the window
+ok 217 - relex: the relexed stream equals a full lex across 10,000 seeded edits and reuses tokens outside the window
+  ---
+  duration_ms: 6861.149868
+  type: 'test'
+  ...
+# Subtest: relex: preprocessor symbols and script options are honoured
+ok 218 - relex: preprocessor symbols and script options are honoured
+  ---
+  duration_ms: 605.604943
+  type: 'test'
+  ...
+# Subtest: relex: directive state decides where the streams resynchronise
+ok 219 - relex: directive state decides where the streams resynchronise
+  ---
+  duration_ms: 0.74187
+  type: 'test'
+  ...
+# Subtest: relex: TokenList shifts tokens after an edit only when they are read
+ok 220 - relex: TokenList shifts tokens after an edit only when they are read
+  ---
+  duration_ms: 0.642884
+  type: 'test'
+  ...
+# Subtest: T24 object, collection and nested initializers match Roslyn
+ok 221 - T24 object, collection and nested initializers match Roslyn
+  ---
+  duration_ms: 16.564936
+  type: 'test'
+  ...
+# Subtest: T24 nested member initializers and multi-argument collection elements have structured nodes
+ok 222 - T24 nested member initializers and multi-argument collection elements have structured nodes
+  ---
+  duration_ms: 2.032636
+  type: 'test'
+  ...
+# Subtest: T24 initializers work on any type, not only registered ones
+ok 223 - T24 initializers work on any type, not only registered ones
+  ---
+  duration_ms: 3.7785
+  type: 'test'
+  ...
+# Subtest: T24 the legacy adapter still gives the compiler its Initializer nodes
+ok 224 - T24 the legacy adapter still gives the compiler its Initializer nodes
+  ---
+  duration_ms: 1.886702
+  type: 'test'
+  ...
+# Subtest: T24 initializers are rejected below C\# 3 and recover as Roslyn does
+ok 225 - T24 initializers are rejected below C\# 3 and recover as Roslyn does
+  ---
+  duration_ms: 3.783979
+  type: 'test'
+  ...
+# Subtest: T41 interface members with bodies, modifiers, static members and nested types match Roslyn
+ok 226 - T41 interface members with bodies, modifiers, static members and nested types match Roslyn
+  ---
+  duration_ms: 22.450983
+  type: 'test'
+  ...
+# Subtest: T41 an interface member is parsed like a class member
+ok 227 - T41 an interface member is parsed like a class member
+  ---
+  duration_ms: 0.956385
+  type: 'test'
+  ...
+# Subtest: T41 readonly is accepted on struct members and accessors
+ok 228 - T41 readonly is accepted on struct members and accessors
+  ---
+  duration_ms: 0.922625
+  type: 'test'
+  ...
+# Subtest: T41 the 8.0 gates fire where Roslyn reports them
+ok 229 - T41 the 8.0 gates fire where Roslyn reports them
+  ---
+  duration_ms: 4.779121
+  type: 'test'
+  ...
+# Subtest: T41 gates by form
+ok 230 - T41 gates by form
+  ---
+  duration_ms: 3.224257
+  type: 'test'
+  ...
+# Subtest: T41 incomplete members recover as Roslyn does
+ok 231 - T41 incomplete members recover as Roslyn does
+  ---
+  duration_ms: 2.371393
+  type: 'test'
+  ...
+# Subtest: alignments that are not integer literals match Roslyn and report nothing
+ok 232 - alignments that are not integer literals match Roslyn and report nothing
+  ---
+  duration_ms: 15.969761
+  type: 'test'
+  ...
+# Subtest: the alignment is an expression node
+ok 233 - the alignment is an expression node
+  ---
+  duration_ms: 2.230767
+  type: 'test'
+  ...
+# Subtest: no alignment reports CS8076; an unclosed hole still does
+ok 234 - no alignment reports CS8076; an unclosed hole still does
+  ---
+  duration_ms: 2.461426
+  type: 'test'
+  ...
+# Subtest: the legacy AST carries an integer literal as a number and any other alignment as an expression, without a diagnostic
+ok 235 - the legacy AST carries an integer literal as a number and any other alignment as an expression, without a diagnostic
+  ---
+  duration_ms: 1.977675
+  type: 'test'
+  ...
+# Subtest: legacy adapter preserves the exact ordinary catch shape: try { } catch { }
+ok 236 - legacy adapter preserves the exact ordinary catch shape: try { } catch { }
+  ---
+  duration_ms: 9.815396
+  type: 'test'
+  ...
+# Subtest: legacy adapter preserves the exact ordinary catch shape: try { } catch (Exception error) { } finally { }
+ok 237 - legacy adapter preserves the exact ordinary catch shape: try { } catch (Exception error) { } finally { }
+  ---
+  duration_ms: 1.768598
+  type: 'test'
+  ...
+# Subtest: legacy adapter preserves the exact ordinary catch shape: try { } catch (ArgumentException error) { } catch { }
+ok 238 - legacy adapter preserves the exact ordinary catch shape: try { } catch (ArgumentException error) { } catch { }
+  ---
+  duration_ms: 0.783781
+  type: 'test'
+  ...
+# Subtest: legacy adapter retains a written false filter and leaves the fallback catch unchanged
+ok 239 - legacy adapter retains a written false filter and leaves the fallback catch unchanged
+  ---
+  duration_ms: 1.492572
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: struct S { int a; }
+ok 240 - legacy adapter public compiler accepts supported syntax: struct S { int a; }
+  ---
+  duration_ms: 97.156426
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: interface I { void M(); }
+ok 241 - legacy adapter public compiler accepts supported syntax: interface I { void M(); }
+  ---
+  duration_ms: 7.40718
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: enum E { A }
+ok 242 - legacy adapter public compiler accepts supported syntax: enum E { A }
+  ---
+  duration_ms: 4.886897
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: delegate void D();
+ok 243 - legacy adapter public compiler accepts supported syntax: delegate void D();
+  ---
+  duration_ms: 4.22103
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: namespace N { struct S { } }
+ok 244 - legacy adapter public compiler accepts supported syntax: namespace N { struct S { } }
+  ---
+  duration_ms: 4.695897
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { class B { } }
+ok 245 - legacy adapter public compiler accepts supported syntax: class A { class B { } }
+  ---
+  duration_ms: 5.802312
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { struct B { } }
+ok 246 - legacy adapter public compiler accepts supported syntax: class A { struct B { } }
+  ---
+  duration_ms: 3.977182
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { void M(ref int x) { } }
+ok 247 - legacy adapter public compiler accepts supported syntax: class A { void M(ref int x) { } }
+  ---
+  duration_ms: 6.577279
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { int? x; }
+ok 248 - legacy adapter public compiler accepts supported syntax: class A { int? x; }
+  ---
+  duration_ms: 4.224575
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A<T> { }
+ok 249 - legacy adapter public compiler accepts supported syntax: class A<T> { }
+  ---
+  duration_ms: 3.808984
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { event System.Action E; }
+ok 250 - legacy adapter public compiler accepts supported syntax: class A { event System.Action E; }
+  ---
+  duration_ms: 4.700063
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { int this[int i] { get { return 0; } } }
+ok 251 - legacy adapter public compiler accepts supported syntax: class A { int this[int i] { get { return 0; } } }
+  ---
+  duration_ms: 6.527628
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { public static A operator +(A x, A y) { return x; } }
+ok 252 - legacy adapter public compiler accepts supported syntax: class A { public static A operator +(A x, A y) { return x; } }
+  ---
+  duration_ms: 5.472418
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class A { (int, int) t; }
+ok 253 - legacy adapter public compiler accepts supported syntax: class A { (int, int) t; }
+  ---
+  duration_ms: 3.937723
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: [System.Obsolete] class A { }
+ok 254 - legacy adapter public compiler accepts supported syntax: [System.Obsolete] class A { }
+  ---
+  duration_ms: 3.635549
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: class C{public int X{get;init;}}
+ok 255 - legacy adapter public compiler accepts supported syntax: class C{public int X{get;init;}}
+  ---
+  duration_ms: 5.308677
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: var t = (1, 2);
+ok 256 - legacy adapter public compiler accepts supported syntax: var t = (1, 2);
+  ---
+  duration_ms: 5.314004
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: int i = 0; L: i++; goto L;
+ok 257 - legacy adapter public compiler accepts supported syntax: int i = 0; L: i++; goto L;
+  ---
+  duration_ms: 6.438897
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: void F() { int G() { return 1; } }
+ok 258 - legacy adapter public compiler accepts supported syntax: void F() { int G() { return 1; } }
+  ---
+  duration_ms: 3.627719
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: var x = 1.2f;
+ok 259 - legacy adapter public compiler accepts supported syntax: var x = 1.2f;
+  ---
+  duration_ms: 2.39705
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: var x = 1L;
+ok 260 - legacy adapter public compiler accepts supported syntax: var x = 1L;
+  ---
+  duration_ms: 1.842006
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: var x = 5000000000;
+ok 261 - legacy adapter public compiler accepts supported syntax: var x = 5000000000;
+  ---
+  duration_ms: 2.316973
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler accepts supported syntax: int x = 1; var y = x switch { > 0 => 1, _ => 0 };
+ok 262 - legacy adapter public compiler accepts supported syntax: int x = 1; var y = x switch { > 0 => 1, _ => 0 };
+  ---
+  duration_ms: 5.017059
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: class A : Base { }
+ok 263 - legacy adapter public compiler preserves invalid-source diagnostics: class A : Base { }
+  ---
+  duration_ms: 4.878645
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: class A { Foo<int> x; }
+ok 264 - legacy adapter public compiler preserves invalid-source diagnostics: class A { Foo<int> x; }
+  ---
+  duration_ms: 7.089883
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: class A { int* p; }
+ok 265 - legacy adapter public compiler preserves invalid-source diagnostics: class A { int* p; }
+  ---
+  duration_ms: 5.155767
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: var f = x => x;
+ok 266 - legacy adapter public compiler preserves invalid-source diagnostics: var f = x => x;
+  ---
+  duration_ms: 2.322451
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: var f = delegate { };
+ok 267 - legacy adapter public compiler preserves invalid-source diagnostics: var f = delegate { };
+  ---
+  duration_ms: 1.969183
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler preserves invalid-source diagnostics: var q = from x in xs select x;
+ok 268 - legacy adapter public compiler preserves invalid-source diagnostics: var q = from x in xs select x;
+  ---
+  duration_ms: 2.785992
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler rejects a real runtime gap: class Base { } class Derived : Base { }
+ok 269 - legacy adapter public compiler rejects a real runtime gap: class Base { } class Derived : Base { }
+  ---
+  duration_ms: 2.203336
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler rejects a real runtime gap: class A { public virtual void M() { } }
+ok 270 - legacy adapter public compiler rejects a real runtime gap: class A { public virtual void M() { } }
+  ---
+  duration_ms: 2.297144
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler rejects a real runtime gap: var s = "x"u8;
+ok 271 - legacy adapter public compiler rejects a real runtime gap: var s = "x"u8;
+  ---
+  duration_ms: 2.350612
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler rejects a real runtime gap: object o = 1; var b = o is int;
+ok 272 - legacy adapter public compiler rejects a real runtime gap: object o = 1; var b = o is int;
+  ---
+  duration_ms: 2.928762
+  type: 'test'
+  ...
+# Subtest: legacy adapter public compiler rejects a real runtime gap: object o = 1; var s = o as string;
+ok 273 - legacy adapter public compiler rejects a real runtime gap: object o = 1; var s = o as string;
+  ---
+  duration_ms: 2.259789
+  type: 'test'
+  ...
+# Subtest: legacy adapter: output is deep-equal to the pre-refactor parser for every recorded test source
+ok 274 - legacy adapter: output is deep-equal to the pre-refactor parser for every recorded test source
+  ---
+  duration_ms: 2087.389961
+  type: 'test'
+  ...
+# Subtest: legacy adapter: output is deep-equal for the repository examples and templates
+ok 275 - legacy adapter: output is deep-equal for the repository examples and templates
+  ---
+  duration_ms: 231.697938
+  type: 'test'
+  ...
+# Subtest: legacy adapter: result keeps the consumer-facing shape
+ok 276 - legacy adapter: result keeps the consumer-facing shape
+  ---
+  duration_ms: 1.105583
+  type: 'test'
+  ...
+# Subtest: legacy adapter: expressions match the pre-refactor parseExpression
+ok 277 - legacy adapter: expressions match the pre-refactor parseExpression
+  ---
+  duration_ms: 2.859109
+  type: 'test'
+  ...
+# Subtest: legacy adapter: newly accepted syntax that maps onto existing nodes compiles
+ok 278 - legacy adapter: newly accepted syntax that maps onto existing nodes compiles
+  ---
+  duration_ms: 76.051711
+  type: 'test'
+  ...
+# Subtest: lexer modules: scanner is split and one escape module serves strings, chars and interpolations
+ok 279 - lexer modules: scanner is split and one escape module serves strings, chars and interpolations
+  ---
+  duration_ms: 4.353695
+  type: 'test'
+  ...
+# Subtest: B02: hex and long Unicode escapes lex in regular, char and interpolated literals
+ok 280 - B02: hex and long Unicode escapes lex in regular, char and interpolated literals
+  ---
+  duration_ms: 60.421564
+  type: 'test'
+  ...
+# Subtest: B04: the \\e escape is a C\# 13 feature
+ok 281 - B04: the \\e escape is a C\# 13 feature
+  ---
+  duration_ms: 4.083267
+  type: 'test'
+  ...
+# Subtest: integers: C\# type selection on exact values
+ok 282 - integers: C\# type selection on exact values
+  ---
+  duration_ms: 0.947612
+  type: 'test'
+  ...
+# Subtest: integers and reals: back-end profile diagnostics stay on the legacy entry points only
+ok 283 - integers and reals: back-end profile diagnostics stay on the legacy entry points only
+  ---
+  duration_ms: 1.498572
+  type: 'test'
+  ...
+# Subtest: reals: float, double and exact decimal values
+ok 284 - reals: float, double and exact decimal values
+  ---
+  duration_ms: 0.932349
+  type: 'test'
+  ...
+# Subtest: identifiers: Unicode escapes, formatting characters and verbatim names
+ok 285 - identifiers: Unicode escapes, formatting characters and verbatim names
+  ---
+  duration_ms: 2.681148
+  type: 'test'
+  ...
+# Subtest: raw strings: quote counts, indentation and diagnostics
+ok 286 - raw strings: quote counts, indentation and diagnostics
+  ---
+  duration_ms: 1.878709
+  type: 'test'
+  ...
+# Subtest: utf8 literals: suffix on regular, verbatim and raw strings with encoded bytes
+ok 287 - utf8 literals: suffix on regular, verbatim and raw strings with encoded bytes
+  ---
+  duration_ms: 0.740007
+  type: 'test'
+  ...
+# Subtest: interpolation: structured segments, nested holes, format clauses and raw forms
+ok 288 - interpolation: structured segments, nested holes, format clauses and raw forms
+  ---
+  duration_ms: 4.501682
+  type: 'test'
+  ...
+# Subtest: directives: conditional compilation skips inactive regions without lexing them
+ok 289 - directives: conditional compilation skips inactive regions without lexing them
+  ---
+  duration_ms: 8.278358
+  type: 'test'
+  ...
+# Subtest: directives: region, diagnostics, line, pragma and nullable yield structured trivia
+ok 290 - directives: region, diagnostics, line, pragma and nullable yield structured trivia
+  ---
+  duration_ms: 11.629772
+  type: 'test'
+  ...
+# Subtest: directives: shebang, \#: and script-only directives
+ok 291 - directives: shebang, \#: and script-only directives
+  ---
+  duration_ms: 1.160134
+  type: 'test'
+  ...
+# Subtest: keywords: reserved and contextual tables match Roslyn SyntaxFacts
+ok 292 - keywords: reserved and contextual tables match Roslyn SyntaxFacts
+  ---
+  duration_ms: 68.687956
+  type: 'test'
+  ...
+# Subtest: B03: goto is a keyword and never a local declaration
+ok 293 - B03: goto is a keyword and never a local declaration
+  ---
+  duration_ms: 22.144674
+  type: 'test'
+  ...
+# Subtest: operators: every punctuation token, split > tokens and the precedence table
+ok 294 - operators: every punctuation token, split > tokens and the precedence table
+  ---
+  duration_ms: 2.132392
+  type: 'test'
+  ...
+# Subtest: B01: shift compound assignments parse to Assignment nodes and compile
+ok 295 - B01: shift compound assignments parse to Assignment nodes and compile
+  ---
+  duration_ms: 2.401397
+  type: 'test'
+  ...
+# Subtest: B05: is and as take a type or pattern operand
+ok 296 - B05: is and as take a type or pattern operand
+  ---
+  duration_ms: 9.129159
+  type: 'test'
+  ...
+# Subtest: T33 local functions with modifiers, attributes, generics and both body forms match Roslyn
+ok 297 - T33 local functions with modifiers, attributes, generics and both body forms match Roslyn
+  ---
+  duration_ms: 18.236966
+  type: 'test'
+  ...
+# Subtest: T33 a name followed by ( or < makes a local function; anything else is a variable or an expression
+ok 298 - T33 a name followed by ( or < makes a local function; anything else is a variable or an expression
+  ---
+  duration_ms: 1.427947
+  type: 'test'
+  ...
+# Subtest: T33 await is an operator only in async local functions
+ok 299 - T33 await is an operator only in async local functions
+  ---
+  duration_ms: 0.528225
+  type: 'test'
+  ...
+# Subtest: T33 local functions need C\# 7; static needs 8; extern and attributes need 9
+ok 300 - T33 local functions need C\# 7; static needs 8; extern and attributes need 9
+  ---
+  duration_ms: 3.643111
+  type: 'test'
+  ...
+# Subtest: T33 malformed local functions recover as Roslyn does
+ok 301 - T33 malformed local functions recover as Roslyn does
+  ---
+  duration_ms: 1.889105
+  type: 'test'
+  ...
+# Subtest: kinds: numeric ids are frozen by the snapshot
+ok 302 - kinds: numeric ids are frozen by the snapshot
+  ---
+  duration_ms: 2.104241
+  type: 'test'
+  ...
+# Subtest: kinds: every token, keyword and grammar node kind is enumerated
+ok 303 - kinds: every token, keyword and grammar node kind is enumerated
+  ---
+  duration_ms: 435.793239
+  type: 'test'
+  ...
+# Subtest: green: full width equals source length for every fixture and all elements are immutable
+ok 304 - green: full width equals source length for every fixture and all elements are immutable
+  ---
+  duration_ms: 415.086691
+  type: 'test'
+  ...
+# Subtest: green: identical subtrees, tokens and trivia are shared
+ok 305 - green: identical subtrees, tokens and trivia are shared
+  ---
+  duration_ms: 1.188826
+  type: 'test'
+  ...
+# Subtest: green: missing tokens are zero-width and flagged
+ok 306 - green: missing tokens are zero-width and flagged
+  ---
+  duration_ms: 1.02109
+  type: 'test'
+  ...
+# Subtest: red: findToken returns the right token for every offset of a 100 KB file and parent chains are consistent
+ok 307 - red: findToken returns the right token for every offset of a 100 KB file and parent chains are consistent
+  ---
+  duration_ms: 357.022064
+  type: 'test'
+  ...
+# Subtest: red: spans exclude trivia, lists are transparent and slots have typed accessors
+ok 308 - red: spans exclude trivia, lists are transparent and slots have typed accessors
+  ---
+  duration_ms: 1.876146
+  type: 'test'
+  ...
+# Subtest: trivia: token full texts reproduce the input byte-for-byte including a BOM and every line ending
+ok 309 - trivia: token full texts reproduce the input byte-for-byte including a BOM and every line ending
+  ---
+  duration_ms: 1.185251
+  type: 'test'
+  ...
+# Subtest: trivia: Roslyn attachment rules
+ok 310 - trivia: Roslyn attachment rules
+  ---
+  duration_ms: 0.849448
+  type: 'test'
+  ...
+# Subtest: recovery: 500 truncated and malformed inputs round-trip without losing a character
+ok 311 - recovery: 500 truncated and malformed inputs round-trip without losing a character
+  ---
+  duration_ms: 1068.867059
+  type: 'test'
+  ...
+# Subtest: recovery: missing tokens are inserted and unexpected tokens become skipped-token trivia
+ok 312 - recovery: missing tokens are inserted and unexpected tokens become skipped-token trivia
+  ---
+  duration_ms: 2.174454
+  type: 'test'
+  ...
+# Subtest: generated nodes: file is reproducible from the grammar and every kind has accessors for all slots
+ok 313 - generated nodes: file is reproducible from the grammar and every kind has accessors for all slots
+  ---
+  duration_ms: 151.040137
+  type: 'test'
+  ...
+# Subtest: generated nodes: with*() updaters and factories build detached nodes
+ok 314 - generated nodes: with*() updaters and factories build detached nodes
+  ---
+  duration_ms: 0.74233
+  type: 'test'
+  ...
+# Subtest: visitor: identity rewriter returns the same green root and a trivia-depth walker visits every character once
+ok 315 - visitor: identity rewriter returns the same green root and a trivia-depth walker visits every character once
+  ---
+  duration_ms: 46.972526
+  type: 'test'
+  ...
+# Subtest: visitor: dispatch, depth and rewriting
+ok 316 - visitor: dispatch, depth and rewriting
+  ---
+  duration_ms: 1.036252
+  type: 'test'
+  ...
+# Subtest: roundtrip: toFullString equals the input for every repository source in LF, CRLF and mixed line endings
+ok 317 - roundtrip: toFullString equals the input for every repository source in LF, CRLF and mixed line endings
+  ---
+  duration_ms: 1548.871549
+  type: 'test'
+  ...
+# Subtest: roundtrip: files with errors, directives and unusual trivia
+ok 318 - roundtrip: files with errors, directives and unusual trivia
+  ---
+  duration_ms: 1.819232
+  type: 'test'
+  ...
+# Subtest: syntax tree: parseText, diagnostics and text changes
+ok 319 - syntax tree: parseText, diagnostics and text changes
+  ---
+  duration_ms: 3.469105
+  type: 'test'
+  ...
+# Subtest: matrix: every syntax-gated catalog row has a positive and a rejected fixture
+ok 320 - matrix: every syntax-gated catalog row has a positive and a rejected fixture
+  ---
+  duration_ms: 8.21075
+  type: 'test'
+  ...
+# Subtest: matrix: 2/Generics is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 321 - matrix: 2/Generics is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 1.767196
+  type: 'test'
+  ...
+# Subtest: matrix: 2/AnonDelegates is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 322 - matrix: 2/AnonDelegates is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 1.039927
+  type: 'test'
+  ...
+# Subtest: matrix: 2/GlobalNamespace is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 323 - matrix: 2/GlobalNamespace is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 0.668402
+  type: 'test'
+  ...
+# Subtest: matrix: 2/FixedBuffer is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 324 - matrix: 2/FixedBuffer is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 0.852522
+  type: 'test'
+  ...
+# Subtest: matrix: 2/Pragma is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 325 - matrix: 2/Pragma is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 0.624047
+  type: 'test'
+  ...
+# Subtest: matrix: 2/StaticClasses is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 326 - matrix: 2/StaticClasses is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 0.671316
+  type: 'test'
+  ...
+# Subtest: matrix: 2/PartialTypes is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 327 - matrix: 2/PartialTypes is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 0.549828
+  type: 'test'
+  ...
+# Subtest: matrix: 2/Nullable is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 328 - matrix: 2/Nullable is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 0.597397
+  type: 'test'
+  ...
+# Subtest: matrix: 2/Iterators is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 329 - matrix: 2/Iterators is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 1.016283
+  type: 'test'
+  ...
+# Subtest: matrix: 2/Default is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 330 - matrix: 2/Default is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 0.78976
+  type: 'test'
+  ...
+# Subtest: matrix: 2/PropertyAccessorMods is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 331 - matrix: 2/PropertyAccessorMods is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 0.811051
+  type: 'test'
+  ...
+# Subtest: matrix: 2/ExternAlias is accepted at C\# 2 and rejected at C\# 1 with CS8022
+ok 332 - matrix: 2/ExternAlias is accepted at C\# 2 and rejected at C\# 1 with CS8022
+  ---
+  duration_ms: 0.627382
+  type: 'test'
+  ...
+# Subtest: matrix: 3/ImplicitArray is accepted at C\# 3 and rejected at C\# 2 with CS8023
+ok 333 - matrix: 3/ImplicitArray is accepted at C\# 3 and rejected at C\# 2 with CS8023
+  ---
+  duration_ms: 1.025366
+  type: 'test'
+  ...
+# Subtest: matrix: 3/AnonymousTypes is accepted at C\# 3 and rejected at C\# 2 with CS8023
+ok 334 - matrix: 3/AnonymousTypes is accepted at C\# 3 and rejected at C\# 2 with CS8023
+  ---
+  duration_ms: 0.848005
+  type: 'test'
+  ...
+# Subtest: matrix: 3/ObjectInitializer is accepted at C\# 3 and rejected at C\# 2 with CS8023
+ok 335 - matrix: 3/ObjectInitializer is accepted at C\# 3 and rejected at C\# 2 with CS8023
+  ---
+  duration_ms: 1.203107
+  type: 'test'
+  ...
+# Subtest: matrix: 3/CollectionInitializer is accepted at C\# 3 and rejected at C\# 2 with CS8023
+ok 336 - matrix: 3/CollectionInitializer is accepted at C\# 3 and rejected at C\# 2 with CS8023
+  ---
+  duration_ms: 0.958297
+  type: 'test'
+  ...
+# Subtest: matrix: 3/Lambda is accepted at C\# 3 and rejected at C\# 2 with CS8023
+ok 337 - matrix: 3/Lambda is accepted at C\# 3 and rejected at C\# 2 with CS8023
+  ---
+  duration_ms: 0.707099
+  type: 'test'
+  ...
+# Subtest: matrix: 3/QueryExpression is accepted at C\# 3 and rejected at C\# 2 with CS8023
+ok 338 - matrix: 3/QueryExpression is accepted at C\# 3 and rejected at C\# 2 with CS8023
+  ---
+  duration_ms: 0.713949
+  type: 'test'
+  ...
+# Subtest: matrix: 3/ExtensionMethod is accepted at C\# 3 and rejected at C\# 2 with CS8023
+ok 339 - matrix: 3/ExtensionMethod is accepted at C\# 3 and rejected at C\# 2 with CS8023
+  ---
+  duration_ms: 0.709171
+  type: 'test'
+  ...
+# Subtest: matrix: 3/PartialMethod is accepted at C\# 3 and rejected at C\# 2 with CS8023
+ok 340 - matrix: 3/PartialMethod is accepted at C\# 3 and rejected at C\# 2 with CS8023
+  ---
+  duration_ms: 0.680319
+  type: 'test'
+  ...
+# Subtest: matrix: 3/ImplicitLocal is accepted at C\# 3 and rejected at C\# 2 with CS8023
+ok 341 - matrix: 3/ImplicitLocal is accepted at C\# 3 and rejected at C\# 2 with CS8023
+  ---
+  duration_ms: 0.581744
+  type: 'test'
+  ...
+# Subtest: matrix: 4/TypeVariance is accepted at C\# 4 and rejected at C\# 3 with CS8024
+ok 342 - matrix: 4/TypeVariance is accepted at C\# 4 and rejected at C\# 3 with CS8024
+  ---
+  duration_ms: 0.616246
+  type: 'test'
+  ...
+# Subtest: matrix: 4/NamedArgument is accepted at C\# 4 and rejected at C\# 3 with CS8024
+ok 343 - matrix: 4/NamedArgument is accepted at C\# 4 and rejected at C\# 3 with CS8024
+  ---
+  duration_ms: 0.868266
+  type: 'test'
+  ...
+# Subtest: matrix: 4/OptionalParameter is accepted at C\# 4 and rejected at C\# 3 with CS8024
+ok 344 - matrix: 4/OptionalParameter is accepted at C\# 4 and rejected at C\# 3 with CS8024
+  ---
+  duration_ms: 0.589436
+  type: 'test'
+  ...
+# Subtest: matrix: 5/Async is accepted at C\# 5 and rejected at C\# 4 with CS8025
+ok 345 - matrix: 5/Async is accepted at C\# 5 and rejected at C\# 4 with CS8025
+  ---
+  duration_ms: 0.573011
+  type: 'test'
+  ...
+# Subtest: matrix: 6/ExceptionFilter is accepted at C\# 6 and rejected at C\# 5 with CS8026
+ok 346 - matrix: 6/ExceptionFilter is accepted at C\# 6 and rejected at C\# 5 with CS8026
+  ---
+  duration_ms: 0.746797
+  type: 'test'
+  ...
+# Subtest: matrix: 6/AutoPropertyInitializer is accepted at C\# 6 and rejected at C\# 5 with CS8026
+ok 347 - matrix: 6/AutoPropertyInitializer is accepted at C\# 6 and rejected at C\# 5 with CS8026
+  ---
+  duration_ms: 0.652098
+  type: 'test'
+  ...
+# Subtest: matrix: 6/NullPropagatingOperator is accepted at C\# 6 and rejected at C\# 5 with CS8026
+ok 348 - matrix: 6/NullPropagatingOperator is accepted at C\# 6 and rejected at C\# 5 with CS8026
+  ---
+  duration_ms: 0.740638
+  type: 'test'
+  ...
+# Subtest: matrix: 6/ExpressionBodiedMethod is accepted at C\# 6 and rejected at C\# 5 with CS8026
+ok 349 - matrix: 6/ExpressionBodiedMethod is accepted at C\# 6 and rejected at C\# 5 with CS8026
+  ---
+  duration_ms: 0.569656
+  type: 'test'
+  ...
+# Subtest: matrix: 6/ExpressionBodiedProperty is accepted at C\# 6 and rejected at C\# 5 with CS8026
+ok 350 - matrix: 6/ExpressionBodiedProperty is accepted at C\# 6 and rejected at C\# 5 with CS8026
+  ---
+  duration_ms: 0.644997
+  type: 'test'
+  ...
+# Subtest: matrix: 6/ExpressionBodiedIndexer is accepted at C\# 6 and rejected at C\# 5 with CS8026
+ok 351 - matrix: 6/ExpressionBodiedIndexer is accepted at C\# 6 and rejected at C\# 5 with CS8026
+  ---
+  duration_ms: 0.594243
+  type: 'test'
+  ...
+# Subtest: matrix: 6/DictionaryInitializer is accepted at C\# 6 and rejected at C\# 5 with CS8026
+ok 352 - matrix: 6/DictionaryInitializer is accepted at C\# 6 and rejected at C\# 5 with CS8026
+  ---
+  duration_ms: 0.974512
+  type: 'test'
+  ...
+# Subtest: matrix: 6/UsingStatic is accepted at C\# 6 and rejected at C\# 5 with CS8026
+ok 353 - matrix: 6/UsingStatic is accepted at C\# 6 and rejected at C\# 5 with CS8026
+  ---
+  duration_ms: 0.599611
+  type: 'test'
+  ...
+# Subtest: matrix: 6/InterpolatedStrings is accepted at C\# 6 and rejected at C\# 5 with CS8026
+ok 354 - matrix: 6/InterpolatedStrings is accepted at C\# 6 and rejected at C\# 5 with CS8026
+  ---
+  duration_ms: 0.960281
+  type: 'test'
+  ...
+# Subtest: matrix: 7/BinaryLiteral is accepted at C\# 7 and rejected at C\# 6 with CS8059
+ok 355 - matrix: 7/BinaryLiteral is accepted at C\# 7 and rejected at C\# 6 with CS8059
+  ---
+  duration_ms: 0.684656
+  type: 'test'
+  ...
+# Subtest: matrix: 7/DigitSeparator is accepted at C\# 7 and rejected at C\# 6 with CS8059
+ok 356 - matrix: 7/DigitSeparator is accepted at C\# 7 and rejected at C\# 6 with CS8059
+  ---
+  duration_ms: 3.981779
+  type: 'test'
+  ...
+# Subtest: matrix: 7/LocalFunctions is accepted at C\# 7 and rejected at C\# 6 with CS8059
+ok 357 - matrix: 7/LocalFunctions is accepted at C\# 7 and rejected at C\# 6 with CS8059
+  ---
+  duration_ms: 0.943135
+  type: 'test'
+  ...
+# Subtest: matrix: 7/RefLocalsReturns is accepted at C\# 7 and rejected at C\# 6 with CS8059
+ok 358 - matrix: 7/RefLocalsReturns is accepted at C\# 7 and rejected at C\# 6 with CS8059
+  ---
+  duration_ms: 0.677285
+  type: 'test'
+  ...
+# Subtest: matrix: 7/PatternMatching is accepted at C\# 7 and rejected at C\# 6 with CS8059
+ok 359 - matrix: 7/PatternMatching is accepted at C\# 7 and rejected at C\# 6 with CS8059
+  ---
+  duration_ms: 0.727919
+  type: 'test'
+  ...
+# Subtest: matrix: 7/ThrowExpression is accepted at C\# 7 and rejected at C\# 6 with CS8059
+ok 360 - matrix: 7/ThrowExpression is accepted at C\# 7 and rejected at C\# 6 with CS8059
+  ---
+  duration_ms: 0.652508
+  type: 'test'
+  ...
+# Subtest: matrix: 7/Tuples is accepted at C\# 7 and rejected at C\# 6 with CS8059
+ok 361 - matrix: 7/Tuples is accepted at C\# 7 and rejected at C\# 6 with CS8059
+  ---
+  duration_ms: 0.663063
+  type: 'test'
+  ...
+# Subtest: matrix: 7/OutVar is accepted at C\# 7 and rejected at C\# 6 with CS8059
+ok 362 - matrix: 7/OutVar is accepted at C\# 7 and rejected at C\# 6 with CS8059
+  ---
+  duration_ms: 0.623656
+  type: 'test'
+  ...
+# Subtest: matrix: 7/ExpressionBodiedAccessor is accepted at C\# 7 and rejected at C\# 6 with CS8059
+ok 363 - matrix: 7/ExpressionBodiedAccessor is accepted at C\# 7 and rejected at C\# 6 with CS8059
+  ---
+  duration_ms: 0.540464
+  type: 'test'
+  ...
+# Subtest: matrix: 7/ExpressionBodiedDeOrConstructor is accepted at C\# 7 and rejected at C\# 6 with CS8059
+ok 364 - matrix: 7/ExpressionBodiedDeOrConstructor is accepted at C\# 7 and rejected at C\# 6 with CS8059
+  ---
+  duration_ms: 0.599771
+  type: 'test'
+  ...
+# Subtest: matrix: 7.1/DefaultLiteral is accepted at C\# 7.1 and rejected at C\# 7 with CS8107
+ok 365 - matrix: 7.1/DefaultLiteral is accepted at C\# 7.1 and rejected at C\# 7 with CS8107
+  ---
+  duration_ms: 0.883047
+  type: 'test'
+  ...
+# Subtest: matrix: 7.2/LeadingDigitSeparator is accepted at C\# 7.2 and rejected at C\# 7.1 with CS8302
+ok 366 - matrix: 7.2/LeadingDigitSeparator is accepted at C\# 7.2 and rejected at C\# 7.1 with CS8302
+  ---
+  duration_ms: 0.710163
+  type: 'test'
+  ...
+# Subtest: matrix: 7.2/PrivateProtected is accepted at C\# 7.2 and rejected at C\# 7.1 with CS8302
+ok 367 - matrix: 7.2/PrivateProtected is accepted at C\# 7.2 and rejected at C\# 7.1 with CS8302
+  ---
+  duration_ms: 0.532232
+  type: 'test'
+  ...
+# Subtest: matrix: 7.2/ReadOnlyReferences is accepted at C\# 7.2 and rejected at C\# 7.1 with CS8302
+ok 368 - matrix: 7.2/ReadOnlyReferences is accepted at C\# 7.2 and rejected at C\# 7.1 with CS8302
+  ---
+  duration_ms: 0.499343
+  type: 'test'
+  ...
+# Subtest: matrix: 7.2/RefStructs is accepted at C\# 7.2 and rejected at C\# 7.1 with CS8302
+ok 369 - matrix: 7.2/RefStructs is accepted at C\# 7.2 and rejected at C\# 7.1 with CS8302
+  ---
+  duration_ms: 0.441929
+  type: 'test'
+  ...
+# Subtest: matrix: 7.2/ReadOnlyStructs is accepted at C\# 7.2 and rejected at C\# 7.1 with CS8302
+ok 370 - matrix: 7.2/ReadOnlyStructs is accepted at C\# 7.2 and rejected at C\# 7.1 with CS8302
+  ---
+  duration_ms: 0.38136
+  type: 'test'
+  ...
+# Subtest: matrix: 7.3/AttributesOnBackingFields is accepted at C\# 7.3 and rejected at C\# 7.2 with CS8371
+ok 371 - matrix: 7.3/AttributesOnBackingFields is accepted at C\# 7.3 and rejected at C\# 7.2 with CS8371
+  ---
+  duration_ms: 0.617878
+  type: 'test'
+  ...
+# Subtest: matrix: 7.3/StackAllocInitializer is accepted at C\# 7.3 and rejected at C\# 7.2 with CS8320
+ok 372 - matrix: 7.3/StackAllocInitializer is accepted at C\# 7.3 and rejected at C\# 7.2 with CS8320
+  ---
+  duration_ms: 0.759315
+  type: 'test'
+  ...
+# Subtest: matrix: 7.3/ExpressionVariablesInQueriesAndInitializers is accepted at C\# 7.3 and rejected at C\# 7.2 with CS8320
+ok 373 - matrix: 7.3/ExpressionVariablesInQueriesAndInitializers is accepted at C\# 7.3 and rejected at C\# 7.2 with CS8320
+  ---
+  duration_ms: 0.972087
+  type: 'test'
+  ...
+# Subtest: matrix: 8/AltInterpolatedVerbatimStrings is accepted at C\# 8 and rejected at C\# 7.3 with CS8401
+ok 374 - matrix: 8/AltInterpolatedVerbatimStrings is accepted at C\# 8 and rejected at C\# 7.3 with CS8401
+  ---
+  duration_ms: 0.752746
+  type: 'test'
+  ...
+# Subtest: matrix: 8/CoalesceAssignmentExpression is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 375 - matrix: 8/CoalesceAssignmentExpression is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.607663
+  type: 'test'
+  ...
+# Subtest: matrix: 8/IndexOperator is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 376 - matrix: 8/IndexOperator is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.692036
+  type: 'test'
+  ...
+# Subtest: matrix: 8/RangeOperator is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 377 - matrix: 8/RangeOperator is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.608133
+  type: 'test'
+  ...
+# Subtest: matrix: 8/AsyncStreams is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 378 - matrix: 8/AsyncStreams is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.590197
+  type: 'test'
+  ...
+# Subtest: matrix: 8/RecursivePatterns is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 379 - matrix: 8/RecursivePatterns is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.713839
+  type: 'test'
+  ...
+# Subtest: matrix: 8/UsingDeclarations is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 380 - matrix: 8/UsingDeclarations is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.68713
+  type: 'test'
+  ...
+# Subtest: matrix: 8/StaticLocalFunctions is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 381 - matrix: 8/StaticLocalFunctions is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.936095
+  type: 'test'
+  ...
+# Subtest: matrix: 8/ReadOnlyMembers is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 382 - matrix: 8/ReadOnlyMembers is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.659889
+  type: 'test'
+  ...
+# Subtest: matrix: 8/DefaultInterfaceImplementation is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 383 - matrix: 8/DefaultInterfaceImplementation is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.628783
+  type: 'test'
+  ...
+# Subtest: matrix: 8/NullableReferenceTypes is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 384 - matrix: 8/NullableReferenceTypes is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.491432
+  type: 'test'
+  ...
+# Subtest: matrix: 8/SwitchExpression is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 385 - matrix: 8/SwitchExpression is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.724664
+  type: 'test'
+  ...
+# Subtest: matrix: 8/AsyncUsing is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+ok 386 - matrix: 8/AsyncUsing is accepted at C\# 8 and rejected at C\# 7.3 with CS8370
+  ---
+  duration_ms: 0.83041
+  type: 'test'
+  ...
+# Subtest: matrix: 9/TopLevelStatements is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 387 - matrix: 9/TopLevelStatements is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.637396
+  type: 'test'
+  ...
+# Subtest: matrix: 9/InitOnlySetters is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 388 - matrix: 9/InitOnlySetters is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.549407
+  type: 'test'
+  ...
+# Subtest: matrix: 9/Records is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 389 - matrix: 9/Records is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.757533
+  type: 'test'
+  ...
+# Subtest: matrix: 9/ImplicitObjectCreation is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 390 - matrix: 9/ImplicitObjectCreation is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.573202
+  type: 'test'
+  ...
+# Subtest: matrix: 9/StaticAnonymousFunction is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 391 - matrix: 9/StaticAnonymousFunction is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.768559
+  type: 'test'
+  ...
+# Subtest: matrix: 9/ExternLocalFunctions is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 392 - matrix: 9/ExternLocalFunctions is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.559722
+  type: 'test'
+  ...
+# Subtest: matrix: 9/FunctionPointers is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 393 - matrix: 9/FunctionPointers is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.505342
+  type: 'test'
+  ...
+# Subtest: matrix: 9/LocalFunctionAttributes is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 394 - matrix: 9/LocalFunctionAttributes is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.802018
+  type: 'test'
+  ...
+# Subtest: matrix: 9/LambdaDiscardParameters is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 395 - matrix: 9/LambdaDiscardParameters is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.802849
+  type: 'test'
+  ...
+# Subtest: matrix: 9/AndPattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 396 - matrix: 9/AndPattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.685858
+  type: 'test'
+  ...
+# Subtest: matrix: 9/OrPattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 397 - matrix: 9/OrPattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.714249
+  type: 'test'
+  ...
+# Subtest: matrix: 9/NotPattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 398 - matrix: 9/NotPattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.723412
+  type: 'test'
+  ...
+# Subtest: matrix: 9/TypePattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 399 - matrix: 9/TypePattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.659549
+  type: 'test'
+  ...
+# Subtest: matrix: 9/ParenthesizedPattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 400 - matrix: 9/ParenthesizedPattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.695272
+  type: 'test'
+  ...
+# Subtest: matrix: 9/RelationalPattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 401 - matrix: 9/RelationalPattern is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.642423
+  type: 'test'
+  ...
+# Subtest: matrix: 9/DefaultTypeParameterConstraint is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 402 - matrix: 9/DefaultTypeParameterConstraint is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.573172
+  type: 'test'
+  ...
+# Subtest: matrix: 9/ExtendedPartialMethods is accepted at C\# 9 and rejected at C\# 8 with CS8400
+ok 403 - matrix: 9/ExtendedPartialMethods is accepted at C\# 9 and rejected at C\# 8 with CS8400
+  ---
+  duration_ms: 0.760247
+  type: 'test'
+  ...
+# Subtest: matrix: 10/MixedDeclarationsAndExpressionsInDeconstruction is accepted at C\# 10 and rejected at C\# 9 with CS8773
+ok 404 - matrix: 10/MixedDeclarationsAndExpressionsInDeconstruction is accepted at C\# 10 and rejected at C\# 9 with CS8773
+  ---
+  duration_ms: 0.942745
+  type: 'test'
+  ...
+# Subtest: matrix: 10/RecordStructs is accepted at C\# 10 and rejected at C\# 9 with CS8773
+ok 405 - matrix: 10/RecordStructs is accepted at C\# 10 and rejected at C\# 9 with CS8773
+  ---
+  duration_ms: 0.505032
+  type: 'test'
+  ...
+# Subtest: matrix: 10/GlobalUsing is accepted at C\# 10 and rejected at C\# 9 with CS8773
+ok 406 - matrix: 10/GlobalUsing is accepted at C\# 10 and rejected at C\# 9 with CS8773
+  ---
+  duration_ms: 0.443972
+  type: 'test'
+  ...
+# Subtest: matrix: 10/LambdaAttributes is accepted at C\# 10 and rejected at C\# 9 with CS8773
+ok 407 - matrix: 10/LambdaAttributes is accepted at C\# 10 and rejected at C\# 9 with CS8773
+  ---
+  duration_ms: 0.78967
+  type: 'test'
+  ...
+# Subtest: matrix: 10/LambdaReturnType is accepted at C\# 10 and rejected at C\# 9 with CS8773
+ok 408 - matrix: 10/LambdaReturnType is accepted at C\# 10 and rejected at C\# 9 with CS8773
+  ---
+  duration_ms: 0.873813
+  type: 'test'
+  ...
+# Subtest: matrix: 10/FileScopedNamespace is accepted at C\# 10 and rejected at C\# 9 with CS8773
+ok 409 - matrix: 10/FileScopedNamespace is accepted at C\# 10 and rejected at C\# 9 with CS8773
+  ---
+  duration_ms: 0.470251
+  type: 'test'
+  ...
+# Subtest: matrix: 10/ParameterlessStructConstructors is accepted at C\# 10 and rejected at C\# 9 with CS8773
+ok 410 - matrix: 10/ParameterlessStructConstructors is accepted at C\# 10 and rejected at C\# 9 with CS8773
+  ---
+  duration_ms: 0.701861
+  type: 'test'
+  ...
+# Subtest: matrix: 10/StructFieldInitializers is accepted at C\# 10 and rejected at C\# 9 with CS8773
+ok 411 - matrix: 10/StructFieldInitializers is accepted at C\# 10 and rejected at C\# 9 with CS8773
+  ---
+  duration_ms: 0.801908
+  type: 'test'
+  ...
+# Subtest: matrix: 10/ExtendedPropertyPatterns is accepted at C\# 10 and rejected at C\# 9 with CS8773
+ok 412 - matrix: 10/ExtendedPropertyPatterns is accepted at C\# 10 and rejected at C\# 9 with CS8773
+  ---
+  duration_ms: 0.864019
+  type: 'test'
+  ...
+# Subtest: matrix: 11/RawStringLiterals is accepted at C\# 11 and rejected at C\# 10 with CS8936
+ok 413 - matrix: 11/RawStringLiterals is accepted at C\# 11 and rejected at C\# 10 with CS8936
+  ---
+  duration_ms: 0.62636
+  type: 'test'
+  ...
+# Subtest: matrix: 11/StaticAbstractMembersInInterfaces is accepted at C\# 11 and rejected at C\# 10 with CS8703
+ok 414 - matrix: 11/StaticAbstractMembersInInterfaces is accepted at C\# 11 and rejected at C\# 10 with CS8703
+  ---
+  duration_ms: 0.641112
+  type: 'test'
+  ...
+# Subtest: matrix: 11/NewLinesInInterpolations is accepted at C\# 11 and rejected at C\# 10 with CS8967
+ok 415 - matrix: 11/NewLinesInInterpolations is accepted at C\# 11 and rejected at C\# 10 with CS8967
+  ---
+  duration_ms: 0.822428
+  type: 'test'
+  ...
+# Subtest: matrix: 11/ListPattern is accepted at C\# 11 and rejected at C\# 10 with CS8936
+ok 416 - matrix: 11/ListPattern is accepted at C\# 11 and rejected at C\# 10 with CS8936
+  ---
+  duration_ms: 0.897839
+  type: 'test'
+  ...
+# Subtest: matrix: 11/RequiredMembers is accepted at C\# 11 and rejected at C\# 10 with CS8936
+ok 417 - matrix: 11/RequiredMembers is accepted at C\# 11 and rejected at C\# 10 with CS8936
+  ---
+  duration_ms: 0.614442
+  type: 'test'
+  ...
+# Subtest: matrix: 11/GenericAttributes is accepted at C\# 11 and rejected at C\# 10 with CS8936
+ok 418 - matrix: 11/GenericAttributes is accepted at C\# 11 and rejected at C\# 10 with CS8936
+  ---
+  duration_ms: 0.747167
+  type: 'test'
+  ...
+# Subtest: matrix: 11/CheckedUserDefinedOperators is accepted at C\# 11 and rejected at C\# 10 with CS8936
+ok 419 - matrix: 11/CheckedUserDefinedOperators is accepted at C\# 11 and rejected at C\# 10 with CS8936
+  ---
+  duration_ms: 0.786115
+  type: 'test'
+  ...
+# Subtest: matrix: 11/UnsignedRightShift is accepted at C\# 11 and rejected at C\# 10 with CS8936
+ok 420 - matrix: 11/UnsignedRightShift is accepted at C\# 11 and rejected at C\# 10 with CS8936
+  ---
+  duration_ms: 0.895866
+  type: 'test'
+  ...
+# Subtest: matrix: 11/Utf8StringLiterals is accepted at C\# 11 and rejected at C\# 10 with CS8936
+ok 421 - matrix: 11/Utf8StringLiterals is accepted at C\# 11 and rejected at C\# 10 with CS8936
+  ---
+  duration_ms: 0.997806
+  type: 'test'
+  ...
+# Subtest: matrix: 11/FileTypes is accepted at C\# 11 and rejected at C\# 10 with CS8936
+ok 422 - matrix: 11/FileTypes is accepted at C\# 11 and rejected at C\# 10 with CS8936
+  ---
+  duration_ms: 0.477141
+  type: 'test'
+  ...
+# Subtest: matrix: 12/PrimaryConstructors is accepted at C\# 12 and rejected at C\# 11 with CS9058
+ok 423 - matrix: 12/PrimaryConstructors is accepted at C\# 12 and rejected at C\# 11 with CS9058
+  ---
+  duration_ms: 0.45665
+  type: 'test'
+  ...
+# Subtest: matrix: 12/UsingTypeAlias is accepted at C\# 12 and rejected at C\# 11 with CS9058
+ok 424 - matrix: 12/UsingTypeAlias is accepted at C\# 12 and rejected at C\# 11 with CS9058
+  ---
+  duration_ms: 0.610977
+  type: 'test'
+  ...
+# Subtest: matrix: 12/CollectionExpressions is accepted at C\# 12 and rejected at C\# 11 with CS9058
+ok 425 - matrix: 12/CollectionExpressions is accepted at C\# 12 and rejected at C\# 11 with CS9058
+  ---
+  duration_ms: 1.090241
+  type: 'test'
+  ...
+# Subtest: matrix: 12/RefReadonlyParameters is accepted at C\# 12 and rejected at C\# 11 with CS9058
+ok 426 - matrix: 12/RefReadonlyParameters is accepted at C\# 12 and rejected at C\# 11 with CS9058
+  ---
+  duration_ms: 0.585129
+  type: 'test'
+  ...
+# Subtest: matrix: 12/LambdaOptionalParameters is accepted at C\# 12 and rejected at C\# 11 with CS9058
+ok 427 - matrix: 12/LambdaOptionalParameters is accepted at C\# 12 and rejected at C\# 11 with CS9058
+  ---
+  duration_ms: 0.780206
+  type: 'test'
+  ...
+# Subtest: matrix: 12/LambdaParamsArray is accepted at C\# 12 and rejected at C\# 11 with CS9058
+ok 428 - matrix: 12/LambdaParamsArray is accepted at C\# 12 and rejected at C\# 11 with CS9058
+  ---
+  duration_ms: 0.746216
+  type: 'test'
+  ...
+# Subtest: matrix: 13/ParamsCollections is accepted at C\# 13 and rejected at C\# 12 with CS9202
+ok 429 - matrix: 13/ParamsCollections is accepted at C\# 13 and rejected at C\# 12 with CS9202
+  ---
+  duration_ms: 0.638488
+  type: 'test'
+  ...
+# Subtest: matrix: 13/StringEscapeCharacter is accepted at C\# 13 and rejected at C\# 12 with CS9202
+ok 430 - matrix: 13/StringEscapeCharacter is accepted at C\# 13 and rejected at C\# 12 with CS9202
+  ---
+  duration_ms: 0.606942
+  type: 'test'
+  ...
+# Subtest: matrix: 13/AllowsRefStructConstraint is accepted at C\# 13 and rejected at C\# 12 with CS9202
+ok 431 - matrix: 13/AllowsRefStructConstraint is accepted at C\# 13 and rejected at C\# 12 with CS9202
+  ---
+  duration_ms: 0.692097
+  type: 'test'
+  ...
+# Subtest: matrix: 13/PartialProperties is accepted at C\# 13 and rejected at C\# 12 with CS8703
+ok 432 - matrix: 13/PartialProperties is accepted at C\# 13 and rejected at C\# 12 with CS8703
+  ---
+  duration_ms: 0.583607
+  type: 'test'
+  ...
+# Subtest: matrix: 14/FieldKeyword is accepted at C\# 14 and rejected at C\# 13 with CS9260
+ok 433 - matrix: 14/FieldKeyword is accepted at C\# 14 and rejected at C\# 13 with CS9260
+  ---
+  duration_ms: 2.505399
+  type: 'test'
+  ...
+# Subtest: matrix: 14/UnboundGenericTypesInNameof is accepted at C\# 14 and rejected at C\# 13 with CS9260
+ok 434 - matrix: 14/UnboundGenericTypesInNameof is accepted at C\# 14 and rejected at C\# 13 with CS9260
+  ---
+  duration_ms: 0.875465
+  type: 'test'
+  ...
+# Subtest: matrix: 14/SimpleLambdaParameterModifiers is accepted at C\# 14 and rejected at C\# 13 with CS9260
+ok 435 - matrix: 14/SimpleLambdaParameterModifiers is accepted at C\# 14 and rejected at C\# 13 with CS9260
+  ---
+  duration_ms: 1.020139
+  type: 'test'
+  ...
+# Subtest: matrix: 14/PartialEventsAndConstructors is accepted at C\# 14 and rejected at C\# 13 with CS9260
+ok 436 - matrix: 14/PartialEventsAndConstructors is accepted at C\# 14 and rejected at C\# 13 with CS9260
+  ---
+  duration_ms: 0.539442
+  type: 'test'
+  ...
+# Subtest: matrix: 14/Extensions is accepted at C\# 14 and rejected at C\# 13 with CS9260
+ok 437 - matrix: 14/Extensions is accepted at C\# 14 and rejected at C\# 13 with CS9260
+  ---
+  duration_ms: 0.838481
+  type: 'test'
+  ...
+# Subtest: matrix: 14/NullConditionalAssignment is accepted at C\# 14 and rejected at C\# 13 with CS9260
+ok 438 - matrix: 14/NullConditionalAssignment is accepted at C\# 14 and rejected at C\# 13 with CS9260
+  ---
+  duration_ms: 0.758985
+  type: 'test'
+  ...
+# Subtest: matrix: 14/UserDefinedCompoundAssignmentOperators is accepted at C\# 14 and rejected at C\# 13 with CS9260
+ok 439 - matrix: 14/UserDefinedCompoundAssignmentOperators is accepted at C\# 14 and rejected at C\# 13 with CS9260
+  ---
+  duration_ms: 0.543047
+  type: 'test'
+  ...
+# Subtest: matrix: preview/CollectionExpressionArguments is accepted at C\# preview and rejected at C\# 14 with CS8652
+ok 440 - matrix: preview/CollectionExpressionArguments is accepted at C\# preview and rejected at C\# 14 with CS8652
+  ---
+  duration_ms: 1.489688
+  type: 'test'
+  ...
+# Subtest: matrix: preview/LabeledBreakContinue is accepted at C\# preview and rejected at C\# 14 with CS8652
+ok 441 - matrix: preview/LabeledBreakContinue is accepted at C\# preview and rejected at C\# 14 with CS8652
+  ---
+  duration_ms: 0.493995
+  type: 'test'
+  ...
+# Subtest: matrix: preview/ExtensionIndexers is accepted at C\# preview and rejected at C\# 14 with CS8652
+ok 442 - matrix: preview/ExtensionIndexers is accepted at C\# preview and rejected at C\# 14 with CS8652
+  ---
+  duration_ms: 0.599731
+  type: 'test'
+  ...
+# Subtest: matrix: preview/Unions is accepted at C\# preview and rejected at C\# 14 with CS8652
+ok 443 - matrix: preview/Unions is accepted at C\# preview and rejected at C\# 14 with CS8652
+  ---
+  duration_ms: 0.39513
+  type: 'test'
+  ...
+# Subtest: matrix: preview/ClosedClasses is accepted at C\# preview and rejected at C\# 14 with CS8652
+ok 444 - matrix: preview/ClosedClasses is accepted at C\# preview and rejected at C\# 14 with CS8652
+  ---
+  duration_ms: 0.400539
+  type: 'test'
+  ...
+# Subtest: matrix: preview/ClosedEnums is accepted at C\# preview and rejected at C\# 14 with CS8652
+ok 445 - matrix: preview/ClosedEnums is accepted at C\# preview and rejected at C\# 14 with CS8652
+  ---
+  duration_ms: 0.585249
+  type: 'test'
+  ...
+# Subtest: matrix: preview/SafeModifier is accepted at C\# preview and rejected at C\# 14 with CS8652
+ok 446 - matrix: preview/SafeModifier is accepted at C\# preview and rejected at C\# 14 with CS8652
+  ---
+  duration_ms: 0.659078
+  type: 'test'
+  ...
+# Subtest: matrix: preview/UnsafeExpressions is accepted at C\# preview and rejected at C\# 14 with CS8652
+ok 447 - matrix: preview/UnsafeExpressions is accepted at C\# preview and rejected at C\# 14 with CS8652
+  ---
+  duration_ms: 0.783581
+  type: 'test'
+  ...
+# Subtest: matrix: conformance report is emitted as JSON
+ok 448 - matrix: conformance report is emitted as JSON
+  ---
+  duration_ms: 1.367999
+  type: 'test'
+  ...
+# Subtest: statements after a file-scoped namespace get the diagnostics Roslyn reports
+ok 449 - statements after a file-scoped namespace get the diagnostics Roslyn reports
+  ---
+  duration_ms: 6.984699
+  type: 'test'
+  ...
+# Subtest: statements inside a namespace with braces get the same diagnostics
+ok 450 - statements inside a namespace with braces get the same diagnostics
+  ---
+  duration_ms: 2.31434
+  type: 'test'
+  ...
+# Subtest: a type that stands alone is CS0116 on its last token; the token after it is CS1022
+ok 451 - a type that stands alone is CS0116 on its last token; the token after it is CS1022
+  ---
+  duration_ms: 0.870258
+  type: 'test'
+  ...
+# Subtest: a statement keyword is skipped with one CS1022 for the run
+ok 452 - a statement keyword is skipped with one CS1022 for the run
+  ---
+  duration_ms: 0.413718
+  type: 'test'
+  ...
+# Subtest: members and types in a namespace are unaffected, and top-level statements still parse
+ok 453 - members and types in a namespace are unaffected, and top-level statements still parse
+  ---
+  duration_ms: 2.496547
+  type: 'test'
+  ...
+# Subtest: a tuple type of fewer than two elements is completed with missing elements and reports CS8124
+ok 454 - a tuple type of fewer than two elements is completed with missing elements and reports CS8124
+  ---
+  duration_ms: 3.356129
+  type: 'test'
+  ...
+# Subtest: the back end profile keeps its statement parsing inside namespaces
+ok 455 - the back end profile keeps its statement parsing inside namespaces
+  ---
+  duration_ms: 0.85789
+  type: 'test'
+  ...
+# Subtest: nested var designations in deconstructions match Roslyn
+ok 456 - nested var designations in deconstructions match Roslyn
+  ---
+  duration_ms: 17.255003
+  type: 'test'
+  ...
+# Subtest: `(var x, var (y, z)) = t` declares x, y and z
+ok 457 - `(var x, var (y, z)) = t` declares x, y and z
+  ---
+  duration_ms: 0.930597
+  type: 'test'
+  ...
+# Subtest: the nested form works at every depth and position, and with a predefined type
+ok 458 - the nested form works at every depth and position, and with a predefined type
+  ---
+  duration_ms: 1.860373
+  type: 'test'
+  ...
+# Subtest: var(...) is still a call where no designation can stand
+ok 459 - var(...) is still a call where no designation can stand
+  ---
+  duration_ms: 1.353758
+  type: 'test'
+  ...
+# Subtest: T26 this parameters, default values, auto-properties and partial methods match Roslyn
+ok 460 - T26 this parameters, default values, auto-properties and partial methods match Roslyn
+  ---
+  duration_ms: 24.580633
+  type: 'test'
+  ...
+# Subtest: T26 the this modifier and default values are parts of the parameter node
+ok 461 - T26 the this modifier and default values are parts of the parameter node
+  ---
+  duration_ms: 2.229925
+  type: 'test'
+  ...
+# Subtest: T26 accessors may have semicolon bodies and partial methods may have no body
+ok 462 - T26 accessors may have semicolon bodies and partial methods may have no body
+  ---
+  duration_ms: 1.184289
+  type: 'test'
+  ...
+# Subtest: T26 each form is rejected below its language version
+ok 463 - T26 each form is rejected below its language version
+  ---
+  duration_ms: 3.205948
+  type: 'test'
+  ...
+# Subtest: T26 malformed parameter lists recover as Roslyn does
+ok 464 - T26 malformed parameter lists recover as Roslyn does
+  ---
+  duration_ms: 3.223264
+  type: 'test'
+  ...
+# Subtest: parse bench: the committed baseline covers small, 1 MB, 10 MB and huge-literal inputs
+ok 465 - parse bench: the committed baseline covers small, 1 MB, 10 MB and huge-literal inputs
+  ---
+  duration_ms: 31.313231
+  type: 'test'
+  ...
+# Subtest: parse bench: the regression check fails beyond 15 percent and passes within it
+ok 466 - parse bench: the regression check fails beyond 15 percent and passes within it
+  ---
+  duration_ms: 41.536546
+  type: 'test'
+  ...
+# Subtest: parse bench: the quick measurement runs every case and produces comparable figures
+ok 467 - parse bench: the quick measurement runs every case and produces comparable figures
+  ---
+  duration_ms: 7147.864775
+  type: 'test'
+  ...
+# Subtest: syntax parse qualification checks the 15 percent boundary even for sub-two-millisecond regressions
+ok 468 - syntax parse qualification checks the 15 percent boundary even for sub-two-millisecond regressions
+  ---
+  duration_ms: 1.467405
+  type: 'test'
+  ...
+# Subtest: syntax parse qualification rejects missing, additional and changed input cases
+ok 469 - syntax parse qualification rejects missing, additional and changed input cases
+  ---
+  duration_ms: 0.370945
+  type: 'test'
+  ...
+# Subtest: syntax parse qualification rejects malformed metrics instead of silently passing NaN comparisons
+ok 470 - syntax parse qualification rejects malformed metrics instead of silently passing NaN comparisons
+  ---
+  duration_ms: 0.602375
+  type: 'test'
+  ...
+# Subtest: syntax parse qualification cannot update its own baseline or silently skip the ten-megabyte case
+ok 471 - syntax parse qualification cannot update its own baseline or silently skip the ten-megabyte case
+  ---
+  duration_ms: 0.451954
+  type: 'test'
+  ...
+# Subtest: syntax parse qualification preserves a failed verdict and the exact baseline digest in its artifact
+ok 472 - syntax parse qualification preserves a failed verdict and the exact baseline digest in its artifact
+  ---
+  duration_ms: 1.650574
+  type: 'test'
+  ...
+# Subtest: parser modules: cursor, types, statements, expressions and one module per declaration, expression and pattern family
+ok 473 - parser modules: cursor, types, statements, expressions and one module per declaration, expression and pattern family
+  ---
+  duration_ms: 7.703084
+  type: 'test'
+  ...
+# Subtest: T05.1 namespaces: namespace, using and alias nodes are preserved in order; the adapter still flattens names
+ok 474 - T05.1 namespaces: namespace, using and alias nodes are preserved in order; the adapter still flattens names
+  ---
+  duration_ms: 5.42709
+  type: 'test'
+  ...
+# Subtest: T05.2-T05.5 types: structs, interfaces, enums, delegates and nested types with recovery on missing braces
+ok 475 - T05.2-T05.5 types: structs, interfaces, enums, delegates and nested types with recovery on missing braces
+  ---
+  duration_ms: 5.529061
+  type: 'test'
+  ...
+# Subtest: T05.6 attributes: targets and named arguments on every declaration kind
+ok 476 - T05.6 attributes: targets and named arguments on every declaration kind
+  ---
+  duration_ms: 4.644311
+  type: 'test'
+  ...
+# Subtest: T05.7-T05.9 members: events, explicit interface names, indexers, operators, constructors
+ok 477 - T05.7-T05.9 members: events, explicit interface names, indexers, operators, constructors
+  ---
+  duration_ms: 21.698619
+  type: 'test'
+  ...
+# Subtest: T05.10-T05.11 modifiers, parameters, type parameters and constraints
+ok 478 - T05.10-T05.11 modifiers, parameters, type parameters and constraints
+  ---
+  duration_ms: 22.075088
+  type: 'test'
+  ...
+# Subtest: T06.1-T06.2 anonymous functions and the lambda / cast / parenthesised-expression scan
+ok 479 - T06.1-T06.2 anonymous functions and the lambda / cast / parenthesised-expression scan
+  ---
+  duration_ms: 8.372117
+  type: 'test'
+  ...
+# Subtest: T06.3-T06.4 queries, tuples and deconstruction
+ok 480 - T06.3-T06.4 queries, tuples and deconstruction
+  ---
+  duration_ms: 3.78942
+  type: 'test'
+  ...
+# Subtest: T06.5-T06.8 patterns: precedence and forms
+ok 481 - T06.5-T06.8 patterns: precedence and forms
+  ---
+  duration_ms: 4.906526
+  type: 'test'
+  ...
+# Subtest: T06.9-T06.10 nullable types, suppression and generic names
+ok 482 - T06.9-T06.10 nullable types, suppression and generic names
+  ---
+  duration_ms: 4.84734
+  type: 'test'
+  ...
+# Subtest: T02.7 types are TypeSyntax nodes, never strings
+ok 483 - T02.7 types are TypeSyntax nodes, never strings
+  ---
+  duration_ms: 2.417065
+  type: 'test'
+  ...
+# Subtest: an invocation before the arrow of a switch arm is not the parameter list of a lambda with a return type
+ok 484 - an invocation before the arrow of a switch arm is not the parameter list of a lambda with a return type
+  ---
+  duration_ms: 11.34989
+  type: 'test'
+  ...
+# Subtest: a lambda with a return type is still recognised by its parameter list
+ok 485 - a lambda with a return type is still recognised by its parameter list
+  ---
+  duration_ms: 5.467841
+  type: 'test'
+  ...
+# Subtest: a constant in a subpattern, a list element or a case label runs up to the conditional operator
+ok 486 - a constant in a subpattern, a list element or a case label runs up to the conditional operator
+  ---
+  duration_ms: 5.29668
+  type: 'test'
+  ...
+# Subtest: a constant directly after `is` ends before a relational or bitwise operator
+ok 487 - a constant directly after `is` ends before a relational or bitwise operator
+  ---
+  duration_ms: 3.614248
+  type: 'test'
+  ...
+# Subtest: a constant in a switch expression arm runs up to the null-coalescing operator
+ok 488 - a constant in a switch expression arm runs up to the null-coalescing operator
+  ---
+  duration_ms: 0.540244
+  type: 'test'
+  ...
+# Subtest: `T?[]` is a type in a pattern although an expression could follow the `?`
+ok 489 - `T?[]` is a type in a pattern although an expression could follow the `?`
+  ---
+  duration_ms: 1.570257
+  type: 'test'
+  ...
+# Subtest: T53 with(...) is a structured element of a collection expression under preview
+ok 490 - T53 with(...) is a structured element of a collection expression under preview
+  ---
+  duration_ms: 13.9624
+  type: 'test'
+  ...
+# Subtest: T53 the pinned examples of the proposal parse under preview
+ok 491 - T53 the pinned examples of the proposal parse under preview
+  ---
+  duration_ms: 2.659945
+  type: 'test'
+  ...
+# Subtest: T53 at LangVersion 14 `with` in an element keeps its old meaning: a call to a method named with
+ok 492 - T53 at LangVersion 14 `with` in an element keeps its old meaning: a call to a method named with
+  ---
+  duration_ms: 2.313106
+  type: 'test'
+  ...
+# Subtest: T53 a with element after the first element is still parsed and reported
+ok 493 - T53 a with element after the first element is still parsed and reported
+  ---
+  duration_ms: 1.36915
+  type: 'test'
+  ...
+# Subtest: T54 labeled break and continue follow the pinned proposal grammar and carry its revision stamp
+ok 494 - T54 labeled break and continue follow the pinned proposal grammar and carry its revision stamp
+  ---
+  duration_ms: 1.490258
+  type: 'test'
+  ...
+# Subtest: T54 a label needs preview; unlabeled jumps are C\# 1
+ok 495 - T54 a label needs preview; unlabeled jumps are C\# 1
+  ---
+  duration_ms: 1.538058
+  type: 'test'
+  ...
+# Subtest: T55 every proposal in the pinned preview folder has a watchlist entry
+ok 496 - T55 every proposal in the pinned preview folder has a watchlist entry
+  ---
+  duration_ms: 0.366398
+  type: 'test'
+  ...
+# Subtest: T55 an implemented entry names stamped catalog features; an unsupported entry is rejected with SF1098
+ok 497 - T55 an implemented entry names stamped catalog features; an unsupported entry is rejected with SF1098
+  ---
+  duration_ms: 1.02188
+  type: 'test'
+  ...
+# Subtest: T55 dictionary expression elements are rejected explicitly and lose no text
+ok 498 - T55 dictionary expression elements are rejected explicitly and lose no text
+  ---
+  duration_ms: 1.524899
+  type: 'test'
+  ...
+# Subtest: T09.1 unions: the pinned proposal examples parse under preview
+ok 499 - T09.1 unions: the pinned proposal examples parse under preview
+  ---
+  duration_ms: 15.880165
+  type: 'test'
+  ...
+# Subtest: T09.1 unions: `union` remains an identifier in non-declaration positions and for valid code below preview
+ok 500 - T09.1 unions: `union` remains an identifier in non-declaration positions and for valid code below preview
+  ---
+  duration_ms: 14.065672
+  type: 'test'
+  ...
+# Subtest: T09.1 / T09.2: forms outside the pinned revisions report the explicit unsupported-preview diagnostic
+ok 501 - T09.1 / T09.2: forms outside the pinned revisions report the explicit unsupported-preview diagnostic
+  ---
+  duration_ms: 1.273049
+  type: 'test'
+  ...
+# Subtest: T09.2 closed classes and closed enums parse under preview
+ok 502 - T09.2 closed classes and closed enums parse under preview
+  ---
+  duration_ms: 3.374774
+  type: 'test'
+  ...
+# Subtest: T09.3 every preview fixture names its proposal revision and the stamp matches preview-revisions.js
+ok 503 - T09.3 every preview fixture names its proposal revision and the stamp matches preview-revisions.js
+  ---
+  duration_ms: 7.084862
+  type: 'test'
+  ...
+# Subtest: T10.1 memory safety: the `safe` modifier and unsafe expressions parse under preview
+ok 504 - T10.1 memory safety: the `safe` modifier and unsafe expressions parse under preview
+  ---
+  duration_ms: 4.960042
+  type: 'test'
+  ...
+# Subtest: expression variables in queries are gated at C\# 7.2 exactly where Roslyn gates them
+ok 505 - expression variables in queries are gated at C\# 7.2 exactly where Roslyn gates them
+  ---
+  duration_ms: 19.511307
+  type: 'test'
+  ...
+# Subtest: the first from collection and a join collection are not gated
+ok 506 - the first from collection and a join collection are not gated
+  ---
+  duration_ms: 3.954105
+  type: 'test'
+  ...
+# Subtest: every other clause is gated, over the variable name
+ok 507 - every other clause is gated, over the variable name
+  ---
+  duration_ms: 6.487235
+  type: 'test'
+  ...
+# Subtest: in a field initializer the first from collection is gated as the initializer it is in
+ok 508 - in a field initializer the first from collection is gated as the initializer it is in
+  ---
+  duration_ms: 1.097351
+  type: 'test'
+  ...
+# Subtest: T38 index and range expressions match Roslyn
+ok 509 - T38 index and range expressions match Roslyn
+  ---
+  duration_ms: 23.742179
+  type: 'test'
+  ...
+# Subtest: T38 a[^1], a[1..^2], .. and x.. have the Roslyn shapes
+ok 510 - T38 a[^1], a[1..^2], .. and x.. have the Roslyn shapes
+  ---
+  duration_ms: 2.682799
+  type: 'test'
+  ...
+# Subtest: T38 a range binds tighter than binary operators and looser than unary ones
+ok 511 - T38 a range binds tighter than binary operators and looser than unary ones
+  ---
+  duration_ms: 2.875001
+  type: 'test'
+  ...
+# Subtest: T38 ranges reach the legacy AST as nodes under their Roslyn names
+ok 512 - T38 ranges reach the legacy AST as nodes under their Roslyn names
+  ---
+  duration_ms: 1.734687
+  type: 'test'
+  ...
+# Subtest: T38 ^ and .. are rejected below C\# 8 and recover as Roslyn does
+ok 513 - T38 ^ and .. are rejected below C\# 8 and recover as Roslyn does
+  ---
+  duration_ms: 4.317108
+  type: 'test'
+  ...
+# Subtest: record declarations at LangVersion 8 parse to the tree and diagnostics Roslyn produces
+ok 514 - record declarations at LangVersion 8 parse to the tree and diagnostics Roslyn produces
+  ---
+  duration_ms: 15.909979
+  type: 'test'
+  ...
+# Subtest: `record R(int X);` is a function returning a type named record; `record S { }` a property of that type
+ok 515 - `record R(int X);` is a function returning a type named record; `record S { }` a property of that type
+  ---
+  duration_ms: 2.134333
+  type: 'test'
+  ...
+# Subtest: `record struct S` and `record class C` are a declaration without a name followed by the type
+ok 516 - `record struct S` and `record class C` are a declaration without a name followed by the type
+  ---
+  duration_ms: 1.636342
+  type: 'test'
+  ...
+# Subtest: a top-level function with member modifiers is a local function and reports CS0106, as in Roslyn
+ok 517 - a top-level function with member modifiers is a local function and reports CS0106, as in Roslyn
+  ---
+  duration_ms: 5.335664
+  type: 'test'
+  ...
+# Subtest: a token that starts nothing at compilation-unit level reports CS1022
+ok 518 - a token that starts nothing at compilation-unit level reports CS1022
+  ---
+  duration_ms: 1.098413
+  type: 'test'
+  ...
+# Subtest: inside a type nothing changes: record is a type name at LangVersion 8
+ok 519 - inside a type nothing changes: record is a type name at LangVersion 8
+  ---
+  duration_ms: 0.862847
+  type: 'test'
+  ...
+# Subtest: the legacy entry point still accepts top-level functions and statements
+ok 520 - the legacy entry point still accepts top-level functions and statements
+  ---
+  duration_ms: 3.474682
+  type: 'test'
+  ...
+# Subtest: reference: fixtures and dumps are present and pinned to one Roslyn build
+ok 521 - reference: fixtures and dumps are present and pinned to one Roslyn build
+  ---
+  duration_ms: 77.996666
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for expression-corpus/precedence.cs
+ok 522 - reference: tree equals Roslyn for expression-corpus/precedence.cs
+  ---
+  duration_ms: 36.424949
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for lexer-corpus/identifiers.cs
+ok 523 - reference: tree equals Roslyn for lexer-corpus/identifiers.cs
+  ---
+  duration_ms: 5.541361
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for lexer-corpus/interpolation.cs
+ok 524 - reference: tree equals Roslyn for lexer-corpus/interpolation.cs
+  ---
+  duration_ms: 11.105566
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for lexer-corpus/numbers.cs
+ok 525 - reference: tree equals Roslyn for lexer-corpus/numbers.cs
+  ---
+  duration_ms: 4.641255
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for lexer-corpus/operators.cs
+ok 526 - reference: tree equals Roslyn for lexer-corpus/operators.cs
+  ---
+  duration_ms: 4.957289
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for lexer-corpus/raw-strings.cs
+ok 527 - reference: tree equals Roslyn for lexer-corpus/raw-strings.cs
+  ---
+  duration_ms: 1.762187
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for lexer-corpus/strings.cs
+ok 528 - reference: tree equals Roslyn for lexer-corpus/strings.cs
+  ---
+  duration_ms: 1.82168
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/10/ExtendedPropertyPatterns/positive.cs
+ok 529 - reference: tree equals Roslyn for matrix/10/ExtendedPropertyPatterns/positive.cs
+  ---
+  duration_ms: 1.132002
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/10/FileScopedNamespace/positive.cs
+ok 530 - reference: tree equals Roslyn for matrix/10/FileScopedNamespace/positive.cs
+  ---
+  duration_ms: 1.014029
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/10/GlobalUsing/positive.cs
+ok 531 - reference: tree equals Roslyn for matrix/10/GlobalUsing/positive.cs
+  ---
+  duration_ms: 0.688701
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/10/LambdaAttributes/positive.cs
+ok 532 - reference: tree equals Roslyn for matrix/10/LambdaAttributes/positive.cs
+  ---
+  duration_ms: 1.224338
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/10/LambdaReturnType/positive.cs
+ok 533 - reference: tree equals Roslyn for matrix/10/LambdaReturnType/positive.cs
+  ---
+  duration_ms: 1.507363
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/10/MixedDeclarationsAndExpressionsInDeconstruction/positive.cs
+ok 534 - reference: tree equals Roslyn for matrix/10/MixedDeclarationsAndExpressionsInDeconstruction/positive.cs
+  ---
+  duration_ms: 1.013648
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/10/ParameterlessStructConstructors/positive.cs
+ok 535 - reference: tree equals Roslyn for matrix/10/ParameterlessStructConstructors/positive.cs
+  ---
+  duration_ms: 0.943635
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/10/RecordStructs/positive.cs
+ok 536 - reference: tree equals Roslyn for matrix/10/RecordStructs/positive.cs
+  ---
+  duration_ms: 0.816038
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/10/StructFieldInitializers/positive.cs
+ok 537 - reference: tree equals Roslyn for matrix/10/StructFieldInitializers/positive.cs
+  ---
+  duration_ms: 0.964977
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/11/CheckedUserDefinedOperators/positive.cs
+ok 538 - reference: tree equals Roslyn for matrix/11/CheckedUserDefinedOperators/positive.cs
+  ---
+  duration_ms: 0.946931
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/11/FileTypes/positive.cs
+ok 539 - reference: tree equals Roslyn for matrix/11/FileTypes/positive.cs
+  ---
+  duration_ms: 0.601803
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/11/GenericAttributes/positive.cs
+ok 540 - reference: tree equals Roslyn for matrix/11/GenericAttributes/positive.cs
+  ---
+  duration_ms: 0.695121
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/11/ListPattern/positive.cs
+ok 541 - reference: tree equals Roslyn for matrix/11/ListPattern/positive.cs
+  ---
+  duration_ms: 0.694029
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/11/NewLinesInInterpolations/positive.cs
+ok 542 - reference: tree equals Roslyn for matrix/11/NewLinesInInterpolations/positive.cs
+  ---
+  duration_ms: 0.868836
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/11/RawStringLiterals/positive.cs
+ok 543 - reference: tree equals Roslyn for matrix/11/RawStringLiterals/positive.cs
+  ---
+  duration_ms: 0.539212
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/11/RequiredMembers/positive.cs
+ok 544 - reference: tree equals Roslyn for matrix/11/RequiredMembers/positive.cs
+  ---
+  duration_ms: 0.863568
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/11/StaticAbstractMembersInInterfaces/positive.cs
+ok 545 - reference: tree equals Roslyn for matrix/11/StaticAbstractMembersInInterfaces/positive.cs
+  ---
+  duration_ms: 0.566932
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/11/UnsignedRightShift/positive.cs
+ok 546 - reference: tree equals Roslyn for matrix/11/UnsignedRightShift/positive.cs
+  ---
+  duration_ms: 2.235012
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/11/Utf8StringLiterals/positive.cs
+ok 547 - reference: tree equals Roslyn for matrix/11/Utf8StringLiterals/positive.cs
+  ---
+  duration_ms: 0.576357
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/12/CollectionExpressions/positive.cs
+ok 548 - reference: tree equals Roslyn for matrix/12/CollectionExpressions/positive.cs
+  ---
+  duration_ms: 0.892781
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/12/LambdaOptionalParameters/positive.cs
+ok 549 - reference: tree equals Roslyn for matrix/12/LambdaOptionalParameters/positive.cs
+  ---
+  duration_ms: 0.652408
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/12/LambdaParamsArray/positive.cs
+ok 550 - reference: tree equals Roslyn for matrix/12/LambdaParamsArray/positive.cs
+  ---
+  duration_ms: 0.578889
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/12/PrimaryConstructors/positive.cs
+ok 551 - reference: tree equals Roslyn for matrix/12/PrimaryConstructors/positive.cs
+  ---
+  duration_ms: 0.355702
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/12/RefReadonlyParameters/positive.cs
+ok 552 - reference: tree equals Roslyn for matrix/12/RefReadonlyParameters/positive.cs
+  ---
+  duration_ms: 0.530029
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/12/UsingTypeAlias/positive.cs
+ok 553 - reference: tree equals Roslyn for matrix/12/UsingTypeAlias/positive.cs
+  ---
+  duration_ms: 0.531821
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/13/AllowsRefStructConstraint/positive.cs
+ok 554 - reference: tree equals Roslyn for matrix/13/AllowsRefStructConstraint/positive.cs
+  ---
+  duration_ms: 0.722811
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/13/ParamsCollections/positive.cs
+ok 555 - reference: tree equals Roslyn for matrix/13/ParamsCollections/positive.cs
+  ---
+  duration_ms: 0.61979
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/13/PartialProperties/positive.cs
+ok 556 - reference: tree equals Roslyn for matrix/13/PartialProperties/positive.cs
+  ---
+  duration_ms: 0.68812
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/13/StringEscapeCharacter/positive.cs
+ok 557 - reference: tree equals Roslyn for matrix/13/StringEscapeCharacter/positive.cs
+  ---
+  duration_ms: 0.492654
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/14/Extensions/positive.cs
+ok 558 - reference: tree equals Roslyn for matrix/14/Extensions/positive.cs
+  ---
+  duration_ms: 1.065404
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/14/FieldKeyword/positive.cs
+ok 559 - reference: tree equals Roslyn for matrix/14/FieldKeyword/positive.cs
+  ---
+  duration_ms: 1.300299
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/14/NullConditionalAssignment/positive.cs
+ok 560 - reference: tree equals Roslyn for matrix/14/NullConditionalAssignment/positive.cs
+  ---
+  duration_ms: 0.766626
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/14/PartialEventsAndConstructors/positive.cs
+ok 561 - reference: tree equals Roslyn for matrix/14/PartialEventsAndConstructors/positive.cs
+  ---
+  duration_ms: 0.658997
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/14/SimpleLambdaParameterModifiers/positive.cs
+ok 562 - reference: tree equals Roslyn for matrix/14/SimpleLambdaParameterModifiers/positive.cs
+  ---
+  duration_ms: 0.955904
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/14/UnboundGenericTypesInNameof/positive.cs
+ok 563 - reference: tree equals Roslyn for matrix/14/UnboundGenericTypesInNameof/positive.cs
+  ---
+  duration_ms: 0.711615
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/14/UserDefinedCompoundAssignmentOperators/positive.cs
+ok 564 - reference: tree equals Roslyn for matrix/14/UserDefinedCompoundAssignmentOperators/positive.cs
+  ---
+  duration_ms: 0.518521
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/15-preview/ExtensionIndexers/positive.cs
+ok 565 - reference: tree equals Roslyn for matrix/15-preview/ExtensionIndexers/positive.cs
+  ---
+  duration_ms: 1.002141
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/AnonDelegates/positive.cs
+ok 566 - reference: tree equals Roslyn for matrix/2/AnonDelegates/positive.cs
+  ---
+  duration_ms: 0.864269
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/Default/positive.cs
+ok 567 - reference: tree equals Roslyn for matrix/2/Default/positive.cs
+  ---
+  duration_ms: 0.649634
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/ExternAlias/positive.cs
+ok 568 - reference: tree equals Roslyn for matrix/2/ExternAlias/positive.cs
+  ---
+  duration_ms: 0.412716
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/FixedBuffer/positive.cs
+ok 569 - reference: tree equals Roslyn for matrix/2/FixedBuffer/positive.cs
+  ---
+  duration_ms: 0.527244
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/Generics/positive.cs
+ok 570 - reference: tree equals Roslyn for matrix/2/Generics/positive.cs
+  ---
+  duration_ms: 0.410673
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/GlobalNamespace/positive.cs
+ok 571 - reference: tree equals Roslyn for matrix/2/GlobalNamespace/positive.cs
+  ---
+  duration_ms: 0.461778
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/Iterators/positive.cs
+ok 572 - reference: tree equals Roslyn for matrix/2/Iterators/positive.cs
+  ---
+  duration_ms: 0.49702
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/Nullable/positive.cs
+ok 573 - reference: tree equals Roslyn for matrix/2/Nullable/positive.cs
+  ---
+  duration_ms: 0.426746
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/PartialTypes/positive.cs
+ok 574 - reference: tree equals Roslyn for matrix/2/PartialTypes/positive.cs
+  ---
+  duration_ms: 0.30666
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/Pragma/positive.cs
+ok 575 - reference: tree equals Roslyn for matrix/2/Pragma/positive.cs
+  ---
+  duration_ms: 1.726205
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/PropertyAccessorMods/positive.cs
+ok 576 - reference: tree equals Roslyn for matrix/2/PropertyAccessorMods/positive.cs
+  ---
+  duration_ms: 0.554545
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/2/StaticClasses/positive.cs
+ok 577 - reference: tree equals Roslyn for matrix/2/StaticClasses/positive.cs
+  ---
+  duration_ms: 0.339659
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/3/AnonymousTypes/positive.cs
+ok 578 - reference: tree equals Roslyn for matrix/3/AnonymousTypes/positive.cs
+  ---
+  duration_ms: 0.522257
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/3/CollectionInitializer/positive.cs
+ok 579 - reference: tree equals Roslyn for matrix/3/CollectionInitializer/positive.cs
+  ---
+  duration_ms: 0.638668
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/3/ExtensionMethod/positive.cs
+ok 580 - reference: tree equals Roslyn for matrix/3/ExtensionMethod/positive.cs
+  ---
+  duration_ms: 0.477211
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/3/ImplicitArray/positive.cs
+ok 581 - reference: tree equals Roslyn for matrix/3/ImplicitArray/positive.cs
+  ---
+  duration_ms: 0.627191
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/3/ImplicitLocal/positive.cs
+ok 582 - reference: tree equals Roslyn for matrix/3/ImplicitLocal/positive.cs
+  ---
+  duration_ms: 0.460886
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/3/Lambda/positive.cs
+ok 583 - reference: tree equals Roslyn for matrix/3/Lambda/positive.cs
+  ---
+  duration_ms: 0.504281
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/3/ObjectInitializer/positive.cs
+ok 584 - reference: tree equals Roslyn for matrix/3/ObjectInitializer/positive.cs
+  ---
+  duration_ms: 0.699387
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/3/PartialMethod/positive.cs
+ok 585 - reference: tree equals Roslyn for matrix/3/PartialMethod/positive.cs
+  ---
+  duration_ms: 0.425304
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/3/QueryExpression/positive.cs
+ok 586 - reference: tree equals Roslyn for matrix/3/QueryExpression/positive.cs
+  ---
+  duration_ms: 1.078584
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/4/NamedArgument/positive.cs
+ok 587 - reference: tree equals Roslyn for matrix/4/NamedArgument/positive.cs
+  ---
+  duration_ms: 1.217969
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/4/OptionalParameter/positive.cs
+ok 588 - reference: tree equals Roslyn for matrix/4/OptionalParameter/positive.cs
+  ---
+  duration_ms: 0.621422
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/4/TypeVariance/positive.cs
+ok 589 - reference: tree equals Roslyn for matrix/4/TypeVariance/positive.cs
+  ---
+  duration_ms: 0.439666
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/5/Async/positive.cs
+ok 590 - reference: tree equals Roslyn for matrix/5/Async/positive.cs
+  ---
+  duration_ms: 0.567383
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/6/AutoPropertyInitializer/positive.cs
+ok 591 - reference: tree equals Roslyn for matrix/6/AutoPropertyInitializer/positive.cs
+  ---
+  duration_ms: 0.518131
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/6/DictionaryInitializer/positive.cs
+ok 592 - reference: tree equals Roslyn for matrix/6/DictionaryInitializer/positive.cs
+  ---
+  duration_ms: 0.740678
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/6/ExceptionFilter/positive.cs
+ok 593 - reference: tree equals Roslyn for matrix/6/ExceptionFilter/positive.cs
+  ---
+  duration_ms: 1.045656
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/6/ExpressionBodiedIndexer/positive.cs
+ok 594 - reference: tree equals Roslyn for matrix/6/ExpressionBodiedIndexer/positive.cs
+  ---
+  duration_ms: 0.756441
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/6/ExpressionBodiedMethod/positive.cs
+ok 595 - reference: tree equals Roslyn for matrix/6/ExpressionBodiedMethod/positive.cs
+  ---
+  duration_ms: 2.722438
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/6/ExpressionBodiedProperty/positive.cs
+ok 596 - reference: tree equals Roslyn for matrix/6/ExpressionBodiedProperty/positive.cs
+  ---
+  duration_ms: 0.859732
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/6/InterpolatedStrings/positive.cs
+ok 597 - reference: tree equals Roslyn for matrix/6/InterpolatedStrings/positive.cs
+  ---
+  duration_ms: 0.849157
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/6/NullPropagatingOperator/positive.cs
+ok 598 - reference: tree equals Roslyn for matrix/6/NullPropagatingOperator/positive.cs
+  ---
+  duration_ms: 0.910667
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/6/UsingStatic/positive.cs
+ok 599 - reference: tree equals Roslyn for matrix/6/UsingStatic/positive.cs
+  ---
+  duration_ms: 0.453756
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7/BinaryLiteral/positive.cs
+ok 600 - reference: tree equals Roslyn for matrix/7/BinaryLiteral/positive.cs
+  ---
+  duration_ms: 0.498222
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7/DigitSeparator/positive.cs
+ok 601 - reference: tree equals Roslyn for matrix/7/DigitSeparator/positive.cs
+  ---
+  duration_ms: 0.51747
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7/ExpressionBodiedAccessor/positive.cs
+ok 602 - reference: tree equals Roslyn for matrix/7/ExpressionBodiedAccessor/positive.cs
+  ---
+  duration_ms: 0.455048
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7/ExpressionBodiedDeOrConstructor/positive.cs
+ok 603 - reference: tree equals Roslyn for matrix/7/ExpressionBodiedDeOrConstructor/positive.cs
+  ---
+  duration_ms: 0.562115
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7/LocalFunctions/positive.cs
+ok 604 - reference: tree equals Roslyn for matrix/7/LocalFunctions/positive.cs
+  ---
+  duration_ms: 0.780857
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7/OutVar/positive.cs
+ok 605 - reference: tree equals Roslyn for matrix/7/OutVar/positive.cs
+  ---
+  duration_ms: 0.480916
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7/PatternMatching/positive.cs
+ok 606 - reference: tree equals Roslyn for matrix/7/PatternMatching/positive.cs
+  ---
+  duration_ms: 0.677144
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7/RefLocalsReturns/positive.cs
+ok 607 - reference: tree equals Roslyn for matrix/7/RefLocalsReturns/positive.cs
+  ---
+  duration_ms: 0.458914
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7/ThrowExpression/positive.cs
+ok 608 - reference: tree equals Roslyn for matrix/7/ThrowExpression/positive.cs
+  ---
+  duration_ms: 0.526623
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7/Tuples/positive.cs
+ok 609 - reference: tree equals Roslyn for matrix/7/Tuples/positive.cs
+  ---
+  duration_ms: 0.502107
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7.1/DefaultLiteral/positive.cs
+ok 610 - reference: tree equals Roslyn for matrix/7.1/DefaultLiteral/positive.cs
+  ---
+  duration_ms: 0.452324
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7.2/LeadingDigitSeparator/positive.cs
+ok 611 - reference: tree equals Roslyn for matrix/7.2/LeadingDigitSeparator/positive.cs
+  ---
+  duration_ms: 0.434748
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7.2/PrivateProtected/positive.cs
+ok 612 - reference: tree equals Roslyn for matrix/7.2/PrivateProtected/positive.cs
+  ---
+  duration_ms: 0.402892
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7.2/ReadOnlyReferences/positive.cs
+ok 613 - reference: tree equals Roslyn for matrix/7.2/ReadOnlyReferences/positive.cs
+  ---
+  duration_ms: 0.360539
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7.2/ReadOnlyStructs/positive.cs
+ok 614 - reference: tree equals Roslyn for matrix/7.2/ReadOnlyStructs/positive.cs
+  ---
+  duration_ms: 0.424803
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7.2/RefStructs/positive.cs
+ok 615 - reference: tree equals Roslyn for matrix/7.2/RefStructs/positive.cs
+  ---
+  duration_ms: 0.317657
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7.3/AttributesOnBackingFields/positive.cs
+ok 616 - reference: tree equals Roslyn for matrix/7.3/AttributesOnBackingFields/positive.cs
+  ---
+  duration_ms: 0.76308
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7.3/ExpressionVariablesInQueriesAndInitializers/positive.cs
+ok 617 - reference: tree equals Roslyn for matrix/7.3/ExpressionVariablesInQueriesAndInitializers/positive.cs
+  ---
+  duration_ms: 0.607792
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/7.3/StackAllocInitializer/positive.cs
+ok 618 - reference: tree equals Roslyn for matrix/7.3/StackAllocInitializer/positive.cs
+  ---
+  duration_ms: 0.628162
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/AltInterpolatedVerbatimStrings/positive.cs
+ok 619 - reference: tree equals Roslyn for matrix/8/AltInterpolatedVerbatimStrings/positive.cs
+  ---
+  duration_ms: 0.551229
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/AsyncStreams/positive.cs
+ok 620 - reference: tree equals Roslyn for matrix/8/AsyncStreams/positive.cs
+  ---
+  duration_ms: 0.822357
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/AsyncUsing/positive.cs
+ok 621 - reference: tree equals Roslyn for matrix/8/AsyncUsing/positive.cs
+  ---
+  duration_ms: 0.591349
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/CoalesceAssignmentExpression/positive.cs
+ok 622 - reference: tree equals Roslyn for matrix/8/CoalesceAssignmentExpression/positive.cs
+  ---
+  duration_ms: 0.386367
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/DefaultInterfaceImplementation/positive.cs
+ok 623 - reference: tree equals Roslyn for matrix/8/DefaultInterfaceImplementation/positive.cs
+  ---
+  duration_ms: 0.366478
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/IndexOperator/positive.cs
+ok 624 - reference: tree equals Roslyn for matrix/8/IndexOperator/positive.cs
+  ---
+  duration_ms: 0.397904
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/NullableReferenceTypes/positive.cs
+ok 625 - reference: tree equals Roslyn for matrix/8/NullableReferenceTypes/positive.cs
+  ---
+  duration_ms: 0.495097
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/RangeOperator/positive.cs
+ok 626 - reference: tree equals Roslyn for matrix/8/RangeOperator/positive.cs
+  ---
+  duration_ms: 0.418585
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/ReadOnlyMembers/positive.cs
+ok 627 - reference: tree equals Roslyn for matrix/8/ReadOnlyMembers/positive.cs
+  ---
+  duration_ms: 0.661401
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/RecursivePatterns/positive.cs
+ok 628 - reference: tree equals Roslyn for matrix/8/RecursivePatterns/positive.cs
+  ---
+  duration_ms: 0.596586
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/StaticLocalFunctions/positive.cs
+ok 629 - reference: tree equals Roslyn for matrix/8/StaticLocalFunctions/positive.cs
+  ---
+  duration_ms: 0.648071
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/SwitchExpression/positive.cs
+ok 630 - reference: tree equals Roslyn for matrix/8/SwitchExpression/positive.cs
+  ---
+  duration_ms: 0.495117
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/8/UsingDeclarations/positive.cs
+ok 631 - reference: tree equals Roslyn for matrix/8/UsingDeclarations/positive.cs
+  ---
+  duration_ms: 0.427027
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/AndPattern/positive.cs
+ok 632 - reference: tree equals Roslyn for matrix/9/AndPattern/positive.cs
+  ---
+  duration_ms: 0.447528
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/DefaultTypeParameterConstraint/positive.cs
+ok 633 - reference: tree equals Roslyn for matrix/9/DefaultTypeParameterConstraint/positive.cs
+  ---
+  duration_ms: 0.410553
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/ExtendedPartialMethods/positive.cs
+ok 634 - reference: tree equals Roslyn for matrix/9/ExtendedPartialMethods/positive.cs
+  ---
+  duration_ms: 0.364936
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/ExternLocalFunctions/positive.cs
+ok 635 - reference: tree equals Roslyn for matrix/9/ExternLocalFunctions/positive.cs
+  ---
+  duration_ms: 1.224157
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/FunctionPointers/positive.cs
+ok 636 - reference: tree equals Roslyn for matrix/9/FunctionPointers/positive.cs
+  ---
+  duration_ms: 0.59944
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/ImplicitObjectCreation/positive.cs
+ok 637 - reference: tree equals Roslyn for matrix/9/ImplicitObjectCreation/positive.cs
+  ---
+  duration_ms: 0.559331
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/InitOnlySetters/positive.cs
+ok 638 - reference: tree equals Roslyn for matrix/9/InitOnlySetters/positive.cs
+  ---
+  duration_ms: 0.409741
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/LambdaDiscardParameters/positive.cs
+ok 639 - reference: tree equals Roslyn for matrix/9/LambdaDiscardParameters/positive.cs
+  ---
+  duration_ms: 0.566212
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/LocalFunctionAttributes/positive.cs
+ok 640 - reference: tree equals Roslyn for matrix/9/LocalFunctionAttributes/positive.cs
+  ---
+  duration_ms: 1.473473
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/NotPattern/positive.cs
+ok 641 - reference: tree equals Roslyn for matrix/9/NotPattern/positive.cs
+  ---
+  duration_ms: 0.501967
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/OrPattern/positive.cs
+ok 642 - reference: tree equals Roslyn for matrix/9/OrPattern/positive.cs
+  ---
+  duration_ms: 2.49295
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/ParenthesizedPattern/positive.cs
+ok 643 - reference: tree equals Roslyn for matrix/9/ParenthesizedPattern/positive.cs
+  ---
+  duration_ms: 0.785814
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/Records/positive.cs
+ok 644 - reference: tree equals Roslyn for matrix/9/Records/positive.cs
+  ---
+  duration_ms: 0.794246
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/RelationalPattern/positive.cs
+ok 645 - reference: tree equals Roslyn for matrix/9/RelationalPattern/positive.cs
+  ---
+  duration_ms: 0.603115
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/StaticAnonymousFunction/positive.cs
+ok 646 - reference: tree equals Roslyn for matrix/9/StaticAnonymousFunction/positive.cs
+  ---
+  duration_ms: 0.525481
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/TopLevelStatements/positive.cs
+ok 647 - reference: tree equals Roslyn for matrix/9/TopLevelStatements/positive.cs
+  ---
+  duration_ms: 0.56532
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for matrix/9/TypePattern/positive.cs
+ok 648 - reference: tree equals Roslyn for matrix/9/TypePattern/positive.cs
+  ---
+  duration_ms: 2.784713
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp1-2/arrays.cs
+ok 649 - reference: tree equals Roslyn for reference/csharp1-2/arrays.cs
+  ---
+  duration_ms: 7.025385
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp1-2/blocks.cs
+ok 650 - reference: tree equals Roslyn for reference/csharp1-2/blocks.cs
+  ---
+  duration_ms: 3.775598
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp1-2/jumps.cs
+ok 651 - reference: tree equals Roslyn for reference/csharp1-2/jumps.cs
+  ---
+  duration_ms: 1.690462
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp1-2/locals.cs
+ok 652 - reference: tree equals Roslyn for reference/csharp1-2/locals.cs
+  ---
+  duration_ms: 2.579557
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp1-2/methods.cs
+ok 653 - reference: tree equals Roslyn for reference/csharp1-2/methods.cs
+  ---
+  duration_ms: 5.997926
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp1-2/names.cs
+ok 654 - reference: tree equals Roslyn for reference/csharp1-2/names.cs
+  ---
+  duration_ms: 3.308888
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp1-2/properties.cs
+ok 655 - reference: tree equals Roslyn for reference/csharp1-2/properties.cs
+  ---
+  duration_ms: 2.856725
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp1-2/try.cs
+ok 656 - reference: tree equals Roslyn for reference/csharp1-2/try.cs
+  ---
+  duration_ms: 2.530765
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp1-2/type-modifiers.cs
+ok 657 - reference: tree equals Roslyn for reference/csharp1-2/type-modifiers.cs
+  ---
+  duration_ms: 3.679332
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp1-2/type-operators.cs
+ok 658 - reference: tree equals Roslyn for reference/csharp1-2/type-operators.cs
+  ---
+  duration_ms: 5.789259
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp1-2/yield.cs
+ok 659 - reference: tree equals Roslyn for reference/csharp1-2/yield.cs
+  ---
+  duration_ms: 1.790569
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp11-12/collection-expressions-recovery.cs
+ok 660 - reference: tree equals Roslyn for reference/csharp11-12/collection-expressions-recovery.cs
+  ---
+  duration_ms: 1.442939
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp11-12/collection-expressions.cs
+ok 661 - reference: tree equals Roslyn for reference/csharp11-12/collection-expressions.cs
+  ---
+  duration_ms: 5.635835
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp11-12/csharp11-recovery.cs
+ok 662 - reference: tree equals Roslyn for reference/csharp11-12/csharp11-recovery.cs
+  ---
+  duration_ms: 0.798372
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp11-12/csharp11.cs
+ok 663 - reference: tree equals Roslyn for reference/csharp11-12/csharp11.cs
+  ---
+  duration_ms: 6.367869
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp11-12/csharp12-recovery.cs
+ok 664 - reference: tree equals Roslyn for reference/csharp11-12/csharp12-recovery.cs
+  ---
+  duration_ms: 1.308071
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp11-12/csharp12.cs
+ok 665 - reference: tree equals Roslyn for reference/csharp11-12/csharp12.cs
+  ---
+  duration_ms: 5.007692
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp11-12/shift-recovery.cs
+ok 666 - reference: tree equals Roslyn for reference/csharp11-12/shift-recovery.cs
+  ---
+  duration_ms: 1.812782
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp11-12/shift.cs
+ok 667 - reference: tree equals Roslyn for reference/csharp11-12/shift.cs
+  ---
+  duration_ms: 5.634833
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp13-14/csharp13-recovery.cs
+ok 668 - reference: tree equals Roslyn for reference/csharp13-14/csharp13-recovery.cs
+  ---
+  duration_ms: 3.078981
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp13-14/csharp13.cs
+ok 669 - reference: tree equals Roslyn for reference/csharp13-14/csharp13.cs
+  ---
+  duration_ms: 3.754282
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp13-14/csharp14-recovery.cs
+ok 670 - reference: tree equals Roslyn for reference/csharp13-14/csharp14-recovery.cs
+  ---
+  duration_ms: 1.002722
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp13-14/csharp14.cs
+ok 671 - reference: tree equals Roslyn for reference/csharp13-14/csharp14.cs
+  ---
+  duration_ms: 3.134682
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp13-14/extension-receiver-default-recovery.cs
+ok 672 - reference: tree equals Roslyn for reference/csharp13-14/extension-receiver-default-recovery.cs
+  ---
+  duration_ms: 0.789479
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp13-14/extension-receiver-default.cs
+ok 673 - reference: tree equals Roslyn for reference/csharp13-14/extension-receiver-default.cs
+  ---
+  duration_ms: 0.943896
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp13-14/field-keyword-langversion13.cs
+ok 674 - reference: tree equals Roslyn for reference/csharp13-14/field-keyword-langversion13.cs
+  ---
+  duration_ms: 4.139629
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp13-14/field-keyword.cs
+ok 675 - reference: tree equals Roslyn for reference/csharp13-14/field-keyword.cs
+  ---
+  duration_ms: 8.539908
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp3-5/anonymous-objects-recovery.cs
+ok 676 - reference: tree equals Roslyn for reference/csharp3-5/anonymous-objects-recovery.cs
+  ---
+  duration_ms: 1.332707
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp3-5/anonymous-objects.cs
+ok 677 - reference: tree equals Roslyn for reference/csharp3-5/anonymous-objects.cs
+  ---
+  duration_ms: 2.261621
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp3-5/arguments-recovery.cs
+ok 678 - reference: tree equals Roslyn for reference/csharp3-5/arguments-recovery.cs
+  ---
+  duration_ms: 0.725064
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp3-5/arguments.cs
+ok 679 - reference: tree equals Roslyn for reference/csharp3-5/arguments.cs
+  ---
+  duration_ms: 3.527168
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp3-5/await-recovery.cs
+ok 680 - reference: tree equals Roslyn for reference/csharp3-5/await-recovery.cs
+  ---
+  duration_ms: 1.046026
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp3-5/await.cs
+ok 681 - reference: tree equals Roslyn for reference/csharp3-5/await.cs
+  ---
+  duration_ms: 4.291932
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp3-5/initializers-recovery.cs
+ok 682 - reference: tree equals Roslyn for reference/csharp3-5/initializers-recovery.cs
+  ---
+  duration_ms: 4.878132
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp3-5/initializers.cs
+ok 683 - reference: tree equals Roslyn for reference/csharp3-5/initializers.cs
+  ---
+  duration_ms: 7.221262
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp3-5/parameters-recovery.cs
+ok 684 - reference: tree equals Roslyn for reference/csharp3-5/parameters-recovery.cs
+  ---
+  duration_ms: 1.807063
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp3-5/parameters.cs
+ok 685 - reference: tree equals Roslyn for reference/csharp3-5/parameters.cs
+  ---
+  duration_ms: 4.03251
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp6/both-bodies-recovery.cs
+ok 686 - reference: tree equals Roslyn for reference/csharp6/both-bodies-recovery.cs
+  ---
+  duration_ms: 1.620829
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp6/both-bodies.cs
+ok 687 - reference: tree equals Roslyn for reference/csharp6/both-bodies.cs
+  ---
+  duration_ms: 3.448888
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp6/conditional-access-recovery.cs
+ok 688 - reference: tree equals Roslyn for reference/csharp6/conditional-access-recovery.cs
+  ---
+  duration_ms: 1.315832
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp6/conditional-access.cs
+ok 689 - reference: tree equals Roslyn for reference/csharp6/conditional-access.cs
+  ---
+  duration_ms: 2.897004
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp6/csharp6-recovery.cs
+ok 690 - reference: tree equals Roslyn for reference/csharp6/csharp6-recovery.cs
+  ---
+  duration_ms: 2.28184
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp6/csharp6.cs
+ok 691 - reference: tree equals Roslyn for reference/csharp6/csharp6.cs
+  ---
+  duration_ms: 3.034365
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp6/expression-bodies-recovery.cs
+ok 692 - reference: tree equals Roslyn for reference/csharp6/expression-bodies-recovery.cs
+  ---
+  duration_ms: 0.977134
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp6/expression-bodies.cs
+ok 693 - reference: tree equals Roslyn for reference/csharp6/expression-bodies.cs
+  ---
+  duration_ms: 4.229721
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp6/initializer-kinds.cs
+ok 694 - reference: tree equals Roslyn for reference/csharp6/initializer-kinds.cs
+  ---
+  duration_ms: 1.334824
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp6/interpolation-alignment.cs
+ok 695 - reference: tree equals Roslyn for reference/csharp6/interpolation-alignment.cs
+  ---
+  duration_ms: 2.180581
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/csharp73.cs
+ok 696 - reference: tree equals Roslyn for reference/csharp7/csharp73.cs
+  ---
+  duration_ms: 7.194483
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/declaration-expressions-recovery.cs
+ok 697 - reference: tree equals Roslyn for reference/csharp7/declaration-expressions-recovery.cs
+  ---
+  duration_ms: 1.413035
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/declaration-expressions.cs
+ok 698 - reference: tree equals Roslyn for reference/csharp7/declaration-expressions.cs
+  ---
+  duration_ms: 3.761803
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/literals.cs
+ok 699 - reference: tree equals Roslyn for reference/csharp7/literals.cs
+  ---
+  duration_ms: 2.694887
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/local-functions-recovery.cs
+ok 700 - reference: tree equals Roslyn for reference/csharp7/local-functions-recovery.cs
+  ---
+  duration_ms: 1.076361
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/local-functions.cs
+ok 701 - reference: tree equals Roslyn for reference/csharp7/local-functions.cs
+  ---
+  duration_ms: 5.059243
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/nested-designations-top-level.cs
+ok 702 - reference: tree equals Roslyn for reference/csharp7/nested-designations-top-level.cs
+  ---
+  duration_ms: 3.001778
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/nested-designations.cs
+ok 703 - reference: tree equals Roslyn for reference/csharp7/nested-designations.cs
+  ---
+  duration_ms: 1.712775
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/short-tuple-types.cs
+ok 704 - reference: tree equals Roslyn for reference/csharp7/short-tuple-types.cs
+  ---
+  duration_ms: 0.727102
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/struct-modifiers-recovery.cs
+ok 705 - reference: tree equals Roslyn for reference/csharp7/struct-modifiers-recovery.cs
+  ---
+  duration_ms: 1.25924
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/struct-modifiers.cs
+ok 706 - reference: tree equals Roslyn for reference/csharp7/struct-modifiers.cs
+  ---
+  duration_ms: 2.885231
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/throw-operand.cs
+ok 707 - reference: tree equals Roslyn for reference/csharp7/throw-operand.cs
+  ---
+  duration_ms: 1.834814
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/throw-recovery.cs
+ok 708 - reference: tree equals Roslyn for reference/csharp7/throw-recovery.cs
+  ---
+  duration_ms: 0.978016
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp7/throw.cs
+ok 709 - reference: tree equals Roslyn for reference/csharp7/throw.cs
+  ---
+  duration_ms: 3.659763
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp8/async-statements-recovery.cs
+ok 710 - reference: tree equals Roslyn for reference/csharp8/async-statements-recovery.cs
+  ---
+  duration_ms: 1.057733
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp8/async-statements.cs
+ok 711 - reference: tree equals Roslyn for reference/csharp8/async-statements.cs
+  ---
+  duration_ms: 5.752476
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp8/interface-members-recovery.cs
+ok 712 - reference: tree equals Roslyn for reference/csharp8/interface-members-recovery.cs
+  ---
+  duration_ms: 1.107686
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp8/interface-members.cs
+ok 713 - reference: tree equals Roslyn for reference/csharp8/interface-members.cs
+  ---
+  duration_ms: 4.547026
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp8/ranges-recovery.cs
+ok 714 - reference: tree equals Roslyn for reference/csharp8/ranges-recovery.cs
+  ---
+  duration_ms: 0.871129
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp8/ranges.cs
+ok 715 - reference: tree equals Roslyn for reference/csharp8/ranges.cs
+  ---
+  duration_ms: 4.081993
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp8/switch-expression-recovery.cs
+ok 716 - reference: tree equals Roslyn for reference/csharp8/switch-expression-recovery.cs
+  ---
+  duration_ms: 1.406145
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp8/switch-expression.cs
+ok 717 - reference: tree equals Roslyn for reference/csharp8/switch-expression.cs
+  ---
+  duration_ms: 7.329472
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp8/switch-tuples-and-guards.cs
+ok 718 - reference: tree equals Roslyn for reference/csharp8/switch-tuples-and-guards.cs
+  ---
+  duration_ms: 4.043847
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/conditional-lambda-nullable.cs
+ok 719 - reference: tree equals Roslyn for reference/csharp9-10/conditional-lambda-nullable.cs
+  ---
+  duration_ms: 3.047114
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/conditional-lambda.cs
+ok 720 - reference: tree equals Roslyn for reference/csharp9-10/conditional-lambda.cs
+  ---
+  duration_ms: 5.306431
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/csharp10-recovery.cs
+ok 721 - reference: tree equals Roslyn for reference/csharp9-10/csharp10-recovery.cs
+  ---
+  duration_ms: 1.156418
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/csharp10.cs
+ok 722 - reference: tree equals Roslyn for reference/csharp9-10/csharp10.cs
+  ---
+  duration_ms: 5.76204
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/csharp9-recovery.cs
+ok 723 - reference: tree equals Roslyn for reference/csharp9-10/csharp9-recovery.cs
+  ---
+  duration_ms: 1.262644
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/csharp9.cs
+ok 724 - reference: tree equals Roslyn for reference/csharp9-10/csharp9.cs
+  ---
+  duration_ms: 4.630909
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/file-scoped-nested.cs
+ok 725 - reference: tree equals Roslyn for reference/csharp9-10/file-scoped-nested.cs
+  ---
+  duration_ms: 0.634812
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/file-scoped-order.cs
+ok 726 - reference: tree equals Roslyn for reference/csharp9-10/file-scoped-order.cs
+  ---
+  duration_ms: 0.665637
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/file-scoped-recovery.cs
+ok 727 - reference: tree equals Roslyn for reference/csharp9-10/file-scoped-recovery.cs
+  ---
+  duration_ms: 0.780837
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/file-scoped-statements.cs
+ok 728 - reference: tree equals Roslyn for reference/csharp9-10/file-scoped-statements.cs
+  ---
+  duration_ms: 5.856404
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/file-scoped.cs
+ok 729 - reference: tree equals Roslyn for reference/csharp9-10/file-scoped.cs
+  ---
+  duration_ms: 1.485581
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/top-level-declarations.cs
+ok 730 - reference: tree equals Roslyn for reference/csharp9-10/top-level-declarations.cs
+  ---
+  duration_ms: 3.872345
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/top-level-order.cs
+ok 731 - reference: tree equals Roslyn for reference/csharp9-10/top-level-order.cs
+  ---
+  duration_ms: 0.934792
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/top-level-recovery.cs
+ok 732 - reference: tree equals Roslyn for reference/csharp9-10/top-level-recovery.cs
+  ---
+  duration_ms: 0.634501
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/csharp9-10/top-level.cs
+ok 733 - reference: tree equals Roslyn for reference/csharp9-10/top-level.cs
+  ---
+  duration_ms: 2.592036
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/declarations/attributes.cs
+ok 734 - reference: tree equals Roslyn for reference/declarations/attributes.cs
+  ---
+  duration_ms: 2.106673
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/declarations/enums-delegates.cs
+ok 735 - reference: tree equals Roslyn for reference/declarations/enums-delegates.cs
+  ---
+  duration_ms: 1.414838
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/declarations/file-scoped-namespace.cs
+ok 736 - reference: tree equals Roslyn for reference/declarations/file-scoped-namespace.cs
+  ---
+  duration_ms: 0.560112
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/declarations/members.cs
+ok 737 - reference: tree equals Roslyn for reference/declarations/members.cs
+  ---
+  duration_ms: 8.775519
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/declarations/modifiers.cs
+ok 738 - reference: tree equals Roslyn for reference/declarations/modifiers.cs
+  ---
+  duration_ms: 1.855184
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/declarations/namespaces.cs
+ok 739 - reference: tree equals Roslyn for reference/declarations/namespaces.cs
+  ---
+  duration_ms: 1.241232
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/declarations/type-parameters.cs
+ok 740 - reference: tree equals Roslyn for reference/declarations/type-parameters.cs
+  ---
+  duration_ms: 1.847121
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/declarations/types.cs
+ok 741 - reference: tree equals Roslyn for reference/declarations/types.cs
+  ---
+  duration_ms: 2.280158
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/expressions/lambdas.cs
+ok 742 - reference: tree equals Roslyn for reference/expressions/lambdas.cs
+  ---
+  duration_ms: 3.106141
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/expressions/nullability-generics.cs
+ok 743 - reference: tree equals Roslyn for reference/expressions/nullability-generics.cs
+  ---
+  duration_ms: 3.738379
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/expressions/patterns.cs
+ok 744 - reference: tree equals Roslyn for reference/expressions/patterns.cs
+  ---
+  duration_ms: 7.944824
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/expressions/queries.cs
+ok 745 - reference: tree equals Roslyn for reference/expressions/queries.cs
+  ---
+  duration_ms: 3.509392
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/expressions/tuples.cs
+ok 746 - reference: tree equals Roslyn for reference/expressions/tuples.cs
+  ---
+  duration_ms: 2.978122
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/ref/ref-forms.cs
+ok 747 - reference: tree equals Roslyn for reference/ref/ref-forms.cs
+  ---
+  duration_ms: 3.107473
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/ref/scoped.cs
+ok 748 - reference: tree equals Roslyn for reference/ref/scoped.cs
+  ---
+  duration_ms: 1.565939
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/statements/statements.cs
+ok 749 - reference: tree equals Roslyn for reference/statements/statements.cs
+  ---
+  duration_ms: 3.707063
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/statements/top-level.cs
+ok 750 - reference: tree equals Roslyn for reference/statements/top-level.cs
+  ---
+  duration_ms: 1.257376
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/trivia/comments.cs
+ok 751 - reference: tree equals Roslyn for reference/trivia/comments.cs
+  ---
+  duration_ms: 5.415551
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/trivia/directives.cs
+ok 752 - reference: tree equals Roslyn for reference/trivia/directives.cs
+  ---
+  duration_ms: 5.759806
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/trivia/doc-comments.cs
+ok 753 - reference: tree equals Roslyn for reference/trivia/doc-comments.cs
+  ---
+  duration_ms: 7.398352
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/types/types.cs
+ok 754 - reference: tree equals Roslyn for reference/types/types.cs
+  ---
+  duration_ms: 6.796408
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/unsafe/fixed.cs
+ok 755 - reference: tree equals Roslyn for reference/unsafe/fixed.cs
+  ---
+  duration_ms: 2.425491
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/unsafe/function-pointers.cs
+ok 756 - reference: tree equals Roslyn for reference/unsafe/function-pointers.cs
+  ---
+  duration_ms: 2.532549
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/unsafe/pointers.cs
+ok 757 - reference: tree equals Roslyn for reference/unsafe/pointers.cs
+  ---
+  duration_ms: 3.15982
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/unsafe/stackalloc.cs
+ok 758 - reference: tree equals Roslyn for reference/unsafe/stackalloc.cs
+  ---
+  duration_ms: 2.058472
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/versioned/extensions-langversion13.cs
+ok 759 - reference: tree equals Roslyn for reference/versioned/extensions-langversion13.cs
+  ---
+  duration_ms: 0.879471
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/versioned/extensions.cs
+ok 760 - reference: tree equals Roslyn for reference/versioned/extensions.cs
+  ---
+  duration_ms: 4.033373
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/versioned/init-required.cs
+ok 761 - reference: tree equals Roslyn for reference/versioned/init-required.cs
+  ---
+  duration_ms: 2.088256
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/versioned/partial-members.cs
+ok 762 - reference: tree equals Roslyn for reference/versioned/partial-members.cs
+  ---
+  duration_ms: 1.903996
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/versioned/primary-constructors.cs
+ok 763 - reference: tree equals Roslyn for reference/versioned/primary-constructors.cs
+  ---
+  duration_ms: 2.031743
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/versioned/records-langversion8-top-level.cs
+ok 764 - reference: tree equals Roslyn for reference/versioned/records-langversion8-top-level.cs
+  ---
+  duration_ms: 1.272038
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/versioned/records-langversion8.cs
+ok 765 - reference: tree equals Roslyn for reference/versioned/records-langversion8.cs
+  ---
+  duration_ms: 1.049721
+  type: 'test'
+  ...
+# Subtest: reference: tree equals Roslyn for reference/versioned/records.cs
+ok 766 - reference: tree equals Roslyn for reference/versioned/records.cs
+  ---
+  duration_ms: 3.631693
+  type: 'test'
+  ...
+# Subtest: reference: every kind used by the Roslyn dumps exists in SyntaxKind
+ok 767 - reference: every kind used by the Roslyn dumps exists in SyntaxKind
+  ---
+  duration_ms: 46.303479
+  type: 'test'
+  ...
+# Subtest: dumps: every matrix fixture has its Roslyn dump
+ok 768 - dumps: every matrix fixture has its Roslyn dump
+  ---
+  duration_ms: 9.271392
+  type: 'test'
+  ...
+# Subtest: dumps: every dump belongs to a fixture and names the pinned Roslyn build
+ok 769 - dumps: every dump belongs to a fixture and names the pinned Roslyn build
+  ---
+  duration_ms: 72.960834
+  type: 'test'
+  ...
+# Subtest: dumps: regenerating with the pinned SDK is byte-identical
+ok 770 - dumps: regenerating with the pinned SDK is byte-identical # SKIP the dotnet CLI is not installed
+  ---
+  duration_ms: 3.7598
+  type: 'test'
+  ...
+# Subtest: T36 readonly struct, ref struct and private protected match Roslyn
+ok 771 - T36 readonly struct, ref struct and private protected match Roslyn
+  ---
+  duration_ms: 27.147839
+  type: 'test'
+  ...
+# Subtest: T36 private protected is two modifiers in either order on any member kind
+ok 772 - T36 private protected is two modifiers in either order on any member kind
+  ---
+  duration_ms: 1.584086
+  type: 'test'
+  ...
+# Subtest: T36 ref before a member type is a ref return, not a struct modifier
+ok 773 - T36 ref before a member type is a ref return, not a struct modifier
+  ---
+  duration_ms: 1.09668
+  type: 'test'
+  ...
+# Subtest: T36 each form is rejected at C\# 7.1 and accepted at 7.2
+ok 774 - T36 each form is rejected at C\# 7.1 and accepted at 7.2
+  ---
+  duration_ms: 4.610494
+  type: 'test'
+  ...
+# Subtest: T36 a struct without a name or a body recovers as Roslyn does
+ok 775 - T36 a struct without a name or a body recovers as Roslyn does
+  ---
+  duration_ms: 2.19312
+  type: 'test'
+  ...
+# Subtest: T39 switch expressions with every pattern form match Roslyn
+ok 776 - T39 switch expressions with every pattern form match Roslyn
+  ---
+  duration_ms: 26.491525
+  type: 'test'
+  ...
+# Subtest: T39 arms take a pattern, an optional when clause and a result
+ok 777 - T39 arms take a pattern, an optional when clause and a result
+  ---
+  duration_ms: 3.67124
+  type: 'test'
+  ...
+# Subtest: T39 switch binds tighter than relational and arithmetic operators and looser than a range
+ok 778 - T39 switch binds tighter than relational and arithmetic operators and looser than a range
+  ---
+  duration_ms: 2.686885
+  type: 'test'
+  ...
+# Subtest: T39 switch after `as` or `is` warns about precedence, as Roslyn does
+ok 779 - T39 switch after `as` or `is` warns about precedence, as Roslyn does
+  ---
+  duration_ms: 0.749129
+  type: 'test'
+  ...
+# Subtest: T39 switch expressions are rejected below C\# 8 and recover as Roslyn does
+ok 780 - T39 switch expressions are rejected below C\# 8 and recover as Roslyn does
+  ---
+  duration_ms: 3.436595
+  type: 'test'
+  ...
+# Subtest: a switch statement over a tuple literal and guards that end in an invocation match Roslyn
+ok 781 - a switch statement over a tuple literal and guards that end in an invocation match Roslyn
+  ---
+  duration_ms: 18.529225
+  type: 'test'
+  ...
+# Subtest: a tuple-governed switch is a C\# 8 form: gated below it, and an unclosed one still reports the parenthesis
+ok 782 - a tuple-governed switch is a C\# 8 form: gated below it, and an unclosed one still reports the parenthesis
+  ---
+  duration_ms: 2.408837
+  type: 'test'
+  ...
+# Subtest: the guard of a switch expression arm is parsed above the lambda precedence
+ok 783 - the guard of a switch expression arm is parsed above the lambda precedence
+  ---
+  duration_ms: 2.79262
+  type: 'test'
+  ...
+# Subtest: T34 throw expressions match Roslyn in every position
+ok 784 - T34 throw expressions match Roslyn in every position
+  ---
+  duration_ms: 20.287016
+  type: 'test'
+  ...
+# Subtest: T34 throw is allowed in conditional, null-coalescing and expression-bodied positions
+ok 785 - T34 throw is allowed in conditional, null-coalescing and expression-bodied positions
+  ---
+  duration_ms: 3.990328
+  type: 'test'
+  ...
+# Subtest: T34 throw in any other position reports CS8115
+ok 786 - T34 throw in any other position reports CS8115
+  ---
+  duration_ms: 3.187369
+  type: 'test'
+  ...
+# Subtest: T34 throw as an operand that binds tighter than ?? is CS1525, as in Roslyn
+ok 787 - T34 throw as an operand that binds tighter than ?? is CS1525, as in Roslyn
+  ---
+  duration_ms: 1.608631
+  type: 'test'
+  ...
+# Subtest: T34 throw expressions are rejected below C\# 7
+ok 788 - T34 throw expressions are rejected below C\# 7
+  ---
+  duration_ms: 1.444091
+  type: 'test'
+  ...
+# Subtest: T34 a throw expression without an operand recovers as Roslyn does
+ok 789 - T34 a throw expression without an operand recovers as Roslyn does
+  ---
+  duration_ms: 1.706225
+  type: 'test'
+  ...
+# Subtest: CS1525 for throw as an operand has the span Roslyn reports
+ok 790 - CS1525 for throw as an operand has the span Roslyn reports
+  ---
+  duration_ms: 12.100065
+  type: 'test'
+  ...
+# Subtest: the tree for throw as an operand matches Roslyn
+ok 791 - the tree for throw as an operand matches Roslyn
+  ---
+  duration_ms: 5.521316
+  type: 'test'
+  ...
+# Subtest: the span covers the throw expression: its keyword and the operand parsed with it
+ok 792 - the span covers the throw expression: its keyword and the operand parsed with it
+  ---
+  duration_ms: 1.760946
+  type: 'test'
+  ...
+# Subtest: T42 a program of top-level statements matches Roslyn
+ok 793 - T42 a program of top-level statements matches Roslyn
+  ---
+  duration_ms: 24.963582
+  type: 'test'
+  ...
+# Subtest: T42 functions at the top level are local functions and await is an operator
+ok 794 - T42 functions at the top level are local functions and await is an operator
+  ---
+  duration_ms: 1.85282
+  type: 'test'
+  ...
+# Subtest: T42 a statement after a type or namespace reports CS8803 once, where Roslyn does
+ok 795 - T42 a statement after a type or namespace reports CS8803 once, where Roslyn does
+  ---
+  duration_ms: 3.481973
+  type: 'test'
+  ...
+# Subtest: T42 the legacy entry point keeps accepting statements after declarations
+ok 796 - T42 the legacy entry point keeps accepting statements after declarations
+  ---
+  duration_ms: 3.587387
+  type: 'test'
+  ...
+# Subtest: T42 top-level statements are rejected below C\# 9, at the first statement as in Roslyn
+ok 797 - T42 top-level statements are rejected below C\# 9, at the first statement as in Roslyn
+  ---
+  duration_ms: 3.014886
+  type: 'test'
+  ...
+# Subtest: T42 an incremental parse reports the same order errors and feature uses as a full parse
+ok 798 - T42 an incremental parse reports the same order errors and feature uses as a full parse
+  ---
+  duration_ms: 3.329769
+  type: 'test'
+  ...
+# Subtest: T42 malformed top-level statements recover as Roslyn does
+ok 799 - T42 malformed top-level statements recover as Roslyn does
+  ---
+  duration_ms: 1.40945
+  type: 'test'
+  ...
+# Subtest: T02.9 typed-reference syntax preserves native operand and type child roles
+ok 800 - T02.9 typed-reference syntax preserves native operand and type child roles
+  ---
+  duration_ms: 7.000578
+  type: 'test'
+  ...
+# Subtest: T11.1 pointers: types, unsafe blocks and pointer operators match Roslyn
+ok 801 - T11.1 pointers: types, unsafe blocks and pointer operators match Roslyn
+  ---
+  duration_ms: 20.667104
+  type: 'test'
+  ...
+# Subtest: T11.2 fixed statements and fixed-size buffers match Roslyn
+ok 802 - T11.2 fixed statements and fixed-size buffers match Roslyn
+  ---
+  duration_ms: 5.55729
+  type: 'test'
+  ...
+# Subtest: T11.3 stackalloc forms match Roslyn with per-version gates
+ok 803 - T11.3 stackalloc forms match Roslyn with per-version gates
+  ---
+  duration_ms: 7.600379
+  type: 'test'
+  ...
+# Subtest: T11.4 ref locals, returns, expressions and in arguments match Roslyn
+ok 804 - T11.4 ref locals, returns, expressions and in arguments match Roslyn
+  ---
+  duration_ms: 9.73244
+  type: 'test'
+  ...
+# Subtest: T11.5 function pointer types match Roslyn
+ok 805 - T11.5 function pointer types match Roslyn
+  ---
+  duration_ms: 3.42551
+  type: 'test'
+  ...
+# Subtest: T11.6 scoped and ref readonly parameter modifiers match Roslyn; `scoped` stays an identifier or type name
+ok 806 - T11.6 scoped and ref readonly parameter modifiers match Roslyn; `scoped` stays an identifier or type name
+  ---
+  duration_ms: 3.625402
+  type: 'test'
+  ...
+# Subtest: T47 >>>, >>>= and operator >>> match Roslyn
+ok 807 - T47 >>>, >>>= and operator >>> match Roslyn
+  ---
+  duration_ms: 17.848536
+  type: 'test'
+  ...
+# Subtest: T47 >>> has the precedence and associativity of the other shifts
+ok 808 - T47 >>> has the precedence and associativity of the other shifts
+  ---
+  duration_ms: 2.223384
+  type: 'test'
+  ...
+# Subtest: T47 nested generics still close with single > tokens
+ok 809 - T47 nested generics still close with single > tokens
+  ---
+  duration_ms: 3.635333
+  type: 'test'
+  ...
+# Subtest: T47 operator >>> is an operator declaration with one token
+ok 810 - T47 operator >>> is an operator declaration with one token
+  ---
+  duration_ms: 0.851771
+  type: 'test'
+  ...
+# Subtest: T47 LangVersion 10 rejects each form over the span Roslyn reports
+ok 811 - T47 LangVersion 10 rejects each form over the span Roslyn reports
+  ---
+  duration_ms: 2.97607
+  type: 'test'
+  ...
+# Subtest: T47 an operator needs the right number of parameters, as in Roslyn
+ok 812 - T47 an operator needs the right number of parameters, as in Roslyn
+  ---
+  duration_ms: 1.609964
+  type: 'test'
+  ...
+# Subtest: T47 malformed shifts recover as Roslyn does
+ok 813 - T47 malformed shifts recover as Roslyn does
+  ---
+  duration_ms: 2.60838
+  type: 'test'
+  ...
+# Subtest: T07.1 records: declarations and with expressions match Roslyn
+ok 814 - T07.1 records: declarations and with expressions match Roslyn
+  ---
+  duration_ms: 19.044872
+  type: 'test'
+  ...
+# Subtest: T07.1 records: `record` remains an identifier at LangVersion 8
+ok 815 - T07.1 records: `record` remains an identifier at LangVersion 8
+  ---
+  duration_ms: 5.924178
+  type: 'test'
+  ...
+# Subtest: T07.2 record structs: forms match Roslyn and LangVersion 9 reports CS8773
+ok 816 - T07.2 record structs: forms match Roslyn and LangVersion 9 reports CS8773
+  ---
+  duration_ms: 1.711834
+  type: 'test'
+  ...
+# Subtest: T07.3 init accessors and required members match Roslyn; the words stay identifiers elsewhere
+ok 817 - T07.3 init accessors and required members match Roslyn; the words stay identifiers elsewhere
+  ---
+  duration_ms: 6.873012
+  type: 'test'
+  ...
+# Subtest: T07.4 primary constructors match Roslyn and LangVersion 11 reports the feature diagnostic
+ok 818 - T07.4 primary constructors match Roslyn and LangVersion 11 reports the feature diagnostic
+  ---
+  duration_ms: 3.869371
+  type: 'test'
+  ...
+# Subtest: T07.5 partial members match Roslyn and are gated per version
+ok 819 - T07.5 partial members match Roslyn and are gated per version
+  ---
+  duration_ms: 5.647532
+  type: 'test'
+  ...
+# Subtest: text: immutable snapshots and UTF-16 positions
+ok 820 - text: immutable snapshots and UTF-16 positions
+  ---
+  duration_ms: 2.476676
+  type: 'test'
+  ...
+# Subtest: text: out-of-range LSP columns clamp before line ending
+ok 821 - text: out-of-range LSP columns clamp before line ending
+  ---
+  duration_ms: 0.191801
+  type: 'test'
+  ...
+# Subtest: text: empty documents and source size validation
+ok 822 - text: empty documents and source size validation
+  ---
+  duration_ms: 0.26549
+  type: 'test'
+  ...
+# Subtest: cache: bounded eviction
+ok 823 - cache: bounded eviction
+  ---
+  duration_ms: 0.257468
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "// before\\r\\nint x = 1; /* "
+ok 824 - lexer: exact trivia roundtrip "// before\\r\\nint x = 1; /* "
+  ---
+  duration_ms: 2.20748
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "using System;\\nclass A { s"
+ok 825 - lexer: exact trivia roundtrip "using System;\\nclass A { s"
+  ---
+  duration_ms: 0.635283
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "int café = 0xFF + 0b1010 "
+ok 826 - lexer: exact trivia roundtrip "int café = 0xFF + 0b1010 "
+  ---
+  duration_ms: 2.483326
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "\\"unfinished\\\\"
+ok 827 - lexer: exact trivia roundtrip "\\"unfinished\\\\"
+  ---
+  duration_ms: 0.371385
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "/* unterminated"
+ok 828 - lexer: exact trivia roundtrip "/* unterminated"
+  ---
+  duration_ms: 0.274102
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip ""
+ok 829 - lexer: exact trivia roundtrip ""
+  ---
+  duration_ms: 0.305729
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "   \\n\\t"
+ok 830 - lexer: exact trivia roundtrip "   \\n\\t"
+  ---
+  duration_ms: 0.153065
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "💥 \#bad\\n"
+ok 831 - lexer: exact trivia roundtrip "💥 \#bad\\n"
+  ---
+  duration_ms: 0.579801
+  type: 'test'
+  ...
+# Subtest: lexer: unchanged token interning preserves identity
+ok 832 - lexer: unchanged token interning preserves identity
+  ---
+  duration_ms: 0.366849
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic CS1010 "unclosed
+ok 833 - lexer: diagnostic CS1010 "unclosed
+  ---
+  duration_ms: 0.221726
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic CS1035 /*bad
+ok 834 - lexer: diagnostic CS1035 /*bad
+  ---
+  duration_ms: 0.10265
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic CS8076 $"{x"
+ok 835 - lexer: diagnostic CS8076 $"{x"
+  ---
+  duration_ms: 1.143138
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic CS1027 \#if true\\n
+ok 836 - lexer: diagnostic CS1027 \#if true\\n
+  ---
+  duration_ms: 2.622661
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic SF1005 3.2f
+ok 837 - lexer: diagnostic SF1005 3.2f
+  ---
+  duration_ms: 0.377805
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic SF1003 123L
+ok 838 - lexer: diagnostic SF1003 123L
+  ---
+  duration_ms: 0.165293
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic CS1013 0xZZ
+ok 839 - lexer: diagnostic CS1013 0xZZ
+  ---
+  duration_ms: 0.144563
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic CS1012 'ab'
+ok 840 - lexer: diagnostic CS1012 'ab'
+  ---
+  duration_ms: 0.106527
+  type: 'test'
+  ...
+# Subtest: parser: precedence and right associative assignments
+ok 841 - parser: precedence and right associative assignments
+  ---
+  duration_ms: 2.648979
+  type: 'test'
+  ...
+# Subtest: parser: syntax tree survives missing tokens
+ok 842 - parser: syntax tree survives missing tokens
+  ---
+  duration_ms: 4.642736
+  type: 'test'
+  ...
+# Subtest: parser: deterministic punctuation fuzz recovers without throwing
+ok 843 - parser: deterministic punctuation fuzz recovers without throwing
+  ---
+  duration_ms: 214.147536
+  type: 'test'
+  ...
+# Subtest: parser: nesting budget reports a diagnostic
+ok 844 - parser: nesting budget reports a diagnostic
+  ---
+  duration_ms: 7.733705
+  type: 'test'
+  ...
+1..844
+# tests 844
+# suites 0
+# pass 842
+# fail 1
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 168685.659606

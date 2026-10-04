@@ -1,0 +1,26 @@
+{
+  "kind": "Bounded V8 CPU diagnostic; not target qualification",
+  "cwd": "/workspace/scratch/42f7738360b9/a05-control",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--expose-gc",
+    "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3-driver.mjs"
+  ],
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": "--max-old-space-size=512"
+  },
+  "revision": "10d710b349d581b88c0013ce8571bd963bfdb839",
+  "tree": "45d4897ecdffb72b3ea738e87b935f25218850af",
+  "statusBefore": "",
+  "driverSha256": "cfc7623e9ceb9777fbde7d94c8c15aa8a85c8c1537439e107a8f2b29e3205544",
+  "startedAt": "2026-10-04T22:15:00.361720+00:00",
+  "exitCode": 0,
+  "completedAt": "2026-10-04T22:15:09.949271+00:00",
+  "statusAfter": "",
+  "logSha256": "3f7b3b572103be8e61cf0cb83227bb653da3495118f886e736ce7024ef42a013"
+}

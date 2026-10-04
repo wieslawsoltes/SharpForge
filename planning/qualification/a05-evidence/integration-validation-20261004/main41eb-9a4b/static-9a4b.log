@@ -1,0 +1,48 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sharpforge@0.14.0 check
+> node scripts/run.js check
+
+{
+  "areas": 30,
+  "nodeFiles": 1347,
+  "browserScripts": 38,
+  "unassigned": 0,
+  "duplicate": 0
+}
+Checked 4800 JavaScript modules; 0 syntax errors.
+{
+  "passed": false,
+  "inspected": 4744,
+  "modules": 4791,
+  "errors": [
+    {
+      "path": "planning/qualification/a05-evidence/source-cpu-48c62243/profile-driver.mjs",
+      "message": "ENOENT: no such file or directory, lstat 'planning/qualification/a05-evidence/source-cpu-48c62243/a05-numeric-qualification'"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/virtual-cpu-000bbabd/driver.as-run.mjs",
+      "message": "ENOENT: no such file or directory, lstat 'planning/qualification/a05-evidence/virtual-cpu-000bbabd/a05-numeric-qualification'"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/virtual-cpu-48c62243/a05-virtual-profile-48c62243.mjs",
+      "message": "ENOENT: no such file or directory, lstat 'planning/qualification/a05-evidence/virtual-cpu-48c62243/a05-numeric-qualification'"
+    },
+    {
+      "path": "planning/qualification/integration-performance/size/measure.mjs",
+      "operation": "dynamic-import",
+      "sha256": "431b55d1751c5fda710454c45a02ef31fb594d029cff12d17cb371072ff819f3",
+      "count": 2,
+      "lines": [
+        6,
+        7
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "planning/qualification/integration-performance/size/measure.mjs",
+      "operation": "dynamic-import",
+      "message": "Stale or mismatched allow-list entry"
+    }
+  ]
+}

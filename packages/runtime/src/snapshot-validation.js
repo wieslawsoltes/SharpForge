@@ -9,6 +9,7 @@ import {validateSnapshotSynchronization} from './execution/snapshot-synchronizat
 import {validateSnapshotExceptions} from './execution/snapshot-exception-validation.js';
 import {validateExceptionEventsSnapshot} from './execution/exception-events-snapshot.js';
 import {validateAsyncSnapshot} from './execution/async-snapshot-validation.js';
+import {validateSnapshotAsyncContinuations} from './execution/snapshot-async-continuations-validation.js';
 import {validateVarargsSnapshot} from './execution/varargs-snapshot-validation.js';
 import {validateSnapshotArrayWork} from './execution/snapshot-array-validation.js';
 import {validateSnapshotObjectValueWork} from './execution/snapshot-object-value-validation.js';
@@ -53,6 +54,7 @@ export function validateSnapshotState(vm, snapshot, engine) {
   validateSnapshotSynchronization(memory);
   validateExceptionEventsSnapshot(vm, snapshot);
   validateAsyncSnapshot(vm, snapshot);
+  validateSnapshotAsyncContinuations(memory);
   validateVarargsSnapshot(vm, snapshot);
   if (engine === 'cil') validateCilStackSnapshot(vm, snapshot);
   else validateSourceStackSnapshot(vm, snapshot);

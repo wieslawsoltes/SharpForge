@@ -1,0 +1,29 @@
+{
+  "id": "async-replay",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05-async",
+      "--async",
+      "--framework",
+      "net8.0",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/async-replay/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "async-replay/evidence",
+  "report": "async-replay/result.json",
+  "startedAt": "2026-10-04T20:28:06.856Z",
+  "durationMs": 3478.217749999996,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "async-replay/stdout.log",
+  "stderr": "async-replay/stderr.log",
+  "finishedAt": "2026-10-04T20:28:10.335Z"
+}

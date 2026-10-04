@@ -8,6 +8,7 @@ import {enterFilter, finishFilter} from './eh-filters.js';
 import {activeClauses, stageExceptionalUnwind, stageLeave, enterSelectedCatch} from './eh-nesting.js';
 import {isFatalFault, markUnhandled} from './unhandled.js';
 import {firstChanceFailurePolicy} from './exception-event-failure.js';
+import {hasTaskFaultBoundary, captureTaskFault} from './task-fault-boundary.js';
 export {fatalFaults} from './unhandled.js';
 export {createExceptionState} from './exception-state.js';
 
@@ -63,6 +64,7 @@ function searchStep(vm, search) {
     search.clause = 0;
     search.clauses = null;
   }
+  if (hasTaskFaultBoundary(vm)) return {phase: 'unwind', search};
   markUnhandled(vm, search.error);
   return null;
 }
@@ -104,7 +106,10 @@ function finishPending(vm, frame) {
 
 function unwindStep(vm, search) {
   const frame = vm.top;
-  if (!frame) { markUnhandled(vm, search.error); return null; }
+  if (!frame) {
+    if (!captureTaskFault(vm, search.error)) markUnhandled(vm, search.error);
+    return null;
+  }
   stageExceptionalUnwind(frame, search, search.locations.get(frame.id) ?? frame.lastOffset);
   vm.fault = null;
   return finishPending(vm, frame);

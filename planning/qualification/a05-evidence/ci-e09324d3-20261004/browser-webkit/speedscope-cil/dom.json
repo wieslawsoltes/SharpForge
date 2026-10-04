@@ -1,0 +1,23 @@
+{
+  "title": "A05 browser cil - speedscope",
+  "rows": [
+    [],
+    [
+      "16 (62%)",
+      "16 (62%)",
+      "Program::A05BrowserTwice"
+    ],
+    [
+      "24 (92%)",
+      "8 (31%)",
+      "Program::Main"
+    ],
+    [
+      "26 (100%)",
+      "2 (7.7%)",
+      "SharpForge.<>Program::<startup>"
+    ]
+  ],
+  "pageErrors": [],
+  "dialogs": []
+}

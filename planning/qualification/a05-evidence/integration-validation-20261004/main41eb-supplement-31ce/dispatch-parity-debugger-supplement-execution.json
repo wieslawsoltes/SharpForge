@@ -1,0 +1,64 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "dispatch-parity-debugger-supplement",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--expose-gc",
+    "--test-reporter=tap",
+    "tests/a05-source-interface-dispatch.test.js",
+    "tests/a05-source-generic-interface-methods.test.js",
+    "tests/a05-managed-state-machine-layout.test.js",
+    "tests/a05-cil-async-profile.test.js",
+    "tests/a05-cil-async-native.test.js",
+    "tests/a05-managed-object-string.test.js",
+    "tests/a05-cil-async-continuation-roots.test.js",
+    "tests/a05-roslyn-async-admission.test.js",
+    "tests/engine-parity.test.js",
+    "tests/a05-engine-parity-contracts.test.js",
+    "tests/compiler.test.js",
+    "tests/release05-language.test.js",
+    "tests/a05-debugger-array-children.test.js",
+    "tests/debugger.test.js",
+    "tests/debugger-advanced.test.js",
+    "tests/conformance/security/limits.test.js",
+    "tests/a05-task-fault-unwind.test.js"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": "net10.0",
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "31ce9e74482310f26efd8ee582931dc93b32f924",
+    "tree": "ce145ed06ecfb80590f14699254f4b4451b80cd8",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T22:06:19.480875+00:00",
+  "completedUTC": "2026-10-04T22:07:26.656768+00:00",
+  "elapsedSeconds": 67.17545465800504,
+  "exitCode": 1,
+  "endIdentity": {
+    "commit": "31ce9e74482310f26efd8ee582931dc93b32f924",
+    "tree": "ce145ed06ecfb80590f14699254f4b4451b80cd8",
+    "status": ""
+  },
+  "artifact": {
+    "path": "dispatch-parity-debugger-supplement.log",
+    "bytes": 145432,
+    "sha256": "656975cceddcd9d466e70c2ba8dad86ffed03cabf1237eaf6429e6e8c46b6db3"
+  }
+}

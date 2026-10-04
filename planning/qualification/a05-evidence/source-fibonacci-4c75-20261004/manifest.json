@@ -1,0 +1,144 @@
+{
+  "format": "SharpForge.A05QualificationArchive/1",
+  "scope": "Post-source integer-plan Fibonacci100 at exact4c75; selected Node source target only",
+  "testedIdentity": {
+    "commit": "4c75ea43f5310e50594098076693d1582b49c7d3",
+    "tree": "bdcb5c1429bd01e2992388b5ed95c56303d05e63",
+    "status": ""
+  },
+  "gitTrees": {
+    "packages/runtime": "04835fc75e190e53d02d88e32806171bcbfba8cc",
+    "packages/bytecode": "085a95b5607814ba2ff7ef591c1ebeda8ccbe67d",
+    "packages/compiler": "ecc4dfa6f63a1c55b79a0767436b7a3b62154be2",
+    "bench/vm": "ed4366b62ff0685630a76d855057e78f70573e1e",
+    "scripts": "7e16b49d8c3c696670e4332ed2ba1a055ba75e72"
+  },
+  "rawArtifacts": [
+    {
+      "path": "source-fibonacci-100.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-priority-after-source-ops-4c75-20261004/source-fibonacci-100.json",
+      "bytes": 226096,
+      "sha256": "8bf2c34ce982965eeb394ee974a26b78320c361a8244e3f6fad6a266be6796d2"
+    },
+    {
+      "path": "source-fibonacci-100.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-priority-after-source-ops-4c75-20261004/source-fibonacci-100.log",
+      "bytes": 169,
+      "sha256": "41a9cc03bf780aabfdd5b899563c0200746fec19400f3f602aabc01acd2e7f7a"
+    },
+    {
+      "path": "source-fibonacci-100-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-priority-after-source-ops-4c75-20261004/source-fibonacci-100-execution.json",
+      "bytes": 1805,
+      "sha256": "e85526f3bbaf3b826a0b6fcfec4de12903a2253492d1cb52c994270bafe4505e"
+    }
+  ],
+  "exitCode": 2,
+  "status": "measured",
+  "acceptance": "inconclusive",
+  "target": {
+    "kind": "minimum-speedup",
+    "value": 1.5,
+    "observed": 1.5856073920808873,
+    "interval": [
+      1.4864772844986704,
+      1.6946718688141758
+    ],
+    "meetsPointTarget": true,
+    "acceptance": "inconclusive",
+    "method": "paired-percentile-ratio-of-medians",
+    "seed": 12012,
+    "confidence": 0.95,
+    "resamples": 10000
+  },
+  "protocol": {
+    "samples": 100,
+    "warmupPairs": 3,
+    "firstExecutionsExcludedPerMode": 1,
+    "nativeIntBits": 64,
+    "seed": 12012,
+    "bootstrapResamples": 10000,
+    "timeoutSeconds": 900,
+    "pairing": "Alternating order, one persistent prepared VM per mode; cold construction/preparation reported separately."
+  },
+  "samples": {
+    "baseline": {
+      "first": 1,
+      "warmup": 3,
+      "measured": 100,
+      "allOutputsVerified": true,
+      "instructionsPerExecution": 262697,
+      "measuredManagedAllocations": 0,
+      "measuredFramesAllocated": 0,
+      "measuredFrameArraysAllocated": 0
+    },
+    "candidate": {
+      "first": 1,
+      "warmup": 3,
+      "measured": 100,
+      "allOutputsVerified": true,
+      "instructionsPerExecution": 262697,
+      "measuredManagedAllocations": 0,
+      "measuredFramesAllocated": 0,
+      "measuredFrameArraysAllocated": 0
+    }
+  },
+  "summaryExecutionMilliseconds": {
+    "baseline": {
+      "count": 100,
+      "minimum": 65.77788200000032,
+      "median": 76.65023699999983,
+      "p95": 105.71982750000046,
+      "p99": 112.6028221400025,
+      "maximum": 113.30128100000002,
+      "interquartileRange": 21.56459624999934,
+      "medianAbsoluteDeviation": 8.507007499999872
+    },
+    "candidate": {
+      "count": 100,
+      "minimum": 41.452948999998625,
+      "median": 48.3412459999995,
+      "p95": 72.17321284999987,
+      "p99": 76.3081820900015,
+      "maximum": 77.45055200000024,
+      "interquartileRange": 14.459327750000398,
+      "medianAbsoluteDeviation": 4.861018000000058
+    }
+  },
+  "harnessHash": "e2444b7f1a07c31e889ced549d9dfebad7fc68fd9fc699fa747b0e3dd167d4ea",
+  "environmentFingerprint": "5ae7016da9fdcdad1a0cb42b2fa3ac14a78b6e015afd693350e966f3e15f34c0",
+  "assemblyHash": "9aad85acc393b657e412b96d2d582e49e54e28d75a925456c578203a1134b0b9",
+  "fixtureAndHarnessSourceProof": [
+    {
+      "path": "bench/vm/qualification.js",
+      "gitBlob": "cd5b098098e350bca88b47d5f943f166ddb51940",
+      "bytes": 8970,
+      "sha256": "658142f280b5cc64dfcc735c76a5d17a26e60f2e6a0aab3ac49dfd6e74977471"
+    },
+    {
+      "path": "bench/vm/qualification-fixtures.js",
+      "gitBlob": "1720277a1df2983eff72530378166652549dcb63",
+      "bytes": 4735,
+      "sha256": "1c4788e3d0174af7294f8ca1a3d1ed35f7b1233d0c63ea798aeb15f14478ba2d"
+    },
+    {
+      "path": "bench/vm/source-fusion-fixtures.js",
+      "gitBlob": "4f22ae205368ce9a511523f3c15c399767a6b76e",
+      "bytes": 452,
+      "sha256": "6f7b80e1a983a4fef3fcdb473939849e905992e74e9f63a6cee38fe5460cd123"
+    }
+  ],
+  "nativeQualification": false,
+  "unsupportedTargets": [
+    "Browser timing/host-memory: this Node harness does not qualify browsers",
+    "Native .NET throughput: no CLR executable is measured",
+    "Wasm tier: interpreter baseline options explicitly disable it"
+  ],
+  "limitations": [
+    "The point estimate exceeds1.5 but the95% confidence interval crosses1.5; the target remains inconclusive.",
+    "Baseline and candidate are options of the same tested4c75 product; no cross-revision comparison or later-head qualification is claimed.",
+    "Historical attempts remain unchanged and are not pooled into this100-pair report.",
+    "Host memory gauges are not allocation totals; zero managed/frame allocations is not a zero-host-object claim.",
+    "No test, build, benchmark, acceptance ledger or product change was made while archiving."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "suite": "profile-exports",
+  "passed": true,
+  "engine": "webkit",
+  "cspViolations": [],
+  "browser": "26.6",
+  "executable": "playwright-managed",
+  "launchOptions": {
+    "headless": true
+  },
+  "mode": "A05 public runtime / allowed CSP",
+  "seconds": 4.26913253799998,
+  "diagnosticErrors": []
+}

@@ -1,0 +1,28 @@
+{
+  "id": "value-storage",
+  "status": "passed",
+  "command": {
+    "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/value-storage",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/home/runner/work/SharpForge/SharpForge/artifacts/a05-native/value-storage/evidence"
+    ],
+    "cwd": "/home/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "value-storage/evidence",
+  "report": "value-storage/result.json",
+  "startedAt": "2026-10-04T19:53:27.530Z",
+  "durationMs": 6235.482428,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "value-storage/stdout.log",
+  "stderr": "value-storage/stderr.log",
+  "finishedAt": "2026-10-04T19:53:33.769Z"
+}

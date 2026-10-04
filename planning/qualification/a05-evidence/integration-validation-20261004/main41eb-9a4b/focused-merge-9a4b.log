@@ -1,0 +1,1732 @@
+TAP version 13
+# Subtest: source: scheduler, active frames and pending faults restore one alias graph
+ok 1 - source: scheduler, active frames and pending faults restore one alias graph
+  ---
+  duration_ms: 12.424239
+  type: 'test'
+  ...
+# Subtest: source: invalid components and versions reject before replacing live state or caches
+ok 2 - source: invalid components and versions reject before replacing live state or caches
+  ---
+  duration_ms: 4.064778
+  type: 'test'
+  ...
+# Subtest: source: captured references remain valid after live collection and handles never move backwards
+ok 3 - source: captured references remain valid after live collection and handles never move backwards
+  ---
+  duration_ms: 4.062004
+  type: 'test'
+  ...
+# Subtest: source: randomized instruction boundaries replay deterministically
+ok 4 - source: randomized instruction boundaries replay deterministically
+  ---
+  duration_ms: 72.034346
+  type: 'test'
+  ...
+# Subtest: cil: scheduler, active frames and pending faults restore one alias graph
+ok 5 - cil: scheduler, active frames and pending faults restore one alias graph
+  ---
+  duration_ms: 12.854718
+  type: 'test'
+  ...
+# Subtest: cil: invalid components and versions reject before replacing live state or caches
+ok 6 - cil: invalid components and versions reject before replacing live state or caches
+  ---
+  duration_ms: 5.254266
+  type: 'test'
+  ...
+# Subtest: cil: captured references remain valid after live collection and handles never move backwards
+ok 7 - cil: captured references remain valid after live collection and handles never move backwards
+  ---
+  duration_ms: 3.127699
+  type: 'test'
+  ...
+# Subtest: cil: randomized instruction boundaries replay deterministically
+ok 8 - cil: randomized instruction boundaries replay deterministically
+  ---
+  duration_ms: 98.237634
+  type: 'test'
+  ...
+# Subtest: source: restore before the first memory allocation preserves later monotonic identities
+ok 9 - source: restore before the first memory allocation preserves later monotonic identities
+  ---
+  duration_ms: 1.188446
+  type: 'test'
+  ...
+# Subtest: cil: restore before the first memory allocation preserves later monotonic identities
+ok 10 - cil: restore before the first memory allocation preserves later monotonic identities
+  ---
+  duration_ms: 1.535773
+  type: 'test'
+  ...
+# Subtest: execution copies preserve sparse local capacity, holes, cycles and null prototypes
+ok 11 - execution copies preserve sparse local capacity, holes, cycles and null prototypes
+  ---
+  duration_ms: 0.194213
+  type: 'test'
+  ...
+# Subtest: source: structured clone snapshot resumes in a fresh owner
+ok 12 - source: structured clone snapshot resumes in a fresh owner
+  ---
+  duration_ms: 26.748764
+  type: 'test'
+  ...
+# Subtest: source: JSON snapshot resumes in a fresh owner
+ok 13 - source: JSON snapshot resumes in a fresh owner
+  ---
+  duration_ms: 6.739585
+  type: 'test'
+  ...
+# Subtest: source: wire retains exact scalar values, cycles, aliases and typed payloads
+ok 14 - source: wire retains exact scalar values, cycles, aliases and typed payloads
+  ---
+  duration_ms: 4.963981
+  type: 'test'
+  ...
+# Subtest: source: wrong code, ABI, host revision and malformed graphs reject before replacement
+ok 15 - source: wrong code, ABI, host revision and malformed graphs reject before replacement
+  ---
+  duration_ms: 6.083586
+  type: 'test'
+  ...
+# Subtest: source: a direct backing alias remains shared with its record across local and portable restore
+ok 16 - source: a direct backing alias remains shared with its record across local and portable restore
+  ---
+  duration_ms: 5.949852
+  type: 'test'
+  ...
+# Subtest: cil: structured clone snapshot resumes in a fresh owner
+ok 17 - cil: structured clone snapshot resumes in a fresh owner
+  ---
+  duration_ms: 27.769766
+  type: 'test'
+  ...
+# Subtest: cil: JSON snapshot resumes in a fresh owner
+ok 18 - cil: JSON snapshot resumes in a fresh owner
+  ---
+  duration_ms: 10.80948
+  type: 'test'
+  ...
+# Subtest: cil: wire retains exact scalar values, cycles, aliases and typed payloads
+ok 19 - cil: wire retains exact scalar values, cycles, aliases and typed payloads
+  ---
+  duration_ms: 7.470413
+  type: 'test'
+  ...
+# Subtest: cil: wrong code, ABI, host revision and malformed graphs reject before replacement
+ok 20 - cil: wrong code, ABI, host revision and malformed graphs reject before replacement
+  ---
+  duration_ms: 8.107594
+  type: 'test'
+  ...
+# Subtest: cil: a direct backing alias remains shared with its record across local and portable restore
+ok 21 - cil: a direct backing alias remains shared with its record across local and portable restore
+  ---
+  duration_ms: 11.731788
+  type: 'test'
+  ...
+# Subtest: portable local addresses and issued function pointers are rebound to the receiving VM
+ok 22 - portable local addresses and issued function pointers are rebound to the receiving VM
+  ---
+  duration_ms: 7.427831
+  type: 'test'
+  ...
+# Subtest: portable snapshots reject functions, unissued refs and accessors without invoking them
+ok 23 - portable snapshots reject functions, unissued refs and accessors without invoking them
+  ---
+  duration_ms: 1.417731
+  type: 'test'
+  ...
+# Subtest: portable generic calls restore closed cache keys and canonical IL bodies
+ok 24 - portable generic calls restore closed cache keys and canonical IL bodies
+  ---
+  duration_ms: 9.219989
+  type: 'test'
+  ...
+# Subtest: COW captures reuse unchanged records and detach host writes before another capture
+ok 25 - COW captures reuse unchanged records and detach host writes before another capture
+  ---
+  duration_ms: 6.43489
+  type: 'test'
+  ...
+# Subtest: snapshot typed backing preserves NaN payload bits and never exposes writable captured storage
+ok 26 - snapshot typed backing preserves NaN payload bits and never exposes writable captured storage
+  ---
+  duration_ms: 0.885493
+  type: 'test'
+  ...
+# Subtest: shared=false: mutable cycles and backing aliases remain independent after restore
+ok 27 - shared=false: mutable cycles and backing aliases remain independent after restore
+  ---
+  duration_ms: 0.359956
+  type: 'test'
+  ...
+# Subtest: shared=true: mutable cycles and backing aliases remain independent after restore
+ok 28 - shared=true: mutable cycles and backing aliases remain independent after restore
+  ---
+  duration_ms: 0.242264
+  type: 'test'
+  ...
+# Subtest: collection and reused slots cannot inherit another generation's shared record
+ok 29 - collection and reused slots cannot inherit another generation's shared record
+  ---
+  duration_ms: 1.382259
+  type: 'test'
+  ...
+# Subtest: shared=false: different typed views preserve buffer aliases, offsets and independent snapshots
+ok 30 - shared=false: different typed views preserve buffer aliases, offsets and independent snapshots
+  ---
+  duration_ms: 0.903139
+  type: 'test'
+  ...
+# Subtest: shared=true: different typed views preserve buffer aliases, offsets and independent snapshots
+ok 31 - shared=true: different typed views preserve buffer aliases, offsets and independent snapshots
+  ---
+  duration_ms: 0.71878
+  type: 'test'
+  ...
+# Subtest: frozen buffer wrappers retain mutable internal bytes and cannot enter the immutable record cache
+ok 32 - frozen buffer wrappers retain mutable internal bytes and cannot enter the immutable record cache
+  ---
+  duration_ms: 0.301631
+  type: 'test'
+  ...
+# Subtest: 128 captures with 1% record mutation retain under twice a 10 MiB logical heap
+ok 33 - 128 captures with 1% record mutation retain under twice a 10 MiB logical heap
+  ---
+  duration_ms: 1073.665174
+  type: 'test'
+  ...
+# Subtest: A05 T29 two real MoveNext suspensions resume through finally and return a result
+ok 34 - A05 T29 two real MoveNext suspensions resume through finally and return a result
+  ---
+  duration_ms: 59.398469
+  type: 'test'
+  ...
+# Subtest: A05 T29 paused await snapshots preserve boxed machine, waiter and builder identities
+ok 35 - A05 T29 paused await snapshots preserve boxed machine, waiter and builder identities
+  ---
+  duration_ms: 45.015653
+  type: 'test'
+  ...
+# Subtest: A05 T29 awaiter raises a task fault inside MoveNext and cleanup executes once
+ok 36 - A05 T29 awaiter raises a task fault inside MoveNext and cleanup executes once
+  ---
+  duration_ms: 25.224858
+  type: 'test'
+  ...
+# Subtest: A05 T29 cancellation during an await drops all pending continuations
+ok 37 - A05 T29 cancellation during an await drops all pending continuations
+  ---
+  duration_ms: 10.390929
+  type: 'test'
+  ...
+# Subtest: A05 T29 constructor root enumeration precedes scheduler creation
+ok 38 - A05 T29 constructor root enumeration precedes scheduler creation
+  ---
+  duration_ms: 1.167325
+  type: 'test'
+  ...
+# Subtest: A05 T29 async descriptors validate closed signatures and reachable compiler methods
+ok 39 - A05 T29 async descriptors validate closed signatures and reachable compiler methods
+  ---
+  duration_ms: 8.317931
+  type: 'test'
+  ...
+# Subtest: A05 T29 builder default copies materialize distinct task identities and reject double completion
+ok 40 - A05 T29 builder default copies materialize distinct task identities and reject double completion
+  ---
+  duration_ms: 4.268666
+  type: 'test'
+  ...
+# Subtest: A05 T29 default and wrong-task awaiters fail deterministically
+ok 41 - A05 T29 default and wrong-task awaiters fail deterministically
+  ---
+  duration_ms: 2.064366
+  type: 'test'
+  ...
+# Subtest: A05 T29 default YieldAwaiter is valid and always asynchronous
+ok 42 - A05 T29 default YieldAwaiter is valid and always asynchronous
+  ---
+  duration_ms: 1.929509
+  type: 'test'
+  ...
+# Subtest: A05 T29 TaskAwaiter.OnCompleted resumes a verified managed delegate
+not ok 43 - A05 T29 TaskAwaiter.OnCompleted resumes a verified managed delegate
+  ---
+  duration_ms: 4.240735
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/a05-29-async.test.js:227:1'
+  failureType: 'testCodeFailure'
+  error: 'Managed IL verification failed: Program::Main IL_6: Async ABI signature uses an incompatible runtime type identity'
+  code: 'ERR_TEST_FAILURE'
+  name: 'CilError'
+  stack: |-
+    requireVerifiedCil (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/verification-error.js:16:13)
+    admitCilAssembly (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-admission.js:15:3)
+    new CilVirtualMachine (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:43:5)
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/a05-29-async.test.js:247:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: A05 T29 async void faults are posted outside the synchronous caller and snapshotted
+ok 44 - A05 T29 async void faults are posted outside the synchronous caller and snapshotted
+  ---
+  duration_ms: 3.163982
+  type: 'test'
+  ...
+# Subtest: A05 T29 malformed async snapshots reject before live execution changes
+ok 45 - A05 T29 malformed async snapshots reject before live execution changes
+  ---
+  duration_ms: 32.434852
+  type: 'test'
+  ...
+# Subtest: A05 T29 awaiting snapshots accept the wake-up boundary before GetResult
+ok 46 - A05 T29 awaiting snapshots accept the wake-up boundary before GetResult
+  ---
+  duration_ms: 19.270851
+  type: 'test'
+  ...
+# Subtest: A05 T29 snapshot validation uses saved roots after the live machine is collected
+ok 47 - A05 T29 snapshot validation uses saved roots after the live machine is collected
+  ---
+  duration_ms: 15.427194
+  type: 'test'
+  ...
+# Subtest: A05 T29 canceled task history remains restorable after its machine is collected
+ok 48 - A05 T29 canceled task history remains restorable after its machine is collected
+  ---
+  duration_ms: 11.118999
+  type: 'test'
+  ...
+# Subtest: async registration normal return cannot leak into a reused CIL frame
+ok 49 - async registration normal return cannot leak into a reused CIL frame
+  ---
+  duration_ms: 34.624855
+  type: 'test'
+  ...
+# Subtest: async registration unwind cannot leak into a reused CIL frame
+ok 50 - async registration unwind cannot leak into a reused CIL frame
+  ---
+  duration_ms: 6.965702
+  type: 'test'
+  ...
+# Subtest: fault completion retains a managed delegate through every allocation and delivers it once
+ok 51 - fault completion retains a managed delegate through every allocation and delivers it once
+  ---
+  duration_ms: 37.700376
+  type: 'test'
+  ...
+# Subtest: managed TaskAwaiter.OnCompleted owns its callback through fault-completion collection
+ok 52 - managed TaskAwaiter.OnCompleted owns its callback through fault-completion collection
+  ---
+  duration_ms: 12.846223
+  type: 'test'
+  ...
+# Subtest: direct CIL async native reference: Completed
+ok 53 - direct CIL async native reference: Completed
+  ---
+  duration_ms: 2619.351531
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Suspended
+ok 54 - direct CIL async native reference: Suspended
+  ---
+  duration_ms: 2085.292152
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Exceptions
+ok 55 - direct CIL async native reference: Exceptions
+  ---
+  duration_ms: 2442.169274
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Retention
+ok 56 - direct CIL async native reference: Retention
+  ---
+  duration_ms: 2278.155664
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: WaitAndDelay
+ok 57 - direct CIL async native reference: WaitAndDelay
+  ---
+  duration_ms: 2639.947652
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async native reference: Mutation
+ok 58 - direct CIL async native reference: Mutation
+  ---
+  duration_ms: 2503.623719
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async snapshot roots and exactly-once continuation: Retention
+ok 59 - direct CIL async snapshot roots and exactly-once continuation: Retention
+  ---
+  duration_ms: 2288.916848
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async snapshot roots and exactly-once continuation: Mutation
+ok 60 - direct CIL async snapshot roots and exactly-once continuation: Mutation
+  ---
+  duration_ms: 2620.304114
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: direct CIL async builder reachability rejects invalid MoveNext before execution
+ok 61 - direct CIL async builder reachability rejects invalid MoveNext before execution
+  ---
+  duration_ms: 1369.487544
+  type: 'test'
+  ...
+# {"dotnet":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","sdk":"10.0.201","compiler":"/workspace/scratch/1692a10afba9/toolchain/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll","framework":"net10.0","languageVersion":"12","referencePack":"10.0.5","referenceDirectory":"/workspace/scratch/1692a10afba9/toolchain/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","referenceFiles":167,"runtimeConfig":{"runtimeOptions":{"tfm":"net10.0","framework":{"name":"Microsoft.NETCore.App","version":"10.0.0"}}},"runtimeScope":"requested runtime configuration; executed runtime patch is not independently probed","cwd":"/tmp/a05-integration-42f7738360b9","timeoutMs":30000,"environment":{"DOTNET":"/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet","DOTNET_ROOT":"/workspace/scratch/1692a10afba9/toolchain/dotnet","DOTNET_TARGET_FRAMEWORK":"net10.0","NODE_OPTIONS":"--max-old-space-size=512","SHARPFORGE_MAX_PARALLEL_RUNS":"1","SHARPFORGE_TEST_CONCURRENCY":"1","SHARPFORGE_MAX_OLD_SPACE_MB":"512"},"optimizationModes":["-","+"]}
+# Subtest: CIL async ABI matcher requires complete generic and byref member signatures
+ok 62 - CIL async ABI matcher requires complete generic and byref member signatures
+  ---
+  duration_ms: 1.458799
+  type: 'test'
+  ...
+# Subtest: CIL async ABI generic awaiter result and real Yield type are exact
+ok 63 - CIL async ABI generic awaiter result and real Yield type are exact
+  ---
+  duration_ms: 0.424183
+  type: 'test'
+  ...
+# Subtest: CIL async callbacks require trusted reference scope and matching MethodImpl declarations
+ok 64 - CIL async callbacks require trusted reference scope and matching MethodImpl declarations
+  ---
+  duration_ms: 22.271028
+  type: 'test'
+  ...
+# Subtest: CIL dispatch admits proved async callback implementations and still rejects malformed declarations
+ok 65 - CIL dispatch admits proved async callback implementations and still rejects malformed declarations
+  ---
+  duration_ms: 6.914212
+  type: 'test'
+  ...
+# Subtest: CIL async callback-only bodies remain mandatory verifier roots
+ok 66 - CIL async callback-only bodies remain mandatory verifier roots
+  ---
+  duration_ms: 1.979754
+  type: 'test'
+  ...
+# Subtest: async native fixtures select the exact SDK inventory root and one shared supported language
+ok 67 - async native fixtures select the exact SDK inventory root and one shared supported language
+  ---
+  duration_ms: 2.754763
+  type: 'test'
+  ...
+# Subtest: missing prerequisite is explicit while mismatched or ambiguous installed SDK axes fail
+ok 68 - missing prerequisite is explicit while mismatched or ambiguous installed SDK axes fail
+  ---
+  duration_ms: 0.625558
+  type: 'test'
+  ...
+# Subtest: direct CIL delegate binding: closed-static-null
+ok 69 - direct CIL delegate binding: closed-static-null
+  ---
+  duration_ms: 37.501233
+  type: 'test'
+  ...
+# Subtest: direct CIL delegate binding: closed-static-string
+ok 70 - direct CIL delegate binding: closed-static-string
+  ---
+  duration_ms: 7.6709
+  type: 'test'
+  ...
+# Subtest: direct CIL delegate binding: open-static
+ok 71 - direct CIL delegate binding: open-static
+  ---
+  duration_ms: 6.828032
+  type: 'test'
+  ...
+# Subtest: direct CIL delegate binding: closed-instance
+ok 72 - direct CIL delegate binding: closed-instance
+  ---
+  duration_ms: 7.983208
+  type: 'test'
+  ...
+# Subtest: direct CIL delegate binding: open-instance
+ok 73 - direct CIL delegate binding: open-instance
+  ---
+  duration_ms: 6.372083
+  type: 'test'
+  ...
+# Subtest: open instance invocation rejects a null receiver at the existing call gate
+ok 74 - open instance invocation rejects a null receiver at the existing call gate
+  ---
+  duration_ms: 6.1453
+  type: 'test'
+  ...
+# Subtest: delegate equality compares canonical target method, type, receiver and binding
+ok 75 - delegate equality compares canonical target method, type, receiver and binding
+  ---
+  duration_ms: 3.531083
+  type: 'test'
+  ...
+# Subtest: static target type, value binding and foreign pointer failures precede allocation
+ok 76 - static target type, value binding and foreign pointer failures precede allocation
+  ---
+  duration_ms: 7.520639
+  type: 'test'
+  ...
+# Subtest: scheduled delegates use the same closed-static arguments and snapshot identity
+ok 77 - scheduled delegates use the same closed-static arguments and snapshot identity
+  ---
+  duration_ms: 20.454253
+  type: 'test'
+  ...
+# Subtest: guest Equals uses the same identity and verifier rejects malformed Invoke signatures
+ok 78 - guest Equals uses the same identity and verifier rejects malformed Invoke signatures
+  ---
+  duration_ms: 9.397183
+  type: 'test'
+  ...
+# Subtest: public delegate profile accepts CLR arity boundary: System.Action
+ok 79 - public delegate profile accepts CLR arity boundary: System.Action
+  ---
+  duration_ms: 0.391795
+  type: 'test'
+  ...
+# Subtest: public delegate profile accepts CLR arity boundary: System.Action`1<int>
+ok 80 - public delegate profile accepts CLR arity boundary: System.Action`1<int>
+  ---
+  duration_ms: 0.166424
+  type: 'test'
+  ...
+# Subtest: public delegate profile accepts CLR arity boundary: System.Action`16<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int>
+ok 81 - public delegate profile accepts CLR arity boundary: System.Action`16<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int>
+  ---
+  duration_ms: 0.190029
+  type: 'test'
+  ...
+# Subtest: public delegate profile accepts CLR arity boundary: System.Func`1<int>
+ok 82 - public delegate profile accepts CLR arity boundary: System.Func`1<int>
+  ---
+  duration_ms: 0.107228
+  type: 'test'
+  ...
+# Subtest: public delegate profile accepts CLR arity boundary: System.Func`17<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int>
+ok 83 - public delegate profile accepts CLR arity boundary: System.Func`17<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int>
+  ---
+  duration_ms: 0.105204
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Action`0
+ok 84 - public delegate profile rejects malformed or out-of-range arity: System.Action`0
+  ---
+  duration_ms: 0.220353
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Action`0<>
+ok 85 - public delegate profile rejects malformed or out-of-range arity: System.Action`0<>
+  ---
+  duration_ms: 0.079557
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Action`17<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int>
+ok 86 - public delegate profile rejects malformed or out-of-range arity: System.Action`17<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int>
+  ---
+  duration_ms: 0.072657
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Func`18<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int>
+ok 87 - public delegate profile rejects malformed or out-of-range arity: System.Func`18<int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int>
+  ---
+  duration_ms: 0.064334
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Func
+ok 88 - public delegate profile rejects malformed or out-of-range arity: System.Func
+  ---
+  duration_ms: 0.051476
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Func`0
+ok 89 - public delegate profile rejects malformed or out-of-range arity: System.Func`0
+  ---
+  duration_ms: 0.060348
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Func`0<>
+ok 90 - public delegate profile rejects malformed or out-of-range arity: System.Func`0<>
+  ---
+  duration_ms: 0.05479
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Func`01<int>
+ok 91 - public delegate profile rejects malformed or out-of-range arity: System.Func`01<int>
+  ---
+  duration_ms: 0.064014
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Action`x<int>
+ok 92 - public delegate profile rejects malformed or out-of-range arity: System.Action`x<int>
+  ---
+  duration_ms: 0.083303
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Action`-1<int>
+ok 93 - public delegate profile rejects malformed or out-of-range arity: System.Action`-1<int>
+  ---
+  duration_ms: 0.06814
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Action`1<>
+ok 94 - public delegate profile rejects malformed or out-of-range arity: System.Action`1<>
+  ---
+  duration_ms: 0.102801
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Func`1
+ok 95 - public delegate profile rejects malformed or out-of-range arity: System.Func`1
+  ---
+  duration_ms: 0.105595
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Action<int>
+ok 96 - public delegate profile rejects malformed or out-of-range arity: System.Action<int>
+  ---
+  duration_ms: 0.067258
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Func`2<int>
+ok 97 - public delegate profile rejects malformed or out-of-range arity: System.Func`2<int>
+  ---
+  duration_ms: 0.055852
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Func`1<int,int>
+ok 98 - public delegate profile rejects malformed or out-of-range arity: System.Func`1<int,int>
+  ---
+  duration_ms: 0.062011
+  type: 'test'
+  ...
+# Subtest: public delegate profile rejects malformed or out-of-range arity: System.Action`2<int>
+ok 99 - public delegate profile rejects malformed or out-of-range arity: System.Action`2<int>
+  ---
+  duration_ms: 0.066908
+  type: 'test'
+  ...
+# Subtest: registered framework canonicalization cannot bypass the standard delegate arity guard
+ok 100 - registered framework canonicalization cannot bypass the standard delegate arity guard
+  ---
+  duration_ms: 0.154346
+  type: 'test'
+  ...
+# Subtest: actual A05 capture declarations pass normal supply validation and reject missing, changed or unnotified assets
+ok 101 - actual A05 capture declarations pass normal supply validation and reject missing, changed or unnotified assets
+  ---
+  duration_ms: 124.985798
+  type: 'test'
+  ...
+# Subtest: A05 shipped documentation contains the small source-host index instead of raw qualification assets
+ok 102 - A05 shipped documentation contains the small source-host index instead of raw qualification assets
+  ---
+  duration_ms: 2.867159
+  type: 'test'
+  ...
+# Subtest: A05 evidence relocation preserves every original Git blob, SHA-256 and byte count
+ok 103 - A05 evidence relocation preserves every original Git blob, SHA-256 and byte count
+  ---
+  duration_ms: 583.933933
+  type: 'test'
+  ...
+# Subtest: per-iteration allocation evidence preserves positive fixed slice costs and separate all-run limits
+ok 104 - per-iteration allocation evidence preserves positive fixed slice costs and separate all-run limits
+  ---
+  duration_ms: 2.240999
+  type: 'test'
+  ...
+# Subtest: a single observed byte of growth or any loop collection stays inconclusive without tolerance
+ok 105 - a single observed byte of growth or any loop collection stays inconclusive without tolerance
+  ---
+  duration_ms: 0.290867
+  type: 'test'
+  ...
+# Subtest: exact loop allocation counters cannot be hidden by flat or falling V8 bytes
+ok 106 - exact loop allocation counters cannot be hidden by flat or falling V8 bytes
+  ---
+  duration_ms: 0.274373
+  type: 'test'
+  ...
+# Subtest: partial workloads, altered warmup, mismatched engines and missing allocation controls cannot qualify
+ok 107 - partial workloads, altered warmup, mismatched engines and missing allocation controls cannot qualify
+  ---
+  duration_ms: 0.394088
+  type: 'test'
+  ...
+# Subtest: allocation trace includes all in-loop bytes and closing pre-collection allocation, not retained size
+ok 108 - allocation trace includes all in-loop bytes and closing pre-collection allocation, not retained size
+  ---
+  duration_ms: 0.682903
+  type: 'test'
+  ...
+# Subtest: retained reports keep their historical labels while fixed-loop interpretation distinguishes real allocation growth
+ok 109 - retained reports keep their historical labels while fixed-loop interpretation distinguishes real allocation growth
+  ---
+  duration_ms: 2.45257
+  type: 'test'
+  ...
+# Subtest: source: pooled frames release regions and pins on actual return
+ok 110 - source: pooled frames release regions and pins on actual return
+  ---
+  duration_ms: 126.595493
+  type: 'test'
+  ...
+# Subtest: source: restored frames release regions and pins on actual return
+ok 111 - source: restored frames release regions and pins on actual return
+  ---
+  duration_ms: 8.988185
+  type: 'test'
+  ...
+# Subtest: source: logical retirement revokes capabilities before pool storage is cleared
+ok 112 - source: logical retirement revokes capabilities before pool storage is cleared
+  ---
+  duration_ms: 2.502431
+  type: 'test'
+  ...
+# Subtest: source: cancellation releases parked pins and stop releases the inspectable fatal frame
+ok 113 - source: cancellation releases parked pins and stop releases the inspectable fatal frame
+  ---
+  duration_ms: 4.15203
+  type: 'test'
+  ...
+# Subtest: source: failed provisional admission releases child pins and preserves parent capabilities
+ok 114 - source: failed provisional admission releases child pins and preserves parent capabilities
+  ---
+  duration_ms: 2.373441
+  type: 'test'
+  ...
+# Subtest: cil: pooled frames release regions and pins on actual return
+ok 115 - cil: pooled frames release regions and pins on actual return
+  ---
+  duration_ms: 17.987757
+  type: 'test'
+  ...
+# Subtest: cil: restored frames release regions and pins on actual return
+ok 116 - cil: restored frames release regions and pins on actual return
+  ---
+  duration_ms: 6.460427
+  type: 'test'
+  ...
+# Subtest: cil: logical retirement revokes capabilities before pool storage is cleared
+ok 117 - cil: logical retirement revokes capabilities before pool storage is cleared
+  ---
+  duration_ms: 2.986561
+  type: 'test'
+  ...
+# Subtest: cil: cancellation releases parked pins and stop releases the inspectable fatal frame
+ok 118 - cil: cancellation releases parked pins and stop releases the inspectable fatal frame
+  ---
+  duration_ms: 2.836261
+  type: 'test'
+  ...
+# Subtest: cil: failed provisional admission releases child pins and preserves parent capabilities
+ok 119 - cil: failed provisional admission releases child pins and preserves parent capabilities
+  ---
+  duration_ms: 3.136676
+  type: 'test'
+  ...
+# Subtest: CIL: parked frames remain live until natural return
+ok 120 - CIL: parked frames remain live until natural return
+  ---
+  duration_ms: 52.667959
+  type: 'test'
+  ...
+# Subtest: CIL: parked frames remain live until cancellation
+ok 121 - CIL: parked frames remain live until cancellation
+  ---
+  duration_ms: 6.977945
+  type: 'test'
+  ...
+# Subtest: CIL: retirement clears late fields and stop preserves fatal inspection until disposal
+ok 122 - CIL: retirement clears late fields and stop preserves fatal inspection until disposal
+  ---
+  duration_ms: 2.742233
+  type: 'test'
+  ...
+# Subtest: source: exception unwinding releases callee roots before reuse
+ok 123 - source: exception unwinding releases callee roots before reuse
+  ---
+  duration_ms: 114.007974
+  type: 'test'
+  ...
+# Subtest: cil: exception unwinding releases callee roots before reuse
+ok 124 - cil: exception unwinding releases callee roots before reuse
+  ---
+  duration_ms: 23.416339
+  type: 'test'
+  ...
+# Subtest: closed generic aggregate constructors, instance methods and MethodSpec values keep independent storage
+ok 125 - closed generic aggregate constructors, instance methods and MethodSpec values keep independent storage
+  ---
+  duration_ms: 38.429402
+  type: 'test'
+  ...
+# Subtest: generic aggregate calls preserve reference fields through collection and repeated snapshots
+ok 126 - generic aggregate calls preserve reference fields through collection and repeated snapshots
+  ---
+  duration_ms: 16.618467
+  type: 'test'
+  ...
+# source-fibonacci: starting
+# source-fibonacci: completed; exit=2; assessment=unmet
+# profiler-reference: starting
+# profiler-reference: completed; exit=2; assessment=unmet
+# source-integer-loop: starting
+# source-integer-loop: completed; exit=0; assessment=satisfied
+# source-fibonacci: starting
+# source-fibonacci: failed; exit=0; assessment=unmet
+# profiler-reference: starting
+# profiler-reference: completed; exit=0; assessment=satisfied
+# profiler-off: starting
+# profiler-off: failed; exit=0; assessment=unmet
+# source-integer-loop: starting
+# source-integer-loop: completed; exit=0; assessment=satisfied
+# Subtest: hosted plan admits every fixed qualification command with exact ABI, counts and distinct outputs
+ok 127 - hosted plan admits every fixed qualification command with exact ABI, counts and distinct outputs
+  ---
+  duration_ms: 4.633447
+  type: 'test'
+  ...
+# Subtest: enabled and allocation reporting retain intentional exit2 without converting a missed gate into success
+ok 128 - enabled and allocation reporting retain intentional exit2 without converting a missed gate into success
+  ---
+  duration_ms: 0.475438
+  type: 'test'
+  ...
+# Subtest: memory qualification recomputes actual retained observations and refuses forged or partial success labels
+ok 129 - memory qualification recomputes actual retained observations and refuses forged or partial success labels
+  ---
+  duration_ms: 1.593197
+  type: 'test'
+  ...
+# Subtest: failed reference blocks only its dependent off command while independent misses and later work remain recorded
+ok 130 - failed reference blocks only its dependent off command while independent misses and later work remain recorded
+  ---
+  duration_ms: 3.260944
+  type: 'test'
+  ...
+# Subtest: source mutation blocks all later commands and missing reports stay failures
+ok 131 - source mutation blocks all later commands and missing reports stay failures
+  ---
+  duration_ms: 1.179109
+  type: 'test'
+  ...
+# Subtest: a successful off report cannot qualify after reference mutation; later independent work still executes
+ok 132 - a successful off report cannot qualify after reference mutation; later independent work still executes
+  ---
+  duration_ms: 3.223969
+  type: 'test'
+  ...
+# Subtest: literal child argv retains nonzero exit, both output streams and cancellation without overwrite
+ok 133 - literal child argv retains nonzero exit, both output streams and cancellation without overwrite
+  ---
+  duration_ms: 166.129366
+  type: 'test'
+  ...
+# Subtest: runner sidecar bounds reads, records unavailable controls, and excludes environment secrets
+ok 134 - runner sidecar bounds reads, records unavailable controls, and excludes environment secrets
+  ---
+  duration_ms: 3.511731
+  type: 'test'
+  ...
+# Subtest: setup cannot start a child after the common infrastructure budget has already elapsed
+ok 135 - setup cannot start a child after the common infrastructure budget has already elapsed
+  ---
+  duration_ms: 0.914441
+  type: 'test'
+  ...
+# Subtest: the hosted reference launcher retains a real worker failure for an invalid manifest
+ok 136 - the hosted reference launcher retains a real worker failure for an invalid manifest
+  ---
+  duration_ms: 163.047796
+  type: 'test'
+  ...
+# Subtest: ldvirtftn binds the override and original receiver, PIC false
+ok 137 - ldvirtftn binds the override and original receiver, PIC false
+  ---
+  duration_ms: 54.43417
+  type: 'test'
+  ...
+# Subtest: ldvirtftn binds the override and original receiver, PIC true
+ok 138 - ldvirtftn binds the override and original receiver, PIC true
+  ---
+  duration_ms: 11.498713
+  type: 'test'
+  ...
+# Subtest: managed delegate null capture throws NullReferenceException
+ok 139 - managed delegate null capture throws NullReferenceException
+  ---
+  duration_ms: 7.742798
+  type: 'test'
+  ...
+# Subtest: managed delegate null invoke throws NullReferenceException
+ok 140 - managed delegate null invoke throws NullReferenceException
+  ---
+  duration_ms: 3.463611
+  type: 'test'
+  ...
+# Subtest: virtual delegate equality includes the selected body and receiver identity
+ok 141 - virtual delegate equality includes the selected body and receiver identity
+  ---
+  duration_ms: 6.431574
+  type: 'test'
+  ...
+# Subtest: managed Combine invokes ordered targets and returns the final result
+ok 142 - managed Combine invokes ordered targets and returns the final result
+  ---
+  duration_ms: 16.36773
+  type: 'test'
+  ...
+# Subtest: managed Remove removes the last matching subsequence
+ok 143 - managed Remove removes the last matching subsequence
+  ---
+  duration_ms: 6.344727
+  type: 'test'
+  ...
+# Subtest: managed Remove retains order after removing a final scalar occurrence and yields null for the full list
+ok 144 - managed Remove retains order after removing a final scalar occurrence and yields null for the full list
+  ---
+  duration_ms: 18.131547
+  type: 'test'
+  ...
+# Subtest: GetInvocationList returns an independent ordered array of equal single-target delegates
+ok 145 - GetInvocationList returns an independent ordered array of equal single-target delegates
+  ---
+  duration_ms: 7.547281
+  type: 'test'
+  ...
+# Subtest: task-owned multicast callbacks survive captured-only local and portable restore and fault delivery exactly once
+ok 146 - task-owned multicast callbacks survive captured-only local and portable restore and fault delivery exactly once
+  ---
+  duration_ms: 62.854271
+  type: 'test'
+  ...
+# Subtest: snapshot after detachment retains scheduled callbacks and the original fault without redelivery
+ok 147 - snapshot after detachment retains scheduled callbacks and the original fault without redelivery
+  ---
+  duration_ms: 15.658419
+  type: 'test'
+  ...
+# Subtest: managed OnCompleted registration survives portable restore before task fault completion
+ok 148 - managed OnCompleted registration survives portable restore before task fault completion
+  ---
+  duration_ms: 14.592225
+  type: 'test'
+  ...
+# Subtest: malformed task-owned callback state rejects atomically before replacing any live execution state
+ok 149 - malformed task-owned callback state rejects atomically before replacing any live execution state
+  ---
+  duration_ms: 5.285794
+  type: 'test'
+  ...
+# Subtest: captured delegate method tokens must remain verified and match the zero-argument callback signature
+ok 150 - captured delegate method tokens must remain verified and match the zero-argument callback signature
+  ---
+  duration_ms: 3.496709
+  type: 'test'
+  ...
+# Subtest: optional SetStateMachine return handshake retains its shared machine and registers once after local or portable restore
+ok 151 - optional SetStateMachine return handshake retains its shared machine and registers once after local or portable restore
+  ---
+  duration_ms: 27.194311
+  type: 'test'
+  ...
+# Subtest: forged registration and machine metadata reject before touching live roots
+ok 152 - forged registration and machine metadata reject before touching live roots
+  ---
+  duration_ms: 9.810692
+  type: 'test'
+  ...
+# Subtest: source, precise=false: async ABI registrations and existing continuations share one root inventory
+ok 153 - source, precise=false: async ABI registrations and existing continuations share one root inventory
+  ---
+  duration_ms: 79.392428
+  type: 'test'
+  ...
+# Subtest: source, precise=true: async ABI registrations and existing continuations share one root inventory
+ok 154 - source, precise=true: async ABI registrations and existing continuations share one root inventory
+  ---
+  duration_ms: 1.031503
+  type: 'test'
+  ...
+# Subtest: cil, precise=false: async ABI registrations and existing continuations share one root inventory
+ok 155 - cil, precise=false: async ABI registrations and existing continuations share one root inventory
+  ---
+  duration_ms: 9.384452
+  type: 'test'
+  ...
+# Subtest: cil, precise=true: async ABI registrations and existing continuations share one root inventory
+ok 156 - cil, precise=true: async ABI registrations and existing continuations share one root inventory
+  ---
+  duration_ms: 1.693686
+  type: 'test'
+  ...
+# Subtest: merged CIL Task.Delay executes the infinite, zero, and full Int32 boundary contracts
+ok 157 - merged CIL Task.Delay executes the infinite, zero, and full Int32 boundary contracts
+  ---
+  duration_ms: 33.704321
+  type: 'test'
+  ...
+# Subtest: merged Task Wait and Result wrap the original fault while await preserves its reference
+ok 158 - merged Task Wait and Result wrap the original fault while await preserves its reference
+  ---
+  duration_ms: 9.338023
+  type: 'test'
+  ...
+# Subtest: merged completion keeps suspended state-machine waiters unwrapped beside aggregate-mode waiters
+ok 159 - merged completion keeps suspended state-machine waiters unwrapped beside aggregate-mode waiters
+  ---
+  duration_ms: 2.362707
+  type: 'test'
+  ...
+# Subtest: ordinary return preserves null, undefined, scalar and reference values without continuation delivery
+ok 160 - ordinary return preserves null, undefined, scalar and reference values without continuation delivery
+  ---
+  duration_ms: 76.356043
+  type: 'test'
+  ...
+# Subtest: source return reads each continuation once, in order, independently and in combination
+ok 161 - source return reads each continuation once, in order, independently and in combination
+  ---
+  duration_ms: 2.428654
+  type: 'test'
+  ...
+# Subtest: CIL return reads each continuation once, in order, independently and in combination
+ok 162 - CIL return reads each continuation once, in order, independently and in combination
+  ---
+  duration_ms: 9.472951
+  type: 'test'
+  ...
+# Subtest: Object string validation precedes absence checks and sees continuation state installed during validation
+ok 163 - Object string validation precedes absence checks and sees continuation state installed during validation
+  ---
+  duration_ms: 1.323773
+  type: 'test'
+  ...
+# Subtest: delegate completion can install an exception continuation before its turn
+ok 164 - delegate completion can install an exception continuation before its turn
+  ---
+  duration_ms: 0.637706
+  type: 'test'
+  ...
+# Subtest: source: ordinary reference return preserves roots while revoking pins and stack regions
+ok 165 - source: ordinary reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 136.567903
+  type: 'test'
+  ...
+# Subtest: source: finally reference return preserves roots while revoking pins and stack regions
+ok 166 - source: finally reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 28.009244
+  type: 'test'
+  ...
+# Subtest: reload: ordinary reference return preserves roots while revoking pins and stack regions
+ok 167 - reload: ordinary reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 18.242611
+  type: 'test'
+  ...
+# Subtest: reload: finally reference return preserves roots while revoking pins and stack regions
+ok 168 - reload: finally reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 8.300841
+  type: 'test'
+  ...
+# Subtest: cil: ordinary reference return preserves roots while revoking pins and stack regions
+ok 169 - cil: ordinary reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 24.191966
+  type: 'test'
+  ...
+# Subtest: cil: finally reference return preserves roots while revoking pins and stack regions
+ok 170 - cil: finally reference return preserves roots while revoking pins and stack regions
+  ---
+  duration_ms: 17.942841
+  type: 'test'
+  ...
+# Subtest: Roslyn async regression consumes the exact SDK8 native-qualified DLL and source
+ok 171 - Roslyn async regression consumes the exact SDK8 native-qualified DLL and source
+  ---
+  duration_ms: 1.543295
+  type: 'test'
+  ...
+# Subtest: generic suffix parsing preserves generated CLI identifiers and nested argument lists
+ok 172 - generic suffix parsing preserves generated CLI identifiers and nested argument lists
+  ---
+  duration_ms: 2.468232
+  type: 'test'
+  ...
+# Subtest: generated generic method tables retain exact definitions, closed fields and argument limits
+ok 173 - generated generic method tables retain exact definitions, closed fields and argument limits
+  ---
+  duration_ms: 2.167922
+  type: 'test'
+  ...
+# Subtest: actual Roslyn generic iterator MethodImpl rows resolve specialized external slots
+not ok 174 - actual Roslyn generic iterator MethodImpl rows resolve specialized external slots
+  ---
+  duration_ms: 53.311725
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/a05-roslyn-async-admission.test.js:51:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    [{"methodToken":100663302,"method":"Program::Echo","offset":37,"code":"IL_REFERENCE","message":"External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<!!0>::Start' is not implemented"}]
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/a05-roslyn-async-admission.test.js:66:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: actual Roslyn iterator still rejects a duplicated MethodImpl declaration
+ok 175 - actual Roslyn iterator still rejects a duplicated MethodImpl declaration
+  ---
+  duration_ms: 3.25725
+  type: 'test'
+  ...
+# Subtest: actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay
+not ok 176 - actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay
+  ---
+  duration_ms: 29.896222
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/a05-roslyn-async-admission.test.js:77:1'
+  failureType: 'testCodeFailure'
+  error: "Managed IL verification failed: Program::Echo IL_25: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<!!0>::Start' is not implemented"
+  code: 'ERR_TEST_FAILURE'
+  name: 'CilError'
+  stack: |-
+    requireVerifiedCil (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/verification-error.js:16:13)
+    admitCilAssembly (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/execution/cil-admission.js:15:3)
+    new CilVirtualMachine (file:///tmp/a05-integration-42f7738360b9/packages/runtime/src/cil-vm.js:43:5)
+    create (file:///tmp/a05-integration-42f7738360b9/scripts/a05-async-qualification.js:13:24)
+    qualifyAsyncAssembly (file:///tmp/a05-integration-42f7738360b9/scripts/a05-async-qualification.js:16:14)
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/a05-roslyn-async-admission.test.js:78:35)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+  ...
+# Subtest: A05 every accepted intrinsic signature has exactly one runtime handler and vice versa
+not ok 177 - A05 every accepted intrinsic signature has exactly one runtime handler and vice versa
+  ---
+  duration_ms: 124.768675
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/a05-seams-cil-intrinsics.test.js:10:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected "actual" to be reference-equal to "expected":
+    + actual - expected
+    ... Skipped lines
+    
+      {
+    +   contract: null,
+    -   contract: {
+    -     id: 408,
+    -     isStatic: false,
+    -     kind: 'get',
+    -     name: 'get_IsCompleted',
+    -     owner: 'System.Threading.Tasks.Task',
+    -     parameters: [],
+    -     property: 'IsCompleted',
+    -     result: 'bool'
+    -   },
+        descriptor: {
+          kind: 'method',
+          name: 'get_IsCompleted',
+          owner: 'System.Threading.Tasks.Task',
+          signature: {
+    ...
+        },
+    +   element: null,
+    +   implementation: 'async',
+    +   kind: 'task',
+    +   methodArguments: [],
+    +   operation: 'status',
+    +   owner: 'System.Threading.Tasks.Task',
+    +   ownerKind: 'task',
+    +   resultType: 'void',
+    +   runtimeOperation: 'status',
+    +   signature: {
+    +     callingConvention: 0,
+    +     genericArity: 0,
+    +     isStatic: false,
+    +     parameters: [],
+    +     returnType: 'bool'
+    +   },
+    +   type: 'System.Threading.Tasks.Task'
+    -   implementation: 'framework',
+    -   key: 'System.Threading.Tasks.Task::get_IsCompleted([]):"bool":instance'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    key: 'System.Threading.Tasks.Task::get_IsCompleted([]):"bool":instance'
+    descriptor:
+      kind: 'method'
+      owner: 'System.Threading.Tasks.Task'
+      name: 'get_IsCompleted'
+      signature:
+        parameters:
+        returnType: 'bool'
+        isStatic: false
+        genericArity: 0
+        callingConvention: 0
+    implementation: 'framework'
+    contract:
+      id: 408
+      owner: 'System.Threading.Tasks.Task'
+      name: 'get_IsCompleted'
+      parameters:
+      result: 'bool'
+      isStatic: false
+      kind: 'get'
+      property: 'IsCompleted'
+  actual:
+    implementation: 'async'
+    operation: 'status'
+    kind: 'task'
+    type: 'System.Threading.Tasks.Task'
+    element: ~
+    descriptor:
+      kind: 'method'
+      owner: 'System.Threading.Tasks.Task'
+      name: 'get_IsCompleted'
+      signature:
+        parameters:
+        returnType: 'bool'
+        isStatic: false
+        genericArity: 0
+        callingConvention: 0
+    owner: 'System.Threading.Tasks.Task'
+    ownerKind: 'task'
+    resultType: 'void'
+    signature:
+      parameters:
+      returnType: 'bool'
+      isStatic: false
+      genericArity: 0
+      callingConvention: 0
+    runtimeOperation: 'status'
+    methodArguments:
+    contract: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/a05-seams-cil-intrinsics.test.js:14:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: A05 framework declarations and inherited signatures retain exact contract selection
+ok 178 - A05 framework declarations and inherited signatures retain exact contract selection
+  ---
+  duration_ms: 18.366484
+  type: 'test'
+  ...
+# Subtest: A05 intrinsic signature boundaries reject wrong arity, staticness, generics and unknown owners
+ok 179 - A05 intrinsic signature boundaries reject wrong arity, staticness, generics and unknown owners
+  ---
+  duration_ms: 0.728849
+  type: 'test'
+  ...
+# Subtest: A05 intrinsic adapters preserve overflow, null and string index faults
+ok 180 - A05 intrinsic adapters preserve overflow, null and string index faults
+  ---
+  duration_ms: 16.997695
+  type: 'test'
+  ...
+# Subtest: A05 framework aliases do not broaden the legacy primitive intrinsic allowlist
+ok 181 - A05 framework aliases do not broaden the legacy primitive intrinsic allowlist
+  ---
+  duration_ms: 2.604942
+  type: 'test'
+  ...
+# Subtest: retention protocol keeps exact workload size fixed and requires explicit bounded measurement options
+ok 182 - retention protocol keeps exact workload size fixed and requires explicit bounded measurement options
+  ---
+  duration_ms: 1.933646
+  type: 'test'
+  ...
+# Subtest: retention census counts unique immutable typed backing once and includes live storage separately
+ok 183 - retention census counts unique immutable typed backing once and includes live storage separately
+  ---
+  duration_ms: 4.926818
+  type: 'test'
+  ...
+# Subtest: host assessment never double counts ArrayBuffers or passes a truncated history
+ok 184 - host assessment never double counts ArrayBuffers or passes a truncated history
+  ---
+  duration_ms: 0.700057
+  type: 'test'
+  ...
+# Subtest: direct struct calls mutate local, array, field and box interiors while ordinary copies stay independent
+ok 185 - direct struct calls mutate local, array, field and box interiors while ordinary copies stay independent
+  ---
+  duration_ms: 111.542802
+  type: 'test'
+  ...
+# Subtest: direct .ctor initializes an uninitialized local without weakening ordinary receiver reads
+ok 186 - direct .ctor initializes an uninitialized local without weakening ordinary receiver reads
+  ---
+  duration_ms: 8.111639
+  type: 'test'
+  ...
+# Subtest: direct struct call rejects a null receiver
+ok 187 - direct struct call rejects a null receiver
+  ---
+  duration_ms: 2.245183
+  type: 'test'
+  ...
+# Subtest: direct struct call rejects a inline copy receiver
+ok 188 - direct struct call rejects a inline copy receiver
+  ---
+  duration_ms: 2.340394
+  type: 'test'
+  ...
+# Subtest: direct struct call rejects a wrong struct address receiver
+ok 189 - direct struct call rejects a wrong struct address receiver
+  ---
+  duration_ms: 2.345781
+  type: 'test'
+  ...
+# Subtest: direct struct call rejects a boxed reference receiver
+ok 190 - direct struct call rejects a boxed reference receiver
+  ---
+  duration_ms: 2.344359
+  type: 'test'
+  ...
+# Subtest: virtual and byref-return user-struct calls remain explicitly unsupported
+ok 191 - virtual and byref-return user-struct calls remain explicitly unsupported
+  ---
+  duration_ms: 4.257396
+  type: 'test'
+  ...
+# Subtest: host entry rejects foreign, readonly and expired this addresses before adding a frame
+ok 192 - host entry rejects foreign, readonly and expired this addresses before adding a frame
+  ---
+  duration_ms: 3.501547
+  type: 'test'
+  ...
+# Subtest: newobj constructor storage survives snapshot replay and is released after return or stop
+ok 193 - newobj constructor storage survives snapshot replay and is released after return or stop
+  ---
+  duration_ms: 9.490652
+  type: 'test'
+  ...
+# Subtest: a throwing constructor never returns its temporary box and stop releases its inspectable root
+ok 194 - a throwing constructor never returns its temporary box and stop releases its inspectable root
+  ---
+  duration_ms: 2.675635
+  type: 'test'
+  ...
+# Subtest: registered framework values retain their existing heap-backed storage representation
+ok 195 - registered framework values retain their existing heap-backed storage representation
+  ---
+  duration_ms: 24.136117
+  type: 'test'
+  ...
+# Subtest: actual CIL struct copies, initobj, nested fields, statics, object fields and array elements are independent
+ok 196 - actual CIL struct copies, initobj, nested fields, statics, object fields and array elements are independent
+  ---
+  duration_ms: 31.752882
+  type: 'test'
+  ...
+# Subtest: interior addresses follow replacement values, preserve narrow fields and replay immutable snapshots
+ok 197 - interior addresses follow replacement values, preserve narrow fields and replay immutable snapshots
+  ---
+  duration_ms: 8.379763
+  type: 'test'
+  ...
+# Subtest: owned value types and interior pointers reject wrong types, foreign VMs, readonly stores and expired frames
+ok 198 - owned value types and interior pointers reject wrong types, foreign VMs, readonly stores and expired frames
+  ---
+  duration_ms: 5.132029
+  type: 'test'
+  ...
+# Subtest: ldobj and stobj preserve copies across by-value managed calls
+ok 199 - ldobj and stobj preserve copies across by-value managed calls
+  ---
+  duration_ms: 3.583497
+  type: 'test'
+  ...
+# Subtest: reference-free struct storage rejects a managed handle disguised as an immutable Decimal
+ok 200 - reference-free struct storage rejects a managed handle disguised as an immutable Decimal
+  ---
+  duration_ms: 1.686674
+  type: 'test'
+  ...
+# Subtest: auto-layout struct storage remains explicitly unsupported
+ok 201 - auto-layout struct storage remains explicitly unsupported
+  ---
+  duration_ms: 1.374236
+  type: 'test'
+  ...
+# Subtest: readonly struct storage remains explicitly unsupported
+ok 202 - readonly struct storage remains explicitly unsupported
+  ---
+  duration_ms: 1.703969
+  type: 'test'
+  ...
+# Subtest: byref-like struct storage remains explicitly unsupported
+ok 203 - byref-like struct storage remains explicitly unsupported
+  ---
+  duration_ms: 1.252448
+  type: 'test'
+  ...
+# Subtest: user struct constructors produce values without allocating a class-shaped value
+ok 204 - user struct constructors produce values without allocating a class-shaped value
+  ---
+  duration_ms: 2.618852
+  type: 'test'
+  ...
+# Subtest: A02-T30 an async iterator implements the async-stream, value-task-source and state-machine interfaces
+ok 205 - A02-T30 an async iterator implements the async-stream, value-task-source and state-machine interfaces
+  ---
+  duration_ms: 116.557348
+  type: 'test'
+  ...
+# Subtest: A02-T30 the kickoff creates the machine in state -2; its constructor creates the builder
+ok 206 - A02-T30 the kickoff creates the machine in state -2; its constructor creates the builder
+  ---
+  duration_ms: 15.778012
+  type: 'test'
+  ...
+# Subtest: A02-T30 MoveNextAsync runs MoveNext through the builder and answers with the promise
+ok 207 - A02-T30 MoveNextAsync runs MoveNext through the builder and answers with the promise
+  ---
+  duration_ms: 14.060091
+  type: 'test'
+  ...
+# Subtest: A02-T30 MoveNext dispatches awaits from 0 and yields from -4, and completes the promise
+ok 208 - A02-T30 MoveNext dispatches awaits from 0 and yields from -4, and completes the promise
+  ---
+  duration_ms: 11.566971
+  type: 'test'
+  ...
+# Subtest: A02-T30 await foreach over the interface passes the default token and disposes the enumerator after the loop
+ok 209 - A02-T30 await foreach over the interface passes the default token and disposes the enumerator after the loop
+  ---
+  duration_ms: 16.56006
+  type: 'test'
+  ...
+# Subtest: A02-T30 await using awaits DisposeAsync of each resource, the last one first
+ok 210 - A02-T30 await using awaits DisposeAsync of each resource, the last one first
+  ---
+  duration_ms: 16.824648
+  type: 'test'
+  ...
+# Subtest: A02-T30 a call of IAsyncEnumerable<T>.GetAsyncEnumerator names the real signature
+ok 211 - A02-T30 a call of IAsyncEnumerable<T>.GetAsyncEnumerator names the real signature
+  ---
+  duration_ms: 9.879864
+  type: 'test'
+  ...
+# Subtest: A02-T30 an async method is a sealed nested class implementing IAsyncStateMachine
+ok 212 - A02-T30 an async method is a sealed nested class implementing IAsyncStateMachine
+  ---
+  duration_ms: 112.152362
+  type: 'test'
+  ...
+# Subtest: A02-T30 the kickoff creates the machine, starts it through the builder and returns the builder task
+ok 213 - A02-T30 the kickoff creates the machine, starts it through the builder and returns the builder task
+  ---
+  duration_ms: 16.954499
+  type: 'test'
+  ...
+# Subtest: A02-T30 MoveNext runs the body in a try whose catch hands the exception to the builder
+ok 214 - A02-T30 MoveNext runs the body in a try whose catch hands the exception to the builder
+  ---
+  duration_ms: 13.375695
+  type: 'test'
+  ...
+# Subtest: A02-T30 an await suspends through the builder and resumes from the awaiter field
+ok 215 - A02-T30 an await suspends through the builder and resumes from the awaiter field
+  ---
+  duration_ms: 11.081288
+  type: 'test'
+  ...
+# Subtest: A02-T30 an operand evaluated before an await is saved in a field and pushed again after it
+ok 216 - A02-T30 an operand evaluated before an await is saved in a field and pushed again after it
+  ---
+  duration_ms: 10.980009
+  type: 'test'
+  ...
+# Subtest: A02-T30 the return type selects the method builder
+ok 217 - A02-T30 the return type selects the method builder
+  ---
+  duration_ms: 19.390365
+  type: 'test'
+  ...
+# Subtest: A02-T30 Task.Yield and the awaitable pattern use their own awaiters
+ok 218 - A02-T30 Task.Yield and the awaitable pattern use their own awaiters
+  ---
+  duration_ms: 21.92039
+  type: 'test'
+  ...
+# Subtest: A02-T30 an async Main gets the entry point <Main>, which waits for its task
+ok 219 - A02-T30 an async Main gets the entry point <Main>, which waits for its task
+  ---
+  duration_ms: 7.545737
+  type: 'test'
+  ...
+# Subtest: A02-T30 top-level statements that await become an async <Main>$ behind the entry point <Main>
+ok 220 - A02-T30 top-level statements that await become an async <Main>$ behind the entry point <Main>
+  ---
+  duration_ms: 8.274267
+  type: 'test'
+  ...
+# Subtest: A02-T30 an await in a finally block moves the block behind a catch-all; an await in a catch moves the handler
+ok 221 - A02-T30 an await in a finally block moves the block behind a catch-all; an await in a catch moves the handler
+  ---
+  duration_ms: 11.091783
+  type: 'test'
+  ...
+# Subtest: A02-T30 async constructs the emitter has no shape for yet are SF2200
+ok 222 - A02-T30 async constructs the emitter has no shape for yet are SF2200
+  ---
+  duration_ms: 9.820967
+  type: 'test'
+  ...
+# Subtest: A02-T30 the typed stream knows what is on the stack, and says when it does not
+ok 223 - A02-T30 the typed stream knows what is on the stack, and says when it does not
+  ---
+  duration_ms: 0.240533
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.4 an async iterator awaits between elements and await foreach consumes it
+ok 224 - SF-A02-T09.4 an async iterator awaits between elements and await foreach consumes it
+  ---
+  duration_ms: 278.374395
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.4 leaving await foreach early disposes the stream: its finally block runs, and may await
+ok 225 - SF-A02-T09.4 leaving await foreach early disposes the stream: its finally block runs, and may await
+  ---
+  duration_ms: 60.891464
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.4 MoveNextAsync and DisposeAsync of an async enumerator are tasks
+ok 226 - SF-A02-T09.4 MoveNextAsync and DisposeAsync of an async enumerator are tasks
+  ---
+  duration_ms: 70.572057
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.4 await foreach over the GetAsyncEnumerator pattern awaits MoveNextAsync and DisposeAsync
+ok 227 - SF-A02-T09.4 await foreach over the GetAsyncEnumerator pattern awaits MoveNextAsync and DisposeAsync
+  ---
+  duration_ms: 60.395252
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.4 await using and using declarations dispose in reverse order when the scope is left
+not ok 228 - SF-A02-T09.4 await using and using declarations dispose in reverse order when the scope is left
+  ---
+  duration_ms: 67.901914
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/compiler-lowering-async-streams.test.js:79:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    ... Skipped lines
+    
+      [
+        'inside',
+        'close second',
+        'end',
+        'plain',
+    ...
+        'close second',
+    -   'plain',
+    -   'close first',
+        'failed'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'inside'
+    1: 'close second'
+    2: 'end'
+    3: 'plain'
+    4: 'close first'
+    5: 'inside'
+    6: 'close second'
+    7: 'plain'
+    8: 'close first'
+    9: 'failed'
+  actual:
+    0: 'inside'
+    1: 'close second'
+    2: 'end'
+    3: 'plain'
+    4: 'close first'
+    5: 'inside'
+    6: 'close second'
+    7: 'failed'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/compiler-lowering-async-streams.test.js:102:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: SF-A02-T09.4 async-stream diagnostics
+ok 229 - SF-A02-T09.4 async-stream diagnostics
+  ---
+  duration_ms: 25.413244
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 an async method runs up to its first pending await, then completes its task
+ok 230 - SF-A02-T09.2 an async method runs up to its first pending await, then completes its task
+  ---
+  duration_ms: 206.274597
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 Task, Task<T>, ValueTask, ValueTask<T> and async void
+ok 231 - SF-A02-T09.2 Task, Task<T>, ValueTask, ValueTask<T> and async void
+  ---
+  duration_ms: 107.691866
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.3 operands evaluated before an await keep their values and their order
+ok 232 - SF-A02-T09.3 operands evaluated before an await keep their values and their order
+  ---
+  duration_ms: 62.29308
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 await inside try, catch and finally; a fault leaves through the awaiting caller
+not ok 233 - SF-A02-T09.2 await inside try, catch and finally; a fault leaves through the awaiting caller
+  ---
+  duration_ms: 56.666465
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/compiler-lowering-async.test.js:74:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'finally',
+        '1',
+        'catch failed',
+    -   'finally',
+        'outer failed'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'finally'
+    1: '1'
+    2: 'catch failed'
+    3: 'finally'
+    4: 'outer failed'
+  actual:
+    0: 'finally'
+    1: '1'
+    2: 'catch failed'
+    3: 'outer failed'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/a05-integration-42f7738360b9/tests/compiler-lowering-async.test.js:87:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: SF-A02-T09.2 async lambdas and local functions capture variables and the receiver
+ok 234 - SF-A02-T09.2 async lambdas and local functions capture variables and the receiver
+  ---
+  duration_ms: 100.787135
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 top-level statements with await run as an async entry point
+ok 235 - SF-A02-T09.2 top-level statements with await run as an async entry point
+  ---
+  duration_ms: 38.376483
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 a task without a registered numeric construction is named
+ok 236 - SF-A02-T09.2 a task without a registered numeric construction is named
+  ---
+  duration_ms: 5.926455
+  type: 'test'
+  ...
+# Subtest: SF-A02-T02.6 a task of a user class shares the runtime task over object
+ok 237 - SF-A02-T02.6 a task of a user class shares the runtime task over object
+  ---
+  duration_ms: 24.525711
+  type: 'test'
+  ...
+# Subtest: SF-A02-T09.2 async diagnostics: parameters, lock, return and await placement
+ok 238 - SF-A02-T09.2 async diagnostics: parameters, lock, return and await placement
+  ---
+  duration_ms: 24.055933
+  type: 'test'
+  ...
+# node:internal/fs/promises:1086
+#   const result = await PromisePrototypeThen(
+#                  ^
+# Error: ENOENT: no such file or directory, lstat '/tmp/a05-integration-42f7738360b9/planning/qualification/supply/public-fixtures.json'
+#     at async lstat (node:internal/fs/promises:1086:18)
+#     at async containedInfo (file:///tmp/a05-integration-42f7738360b9/scripts/conformance/supply/files.js:37:12)
+#     at async boundedRead (file:///tmp/a05-integration-42f7738360b9/scripts/conformance/supply/files.js:47:16)
+#     at async readJSON (file:///tmp/a05-integration-42f7738360b9/scripts/conformance/supply/files.js:53:21)
+#     at async file:///tmp/a05-integration-42f7738360b9/scripts/conformance/supply/secret-scan.js:13:24 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'lstat',
+#   path: '/tmp/a05-integration-42f7738360b9/planning/qualification/supply/public-fixtures.json'
+# }
+# Node.js v24.19.0
+# Subtest: tests/conformance/supply/gates.test.js
+not ok 34 - tests/conformance/supply/gates.test.js
+  ---
+  duration_ms: 114.689002
+  type: 'test'
+  location: '/tmp/a05-integration-42f7738360b9/tests/conformance/supply/gates.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..239
+# tests 239
+# suites 0
+# pass 232
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 50769.780854

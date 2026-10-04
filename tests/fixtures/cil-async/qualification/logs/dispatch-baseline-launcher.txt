@@ -1,0 +1,8 @@
+{
+  "output": "/workspace/scratch/1692a10afba9/cil-async-dispatch-baseline.json",
+  "runs": 1,
+  "failure": null,
+  "exitCodes": [
+    1
+  ]
+}

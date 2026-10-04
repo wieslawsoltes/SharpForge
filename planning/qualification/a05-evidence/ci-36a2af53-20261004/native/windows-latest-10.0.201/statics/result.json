@@ -1,0 +1,28 @@
+{
+  "id": "statics",
+  "status": "passed",
+  "command": {
+    "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05-statics",
+      "--framework",
+      "net10.0",
+      "--output",
+      "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\statics\\evidence"
+    ],
+    "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "statics\\evidence",
+  "report": "statics\\result.json",
+  "startedAt": "2026-10-04T20:13:32.459Z",
+  "durationMs": 3307.1960999999937,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "statics\\stdout.log",
+  "stderr": "statics\\stderr.log",
+  "finishedAt": "2026-10-04T20:13:35.768Z"
+}

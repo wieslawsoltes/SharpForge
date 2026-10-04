@@ -1,0 +1,189 @@
+{
+  "status": "verified",
+  "verifiedAt": "2026-10-04T19:55:06.750016+00:00",
+  "productDirectory": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "fullTree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+  "runtimeTree": "9c6bba1f626305ff49409bf34c9007e44e8dd812",
+  "harnessTree": "8be9755a4ca2be2a8a0a68e8c0b5ef372e619753",
+  "worktreeStatus": "",
+  "trackedFilesInIndex": 16688,
+  "materializedTrackedFiles": 4620,
+  "materializedTrackedBytes": 26301928,
+  "materializedInventorySHA256": "8751b3703da65ac05502a528378ea772f9669332b7ff1bd874c520fd08f5674d",
+  "allMaterializedTrackedBytesMatchGit": true,
+  "workspaceLinks": [
+    {
+      "name": "@sharpforge/archive",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/archive",
+      "relativeTarget": "../../packages/archive",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/archive"
+    },
+    {
+      "name": "@sharpforge/bcl-collections",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/bcl-collections",
+      "relativeTarget": "../../packages/bcl-collections",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/bcl-collections"
+    },
+    {
+      "name": "@sharpforge/bcl-core",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/bcl-core",
+      "relativeTarget": "../../packages/bcl-core",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/bcl-core"
+    },
+    {
+      "name": "@sharpforge/bytecode",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/bytecode",
+      "relativeTarget": "../../packages/bytecode",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/bytecode"
+    },
+    {
+      "name": "@sharpforge/cil",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/cil",
+      "relativeTarget": "../../packages/cil",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/cil"
+    },
+    {
+      "name": "@sharpforge/clr",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/clr",
+      "relativeTarget": "../../packages/clr",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/clr"
+    },
+    {
+      "name": "@sharpforge/compiler",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/compiler",
+      "relativeTarget": "../../packages/compiler",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/compiler"
+    },
+    {
+      "name": "@sharpforge/compute",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/compute",
+      "relativeTarget": "../../packages/compute",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/compute"
+    },
+    {
+      "name": "@sharpforge/controls",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/controls",
+      "relativeTarget": "../../packages/controls",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/controls"
+    },
+    {
+      "name": "@sharpforge/debugger",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/debugger",
+      "relativeTarget": "../../packages/debugger",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/debugger"
+    },
+    {
+      "name": "@sharpforge/designer",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/designer",
+      "relativeTarget": "../../packages/designer",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/designer"
+    },
+    {
+      "name": "@sharpforge/docking",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/docking",
+      "relativeTarget": "../../packages/docking",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/docking"
+    },
+    {
+      "name": "@sharpforge/editor",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/editor",
+      "relativeTarget": "../../packages/editor",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/editor"
+    },
+    {
+      "name": "@sharpforge/extensions",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/extensions",
+      "relativeTarget": "../../packages/extensions",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/extensions"
+    },
+    {
+      "name": "@sharpforge/framework",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/framework",
+      "relativeTarget": "../../packages/framework",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/framework"
+    },
+    {
+      "name": "@sharpforge/language",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/language",
+      "relativeTarget": "../../packages/language",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/language"
+    },
+    {
+      "name": "@sharpforge/msbuild",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/msbuild",
+      "relativeTarget": "../../packages/msbuild",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/msbuild"
+    },
+    {
+      "name": "@sharpforge/network",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/network",
+      "relativeTarget": "../../packages/network",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/network"
+    },
+    {
+      "name": "@sharpforge/project-system",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/project-system",
+      "relativeTarget": "../../packages/project-system",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/project-system"
+    },
+    {
+      "name": "@sharpforge/protocol",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/protocol",
+      "relativeTarget": "../../packages/protocol",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/protocol"
+    },
+    {
+      "name": "@sharpforge/refactoring",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/refactoring",
+      "relativeTarget": "../../packages/refactoring",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/refactoring"
+    },
+    {
+      "name": "@sharpforge/runtime",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/runtime",
+      "relativeTarget": "../../packages/runtime",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/runtime"
+    },
+    {
+      "name": "@sharpforge/symbols",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/symbols",
+      "relativeTarget": "../../packages/symbols",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/symbols"
+    },
+    {
+      "name": "@sharpforge/syntax",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/syntax",
+      "relativeTarget": "../../packages/syntax",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/syntax"
+    },
+    {
+      "name": "@sharpforge/templates",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/templates",
+      "relativeTarget": "../../packages/templates",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/templates"
+    },
+    {
+      "name": "@sharpforge/text",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/text",
+      "relativeTarget": "../../packages/text",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/text"
+    },
+    {
+      "name": "@sharpforge/winui",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/winui",
+      "relativeTarget": "../../packages/winui",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/winui"
+    },
+    {
+      "name": "@sharpforge/workspace",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge/workspace",
+      "relativeTarget": "../../packages/workspace",
+      "resolvedTarget": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/packages/workspace"
+    }
+  ],
+  "sparsePatterns": "/.gitignore\n/.gitattributes\n/package.json\n/package-lock.json\n/packages/\n/bench/vm/\n/scripts/limited.js\n/scripts/planning/lib/resource-limits.js\n/scripts/perf-gate.js\n/scripts/planning/lib/run-slot-lease.js\n/scripts/planning/lib/run-slot-owner.js\n",
+  "sparsePatternsSha256": "3d6c963770b07bc488125f2fdd868fbd83c5872f65e4f586d6c9b7451b27c2bc",
+  "verifierSha256": "93e9ea98c3c57ae7fc728728e8fe3c0d0d6722e0183671895ce6f43270c0f6d9",
+  "scope": "Read-only checkout identity and own-package resolution; no runtime or performance execution."
+}

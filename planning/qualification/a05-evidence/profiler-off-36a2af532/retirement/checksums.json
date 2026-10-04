@@ -1,0 +1,9 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "README.md": "c92f144c42f23fa0f1e24f12a7337673bf0305023b445557cabcd1632670afcc",
+    "git-worktree-remove.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "profiler-reference.commit": "4a1d8f19d1159e87d646f7e97421d5d889a41c7678274f47989698bc2cccdc6a",
+    "retirement.json": "487dd6f9f553af21628e99fc45a1be4c9e15b97e22e309a0e459d7311aad19ee"
+  }
+}

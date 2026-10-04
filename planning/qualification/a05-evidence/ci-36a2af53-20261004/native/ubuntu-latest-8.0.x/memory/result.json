@@ -1,0 +1,29 @@
+{
+  "id": "memory",
+  "status": "passed",
+  "command": {
+    "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05-memory",
+      "--unsafe",
+      "--framework",
+      "net8.0",
+      "--output",
+      "/home/runner/work/SharpForge/SharpForge/artifacts/a05-native/memory/evidence"
+    ],
+    "cwd": "/home/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "memory/evidence",
+  "report": "memory/result.json",
+  "startedAt": "2026-10-04T19:52:42.767Z",
+  "durationMs": 2280.5582609999983,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "memory/stdout.log",
+  "stderr": "memory/stderr.log",
+  "finishedAt": "2026-10-04T19:52:45.049Z"
+}

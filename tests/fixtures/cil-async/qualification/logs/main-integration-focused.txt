@@ -1,0 +1,60 @@
+✔ fault completion retains a managed delegate through every allocation and delivers it once (25.626761ms)
+✔ managed TaskAwaiter.OnCompleted owns its callback through fault-completion collection (12.566821ms)
+✔ direct CIL async native reference: Completed (2807.006102ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async native reference: Suspended (2251.986957ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async native reference: Exceptions (2419.04012ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async native reference: Retention (2292.635922ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async native reference: WaitAndDelay (2827.539147ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async native reference: Mutation (2270.904438ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async snapshot roots and exactly-once continuation: Retention (2025.192592ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async snapshot roots and exactly-once continuation: Mutation (1970.842995ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async builder reachability rejects invalid MoveNext before execution (1095.645335ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ CIL async ABI matcher requires complete generic and byref member signatures (1.945128ms)
+✔ CIL async ABI generic awaiter result and real Yield type are exact (0.310917ms)
+✔ CIL async callbacks require trusted reference scope and matching MethodImpl declarations (25.866583ms)
+✔ CIL dispatch admits proved async callback implementations and still rejects malformed declarations (5.907419ms)
+✔ CIL async callback-only bodies remain mandatory verifier roots (1.970906ms)
+✔ module initialization baseline: producer emits a module constructor for plain-main (105.426182ms)
+✔ module initialization baseline: producer emits a module constructor for static-field-main (13.36811ms)
+✔ module initialization baseline: producer emits a module constructor for static-constructor-main (8.340644ms)
+✔ module initialization baseline: producer emits a module constructor for initializer-calls-entry-type (11.99999ms)
+✔ module initialization baseline: direct CIL startup for plain-main (19.005963ms)
+✔ module initialization baseline: direct CIL startup for static-field-main (11.961984ms)
+✔ module initialization baseline: direct CIL startup for static-constructor-main (7.522121ms)
+✔ module initialization baseline: direct CIL startup for initializer-calls-entry-type (9.639662ms)
+✔ module initialization baseline: direct CIL startup for declaration-order-once (13.092375ms)
+✔ module initialization baseline: direct CIL startup for pre-entry-fault (13.786655ms)
+✔ module initialization baseline: direct CIL startup for no-initializers (4.409199ms)
+✔ module initialization baseline: a library owns module startup before a selected static method (9.318951ms)
+✔ module initialization baseline: module constructor preserves source declaration order across files (17.938455ms)
+✔ module initialization baseline: no initializer leaves the module empty (9.351499ms)
+✔ module initialization baseline: independent CIL module startup is verified and runs once (entry) (3.867262ms)
+✔ module initialization baseline: independent CIL module startup is verified and runs once (library) (2.309153ms)
+✔ module initialization baseline: an active module initializer survives snapshot restore and collection (4.989531ms)
+✔ module initialization baseline: pre-entry failure bypasses Main catch and stays cached, rooted, and restorable (3.295061ms)
+✔ module initialization baseline: an invalid module body is rejected before entry execution (1.023864ms)
+✔ module initialization baseline: an invalid module body is rejected before selected method execution (0.766446ms)
+✔ module initialization baseline: an unrelated unreachable invalid body is not a module initialization root (0.990365ms)
+✔ module initialization baseline: compile source-image startup remains a separate control (21.853577ms)
+✔ module initialization baseline: compileToIL source-image startup remains a separate control (11.328103ms)
+✔ module initialization reference fixtures have current real Roslyn pins (0.496299ms)
+✔ module initialization diagnostics match Roslyn with real reference assemblies (118.28918ms)
+✔ module initialization assemblies execute with the pinned output on real .NET (262.462097ms)
+ℹ 7 assemblies ran on .NET 10.0.201, reference pack 10.0.5
+ℹ tests 42
+ℹ suites 0
+ℹ pass 42
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24201.129978

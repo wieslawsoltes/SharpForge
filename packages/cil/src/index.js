@@ -65,3 +65,6 @@ export { AssemblyUsageAnalysis } from './browser/analyzers.js';
 export { MetadataTableInspector } from './inspector-tables.js';
 export {readSourceTypeIdentities} from './source-type-identities.js';
 export { MetadataGenerations, metadataGenerationDiagnosticCatalog } from './metadata/delta-reader.js';
+
+export {asyncTypes, asyncValueType} from './async-profile.js';
+export {asyncStateMachine, asyncCallbackTargets} from './async-state-machines.js';

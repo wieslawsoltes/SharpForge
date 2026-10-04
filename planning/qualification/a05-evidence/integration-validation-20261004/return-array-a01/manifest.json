@@ -1,0 +1,260 @@
+{
+  "format": "SharpForge.A05ValidationCheckpoint/1",
+  "scope": "Failed actual CI core cohort, local return/array/A01 repair cohort, and completed full A01 rerun with one retained OOM failure",
+  "files": [
+    {
+      "file": "focused-return-array-a01-journal.json",
+      "source": "/workspace/scratch/42f7738360b9/a05-return-array-a01-validation-20261004/focused-return-array-a01-journal.json",
+      "bytes": 1602,
+      "sha256": "d17d98850e80087d55d9504d59c1ba610749c619bd980719b3354cffbf106a81",
+      "retention": "byte-for-byte"
+    },
+    {
+      "file": "focused-return-array-a01.tap",
+      "source": "/workspace/scratch/42f7738360b9/a05-return-array-a01-validation-20261004/focused-return-array-a01.tap",
+      "bytes": 60697,
+      "sha256": "2e1bed338f43debb90a9d0f67a759f7b05ab2113d28a12af3974e06557f91849",
+      "retention": "byte-for-byte"
+    },
+    {
+      "file": "a05-ci36-core-job111517027079.log",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci36-core-job111517027079.log",
+      "bytes": 1177496,
+      "sha256": "cafd0ad3adb1a3368c5ccf70f1912b3b7bc6fc2460675f59ac21d591d932b340",
+      "retention": "byte-for-byte"
+    },
+    {
+      "file": "full-a01-after-compatibility-repair-journal.json",
+      "source": "/workspace/scratch/42f7738360b9/a05-return-array-a01-validation-20261004/full-a01-after-compatibility-repair-journal.json",
+      "bytes": 689,
+      "sha256": "9de3a778509662cafc7e60b900608d8c8c7b28e6a5b4b10b2f359daab85c4e54",
+      "retention": "byte-for-byte after root confirmed completion and immutability"
+    },
+    {
+      "file": "full-a01-after-compatibility-repair.tap",
+      "source": "/workspace/scratch/42f7738360b9/a05-return-array-a01-validation-20261004/full-a01-after-compatibility-repair.tap",
+      "bytes": 186288,
+      "sha256": "c9a59de804989c1719042e584be4668d210af814d10846fe29190982d0548367",
+      "retention": "byte-for-byte after root confirmed completion and immutability"
+    },
+    {
+      "file": "cancellation-oom-triage.json",
+      "bytes": 4738,
+      "sha256": "4364ad5ebf49563f1044bfdf4f2bc324f3e131070b52afad5e679859218614fd",
+      "retention": "independent read-only source and retained-log analysis"
+    }
+  ],
+  "records": [
+    {
+      "kind": "local-focused",
+      "provenance": {
+        "revision": "111c299384fc98b7ed937789edd07ad79395ce75",
+        "tree": "04849c4af388f4a3ff8e88ced30afbaaf9535a5c",
+        "parents": [
+          "861c9b181cc0b5d3211dec1e307bf1a794d901d4"
+        ],
+        "subject": "SF-A01-T02.8: preserve ordinary catch AST compatibility and current profile checks"
+      },
+      "nodeVersion": "v24.19.0",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a05-ordinary-return-control.test.js",
+        "tests/a05-ordinary-return-lifetime.test.js",
+        "tests/a05-object-value-continuations.test.js",
+        "tests/a05-object-string-return.test.js",
+        "tests/a05-managed-delegate-protocol.test.js",
+        "tests/a05-exception-event-policy.test.js",
+        "tests/a05-source-exception-events.test.js",
+        "tests/a05-synchronous-callbacks.test.js",
+        "tests/a05-frame-memory-retirement.test.js",
+        "tests/a05-cil-method-events.test.js",
+        "tests/a05-source-method-events.test.js",
+        "tests/a05-roslyn-async-admission.test.js",
+        "tests/a05-stack-reservation-reuse.test.js",
+        "tests/a05-prepared-virtual-calls.test.js",
+        "tests/a05-array-latency.test.js",
+        "tests/a05-byref-latency.test.js",
+        "tests/syntax-legacy-adapter.test.js",
+        "tests/syntax-legacy-adapter-profile.test.js",
+        "tests/a05-source-filter-binding.test.js",
+        "tests/a05-source-filters.test.js"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "trackedStatusBefore": "",
+      "trackedStatusAfter": "",
+      "postCommit": "111c299384fc98b7ed937789edd07ad79395ce75",
+      "startedUnixSeconds": 1791144991.0523438,
+      "finishedUnixSeconds": 1791145026.0346253,
+      "wallElapsedMs": 34982.281446,
+      "exitCode": 1,
+      "tests": 233,
+      "passed": 231,
+      "failed": 2,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "tapDurationMs": 34723.039299,
+      "failures": [
+        {
+          "ordinal": 211,
+          "file": "tests/syntax-legacy-adapter-profile.test.js",
+          "source": "object o = 1; var b = o is int;",
+          "actualDiagnosticCodes": [
+            "SF2098",
+            "SF2200"
+          ]
+        },
+        {
+          "ordinal": 212,
+          "file": "tests/syntax-legacy-adapter-profile.test.js",
+          "source": "object o = 1; var s = o as string;",
+          "actualDiagnosticCodes": [
+            "SF2098",
+            "SF2200"
+          ]
+        }
+      ],
+      "interpretation": "Both failures are new A01 profile classifications. The selected return/array/byref/filter and other focused cases passed; this is not a full A05 or repository pass."
+    },
+    {
+      "kind": "actual-CI-core",
+      "jobId": "111517027079",
+      "checkout": {
+        "revision": "edfa7cc8e11e05b9ceb0f6fdcb43fe071b24e11e",
+        "tree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+        "parents": [
+          "f009e2949f3311f0ca84a4a6bc694535140d130b",
+          "36a2af53287a563fd47d3a33b8e6e6382a726d35"
+        ],
+        "subject": "Merge 36a2af53287a563fd47d3a33b8e6e6382a726d35 into f009e2949f3311f0ca84a4a6bc694535140d130b"
+      },
+      "pullRequestHead": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+      "eventBase": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+      "nodeVersion": "v22.23.3",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "overallExitCode": 1,
+      "cohorts": [
+        {
+          "area": "A00",
+          "tests": 482,
+          "passed": 482,
+          "failed": 0,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0,
+          "tapDurationMs": 351187.947253
+        },
+        {
+          "area": "A01",
+          "tests": 809,
+          "passed": 805,
+          "failed": 3,
+          "skipped": 1,
+          "cancelled": 0,
+          "todo": 0,
+          "tapDurationMs": 149805.875991,
+          "failures": [
+            {
+              "ordinal": 238,
+              "name": "legacy adapter: output is deep-equal to the pre-refactor parser for every recorded test source"
+            },
+            {
+              "ordinal": 239,
+              "name": "legacy adapter: output is deep-equal for the repository examples and templates"
+            },
+            {
+              "ordinal": 242,
+              "name": "legacy adapter: syntax the back end cannot bind keeps a not-supported diagnostic and never crashes the compiler"
+            }
+          ]
+        }
+      ],
+      "interpretation": "Actual PR merge checkout, not direct branch HEAD; independently inspected Git tree matches da3add4a11cce5ed887d2a093eac4b48a4c26754. The failing A01 cohort prevented an overall core pass."
+    },
+    {
+      "kind": "local-full-A01",
+      "provenance": {
+        "revision": "6b3038a154be525c05a64ebae9912dd8b536bedf",
+        "tree": "a59e2700a642c8c225619fa09d231ec5b27a1d12"
+      },
+      "nodeVersion": "v24.19.0",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/planning/run-tests.js",
+        "--area",
+        "A01",
+        "--",
+        "--test-reporter=tap"
+      ],
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "trackedStatusBefore": "",
+      "trackedStatusAfter": "",
+      "postCommit": "6b3038a154be525c05a64ebae9912dd8b536bedf",
+      "startedUnixSeconds": 1791145253.790776,
+      "finishedUnixSeconds": 1791145422.9686012,
+      "wallElapsedMs": 169177.825212,
+      "exitCode": 1,
+      "tests": 844,
+      "passed": 842,
+      "failed": 1,
+      "skipped": 1,
+      "cancelled": 0,
+      "todo": 0,
+      "tapDurationMs": 168685.659606,
+      "failure": {
+        "file": "tests/syntax-cancellation.test.js",
+        "signal": "SIGABRT",
+        "diagnostic": "V8 JavaScript heap out of memory near heap limit",
+        "classification": "Local resource-cap failure pending phase attribution; no established A05 or cancellation implementation regression."
+      },
+      "passedRepairCases": {
+        "isAndAsNegativeProfileOrdinals": [
+          272,
+          273
+        ],
+        "legacyRecordedSourceAndRepositoryComparisonOrdinals": [
+          274,
+          275
+        ]
+      },
+      "triage": "cancellation-oom-triage.json"
+    }
+  ],
+  "followup": {
+    "provenance": {
+      "revision": "13d250dec9bdbe3cb7ff25b0d78c28207aa45a5a",
+      "tree": "fc6b4cbc3c867b17696ec2b94d77fe41fa361715",
+      "parents": [
+        "111c299384fc98b7ed937789edd07ad79395ce75"
+      ],
+      "subject": "SF-A01-T02.8: retain negative bytecode type-test profile coverage"
+    },
+    "file": "tests/syntax-legacy-adapter-profile.test.js",
+    "scope": "Preserves both exact is/as source strings and asserts exact SF2098/SF2200 codes, expression ranges and legacy messages. These cases pass in the appended full A01 run at 6b3038a1; that run still fails overall due to the separate cancellation-file OOM."
+  },
+  "limitations": [
+    "Counts overlap other cohorts and must not be added.",
+    "Full A01 files were copied only after root confirmed completion and immutability; all failed original runs remain retained.",
+    "No tests, builds, benchmarks or generators were executed during archival.",
+    "No progress or acceptance status is updated by this checkpoint."
+  ]
+}

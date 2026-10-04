@@ -1,0 +1,576 @@
+{
+  "url": "http://127.0.0.1:45837/allowed.html",
+  "result": {
+    "passed": true,
+    "fixture": "tests/support/wasm-heap-fixture.js",
+    "byteLength": 587,
+    "nativeObservation": {
+      "instantiations": [
+        {
+          "byteLength": 587,
+          "imports": [
+            {
+              "module": "runtime",
+              "name": "pop_i32",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "push_i32",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "pop_i64",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "push_i64",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "pop_f32",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "push_f32",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "pop_f64",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "push_f64",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "guard",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "allocate",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "field",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "array",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "call",
+              "kind": "function"
+            },
+            {
+              "module": "runtime",
+              "name": "host",
+              "kind": "function"
+            }
+          ],
+          "exports": [
+            {
+              "name": "p0",
+              "kind": "function"
+            },
+            {
+              "name": "p1",
+              "kind": "function"
+            },
+            {
+              "name": "p2",
+              "kind": "function"
+            },
+            {
+              "name": "p3",
+              "kind": "function"
+            },
+            {
+              "name": "p4",
+              "kind": "function"
+            },
+            {
+              "name": "p5",
+              "kind": "function"
+            },
+            {
+              "name": "p6",
+              "kind": "function"
+            },
+            {
+              "name": "p7",
+              "kind": "function"
+            },
+            {
+              "name": "p8",
+              "kind": "function"
+            },
+            {
+              "name": "p9",
+              "kind": "function"
+            },
+            {
+              "name": "p10",
+              "kind": "function"
+            },
+            {
+              "name": "p11",
+              "kind": "function"
+            },
+            {
+              "name": "p12",
+              "kind": "function"
+            },
+            {
+              "name": "p13",
+              "kind": "function"
+            },
+            {
+              "name": "p14",
+              "kind": "function"
+            },
+            {
+              "name": "p15",
+              "kind": "function"
+            },
+            {
+              "name": "p16",
+              "kind": "function"
+            },
+            {
+              "name": "p17",
+              "kind": "function"
+            },
+            {
+              "name": "p18",
+              "kind": "function"
+            }
+          ]
+        }
+      ],
+      "importCalls": {
+        "allocate": 3,
+        "host": 6,
+        "push_i32": 4,
+        "array": 2,
+        "field": 3,
+        "call": 1
+      },
+      "programCounters": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ]
+    },
+    "nativeInstructionCount": 19,
+    "selectedMethodInstructionCount": 19,
+    "actual": {
+      "instructions": 22,
+      "result": "rooted",
+      "output": "",
+      "mainProgramCounters": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "safepointCollections": 22,
+      "writes": [
+        {
+          "kind": "local",
+          "index": 0,
+          "frameId": 1,
+          "oldValue": null,
+          "value": {
+            "kind": "object",
+            "type": "Program",
+            "value": null
+          }
+        },
+        {
+          "kind": "local",
+          "index": 1,
+          "frameId": 1,
+          "oldValue": null,
+          "value": {
+            "kind": "array",
+            "type": "System.String[]",
+            "value": null
+          }
+        },
+        {
+          "kind": "array",
+          "index": 0,
+          "frameId": 1,
+          "handle": 1,
+          "generation": 2,
+          "oldValue": null,
+          "value": {
+            "kind": "string",
+            "type": "string",
+            "value": "rooted"
+          }
+        },
+        {
+          "kind": "field",
+          "index": 0,
+          "frameId": 1,
+          "handle": 0,
+          "generation": 1,
+          "oldValue": null,
+          "value": {
+            "kind": "string",
+            "type": "string",
+            "value": "rooted"
+          }
+        },
+        {
+          "kind": "static",
+          "index": 67108866,
+          "frameId": 1,
+          "oldValue": 0,
+          "value": 123
+        }
+      ],
+      "writeRevision": 5,
+      "heap": {
+        "allocations": 3,
+        "allocatedBytes": 116,
+        "collections": 23,
+        "liveObjects": 1,
+        "liveBytes": 36,
+        "freedObjects": 2,
+        "mutationRevision": 28
+      },
+      "profile": {
+        "format": "SharpForge.InstructionProfile/1",
+        "clock": "instructions",
+        "instructions": 22,
+        "suspensions": 0,
+        "allocations": 3,
+        "allocatedBytes": 116,
+        "sampleBudget": 256,
+        "overflow": {
+          "methods": 0,
+          "stackInstructions": 0,
+          "stackDepthInstructions": 0,
+          "allocationBytes": 0,
+          "allocationCount": 0
+        },
+        "methods": [
+          {
+            "id": 0,
+            "name": "[runtime]",
+            "calls": 0,
+            "instructions": 0,
+            "inclusiveInstructions": 0,
+            "allocations": 0,
+            "allocatedBytes": 0
+          },
+          {
+            "id": 1,
+            "name": "[profile capacity]",
+            "calls": 0,
+            "instructions": 0,
+            "inclusiveInstructions": 0,
+            "allocations": 0,
+            "allocatedBytes": 0
+          },
+          {
+            "id": 2,
+            "name": "Program::Main",
+            "calls": 1,
+            "instructions": 19,
+            "inclusiveInstructions": 22,
+            "allocations": 3,
+            "allocatedBytes": 116
+          },
+          {
+            "id": 3,
+            "name": "Program::.ctor",
+            "calls": 1,
+            "instructions": 3,
+            "inclusiveInstructions": 3,
+            "allocations": 0,
+            "allocatedBytes": 0
+          }
+        ],
+        "samples": [
+          {
+            "stack": [
+              2
+            ],
+            "weight": 19
+          },
+          {
+            "stack": [
+              2,
+              3
+            ],
+            "weight": 3
+          }
+        ],
+        "allocationSites": [
+          {
+            "method": 2,
+            "offset": 0,
+            "allocations": 1,
+            "bytes": 40
+          },
+          {
+            "method": 2,
+            "offset": 7,
+            "allocations": 1,
+            "bytes": 40
+          },
+          {
+            "method": 2,
+            "offset": 15,
+            "allocations": 1,
+            "bytes": 36
+          }
+        ]
+      },
+      "returnRootProbe": {
+        "survivedWithRoot": true,
+        "collectedWithoutRoot": true,
+        "extraCollections": 1
+      }
+    },
+    "reference": {
+      "instructions": 22,
+      "result": "rooted",
+      "output": "",
+      "mainProgramCounters": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "safepointCollections": 22,
+      "writes": [
+        {
+          "kind": "local",
+          "index": 0,
+          "frameId": 1,
+          "oldValue": null,
+          "value": {
+            "kind": "object",
+            "type": "Program",
+            "value": null
+          }
+        },
+        {
+          "kind": "local",
+          "index": 1,
+          "frameId": 1,
+          "oldValue": null,
+          "value": {
+            "kind": "array",
+            "type": "System.String[]",
+            "value": null
+          }
+        },
+        {
+          "kind": "array",
+          "index": 0,
+          "frameId": 1,
+          "handle": 1,
+          "generation": 2,
+          "oldValue": null,
+          "value": {
+            "kind": "string",
+            "type": "string",
+            "value": "rooted"
+          }
+        },
+        {
+          "kind": "field",
+          "index": 0,
+          "frameId": 1,
+          "handle": 0,
+          "generation": 1,
+          "oldValue": null,
+          "value": {
+            "kind": "string",
+            "type": "string",
+            "value": "rooted"
+          }
+        },
+        {
+          "kind": "static",
+          "index": 67108866,
+          "frameId": 1,
+          "oldValue": 0,
+          "value": 123
+        }
+      ],
+      "writeRevision": 5,
+      "heap": {
+        "allocations": 3,
+        "allocatedBytes": 116,
+        "collections": 23,
+        "liveObjects": 1,
+        "liveBytes": 36,
+        "freedObjects": 2,
+        "mutationRevision": 28
+      },
+      "profile": {
+        "format": "SharpForge.InstructionProfile/1",
+        "clock": "instructions",
+        "instructions": 22,
+        "suspensions": 0,
+        "allocations": 3,
+        "allocatedBytes": 116,
+        "sampleBudget": 256,
+        "overflow": {
+          "methods": 0,
+          "stackInstructions": 0,
+          "stackDepthInstructions": 0,
+          "allocationBytes": 0,
+          "allocationCount": 0
+        },
+        "methods": [
+          {
+            "id": 0,
+            "name": "[runtime]",
+            "calls": 0,
+            "instructions": 0,
+            "inclusiveInstructions": 0,
+            "allocations": 0,
+            "allocatedBytes": 0
+          },
+          {
+            "id": 1,
+            "name": "[profile capacity]",
+            "calls": 0,
+            "instructions": 0,
+            "inclusiveInstructions": 0,
+            "allocations": 0,
+            "allocatedBytes": 0
+          },
+          {
+            "id": 2,
+            "name": "Program::Main",
+            "calls": 1,
+            "instructions": 19,
+            "inclusiveInstructions": 22,
+            "allocations": 3,
+            "allocatedBytes": 116
+          },
+          {
+            "id": 3,
+            "name": "Program::.ctor",
+            "calls": 1,
+            "instructions": 3,
+            "inclusiveInstructions": 3,
+            "allocations": 0,
+            "allocatedBytes": 0
+          }
+        ],
+        "samples": [
+          {
+            "stack": [
+              2
+            ],
+            "weight": 19
+          },
+          {
+            "stack": [
+              2,
+              3
+            ],
+            "weight": 3
+          }
+        ],
+        "allocationSites": [
+          {
+            "method": 2,
+            "offset": 0,
+            "allocations": 1,
+            "bytes": 40
+          },
+          {
+            "method": 2,
+            "offset": 7,
+            "allocations": 1,
+            "bytes": 40
+          },
+          {
+            "method": 2,
+            "offset": 15,
+            "allocations": 1,
+            "bytes": 36
+          }
+        ]
+      },
+      "returnRootProbe": {
+        "survivedWithRoot": true,
+        "collectedWithoutRoot": true,
+        "extraCollections": 1
+      }
+    },
+    "browserVersion": "155.0",
+    "csp": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8=' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+    "blockedRequests": []
+  },
+  "cspEvents": []
+}

@@ -1,0 +1,28 @@
+{
+  "id": "generic-calls",
+  "status": "passed",
+  "command": {
+    "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/generic-calls",
+      "--framework",
+      "net8.0",
+      "--output",
+      "/home/runner/work/SharpForge/SharpForge/artifacts/a05-native/generic-calls/evidence"
+    ],
+    "cwd": "/home/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "generic-calls/evidence",
+  "report": "generic-calls/result.json",
+  "startedAt": "2026-10-04T19:52:13.617Z",
+  "durationMs": 2254.7847679999977,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "generic-calls/stdout.log",
+  "stderr": "generic-calls/stderr.log",
+  "finishedAt": "2026-10-04T19:52:15.873Z"
+}

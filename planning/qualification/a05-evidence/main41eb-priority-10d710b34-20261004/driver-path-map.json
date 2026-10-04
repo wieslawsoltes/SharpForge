@@ -1,0 +1,21 @@
+{
+  "format": "SharpForge.A05ArchivedDriverPaths/1",
+  "files": [
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/driver.mjs",
+      "archivedPath": "virtual-cpu/driver.mjs.txt",
+      "bytes": 3207,
+      "sha256": "e6a25e48bae8401b944a2e27affc5f31e91884e98bd1eb77d468c38e7d0bb400",
+      "gitBlobSha1": "86491f99e2a846970e5d2f31c1104bcf0f8656b2",
+      "reason": "Preserve executable diagnostic driver as inert archive text; bytes and historical argv unchanged."
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3-driver.mjs",
+      "archivedPath": "source-cpu/driver.mjs.txt",
+      "bytes": 5697,
+      "sha256": "cfc7623e9ceb9777fbde7d94c8c15aa8a85c8c1537439e107a8f2b29e3205544",
+      "gitBlobSha1": "d151789b38a12e77b4d12e2fb7b3d68e2c8bb27d",
+      "reason": "Preserve executable diagnostic driver as inert archive text; bytes and historical argv unchanged."
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # A05 scalar, call, cache and frame capabilities
 
 This is the implementation/API map for Project 7 parents #74, #75, #80, #81 and
-#82, inspected at `a5f84cd47`. It supplements the revision-scoped
+#82, initially inspected at `a5f84cd47`. It supplements the revision-scoped
 [acceptance audit](a05-project7-acceptance-audit.md); it does not replace its
 historical observations or declare every child criterion complete.
 
@@ -96,7 +96,7 @@ and slot clearing. The 500-frame root-scan speed target, retained host memory,
 browser/native/platform qualification and profiler overhead require their own
 measurements. This document does not infer them from root correctness or pool
 counters. The scalar-slot timing report at
-[48c62243](a05-evidence/slots-virtual-48c62243/README.md) applies to that revision
+[48c62243](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/slots-virtual-48c62243/README.md) applies to that revision
 and target; its virtual target still missed the required 3×.
 
 ## Validation scope of this documentation batch
@@ -105,11 +105,24 @@ The scalar example passed all three routes at `45ca8e0a4`. That combined run had
 133 passes and one failure: the preparation example used class inheritance, which
 the source execution profile rejects. The example now uses admitted interface
 dispatch while retaining its preparation, invalidation and replay assertions;
-this correction awaits the coordinated serial rerun. The existing
+this correction awaited the coordinated serial rerun at that checkpoint. The existing
 managed-reference examples and getter-order regression passed all three routes
 at `d9453a979` in the integration owner's 47-test run: 40 passed, zero failed,
 seven existing reference-pack-dependent compiler tests skipped. Those skips do
 not qualify an unavailable reference pack.
+
+The later [broad7d archive][capability-broad] explicitly records the scalar and
+preparation/invalidation/restore examples passing on all three routes (subtests
+2114 and 2115), alongside the rectangular-memory and exception-order examples
+(2130 and 2131). The complete selection passed 3,369 tests at `7d7fac37a`; these
+four examples are part of that count, not additional results.
+
+The [completed36 native archive][capability-native] adds actual native output
+comparison for the exact managed-reference example and configured native widths,
+with source/reload/compiler-CIL routes. Its unsupported SDK8 numeric and Unix
+varargs outcomes remain explicit. These observations supersede missing-evidence
+statements at earlier checkpoints; they do not qualify the later `1520f50b1`
+async/task/snapshot reconciliation, current CI or pending performance targets.
 
 ```sh
 node scripts/limited.js node --test tests/a05-runtime-capability-examples.test.js tests/a05-byref-call-scenarios.test.js tests/a05-12-harness.test.js tests/a05-reference-slot-liveness.test.js
@@ -119,3 +132,6 @@ Actual native/SDK/OS, browser, Speedscope, Wasm-host and final performance resul
 remain separate evidence. Run the [native matrix](a05-native-ci.md) and
 [browser qualification](a05-browser-qualification.md) under their prescribed
 environments; no simulator or authored expected trace substitutes for execution.
+
+[capability-broad]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/broad-a05-7d7fac37a/README.md
+[capability-native]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/native/README.md

@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: action updater pins reviewed references and refuses unknown or changed versions
+ok 1 - action updater pins reviewed references and refuses unknown or changed versions
+  ---
+  duration_ms: 1.574142
+  type: 'test'
+  ...
+# Subtest: vendor gate rejects changed bytes even if the distributed hash is re-recorded
+ok 2 - vendor gate rejects changed bytes even if the distributed hash is re-recorded
+  ---
+  duration_ms: 30.209666
+  type: 'test'
+  ...
+# Subtest: asset gate rejects unlisted assets, disallowed licenses, absent notices and changed bytes
+ok 3 - asset gate rejects unlisted assets, disallowed licenses, absent notices and changed bytes
+  ---
+  duration_ms: 13.535516
+  type: 'test'
+  ...
+# Subtest: secret scanner detects constructed fake tokens and entropy without returning matched values
+ok 4 - secret scanner detects constructed fake tokens and entropy without returning matched values
+  ---
+  duration_ms: 1.415809
+  type: 'test'
+  ...
+# Subtest: secret scan covers a planted token in a separate fixture Git branch and built bundles
+ok 5 - secret scan covers a planted token in a separate fixture Git branch and built bundles
+  ---
+  duration_ms: 48.42599
+  type: 'test'
+  ...
+# Subtest: tree scans and reads enforce path, count, byte and cancellation boundaries
+ok 6 - tree scans and reads enforce path, count, byte and cancellation boundaries
+  ---
+  duration_ms: 39.823117
+  type: 'test'
+  ...
+# Subtest: build seal binds source revision and exact downloaded payload membership/content
+ok 7 - build seal binds source revision and exact downloaded payload membership/content
+  ---
+  duration_ms: 52.40322
+  type: 'test'
+  ...
+# Subtest: attestation policy binds repository, signer workflow, source commit, tag and hosted runner
+ok 8 - attestation policy binds repository, signer workflow, source commit, tag and hosted runner
+  ---
+  duration_ms: 0.581073
+  type: 'test'
+  ...
+# Subtest: secret scanner indexes large line sets, preserves leading placeholders and caps findings
+ok 9 - secret scanner indexes large line sets, preserves leading placeholders and caps findings
+  ---
+  duration_ms: 1.059686
+  type: 'test'
+  ...
+# Subtest: SBOM inventories actual package/browser bytes and independently reconstructs vendor bodies
+ok 10 - SBOM inventories actual package/browser bytes and independently reconstructs vendor bodies
+  ---
+  duration_ms: 45.049602
+  type: 'test'
+  ...
+# Subtest: attestation subjects bind exact payload bytes and reject changed commits before invoking gh
+ok 11 - attestation subjects bind exact payload bytes and reject changed commits before invoking gh
+  ---
+  duration_ms: 38.512333
+  type: 'test'
+  ...
+# Subtest: payload and vendor boundaries reject linked directory roots and ancestors
+ok 12 - payload and vendor boundaries reject linked directory roots and ancestors
+  ---
+  duration_ms: 3.585886
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 370.753337

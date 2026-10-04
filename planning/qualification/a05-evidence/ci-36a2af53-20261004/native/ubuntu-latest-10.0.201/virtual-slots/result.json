@@ -1,0 +1,28 @@
+{
+  "id": "virtual-slots",
+  "status": "passed",
+  "command": {
+    "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/virtual-slots",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/home/runner/work/SharpForge/SharpForge/artifacts/a05-native/virtual-slots/evidence"
+    ],
+    "cwd": "/home/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "virtual-slots/evidence",
+  "report": "virtual-slots/result.json",
+  "startedAt": "2026-10-04T19:53:43.066Z",
+  "durationMs": 3050.1289860000015,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "virtual-slots/stdout.log",
+  "stderr": "virtual-slots/stderr.log",
+  "finishedAt": "2026-10-04T19:53:46.117Z"
+}

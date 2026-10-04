@@ -1,0 +1,38 @@
+{
+  "format": "SharpForge.A05EvidenceRelocation/1",
+  "sourceRevision": "d270516a994b138d28c486aab89814948f25a08e",
+  "sourceTree": "10ecdcaf5d8326f15bffbcaa5a33797b904da490",
+  "sourcePrefix": "planning/qualification/a05-evidence/",
+  "destinationPrefix": "planning/qualification/a05-evidence/",
+  "fileCount": 3,
+  "bytes": 15993,
+  "predecessorManifest": "planning/qualification/a05-evidence-relocations/initial-20261004.json",
+  "predecessorManifestSHA256": "939594cd47cf91d7548c1690913c36de51da00471d5afe3e6457b278117bdb0d",
+  "scope": "Three checkout-specific historical command drivers are text evidence, not executable repository modules. Only names gain .txt; raw bytes, original manifests and embedded paths remain unchanged.",
+  "files": [
+    {
+      "oldPath": "planning/qualification/a05-evidence/source-cpu-48c62243/profile-driver.mjs",
+      "newPath": "planning/qualification/a05-evidence/source-cpu-48c62243/profile-driver.mjs.txt",
+      "mode": "100644",
+      "gitBlob": "a572cf1dfaafa6c06b5ce02bfe26e51ab2b86026",
+      "sha256": "e586c8f9659e67023c2c6946cab31d48bfac385f4284b008247135cd2466e0a7",
+      "bytes": 5767
+    },
+    {
+      "oldPath": "planning/qualification/a05-evidence/virtual-cpu-000bbabd/driver.as-run.mjs",
+      "newPath": "planning/qualification/a05-evidence/virtual-cpu-000bbabd/driver.as-run.mjs.txt",
+      "mode": "100644",
+      "gitBlob": "28abbf346e0752e1d915e3b6fe4ac82491376d6f",
+      "sha256": "e1ab158039640651672caa077aa886efac1a481dd30fb63d3befb67355b8648a",
+      "bytes": 5104
+    },
+    {
+      "oldPath": "planning/qualification/a05-evidence/virtual-cpu-48c62243/a05-virtual-profile-48c62243.mjs",
+      "newPath": "planning/qualification/a05-evidence/virtual-cpu-48c62243/a05-virtual-profile-48c62243.mjs.txt",
+      "mode": "100644",
+      "gitBlob": "98708b79fec7a2e65838492d844a53673ab8dcfe",
+      "sha256": "150fc5f294732653d536b4e4c09bfa938e295dc5f93551f4085a7a45b7682b52",
+      "bytes": 5122
+    }
+  ]
+}

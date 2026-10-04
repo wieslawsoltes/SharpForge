@@ -40,7 +40,7 @@ byte makes the trace assessment inconclusive. A positive exact loop allocation
 counter is a miss; incomplete or mismatched protocols are unqualified.
 
 The unchanged historical
-[warm10 report](a05-evidence/float-allocation-2026-10-04/a05-float-allocation-single-boundary-warm-slices.json)
+[warm10 report](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/float-allocation-2026-10-04/a05-float-allocation-single-boundary-warm-slices.json)
 at `b0b1a20db65f36b5c6985f90237914613d037a7f` recorded these absolute interval bytes:
 
 | Loop | 100,000 iterations | 1,000,000 iterations | Additional bytes |
@@ -54,7 +54,7 @@ control detected 70,000 carriers. This supports no recurring iteration-dependent
 allocation on those warmed loops using the issue's permitted GC-trace method.
 The original report and its `partial` label remain unchanged. Its raw traces,
 hashes and earlier measurements are retained in the
-[evidence directory](a05-evidence/float-allocation-2026-10-04/README.md).
+[evidence directory](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/float-allocation-2026-10-04/README.md).
 
 A fresh revision requires fresh evidence. Run serially from a clean committed
 checkout, use a new output path, and retain the JSON and all seven adjacent raw

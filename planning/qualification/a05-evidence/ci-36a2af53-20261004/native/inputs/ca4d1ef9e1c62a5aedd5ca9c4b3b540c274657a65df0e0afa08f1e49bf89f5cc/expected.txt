@@ -1,0 +1,10 @@
+cellcell|
+2
+17
+0
+Cell`1
+Sample.Plain`1[System.String]
+False
+Sample.Box`1[System.Int32]
+Sample.Outer`1+Inner`1[System.Int32,System.String]
+Sample.Box`1[System.Int32[,]]

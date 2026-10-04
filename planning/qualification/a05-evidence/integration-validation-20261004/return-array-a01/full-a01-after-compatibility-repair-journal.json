@@ -1,0 +1,27 @@
+{
+  "commit": "6b3038a154be525c05a64ebae9912dd8b536bedf",
+  "tree": "a59e2700a642c8c225619fa09d231ec5b27a1d12",
+  "nodeVersion": "v24.19.0",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "scripts/planning/run-tests.js",
+    "--area",
+    "A01",
+    "--",
+    "--test-reporter=tap"
+  ],
+  "limits": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "statusBefore": "",
+  "started": 1791145253.790776,
+  "log": "full-a01-after-compatibility-repair.tap",
+  "finished": 1791145422.9686012,
+  "exitCode": 1,
+  "postCommit": "6b3038a154be525c05a64ebae9912dd8b536bedf",
+  "statusAfter": ""
+}

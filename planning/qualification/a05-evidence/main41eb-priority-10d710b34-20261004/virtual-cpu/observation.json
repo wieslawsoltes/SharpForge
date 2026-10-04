@@ -1,0 +1,63 @@
+{
+  "revision": "10d710b349d581b88c0013ce8571bd963bfdb839",
+  "kind": "Single candidate V8 CPU profile; diagnostic only, not performance qualification",
+  "samplingIntervalMicroseconds": 100,
+  "profiledExecutions": 8,
+  "initialAndWarmupPairs": 4,
+  "fixture": {
+    "id": "virtual",
+    "virtual": true,
+    "expectedReturn": 140000,
+    "iterations": 20000,
+    "dispatchByEngine": {
+      "source": "interface-callvirt",
+      "reloaded": "interface-callvirt",
+      "cil": "class-override-callvirt"
+    },
+    "source": "interface IValue { int Value() { return 0; } }\n      class Derived : IValue { public int Value() { return 7; } }\n      class Program { static int Main() { IValue value=new Derived(); int sum=0;\n        for(int i=0;i<20000;i++){sum+=value.Value();} return sum; } }"
+  },
+  "vmOptions": {
+    "baseline": {
+      "nativeIntBits": 64,
+      "maxInstructions": 1000000000,
+      "maxFrames": 512,
+      "sourceFusion": false,
+      "specializeNumericHandlers": false,
+      "smallLongs": false,
+      "typedNumericStack": false,
+      "scalarSlotLoads": true,
+      "inlineCaches": false,
+      "preciseRoots": true,
+      "preciseRootLiveness": false,
+      "framePooling": true,
+      "wasmTiering": false,
+      "profile": false
+    },
+    "candidate": {
+      "nativeIntBits": 64,
+      "maxInstructions": 1000000000,
+      "maxFrames": 512,
+      "sourceFusion": false,
+      "specializeNumericHandlers": false,
+      "smallLongs": false,
+      "typedNumericStack": false,
+      "scalarSlotLoads": true,
+      "inlineCaches": true,
+      "preciseRoots": true,
+      "preciseRootLiveness": false,
+      "framePooling": true,
+      "wasmTiering": false,
+      "profile": false
+    }
+  },
+  "instructionCounts": [
+    280014,
+    280014,
+    280014,
+    280014,
+    280014,
+    280014,
+    280014,
+    280014
+  ]
+}

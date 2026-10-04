@@ -1,0 +1,186 @@
+{
+  "format": "SharpForge.A05QualificationArchive/1",
+  "scope": "Source admission reuse correctness and independent Fibonacci100 qualification at exactef375",
+  "testedIdentity": {
+    "commit": "ef37516ecc3c47fcf34800af3220671eabc7a5eb",
+    "tree": "d5b74f47247d40e89cc6e7711c737a22d035b7cc",
+    "status": ""
+  },
+  "gitTrees": {
+    "packages/runtime": "aa8c34c50627c8b7b4d5b2b921941ca42db34433",
+    "packages/bytecode": "085a95b5607814ba2ff7ef591c1ebeda8ccbe67d",
+    "packages/compiler": "ecc4dfa6f63a1c55b79a0767436b7a3b62154be2",
+    "bench/vm": "ed4366b62ff0685630a76d855057e78f70573e1e",
+    "tests": "4aefbbe834f577dd9ae18188dda6f2ee3ff0c65b"
+  },
+  "rawArtifacts": [
+    {
+      "path": "source-admission-reuse.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/source-admission-reuse.log",
+      "bytes": 8802,
+      "sha256": "3db1511ba21e1e7f70d7d17cdbeb36cca4e0458dd618c87c7ccb7a3d8dae0b7a"
+    },
+    {
+      "path": "source-admission-reuse-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/source-admission-reuse-execution.json",
+      "bytes": 1628,
+      "sha256": "450a7a21640419d560ecf9cac26242339bfb99c5ba914f2ec2bc22146789518b"
+    },
+    {
+      "path": "source-fibonacci-100.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-priority-after-admission-reuse-ef375-20261004/source-fibonacci-100.json",
+      "bytes": 226078,
+      "sha256": "8dc8d77e35a7c933d2c352971394d13ca4aeae1ddcaaa73323e5307692c4f2dc"
+    },
+    {
+      "path": "source-fibonacci-100.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-priority-after-admission-reuse-ef375-20261004/source-fibonacci-100.log",
+      "bytes": 175,
+      "sha256": "9b891e2feda05514cb0bf1efb35e7911ec5b2a7afea23ef91f6d64d3b65adad9"
+    },
+    {
+      "path": "source-fibonacci-100-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-priority-after-admission-reuse-ef375-20261004/source-fibonacci-100-execution.json",
+      "bytes": 1810,
+      "sha256": "1f566ea3dfce27c7f0882b7e7acd09ff9aaf20d89fec3d4597b88030c9523977"
+    }
+  ],
+  "correctness": {
+    "exitCode": 0,
+    "tests": 39,
+    "passed": 39,
+    "failed": 0,
+    "skipped": 0,
+    "testDurationMilliseconds": 4558.381664,
+    "wallSeconds": 4.729460121001466,
+    "executionRecord": "source-admission-reuse-execution.json"
+  },
+  "fibonacci": {
+    "exitCode": 2,
+    "status": "measured",
+    "acceptance": "inconclusive",
+    "target": {
+      "kind": "minimum-speedup",
+      "value": 1.5,
+      "observed": 1.605549272945154,
+      "interval": [
+        1.4364472786404399,
+        1.7696360228862134
+      ],
+      "meetsPointTarget": true,
+      "acceptance": "inconclusive",
+      "method": "paired-percentile-ratio-of-medians",
+      "seed": 12012,
+      "confidence": 0.95,
+      "resamples": 10000
+    },
+    "summaryExecutionMilliseconds": {
+      "baseline": {
+        "count": 100,
+        "minimum": 65.5623400000004,
+        "median": 82.52635249999912,
+        "p95": 114.99300514999963,
+        "p99": 120.05792745000134,
+        "maximum": 122.88531300000022,
+        "interquartileRange": 29.10310400000003,
+        "medianAbsoluteDeviation": 14.187039499999628
+      },
+      "candidate": {
+        "count": 100,
+        "minimum": 42.37559300000066,
+        "median": 51.400697500000206,
+        "p95": 74.90600214999904,
+        "p99": 76.85779920999889,
+        "maximum": 84.92057800000111,
+        "interquartileRange": 23.859940500000903,
+        "medianAbsoluteDeviation": 7.900738999999703
+      }
+    },
+    "samplePhases": {
+      "baseline": {
+        "first": 1,
+        "warmup": 3,
+        "measured": 100
+      },
+      "candidate": {
+        "first": 1,
+        "warmup": 3,
+        "measured": 100
+      }
+    },
+    "instructionsPerExecution": 262697,
+    "allOutputsVerified": true,
+    "errors": [],
+    "wallSeconds": 20.75799839299725,
+    "executionRecord": "source-fibonacci-100-execution.json",
+    "harnessHash": "e2444b7f1a07c31e889ced549d9dfebad7fc68fd9fc699fa747b0e3dd167d4ea",
+    "environmentFingerprint": "5ae7016da9fdcdad1a0cb42b2fa3ac14a78b6e015afd693350e966f3e15f34c0",
+    "assemblyHash": "9aad85acc393b657e412b96d2d582e49e54e28d75a925456c578203a1134b0b9",
+    "nativeQualification": false,
+    "unsupportedTargets": [
+      "Browser timing/host-memory: this Node harness does not qualify browsers",
+      "Native .NET throughput: no CLR executable is measured",
+      "Wasm tier: interpreter baseline options explicitly disable it"
+    ]
+  },
+  "protocol": {
+    "samples": 100,
+    "warmup": 3,
+    "nativeIntBits": 64,
+    "seed": 12012,
+    "resamples": 10000,
+    "timeoutSeconds": 900
+  },
+  "sourceProof": [
+    {
+      "path": "tests/a05-source-admission-reuse.test.js",
+      "gitBlob": "c16d4e18379471fc8323394f3d58748fcf574324",
+      "bytes": 4066,
+      "sha256": "971972b0cfaeab91f0beb19fd6d82282acaf5a7e9cec40a90f9ddcec046dc9c2"
+    },
+    {
+      "path": "tests/a05-source-stack-byte-budget.test.js",
+      "gitBlob": "8f188a5bad60b20ab763ec374e7d90a2e8deedd0",
+      "bytes": 9896,
+      "sha256": "28c8345891b8a61b5b0ca384d770809e861da49c2e076deda7a412f651947c30"
+    },
+    {
+      "path": "tests/a05-source-prepared-calls.test.js",
+      "gitBlob": "48c7228cfcbd357926865569f7d604bf4af11737",
+      "bytes": 4271,
+      "sha256": "63ad3e9e79efbb7aa6b95bd8eb9ba9f8ff5bdfb42e23a3afe5add291ccaab485"
+    },
+    {
+      "path": "tests/a05-source-fusion-integer-plans.test.js",
+      "gitBlob": "5f3621d0051f45b211510bc6b179e5593e3e6c98",
+      "bytes": 3961,
+      "sha256": "27c9a83dde597862df94a2ead96f0556f12aec9a78cee4ddcc2749e0eb9bd847"
+    },
+    {
+      "path": "bench/vm/qualification.js",
+      "gitBlob": "cd5b098098e350bca88b47d5f943f166ddb51940",
+      "bytes": 8970,
+      "sha256": "658142f280b5cc64dfcc735c76a5d17a26e60f2e6a0aab3ac49dfd6e74977471"
+    },
+    {
+      "path": "bench/vm/qualification-fixtures.js",
+      "gitBlob": "1720277a1df2983eff72530378166652549dcb63",
+      "bytes": 4735,
+      "sha256": "1c4788e3d0174af7294f8ca1a3d1ed35f7b1233d0c63ea798aeb15f14478ba2d"
+    },
+    {
+      "path": "bench/vm/source-fusion-fixtures.js",
+      "gitBlob": "4f22ae205368ce9a511523f3c15c399767a6b76e",
+      "bytes": 452,
+      "sha256": "6f7b80e1a983a4fef3fcdb473939849e905992e74e9f63a6cee38fe5460cd123"
+    }
+  ],
+  "limitations": [
+    "Passing focused correctness does not qualify the inconclusive performance target.",
+    "The95% interval crosses1.5, so no performance pass is claimed despite the point estimate.",
+    "Baseline and candidate differ by options within exactef375; no cross-revision speed claim or result selection.",
+    "Every historical attempt remains preserved; no pooling, replacement or threshold change.",
+    "The old strict-structure failure remains unchanged; the later line-wrap repair is separate.",
+    "No product or acceptance-ledger edits, tests, builds or benchmarks occurred during archiving."
+  ]
+}

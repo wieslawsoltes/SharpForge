@@ -1,0 +1,1071 @@
+{
+  "format": "SharpForge.A05NativeQualification/1",
+  "task": "SF-A05",
+  "startedAt": "2026-10-04T20:29:09.934Z",
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "node": "v22.23.2",
+  "requestedSdk": "10.0.201",
+  "dotnetSdk": "10.0.201",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.1 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.4 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.7 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.30 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.1 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.4 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.19 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.3 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.5 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.7 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.10 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.11 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.1 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.4 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.7 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.30 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.1 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.4 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.19 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.3 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.7 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.10 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.11 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.12 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]",
+  "requestedSdkChannel": "10.0.201",
+  "resources": {
+    "nodeOptions": "--max-old-space-size=4096",
+    "concurrentCases": 1
+  },
+  "runnerImage": {
+    "os": "macos26",
+    "version": "20260907.0351.1"
+  },
+  "probes": [
+    {
+      "command": "git",
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "36a2af53287a563fd47d3a33b8e6e6382a726d35\n",
+      "stderr": ""
+    },
+    {
+      "command": "git",
+      "arguments": [
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "da3add4a11cce5ed887d2a093eac4b48a4c26754\n",
+      "stderr": ""
+    },
+    {
+      "command": "git",
+      "arguments": [
+        "status",
+        "--porcelain",
+        "--untracked-files=no"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "git",
+      "arguments": [
+        "ls-files",
+        "--",
+        "global.json"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "--version"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "10.0.201\n",
+      "stderr": ""
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "--list-runtimes"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "Microsoft.AspNetCore.App 8.0.1 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.4 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.7 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.30 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.1 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.4 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.19 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.3 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.5 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.7 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.10 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.11 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.1 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.4 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.7 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.30 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.1 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.4 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.19 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.3 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.7 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.10 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.11 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.12 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\n",
+      "stderr": ""
+    }
+  ],
+  "tree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+  "trackedChanges": "",
+  "cleanTrackedTree": true,
+  "globalJson": {
+    "path": "global.json",
+    "present": true,
+    "tracked": false,
+    "content": "{\"sdk\":{\"version\":\"10.0.201\",\"rollForward\":\"disable\"}}\n",
+    "sha256": "6e8ea1d80966e817f64f6eaf16fa6b1e9a682bb4bd4b05ff6a849498356390d6"
+  },
+  "workflow": {
+    "runId": "37229843614",
+    "runAttempt": "1",
+    "eventName": "push",
+    "repository": "wieslawsoltes/SharpForge",
+    "sha": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+    "ref": "refs/heads/codex/a05-e01-started-handoff-20261004",
+    "headRef": "",
+    "baseRef": "",
+    "workflowRef": "wieslawsoltes/SharpForge/.github/workflows/a05-runtime.yml@refs/heads/codex/a05-e01-started-handoff-20261004",
+    "workflowSha": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+    "pullRequest": null
+  },
+  "nativeRuntimeObservation": "dotnetRuntimes is the installed runtime inventory; it does not identify the guest process runtime patch.",
+  "targetFramework": "net10.0",
+  "setupError": null,
+  "cases": [
+    {
+      "id": "value-storage",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/value-storage",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/value-storage/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "value-storage/evidence",
+      "report": "value-storage/result.json",
+      "startedAt": "2026-10-04T20:29:09.936Z",
+      "durationMs": 6555.787875,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "value-storage/stdout.log",
+      "stderr": "value-storage/stderr.log",
+      "finishedAt": "2026-10-04T20:29:16.499Z"
+    },
+    {
+      "id": "value-layout-sizeof",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/value-layout-sizeof",
+          "--unsafe",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/value-layout-sizeof/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "value-layout-sizeof/evidence",
+      "report": "value-layout-sizeof/result.json",
+      "startedAt": "2026-10-04T20:29:16.501Z",
+      "durationMs": 3422.9877500000002,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "value-layout-sizeof/stdout.log",
+      "stderr": "value-layout-sizeof/stderr.log",
+      "finishedAt": "2026-10-04T20:29:19.939Z"
+    },
+    {
+      "id": "value-boxing",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/value-boxing",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/value-boxing/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "value-boxing/evidence",
+      "report": "value-boxing/result.json",
+      "startedAt": "2026-10-04T20:29:19.959Z",
+      "durationMs": 3111.7874169999996,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "value-boxing/stdout.log",
+      "stderr": "value-boxing/stderr.log",
+      "finishedAt": "2026-10-04T20:29:23.091Z"
+    },
+    {
+      "id": "value-instance-calls",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/value-instance-calls",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/value-instance-calls/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "value-instance-calls/evidence",
+      "report": "value-instance-calls/result.json",
+      "startedAt": "2026-10-04T20:29:23.092Z",
+      "durationMs": 3102.4492500000015,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "value-instance-calls/stdout.log",
+      "stderr": "value-instance-calls/stderr.log",
+      "finishedAt": "2026-10-04T20:29:26.197Z"
+    },
+    {
+      "id": "virtual-slots",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/virtual-slots",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/virtual-slots/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "virtual-slots/evidence",
+      "report": "virtual-slots/result.json",
+      "startedAt": "2026-10-04T20:29:26.199Z",
+      "durationMs": 3253.077792,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "virtual-slots/stdout.log",
+      "stderr": "virtual-slots/stderr.log",
+      "finishedAt": "2026-10-04T20:29:29.456Z"
+    },
+    {
+      "id": "delegates",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/delegates",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/delegates/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "delegates/evidence",
+      "report": "delegates/result.json",
+      "startedAt": "2026-10-04T20:29:29.458Z",
+      "durationMs": 2624.985208000002,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "delegates/stdout.log",
+      "stderr": "delegates/stderr.log",
+      "finishedAt": "2026-10-04T20:29:32.086Z"
+    },
+    {
+      "id": "byref-calls",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/byref-calls",
+          "--source-routes",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/byref-calls/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "byref-calls/evidence",
+      "report": "byref-calls/result.json",
+      "startedAt": "2026-10-04T20:29:32.088Z",
+      "durationMs": 4666.942666999999,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "byref-calls/stdout.log",
+      "stderr": "byref-calls/stderr.log",
+      "finishedAt": "2026-10-04T20:29:36.758Z"
+    },
+    {
+      "id": "native-width",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/native-width",
+          "--source-routes",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/native-width/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "native-width/evidence",
+      "report": "native-width/result.json",
+      "startedAt": "2026-10-04T20:29:36.759Z",
+      "durationMs": 3902.0957080000007,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "native-width/stdout.log",
+      "stderr": "native-width/stderr.log",
+      "finishedAt": "2026-10-04T20:29:40.664Z"
+    },
+    {
+      "id": "default-interfaces",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/default-interfaces",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/default-interfaces/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "default-interfaces/evidence",
+      "report": "default-interfaces/result.json",
+      "startedAt": "2026-10-04T20:29:40.665Z",
+      "durationMs": 2195.0108329999966,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "default-interfaces/stdout.log",
+      "stderr": "default-interfaces/stderr.log",
+      "finishedAt": "2026-10-04T20:29:42.862Z"
+    },
+    {
+      "id": "generic-calls",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/generic-calls",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/generic-calls/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "generic-calls/evidence",
+      "report": "generic-calls/result.json",
+      "startedAt": "2026-10-04T20:29:42.864Z",
+      "durationMs": 2402.878125000003,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "generic-calls/stdout.log",
+      "stderr": "generic-calls/stderr.log",
+      "finishedAt": "2026-10-04T20:29:45.269Z"
+    },
+    {
+      "id": "source-generic-values",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/source-generic-values",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/source-generic-values/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "source-generic-values/evidence",
+      "report": "source-generic-values/result.json",
+      "startedAt": "2026-10-04T20:29:45.270Z",
+      "durationMs": 2507.137041999995,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "source-generic-values/stdout.log",
+      "stderr": "source-generic-values/stderr.log",
+      "finishedAt": "2026-10-04T20:29:47.779Z"
+    },
+    {
+      "id": "enum-unboxing",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/enum-unboxing",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/enum-unboxing/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "enum-unboxing/evidence",
+      "report": "enum-unboxing/result.json",
+      "startedAt": "2026-10-04T20:29:47.782Z",
+      "durationMs": 2360.430500000002,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "enum-unboxing/stdout.log",
+      "stderr": "enum-unboxing/stderr.log",
+      "finishedAt": "2026-10-04T20:29:50.145Z"
+    },
+    {
+      "id": "nullable",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/nullable",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/nullable/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "nullable/evidence",
+      "report": "nullable/result.json",
+      "startedAt": "2026-10-04T20:29:50.146Z",
+      "durationMs": 2483.1008750000037,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "nullable/stdout.log",
+      "stderr": "nullable/stderr.log",
+      "finishedAt": "2026-10-04T20:29:52.632Z"
+    },
+    {
+      "id": "enums-strings",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/enums-strings",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/enums-strings/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "enums-strings/evidence",
+      "report": "enums-strings/result.json",
+      "startedAt": "2026-10-04T20:29:52.634Z",
+      "durationMs": 2269.986124999996,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "enums-strings/stdout.log",
+      "stderr": "enums-strings/stderr.log",
+      "finishedAt": "2026-10-04T20:29:54.906Z"
+    },
+    {
+      "id": "tokens",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/tokens",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/tokens/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "tokens/evidence",
+      "report": "tokens/result.json",
+      "startedAt": "2026-10-04T20:29:54.907Z",
+      "durationMs": 2038.979542000001,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "tokens/stdout.log",
+      "stderr": "tokens/stderr.log",
+      "finishedAt": "2026-10-04T20:29:56.948Z"
+    },
+    {
+      "id": "statics",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-statics",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/statics/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "statics/evidence",
+      "report": "statics/result.json",
+      "startedAt": "2026-10-04T20:29:56.949Z",
+      "durationMs": 2702.0521670000016,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "statics/stdout.log",
+      "stderr": "statics/stderr.log",
+      "finishedAt": "2026-10-04T20:29:59.653Z"
+    },
+    {
+      "id": "calli",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-calli",
+          "--unsafe",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/calli/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "calli/evidence",
+      "report": "calli/result.json",
+      "startedAt": "2026-10-04T20:29:59.655Z",
+      "durationMs": 2269.469916000002,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "calli/stdout.log",
+      "stderr": "calli/stderr.log",
+      "finishedAt": "2026-10-04T20:30:01.927Z"
+    },
+    {
+      "id": "varargs",
+      "status": "unsupported",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-source-varargs",
+          "--managed-varargs",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/varargs/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "varargs/evidence",
+      "report": "varargs/result.json",
+      "startedAt": "2026-10-04T20:30:01.927Z",
+      "durationMs": 2388.9306670000005,
+      "exitCode": 0,
+      "signal": null,
+      "outcomeReport": "varargs/evidence/qualification.json",
+      "reason": "Observed CLR managed-varargs rejection; VM authored trace passed without native parity.",
+      "stdout": "varargs/stdout.log",
+      "stderr": "varargs/stderr.log",
+      "finishedAt": "2026-10-04T20:30:04.320Z"
+    },
+    {
+      "id": "control-exceptions",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-control-exceptions",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/control-exceptions/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "control-exceptions/evidence",
+      "report": "control-exceptions/result.json",
+      "startedAt": "2026-10-04T20:30:04.321Z",
+      "durationMs": 4321.934541000002,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "control-exceptions/stdout.log",
+      "stderr": "control-exceptions/stderr.log",
+      "finishedAt": "2026-10-04T20:30:08.656Z"
+    },
+    {
+      "id": "runtime-faults",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/runtime-faults",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/runtime-faults/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "runtime-faults/evidence",
+      "report": "runtime-faults/result.json",
+      "startedAt": "2026-10-04T20:30:08.685Z",
+      "durationMs": 2700.2355000000025,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "runtime-faults/stdout.log",
+      "stderr": "runtime-faults/stderr.log",
+      "finishedAt": "2026-10-04T20:30:11.401Z"
+    },
+    {
+      "id": "decimal",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/decimal",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/decimal/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "decimal/evidence",
+      "report": "decimal/result.json",
+      "startedAt": "2026-10-04T20:30:11.402Z",
+      "durationMs": 2155.1802089999983,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "decimal/stdout.log",
+      "stderr": "decimal/stderr.log",
+      "finishedAt": "2026-10-04T20:30:13.560Z"
+    },
+    {
+      "id": "unsigned-widening",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/numeric-conversions",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/unsigned-widening/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "unsigned-widening/evidence",
+      "report": "unsigned-widening/result.json",
+      "startedAt": "2026-10-04T20:30:13.561Z",
+      "durationMs": 2974.088582999997,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "unsigned-widening/stdout.log",
+      "stderr": "unsigned-widening/stderr.log",
+      "finishedAt": "2026-10-04T20:30:16.538Z"
+    },
+    {
+      "id": "memory",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-memory",
+          "--unsafe",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/memory/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "memory/evidence",
+      "report": "memory/result.json",
+      "startedAt": "2026-10-04T20:30:16.540Z",
+      "durationMs": 2930.067458000005,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "memory/stdout.log",
+      "stderr": "memory/stderr.log",
+      "finishedAt": "2026-10-04T20:30:19.473Z"
+    },
+    {
+      "id": "async-replay",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05-async",
+          "--async",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/async-replay/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "async-replay/evidence",
+      "report": "async-replay/result.json",
+      "startedAt": "2026-10-04T20:30:19.474Z",
+      "durationMs": 2988.0136249999923,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "async-replay/stdout.log",
+      "stderr": "async-replay/stderr.log",
+      "finishedAt": "2026-10-04T20:30:22.465Z"
+    },
+    {
+      "id": "synchronization",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/synchronization",
+          "--scheduled",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/synchronization/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "synchronization/evidence",
+      "report": "synchronization/result.json",
+      "startedAt": "2026-10-04T20:30:22.466Z",
+      "durationMs": 2501.2486250000075,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "synchronization/stdout.log",
+      "stderr": "synchronization/stderr.log",
+      "finishedAt": "2026-10-04T20:30:24.970Z"
+    },
+    {
+      "id": "exception-event-identity",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/exception-event-identity",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/exception-event-identity/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "exception-event-identity/evidence",
+      "report": "exception-event-identity/result.json",
+      "startedAt": "2026-10-04T20:30:24.971Z",
+      "durationMs": 2101.511624999999,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "exception-event-identity/stdout.log",
+      "stderr": "exception-event-identity/stderr.log",
+      "finishedAt": "2026-10-04T20:30:27.076Z"
+    },
+    {
+      "id": "first-chance-policy",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/first-chance-policy",
+          "--failfast",
+          "--first-chance-policy",
+          "after-unwind",
+          "--expected",
+          "tests/fixtures/a05/first-chance-policy/expected-after-unwind.txt",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/first-chance-policy/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "first-chance-policy/evidence",
+      "report": "first-chance-policy/result.json",
+      "startedAt": "2026-10-04T20:30:27.077Z",
+      "durationMs": 4212.140417000002,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "first-chance-policy/stdout.log",
+      "stderr": "first-chance-policy/stderr.log",
+      "finishedAt": "2026-10-04T20:30:31.294Z"
+    },
+    {
+      "id": "unhandled-policy",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--fixture",
+          "tests/fixtures/a05/unhandled-policy",
+          "--fault",
+          "Exception",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/unhandled-policy/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "unhandled-policy/evidence",
+      "report": "unhandled-policy/result.json",
+      "startedAt": "2026-10-04T20:30:31.295Z",
+      "durationMs": 2052.4758750000037,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "unhandled-policy/stdout.log",
+      "stderr": "unhandled-policy/stderr.log",
+      "finishedAt": "2026-10-04T20:30:33.350Z"
+    },
+    {
+      "id": "assignability",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-type-system.js",
+          "--casts",
+          "--framework",
+          "net10.0",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/assignability/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "assignability/evidence",
+      "report": "assignability/result.json",
+      "startedAt": "2026-10-04T20:30:33.351Z",
+      "durationMs": 2502.678958000004,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "assignability/stdout.log",
+      "stderr": "assignability/stderr.log",
+      "finishedAt": "2026-10-04T20:30:35.856Z"
+    },
+    {
+      "id": "dispatch",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-dispatch.js",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/dispatch/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "dispatch/evidence",
+      "report": "dispatch/result.json",
+      "startedAt": "2026-10-04T20:30:35.857Z",
+      "durationMs": 2520.3537499999948,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "dispatch/stdout.log",
+      "stderr": "dispatch/stderr.log",
+      "finishedAt": "2026-10-04T20:30:38.380Z"
+    },
+    {
+      "id": "static-init",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-static-init.js",
+          "--output",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/static-init/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "static-init/evidence",
+      "report": "static-init/result.json",
+      "startedAt": "2026-10-04T20:30:38.382Z",
+      "durationMs": 1768.5374999999913,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "static-init/stdout.log",
+      "stderr": "static-init/stderr.log",
+      "finishedAt": "2026-10-04T20:30:40.152Z"
+    },
+    {
+      "id": "numeric-conversions",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/validate-a05-numeric-dotnet.js"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 300000,
+      "evidence": "numeric-conversions",
+      "report": "numeric-conversions/result.json",
+      "startedAt": "2026-10-04T20:30:40.154Z",
+      "durationMs": 1667.8994590000075,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "numeric-conversions/stdout.log",
+      "stderr": "numeric-conversions/stderr.log",
+      "finishedAt": "2026-10-04T20:30:41.824Z"
+    },
+    {
+      "id": "numeric-capture",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "scripts/numeric/generate-oracle.js",
+          "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/numeric-capture/evidence"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {},
+      "timeoutMs": 900000,
+      "evidence": "numeric-capture/evidence",
+      "report": "numeric-capture/result.json",
+      "startedAt": "2026-10-04T20:30:41.825Z",
+      "durationMs": 25939.799916999997,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "numeric-capture/stdout.log",
+      "stderr": "numeric-capture/stderr.log",
+      "finishedAt": "2026-10-04T20:31:07.780Z"
+    },
+    {
+      "id": "numeric-replay",
+      "status": "passed",
+      "command": {
+        "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+        "arguments": [
+          "--test",
+          "--test-concurrency=1",
+          "tests/numeric-differential.test.js"
+        ],
+        "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+      },
+      "environment": {
+        "SHARPFORGE_NUMERIC_ORACLE_DIR": "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/numeric-capture/evidence"
+      },
+      "timeoutMs": 1800000,
+      "evidence": "numeric-replay",
+      "report": "numeric-replay/result.json",
+      "startedAt": "2026-10-04T20:31:07.782Z",
+      "durationMs": 603314.8634159999,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "numeric-replay/stdout.log",
+      "stderr": "numeric-replay/stderr.log",
+      "finishedAt": "2026-10-04T20:41:11.402Z"
+    }
+  ],
+  "counts": {
+    "passed": 33,
+    "unsupported": 1
+  },
+  "status": "partial",
+  "passed": false,
+  "finishedAt": "2026-10-04T20:41:11.404Z"
+}

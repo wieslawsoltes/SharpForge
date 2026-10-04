@@ -1,0 +1,16 @@
+{
+  "sdk": "10.0.201",
+  "installerSha256": "7e9969069558023daf52bbf6fc55eb37032eb23c7ff55a7d6afc659d54d6c23b",
+  "requestedArchitecture": "x86",
+  "dotnetHostSha256": "47bffbee92300569c9129af5fcb3fba95a273d414ea970dabd4cc8e588af2a04",
+  "hostPeMachine": "0x014c",
+  "installerUrl": "https://raw.githubusercontent.com/actions/setup-dotnet/67a3573c9a986a3f9c594539f4ab511d57bb3ce9/externals/install-dotnet.ps1",
+  "runtimeFiles": [
+    {
+      "sha256": "3e4735c8fb4ef5ec28570a56d58ddc9cac1b1b8c71d3dc165e989dbf81c696b2",
+      "runtime": "10.0.5",
+      "file": "coreclr.dll"
+    }
+  ],
+  "roslynCompilerSha256": "582fb62f5547d32adf476f200179e9d161f4967d4e6edaa4a18dd819b1965929"
+}

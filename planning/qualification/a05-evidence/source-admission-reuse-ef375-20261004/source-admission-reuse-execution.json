@@ -1,0 +1,51 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "source-admission-reuse",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--expose-gc",
+    "--test-reporter=tap",
+    "tests/a05-source-admission-reuse.test.js",
+    "tests/a05-source-stack-byte-budget.test.js",
+    "tests/a05-source-prepared-calls.test.js",
+    "tests/a05-source-fusion-integer-plans.test.js"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": null,
+    "DOTNET_ROOT": null,
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": null,
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "ef37516ecc3c47fcf34800af3220671eabc7a5eb",
+    "tree": "d5b74f47247d40e89cc6e7711c737a22d035b7cc",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T22:52:28.936701+00:00",
+  "completedUTC": "2026-10-04T22:52:33.666434+00:00",
+  "elapsedSeconds": 4.729460121001466,
+  "exitCode": 0,
+  "endIdentity": {
+    "commit": "ef37516ecc3c47fcf34800af3220671eabc7a5eb",
+    "tree": "d5b74f47247d40e89cc6e7711c737a22d035b7cc",
+    "status": ""
+  },
+  "artifact": {
+    "path": "source-admission-reuse.log",
+    "bytes": 8802,
+    "sha256": "3db1511ba21e1e7f70d7d17cdbeb36cca4e0458dd618c87c7ccb7a3d8dae0b7a"
+  }
+}

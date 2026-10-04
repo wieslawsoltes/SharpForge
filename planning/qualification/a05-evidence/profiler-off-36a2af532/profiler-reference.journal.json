@@ -1,0 +1,32 @@
+{
+  "status": "finished",
+  "action": "reference",
+  "startedAt": "2026-10-04T20:03:29.604462+00:00",
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "cwd": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "bench/vm/profiler-reference.js",
+    "--dir",
+    "/tmp/a05-profiler-reference-36a2af53287a563fd47d3a33b8e6e6382a726d35",
+    "--out",
+    "/workspace/scratch/42f7738360b9/a05-final-36a2af53287a563fd47d3a33b8e6e6382a726d35/profiler-off/profiler-reference.json"
+  ],
+  "resourceEnvironment": {
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "inheritedNodeOptions": null,
+  "runnerScriptSha256": "2ef4303ead89ba6b37fab615a58c1383d7e766eae51c8681e376b23e2d048c17",
+  "report": "/workspace/scratch/42f7738360b9/a05-final-36a2af53287a563fd47d3a33b8e6e6382a726d35/profiler-off/profiler-reference.json",
+  "log": "/workspace/scratch/42f7738360b9/a05-final-36a2af53287a563fd47d3a33b8e6e6382a726d35/profiler-off/profiler-reference.log",
+  "completedAt": "2026-10-04T20:03:30.560182+00:00",
+  "exitCode": 0,
+  "endingRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "endingWorktreeStatus": "",
+  "reportSha256": "da0dd00aedeb39bea07bc56bd5cb21afb46b00d4d6e72b03cdc56de4840b6da5",
+  "logSha256": "63e6fd39208dc5f95ad2bb6634ffe8fad67bca0f30f2791da5d3568fb6ac95e5"
+}

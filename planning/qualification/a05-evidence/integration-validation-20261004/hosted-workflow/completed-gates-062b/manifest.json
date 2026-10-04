@@ -1,0 +1,239 @@
+{
+  "format": "SharpForge.A05ValidationCheckpoint/1",
+  "revision": "062b3b899d8dd36a696ee0e028e5951d86e98139",
+  "tree": "a48712f9873d7c4948619ed6e3654d7e53e81d63",
+  "scope": "Completed failed static gate, passing oracle license-policy inventory and passing functional sparse build; not release-size or broad licensing qualification",
+  "files": [
+    {
+      "file": "static-execution.json",
+      "bytes": 1050,
+      "sha256": "b7bc06f8188d6977521338bca0ae2da31640aeba8d7e79530dcf2701cde0f5c0",
+      "source": "/workspace/scratch/42f7738360b9/a05-hosted-workflow-validation-20261004/static-execution.json",
+      "retention": "byte-for-byte original"
+    },
+    {
+      "file": "static.log",
+      "bytes": 692,
+      "sha256": "b8698fbcef369e488cdb6100dc22ca9113ffb1402e12021e88c4233d81fdecf2",
+      "source": "/workspace/scratch/42f7738360b9/a05-hosted-workflow-validation-20261004/static.log",
+      "retention": "byte-for-byte original"
+    },
+    {
+      "file": "license-execution.json",
+      "bytes": 1146,
+      "sha256": "678d4c83c2c0559a5e65eed567b1cf0eabc247bb879e891c0b1aa4d99cad86ed",
+      "source": "/workspace/scratch/42f7738360b9/a05-hosted-workflow-validation-20261004/license-execution.json",
+      "retention": "byte-for-byte original"
+    },
+    {
+      "file": "license.log",
+      "bytes": 88,
+      "sha256": "bebbb33216cff9ed2de82fddd5710806b04a02c04635b630a812635aeebf2548",
+      "source": "/workspace/scratch/42f7738360b9/a05-hosted-workflow-validation-20261004/license.log",
+      "retention": "byte-for-byte original"
+    },
+    {
+      "file": "build-execution.json",
+      "bytes": 1350,
+      "sha256": "ebd986df7ce44d69093ba4c795ded66622e3f2ec25109c30567b08cf56e283d9",
+      "source": "/workspace/scratch/42f7738360b9/a05-hosted-workflow-validation-20261004/build-execution.json",
+      "retention": "byte-for-byte original"
+    },
+    {
+      "file": "build.log",
+      "bytes": 206,
+      "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f",
+      "source": "/workspace/scratch/42f7738360b9/a05-hosted-workflow-validation-20261004/build.log",
+      "retention": "byte-for-byte original"
+    },
+    {
+      "file": "preexisting-stale-build-identity.json.gz",
+      "bytes": 301422,
+      "sha256": "54c33be5a595394688bd8137dfffb1faea3f17d3f819590c985df502086753fa",
+      "source": "/workspace/scratch/42f7738360b9/a05-hosted-workflow-validation-20261004/preexisting-stale-build-identity.json",
+      "retention": "deterministic lossless gzip",
+      "original": {
+        "file": "preexisting-stale-build-identity.json",
+        "bytes": 1137703,
+        "sha256": "9f760f03fb41a870ce4a2b6c1e53fd136e99703a8f0aadfcbb3116d2c134f2e5"
+      },
+      "compression": {
+        "format": "gzip",
+        "level": 9,
+        "mtime": 0,
+        "embeddedFilename": "",
+        "roundTripByteIdentical": true
+      }
+    },
+    {
+      "file": "completed-build-identity.json.gz",
+      "bytes": 414386,
+      "sha256": "a4d1af5e4be0e0a230e54f808c4352e0a19dc09a9d3286d18e8b26650327a009",
+      "source": "/workspace/scratch/42f7738360b9/a05-hosted-workflow-validation-20261004/completed-build-identity.json",
+      "retention": "deterministic lossless gzip",
+      "original": {
+        "file": "completed-build-identity.json",
+        "bytes": 2184323,
+        "sha256": "c50a6a80b669d54e87b3a2f0dcda184df9f380e3c8cb18b107c5aea0ecce2edd"
+      },
+      "compression": {
+        "format": "gzip",
+        "level": 9,
+        "mtime": 0,
+        "embeddedFilename": "",
+        "roundTripByteIdentical": true
+      }
+    }
+  ],
+  "records": [
+    {
+      "kind": "static",
+      "journal": "static-execution.json",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+      "nodeVersion": "v24.19.0",
+      "resources": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+        "NODE_OPTIONS": null
+      },
+      "startedUTC": "2026-10-04T20:44:44.770855+00:00",
+      "completedUTC": "2026-10-04T20:44:53.434293+00:00",
+      "elapsedSeconds": 8.66321867499937,
+      "exitCode": 1,
+      "unchangedCleanStartAndEnd": true,
+      "scope": "Repository static gates; failed on one unreviewed dynamic import"
+    },
+    {
+      "kind": "license",
+      "journal": "license-execution.json",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "scripts/limited.js",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "scripts/conformance/oracle/license-policy.js"
+      ],
+      "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+      "nodeVersion": "v24.19.0",
+      "resources": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+        "NODE_OPTIONS": null
+      },
+      "startedUTC": "2026-10-04T20:44:53.537645+00:00",
+      "completedUTC": "2026-10-04T20:44:53.816004+00:00",
+      "elapsedSeconds": 0.2781451199989533,
+      "exitCode": 0,
+      "unchangedCleanStartAndEnd": true,
+      "scope": "Oracle license-policy inventory only"
+    },
+    {
+      "kind": "build",
+      "journal": "build-execution.json",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+      "nodeVersion": "v24.19.0",
+      "resources": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+        "NODE_OPTIONS": null
+      },
+      "startedUTC": "2026-10-04T20:44:53.924809+00:00",
+      "completedUTC": "2026-10-04T20:45:09.565958+00:00",
+      "elapsedSeconds": 15.64094630999898,
+      "exitCode": 0,
+      "unchangedCleanStartAndEnd": true,
+      "scope": "Functional build on recorded sparse checkout; not complete-asset size or pinned release-toolchain qualification."
+    }
+  ],
+  "staticResult": {
+    "passed": false,
+    "nodeTestFiles": 1335,
+    "unassigned": 0,
+    "duplicate": 0,
+    "syntaxModules": 4769,
+    "syntaxErrors": 0,
+    "importInspected": 4710,
+    "importLinked": 4757,
+    "errors": [
+      {
+        "path": "scripts/a05/hosted-reference-check.js",
+        "operation": "dynamic-import",
+        "line": 27,
+        "count": 1,
+        "message": "Unreviewed dynamic-code use or changed file"
+      }
+    ]
+  },
+  "licenseResult": {
+    "status": "passed",
+    "tools": 7,
+    "packages": 14,
+    "actions": 4,
+    "images": 3,
+    "trackedPaths": 17007,
+    "scope": "Only scripts/conformance/oracle/license-policy.js; not a whole-repository license scan or release clearance"
+  },
+  "buildResult": {
+    "status": "passed",
+    "scope": "Functional build on recorded sparse checkout; not complete-asset size or pinned release-toolchain qualification.",
+    "identities": [
+      {
+        "file": "preexisting-stale-build-identity.json.gz",
+        "source": {
+          "commit": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+          "tree": "5a1db2dbc3fcbe948ac46553a73774260c98c8fd",
+          "clean": true
+        },
+        "stable": true,
+        "assetsSha256": "de17cc0ee5c6fbd1a14a3841d168be60b0412951bf2f64277bfc752b7b9a067f",
+        "assetCount": 5979,
+        "stagingAssetCount": 0,
+        "scope": "Recorded inventory only; not complete release-asset or release-size qualification"
+      },
+      {
+        "file": "completed-build-identity.json.gz",
+        "source": {
+          "commit": "062b3b899d8dd36a696ee0e028e5951d86e98139",
+          "tree": "a48712f9873d7c4948619ed6e3654d7e53e81d63",
+          "clean": true
+        },
+        "stable": true,
+        "assetsSha256": "ebd9a2b46430ba139e0c79618f75c7b561f0b4ad6117e9c3160df48164d3434e",
+        "assetCount": 10916,
+        "stagingAssetCount": 2,
+        "scope": "Recorded inventory only; not complete release-asset or release-size qualification"
+      }
+    ]
+  },
+  "followup": {
+    "revision": "bf48fd5c94487b862633de4cb88df6d439beb07e",
+    "tree": "3b7349e0d948b273a78dd5184639fab4c1a9d320",
+    "subject": "SF-A05-T10.1: isolate hosted reference validation worker",
+    "status": "Static child split integrated after this measured revision; not retested in these records"
+  },
+  "limitations": [
+    "Original source identities and source paths are preserved, including the stale pre-build identity.",
+    "A clean Git tree and stable build-identity flag do not prove all tracked assets were materialized in this sparse checkout.",
+    "The recorded completed asset inventory includes staging paths and cannot support a release-size or asset-completeness claim.",
+    "Exact historical sparse-checkout patterns are not present in these supplied journals.",
+    "No later actual-main merge, static retest, complete-asset build or release qualification is covered.",
+    "Focused 48-test evidence already exists in the parent archive; this checkpoint does not duplicate or add its count.",
+    "Archival work only; no tests, builds, benchmarks, generators or source edits were performed."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "verifiedAt": "2026-10-04T20:02:51.130541+00:00",
+  "historicalReference": "e5191e722647d6a37f034499c0e880765fed4dad",
+  "historicalSource": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+  "protectedBranch": "codex/a05-profiler-reference-historical-312",
+  "archivedManifest": "/workspace/scratch/42f7738360b9/a05-performance/docs/a05-evidence/priority-312cd9242/profiler-reference.json",
+  "manifestSha256": "ebad86db5319bf9b078569a3074301d2352dbdf223ec2f296a1470c65a88db40",
+  "patchSha256": "53d3893d617b68ec1674fff69634d758cd2727246ae26541bd20d398a4236b8e",
+  "materializedBlobsVerified": 4553,
+  "cleanWorktree": true,
+  "ignoredEntries": [
+    "node_modules/@sharpforge"
+  ],
+  "ignoredDependencyLink": "/tmp/a05-qualification-312cd9242a492ce6f03e7e034a51cc17669a7edf/node_modules/@sharpforge",
+  "directory": "/tmp/a05-profiler-reference-312cd9242a492ce6f03e7e034a51cc17669a7edf",
+  "retirement": "removed only verified reproducible checkout; protected commit and archived proof retained",
+  "removedAt": "2026-10-04T20:02:51.210044+00:00"
+}

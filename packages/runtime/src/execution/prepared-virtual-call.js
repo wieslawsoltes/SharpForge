@@ -1,3 +1,4 @@
+import {supportedDelegateCall} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {callDescriptor, selectedCallOwner} from './generic-calls.js';
@@ -16,6 +17,8 @@ function build(vm, caller, instruction) {
   if (!method || !(method.flags & 0x40) || method.flags & 0x10 || signature.isStatic || signature.callingConvention ||
       signature.explicitThis || signature.sentinel != null || signature.genericArity || descriptor.methodArguments?.length ||
       descriptor.ownerInstance || descriptor.genericIdentity) return null;
+  // Delegate Invoke is a runtime contract, not a verified IL override or a prepared managed frame.
+  if (supportedDelegateCall(vm.inspector, descriptor)) return null;
   const owner = vm.typeSystem.table(method.ownerToken);
   if (owner.flags.valueType || owner.flags.interface || owner.genericArity || owner.containsGenericParameters) return null;
   return {descriptor, count: signature.parameters.length + 1, targets: new WeakMap()};

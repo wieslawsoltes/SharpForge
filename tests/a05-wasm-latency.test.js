@@ -1,11 +1,26 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {mkdtempSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import {wasmLatencyFixtures} from '../bench/vm/wasm-latency-fixtures.js';
 import {measureWasmLatency} from '../bench/vm/wasm-latency-measure.js';
-import {parseWasmLatencyOptions} from '../bench/vm/wasm-latency.js';
+import {parseWasmLatencyOptions, runWasmLatencyReport} from '../bench/vm/wasm-latency.js';
 
 const options = parseWasmLatencyOptions(['--runner', 'wasm-latency-test', '--samples', '20', '--warmup', '1',
   '--native-bits', '64', '--timeout-seconds', '60']);
+
+test('the Wasm report entry point refuses to overwrite retained evidence before compiling', async t => {
+  const directory = mkdtempSync(join(tmpdir(), 'sharpforge-wasm-latency-'));
+  const out = join(directory, 'existing.json'), retained = '{"status":"retained"}\n';
+  t.mock.method(WebAssembly, 'instantiate', () => assert.fail('Existing evidence must be rejected before compilation'));
+  try {
+    writeFileSync(out, retained);
+    await assert.rejects(runWasmLatencyReport({...options, out}),
+      {name: 'Error', message: 'Refusing to overwrite Wasm latency evidence'});
+    assert.equal(readFileSync(out, 'utf8'), retained);
+  } finally { rmSync(directory, {recursive: true, force: true}); }
+});
 
 for (const fixture of wasmLatencyFixtures(32)) {
   test(`${fixture.id}: repeated cold preparation and warm calls execute real Wasm with exact scoped counters`, async () => {

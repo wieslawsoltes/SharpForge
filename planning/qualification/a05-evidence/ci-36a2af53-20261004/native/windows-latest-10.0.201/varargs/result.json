@@ -1,0 +1,30 @@
+{
+  "id": "varargs",
+  "status": "passed",
+  "command": {
+    "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05-source-varargs",
+      "--managed-varargs",
+      "--framework",
+      "net10.0",
+      "--output",
+      "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\varargs\\evidence"
+    ],
+    "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "varargs\\evidence",
+  "report": "varargs\\result.json",
+  "startedAt": "2026-10-04T20:13:39.057Z",
+  "durationMs": 3309.870299999995,
+  "exitCode": 0,
+  "signal": null,
+  "outcomeReport": "varargs\\evidence\\qualification.json",
+  "stdout": "varargs\\stdout.log",
+  "stderr": "varargs\\stderr.log",
+  "finishedAt": "2026-10-04T20:13:42.369Z"
+}

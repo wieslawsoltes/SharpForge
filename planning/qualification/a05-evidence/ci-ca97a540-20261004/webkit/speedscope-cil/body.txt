@@ -1,0 +1,5 @@
+🕰Time Order⬅️Left Heavy🥪SandwichA05 browser cil⤴️Export⤵️Import🎨System❓Help
+Total	Self	Symbol Name
+16 (62%)	16 (62%)	Program::A05BrowserTwice
+24 (92%)	8 (31%)	Program::Main
+26 (100%)	2 (7.7%)	SharpForge.<>Program::<startup>

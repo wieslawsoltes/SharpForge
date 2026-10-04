@@ -1,0 +1,1493 @@
+{
+  "format": "SharpForge.A05ScreenshotOriginProposals/1",
+  "status": "catalog-declarations-pending-maintainer-review",
+  "policy": "planning/qualification/supply/licenses.json",
+  "noticeStatus": "retained-with-explicit-review-status",
+  "classificationScope": "MIT UI/repository screenshots; recorded browser evidence, not redistributed Speedscope application or font binaries. Source Code Pro OFL text explicitly exempts documents created using the font. No asset-author or release sign-off is asserted.",
+  "files": [
+    {
+      "path": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/csp-denied-fallback/screenshot.png",
+      "sha256": "becd6e165634ac5438292ec600b7cd557f113780568688303a8f63f357ae119a",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/csp-denied-fallback/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/wieslawsoltes/SharpForge/blob/312cd9242a492ce6f03e7e034a51cc17669a7edf/tests/fixtures/a05-browser/server.py"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/report.json",
+        "reportSHA256": "a3002ebf4fd8d99b720f778eef599d5fd8ff8957288a6dbf773e3968bab8ffab",
+        "session": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/csp-denied-fallback/session.json",
+        "sessionSHA256": "0964cd094fe275a774cc2f335c00fff43316d5076e3fb30c9768484951e90f99",
+        "sourceRevision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "case": "csp-denied-fallback",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": false,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "bfb04bcf22ab5bcb96a71aaf2f911f5052184efe",
+        "originalPath": "docs/a05-evidence/ci-312cd924-20261004/browser-chromium/csp-denied-fallback/screenshot.png"
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-cil/speedscope.png",
+      "sha256": "c6b8dc92b067983d7f355b85be7727957aac7f257379c1cd4479eca6fab9d7ef",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-cil/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/report.json",
+        "reportSHA256": "a3002ebf4fd8d99b720f778eef599d5fd8ff8957288a6dbf773e3968bab8ffab",
+        "session": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-cil/session.json",
+        "sessionSHA256": "faf10dfb1f54aa575ca356a497e51853c47f628218eb57f0e28d01260b75a1a5",
+        "sourceRevision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "case": "speedscope-cil",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "24aae7bfbe9184a323df88fa2783a279893e9178",
+        "originalPath": "docs/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-cil/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-reload/speedscope.png",
+      "sha256": "5cdbc274cc05570adb3d894210a99dd2fdbe01058aa4a20f392bd28e119539a1",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-reload/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/report.json",
+        "reportSHA256": "a3002ebf4fd8d99b720f778eef599d5fd8ff8957288a6dbf773e3968bab8ffab",
+        "session": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-reload/session.json",
+        "sessionSHA256": "b4085275c9bad46c426850ba9db34432f4693454d11aae4a4341dfec3fb58fed",
+        "sourceRevision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "case": "speedscope-reload",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "0f4d75c0f15a22dff9b531b70530f29a50e84a09",
+        "originalPath": "docs/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-reload/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-source/speedscope.png",
+      "sha256": "e47b4b3432f8a5e53bf3f67f6563ce410b41e2b3a1fd0f0bc33db08988fd7667",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-source/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/report.json",
+        "reportSHA256": "a3002ebf4fd8d99b720f778eef599d5fd8ff8957288a6dbf773e3968bab8ffab",
+        "session": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-source/session.json",
+        "sessionSHA256": "cfb5963676c8cf26fabf258d49b1fc5c63e2d285d2f9654a6c17ae6c29706592",
+        "sourceRevision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "case": "speedscope-source",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "11d936c2463f0840d3a57c2cdb3de10093f3b415",
+        "originalPath": "docs/a05-evidence/ci-312cd924-20261004/browser-chromium/speedscope-source/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/csp-denied-fallback/screenshot.png",
+      "sha256": "7a1b8d3f02b1bbfd89dd249d1bee607fb281d6e81b463d3a5a934c8337bf677f",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/csp-denied-fallback/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/wieslawsoltes/SharpForge/blob/312cd9242a492ce6f03e7e034a51cc17669a7edf/tests/fixtures/a05-browser/server.py"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/report.json",
+        "reportSHA256": "39f1a9b2120e6a4cd75f36f05a7b74508ed63969f53122a4a67891cd44166bc3",
+        "session": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/csp-denied-fallback/session.json",
+        "sessionSHA256": "8916976ea6029c8f130b76b5f3604e02569b14e38c3c044623ffa0f5bed037d7",
+        "sourceRevision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "case": "csp-denied-fallback",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": false,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "d846a46f34a32844679ac92125de599df204bce7",
+        "originalPath": "docs/a05-evidence/ci-312cd924-20261004/browser-firefox/csp-denied-fallback/screenshot.png"
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-cil/speedscope.png",
+      "sha256": "fc1a8b07cce027fda9c5cdb33470a18fe48cd3ee621d1b8ef266e32f9603b270",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-cil/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/report.json",
+        "reportSHA256": "39f1a9b2120e6a4cd75f36f05a7b74508ed63969f53122a4a67891cd44166bc3",
+        "session": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-cil/session.json",
+        "sessionSHA256": "d11702d57ce11bdf2e4f60bf7bb351a3c8ce053cb088579d8c2b2f09e6206970",
+        "sourceRevision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "case": "speedscope-cil",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "da1df59ae92609388156eca767fd092a70a59120",
+        "originalPath": "docs/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-cil/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-reload/speedscope.png",
+      "sha256": "a938a3e71ec894ab440bc01e85d5d89175381633ecc24ada0c7d3a736ea1f6bf",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-reload/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/report.json",
+        "reportSHA256": "39f1a9b2120e6a4cd75f36f05a7b74508ed63969f53122a4a67891cd44166bc3",
+        "session": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-reload/session.json",
+        "sessionSHA256": "5915d64b98b6bb5b823bd62d88c4e528cfaa8e9daf9984f01a6dfa11c31dec0d",
+        "sourceRevision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "case": "speedscope-reload",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "14e4cb1e84363c8706bb977aa2684a63115e6984",
+        "originalPath": "docs/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-reload/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-source/speedscope.png",
+      "sha256": "1a804b1ac4ea9933daf264194a33fdb1997b823063648d4eed311db5433978a1",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-source/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/report.json",
+        "reportSHA256": "39f1a9b2120e6a4cd75f36f05a7b74508ed63969f53122a4a67891cd44166bc3",
+        "session": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-source/session.json",
+        "sessionSHA256": "51317633f97bcc6f8b9ad4d7b8e35e40890258af219db1442b2c0bb7964d652d",
+        "sourceRevision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "case": "speedscope-source",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "41613414a32db847130fddfa3c13c9ab73b00e21",
+        "originalPath": "docs/a05-evidence/ci-312cd924-20261004/browser-firefox/speedscope-source/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-cil/speedscope.png",
+      "sha256": "bec1112b698b88dfa6a334cfd6ae2683c5f5a54b3987e053384709e88ca4a0f4",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-cil/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/report.json",
+        "reportSHA256": "321291bebe1279032ffee007c106de01cf86926bf20a1ea63c244e439680ae17",
+        "session": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-cil/session.json",
+        "sessionSHA256": "ab8951f50c78a6ff7529b4626fc7a46e3a020faa037b640e33b530d6499db0d9",
+        "sourceRevision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "case": "speedscope-cil",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "11827ccbc609daa8ce3ff57bea8745067b1d2830",
+        "originalPath": "docs/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-cil/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-reload/speedscope.png",
+      "sha256": "38488766417202e49fd2952e86da456e88d2d67f0d3e8eb4249fdce82ddbf971",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-reload/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/report.json",
+        "reportSHA256": "321291bebe1279032ffee007c106de01cf86926bf20a1ea63c244e439680ae17",
+        "session": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-reload/session.json",
+        "sessionSHA256": "fb12c7e25428ade32193135a3b67dda8de3c26681feeb17d4f4d5b73a9d43afd",
+        "sourceRevision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "case": "speedscope-reload",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "98ffa72066a9626ff876c77d54adc95dea110830",
+        "originalPath": "docs/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-reload/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-source/speedscope.png",
+      "sha256": "a1de1c1ae06bbd93aab65ebc4a482f429620fc11049a9110fae8ebb9abf82e4d",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-source/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/report.json",
+        "reportSHA256": "321291bebe1279032ffee007c106de01cf86926bf20a1ea63c244e439680ae17",
+        "session": "planning/qualification/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-source/session.json",
+        "sessionSHA256": "ed588a17508a8e2763ba03e81e733ba88bc344f6a3b87952336929879f959d00",
+        "sourceRevision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "case": "speedscope-source",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "849edfa999853b5b565072b00169789158e4c638",
+        "originalPath": "docs/a05-evidence/ci-312cd924-20261004/browser-webkit/speedscope-source/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/csp-denied-fallback/screenshot.png",
+      "sha256": "becd6e165634ac5438292ec600b7cd557f113780568688303a8f63f357ae119a",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/csp-denied-fallback/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/wieslawsoltes/SharpForge/blob/36a2af53287a563fd47d3a33b8e6e6382a726d35/tests/fixtures/a05-browser/server.py"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/report.json",
+        "reportSHA256": "f470d37d6b26859d4569433179dceb21a3cc937b606003426323487b512c2694",
+        "session": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/csp-denied-fallback/session.json",
+        "sessionSHA256": "33de7c4ab715dc70beaaeb744044aef1a73d1ec272d779cfe54ad29b7051a1fc",
+        "sourceRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+        "case": "csp-denied-fallback",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": false,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "bfb04bcf22ab5bcb96a71aaf2f911f5052184efe",
+        "originalPath": "docs/a05-evidence/ci-36a2af53-20261004/chromium/csp-denied-fallback/screenshot.png"
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-cil/speedscope.png",
+      "sha256": "c6b8dc92b067983d7f355b85be7727957aac7f257379c1cd4479eca6fab9d7ef",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-cil/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/report.json",
+        "reportSHA256": "f470d37d6b26859d4569433179dceb21a3cc937b606003426323487b512c2694",
+        "session": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-cil/session.json",
+        "sessionSHA256": "1c3a1dfe0f258dc4e84ef258c6aeb8deb99f1bdc14a9364782e929c81b2da1cb",
+        "sourceRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+        "case": "speedscope-cil",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "24aae7bfbe9184a323df88fa2783a279893e9178",
+        "originalPath": "docs/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-cil/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-reload/speedscope.png",
+      "sha256": "5cdbc274cc05570adb3d894210a99dd2fdbe01058aa4a20f392bd28e119539a1",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-reload/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/report.json",
+        "reportSHA256": "f470d37d6b26859d4569433179dceb21a3cc937b606003426323487b512c2694",
+        "session": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-reload/session.json",
+        "sessionSHA256": "0b40278cf00fb566064378d834b7c93ad1e046463c8b4801521b0c683d21f9a9",
+        "sourceRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+        "case": "speedscope-reload",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "0f4d75c0f15a22dff9b531b70530f29a50e84a09",
+        "originalPath": "docs/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-reload/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-source/speedscope.png",
+      "sha256": "930ecf34bb5c58e5a2d8e7c9727e9125f42242a434cd045a0d9f91f3825dd65c",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-source/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/report.json",
+        "reportSHA256": "f470d37d6b26859d4569433179dceb21a3cc937b606003426323487b512c2694",
+        "session": "planning/qualification/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-source/session.json",
+        "sessionSHA256": "60c91e368666a36ebac3e89928f0dff61c9bed09f9d11d18c116310eb037d8a2",
+        "sourceRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+        "case": "speedscope-source",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "08248ab2283997d8af6fa67cc60725c8b148e3b1",
+        "originalPath": "docs/a05-evidence/ci-36a2af53-20261004/chromium/speedscope-source/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/csp-denied-fallback/screenshot.png",
+      "sha256": "7a1b8d3f02b1bbfd89dd249d1bee607fb281d6e81b463d3a5a934c8337bf677f",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/csp-denied-fallback/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/wieslawsoltes/SharpForge/blob/36a2af53287a563fd47d3a33b8e6e6382a726d35/tests/fixtures/a05-browser/server.py"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/report.json",
+        "reportSHA256": "be4567f06b6f98b5a5ab8228efa2965a7adb7f14fa6220e06fb51bbb5fc02156",
+        "session": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/csp-denied-fallback/session.json",
+        "sessionSHA256": "2c70f92e63a91b11930c6eca4efe844adaa652eeabdc80883751eb84fb8ca94f",
+        "sourceRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+        "case": "csp-denied-fallback",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": false,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "d846a46f34a32844679ac92125de599df204bce7",
+        "originalPath": "docs/a05-evidence/ci-36a2af53-20261004/firefox/csp-denied-fallback/screenshot.png"
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-cil/speedscope.png",
+      "sha256": "fc1a8b07cce027fda9c5cdb33470a18fe48cd3ee621d1b8ef266e32f9603b270",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-cil/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/report.json",
+        "reportSHA256": "be4567f06b6f98b5a5ab8228efa2965a7adb7f14fa6220e06fb51bbb5fc02156",
+        "session": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-cil/session.json",
+        "sessionSHA256": "4016374b2ad73a7ab2d6734548b9cd6257bfe5f421e60e6ee0087ffd9a81258d",
+        "sourceRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+        "case": "speedscope-cil",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "da1df59ae92609388156eca767fd092a70a59120",
+        "originalPath": "docs/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-cil/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-reload/speedscope.png",
+      "sha256": "a938a3e71ec894ab440bc01e85d5d89175381633ecc24ada0c7d3a736ea1f6bf",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-reload/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/report.json",
+        "reportSHA256": "be4567f06b6f98b5a5ab8228efa2965a7adb7f14fa6220e06fb51bbb5fc02156",
+        "session": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-reload/session.json",
+        "sessionSHA256": "a6f02431818120b238321302d60a49b76728af5e9e04113dee6c52eb24270922",
+        "sourceRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+        "case": "speedscope-reload",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "14e4cb1e84363c8706bb977aa2684a63115e6984",
+        "originalPath": "docs/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-reload/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-source/speedscope.png",
+      "sha256": "1a804b1ac4ea9933daf264194a33fdb1997b823063648d4eed311db5433978a1",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-source/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/report.json",
+        "reportSHA256": "be4567f06b6f98b5a5ab8228efa2965a7adb7f14fa6220e06fb51bbb5fc02156",
+        "session": "planning/qualification/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-source/session.json",
+        "sessionSHA256": "8c0209aa1a86818ef00f79fc463dea357e184a12a98ebe192a0cb5ac7faa8429",
+        "sourceRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+        "case": "speedscope-source",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "41613414a32db847130fddfa3c13c9ab73b00e21",
+        "originalPath": "docs/a05-evidence/ci-36a2af53-20261004/firefox/speedscope-source/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-cil/speedscope.png",
+      "sha256": "bec1112b698b88dfa6a334cfd6ae2683c5f5a54b3987e053384709e88ca4a0f4",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-cil/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/report.json",
+        "reportSHA256": "5691f245c63b0be8a24384f5bc75ded5f859db3460d1e631e1fa52460a667707",
+        "session": "planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-cil/session.json",
+        "sessionSHA256": "5ad1ad930c7c3237f879001f07c98f688936fb1e8c191ee90c2603ff7681c3ac",
+        "sourceRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+        "case": "speedscope-cil",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "11827ccbc609daa8ce3ff57bea8745067b1d2830",
+        "originalPath": "docs/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-cil/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-reload/speedscope.png",
+      "sha256": "38488766417202e49fd2952e86da456e88d2d67f0d3e8eb4249fdce82ddbf971",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-reload/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/report.json",
+        "reportSHA256": "5691f245c63b0be8a24384f5bc75ded5f859db3460d1e631e1fa52460a667707",
+        "session": "planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-reload/session.json",
+        "sessionSHA256": "cffbbf4cb2dcce51065b7320d96313c3110e6db40274cea8d2d6f0d2d5c20b59",
+        "sourceRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+        "case": "speedscope-reload",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "98ffa72066a9626ff876c77d54adc95dea110830",
+        "originalPath": "docs/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-reload/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-source/speedscope.png",
+      "sha256": "a1de1c1ae06bbd93aab65ebc4a482f429620fc11049a9110fae8ebb9abf82e4d",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-source/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/report.json",
+        "reportSHA256": "5691f245c63b0be8a24384f5bc75ded5f859db3460d1e631e1fa52460a667707",
+        "session": "planning/qualification/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-source/session.json",
+        "sessionSHA256": "955f0584baa8895f70adb655ec7441b04466bcb6c2669d64eaf56796dc38f7b3",
+        "sourceRevision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+        "case": "speedscope-source",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "849edfa999853b5b565072b00169789158e4c638",
+        "originalPath": "docs/a05-evidence/ci-36a2af53-20261004/webkit/speedscope-source/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/csp-denied-fallback/screenshot.png",
+      "sha256": "becd6e165634ac5438292ec600b7cd557f113780568688303a8f63f357ae119a",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/csp-denied-fallback/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/wieslawsoltes/SharpForge/blob/ca97a540252605fec532768e68220495a858c02f/tests/fixtures/a05-browser/server.py"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/report.json",
+        "reportSHA256": "fefb8001a8ef3fffa2b77af389c210370553c18ea718e656fd47fa1ff879245b",
+        "session": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/csp-denied-fallback/session.json",
+        "sessionSHA256": "63b78c93101bdd68c29dd9d34d4651fadf9e014269fc7a62a8ea14ae34fc87e9",
+        "sourceRevision": "ca97a540252605fec532768e68220495a858c02f",
+        "case": "csp-denied-fallback",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": false,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "bfb04bcf22ab5bcb96a71aaf2f911f5052184efe",
+        "originalPath": "docs/a05-evidence/ci-ca97a540-20261004/chromium/csp-denied-fallback/screenshot.png"
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-cil/speedscope.png",
+      "sha256": "0296e6d9383ee17310e2d2f23c1a53aaaaee898ac4648fc40a6b69fdd4624b66",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-cil/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/report.json",
+        "reportSHA256": "fefb8001a8ef3fffa2b77af389c210370553c18ea718e656fd47fa1ff879245b",
+        "session": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-cil/session.json",
+        "sessionSHA256": "6d38aa635aabdb8f382e5b77ee761eed95af8e4065565d07ba284d270e4ae20d",
+        "sourceRevision": "ca97a540252605fec532768e68220495a858c02f",
+        "case": "speedscope-cil",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "b8d59bc6b907d97acf8f5de3fd9728d9d13385e5",
+        "originalPath": "docs/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-cil/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-reload/speedscope.png",
+      "sha256": "a34d8e5a23266c5ff35e2cb6de007eb56c3ef681ce7c760c7d9589200287faab",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-reload/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/report.json",
+        "reportSHA256": "fefb8001a8ef3fffa2b77af389c210370553c18ea718e656fd47fa1ff879245b",
+        "session": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-reload/session.json",
+        "sessionSHA256": "3ee8756a57ea24b463e840321f5fb9e8c868ca6f086bfcb481f20a397de0c67d",
+        "sourceRevision": "ca97a540252605fec532768e68220495a858c02f",
+        "case": "speedscope-reload",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "e606b4afc03a1a7deb69b0cac6d85e14efcbc40d",
+        "originalPath": "docs/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-reload/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-source/speedscope.png",
+      "sha256": "91f128c8b8d16584a8ac5bdf08fcc6a7c21e10d4dc6204b0edd2cafff74e3ac7",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-source/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/report.json",
+        "reportSHA256": "fefb8001a8ef3fffa2b77af389c210370553c18ea718e656fd47fa1ff879245b",
+        "session": "planning/qualification/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-source/session.json",
+        "sessionSHA256": "7b2403bf19900f00fd260fd2e63a5e2bf67ca46ec95f616932cfac709dfc8c9b",
+        "sourceRevision": "ca97a540252605fec532768e68220495a858c02f",
+        "case": "speedscope-source",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "18c75271d0a370ac9fb2162b871a76453dd87a60",
+        "originalPath": "docs/a05-evidence/ci-ca97a540-20261004/chromium/speedscope-source/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/csp-denied-fallback/screenshot.png",
+      "sha256": "7a1b8d3f02b1bbfd89dd249d1bee607fb281d6e81b463d3a5a934c8337bf677f",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/csp-denied-fallback/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/wieslawsoltes/SharpForge/blob/ca97a540252605fec532768e68220495a858c02f/tests/fixtures/a05-browser/server.py"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/report.json",
+        "reportSHA256": "0e8cef3ade5648e007505899413e43bce9ee25529fdfd775126f94716cb532de",
+        "session": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/csp-denied-fallback/session.json",
+        "sessionSHA256": "adbfeeb910044a0d6e7ac31de6766fdd0b28734b3c71ff93500ec8e53555f0ed",
+        "sourceRevision": "ca97a540252605fec532768e68220495a858c02f",
+        "case": "csp-denied-fallback",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": false,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "d846a46f34a32844679ac92125de599df204bce7",
+        "originalPath": "docs/a05-evidence/ci-ca97a540-20261004/firefox/csp-denied-fallback/screenshot.png"
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-cil/speedscope.png",
+      "sha256": "fc1a8b07cce027fda9c5cdb33470a18fe48cd3ee621d1b8ef266e32f9603b270",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-cil/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/report.json",
+        "reportSHA256": "0e8cef3ade5648e007505899413e43bce9ee25529fdfd775126f94716cb532de",
+        "session": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-cil/session.json",
+        "sessionSHA256": "e252eabc63492554e8f73913ea42cca7b6ebb32904d15d3a9c01d69b01eb839b",
+        "sourceRevision": "ca97a540252605fec532768e68220495a858c02f",
+        "case": "speedscope-cil",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "da1df59ae92609388156eca767fd092a70a59120",
+        "originalPath": "docs/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-cil/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-reload/speedscope.png",
+      "sha256": "a938a3e71ec894ab440bc01e85d5d89175381633ecc24ada0c7d3a736ea1f6bf",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-reload/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/report.json",
+        "reportSHA256": "0e8cef3ade5648e007505899413e43bce9ee25529fdfd775126f94716cb532de",
+        "session": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-reload/session.json",
+        "sessionSHA256": "206df5189cb85ff71fb47c8899592245d00f3988709ace64ca4200b6b1172358",
+        "sourceRevision": "ca97a540252605fec532768e68220495a858c02f",
+        "case": "speedscope-reload",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "14e4cb1e84363c8706bb977aa2684a63115e6984",
+        "originalPath": "docs/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-reload/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-source/speedscope.png",
+      "sha256": "1a804b1ac4ea9933daf264194a33fdb1997b823063648d4eed311db5433978a1",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-source/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/report.json",
+        "reportSHA256": "0e8cef3ade5648e007505899413e43bce9ee25529fdfd775126f94716cb532de",
+        "session": "planning/qualification/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-source/session.json",
+        "sessionSHA256": "3625104ef2dcfa0707c3339795a7923e1a6050358fbb9d1607604b76c7e1c556",
+        "sourceRevision": "ca97a540252605fec532768e68220495a858c02f",
+        "case": "speedscope-source",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "41613414a32db847130fddfa3c13c9ab73b00e21",
+        "originalPath": "docs/a05-evidence/ci-ca97a540-20261004/firefox/speedscope-source/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-cil/speedscope.png",
+      "sha256": "bec1112b698b88dfa6a334cfd6ae2683c5f5a54b3987e053384709e88ca4a0f4",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-cil/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/report.json",
+        "reportSHA256": "dc8580a9164aa9ae20b82514b09cbaaf7842f22e5cdce9d3d0625604986923e9",
+        "session": "planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-cil/session.json",
+        "sessionSHA256": "51ca990b1885cce1dc68fe1a0a4b5e08426bae2f9d8daa7635f00af3117cd630",
+        "sourceRevision": "ca97a540252605fec532768e68220495a858c02f",
+        "case": "speedscope-cil",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "11827ccbc609daa8ce3ff57bea8745067b1d2830",
+        "originalPath": "docs/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-cil/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-reload/speedscope.png",
+      "sha256": "38488766417202e49fd2952e86da456e88d2d67f0d3e8eb4249fdce82ddbf971",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-reload/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/report.json",
+        "reportSHA256": "dc8580a9164aa9ae20b82514b09cbaaf7842f22e5cdce9d3d0625604986923e9",
+        "session": "planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-reload/session.json",
+        "sessionSHA256": "cd1f8ec9b8d9e0176e54b4ca3430e3c1c500d53dcc57a4cd0d4ddd5c24e4b9e5",
+        "sourceRevision": "ca97a540252605fec532768e68220495a858c02f",
+        "case": "speedscope-reload",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "98ffa72066a9626ff876c77d54adc95dea110830",
+        "originalPath": "docs/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-reload/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-source/speedscope.png",
+      "sha256": "a1de1c1ae06bbd93aab65ebc4a482f429620fc11049a9110fae8ebb9abf82e4d",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-source/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/report.json",
+        "reportSHA256": "dc8580a9164aa9ae20b82514b09cbaaf7842f22e5cdce9d3d0625604986923e9",
+        "session": "planning/qualification/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-source/session.json",
+        "sessionSHA256": "03a9662440c9462b9c6fbac9cf54466349ec72db613f488be3f122ce6ad23704",
+        "sourceRevision": "ca97a540252605fec532768e68220495a858c02f",
+        "case": "speedscope-source",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "849edfa999853b5b565072b00169789158e4c638",
+        "originalPath": "docs/a05-evidence/ci-ca97a540-20261004/webkit/speedscope-source/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/csp-denied-fallback/screenshot.png",
+      "sha256": "becd6e165634ac5438292ec600b7cd557f113780568688303a8f63f357ae119a",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/csp-denied-fallback/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/wieslawsoltes/SharpForge/blob/e09324d3e83d742d47eb39b8f0482c38dc0f8756/tests/fixtures/a05-browser/server.py"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/report.json",
+        "reportSHA256": "89cec7b419c8bdc6f3157017dbb512d5c04ca69f27b2ccece462bdad4aac498d",
+        "session": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/csp-denied-fallback/session.json",
+        "sessionSHA256": "c7dbb8f1e89d7b4bd0d19746053637610a23ee0820edac6c1aaf08b5dcf1ba3c",
+        "sourceRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+        "case": "csp-denied-fallback",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": false,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "bfb04bcf22ab5bcb96a71aaf2f911f5052184efe",
+        "originalPath": "docs/a05-evidence/ci-e09324d3-20261004/browser-chromium/csp-denied-fallback/screenshot.png"
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-cil/speedscope.png",
+      "sha256": "c6b8dc92b067983d7f355b85be7727957aac7f257379c1cd4479eca6fab9d7ef",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-cil/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/report.json",
+        "reportSHA256": "89cec7b419c8bdc6f3157017dbb512d5c04ca69f27b2ccece462bdad4aac498d",
+        "session": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-cil/session.json",
+        "sessionSHA256": "00bba187e51f18e5cb44400784304bd9214280066ebccbca551e88b8a306cad0",
+        "sourceRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+        "case": "speedscope-cil",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "24aae7bfbe9184a323df88fa2783a279893e9178",
+        "originalPath": "docs/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-cil/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-reload/speedscope.png",
+      "sha256": "5cdbc274cc05570adb3d894210a99dd2fdbe01058aa4a20f392bd28e119539a1",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-reload/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/report.json",
+        "reportSHA256": "89cec7b419c8bdc6f3157017dbb512d5c04ca69f27b2ccece462bdad4aac498d",
+        "session": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-reload/session.json",
+        "sessionSHA256": "b1f67cf9467d5a2ba2ba24d9d981b14575ef659b20fe4b8d89e89fe8e4524d21",
+        "sourceRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+        "case": "speedscope-reload",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "0f4d75c0f15a22dff9b531b70530f29a50e84a09",
+        "originalPath": "docs/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-reload/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-source/speedscope.png",
+      "sha256": "5de5b60a32b1422e09aa851a979a2928710962533ad88cac4e5ef1c5cff94d18",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-source/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/report.json",
+        "reportSHA256": "89cec7b419c8bdc6f3157017dbb512d5c04ca69f27b2ccece462bdad4aac498d",
+        "session": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-source/session.json",
+        "sessionSHA256": "386bafd61299630b3f1115442edd285afe8d1ef6d274944484e47f5a6d2d0445",
+        "sourceRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+        "case": "speedscope-source",
+        "engine": "chromium",
+        "browser": "153.0.8010.12",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "9553f6796ab3408cc414c6fbc0326bfae24959e3",
+        "originalPath": "docs/a05-evidence/ci-e09324d3-20261004/browser-chromium/speedscope-source/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/csp-denied-fallback/screenshot.png",
+      "sha256": "7a1b8d3f02b1bbfd89dd249d1bee607fb281d6e81b463d3a5a934c8337bf677f",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/csp-denied-fallback/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/wieslawsoltes/SharpForge/blob/e09324d3e83d742d47eb39b8f0482c38dc0f8756/tests/fixtures/a05-browser/server.py"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/report.json",
+        "reportSHA256": "95db994768423bcf966f910d4a9919625a5adc6675602f742b9811ac1591c48d",
+        "session": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/csp-denied-fallback/session.json",
+        "sessionSHA256": "16d1c24721c2a2c3843eafd59c5e5a419bf12b03bebd71782d24130327f07f52",
+        "sourceRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+        "case": "csp-denied-fallback",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": false,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "d846a46f34a32844679ac92125de599df204bce7",
+        "originalPath": "docs/a05-evidence/ci-e09324d3-20261004/browser-firefox/csp-denied-fallback/screenshot.png"
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-cil/screenshot.png",
+      "sha256": "3e7a009ecd074edb39a3ede345779ec5df27d8ea74e83521007b4444c9f65cf3",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-cil/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/report.json",
+        "reportSHA256": "95db994768423bcf966f910d4a9919625a5adc6675602f742b9811ac1591c48d",
+        "session": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-cil/session.json",
+        "sessionSHA256": "d45b1226655bc14f7159b01c0ca963b063cd08aaaf96d4f028d85cc2f098e1bd",
+        "sourceRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+        "case": "speedscope-cil",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": false,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "f77f6a24821b7c42fdfef1c4e1df4da272e2efa7",
+        "originalPath": "docs/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-cil/screenshot.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-reload/screenshot.png",
+      "sha256": "3e7a009ecd074edb39a3ede345779ec5df27d8ea74e83521007b4444c9f65cf3",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-reload/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/report.json",
+        "reportSHA256": "95db994768423bcf966f910d4a9919625a5adc6675602f742b9811ac1591c48d",
+        "session": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-reload/session.json",
+        "sessionSHA256": "90a6dbb4e78ded7eec4d413577674ca3ba0890c367bd17cdabd02e2b3087819d",
+        "sourceRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+        "case": "speedscope-reload",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": false,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "f77f6a24821b7c42fdfef1c4e1df4da272e2efa7",
+        "originalPath": "docs/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-reload/screenshot.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-source/screenshot.png",
+      "sha256": "3e7a009ecd074edb39a3ede345779ec5df27d8ea74e83521007b4444c9f65cf3",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-source/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/report.json",
+        "reportSHA256": "95db994768423bcf966f910d4a9919625a5adc6675602f742b9811ac1591c48d",
+        "session": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-source/session.json",
+        "sessionSHA256": "17378af0367d2c5d4d3a39ad06485bcc9b52e835330c5b8d3a079ae9116e5020",
+        "sourceRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+        "case": "speedscope-source",
+        "engine": "firefox",
+        "browser": "155.0",
+        "rawSessionPassed": false,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "f77f6a24821b7c42fdfef1c4e1df4da272e2efa7",
+        "originalPath": "docs/a05-evidence/ci-e09324d3-20261004/browser-firefox/speedscope-source/screenshot.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-cil/speedscope.png",
+      "sha256": "bec1112b698b88dfa6a334cfd6ae2683c5f5a54b3987e053384709e88ca4a0f4",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-cil/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/report.json",
+        "reportSHA256": "44073107027e95be2fe7a85e2104c83dada1d67a09820aea1bd1b01c1bcac445",
+        "session": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-cil/session.json",
+        "sessionSHA256": "7d9bc19c8147bf374433c5c8a813a906354c881c8cbc7cb9b5c81134bdde8077",
+        "sourceRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+        "case": "speedscope-cil",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "11827ccbc609daa8ce3ff57bea8745067b1d2830",
+        "originalPath": "docs/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-cil/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-reload/speedscope.png",
+      "sha256": "38488766417202e49fd2952e86da456e88d2d67f0d3e8eb4249fdce82ddbf971",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-reload/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/report.json",
+        "reportSHA256": "44073107027e95be2fe7a85e2104c83dada1d67a09820aea1bd1b01c1bcac445",
+        "session": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-reload/session.json",
+        "sessionSHA256": "5557ccc9d4c2659eec12a59a5abbc9c7b094101a1ed5e788650c8452372d3078",
+        "sourceRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+        "case": "speedscope-reload",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "98ffa72066a9626ff876c77d54adc95dea110830",
+        "originalPath": "docs/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-reload/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    },
+    {
+      "path": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-source/speedscope.png",
+      "sha256": "a1de1c1ae06bbd93aab65ebc4a482f429620fc11049a9110fae8ebb9abf82e4d",
+      "kind": "captured-browser-evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-source/speedscope.png",
+      "license": "MIT",
+      "licenseFile": "planning/qualification/a05-evidence-relocations/licenses/speedscope-MIT.txt",
+      "licenseSHA256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0",
+      "notice": "A05 browser qualification captures",
+      "sourceOrigins": [
+        "https://github.com/jlfwong/speedscope/tree/fc76932551754a442cd5c4f0afdba28032d14d8a"
+      ],
+      "captureEvidence": {
+        "report": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/report.json",
+        "reportSHA256": "44073107027e95be2fe7a85e2104c83dada1d67a09820aea1bd1b01c1bcac445",
+        "session": "planning/qualification/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-source/session.json",
+        "sessionSHA256": "82b4d318462efa5913606e077e55e3f8cc941e90c0052454709638f8a051f149",
+        "sourceRevision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+        "case": "speedscope-source",
+        "engine": "webkit",
+        "browser": "26.6",
+        "rawSessionPassed": true,
+        "scope": "Original capture, including failed observations; origin is not a qualification pass.",
+        "originalGitBlob": "849edfa999853b5b565072b00169789158e4c638",
+        "originalPath": "docs/a05-evidence/ci-e09324d3-20261004/browser-webkit/speedscope-source/speedscope.png"
+      },
+      "officialRelease": {
+        "version": "1.24.0",
+        "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+        "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+        "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+        "bytes": 218392
+      },
+      "reviewStatus": "proposed-maintainer-review"
+    }
+  ]
+}

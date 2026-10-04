@@ -1,0 +1,14 @@
+{
+  "recordedAtUtc": "2026-10-04T20:21:44.384004+00:00",
+  "head": "8666b64e104753d3edb066ddd1c1c629ea18d6cc",
+  "tree": "680c4d1383d30d8a2b09169e736d30eb43199996",
+  "status": "",
+  "filesChecked": 178,
+  "changedCapturedFiles": [],
+  "aliases": {
+    "syntax": "/workspace/scratch/1692a10afba9/p5-syntax-ci/packages/syntax",
+    "text": "/workspace/scratch/1692a10afba9/p5-syntax-ci/packages/text"
+  },
+  "baselineSha256": "816f4875798f97551fe42d3dcfa0488b277691f249d9fde3f696266f6838aeb2",
+  "availableBytes": 705114112
+}

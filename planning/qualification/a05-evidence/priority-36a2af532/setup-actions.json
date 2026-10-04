@@ -1,0 +1,18 @@
+{
+  "startedAt": "2026-10-04T19:53:56.790296+00:00",
+  "oldDirectory": "/tmp/a05-qualification-ca97a540252605fec532768e68220495a858c02f",
+  "newDirectory": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "tree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+  "previousSetupOnlyRevision": "ca97a540252605fec532768e68220495a858c02f",
+  "previousSetupWasNeverMeasured": true,
+  "historicalReferenceBranch": "codex/a05-profiler-reference-historical-312",
+  "historicalReferenceCommit": "e5191e722647d6a37f034499c0e880765fed4dad",
+  "historicalEvidenceArchiveCommit": "d1e4d807a88d0349f0151f8995d0b3c002675f2e",
+  "actions": [
+    "Detached existing sparse product onto reconciled public commit",
+    "Moved existing sparse product to revision-specific path",
+    "Verified or repaired own-package relative workspace symlinks"
+  ],
+  "completedAt": "2026-10-04T19:53:56.979924+00:00"
+}

@@ -1,3 +1,4 @@
+import {isAsyncMethodImplementation} from './async-state-machines.js';
 import {CilError} from './binary.js';
 import {decodeCoded, token} from './metadata.js';
 import {genericTypeParts} from './field-profile.js';
@@ -146,6 +147,8 @@ export class CilDispatchTable {
     const callContext = {ownerToken: type.token, genericIdentity: name, typeArguments: context.arguments};
     for (const implementation of this.implementations.get(type.token) ?? []) {
       const declaration = this.definition(implementation.declaration, callContext);
+      // Local declarations also serve source images; only external contracts require runtime assembly identity proof.
+      if (declaration.external) isAsyncMethodImplementation(this.inspector, name, implementation);
       const body = this.definition(implementation.body, callContext);
       if (!(declaration.flags & virtual) || declaration.flags & 0x10 || body.flags & 0x10 ||
           !(declaration.external ? table.instances.has(declaration.ownerInstance) : table.ancestors.has(declaration.ownerToken)) ||

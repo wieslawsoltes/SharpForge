@@ -17,6 +17,38 @@ concurrency:
   group: performance-${{ github.ref }}
   cancel-in-progress: false
 jobs:
+  syntax:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      SHARPFORGE_MAX_OLD_SPACE_MB: '2048'
+      SHARPFORGE_BENCH_HOST_CONTEXT: GitHub-hosted Ubuntu runner; host isolation not verified.
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.21.0'
+      - run: npm ci
+      - name: Syntax benchmark gate correctness
+        run: >-
+          node scripts/limited.js node --test --test-concurrency=1
+          tests/syntax-parse-qualification.test.js tests/syntax-parse-bench.test.js
+      - name: Compare all syntax cases with the retained baseline
+        run: >-
+          node scripts/limited.js node --expose-gc packages/syntax/bench/parse.bench.js
+          --check --output artifacts/results/performance/syntax/parse.json
+      - name: Require unmodified source
+        if: always()
+        run: node scripts/conformance/clean-checkout.js
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: performance-syntax-${{ github.run_id }}
+          path: artifacts/results/performance/syntax/
+          retention-days: 30
+          if-no-files-found: error
   paired:
     runs-on: ubuntu-24.04
     timeout-minutes: 40

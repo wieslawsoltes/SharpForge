@@ -1,0 +1,15 @@
+first
+second
+finally
+42
+1
+awaited-error
+failure-finally
+7
+yielded
+9
+3
+4
+iterator-finally
+3
+iterator-finally

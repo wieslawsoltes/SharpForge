@@ -1,0 +1,106 @@
+{
+  "format": "SharpForge.NativeNumericOracle/1",
+  "sdk": "10.0.201",
+  "runtime": ".NET SDK:\n Version:           10.0.201\n Commit:            4d3023de60\n Workload version:  10.0.200-manifests.63b36e85\n MSBuild version:   18.3.0-release-26153-122+4d3023de6\n\nRuntime Environment:\n OS Name:     ubuntu\n OS Version:  24.04\n OS Platform: Linux\n RID:         linux-x64\n Base Path:   /usr/share/dotnet/sdk/10.0.201/\n\n.NET workloads installed:\nThere are no installed workloads to display.\nConfigured to use workload sets when installing new manifests.\nNo workload sets are installed. Run \"dotnet workload restore\" to install a workload set.\n\nHost:\n  Version:      10.0.12\n  Architecture: x64\n  Commit:       95017c711e\n\n.NET SDKs installed:\n  8.0.131 [/usr/share/dotnet/sdk]\n  8.0.206 [/usr/share/dotnet/sdk]\n  8.0.319 [/usr/share/dotnet/sdk]\n  8.0.425 [/usr/share/dotnet/sdk]\n  9.0.121 [/usr/share/dotnet/sdk]\n  9.0.205 [/usr/share/dotnet/sdk]\n  9.0.318 [/usr/share/dotnet/sdk]\n  10.0.112 [/usr/share/dotnet/sdk]\n  10.0.201 [/usr/share/dotnet/sdk]\n  10.0.204 [/usr/share/dotnet/sdk]\n  10.0.303 [/usr/share/dotnet/sdk]\n  10.0.401 [/usr/share/dotnet/sdk]\n\n.NET runtimes installed:\n  Microsoft.AspNetCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.5 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.NETCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.5 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n\nOther architectures found:\n  None\n\nEnvironment variables:\n  DOTNET_CLI_TELEMETRY_OPTOUT              [1]\n  DOTNET_MULTILEVEL_LOOKUP                 [0]\n  DOTNET_NOLOGO                            [1]\n  DOTNET_ROOT                              [/usr/share/dotnet]\n  DOTNET_SKIP_FIRST_TIME_EXPERIENCE        [1]\n  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT    [1]\n  DOTNET_TARGET_FRAMEWORK                  [net10.0]\n\nglobal.json file:\n  /home/runner/work/SharpForge/SharpForge/global.json\n\nLearn more:\n  https://aka.ms/dotnet/info\n\nDownload .NET:\n  https://aka.ms/dotnet/download\n",
+  "node": "v22.23.3",
+  "platform": "linux",
+  "architecture": "x64",
+  "nativeIntBits": 64,
+  "globalization": "invariant",
+  "commit": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "conversionTargetEncodings": 13,
+  "concreteTargetsAcrossAbis": 15,
+  "unqualifiedNativeWidths": [
+    32
+  ],
+  "files": {
+    "int64.cs": {
+      "sha256": "6eadf18bcf4285086228f4e525edece53e2cbd419119441ff01c6f6d508cc1d7",
+      "bytes": 1912
+    },
+    "int64.txt.gz": {
+      "sha256": "af51fb240513995892d621236bbe230a60120a9dcb5c745cd0750d6334c36f1c",
+      "bytes": 10562855,
+      "pairs": 100000,
+      "operationsPerPair": 29,
+      "seed": "88172645463325252",
+      "languageVersion": "9.0"
+    },
+    "uint32-matrix.cs": {
+      "sha256": "e08b49ecd4a2af0a762c4061654ce0c1fc2e576c2f3b17251379a8a1c9c4e1dd",
+      "bytes": 1539
+    },
+    "uint32-matrix.txt": {
+      "sha256": "1ada8aafcdc6454fbbbf42bd067b82ca9cd80c8ba0b35137ad42e90c83c1bb5c",
+      "bytes": 4029,
+      "pairs": 25
+    },
+    "uint32.cs": {
+      "sha256": "102937e9cd7a73277015948f0c886845af7b02e43aa7660fd7b0c441342fceb9",
+      "bytes": 455
+    },
+    "uint32.txt": {
+      "sha256": "920d5f6aede2a503c959e97880edc850e47db09da5969014ca676dceeef9dd8f",
+      "bytes": 95,
+      "languageVersion": "9.0"
+    },
+    "native.cs": {
+      "sha256": "0715c0a2786e5c20d6dde563143d127c0974f2015361fd5c5086b5ef914fe9ec",
+      "bytes": 416
+    },
+    "native.txt": {
+      "sha256": "83ddf98c214d656e7611f29b7d1b71a7e507b23a686f414e128aa7a2fe29aef2",
+      "bytes": 60,
+      "languageVersion": "9.0"
+    },
+    "float.cs": {
+      "sha256": "08368642a5de7795c416d8268b9a11a00623271dd862248debcbd1bef9aee3cd",
+      "bytes": 828
+    },
+    "float.txt": {
+      "sha256": "b86f6d16684daf44a02b98e73172838cd331546ac1e796591254ef1b6e5907ea",
+      "bytes": 151,
+      "languageVersion": "9.0"
+    },
+    "decimal.cs": {
+      "sha256": "8ca6671628d355127d6ae12cdeb6f60c75b7f7cb6a173ca2833265d77a04e754",
+      "bytes": 436
+    },
+    "decimal.txt": {
+      "sha256": "c55e157d56aee6ef6881df1fde896953078dcb2aab09241ecf6fc8e5388dc4c8",
+      "bytes": 69,
+      "languageVersion": "9.0"
+    },
+    "checked-shift.cs": {
+      "sha256": "3b9999fc5cdd76bc93dacd7e6e52722c89b919b0b274b7c8fcafbdd810b8a3de",
+      "bytes": 458
+    },
+    "checked-shift.txt": {
+      "sha256": "faa3884b8c0176a8d9cc06aeb7460d342bcbc120cda69cd6498f565ea3b29028",
+      "bytes": 98,
+      "languageVersion": "11.0"
+    },
+    "small-storage.cs": {
+      "sha256": "4c4a0ba7725e4904d00ffacbc27d57ca1a43b50b987b2e4be68ac8a20fe3dcd7",
+      "bytes": 3386
+    },
+    "small-storage.txt": {
+      "sha256": "7d435148f2f2c7418d425044a9d652cda7eea56f4baf1661fc9cec3eebc7872b",
+      "bytes": 162
+    },
+    "conversions.json": {
+      "sha256": "25f1366e9b134bbf90e71ec91571e4efd360a1f2f51a0f1e292dd801db84523e",
+      "bytes": 350197
+    },
+    "conversions.txt.gz": {
+      "sha256": "a754fc9a60251145f3eee43ae5e765ccaf1f5c0d59400d3624e181e90cc422b6",
+      "bytes": 1190,
+      "cases": 2112,
+      "sourceSha256": "0b5bca25f3071eb8e11c9e2a9fea95802a5aeddc6a4b901c1c1181e88ea55a14"
+    },
+    "storage.json": {
+      "sha256": "fcca10ea0c71ff78f954321bd6ad6c0e2b2fc5e2ec57ca40da65eba1a9012b3c",
+      "bytes": 43863
+    }
+  }
+}

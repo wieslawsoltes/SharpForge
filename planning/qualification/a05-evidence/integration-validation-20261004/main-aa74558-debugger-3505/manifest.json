@@ -1,0 +1,92 @@
+{
+  "format": "SharpForge.A05ValidationArchive/1",
+  "scope": "Focused eight-file debugger evaluation and late CIL admission repair run",
+  "completion": "complete",
+  "exitCode": 0,
+  "testedIdentity": {
+    "commit": "3505b8a50d0f6e860c5a8b8eeebb239830eca6b0",
+    "tree": "290d3cb62d20dbba7347d23550e6b0acb4d6f4ae",
+    "status": ""
+  },
+  "rawArtifacts": [
+    {
+      "path": "debugger-delegate-repair-3505.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/debugger-delegate-repair-3505.log",
+      "bytes": 19434,
+      "sha256": "9e3bd94fc768b2a7d27c0d4bb4ad60552977a7233704fbfc64e590dd516e7938"
+    },
+    {
+      "path": "debugger-delegate-repair-3505-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/debugger-delegate-repair-3505-execution.json",
+      "bytes": 1812,
+      "sha256": "49279c1304d252638126bdccbba89671ef35fd647d1bb3d2c4ad12027a1dddc6"
+    }
+  ],
+  "result": {
+    "tests": 89,
+    "passed": 89,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "testDurationMilliseconds": 8736.638346,
+    "wallSeconds": 8.899706256001082
+  },
+  "priorFailedCohort": "../main-aa74558-4c75/manifest.json",
+  "sourceProof": [
+    {
+      "path": "tests/a05-evaluation-call-membership.test.js",
+      "gitBlob": "5dec5950c3964b06860491ec2de254b044e6cc7d",
+      "bytes": 2850,
+      "sha256": "293434a089df7387d1bdeefa09d6025f626cd168a404499dc6dfa0d8f5d099bd"
+    },
+    {
+      "path": "tests/a05-prepared-runtime-delegate.test.js",
+      "gitBlob": "6ae8b33f80d92dadd1dd74cbc7aa04c25274102c",
+      "bytes": 3046,
+      "sha256": "553a02c286cb4754ce1a869ac0f2415434653302acae3897e70d84c8e03846c2"
+    },
+    {
+      "path": "tests/a05-debugger-evaluation-transactions.test.js",
+      "gitBlob": "7f344acdff51f0689071c574b5fd9e6a508b1f8d",
+      "bytes": 9300,
+      "sha256": "53ff35d3eddd0feeb55b6e380c5f772bf89cb6f33bce400ef178433bb99f4db1"
+    },
+    {
+      "path": "tests/a05-local-constructor-identity.test.js",
+      "gitBlob": "c22ba8cbc6e2790230b43897e57307742e04ac7f",
+      "bytes": 7957,
+      "sha256": "cf6f9c4d2d213892a8810c5bdbd19a2e8f62ad19ceb221381eefcd529791d5cc"
+    },
+    {
+      "path": "tests/a05-prepared-virtual-calls.test.js",
+      "gitBlob": "89cb9aed9732fed75c591de1e662f79d60a3b81b",
+      "bytes": 5577,
+      "sha256": "e399fd08dd49cec67cd86f1dff03cd92f00c8d47559110b14b99d1af3ac80aad"
+    },
+    {
+      "path": "tests/a05-token-cache.test.js",
+      "gitBlob": "4f4acd4327217017dd426b2f61ad37de5e12fe8e",
+      "bytes": 10916,
+      "sha256": "30afe78b1d40a113018f9aca926f0b89f9f6a97b1577153e6b87d35538f42e4f"
+    },
+    {
+      "path": "tests/debugger-advanced.test.js",
+      "gitBlob": "85e2ae6c2ab8962b67f8313a1e6041c1325f8065",
+      "bytes": 7807,
+      "sha256": "32383709c6dff28f81c4c857fb32531702b1be3c6e51ef04a0a0a14f5834a9f3"
+    },
+    {
+      "path": "tests/debugger.test.js",
+      "gitBlob": "7a3bd2704c60e4fa80e5fb6d667f870ff49f9840",
+      "bytes": 7409,
+      "sha256": "933374b4acd11a47166d685d136fa1e713046b390b6c44b59ee3b168f12f3fe6"
+    }
+  ],
+  "limitations": [
+    "This focused run is separate from the earlier 283-test cohort with seven failures; neither result replaces the other.",
+    "The executed scope is the eight test files in the original command journal, including all twelve evaluation transaction cases.",
+    "No full-suite, native CLR, browser, performance or release-size qualification is claimed.",
+    "The archive was prepared through static file copying and hash verification; no tests or measurements were run during archiving."
+  ]
+}

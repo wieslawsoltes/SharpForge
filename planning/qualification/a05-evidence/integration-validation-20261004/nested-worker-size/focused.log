@@ -1,0 +1,12 @@
+✔ size budget inventory uses declared nested workers despite same-name root decoys (25.286955ms)
+✔ historical raw measurement preserves the same complete nested-worker inventory (106.036101ms)
+✔ missing declared nested worker rejects instead of falling back to a root decoy (73.902688ms)
+✔ nested workers and packages still require explicit reviewed budgets without changing ceilings (13.075258ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 319.978735

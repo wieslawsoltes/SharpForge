@@ -1,0 +1,90 @@
+{
+  "task": "SF-A05-T21",
+  "timestamp": "2026-10-04T20:30:40.138Z",
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "qualification": "Roslyn-compiled assembly executed by native .NET and directly by CilVirtualMachine",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "node": "v22.23.2",
+  "dotnetSdk": "10.0.201",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.1 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.4 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.7 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.30 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.1 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.4 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.19 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.3 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.5 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.7 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.10 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.11 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.1 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.4 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.7 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.30 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.1 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.4 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.19 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.3 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.7 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.10 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.11 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.12 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]",
+  "targetFramework": "net10.0",
+  "source": "tests/fixtures/a05-static-init/Program.cs",
+  "sourceSha256": "4a7e663a5e3d17e393bab087e3287028cc31a9d1ae182058b9396df35ad17327",
+  "assemblySha256": "e46be82fd96cc9533990100e845ee63d78ae4a7261b72fbe027b7f3286d8a048",
+  "fixtureEvidence": {
+    "preciseInitializer": "A",
+    "beforeFieldInit": "Lazy",
+    "failedType": "Broken",
+    "failureAccessCount": 2
+  },
+  "native": {
+    "state": "terminated",
+    "exitCode": 0,
+    "output": "A\nB\nC\n3\n2\n1\nBroken\ncause\ncause\nPing\nbefore field\nLazy\n9\n"
+  },
+  "cil": {
+    "state": "terminated",
+    "exitCode": 0,
+    "output": "A\nB\nC\n3\n2\n1\nBroken\ncause\ncause\nPing\nbefore field\nLazy\n9\n",
+    "instructions": 84
+  },
+  "expectedOutput": "A\nB\nC\n3\n2\n1\nBroken\ncause\ncause\nPing\nbefore field\nLazy\n9\n",
+  "passed": true,
+  "commands": [
+    {
+      "command": "dotnet",
+      "arguments": [
+        "--version"
+      ],
+      "status": 0
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "--list-runtimes"
+      ],
+      "status": 0
+    },
+    {
+      "command": "git",
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "status": 0
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "restore",
+        "StaticInitialization.csproj",
+        "--configfile",
+        "NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "status": 0
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "build",
+        "StaticInitialization.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "status": 0
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "<temporary-project>/bin/Release/net10.0/StaticInitialization.dll"
+      ],
+      "status": 0
+    }
+  ]
+}

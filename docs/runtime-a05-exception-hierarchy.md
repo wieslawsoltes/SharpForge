@@ -65,7 +65,7 @@ The example cases themselves were not skipped.
 The `8cc82866` main-merge repair cohort passed 146/146 cases, including
 first-chance/unhandled callback order and local/portable replay in source,
 reloaded source and CIL. The
-[retained validation manifest](a05-evidence/integration-validation-20261004/README.md)
+[retained validation manifest](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/README.md)
 records those full revisions and log digests. A later 123/123 focused run at
 `3ad9a4bd7` (`a05-main349-repairs-r1.log`) includes source/CIL callback lifetime,
 cancellation, snapshot rejection and abandoned-initializer cleanup after the

@@ -1,0 +1,74 @@
+{
+  "head": "37ce0e62c2b0180764970b63f58b742d383fe0cb",
+  "tree": "2ec8f359d3b66250425f999811f4100604349175",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a05-29-async.test.js",
+    "tests/a05-cil-async-profile.test.js",
+    "tests/a05-seams-cil-intrinsics.test.js",
+    "tests/a05-roslyn-async-admission.test.js",
+    "tests/a05-cil-async-continuation-roots.test.js",
+    "tests/a05-merged-task-operations.test.js"
+  ],
+  "cwd": "/workspace/scratch/42f7738360b9/a05-control",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": "--max-old-space-size=512"
+  },
+  "CI": null,
+  "node": "v24.19.0",
+  "ownedLinks": {
+    "runtime": "/workspace/scratch/42f7738360b9/a05-control/packages/runtime",
+    "cil": "/workspace/scratch/42f7738360b9/a05-control/packages/cil",
+    "compiler": "/workspace/scratch/42f7738360b9/a05-control/packages/compiler",
+    "bytecode": "/workspace/scratch/42f7738360b9/a05-control/packages/bytecode"
+  },
+  "inputs": [
+    {
+      "path": "tests/a05-29-async.test.js",
+      "sha256": "dced0ea830ee7c83426bc0c2c0ea9ec0934e14357ce0c9cf499b2c8f8f07a36d"
+    },
+    {
+      "path": "tests/a05-cil-async-profile.test.js",
+      "sha256": "c7e077d7048a1e05348a80d27ff09bf21a2db400b3599e4399be78fd68a03d07"
+    },
+    {
+      "path": "tests/a05-seams-cil-intrinsics.test.js",
+      "sha256": "9dd3184456ec822528b9b62c88f59272f26384a15a743f97a001cf8066cb208b"
+    },
+    {
+      "path": "tests/a05-roslyn-async-admission.test.js",
+      "sha256": "db095e804039ec997846dab6f25925ef67ea2b8dff292890c085b0833e23e978"
+    },
+    {
+      "path": "tests/a05-cil-async-continuation-roots.test.js",
+      "sha256": "41c525101931f5fcc56ed2bb784f98e7838ebd6301d127a4e547c160fb1932c5"
+    },
+    {
+      "path": "tests/a05-merged-task-operations.test.js",
+      "sha256": "3abf419b69df3d007bf72bb72b45dcb13702373ef1f418467fac8b42f9519ce6"
+    }
+  ],
+  "startedAt": "2026-10-04T21:31:16.248252+00:00",
+  "priorAttempt": "/workspace/scratch/42f7738360b9/a05-async-proof-repair-37ce0e62c.json",
+  "finishedAt": "2026-10-04T21:31:21.609863+00:00",
+  "exitCode": 0,
+  "log": "/workspace/scratch/42f7738360b9/a05-async-proof-repair-37ce0e62c-retry1.tap",
+  "logSha256": "4107bea1ba8ca851741e806e954bafd2feea4c2f15f3636454d543d4e9376999",
+  "trackedDiffAfter": [],
+  "summary": {
+    "tests": 37,
+    "pass": 37,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

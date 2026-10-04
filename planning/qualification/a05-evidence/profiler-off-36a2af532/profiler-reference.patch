@@ -1,0 +1,288 @@
+diff --git a/packages/runtime/src/execution/call-frames.js b/packages/runtime/src/execution/call-frames.js
+index aed892ccc..4401b8a2c 100644
+--- a/packages/runtime/src/execution/call-frames.js
++++ b/packages/runtime/src/execution/call-frames.js
+@@ -106,7 +106,6 @@ export function callSourceFrame(vm, methodId, args, extra = {}) {
+     try { if (pinCount !== undefined) vm.heap.pins.length = pinCount; }
+     finally { releaseStackReservation(ticket); }
+   }
+-  vm.profiler?.enter(frame);
+   enterSourceMethod(vm, frame);
+ }
+ 
+diff --git a/packages/runtime/src/execution/cil-array-continuations.js b/packages/runtime/src/execution/cil-array-continuations.js
+index 4f5c62bad..50e8e5def 100644
+--- a/packages/runtime/src/execution/cil-array-continuations.js
++++ b/packages/runtime/src/execution/cil-array-continuations.js
+@@ -2,12 +2,6 @@ import {resumeArrayOperation} from './array-continuations.js';
+ 
+ /** The CIL slice owns quota charging/fault dispatch; a resumed unit keeps the original call offset. */
+ export function resumeCilArrayContinuation(vm, frame) {
+-  const profiler = vm.profiler;
+-  let succeeded = false;
+-  try {
+-    profiler?.instruction(frame);
+-    const result = resumeArrayOperation(vm, frame);
+-    if (result.done && result.returns) vm.push(result.value);
+-    succeeded = true;
+-  } finally { profiler?.endInstruction(succeeded); }
++  const result = resumeArrayOperation(vm, frame);
++  if (result.done && result.returns) vm.push(result.value);
+ }
+diff --git a/packages/runtime/src/execution/cil-instrumentation.js b/packages/runtime/src/execution/cil-instrumentation.js
+index 1d2fa7d6b..668754143 100644
+--- a/packages/runtime/src/execution/cil-instrumentation.js
++++ b/packages/runtime/src/execution/cil-instrumentation.js
+@@ -1,12 +1,9 @@
+-import {initializeExecutionProfiler} from './profiler.js';
+-import {executionProfiler} from './profiler.js';
+ import {initializeWasmTiering} from './wasm/tiering.js';
+ import {initializeHeapEvents} from './heap-events.js';
+ 
+ /** Attach optional host instrumentation after heap creation and before entry arguments. */
+ export function initializeCilInstrumentation(vm, options, profilerReady) {
+-  initializeExecutionProfiler(vm, options.profile);
+-  profilerReady?.(executionProfiler(vm));
++  profilerReady?.(null);
+   initializeWasmTiering(vm, options.wasmTiering);
+   initializeHeapEvents(vm);
+ }
+diff --git a/packages/runtime/src/execution/cil-method-events.js b/packages/runtime/src/execution/cil-method-events.js
+index 1963ad570..ca99c48a0 100644
+--- a/packages/runtime/src/execution/cil-method-events.js
++++ b/packages/runtime/src/execution/cil-method-events.js
+@@ -21,7 +21,6 @@ export function cilRuntimeEvents(vm) {
+ 
+ export function enterCilMethod(vm, frame, reason = 'call') {
+   if (reason === 'call') observeWasmCall(vm, frame);
+-  if (reason === 'call') vm.profiler?.enter(frame);
+   const observer = observers.get(vm);
+   if (!observer) return;
+   const method = frame.method;
+diff --git a/packages/runtime/src/execution/cil-slice.js b/packages/runtime/src/execution/cil-slice.js
+index 715131592..2f894fd24 100644
+--- a/packages/runtime/src/execution/cil-slice.js
++++ b/packages/runtime/src/execution/cil-slice.js
+@@ -30,7 +30,6 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
+   const nested = slicing.has(vm);
+   slicing.add(vm);
+   try {
+-    vm.profiler?.beginSlice();
+     vm.scheduler.beforeSlice();
+     if (vm.state === 'ready') vm.state = 'running';
+     if (vm.state !== 'running') return vm.state;
+@@ -86,9 +85,7 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
+     try {
+       if (started !== undefined) vm.elapsedMs += performance.now() - started;
+       flushFramePool(vm);
+-      vm.profiler?.closeSlice();
+       flushCilMethodEvents(vm);
+-      vm.profiler?.reportClockFailure();
+     } finally {
+       if (!nested) slicing.delete(vm);
+     }
+diff --git a/packages/runtime/src/execution/cil-step.js b/packages/runtime/src/execution/cil-step.js
+index f959a84f6..b08557c59 100644
+--- a/packages/runtime/src/execution/cil-step.js
++++ b/packages/runtime/src/execution/cil-step.js
+@@ -30,18 +30,13 @@ export function executeCilStep(vm, dispatcher = null) {
+     if (plan) frame.offsets = plan.offsets;
+     const handler = plan ? plan.handlers[index] : cilHandlers.get(instruction.name);
+     if (!handler) rejectCilOpcode(instruction.name);
+-    const profiler = vm.profiler;
+-    let succeeded = false;
+     try {
+-      profiler?.instruction(frame);
+       if (dispatcher) dispatcher(vm, frame, instruction, index, handler);
+       else dispatchWasmCall(vm, frame, instruction, index, handler);
+       const hotBackedge = observeWasmBackedge(vm, frame, instruction, index, frameId);
+       if (!dispatcher && hotBackedge) selectWasmOsr(vm, frame, hotBackedge, frameId);
+-      succeeded = true;
+     } finally {
+       flushFramePool(vm);
+-      profiler?.endInstruction(succeeded);
+     }
+   } finally {
+     if (!nested) dispatching.set(vm, false);
+diff --git a/packages/runtime/src/execution/context-events.js b/packages/runtime/src/execution/context-events.js
+index 9e0431e17..965fb09f0 100644
+--- a/packages/runtime/src/execution/context-events.js
++++ b/packages/runtime/src/execution/context-events.js
+@@ -1,5 +1,4 @@
+ import {RuntimeEventName} from './runtime-events.js';
+-import {executionProfiler} from './profiler.js';
+ 
+ const terminal = new Set(['completed', 'faulted', 'canceled']);
+ // Contexts are weakly held: observations cannot retain parked guest stacks.
+@@ -9,14 +8,12 @@ const suspended = new WeakMap();
+ export function observeContextTransition(scheduler, previous, next) {
+   const vm = scheduler.vm;
+   const log = vm.runtimeEvents;
+-  const profiler = executionProfiler(vm);
+-  if ((!log && !profiler) || previous === next) return;
++  if (!log || previous === next) return;
+   let observed = suspended.get(scheduler);
+   if (previous?.frames.length && !terminal.has(previous.status) && !observed?.has(previous)) {
+     // The transition has committed even if an optional event emission fails.
+     if (!observed) suspended.set(scheduler, observed = new WeakSet());
+     observed.add(previous);
+-    profiler?.suspend();
+     log?.emit(RuntimeEventName.Suspend,
+       {context: previous.id, frame: previous.frames.at(-1).id}, vm.instructions);
+   }
+diff --git a/packages/runtime/src/execution/initialize-source.js b/packages/runtime/src/execution/initialize-source.js
+index 4292bfd9e..a383b5a97 100644
+--- a/packages/runtime/src/execution/initialize-source.js
++++ b/packages/runtime/src/execution/initialize-source.js
+@@ -6,8 +6,6 @@ import { CooperativeScheduler } from '../scheduler.js';
+ import { normalizeRuntimeLaunchOptions } from '../launch-options.js';
+ import { createSourceMethodTables } from './method-table.js';
+ import { sourceEntryArguments } from './entry-arguments.js';
+-import { initializeExecutionProfiler } from './profiler.js';
+-import {executionProfiler} from './profiler.js';
+ import { initializeSourceNumbers, sourceInitialValue } from './source-numbers.js';
+ import { installRootProvider } from './frame-roots.js';
+ import { stackByteLimit } from './stack-budget.js';
+@@ -51,8 +49,7 @@ export function initializeSourceVM(vm, image, options, profilerReady) {
+   vm.onOutput = options.onOutput ?? (() => {});
+   vm.onException = null;
+   vm.onWrite = null;
+-  initializeExecutionProfiler(vm, options.profile);
+-  profilerReady?.(executionProfiler(vm));
++  profilerReady?.(null);
+   initializeSourceRuntimeEvents(vm, options.runtimeEvents);
+   initializeHeapEvents(vm);
+   vm.platform = new ManagedPlatform(vm, options);
+diff --git a/packages/runtime/src/execution/numeric-blocks.js b/packages/runtime/src/execution/numeric-blocks.js
+index 49f1eccbe..e9775ed13 100644
+--- a/packages/runtime/src/execution/numeric-blocks.js
++++ b/packages/runtime/src/execution/numeric-blocks.js
+@@ -16,7 +16,7 @@ function contextFor(frame, stack, locals, arguments_) {
+ }
+ 
+ function observed(vm, frame, onInstruction) {
+-  return onInstruction || vm.onWrite || vm.onException || vm.profiler || vm.options.profile || vm.runtimeEvents ||
++  return onInstruction || vm.onWrite || vm.onException || vm.runtimeEvents ||
+     vm.options.gcStress === 'instruction' || vm.options.wasmTiering || vm.scheduler.enabled || vm.scheduler.suppressed ||
+     Object.hasOwn(vm.scheduler, 'beforeInstruction') || Object.hasOwn(vm.scheduler, 'afterInstruction') ||
+     Object.hasOwn(vm, 'step') || Object.hasOwn(vm, 'push') || Object.hasOwn(vm, 'pop') ||
+diff --git a/packages/runtime/src/execution/object-value-slice.js b/packages/runtime/src/execution/object-value-slice.js
+index c527bc803..0472015a9 100644
+--- a/packages/runtime/src/execution/object-value-slice.js
++++ b/packages/runtime/src/execution/object-value-slice.js
+@@ -5,12 +5,7 @@ import {handleSourceInstructionFault} from './source-stack-admission.js';
+ import {flushFramePool} from './frame-pool.js';
+ 
+ export function resumeCilObjectValueWork(vm, frame) {
+-  let succeeded = false;
+-  try {
+-    vm.profiler?.instruction(frame);
+-    resumeObjectValueWork(vm, frame);
+-    succeeded = true;
+-  } finally { vm.profiler?.endInstruction(succeeded); }
++  resumeObjectValueWork(vm, frame);
+ }
+ 
+ /** Shared equality also serves source array searches; each native quantum is an observable quota unit. */
+@@ -22,7 +17,6 @@ export function resumeSourceObjectValueWork(vm, frame, deadline = Infinity) {
+     if (vm.instructions > vm.options.maxInstructions) {
+       throw new ManagedFault('InstructionLimitException', 'Program exceeded its instruction budget');
+     }
+-    vm.profiler?.instruction(frame);
+     resumeObjectValueWork(vm, frame);
+   } catch (error) {
+     handleSourceInstructionFault(vm, error, {frame, opcode: Op.BUILTIN, index: frame.pc - 1,
+diff --git a/packages/runtime/src/execution/source-array-continuations.js b/packages/runtime/src/execution/source-array-continuations.js
+index 3727c6afb..93d5ac2d6 100644
+--- a/packages/runtime/src/execution/source-array-continuations.js
++++ b/packages/runtime/src/execution/source-array-continuations.js
+@@ -13,7 +13,6 @@ export function resumeSourceArrayContinuation(vm, frame, deadline = Infinity) {
+     if (vm.instructions > vm.options.maxInstructions) {
+       throw new ManagedFault('InstructionLimitException', 'Program exceeded its instruction budget');
+     }
+-    vm.profiler?.instruction(frame);
+     const result = resumeArrayOperation(vm, frame);
+     if (result.done && result.returns) vm.stack.push(result.value);
+   } catch (error) {
+diff --git a/packages/runtime/src/execution/source-fusion.js b/packages/runtime/src/execution/source-fusion.js
+index 033e82891..598de181f 100644
+--- a/packages/runtime/src/execution/source-fusion.js
++++ b/packages/runtime/src/execution/source-fusion.js
+@@ -50,7 +50,7 @@ export function selectSourceFrameFusion(vm, frame, method, remaining, state) {
+ export function selectSourceFusion(vm, frame, method, remaining, onSequence) {
+   if (remaining < 2 || vm.options.sourceFusion === false ||
+       vm.scheduler.enabled || vm.scheduler.suppressed ||
+-      onSequence || vm.onWrite || vm.onException || vm.profiler || vm.options.profile || vm.runtimeEvents ||
++      onSequence || vm.onWrite || vm.onException || vm.runtimeEvents ||
+       vm.options.gcStress === 'instruction' || !hasCanonicalSourceAdapters(vm)) return null;
+   return selectSourceFrameFusion(vm, frame, method, remaining);
+ }
+diff --git a/packages/runtime/src/execution/source-slice.js b/packages/runtime/src/execution/source-slice.js
+index e6168954d..1e9a0e5a4 100644
+--- a/packages/runtime/src/execution/source-slice.js
++++ b/packages/runtime/src/execution/source-slice.js
+@@ -10,12 +10,8 @@ import {selectSourceFusion} from './source-fusion.js';
+ import {executeSourceFusionBatch} from './source-fusion-batch.js';
+ 
+ // Capture only the slice's observer identity; its method remains observable at each instruction.
+-function instructionDispatcher(profiler) {
+-  if (profiler === null || profiler === undefined) return dispatchSourceOpcode;
+-  return (vm, frame, opcode, first, second) => {
+-    profiler.instruction(frame);
+-    return dispatchSourceOpcode(vm, frame, opcode, first, second);
+-  };
++function instructionDispatcher() {
++  return dispatchSourceOpcode;
+ }
+ 
+ function executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, started}, dispatch) {
+@@ -79,8 +75,7 @@ function executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, s
+ 
+ /** Source instruction boundaries own quotas, sequence pauses and ordered observer delivery. */
+ export function runSourceSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, onSequence = null} = {}) {
+-  const profiler = vm.profiler;
+-  const dispatch = instructionDispatcher(profiler);
++  const dispatch = instructionDispatcher();
+   try {
+     vm.scheduler.beforeSlice();
+     if (vm.state === 'ready') vm.state = 'running';
+@@ -98,8 +93,6 @@ export function runSourceSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8,
+     return vm.state;
+   } finally {
+     flushFramePool(vm);
+-    profiler?.closeSlice();
+     flushSourceRuntimeEvents(vm);
+-    profiler?.reportClockFailure();
+   }
+ }
+diff --git a/packages/runtime/src/execution/stop.js b/packages/runtime/src/execution/stop.js
+index e95e6942b..1ae3ad046 100644
+--- a/packages/runtime/src/execution/stop.js
++++ b/packages/runtime/src/execution/stop.js
+@@ -9,8 +9,6 @@ import {cancelCallbackScopes} from './callback-frames.js';
+ /** Dispose live and parked storage before dropping the VM's execution roots. */
+ export function stopExecution(vm) {
+   cancelCallbackScopes(vm.scheduler);
+-  const hadGuestFault = vm.fault || vm.pendingFault;
+-  vm.profiler?.closeSlice();
+   invalidateExecutionCode(vm, 'stop');
+   clearStrings(vm);
+   clearRuntimeTypes(vm);
+@@ -26,5 +24,4 @@ export function stopExecution(vm) {
+     vm.currentPoint = null;
+     stopSourceRuntimeEvents(vm);
+   }
+-  if (!hadGuestFault) vm.profiler?.reportClockFailure();
+ }
+diff --git a/packages/runtime/src/snapshot.js b/packages/runtime/src/snapshot.js
+index 77ae550fb..ede529108 100644
+--- a/packages/runtime/src/snapshot.js
++++ b/packages/runtime/src/snapshot.js
+@@ -90,7 +90,6 @@ export function restoreVM(vm, snapshot, engine) {
+     if (engine === 'cil') bindRestoredGenericMethods(vm, prepared.values, generics);
+     return {generics, ...prepared, synchronization: prepareSynchronizationRestore(vm, prepared.values)};
+   });
+-  vm.profiler?.boundary();
+   const deopt = engine === 'cil' ? captureWasmDeopt(vm) : null;
+   releaseVMFrameMemory(vm);
+   vm.heap.restore(values.get('heap'), {prepared: true});

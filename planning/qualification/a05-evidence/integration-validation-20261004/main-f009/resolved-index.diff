@@ -1,0 +1,9 @@
+diff --git a/packages/cil/src/index.js b/packages/cil/src/index.js
+index 201d23cc0..73a152060 100644
+--- a/packages/cil/src/index.js
++++ b/packages/cil/src/index.js
+@@ -64,3 +64,4 @@ export { referenceAssemblyMemberIncluded, addReferenceAssemblyAttribute } from '
+ export { AssemblyUsageAnalysis } from './browser/analyzers.js';
+ export { MetadataTableInspector } from './inspector-tables.js';
+ export {readSourceTypeIdentities} from './source-type-identities.js';
++export { MetadataGenerations, metadataGenerationDiagnosticCatalog } from './metadata/delta-reader.js';

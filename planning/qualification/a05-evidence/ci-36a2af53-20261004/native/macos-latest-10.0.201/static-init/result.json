@@ -1,0 +1,24 @@
+{
+  "id": "static-init",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-static-init.js",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/static-init/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "static-init/evidence",
+  "report": "static-init/result.json",
+  "startedAt": "2026-10-04T20:30:38.382Z",
+  "durationMs": 1768.5374999999913,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "static-init/stdout.log",
+  "stderr": "static-init/stderr.log",
+  "finishedAt": "2026-10-04T20:30:40.152Z"
+}

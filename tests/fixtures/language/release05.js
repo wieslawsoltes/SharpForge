@@ -2,6 +2,8 @@
 export const cases = [
  ['nested rethrow restores lexical exception','try{try{throw new Exception("outer");}catch(Exception e){try{throw new Exception("inner");}catch(Exception f){Console.WriteLine(f.Message);}throw;}}catch(Exception g){Console.WriteLine(g.Message);}','inner\nouter\n'],
  ['auto property', 'var c = new C(); c.X += 4; Console.WriteLine(c.X); class C { public int X { get; set; } = 3; }', '7\n'],
+ ['init-only declaration','Console.WriteLine(1);class C{public int X{get;init;}}','1\n'],
+ ['init-only initializer','var c=new C(){X=7};Console.WriteLine(c.X);class C{public int X{get;init;}}','7\n'],
  ['expression getter', 'var c=new C(){X=7}; Console.WriteLine(c.Double); class C { public int X { get; set; } public int Double => X*2; }','14\n'],
  ['explicit accessors','var c=new C(); c.X=5; Console.WriteLine(c.X); class C { int x; public int X { get {return x;} set {x=value*2;} } }','10\n'],
  ['expression accessors','var c=new C(); c.X=5; Console.WriteLine(c.X); class C { int x; public int X { get => x; set => x=value+1; } }','6\n'],
@@ -37,7 +39,7 @@ export const diagnosticCases=[
  ['return exits finally','int F(){try{return 1;}finally{return 2;}}Console.WriteLine(F());','CS0157'],
  ['break exits finally','while(true){try{}finally{break;}}','CS0157'],
  ['continue exits finally','while(true){try{}finally{continue;}}','CS0157'],
- ['init remains explicit limitation','Console.WriteLine(1);class C{public int X{get;init;}}','CS1014'],
+ ['init-only write after construction','var c=new C(){X=7};c.X=8;class C{public int X{get;init;}}','CS8852'],
 ];
 export const languageFixtures=[
  ...cases.map(([name,source,output])=>({id:'release05/'+name,source,expected:{output}})),

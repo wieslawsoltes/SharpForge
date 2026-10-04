@@ -1,0 +1,65 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "virtual-cache-100",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "bench/vm/qualification.js",
+    "--runner",
+    "a05-linux-x64-node24",
+    "--suite",
+    "targets",
+    "--target",
+    "virtual-cache",
+    "--samples",
+    "100",
+    "--warmup",
+    "3",
+    "--native-bits",
+    "64",
+    "--seed",
+    "12012",
+    "--resamples",
+    "10000",
+    "--timeout-seconds",
+    "900",
+    "--out",
+    "/workspace/scratch/42f7738360b9/a05-priority-main41eb-20261004/virtual-cache-100.json"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": null,
+    "DOTNET_ROOT": null,
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": null,
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "10d710b349d581b88c0013ce8571bd963bfdb839",
+    "tree": "45d4897ecdffb72b3ea738e87b935f25218850af",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T22:09:31.737382+00:00",
+  "completedUTC": "2026-10-04T22:10:35.204394+00:00",
+  "elapsedSeconds": 63.46524196300015,
+  "exitCode": 1,
+  "endIdentity": {
+    "commit": "10d710b349d581b88c0013ce8571bd963bfdb839",
+    "tree": "45d4897ecdffb72b3ea738e87b935f25218850af",
+    "status": ""
+  },
+  "artifact": {
+    "path": "virtual-cache-100.log",
+    "bytes": 138,
+    "sha256": "4a50c072c4efabc9a49ea5c88d80b2cd3cd7a813d763be967b2114b96a933478"
+  }
+}

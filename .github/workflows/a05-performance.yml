@@ -1,0 +1,76 @@
+name: A05 fixed hosted performance qualification
+on:
+  push:
+    branches: ['codex/a05-performance-qualification-*']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: a05-fixed-hosted-performance
+  cancel-in-progress: false
+defaults:
+  run:
+    shell: bash
+jobs:
+  qualification:
+    runs-on: ubuntu-24.04
+    # Fixed queue includes ten paired targets, off/on profiling and two complete T12 runs.
+    # The helper stops at 340 minutes, preserving incomplete work and 20 minutes for upload.
+    timeout-minutes: 360
+    env:
+      SHARPFORGE_TEST_CONCURRENCY: '1'
+      SHARPFORGE_MAX_PARALLEL_RUNS: '1'
+      SHARPFORGE_MAX_OLD_SPACE_MB: '512'
+      NODE_OPTIONS: --max-old-space-size=512
+      A05_EVIDENCE: ${{ runner.temp }}/a05-performance-${{ github.run_id }}-${{ github.run_attempt }}
+      A05_REFERENCE: ${{ runner.temp }}/a05-profiler-reference-${{ github.run_id }}-${{ github.run_attempt }}
+      A05_LOGS: ${{ runner.temp }}/a05-orchestration-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        id: checkout
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        id: node_setup
+        with:
+          node-version: '24.19.0'
+      - name: Record the immutable plan and initial runner provenance
+        id: initialize
+        run: |
+          mkdir -p "$A05_LOGS"
+          node scripts/a05/hosted-qualification.js initialize "$A05_EVIDENCE" "$A05_REFERENCE" 2>&1 | tee "$A05_LOGS/initialize.log"
+      - name: Complete dependency installation before measurement
+        id: install
+        run: node scripts/a05/hosted-qualification.js install "$A05_EVIDENCE" 2>&1 | tee "$A05_LOGS/install.log"
+      - name: Execute every independent fixed command serially without retries
+        id: measure
+        run: node scripts/a05/hosted-qualification.js run "$A05_EVIDENCE" 2>&1 | tee "$A05_LOGS/orchestration.log"
+      - name: Retain incomplete setup, raw exits, source checks and final gate status
+        if: always()
+        env:
+          A05_CHECKOUT_OUTCOME: ${{ steps.checkout.outcome }}
+          A05_NODE_SETUP_OUTCOME: ${{ steps.node_setup.outcome }}
+          A05_INITIALIZE_OUTCOME: ${{ steps.initialize.outcome }}
+          A05_INSTALL_OUTCOME: ${{ steps.install.outcome }}
+          A05_MEASURE_OUTCOME: ${{ steps.measure.outcome }}
+        run: |
+          mkdir -p "$A05_LOGS" "$A05_EVIDENCE"
+          if [[ ! -f scripts/a05/hosted-qualification.js ]]; then
+            printf 'Qualification helper unavailable after checkout: %s\n' "$A05_CHECKOUT_OUTCOME" > "$A05_LOGS/setup-failure.log"
+            exit 1
+          fi
+          node scripts/a05/hosted-qualification.js finalize "$A05_EVIDENCE" 2>&1 | tee "$A05_LOGS/finalize.log"
+      - name: Hash completed raw reports, journals and orchestration logs
+        if: always()
+        run: node scripts/a05/hosted-qualification.js seal "$A05_EVIDENCE"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: a05-performance-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.A05_EVIDENCE }}/
+            ${{ env.A05_LOGS }}/
+          if-no-files-found: error
+          retention-days: 30

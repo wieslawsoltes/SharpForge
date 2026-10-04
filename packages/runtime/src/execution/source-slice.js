@@ -91,6 +91,7 @@ export function runSourceSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8,
       vm.pendingFault = null;
       pending.exceptionDebuggerResume = true;
       vm.handleFault(pending);
+      vm.scheduler.beforeInstruction();
     }
     executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, started}, dispatch);
     vm.currentPoint = vm.top?.point ?? null;

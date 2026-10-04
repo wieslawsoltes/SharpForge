@@ -1,0 +1,91 @@
+{
+  "version": "1.24.0",
+  "commit": "fc76932551754a442cd5c4f0afdba28032d14d8a",
+  "release": "https://github.com/jlfwong/speedscope/releases/tag/v1.24.0",
+  "url": "https://github.com/jlfwong/speedscope/releases/download/v1.24.0/speedscope-1.24.0.zip",
+  "sha256": "1cd7de1f33e7a56a0b08ca51b4ba9598b766676f9c5f07077e731258d47e6121",
+  "bytes": 218392,
+  "entry": "speedscope/index.html",
+  "files": [
+    {
+      "path": "speedscope/LICENSE",
+      "bytes": 1067,
+      "sha256": "6244b13e9bf25cfd42d81c939d6c535d932596e8c320050234f2c2ac5a6f36a0"
+    },
+    {
+      "path": "speedscope/README",
+      "bytes": 124,
+      "sha256": "f8f44be85767f0f2dda603f5015803d579742526e53c434cc1e7235dead371c4"
+    },
+    {
+      "path": "speedscope/SourceCodePro-Regular.ttf-ILST5JV6.woff2",
+      "bytes": 52228,
+      "sha256": "8badfe75c98da1e8315a52619f177def4618350f7b3e496baf5b8894da2c2ac0"
+    },
+    {
+      "path": "speedscope/favicon-16x16-V2DMIAZS.js",
+      "bytes": 100,
+      "sha256": "c0f242e15ad5552b1fabfbd8aeff1afe5e28b628bda0f8e27e4998cb355b2a0e"
+    },
+    {
+      "path": "speedscope/favicon-16x16-VSI62OPJ.png",
+      "bytes": 679,
+      "sha256": "a62a6da7742b43ee798b106b709aa82eafd1b500ef050427cfec05e4d41dacac"
+    },
+    {
+      "path": "speedscope/favicon-32x32-3EB2YCUY.png",
+      "bytes": 1585,
+      "sha256": "9ea6e6d13b7b8064187866deba1e8674d8ba25071279ba7b15f34b54df2508d0"
+    },
+    {
+      "path": "speedscope/favicon-32x32-THY3JDJL.js",
+      "bytes": 100,
+      "sha256": "19e14dad956dd3f1735081687479f9ef127fd7060e324a48569b57b5ebf34546"
+    },
+    {
+      "path": "speedscope/favicon-FOKUP5Y5.ico",
+      "bytes": 15086,
+      "sha256": "45701858a8fe9daccd63d2cb5749fdbd155a471b5fc391d04f3f61d18a9efcdd"
+    },
+    {
+      "path": "speedscope/favicon-M34RF7BI.js",
+      "bytes": 88,
+      "sha256": "8a8fc32e3eeca5da272fcea04585a97e47c411c604ae9d8386a3bba02f95ef99"
+    },
+    {
+      "path": "speedscope/file-format-schema.json",
+      "bytes": 9517,
+      "sha256": "4aaaa982e721bdb60fbdc095abb1a5349997826dfc64ca3a41d89e2ef659617c"
+    },
+    {
+      "path": "speedscope/index.html",
+      "bytes": 628,
+      "sha256": "a011cca4a3c4d9a95c210274497601d8a55658e09f6da748820281db2b665375"
+    },
+    {
+      "path": "speedscope/perf-vertx-stacks-01-collapsed-all-ZNUIGAJL.txt",
+      "bytes": 263949,
+      "sha256": "dedaa1c8055267638030efa25081116105fd0e357944cefc0974e792dfcabedd"
+    },
+    {
+      "path": "speedscope/release.txt",
+      "bytes": 88,
+      "sha256": "a034e8e47c2f4459ad45dbdbb0852902ee0c2241a52dbcc9f6b18fffd9bff45a"
+    },
+    {
+      "path": "speedscope/source-code-pro.LICENSE.md",
+      "bytes": 4485,
+      "sha256": "2e14ee65e55dbcc7d66347cd7c76a10a1a18ac49dd7989a2b3838b479676f746"
+    },
+    {
+      "path": "speedscope/speedscope-432XE7GS.js",
+      "bytes": 480944,
+      "sha256": "c7cdebe091dddf523863ae7442437b1c122959d34624c09772baf7515441ee99"
+    },
+    {
+      "path": "speedscope/speedscope-GHPHNKXC.css",
+      "bytes": 1053,
+      "sha256": "0f823f58242a0ca365d46761dd99034626931157a08e24dd667b310363209bc9"
+    }
+  ]
+}

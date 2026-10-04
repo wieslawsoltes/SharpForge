@@ -1,0 +1,817 @@
+{
+  "sdk": "10.0.201",
+  "referencePack": "10.0.5",
+  "runtimes": "Microsoft.AspNetCore.App 10.0.5 [/workspace/scratch/1692a10afba9/toolchain/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.5 [/workspace/scratch/1692a10afba9/toolchain/dotnet/shared/Microsoft.NETCore.App]",
+  "head": "d6051bff9a29c21b31d6911f3bf5216d2001ce95",
+  "trackedDiff": "",
+  "entries": [
+    {
+      "name": "Completed",
+      "mode": "Debug",
+      "sourceSha256": "fec92a46d93f25d339edf91bf72ee19878c6edde3e388f603aed8b777b865046",
+      "assemblySha256": "dfb903d6327f6e44c1e9c52e87fef1edb468c6b1fd02115df1f285670385cdef",
+      "bytes": 7168,
+      "compilerOutput": "",
+      "output": "plain\n42\nresult\n",
+      "machines": [
+        {
+          "name": "Program+<Main>d__3",
+          "base": "System.Object",
+          "methods": [
+            {
+              "name": ".ctor",
+              "token": 100663303
+            },
+            {
+              "name": "MoveNext",
+              "token": 100663304
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663305
+            }
+          ]
+        },
+        {
+          "name": "Program+<Number>d__1",
+          "base": "System.Object",
+          "methods": [
+            {
+              "name": ".ctor",
+              "token": 100663306
+            },
+            {
+              "name": "MoveNext",
+              "token": 100663307
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663308
+            }
+          ]
+        },
+        {
+          "name": "Program+<Plain>d__0",
+          "base": "System.Object",
+          "methods": [
+            {
+              "name": ".ctor",
+              "token": 100663309
+            },
+            {
+              "name": "MoveNext",
+              "token": 100663310
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663311
+            }
+          ]
+        },
+        {
+          "name": "Program+<Text>d__2",
+          "base": "System.Object",
+          "methods": [
+            {
+              "name": ".ctor",
+              "token": 100663312
+            },
+            {
+              "name": "MoveNext",
+              "token": 100663313
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663314
+            }
+          ]
+        }
+      ],
+      "verifier": {
+        "success": false,
+        "methods": [
+          100663302,
+          100663300,
+          100663303
+        ],
+        "issues": [
+          {
+            "methodToken": 100663302,
+            "method": "Program::<Main>",
+            "offset": 5,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Threading.Tasks.Task::GetAwaiter' is not implemented"
+          },
+          {
+            "methodToken": 100663302,
+            "method": "Program::<Main>",
+            "offset": 13,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.TaskAwaiter::GetResult' is not implemented"
+          },
+          {
+            "methodToken": 100663300,
+            "method": "Program::Main",
+            "offset": 7,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Create' is not implemented"
+          },
+          {
+            "methodToken": 100663300,
+            "method": "Program::Main",
+            "offset": 32,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Start' is not implemented"
+          },
+          {
+            "methodToken": 100663300,
+            "method": "Program::Main",
+            "offset": 43,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::get_Task' is not implemented"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Completed",
+      "mode": "Release",
+      "sourceSha256": "fec92a46d93f25d339edf91bf72ee19878c6edde3e388f603aed8b777b865046",
+      "assemblySha256": "076875b4d147896811db27283c447032eaebb376118a735b2cd17aaa5730f53e",
+      "bytes": 7168,
+      "compilerOutput": "",
+      "output": "plain\n42\nresult\n",
+      "machines": [
+        {
+          "name": "Program+<Main>d__3",
+          "base": "System.ValueType",
+          "methods": [
+            {
+              "name": "MoveNext",
+              "token": 100663303
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663304
+            }
+          ]
+        },
+        {
+          "name": "Program+<Number>d__1",
+          "base": "System.ValueType",
+          "methods": [
+            {
+              "name": "MoveNext",
+              "token": 100663305
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663306
+            }
+          ]
+        },
+        {
+          "name": "Program+<Plain>d__0",
+          "base": "System.ValueType",
+          "methods": [
+            {
+              "name": "MoveNext",
+              "token": 100663307
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663308
+            }
+          ]
+        },
+        {
+          "name": "Program+<Text>d__2",
+          "base": "System.ValueType",
+          "methods": [
+            {
+              "name": "MoveNext",
+              "token": 100663309
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663310
+            }
+          ]
+        }
+      ],
+      "verifier": {
+        "success": false,
+        "methods": [
+          100663302,
+          100663300
+        ],
+        "issues": [
+          {
+            "methodToken": 100663302,
+            "method": "Program::<Main>",
+            "offset": 5,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Threading.Tasks.Task::GetAwaiter' is not implemented"
+          },
+          {
+            "methodToken": 100663302,
+            "method": "Program::<Main>",
+            "offset": 13,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.TaskAwaiter::GetResult' is not implemented"
+          },
+          {
+            "methodToken": 100663300,
+            "method": "Program::Main",
+            "offset": 2,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Create' is not implemented"
+          },
+          {
+            "methodToken": 100663300,
+            "method": "Program::Main",
+            "offset": 29,
+            "code": "IL_TOKEN",
+            "message": "Struct generic arguments require a static Apply<T>(ref T, ...) constrained interface forwarder"
+          },
+          {
+            "methodToken": 100663300,
+            "method": "Program::Main",
+            "offset": 41,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::get_Task' is not implemented"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Suspended",
+      "mode": "Debug",
+      "sourceSha256": "9a5dafe8a6be3975ea02a7e0106b3d019fbe2854510b91b2a3fb3ae12cd200bf",
+      "assemblySha256": "30d90096b766ba7631a5e2ba55c21fec4294039234801390d1ae41d2eb0fa3cd",
+      "bytes": 6144,
+      "compilerOutput": "",
+      "output": "enter\nFalse\nfirst\nsecond\n42\nTrue\n",
+      "machines": [
+        {
+          "name": "Program+<Main>d__1",
+          "base": "System.Object",
+          "methods": [
+            {
+              "name": ".ctor",
+              "token": 100663301
+            },
+            {
+              "name": "MoveNext",
+              "token": 100663302
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663303
+            }
+          ]
+        },
+        {
+          "name": "Program+<Work>d__0",
+          "base": "System.Object",
+          "methods": [
+            {
+              "name": ".ctor",
+              "token": 100663304
+            },
+            {
+              "name": "MoveNext",
+              "token": 100663305
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663306
+            }
+          ]
+        }
+      ],
+      "verifier": {
+        "success": false,
+        "methods": [
+          100663300,
+          100663298,
+          100663301
+        ],
+        "issues": [
+          {
+            "methodToken": 100663300,
+            "method": "Program::<Main>",
+            "offset": 5,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Threading.Tasks.Task::GetAwaiter' is not implemented"
+          },
+          {
+            "methodToken": 100663300,
+            "method": "Program::<Main>",
+            "offset": 13,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.TaskAwaiter::GetResult' is not implemented"
+          },
+          {
+            "methodToken": 100663298,
+            "method": "Program::Main",
+            "offset": 7,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Create' is not implemented"
+          },
+          {
+            "methodToken": 100663298,
+            "method": "Program::Main",
+            "offset": 32,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Start' is not implemented"
+          },
+          {
+            "methodToken": 100663298,
+            "method": "Program::Main",
+            "offset": 43,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::get_Task' is not implemented"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Suspended",
+      "mode": "Release",
+      "sourceSha256": "9a5dafe8a6be3975ea02a7e0106b3d019fbe2854510b91b2a3fb3ae12cd200bf",
+      "assemblySha256": "21c107a1883185878d721643f7ad3e9ed5054678d90d24eea500aef30ad6547f",
+      "bytes": 6144,
+      "compilerOutput": "",
+      "output": "enter\nFalse\nfirst\nsecond\n42\nTrue\n",
+      "machines": [
+        {
+          "name": "Program+<Main>d__1",
+          "base": "System.ValueType",
+          "methods": [
+            {
+              "name": "MoveNext",
+              "token": 100663301
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663302
+            }
+          ]
+        },
+        {
+          "name": "Program+<Work>d__0",
+          "base": "System.ValueType",
+          "methods": [
+            {
+              "name": "MoveNext",
+              "token": 100663303
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663304
+            }
+          ]
+        }
+      ],
+      "verifier": {
+        "success": false,
+        "methods": [
+          100663300,
+          100663298
+        ],
+        "issues": [
+          {
+            "methodToken": 100663300,
+            "method": "Program::<Main>",
+            "offset": 5,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Threading.Tasks.Task::GetAwaiter' is not implemented"
+          },
+          {
+            "methodToken": 100663300,
+            "method": "Program::<Main>",
+            "offset": 13,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.TaskAwaiter::GetResult' is not implemented"
+          },
+          {
+            "methodToken": 100663298,
+            "method": "Program::Main",
+            "offset": 2,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Create' is not implemented"
+          },
+          {
+            "methodToken": 100663298,
+            "method": "Program::Main",
+            "offset": 29,
+            "code": "IL_TOKEN",
+            "message": "Struct generic arguments require a static Apply<T>(ref T, ...) constrained interface forwarder"
+          },
+          {
+            "methodToken": 100663298,
+            "method": "Program::Main",
+            "offset": 41,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::get_Task' is not implemented"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Exceptions",
+      "mode": "Debug",
+      "sourceSha256": "778357e49c37a25e65b7c8101c84ee615ab29635b95c6cb7ceee598c4c51bcfe",
+      "assemblySha256": "008e52dd23a559d1a6d8e3f100b38b9ee1521127b00fa73d939bfe90465f321b",
+      "bytes": 6656,
+      "compilerOutput": "",
+      "output": "finally\nTrue\nTrue\nfinally\nTrue\nTrue\n",
+      "machines": [
+        {
+          "name": "Program+<Fail>d__1",
+          "base": "System.Object",
+          "methods": [
+            {
+              "name": ".ctor",
+              "token": 100663302
+            },
+            {
+              "name": "MoveNext",
+              "token": 100663303
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663304
+            }
+          ]
+        },
+        {
+          "name": "Program+<Main>d__3",
+          "base": "System.Object",
+          "methods": [
+            {
+              "name": ".ctor",
+              "token": 100663305
+            },
+            {
+              "name": "MoveNext",
+              "token": 100663306
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663307
+            }
+          ]
+        },
+        {
+          "name": "Program+<Observe>d__2",
+          "base": "System.Object",
+          "methods": [
+            {
+              "name": ".ctor",
+              "token": 100663308
+            },
+            {
+              "name": "MoveNext",
+              "token": 100663309
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663310
+            }
+          ]
+        }
+      ],
+      "verifier": {
+        "success": false,
+        "methods": [
+          100663301,
+          100663299,
+          100663305
+        ],
+        "issues": [
+          {
+            "methodToken": 100663301,
+            "method": "Program::<Main>",
+            "offset": 5,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Threading.Tasks.Task::GetAwaiter' is not implemented"
+          },
+          {
+            "methodToken": 100663301,
+            "method": "Program::<Main>",
+            "offset": 13,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.TaskAwaiter::GetResult' is not implemented"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 7,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Create' is not implemented"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 32,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Start' is not implemented"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 43,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::get_Task' is not implemented"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Exceptions",
+      "mode": "Release",
+      "sourceSha256": "778357e49c37a25e65b7c8101c84ee615ab29635b95c6cb7ceee598c4c51bcfe",
+      "assemblySha256": "065f71407de133c74f5b73692d4dcac4da743b824f9d803a3f29e6c330a87a16",
+      "bytes": 6656,
+      "compilerOutput": "",
+      "output": "finally\nTrue\nTrue\nfinally\nTrue\nTrue\n",
+      "machines": [
+        {
+          "name": "Program+<Fail>d__1",
+          "base": "System.ValueType",
+          "methods": [
+            {
+              "name": "MoveNext",
+              "token": 100663302
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663303
+            }
+          ]
+        },
+        {
+          "name": "Program+<Main>d__3",
+          "base": "System.ValueType",
+          "methods": [
+            {
+              "name": "MoveNext",
+              "token": 100663304
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663305
+            }
+          ]
+        },
+        {
+          "name": "Program+<Observe>d__2",
+          "base": "System.ValueType",
+          "methods": [
+            {
+              "name": "MoveNext",
+              "token": 100663306
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663307
+            }
+          ]
+        }
+      ],
+      "verifier": {
+        "success": false,
+        "methods": [
+          100663301,
+          100663299
+        ],
+        "issues": [
+          {
+            "methodToken": 100663301,
+            "method": "Program::<Main>",
+            "offset": 5,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Threading.Tasks.Task::GetAwaiter' is not implemented"
+          },
+          {
+            "methodToken": 100663301,
+            "method": "Program::<Main>",
+            "offset": 13,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.TaskAwaiter::GetResult' is not implemented"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 2,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Create' is not implemented"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 29,
+            "code": "IL_TOKEN",
+            "message": "Struct generic arguments require a static Apply<T>(ref T, ...) constrained interface forwarder"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 41,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::get_Task' is not implemented"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Retention",
+      "mode": "Debug",
+      "sourceSha256": "2b734b4548e5a49a18441c54ba053ec5b1f256c83655724ebc8cc3d3a2c016e2",
+      "assemblySha256": "c3714784fb98a8397d9773b4573e3f0882d625a1bbf7d0de07cf2d6a46e4eb61",
+      "bytes": 6144,
+      "compilerOutput": "",
+      "output": "retained\n1\n",
+      "machines": [
+        {
+          "name": "Program+<Main>d__2",
+          "base": "System.Object",
+          "methods": [
+            {
+              "name": ".ctor",
+              "token": 100663302
+            },
+            {
+              "name": "MoveNext",
+              "token": 100663303
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663304
+            }
+          ]
+        },
+        {
+          "name": "Program+<Work>d__1",
+          "base": "System.Object",
+          "methods": [
+            {
+              "name": ".ctor",
+              "token": 100663305
+            },
+            {
+              "name": "MoveNext",
+              "token": 100663306
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663307
+            }
+          ]
+        }
+      ],
+      "verifier": {
+        "success": false,
+        "methods": [
+          100663301,
+          100663299,
+          100663302
+        ],
+        "issues": [
+          {
+            "methodToken": 100663301,
+            "method": "Program::<Main>",
+            "offset": 5,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Threading.Tasks.Task::GetAwaiter' is not implemented"
+          },
+          {
+            "methodToken": 100663301,
+            "method": "Program::<Main>",
+            "offset": 13,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.TaskAwaiter::GetResult' is not implemented"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 7,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Create' is not implemented"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 32,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Start' is not implemented"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 43,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::get_Task' is not implemented"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Retention",
+      "mode": "Release",
+      "sourceSha256": "2b734b4548e5a49a18441c54ba053ec5b1f256c83655724ebc8cc3d3a2c016e2",
+      "assemblySha256": "63de815e3fbb454bcec4706ff869d79517991e02af6fb9051136275b638eaf68",
+      "bytes": 6144,
+      "compilerOutput": "",
+      "output": "retained\n1\n",
+      "machines": [
+        {
+          "name": "Program+<Main>d__2",
+          "base": "System.ValueType",
+          "methods": [
+            {
+              "name": "MoveNext",
+              "token": 100663302
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663303
+            }
+          ]
+        },
+        {
+          "name": "Program+<Work>d__1",
+          "base": "System.ValueType",
+          "methods": [
+            {
+              "name": "MoveNext",
+              "token": 100663304
+            },
+            {
+              "name": "SetStateMachine",
+              "token": 100663305
+            }
+          ]
+        }
+      ],
+      "verifier": {
+        "success": false,
+        "methods": [
+          100663301,
+          100663299
+        ],
+        "issues": [
+          {
+            "methodToken": 100663301,
+            "method": "Program::<Main>",
+            "offset": 5,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Threading.Tasks.Task::GetAwaiter' is not implemented"
+          },
+          {
+            "methodToken": 100663301,
+            "method": "Program::<Main>",
+            "offset": 13,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.TaskAwaiter::GetResult' is not implemented"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 2,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Create' is not implemented"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 29,
+            "code": "IL_TOKEN",
+            "message": "Struct generic arguments require a static Apply<T>(ref T, ...) constrained interface forwarder"
+          },
+          {
+            "methodToken": 100663299,
+            "method": "Program::Main",
+            "offset": 41,
+            "code": "IL_REFERENCE",
+            "message": "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::get_Task' is not implemented"
+          }
+        ]
+      }
+    }
+  ],
+  "fullCaptureSha256": "fa0d95e08b40bef56fa2565e500faf2c672a40ec1499b6c927f5924b94530b07",
+  "commands": [
+    "DOTNET_ROOT=<SDK root> DOTNET=<dotnet> node scripts/limited.js node --test tests/a05-cil-async-native.test.js",
+    "DOTNET_ROOT=<SDK root> DOTNET=<dotnet> node scripts/limited.js node tests/fixtures/cil-async/capture.mjs <output-directory>"
+  ],
+  "focusedTests": {
+    "passed": 0,
+    "failed": 6,
+    "skipped": 0,
+    "durationMs": 10123.728789,
+    "logSha256": "7daa76ce4278ee9c78de362aca0affa2907493d55b0d260b60abdf06c22dde09"
+  }
+}

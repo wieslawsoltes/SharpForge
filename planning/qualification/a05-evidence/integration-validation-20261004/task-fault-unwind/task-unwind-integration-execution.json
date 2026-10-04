@@ -1,0 +1,60 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "task-unwind-integration",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/compiler-lowering-async.test.js",
+    "tests/compiler-lowering-async-streams.test.js",
+    "tests/a05-task-fault-unwind.test.js",
+    "tests/a05-04-exceptions.test.js",
+    "tests/a05-source-filters.test.js",
+    "tests/a05-exception-events.test.js",
+    "tests/a05-source-exception-events.test.js",
+    "tests/a05-first-chance-unwind-policy.test.js",
+    "tests/a05-default-stack-budget.test.js",
+    "tests/debugger.test.js",
+    "tests/a05-async-registration-retirement.test.js",
+    "tests/a05-ordinary-return-control.test.js",
+    "tests/a05-ordinary-return-lifetime.test.js"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": "net10.0",
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "867fc2493620de9c375f6f01bc6b3506f70f6168",
+    "tree": "2b7535d9daf5bd7653372bf633cfd50821929868",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T21:37:51.258182+00:00",
+  "completedUTC": "2026-10-04T21:38:13.945391+00:00",
+  "elapsedSeconds": 22.686981146995095,
+  "exitCode": 1,
+  "endIdentity": {
+    "commit": "867fc2493620de9c375f6f01bc6b3506f70f6168",
+    "tree": "2b7535d9daf5bd7653372bf633cfd50821929868",
+    "status": ""
+  },
+  "artifact": {
+    "path": "task-unwind-integration.log",
+    "bytes": 37493,
+    "sha256": "3432bd922bebe233fc72d9cb2b6c94e20a95463200a8f91f2e51599667cba300"
+  }
+}

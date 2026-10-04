@@ -9,6 +9,7 @@ import {invokeDelegate} from './execution/delegate-invocations.js';
 import {startAsyncContext} from './execution/async-start.js';
 import {postAsyncFault,flushAsyncFault} from './execution/scheduler-async-faults.js';
 import {completeTask,taskFailure} from './execution/scheduler-task-delivery.js';
+import {resumeScheduledFault} from './execution/task-fault-boundary.js';
 import {afterSchedulerInstruction,schedulerNextDelay} from './execution/scheduler-boundary.js';
 import {ManagedFault} from './heap.js';
 import {SUSPENDED} from './platform.js';
@@ -39,18 +40,18 @@ export class CooperativeScheduler {
     const t={id,ref,status:'waiting',resultType,result:null,error:null,waiters:new Set(),created:this.now(),...extra};this.tasks.set(id,t);return t;
   }
   complete(task,result=null,error=null,canceled=false){return completeTask(this,task,result,error,canceled);}
-  failure(task){return taskFailure(this,task);}
+  failure(task,mode=null){return taskFailure(this,task,mode);}
   enqueue(delegate,args=[],options={}){return enqueueContext(this,delegate,args,options,contextFields);}
   enqueueCall(methodToken,args=[],options={}){return enqueueContext(this,null,args,{...options,methodToken},contextFields);}
   callDelegate(delegate,args){return invokeDelegate(this.vm,delegate,args);}
   postAsyncFault(error){return postAsyncFault(this,error);}
   flushAsyncFault(){return flushAsyncFault(this);}
-  wait(ref,{pushResult=true,voidResult=false,forceYield=false}={}){
-    const t=this.taskRecord(ref);if(terminal.has(t.status)&&!forceYield){if(t.status!=='completed')throw this.failure(t);return voidResult?null:t.result;}
+  wait(ref,{pushResult=true,voidResult=false,forceYield=false,failureMode=null}={}){
+    const t=this.taskRecord(ref);if(terminal.has(t.status)&&!forceYield){if(t.status!=='completed')throw this.failure(t,failureMode);return voidResult?null:t.result;}
     if(this.suppressed)throw new ManagedFault('InvalidOperationException','A pending task cannot be awaited during synchronous function evaluation');
     this.ensure();const c=this.current;if(c.task&&key(c.task)===key(ref))throw new ManagedFault('InvalidOperationException','A task cannot await itself');
     let next=t;const visited=new Set();while(next?.contextId&&!visited.has(next.id)){visited.add(next.id);const other=this.contexts.get(next.contextId);if(other?.id===c.id)throw new ManagedFault('InvalidOperationException','Cyclic task wait');next=other?.wait?this.taskRecord(other.wait.task):null;}
-    c.wait={task:ref,pushResult,voidResult};c.status='waiting';t.waiters.add(c.id);
+    c.wait={task:ref,pushResult,voidResult,failureMode};c.status='waiting';t.waiters.add(c.id);
     if(forceYield&&terminal.has(t.status)){t.status='waiting';t.deadline=this.now();t.readyTurn=this.turn+1;}
     this.save();return SUSPENDED;
   }
@@ -73,14 +74,14 @@ export class CooperativeScheduler {
     if(d.kind==='await')return this.wait(values[0],{pushResult:wantsResult,voidResult:d.result==='void',forceYield:!!this.taskRecord(values[0]).forceYield});
     if(d.kind==='get'){
       if(d.property==='CompletedTask'){const t=this.createTask();this.complete(t);return t.ref;}
-      const t=this.taskRecord(ref);if(d.property==='Result')return this.wait(ref,{pushResult:true});
+      const t=this.taskRecord(ref);if(d.property==='Result')return this.wait(ref,{pushResult:true,failureMode:'aggregate'});
       if(d.property==='Id')return t.id;
       return p.managed(d.property==='IsCompleted'?terminal.has(t.status):d.property==='IsFaulted'?t.status==='faulted':t.status==='canceled','bool');
     }
-    if(d.name==='Wait')return this.wait(ref,{pushResult:wantsResult,voidResult:true});
+    if(d.name==='Wait')return this.wait(ref,{pushResult:wantsResult,voidResult:true,failureMode:'aggregate'});
     if(d.name==='Delay'||d.name==='Yield'){
-      const ms=d.name==='Yield'?0:Number(n(values[0]));if(!Number.isInteger(ms)||ms<0||ms>86400000)throw new ManagedFault('ArgumentOutOfRangeException','Delay duration must be 0–86400000 milliseconds');
-      const t=this.createTask('void',{deadline:this.now()+ms,readyTurn:this.turn+1,forceYield:d.name==='Yield'});if(ms===0&&d.name!=='Yield')this.complete(t);return t.ref;
+      const ms=d.name==='Yield'?0:Number(n(values[0]));if(!Number.isInteger(ms)||ms < -1||ms>2147483647)throw new ManagedFault('ArgumentOutOfRangeException','Delay duration must be -1 or a nonnegative Int32');
+      const t=this.createTask('void',{...(ms===-1?{}:{deadline:this.now()+ms}),readyTurn:this.turn+1,forceYield:d.name==='Yield'});if(ms===0&&d.name!=='Yield')this.complete(t);return t.ref;
     }
     if(d.name==='FromResult'){const t=this.createTask(taskResult(d.result));this.complete(t,values[0]);return t.ref;}
     if(d.name==='WhenAll'||d.name==='WhenAny'){
@@ -104,7 +105,7 @@ export class CooperativeScheduler {
     return null;
   }
   beforeSlice(){if(this.flushAsyncFault()||!this.enabled||this.suppressed)return;if(['running','ready'].includes(this.vm.state)&&this.current?.frozen){this.save();this.current.status='ready';const next=this.choose();if(next){this.load(next);return;}parkContext(this);}if(this.vm.state!=='waiting')return;this.turn++;this.poll();const next=this.choose();if(next)this.load(next);}
-  beforeInstruction(){if(!this.enabled||this.suppressed)return;const c=this.current;if(c?.resumeFault){const error=c.resumeFault;c.resumeFault=null;if(this.vm.inspector)this.vm.raise(error);else this.vm.handleFault(error);}}
+  beforeInstruction(){if(this.enabled&&!this.suppressed)resumeScheduledFault(this);}
   afterInstruction(){return afterSchedulerInstruction(this);}
   freeze(id,frozen=true){this.ensure();const c=this.contexts.get(id);if(!c||terminal.has(c.status))throw new ManagedFault('InvalidOperationException','No live logical context');c.frozen=!!frozen;return this.threads();}
   nextDelay(){return schedulerNextDelay(this);}

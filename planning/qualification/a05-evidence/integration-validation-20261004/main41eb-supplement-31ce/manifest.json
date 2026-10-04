@@ -1,0 +1,158 @@
+{
+  "format": "SharpForge.A05ValidationArchive/1",
+  "scope": "Completed failing17-file supplement after interrupted full A05 attempt",
+  "completion": "complete",
+  "exitCode": 1,
+  "testedIdentity": {
+    "commit": "31ce9e74482310f26efd8ee582931dc93b32f924",
+    "tree": "ce145ed06ecfb80590f14699254f4b4451b80cd8",
+    "status": ""
+  },
+  "rawArtifacts": [
+    {
+      "path": "dispatch-parity-debugger-supplement.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/dispatch-parity-debugger-supplement.log",
+      "bytes": 145432,
+      "sha256": "656975cceddcd9d466e70c2ba8dad86ffed03cabf1237eaf6429e6e8c46b6db3"
+    },
+    {
+      "path": "dispatch-parity-debugger-supplement-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/dispatch-parity-debugger-supplement-execution.json",
+      "bytes": 2323,
+      "sha256": "e70866900e8c1662fa1ce0e7893b040a48a9bc60b49998031412721dedd7cf99"
+    }
+  ],
+  "result": {
+    "tests": 781,
+    "passed": 779,
+    "failed": 2,
+    "skipped": 0,
+    "testDurationMilliseconds": 67001.154921,
+    "wallSeconds": 67.17545465800504
+  },
+  "observedFailures": [
+    {
+      "number": 253,
+      "name": "source: evaluation rollback restores target state, output and history",
+      "reason": "Cannot snapshot during an active platform transaction",
+      "path": "tests/debugger-advanced.test.js:28:2"
+    },
+    {
+      "number": 266,
+      "name": "CIL: evaluation rollback restores target state, output and history",
+      "reason": "Cannot snapshot during an active platform transaction",
+      "path": "tests/debugger-advanced.test.js:28:2"
+    }
+  ],
+  "selectedTestSourceProof": [
+    {
+      "path": "tests/a05-source-interface-dispatch.test.js",
+      "gitBlob": "6f0b709112f06106fc614e68c3714d6c3995d39d",
+      "bytes": 5359,
+      "sha256": "03e36827c982c1a7b7ef05b7a57d43e18429b26b62673c2af81746503a6dd0a7"
+    },
+    {
+      "path": "tests/a05-source-generic-interface-methods.test.js",
+      "gitBlob": "4a9214d45bcd4962b5f5a43a25ec4034e97fecc5",
+      "bytes": 6478,
+      "sha256": "8b1ae9860c1a7312ce46f63c5434d6ed2bb55b0899e24ba1437f6a25ea44af8b"
+    },
+    {
+      "path": "tests/a05-managed-state-machine-layout.test.js",
+      "gitBlob": "16c6eff02cf17b5388b7e419553aceefdad35250",
+      "bytes": 7651,
+      "sha256": "7c82b97f4d6d3036960d2b3e500330e21650c266842534599f3b98bae1958f24"
+    },
+    {
+      "path": "tests/a05-cil-async-profile.test.js",
+      "gitBlob": "469cf970cd984bc3e0403eafbc523c439712a224",
+      "bytes": 6352,
+      "sha256": "c7e077d7048a1e05348a80d27ff09bf21a2db400b3599e4399be78fd68a03d07"
+    },
+    {
+      "path": "tests/a05-cil-async-native.test.js",
+      "gitBlob": "a3d7271536742c80573201d6c4430c657967a4e5",
+      "bytes": 5303,
+      "sha256": "9e7b4e3f4d1e6f85ad594f8b1dd0d67766cd9ff6c47e6b654f808e2fa908885e"
+    },
+    {
+      "path": "tests/a05-managed-object-string.test.js",
+      "gitBlob": "937909350d2ced5d73c50a3eee8d1c453f400d87",
+      "bytes": 5577,
+      "sha256": "4dc5fcbe1bbbc05611ddd3a18173e44824483132201ff0d339878ceb514379be"
+    },
+    {
+      "path": "tests/a05-cil-async-continuation-roots.test.js",
+      "gitBlob": "dd19690f8637617cb5df1bfe581533d638e595dc",
+      "bytes": 3580,
+      "sha256": "41c525101931f5fcc56ed2bb784f98e7838ebd6301d127a4e547c160fb1932c5"
+    },
+    {
+      "path": "tests/a05-roslyn-async-admission.test.js",
+      "gitBlob": "6b3e9a2108db761078ea30942e69ee62d2705ba1",
+      "bytes": 5162,
+      "sha256": "db095e804039ec997846dab6f25925ef67ea2b8dff292890c085b0833e23e978"
+    },
+    {
+      "path": "tests/engine-parity.test.js",
+      "gitBlob": "e9f40c374ead6d4585fb13f9cedb8a403e4c290a",
+      "bytes": 6340,
+      "sha256": "0f3e1fd3ffc3b2866b08486480d140a1b00e115da1916de9496027bbcbf7e16e"
+    },
+    {
+      "path": "tests/a05-engine-parity-contracts.test.js",
+      "gitBlob": "1dd745dd01916b46d16120fd743ddcd7bc870728",
+      "bytes": 1937,
+      "sha256": "72f7c04cdc8cada0fcb45076cacbd2f17d03d68d68167f2c7190b5979a088539"
+    },
+    {
+      "path": "tests/compiler.test.js",
+      "gitBlob": "32f05465811bdc729d05dc73840d1a031f4aac3e",
+      "bytes": 2940,
+      "sha256": "0c68e78eae317be0afb3915577a5478538d95fc67e9fe1d6316de3cc7d4f1f07"
+    },
+    {
+      "path": "tests/release05-language.test.js",
+      "gitBlob": "5dc4a417f8e372a8c6a160050164c5bb40e81ae0",
+      "bytes": 1696,
+      "sha256": "45e13415c46309c7399f0ed87b4d3063b11688d254b3b09bcaa0ba763b952460"
+    },
+    {
+      "path": "tests/a05-debugger-array-children.test.js",
+      "gitBlob": "f82fbf56d4ebb331de7fa02d7a8af0d875351408",
+      "bytes": 3278,
+      "sha256": "cc2f25c5a189870324fa883a2428b784b4f47b7c20a9733fda0e3d8ac70699b0"
+    },
+    {
+      "path": "tests/debugger.test.js",
+      "gitBlob": "7a3bd2704c60e4fa80e5fb6d667f870ff49f9840",
+      "bytes": 7409,
+      "sha256": "933374b4acd11a47166d685d136fa1e713046b390b6c44b59ee3b168f12f3fe6"
+    },
+    {
+      "path": "tests/debugger-advanced.test.js",
+      "gitBlob": "85e2ae6c2ab8962b67f8313a1e6041c1325f8065",
+      "bytes": 7807,
+      "sha256": "32383709c6dff28f81c4c857fb32531702b1be3c6e51ef04a0a0a14f5834a9f3"
+    },
+    {
+      "path": "tests/conformance/security/limits.test.js",
+      "gitBlob": "846f36cf4d7f637c1b064249b632172320176351",
+      "bytes": 16211,
+      "sha256": "dbfdde8c5fad03bd276ae36948fd8d9653c42f19d21fad9b76ce52871310b00a"
+    },
+    {
+      "path": "tests/a05-task-fault-unwind.test.js",
+      "gitBlob": "0ffdd75167828a00b82d4ad2e5d588dc415d111e",
+      "bytes": 6573,
+      "sha256": "9edd04b1a985467acf34197884c46a495e15447332e2ecb94f42fad5e4a77a81"
+    }
+  ],
+  "originalIncompleteAttempt": "../main41eb-full-a05-incomplete-001a/",
+  "limitations": [
+    "A completed failing supplement does not complete the earlier interrupted full manifest attempt.",
+    "The two debugger transaction/history failures remain failures in this capture.",
+    "No full A05, all-platform, release-size or performance qualification is claimed.",
+    "No rerun was performed while preparing this archive."
+  ]
+}

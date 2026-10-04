@@ -1,4 +1,5 @@
 import {finishControlContext} from './scheduler-context-completion.js';
+import {cancelAsyncTask} from './async-continuation-roots.js';
 import {retirePooledFrame, flushFramePool, clearFramePool} from './frame-pool.js';
 import {releaseStackFrame, clearStackBudget} from './stack-budget.js';
 import {forgetContextSuspension} from './context-events.js';
@@ -83,6 +84,7 @@ export function cancelContexts(scheduler) {
     context.wait = null;
   }
   for (const task of scheduler.tasks.values()) {
+    cancelAsyncTask(task);
     if (!terminal.has(task.status)) scheduler.complete(task, null, null, true);
   }
 }

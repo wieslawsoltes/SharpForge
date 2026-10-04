@@ -1,0 +1,156 @@
+✔ prepared CIL storage authority is opaque, owned by metadata, and isolated between VM pools (44.925844ms)
+✔ prepared CIL storage rejects stale shape, code owner and discarded pools (5.070049ms)
+✔ prepared CIL retirement revokes memory leases and preserves deferred roots until scrub (6.974126ms)
+✔ a new local shape discards cached storage and prevents late retirement into the old bucket (4.590545ms)
+✔ prepared CIL scrub matches ordinary deletion, nonenumerability, inherited getters and setter order (4.387005ms)
+✔ prepared CIL buckets preserve retention budgets and follow current stack capacity (23.054441ms)
+✔ invalid stack byte limit 0 is rejected at admission (17.000597ms)
+✔ invalid stack byte limit 15 is rejected at admission (2.133794ms)
+✔ invalid stack byte limit -1 is rejected at admission (1.451633ms)
+✔ invalid stack byte limit 1.5 is rejected at admission (1.340449ms)
+✔ invalid stack byte limit NaN is rejected at admission (1.709872ms)
+✔ invalid stack byte limit Infinity is rejected at admission (1.227914ms)
+✔ invalid stack byte limit 24 is rejected at admission (1.049812ms)
+✔ invalid stack byte limit null is rejected at admission (0.807716ms)
+✔ zero-peak frames fit sixteen bytes, a single evaluation slot requires twenty-four (13.863348ms)
+✔ byte accounting follows reserved verified capacity, including inflated CLI headers (2.004836ms)
+✔ rejected recursive call allocates no frame and leaves the caller inspectable (1.343885ms)
+✔ argument normalization failure rolls back its provisional reservation (3.797709ms)
+✔ Decimal, native integers and managed addresses use metadata storage widths (32-bit ABI) (3.288221ms)
+✔ Decimal, native integers and managed addresses use metadata storage widths (64-bit ABI) (2.037634ms)
+✔ concrete instantiated signatures determine Decimal argument and local charges (2.131331ms)
+✔ lowered and invalid live limits reject before dispatch or direct push (1.850889ms)
+✔ turning on a byte limit accounts existing frames; removing it restores default admission (1.107477ms)
+✔ snapshot rejection precedes heap/frame mutation, and successful replay reconstructs live charges (7.710428ms)
+✔ parked contexts count against the VM total and parked snapshots are preflighted (15.980418ms)
+✔ replaced unverified bodies reserve their checked fallback rather than stale verified capacity (1.183339ms)
+✔ exception unwind releases a callee before the next call uses the same byte budget (8.174901ms)
+✔ admission while enqueue switches frame arrays still accounts the parent context (2.27322ms)
+✔ host replacement of locals triggers byte admission before the next instruction (1.379227ms)
+✔ host replacement of signature triggers byte admission before the next instruction (1.127036ms)
+✔ host replacement of parameters triggers byte admission before the next instruction (9.414221ms)
+✔ CIL: parked frames remain live until natural return (37.675978ms)
+✔ CIL: parked frames remain live until cancellation (5.436557ms)
+✔ CIL: retirement clears late fields and stop preserves fatal inspection until disposal (2.611337ms)
+✔ source: exception unwinding releases callee roots before reuse (126.588004ms)
+✔ cil: exception unwinding releases callee roots before reuse (27.684032ms)
+✔ source: indexed lookup does not enumerate active frames or logical contexts (115.826209ms)
+✔ source: logical retirement expires identity before deferred clearing and pool reuse (1.951137ms)
+✔ source: provisional enqueue preserves parent roots and atomically discards admitted children (5.652355ms)
+✔ source: queued contexts keep both frame sets live across activation and cancellation (1.410773ms)
+✔ source: parked frame identity survives freeze and restore, and expires at cancellation (8.070236ms)
+✔ source: terminal context disposal retires active storage before another context can run (0.792835ms)
+✔ source: detached host-edited arrays cannot keep expired frames addressable (0.539612ms)
+✔ source: malformed identity restores leave frames, pools and lookup unchanged (1.660249ms)
+✔ source: exhausted identity sequences reject calls without admitting an unsafe integer (0.514506ms)
+✔ reload: indexed lookup does not enumerate active frames or logical contexts (13.059422ms)
+✔ reload: logical retirement expires identity before deferred clearing and pool reuse (4.8667ms)
+✔ reload: provisional enqueue preserves parent roots and atomically discards admitted children (4.345334ms)
+✔ reload: queued contexts keep both frame sets live across activation and cancellation (3.504889ms)
+✔ reload: parked frame identity survives freeze and restore, and expires at cancellation (4.334138ms)
+✔ reload: terminal context disposal retires active storage before another context can run (3.499642ms)
+✔ reload: detached host-edited arrays cannot keep expired frames addressable (3.09772ms)
+✔ reload: malformed identity restores leave frames, pools and lookup unchanged (5.689469ms)
+✔ reload: exhausted identity sequences reject calls without admitting an unsafe integer (4.430399ms)
+✔ cil: indexed lookup does not enumerate active frames or logical contexts (18.632384ms)
+✔ cil: logical retirement expires identity before deferred clearing and pool reuse (2.925408ms)
+✔ cil: provisional enqueue preserves parent roots and atomically discards admitted children (4.592718ms)
+✔ cil: queued contexts keep both frame sets live across activation and cancellation (5.012815ms)
+✔ cil: parked frame identity survives freeze and restore, and expires at cancellation (4.590524ms)
+✔ cil: terminal context disposal retires active storage before another context can run (2.117722ms)
+✔ cil: detached host-edited arrays cannot keep expired frames addressable (6.775234ms)
+✔ cil: malformed identity restores leave frames, pools and lookup unchanged (1.999307ms)
+✔ cil: exhausted identity sequences reject calls without admitting an unsafe integer (1.410362ms)
+✔ CIL managed byrefs retain ownership and resolve restored frames instead of abandoned storage (10.255017ms)
+✔ captured context identities reject aliasing, sequence violations and divergent current stacks (0.424854ms)
+✔ invalid managed sequence values do not mutate the sequence (0.2313ms)
+✔ constant elision or argument normalization fallback preserves execution: null (40.981594ms)
+✔ constant elision or argument normalization fallback preserves execution: -17 (12.065086ms)
+✔ constant elision or argument normalization fallback preserves execution: 2147483647 (14.506752ms)
+✔ warm calls remain eligible after a pristine physical leaf has returned (14.680247ms)
+✔ logical admission preserves quota/identity failures at the call instruction (6.739252ms)
+✔ logical admission preserves quota/identity failures at the call instruction (6.087463ms)
+✔ logical admission preserves quota/identity failures at the call instruction (7.075535ms)
+✔ logical admission preserves quota/identity failures at the call instruction (5.269112ms)
+✔ instruction quota preserves partial leaf frames with 0 instructions left (5.285155ms)
+✔ instruction quota preserves partial leaf frames with 1 instructions left (4.81196ms)
+✔ instruction quota preserves partial leaf frames with 2 instructions left (4.924866ms)
+✔ instruction quota preserves partial leaf frames with 3 instructions left (5.766161ms)
+✖ one-instruction slices expose every leaf instruction and restore keeps ordinary execution (19.759229ms)
+✔ observed or non-raw execution stays on the physical path: {"profile":true} (6.545085ms)
+✔ observed or non-raw execution stays on the physical path: {"runtimeEvents":true} (5.939096ms)
+✔ observed or non-raw execution stays on the physical path: {"gcStress":"instruction"} (8.76643ms)
+✔ observed or non-raw execution stays on the physical path: {"typedNumericStack":true} (8.856812ms)
+✔ observed or non-raw execution stays on the physical path: {"preparedLeafCalls":false} (5.093503ms)
+✔ a host call override prevents physical-frame elision (7.608478ms)
+✔ a host step override prevents physical-frame elision (4.105813ms)
+✔ a host push override prevents physical-frame elision (3.338646ms)
+✔ a host pop override prevents physical-frame elision (3.34225ms)
+✔ a host storage override prevents physical-frame elision (4.306547ms)
+✔ a host slotType override prevents physical-frame elision (2.635812ms)
+✔ a host ensureInitialized override prevents physical-frame elision (3.797469ms)
+✔ turning an observer off does not skip setters on a retained physical frame (8.848159ms)
+✔ edited metadata, inspector adapters and execution epochs invalidate the original leaf proof (16.625937ms)
+✔ pool proof is read-only, remains warm with scratch buffers, and rejects retained storage customization (2.778252ms)
+✔ inherited quota getters and exposed identity-map adapters retain the physical call path (22.149091ms)
+✔ a stale private prepared binding cannot authenticate a replacement public bucket (3.518239ms)
+✔ leaf opt-out and code invalidation discard eligibility without fabricating physical counters (14.596946ms)
+✔ retained exposed identity records keep their registration and retirement callbacks (9.11405ms)
+✔ receiver callbacks cannot borrow or reuse an outer opcode allowance for direct invoke (4.960297ms)
+✔ prepared virtual calls preserve managed events, exact instruction counts and GC boundaries (48.368061ms)
+✔ prepared call failure keeps ordinary quota and frame behavior {"maxFrames":2} (7.784016ms)
+✔ prepared call failure keeps ordinary quota and frame behavior {"maxStackBytes":192} (15.602552ms)
+✔ prepared call failure keeps ordinary quota and frame behavior {"maxInstructions":24} (10.458005ms)
+✔ one-instruction slices expose the prepared callee and restored execution rebuilds the call setup (23.34699ms)
+✔ prepared direct frame entry normalizes arguments while the caller stack retains receiver roots (23.732457ms)
+✔ a own host call hook continues to observe every prepared virtual target (10.532093ms)
+✔ a subclass host call hook continues to observe every prepared virtual target (8.86909ms)
+✔ a prototype host call hook continues to observe every prepared virtual target (8.675055ms)
+✔ reference transformation deletes only reviewed consumers and preserves runtime cleanup (15.052495ms)
+✔ reference creation refuses unknown hook sites and newly introduced profiler behavior (0.954071ms)
+✔ numeric block reference retains all non-profiler observation guards (0.192113ms)
+✔ object-value reference preserves reviewed CIL work and source fault/cleanup boundaries (0.235235ms)
+✔ reviewed array continuation hooks preserve their exact resume/result and fault-cleanup semantics (0.287653ms)
+✔ profiler reference rejects oversized input before parsing or importing another runtime (2.657314ms)
+✔ source dispatch reference removes only the exact reviewed profiling wrapper and keeps dispatch selection (0.46271ms)
+✔ leaf-call reference removes exactly one profiler guard and preserves every other eligibility barrier (0.603227ms)
+ℹ tests 116
+ℹ suites 0
+ℹ pass 115
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5825.22397
+
+✖ failing tests:
+
+test at tests/a05-prepared-leaf-elision.test.js:99:1
+✖ one-instruction slices expose every leaf instruction and restore keeps ordinary execution (19.759229ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fault: undefined,
+  +   frameId: 45,
+  -   frameId: 25,
+      frames: [],
+      instructions: 86,
+      state: 'terminated',
+      value: 6
+    }
+  
+      at TestContext.<anonymous> (file:///tmp/a05-virtual-witness-42f7738360b9/tests/a05-prepared-leaf-elision.test.js:123:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { state: 'terminated', value: 6, instructions: 86, frameId: 45, fault: undefined, frames: [] },
+    expected: { state: 'terminated', value: 6, instructions: 86, frameId: 25, fault: undefined, frames: [] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

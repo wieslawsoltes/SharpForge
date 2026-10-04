@@ -1,0 +1,411 @@
+{
+  "format": "SharpForge.A05EvidenceArchive/1",
+  "scope": "Completed pre-optimization priority qualifications and bounded CPU diagnostics; raw inputs copied without modification.",
+  "revision": "10d710b349d581b88c0013ce8571bd963bfdb839",
+  "tree": "45d4897ecdffb72b3ea738e87b935f25218850af",
+  "archiveCreatedAt": "2026-10-04",
+  "rawFiles": 57,
+  "rawBytes": 2160010,
+  "provenanceNote": "This manifest and README are additive archival metadata. Existing reports/journals retain their actual paths, argv, outcomes and limitations.",
+  "files": [
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-priority-main41eb-20261004/source-fibonacci-100-execution.json",
+      "archivedPath": "priority/source-fibonacci-100-execution.json",
+      "bytes": 1792,
+      "sha256": "69cfc36b14c1d06b948d544ab3d62353c49044be1162a632c5fd10b8cef071f1",
+      "gitBlobSha1": "56db813741caa8c83ec110f00d4f1e6d9fed9b3d"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-priority-main41eb-20261004/source-fibonacci-100.json",
+      "archivedPath": "priority/source-fibonacci-100.json",
+      "bytes": 226062,
+      "sha256": "c25a06496fc58c9ab9f7ba4a328b89a3d139f1f8f47efadbf108f7c30751071c",
+      "gitBlobSha1": "7365c2562b2d2ba03826060523e1ccd7310b772d"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-priority-main41eb-20261004/source-fibonacci-100.log",
+      "archivedPath": "priority/source-fibonacci-100.log",
+      "bytes": 156,
+      "sha256": "e84c50b41ab13c91c6ea8512d10db8ed69f48a127da8d0fbc338110f4f4516f6",
+      "gitBlobSha1": "a46d406f7d10221fd2015eee4a6f8f9ed2be55c6"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-priority-main41eb-20261004/virtual-cache-100-execution.json",
+      "archivedPath": "priority/virtual-cache-100-execution.json",
+      "bytes": 1779,
+      "sha256": "24b863b2b4743bab8f6e01b8e00669caf6e70906fd3ade7412b0f88f96f4497b",
+      "gitBlobSha1": "038f660e4c24e0c5e12b6c05455f39282103ee2d"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-priority-main41eb-20261004/virtual-cache-100.json",
+      "archivedPath": "priority/virtual-cache-100.json",
+      "bytes": 225834,
+      "sha256": "2e500aaa483e13a23c14d2e230b78a8e4ae676e640ba39fa42677ed16554d0ee",
+      "gitBlobSha1": "09a429b539c0f9899bd0060c6b1377a3ee359969"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-priority-main41eb-20261004/virtual-cache-100.log",
+      "archivedPath": "priority/virtual-cache-100.log",
+      "bytes": 138,
+      "sha256": "4a50c072c4efabc9a49ea5c88d80b2cd3cd7a813d763be967b2114b96a933478",
+      "gitBlobSha1": "29bb74504cca0688ac566bea16a825b40a453cce"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/candidate.cpuprofile",
+      "archivedPath": "virtual-cpu/candidate.cpuprofile",
+      "bytes": 195922,
+      "sha256": "bd6dcc318638cac47dda0ac7d886794e274157a020555486149145af1f047acc",
+      "gitBlobSha1": "79c1e7637aecb1bc11b7b77d6daadb7284564075"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/checkout-before.json",
+      "archivedPath": "virtual-cpu/checkout-before.json",
+      "bytes": 9090,
+      "sha256": "8d0fb03c3eb7d3a5e80e924e988a09c9932b035689583c074338146ce6be4b63",
+      "gitBlobSha1": "f989ff7536151b85be7cbd2f54d7d3c73165077b"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/driver.mjs",
+      "archivedPath": "virtual-cpu/driver.mjs.txt",
+      "bytes": 3207,
+      "sha256": "e6a25e48bae8401b944a2e27affc5f31e91884e98bd1eb77d468c38e7d0bb400",
+      "gitBlobSha1": "86491f99e2a846970e5d2f31c1104bcf0f8656b2"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/guest-summary.json",
+      "archivedPath": "virtual-cpu/guest-summary.json",
+      "bytes": 93176,
+      "sha256": "8a719035ee4f05935defe19673c9559ddb1e2e378d8c409f3f4531f445eb70b3",
+      "gitBlobSha1": "4c4a5d8aa83e9b872d5aff761f8f9806f1bf0004"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/observation.json",
+      "archivedPath": "virtual-cpu/observation.json",
+      "bytes": 1842,
+      "sha256": "36446320bd5b15f0099e5a7aa467c1a699946e4c05e029ec191ab1d68c3d1c5c",
+      "gitBlobSha1": "737c9efd6e7bebbad4d31d8b0cb1c3511e82cd00"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/profile-execution.json",
+      "archivedPath": "virtual-cpu/profile-execution.json",
+      "bytes": 1281,
+      "sha256": "d0fae935ea2c2e3ff2de66aebef6d1a52ddcdad6dec64d4229e8fb4501ba6e71",
+      "gitBlobSha1": "a892843df419cace00b2f7cf192e3102340a7146"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/profile.log",
+      "archivedPath": "virtual-cpu/profile.log",
+      "bytes": 106,
+      "sha256": "523a19a5e9337047d7a7fbd305eccd0e26b742564e884a742881ae2c4cd6e72d",
+      "gitBlobSha1": "33f752317737b6aecfac162a3720341ed4aa787b"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-00.cpuprofile",
+      "archivedPath": "source-cpu/baseline-00.cpuprofile",
+      "bytes": 34306,
+      "sha256": "41b8f77763d34b8433068bfeb391b549b6880e1d0ae48c259a2ac82a13e92e63",
+      "gitBlobSha1": "27e9732b0a8640054ae4d37160247175a6286335"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-01.cpuprofile",
+      "archivedPath": "source-cpu/baseline-01.cpuprofile",
+      "bytes": 34237,
+      "sha256": "76fa868538caef20c1a0492331f3f6e6b91fbf65b54bb66929ad13c8872e5618",
+      "gitBlobSha1": "cce8a0fb3ff7d7e512c9cbed94b6c4f1231182ac"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-02.cpuprofile",
+      "archivedPath": "source-cpu/baseline-02.cpuprofile",
+      "bytes": 34865,
+      "sha256": "2a515968852f5ea106a59a233e12844f5abbb953b58218af0a3b99c2f32a081e",
+      "gitBlobSha1": "0e7e2b66661f9eec061fd46aa21dc3cfa3f2175a"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-03.cpuprofile",
+      "archivedPath": "source-cpu/baseline-03.cpuprofile",
+      "bytes": 35013,
+      "sha256": "f5369fb4e55be60b989bbc4a6e9b9364c4eb42a06110fcf8b07702265551da88",
+      "gitBlobSha1": "599719fd6a0e458b94eab2fe1bcd38a5fa22a7b0"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-04.cpuprofile",
+      "archivedPath": "source-cpu/baseline-04.cpuprofile",
+      "bytes": 34017,
+      "sha256": "1fcc8ca6d46b4600b9ee604f8eeef52d201662cd1e0b52bb3f9bfab7ea4b597b",
+      "gitBlobSha1": "1a48bcd7e697c3bee35637b2f68970c9f4452cff"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-05.cpuprofile",
+      "archivedPath": "source-cpu/baseline-05.cpuprofile",
+      "bytes": 31649,
+      "sha256": "fea7fc30dfdc5f5f6bc7dcb94c15ebbd8853d79937bb62805915fe26f614d926",
+      "gitBlobSha1": "21d992f3db8900e314f4f03860f510fd03a0cd1f"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-06.cpuprofile",
+      "archivedPath": "source-cpu/baseline-06.cpuprofile",
+      "bytes": 26963,
+      "sha256": "4b576ad7f46701333e2cd7a4ee825aea18752f2ba3d8e2f814db6c935e87b36d",
+      "gitBlobSha1": "9f17a66cb6639d44fd2155a6e86b019098715b6d"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-07.cpuprofile",
+      "archivedPath": "source-cpu/baseline-07.cpuprofile",
+      "bytes": 47004,
+      "sha256": "c5a88a08fbb1c15a00e02759282dbdbc89e5f078e9efb8cc38fbeb15d7de8f58",
+      "gitBlobSha1": "56f66d7ecf8bd83f1070f42e240b755ae8d7d87e"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-08.cpuprofile",
+      "archivedPath": "source-cpu/baseline-08.cpuprofile",
+      "bytes": 30726,
+      "sha256": "c23af2d12a28f709119aa4f5f1b37710214d82d3c78319df11d02652d4078545",
+      "gitBlobSha1": "90ff16e4c8b646296f96f79cab835de2e9f37e67"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-09.cpuprofile",
+      "archivedPath": "source-cpu/baseline-09.cpuprofile",
+      "bytes": 32259,
+      "sha256": "6df582f99a5e8cc79bb91f2d2080ca0fd3db0d144ccdfc7fe02149e169c03ee7",
+      "gitBlobSha1": "a6852fdfe367b8808e4dbdf33ed70e5803281b6b"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-10.cpuprofile",
+      "archivedPath": "source-cpu/baseline-10.cpuprofile",
+      "bytes": 31873,
+      "sha256": "076f40b4d3112b191860ed588b64e6adcbf14085af7e83a298635880cd67afee",
+      "gitBlobSha1": "bc38a51bc2c18f0156e1d9f382a19a5abfd2fe39"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-11.cpuprofile",
+      "archivedPath": "source-cpu/baseline-11.cpuprofile",
+      "bytes": 27141,
+      "sha256": "c8a4fdb7795e72083460305ff22aca698a1a03e7e32afc61331a34aba5b5f382",
+      "gitBlobSha1": "120c4279636a4c1763b7c2d4e075fe40bfb211bf"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-12.cpuprofile",
+      "archivedPath": "source-cpu/baseline-12.cpuprofile",
+      "bytes": 27704,
+      "sha256": "9b4d568d0b5c3d488851ff6737ad0856f9a28b66b0dfe79c7198d4afb6888f9f",
+      "gitBlobSha1": "fb100ae25250a6f1bcf4cc47e4c6d3ee9b489ce0"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-13.cpuprofile",
+      "archivedPath": "source-cpu/baseline-13.cpuprofile",
+      "bytes": 26350,
+      "sha256": "4a8f754414dc78ea75be1242b52e1e32fbbff634a9f92e3e95454f76f555ba5d",
+      "gitBlobSha1": "6e07ed5ebb2162050ba15aa34a01172f6ff62215"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-14.cpuprofile",
+      "archivedPath": "source-cpu/baseline-14.cpuprofile",
+      "bytes": 28271,
+      "sha256": "57069d63803d0f90a81d75359f82e80245b06d62f49f2a034a15d68f3d1e799a",
+      "gitBlobSha1": "fd44d3097fa22068769bdcf8d60c3119174ba390"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-15.cpuprofile",
+      "archivedPath": "source-cpu/baseline-15.cpuprofile",
+      "bytes": 30159,
+      "sha256": "08ef3ffdf655b2a749fb2f1982ace067c54877b9f15719bdb6b30dd9f77456ad",
+      "gitBlobSha1": "1a7e7eb0ddae1d8f7229db33e3582f9492d56178"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-16.cpuprofile",
+      "archivedPath": "source-cpu/baseline-16.cpuprofile",
+      "bytes": 27780,
+      "sha256": "a2eb6ceffcdccff3f7209e470ef0afce768d0f9fef728f21e3b0792f14da428c",
+      "gitBlobSha1": "6a98cd3ec53df794a53653a29c30e253c275fb35"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-17.cpuprofile",
+      "archivedPath": "source-cpu/baseline-17.cpuprofile",
+      "bytes": 30205,
+      "sha256": "48886b6ac10680f7257b62f316e65360cd16b64125a5fe159e792b8527d97881",
+      "gitBlobSha1": "b92b1ce7d75d70f192a6ca4fd7986a953acbabfb"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-18.cpuprofile",
+      "archivedPath": "source-cpu/baseline-18.cpuprofile",
+      "bytes": 29716,
+      "sha256": "ec6e54c55ab50ac804d3f6e5954054ba0a8e7f04b5650a7a4f96bf05e746da12",
+      "gitBlobSha1": "29759e41e69a0c3859db57a597b79d494144dae5"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/baseline-19.cpuprofile",
+      "archivedPath": "source-cpu/baseline-19.cpuprofile",
+      "bytes": 28463,
+      "sha256": "fbcc3cdc3fcfe3cd014d1f6c6204e90e8bef19ccb0dbab8b4282e36f0b7c5bd0",
+      "gitBlobSha1": "7f1ce5b50a5b51ac3c7ae73122fe96caccdccb21"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-00.cpuprofile",
+      "archivedPath": "source-cpu/candidate-00.cpuprofile",
+      "bytes": 32927,
+      "sha256": "a1ce8aa356aedf12dc7bf0607a5a04bb9f56c9581c78a225d901711236d38f2b",
+      "gitBlobSha1": "478f2b06f79bd8d548df0aa64aa25c039a05f105"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-01.cpuprofile",
+      "archivedPath": "source-cpu/candidate-01.cpuprofile",
+      "bytes": 30916,
+      "sha256": "fda1acaa9be01d367245a1b3d727306545d15ecb73eeb915191778136ff64297",
+      "gitBlobSha1": "8136e6087801089730196237f6ec23edc038695c"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-02.cpuprofile",
+      "archivedPath": "source-cpu/candidate-02.cpuprofile",
+      "bytes": 32903,
+      "sha256": "a74b0db0cb41f2bbaa95ede9720c0fa707654c54168de189be1af28cd24732bd",
+      "gitBlobSha1": "885c5b43a8907aa1366fa78134a672d966c47fcd"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-03.cpuprofile",
+      "archivedPath": "source-cpu/candidate-03.cpuprofile",
+      "bytes": 16411,
+      "sha256": "1cf60eefaa06735873bc0e557478545c6c9e2550b4e22f370fb4e3b95b0367e2",
+      "gitBlobSha1": "83ddcbbfc51938fff453f272c4bc95566bbc0080"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-04.cpuprofile",
+      "archivedPath": "source-cpu/candidate-04.cpuprofile",
+      "bytes": 26229,
+      "sha256": "6a891e22527a92fe159065d5c68f0fa3d1a003ef96812712f58b5c20a28046ea",
+      "gitBlobSha1": "0861e8c8248fbc5a0b4dbd4e144c7c42301ebd86"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-05.cpuprofile",
+      "archivedPath": "source-cpu/candidate-05.cpuprofile",
+      "bytes": 30914,
+      "sha256": "68c6d57b6fcaf178a71441fb1d3bdc62c925c00d9320cfc538b9623bc25aeed1",
+      "gitBlobSha1": "2d473566d1e7a96258df29bc78434ac7b2aec94f"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-06.cpuprofile",
+      "archivedPath": "source-cpu/candidate-06.cpuprofile",
+      "bytes": 28532,
+      "sha256": "9850d6fc1a02347aa9b922ba732d829d92de8c3b9f9d8aaace02a8ae60ee9434",
+      "gitBlobSha1": "27ee27718499f8fcc4edc85c73bdac9c42632cba"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-07.cpuprofile",
+      "archivedPath": "source-cpu/candidate-07.cpuprofile",
+      "bytes": 27054,
+      "sha256": "06322e4348157cf4551b7a5f464b1e2b3c2f417cc28841240ef47e6b34acb939",
+      "gitBlobSha1": "d8a4fb04c2982377ec98aa8f5568c0855c7933de"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-08.cpuprofile",
+      "archivedPath": "source-cpu/candidate-08.cpuprofile",
+      "bytes": 26411,
+      "sha256": "f17f01ff85eed0cc399bbd762c9d5399c732dca8b4d173ea1a6d43b644d787e4",
+      "gitBlobSha1": "6fbdbf51afa78f51c1c25b4dcb440cfc0104dca6"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-09.cpuprofile",
+      "archivedPath": "source-cpu/candidate-09.cpuprofile",
+      "bytes": 29475,
+      "sha256": "acb86694e0e5b2e307b486bfb2c24e8987656a61de03b73cb72b01fcc1f4561e",
+      "gitBlobSha1": "989b6826549382e6a665fabb2b0e5052d0d85816"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-10.cpuprofile",
+      "archivedPath": "source-cpu/candidate-10.cpuprofile",
+      "bytes": 27121,
+      "sha256": "aca5f9e57329d03797a094fe169db5173107a4c42b8a00f3ac49d2ffc206e685",
+      "gitBlobSha1": "9d0842cb02312385c1a0d130e06adde354153d53"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-11.cpuprofile",
+      "archivedPath": "source-cpu/candidate-11.cpuprofile",
+      "bytes": 28547,
+      "sha256": "98f24ad729c007ff7334daf834969cefc4e3b46b8aae4db098fa6dd373228e65",
+      "gitBlobSha1": "9790d9c12f2f1782ad863cc323a680bc4d40e032"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-12.cpuprofile",
+      "archivedPath": "source-cpu/candidate-12.cpuprofile",
+      "bytes": 29927,
+      "sha256": "0cf431eb28d5a1dff1bce77309107743405d480d8972f8ed0009665a511f8570",
+      "gitBlobSha1": "30585c438374b7c25dfbe11afed946f2bd126be7"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-13.cpuprofile",
+      "archivedPath": "source-cpu/candidate-13.cpuprofile",
+      "bytes": 32675,
+      "sha256": "d013756be46c226d4d6bebf93df41547f6751cb655cae7a368e67f505b008bbb",
+      "gitBlobSha1": "692e7de696cc9962cf0afc70ba9cb9e453f2456b"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-14.cpuprofile",
+      "archivedPath": "source-cpu/candidate-14.cpuprofile",
+      "bytes": 30502,
+      "sha256": "0a1f87de187be5f182acacae0c0cf3e0ce199c39d6aa4bbd1bb576edb3c5eb9c",
+      "gitBlobSha1": "d52b288fa6f9b6e3b052408dc9fe3d3ca825a9c9"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-15.cpuprofile",
+      "archivedPath": "source-cpu/candidate-15.cpuprofile",
+      "bytes": 32240,
+      "sha256": "00269973d912b6b1976ef39f59cca95ba68fa3c06a6eb13609beda3cf8823de8",
+      "gitBlobSha1": "12ce72978abfaf90d7d29261ab2bd487c2ca85ce"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-16.cpuprofile",
+      "archivedPath": "source-cpu/candidate-16.cpuprofile",
+      "bytes": 25718,
+      "sha256": "7006de05b16aff340797b03f44c15d6ceafd462137e7f490979d6c774aef52e3",
+      "gitBlobSha1": "6d30535080b76d502fef5fb548ba49cfa8d85b7f"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-17.cpuprofile",
+      "archivedPath": "source-cpu/candidate-17.cpuprofile",
+      "bytes": 27905,
+      "sha256": "eb2c5e55215f030227257931384f95977c237b3114e0d21e2d79df7241b119cc",
+      "gitBlobSha1": "7542667a5829b44ea57aa94ebc2ceeee7bb34c39"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-18.cpuprofile",
+      "archivedPath": "source-cpu/candidate-18.cpuprofile",
+      "bytes": 28056,
+      "sha256": "6381e74063c2ee16bb428f81c9b439e9d051f9a54fde32c3de1aaf0f8216fe2d",
+      "gitBlobSha1": "21ef94ae26d8881902765406a55ce2e64861f9d4"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/candidate-19.cpuprofile",
+      "archivedPath": "source-cpu/candidate-19.cpuprofile",
+      "bytes": 30986,
+      "sha256": "2af7d3eb66f5d6ddb7db9f2c08b6a8d4deafd550fb1a278bfcd3e36d01439b0d",
+      "gitBlobSha1": "390e2d49e5cf47a813f473c0f9d2acb3c00e470c"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/execution.json",
+      "archivedPath": "source-cpu/execution.json",
+      "bytes": 923,
+      "sha256": "0fa5f5d18acd0ff1d37557d27c51ba9598cf807f978851296f059392e6b200a7",
+      "gitBlobSha1": "5a1cc296f8614d35d8dc0f96c15f52afd516ea0e"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/profile.log",
+      "archivedPath": "source-cpu/profile.log",
+      "bytes": 106,
+      "sha256": "3f7b3b572103be8e61cf0cb83227bb653da3495118f886e736ce7024ef42a013",
+      "gitBlobSha1": "0ba447cf80e9542c464d469d2a42a291b95fc14a"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3/summary.json",
+      "archivedPath": "source-cpu/summary.json",
+      "bytes": 188749,
+      "sha256": "772e2cf286201359d35715345d4697e2324c0b971176e5af202edcbf8422ca0d",
+      "gitBlobSha1": "5bc11c72f722d96824950cf7db8d067c70a5e71a"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-source-cpu-10d710b3-driver.mjs",
+      "archivedPath": "source-cpu/driver.mjs.txt",
+      "bytes": 5697,
+      "sha256": "cfc7623e9ceb9777fbde7d94c8c15aa8a85c8c1537439e107a8f2b29e3205544",
+      "gitBlobSha1": "d151789b38a12e77b4d12e2fb7b3d68e2c8bb27d"
+    }
+  ]
+}

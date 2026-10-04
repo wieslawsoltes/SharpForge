@@ -22,7 +22,8 @@ function catchClause(clause) {
     type: clause.declaration ? this.type(clause.declaration.type) : 'Exception',
     name: id?.valueText,
     nameSpan: id ? this.nameSpan(id) : null,
-    filter: clause.filter ? this.expression(clause.filter.filterExpression) : null,
+    // Ordinary catches keep the pre-filter AST shape; only a written `when` adds this optional field.
+    ...(clause.filter ? { filter: this.expression(clause.filter.filterExpression) } : {}),
     body: this.block(clause.block)
   };
 }

@@ -149,8 +149,7 @@ export function notifyFirstChance(vm, fault) {
 }
 
 /** Returning from a notification advances the captured invocation list exactly once. */
-export function continueExceptionEvent(vm, frame) {
-  const continuation = frame.exceptionEventContinuation;
+export function continueExceptionEvent(vm, frame, continuation = frame.exceptionEventContinuation) {
   if (!continuation) return null;
   if (continuation.index < continuation.handlers.length && startHandler(vm, continuation)) {
     return {

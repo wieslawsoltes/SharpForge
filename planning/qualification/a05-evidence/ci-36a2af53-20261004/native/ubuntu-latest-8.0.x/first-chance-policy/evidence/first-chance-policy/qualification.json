@@ -1,0 +1,152 @@
+{
+  "task": "SF-A05-E04",
+  "fixture": "first-chance-policy",
+  "timestamp": "2026-10-04T19:52:52.947Z",
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "platform": "linux",
+  "architecture": "x64",
+  "node": "v22.23.3",
+  "dotnetSdk": "8.0.425",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.NETCore.App]",
+  "targetFramework": "net8.0",
+  "passed": true,
+  "status": "passed",
+  "qualification": "same Roslyn DLL executed by native .NET and CilVirtualMachine",
+  "sources": [
+    {
+      "path": "tests/fixtures/a05/first-chance-policy/Program.cs",
+      "sha256": "c8253436715042444ac0044cb8a83323534e501db0c04b9e6ba808750f6f7825"
+    }
+  ],
+  "expectedOutput": "first:original\nfirst:subscriber\nsecond:subscriber\n",
+  "expectedFault": "ExecutionEngineException",
+  "failfast": true,
+  "firstChanceFailurePolicy": "before-unwind",
+  "assemblySha256": "542042b2088ac2ac98c8b34a74ee6fc70d1466b26b642f7feff5604fd7e303e4",
+  "nativeRuntime": {
+    "scope": "Independent native process with identical fixture runtimeconfig, dotnet executable, cwd and environment; not guest instrumentation.",
+    "frameworkDescription": ".NET 8.0.31",
+    "environmentVersion": "8.0.31",
+    "runtimeIdentifier": "linux-x64",
+    "runtimeConfig": {
+      "file": "Qualification.runtimeconfig.json",
+      "sha256": "97c9700542b659150b230c3578b29530fd76ab01ec66a92cd16945e0245713df",
+      "content": "{\n  \"runtimeOptions\": {\n    \"tfm\": \"net8.0\",\n    \"framework\": {\n      \"name\": \"Microsoft.NETCore.App\",\n      \"version\": \"8.0.0\"\n    },\n    \"configProperties\": {\n      \"System.Reflection.Metadata.MetadataUpdater.IsSupported\": false,\n      \"System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization\": false\n    }\n  }\n}"
+    },
+    "probe": {
+      "sourceSha256": "36ae2a2dc24bddf7ef6ada8990ddcb80166853e4cb318c98fc9763b30edc90ab",
+      "assemblySha256": "e320176ffdff73c9d18db7cae17615a18b360df265cfd19bf201a15821a78993"
+    },
+    "command": {
+      "executable": "dotnet",
+      "arguments": [
+        "exec",
+        "--runtimeconfig",
+        "<temporary-project>/bin/Release/net8.0/Qualification.runtimeconfig.json",
+        "<temporary-project>/runtime-probe/bin/Release/net8.0/RuntimeProbe.dll"
+      ]
+    },
+    "exitCode": 0,
+    "signal": null,
+    "output": ".NET 8.0.31\n8.0.31\nlinux-x64\n",
+    "stderr": ""
+  },
+  "native": {
+    "exitCode": null,
+    "signal": "SIGABRT",
+    "output": "first:original\nfirst:subscriber\nsecond:subscriber\n",
+    "stderr": "Fatal error. Internal CLR error. (0x80131506)\n   at Program.First(System.Object, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs)\n   at Program.Main()\n"
+  },
+  "cil": {
+    "state": "faulted",
+    "exitCode": -2146233082,
+    "output": "first:original\nfirst:subscriber\nsecond:subscriber\n",
+    "instructions": 73,
+    "fault": {
+      "name": "ExecutionEngineException",
+      "message": "FirstChanceException handler escaped: subscriber",
+      "fatal": true
+    }
+  },
+  "commands": [
+    {
+      "command": "dotnet",
+      "arguments": [
+        "restore",
+        "Qualification.csproj",
+        "--configfile",
+        "NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "build",
+        "Qualification.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "restore",
+        "RuntimeProbe.csproj",
+        "--configfile",
+        "<temporary-project>/NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>/runtime-probe",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "build",
+        "RuntimeProbe.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>/runtime-probe",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "exec",
+        "--runtimeconfig",
+        "<temporary-project>/bin/Release/net8.0/Qualification.runtimeconfig.json",
+        "<temporary-project>/runtime-probe/bin/Release/net8.0/RuntimeProbe.dll"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "<temporary-project>/bin/Release/net8.0/Qualification.dll"
+      ],
+      "cwd": "<temporary-project>",
+      "status": null,
+      "signal": "SIGABRT"
+    }
+  ]
+}

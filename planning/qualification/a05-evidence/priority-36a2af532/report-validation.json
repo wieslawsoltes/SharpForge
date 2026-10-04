@@ -1,0 +1,110 @@
+{
+  "verifiedAt": "2026-10-04T19:59:04.306506+00:00",
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "fullTree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+  "scope": "Read-only validation of completed raw reports; no additional execution or timing.",
+  "rows": [
+    {
+      "report": "source-fibonacci-100-attempt2.json",
+      "id": "source-fibonacci",
+      "status": "measured",
+      "target": {
+        "kind": "minimum-speedup",
+        "value": 1.5,
+        "observed": 1.4961811853342564,
+        "interval": [
+          1.459994839941652,
+          1.5303095411438201
+        ],
+        "meetsPointTarget": false,
+        "acceptance": "inconclusive",
+        "method": "paired-percentile-ratio-of-medians",
+        "seed": 12012,
+        "confidence": 0.95,
+        "resamples": 10000
+      },
+      "observationsPerMode": 104,
+      "measuredPerMode": 100,
+      "warmupPerMode": 3,
+      "firstPerMode": 1,
+      "allOutputsVerified": true,
+      "allInstructionCountsPaired": true,
+      "executionMs": {
+        "baseline": {
+          "count": 100,
+          "minimum": 67.21164099999987,
+          "median": 73.86484700000074,
+          "p95": 90.55233015000003,
+          "p99": 97.59545608999964,
+          "maximum": 100.02334100000007,
+          "interquartileRange": 8.072248249999802,
+          "medianAbsoluteDeviation": 4.118155500001421
+        },
+        "candidate": {
+          "count": 100,
+          "minimum": 45.13102300000037,
+          "median": 49.36891850000029,
+          "p95": 63.53461740000148,
+          "p99": 69.53548388000016,
+          "maximum": 69.64447099999961,
+          "interquartileRange": 5.3383825000005345,
+          "medianAbsoluteDeviation": 2.6617204999984097
+        }
+      },
+      "assemblyHash": "9aad85acc393b657e412b96d2d582e49e54e28d75a925456c578203a1134b0b9",
+      "environmentFingerprint": "5ae7016da9fdcdad1a0cb42b2fa3ac14a78b6e015afd693350e966f3e15f34c0",
+      "harnessHash": "758bf0ed5813d67f7f24eca1d4f0eee7b794b1bc625c73a7653a2eaea4e46b8c"
+    },
+    {
+      "report": "virtual-cache-100-attempt1.json",
+      "id": "virtual-cache",
+      "status": "measured",
+      "target": {
+        "kind": "minimum-speedup",
+        "value": 3,
+        "observed": 2.283161499046044,
+        "interval": [
+          2.201787518561151,
+          2.4204059808342073
+        ],
+        "meetsPointTarget": false,
+        "acceptance": "missed",
+        "method": "paired-percentile-ratio-of-medians",
+        "seed": 12012,
+        "confidence": 0.95,
+        "resamples": 10000
+      },
+      "observationsPerMode": 104,
+      "measuredPerMode": 100,
+      "warmupPerMode": 3,
+      "firstPerMode": 1,
+      "allOutputsVerified": true,
+      "allInstructionCountsPaired": true,
+      "executionMs": {
+        "baseline": {
+          "count": 100,
+          "minimum": 338.32951799999864,
+          "median": 418.60360000000037,
+          "p95": 530.7308137499996,
+          "p99": 555.2430816500009,
+          "maximum": 615.9951890000011,
+          "interquartileRange": 84.03370449999602,
+          "medianAbsoluteDeviation": 45.26363950000268
+        },
+        "candidate": {
+          "count": 100,
+          "minimum": 150.5422799999942,
+          "median": 183.34384150000005,
+          "p95": 250.41389864999846,
+          "p99": 258.2090749099994,
+          "maximum": 268.8966110000001,
+          "interquartileRange": 49.72191699999894,
+          "medianAbsoluteDeviation": 22.73813549999977
+        }
+      },
+      "assemblyHash": "f9fb25e572cff426a282eef6f6d56b9318d29af616a7ffd33199c290f1a31c40",
+      "environmentFingerprint": "5ae7016da9fdcdad1a0cb42b2fa3ac14a78b6e015afd693350e966f3e15f34c0",
+      "harnessHash": "758bf0ed5813d67f7f24eca1d4f0eee7b794b1bc625c73a7653a2eaea4e46b8c"
+    }
+  ]
+}

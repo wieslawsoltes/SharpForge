@@ -1,0 +1,63 @@
+import {Session} from 'node:inspector';
+import {writeFile} from 'node:fs/promises';
+import {CilVirtualMachine, prepareExecution} from '/tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/index.js';
+import {compileFixture, assertOutput} from '/tmp/a05-virtual-witness-42f7738360b9/bench/vm/operations.js';
+import {qualificationTargets} from '/tmp/a05-virtual-witness-42f7738360b9/bench/vm/qualification-fixtures.js';
+import {qualificationVmOptions, runQualificationVM} from '/tmp/a05-virtual-witness-42f7738360b9/bench/vm/qualification-execution.js';
+
+const directory = '/workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34';
+const definition = qualificationTargets().find(target => target.id === 'virtual-cache');
+const artifact = compileFixture(definition.fixture);
+const deadline = performance.now() + 120000;
+const signal = new AbortController().signal;
+const contexts = {};
+const session = new Session();
+session.connect();
+const post = (method, params = {}) => new Promise((resolve, reject) => session.post(method, params,
+  (error, result) => error ? reject(error) : resolve(result)));
+
+async function observe(context) {
+  const {vm, entry} = context;
+  if (vm.state === 'terminated') {
+    vm.output.length = 0;
+    vm.outputCharacters = 0;
+    vm.returnValue = null;
+    vm.state = 'running';
+    vm.call(entry, []);
+  }
+  globalThis.gc();
+  const before = vm.instructions;
+  await runQualificationVM(vm, deadline, signal);
+  assertOutput(vm, definition.fixture);
+  return vm.instructions - before;
+}
+
+const report = {revision: '10d710b349d581b88c0013ce8571bd963bfdb839',
+  kind: 'Single candidate V8 CPU profile; diagnostic only, not performance qualification',
+  samplingIntervalMicroseconds: 100, profiledExecutions: 8, initialAndWarmupPairs: 4,
+  fixture: definition.fixture, vmOptions: {}, instructionCounts: []};
+try {
+  for (const mode of ['baseline', 'candidate']) {
+    const options = {...qualificationVmOptions({nativeBits: 64}), ...definition[mode + 'Options']};
+    const vm = new CilVirtualMachine(artifact.assembly, options);
+    prepareExecution(vm);
+    vm.heap.collect();
+    contexts[mode] = {vm, entry: vm.top.method.token};
+    report.vmOptions[mode] = options;
+  }
+  for (let index = 0; index < 4; index++) {
+    for (const mode of index % 2 ? ['candidate', 'baseline'] : ['baseline', 'candidate']) await observe(contexts[mode]);
+  }
+  await post('Profiler.enable');
+  await post('Profiler.setSamplingInterval', {interval: 100});
+  await post('Profiler.start');
+  for (let index = 0; index < 8; index++) report.instructionCounts.push(await observe(contexts.candidate));
+  const {profile} = await post('Profiler.stop');
+  if (new Set(report.instructionCounts).size !== 1) throw new Error('Guest instruction counts changed');
+  await writeFile(directory + '/candidate.cpuprofile', JSON.stringify(profile), {flag: 'wx'});
+  await writeFile(directory + '/observation.json', JSON.stringify(report, null, 2) + '\n', {flag: 'wx'});
+  console.log(JSON.stringify({executions: report.profiledExecutions, instructions: report.instructionCounts, samples: profile.samples.length}));
+} finally {
+  for (const {vm} of Object.values(contexts)) vm.stop();
+  session.disconnect();
+}

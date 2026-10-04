@@ -1,0 +1,377 @@
+{
+  "format": "SharpForge.A05ValidationArchive/1",
+  "scope": "Focused main41eb async merge cohort and static check; both failed",
+  "testedIdentity": {
+    "commit": "9a4b0aef663ee78ab8da487eb90e1cb11c911c9a",
+    "tree": "4d0164eaecb6a6ccf9bd5e6762fcdea17761f0b0",
+    "status": ""
+  },
+  "testedTrees": {
+    "packages": "d33737cb75b7945c12e215dce72e56ba6f0641ef",
+    "apps": "4576bc46cc870b669abb17e52754fad7449e28c0",
+    "scripts": "bd4cc9b3fa260d57f99b2ec20d21e73071876939",
+    "tests": "40cbd666f2e857d0ca3baf89bbc42632eb08a087"
+  },
+  "sourceDirectory": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004",
+  "workingDirectory": "/tmp/a05-integration-42f7738360b9",
+  "rawArtifacts": [
+    {
+      "path": "focused-merge-9a4b.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/focused-merge-9a4b.log",
+      "bytes": 75958,
+      "sha256": "b94e9c4bd15eeb9436d4d583f9d0b882dcdfa42dee49d95656a1d809cf5ab62d",
+      "preservation": "byte-identical original"
+    },
+    {
+      "path": "focused-merge-9a4b-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/focused-merge-9a4b-execution.json",
+      "bytes": 3145,
+      "sha256": "2f0cf947eb8bad2c585020692d76c2a670362ceca5bbcee482ea6b13b0d7b971",
+      "preservation": "byte-identical original"
+    },
+    {
+      "path": "static-9a4b.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/static-9a4b.log",
+      "bytes": 1679,
+      "sha256": "7097f9124629c9ae143f78ea4ec68be28fb540ae3e7cd93b54271d15fe935f6c",
+      "preservation": "byte-identical original"
+    },
+    {
+      "path": "static-9a4b-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/static-9a4b-execution.json",
+      "bytes": 1279,
+      "sha256": "cdf0e8bc353f6df4e44e05c453e8c5603ffab457c33a5e77503e66fc66d068c2",
+      "preservation": "byte-identical original"
+    }
+  ],
+  "focusedResult": {
+    "exitCode": 1,
+    "tests": 239,
+    "passed": 232,
+    "failed": 7,
+    "skipped": 0,
+    "testDurationMilliseconds": 50769.780854,
+    "wallSeconds": 50.92452650099585,
+    "selectedFiles": 34,
+    "aggregatePassed": false
+  },
+  "failureGroups": [
+    {
+      "category": "Control: exact async runtime type identity",
+      "testNumbers": [
+        43
+      ],
+      "path": "tests/a05-29-async.test.js",
+      "observation": "TaskAwaiter.OnCompleted fixture rejected at Program::Main IL_6: Async ABI signature uses an incompatible runtime type identity"
+    },
+    {
+      "category": "Control: open generic builder Start admission",
+      "testNumbers": [
+        174,
+        176
+      ],
+      "path": "tests/a05-roslyn-async-admission.test.js",
+      "observation": "AsyncTaskMethodBuilder`1<!!0>::Start is not implemented; verifier and SDK8 snapshot/replay cases fail"
+    },
+    {
+      "category": "Control: exact intrinsic handler coverage",
+      "testNumbers": [
+        177
+      ],
+      "path": "tests/a05-seams-cil-intrinsics.test.js",
+      "observation": "Task.get_IsCompleted returns async status definition instead of the reference-equal platform definition expected by the seam assertion"
+    },
+    {
+      "category": "Source cleanup order",
+      "testNumbers": [
+        228
+      ],
+      "path": "tests/compiler-lowering-async-streams.test.js",
+      "observation": "Faulted await-using case omits plain and close first before failed"
+    },
+    {
+      "category": "Source cleanup order",
+      "testNumbers": [
+        233
+      ],
+      "path": "tests/compiler-lowering-async.test.js",
+      "observation": "Faulted catch path omits finally before outer failed"
+    },
+    {
+      "category": "Local input unavailable",
+      "testNumbers": [
+        34
+      ],
+      "path": "tests/conformance/supply/gates.test.js",
+      "observation": "File-level failure: planning/qualification/supply/public-fixtures.json missing in local checkout; not an executed passing supply gate"
+    }
+  ],
+  "nativeSubset": {
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "testNumbers": [
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61
+    ],
+    "sdk": "10.0.201",
+    "framework": "net10.0",
+    "languageVersion": "12",
+    "referencePack": "10.0.5",
+    "referenceFiles": 167,
+    "optimizationModes": [
+      "-",
+      "+"
+    ],
+    "runtimePatchIndependentlyProbed": false,
+    "scope": "Six native output comparisons, two snapshot/root replays, one real-Roslyn corrupted-MoveNext rejection; the last case builds only the unoptimized fixture"
+  },
+  "staticResult": {
+    "exitCode": 1,
+    "wallSeconds": 7.951697065996996,
+    "syntaxModules": 4800,
+    "syntaxErrors": 0,
+    "manifestNodeFiles": 1347,
+    "manifestBrowserScripts": 38,
+    "manifestUnassigned": 0,
+    "manifestDuplicates": 0,
+    "dynamicGatePassed": false,
+    "dynamicInspected": 4744,
+    "dynamicModules": 4791,
+    "dynamicErrors": 5,
+    "scope": "Three archived MJS source-resolution errors plus two changed/stale dynamic-import allow-list diagnostics for historical size measure.mjs"
+  },
+  "executionRecords": "Exact argv, resources, toolchain environment, start/end identities and timestamps are retained in the original execution JSON files.",
+  "selectedSourceProof": [
+    {
+      "path": "tests/a05-cil-async-toolchain.test.js",
+      "gitBlob": "13d2de598e67d95a76149628ae734607538bd8e6",
+      "bytes": 1848,
+      "sha256": "6ea83db8d374d296a341f5e9855a7cc332f9ad4fb3780726c29b92af1b33bb1f"
+    },
+    {
+      "path": "tests/a05-cil-async-native.test.js",
+      "gitBlob": "a3d7271536742c80573201d6c4430c657967a4e5",
+      "bytes": 5303,
+      "sha256": "9e7b4e3f4d1e6f85ad594f8b1dd0d67766cd9ff6c47e6b654f808e2fa908885e"
+    },
+    {
+      "path": "tests/a05-cil-async-profile.test.js",
+      "gitBlob": "0424d2037eba92e8208761030d2f8001bfa4244d",
+      "bytes": 5524,
+      "sha256": "4f71052ef34370f35aa19dde267e10b16f84fa6a030359fabb102d5edfae0160"
+    },
+    {
+      "path": "tests/a05-cil-async-continuation-roots.test.js",
+      "gitBlob": "dd19690f8637617cb5df1bfe581533d638e595dc",
+      "bytes": 3580,
+      "sha256": "41c525101931f5fcc56ed2bb784f98e7838ebd6301d127a4e547c160fb1932c5"
+    },
+    {
+      "path": "tests/a05-29-async.test.js",
+      "gitBlob": "afd0bf5f16ff4e1d14a0ccfccf6c36aee4f09eb7",
+      "bytes": 15884,
+      "sha256": "158e04f9b71687742020c4a39beee68a66b81c04033ff01259f7fbff33264157"
+    },
+    {
+      "path": "tests/a05-roslyn-async-admission.test.js",
+      "gitBlob": "6b3e9a2108db761078ea30942e69ee62d2705ba1",
+      "bytes": 5162,
+      "sha256": "db095e804039ec997846dab6f25925ef67ea2b8dff292890c085b0833e23e978"
+    },
+    {
+      "path": "tests/a05-seams-cil-intrinsics.test.js",
+      "gitBlob": "fbe8879c540353b60e1326c05554b03f61bbbc08",
+      "bytes": 4647,
+      "sha256": "9dd3184456ec822528b9b62c88f59272f26384a15a743f97a001cf8066cb208b"
+    },
+    {
+      "path": "tests/a05-merged-task-operations.test.js",
+      "gitBlob": "eb00af5287cb602b5c2765d57cff0fd784f993cb",
+      "bytes": 5115,
+      "sha256": "3abf419b69df3d007bf72bb72b45dcb13702373ef1f418467fac8b42f9519ce6"
+    },
+    {
+      "path": "tests/a05-merged-async-root-inventory.test.js",
+      "gitBlob": "15cf0a2c28d3436245033ee821cd3cb63a04b853",
+      "bytes": 2528,
+      "sha256": "122beee2b0725cd0ad3c908e944855d6c9c0c76c872d5bc587c3e4bb6f380302"
+    },
+    {
+      "path": "tests/a05-async-registration-retirement.test.js",
+      "gitBlob": "df743e3b5a3a621439e78492efa36f0d2d5a2a0a",
+      "bytes": 3530,
+      "sha256": "f17320e9e783b223b905969b78c8a0fe427133c21f6da8ebec3ce87c804434cc"
+    },
+    {
+      "path": "tests/a05-merged-async-continuation-snapshots.test.js",
+      "gitBlob": "d447e625021fe32fd970f71546611930fd056f48",
+      "bytes": 11959,
+      "sha256": "c9297fef08b7310caf45c0cafe1bca30b9bacacdd0c7f275b05d366b503996e5"
+    },
+    {
+      "path": "tests/a05-ordinary-return-control.test.js",
+      "gitBlob": "b69f2fb1cba1a0073b3bb96a95485f120466acb7",
+      "bytes": 5173,
+      "sha256": "ab182ec37c4ce91bb7f22038525e8d63d6a62ed36fb6f77901b74bd8d3bf4c70"
+    },
+    {
+      "path": "tests/a05-ordinary-return-lifetime.test.js",
+      "gitBlob": "b500a8165f1dc2d219402391780d8bffb952335e",
+      "bytes": 3567,
+      "sha256": "e78aeb00efce84ceecc55847ca154554bad8086b1671dafdf2485e81a6dc99ff"
+    },
+    {
+      "path": "tests/a05-frame-memory-retirement.test.js",
+      "gitBlob": "70124edc9a56210293ab8e567acf68eca7132101",
+      "bytes": 5257,
+      "sha256": "d4d579713596da8c62d956fe83843f6cc758d961e73634fa4e1df6774ec52e78"
+    },
+    {
+      "path": "tests/a05-frame-pool-lifecycle.test.js",
+      "gitBlob": "2839690ae3c6a366d3ec2dda671c8141ae3de0f9",
+      "bytes": 3851,
+      "sha256": "82feacfa1e30c885a1f3191ca9778bceb54532c3a5b5d938e68531e49b0c97f7"
+    },
+    {
+      "path": "tests/a05-generic-aggregate-calls.test.js",
+      "gitBlob": "0e3f1121b23de591a25ecbc7865740bcb3561388",
+      "bytes": 3603,
+      "sha256": "0f864850e1ad7e0a5f9e7e444bc4bbd338a6e9193c2cec84d0ee805069f2d6fe"
+    },
+    {
+      "path": "tests/a05-value-storage.test.js",
+      "gitBlob": "6aa423c4e651ef609112d234925823df536512b8",
+      "bytes": 9790,
+      "sha256": "1fd0ae86091e1b762c721822bb36481923ec68c53713e76bcae794eb1ff9f1d5"
+    },
+    {
+      "path": "tests/a05-value-instance-calls.test.js",
+      "gitBlob": "1fd96af7d4eee8e3e205d77e500ecd3d61f051b5",
+      "bytes": 9599,
+      "sha256": "49c709af35ecea0e3cc9cf033bae90eba80ede7103c510c5576e56b578b2e716"
+    },
+    {
+      "path": "tests/a05-managed-delegate-protocol.test.js",
+      "gitBlob": "ba444beef22a949acf6921ddcea578586b8f45e3",
+      "bytes": 5172,
+      "sha256": "ecb0658b324200a85df5bbc1adf2d3f6597a76a28ea4a1f02722edb328b97659"
+    },
+    {
+      "path": "tests/a05-delegate-targets.test.js",
+      "gitBlob": "d8a7b695c70942a0d3ba92fd2255378b6527982f",
+      "bytes": 9234,
+      "sha256": "169dd499ae2941d24d26cc02f3947569da9d580d7c5324df5474ef946e983ddc"
+    },
+    {
+      "path": "tests/a05-06-coherent-snapshot.test.js",
+      "gitBlob": "9841e79984401f40040e5bece9ec8a18cdff2836",
+      "bytes": 5292,
+      "sha256": "9bad90d81c211cd0507eb18eed43e7cef96e44772db3eda7bbb689c97cca0d70"
+    },
+    {
+      "path": "tests/a05-06-portable-snapshot.test.js",
+      "gitBlob": "69474b6b8b584a10e9007cd6111db038d2345ac7",
+      "bytes": 8293,
+      "sha256": "9a97e5b4bc23b2632915274cd145814784428a20599bcb2fd84a2b5e58695d11"
+    },
+    {
+      "path": "tests/a05-06-snapshot-cow.test.js",
+      "gitBlob": "b29b59646cbc0302f6a2d52d32b3516c995c6a06",
+      "bytes": 6882,
+      "sha256": "d91d55f2b06c90ff58a929f35e96c4285e1db41e4402919fe633170a2ff339ec"
+    },
+    {
+      "path": "tests/compiler-lowering-async.test.js",
+      "gitBlob": "957e43b48f1232947dc0446102b02c3efbea8194",
+      "bytes": 7229,
+      "sha256": "6b4fa9210ef172c024cd8075d62ef3d81284a9771a3508bf8cbe3ceff0297acc"
+    },
+    {
+      "path": "tests/compiler-lowering-async-streams.test.js",
+      "gitBlob": "c8e8aa1b950296d5efbb4f41a1b6ba18b44c96b1",
+      "bytes": 5474,
+      "sha256": "2dcb6414b749a8fb80aa07d3a3706712abe56f774f8130df39726cd18bc7330a"
+    },
+    {
+      "path": "tests/compiler-cil-emission-async.test.js",
+      "gitBlob": "2250badfc5668cca1b363bf454d213f6821eef14",
+      "bytes": 14530,
+      "sha256": "cdaeaf094367e8edca81ec015a58b5342c2099713bcf62451d3ac53523b2f0da"
+    },
+    {
+      "path": "tests/compiler-cil-emission-async-streams.test.js",
+      "gitBlob": "2095c1c16b16bd7cd54d30f3767801c5c1ad8969",
+      "bytes": 9839,
+      "sha256": "f68c9bea911a307007d2ef0083ad5cc56512554c6ac921c179930d3d319ce4db"
+    },
+    {
+      "path": "tests/a05-hosted-reference-worker.test.js",
+      "gitBlob": "311e8f906630c447fb05232fa0044677179e8057",
+      "bytes": 1823,
+      "sha256": "5a2a76bba322f7f3d639859b2c3db18620c36567142ad0fdb86e6c719798aa7a"
+    },
+    {
+      "path": "tests/a05-hosted-qualification.test.js",
+      "gitBlob": "bc76e58c491f11e2667f12250753f0feb16af869",
+      "bytes": 12458,
+      "sha256": "511c226650dfe785e8b68f9116881bf2efdf486bd5a924f6cc15bc66e0cf6452"
+    },
+    {
+      "path": "tests/a05-evidence-packaging.test.js",
+      "gitBlob": "c830b90eb9bee29f5dbfb1bb5fa84f1cf5d2c13a",
+      "bytes": 2004,
+      "sha256": "4418e6e3c32f18da7d16f41ee32a66472183bd4d6795e6abecc79628f89ab046"
+    },
+    {
+      "path": "tests/a05-evidence-origins.test.js",
+      "gitBlob": "1623790b1365e6fe47f5cabd7fc9c8e7438567dc",
+      "bytes": 1926,
+      "sha256": "baef888001a22c943e1dd7b9432033d65960e60886cb68a7e8439afd8d35d492"
+    },
+    {
+      "path": "tests/a05-float-iteration-criterion.test.js",
+      "gitBlob": "a7b1b83e6fb6f303932d054db1b701e26b96104e",
+      "bytes": 5634,
+      "sha256": "90e03af9f28463b917a6bd0979adb780fe64acfbd1539a15eb3c380c033032d1"
+    },
+    {
+      "path": "tests/a05-snapshot-retention-protocol.test.js",
+      "gitBlob": "6c1aa6b5b08e4e55b7136d93f5f5592a71538fe1",
+      "bytes": 3457,
+      "sha256": "c0fe92522572e02074de2e256c3d937f9c2e2f6373c762ab84d237481146bd08"
+    },
+    {
+      "path": "tests/conformance/supply/gates.test.js",
+      "gitBlob": "0ecfb4c16dd033c04f3958074cd85ce984d189ec",
+      "bytes": 14605,
+      "sha256": "8d4713859c0341124f2b969781552c5eb06cb640f01a6043476fb64934f0d55b"
+    },
+    {
+      "path": "tests/support/cil-async-toolchain.js",
+      "gitBlob": "9962071448dab2c8e1b0b996367eaa3811f26b8c",
+      "bytes": 3596,
+      "sha256": "7c5e2964f0e32261ffc2de5b146b562fb8e1e90523da64dd7cecfd7ce1712b36"
+    },
+    {
+      "path": "scripts/limited.js",
+      "gitBlob": "b93ef0d6ceaaa808e4e7d7e704044d54d14f718d",
+      "bytes": 1311,
+      "sha256": "7b36837aa62bdd6365d6d63d497b95d86de913ccbabc577ba082f4c092d1c883"
+    }
+  ],
+  "limitations": [
+    "This archive does not rerun or repair either failed command.",
+    "The focused cohort is not the full A05 manifest or all-engine/platform qualification.",
+    "A passing native subset does not make the combined command pass.",
+    "Native diagnostics record requested net10 runtime configuration, not an independently probed executed runtime patch.",
+    "Missing local supply input is recorded as a failure, not omitted or treated as a waiver."
+  ]
+}

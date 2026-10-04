@@ -1,0 +1,207 @@
+{
+  "format": "SharpForge.A05ValidationArchive/1",
+  "scope": "Passing focused supply-unit, evidence-packaging and static repairs; not full release asset qualification",
+  "originalFailureArchive": "../main41eb-9a4b/",
+  "sourceDirectory": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004",
+  "rawArtifacts": [
+    {
+      "path": "supply-unit-bb66.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/supply-unit-bb66.log",
+      "bytes": 2996,
+      "sha256": "12d784e517cfbd11b1851ecadf0b6e4e0e30f7dc6672d392892f23b44ad4174b"
+    },
+    {
+      "path": "supply-unit-bb66-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/supply-unit-bb66-execution.json",
+      "bytes": 1446,
+      "sha256": "531126c7af88f6d8e69fa4b8620dbc13c6d1f4cb1d38e13edd7141b0ee82a6ec"
+    },
+    {
+      "path": "packaging-63f6.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/packaging-63f6.log",
+      "bytes": 1414,
+      "sha256": "214ca61cea1c4b3a460bc2eced08d5a7b27502baac673f70d3a7a2d7787e9710"
+    },
+    {
+      "path": "packaging-63f6-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/packaging-63f6-execution.json",
+      "bytes": 1482,
+      "sha256": "f1a0829eeb41c58ffdd7a832e93e19a1da8a8c493032c7c327fb99293212e01c"
+    },
+    {
+      "path": "static-63f6.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/static-63f6.log",
+      "bytes": 382,
+      "sha256": "e5964e86ba439bb30abb78f243b426ae67a9a8580624b10c27aa1eaebff8393e"
+    },
+    {
+      "path": "static-63f6-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/static-63f6-execution.json",
+      "bytes": 1277,
+      "sha256": "d1a8e8df06f1961b392f1f693f12ada127acdbd914985ef34f5366008aac71a5"
+    }
+  ],
+  "runs": [
+    {
+      "name": "supply-unit-bb66",
+      "executionRecord": "supply-unit-bb66-execution.json",
+      "testedIdentity": {
+        "commit": "bb66ca2bb27bad05b29cc9e5072355f50337b682",
+        "tree": "ce1383432001dab0d18a229feb811e8537da05e6",
+        "status": ""
+      },
+      "exitCode": 0,
+      "wallSeconds": 0.5017246429997613,
+      "sourceProof": [
+        {
+          "path": "tests/conformance/supply/gates.test.js",
+          "gitBlob": "0ecfb4c16dd033c04f3958074cd85ce984d189ec",
+          "bytes": 14605,
+          "sha256": "8d4713859c0341124f2b969781552c5eb06cb640f01a6043476fb64934f0d55b"
+        },
+        {
+          "path": "scripts/limited.js",
+          "gitBlob": "b93ef0d6ceaaa808e4e7d7e704044d54d14f718d",
+          "bytes": 1311,
+          "sha256": "7b36837aa62bdd6365d6d63d497b95d86de913ccbabc577ba082f4c092d1c883"
+        },
+        {
+          "path": "planning/qualification/supply/public-fixtures.json",
+          "gitBlob": "de14be72291047d656c8f8479c252cf5e682c5dd",
+          "bytes": 663,
+          "sha256": "0dfd1dc02d5a95e36cd8f20ae0b33947e2ccf2738c05ba41e647a363e3ac490a"
+        }
+      ],
+      "tests": 12,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "testDurationMilliseconds": 370.753337
+    },
+    {
+      "name": "packaging-63f6",
+      "executionRecord": "packaging-63f6-execution.json",
+      "testedIdentity": {
+        "commit": "63f6134b51882b88336428d0699bff42a4fde74d",
+        "tree": "66e422f49400126898cd5072df97c0da96f1c2e5",
+        "status": ""
+      },
+      "exitCode": 0,
+      "wallSeconds": 1.1595788030026597,
+      "sourceProof": [
+        {
+          "path": "tests/a05-evidence-packaging.test.js",
+          "gitBlob": "1eded6fb63dabc7c49020a90d702ff1470263702",
+          "bytes": 4904,
+          "sha256": "d14166eb974729b9d377e11f27f62078598bcd8cb3a0431c54d26a138c880fa6"
+        },
+        {
+          "path": "tests/a05-evidence-origins.test.js",
+          "gitBlob": "1623790b1365e6fe47f5cabd7fc9c8e7438567dc",
+          "bytes": 1926,
+          "sha256": "baef888001a22c943e1dd7b9432033d65960e60886cb68a7e8439afd8d35d492"
+        },
+        {
+          "path": "scripts/limited.js",
+          "gitBlob": "b93ef0d6ceaaa808e4e7d7e704044d54d14f718d",
+          "bytes": 1311,
+          "sha256": "7b36837aa62bdd6365d6d63d497b95d86de913ccbabc577ba082f4c092d1c883"
+        }
+      ],
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "testDurationMilliseconds": 980.326699
+    },
+    {
+      "name": "static-63f6",
+      "executionRecord": "static-63f6-execution.json",
+      "testedIdentity": {
+        "commit": "63f6134b51882b88336428d0699bff42a4fde74d",
+        "tree": "66e422f49400126898cd5072df97c0da96f1c2e5",
+        "status": ""
+      },
+      "exitCode": 0,
+      "wallSeconds": 8.57350302800478,
+      "sourceProof": [
+        {
+          "path": "scripts/limited.js",
+          "gitBlob": "b93ef0d6ceaaa808e4e7d7e704044d54d14f718d",
+          "bytes": 1311,
+          "sha256": "7b36837aa62bdd6365d6d63d497b95d86de913ccbabc577ba082f4c092d1c883"
+        },
+        {
+          "path": "scripts/conformance/static/allowlist.json",
+          "gitBlob": "4b65ec6ccf613a6ccc4ae07354e62901c5530489",
+          "bytes": 30701,
+          "sha256": "cd5cf67ef57801016726aad3943af0e62859116c78fb729f19fc6046b33f810b"
+        },
+        {
+          "path": "planning/qualification/integration-performance/size/measure.mjs",
+          "gitBlob": "a1fd209cff2cc6b1b0963a9884131b2d340e8108",
+          "bytes": 1570,
+          "sha256": "431b55d1751c5fda710454c45a02ef31fb594d029cff12d17cb371072ff819f3"
+        }
+      ],
+      "syntaxModules": 4797,
+      "syntaxErrors": 0,
+      "dynamicInspected": 4741,
+      "dynamicModules": 4788,
+      "dynamicGatePassed": true,
+      "dynamicErrors": 0,
+      "manifestAreas": 30,
+      "manifestNodeFiles": 1347,
+      "manifestBrowserScripts": 38,
+      "manifestUnassigned": 0,
+      "manifestDuplicates": 0
+    }
+  ],
+  "selectedUnchangedSourceInputs": [
+    {
+      "path": "tests/conformance/supply/gates.test.js",
+      "blobsByCommit": {
+        "9a4b0aef663ee78ab8da487eb90e1cb11c911c9a": "0ecfb4c16dd033c04f3958074cd85ce984d189ec",
+        "bb66ca2bb27bad05b29cc9e5072355f50337b682": "0ecfb4c16dd033c04f3958074cd85ce984d189ec",
+        "63f6134b51882b88336428d0699bff42a4fde74d": "0ecfb4c16dd033c04f3958074cd85ce984d189ec"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "planning/qualification/supply/public-fixtures.json",
+      "blobsByCommit": {
+        "9a4b0aef663ee78ab8da487eb90e1cb11c911c9a": "de14be72291047d656c8f8479c252cf5e682c5dd",
+        "bb66ca2bb27bad05b29cc9e5072355f50337b682": "de14be72291047d656c8f8479c252cf5e682c5dd",
+        "63f6134b51882b88336428d0699bff42a4fde74d": "de14be72291047d656c8f8479c252cf5e682c5dd"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "scripts/conformance/supply/license-gate.js",
+      "blobsByCommit": {
+        "9a4b0aef663ee78ab8da487eb90e1cb11c911c9a": "a0e5f5547c4277595b2eedc53cd39a02cf226ee9",
+        "bb66ca2bb27bad05b29cc9e5072355f50337b682": "a0e5f5547c4277595b2eedc53cd39a02cf226ee9",
+        "63f6134b51882b88336428d0699bff42a4fde74d": "a0e5f5547c4277595b2eedc53cd39a02cf226ee9"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "planning/qualification/integration-performance/size/measure.mjs",
+      "blobsByCommit": {
+        "9a4b0aef663ee78ab8da487eb90e1cb11c911c9a": "a1fd209cff2cc6b1b0963a9884131b2d340e8108",
+        "bb66ca2bb27bad05b29cc9e5072355f50337b682": "a1fd209cff2cc6b1b0963a9884131b2d340e8108",
+        "63f6134b51882b88336428d0699bff42a4fde74d": "a1fd209cff2cc6b1b0963a9884131b2d340e8108"
+      },
+      "unchanged": true
+    }
+  ],
+  "preservation": "All six raw artifacts copied byte-identically; exact argv/environment/start/end identity retained in execution JSON.",
+  "limitations": [
+    "No full A05 cohort was executed by these three commands.",
+    "The supply unit suite exercises synthetic fixtures and negative boundaries; it is not the complete release asset/license gate or built artifact qualification.",
+    "No full-asset build, package measurement, browser or platform qualification was run.",
+    "Clean Git identities do not independently prove complete sparse-checkout materialization.",
+    "The earlier main41eb-9a4b failures are preserved; these follow-ups do not retroactively turn that command into a pass.",
+    "No tests/builds/checks were rerun to prepare this archive."
+  ]
+}

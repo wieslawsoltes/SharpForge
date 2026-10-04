@@ -1,0 +1,5 @@
+Auto-merging packages/cil/README.md
+Auto-merging packages/cil/src/index.js
+CONFLICT (content): Merge conflict in packages/cil/src/index.js
+Auto-merging scripts/conformance/static/allowlist.json
+Automatic merge failed; fix conflicts and then commit the result.

@@ -1,0 +1,400 @@
+{
+  "schemaVersion": 1,
+  "reviewedUtc": "2026-10-04T20:53:28.761160+00:00",
+  "reviewer": "Task coordinator automated source/evidence review",
+  "decision": "Accept all quantified adverse observations as an explicit correctness-cost performance exception under CONTRIBUTING section4 for this bounded integrated PE batch. This is not a threshold pass or human approval.",
+  "candidate": "ddf3da105ace61ed61463a5704caf93c0c3dcf6f",
+  "product": "8f0f0feec8ed8955e6119a346051ec6fdd965760",
+  "baseline": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+  "evidence": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/report.json",
+      "bytes": 2177813,
+      "sha256": "cadcd76959b557d2cac79f8a63b3d130dbb26c9793448a53e1a783f973e4af7d"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/performance.execution.json",
+      "bytes": 276786,
+      "sha256": "246876416178848199a61224999db662cd6762e581b8b0cb3eec24dbd4af33d4"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance-integration-ddf3-preflight.json",
+      "bytes": 5734,
+      "sha256": "8229888ace6c1f104ba10f8bf9ca56b34fd5caa52f7d2167467582d4073abfe5"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-integration-independent-review.json",
+      "bytes": 42412,
+      "sha256": "100f231ce5da5859d0017c7e684c2202601f40dd5490249046f33ebe1f24ed18"
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "small",
+      "latency": {
+        "baseline": {
+          "count": 100,
+          "median": 15.867406249999938,
+          "p95": 158.66700781249853,
+          "p99": 224.4148046874983,
+          "min": 11.741929687499209,
+          "max": 241.20478124999954,
+          "mean": 33.31217351562505
+        },
+        "candidate": {
+          "count": 100,
+          "median": 21.291738281250083,
+          "p95": 106.87203125000089,
+          "p99": 178.69289843750025,
+          "min": 12.594507812501377,
+          "max": 224.09343750000056,
+          "mean": 34.3561193750001
+        }
+      },
+      "changePercent": {
+        "median": 34.185373121395735,
+        "p95": -32.64382260470008,
+        "p99": -20.373836883741536,
+        "min": 7.260971132452343,
+        "max": -7.094114661128437,
+        "mean": 3.133826914312232
+      },
+      "signedNetHeapBytes": {
+        "baseline": {
+          "median": 3495880.0,
+          "p95": 3512712,
+          "p99": 3522912,
+          "min": -82377560,
+          "max": 3543016
+        },
+        "candidate": {
+          "median": 3815672.0,
+          "p95": 3834096,
+          "p99": 3842424,
+          "min": -55124696,
+          "max": 3842440
+        }
+      }
+    },
+    {
+      "id": "dense96",
+      "latency": {
+        "baseline": {
+          "count": 100,
+          "median": 61.733781250000064,
+          "p95": 119.83943750000137,
+          "p99": 167.29915624999592,
+          "min": 52.112468750003416,
+          "max": 216.0942499999976,
+          "mean": 73.50035593749982
+        },
+        "candidate": {
+          "count": 100,
+          "median": 67.72634375000308,
+          "p95": 134.3876562499986,
+          "p99": 178.2959062499998,
+          "min": 53.20406250000076,
+          "max": 192.2980625000008,
+          "mean": 80.2732978125001
+        }
+      },
+      "changePercent": {
+        "median": 9.70710424449015,
+        "p95": 12.139758875284334,
+        "p99": 6.573105475541907,
+        "min": 2.094688231398112,
+        "max": -11.011948490067203,
+        "mean": 9.214842280164714
+      },
+      "signedNetHeapBytes": {
+        "baseline": {
+          "median": 3924456.0,
+          "p95": 3931968,
+          "p99": 3932880,
+          "min": -58591808,
+          "max": 3933488
+        },
+        "candidate": {
+          "median": 4524024.0,
+          "p95": 4531240,
+          "p99": 4533680,
+          "min": -58884424,
+          "max": 4549848
+        }
+      }
+    },
+    {
+      "id": "il",
+      "latency": {
+        "baseline": {
+          "count": 100,
+          "median": 56.58246874999939,
+          "p95": 199.25215624999737,
+          "p99": 330.2669218749976,
+          "min": 50.32874999999848,
+          "max": 334.1922031249993,
+          "mean": 81.5300707812497
+        },
+        "candidate": {
+          "count": 100,
+          "median": 56.504070312499266,
+          "p95": 220.27128124999962,
+          "p99": 244.23695312500016,
+          "min": 50.01046874999915,
+          "max": 293.18835937500154,
+          "mean": 80.48651171875004
+        }
+      },
+      "changePercent": {
+        "median": -0.13855605672936644,
+        "p95": 10.549007546814204,
+        "p99": -26.04861796682104,
+        "min": -0.6324044408004159,
+        "max": -12.269539314973466,
+        "mean": -1.2799683018791974
+      },
+      "signedNetHeapBytes": {
+        "baseline": {
+          "median": 7249692.0,
+          "p95": 7256240,
+          "p99": 7324472,
+          "min": -151724112,
+          "max": 7337184
+        },
+        "candidate": {
+          "median": 7409724.0,
+          "p95": 7417784,
+          "p99": 7481520,
+          "min": -39288456,
+          "max": 7496864
+        }
+      }
+    },
+    {
+      "id": "r2r",
+      "latency": {
+        "baseline": {
+          "count": 100,
+          "median": 133.9797599999929,
+          "p95": 521.3700399999925,
+          "p99": 631.8803200000002,
+          "min": 118.15508000000591,
+          "max": 753.3415200000035,
+          "mean": 185.12545920000034
+        },
+        "candidate": {
+          "count": 100,
+          "median": 140.05928000000495,
+          "p95": 534.0482800000063,
+          "p99": 663.6722400000008,
+          "min": 119.34887999999773,
+          "max": 673.6136400000032,
+          "mean": 196.26426280000084
+        }
+      },
+      "changePercent": {
+        "median": 4.537640610799998,
+        "p95": 2.431716252819971,
+        "p99": 5.031319855000471,
+        "min": 1.0103670531912412,
+        "max": -10.583231891957833,
+        "mean": 6.016894514744564
+      },
+      "signedNetHeapBytes": {
+        "baseline": {
+          "median": 7562184.0,
+          "p95": 7577536,
+          "p99": 7616000,
+          "min": -25932336,
+          "max": 7641160
+        },
+        "candidate": {
+          "median": 7623304.0,
+          "p95": 7627576,
+          "p99": 7676848,
+          "min": -162471072,
+          "max": 7710504
+        }
+      }
+    },
+    {
+      "id": "mixed",
+      "latency": {
+        "baseline": {
+          "count": 100,
+          "median": 103.10482000000093,
+          "p95": 514.5088000000032,
+          "p99": 658.5936000000038,
+          "min": 93.67236000000048,
+          "max": 1123.2291600000008,
+          "mean": 157.18206240000023
+        },
+        "candidate": {
+          "count": 100,
+          "median": 89.92125999999644,
+          "p95": 498.2052399999975,
+          "p99": 591.0251599999992,
+          "min": 79.64856000000509,
+          "max": 626.9483200000013,
+          "mean": 138.75786960000042
+        }
+      },
+      "changePercent": {
+        "median": -12.786560317940875,
+        "p95": -3.1687621280735434,
+        "p99": -10.259504495641036,
+        "min": -14.97111848147663,
+        "max": -44.183400651742254,
+        "mean": -11.721561938227742
+      },
+      "signedNetHeapBytes": {
+        "baseline": {
+          "median": 4716760.0,
+          "p95": 4748392,
+          "p99": 4756456,
+          "min": -105483024,
+          "max": 4779720
+        },
+        "candidate": {
+          "median": 4792416.0,
+          "p95": 4823432,
+          "p99": 4830496,
+          "min": -91481304,
+          "max": 4859664
+        }
+      }
+    }
+  ],
+  "allAdversePredefinedLatencyMetrics": [
+    {
+      "workload": "small",
+      "metric": "median",
+      "baseline": 15.867406249999938,
+      "candidate": 21.291738281250083,
+      "changePercent": 34.185373121395735,
+      "absoluteMicroseconds": 5.424332031250145
+    },
+    {
+      "workload": "small",
+      "metric": "min",
+      "baseline": 11.741929687499209,
+      "candidate": 12.594507812501377,
+      "changePercent": 7.260971132452343,
+      "absoluteMicroseconds": 0.852578125002168
+    },
+    {
+      "workload": "dense96",
+      "metric": "median",
+      "baseline": 61.733781250000064,
+      "candidate": 67.72634375000308,
+      "changePercent": 9.70710424449015,
+      "absoluteMicroseconds": 5.992562500003018
+    },
+    {
+      "workload": "dense96",
+      "metric": "p95",
+      "baseline": 119.83943750000137,
+      "candidate": 134.3876562499986,
+      "changePercent": 12.139758875284334,
+      "absoluteMicroseconds": 14.548218749997233
+    },
+    {
+      "workload": "dense96",
+      "metric": "p99",
+      "baseline": 167.29915624999592,
+      "candidate": 178.2959062499998,
+      "changePercent": 6.573105475541907,
+      "absoluteMicroseconds": 10.996750000003885
+    },
+    {
+      "workload": "dense96",
+      "metric": "min",
+      "baseline": 52.112468750003416,
+      "candidate": 53.20406250000076,
+      "changePercent": 2.094688231398112,
+      "absoluteMicroseconds": 1.0915937499973438
+    },
+    {
+      "workload": "il",
+      "metric": "p95",
+      "baseline": 199.25215624999737,
+      "candidate": 220.27128124999962,
+      "changePercent": 10.549007546814204,
+      "absoluteMicroseconds": 21.019125000002248
+    },
+    {
+      "workload": "r2r",
+      "metric": "median",
+      "baseline": 133.9797599999929,
+      "candidate": 140.05928000000495,
+      "changePercent": 4.537640610799998,
+      "absoluteMicroseconds": 6.079520000012053
+    },
+    {
+      "workload": "r2r",
+      "metric": "p95",
+      "baseline": 521.3700399999925,
+      "candidate": 534.0482800000063,
+      "changePercent": 2.431716252819971,
+      "absoluteMicroseconds": 12.67824000001383
+    },
+    {
+      "workload": "r2r",
+      "metric": "p99",
+      "baseline": 631.8803200000002,
+      "candidate": 663.6722400000008,
+      "changePercent": 5.031319855000471,
+      "absoluteMicroseconds": 31.791920000000573
+    },
+    {
+      "workload": "r2r",
+      "metric": "min",
+      "baseline": 118.15508000000591,
+      "candidate": 119.34887999999773,
+      "changePercent": 1.0103670531912412,
+      "absoluteMicroseconds": 1.1937999999918247
+    }
+  ],
+  "supplementalAdverseMeans": [
+    {
+      "workload": "small",
+      "metric": "mean",
+      "baseline": 33.31217351562505,
+      "candidate": 34.3561193750001,
+      "changePercent": 3.133826914312232,
+      "absoluteMicroseconds": 1.0439458593750501
+    },
+    {
+      "workload": "dense96",
+      "metric": "mean",
+      "baseline": 73.50035593749982,
+      "candidate": 80.2732978125001,
+      "changePercent": 9.214842280164714,
+      "absoluteMicroseconds": 6.772941875000285
+    },
+    {
+      "workload": "r2r",
+      "metric": "mean",
+      "baseline": 185.12545920000034,
+      "candidate": 196.26426280000084,
+      "changePercent": 6.016894514744564,
+      "absoluteMicroseconds": 11.1388036000005
+    }
+  ],
+  "rationale": [
+    "Every successful read now checks PE header coverage and safe raw/RVA spans, excluding forbidden header/peer overlap before address translation. Native header acceptance is deliberately not the sole admission policy.",
+    "The implementation retains the existing96-section cap and uses two sorted interval indexes with O(sectionCount log sectionCount) construction and O(sectionCount) extra storage; it does not repeatedly compare every section pair.",
+    "The fresh qualification passed58authored cases,3real-image fact comparisons, strict source verification and91focused tests.20authored cases agree in accepted header facts,30are deliberately stricter rejections,8are rejected by both.",
+    "The observed small median cost is5.424332031250145microseconds/read and dense96 cost5.992562500003015microseconds/read. The cost is accepted for deterministic malformed-input admission.",
+    "All11predefined adverse metrics,7above5percent including the small minimum, are retained; six above5percent occur among median/p95/p99. Supplemental computed means and signed heap changes are also retained.",
+    "No favorable change is used to erase a regression, and no cause is inferred for individual tails, first reads or heap swings. No repeat was run to seek a better result."
+  ],
+  "qualificationLimits": [
+    "One frozen cohort per workload/variant on a shared Linux x64 Node24.19.0 host; team source activity paused and no competing workload observed at preflight. This is not cross-machine statistical inference.",
+    "p95/p99 are nearest-rank quantiles of100batch means, not per-call tail distributions.",
+    "Signed heapUsed deltas include temporary objects and collection effects; they are not allocation rates, retained-heap totals or peakRSS. No forced GC was used.",
+    "No cancellation injection or browser/OS engine matrix was run by this cohort. Tracking issue2417 remains open.",
+    "Earlier75f0/6e3native and performance records stay historical and byte-exact. Integrated findings govern this PR update."
+  ],
+  "additionalExecutionPerformedByReview": false
+}

@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: actual A05 capture declarations pass normal supply validation and reject missing, changed or unnotified assets
+ok 1 - actual A05 capture declarations pass normal supply validation and reject missing, changed or unnotified assets
+  ---
+  duration_ms: 154.491671
+  type: 'test'
+  ...
+# Subtest: A05 shipped documentation contains the small source-host index instead of raw qualification assets
+ok 2 - A05 shipped documentation contains the small source-host index instead of raw qualification assets
+  ---
+  duration_ms: 1.594847
+  type: 'test'
+  ...
+# Subtest: A05 evidence relocation preserves every original Git blob, SHA-256 and byte count
+ok 3 - A05 evidence relocation preserves every original Git blob, SHA-256 and byte count
+  ---
+  duration_ms: 557.332569
+  type: 'test'
+  ...
+# Subtest: historical drivers remain text evidence outside the unchanged executable module inventory
+ok 4 - historical drivers remain text evidence outside the unchanged executable module inventory
+  ---
+  duration_ms: 40.934034
+  type: 'test'
+  ...
+# Subtest: relocation chains reject a forged identity or a cycle instead of hiding a changed artifact
+ok 5 - relocation chains reject a forged identity or a cycle instead of hiding a changed artifact
+  ---
+  duration_ms: 7.08702
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 980.326699

@@ -1,0 +1,232 @@
+TAP version 13
+# Subtest: A05 T29 two real MoveNext suspensions resume through finally and return a result
+ok 1 - A05 T29 two real MoveNext suspensions resume through finally and return a result
+  ---
+  duration_ms: 69.687067
+  type: 'test'
+  ...
+# Subtest: A05 T29 paused await snapshots preserve boxed machine, waiter and builder identities
+ok 2 - A05 T29 paused await snapshots preserve boxed machine, waiter and builder identities
+  ---
+  duration_ms: 54.196489
+  type: 'test'
+  ...
+# Subtest: A05 T29 awaiter raises a task fault inside MoveNext and cleanup executes once
+ok 3 - A05 T29 awaiter raises a task fault inside MoveNext and cleanup executes once
+  ---
+  duration_ms: 19.480763
+  type: 'test'
+  ...
+# Subtest: A05 T29 cancellation during an await drops all pending continuations
+ok 4 - A05 T29 cancellation during an await drops all pending continuations
+  ---
+  duration_ms: 13.564246
+  type: 'test'
+  ...
+# Subtest: A05 T29 constructor root enumeration precedes scheduler creation
+ok 5 - A05 T29 constructor root enumeration precedes scheduler creation
+  ---
+  duration_ms: 0.852043
+  type: 'test'
+  ...
+# Subtest: A05 T29 async descriptors validate closed signatures and reachable compiler methods
+ok 6 - A05 T29 async descriptors validate closed signatures and reachable compiler methods
+  ---
+  duration_ms: 7.230678
+  type: 'test'
+  ...
+# Subtest: A05 T29 builder default copies materialize distinct task identities and reject double completion
+ok 7 - A05 T29 builder default copies materialize distinct task identities and reject double completion
+  ---
+  duration_ms: 5.494085
+  type: 'test'
+  ...
+# Subtest: A05 T29 default and wrong-task awaiters fail deterministically
+ok 8 - A05 T29 default and wrong-task awaiters fail deterministically
+  ---
+  duration_ms: 2.48331
+  type: 'test'
+  ...
+# Subtest: A05 T29 default YieldAwaiter is valid and always asynchronous
+ok 9 - A05 T29 default YieldAwaiter is valid and always asynchronous
+  ---
+  duration_ms: 2.12953
+  type: 'test'
+  ...
+# Subtest: A05 T29 TaskAwaiter.OnCompleted resumes a verified managed delegate
+ok 10 - A05 T29 TaskAwaiter.OnCompleted resumes a verified managed delegate
+  ---
+  duration_ms: 9.442018
+  type: 'test'
+  ...
+# Subtest: A05 T29 async void faults are posted outside the synchronous caller and snapshotted
+ok 11 - A05 T29 async void faults are posted outside the synchronous caller and snapshotted
+  ---
+  duration_ms: 4.5386
+  type: 'test'
+  ...
+# Subtest: A05 T29 malformed async snapshots reject before live execution changes
+ok 12 - A05 T29 malformed async snapshots reject before live execution changes
+  ---
+  duration_ms: 36.425008
+  type: 'test'
+  ...
+# Subtest: A05 T29 awaiting snapshots accept the wake-up boundary before GetResult
+ok 13 - A05 T29 awaiting snapshots accept the wake-up boundary before GetResult
+  ---
+  duration_ms: 18.518849
+  type: 'test'
+  ...
+# Subtest: A05 T29 snapshot validation uses saved roots after the live machine is collected
+ok 14 - A05 T29 snapshot validation uses saved roots after the live machine is collected
+  ---
+  duration_ms: 18.112351
+  type: 'test'
+  ...
+# Subtest: A05 T29 canceled task history remains restorable after its machine is collected
+ok 15 - A05 T29 canceled task history remains restorable after its machine is collected
+  ---
+  duration_ms: 15.713356
+  type: 'test'
+  ...
+# Subtest: fault completion retains a managed delegate through every allocation and delivers it once
+ok 16 - fault completion retains a managed delegate through every allocation and delivers it once
+  ---
+  duration_ms: 29.479759
+  type: 'test'
+  ...
+# Subtest: managed TaskAwaiter.OnCompleted owns its callback through fault-completion collection
+ok 17 - managed TaskAwaiter.OnCompleted owns its callback through fault-completion collection
+  ---
+  duration_ms: 11.55622
+  type: 'test'
+  ...
+# Subtest: CIL async ABI matcher requires complete generic and byref member signatures
+ok 18 - CIL async ABI matcher requires complete generic and byref member signatures
+  ---
+  duration_ms: 1.635381
+  type: 'test'
+  ...
+# Subtest: CIL async ABI generic awaiter result and real Yield type are exact
+ok 19 - CIL async ABI generic awaiter result and real Yield type are exact
+  ---
+  duration_ms: 0.506864
+  type: 'test'
+  ...
+# Subtest: CIL async matching preserves caller generic variables in an already substituted state-machine argument
+ok 20 - CIL async matching preserves caller generic variables in an already substituted state-machine argument
+  ---
+  duration_ms: 0.997054
+  type: 'test'
+  ...
+# Subtest: CIL async callbacks require trusted reference scope and matching MethodImpl declarations
+ok 21 - CIL async callbacks require trusted reference scope and matching MethodImpl declarations
+  ---
+  duration_ms: 22.32964
+  type: 'test'
+  ...
+# Subtest: CIL dispatch admits proved async callback implementations and still rejects malformed declarations
+ok 22 - CIL dispatch admits proved async callback implementations and still rejects malformed declarations
+  ---
+  duration_ms: 9.047226
+  type: 'test'
+  ...
+# Subtest: CIL async callback-only bodies remain mandatory verifier roots
+ok 23 - CIL async callback-only bodies remain mandatory verifier roots
+  ---
+  duration_ms: 1.504189
+  type: 'test'
+  ...
+# Subtest: merged CIL Task.Delay executes the infinite, zero, and full Int32 boundary contracts
+ok 24 - merged CIL Task.Delay executes the infinite, zero, and full Int32 boundary contracts
+  ---
+  duration_ms: 35.222714
+  type: 'test'
+  ...
+# Subtest: merged Task Wait and Result wrap the original fault while await preserves its reference
+ok 25 - merged Task Wait and Result wrap the original fault while await preserves its reference
+  ---
+  duration_ms: 10.809082
+  type: 'test'
+  ...
+# Subtest: merged completion keeps suspended state-machine waiters unwrapped beside aggregate-mode waiters
+ok 26 - merged completion keeps suspended state-machine waiters unwrapped beside aggregate-mode waiters
+  ---
+  duration_ms: 2.967138
+  type: 'test'
+  ...
+# Subtest: Roslyn async regression consumes the exact SDK8 native-qualified DLL and source
+ok 27 - Roslyn async regression consumes the exact SDK8 native-qualified DLL and source
+  ---
+  duration_ms: 1.536827
+  type: 'test'
+  ...
+# Subtest: generic suffix parsing preserves generated CLI identifiers and nested argument lists
+ok 28 - generic suffix parsing preserves generated CLI identifiers and nested argument lists
+  ---
+  duration_ms: 1.68271
+  type: 'test'
+  ...
+# Subtest: generated generic method tables retain exact definitions, closed fields and argument limits
+ok 29 - generated generic method tables retain exact definitions, closed fields and argument limits
+  ---
+  duration_ms: 3.179098
+  type: 'test'
+  ...
+# Subtest: actual Roslyn generic iterator MethodImpl rows resolve specialized external slots
+ok 30 - actual Roslyn generic iterator MethodImpl rows resolve specialized external slots
+  ---
+  duration_ms: 100.977491
+  type: 'test'
+  ...
+# Subtest: actual Roslyn iterator still rejects a duplicated MethodImpl declaration
+ok 31 - actual Roslyn iterator still rejects a duplicated MethodImpl declaration
+  ---
+  duration_ms: 9.709588
+  type: 'test'
+  ...
+# Subtest: actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay
+ok 32 - actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay
+  ---
+  duration_ms: 367.433049
+  type: 'test'
+  ...
+# Subtest: A05 every accepted intrinsic signature has exactly one runtime handler and vice versa
+ok 33 - A05 every accepted intrinsic signature has exactly one runtime handler and vice versa
+  ---
+  duration_ms: 167.843591
+  type: 'test'
+  ...
+# Subtest: A05 framework declarations and inherited signatures retain exact contract selection
+ok 34 - A05 framework declarations and inherited signatures retain exact contract selection
+  ---
+  duration_ms: 25.923818
+  type: 'test'
+  ...
+# Subtest: A05 intrinsic signature boundaries reject wrong arity, staticness, generics and unknown owners
+ok 35 - A05 intrinsic signature boundaries reject wrong arity, staticness, generics and unknown owners
+  ---
+  duration_ms: 0.908684
+  type: 'test'
+  ...
+# Subtest: A05 intrinsic adapters preserve overflow, null and string index faults
+ok 36 - A05 intrinsic adapters preserve overflow, null and string index faults
+  ---
+  duration_ms: 23.008217
+  type: 'test'
+  ...
+# Subtest: A05 framework aliases do not broaden the legacy primitive intrinsic allowlist
+ok 37 - A05 framework aliases do not broaden the legacy primitive intrinsic allowlist
+  ---
+  duration_ms: 3.587708
+  type: 'test'
+  ...
+1..37
+# tests 37
+# suites 0
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5166.376966

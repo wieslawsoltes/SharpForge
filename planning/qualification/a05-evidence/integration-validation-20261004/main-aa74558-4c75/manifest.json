@@ -1,0 +1,293 @@
+{
+  "format": "SharpForge.A05ValidationArchive/1",
+  "scope": "Completed failing29-file cohort after mainaa74558 reconciliation",
+  "completion": "complete",
+  "exitCode": 1,
+  "testedIdentity": {
+    "commit": "4c75ea43f5310e50594098076693d1582b49c7d3",
+    "tree": "bdcb5c1429bd01e2992388b5ed95c56303d05e63",
+    "status": ""
+  },
+  "rawArtifacts": [
+    {
+      "path": "admission-conversion-fusion-debugger.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/admission-conversion-fusion-debugger.log",
+      "bytes": 82522,
+      "sha256": "880f97c320de7f7746793cb324cc495364393204db51f0e42978178ac991ac53"
+    },
+    {
+      "path": "admission-conversion-fusion-debugger-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/admission-conversion-fusion-debugger-execution.json",
+      "bytes": 2964,
+      "sha256": "e576048089aaa89506c08102319cd30ee354e8b0d44d8f5b8607fd8e8a43b704"
+    }
+  ],
+  "result": {
+    "tests": 283,
+    "passed": 276,
+    "failed": 7,
+    "skipped": 0,
+    "testDurationMilliseconds": 66668.970326,
+    "wallSeconds": 66.85826125300082
+  },
+  "observedFailures": [
+    {
+      "number": 115,
+      "name": "source: evaluation captures committed history before host publication and retains its result",
+      "category": "source disabled-scheduler snapshot expectation",
+      "assignedOwner": "Snapshots"
+    },
+    {
+      "number": 120,
+      "name": "CIL: evaluation captures committed history before host publication and retains its result",
+      "category": "CIL unverified virtual target",
+      "assignedOwner": "Control"
+    },
+    {
+      "number": 121,
+      "name": "CIL: failed history preparation discards buffered effects and result leases",
+      "category": "CIL unverified virtual target",
+      "assignedOwner": "Control"
+    },
+    {
+      "number": 122,
+      "name": "CIL: command delivery failure preserves the already observable evaluation commit",
+      "category": "CIL unverified virtual target",
+      "assignedOwner": "Control"
+    },
+    {
+      "number": 123,
+      "name": "CIL: output delivery failure preserves the already observable evaluation commit",
+      "category": "CIL unverified virtual target",
+      "assignedOwner": "Control"
+    },
+    {
+      "number": 124,
+      "name": "CIL: rollback and cancellation keep the active-transaction snapshot guard",
+      "category": "CIL unverified virtual target",
+      "assignedOwner": "Control"
+    },
+    {
+      "number": 142,
+      "name": "local construction identity: a user delegate named Button keeps its managed constructor contract",
+      "category": "CIL unverified virtual target",
+      "assignedOwner": "Control"
+    }
+  ],
+  "admissionCohortPreservation": {
+    "a05Original": {
+      "path": "tests/a05-cil-admission-budget.test.js",
+      "preMergeRevision": "10d710b349d581b88c0013ce8571bd963bfdb839",
+      "gitBlob": "5e21ac08c116da6ad92c2b454cca5e0907830b11"
+    },
+    "mainOriginal": {
+      "originalPath": "tests/a05-cil-admission-budget.test.js",
+      "revision": "aa74558ccae4851817b23d0a19c5fdfb1ef5a350",
+      "retainedPath": "tests/a05-cil-admission-static-execution.test.js",
+      "gitBlob": "1501a5d1688065ab8e5bba175dc9e3431c03c2a6"
+    },
+    "byteIdentical": true,
+    "observedOutcome": "Both original cohorts passed; helper options/heap/assembly/callback checks also passed."
+  },
+  "sourceProof": [
+    {
+      "path": "tests/a05-cil-admission-budget.test.js",
+      "gitBlob": "5e21ac08c116da6ad92c2b454cca5e0907830b11",
+      "bytes": 1871,
+      "sha256": "02ac7b406a99f5e04c71b74d5301e2311c813a2726fd1fb7f31a5e717357243a"
+    },
+    {
+      "path": "tests/a05-cil-admission-static-execution.test.js",
+      "gitBlob": "1501a5d1688065ab8e5bba175dc9e3431c03c2a6",
+      "bytes": 6518,
+      "sha256": "9bc535d44ef855cdd533db8173e58c3a82871dbf6deeb321c775bc0a00616006"
+    },
+    {
+      "path": "tests/a05-cil-admission-options.test.js",
+      "gitBlob": "aabd32f6ec2a2f50e10b9059dfac1801d1def32c",
+      "bytes": 2333,
+      "sha256": "14099d649494d22a891d250ec255a540d477dc8e43877eed68f459aba8e44c09"
+    },
+    {
+      "path": "tests/a05-cil-assembly-heap-limits.test.js",
+      "gitBlob": "1fc7c81056ec406567b6f8b6cf9e4966f34dcc9e",
+      "bytes": 2641,
+      "sha256": "385f533230e702651184665186f3bdb1e25bc1c4f3b6d373c04de03e2f86d462"
+    },
+    {
+      "path": "tests/a05-cil-callback-admission-limits.test.js",
+      "gitBlob": "3e7a446a7c9b6e842ff25a0ee498a709eefb223c",
+      "bytes": 3903,
+      "sha256": "007b2c99a193b5960ec9a97abf919ab8522226c9f6f1ff8f50f0a2f9f3ad33bc"
+    },
+    {
+      "path": "tests/a05-cil-admission-diagnostics.test.js",
+      "gitBlob": "3c3585bfd5b5e48201b74f183be71b4ab3e9df36",
+      "bytes": 1725,
+      "sha256": "6e3f1a1d48563240ef55d8d006c0c3ad4c9c60d8e9350d5cbb7c892ee09e90e1"
+    },
+    {
+      "path": "tests/a05-local-constructor-identity.test.js",
+      "gitBlob": "c22ba8cbc6e2790230b43897e57307742e04ac7f",
+      "bytes": 7957,
+      "sha256": "cf6f9c4d2d213892a8810c5bdbd19a2e8f62ad19ceb221381eefcd529791d5cc"
+    },
+    {
+      "path": "tests/a03-09-pe-bounds.test.js",
+      "gitBlob": "d23ee249f223e19eee6f22d88954da97ce80a412",
+      "bytes": 3634,
+      "sha256": "a802c0665910968d61a82ecec023b2ba77cd43e63439d15e1413b4286f12a1f1"
+    },
+    {
+      "path": "tests/a05-conversion-abi-qualification.test.js",
+      "gitBlob": "61b4d14fe897f3bee43bb87880a83b1341945381",
+      "bytes": 6946,
+      "sha256": "f7a92945a9a8cf3f65cd50b852264a6a5c474cb1ce687b83baea9da45593a23d"
+    },
+    {
+      "path": "tests/a05-numeric-differential-harness.test.js",
+      "gitBlob": "930177b2337b2802c2f1bc57c7901ee119f76026",
+      "bytes": 2122,
+      "sha256": "fcb79c159bcc0dcb9abeb6e26c3faf52e4b63c1a1d689d68d916d7d9428f3fda"
+    },
+    {
+      "path": "tests/a05-native-width-qualification.test.js",
+      "gitBlob": "3c321fa40ac3b20005ae7b1a993d93c4255d4d87",
+      "bytes": 2218,
+      "sha256": "075cc824bc8fa9dcde53cde24aa9f59e468e7db045beefddff0f1b9c28ee600d"
+    },
+    {
+      "path": "tests/a05-source-fusion-integer-plans.test.js",
+      "gitBlob": "5f3621d0051f45b211510bc6b179e5593e3e6c98",
+      "bytes": 3961,
+      "sha256": "27c9a83dde597862df94a2ead96f0556f12aec9a78cee4ddcc2749e0eb9bd847"
+    },
+    {
+      "path": "tests/a05-source-fusion.test.js",
+      "gitBlob": "2daf5ba9505eddb534afcb7fc625fc6fce4a1f28",
+      "bytes": 9835,
+      "sha256": "e78dbec0bf41571bea91c708be8c3b48aac975df8888a7228327da9267dc2451"
+    },
+    {
+      "path": "tests/a05-source-fusion-blocks.test.js",
+      "gitBlob": "626b6725087c85a2b8af52a28a3f108551bb84df",
+      "bytes": 5390,
+      "sha256": "d1721faebea7d341a77eb93ff91a15b8c0c1d3c4856d5f538948a178c72b7ef4"
+    },
+    {
+      "path": "tests/a05-source-fusion-batch.test.js",
+      "gitBlob": "e360a087f2dc96d2e86c98ec706a571c82c9d5ae",
+      "bytes": 6355,
+      "sha256": "386b68ce0f6b07e3e6ccd51a2d7f9d9b620732212ba07dc9c06d0fa3ff09d459"
+    },
+    {
+      "path": "tests/a05-source-fusion-retirement.test.js",
+      "gitBlob": "09f78c27fdf739284f6b2942d0771a79b90869c6",
+      "bytes": 6960,
+      "sha256": "6ade98acf61c9713eb10de77778f54e9537f308277e7d140f2eb3300ebe239b1"
+    },
+    {
+      "path": "tests/a05-source-prepared-calls.test.js",
+      "gitBlob": "48c7228cfcbd357926865569f7d604bf4af11737",
+      "bytes": 4271,
+      "sha256": "63ad3e9e79efbb7aa6b95bd8eb9ba9f8ff5bdfb42e23a3afe5add291ccaab485"
+    },
+    {
+      "path": "tests/a05-int32-specialized-handlers.test.js",
+      "gitBlob": "2cae4e59344b9b1d086363265389e50fa0ff49ba",
+      "bytes": 4852,
+      "sha256": "f1c980842f2a1b43431152929c47cbfc4decbbe37083aa3a12012b343cc8e6e5"
+    },
+    {
+      "path": "tests/a05-int32-specialized-cil.test.js",
+      "gitBlob": "94d9a2e8220d6b54412857dc224ab54a34bc9acd",
+      "bytes": 6386,
+      "sha256": "5692ae660a11a6f47543459788a8a9ec6f2be78d2956d8d95d96f6849878e57c"
+    },
+    {
+      "path": "tests/a05-debugger-evaluation-transactions.test.js",
+      "gitBlob": "2835b2312ea05c1252e0581ac16d486f872efe17",
+      "bytes": 8905,
+      "sha256": "386ca8efc053c6c73104017fa9554d36adae84157b23449ad9a43305c9600590"
+    },
+    {
+      "path": "tests/debugger-advanced.test.js",
+      "gitBlob": "85e2ae6c2ab8962b67f8313a1e6041c1325f8065",
+      "bytes": 7807,
+      "sha256": "32383709c6dff28f81c4c857fb32531702b1be3c6e51ef04a0a0a14f5834a9f3"
+    },
+    {
+      "path": "tests/debugger.test.js",
+      "gitBlob": "7a3bd2704c60e4fa80e5fb6d667f870ff49f9840",
+      "bytes": 7409,
+      "sha256": "933374b4acd11a47166d685d136fa1e713046b390b6c44b59ee3b168f12f3fe6"
+    },
+    {
+      "path": "tests/conformance/security/limits.test.js",
+      "gitBlob": "846f36cf4d7f637c1b064249b632172320176351",
+      "bytes": 16211,
+      "sha256": "dbfdde8c5fad03bd276ae36948fd8d9653c42f19d21fad9b76ce52871310b00a"
+    },
+    {
+      "path": "tests/a05-source-interface-dispatch.test.js",
+      "gitBlob": "6f0b709112f06106fc614e68c3714d6c3995d39d",
+      "bytes": 5359,
+      "sha256": "03e36827c982c1a7b7ef05b7a57d43e18429b26b62673c2af81746503a6dd0a7"
+    },
+    {
+      "path": "tests/a05-source-generic-interface-methods.test.js",
+      "gitBlob": "4a9214d45bcd4962b5f5a43a25ec4034e97fecc5",
+      "bytes": 6478,
+      "sha256": "8b1ae9860c1a7312ce46f63c5434d6ed2bb55b0899e24ba1437f6a25ea44af8b"
+    },
+    {
+      "path": "tests/a05-cil-async-profile.test.js",
+      "gitBlob": "469cf970cd984bc3e0403eafbc523c439712a224",
+      "bytes": 6352,
+      "sha256": "c7e077d7048a1e05348a80d27ff09bf21a2db400b3599e4399be78fd68a03d07"
+    },
+    {
+      "path": "tests/a05-cil-async-native.test.js",
+      "gitBlob": "a3d7271536742c80573201d6c4430c657967a4e5",
+      "bytes": 5303,
+      "sha256": "9e7b4e3f4d1e6f85ad594f8b1dd0d67766cd9ff6c47e6b654f808e2fa908885e"
+    },
+    {
+      "path": "tests/a05-managed-state-machine-layout.test.js",
+      "gitBlob": "16c6eff02cf17b5388b7e419553aceefdad35250",
+      "bytes": 7651,
+      "sha256": "7c82b97f4d6d3036960d2b3e500330e21650c266842534599f3b98bae1958f24"
+    },
+    {
+      "path": "tests/a05-task-fault-unwind.test.js",
+      "gitBlob": "0ffdd75167828a00b82d4ad2e5d588dc415d111e",
+      "bytes": 6573,
+      "sha256": "9edd04b1a985467acf34197884c46a495e15447332e2ecb94f42fad5e4a77a81"
+    },
+    {
+      "path": "packages/runtime/src/execution/cil-admission.js",
+      "gitBlob": "e4f88694d46e980f2a2e08bbe4a96d269286b2e0",
+      "bytes": 1066,
+      "sha256": "918916e63efd0cc950dd633bc8f5e6bc8fcdaa46e3bfbedf6eef9b2f6cf86bf8"
+    },
+    {
+      "path": "packages/runtime/src/execution/synchronous-call.js",
+      "gitBlob": "411a017abe62144dcb1e41097f644468dda29b8e",
+      "bytes": 6490,
+      "sha256": "5ead98b728aff45eb1a71671423ba43490950890081a39f498b07242089da51b"
+    },
+    {
+      "path": "packages/runtime/src/cil-vm.js",
+      "gitBlob": "703e98abbdc9c7dd68571614e8a7cb120f439ba8",
+      "bytes": 8987,
+      "sha256": "3ce1edb3be0e2e83889283a52379276c3639e008bc7199eb0cbb6a423ea6ece6"
+    }
+  ],
+  "limitations": [
+    "The command failed overall; seven observed failures remain part of this immutable record.",
+    "Passing ABI32 machinery unit tests do not constitute a fresh actual32-bit CLR conversion-oracle capture or complete ABI32 matrix.",
+    "Passing source fusion correctness tests do not establish a performance target.",
+    "No complete full A05, browser, release-size or all-platform qualification is claimed.",
+    "No test/build/measurement was run while preparing the archive."
+  ]
+}

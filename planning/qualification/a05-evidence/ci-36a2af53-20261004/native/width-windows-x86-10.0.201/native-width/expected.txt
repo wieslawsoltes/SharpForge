@@ -1,0 +1,13 @@
+4
+4
+1
+-256
+2147483647
+signed-overflow
+-2147483648
+signed-underflow
+4294967295
+unsigned-overflow
+conversion-overflow
+1
+0

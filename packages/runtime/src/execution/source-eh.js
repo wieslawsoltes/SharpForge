@@ -9,6 +9,7 @@ import {frameById, nextFrameId} from './frame-lifetimes.js';
 import {exceptionMatches} from './exception-types.js';
 import {isFatalFault, markUnhandled} from './unhandled.js';
 import {firstChanceFailurePolicy} from './exception-event-failure.js';
+import {hasTaskFaultBoundary, captureTaskFault} from './task-fault-boundary.js';
 
 export function frameState() { return {exception: null, caught: [], unwinds: []}; }
 
@@ -60,8 +61,8 @@ export function finishReturn(vm, frame, value) {
   vm.stack.length = frame.base;
   popFrame(vm, 'return');
   const control = continueControlReturn(vm, frame, value);
-  if (control.handled) return;
-  deliverSourceReturn(vm, control.value);
+  if (control?.handled) return;
+  deliverSourceReturn(vm, control ? control.value : value);
 }
 
 export function transfer(vm, frame, kind, target, value) {
@@ -159,6 +160,7 @@ function searchStep(vm, search) {
     search.clause = 0;
     search.clauses = null;
   }
+  if (hasTaskFaultBoundary(vm)) return {phase: 'unwind', search};
   markUnhandled(vm, search.error);
   return null;
 }
@@ -201,7 +203,10 @@ function finishPending(vm, frame) {
 
 function unwindStep(vm, search) {
   const frame = vm.top;
-  if (!frame) { markUnhandled(vm, search.error); return null; }
+  if (!frame) {
+    if (!captureTaskFault(vm, search.error)) markUnhandled(vm, search.error);
+    return null;
+  }
   const catcher = search.selection?.kind === 'catch' && search.selection.frameId === frame.id ? search.selection.handler : null;
   frame.unwinds = frame.unwinds.filter(unwind => unwind.active && catcher &&
     catcher.target >= unwind.active.target && catcher.target < unwind.active.handlerEnd);

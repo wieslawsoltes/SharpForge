@@ -1,0 +1,45 @@
+{
+  "format": "SharpForge.CIStatusArchive/1",
+  "head": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "tree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+  "coreJobId": 111517027079,
+  "decodedLogUtf16CodeUnits": 1177487,
+  "decodedLogNewlines": "LF",
+  "files": [
+    {
+      "path": "core-job111517027079.log",
+      "bytes": 1177495,
+      "sha256": "5a5a16a25e170a61ce360703987a897e10347d46849f8d81b90cfe7e71dfc48a"
+    },
+    {
+      "path": "core-jobs.json",
+      "bytes": 7572,
+      "sha256": "73ceea45e8f7a8e588127bfb7e8fe977853776553623a306039f0124a09a5001"
+    },
+    {
+      "path": "native-jobs.json",
+      "bytes": 20359,
+      "sha256": "e1ca583436c09883afdff000366b15ef2b42e5156536f07f6cf3d6aed021877a"
+    },
+    {
+      "path": "pr-merge-commit.json",
+      "bytes": 2904,
+      "sha256": "77b352459316064cf501c3668da9c7686ca1272924ddcea3c9a636c8a3b3e905"
+    },
+    {
+      "path": "previous-ca97-native-jobs.json",
+      "bytes": 10763,
+      "sha256": "4035978d80e77e1d06807d9e4a6b7b6bccbb4dc35eba15405ae195f1193be27c"
+    },
+    {
+      "path": "previous-ca97-runs.json",
+      "bytes": 33819,
+      "sha256": "e565f95e91fdd7586c8c2b74f8c77c635ad85eb2b9748a1073b79ecf9a27c4bd"
+    },
+    {
+      "path": "workflow-runs.json",
+      "bytes": 116725,
+      "sha256": "f8587e5fba161f0dbbc6ee5d43076bedc8f958db90dfba8c1f8c942df5b44ae3"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
-import {parseExpression} from '@sharpforge/syntax';
+import {evaluateTransaction} from './evaluation-transaction.js';
 import {BuiltinMap} from '@sharpforge/bytecode';
 import {isReference,ManagedFault} from '@sharpforge/runtime';
-import {verifyCilAssembly} from '@sharpforge/cil';
+import {admitEvaluationMethod} from './evaluation-admission.js';
 
 const numeric = new Set(['sbyte','byte','short','ushort','char','int','uint','long','ulong','float','double','nint','nuint']);
 const normalize = t => ({'System.Int32':'int','System.Double':'double','System.String':'string','System.Boolean':'bool','System.Object':'object','System.Exception':'Exception'}[t] ?? t);
@@ -175,7 +175,7 @@ class EffectfulExpression {
     if(m.isAsync)error('Suspendable async evaluation is not allowed; evaluate a synchronous method or resume the task');
     if(signature.parameters.length!==args.length)error('Method argument count mismatch');
     const converted=args.map((a,i)=>this.convert(a,source?m.parameters[i].type:signature.parameters[i]));
-    if(!source){const report=verifyCilAssembly(vm.inspector,{methodToken:id});if(!report.success)error(report.issues.map(i=>i.message).join('; '));for(const t of report.methods)if(!vm.report.methods.includes(t))vm.report.methods.push(t);}
+    if(!source)admitEvaluationMethod(vm,id);
     const control={frames:vm.frames,stack:vm.stack,state:vm.state,sourcePause:vm.sourcePause,point:vm.currentPoint,pendingFault:vm.pendingFault,fault:vm.fault,returnValue:vm.returnValue,exitCode:vm.exitCode};
     vm.frames=[];if(source)vm.stack=[];vm.returnValue=null;vm.pendingFault=null;vm.fault=null;vm.state='running';vm.sourcePause=false;
     vm.call(id,[...(!signature.isStatic?[receiver]:[]),...converted]);if(!source)vm.ensureInitialized(m.ownerToken);
@@ -202,35 +202,5 @@ class EffectfulExpression {
 /** Evaluate with explicit consent. commit:false rolls back managed state, including GC,
  * output, exception state and initialization. This is not a sandbox for native host effects.
  */
-export function evaluateFunction(session,expression,{frameId,allowSideEffects=false,commit=true,maxInstructions=100000,timeBudgetMs=250,signal}={}) {
-  const vm=session.vm;
-  if(!allowSideEffects)error('Function evaluation executes program code. Explicit side-effect consent is required');
-  if(!['paused','waiting','terminated'].includes(vm.state))error('Pause before evaluating program code');
-  if(!Number.isSafeInteger(maxInstructions)||maxInstructions<1||maxInstructions>1000000||!Number.isFinite(timeBudgetMs)||timeBudgetMs<1||timeBudgetMs>2000)error('Invalid evaluation budget');
-  if(typeof expression!=='string'||expression.length>16384)error('Evaluation expression exceeds 16384 characters');
-  const parsed=parseExpression(expression);if(parsed.diagnostics.length)error(parsed.diagnostics[0].message);
-  const frame=frameId===undefined?vm.top:session.frame(frameId),snapshot=vm.snapshot(),roots=[...vm.roots()],state=vm.state;
-  const oldSuppressed=vm.scheduler?.suppressed;if(vm.scheduler)vm.scheduler.suppressed=true;
-  const callbacks={onOutput:vm.onOutput,onWrite:vm.onWrite,onException:vm.onException},max=vm.options.maxInstructions,oldReport=vm.report?.methods.slice();
-  const history={items:[...(session.history??[])],bytes:session.historyBytes,dropped:session.historyDropped};
-  const begin=performance.now(),instructions=vm.instructions,outputStart=vm.output.length;
-  const check=()=>{if(signal?.aborted)error('Function evaluation cancelled');if(performance.now()-begin>timeBudgetMs)error('Function evaluation timed out');if(vm.instructions-instructions>maxInstructions)error('Function evaluation instruction budget exceeded');};
-  let hostTransaction;
-  try {
-    check();session.remember?.(true);
-    vm.onOutput=()=>{};vm.onWrite=null;vm.onException=null;vm.options.maxInstructions=vm.instructions+maxInstructions;
-    hostTransaction=vm.platform?.beginTransaction?.();
-    const evaluator=new EffectfulExpression(session,frame,check);
-    const result=vm.heap.withRoots(roots,()=>evaluator.eval(parsed.expression)),display=result.type==='bool'?(result.value?'True':'False'):vm.display(result.value),output=vm.output.slice(outputStart).join(''),used=vm.instructions-instructions;
-    if(!commit){vm.restore(snapshot);vm.state=state;vm.platform?.rollbackTransaction?.(hostTransaction);session.history=history.items;session.historyBytes=history.bytes;session.historyDropped=history.dropped;if(oldReport)vm.report.methods=oldReport;}
-    else {
-      vm.state=state;vm.writeRevision++;session.remember?.(true);vm.platform?.commitTransaction?.(hostTransaction);
-      if(isReference(result.value)){session.evaluationHandles??=[];session.evaluationHandles.push(vm.heap.createHandle(result.value));while(session.evaluationHandles.length>32)vm.heap.releaseHandle(session.evaluationHandles.shift());}
-      if(output)callbacks.onOutput(output);
-    }
-    return {result:display,type:result.type,value:commit||!isReference(result.value)?result.value:null,reference:commit&&isReference(result.value)?result.value:null,output,committed:commit,instructions:used};
-  } catch(e) {
-    vm.restore(snapshot);vm.state=state;vm.platform?.rollbackTransaction?.(hostTransaction);session.history=history.items;session.historyBytes=history.bytes;session.historyDropped=history.dropped;if(oldReport)vm.report.methods=oldReport;throw e;
-  } finally {if(vm.scheduler)vm.scheduler.suppressed=oldSuppressed;Object.assign(vm,callbacks);vm.options.maxInstructions=max;}
-}
+export function evaluateFunction(session,expression,options={}) {return evaluateTransaction(session,expression,options,EffectfulExpression);}
 export function releaseEvaluationHandles(session){for(const h of session.evaluationHandles??[])session.vm.heap.releaseHandle(h);session.evaluationHandles=[];}

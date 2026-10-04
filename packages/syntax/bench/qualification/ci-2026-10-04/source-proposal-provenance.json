@@ -1,0 +1,127 @@
+{
+  "mode": "source-only; no benchmark/test executed",
+  "workflowBase": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+  "workflowBaseSha256": "356d3b24e97eee45261d23dc9766113c979a12f37263ea0f322f748f61c39b9b",
+  "workflowProposedSha256": "f7100d04267bd576ac15f3e729548ef2f49fb61a65002001038854d277defd6a",
+  "patchSha256": "da845b8bd0923c30a61ef0cb5aa482ae289e6d930f83c123b4b5adb92b5ef8f2",
+  "refs": {
+    "historicalBaselineIntroduction": {
+      "commit": "ea012f434cfeba428392d61afd371e3fa65ba5a4",
+      "url": "https://github.com/wieslawsoltes/SharpForge/commit/ea012f434cfeba428392d61afd371e3fa65ba5a4",
+      "objects": {
+        "packages/syntax": "299cdb9a0b0a878368650cddf10332cfd999dcd0",
+        "packages/text": "48c7191d7558e51e44f991a34e4b6e9c284a38b3",
+        "packages/syntax/bench/parse.baseline.json": "28b47e3507287681b9a011af8a3ba2bcbf9d6d71",
+        "packages/syntax/bench/parse.bench.js": "60ee15e0a188c9416bfb7af212dbe5e334f39dd1"
+      }
+    },
+    "retainedFailureSource": {
+      "commit": "60e000787912434100cb7dac83c4fdb0893c13d9",
+      "url": "https://github.com/wieslawsoltes/SharpForge/commit/60e000787912434100cb7dac83c4fdb0893c13d9",
+      "objects": {
+        "packages/syntax": "71cfb25f113b73a5998c5634a2c67f0597bce50e",
+        "packages/text": "e68012e1423ba4c7dcb5fcab453f22fa87ffda05",
+        "packages/syntax/bench/parse.baseline.json": "28b47e3507287681b9a011af8a3ba2bcbf9d6d71",
+        "packages/syntax/bench/parse.bench.js": "752aedeaf3ced018fd979d45347384ea00fd1ea5"
+      }
+    },
+    "currentMain": {
+      "commit": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+      "url": "https://github.com/wieslawsoltes/SharpForge/commit/f009e2949f3311f0ca84a4a6bc694535140d130b",
+      "objects": {
+        "packages/syntax": "71cfb25f113b73a5998c5634a2c67f0597bce50e",
+        "packages/text": "e68012e1423ba4c7dcb5fcab453f22fa87ffda05",
+        "packages/syntax/bench/parse.baseline.json": "28b47e3507287681b9a011af8a3ba2bcbf9d6d71",
+        "packages/syntax/bench/parse.bench.js": "752aedeaf3ced018fd979d45347384ea00fd1ea5"
+      }
+    }
+  },
+  "historicalBaselineSha256": "816f4875798f97551fe42d3dcfa0488b277691f249d9fde3f696266f6838aeb2",
+  "retainedFailure": {
+    "path": "/workspace/scratch/1692a10afba9/syntax-parse-qualification.json",
+    "sha256": "c28aad19848972ebf6d571c5ea97ad5ac229e79b691693934cb66ab14314f240",
+    "source": {
+      "commit": "60e000787912434100cb7dac83c4fdb0893c13d9",
+      "trackedChanges": []
+    },
+    "node": "v24.19.0",
+    "platform": "linux x64",
+    "context": "Shared Linux execution host with concurrent project agents; no quiet-host isolation established.",
+    "failureCount": 11,
+    "failures": [
+      {
+        "name": "small",
+        "baseline": 0.65,
+        "current": 1.32,
+        "change": 103.08
+      },
+      {
+        "name": "oneMegabyte",
+        "baseline": 18.85,
+        "current": 40.49,
+        "change": 114.8
+      },
+      {
+        "name": "hugeString",
+        "baseline": 0.83,
+        "current": 2.32,
+        "change": 179.52
+      },
+      {
+        "name": "hugeVerbatimString",
+        "baseline": 0.64,
+        "current": 1.09,
+        "change": 70.31
+      },
+      {
+        "name": "hugeRawString",
+        "baseline": 0.99,
+        "current": 1.77,
+        "change": 78.79
+      },
+      {
+        "name": "hugeInterpolatedString",
+        "baseline": 20.28,
+        "current": 48.09,
+        "change": 137.13
+      },
+      {
+        "name": "hugeNumber",
+        "baseline": 0.45,
+        "current": 1.06,
+        "change": 135.56
+      },
+      {
+        "name": "hugeArrayInitializer",
+        "baseline": 18.16,
+        "current": 43.78,
+        "change": 141.08
+      },
+      {
+        "name": "hugeComment",
+        "baseline": 0.02,
+        "current": 0.09,
+        "change": 350
+      },
+      {
+        "name": "longBinaryChain",
+        "baseline": 15.15,
+        "current": 35.33,
+        "change": 133.2
+      },
+      {
+        "name": "tenMegabytes",
+        "baseline": 202.85,
+        "current": 463.29,
+        "change": 128.39
+      }
+    ],
+    "processPeakRssMB": 1581.77
+  },
+  "unchangedBaselinePolicy": true,
+  "patchCheck": {
+    "command": "git -C /workspace/scratch/1692a10afba9/p5-canonical-cil apply --check --cached <workflow.patch>",
+    "mode": "index-only dry run; no working-tree or index write",
+    "preliminaryWorkingTreeCheck": "Failed because sparse root omits .github/workflows/perf.yml; no source change attempted."
+  }
+}

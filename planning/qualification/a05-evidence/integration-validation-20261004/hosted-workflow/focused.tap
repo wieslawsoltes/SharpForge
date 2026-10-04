@@ -1,0 +1,312 @@
+TAP version 13
+# Subtest: array proof reuses the exact canonical grid and vector fixtures without altering the T12 catalog
+ok 1 - array proof reuses the exact canonical grid and vector fixtures without altering the T12 catalog
+  ---
+  duration_ms: 0.824601
+  type: 'test'
+  ...
+# Subtest: rectangular/source: complete cold/warm array work retains exact result and scoped counters
+ok 2 - rectangular/source: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 348.058184
+  type: 'test'
+  ...
+# Subtest: rectangular/reloaded: complete cold/warm array work retains exact result and scoped counters
+ok 3 - rectangular/reloaded: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 160.241412
+  type: 'test'
+  ...
+# Subtest: rectangular/cil: complete cold/warm array work retains exact result and scoped counters
+ok 4 - rectangular/cil: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 308.231964
+  type: 'test'
+  ...
+# Subtest: vector/source: complete cold/warm array work retains exact result and scoped counters
+ok 5 - vector/source: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 394.211745
+  type: 'test'
+  ...
+# Subtest: vector/reloaded: complete cold/warm array work retains exact result and scoped counters
+ok 6 - vector/reloaded: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 364.434412
+  type: 'test'
+  ...
+# Subtest: vector/cil: complete cold/warm array work retains exact result and scoped counters
+ok 7 - vector/cil: complete cold/warm array work retains exact result and scoped counters
+  ---
+  duration_ms: 3052.249139
+  type: 'test'
+  ...
+# Subtest: incorrect complete array result fails before any cold or warm sample is accepted
+ok 8 - incorrect complete array result fails before any cold or warm sample is accepted
+  ---
+  duration_ms: 63.013244
+  type: 'test'
+  ...
+# Subtest: array proof rejects unmeasured engines, invalid bounds and cancellation before guest construction
+ok 9 - array proof rejects unmeasured engines, invalid bounds and cancellation before guest construction
+  ---
+  duration_ms: 0.988812
+  type: 'test'
+  ...
+# Subtest: array proof refuses to overwrite retained evidence
+ok 10 - array proof refuses to overwrite retained evidence
+  ---
+  duration_ms: 1.199201
+  type: 'test'
+  ...
+# Subtest: source: byref latency retains complete cold/warm executions and exact result/counter scope
+ok 11 - source: byref latency retains complete cold/warm executions and exact result/counter scope
+  ---
+  duration_ms: 467.811215
+  type: 'test'
+  ...
+# Subtest: reloaded: byref latency retains complete cold/warm executions and exact result/counter scope
+ok 12 - reloaded: byref latency retains complete cold/warm executions and exact result/counter scope
+  ---
+  duration_ms: 383.237451
+  type: 'test'
+  ...
+# Subtest: cil: byref latency retains complete cold/warm executions and exact result/counter scope
+ok 13 - cil: byref latency retains complete cold/warm executions and exact result/counter scope
+  ---
+  duration_ms: 1882.050011
+  type: 'test'
+  ...
+# Subtest: byref latency rejects wrong guest output instead of publishing a measured row
+ok 14 - byref latency rejects wrong guest output instead of publishing a measured row
+  ---
+  duration_ms: 354.399568
+  type: 'test'
+  ...
+# Subtest: byref latency validates bounds and cancellation before constructing a guest
+ok 15 - byref latency validates bounds and cancellation before constructing a guest
+  ---
+  duration_ms: 0.930357
+  type: 'test'
+  ...
+# Subtest: per-iteration allocation evidence preserves positive fixed slice costs and separate all-run limits
+ok 16 - per-iteration allocation evidence preserves positive fixed slice costs and separate all-run limits
+  ---
+  duration_ms: 2.230486
+  type: 'test'
+  ...
+# Subtest: a single observed byte of growth or any loop collection stays inconclusive without tolerance
+ok 17 - a single observed byte of growth or any loop collection stays inconclusive without tolerance
+  ---
+  duration_ms: 0.298578
+  type: 'test'
+  ...
+# Subtest: exact loop allocation counters cannot be hidden by flat or falling V8 bytes
+ok 18 - exact loop allocation counters cannot be hidden by flat or falling V8 bytes
+  ---
+  duration_ms: 0.271438
+  type: 'test'
+  ...
+# Subtest: partial workloads, altered warmup, mismatched engines and missing allocation controls cannot qualify
+ok 19 - partial workloads, altered warmup, mismatched engines and missing allocation controls cannot qualify
+  ---
+  duration_ms: 0.397764
+  type: 'test'
+  ...
+# Subtest: allocation trace includes all in-loop bytes and closing pre-collection allocation, not retained size
+ok 20 - allocation trace includes all in-loop bytes and closing pre-collection allocation, not retained size
+  ---
+  duration_ms: 0.623105
+  type: 'test'
+  ...
+# Subtest: retained reports keep their historical labels while fixed-loop interpretation distinguishes real allocation growth
+ok 21 - retained reports keep their historical labels while fixed-loop interpretation distinguishes real allocation growth
+  ---
+  duration_ms: 3.246178
+  type: 'test'
+  ...
+# source-fibonacci: starting
+# source-fibonacci: completed; exit=2; assessment=unmet
+# profiler-reference: starting
+# profiler-reference: completed; exit=2; assessment=unmet
+# source-integer-loop: starting
+# source-integer-loop: completed; exit=0; assessment=satisfied
+# source-fibonacci: starting
+# source-fibonacci: failed; exit=0; assessment=unmet
+# profiler-reference: starting
+# profiler-reference: completed; exit=0; assessment=satisfied
+# profiler-off: starting
+# profiler-off: failed; exit=0; assessment=unmet
+# source-integer-loop: starting
+# source-integer-loop: completed; exit=0; assessment=satisfied
+# Subtest: hosted plan admits every fixed qualification command with exact ABI, counts and distinct outputs
+ok 22 - hosted plan admits every fixed qualification command with exact ABI, counts and distinct outputs
+  ---
+  duration_ms: 4.35786
+  type: 'test'
+  ...
+# Subtest: enabled and allocation reporting retain intentional exit2 without converting a missed gate into success
+ok 23 - enabled and allocation reporting retain intentional exit2 without converting a missed gate into success
+  ---
+  duration_ms: 0.405506
+  type: 'test'
+  ...
+# Subtest: memory qualification recomputes actual retained observations and refuses forged or partial success labels
+ok 24 - memory qualification recomputes actual retained observations and refuses forged or partial success labels
+  ---
+  duration_ms: 1.664695
+  type: 'test'
+  ...
+# Subtest: failed reference blocks only its dependent off command while independent misses and later work remain recorded
+ok 25 - failed reference blocks only its dependent off command while independent misses and later work remain recorded
+  ---
+  duration_ms: 4.196753
+  type: 'test'
+  ...
+# Subtest: source mutation blocks all later commands and missing reports stay failures
+ok 26 - source mutation blocks all later commands and missing reports stay failures
+  ---
+  duration_ms: 1.377603
+  type: 'test'
+  ...
+# Subtest: a successful off report cannot qualify after reference mutation; later independent work still executes
+ok 27 - a successful off report cannot qualify after reference mutation; later independent work still executes
+  ---
+  duration_ms: 2.674599
+  type: 'test'
+  ...
+# Subtest: literal child argv retains nonzero exit, both output streams and cancellation without overwrite
+ok 28 - literal child argv retains nonzero exit, both output streams and cancellation without overwrite
+  ---
+  duration_ms: 175.436934
+  type: 'test'
+  ...
+# Subtest: runner sidecar bounds reads, records unavailable controls, and excludes environment secrets
+ok 29 - runner sidecar bounds reads, records unavailable controls, and excludes environment secrets
+  ---
+  duration_ms: 3.094896
+  type: 'test'
+  ...
+# Subtest: setup cannot start a child after the common infrastructure budget has already elapsed
+ok 30 - setup cannot start a child after the common infrastructure budget has already elapsed
+  ---
+  duration_ms: 0.855727
+  type: 'test'
+  ...
+# Subtest: private construction handles and shared host allocation observers remain byte-identical
+ok 31 - private construction handles and shared host allocation observers remain byte-identical
+  ---
+  duration_ms: 5.409555
+  type: 'test'
+  ...
+# Subtest: profiler-free construction retains the exact callback with a null handle before guest entry
+ok 32 - profiler-free construction retains the exact callback with a null handle before guest entry
+  ---
+  duration_ms: 0.6738
+  type: 'test'
+  ...
+# Subtest: prepared pool capabilities, source identities, calls and callbacks remain byte-identical in the reference
+ok 33 - prepared pool capabilities, source identities, calls and callbacks remain byte-identical in the reference
+  ---
+  duration_ms: 1.003173
+  type: 'test'
+  ...
+# Subtest: reference removes only profiler eligibility from the integrated batching guards
+ok 34 - reference removes only profiler eligibility from the integrated batching guards
+  ---
+  duration_ms: 0.455068
+  type: 'test'
+  ...
+# Subtest: current instruction, continuation and method consumers produce syntactically valid reference modules
+ok 35 - current instruction, continuation and method consumers produce syntactically valid reference modules
+  ---
+  duration_ms: 453.614114
+  type: 'test'
+  ...
+# Subtest: option-only gates and direct profiler calls require explicit transformation review
+ok 36 - option-only gates and direct profiler calls require explicit transformation review
+  ---
+  duration_ms: 0.461268
+  type: 'test'
+  ...
+# Subtest: qualification defaults retain the actual full acceptance counts and explicit runner
+ok 37 - qualification defaults retain the actual full acceptance counts and explicit runner
+  ---
+  duration_ms: 1.197829
+  type: 'test'
+  ...
+# Subtest: qualification options reject unsafe sizes, duplicate flags and accidental reference overwrite
+ok 38 - qualification options reject unsafe sizes, duplicate flags and accidental reference overwrite
+  ---
+  duration_ms: 0.363855
+  type: 'test'
+  ...
+# Subtest: qualification never promotes unavailable, reduced-count or uncertain targets to completion
+ok 39 - qualification never promotes unavailable, reduced-count or uncertain targets to completion
+  ---
+  duration_ms: 0.29293
+  type: 'test'
+  ...
+# Subtest: retention protocol keeps exact workload size fixed and requires explicit bounded measurement options
+ok 40 - retention protocol keeps exact workload size fixed and requires explicit bounded measurement options
+  ---
+  duration_ms: 1.841374
+  type: 'test'
+  ...
+# Subtest: retention census counts unique immutable typed backing once and includes live storage separately
+ok 41 - retention census counts unique immutable typed backing once and includes live storage separately
+  ---
+  duration_ms: 4.176273
+  type: 'test'
+  ...
+# Subtest: host assessment never double counts ArrayBuffers or passes a truncated history
+ok 42 - host assessment never double counts ArrayBuffers or passes a truncated history
+  ---
+  duration_ms: 0.363694
+  type: 'test'
+  ...
+# Subtest: the Wasm report entry point refuses to overwrite retained evidence before compiling
+ok 43 - the Wasm report entry point refuses to overwrite retained evidence before compiling
+  ---
+  duration_ms: 2.862443
+  type: 'test'
+  ...
+# Subtest: wasm-call-arithmetic: repeated cold preparation and warm calls execute real Wasm with exact scoped counters
+ok 44 - wasm-call-arithmetic: repeated cold preparation and warm calls execute real Wasm with exact scoped counters
+  ---
+  duration_ms: 1763.53398
+  type: 'test'
+  ...
+# Subtest: wasm-call-boxing: repeated cold preparation and warm calls execute real Wasm with exact scoped counters
+ok 45 - wasm-call-boxing: repeated cold preparation and warm calls execute real Wasm with exact scoped counters
+  ---
+  duration_ms: 1703.847305
+  type: 'test'
+  ...
+# Subtest: a declined Wasm backend cannot become a successful interpreter timing row
+ok 46 - a declined Wasm backend cannot become a successful interpreter timing row
+  ---
+  duration_ms: 45.335405
+  type: 'test'
+  ...
+# Subtest: incorrect output fails before cold or warm Wasm observations can be accepted
+ok 47 - incorrect output fails before cold or warm Wasm observations can be accepted
+  ---
+  duration_ms: 19.070777
+  type: 'test'
+  ...
+# Subtest: cancellation and bounded options reject before compiling or executing a guest
+ok 48 - cancellation and bounded options reject before compiling or executing a guest
+  ---
+  duration_ms: 1.709141
+  type: 'test'
+  ...
+1..48
+# tests 48
+# suites 0
+# pass 48
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17153.145717

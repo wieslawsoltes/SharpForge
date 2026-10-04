@@ -1,0 +1,13 @@
+{"index":0,"disabledMs":234.04590599999983,"enabledMs":659.9146740000001,"leafCalls":19844}
+{"index":1,"disabledMs":169.63225599999987,"enabledMs":514.9895040000001,"leafCalls":19844}
+{"index":2,"disabledMs":160.0279800000003,"enabledMs":516.010127,"leafCalls":19844}
+{"index":3,"disabledMs":172.6262480000005,"enabledMs":576.666487,"leafCalls":19844}
+{"index":4,"disabledMs":175.33934900000077,"enabledMs":613.8924020000004,"leafCalls":19844}
+{"index":5,"disabledMs":207.34088699999938,"enabledMs":553.3080760000003,"leafCalls":19844}
+{"index":6,"disabledMs":178.87726999999995,"enabledMs":496.3017829999999,"leafCalls":19844}
+{"index":7,"disabledMs":215.1863659999999,"enabledMs":581.7265539999999,"leafCalls":19844}
+{"index":8,"disabledMs":159.1953450000001,"enabledMs":559.5260750000007,"leafCalls":19844}
+{"index":9,"disabledMs":209.11298800000077,"enabledMs":557.5391259999997,"leafCalls":19844}
+{"index":10,"disabledMs":200.68973900000128,"enabledMs":546.7184410000009,"leafCalls":19844}
+{"index":11,"disabledMs":179.57793599999968,"enabledMs":598.4296949999989,"leafCalls":19844}
+{"status":"completed","summary":{"disabled":{"count":8,"minimum":159.1953450000001,"median":190.13383750000048,"p95":213.0606837000002,"p99":214.76122953999996,"maximum":215.1863659999999,"interquartileRange":29.791122499999574,"medianAbsoluteDeviation":16.00076899999931},"enabled":{"count":8,"minimum":496.3017829999999,"median":558.5326005000002,"p95":608.4804545499999,"p99":612.8100125100003,"maximum":613.8924020000004,"interquartileRange":34.2416719999992,"medianAbsoluteDeviation":17.50405649999948}},"ratio":0.3404167229089082}

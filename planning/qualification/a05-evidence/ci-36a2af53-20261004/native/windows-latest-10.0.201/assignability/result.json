@@ -1,0 +1,27 @@
+{
+  "id": "assignability",
+  "status": "passed",
+  "command": {
+    "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--casts",
+      "--framework",
+      "net10.0",
+      "--output",
+      "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\assignability\\evidence"
+    ],
+    "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "assignability\\evidence",
+  "report": "assignability\\result.json",
+  "startedAt": "2026-10-04T20:14:18.428Z",
+  "durationMs": 3274.8156000000017,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "assignability\\stdout.log",
+  "stderr": "assignability\\stderr.log",
+  "finishedAt": "2026-10-04T20:14:21.704Z"
+}

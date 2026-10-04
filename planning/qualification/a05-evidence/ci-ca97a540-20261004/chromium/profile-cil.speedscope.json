@@ -1,0 +1,53 @@
+{
+  "$schema": "https://www.speedscope.app/file-format-schema.json",
+  "name": "A05 browser cil",
+  "exporter": "SharpForge.InstructionProfile/1",
+  "activeProfileIndex": 0,
+  "shared": {
+    "frames": [
+      {
+        "name": "[runtime]"
+      },
+      {
+        "name": "[profile capacity]"
+      },
+      {
+        "name": "SharpForge.<>Program::<startup>"
+      },
+      {
+        "name": "Program::Main"
+      },
+      {
+        "name": "Program::A05BrowserTwice"
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "type": "sampled",
+      "name": "A05 browser cil",
+      "unit": "none",
+      "startValue": 0,
+      "endValue": 26,
+      "samples": [
+        [
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4
+        ]
+      ],
+      "weights": [
+        2,
+        8,
+        16
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+import {writeFile} from 'node:fs/promises';
+import {getHeapStatistics} from 'node:v8';
+import {CilVirtualMachine, prepareExecution, executionCodeStatistics, framePoolStatistics} from '/tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/index.js';
+import {compileFixture, assertOutput, hostMemory, samplePhase} from '/tmp/a05-virtual-witness-42f7738360b9/bench/vm/operations.js';
+import {qualificationTargets} from '/tmp/a05-virtual-witness-42f7738360b9/bench/vm/qualification-fixtures.js';
+import {qualificationVmOptions, runQualificationVM} from '/tmp/a05-virtual-witness-42f7738360b9/bench/vm/qualification-execution.js';
+import {distribution} from '/tmp/a05-virtual-witness-42f7738360b9/bench/vm/statistics.js';
+
+const directory = '/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71';
+const definition = qualificationTargets().find(target => target.id === 'virtual-cache');
+const artifact = compileFixture(definition.fixture);
+const deadline = performance.now() + 120000, signal = new AbortController().signal;
+const contexts = {};
+const report = {revision: 'dc37f2c50420d136a076e8bee046c999fa573303',
+  kind: 'Bounded same-product leaf-guard diagnostic, not original target qualification',
+  protocol: {samples: 8, warmup: 3, first: 1, alternatingOrder: true, nativeBits: 64, timeoutSeconds: 120,
+    guestInstructionBudget: 10000, timeBudgetMs: 8, gcOutsideTimedInterval: true},
+  fixture: definition.fixture, environment: {node: process.version, platform: process.platform, arch: process.arch,
+    nodeOptions: process.env.NODE_OPTIONS, heapSizeLimit: getHeapStatistics().heap_size_limit},
+  modes: {}, observations: {disabled: [], enabled: []}, status: 'running'};
+
+function counters(vm) {
+  return {instructions: vm.instructions, frameId: vm.frameId, code: executionCodeStatistics(vm),
+    frames: framePoolStatistics(vm), allocations: vm.heap.stats.allocations, allocatedBytes: vm.heap.stats.allocatedBytes};
+}
+async function observe(context, index) {
+  const {vm, entry} = context;
+  if (vm.state === 'terminated') {
+    vm.output.length = 0;
+    vm.outputCharacters = 0;
+    vm.returnValue = null;
+    vm.state = 'running';
+    vm.call(entry, []);
+  }
+  globalThis.gc();
+  const before = counters(vm), hostBefore = hostMemory(), started = performance.now();
+  await runQualificationVM(vm, deadline, signal);
+  const executionMs = performance.now() - started, hostAfter = hostMemory(), after = counters(vm);
+  assertOutput(vm, definition.fixture);
+  return {index, phase: samplePhase(index, 3), executionMs, outputVerified: true, hostBefore, hostAfter,
+    instructions: after.instructions - before.instructions, admittedCallIds: after.frameId - before.frameId,
+    leafCalls: after.code.cilLeafCalls - before.code.cilLeafCalls,
+    leafInstructions: after.code.cilLeafInstructions - before.code.cilLeafInstructions,
+    framesAllocated: after.frames.framesAllocated - before.frames.framesAllocated,
+    arraysAllocated: after.frames.arraysAllocated - before.frames.arraysAllocated,
+    physicalReuses: after.frames.reused - before.frames.reused,
+    physicalRetirements: after.frames.released - before.frames.released,
+    managedAllocations: after.allocations - before.allocations, managedAllocatedBytes: after.allocatedBytes - before.allocatedBytes};
+}
+try {
+  for (const mode of ['disabled', 'enabled']) {
+    const options = {...qualificationVmOptions({nativeBits: 64}), ...definition.candidateOptions, preparedLeafCalls: mode === 'enabled'};
+    const started = performance.now(), vm = new CilVirtualMachine(artifact.assembly, options);
+    const constructionMs = performance.now() - started, prepareStart = performance.now(), preparation = prepareExecution(vm);
+    const preparationMs = performance.now() - prepareStart;
+    vm.heap.collect();
+    contexts[mode] = {vm, entry: vm.top.method.token};
+    report.modes[mode] = {options, constructionMs, preparationMs, preparation};
+  }
+  for (let index = 0; index < 12; index++) {
+    for (const mode of index % 2 ? ['enabled', 'disabled'] : ['disabled', 'enabled']) {
+      report.observations[mode].push(await observe(contexts[mode], index));
+    }
+    const disabled = report.observations.disabled.at(-1), enabled = report.observations.enabled.at(-1);
+    if (disabled.instructions !== enabled.instructions || disabled.admittedCallIds !== enabled.admittedCallIds) {
+      throw new Error('Logical instructions or admitted call identity count changed');
+    }
+    if (disabled.leafCalls || enabled.leafCalls === 0 || enabled.leafInstructions !== enabled.leafCalls * 2) {
+      throw new Error('Diagnostic failed to exercise the declared leaf modes');
+    }
+    console.log(JSON.stringify({index, disabledMs: disabled.executionMs, enabledMs: enabled.executionMs, leafCalls: enabled.leafCalls}));
+  }
+  report.summary = Object.fromEntries(Object.entries(report.observations).map(([mode, values]) =>
+    [mode, distribution(values.filter(value => value.phase === 'measured').map(value => value.executionMs))]));
+  report.ratioOfMediansDisabledOverEnabled = report.summary.disabled.median / report.summary.enabled.median;
+  report.acceptance = 'not-qualified-diagnostic-only';
+  report.status = 'completed';
+} catch (error) {
+  report.status = 'failed';
+  report.error = {name: error.name, message: error.message, stack: error.stack};
+  process.exitCode = 1;
+} finally {
+  for (const {vm} of Object.values(contexts)) vm.stop();
+  await writeFile(directory + '/probe-results.json', JSON.stringify(report, null, 2) + '\n', {flag: 'wx'});
+}
+console.log(JSON.stringify({status: report.status, summary: report.summary, ratio: report.ratioOfMediansDisabledOverEnabled}));

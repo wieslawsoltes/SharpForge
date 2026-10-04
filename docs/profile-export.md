@@ -94,3 +94,20 @@ a passing full-integration result. Exporter assertions establish the tested JSON
 ownership and captured-weight contracts. They do not establish measured profiler
 overhead, actual Speedscope application loading or browser qualification. The
 28-test result above remains attached to its original revision and scope.
+
+The later [published36 browser archive][profile-browser36] supplies the previously
+missing actual application observation. At `36a2af53`, Chromium 153.0.8010.12,
+Firefox 155.0 and WebKit 26.6 each loaded source, reloaded-source and CIL profiles
+into the pinned official Speedscope 1.24.0 UI. The retained DOM rows and profile
+files establish displayed method names and exact recorded instruction totals.
+All eight browser cases passed per engine; those observations do not imply binary
+`.nettrace` compatibility or duration-profile UI qualification.
+
+The [strict off comparison][profile-off36] at the same public revision measured
+all six required workloads, but every below-1% acceptance decision remained
+inconclusive. Enabled overhead reporting is a separate required set of six rows.
+Later runtime changes and the hosted qualification plan have no implied measured
+result; the earlier failures, raw observations and reference patch remain intact.
+
+[profile-browser36]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/README.md
+[profile-off36]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/profiler-off-36a2af532/README.md

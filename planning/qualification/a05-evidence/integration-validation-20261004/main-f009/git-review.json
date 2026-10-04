@@ -1,0 +1,255 @@
+{
+  "format": "SharpForge.A05MergeReview/1",
+  "reviewKind": "Read-only committed Git-object inspection; no new execution checks",
+  "reviewWorkingDirectory": "/workspace/scratch/42f7738360b9/a05-snapshots",
+  "commits": [
+    {
+      "revision": "01745592db079b44f248ecc460ed09f0a01b9df5",
+      "tree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+      "parents": [
+        "9d46f4ad6f65bd7cbbed4a3a2f2e2abb9ddf763c",
+        "f009e2949f3311f0ca84a4a6bc694535140d130b"
+      ]
+    },
+    {
+      "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+      "tree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+      "parents": [
+        "ca97a540252605fec532768e68220495a858c02f",
+        "f009e2949f3311f0ca84a4a6bc694535140d130b"
+      ]
+    },
+    {
+      "revision": "9d46f4ad6f65bd7cbbed4a3a2f2e2abb9ddf763c",
+      "tree": "08c3f8560c079bd5d370ef00dfa7529f3b936c10",
+      "parents": [
+        "0588e436718aa9774b33b7df85e0682beefc7d1c"
+      ]
+    },
+    {
+      "revision": "ca97a540252605fec532768e68220495a858c02f",
+      "tree": "08c3f8560c079bd5d370ef00dfa7529f3b936c10",
+      "parents": [
+        "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+        "75f0caad1c3ea096a656feb2989b867781edc82f"
+      ]
+    },
+    {
+      "revision": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+      "tree": "c4fdeccf5fefe11f21c801191b20e0fefd5708eb",
+      "parents": [
+        "0bcfa3f5df1e10cfecf7dfc52f2e4e6c98e86492",
+        "decd9f04b9d8b1677dd2628899b4f9303e87dd1c"
+      ]
+    }
+  ],
+  "automaticMergeTree": "698153f09271e65a287cf5713832859dd40112c6",
+  "parentToMergeChangedPathCount": 264,
+  "onlyManualResolutionPaths": [
+    "packages/cil/src/index.js"
+  ],
+  "otherAutomaticallyMergedChangedPaths": 263,
+  "unchangedPathspecs": [
+    "packages/runtime",
+    "packages/bytecode",
+    "packages/bcl*",
+    "bench",
+    "tests/a05-*",
+    ".github/workflows"
+  ],
+  "unchangedPathspecChanges": [],
+  "publicAndLocalTreesEqual": true,
+  "publicAndLocalParentTreesEqual": true,
+  "manualIndexWhitespaceCheck": {
+    "exitCode": 0,
+    "notices": 0
+  },
+  "wholeMergeWhitespace": {
+    "status": "root-reported; original output not retained in supplied files",
+    "notices": 8,
+    "scope": "Imported upstream files; preserved without whitespace normalization",
+    "independentlyRepeated": false
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "01745592db079b44f248ecc460ed09f0a01b9df5^{tree}"
+      ],
+      "exitCode": 0,
+      "stdout": "da3add4a11cce5ed887d2a093eac4b48a4c26754\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "01745592db079b44f248ecc460ed09f0a01b9df5"
+      ],
+      "exitCode": 0,
+      "stdout": "9d46f4ad6f65bd7cbbed4a3a2f2e2abb9ddf763c f009e2949f3311f0ca84a4a6bc694535140d130b\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "36a2af53287a563fd47d3a33b8e6e6382a726d35^{tree}"
+      ],
+      "exitCode": 0,
+      "stdout": "da3add4a11cce5ed887d2a093eac4b48a4c26754\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "36a2af53287a563fd47d3a33b8e6e6382a726d35"
+      ],
+      "exitCode": 0,
+      "stdout": "ca97a540252605fec532768e68220495a858c02f f009e2949f3311f0ca84a4a6bc694535140d130b\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "9d46f4ad6f65bd7cbbed4a3a2f2e2abb9ddf763c^{tree}"
+      ],
+      "exitCode": 0,
+      "stdout": "08c3f8560c079bd5d370ef00dfa7529f3b936c10\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "9d46f4ad6f65bd7cbbed4a3a2f2e2abb9ddf763c"
+      ],
+      "exitCode": 0,
+      "stdout": "0588e436718aa9774b33b7df85e0682beefc7d1c\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "ca97a540252605fec532768e68220495a858c02f^{tree}"
+      ],
+      "exitCode": 0,
+      "stdout": "08c3f8560c079bd5d370ef00dfa7529f3b936c10\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "ca97a540252605fec532768e68220495a858c02f"
+      ],
+      "exitCode": 0,
+      "stdout": "312cd9242a492ce6f03e7e034a51cc17669a7edf 75f0caad1c3ea096a656feb2989b867781edc82f\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "f009e2949f3311f0ca84a4a6bc694535140d130b^{tree}"
+      ],
+      "exitCode": 0,
+      "stdout": "c4fdeccf5fefe11f21c801191b20e0fefd5708eb\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "f009e2949f3311f0ca84a4a6bc694535140d130b"
+      ],
+      "exitCode": 0,
+      "stdout": "0bcfa3f5df1e10cfecf7dfc52f2e4e6c98e86492 decd9f04b9d8b1677dd2628899b4f9303e87dd1c\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "9d46f4ad6f65bd7cbbed4a3a2f2e2abb9ddf763c",
+        "01745592db079b44f248ecc460ed09f0a01b9df5"
+      ],
+      "exitCode": 0,
+      "stdout": "packages/cil/METADATA-GENERATIONS.md\npackages/cil/README.md\npackages/cil/src/index.js\npackages/cil/src/metadata.js\npackages/cil/src/metadata/delta-contracts.js\npackages/cil/src/metadata/delta-heaps.js\npackages/cil/src/metadata/delta-input.js\npackages/cil/src/metadata/delta-map.js\npackages/cil/src/metadata/delta-reader.js\npackages/cil/src/metadata/delta-rows.js\npackages/cil/src/metadata/reader-budget.js\npackages/cil/src/metadata/reader.js\npackages/cil/src/metadata/table-stream.js\npackages/cil/src/pe/reader.js\npackages/cil/tools/benchmark-metadata-generations.mjs\npackages/cil/tools/metadata-generations-benchmark-facts.mjs\npackages/cil/tools/metadata-generations-benchmark-features.mjs\npackages/cil/tools/metadata-generations-benchmark-measure.mjs\npackages/cil/tools/metadata-generations-benchmark-protocol.mjs\npackages/cil/tools/metadata-generations-benchmark-source.mjs\npackages/cil/tools/metadata-generations-benchmark-worker.mjs\npackages/compiler/src/binder/attributes.js\npackages/compiler/src/binder/extension-attributes.js\npackages/compiler/src/codegen/metadata/attribute-flags.js\npackages/compiler/src/codegen/metadata/custom-attributes.js\npackages/compiler/src/codegen/metadata/extension-block-attributes.js\npackages/compiler/src/codegen/metadata/extension-block-keys.js\npackages/compiler/src/codegen/metadata/extension-block-plan.js\npackages/compiler/src/codegen/metadata/extension-block-symbols.js\npackages/compiler/src/codegen/metadata/extension-constraint-shapes.js\npackages/compiler/src/codegen/metadata/extension-marker-attribute.js\npackages/compiler/src/codegen/metadata/member-signatures.js\npackages/compiler/src/codegen/metadata/nullable-plan.js\npackages/compiler/src/codegen/metadata/parameter-metadata.js\npackages/compiler/src/codegen/metadata/ref-declaration-metadata.js\npackages/compiler/src/codegen/metadata/ref-signatures.js\npackages/compiler/src/codegen/metadata/symbol-metadata.js\npackages/compiler/src/codegen/metadata/unmanaged-metadata.js\npackages/compiler/src/emit/cil/assembly-emitter.js\npackages/compiler/src/emit/cil/extension-block-bodies.js\npackages/compiler/src/emit/cil/synthesized-members.js\nscripts/benchmarks/a02-extension-metadata-paired.mjs\nscripts/benchmarks/a02-extension-metadata.mjs\nscripts/conformance/static/allowlist.json\ntests/a03-24-metadata-generation-boundaries.test.js\ntests/a03-24-metadata-generations-native.test.js\ntests/a03-24-metadata-generations.test.js\ntests/a03-24-reader-budgets.test.js\ntests/compiler-declaration-ref-metadata.test.js\ntests/compiler-declaration-ref-native.test.js\ntests/compiler-exported-extension-blocks.test.js\ntests/compiler-exported-extension-native.test.js\ntests/compiler-extension-attributes.test.js\ntests/compiler-extension-constraint-normalization.test.js\ntests/compiler-extension-marker-identities.test.js\ntests/compiler-nullable-empty-method-scopes.test.js\ntests/fixtures/exported-extension-blocks/AttributedExtensions.cs\ntests/fixtures/exported-extension-blocks/Consumer.cs\ntests/fixtures/exported-extension-blocks/DeclarationMetadata.cs\ntests/fixtures/exported-extension-blocks/DeclarationMetadata.dll\ntests/fixtures/exported-extension-blocks/NoTransformMethods.cs\ntests/fixtures/exported-extension-blocks/README.md\ntests/fixtures/exported-extension-blocks/benchmark-after.json\ntests/fixtures/exported-extension-blocks/benchmark-before.json\ntests/fixtures/exported-extension-blocks/benchmark-harnesses.md\ntests/fixtures/exported-extension-blocks/benchmark-paired-final.json\ntests/fixtures/exported-extension-blocks/benchmark-paired.json\ntests/fixtures/exported-extension-blocks/benchmark-pilot-after.json\ntests/fixtures/exported-extension-blocks/benchmark-pilot-before.json\ntests/fixtures/exported-extension-blocks/capture-notes.md\ntests/fixtures/exported-extension-blocks/cpu-profile-summary.json\ntests/fixtures/exported-extension-blocks/cpu-profile.json\ntests/fixtures/exported-extension-blocks/cpu-profiles/baseline.cpuprofile.gz\ntests/fixtures/exported-extension-blocks/cpu-profiles/candidate.cpuprofile.gz\ntests/fixtures/exported-extension-blocks/dotnet.mjs\ntests/fixtures/exported-extension-blocks/generate.mjs\ntests/fixtures/exported-extension-blocks/metadata.mjs\ntests/fixtures/exported-extension-blocks/no-transform-metadata.json\ntests/fixtures/exported-extension-blocks/nullable-empty-snapshot.mjs\ntests/fixtures/exported-extension-blocks/ordinary-metadata.json\ntests/fixtures/exported-extension-blocks/provenance.json\ntests/fixtures/exported-extension-blocks/validation/publication-2026-10-04/README.md\ntests/fixtures/exported-extension-blocks/validation/publication-2026-10-04/aliases-after.json\ntests/fixtures/exported-extension-blocks/validation/publication-2026-10-04/aliases-before.json\ntests/fixtures/exported-extension-blocks/validation/publication-2026-10-04/node-resolution.json\ntests/fixtures/exported-extension-blocks/validation/publication-2026-10-04/preparation-notes.txt\ntests/fixtures/exported-extension-blocks/validation/publication-2026-10-04/replay.log\ntests/fixtures/exported-extension-blocks/validation/publication-2026-10-04/summary.json\ntests/fixtures/exported-extension-blocks/validation/publication-2026-10-04/toolchain.json\ntests/fixtures/metadata-generations/README.md\ntests/fixtures/metadata-generations/browser.mjs\ntests/fixtures/metadata-generations/capture.mjs\ntests/fixtures/metadata-generations/oracle/FixtureWriter.cs\ntests/fixtures/metadata-generations/oracle/MetadataGenerations.csproj\ntests/fixtures/metadata-generations/oracle/NativeHeaps.cs\ntests/fixtures/metadata-generations/oracle/NativeRows.cs\ntests/fixtures/metadata-generations/oracle/NuGet.Config\ntests/fixtures/metadata-generations/oracle/Program.cs\ntests/fixtures/metadata-generations/qualification/ORDINAL-PERFORMANCE.md\ntests/fixtures/metadata-generations/qualification/ORDINAL-PLAN.md\ntests/fixtures/metadata-generations/qualification/ORDINAL-RESULTS.md\ntests/fixtures/metadata-generations/qualification/README.md\ntests/fixtures/metadata-generations/qualification/ROOT-PERFORMANCE-DISPOSITION.md\ntests/fixtures/metadata-generations/qualification/execution-first/focused.execution.json\ntests/fixtures/metadata-generations/qualification/execution-first/focused.stderr.txt\ntests/fixtures/metadata-generations/qualification/execution-first/focused.stdout.txt\ntests/fixtures/metadata-generations/qualification/execution-first/native.execution.json\ntests/fixtures/metadata-generations/qualification/execution-first/native.stderr.txt\ntests/fixtures/metadata-generations/qualification/execution-first/native.stdout.txt\ntests/fixtures/metadata-generations/qualification/execution-first/verify-external.execution.json\ntests/fixtures/metadata-generations/qualification/execution-first/verify-external.stderr.txt\ntests/fixtures/metadata-generations/qualification/execution-first/verify-external.stdout.txt\ntests/fixtures/metadata-generations/qualification/execution-first/verify-retained.execution.json\ntests/fixtures/metadata-generations/qualification/execution-first/verify-retained.stderr.txt\ntests/fixtures/metadata-generations/qualification/execution-first/verify-retained.stdout.txt\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/focused.execution.json\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/focused.stderr.txt\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/focused.stdout.txt\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/native.execution.json\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/native.stderr.txt\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/native.stdout.txt\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/performance.execution.json\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/performance.stderr.txt\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/performance.stdout.txt\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/retain-native.execution.json\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/verify-external.execution.json\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/verify-external.stderr.txt\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/verify-external.stdout.txt\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/verify-retained.execution.json\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/verify-retained.stderr.txt\ntests/fixtures/metadata-generations/qualification/execution-ordinal-first/verify-retained.stdout.txt\ntests/fixtures/metadata-generations/qualification/first-gate-retention.json\ntests/fixtures/metadata-generations/qualification/first-gate-retention.py.txt\ntests/fixtures/metadata-generations/qualification/integration-75f0caad-first/execution.json\ntests/fixtures/metadata-generations/qualification/integration-75f0caad-first/preflight-failure.json\ntests/fixtures/metadata-generations/qualification/integration-75f0caad-first/recorder-corrected.py.txt\ntests/fixtures/metadata-generations/qualification/integration-75f0caad-first/recorder-preflight-original.py.txt\ntests/fixtures/metadata-generations/qualification/integration-75f0caad-first/retention.json\ntests/fixtures/metadata-generations/qualification/integration-75f0caad-first/source-after.json\ntests/fixtures/metadata-generations/qualification/integration-75f0caad-first/source-before.json\ntests/fixtures/metadata-generations/qualification/integration-75f0caad-first/stderr.log\ntests/fixtures/metadata-generations/qualification/integration-75f0caad-first/stdout.log\ntests/fixtures/metadata-generations/qualification/integration-main-75f0caad.json\ntests/fixtures/metadata-generations/qualification/native-retention.json\ntests/fixtures/metadata-generations/qualification/native-retention.py.txt\ntests/fixtures/metadata-generations/qualification/ordinal-baseline-preparation.json\ntests/fixtures/metadata-generations/qualification/ordinal-baseline-preparation.py.txt\ntests/fixtures/metadata-generations/qualification/ordinal-benchmark-pin.diff\ntests/fixtures/metadata-generations/qualification/ordinal-gate-retention.json\ntests/fixtures/metadata-generations/qualification/ordinal-gate-retention.py.txt\ntests/fixtures/metadata-generations/qualification/ordinal-performance-retention.json\ntests/fixtures/metadata-generations/qualification/ordinal-performance-retention.py.txt\ntests/fixtures/metadata-generations/qualification/ordinal-run-step.py\ntests/fixtures/metadata-generations/qualification/ordinal-source-revision.json\ntests/fixtures/metadata-generations/qualification/ordinal-validation-plan.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/generation-features-candidate.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/generation-features-candidate.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/generation-features-candidate.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/generation-features-candidate.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/inputs.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/prepare-baseline.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/prepare-baseline.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/prepare-baseline.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/prepare-baseline.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/prepare-candidate.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/prepare-candidate.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/prepare-candidate.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/prepare-candidate.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-baseline.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-baseline.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-baseline.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-baseline.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-candidate-bounded.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-candidate-bounded.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-candidate-bounded.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-candidate-bounded.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-candidate.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-candidate.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-candidate.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-real-candidate.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-baseline.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-baseline.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-baseline.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-baseline.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-candidate-bounded.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-candidate-bounded.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-candidate-bounded.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-candidate-bounded.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-candidate.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-candidate.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-candidate.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readMetadata-small-candidate.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-baseline.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-baseline.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-baseline.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-baseline.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-candidate-bounded.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-candidate-bounded.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-candidate-bounded.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-candidate-bounded.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-candidate.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-candidate.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-candidate.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-real-candidate.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-baseline.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-baseline.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-baseline.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-baseline.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-candidate-bounded.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-candidate-bounded.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-candidate-bounded.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-candidate-bounded.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-candidate.job.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-candidate.result.json\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-candidate.stderr.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/readPE-small-candidate.stdout.log\ntests/fixtures/metadata-generations/qualification/performance-ordinal-first/report.json\ntests/fixtures/metadata-generations/qualification/root-performance-review.json\ntests/fixtures/metadata-generations/qualification/root-performance-review.py.txt\ntests/fixtures/metadata-generations/qualification/root-run-step.py.txt\ntests/fixtures/metadata-generations/reference-ordinal/build.stderr.log\ntests/fixtures/metadata-generations/reference-ordinal/build.stdout.log\ntests/fixtures/metadata-generations/reference-ordinal/create-mixed.stderr.log\ntests/fixtures/metadata-generations/reference-ordinal/create-mixed.stdout.log\ntests/fixtures/metadata-generations/reference-ordinal/mixed/baseline.cs\ntests/fixtures/metadata-generations/reference-ordinal/mixed/baseline.dll\ntests/fixtures/metadata-generations/reference-ordinal/mixed/baseline.pdb\ntests/fixtures/metadata-generations/reference-ordinal/mixed/delta1.cs\ntests/fixtures/metadata-generations/reference-ordinal/mixed/delta1.dil\ntests/fixtures/metadata-generations/reference-ordinal/mixed/delta1.dmeta\ntests/fixtures/metadata-generations/reference-ordinal/mixed/delta1.pdb\ntests/fixtures/metadata-generations/reference-ordinal/mixed/delta2.cs\ntests/fixtures/metadata-generations/reference-ordinal/mixed/delta2.dil\ntests/fixtures/metadata-generations/reference-ordinal/mixed/delta2.dmeta\ntests/fixtures/metadata-generations/reference-ordinal/mixed/delta2.pdb\ntests/fixtures/metadata-generations/reference-ordinal/native.json\ntests/fixtures/metadata-generations/reference-ordinal/observe-mixed.stderr.log\ntests/fixtures/metadata-generations/reference-ordinal/observe-mixed.stdout.log\ntests/fixtures/metadata-generations/reference-ordinal/observe-original.stderr.log\ntests/fixtures/metadata-generations/reference-ordinal/observe-original.stdout.log\ntests/fixtures/metadata-generations/reference/build.stderr.log\ntests/fixtures/metadata-generations/reference/build.stdout.log\ntests/fixtures/metadata-generations/reference/create-mixed.stderr.log\ntests/fixtures/metadata-generations/reference/create-mixed.stdout.log\ntests/fixtures/metadata-generations/reference/mixed/baseline.cs\ntests/fixtures/metadata-generations/reference/mixed/baseline.dll\ntests/fixtures/metadata-generations/reference/mixed/baseline.pdb\ntests/fixtures/metadata-generations/reference/mixed/delta1.cs\ntests/fixtures/metadata-generations/reference/mixed/delta1.dil\ntests/fixtures/metadata-generations/reference/mixed/delta1.dmeta\ntests/fixtures/metadata-generations/reference/mixed/delta1.pdb\ntests/fixtures/metadata-generations/reference/mixed/delta2.cs\ntests/fixtures/metadata-generations/reference/mixed/delta2.dil\ntests/fixtures/metadata-generations/reference/mixed/delta2.dmeta\ntests/fixtures/metadata-generations/reference/mixed/delta2.pdb\ntests/fixtures/metadata-generations/reference/native.json\ntests/fixtures/metadata-generations/reference/observe-mixed.stderr.log\ntests/fixtures/metadata-generations/reference/observe-mixed.stdout.log\ntests/fixtures/metadata-generations/reference/observe-original.stderr.log\ntests/fixtures/metadata-generations/reference/observe-original.stdout.log\ntests/fixtures/metadata-generations/replay.mjs\ntests/fixtures/metadata-generations/validation-plan.json\ntests/fixtures/metadata-generations/verify.mjs\ntests/support/cli-metadata-delta.js\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "698153f09271e65a287cf5713832859dd40112c6",
+        "01745592db079b44f248ecc460ed09f0a01b9df5"
+      ],
+      "exitCode": 0,
+      "stdout": "packages/cil/src/index.js\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "9d46f4ad6f65bd7cbbed4a3a2f2e2abb9ddf763c",
+        "01745592db079b44f248ecc460ed09f0a01b9df5",
+        "--",
+        "packages/runtime",
+        "packages/bytecode",
+        "packages/bcl*",
+        "bench",
+        "tests/a05-*",
+        ".github/workflows"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "9d46f4ad6f65bd7cbbed4a3a2f2e2abb9ddf763c",
+        "01745592db079b44f248ecc460ed09f0a01b9df5",
+        "--",
+        "packages/cil/src/index.js"
+      ],
+      "exitCode": 0,
+      "stdout": "diff --git a/packages/cil/src/index.js b/packages/cil/src/index.js\nindex 201d23cc0..73a152060 100644\n--- a/packages/cil/src/index.js\n+++ b/packages/cil/src/index.js\n@@ -64,3 +64,4 @@ export { referenceAssemblyMemberIncluded, addReferenceAssemblyAttribute } from '\n export { AssemblyUsageAnalysis } from './browser/analyzers.js';\n export { MetadataTableInspector } from './inspector-tables.js';\n export {readSourceTypeIdentities} from './source-type-identities.js';\n+export { MetadataGenerations, metadataGenerationDiagnosticCatalog } from './metadata/delta-reader.js';\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check",
+        "9d46f4ad6f65bd7cbbed4a3a2f2e2abb9ddf763c",
+        "01745592db079b44f248ecc460ed09f0a01b9df5",
+        "--",
+        "packages/cil/src/index.js"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

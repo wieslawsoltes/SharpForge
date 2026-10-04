@@ -1,0 +1,29 @@
+{
+  "id": "value-layout-sizeof",
+  "status": "passed",
+  "command": {
+    "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/value-layout-sizeof",
+      "--unsafe",
+      "--framework",
+      "net10.0",
+      "--output",
+      "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\value-layout-sizeof\\evidence"
+    ],
+    "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "value-layout-sizeof\\evidence",
+  "report": "value-layout-sizeof\\result.json",
+  "startedAt": "2026-10-04T20:12:39.565Z",
+  "durationMs": 3658.926800000001,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "value-layout-sizeof\\stdout.log",
+  "stderr": "value-layout-sizeof\\stderr.log",
+  "finishedAt": "2026-10-04T20:12:43.229Z"
+}

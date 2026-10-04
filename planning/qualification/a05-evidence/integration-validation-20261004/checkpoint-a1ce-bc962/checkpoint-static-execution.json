@@ -1,0 +1,45 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "checkpoint-static",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "npm",
+    "run",
+    "check"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": null,
+    "DOTNET_ROOT": null,
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": null,
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "a1ce82342b906845dfa5001c1a45b2af35d06390",
+    "tree": "3275f92ca8f8227191fe3913abb73f9b4cb7f1e9",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T23:13:47.495945+00:00",
+  "completedUTC": "2026-10-04T23:13:54.847312+00:00",
+  "elapsedSeconds": 7.35111122699891,
+  "exitCode": 0,
+  "endIdentity": {
+    "commit": "a1ce82342b906845dfa5001c1a45b2af35d06390",
+    "tree": "3275f92ca8f8227191fe3913abb73f9b4cb7f1e9",
+    "status": ""
+  },
+  "artifact": {
+    "path": "checkpoint-static.log",
+    "bytes": 382,
+    "sha256": "282ca24045ca88848297d1e69e855059e22d865e4b1c41d172b2ff67d9b0bba8"
+  }
+}

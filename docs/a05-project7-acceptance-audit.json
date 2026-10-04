@@ -7595,5 +7595,560 @@
       "evidence": "docs/a05-evidence/integration-validation-20261004/build-cycle-repair/README.md",
       "scope": "Relevant packages, runtime, apps and scripts trees match; original8f failed build remains unchanged. Focused dependency-boundary cohorts passed78/78 and19/19, not summed with broad selections."
     }
-  }
+  },
+  "historical_evidence_reconciliations": [
+    {
+      "observed_revision": "4e9c5017307b1a31fc3f4c944c6965fe6b5822fd",
+      "integrated_async_revision": "1520f50b1",
+      "date": "2026-10-04",
+      "method": "Read-only original criterion/source/report reconciliation; no test, benchmark, SDK, browser or build executed by this auditor.",
+      "scope_issues": 83,
+      "scope_criteria": 210,
+      "historical_fields_preserved": true,
+      "project_complete": false,
+      "issue_closures": [],
+      "evidence_catalog": [
+        {
+          "id": "native36",
+          "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/native/manifest.json",
+          "sha256": "459506de2dcdca216621570e835236dda4e234b4dcf5a52c90883252e1a0b8d7"
+        },
+        {
+          "id": "browser36",
+          "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/manifest.json",
+          "sha256": "910ef6a0ecd3fc8f8037d5993b4935ed66b55a8ab6c6a960fc8c8e74df5205e5"
+        },
+        {
+          "id": "core36",
+          "path": "planning/qualification/a05-evidence/ci-36a2af53-20261004/ci-status/manifest.json",
+          "sha256": "cdbba849f0a63c146a0463a67fc6bd42b46748c45d34a9fd4f8f7e07f144f5c5"
+        },
+        {
+          "id": "return-repairs",
+          "path": "planning/qualification/a05-evidence/integration-validation-20261004/return-array-a01/manifest.json",
+          "sha256": "88414f198ceef61589b8a6116a43af4519daba94367c606c811f368b7271c8b3"
+        },
+        {
+          "id": "return-stress",
+          "path": "planning/qualification/a05-evidence/integration-validation-20261004/return-lifetime-byref/manifest.json",
+          "sha256": "3057536656eb0c990f4be71720782a7383a1614bb0c086143bdf267be0aa9502"
+        },
+        {
+          "id": "hosted-contract",
+          "path": "planning/qualification/a05-evidence/integration-validation-20261004/hosted-workflow/manifest.json",
+          "sha256": "5657727f9ed3404710194902abe852dc1c1308a8a5046ec53e0f2f653c2b72a9"
+        },
+        {
+          "id": "hosted-gates",
+          "path": "planning/qualification/a05-evidence/integration-validation-20261004/hosted-workflow/completed-gates-062b/manifest.json",
+          "sha256": "7d222ce9c3534f4fa7b9e255682e25a39dc0d64c2710cc12c3579e8e27ae0c4d"
+        },
+        {
+          "id": "priority36",
+          "path": "planning/qualification/a05-evidence/priority-36a2af532/SHA256SUMS.json",
+          "sha256": "a97f5ed3759b9804e83ba541e34547abaef6d8818483ad65bddb94ae0f9f54ed"
+        },
+        {
+          "id": "off36",
+          "path": "planning/qualification/a05-evidence/profiler-off-36a2af532/SHA256SUMS.json",
+          "sha256": "8259e0203747f7d8619f0b06560b674cc9e6daa53f601d958e28a1766642fc16"
+        },
+        {
+          "id": "broad7d",
+          "path": "planning/qualification/a05-evidence/integration-validation-20261004/broad-a05-7d7fac37a/manifest.json",
+          "sha256": "08fa337030af3d0d25ce277742c266d62ac4d8720452bc04bfabe4aaaa19589c"
+        }
+      ],
+      "completed_observations": [
+        {
+          "id": "native36",
+          "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+          "tree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+          "standard_cases": {
+            "total": 204,
+            "passed": 191,
+            "failed": 0,
+            "unsupported": 13
+          },
+          "additional_x86_jobs_passed": 2,
+          "unsupported": "Nine SDK8 numeric-policy records and four actual Unix CLR managed-varargs rejections. Windows varargs native parity passed.",
+          "scope": "Six standard OS/SDK cells plus two independent actual WindowsX86 cases; not current integrated runtime qualification."
+        },
+        {
+          "id": "browser36",
+          "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+          "per_engine": {
+            "chromium": {
+              "passed": 8,
+              "failed": 0
+            },
+            "firefox": {
+              "passed": 8,
+              "failed": 0
+            },
+            "webkit": {
+              "passed": 8,
+              "failed": 0
+            }
+          },
+          "scope": "Actual native Wasm, heap/GC bridge, debugger, CSP and official Speedscope imports; observed browser hosts only."
+        },
+        {
+          "id": "core36",
+          "revision": "edfa7cc8e11e05b9ceb0f6fdcb43fe071b24e11e",
+          "a00": {
+            "passed": 482,
+            "failed": 0,
+            "skipped": 0
+          },
+          "a01": {
+            "passed": 805,
+            "failed": 3,
+            "skipped": 1
+          },
+          "overall": "failed"
+        },
+        {
+          "id": "return-repairs",
+          "revision": "111c299384fc98b7ed937789edd07ad79395ce75",
+          "passed": 231,
+          "failed": 2,
+          "skipped": 0,
+          "scope": "20-file focused selection; return/array/byref/filter cases passed, two legacy is/as profile expectations failed and were corrected later."
+        },
+        {
+          "id": "return-repairs",
+          "revision": "6b3038a154be525c05a64ebae9912dd8b536bedf",
+          "passed": 842,
+          "failed": 1,
+          "skipped": 1,
+          "scope": "Full A01; repaired legacy assertions passed; cancellation-file SIGABRT/heap exhaustion remains a failure, not an established A05 regression."
+        },
+        {
+          "id": "return-stress",
+          "revision": "6cdd61291d79b609211e05624645225aeaa7d94c",
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "distinct_cil_programs": 1000,
+          "instructions": 131341,
+          "collections": 131341,
+          "separate_source_counterparts": 96,
+          "corpus_sha256": "18c91f4e6fabf4b7f28afd8e760ff33a3438ac301e1174811241c029f431f140",
+          "scope": "Affected return-lifetime qualification with owner-removal negative controls; no summed counts or later async attribution."
+        },
+        {
+          "id": "hosted-contract",
+          "revision": "062b3b899d8dd36a696ee0e028e5951d86e98139",
+          "passed": 48,
+          "failed": 0,
+          "skipped": 0,
+          "scope": "Hosted/latency/options/reference/memory assessment contracts, not measurement execution."
+        },
+        {
+          "id": "hosted-gates",
+          "revision": "062b3b899d8dd36a696ee0e028e5951d86e98139",
+          "static_check": "failed-dynamic-import",
+          "oracle_license": "passed",
+          "functional_sparse_build": "passed",
+          "follow_up": "bf48fd5c9 replaces the dynamic import with a child-only static worker; retest remains pending in this reconciliation. Complete assets and supply policy are separate."
+        }
+      ],
+      "criterion_deltas": [
+        {
+          "criterion_ids": [
+            "1347.C1",
+            "1361.C1"
+          ],
+          "status": "native-and-three-route-evidence-at36",
+          "evidence_refs": [
+            "native36"
+          ],
+          "assessment": "The exact combined byref scenario and observed native widths have actual native comparisons; explicit 32-bit and 64-bit processes are independently recorded."
+        },
+        {
+          "criterion_ids": [
+            "1358.C1",
+            "1362.C1"
+          ],
+          "status": "supported-native-evidence-at36",
+          "evidence_refs": [
+            "native36"
+          ],
+          "assessment": "Delegate protocol and supported Windows varargs compare to native output; Unix varargs stays unsupported, with its exact native rejection retained."
+        },
+        {
+          "criterion_ids": [
+            "1370.C1"
+          ],
+          "status": "return-lifetime-stress-qualified-at6cdd",
+          "evidence_refs": [
+            "return-stress"
+          ],
+          "assessment": "The unchanged 1,000-program corpus, 96 source counterparts and negative controls passed. The new 1520 async/task integration is not covered by that revision."
+        },
+        {
+          "criterion_ids": [
+            "1404.C1"
+          ],
+          "status": "official-ui-evidence-at36",
+          "evidence_refs": [
+            "browser36"
+          ],
+          "assessment": "Official Speedscope imports show actual source/reload/CIL names and exact instruction totals in all three observed engines; binary .nettrace is not claimed."
+        },
+        {
+          "criterion_ids": [
+            "1405.C1",
+            "1406.C1",
+            "1407.C1",
+            "1408.C1",
+            "1409.C1"
+          ],
+          "status": "browser-evidence-at36-with-timing-still-separate",
+          "evidence_refs": [
+            "browser36"
+          ],
+          "assessment": "Real Wasm execution, eligibility/fallback, OSR/debugger state and compiled heap/GC bridge observations exist. Complete cooperative timing and later-head validation remain separate."
+        },
+        {
+          "criterion_ids": [
+            "74.C4",
+            "75.C4",
+            "76.C4",
+            "77.C4",
+            "78.C4",
+            "80.C4",
+            "81.C4",
+            "82.C4"
+          ],
+          "status": "delivery-artifacts-present-with-scoped-regressions",
+          "evidence_refs": [
+            "broad7d",
+            "native36"
+          ],
+          "assessment": "Scalar, managed-reference, rectangular-memory, exception-order, preparation/invalidation and liveness examples and capability tables supersede earlier missing-artifact observations; not universal platform qualification."
+        },
+        {
+          "criterion_ids": [
+            "725.C1",
+            "725.C2",
+            "1377.C1",
+            "1386.C1",
+            "1388.C1",
+            "1389.C1"
+          ],
+          "status": "integrated-async-repairs-validation-pending",
+          "evidence_refs": [
+            "native36"
+          ],
+          "assessment": "1520 reconciles strict Task ABI, canonical AggregateException inner lists, owned continuation roots and snapshot preflight. Old native/replay passes do not qualify this new integration."
+        },
+        {
+          "criterion_ids": [
+            "1349.C1"
+          ],
+          "status": "literal-target-count-disposition-unresolved",
+          "evidence_refs": [
+            "native36"
+          ],
+          "assessment": "Original wording requires 15 targets x 5 source kinds. conversionMatrixTargets defines 13 opcodes; the actual 2,112-case matrix is proven only for that inventory. No rewritten count or duplicate target is substituted."
+        },
+        {
+          "criterion_ids": [
+            "1394.C1"
+          ],
+          "status": "inconclusive-at36",
+          "evidence_refs": [
+            "priority36"
+          ],
+          "assessment": "Fibonacci 100 pairs: 1.4961811853342564x, 95% CI[1.459994839941652,1.5303095411438201], against 1.5x. Prior loop evidence retains its original revision; final paired targets remain pending."
+        },
+        {
+          "criterion_ids": [
+            "1391.C1"
+          ],
+          "status": "missed-at36",
+          "evidence_refs": [
+            "priority36"
+          ],
+          "assessment": "Virtual 100 pairs: 2.283161499046044x, 95% CI[2.201787518561151,2.4204059808342073], against 3x. Later return changes are not a measured pass."
+        },
+        {
+          "criterion_ids": [
+            "1402.C1"
+          ],
+          "status": "off-inconclusive-at36-enabled-reporting-pending",
+          "evidence_refs": [
+            "off36"
+          ],
+          "assessment": "All six strict off rows completed 100 pairs and remained inconclusive against the below-1% requirement. The original criterion also requires enabled overhead reporting; those six rows are separately planned."
+        },
+        {
+          "criterion_ids": [
+            "76.C5",
+            "78.C5",
+            "84.C5"
+          ],
+          "status": "additive-latency-harness-qualified-reports-pending",
+          "evidence_refs": [
+            "hosted-contract"
+          ],
+          "assessment": "Complete-work byref/array/actual-Wasm cold/warm p50/p95/p99 and scoped allocation harnesses have contract coverage; actual prescribed measurements remain pending."
+        },
+        {
+          "criterion_ids": [
+            "1410.C1",
+            "1411.C1",
+            "1412.C1"
+          ],
+          "status": "two-complete-runs-and-baseline-gate-pending",
+          "evidence_refs": [
+            "hosted-contract"
+          ],
+          "assessment": "Two full same-runner reports within 5%, required startup phases in their qualified baseline, and slowed-handler/noise gate controls satisfy the original protocol. No mandatory third full prospective run is introduced."
+        }
+      ],
+      "remaining_qualification": {
+        "fixed_plan": "scripts/a05/hosted-plan.js",
+        "commands": 25,
+        "status": "not-executed-by-this-audit",
+        "scope": "All unchanged target/counter/root, numeric differential, fairness, float, snapshot, latency, off/enabled profiler and two-run T12 protocols remain required. Prior misses/inconclusive reports are retained.",
+        "separate_correctness": "tests/byref-gc-stress.test.js and tests/numeric-differential.test.js are in the full A05 manifest; byref latency does not substitute for stress. Current CI and new 1520 async validation remain pending."
+      },
+      "audit_limit": "No additional demonstrated original product-code gap beyond the identified async integration repairs and unresolved #1349 target-count disposition; static review is not proof that every criterion passed."
+    },
+    {
+      "observed_revision": "0d99a7aa00f0b8807411030f29e8582f2e5bdcc9",
+      "observed_tree": "82d6f5517ef5f2162d3cba9a6664b1cadc03fd15",
+      "date": "2026-10-04",
+      "method": "Additive read-only source and retained-report reconciliation; no executable checks, tests, generators, builds or measurements run by this auditor.",
+      "scope_issues": 83,
+      "scope_criteria": 210,
+      "historical_fields_preserved": true,
+      "project_complete": false,
+      "issue_closures": [],
+      "publication_scope": "Completed focused correctness checkpoint for the existing draft PR; runtime performance work and final qualification continue.",
+      "evidence_catalog": [
+        {
+          "id": "main-aa-4c75",
+          "path": "planning/qualification/a05-evidence/integration-validation-20261004/main-aa74558-4c75/manifest.json",
+          "sha256": "fefead65e9a8da07d7382b1b9741daece830ea99837041cd5a318b9ac4443708"
+        },
+        {
+          "id": "debugger-3505",
+          "path": "planning/qualification/a05-evidence/integration-validation-20261004/main-aa74558-debugger-3505/manifest.json",
+          "sha256": "b111e89532622b09bf33a9825668a39501f74be3b609574c099dccc489e59fe3"
+        },
+        {
+          "id": "source-ef375",
+          "path": "planning/qualification/a05-evidence/source-admission-reuse-ef375-20261004/manifest.json",
+          "sha256": "e11fa906115a4b855e9dc30093fa4f9be0bad56a67504880645479c95871b49f"
+        },
+        {
+          "id": "conversion-e37a",
+          "path": "planning/qualification/a05-evidence/integration-validation-20261004/conversion-retention-e37a/manifest.json",
+          "sha256": "cfebc81ef6c3074aa6d848f5f9922aa0b89908ef6990f8b7ec04c184c232a743"
+        },
+        {
+          "id": "static-2a9b",
+          "path": "planning/qualification/a05-evidence/integration-validation-20261004/main-aa74558-static-structure-2a9b/manifest.json",
+          "sha256": "c90eaca414fbfd4f5205d5422206e4af7bedb59e83edf3813091eb125c98d2dc"
+        },
+        {
+          "id": "priority-10d",
+          "path": "planning/qualification/a05-evidence/main41eb-priority-10d710b34-20261004/manifest.json",
+          "sha256": "2d4f1a749a357e98c54f962b5e27da146b1693316e4be6e63de887d2e4683aff"
+        }
+      ],
+      "completed_observations": [
+        {
+          "id": "main-aa-4c75",
+          "revision": "4c75ea43f5310e50594098076693d1582b49c7d3",
+          "tests": 283,
+          "passed": 276,
+          "failed": 7,
+          "skipped": 0,
+          "exit_code": 1,
+          "scope": "Failed 29-file admission/conversion/fusion/debugger cohort. Later selected repairs do not turn this run into a pass."
+        },
+        {
+          "id": "debugger-3505",
+          "revision": "3505b8a50d0f6e860c5a8b8eeebb239830eca6b0",
+          "tests": 89,
+          "passed": 89,
+          "failed": 0,
+          "skipped": 0,
+          "exit_code": 0,
+          "scope": "Eight-file focused selection: source/CIL evaluation transactions, late verified-call membership and rollback, prepared runtime delegates, local constructor identity, virtual calls, token caches and existing debugger checks."
+        },
+        {
+          "id": "source-ef375",
+          "revision": "ef37516ecc3c47fcf34800af3220671eabc7a5eb",
+          "tests": 39,
+          "passed": 39,
+          "failed": 0,
+          "skipped": 0,
+          "exit_code": 0,
+          "scope": "Four-file source admission reuse, source byte budget, prepared calls and fusion integer-plan correctness selection."
+        },
+        {
+          "id": "source-ef375",
+          "revision": "ef37516ecc3c47fcf34800af3220671eabc7a5eb",
+          "kind": "source-fibonacci-paired-measurement",
+          "samples_per_mode": 100,
+          "warmup_per_mode": 3,
+          "first_per_mode": 1,
+          "observed_speedup": 1.605549272945154,
+          "confidence_interval": [
+            1.4364472786404399,
+            1.7696360228862134
+          ],
+          "target": 1.5,
+          "acceptance": "inconclusive",
+          "exit_code": 2,
+          "scope": "All 104 executions per mode verified output and equal guest work. The interval crosses the unchanged threshold; no pooling with historical results."
+        },
+        {
+          "id": "conversion-e37a",
+          "revision": "e37a5452944765f50c7bf32858e6a2ec2e1d1dc7",
+          "tests": 12,
+          "passed": 12,
+          "failed": 0,
+          "skipped": 0,
+          "exit_code": 0,
+          "scope": "Three-file conversion qualification/failure-retention and numeric differential-helper selection; actual native CLR32 capture and complete 2277-case replay remain pending."
+        },
+        {
+          "id": "static-2a9b",
+          "revision": "2a9b265292bc24a94f7d393f206d12caa135c021",
+          "ordinary_static_check": "passed",
+          "ordinary_exit_code": 0,
+          "strict_structure_check": "failed",
+          "strict_exit_code": 1,
+          "reported_problems": 265,
+          "classification_against_main_aa74558": {
+            "byte_identical_main": 238,
+            "changed_source_offending_metrics_unchanged_or_smaller": 26,
+            "new_integration_line_violation": 1,
+            "grown_existing_offending_metrics": 0
+          },
+          "follow_up": {
+            "revision": "77f338fbb04fd12a28a6f8a22a5803f4054cb866",
+            "path": "packages/cil/src/async-runtime-profile.js",
+            "change": "Wrap the sole new 174-unit line; observed maximum is 144 UTF-16 units at this checkpoint.",
+            "scope": "No baseline change or new global strict-check execution; the original failed 265 record remains unchanged."
+          }
+        },
+        {
+          "id": "priority-10d",
+          "revision": "10d710b349d581b88c0013ce8571bd963bfdb839",
+          "kind": "virtual-cache-paired-measurement",
+          "samples_per_mode": 100,
+          "observed_speedup": 1.982710053204195,
+          "confidence_interval": [
+            1.9063535270623788,
+            2.0961506499612357
+          ],
+          "target": 3,
+          "acceptance": "missed",
+          "exit_code": 1,
+          "scope": "Latest retained virtual target result; CPU diagnostics are not additional qualification."
+        }
+      ],
+      "criterion_deltas": [
+        {
+          "criterion_ids": [
+            "1354.C2",
+            "1358.C2",
+            "1392.C2",
+            "1393.C2",
+            "1401.C2"
+          ],
+          "status": "focused-admission-and-debugger-repairs-passed-at3505",
+          "evidence_refs": [
+            "main-aa-4c75",
+            "debugger-3505"
+          ],
+          "assessment": "The six CIL verification/delegate failures and the source-history fixture are repaired in the focused selection. Full affected-suite/platform qualification remains separate."
+        },
+        {
+          "criterion_ids": [
+            "1363.C2",
+            "1394.C2",
+            "1401.C2"
+          ],
+          "status": "focused-source-admission-correctness-passed-at-ef375",
+          "evidence_refs": [
+            "source-ef375"
+          ],
+          "assessment": "The 39-test selection covers changed source admission/prepared execution. It does not replace independent deep-recursion, stress or performance requirements."
+        },
+        {
+          "criterion_ids": [
+            "1349.C1",
+            "1353.C1"
+          ],
+          "status": "exhaustive-ABI32-machinery-tested-native-report-pending",
+          "evidence_refs": [
+            "main-aa-4c75",
+            "conversion-e37a"
+          ],
+          "assessment": "Existing33-opcode/five-source inventory is unchanged. The ABI32 runner observes CLR10/X86 before its 2277 cases and retains actual emitted CIL before replay, including failures. The original 15-target wording remains intact:11 non-native forms plus 4 native-width forms is a coverage interpretation, not inferred author intent. ABI64 native evidence does not qualify the pending complete ABI32 run."
+        },
+        {
+          "criterion_ids": [
+            "1394.C1"
+          ],
+          "status": "inconclusive-at-ef375",
+          "evidence_refs": [
+            "source-ef375"
+          ],
+          "assessment": "Fibonacci 1.605549272945154x with 95% CI[1.4364472786404399,1.7696360228862134] remains inconclusive against 1.5x; the original loop target also remains part of final qualification."
+        },
+        {
+          "criterion_ids": [
+            "1391.C1"
+          ],
+          "status": "missed-at10d",
+          "evidence_refs": [
+            "priority-10d"
+          ],
+          "assessment": "Virtual 1.982710053204195x with 95% CI[1.9063535270623788,2.0961506499612357] misses 3x; no later implementation is promoted to a measured pass."
+        },
+        {
+          "criterion_ids": [
+            "1402.C1"
+          ],
+          "status": "required-off-and-enabled-reporting-pending",
+          "assessment": "Retain the six historical inconclusive strict-off rows. Final qualification still requires off overhead below 1% and six separately reported enabled rows."
+        },
+        {
+          "criterion_ids": [
+            "1410.C1",
+            "1411.C1",
+            "1412.C1"
+          ],
+          "status": "two-complete-runs-and-baseline-gate-pending",
+          "assessment": "Exactly two complete same-runner stable reports, the required startup phases in their qualified baseline, and slowed-handler/noise gate controls remain required. No mandatory third full run is added."
+        }
+      ],
+      "remaining_qualification": {
+        "fixed_plan": "scripts/a05/hosted-plan.js",
+        "commands": 25,
+        "status": "pending-complete-qualifying-reports",
+        "scope": "Unchanged targets/counters/roots, numeric differentials, fairness, float allocation, original 128-snapshot retention, standalone byref/array/Wasm latency, strict-off/enabled profiling and two-run T12 protocols.",
+        "actual_ABI32_conversion": "2277-case observed CLR10/X86 capture and source/reload/direct-CIL replay remain pending independently of the 25-command performance queue.",
+        "platforms_and_full_CI": "Current native/browser/full-CI qualification remains pending; completed 36 platform results retain their exact old revision and explicit unsupported lanes.",
+        "build_size": {
+          "artifact_rows": 34,
+          "existing_budget_rows": 29,
+          "unbudgeted_rows": 5,
+          "status": "Complete source/assets/output comparison and incomplete budget policy remain unresolved; no omission or global size pass."
+        }
+      },
+      "audit_limit": "No additional demonstrated original implementation gap was found in this bounded audit. Parent examples/capability delivery was already reconciled. Focused passes and static review do not prove all 210 criteria complete.",
+      "counts_are_not_summed": true
+    }
+  ]
 }

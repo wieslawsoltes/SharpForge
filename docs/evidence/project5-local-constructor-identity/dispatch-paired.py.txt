@@ -1,0 +1,197 @@
+"""Measure the reviewed constructor-selection delta against its exact parent."""
+import hashlib
+import importlib.util
+import json
+import math
+import os
+from pathlib import Path
+import platform
+import shutil
+import statistics
+import subprocess
+import sys
+import tempfile
+import time
+
+sys.dont_write_bytecode = True
+ROOT = Path(__file__).resolve().parent
+REPOSITORY = Path('/workspace/scratch/1692a10afba9/p5-canonical-object-identity')
+BASELINE = 'bd91c105aa9fa1f765ae0d8254ca99783535df23'
+CANDIDATE = '4ff5a1ccb789eabd69d82386304c2d4014e3a015'
+HELPER_SHA256 = 'd96b609f43e40edb2cac20910674bf9982b5f1a095b0c88277f8c29b84602ad6'
+RUNNER = 'packages/runtime/bench/local-constructor-identity.mjs'
+FIXTURES = ['tests/managed-fixtures.js', 'tests/support/generic-call-fixture.js']
+ORDER = ['A', 'B', 'B', 'A', 'B', 'A', 'A', 'B']
+COUNTS = ['instructions', 'allocations', 'allocatedBytes']
+TIMINGS = ['admissionMs', 'executionMs', 'totalMs']
+OUTPUT = ROOT / 'dispatch-paired.json'
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def git(*args):
+    return subprocess.check_output(['git', '-C', str(REPOSITORY), *args])
+
+
+def save(report):
+    temporary = OUTPUT.with_suffix('.json.tmp')
+    temporary.write_text(json.dumps(report, indent=2, allow_nan=False) + '\n')
+    temporary.replace(OUTPUT)
+
+
+def helper_module():
+    path = ROOT / 'source-export-helper.py'
+    if digest(path.read_bytes()) != HELPER_SHA256:
+        raise ValueError('Reviewed export/run helper changed')
+    specification = importlib.util.spec_from_file_location('dispatch_export', path)
+    helper = importlib.util.module_from_spec(specification)
+    specification.loader.exec_module(helper)
+    return helper
+
+
+def numeric(value):
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and value >= 0
+
+
+def verify_result(result, commit, identities):
+    if result['head'] != commit or result['samples'] != 24 or result['warmups'] != 80:
+        raise ValueError('Benchmark revision or sampling plan changed')
+    if [entry['name'] for entry in result['cases']] != ['external-only', 'local-constructor-and-call']:
+        raise ValueError('Benchmark cases changed')
+    for entry in result['cases']:
+        if len(entry['samples']) != 24 or entry['expected'] != {'output': '', 'returnValue': 8256}:
+            raise ValueError('Benchmark output or sample count changed')
+        if any(not numeric(entry['controls'].get(key)) for key in COUNTS):
+            raise ValueError('Missing or non-finite execution count')
+        for sample in entry['samples']:
+            if any(not numeric(sample.get(key)) for key in COUNTS + TIMINGS):
+                raise ValueError('Missing or non-finite sample field')
+            if any(sample[key] != entry['controls'][key] for key in COUNTS):
+                raise ValueError('Execution counts changed within a process')
+        identity = {key: entry[key] for key in ['assemblyBytes', 'assemblySha256', 'expected', 'controls']}
+        previous = identities.setdefault(entry['name'], identity)
+        if identity != previous:
+            raise ValueError('Baseline/candidate bytes, outputs or execution counts differ')
+
+
+def summarize(runs):
+    samples = {}
+    for run in runs:
+        for entry in run['result']['cases']:
+            samples.setdefault((run['revision'], entry['name']), []).extend(entry['samples'])
+    summary = []
+    for (revision, name), values in samples.items():
+        if len(values) != 96:
+            raise ValueError('Incomplete fixed paired sampling plan')
+        metrics = {}
+        for key in TIMINGS + COUNTS:
+            ordered = sorted(value[key] for value in values)
+            metrics[key] = {'median': statistics.median(ordered), 'p95': ordered[math.ceil(len(ordered) * 0.95) - 1]}
+        summary.append({'revision': revision, 'name': name, 'sampleCount': len(values), 'metrics': metrics})
+    by_case = {}
+    for item in summary:
+        by_case.setdefault(item['name'], {})[item['revision']] = item
+    comparisons = []
+    breaches = []
+    for name, versions in by_case.items():
+        metrics = {}
+        for key in TIMINGS + COUNTS:
+            baseline = versions['A']['metrics'][key]
+            candidate = versions['B']['metrics'][key]
+            differences = {statistic: (candidate[statistic] / baseline[statistic] - 1) * 100
+                           if baseline[statistic] else None for statistic in ['median', 'p95']}
+            metrics[key] = {'baseline': baseline, 'candidate': candidate, 'percentChange': differences}
+            for statistic, change in differences.items():
+                if key in TIMINGS and change is not None and change > 5:
+                    breaches.append({'case': name, 'metric': key, 'statistic': statistic, 'percentChange': change})
+        comparisons.append({'name': name, 'metrics': metrics})
+    return summary, comparisons, breaches
+
+
+def execute(report):
+    helper = helper_module()
+    for commit in [BASELINE, CANDIDATE]:
+        helper.revision(REPOSITORY, commit)
+    if git('rev-parse', 'HEAD').decode().strip() != CANDIDATE or git('status', '--short').strip():
+        raise ValueError('Candidate worktree is no longer the clean reviewed checkpoint')
+    runner = (ROOT / 'dispatch-bench.mjs').read_bytes()
+    report.update(runnerSha256=digest(runner), driverSha256=digest(Path(__file__).read_bytes()))
+    for fixture in FIXTURES:
+        if git('show', BASELINE + ':' + fixture) != git('show', CANDIDATE + ':' + fixture):
+            raise ValueError('Benchmark fixture source differs between revisions')
+    if shutil.disk_usage(ROOT).free < 128 * 1024 * 1024:
+        raise ValueError('Insufficient space for bounded exports')
+    identities = {}
+    with tempfile.TemporaryDirectory(prefix='dispatch-pair-', dir=ROOT) as temporary:
+        directories = {}
+        report['sources'] = {}
+        for label, commit in [('A', BASELINE), ('B', CANDIDATE)]:
+            directory = Path(temporary) / label
+            inventory = helper.export_sources(REPOSITORY, commit, directory, FIXTURES)
+            if inventory['bytes'] > 32 * 1024 * 1024:
+                raise ValueError('Runtime source export exceeded its 32 MiB budget')
+            target = directory / RUNNER
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(runner)
+            inventory['files'].append({'path': RUNNER, 'sha256': digest(runner), 'bytes': len(runner)})
+            inventory['bytes'] += len(runner)
+            directories[label] = directory
+            report['sources'][label] = inventory
+        before = {item['path']: item['sha256'] for item in report['sources']['A']['files']}
+        after = {item['path']: item['sha256'] for item in report['sources']['B']['files']}
+        differences = sorted(path for path in before.keys() | after.keys() if before.get(path) != after.get(path))
+        report['sourceDifferences'] = differences
+        if differences != ['packages/runtime/src/execution/calls.js']:
+            raise ValueError('Paired graph includes changes beyond the reviewed call selection')
+        save(report)
+        for index, label in enumerate(ORDER):
+            directory = directories[label]
+            inventory = report['sources'][label]
+            helper.verify_export(directory, inventory)
+            if shutil.disk_usage(ROOT).free < 96 * 1024 * 1024:
+                raise ValueError('Insufficient space before bounded benchmark child')
+            report['stage'] = 'process ' + str(index + 1) + ' ' + label
+            save(report)
+            print(json.dumps({'stage': report['stage']}), flush=True)
+            observed = helper.run(directory, [RUNNER], inventory['commit'], timeout=60)
+            observed.update(revision=label, processIndex=index)
+            report['runs'].append(observed)
+            save(report)
+            helper.verify_export(directory, inventory)
+            if observed['exitCode']:
+                raise ValueError('Benchmark child failed; raw output retained')
+            observed['result'] = json.loads(observed['stdout'])
+            verify_result(observed['result'], inventory['commit'], identities)
+            save(report)
+        report['summary'], report['comparisons'], report['thresholdBreaches'] = summarize(report['runs'])
+        report['identities'] = identities
+    report['headAfter'] = git('rev-parse', 'HEAD').decode().strip()
+    report['statusAfter'] = git('status', '--short').decode()
+    if report['headAfter'] != CANDIDATE or report['statusAfter']:
+        raise ValueError('Candidate worktree changed during measurement')
+
+
+if __name__ == '__main__':
+    if OUTPUT.exists():
+        raise SystemExit('Refusing to replace an existing paired capture')
+    report = {'baseline': BASELINE, 'candidate': CANDIDATE, 'order': ORDER, 'helperSha256': HELPER_SHA256,
+              'startedUtc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'runs': [],
+              'environment': {'platform': platform.platform(), 'machine': platform.machine(), 'cpuCount': os.cpu_count(),
+                              'loadAverage': os.getloadavg(), 'sharedHost': True}, 'stage': 'preflight'}
+    if Path('/proc/cpuinfo').is_file():
+        report['environment']['cpuModel'] = next((line.split(':', 1)[1].strip()
+            for line in Path('/proc/cpuinfo').read_text().splitlines() if line.startswith('model name')), None)
+    started = time.perf_counter()
+    try:
+        execute(report)
+        report['stage'] = 'completed'
+    except Exception as error:
+        report['failure'] = {'type': type(error).__name__, 'message': str(error), 'stage': report['stage']}
+    finally:
+        report['wallSeconds'] = time.perf_counter() - started
+        save(report)
+    print(json.dumps({'output': str(OUTPUT), 'runs': len(report['runs']), 'stage': report['stage'],
+                      'failure': report.get('failure'), 'thresholdBreaches': report.get('thresholdBreaches')}, indent=2))
+    raise SystemExit(1 if report.get('failure') else 0)

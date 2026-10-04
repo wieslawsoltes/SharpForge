@@ -1,0 +1,44 @@
+TAP version 13
+# Subtest: merged CIL Task.Delay executes the infinite, zero, and full Int32 boundary contracts
+ok 1 - merged CIL Task.Delay executes the infinite, zero, and full Int32 boundary contracts
+  ---
+  duration_ms: 28.880057
+  type: 'test'
+  ...
+# Subtest: merged Task Wait and Result wrap the original fault while await preserves its reference
+not ok 2 - merged Task Wait and Result wrap the original fault while await preserves its reference
+  ---
+  duration_ms: 5.463352
+  type: 'test'
+  location: '/workspace/scratch/42f7738360b9/a05-control/tests/a05-merged-task-operations.test.js:38:1'
+  failureType: 'testCodeFailure'
+  error: 'Object reference not set to an instance of an object'
+  code: 'ERR_TEST_FAILURE'
+  name: 'NullReferenceException'
+  stack: |-
+    ManagedHeap.get (file:///workspace/scratch/42f7738360b9/a05-control/packages/runtime/src/heap.js:33:42)
+    inputItems (file:///workspace/scratch/42f7738360b9/a05-control/packages/runtime/src/execution/aggregate-exception.js:15:26)
+    exceptionListCall (file:///workspace/scratch/42f7738360b9/a05-control/packages/runtime/src/execution/aggregate-exception.js:86:16)
+    file:///workspace/scratch/42f7738360b9/a05-control/tests/a05-merged-task-operations.test.js:54:22
+    ManagedHeap.withRoots (file:///workspace/scratch/42f7738360b9/a05-control/packages/runtime/src/heap.js:16:116)
+    Object.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-control/tests/a05-merged-task-operations.test.js:49:88)
+    expectedException (node:assert:578:17)
+    expectsError (node:assert:703:21)
+    strict.throws (node:assert:759:3)
+    file:///workspace/scratch/42f7738360b9/a05-control/tests/a05-merged-task-operations.test.js:49:14
+  ...
+# Subtest: merged completion keeps suspended state-machine waiters unwrapped beside aggregate-mode waiters
+ok 3 - merged completion keeps suspended state-machine waiters unwrapped beside aggregate-mode waiters
+  ---
+  duration_ms: 2.137058
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 2
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 803.601209

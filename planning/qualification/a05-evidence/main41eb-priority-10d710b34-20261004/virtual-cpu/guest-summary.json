@@ -1,0 +1,2951 @@
+{
+  "kind": "Guest-filtered diagnostic attribution, not timing qualification",
+  "revision": "10d710b349d581b88c0013ce8571bd963bfdb839",
+  "guestSamples": 9333,
+  "guestMicroseconds": 1634717,
+  "filter": "Ancestors include runQualificationVM; recursive frames counted once per sample for inclusive totals",
+  "self": [
+    {
+      "function": "executeCilStep",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-step.js",
+      "line": 14,
+      "column": 31,
+      "selfUs": 296243,
+      "inclusiveUs": 1435183,
+      "selfPercent": 18.121974629247752,
+      "inclusivePercent": 87.7939729017316
+    },
+    {
+      "function": "storeScalarSlot",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/scalar-slot-store.js",
+      "line": 16,
+      "column": 32,
+      "selfUs": 116740,
+      "inclusiveUs": 130486,
+      "selfPercent": 7.141297239828055,
+      "inclusivePercent": 7.982176731507655
+    },
+    {
+      "function": "scrubPreparedFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/prepared-frame-scrub.js",
+      "line": 2,
+      "column": 35,
+      "selfUs": 104875,
+      "inclusiveUs": 104875,
+      "selfPercent": 6.415483536294049,
+      "inclusivePercent": 6.415483536294049
+    },
+    {
+      "function": "step",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 96,
+      "column": 7,
+      "selfUs": 95423,
+      "inclusiveUs": 1510660,
+      "selfPercent": 5.837279480179138,
+      "inclusivePercent": 92.4111023498257
+    },
+    {
+      "function": "runCilSlice",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-slice.js",
+      "line": 28,
+      "column": 28,
+      "selfUs": 83671,
+      "inclusiveUs": 1628324,
+      "selfPercent": 5.118378288107361,
+      "inclusivePercent": 99.60892313470772
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/load-store.js",
+      "line": 24,
+      "column": 32,
+      "selfUs": 70049,
+      "inclusiveUs": 374057,
+      "selfPercent": 4.285084207235871,
+      "inclusivePercent": 22.882064602007564
+    },
+    {
+      "function": "beginFrameInstruction",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-stack.js",
+      "line": 37,
+      "column": 38,
+      "selfUs": 58959,
+      "inclusiveUs": 72193,
+      "selfPercent": 3.606679321252547,
+      "inclusivePercent": 4.416238407014792
+    },
+    {
+      "function": "admitStackPush",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-stack.js",
+      "line": 74,
+      "column": 31,
+      "selfUs": 49739,
+      "inclusiveUs": 60533,
+      "selfPercent": 3.0426673240689364,
+      "inclusivePercent": 3.702965100381289
+    },
+    {
+      "function": "executionCodeState",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/code-version.js",
+      "line": 29,
+      "column": 35,
+      "selfUs": 47322,
+      "inclusiveUs": 47322,
+      "selfPercent": 2.894812985978613,
+      "inclusivePercent": 2.894812985978613
+    },
+    {
+      "function": "flush",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 139,
+      "column": 8,
+      "selfUs": 46685,
+      "inclusiveUs": 151560,
+      "selfPercent": 2.8558459965853418,
+      "inclusivePercent": 9.271329532879392
+    },
+    {
+      "function": "binary",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/numeric-ops.js",
+      "line": 63,
+      "column": 23,
+      "selfUs": 40370,
+      "inclusiveUs": 59404,
+      "selfPercent": 2.469540599382034,
+      "inclusivePercent": 3.63390115842681
+    },
+    {
+      "function": "tryPreparedVirtualCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/prepared-virtual-call.js",
+      "line": 52,
+      "column": 39,
+      "selfUs": 39103,
+      "inclusiveUs": 201308,
+      "selfPercent": 2.3920348292701425,
+      "inclusivePercent": 12.314547410958594
+    },
+    {
+      "function": "dispatchWasmCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js",
+      "line": 131,
+      "column": 33,
+      "selfUs": 38317,
+      "inclusiveUs": 853429,
+      "selfPercent": 2.3439531123735793,
+      "inclusivePercent": 52.206528714144405
+    },
+    {
+      "function": "#acquireBucket",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 105,
+      "column": 17,
+      "selfUs": 36381,
+      "inclusiveUs": 36381,
+      "selfPercent": 2.2255228274985823,
+      "inclusivePercent": 2.2255228274985823
+    },
+    {
+      "function": "substituteTypeArguments",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/generic-signatures.js",
+      "line": 20,
+      "column": 40,
+      "selfUs": 35000,
+      "inclusiveUs": 35000,
+      "selfPercent": 2.1410433732566556,
+      "inclusivePercent": 2.1410433732566556
+    },
+    {
+      "function": "enterPreparedCilFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/prepared-cil-frame.js",
+      "line": 26,
+      "column": 38,
+      "selfUs": 32054,
+      "inclusiveUs": 139804,
+      "selfPercent": 1.9608286938962525,
+      "inclusivePercent": 8.552183650136385
+    },
+    {
+      "function": "normalizeCallType",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/generic-signatures.js",
+      "line": 34,
+      "column": 34,
+      "selfUs": 31187,
+      "inclusiveUs": 36158,
+      "selfPercent": 1.9077919909072947,
+      "inclusivePercent": 2.2118813225775473
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/load-store.js",
+      "line": 16,
+      "column": 63,
+      "selfUs": 23365,
+      "inclusiveUs": 26984,
+      "selfPercent": 1.4292993833183358,
+      "inclusivePercent": 1.650683268113074
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/call.js",
+      "line": 15,
+      "column": 20,
+      "selfUs": 21746,
+      "inclusiveUs": 51505,
+      "selfPercent": 1.3302608341382636,
+      "inclusivePercent": 3.1506982554166867
+    },
+    {
+      "function": "flushFramePool",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 197,
+      "column": 31,
+      "selfUs": 21165,
+      "inclusiveUs": 172725,
+      "selfPercent": 1.2947195141422032,
+      "inclusivePercent": 10.566049047021595
+    },
+    {
+      "function": "uint32Binary",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/bytecode/src/numeric/uint32.js",
+      "line": 5,
+      "column": 29,
+      "selfUs": 19034,
+      "inclusiveUs": 19034,
+      "selfPercent": 1.1643605590447765,
+      "inclusivePercent": 1.1643605590447765
+    },
+    {
+      "function": "invoke",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/calls.js",
+      "line": 42,
+      "column": 23,
+      "selfUs": 18243,
+      "inclusiveUs": 222405,
+      "selfPercent": 1.1159729788091761,
+      "inclusivePercent": 13.6051071836899
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/arith.js",
+      "line": 11,
+      "column": 21,
+      "selfUs": 18128,
+      "inclusiveUs": 101628,
+      "selfPercent": 1.108938122011333,
+      "inclusivePercent": 6.21685588392364
+    },
+    {
+      "function": "storageValue",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/storage.js",
+      "line": 35,
+      "column": 29,
+      "selfUs": 17471,
+      "inclusiveUs": 128904,
+      "selfPercent": 1.068747679261915,
+      "inclusivePercent": 7.8854015710364544
+    },
+    {
+      "function": "acquireCil",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 88,
+      "column": 13,
+      "selfUs": 15024,
+      "inclusiveUs": 52065,
+      "selfPercent": 0.9190581611373712,
+      "inclusivePercent": 3.1849549493887936
+    },
+    {
+      "function": "compare",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/numeric-ops.js",
+      "line": 25,
+      "column": 24,
+      "selfUs": 13990,
+      "inclusiveUs": 13990,
+      "selfPercent": 0.8558056226245888,
+      "inclusivePercent": 0.8558056226245888
+    },
+    {
+      "function": "storage",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 63,
+      "column": 10,
+      "selfUs": 12974,
+      "inclusiveUs": 142578,
+      "selfPercent": 0.7936541921323386,
+      "inclusivePercent": 8.721876630633925
+    },
+    {
+      "function": "boundsFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-stack.js",
+      "line": 20,
+      "column": 19,
+      "selfUs": 10966,
+      "inclusiveUs": 10966,
+      "selfPercent": 0.6708194751752138,
+      "inclusivePercent": 0.6708194751752138
+    },
+    {
+      "function": "prepareCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/calls.js",
+      "line": 32,
+      "column": 28,
+      "selfUs": 10722,
+      "inclusiveUs": 12010,
+      "selfPercent": 0.6558933442302245,
+      "inclusivePercent": 0.7346837403660694
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/load-store.js",
+      "line": 13,
+      "column": 68,
+      "selfUs": 9671,
+      "inclusiveUs": 11792,
+      "selfPercent": 0.5916008703647175,
+      "inclusivePercent": 0.7213480987840709
+    },
+    {
+      "function": "reserveStackFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 145,
+      "column": 34,
+      "selfUs": 9211,
+      "inclusiveUs": 16115,
+      "selfPercent": 0.5634614431733443,
+      "inclusivePercent": 0.9857975417151715
+    },
+    {
+      "function": "scalarStorageGuard",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/scalar-storage-plan.js",
+      "line": 28,
+      "column": 35,
+      "selfUs": 9152,
+      "inclusiveUs": 9152,
+      "selfPercent": 0.5598522557727117,
+      "inclusivePercent": 0.5598522557727117
+    },
+    {
+      "function": "observeWasmBackedge",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js",
+      "line": 102,
+      "column": 36,
+      "selfUs": 8960,
+      "inclusiveUs": 8960,
+      "selfPercent": 0.5481071035537038,
+      "inclusivePercent": 0.5481071035537038
+    },
+    {
+      "function": "add",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 17,
+      "column": 13,
+      "selfUs": 8642,
+      "inclusiveUs": 8642,
+      "selfPercent": 0.5286541951909719,
+      "inclusivePercent": 0.5286541951909719
+    },
+    {
+      "function": "popPooledFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-retirement.js",
+      "line": 10,
+      "column": 31,
+      "selfUs": 8634,
+      "inclusiveUs": 17806,
+      "selfPercent": 0.5281648138485132,
+      "inclusivePercent": 1.0892405229773716
+    },
+    {
+      "function": "get",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/method-table.js",
+      "line": 122,
+      "column": 6,
+      "selfUs": 8590,
+      "inclusiveUs": 8768,
+      "selfPercent": 0.5254732164649906,
+      "inclusivePercent": 0.5363619513346959
+    },
+    {
+      "function": "storage",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/numeric-ops.js",
+      "line": 132,
+      "column": 24,
+      "selfUs": 8514,
+      "inclusiveUs": 8514,
+      "selfPercent": 0.5208240937116333,
+      "inclusivePercent": 0.5208240937116333
+    },
+    {
+      "function": "planFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/prepared-virtual-call.js",
+      "line": 24,
+      "column": 17,
+      "selfUs": 7525,
+      "inclusiveUs": 7827,
+      "selfPercent": 0.4603243252501809,
+      "inclusivePercent": 0.47879847092799543
+    },
+    {
+      "function": "admitCallFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/call-frames.js",
+      "line": 16,
+      "column": 31,
+      "selfUs": 6779,
+      "inclusiveUs": 20614,
+      "selfPercent": 0.4146895150659105,
+      "inclusivePercent": 1.2610133741803629
+    },
+    {
+      "function": "cilNumericContext",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-values.js",
+      "line": 21,
+      "column": 34,
+      "selfUs": 6732,
+      "inclusiveUs": 6732,
+      "selfPercent": 0.4118143996789658,
+      "inclusivePercent": 0.4118143996789658
+    },
+    {
+      "function": "enumInfo",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/enums.js",
+      "line": 27,
+      "column": 25,
+      "selfUs": 6500,
+      "inclusiveUs": 6500,
+      "selfPercent": 0.39762234074766456,
+      "inclusivePercent": 0.39762234074766456
+    },
+    {
+      "function": "varargsStorage",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/varargs-storage.js",
+      "line": 16,
+      "column": 31,
+      "selfUs": 6489,
+      "inclusiveUs": 6489,
+      "selfPercent": 0.39694944140178395,
+      "inclusivePercent": 0.39694944140178395
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/branch.js",
+      "line": 21,
+      "column": 52,
+      "selfUs": 6429,
+      "inclusiveUs": 23334,
+      "selfPercent": 0.3932790813333439,
+      "inclusivePercent": 1.4274030306163084
+    },
+    {
+      "function": "methodSize",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 55,
+      "column": 20,
+      "selfUs": 6210,
+      "inclusiveUs": 6210,
+      "selfPercent": 0.379882267083538,
+      "inclusivePercent": 0.379882267083538
+    },
+    {
+      "function": "indexFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 77,
+      "column": 18,
+      "selfUs": 5957,
+      "inclusiveUs": 5957,
+      "selfPercent": 0.3644055821282828,
+      "inclusivePercent": 0.3644055821282828
+    },
+    {
+      "function": "guardFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/slot-storage.js",
+      "line": 7,
+      "column": 18,
+      "selfUs": 5364,
+      "inclusiveUs": 5364,
+      "selfPercent": 0.3281301901185343,
+      "inclusivePercent": 0.3281301901185343
+    },
+    {
+      "function": "genericTypeParts",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/generic-signatures.js",
+      "line": 2,
+      "column": 33,
+      "selfUs": 4971,
+      "inclusiveUs": 4971,
+      "selfPercent": 0.3040893316702524,
+      "inclusivePercent": 0.3040893316702524
+    },
+    {
+      "function": "floatPlanCurrent",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/typed-float-plan.js",
+      "line": 15,
+      "column": 33,
+      "selfUs": 4126,
+      "inclusiveUs": 4126,
+      "selfPercent": 0.252398427373056,
+      "inclusivePercent": 0.252398427373056
+    },
+    {
+      "function": "resolveEntry",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/inline-cache.js",
+      "line": 52,
+      "column": 22,
+      "selfUs": 4099,
+      "inclusiveUs": 4607,
+      "selfPercent": 0.25074676534225804,
+      "inclusivePercent": 0.28182248058838316
+    },
+    {
+      "function": "getDecodePlan",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/decode-plan.js",
+      "line": 87,
+      "column": 30,
+      "selfUs": 4090,
+      "inclusiveUs": 29346,
+      "selfPercent": 0.25019621133199205,
+      "inclusivePercent": 1.7951731094739947
+    },
+    {
+      "function": "resolveCallType",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/generic-calls.js",
+      "line": 7,
+      "column": 32,
+      "selfUs": 3994,
+      "inclusiveUs": 77206,
+      "selfPercent": 0.24432363522248804,
+      "inclusivePercent": 4.722896990732953
+    },
+    {
+      "function": "table",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/type-system.js",
+      "line": 46,
+      "column": 8,
+      "selfUs": 3968,
+      "inclusiveUs": 31847,
+      "selfPercent": 0.2427331458594974,
+      "inclusivePercent": 1.9481659516601344
+    },
+    {
+      "function": "releaseStackFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 200,
+      "column": 34,
+      "selfUs": 3755,
+      "inclusiveUs": 3755,
+      "selfPercent": 0.22970336761653545,
+      "inclusivePercent": 0.22970336761653545
+    },
+    {
+      "function": "mustInitialize",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/static-init.js",
+      "line": 7,
+      "column": 24,
+      "selfUs": 3159,
+      "inclusiveUs": 3159,
+      "selfPercent": 0.19324445760336498,
+      "inclusivePercent": 0.19324445760336498
+    },
+    {
+      "function": "containerFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 8,
+      "column": 22,
+      "selfUs": 2977,
+      "inclusiveUs": 2977,
+      "selfPercent": 0.18211103206243037,
+      "inclusivePercent": 0.18211103206243037
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/call.js",
+      "line": 11,
+      "column": 66,
+      "selfUs": 2553,
+      "inclusiveUs": 225819,
+      "selfPercent": 0.1561738209121212,
+      "inclusivePercent": 13.813950671584132
+    },
+    {
+      "function": "commitStackFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 162,
+      "column": 33,
+      "selfUs": 2498,
+      "inclusiveUs": 2498,
+      "selfPercent": 0.15280932418271786,
+      "inclusivePercent": 0.15280932418271786
+    },
+    {
+      "function": "retire",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 131,
+      "column": 9,
+      "selfUs": 2482,
+      "inclusiveUs": 2482,
+      "selfPercent": 0.15183056149780053,
+      "inclusivePercent": 0.15183056149780053
+    },
+    {
+      "function": "substituteCallType",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/generic-signatures.js",
+      "line": 45,
+      "column": 35,
+      "selfUs": 2220,
+      "inclusiveUs": 73378,
+      "selfPercent": 0.13580332253227928,
+      "inclusivePercent": 4.488728018366482
+    },
+    {
+      "function": "ensureInitialized",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 75,
+      "column": 20,
+      "selfUs": 2206,
+      "inclusiveUs": 5181,
+      "selfPercent": 0.1349469051829766,
+      "inclusivePercent": 0.3169355919097923
+    },
+    {
+      "function": "enterCilMethod",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-method-events.js",
+      "line": 22,
+      "column": 31,
+      "selfUs": 2001,
+      "inclusiveUs": 2923,
+      "selfPercent": 0.12240650828247335,
+      "inclusivePercent": 0.1788077080008344
+    },
+    {
+      "function": "runQualificationVM",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/bench/vm/qualification-execution.js",
+      "line": 28,
+      "column": 41,
+      "selfUs": 1967,
+      "inclusiveUs": 1634717,
+      "selfPercent": 0.12032663757702404,
+      "inclusivePercent": 100.0
+    },
+    {
+      "function": "releaseFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 120,
+      "column": 29,
+      "selfUs": 1893,
+      "inclusiveUs": 1893,
+      "selfPercent": 0.11579986015928138,
+      "inclusivePercent": 0.11579986015928138
+    },
+    {
+      "function": "numericPlanCurrent",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/numeric-specialization.js",
+      "line": 61,
+      "column": 35,
+      "selfUs": 1753,
+      "inclusiveUs": 1753,
+      "selfPercent": 0.10723568666625477,
+      "inclusivePercent": 0.10723568666625477
+    },
+    {
+      "function": "methodOffsets",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/method-offsets.js",
+      "line": 3,
+      "column": 30,
+      "selfUs": 1700,
+      "inclusiveUs": 1700,
+      "selfPercent": 0.10399353527246612,
+      "inclusivePercent": 0.10399353527246612
+    },
+    {
+      "function": "verifiedMethod",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/token-cache.js",
+      "line": 41,
+      "column": 31,
+      "selfUs": 1573,
+      "inclusiveUs": 2619,
+      "selfPercent": 0.09622460646093484,
+      "inclusivePercent": 0.16021121698740515
+    },
+    {
+      "function": "afterSchedulerInstruction",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/scheduler-boundary.js",
+      "line": 11,
+      "column": 42,
+      "selfUs": 1559,
+      "inclusiveUs": 1559,
+      "selfPercent": 0.09536818911163217,
+      "inclusivePercent": 0.09536818911163217
+    },
+    {
+      "function": "binary",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 88,
+      "column": 9,
+      "selfUs": 1502,
+      "inclusiveUs": 64344,
+      "selfPercent": 0.09188134704661419,
+      "inclusivePercent": 3.9360941373950356
+    },
+    {
+      "function": "runSlice",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 97,
+      "column": 11,
+      "selfUs": 1208,
+      "inclusiveUs": 1629532,
+      "selfPercent": 0.07389658271125828,
+      "inclusivePercent": 99.68281971741898
+    },
+    {
+      "function": "Immediate",
+      "url": "node:internal/timers",
+      "line": 682,
+      "column": 14,
+      "selfUs": 1157,
+      "inclusiveUs": 2166,
+      "selfPercent": 0.0707767766530843,
+      "inclusivePercent": 0.1324999984706833
+    },
+    {
+      "function": "retirePooledFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 192,
+      "column": 34,
+      "selfUs": 1042,
+      "inclusiveUs": 3524,
+      "selfPercent": 0.063741919855241,
+      "inclusivePercent": 0.21557248135304152
+    },
+    {
+      "function": "observeWasmCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js",
+      "line": 64,
+      "column": 32,
+      "selfUs": 922,
+      "inclusiveUs": 922,
+      "selfPercent": 0.05640119971836103,
+      "inclusivePercent": 0.05640119971836103
+    },
+    {
+      "function": "get",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/heap.js",
+      "line": 32,
+      "column": 6,
+      "selfUs": 863,
+      "inclusiveUs": 863,
+      "selfPercent": 0.05279201231772839,
+      "inclusivePercent": 0.05279201231772839
+    },
+    {
+      "function": "ordinaryAdapters",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/scalar-slot-store.js",
+      "line": 9,
+      "column": 26,
+      "selfUs": 853,
+      "inclusiveUs": 853,
+      "selfPercent": 0.05218028563965506,
+      "inclusivePercent": 0.05218028563965506
+    },
+    {
+      "function": "hasCanonicalCilCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/call-entry-guard.js",
+      "line": 5,
+      "column": 36,
+      "selfUs": 832,
+      "inclusiveUs": 832,
+      "selfPercent": 0.05089565961570107,
+      "inclusivePercent": 0.05089565961570107
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/calls.js",
+      "line": 62,
+      "column": 26,
+      "selfUs": 691,
+      "inclusiveUs": 1718,
+      "selfPercent": 0.04227031345486711,
+      "inclusivePercent": 0.10509464329299813
+    },
+    {
+      "function": "invoke",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 92,
+      "column": 9,
+      "selfUs": 689,
+      "inclusiveUs": 223266,
+      "selfPercent": 0.04214796811925245,
+      "inclusivePercent": 13.657776850672013
+    },
+    {
+      "function": "resolveVirtualCallEntry",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/inline-cache.js",
+      "line": 47,
+      "column": 40,
+      "selfUs": 686,
+      "inclusiveUs": 4606,
+      "selfPercent": 0.04196445011583045,
+      "inclusivePercent": 0.28176130792057585
+    },
+    {
+      "function": "now",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfUs": 682,
+      "inclusiveUs": 682,
+      "selfPercent": 0.041719759444601115,
+      "inclusivePercent": 0.041719759444601115
+    },
+    {
+      "function": "ensureTypeInitialized",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/static-init.js",
+      "line": 31,
+      "column": 38,
+      "selfUs": 540,
+      "inclusiveUs": 3699,
+      "selfPercent": 0.03303324061595983,
+      "inclusivePercent": 0.2262776982193248
+    },
+    {
+      "function": "budgetFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 134,
+      "column": 19,
+      "selfUs": 525,
+      "inclusiveUs": 694,
+      "selfPercent": 0.032115650598849826,
+      "inclusivePercent": 0.04245383145828911
+    },
+    {
+      "function": "leaveCilMethod",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-method-events.js",
+      "line": 37,
+      "column": 31,
+      "selfUs": 516,
+      "inclusiveUs": 516,
+      "selfPercent": 0.031565096588583835,
+      "inclusivePercent": 0.031565096588583835
+    },
+    {
+      "function": "pushStackValue",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-stack.js",
+      "line": 91,
+      "column": 31,
+      "selfUs": 511,
+      "inclusiveUs": 60870,
+      "selfPercent": 0.03125923324954717,
+      "inclusivePercent": 3.723580289432361
+    },
+    {
+      "function": "initAsyncResource",
+      "url": "node:internal/timers",
+      "line": 164,
+      "column": 27,
+      "selfUs": 511,
+      "inclusiveUs": 689,
+      "selfPercent": 0.03125923324954717,
+      "inclusivePercent": 0.04214796811925245
+    },
+    {
+      "function": "compare",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 87,
+      "column": 10,
+      "selfUs": 509,
+      "inclusiveUs": 16905,
+      "selfPercent": 0.031136887913932505,
+      "inclusivePercent": 1.0341239492829646
+    },
+    {
+      "function": "loadSlot",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/slot-storage.js",
+      "line": 24,
+      "column": 25,
+      "selfUs": 508,
+      "inclusiveUs": 148638,
+      "selfPercent": 0.03107571524612517,
+      "inclusivePercent": 9.092582997546364
+    },
+    {
+      "function": "",
+      "url": "node:internal/validators",
+      "line": 547,
+      "column": 51,
+      "selfUs": 507,
+      "inclusiveUs": 507,
+      "selfPercent": 0.031014542578317837,
+      "inclusivePercent": 0.031014542578317837
+    },
+    {
+      "function": "beforeSlice",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/scheduler.js",
+      "line": 107,
+      "column": 14,
+      "selfUs": 369,
+      "inclusiveUs": 369,
+      "selfPercent": 0.02257271442090588,
+      "inclusivePercent": 0.02257271442090588
+    },
+    {
+      "function": "now",
+      "url": "node:internal/perf/performance",
+      "line": 137,
+      "column": 6,
+      "selfUs": 353,
+      "inclusiveUs": 1542,
+      "selfPercent": 0.021593951735988555,
+      "inclusivePercent": 0.09432825375890751
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/bench/vm/qualification-execution.js",
+      "line": 32,
+      "column": 51,
+      "selfUs": 350,
+      "inclusiveUs": 2865,
+      "selfPercent": 0.021410433732566552,
+      "inclusivePercent": 0.17525969326800908
+    },
+    {
+      "function": "framePool",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 186,
+      "column": 26,
+      "selfUs": 350,
+      "inclusiveUs": 1052,
+      "selfPercent": 0.021410433732566552,
+      "inclusivePercent": 0.06435364653331434
+    },
+    {
+      "function": "createHeapReference",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/heap-reference.js",
+      "line": 4,
+      "column": 36,
+      "selfUs": 347,
+      "inclusiveUs": 347,
+      "selfPercent": 0.021226915729144556,
+      "inclusivePercent": 0.021226915729144556
+    },
+    {
+      "function": "get",
+      "url": "node:internal/util",
+      "line": 638,
+      "column": 17,
+      "selfUs": 338,
+      "inclusiveUs": 338,
+      "selfPercent": 0.020676361718878558,
+      "inclusivePercent": 0.020676361718878558
+    },
+    {
+      "function": "runtimeTypeName",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/method-table.js",
+      "line": 28,
+      "column": 32,
+      "selfUs": 178,
+      "inclusiveUs": 178,
+      "selfPercent": 0.010888734869705275,
+      "inclusivePercent": 0.010888734869705275
+    },
+    {
+      "function": "newAsyncId",
+      "url": "node:internal/async_hooks",
+      "line": 425,
+      "column": 20,
+      "selfUs": 178,
+      "inclusiveUs": 178,
+      "selfPercent": 0.010888734869705275,
+      "inclusivePercent": 0.010888734869705275
+    },
+    {
+      "function": "",
+      "url": "node:internal/validators",
+      "line": 471,
+      "column": 42,
+      "selfUs": 177,
+      "inclusiveUs": 177,
+      "selfPercent": 0.010827562201897943,
+      "inclusivePercent": 0.010827562201897943
+    },
+    {
+      "function": "location",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/managed-address.js",
+      "line": 17,
+      "column": 18,
+      "selfUs": 175,
+      "inclusiveUs": 175,
+      "selfPercent": 0.010705216866283276,
+      "inclusivePercent": 0.010705216866283276
+    },
+    {
+      "function": "#bucketFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 37,
+      "column": 13,
+      "selfUs": 174,
+      "inclusiveUs": 174,
+      "selfPercent": 0.010644044198475944,
+      "inclusivePercent": 0.010644044198475944
+    },
+    {
+      "function": "memoryLocalType",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/memory-values.js",
+      "line": 8,
+      "column": 32,
+      "selfUs": 174,
+      "inclusiveUs": 174,
+      "selfPercent": 0.010644044198475944,
+      "inclusivePercent": 0.010644044198475944
+    },
+    {
+      "function": "toggleImmediateRef",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfUs": 173,
+      "inclusiveUs": 173,
+      "selfPercent": 0.01058287153066861,
+      "inclusivePercent": 0.01058287153066861
+    },
+    {
+      "function": "dereferenceManagedAddress",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/managed-address.js",
+      "line": 107,
+      "column": 42,
+      "selfUs": 172,
+      "inclusiveUs": 347,
+      "selfPercent": 0.010521698862861278,
+      "inclusivePercent": 0.021226915729144556
+    },
+    {
+      "function": "intrinsicDefinition",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/intrinsic-profile.js",
+      "line": 121,
+      "column": 36,
+      "selfUs": 172,
+      "inclusiveUs": 842,
+      "selfPercent": 0.010521698862861278,
+      "inclusivePercent": 0.051507386293774396
+    },
+    {
+      "function": "wrappedFn",
+      "url": "node:internal/errors",
+      "line": 537,
+      "column": 21,
+      "selfUs": 172,
+      "inclusiveUs": 856,
+      "selfPercent": 0.010521698862861278,
+      "inclusivePercent": 0.052363803643077064
+    },
+    {
+      "function": "memorySignature",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/memory-signatures.js",
+      "line": 6,
+      "column": 32,
+      "selfUs": 171,
+      "inclusiveUs": 337,
+      "selfPercent": 0.010460526195053945,
+      "inclusivePercent": 0.020615189051071226
+    },
+    {
+      "function": "executeCilNumericBlock",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/numeric-blocks.js",
+      "line": 28,
+      "column": 39,
+      "selfUs": 169,
+      "inclusiveUs": 169,
+      "selfPercent": 0.010338180859439279,
+      "inclusivePercent": 0.010338180859439279
+    },
+    {
+      "function": "invokeIntrinsic",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/intrinsics.js",
+      "line": 161,
+      "column": 32,
+      "selfUs": 168,
+      "inclusiveUs": 168,
+      "selfPercent": 0.010277008191631947,
+      "inclusivePercent": 0.010277008191631947
+    },
+    {
+      "function": "isValueRecord",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/value-types.js",
+      "line": 16,
+      "column": 30,
+      "selfUs": 168,
+      "inclusiveUs": 168,
+      "selfPercent": 0.010277008191631947,
+      "inclusivePercent": 0.010277008191631947
+    },
+    {
+      "function": "isSynchronizationIntrinsic",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/bytecode/src/sync-intrinsic-profile.js",
+      "line": 81,
+      "column": 43,
+      "selfUs": 168,
+      "inclusiveUs": 168,
+      "selfPercent": 0.010277008191631947,
+      "inclusivePercent": 0.010277008191631947
+    },
+    {
+      "function": "recordAllocation",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/heap-allocation.js",
+      "line": 18,
+      "column": 33,
+      "selfUs": 167,
+      "inclusiveUs": 514,
+      "selfPercent": 0.010215835523824613,
+      "inclusivePercent": 0.03144275125296917
+    },
+    {
+      "function": "nullableMethodDefinition",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/nullable-profile.js",
+      "line": 6,
+      "column": 41,
+      "selfUs": 165,
+      "inclusiveUs": 165,
+      "selfPercent": 0.010093490188209948,
+      "inclusivePercent": 0.010093490188209948
+    },
+    {
+      "function": "flushCilMethodEvents",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-method-events.js",
+      "line": 57,
+      "column": 37,
+      "selfUs": 165,
+      "inclusiveUs": 165,
+      "selfPercent": 0.010093490188209948,
+      "inclusivePercent": 0.010093490188209948
+    },
+    {
+      "function": "admitCilStack",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-stack.js",
+      "line": 58,
+      "column": 30,
+      "selfUs": 162,
+      "inclusiveUs": 10954,
+      "selfPercent": 0.009909972184787948,
+      "inclusivePercent": 0.6700854031615258
+    },
+    {
+      "function": "ref",
+      "url": "node:internal/timers",
+      "line": 698,
+      "column": 6,
+      "selfUs": 147,
+      "inclusiveUs": 320,
+      "selfPercent": 0.008992382167677953,
+      "inclusivePercent": 0.019575253698346562
+    },
+    {
+      "function": "decodeCoded",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/metadata/indices.js",
+      "line": 36,
+      "column": 28,
+      "selfUs": 112,
+      "inclusiveUs": 112,
+      "selfPercent": 0.006851338794421296,
+      "inclusivePercent": 0.006851338794421296
+    },
+    {
+      "function": "userValueCallType",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/value-calls.js",
+      "line": 11,
+      "column": 34,
+      "selfUs": 0,
+      "inclusiveUs": 354,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.021655124403795887
+    },
+    {
+      "function": "observe",
+      "url": "file:///workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/driver.mjs",
+      "line": 19,
+      "column": 23,
+      "selfUs": 0,
+      "inclusiveUs": 62021,
+      "selfPercent": 0.0,
+      "inclusivePercent": 3.7939900300786005
+    },
+    {
+      "function": "",
+      "url": "file:///workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/driver.mjs",
+      "line": 0,
+      "column": 0,
+      "selfUs": 0,
+      "inclusiveUs": 62021,
+      "selfPercent": 0.0,
+      "inclusivePercent": 3.7939900300786005
+    },
+    {
+      "function": "(root)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfUs": 0,
+      "inclusiveUs": 1634717,
+      "selfPercent": 0.0,
+      "inclusivePercent": 100.0
+    },
+    {
+      "function": "allocateHeapRecord",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/heap-storage.js",
+      "line": 10,
+      "column": 35,
+      "selfUs": 0,
+      "inclusiveUs": 514,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.03144275125296917
+    },
+    {
+      "function": "allocate",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/heap.js",
+      "line": 26,
+      "column": 11,
+      "selfUs": 0,
+      "inclusiveUs": 514,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.03144275125296917
+    },
+    {
+      "function": "object",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/heap.js",
+      "line": 30,
+      "column": 9,
+      "selfUs": 0,
+      "inclusiveUs": 514,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.03144275125296917
+    },
+    {
+      "function": "withRoots",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/heap.js",
+      "line": 16,
+      "column": 12,
+      "selfUs": 0,
+      "inclusiveUs": 1718,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.10509464329299813
+    },
+    {
+      "function": "read",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/metadata/type-names.js",
+      "line": 29,
+      "column": 7,
+      "selfUs": 0,
+      "inclusiveUs": 112,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.006851338794421296
+    },
+    {
+      "function": "typeName",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/metadata/reader.js",
+      "line": 89,
+      "column": 13,
+      "selfUs": 0,
+      "inclusiveUs": 112,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.006851338794421296
+    },
+    {
+      "function": "managedDelegateSignature",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/delegate-profile.js",
+      "line": 9,
+      "column": 41,
+      "selfUs": 0,
+      "inclusiveUs": 112,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.006851338794421296
+    },
+    {
+      "function": "supportedDelegateCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/delegate-profile.js",
+      "line": 34,
+      "column": 38,
+      "selfUs": 0,
+      "inclusiveUs": 112,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.006851338794421296
+    },
+    {
+      "function": "dereference",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 82,
+      "column": 14,
+      "selfUs": 0,
+      "inclusiveUs": 347,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.021226915729144556
+    },
+    {
+      "function": "registerFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 92,
+      "column": 30,
+      "selfUs": 0,
+      "inclusiveUs": 13835,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.8463238591144522
+    },
+    {
+      "function": "push",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 72,
+      "column": 7,
+      "selfUs": 0,
+      "inclusiveUs": 60870,
+      "selfPercent": 0.0,
+      "inclusivePercent": 3.723580289432361
+    },
+    {
+      "function": "afterInstruction",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/scheduler.js",
+      "line": 109,
+      "column": 19,
+      "selfUs": 0,
+      "inclusiveUs": 1559,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.09536818911163217
+    },
+    {
+      "function": "cacheFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/token-cache.js",
+      "line": 3,
+      "column": 18,
+      "selfUs": 0,
+      "inclusiveUs": 1046,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.06398661052647032
+    },
+    {
+      "function": "frameBytes",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 83,
+      "column": 20,
+      "selfUs": 0,
+      "inclusiveUs": 6210,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.379882267083538
+    },
+    {
+      "function": "frameById",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 143,
+      "column": 26,
+      "selfUs": 0,
+      "inclusiveUs": 3741,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.22884695026723278
+    },
+    {
+      "function": "ensureInitialized",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/calls.js",
+      "line": 28,
+      "column": 34,
+      "selfUs": 0,
+      "inclusiveUs": 2975,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.18198868672681573
+    },
+    {
+      "function": "setImmediate",
+      "url": "node:timers",
+      "line": 207,
+      "column": 22,
+      "selfUs": 0,
+      "inclusiveUs": 2515,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.15384925953544254
+    },
+    {
+      "function": "checkQualificationLimit",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/bench/vm/qualification-execution.js",
+      "line": 22,
+      "column": 40,
+      "selfUs": 0,
+      "inclusiveUs": 353,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.021593951735988555
+    },
+    {
+      "function": "acquire",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 65,
+      "column": 10,
+      "selfUs": 0,
+      "inclusiveUs": 174,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.010644044198475944
+    },
+    {
+      "function": "cilCallFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/call-frames.js",
+      "line": 30,
+      "column": 29,
+      "selfUs": 0,
+      "inclusiveUs": 345,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.02110457039352989
+    },
+    {
+      "function": "enterManagedCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/managed-call-entry.js",
+      "line": 31,
+      "column": 33,
+      "selfUs": 0,
+      "inclusiveUs": 345,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.02110457039352989
+    },
+    {
+      "function": "call",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 74,
+      "column": 7,
+      "selfUs": 0,
+      "inclusiveUs": 345,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.02110457039352989
+    },
+    {
+      "function": "pushIntrinsicCallResult",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/intrinsic-call-result.js",
+      "line": 5,
+      "column": 40,
+      "selfUs": 0,
+      "inclusiveUs": 168,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.010277008191631947
+    },
+    {
+      "function": "ownerOf",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 8,
+      "column": 17,
+      "selfUs": 0,
+      "inclusiveUs": 1362,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.08331717355358756
+    },
+    {
+      "function": "siteFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/inline-cache.js",
+      "line": 3,
+      "column": 17,
+      "selfUs": 0,
+      "inclusiveUs": 508,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.03107571524612517
+    },
+    {
+      "function": "memoryMethodDefinition",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/memory-profile.js",
+      "line": 67,
+      "column": 39,
+      "selfUs": 0,
+      "inclusiveUs": 171,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.010460526195053945
+    },
+    {
+      "function": "canonical",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/memory-signatures.js",
+      "line": 20,
+      "column": 21,
+      "selfUs": 0,
+      "inclusiveUs": 166,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.01015466285601728
+    },
+    {
+      "function": "arrayRuntimeDefinition",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/array-runtime-profile.js",
+      "line": 32,
+      "column": 39,
+      "selfUs": 0,
+      "inclusiveUs": 166,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.01015466285601728
+    },
+    {
+      "function": "arrayMethodDefinition",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/array-profile.js",
+      "line": 48,
+      "column": 38,
+      "selfUs": 0,
+      "inclusiveUs": 166,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.01015466285601728
+    }
+  ],
+  "inclusive": [
+    {
+      "function": "runQualificationVM",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/bench/vm/qualification-execution.js",
+      "line": 28,
+      "column": 41,
+      "selfUs": 1967,
+      "inclusiveUs": 1634717,
+      "selfPercent": 0.12032663757702404,
+      "inclusivePercent": 100.0
+    },
+    {
+      "function": "(root)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfUs": 0,
+      "inclusiveUs": 1634717,
+      "selfPercent": 0.0,
+      "inclusivePercent": 100.0
+    },
+    {
+      "function": "runSlice",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 97,
+      "column": 11,
+      "selfUs": 1208,
+      "inclusiveUs": 1629532,
+      "selfPercent": 0.07389658271125828,
+      "inclusivePercent": 99.68281971741898
+    },
+    {
+      "function": "runCilSlice",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-slice.js",
+      "line": 28,
+      "column": 28,
+      "selfUs": 83671,
+      "inclusiveUs": 1628324,
+      "selfPercent": 5.118378288107361,
+      "inclusivePercent": 99.60892313470772
+    },
+    {
+      "function": "step",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 96,
+      "column": 7,
+      "selfUs": 95423,
+      "inclusiveUs": 1510660,
+      "selfPercent": 5.837279480179138,
+      "inclusivePercent": 92.4111023498257
+    },
+    {
+      "function": "executeCilStep",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-step.js",
+      "line": 14,
+      "column": 31,
+      "selfUs": 296243,
+      "inclusiveUs": 1435183,
+      "selfPercent": 18.121974629247752,
+      "inclusivePercent": 87.7939729017316
+    },
+    {
+      "function": "dispatchWasmCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js",
+      "line": 131,
+      "column": 33,
+      "selfUs": 38317,
+      "inclusiveUs": 853429,
+      "selfPercent": 2.3439531123735793,
+      "inclusivePercent": 52.206528714144405
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/load-store.js",
+      "line": 24,
+      "column": 32,
+      "selfUs": 70049,
+      "inclusiveUs": 374057,
+      "selfPercent": 4.285084207235871,
+      "inclusivePercent": 22.882064602007564
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/call.js",
+      "line": 11,
+      "column": 66,
+      "selfUs": 2553,
+      "inclusiveUs": 225819,
+      "selfPercent": 0.1561738209121212,
+      "inclusivePercent": 13.813950671584132
+    },
+    {
+      "function": "invoke",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 92,
+      "column": 9,
+      "selfUs": 689,
+      "inclusiveUs": 223266,
+      "selfPercent": 0.04214796811925245,
+      "inclusivePercent": 13.657776850672013
+    },
+    {
+      "function": "invoke",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/calls.js",
+      "line": 42,
+      "column": 23,
+      "selfUs": 18243,
+      "inclusiveUs": 222405,
+      "selfPercent": 1.1159729788091761,
+      "inclusivePercent": 13.6051071836899
+    },
+    {
+      "function": "tryPreparedVirtualCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/prepared-virtual-call.js",
+      "line": 52,
+      "column": 39,
+      "selfUs": 39103,
+      "inclusiveUs": 201308,
+      "selfPercent": 2.3920348292701425,
+      "inclusivePercent": 12.314547410958594
+    },
+    {
+      "function": "flushFramePool",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 197,
+      "column": 31,
+      "selfUs": 21165,
+      "inclusiveUs": 172725,
+      "selfPercent": 1.2947195141422032,
+      "inclusivePercent": 10.566049047021595
+    },
+    {
+      "function": "flush",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 139,
+      "column": 8,
+      "selfUs": 46685,
+      "inclusiveUs": 151560,
+      "selfPercent": 2.8558459965853418,
+      "inclusivePercent": 9.271329532879392
+    },
+    {
+      "function": "loadSlot",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/slot-storage.js",
+      "line": 24,
+      "column": 25,
+      "selfUs": 508,
+      "inclusiveUs": 148638,
+      "selfPercent": 0.03107571524612517,
+      "inclusivePercent": 9.092582997546364
+    },
+    {
+      "function": "storage",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 63,
+      "column": 10,
+      "selfUs": 12974,
+      "inclusiveUs": 142578,
+      "selfPercent": 0.7936541921323386,
+      "inclusivePercent": 8.721876630633925
+    },
+    {
+      "function": "enterPreparedCilFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/prepared-cil-frame.js",
+      "line": 26,
+      "column": 38,
+      "selfUs": 32054,
+      "inclusiveUs": 139804,
+      "selfPercent": 1.9608286938962525,
+      "inclusivePercent": 8.552183650136385
+    },
+    {
+      "function": "storeScalarSlot",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/scalar-slot-store.js",
+      "line": 16,
+      "column": 32,
+      "selfUs": 116740,
+      "inclusiveUs": 130486,
+      "selfPercent": 7.141297239828055,
+      "inclusivePercent": 7.982176731507655
+    },
+    {
+      "function": "storageValue",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/storage.js",
+      "line": 35,
+      "column": 29,
+      "selfUs": 17471,
+      "inclusiveUs": 128904,
+      "selfPercent": 1.068747679261915,
+      "inclusivePercent": 7.8854015710364544
+    },
+    {
+      "function": "scrubPreparedFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/prepared-frame-scrub.js",
+      "line": 2,
+      "column": 35,
+      "selfUs": 104875,
+      "inclusiveUs": 104875,
+      "selfPercent": 6.415483536294049,
+      "inclusivePercent": 6.415483536294049
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/arith.js",
+      "line": 11,
+      "column": 21,
+      "selfUs": 18128,
+      "inclusiveUs": 101628,
+      "selfPercent": 1.108938122011333,
+      "inclusivePercent": 6.21685588392364
+    },
+    {
+      "function": "resolveCallType",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/generic-calls.js",
+      "line": 7,
+      "column": 32,
+      "selfUs": 3994,
+      "inclusiveUs": 77206,
+      "selfPercent": 0.24432363522248804,
+      "inclusivePercent": 4.722896990732953
+    },
+    {
+      "function": "substituteCallType",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/generic-signatures.js",
+      "line": 45,
+      "column": 35,
+      "selfUs": 2220,
+      "inclusiveUs": 73378,
+      "selfPercent": 0.13580332253227928,
+      "inclusivePercent": 4.488728018366482
+    },
+    {
+      "function": "beginFrameInstruction",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-stack.js",
+      "line": 37,
+      "column": 38,
+      "selfUs": 58959,
+      "inclusiveUs": 72193,
+      "selfPercent": 3.606679321252547,
+      "inclusivePercent": 4.416238407014792
+    },
+    {
+      "function": "binary",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 88,
+      "column": 9,
+      "selfUs": 1502,
+      "inclusiveUs": 64344,
+      "selfPercent": 0.09188134704661419,
+      "inclusivePercent": 3.9360941373950356
+    },
+    {
+      "function": "observe",
+      "url": "file:///workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/driver.mjs",
+      "line": 19,
+      "column": 23,
+      "selfUs": 0,
+      "inclusiveUs": 62021,
+      "selfPercent": 0.0,
+      "inclusivePercent": 3.7939900300786005
+    },
+    {
+      "function": "",
+      "url": "file:///workspace/scratch/42f7738360b9/a05-virtual-cpu-10d710b34/driver.mjs",
+      "line": 0,
+      "column": 0,
+      "selfUs": 0,
+      "inclusiveUs": 62021,
+      "selfPercent": 0.0,
+      "inclusivePercent": 3.7939900300786005
+    },
+    {
+      "function": "pushStackValue",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-stack.js",
+      "line": 91,
+      "column": 31,
+      "selfUs": 511,
+      "inclusiveUs": 60870,
+      "selfPercent": 0.03125923324954717,
+      "inclusivePercent": 3.723580289432361
+    },
+    {
+      "function": "push",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 72,
+      "column": 7,
+      "selfUs": 0,
+      "inclusiveUs": 60870,
+      "selfPercent": 0.0,
+      "inclusivePercent": 3.723580289432361
+    },
+    {
+      "function": "admitStackPush",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-stack.js",
+      "line": 74,
+      "column": 31,
+      "selfUs": 49739,
+      "inclusiveUs": 60533,
+      "selfPercent": 3.0426673240689364,
+      "inclusivePercent": 3.702965100381289
+    },
+    {
+      "function": "binary",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/numeric-ops.js",
+      "line": 63,
+      "column": 23,
+      "selfUs": 40370,
+      "inclusiveUs": 59404,
+      "selfPercent": 2.469540599382034,
+      "inclusivePercent": 3.63390115842681
+    },
+    {
+      "function": "acquireCil",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 88,
+      "column": 13,
+      "selfUs": 15024,
+      "inclusiveUs": 52065,
+      "selfPercent": 0.9190581611373712,
+      "inclusivePercent": 3.1849549493887936
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/call.js",
+      "line": 15,
+      "column": 20,
+      "selfUs": 21746,
+      "inclusiveUs": 51505,
+      "selfPercent": 1.3302608341382636,
+      "inclusivePercent": 3.1506982554166867
+    },
+    {
+      "function": "executionCodeState",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/code-version.js",
+      "line": 29,
+      "column": 35,
+      "selfUs": 47322,
+      "inclusiveUs": 47322,
+      "selfPercent": 2.894812985978613,
+      "inclusivePercent": 2.894812985978613
+    },
+    {
+      "function": "#acquireBucket",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 105,
+      "column": 17,
+      "selfUs": 36381,
+      "inclusiveUs": 36381,
+      "selfPercent": 2.2255228274985823,
+      "inclusivePercent": 2.2255228274985823
+    },
+    {
+      "function": "normalizeCallType",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/generic-signatures.js",
+      "line": 34,
+      "column": 34,
+      "selfUs": 31187,
+      "inclusiveUs": 36158,
+      "selfPercent": 1.9077919909072947,
+      "inclusivePercent": 2.2118813225775473
+    },
+    {
+      "function": "substituteTypeArguments",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/generic-signatures.js",
+      "line": 20,
+      "column": 40,
+      "selfUs": 35000,
+      "inclusiveUs": 35000,
+      "selfPercent": 2.1410433732566556,
+      "inclusivePercent": 2.1410433732566556
+    },
+    {
+      "function": "table",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/type-system.js",
+      "line": 46,
+      "column": 8,
+      "selfUs": 3968,
+      "inclusiveUs": 31847,
+      "selfPercent": 0.2427331458594974,
+      "inclusivePercent": 1.9481659516601344
+    },
+    {
+      "function": "getDecodePlan",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/decode-plan.js",
+      "line": 87,
+      "column": 30,
+      "selfUs": 4090,
+      "inclusiveUs": 29346,
+      "selfPercent": 0.25019621133199205,
+      "inclusivePercent": 1.7951731094739947
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/load-store.js",
+      "line": 16,
+      "column": 63,
+      "selfUs": 23365,
+      "inclusiveUs": 26984,
+      "selfPercent": 1.4292993833183358,
+      "inclusivePercent": 1.650683268113074
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/branch.js",
+      "line": 21,
+      "column": 52,
+      "selfUs": 6429,
+      "inclusiveUs": 23334,
+      "selfPercent": 0.3932790813333439,
+      "inclusivePercent": 1.4274030306163084
+    },
+    {
+      "function": "admitCallFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/call-frames.js",
+      "line": 16,
+      "column": 31,
+      "selfUs": 6779,
+      "inclusiveUs": 20614,
+      "selfPercent": 0.4146895150659105,
+      "inclusivePercent": 1.2610133741803629
+    },
+    {
+      "function": "uint32Binary",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/bytecode/src/numeric/uint32.js",
+      "line": 5,
+      "column": 29,
+      "selfUs": 19034,
+      "inclusiveUs": 19034,
+      "selfPercent": 1.1643605590447765,
+      "inclusivePercent": 1.1643605590447765
+    },
+    {
+      "function": "popPooledFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-retirement.js",
+      "line": 10,
+      "column": 31,
+      "selfUs": 8634,
+      "inclusiveUs": 17806,
+      "selfPercent": 0.5281648138485132,
+      "inclusivePercent": 1.0892405229773716
+    },
+    {
+      "function": "compare",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 87,
+      "column": 10,
+      "selfUs": 509,
+      "inclusiveUs": 16905,
+      "selfPercent": 0.031136887913932505,
+      "inclusivePercent": 1.0341239492829646
+    },
+    {
+      "function": "reserveStackFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 145,
+      "column": 34,
+      "selfUs": 9211,
+      "inclusiveUs": 16115,
+      "selfPercent": 0.5634614431733443,
+      "inclusivePercent": 0.9857975417151715
+    },
+    {
+      "function": "compare",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/numeric-ops.js",
+      "line": 25,
+      "column": 24,
+      "selfUs": 13990,
+      "inclusiveUs": 13990,
+      "selfPercent": 0.8558056226245888,
+      "inclusivePercent": 0.8558056226245888
+    },
+    {
+      "function": "registerFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 92,
+      "column": 30,
+      "selfUs": 0,
+      "inclusiveUs": 13835,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.8463238591144522
+    },
+    {
+      "function": "prepareCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/calls.js",
+      "line": 32,
+      "column": 28,
+      "selfUs": 10722,
+      "inclusiveUs": 12010,
+      "selfPercent": 0.6558933442302245,
+      "inclusivePercent": 0.7346837403660694
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/handlers/load-store.js",
+      "line": 13,
+      "column": 68,
+      "selfUs": 9671,
+      "inclusiveUs": 11792,
+      "selfPercent": 0.5916008703647175,
+      "inclusivePercent": 0.7213480987840709
+    },
+    {
+      "function": "boundsFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-stack.js",
+      "line": 20,
+      "column": 19,
+      "selfUs": 10966,
+      "inclusiveUs": 10966,
+      "selfPercent": 0.6708194751752138,
+      "inclusivePercent": 0.6708194751752138
+    },
+    {
+      "function": "admitCilStack",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-stack.js",
+      "line": 58,
+      "column": 30,
+      "selfUs": 162,
+      "inclusiveUs": 10954,
+      "selfPercent": 0.009909972184787948,
+      "inclusivePercent": 0.6700854031615258
+    },
+    {
+      "function": "scalarStorageGuard",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/scalar-storage-plan.js",
+      "line": 28,
+      "column": 35,
+      "selfUs": 9152,
+      "inclusiveUs": 9152,
+      "selfPercent": 0.5598522557727117,
+      "inclusivePercent": 0.5598522557727117
+    },
+    {
+      "function": "observeWasmBackedge",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js",
+      "line": 102,
+      "column": 36,
+      "selfUs": 8960,
+      "inclusiveUs": 8960,
+      "selfPercent": 0.5481071035537038,
+      "inclusivePercent": 0.5481071035537038
+    },
+    {
+      "function": "get",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/method-table.js",
+      "line": 122,
+      "column": 6,
+      "selfUs": 8590,
+      "inclusiveUs": 8768,
+      "selfPercent": 0.5254732164649906,
+      "inclusivePercent": 0.5363619513346959
+    },
+    {
+      "function": "add",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 17,
+      "column": 13,
+      "selfUs": 8642,
+      "inclusiveUs": 8642,
+      "selfPercent": 0.5286541951909719,
+      "inclusivePercent": 0.5286541951909719
+    },
+    {
+      "function": "storage",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/numeric-ops.js",
+      "line": 132,
+      "column": 24,
+      "selfUs": 8514,
+      "inclusiveUs": 8514,
+      "selfPercent": 0.5208240937116333,
+      "inclusivePercent": 0.5208240937116333
+    },
+    {
+      "function": "planFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/prepared-virtual-call.js",
+      "line": 24,
+      "column": 17,
+      "selfUs": 7525,
+      "inclusiveUs": 7827,
+      "selfPercent": 0.4603243252501809,
+      "inclusivePercent": 0.47879847092799543
+    },
+    {
+      "function": "cilNumericContext",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-values.js",
+      "line": 21,
+      "column": 34,
+      "selfUs": 6732,
+      "inclusiveUs": 6732,
+      "selfPercent": 0.4118143996789658,
+      "inclusivePercent": 0.4118143996789658
+    },
+    {
+      "function": "enumInfo",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/enums.js",
+      "line": 27,
+      "column": 25,
+      "selfUs": 6500,
+      "inclusiveUs": 6500,
+      "selfPercent": 0.39762234074766456,
+      "inclusivePercent": 0.39762234074766456
+    },
+    {
+      "function": "varargsStorage",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/varargs-storage.js",
+      "line": 16,
+      "column": 31,
+      "selfUs": 6489,
+      "inclusiveUs": 6489,
+      "selfPercent": 0.39694944140178395,
+      "inclusivePercent": 0.39694944140178395
+    },
+    {
+      "function": "methodSize",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 55,
+      "column": 20,
+      "selfUs": 6210,
+      "inclusiveUs": 6210,
+      "selfPercent": 0.379882267083538,
+      "inclusivePercent": 0.379882267083538
+    },
+    {
+      "function": "frameBytes",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 83,
+      "column": 20,
+      "selfUs": 0,
+      "inclusiveUs": 6210,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.379882267083538
+    },
+    {
+      "function": "indexFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 77,
+      "column": 18,
+      "selfUs": 5957,
+      "inclusiveUs": 5957,
+      "selfPercent": 0.3644055821282828,
+      "inclusivePercent": 0.3644055821282828
+    },
+    {
+      "function": "guardFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/slot-storage.js",
+      "line": 7,
+      "column": 18,
+      "selfUs": 5364,
+      "inclusiveUs": 5364,
+      "selfPercent": 0.3281301901185343,
+      "inclusivePercent": 0.3281301901185343
+    },
+    {
+      "function": "ensureInitialized",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 75,
+      "column": 20,
+      "selfUs": 2206,
+      "inclusiveUs": 5181,
+      "selfPercent": 0.1349469051829766,
+      "inclusivePercent": 0.3169355919097923
+    },
+    {
+      "function": "genericTypeParts",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/generic-signatures.js",
+      "line": 2,
+      "column": 33,
+      "selfUs": 4971,
+      "inclusiveUs": 4971,
+      "selfPercent": 0.3040893316702524,
+      "inclusivePercent": 0.3040893316702524
+    },
+    {
+      "function": "resolveEntry",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/inline-cache.js",
+      "line": 52,
+      "column": 22,
+      "selfUs": 4099,
+      "inclusiveUs": 4607,
+      "selfPercent": 0.25074676534225804,
+      "inclusivePercent": 0.28182248058838316
+    },
+    {
+      "function": "resolveVirtualCallEntry",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/inline-cache.js",
+      "line": 47,
+      "column": 40,
+      "selfUs": 686,
+      "inclusiveUs": 4606,
+      "selfPercent": 0.04196445011583045,
+      "inclusivePercent": 0.28176130792057585
+    },
+    {
+      "function": "floatPlanCurrent",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/typed-float-plan.js",
+      "line": 15,
+      "column": 33,
+      "selfUs": 4126,
+      "inclusiveUs": 4126,
+      "selfPercent": 0.252398427373056,
+      "inclusivePercent": 0.252398427373056
+    },
+    {
+      "function": "releaseStackFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 200,
+      "column": 34,
+      "selfUs": 3755,
+      "inclusiveUs": 3755,
+      "selfPercent": 0.22970336761653545,
+      "inclusivePercent": 0.22970336761653545
+    },
+    {
+      "function": "frameById",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 143,
+      "column": 26,
+      "selfUs": 0,
+      "inclusiveUs": 3741,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.22884695026723278
+    },
+    {
+      "function": "ensureTypeInitialized",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/static-init.js",
+      "line": 31,
+      "column": 38,
+      "selfUs": 540,
+      "inclusiveUs": 3699,
+      "selfPercent": 0.03303324061595983,
+      "inclusivePercent": 0.2262776982193248
+    },
+    {
+      "function": "retirePooledFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 192,
+      "column": 34,
+      "selfUs": 1042,
+      "inclusiveUs": 3524,
+      "selfPercent": 0.063741919855241,
+      "inclusivePercent": 0.21557248135304152
+    },
+    {
+      "function": "mustInitialize",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/static-init.js",
+      "line": 7,
+      "column": 24,
+      "selfUs": 3159,
+      "inclusiveUs": 3159,
+      "selfPercent": 0.19324445760336498,
+      "inclusivePercent": 0.19324445760336498
+    },
+    {
+      "function": "containerFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 8,
+      "column": 22,
+      "selfUs": 2977,
+      "inclusiveUs": 2977,
+      "selfPercent": 0.18211103206243037,
+      "inclusivePercent": 0.18211103206243037
+    },
+    {
+      "function": "ensureInitialized",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/calls.js",
+      "line": 28,
+      "column": 34,
+      "selfUs": 0,
+      "inclusiveUs": 2975,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.18198868672681573
+    },
+    {
+      "function": "enterCilMethod",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-method-events.js",
+      "line": 22,
+      "column": 31,
+      "selfUs": 2001,
+      "inclusiveUs": 2923,
+      "selfPercent": 0.12240650828247335,
+      "inclusivePercent": 0.1788077080008344
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/bench/vm/qualification-execution.js",
+      "line": 32,
+      "column": 51,
+      "selfUs": 350,
+      "inclusiveUs": 2865,
+      "selfPercent": 0.021410433732566552,
+      "inclusivePercent": 0.17525969326800908
+    },
+    {
+      "function": "verifiedMethod",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/token-cache.js",
+      "line": 41,
+      "column": 31,
+      "selfUs": 1573,
+      "inclusiveUs": 2619,
+      "selfPercent": 0.09622460646093484,
+      "inclusivePercent": 0.16021121698740515
+    },
+    {
+      "function": "setImmediate",
+      "url": "node:timers",
+      "line": 207,
+      "column": 22,
+      "selfUs": 0,
+      "inclusiveUs": 2515,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.15384925953544254
+    },
+    {
+      "function": "commitStackFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 162,
+      "column": 33,
+      "selfUs": 2498,
+      "inclusiveUs": 2498,
+      "selfPercent": 0.15280932418271786,
+      "inclusivePercent": 0.15280932418271786
+    },
+    {
+      "function": "retire",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 131,
+      "column": 9,
+      "selfUs": 2482,
+      "inclusiveUs": 2482,
+      "selfPercent": 0.15183056149780053,
+      "inclusivePercent": 0.15183056149780053
+    },
+    {
+      "function": "Immediate",
+      "url": "node:internal/timers",
+      "line": 682,
+      "column": 14,
+      "selfUs": 1157,
+      "inclusiveUs": 2166,
+      "selfPercent": 0.0707767766530843,
+      "inclusivePercent": 0.1324999984706833
+    },
+    {
+      "function": "releaseFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-lifetimes.js",
+      "line": 120,
+      "column": 29,
+      "selfUs": 1893,
+      "inclusiveUs": 1893,
+      "selfPercent": 0.11579986015928138,
+      "inclusivePercent": 0.11579986015928138
+    },
+    {
+      "function": "numericPlanCurrent",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/numeric-specialization.js",
+      "line": 61,
+      "column": 35,
+      "selfUs": 1753,
+      "inclusiveUs": 1753,
+      "selfPercent": 0.10723568666625477,
+      "inclusivePercent": 0.10723568666625477
+    },
+    {
+      "function": "",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/calls.js",
+      "line": 62,
+      "column": 26,
+      "selfUs": 691,
+      "inclusiveUs": 1718,
+      "selfPercent": 0.04227031345486711,
+      "inclusivePercent": 0.10509464329299813
+    },
+    {
+      "function": "withRoots",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/heap.js",
+      "line": 16,
+      "column": 12,
+      "selfUs": 0,
+      "inclusiveUs": 1718,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.10509464329299813
+    },
+    {
+      "function": "methodOffsets",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/method-offsets.js",
+      "line": 3,
+      "column": 30,
+      "selfUs": 1700,
+      "inclusiveUs": 1700,
+      "selfPercent": 0.10399353527246612,
+      "inclusivePercent": 0.10399353527246612
+    },
+    {
+      "function": "afterSchedulerInstruction",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/scheduler-boundary.js",
+      "line": 11,
+      "column": 42,
+      "selfUs": 1559,
+      "inclusiveUs": 1559,
+      "selfPercent": 0.09536818911163217,
+      "inclusivePercent": 0.09536818911163217
+    },
+    {
+      "function": "afterInstruction",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/scheduler.js",
+      "line": 109,
+      "column": 19,
+      "selfUs": 0,
+      "inclusiveUs": 1559,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.09536818911163217
+    },
+    {
+      "function": "now",
+      "url": "node:internal/perf/performance",
+      "line": 137,
+      "column": 6,
+      "selfUs": 353,
+      "inclusiveUs": 1542,
+      "selfPercent": 0.021593951735988555,
+      "inclusivePercent": 0.09432825375890751
+    },
+    {
+      "function": "ownerOf",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 8,
+      "column": 17,
+      "selfUs": 0,
+      "inclusiveUs": 1362,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.08331717355358756
+    },
+    {
+      "function": "framePool",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 186,
+      "column": 26,
+      "selfUs": 350,
+      "inclusiveUs": 1052,
+      "selfPercent": 0.021410433732566552,
+      "inclusivePercent": 0.06435364653331434
+    },
+    {
+      "function": "cacheFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/token-cache.js",
+      "line": 3,
+      "column": 18,
+      "selfUs": 0,
+      "inclusiveUs": 1046,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.06398661052647032
+    },
+    {
+      "function": "observeWasmCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/wasm/call-tier-state.js",
+      "line": 64,
+      "column": 32,
+      "selfUs": 922,
+      "inclusiveUs": 922,
+      "selfPercent": 0.05640119971836103,
+      "inclusivePercent": 0.05640119971836103
+    },
+    {
+      "function": "get",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/heap.js",
+      "line": 32,
+      "column": 6,
+      "selfUs": 863,
+      "inclusiveUs": 863,
+      "selfPercent": 0.05279201231772839,
+      "inclusivePercent": 0.05279201231772839
+    },
+    {
+      "function": "wrappedFn",
+      "url": "node:internal/errors",
+      "line": 537,
+      "column": 21,
+      "selfUs": 172,
+      "inclusiveUs": 856,
+      "selfPercent": 0.010521698862861278,
+      "inclusivePercent": 0.052363803643077064
+    },
+    {
+      "function": "ordinaryAdapters",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/scalar-slot-store.js",
+      "line": 9,
+      "column": 26,
+      "selfUs": 853,
+      "inclusiveUs": 853,
+      "selfPercent": 0.05218028563965506,
+      "inclusivePercent": 0.05218028563965506
+    },
+    {
+      "function": "intrinsicDefinition",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/intrinsic-profile.js",
+      "line": 121,
+      "column": 36,
+      "selfUs": 172,
+      "inclusiveUs": 842,
+      "selfPercent": 0.010521698862861278,
+      "inclusivePercent": 0.051507386293774396
+    },
+    {
+      "function": "hasCanonicalCilCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/call-entry-guard.js",
+      "line": 5,
+      "column": 36,
+      "selfUs": 832,
+      "inclusiveUs": 832,
+      "selfPercent": 0.05089565961570107,
+      "inclusivePercent": 0.05089565961570107
+    },
+    {
+      "function": "budgetFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/stack-budget.js",
+      "line": 134,
+      "column": 19,
+      "selfUs": 525,
+      "inclusiveUs": 694,
+      "selfPercent": 0.032115650598849826,
+      "inclusivePercent": 0.04245383145828911
+    },
+    {
+      "function": "initAsyncResource",
+      "url": "node:internal/timers",
+      "line": 164,
+      "column": 27,
+      "selfUs": 511,
+      "inclusiveUs": 689,
+      "selfPercent": 0.03125923324954717,
+      "inclusivePercent": 0.04214796811925245
+    },
+    {
+      "function": "now",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfUs": 682,
+      "inclusiveUs": 682,
+      "selfPercent": 0.041719759444601115,
+      "inclusivePercent": 0.041719759444601115
+    },
+    {
+      "function": "leaveCilMethod",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-method-events.js",
+      "line": 37,
+      "column": 31,
+      "selfUs": 516,
+      "inclusiveUs": 516,
+      "selfPercent": 0.031565096588583835,
+      "inclusivePercent": 0.031565096588583835
+    },
+    {
+      "function": "recordAllocation",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/heap-allocation.js",
+      "line": 18,
+      "column": 33,
+      "selfUs": 167,
+      "inclusiveUs": 514,
+      "selfPercent": 0.010215835523824613,
+      "inclusivePercent": 0.03144275125296917
+    },
+    {
+      "function": "allocateHeapRecord",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/heap-storage.js",
+      "line": 10,
+      "column": 35,
+      "selfUs": 0,
+      "inclusiveUs": 514,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.03144275125296917
+    },
+    {
+      "function": "allocate",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/heap.js",
+      "line": 26,
+      "column": 11,
+      "selfUs": 0,
+      "inclusiveUs": 514,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.03144275125296917
+    },
+    {
+      "function": "object",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/heap.js",
+      "line": 30,
+      "column": 9,
+      "selfUs": 0,
+      "inclusiveUs": 514,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.03144275125296917
+    },
+    {
+      "function": "siteFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/inline-cache.js",
+      "line": 3,
+      "column": 17,
+      "selfUs": 0,
+      "inclusiveUs": 508,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.03107571524612517
+    },
+    {
+      "function": "",
+      "url": "node:internal/validators",
+      "line": 547,
+      "column": 51,
+      "selfUs": 507,
+      "inclusiveUs": 507,
+      "selfPercent": 0.031014542578317837,
+      "inclusivePercent": 0.031014542578317837
+    },
+    {
+      "function": "beforeSlice",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/scheduler.js",
+      "line": 107,
+      "column": 14,
+      "selfUs": 369,
+      "inclusiveUs": 369,
+      "selfPercent": 0.02257271442090588,
+      "inclusivePercent": 0.02257271442090588
+    },
+    {
+      "function": "userValueCallType",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/value-calls.js",
+      "line": 11,
+      "column": 34,
+      "selfUs": 0,
+      "inclusiveUs": 354,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.021655124403795887
+    },
+    {
+      "function": "checkQualificationLimit",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/bench/vm/qualification-execution.js",
+      "line": 22,
+      "column": 40,
+      "selfUs": 0,
+      "inclusiveUs": 353,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.021593951735988555
+    },
+    {
+      "function": "createHeapReference",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/heap-reference.js",
+      "line": 4,
+      "column": 36,
+      "selfUs": 347,
+      "inclusiveUs": 347,
+      "selfPercent": 0.021226915729144556,
+      "inclusivePercent": 0.021226915729144556
+    },
+    {
+      "function": "dereferenceManagedAddress",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/managed-address.js",
+      "line": 107,
+      "column": 42,
+      "selfUs": 172,
+      "inclusiveUs": 347,
+      "selfPercent": 0.010521698862861278,
+      "inclusivePercent": 0.021226915729144556
+    },
+    {
+      "function": "dereference",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 82,
+      "column": 14,
+      "selfUs": 0,
+      "inclusiveUs": 347,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.021226915729144556
+    },
+    {
+      "function": "cilCallFrame",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/call-frames.js",
+      "line": 30,
+      "column": 29,
+      "selfUs": 0,
+      "inclusiveUs": 345,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.02110457039352989
+    },
+    {
+      "function": "enterManagedCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/managed-call-entry.js",
+      "line": 31,
+      "column": 33,
+      "selfUs": 0,
+      "inclusiveUs": 345,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.02110457039352989
+    },
+    {
+      "function": "call",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/cil-vm.js",
+      "line": 74,
+      "column": 7,
+      "selfUs": 0,
+      "inclusiveUs": 345,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.02110457039352989
+    },
+    {
+      "function": "get",
+      "url": "node:internal/util",
+      "line": 638,
+      "column": 17,
+      "selfUs": 338,
+      "inclusiveUs": 338,
+      "selfPercent": 0.020676361718878558,
+      "inclusivePercent": 0.020676361718878558
+    },
+    {
+      "function": "memorySignature",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/memory-signatures.js",
+      "line": 6,
+      "column": 32,
+      "selfUs": 171,
+      "inclusiveUs": 337,
+      "selfPercent": 0.010460526195053945,
+      "inclusivePercent": 0.020615189051071226
+    },
+    {
+      "function": "ref",
+      "url": "node:internal/timers",
+      "line": 698,
+      "column": 6,
+      "selfUs": 147,
+      "inclusiveUs": 320,
+      "selfPercent": 0.008992382167677953,
+      "inclusivePercent": 0.019575253698346562
+    },
+    {
+      "function": "runtimeTypeName",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/method-table.js",
+      "line": 28,
+      "column": 32,
+      "selfUs": 178,
+      "inclusiveUs": 178,
+      "selfPercent": 0.010888734869705275,
+      "inclusivePercent": 0.010888734869705275
+    },
+    {
+      "function": "newAsyncId",
+      "url": "node:internal/async_hooks",
+      "line": 425,
+      "column": 20,
+      "selfUs": 178,
+      "inclusiveUs": 178,
+      "selfPercent": 0.010888734869705275,
+      "inclusivePercent": 0.010888734869705275
+    },
+    {
+      "function": "",
+      "url": "node:internal/validators",
+      "line": 471,
+      "column": 42,
+      "selfUs": 177,
+      "inclusiveUs": 177,
+      "selfPercent": 0.010827562201897943,
+      "inclusivePercent": 0.010827562201897943
+    },
+    {
+      "function": "location",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/managed-address.js",
+      "line": 17,
+      "column": 18,
+      "selfUs": 175,
+      "inclusiveUs": 175,
+      "selfPercent": 0.010705216866283276,
+      "inclusivePercent": 0.010705216866283276
+    },
+    {
+      "function": "#bucketFor",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 37,
+      "column": 13,
+      "selfUs": 174,
+      "inclusiveUs": 174,
+      "selfPercent": 0.010644044198475944,
+      "inclusivePercent": 0.010644044198475944
+    },
+    {
+      "function": "acquire",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/frame-pool.js",
+      "line": 65,
+      "column": 10,
+      "selfUs": 0,
+      "inclusiveUs": 174,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.010644044198475944
+    },
+    {
+      "function": "memoryLocalType",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/memory-values.js",
+      "line": 8,
+      "column": 32,
+      "selfUs": 174,
+      "inclusiveUs": 174,
+      "selfPercent": 0.010644044198475944,
+      "inclusivePercent": 0.010644044198475944
+    },
+    {
+      "function": "toggleImmediateRef",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfUs": 173,
+      "inclusiveUs": 173,
+      "selfPercent": 0.01058287153066861,
+      "inclusivePercent": 0.01058287153066861
+    },
+    {
+      "function": "memoryMethodDefinition",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/memory-profile.js",
+      "line": 67,
+      "column": 39,
+      "selfUs": 0,
+      "inclusiveUs": 171,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.010460526195053945
+    },
+    {
+      "function": "executeCilNumericBlock",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/numeric-blocks.js",
+      "line": 28,
+      "column": 39,
+      "selfUs": 169,
+      "inclusiveUs": 169,
+      "selfPercent": 0.010338180859439279,
+      "inclusivePercent": 0.010338180859439279
+    },
+    {
+      "function": "invokeIntrinsic",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/intrinsics.js",
+      "line": 161,
+      "column": 32,
+      "selfUs": 168,
+      "inclusiveUs": 168,
+      "selfPercent": 0.010277008191631947,
+      "inclusivePercent": 0.010277008191631947
+    },
+    {
+      "function": "pushIntrinsicCallResult",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/intrinsic-call-result.js",
+      "line": 5,
+      "column": 40,
+      "selfUs": 0,
+      "inclusiveUs": 168,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.010277008191631947
+    },
+    {
+      "function": "isValueRecord",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/value-types.js",
+      "line": 16,
+      "column": 30,
+      "selfUs": 168,
+      "inclusiveUs": 168,
+      "selfPercent": 0.010277008191631947,
+      "inclusivePercent": 0.010277008191631947
+    },
+    {
+      "function": "isSynchronizationIntrinsic",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/bytecode/src/sync-intrinsic-profile.js",
+      "line": 81,
+      "column": 43,
+      "selfUs": 168,
+      "inclusiveUs": 168,
+      "selfPercent": 0.010277008191631947,
+      "inclusivePercent": 0.010277008191631947
+    },
+    {
+      "function": "canonical",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/memory-signatures.js",
+      "line": 20,
+      "column": 21,
+      "selfUs": 0,
+      "inclusiveUs": 166,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.01015466285601728
+    },
+    {
+      "function": "arrayRuntimeDefinition",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/array-runtime-profile.js",
+      "line": 32,
+      "column": 39,
+      "selfUs": 0,
+      "inclusiveUs": 166,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.01015466285601728
+    },
+    {
+      "function": "arrayMethodDefinition",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/array-profile.js",
+      "line": 48,
+      "column": 38,
+      "selfUs": 0,
+      "inclusiveUs": 166,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.01015466285601728
+    },
+    {
+      "function": "nullableMethodDefinition",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/nullable-profile.js",
+      "line": 6,
+      "column": 41,
+      "selfUs": 165,
+      "inclusiveUs": 165,
+      "selfPercent": 0.010093490188209948,
+      "inclusivePercent": 0.010093490188209948
+    },
+    {
+      "function": "flushCilMethodEvents",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/runtime/src/execution/cil-method-events.js",
+      "line": 57,
+      "column": 37,
+      "selfUs": 165,
+      "inclusiveUs": 165,
+      "selfPercent": 0.010093490188209948,
+      "inclusivePercent": 0.010093490188209948
+    },
+    {
+      "function": "decodeCoded",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/metadata/indices.js",
+      "line": 36,
+      "column": 28,
+      "selfUs": 112,
+      "inclusiveUs": 112,
+      "selfPercent": 0.006851338794421296,
+      "inclusivePercent": 0.006851338794421296
+    },
+    {
+      "function": "read",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/metadata/type-names.js",
+      "line": 29,
+      "column": 7,
+      "selfUs": 0,
+      "inclusiveUs": 112,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.006851338794421296
+    },
+    {
+      "function": "typeName",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/metadata/reader.js",
+      "line": 89,
+      "column": 13,
+      "selfUs": 0,
+      "inclusiveUs": 112,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.006851338794421296
+    },
+    {
+      "function": "managedDelegateSignature",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/delegate-profile.js",
+      "line": 9,
+      "column": 41,
+      "selfUs": 0,
+      "inclusiveUs": 112,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.006851338794421296
+    },
+    {
+      "function": "supportedDelegateCall",
+      "url": "file:///tmp/a05-virtual-witness-42f7738360b9/packages/cil/src/delegate-profile.js",
+      "line": 34,
+      "column": 38,
+      "selfUs": 0,
+      "inclusiveUs": 112,
+      "selfPercent": 0.0,
+      "inclusivePercent": 0.006851338794421296
+    }
+  ]
+}

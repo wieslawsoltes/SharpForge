@@ -4,6 +4,7 @@ import { VirtualMachine, isReference } from '@sharpforge/runtime';
 import { SourceBreakpointIndex } from './source-locations.js';
 import { sameBreakpointRule,validateBreakpointRule,hitMatches,evaluateBreakpointRule,formatLogpoint,ruleState,restoreRuleState,publicBreakpoint } from './breakpoint-rules.js';
 import { parseExpression } from '@sharpforge/syntax';
+import {sourceObjectChildren} from './object-children.js';
 /** Side-effect-free watch evaluator. It never executes methods, accessors, assignments or host JavaScript. */
 export class ExpressionEvaluator {
   constructor(vm){this.vm=vm;this.cache=new Map();}
@@ -382,12 +383,7 @@ export class DebugSession {
   statics(){return this.vm.image.statics.map((s,index)=>({name:s.name,type:s.type,value:this.vm.display(this.vm.statics[index]),
     raw:this.vm.statics[index],reference:isReference(this.vm.statics[index])?this.vm.statics[index]:null,index}));}
   children(reference,start=0,count=100) {
-    if(!Number.isSafeInteger(start)||start<0||!Number.isSafeInteger(count)||count<0||count>10000)throw new RangeError('Invalid variable page');
-    const record=this.vm.heap.get(reference);
-    if(record.kind==='string')return [{name:'Length',type:'int',value:String(record.data.length),raw:record.data.length}];
-    const fields=this.vm.image.types.find(t=>t.name===record.type)?.fields;
-    return record.data.slice(start,start+count).map((value,i)=>({name:record.kind==='array'?`[${start+i}]`:fields?.[start+i]?.name??(record.kind==='exception'?'Message':String(start+i)),
-      type:fields?.[start+i]?.type??(record.kind==='array'?record.type.slice(0,-2):'string'),value:this.vm.display(value),raw:value,reference:isReference(value)?value:null}));
+    return sourceObjectChildren(this,reference,start,count);
   }
   state() {this.syncHostHistory();
     const frames=this.stackTrace(),point=this.vm.top?.point?this.sourceIndex.byId.get(this.vm.top.point.id):null;

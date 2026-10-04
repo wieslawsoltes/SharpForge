@@ -1,0 +1,110 @@
+{
+  "format": "SharpForge.A05ValidationCheckpoint/1",
+  "scope": "Local focused hosted-orchestration and existing measurement-driver contract tests; not execution of the full hosted measurement queue",
+  "revision": "062b3b899d8dd36a696ee0e028e5951d86e98139",
+  "tree": "a48712f9873d7c4948619ed6e3654d7e53e81d63",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a05-hosted-qualification.test.js",
+    "tests/a05-wasm-latency.test.js",
+    "tests/a05-array-latency.test.js",
+    "tests/a05-byref-latency.test.js",
+    "tests/a05-qualification-options.test.js",
+    "tests/a05-float-iteration-criterion.test.js",
+    "tests/a05-snapshot-retention-protocol.test.js",
+    "tests/a05-profiler-reference-integration.test.js"
+  ],
+  "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+  "nodeVersion": "v24.19.0",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "startedUTC": "2026-10-04T20:42:06.280267+00:00",
+  "completedUTC": "2026-10-04T20:42:23.651465+00:00",
+  "elapsedSeconds": 17.37091186700127,
+  "exitCode": 0,
+  "unchangedCleanStartAndEnd": true,
+  "files": [
+    {
+      "file": "focused-execution.json",
+      "bytes": 1569,
+      "sha256": "bb4a5ca07ad131e9ba25924b87ed5e5fe491b2bc7cf283b001f0f4c03d188b21",
+      "source": "/workspace/scratch/42f7738360b9/a05-hosted-workflow-validation-20261004/focused-execution.json",
+      "retention": "byte-for-byte completed original"
+    },
+    {
+      "file": "focused.tap",
+      "bytes": 12836,
+      "sha256": "3e678029d9eb6e19be97e7df3c3a07ef3d8b896087c6e439ebc0c51f1be1a699",
+      "source": "/workspace/scratch/42f7738360b9/a05-hosted-workflow-validation-20261004/focused.tap",
+      "retention": "byte-for-byte completed original"
+    }
+  ],
+  "result": {
+    "tests": 48,
+    "passed": 48,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "tapDurationMs": 17153.145717
+  },
+  "staticReview": {
+    "files": [
+      {
+        "path": "scripts/a05/hosted-memory-results.js",
+        "gitBlob": "3799d27b4e416e97d5df69be16fd1107c403b143",
+        "sha256": "4972463b3eebf8a264ac375e5ab999f7ca2c5d8920737735fb85f6b75574ba35",
+        "reviewedWorkingCopyMatchesTestedCommit": true
+      },
+      {
+        "path": "scripts/a05/hosted-plan.js",
+        "gitBlob": "f73d631116daf4e1deb6ac637a9c12542b7e402c",
+        "sha256": "af92e04012aed987122351474c12c0898ff88f02f13f9237b0eeac133f828a86",
+        "reviewedWorkingCopyMatchesTestedCommit": true
+      },
+      {
+        "path": "scripts/a05/hosted-results.js",
+        "gitBlob": "e67797938f44619fb5aefc90efb63aadb7dd6294",
+        "sha256": "37223b53d36cc662e3afb1583d476972ea8dd409afc4eb34d63d28f9295c2b26",
+        "reviewedWorkingCopyMatchesTestedCommit": true
+      },
+      {
+        "path": "scripts/a05/hosted-provenance.js",
+        "gitBlob": "186b9b42a94d7b98dee45f82dfbf7e9e3b1a87b3",
+        "sha256": "3e162f8e693ec305eeeee6902fea32543f4f269907445c767826393afe9930d9",
+        "reviewedWorkingCopyMatchesTestedCommit": true
+      },
+      {
+        "path": "tests/a05-hosted-qualification.test.js",
+        "gitBlob": "fdf0c6290360ab3132115962de044dd5db7ba6ef",
+        "sha256": "b682fba33255163a8cc0d99ba51d7adfa0dded176e2ee1981e455b0ec9e645dc",
+        "reviewedWorkingCopyMatchesTestedCommit": true
+      }
+    ],
+    "findings": [
+      "Float queue uses seven existing isolated children and exact warmup/sample counts; snapshot queue preserves expose-gc and original-records 128/cap256 protocol.",
+      "Memory guards require expected formats/protocols and recompute existing pure criteria, so copied met labels do not suffice.",
+      "Snapshot guard requires 128 captures and 128 equal full-copy restores with expected record mutation unit and host cap.",
+      "Both drivers write flat sibling report/trace files, including failed logs; artifact inventory supports these output forms."
+    ],
+    "reviewOnly": true
+  },
+  "limitations": [
+    "No full hosted 25-command queue was executed by this focused selection.",
+    "No new numerical timing/retention/float allocation acceptance claim is derived from historical reports used as contract-test inputs.",
+    "No fresh native CLR or browser qualification is claimed.",
+    "Static/license/build checks were pending separately and their active files are not copied here.",
+    "Counts overlap prior focused selections and must not be added.",
+    "No new tests, benchmarks or builds were run during archival."
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "kind": "direct CIL Task ABI qualification",
+  "identity": {
+    "head": "974a5621bc59088b20b63034306e35b3af2a2122",
+    "tree": "9730db52f98b428b223d01c0294a41c8352cf98a",
+    "kind": "static ESM with literal dynamic-import inventory",
+    "modules": 1378,
+    "untrackedModules": [],
+    "changedModules": [],
+    "resolutionErrors": [],
+    "fullInventorySha256": "292ba07d661bdd8f888129863952cb9405af7d595960ded129a5b678d21fd1e5",
+    "preservedUntrackedCount": 41,
+    "note": "Preserved unrelated untracked prior-batch files existed. None were in the tested static ESM/literal-dynamic import graph. No whole-worktree cleanliness claim."
+  },
+  "tools": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "node": "v24.19.0"
+  },
+  "engine": "JavaScript direct CIL interpreter; source VM exercised by selected adjacent tests; genuine Roslyn/CoreCLR comparisons",
+  "runs": [
+    {
+      "head": "b53595d866aa79aae0c66a488738e2514a188596",
+      "command": "env DOTNET_ROOT=/workspace/scratch/1692a10afba9/toolchain/dotnet DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet SHARPFORGE_ORACLE_DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet node scripts/limited.js node --test tests/a05-cil-async-profile.test.js tests/a05-cil-async-native.test.js",
+      "passed": 4,
+      "failed": 9,
+      "skipped": 0,
+      "durationMs": 14022.574938,
+      "log": "tests/fixtures/cil-async/qualification/logs/cil-async-post-fix-b53595d86.txt",
+      "finding": "Projected Exception signature was not matched; native malformed-body control used absent described-method offsets."
+    },
+    {
+      "head": "4e43afaa1fd4af14b8e6f97fecf0cb5917e509ac",
+      "command": "env DOTNET_ROOT=/workspace/scratch/1692a10afba9/toolchain/dotnet DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet SHARPFORGE_ORACLE_DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet node scripts/limited.js node --test tests/a05-cil-async-profile.test.js tests/a05-cil-async-native.test.js",
+      "passed": 5,
+      "failed": 8,
+      "skipped": 0,
+      "durationMs": 12825.194281,
+      "log": "tests/fixtures/cil-async/qualification/logs/cil-async-post-fix-repeat1.txt",
+      "finding": "Runtime dispatch rejected proved external IAsyncStateMachine MethodImpl declarations."
+    },
+    {
+      "runtimeHead": "4e43afaa1fd4af14b8e6f97fecf0cb5917e509ac",
+      "probeCommit": "df110679f",
+      "command": "node scripts/limited.js node --test tests/a05-cil-async-continuation-roots.test.js",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "durationMs": 792.103001,
+      "log": "tests/fixtures/cil-async/qualification/logs/cil-async-continuation-roots-pre-fix.txt",
+      "note": "New probe executed before its source commit; unrelated unconnected proof/helper edits existed."
+    },
+    {
+      "runtimeHead": "df110679f",
+      "probeCommit": "dff6d49f7",
+      "command": "node scripts/limited.js node --test tests/a05-cil-async-continuation-roots.test.js",
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0,
+      "durationMs": 735.890969,
+      "log": "tests/fixtures/cil-async/qualification/logs/cil-async-continuation-roots-managed-pre-fix.txt",
+      "note": "Probe edits executed before their commit, then frozen; no completion production fix was connected."
+    },
+    {
+      "head": "974a5621bc59088b20b63034306e35b3af2a2122",
+      "command": "env DOTNET_ROOT=/workspace/scratch/1692a10afba9/toolchain/dotnet DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet SHARPFORGE_ORACLE_DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet node scripts/limited.js node --test tests/a05-cil-async-profile.test.js tests/a05-cil-async-native.test.js tests/a05-cil-async-continuation-roots.test.js",
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 21732.304142,
+      "log": "tests/fixtures/cil-async/qualification/logs/cil-async-post-fix-repeat2.txt"
+    },
+    {
+      "head": "974a5621bc59088b20b63034306e35b3af2a2122",
+      "command": "env DOTNET_ROOT=/workspace/scratch/1692a10afba9/toolchain/dotnet DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet SHARPFORGE_ORACLE_DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet node scripts/limited.js node --test tests/compiler-lowering-async.test.js tests/compiler-lowering-async-streams.test.js tests/a05-seams-cil-intrinsics.test.js tests/a05-managed-address.test.js tests/a05-value-storage.test.js tests/a05-delegate-targets.test.js",
+      "passed": 67,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 4596.842402,
+      "log": "tests/fixtures/cil-async/qualification/logs/cil-async-adjacent.txt"
+    },
+    {
+      "head": "974a5621bc59088b20b63034306e35b3af2a2122",
+      "command": "node scripts/limited.js node --test tests/a05-02-interface-dispatch.test.js tests/a05-02-virtual-slots.test.js tests/a05-02-generic-dispatch.test.js",
+      "passed": 33,
+      "failed": 1,
+      "skipped": 0,
+      "durationMs": 1987.356699,
+      "log": "tests/fixtures/cil-async/qualification/logs/cil-async-dispatch-adjacent.txt"
+    }
+  ],
+  "rawLogs": [
+    {
+      "file": "tests/fixtures/cil-async/qualification/logs/cil-async-post-fix-b53595d86.txt",
+      "sha256": "155e0e619ee0b0b95a90132546aeb96381c0240c5f69141a0038b974efe0b433"
+    },
+    {
+      "file": "tests/fixtures/cil-async/qualification/logs/cil-async-post-fix-repeat1.txt",
+      "sha256": "04ca0e27910c15f7981ac9e779e5379b6549feb0e96255305521b959ce32d63d"
+    },
+    {
+      "file": "tests/fixtures/cil-async/qualification/logs/cil-async-continuation-roots-pre-fix.txt",
+      "sha256": "01b03086b1267e4e7dfdbdf0fb3d0d9139c60f72ebec56682051bb800ad9699b"
+    },
+    {
+      "file": "tests/fixtures/cil-async/qualification/logs/cil-async-continuation-roots-managed-pre-fix.txt",
+      "sha256": "29e1e42e6109bd39667c3691aaa0dda165a270ea3590dedbec8dd8389dca64d5"
+    },
+    {
+      "file": "tests/fixtures/cil-async/qualification/logs/cil-async-post-fix-repeat2.txt",
+      "sha256": "4b07e984e81eb19b260bda0108225989704935176fd6c9fc715c14cf6dda26ac"
+    },
+    {
+      "file": "tests/fixtures/cil-async/qualification/logs/cil-async-adjacent.txt",
+      "sha256": "f5457db17d14bedbe233dfada256338b1ae5d2342aeba4fc80be19e843f89cf7"
+    },
+    {
+      "file": "tests/fixtures/cil-async/qualification/logs/cil-async-dispatch-adjacent.txt",
+      "sha256": "2b57373de6e13be61998ffb5619124289562c63a7d2c57452389f6f7bf14487b"
+    }
+  ],
+  "nativeCoverage": {
+    "originalFixtures": [
+      "Completed",
+      "Suspended",
+      "Exceptions",
+      "Retention"
+    ],
+    "additionalFixtures": [
+      "WaitAndDelay",
+      "Mutation"
+    ],
+    "modes": [
+      "Roslyn optimize-",
+      "Roslyn optimize+"
+    ],
+    "independentSharpForgeExecutions": 6,
+    "snapshotRestoreAndAllocationObserver": [
+      "Retention in both modes",
+      "Mutation in both modes"
+    ],
+    "baselineNativeCapture": "pre-fix.json",
+    "note": "Native results were compared directly at execution, without authored output pins. Failed early runs did not reach every requested mode."
+  },
+  "unresolved": [
+    {
+      "test": "tests/a05-02-generic-dispatch.test.js:108",
+      "expected": "T03 value storage",
+      "currentSourceRejection": "Struct generic arguments require a static Apply<T>(ref T, ...) constrained interface forwarder",
+      "baseline": "eadd85149b0740f337f7b8f3e92d259353892fdb",
+      "evidence": "Both the assertion and rejection text occur unchanged in baseline Git source. No baseline-only execution was performed. Treat as an unresolved existing wording expectation, not a candidate pass."
+    }
+  ],
+  "pending": [
+    "Paired ordinary-control and async performance measurements",
+    "Rust/Wasm and browser runtime qualification",
+    "Separate ValueTask/custom-awaiter/async-void/async-iterator direct-CIL extensions",
+    "Additional generic state-machine boundary qualification"
+  ],
+  "processStatus": "All validation processes completed and serial slot released before documentation/evidence commit.",
+  "baselineControlErratum": "The original native invalid-body test at d6051bff used absent described-method fileOffset/headerSize fields and did not mutate the PE. Its recorded failure does not independently establish callback-body reachability. The corrected PE mutation at4e43afaa1 is genuinely exercised and passes; original raw results/capture remain unchanged."
+}

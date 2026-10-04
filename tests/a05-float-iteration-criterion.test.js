@@ -82,7 +82,7 @@ test('allocation trace includes all in-loop bytes and closing pre-collection all
 });
 
 test('retained reports keep their historical labels while fixed-loop interpretation distinguishes real allocation growth', () => {
-  const directory = '../docs/a05-evidence/float-allocation-2026-10-04/';
+  const directory = '../planning/qualification/a05-evidence/float-allocation-2026-10-04/';
   for (const [name, expected] of [
     ['a05-float-allocation-single-boundary-warm-slices.json', 'met'],
     ['a05-float-allocation-warm-slices.json', 'inconclusive'],

@@ -1,0 +1,55 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "debugger-delegate-repair-3505",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--expose-gc",
+    "--test-reporter=tap",
+    "tests/a05-evaluation-call-membership.test.js",
+    "tests/a05-prepared-runtime-delegate.test.js",
+    "tests/a05-debugger-evaluation-transactions.test.js",
+    "tests/a05-local-constructor-identity.test.js",
+    "tests/a05-prepared-virtual-calls.test.js",
+    "tests/a05-token-cache.test.js",
+    "tests/debugger-advanced.test.js",
+    "tests/debugger.test.js"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": null,
+    "DOTNET_ROOT": null,
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": null,
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "3505b8a50d0f6e860c5a8b8eeebb239830eca6b0",
+    "tree": "290d3cb62d20dbba7347d23550e6b0acb4d6f4ae",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T22:40:06.410911+00:00",
+  "completedUTC": "2026-10-04T22:40:15.310882+00:00",
+  "elapsedSeconds": 8.899706256001082,
+  "exitCode": 0,
+  "endIdentity": {
+    "commit": "3505b8a50d0f6e860c5a8b8eeebb239830eca6b0",
+    "tree": "290d3cb62d20dbba7347d23550e6b0acb4d6f4ae",
+    "status": ""
+  },
+  "artifact": {
+    "path": "debugger-delegate-repair-3505.log",
+    "bytes": 19434,
+    "sha256": "9e3bd94fc768b2a7d27c0d4bb4ad60552977a7233704fbfc64e590dd516e7938"
+  }
+}

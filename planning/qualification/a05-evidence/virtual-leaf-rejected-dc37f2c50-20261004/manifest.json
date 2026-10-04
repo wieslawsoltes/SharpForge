@@ -1,0 +1,151 @@
+{
+  "schema": "SharpForge.RejectedLeafDiagnosticArchive/1",
+  "disposition": "Rejected guarded prototype; do not integrate runtime or treat as target qualification",
+  "runtimeCommit": "dc37f2c50420d136a076e8bee046c999fa573303",
+  "runtimeTree": "39ee39ebbf2966a37183a2f7b1dfb269fedfd2d5",
+  "implementationCommits": [
+    "e8bb53306aedd02a6d67d47db83f0af8e2d1f12f",
+    "d3a7a3e71ca0f31f2f0e495ddadd28dfc95d3eb4",
+    "dc37f2c50420d136a076e8bee046c999fa573303"
+  ],
+  "reference": "Same runtime and original virtual20k fixture/qualification runner; both inlineCaches:true, only preparedLeafCalls:false versus true",
+  "protocol": {
+    "firstPairs": 1,
+    "warmupPairs": 3,
+    "measuredPairs": 8,
+    "order": "alternating",
+    "nativeIntBits": 64,
+    "instructionBudget": 10000,
+    "timeBudgetMs": 8,
+    "timeoutSeconds": 120
+  },
+  "qualification": {
+    "status": "not-run",
+    "original100PairTargetUnchanged": true,
+    "speedupAcceptanceClaim": false
+  },
+  "validation": [
+    {
+      "capture": "focused-execution.json",
+      "passed": 115,
+      "failed": 1,
+      "skipped": 0,
+      "reason": "New restore test wrongly expected logical frame ID rewind"
+    },
+    {
+      "capture": "focused-after-fixture-execution.json",
+      "passed": 116,
+      "failed": 0,
+      "skipped": 0,
+      "change": "Only test assertion corrected to exact new-call delta and preserved frame ID high-water mark"
+    }
+  ],
+  "artifactPathPolicy": "Original bytes retained; executable diagnostic/capture sources archived as .txt with original absolute argv unchanged in capture journals",
+  "files": [
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/checkout-before.json",
+      "archivePath": "checkout-before.json",
+      "bytes": 9090,
+      "sha256": "d189ab2ea3cfd1ce4fd2a8ef00092144b239587c0a731af87a3879e114313489"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/checkout-probe-after.json",
+      "archivePath": "checkout-probe-after.json",
+      "bytes": 9090,
+      "sha256": "3e5fad575d408a4977b365d1f387b96a368b81224885713778a80620b46a2e4e"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/checkout-probe-before.json",
+      "archivePath": "checkout-probe-before.json",
+      "bytes": 9090,
+      "sha256": "e5cbda9743346d42ff60703146b2c052240b618dbe93083d18c64c220be941ac"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/focused-after-fixture-execution.json",
+      "archivePath": "focused-after-fixture-execution.json",
+      "bytes": 1555,
+      "sha256": "771a98617ca6c7dd79846e6f14b0c828c286fa1309b9e02e0fc2cc5f04a53d21"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/focused-after-fixture.log",
+      "archivePath": "focused-after-fixture.log",
+      "bytes": 11222,
+      "sha256": "ddd20a9e9a7eee67489fe2c43b4c64abf33be9f6b54f8f09ac37f0559bf1b728"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/focused-execution.json",
+      "archivePath": "focused-execution.json",
+      "bytes": 1526,
+      "sha256": "6e6e597151f77205ecea270b2afc5336c93bf9b5746d41af4b1bc7b6865f1ff0"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/focused.log",
+      "archivePath": "focused.log",
+      "bytes": 12520,
+      "sha256": "0876439475fbe434d68a5f9eca242413a62033da25a6f76832fadbed38c5a5d5"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/probe-driver-identity.json",
+      "archivePath": "probe-driver-identity.json",
+      "bytes": 389,
+      "sha256": "2c0798540a96ac072fe8df12b00dfe1421124252968bec5eda471fe2641c424d"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/probe-execution.json",
+      "archivePath": "probe-execution.json",
+      "bytes": 1282,
+      "sha256": "f9a601f1e273d210c1fb1591bc0c1c41c50d7c82d5e53039ff63abe54c9d6aad"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/probe-results.json",
+      "archivePath": "probe-results.json",
+      "bytes": 24699,
+      "sha256": "e9adeefb34bb2175fd8dd6c18b6f87eebd19c335cd577834ff4b6ff15db602aa"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/probe.log",
+      "archivePath": "probe.log",
+      "bytes": 1625,
+      "sha256": "159b335c83bd6f24890da7399d6e4ea1745501843203a65f3893d6f82846fa73"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/probe.mjs",
+      "archivePath": "probe.mjs.txt",
+      "bytes": 5646,
+      "sha256": "1db797a16ce8950f2f431561b9dc7fe151862698bb4f782727c35a7712aa90fe"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-run-captured.py",
+      "archivePath": "a05-run-captured.py.txt",
+      "bytes": 3415,
+      "sha256": "e1242603c9c52ad956a0b856a0582352b7be5930beb4732c70d4ce243c901948"
+    },
+    {
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-verify-qualification-checkout.py",
+      "archivePath": "a05-verify-qualification-checkout.py.txt",
+      "bytes": 6177,
+      "sha256": "93e9ea98c3c57ae7fc728728e8fe3c0d0d6722e0183671895ce6f43270c0f6d9"
+    }
+  ],
+  "reconstruction": {
+    "patch": "rejected-runtime-10d710b34-to-dc37f2c50.patch.txt",
+    "format": "git diff --binary --full-index",
+    "baseCommit": "10d710b349d581b88c0013ce8571bd963bfdb839",
+    "baseTree": "45d4897ecdffb72b3ea738e87b935f25218850af",
+    "finalCommit": "dc37f2c50420d136a076e8bee046c999fa573303",
+    "finalTree": "39ee39ebbf2966a37183a2f7b1dfb269fedfd2d5",
+    "bytes": 83218,
+    "sha256": "8e479d075e050e9717137f80a67c2a9209eafd98accb99fbed8916010da4dd6a",
+    "command": [
+      "git",
+      "diff",
+      "--binary",
+      "--full-index",
+      "10d710b349d581b88c0013ce8571bd963bfdb839",
+      "dc37f2c50420d136a076e8bee046c999fa573303",
+      "--"
+    ],
+    "apply": "Starting from the exact base tree, git apply --index this patch; git write-tree must equal finalTree.",
+    "scope": "Only the three rejected implementation/test commits; no observation archive or subsequent batch work."
+  }
+}

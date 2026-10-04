@@ -19,7 +19,7 @@ const entries = [
   {id: 'standalone', path: 'artifacts/SharpForge-standalone.html'},
 ];
 for (const worker of (await loadBuildContributions(root)).workers) {
-  entries.push({id: 'worker:' + worker.entry, path: 'dist/' + worker.entry.split('/').at(-1)});
+  entries.push({id: 'worker:' + worker.entry, path: 'dist/' + worker.entry});
 }
 for (const pkg of await discoverPackages(root)) {
   const manifest = JSON.parse(await readFile(join(root, pkg.directory, 'package.json'), 'utf8'));

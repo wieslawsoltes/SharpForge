@@ -3,6 +3,7 @@ import {invokeControl} from './execution/control-contracts.js';
 import {initializeBclHost,invokeBclPlatform} from './bcl-adapter.js';
 import {constructBoundDelegate} from './execution/delegate-targets.js';
 import {HostOperations} from './host-operations.js';
+import {beginPlatformTransaction,commitPlatformTransaction,rollbackPlatformTransaction} from './execution/platform-transactions.js';
 import {invokeAnimation,createManagedAnimationClock,advanceManagedAnimations} from './animation.js';
 import {refreshStyle,refreshStyles,applyTemplate,updateBindings,invokeStyling} from './styling.js';
 import {canonicalType,frameworkType,propertiesFor,eventsFor,frameworkAssignable,colorValues,XAML,CONTROLS,MEDIA,TASK,THREAD,taskResult} from '@sharpforge/framework';
@@ -23,8 +24,7 @@ export class ManagedPlatform {
   set(ref,key,value){
     if(!this.animations.applying&&this.animations.bases.size&&this.animations.bases.has(this.animations.key(ref,key))){this.animations.setBase(ref,key,this.native(value));return value;}
     const r=this.record(ref),at=this.propertyIndex(r).get(key),index=at===undefined?r.data.length:at,old=at===undefined?null:r.data[index+1];
-    // Existing slots have fixed size; mutate once, retaining GC/write-barrier bookkeeping.
-    // Snapshots own copies, and restore replaces records, invalidating the WeakMap naturally.
+    // Fixed-size writes retain GC bookkeeping; restored records invalidate the property cache.
     if(at===undefined)this.heap.replaceData(ref,[...r.data,key,value]);else{r.data[index+1]=value;this.heap.mutationRevision++;}
     this.vm.notifyWrite?.({kind:'field',handle:ref.h,generation:ref.g,index:index+1,value,oldValue:old,property:key});return value;
   }
@@ -32,9 +32,9 @@ export class ManagedPlatform {
   managed(v,type){if(v===null||v===undefined)return null;if(type==='string')return this.heap.string(String(v));if(this.vm.inspector){if(type==='double')return {float:'r8',value:Number(v)};if(type==='bool')return v?1:0;}return v;}
   make(type,values={},kind='host'){const data=[];return this.heap.withRoots(Object.values(values),()=>{for(const [k,v]of Object.entries(values)){data.push(k,v);if(isReference(v))this.heap.pins.push(v);}return this.heap.allocate(kind,type,data);});}
   command(command){if(command.op==='set'&&this.animations){const [h,g]=String(command.id).split(':').map(Number),ref={h,g},prop=['Left','Top'].includes(command.property)?'$'+command.property:command.property;if(this.animations.bases.has(this.animations.key(ref,prop)))command={...command,value:this.exportValue(this.get(ref,prop))};}const value={...command,sequence:++this.sequence};if(this.transaction){if(this.transaction.length>=this.maxCommands)throw new ManagedFault('ExecutionLimitException','UI transaction command limit exceeded');this.transaction.push(value);}else this.options.onUICommand?.(value);}
-  beginTransaction(){if(this.transaction)throw new ManagedFault('InvalidOperationException','Nested platform transaction');const t=[];this.transaction=t;return t;}
-  commitTransaction(t){if(!t)return;if(this.transaction!==t)throw new ManagedFault('InvalidOperationException','Invalid UI transaction');this.transaction=null;for(const c of t)this.options.onUICommand?.(c);}
-  rollbackTransaction(t){if(t&&this.transaction===t)this.transaction=null;}
+  beginTransaction(){return beginPlatformTransaction(this);}
+  commitTransaction(t,prepare){return commitPlatformTransaction(this,t,prepare);}
+  rollbackTransaction(t){rollbackPlatformTransaction(this,t);}
   runtimeInfo(){return {externalRevision:this.hostOperations.revision,pendingExternal:this.hostOperations.active.size,reverseBarrier:this.hostOperations.active.size?'External operation pending':this.hostOperations.revision?'History cannot cross earlier external operations':null,simd:this.numeric?{...this.numeric.metrics}:{backend:'not initialized'},compute:this.computePool?{...this.computePool.stats,workers:this.computePool.size,slots:this.computePool.slots.map(s=>s?.info??null)}:null,network:this.httpTransport?{policy:this.httpTransport.policy.describe(),...this.httpTransport.stats,active:this.httpTransport.active.size,queued:this.httpTransport.queue.length}:{enabled:false,requests:0}};}
   snapshot(){return {animations:this.animations.snapshot(),singletons:[...this.singletons],windows:[...this.windows],application:this.application,sequence:this.sequence};}
   restore(s){if(!s)return;this.animations.restore(s.animations);this.windows=new Map(s.windows);this.singletons=new Map(s.singletons??[]);this.application=s.application;this.sequence=Math.max(this.sequence,s.sequence);if(!this.transaction&&this.options.onUICommand)this.command({op:'reset',snapshot:this.scene()});}

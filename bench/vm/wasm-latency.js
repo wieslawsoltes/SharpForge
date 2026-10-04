@@ -1,3 +1,4 @@
+import {existsSync} from 'node:fs';
 import {parseQualificationOptions} from './qualification-options.js';
 import {wasmLatencyFixtures} from './wasm-latency-fixtures.js';
 import {measureWasmLatency} from './wasm-latency-measure.js';
@@ -85,4 +86,3 @@ if (isMain(import.meta.url)) {
   } catch (error) { process.stderr.write(error.stack + '\n'); process.exitCode = 1; }
   finally { process.removeListener('SIGINT', cancel); process.removeListener('SIGTERM', cancel); }
 }
-import {existsSync} from 'node:fs';

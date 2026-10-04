@@ -1,0 +1,78 @@
+{
+  "format": "SharpForge.A05ValidationArchive/1",
+  "scope": "One bounded debugger-root diagnostic, not a test-suite or native qualification result.",
+  "measuredRevision": "867fc2493620de9c375f6f01bc6b3506f70f6168",
+  "measuredTree": "2b7535d9daf5bd7653372bf633cfd50821929868",
+  "trackedCleanBeforeAfter": true,
+  "headAndTreeUnchanged": true,
+  "exitCode": 0,
+  "durationMs": 2065.491629000462,
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "/workspace/scratch/42f7738360b9/a05-debugger-root-diagnosis-20261004/driver.mjs"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": "--max-old-space-size=512"
+  },
+  "files": [
+    {
+      "path": "driver.mjs.txt",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-debugger-root-diagnosis-20261004/driver.mjs",
+      "bytes": 1373,
+      "sha256": "0f5817fb7666999f9d7085eb8d3966ac315ff2cbef7753c384b2b91a07689931"
+    },
+    {
+      "path": "roots.jsonl",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-debugger-root-diagnosis-20261004/roots.jsonl",
+      "bytes": 3288,
+      "sha256": "24715206cd871721cf233304a7dd0b35efff35132f4d5259c8f3e5f7671d488a"
+    },
+    {
+      "path": "execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-debugger-root-diagnosis-20261004/execution.json",
+      "bytes": 1247,
+      "sha256": "6ce70d1f5edca73e0932d0b6ce55a2bc30ffac34eb7b38aed49d8385c62a0c3c"
+    }
+  ],
+  "observations": {
+    "initialLiveObjects": 1,
+    "initialLiveBytes": 32,
+    "initialRoot": {
+      "kind": "array",
+      "type": "string[]",
+      "handle": 0,
+      "generation": 1,
+      "length": 0
+    },
+    "constructedObject": {
+      "kind": "object",
+      "type": "N",
+      "handle": 1,
+      "generation": 2,
+      "fields": [
+        11
+      ]
+    },
+    "hiddenInitializerTemporaryAfterConstruction": null,
+    "afterCollection": {
+      "state": "paused",
+      "sourceLine": 4,
+      "liveObjects": 1,
+      "liveBytes": 32,
+      "freedObjects": 1,
+      "freedBytes": 40,
+      "constructedObjectRecord": null
+    }
+  },
+  "limitations": [
+    "The initial static Sequence-temporary leak hypothesis was falsified by the actual trace.",
+    "No product change follows from this diagnosis; the old zero-total-live-objects assertion ignored the implicit entry arguments.",
+    "The corrected reverse-debugger test in 4d7eaaf51d691e14d3d22bb736f2ac70e861d59f was only syntax-checked when this archive was created; its execution result is not represented here."
+  ]
+}

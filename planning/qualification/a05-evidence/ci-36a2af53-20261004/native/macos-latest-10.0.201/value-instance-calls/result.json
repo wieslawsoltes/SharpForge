@@ -1,0 +1,28 @@
+{
+  "id": "value-instance-calls",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/value-instance-calls",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/value-instance-calls/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "value-instance-calls/evidence",
+  "report": "value-instance-calls/result.json",
+  "startedAt": "2026-10-04T20:29:23.092Z",
+  "durationMs": 3102.4492500000015,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "value-instance-calls/stdout.log",
+  "stderr": "value-instance-calls/stderr.log",
+  "finishedAt": "2026-10-04T20:29:26.197Z"
+}

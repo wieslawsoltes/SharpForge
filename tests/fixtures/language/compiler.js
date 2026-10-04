@@ -44,6 +44,10 @@ export const cases=[
  ['round-to-even conversion','Console.WriteLine(Convert.ToInt32(2.5));Console.WriteLine(Convert.ToInt32(3.5));','2\n4\n'],
  ['array sort','int[] a=new int[]{3,1,2};Array.Sort(a);Array.Reverse(a);foreach(int v in a)Console.WriteLine(v);','3\n2\n1\n'],
  ['caught division','try {int z=0;Console.WriteLine(4/z);}catch(Exception e){Console.WriteLine("caught");}Console.WriteLine("after");','caught\nafter\n'],
+ ['filtered catch declaration','try{Console.WriteLine(1);}catch(Exception e) when(true){}','1\n'],
+ ['filtered catch selection',
+  'try{throw new Exception("saved");}catch(Exception e) when(false){Console.WriteLine("wrong");}' +
+  'catch(Exception e) when(true){Console.WriteLine(e.Message);}', 'saved\n'],
  ['throw exception','try{throw new Exception("boom");}catch(Exception e){Console.WriteLine(e.Message);}','boom\n'],
  ['cross-frame catch','int Divide(int x){return 1/x;}try{Console.WriteLine(Divide(0));}catch(Exception e){Console.WriteLine("caught");}','caught\n'],
  ['rethrow','try{try{throw new Exception("again");}catch(Exception e){throw;}}catch(Exception e){Console.WriteLine(e.Message);}','again\n'],
@@ -66,12 +70,13 @@ export const diagnosticCases=[
  ['double to int','int x=1.2;','CS0266'],
  ['const write','const int x=1;x=2;','CS0131'],
  ['no entry','class A {}','CS5001'],
- ['invalid condition','if(1)Console.WriteLine(1);','CS0029']
+ ['invalid condition','if(1)Console.WriteLine(1);','CS0029'],
+ ['filter definite assignment',
+  'int value;try{throw new Exception("x");}catch(Exception e) when(value==7){Console.WriteLine(1);}', 'CS0165']
 ];
 export const unsupportedCases=[
  'Console.WriteLine(1);class B{}class A:B{}',
  'class A{static async void Main(){}}',
- 'try{Console.WriteLine(1);}catch(Exception e) when(true){}',
 ];
 export const languageFixtures=[
  ...cases.map(([name,source,output])=>({id:'compiler/'+name,source,expected:{output}})),

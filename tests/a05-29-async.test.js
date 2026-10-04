@@ -126,7 +126,8 @@ test('A05 T29 constructor root enumeration precedes scheduler creation', () => {
 });
 test('A05 T29 async descriptors validate closed signatures and reachable compiler methods', () => {
   const good = descriptor(TASK + '`1<int>', 'GetAwaiter', RESULT_AWAITER);
-  assert.equal(asyncMethodDefinition(good).operation, 'task-awaiter');
+  assert.equal(asyncMethodDefinition(good).operation, 'getAwaiter');
+  assert.equal(asyncMethodDefinition(good).runtimeOperation, 'task-awaiter');
   assert.equal(asyncMethodDefinition({
     ...good,
     signature: {
@@ -163,7 +164,7 @@ test('A05 T29 async descriptors validate closed signatures and reachable compile
         genericArity: 1
       }
     };
-  assert.deepEqual([...reachableAsyncMethods(inspector, start)], [0x06000002]);
+  assert.deepEqual([...reachableAsyncMethods(inspector, start)], [0x06000002, 0x06000003]);
   assert(verifyCilAssembly(inspector).success);
   assert.equal(asyncTypeDefinition('System.Runtime.CompilerServices.ValueTaskAwaiter'), null);
 });
@@ -230,7 +231,7 @@ test('A05 T29 TaskAwaiter.OnCompleted resumes a verified managed delegate', asyn
         name: 'Main',
         localBytes: c => asyncSignatureType(new Writer().u8(7).u8(1), AWAITER, c).finish(),
         body: (w, c) => {
-          w.op('ldc.i4.5').op('call', c.member(TASK, 'Delay', TASK, ['int'])).op('callvirt', c.member(TASK, 'GetAwaiter', AWAITER, [],
+          w.op('ldc.i4.5').op('call', c.member(TASK, 'Delay', TASK, ['int'])).op('callvirt', c.member(TASK, 'GetAwaiter', 'valuetype ' + AWAITER, [],
               false)).op('stloc.0')
             .op('ldloca.s', 0).op('ldnull').op('ldftn', c.methods.get('Program.Callback')).op('newobj', c.member('System.Action',
               '.ctor', 'void', ['object', 'nint'], false))
@@ -246,13 +247,18 @@ test('A05 T29 TaskAwaiter.OnCompleted resumes a verified managed delegate', asyn
   const vm = new CilVirtualMachine(bytes, {
     virtualTime: true
   });
-  assert.equal(vm.run().state, 'waiting');
+  assert.equal(vm.run().state, 'terminated');
+  const task = [...vm.scheduler.tasks.values()].find(task => task.status === 'waiting');
+  assert.equal(task.continuations.length, 1);
+  assert.equal(vm.output.join(''), '');
   const snapshot = vm.snapshot();
+  vm.scheduler.advance(5);
   const result = await vm.runAsync();
   assert.equal(result.state, 'terminated', result.fault?.stack);
   assert.equal(result.output, '42\n');
   vm.restore(snapshot);
   vm.heap.collect();
+  vm.scheduler.advance(5);
   assert.equal((await vm.runAsync()).output, result.output);
 });
 test('A05 T29 async void faults are posted outside the synchronous caller and snapshotted', () => {

@@ -1,0 +1,45 @@
+{
+  "format": "SharpForge.NativeWidthQualification/1",
+  "passed": true,
+  "status": "passed",
+  "expectedNativeIntBits": 32,
+  "expectedSdk": "8.0.425",
+  "timestamp": "2026-10-04T19:52:34.468Z",
+  "bits": 32,
+  "sdk": "8.0.425",
+  "processArchitecture": "X86",
+  "assemblySha256": "e5c8b4b2d7ed7dc79321494ebe95083da2251ccf3f9bb8234cfcfb996a85dada",
+  "sourceSha256": "b764599bc1399b0a3af0b53fa0a747a0abb811531c778cd2f1a56673bd1c3533",
+  "nativeRuntime": {
+    "scope": "Independent native process with identical fixture runtimeconfig, dotnet executable, cwd and environment; not guest instrumentation.",
+    "frameworkDescription": ".NET 8.0.31",
+    "environmentVersion": "8.0.31",
+    "runtimeIdentifier": "win-x86",
+    "nativeIntBits": 32,
+    "processArchitecture": "X86",
+    "runtimeConfig": {
+      "file": "Qualification.runtimeconfig.json",
+      "sha256": "28329cf08f6505e73806b17558b187c02f0c1c516fe47ebfb7a013d082aaa306",
+      "content": "{\r\n  \"runtimeOptions\": {\r\n    \"tfm\": \"net8.0\",\r\n    \"framework\": {\r\n      \"name\": \"Microsoft.NETCore.App\",\r\n      \"version\": \"8.0.0\"\r\n    },\r\n    \"configProperties\": {\r\n      \"System.Reflection.Metadata.MetadataUpdater.IsSupported\": false,\r\n      \"System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization\": false\r\n    }\r\n  }\r\n}"
+    },
+    "probe": {
+      "sourceSha256": "e71c8ef2c6af179c6c2e7cfc64e8f4193ad4110475875f729771938bd32bb1d7",
+      "assemblySha256": "47c31eb1d100b3c486bfc450959d73360fa4ab614d2d4c69c033bcb83aa528a4"
+    },
+    "command": {
+      "executable": "D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\dotnet.exe",
+      "arguments": [
+        "exec",
+        "--runtimeconfig",
+        "<temporary-project>\\bin\\Release\\net8.0\\Qualification.runtimeconfig.json",
+        "<temporary-project>\\runtime-probe\\bin\\Release\\net8.0\\RuntimeProbe.dll"
+      ]
+    },
+    "exitCode": 0,
+    "signal": null,
+    "output": ".NET 8.0.31\n8.0.31\nwin-x86\n4\nX86\n",
+    "stderr": ""
+  },
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "qualificationSha256": "38b5778e68a36e9dcd5746eb0cc915d44159d59e4fb0ca5180d06693de3258c7"
+}

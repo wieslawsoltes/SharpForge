@@ -41,6 +41,7 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
       vm.pendingFault = null;
       pending.exceptionDebuggerResume = true;
       vm.raise(pending);
+      vm.scheduler.beforeInstruction();
     }
     while (vm.state === 'running' && vm.frames.length && count < instructionBudget) {
       if (timeBudgetMs !== Infinity && (count & 255) === 0 && performance.now() - started >= timeBudgetMs) break;

@@ -1,0 +1,54 @@
+{
+  "suite": "csp-denied-fallback",
+  "passed": false,
+  "engine": "firefox",
+  "cspViolations": [
+    {
+      "source": "event",
+      "directive": "script-src",
+      "blockedURI": "wasm-eval",
+      "disposition": "enforce",
+      "documentURI": "http://127.0.0.1:38973/denied.html",
+      "policy": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    },
+    {
+      "source": "event",
+      "directive": "script-src",
+      "blockedURI": "wasm-eval",
+      "disposition": "enforce",
+      "documentURI": "http://127.0.0.1:38973/denied.html",
+      "policy": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    },
+    {
+      "source": "event",
+      "directive": "script-src",
+      "blockedURI": "wasm-eval",
+      "disposition": "enforce",
+      "documentURI": "http://127.0.0.1:38973/denied.html",
+      "policy": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    },
+    {
+      "source": "console",
+      "message": "[JavaScript Error: \"Content-Security-Policy: The page\u2019s settings blocked WebAssembly (script-src) from being executed because it violates the following directive: \u201cscript-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\u201d (Missing 'wasm-unsafe-eval' or 'unsafe-eval')\" {file: \"http://127.0.0.1:38973/tests/fixtures/a05-browser/runtime.mjs\" line: 45}]",
+      "url": "http://127.0.0.1:38973/denied.html"
+    },
+    {
+      "source": "console",
+      "message": "[JavaScript Error: \"Content-Security-Policy: The page\u2019s settings blocked WebAssembly (script-src) from being executed because it violates the following directive: \u201cscript-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\u201d (Missing 'wasm-unsafe-eval' or 'unsafe-eval')\" {file: \"http://127.0.0.1:38973/packages/runtime/src/execution/wasm/compile.js\" line: 34}]",
+      "url": "http://127.0.0.1:38973/denied.html"
+    },
+    {
+      "source": "console",
+      "message": "[JavaScript Error: \"Content-Security-Policy: The page\u2019s settings blocked WebAssembly (script-src) from being executed because it violates the following directive: \u201cscript-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\u201d (Missing 'wasm-unsafe-eval' or 'unsafe-eval')\" {file: \"http://127.0.0.1:38973/packages/runtime/src/execution/wasm/compile.js\" line: 34}]",
+      "url": "http://127.0.0.1:38973/denied.html"
+    }
+  ],
+  "browser": "155.0",
+  "executable": "playwright-managed",
+  "launchOptions": {
+    "headless": false
+  },
+  "mode": "A05 public runtime / denied CSP",
+  "seconds": 5.374813555999992,
+  "diagnosticErrors": []
+}

@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "scope": "SF-A05 Task.Wait/Result AggregateException construction regression; no native or whole-project parity claim",
+  "testedCommit": "1520f50b1d2b8a890e45e5da3186577964468c9a",
+  "testedTree": "4d947f761d87122ed58ca4e3abc4a6159c5ad8e1",
+  "workingDirectory": "/workspace/scratch/42f7738360b9/a05-control",
+  "nodeVersion": "v24.19.0",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": "--max-old-space-size=512",
+    "CI": null
+  },
+  "ownedPackageLinks": {
+    "runtime": "/workspace/scratch/42f7738360b9/a05-control/packages/runtime",
+    "cil": "/workspace/scratch/42f7738360b9/a05-control/packages/cil",
+    "compiler": "/workspace/scratch/42f7738360b9/a05-control/packages/compiler",
+    "bytecode": "/workspace/scratch/42f7738360b9/a05-control/packages/bytecode"
+  },
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-merged-task-operations.test.js"
+      ],
+      "reporter": "default spec",
+      "log": "before.raw.log",
+      "exitCode": 1,
+      "reason": "Initial observed failure; then repeated with explicit TAP to preserve complete TAP statistics"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a05-merged-task-operations.test.js"
+      ],
+      "log": "before.tap",
+      "exitCode": 1,
+      "summary": {
+        "tests": 3,
+        "pass": 2,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "trackedWorktreeDifference": {
+        "path": "packages/runtime/src/execution/scheduler-task-delivery.js",
+        "replacement": "before-scheduler-task-delivery.js.txt",
+        "gitBlob": "3572e196c32eda12d4d8dbc06c45604d112793f8",
+        "sha256": "5d0525f4d34eb1b65b299205bb947638e6685297e6ce5e42a9f4bc096bf14540"
+      },
+      "expectedFailure": "NullReferenceException at InnerExceptions Count because the _innerExceptions list was absent"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a05-merged-task-operations.test.js"
+      ],
+      "log": "after.tap",
+      "exitCode": 0,
+      "summary": {
+        "tests": 3,
+        "pass": 3,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "trackedWorktreeDifference": null,
+      "fixedSourceSha256": "fa7ea6b4d04b810f814ef4e70fa1fb46d47e05b95c718bde79722f8533d68892"
+    }
+  ],
+  "payloads": [
+    {
+      "path": "before.raw.log",
+      "bytes": 1704,
+      "sha256": "02a06c8b662ebb7e6e2e97f37a85b6aa79b31a7fbf258531f0a1f45160bd76a2",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-task-aggregate-prefix-1520f50b1.log"
+    },
+    {
+      "path": "before.tap",
+      "bytes": 2074,
+      "sha256": "8292e486cb48d1356a8c9b172ec9aea27ca98b5a3cfef829151e0ec3af59faca",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-task-aggregate-prefix-1520f50b1.tap"
+    },
+    {
+      "path": "after.tap",
+      "bytes": 865,
+      "sha256": "8c5db838cfeb1ba970f57f197937e946adb64becc82b910ca9ff287fcf7c9ed9",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-task-aggregate-fixed-1520f50b1.tap"
+    },
+    {
+      "path": "before-scheduler-task-delivery.js.txt",
+      "bytes": 3459,
+      "sha256": "5d0525f4d34eb1b65b299205bb947638e6685297e6ce5e42a9f4bc096bf14540",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-task-aggregate-before-canonical-construction.js"
+    }
+  ],
+  "notes": [
+    "The single test file and every other tracked input were identical in the before and after runs.",
+    "Before used the exact staged pre-fix blob saved before applying canonical exception construction; this is a deliberately dirty control, not a historical full revision.",
+    "The final fixed product file was restored byte-identical to testedCommit, and git diff/git diff --cached were empty before archiving.",
+    "Existing untracked historical archive payloads and source-frame-scrub.js were preserved and are not imported by the regression.",
+    "The machine-wide heavy slot was released after the fixed test completed."
+  ]
+}

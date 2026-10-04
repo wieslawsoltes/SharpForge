@@ -1,0 +1,51 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "focused",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a05-prepared-leaf-elision.test.js",
+    "tests/a05-prepared-virtual-calls.test.js",
+    "tests/a05-cil-prepared-frame-pool.test.js",
+    "tests/a05-frame-pool-lifecycle.test.js",
+    "tests/a05-live-frame-index.test.js",
+    "tests/a05-cil-stack-byte-budget.test.js",
+    "tests/a05-profiler-reference.test.js"
+  ],
+  "cwd": "/tmp/a05-virtual-witness-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": null,
+    "DOTNET_ROOT": null,
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": null,
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "d3a7a3e71ca0f31f2f0e495ddadd28dfc95d3eb4",
+    "tree": "e2b1ad247c9d22eb8d923a2cbc32fd7abb2f3048",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T23:06:27.019636+00:00",
+  "completedUTC": "2026-10-04T23:06:33.012602+00:00",
+  "elapsedSeconds": 5.992719550005859,
+  "exitCode": 1,
+  "endIdentity": {
+    "commit": "d3a7a3e71ca0f31f2f0e495ddadd28dfc95d3eb4",
+    "tree": "e2b1ad247c9d22eb8d923a2cbc32fd7abb2f3048",
+    "status": ""
+  },
+  "artifact": {
+    "path": "focused.log",
+    "bytes": 12520,
+    "sha256": "0876439475fbe434d68a5f9eca242413a62033da25a6f76832fadbed38c5a5d5"
+  }
+}

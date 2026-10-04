@@ -1,0 +1,82 @@
+{
+  "format": "SharpForge.A05EvidenceArchive/1",
+  "archive": "conversion-retention-e37a",
+  "measuredIdentity": {
+    "commit": "e37a5452944765f50c7bf32858e6a2ec2e1d1dc7",
+    "tree": "e05560bf9690ee617676c1e62835d57c9b804b9e",
+    "status": ""
+  },
+  "result": {
+    "tests": 12,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "exitCode": 0,
+    "testDurationMs": 4064.751406,
+    "wallSeconds": 4.225959823001176
+  },
+  "scope": "Three-file qualification-machinery and numeric differential helper selection; actual CLR32 2277-case capture remains pending.",
+  "commandEvidence": "Original execution JSON is retained unchanged; no reconstructed command or environment substitutes for it.",
+  "rawFiles": [
+    {
+      "path": "conversion-failure-artifacts.log",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/conversion-failure-artifacts.log",
+      "bytes": 2937,
+      "sha256": "a933a73841286cf41fd3f1062fee156c9534248911c11a31fdf1816ff7398e5e",
+      "gitBlob": "be622b5770ad2df56782ac6006de0cd1493b5881"
+    },
+    {
+      "path": "conversion-failure-artifacts-execution.json",
+      "originalPath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/conversion-failure-artifacts-execution.json",
+      "bytes": 1581,
+      "sha256": "509bd269b3b668c8a93589686d8052c062ec42d22749cb452c6d03a1fd450909",
+      "gitBlob": "8d39e36426fc63d4b71ed611aea4b28af344fa19"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "tests/a05-conversion-failed-replay.test.js",
+      "gitBlob": "0e5c49cccf6f7f6e2095599fe8f02fb7d009a38a",
+      "bytes": 4312,
+      "sha256": "7dfc6938fcfeccc9d520ad121d6f5557a9b61abb3893b4f20320cf726b1ba1f7"
+    },
+    {
+      "path": "tests/a05-conversion-abi-qualification.test.js",
+      "gitBlob": "0384edc359d58b8a2582ff4f28f8eb06cc5d3b1b",
+      "bytes": 6957,
+      "sha256": "6bbb0f0a451f28d957f40efeab05015523ba30cb112dcd8e38f9a5c323591b8d"
+    },
+    {
+      "path": "tests/a05-numeric-differential-harness.test.js",
+      "gitBlob": "930177b2337b2802c2f1bc57c7901ee119f76026",
+      "bytes": 2122,
+      "sha256": "fcb79c159bcc0dcb9abeb6e26c3faf52e4b63c1a1d689d68d916d7d9428f3fda"
+    },
+    {
+      "path": "tests/support/numeric-differential.js",
+      "gitBlob": "429bacdbdbef60a539e1a8ab2fa482bfeb5a8607",
+      "bytes": 3860,
+      "sha256": "29eb86afb047c23fa8cd0dfec01103f80219e508d142778b031cd08b1885505a"
+    },
+    {
+      "path": "scripts/numeric/conversion-replay.js",
+      "gitBlob": "eab4a9d5821688b1b008c4beeca80c16aa306c87",
+      "bytes": 2145,
+      "sha256": "89aac294e3651b4b1d8f6adc4a5c2fe64a74a25bd8d68883b07069d7cea913b5"
+    },
+    {
+      "path": "scripts/numeric/qualify-conversions.js",
+      "gitBlob": "b74a6f8924651dea197036ba5aae0f0d47ac9bd4",
+      "bytes": 5197,
+      "sha256": "b815b7be297cbc0c9a82b6f20888d244cf4f8ffb633dc2c14a2be370fa036cc8"
+    },
+    {
+      "path": "scripts/numeric/conversion-proof.js",
+      "gitBlob": "e3029377e6a08d0357f7b9f3215e25bf357a6eb4",
+      "bytes": 3571,
+      "sha256": "abef9356f1f7cb4a0d88fda1cbe9b0ea7ef39d9d2a753001f8ab56c5b5fe4995"
+    }
+  ],
+  "historicalEvidenceModified": false
+}

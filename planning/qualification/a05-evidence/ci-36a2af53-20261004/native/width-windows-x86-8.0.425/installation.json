@@ -1,0 +1,16 @@
+{
+  "runtimeFiles": [
+    {
+      "runtime": "8.0.31",
+      "file": "coreclr.dll",
+      "sha256": "50b38eed145b64e78fde2a1e2e9e700079aae7770d5524b4842cca83da1218ce"
+    }
+  ],
+  "roslynCompilerSha256": "9a613ea183d496db12d90f73d50f700401c90632c39d38ada88b2045cadbc323",
+  "dotnetHostSha256": "1ba0697a012fafdcd03f96c18e4c47c7fafe94699c2bc94c02d65f7e8f63c752",
+  "installerSha256": "7e9969069558023daf52bbf6fc55eb37032eb23c7ff55a7d6afc659d54d6c23b",
+  "installerUrl": "https://raw.githubusercontent.com/actions/setup-dotnet/67a3573c9a986a3f9c594539f4ab511d57bb3ce9/externals/install-dotnet.ps1",
+  "hostPeMachine": "0x014c",
+  "requestedArchitecture": "x86",
+  "sdk": "8.0.425"
+}

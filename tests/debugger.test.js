@@ -25,6 +25,39 @@ test('debugger: arrays and object children expose actual values',()=>{const s=de
 test('debugger: exception break happens before catch and resumes into handler',()=>{const s=debug('try{int z=0;Console.WriteLine(1/z);}catch(Exception e){Console.WriteLine("handled");}');s.exceptionBreak='all';s.start(false);assert.equal(stop(s).reason.reason,'exception');assert.equal(s.vm.pendingFault.name,'DivideByZeroException');assert.equal(stop(s,'continue').output,'handled\n');});
 test('debugger: uncaught-only exception mode ignores caught exceptions',()=>{const s=debug('try{throw new Exception("x");}catch(Exception e){Console.WriteLine(e.Message);}');s.exceptionBreak='uncaught';s.start(false);assert.equal(stop(s).state,'terminated');});
 test('debugger: reverse snapshots restore locals and output',()=>{const s=debug('int x=1;\nx=2;\nConsole.WriteLine(x);',{recordHistory:true}).start();stop(s);stop(s,'next');stop(s,'next');assert.equal(s.evaluate('x').value,2);s.stepBack();assert.equal(s.vm.currentPoint.line,2);assert.equal(s.evaluate('x').value,1);assert.equal(stop(s,'continue').output,'2\n');});
-test('debugger: reverse snapshots retain objects across later collection',()=>{const s=debug('var n=new N(){Value=11};\nn=null;\nGC.Collect();\nConsole.WriteLine(0);\nclass N{public int Value;}',{recordHistory:true}).start();stop(s);stop(s,'next');assert.equal(s.evaluate('n.Value').value,11);stop(s,'next');stop(s,'next');assert.equal(s.vm.heap.stats.liveObjects,0);s.stepBack();s.stepBack();assert.equal(s.evaluate('n.Value').value,11);});
+test('debugger: reverse snapshots retain objects across later collection', () => {
+  const session = debug('var n=new N(){Value=11};\nn=null;\nGC.Collect();\nConsole.WriteLine(0);\nclass N{public int Value;}',
+    {recordHistory: true}).start();
+  stop(session);
+  const vm = session.vm;
+  assert.notEqual(vm.options.preciseRootLiveness, true);
+  const argumentsReference = session.evaluate('args').reference;
+  assert.equal(vm.heap.get(argumentsReference).kind, 'array');
+  assert.equal(vm.heap.get(argumentsReference).type, 'string[]');
+  assert.deepEqual(vm.heap.get(argumentsReference).data, []);
+  const initialObjects = vm.heap.stats.liveObjects;
+  const initialBytes = vm.heap.stats.liveBytes;
+  assert.equal(initialObjects, 1, 'the implicit entry arguments are the initial managed root');
+
+  stop(session, 'next');
+  const reference = session.evaluate('n').reference;
+  assert.equal(vm.heap.get(reference).type, 'N');
+  assert.equal(session.evaluate('n.Value').value, 11);
+  stop(session, 'next');
+  assert.equal(session.evaluate('n').value, null);
+  stop(session, 'next');
+  assert.equal(vm.state, 'paused');
+  assert.equal(vm.currentPoint.line, 4);
+  assert.throws(() => vm.heap.get(reference), error => error.name === 'InvalidReferenceException');
+  assert.equal(vm.heap.stats.liveObjects, initialObjects);
+  assert.equal(vm.heap.stats.liveBytes, initialBytes);
+  assert.deepEqual(vm.heap.get(argumentsReference).data, []);
+
+  session.stepBack();
+  session.stepBack();
+  assert.equal(session.evaluate('n').reference, reference);
+  assert.equal(session.evaluate('n.Value').value, 11);
+  assert.equal(session.evaluate('args').reference, argumentsReference);
+});
 test('debugger: recording is bounded and optional',()=>{const s=debug('int i=0;while(i<40){i++;}',{recordHistory:true,maxHistory:5,maxHistoryBytes:2048}).start(false);stop(s);assert(s.history.length<=5);assert(s.historyBytes<=2048);const no=debug(source).start(false);stop(no);assert.equal(no.history.length,0);});
 test('debugger: pause/stop are cooperative and invalidate frames',()=>{const s=debug('while(true){}').start(false);s.pump({instructionBudget:50});s.pause();assert.equal(s.vm.state,'paused');const id=s.vm.top.id;s.stop();assert.throws(()=>s.frame(id),/no longer exists/);});

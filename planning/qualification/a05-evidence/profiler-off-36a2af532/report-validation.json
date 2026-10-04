@@ -1,0 +1,336 @@
+{
+  "verifiedAt": "2026-10-04T20:16:54.878347+00:00",
+  "scope": "Read-only completed-report checks; no additional guest or timing execution.",
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "referenceCommit": "6f26b84f46053b4aafd3ab8e77150cc793790d8d",
+  "coverage": {
+    "mode": "off",
+    "requiredOff": {
+      "expected": [
+        "profiler-off-source-arith",
+        "profiler-off-source-calls",
+        "profiler-off-source-allocation",
+        "profiler-off-cil-arith",
+        "profiler-off-cil-calls",
+        "profiler-off-cil-allocation"
+      ],
+      "measured": [
+        "profiler-off-source-arith",
+        "profiler-off-source-calls",
+        "profiler-off-source-allocation",
+        "profiler-off-cil-arith",
+        "profiler-off-cil-calls",
+        "profiler-off-cil-allocation"
+      ],
+      "missing": [],
+      "omitted": []
+    },
+    "enabledOverhead": {
+      "expected": [
+        "profiler-on-source-arith",
+        "profiler-on-source-calls",
+        "profiler-on-source-allocation",
+        "profiler-on-cil-arith",
+        "profiler-on-cil-calls",
+        "profiler-on-cil-allocation"
+      ],
+      "measured": [],
+      "missing": [
+        "profiler-on-source-arith",
+        "profiler-on-source-calls",
+        "profiler-on-source-allocation",
+        "profiler-on-cil-arith",
+        "profiler-on-cil-calls",
+        "profiler-on-cil-allocation"
+      ],
+      "omitted": [
+        "profiler-on-source-arith",
+        "profiler-on-source-calls",
+        "profiler-on-source-allocation",
+        "profiler-on-cil-arith",
+        "profiler-on-cil-calls",
+        "profiler-on-cil-allocation"
+      ]
+    },
+    "complete": false,
+    "scope": "Acceptance covers all six required profiling-off comparisons; enabled overhead is separately reported."
+  },
+  "rows": [
+    {
+      "id": "profiler-off-source-arith",
+      "target": {
+        "kind": "maximum-overhead",
+        "value": 0.01,
+        "observed": -7.853821055181509e-05,
+        "interval": [
+          -0.09825288190327508,
+          0.06333206121813299
+        ],
+        "meetsPointTarget": true,
+        "acceptance": "inconclusive",
+        "method": "paired-percentile-ratio-of-medians",
+        "seed": 12012,
+        "confidence": 0.95,
+        "resamples": 10000
+      },
+      "observationsPerMode": 111,
+      "firstPerMode": 1,
+      "warmupPerMode": 10,
+      "measuredPerMode": 100,
+      "allOutputsVerified": true,
+      "allInstructionCountsPaired": true,
+      "executionMs": {
+        "baseline": {
+          "count": 100,
+          "minimum": 29.75838400000066,
+          "median": 35.45407999999952,
+          "p95": 56.148713850000604,
+          "p99": 57.169418049999294,
+          "maximum": 57.20139999999992,
+          "interquartileRange": 13.304843750001055,
+          "medianAbsoluteDeviation": 4.156807499999559
+        },
+        "candidate": {
+          "count": 100,
+          "minimum": 30.21677600000021,
+          "median": 35.45129549999956,
+          "p95": 56.95909620000002,
+          "p99": 58.18527592999948,
+          "maximum": 61.501570999998876,
+          "interquartileRange": 10.602436249999982,
+          "medianAbsoluteDeviation": 3.7840519999995195
+        }
+      }
+    },
+    {
+      "id": "profiler-off-source-calls",
+      "target": {
+        "kind": "maximum-overhead",
+        "value": 0.01,
+        "observed": 0.022952140371615748,
+        "interval": [
+          -0.04725954573231042,
+          0.10182401407489775
+        ],
+        "meetsPointTarget": false,
+        "acceptance": "inconclusive",
+        "method": "paired-percentile-ratio-of-medians",
+        "seed": 12012,
+        "confidence": 0.95,
+        "resamples": 10000
+      },
+      "observationsPerMode": 111,
+      "firstPerMode": 1,
+      "warmupPerMode": 10,
+      "measuredPerMode": 100,
+      "allOutputsVerified": true,
+      "allInstructionCountsPaired": true,
+      "executionMs": {
+        "baseline": {
+          "count": 100,
+          "minimum": 82.21281100000124,
+          "median": 105.53647549999914,
+          "p95": 141.7002334499999,
+          "p99": 144.19838982000024,
+          "maximum": 152.6395080000002,
+          "interquartileRange": 35.71209799999542,
+          "medianAbsoluteDeviation": 17.882220500001495
+        },
+        "candidate": {
+          "count": 100,
+          "minimum": 80.96780500000023,
+          "median": 107.95876350000071,
+          "p95": 138.89425134999965,
+          "p99": 145.1613728300016,
+          "maximum": 145.2159049999973,
+          "interquartileRange": 35.01453774999845,
+          "medianAbsoluteDeviation": 17.770128000000113
+        }
+      }
+    },
+    {
+      "id": "profiler-off-source-allocation",
+      "target": {
+        "kind": "maximum-overhead",
+        "value": 0.01,
+        "observed": 0.024653932405187096,
+        "interval": [
+          -0.03956316939474669,
+          0.08134528525724849
+        ],
+        "meetsPointTarget": false,
+        "acceptance": "inconclusive",
+        "method": "paired-percentile-ratio-of-medians",
+        "seed": 12012,
+        "confidence": 0.95,
+        "resamples": 10000
+      },
+      "observationsPerMode": 111,
+      "firstPerMode": 1,
+      "warmupPerMode": 10,
+      "measuredPerMode": 100,
+      "allOutputsVerified": true,
+      "allInstructionCountsPaired": true,
+      "executionMs": {
+        "baseline": {
+          "count": 100,
+          "minimum": 96.1985349999959,
+          "median": 118.342053999997,
+          "p95": 172.06834139999845,
+          "p99": 182.37455389000525,
+          "maximum": 190.74835899999744,
+          "interquartileRange": 35.98075050000443,
+          "medianAbsoluteDeviation": 14.558506500001386
+        },
+        "candidate": {
+          "count": 100,
+          "minimum": 93.81915200000367,
+          "median": 121.25965100000394,
+          "p95": 170.47746179999666,
+          "p99": 180.8383255799962,
+          "maximum": 187.2133890000041,
+          "interquartileRange": 27.946007250002367,
+          "medianAbsoluteDeviation": 14.419386000001396
+        }
+      }
+    },
+    {
+      "id": "profiler-off-cil-arith",
+      "target": {
+        "kind": "maximum-overhead",
+        "value": 0.01,
+        "observed": 0.003779810212117596,
+        "interval": [
+          -0.053502547553693006,
+          0.06572199842712624
+        ],
+        "meetsPointTarget": true,
+        "acceptance": "inconclusive",
+        "method": "paired-percentile-ratio-of-medians",
+        "seed": 12012,
+        "confidence": 0.95,
+        "resamples": 10000
+      },
+      "observationsPerMode": 111,
+      "firstPerMode": 1,
+      "warmupPerMode": 10,
+      "measuredPerMode": 100,
+      "allOutputsVerified": true,
+      "allInstructionCountsPaired": true,
+      "executionMs": {
+        "baseline": {
+          "count": 100,
+          "minimum": 143.6874749999988,
+          "median": 179.30556349999824,
+          "p95": 246.91274069999557,
+          "p99": 274.0320266700002,
+          "maximum": 276.89408399999957,
+          "interquartileRange": 45.3574822499977,
+          "medianAbsoluteDeviation": 21.12640800000372
+        },
+        "candidate": {
+          "count": 100,
+          "minimum": 145.9483409999957,
+          "median": 179.98330450000503,
+          "p95": 251.89989300000303,
+          "p99": 262.5856219399998,
+          "maximum": 277.0285280000098,
+          "interquartileRange": 47.365517750004074,
+          "medianAbsoluteDeviation": 21.691337499993097
+        }
+      }
+    },
+    {
+      "id": "profiler-off-cil-calls",
+      "target": {
+        "kind": "maximum-overhead",
+        "value": 0.01,
+        "observed": 0.0026622596325682757,
+        "interval": [
+          -0.03160247339499487,
+          0.03916204184243951
+        ],
+        "meetsPointTarget": true,
+        "acceptance": "inconclusive",
+        "method": "paired-percentile-ratio-of-medians",
+        "seed": 12012,
+        "confidence": 0.95,
+        "resamples": 10000
+      },
+      "observationsPerMode": 111,
+      "firstPerMode": 1,
+      "warmupPerMode": 10,
+      "measuredPerMode": 100,
+      "allOutputsVerified": true,
+      "allInstructionCountsPaired": true,
+      "executionMs": {
+        "baseline": {
+          "count": 100,
+          "minimum": 462.93506400001934,
+          "median": 562.8196369999932,
+          "p95": 734.7134206499904,
+          "p99": 790.2676197900133,
+          "maximum": 824.5733760000148,
+          "interquartileRange": 96.75874724998721,
+          "medianAbsoluteDeviation": 48.28172300000733
+        },
+        "candidate": {
+          "count": 100,
+          "minimum": 465.14535100001376,
+          "median": 564.3180089999951,
+          "p95": 710.7245178999962,
+          "p99": 804.6402301799938,
+          "maximum": 813.7757700000075,
+          "interquartileRange": 72.74993974997051,
+          "medianAbsoluteDeviation": 35.17811300000176
+        }
+      }
+    },
+    {
+      "id": "profiler-off-cil-allocation",
+      "target": {
+        "kind": "maximum-overhead",
+        "value": 0.01,
+        "observed": -0.002195837422860225,
+        "interval": [
+          -0.01305788559375598,
+          0.034862853002649574
+        ],
+        "meetsPointTarget": true,
+        "acceptance": "inconclusive",
+        "method": "paired-percentile-ratio-of-medians",
+        "seed": 12012,
+        "confidence": 0.95,
+        "resamples": 10000
+      },
+      "observationsPerMode": 111,
+      "firstPerMode": 1,
+      "warmupPerMode": 10,
+      "measuredPerMode": 100,
+      "allOutputsVerified": true,
+      "allInstructionCountsPaired": true,
+      "executionMs": {
+        "baseline": {
+          "count": 100,
+          "minimum": 1269.5422329999856,
+          "median": 1476.8449915000529,
+          "p95": 1776.827052150003,
+          "p99": 1903.9637932400208,
+          "maximum": 1914.0375619999832,
+          "interquartileRange": 240.5909157499991,
+          "medianAbsoluteDeviation": 130.6048540000047
+        },
+        "candidate": {
+          "count": 100,
+          "minimum": 1283.4554089999874,
+          "median": 1473.6020799999533,
+          "p95": 1842.7512091500334,
+          "p99": 1973.6202432199996,
+          "maximum": 2157.2448710000026,
+          "interquartileRange": 206.47713299999305,
+          "medianAbsoluteDeviation": 87.5479500000074
+        }
+      }
+    }
+  ]
+}

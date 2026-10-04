@@ -1,5 +1,51 @@
 # Project 7 criterion audit checkpoint — 2026-10-04
 
+The current additive reconciliation observes
+`0d99a7aa00f0b8807411030f29e8582f2e5bdcc9`, tree
+`82d6f5517ef5f2162d3cba9a6664b1cadc03fd15`. Its entry in the JSON ledger's
+`historical_evidence_reconciliations` array preserves all preceding fields,
+83 issues, 210 original criteria, body hashes and results. The
+[progress document](a05-project7-progress.md#current-focused-correctness-checkpoint)
+links the exact archives. This is a focused correctness checkpoint for the
+existing draft PR, with performance work continuing; it closes no issue.
+
+The failed `4c75` cohort remains **276/283 passed, seven failed**. Separate
+repairs passed **89/89** debugger/admission tests at `3505`, **39/39** source
+admission tests at `ef375`, and **12/12** conversion-retention/helper tests at
+`e37a`. These selections overlap and are not added together. The last selection
+does not establish actual native execution of the pending **2,277-case ABI32**
+conversion matrix. The original 15-target wording is unchanged; eleven fixed
+forms plus four native-width forms is the documented coverage interpretation,
+not a claim about author intent.
+
+At `2a9b`, ordinary static checking passed while strict structure checking
+failed with **265** reported problems: **238** byte-identical main paths,
+**26** changed paths with unchanged or smaller offending metrics, and **one**
+new overlong line. `77f338fbb` wraps that line, giving a maximum of 144 UTF-16
+units in the affected file. No baseline changed and no global strict pass is
+claimed. Original failed logs remain intact.
+
+Latest retained Fibonacci at `ef375` is **1.605549272945154×**, 95% interval
+**[1.4364472786404399, 1.7696360228862134]**, still inconclusive against 1.5×.
+Virtual dispatch at `10d` remains **1.982710053204195×**, below its 3× target.
+The fixed 25-command qualification queue, current native/browser/full CI and
+complete size comparison remain pending; the size catalog has 34 artifacts
+and five without existing budgets. T12 requires two complete stable same-runner
+reports and the baseline/gate evidence, with no mandatory third full run.
+The bounded review found no additional demonstrated implementation gap; this
+does not establish that all criteria passed.
+
+## Earlier reconciliation and preserved checkpoint
+
+An additive reconciliation observed at `4e9c5017307b1a31fc3f4c944c6965fe6b5822fd`
+now appears in the JSON ledger's `historical_evidence_reconciliations` array and
+the [progress document](a05-project7-progress.md). It records completed36 native
+and eight-case browser results, return-lifetime stress, exact failed core/A01
+observations and subsequent scoped repairs. The new `1520f50b1` async integration,
+current CI and fixed performance queue remain pending. Original #1349's literal
+15-target count is not established by the actual 13-target matrix. No original
+criteria, hashes, historical assessment or issue state are replaced.
+
 This `54e3bba84` checkpoint is preserved as evidence of the earlier repair state.
 See [ongoing integration progress](a05-project7-progress.md) for subsequent repairs,
 executed focused checks and measured targets. Its remaining-work statements are
@@ -38,7 +84,7 @@ These runs differ in scope and cannot be summed or described as a monotonically
 improving full-suite pass rate. The current 47 failing cases are retained in the
 catalog by test location. No fresh full-suite result replaces the 2,784-test run.
 
-The committed [integration measurements](a05-evidence/integration-measurements.md)
+The committed [integration measurements](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-measurements.md)
 retain the original reports and their hashes. The byref stress report at clean
 `17f2620c` records **1,000 generated CIL assemblies and 131,341 actual
 instruction-boundary collections**, plus 96 source/reloaded/CIL counterparts and

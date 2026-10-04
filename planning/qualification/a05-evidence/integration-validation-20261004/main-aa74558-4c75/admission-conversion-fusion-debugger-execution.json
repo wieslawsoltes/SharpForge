@@ -1,0 +1,76 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "admission-conversion-fusion-debugger",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--expose-gc",
+    "--test-reporter=tap",
+    "tests/a05-cil-admission-budget.test.js",
+    "tests/a05-cil-admission-static-execution.test.js",
+    "tests/a05-cil-admission-options.test.js",
+    "tests/a05-cil-assembly-heap-limits.test.js",
+    "tests/a05-cil-callback-admission-limits.test.js",
+    "tests/a05-cil-admission-diagnostics.test.js",
+    "tests/a05-local-constructor-identity.test.js",
+    "tests/a03-09-pe-bounds.test.js",
+    "tests/a05-conversion-abi-qualification.test.js",
+    "tests/a05-numeric-differential-harness.test.js",
+    "tests/a05-native-width-qualification.test.js",
+    "tests/a05-source-fusion-integer-plans.test.js",
+    "tests/a05-source-fusion.test.js",
+    "tests/a05-source-fusion-blocks.test.js",
+    "tests/a05-source-fusion-batch.test.js",
+    "tests/a05-source-fusion-retirement.test.js",
+    "tests/a05-source-prepared-calls.test.js",
+    "tests/a05-int32-specialized-handlers.test.js",
+    "tests/a05-int32-specialized-cil.test.js",
+    "tests/a05-debugger-evaluation-transactions.test.js",
+    "tests/debugger-advanced.test.js",
+    "tests/debugger.test.js",
+    "tests/conformance/security/limits.test.js",
+    "tests/a05-source-interface-dispatch.test.js",
+    "tests/a05-source-generic-interface-methods.test.js",
+    "tests/a05-cil-async-profile.test.js",
+    "tests/a05-cil-async-native.test.js",
+    "tests/a05-managed-state-machine-layout.test.js",
+    "tests/a05-task-fault-unwind.test.js"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": "net10.0",
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "4c75ea43f5310e50594098076693d1582b49c7d3",
+    "tree": "bdcb5c1429bd01e2992388b5ed95c56303d05e63",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T22:23:00.860218+00:00",
+  "completedUTC": "2026-10-04T22:24:07.718745+00:00",
+  "elapsedSeconds": 66.85826125300082,
+  "exitCode": 1,
+  "endIdentity": {
+    "commit": "4c75ea43f5310e50594098076693d1582b49c7d3",
+    "tree": "bdcb5c1429bd01e2992388b5ed95c56303d05e63",
+    "status": ""
+  },
+  "artifact": {
+    "path": "admission-conversion-fusion-debugger.log",
+    "bytes": 82522,
+    "sha256": "880f97c320de7f7746793cb324cc495364393204db51f0e42978178ac991ac53"
+  }
+}

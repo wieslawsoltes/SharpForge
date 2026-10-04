@@ -1,0 +1,56 @@
+{
+  "format": "SharpForge.A05ReferenceRetirement/1",
+  "verifiedAt": "2026-10-04T21:00:33.207218+00:00",
+  "status": "retired",
+  "sourceCommit": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "sourceTree": "da3add4a11cce5ed887d2a093eac4b48a4c26754",
+  "referenceCommit": "6f26b84f46053b4aafd3ab8e77150cc793790d8d",
+  "referenceTree": "0f987d136a2eca1c7302d3e5059cf5a0f9faa0c1",
+  "protectedBranch": "codex/a05-profiler-reference-historical-36",
+  "referenceDirectory": "/tmp/a05-profiler-reference-36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "productDirectoryPreserved": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "cleanIndexAndWorktree": true,
+  "materializedTrackedFiles": 4620,
+  "materializedTrackedBytes": 26300134,
+  "trackedFilesInIndex": 16688,
+  "materializedInventorySHA256": "26b99c55e9359016bd08706a6152050d68333f2b3c5b7392b06e3c7732e18817",
+  "matchesOriginalPostMeasurementInventory": true,
+  "manifestSHA256": "da0dd00aedeb39bea07bc56bd5cb21afb46b00d4d6e72b03cdc56de4840b6da5",
+  "patchSHA256": "ed7fe69551c5b6fc78a5bfe7d2e95d6ee2e24c30ee5b9d05e4e46ef829a30ecd",
+  "transformSHA256": "81239b61e2a3c39cd0a4f946011e15fcea717b0f58d867721197258121afc2ea",
+  "unchangedArchivedManifestAndPatch": {
+    "commit": "eb436f98aa20876b16b3d28ca96e9b1240ee7c87",
+    "prefix": "docs/a05-evidence/profiler-off-36a2af532/"
+  },
+  "rawCommitSHA256": "4a1d8f19d1159e87d646f7e97421d5d889a41c7678274f47989698bc2cccdc6a",
+  "rawCommitGitObject": "6f26b84f46053b4aafd3ab8e77150cc793790d8d",
+  "rawCommitBytes": 270,
+  "dependenciesVerified": [
+    {
+      "name": "@sharpforge",
+      "link": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge",
+      "resolved": "/tmp/a05-qualification-36a2af53287a563fd47d3a33b8e6e6382a726d35/node_modules/@sharpforge"
+    }
+  ],
+  "ignoredEntries": [
+    "node_modules/@sharpforge"
+  ],
+  "sourceWorktreeStatusBefore": "",
+  "checkoutAllocatedBytesBefore": 40091648,
+  "availableBytesBefore": 425033728,
+  "removalCommand": [
+    "git",
+    "worktree",
+    "remove",
+    "/tmp/a05-profiler-reference-36a2af53287a563fd47d3a33b8e6e6382a726d35"
+  ],
+  "scope": "Remove only the clean reproducible reference checkout; retain all original observations and before/after checks.",
+  "removalExitCode": 0,
+  "availableBytesAfter": 467435520,
+  "availableBytesDelta": 42401792,
+  "finishedAt": "2026-10-04T21:00:33.409348+00:00",
+  "removed": true,
+  "protectedBranchAfter": "6f26b84f46053b4aafd3ab8e77150cc793790d8d",
+  "sourceCommitAfter": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "sourceWorktreeStatusAfter": ""
+}

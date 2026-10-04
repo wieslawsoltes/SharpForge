@@ -25,8 +25,22 @@ function admit(vm, frame) {
     throw new ManagedFault('InvalidProgramException', 'Frame exceeds its verified source stack bound');
   }
   admitStackBytes(vm, frame);
-  admissions.set(frame, {epoch, limit, id: frame.id, method, code: method.code, handlers: method.handlers,
-    locals: method.locals, localCount: frame.locals.length, metadataLocalCount: method.locals.length, methods: vm.image.methods});
+  const id = frame.id, code = method.code, handlers = method.handlers, locals = method.locals;
+  const localCount = frame.locals.length, metadataLocalCount = method.locals.length, methods = vm.image.methods;
+  // Frame pooling changes the logical id, but its private admission record can
+  // be reused after validation and all potentially observable reads succeed.
+  const entry = previous ?? {};
+  entry.epoch = epoch;
+  entry.limit = limit;
+  entry.id = id;
+  entry.method = method;
+  entry.code = code;
+  entry.handlers = handlers;
+  entry.locals = locals;
+  entry.localCount = localCount;
+  entry.metadataLocalCount = metadataLocalCount;
+  entry.methods = methods;
+  if (!previous) admissions.set(frame, entry);
 }
 
 /** Quota rejection precedes pc/counter/profiler changes; ordinary managed faults keep their existing path. */

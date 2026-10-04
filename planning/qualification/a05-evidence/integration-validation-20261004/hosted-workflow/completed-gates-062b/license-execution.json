@@ -1,0 +1,36 @@
+{
+  "name": "license",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/conformance/oracle/license-policy.js"
+  ],
+  "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "062b3b899d8dd36a696ee0e028e5951d86e98139",
+    "tree": "a48712f9873d7c4948619ed6e3654d7e53e81d63",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T20:44:53.537645+00:00",
+  "completedUTC": "2026-10-04T20:44:53.816004+00:00",
+  "elapsedSeconds": 0.2781451199989533,
+  "exitCode": 0,
+  "endIdentity": {
+    "commit": "062b3b899d8dd36a696ee0e028e5951d86e98139",
+    "tree": "a48712f9873d7c4948619ed6e3654d7e53e81d63",
+    "status": ""
+  },
+  "artifact": {
+    "path": "license.log",
+    "bytes": 88,
+    "sha256": "bebbb33216cff9ed2de82fddd5710806b04a02c04635b630a812635aeebf2548"
+  }
+}

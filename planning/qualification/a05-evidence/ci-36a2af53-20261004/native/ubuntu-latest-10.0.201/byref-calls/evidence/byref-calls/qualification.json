@@ -1,0 +1,174 @@
+{
+  "task": "SF-A05-E04",
+  "fixture": "byref-calls",
+  "timestamp": "2026-10-04T19:53:50.362Z",
+  "revision": "36a2af53287a563fd47d3a33b8e6e6382a726d35",
+  "platform": "linux",
+  "architecture": "x64",
+  "node": "v22.23.3",
+  "dotnetSdk": "10.0.201",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.5 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.5 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.NETCore.App]",
+  "targetFramework": "net10.0",
+  "passed": true,
+  "status": "passed",
+  "qualification": "Same native source and output compared across Roslyn CIL and compiler source/reload/CIL routes",
+  "sources": [
+    {
+      "path": "tests/fixtures/a05/byref-calls/Program.cs",
+      "sha256": "abd024ce59c9f9b44cd8dc09fdd3baece49efe63c8260df2f9520f130f2a7955"
+    }
+  ],
+  "expectedOutput": "9\n5\n32\n31\n8\n7\nbounds\n",
+  "assemblySha256": "9c2ebe2a20ef42b8ddbfdc684f7a6a6c73590e66aaa5232a8a66e5508a2433f3",
+  "nativeRuntime": {
+    "scope": "Independent native process with identical fixture runtimeconfig, dotnet executable, cwd and environment; not guest instrumentation.",
+    "frameworkDescription": ".NET 10.0.12",
+    "environmentVersion": "10.0.12",
+    "runtimeIdentifier": "linux-x64",
+    "nativeIntBits": 64,
+    "processArchitecture": "X64",
+    "runtimeConfig": {
+      "file": "Qualification.runtimeconfig.json",
+      "sha256": "9950d4583cfc9a106857c0d5b8a75b53e8774852b57b80bc3823a74d44a4d87f",
+      "content": "{\n  \"runtimeOptions\": {\n    \"tfm\": \"net10.0\",\n    \"framework\": {\n      \"name\": \"Microsoft.NETCore.App\",\n      \"version\": \"10.0.0\"\n    },\n    \"configProperties\": {\n      \"System.Reflection.Metadata.MetadataUpdater.IsSupported\": false,\n      \"System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization\": false\n    }\n  }\n}"
+    },
+    "probe": {
+      "sourceSha256": "e71c8ef2c6af179c6c2e7cfc64e8f4193ad4110475875f729771938bd32bb1d7",
+      "assemblySha256": "2c337f017061007bca7b1388662a064d70a8e27aad19ca64d41d2e51ac527267"
+    },
+    "command": {
+      "executable": "dotnet",
+      "arguments": [
+        "exec",
+        "--runtimeconfig",
+        "<temporary-project>/bin/Release/net10.0/Qualification.runtimeconfig.json",
+        "<temporary-project>/runtime-probe/bin/Release/net10.0/RuntimeProbe.dll"
+      ]
+    },
+    "exitCode": 0,
+    "signal": null,
+    "output": ".NET 10.0.12\n10.0.12\nlinux-x64\n8\nX64\n",
+    "stderr": ""
+  },
+  "native": {
+    "exitCode": 0,
+    "signal": null,
+    "output": "9\n5\n32\n31\n8\n7\nbounds\n",
+    "stderr": ""
+  },
+  "cil": {
+    "state": "terminated",
+    "exitCode": 0,
+    "output": "9\n5\n32\n31\n8\n7\nbounds\n",
+    "instructions": 183
+  },
+  "sourceRoutes": {
+    "nativeIntBits": 64,
+    "sourceSha256": "abd024ce59c9f9b44cd8dc09fdd3baece49efe63c8260df2f9520f130f2a7955",
+    "assemblySha256": "965d5072df5161aadf8c830472b4b8a4ea6ce3d413a58b06401d28c4b9cb703f",
+    "routes": [
+      {
+        "engine": "source",
+        "state": "terminated",
+        "exitCode": 0,
+        "output": "9\n5\n32\n31\n8\n7\nbounds\n",
+        "instructions": 425
+      },
+      {
+        "engine": "reloaded-source",
+        "state": "terminated",
+        "exitCode": 0,
+        "output": "9\n5\n32\n31\n8\n7\nbounds\n",
+        "instructions": 425
+      },
+      {
+        "engine": "compiled-cil",
+        "state": "terminated",
+        "exitCode": 0,
+        "output": "9\n5\n32\n31\n8\n7\nbounds\n",
+        "instructions": 661
+      }
+    ]
+  },
+  "commands": [
+    {
+      "command": "dotnet",
+      "arguments": [
+        "restore",
+        "Qualification.csproj",
+        "--configfile",
+        "NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "build",
+        "Qualification.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "restore",
+        "RuntimeProbe.csproj",
+        "--configfile",
+        "<temporary-project>/NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>/runtime-probe",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "build",
+        "RuntimeProbe.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>/runtime-probe",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "exec",
+        "--runtimeconfig",
+        "<temporary-project>/bin/Release/net10.0/Qualification.runtimeconfig.json",
+        "<temporary-project>/runtime-probe/bin/Release/net10.0/RuntimeProbe.dll"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "<temporary-project>/bin/Release/net10.0/Qualification.dll"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    }
+  ]
+}

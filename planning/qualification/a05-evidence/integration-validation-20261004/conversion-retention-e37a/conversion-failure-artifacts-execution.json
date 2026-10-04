@@ -1,0 +1,49 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "conversion-failure-artifacts",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a05-conversion-failed-replay.test.js",
+    "tests/a05-conversion-abi-qualification.test.js",
+    "tests/a05-numeric-differential-harness.test.js"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": null,
+    "DOTNET_ROOT": null,
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": null,
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "e37a5452944765f50c7bf32858e6a2ec2e1d1dc7",
+    "tree": "e05560bf9690ee617676c1e62835d57c9b804b9e",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T22:56:26.323040+00:00",
+  "completedUTC": "2026-10-04T22:56:30.549269+00:00",
+  "elapsedSeconds": 4.225959823001176,
+  "exitCode": 0,
+  "endIdentity": {
+    "commit": "e37a5452944765f50c7bf32858e6a2ec2e1d1dc7",
+    "tree": "e05560bf9690ee617676c1e62835d57c9b804b9e",
+    "status": ""
+  },
+  "artifact": {
+    "path": "conversion-failure-artifacts.log",
+    "bytes": 2937,
+    "sha256": "a933a73841286cf41fd3f1062fee156c9534248911c11a31fdf1816ff7398e5e"
+  }
+}

@@ -1,22 +1,111 @@
 # Project 7 integration progress — 2026-10-04
 
-The current repair checkpoint is
-`7d7fac37a672d0961fa82c457b64910c0c97a7d6`, including reconciliation with the
-newer main used by the failed core CI merge. Earlier broad correctness and native
-numeric replay results remain scoped to their recorded revisions. The new broad
-regression selection passed all 3,369 tests at this checkpoint, and the published
-`312cd9242` platform matrix has actual results described below. Remaining
-performance and platform gates are still open; this checkpoint does not close issues or claim
-Project 7 completion.
+This additive reconciliation observes `0d99a7aa00f0b8807411030f29e8582f2e5bdcc9`,
+tree `82d6f5517ef5f2162d3cba9a6664b1cadc03fd15`. It records a completed focused
+correctness checkpoint for publication to the existing draft PR. Runtime
+performance work continues. Current native/browser/full CI, the fixed hosted
+qualification queue and complete size comparison remain **pending**. No issue
+is closed and no whole-project pass is claimed.
 
 The original [acceptance ledger](a05-project7-acceptance-audit.json) retains all
 83 captured issues, 210 exact criteria, issue-body hashes and historical
 assessments. Its `54e3bba84` state is historical. Additive repair observations link
 new evidence without changing the original criteria or relabeling earlier runs.
 
-## Current repair checkpoint
+## Current focused correctness checkpoint
 
-The [CI repair archive](a05-evidence/integration-validation-20261004/ci-repair-checkpoint/README.md)
+| Recorded selection | Revision | Result and limit |
+| --- | --- | --- |
+| [Main admission/conversion/fusion/debugger cohort][main-aa-4c75] | `4c75ea43f` | **276/283 passed, seven failed**; original failed record preserved |
+| [Debugger and late CIL admission repairs][debugger-3505] | `3505b8a50` | **89/89 passed**, zero failures or skips; eight selected files |
+| [Source admission reuse and prepared execution][source-ef375] | `ef37516ec` | **39/39 passed**, zero failures or skips; four selected files |
+| [Conversion failure-retention and differential helpers][conversion-e37a] | `e37a54529` | **12/12 passed**, zero failures or skips; three selected files |
+| [Ordinary static check][static-2a9b] | `2a9b26529` | Passed after the reviewed exact evaluator-hash update; earlier `3505` failure retained |
+| [Optional strict structure check][static-2a9b] | `2a9b26529` | Failed with **265** reported problems; no global structure pass |
+
+The `3505` selection covers the source/CIL evaluation transaction cases,
+late verified-call membership and rollback, runtime-implemented delegates,
+local constructor identity, virtual calls, token caching and existing debugger
+checks. It resolves the six observed CIL verification/delegate failures and
+the source-history fixture issue in its focused scope. The `ef375` checks cover
+source admission reuse, byte budgets, prepared calls and fusion integer plans.
+Counts are not added across selections, and neither repairs the historical
+outcome of the failed `4c75` command.
+
+The strict-check differential uses the unchanged main checker and baseline:
+238 reported paths are byte-identical to main `aa74558`, 26 changed paths have
+unchanged or smaller offending metrics, and one new integration line exceeded
+160 UTF-16 units. Commit `77f338fbb04fd12a28a6f8a22a5803f4054cb866` wraps that
+line in `packages/cil/src/async-runtime-profile.js`; its observed maximum is
+now 144 units. This source correction does not invent a later strict-check
+execution or remove the 264 observed existing-main violations.
+
+The conversion runner now retains and hashes emitted CIL before the first VM
+execution, including failed replay chunks. Its negative tests prove that retained
+artifacts cannot promote a failed run to qualified. Actual exhaustive
+**CLR10/X86 capture and 2,277-case source/reload/direct-CIL replay remain pending**.
+The [cross-ABI protocol](a05-conversion-abi-qualification.md) preserves #1349's
+literal 15-target criterion and the existing 33-opcode/five-source inventory.
+Eleven non-native forms plus four native-width forms is a coverage interpretation,
+not inferred author intent; the historical 2,112-case ABI64 corpus is unchanged.
+
+The bounded acceptance review found no additional demonstrated implementation
+gap beyond these assigned repairs. Parent examples and capability delivery were
+already reconciled. Current full qualification, including the later async/task
+integration, remains separate from these focused results and the completed36
+platform observations below. Earlier interrupted or failed full runs remain
+incomplete or failed.
+
+## Completed36 evidence and subsequent repairs
+
+The [completed36 native archive][native36] records all six standard SDK/OS cells
+and both targeted Windows x86 cells. Standard outcomes are **191 passed, zero
+failed, 13 unsupported** across 204 cases. The 13 comprise nine SDK 8 exclusions
+for the pinned SDK 10 numeric policy and four observed Unix CLR varargs
+rejections. Windows varargs has actual native parity. Unsupported records are
+not counted as passes. Exact Swap/out/ref-indexer/in-struct and native-width
+cases compare native output with the same Roslyn CIL and source/reload/compiler
+CIL routes; both 32-bit and 64-bit native processes were observed.
+
+The [completed36 browser archive][browser36] has **8/8 cases passing per engine**
+for Chromium 153.0.8010.12, Firefox 155.0 and WebKit 26.6. It includes official
+Speedscope imports for source/reload/CIL and the new actual Wasm heap bridge:
+22 instructions and 22 safepoint collections, matching writes/allocations/profile
+records, plus return-root survival and collection. It does not qualify later
+runtime changes or every browser/OS combination.
+
+The concurrent [actual core failure][core36] remains a failure: A00 passed 482/482,
+then A01 had 805 passes, three failures and one skip out of 809. The legacy-adapter
+comparison/profile repairs subsequently passed their assertions. The later
+[full A01 rerun][return-repairs] at `6b3038a1` still had 842 passes, one file-level
+heap-exhaustion/SIGABRT failure and one skip out of 844; it is not a full A01 pass.
+Its earlier 20-file selection at `111c2993` had 231/233 passes, with the selected
+return/array/byref/filter tests passing and two profile-expectation failures
+subsequently corrected. None of these overlapping counts are combined.
+
+The [return-lifetime stress repeat][return-stress] passed **6/6** at clean
+`6cdd61291`: the same 1,000 distinct CIL programs, 131,341 instructions and 131,341
+instruction-boundary collections, plus 96 separately counted source/reload/CIL
+counterparts. The corpus hash and owner-removal negative controls are retained.
+This supersedes an unrun-return-lifetime observation; it does not qualify the
+new `1520f50b1` task continuation or AggregateException changes.
+
+The [hosted contract selection][hosted-contract] passed 48/48 at `062b3b899`.
+Its [separate completed gates][hosted-gates] retain a failed static check for the
+then-present dynamic import, a passing oracle-license check and a functional
+sparse build. The later `bf48fd5c9` static-worker repair is implemented; no retest
+is inferred from that failed record. Complete-asset size and supply-catalog
+validation are separate from those limited passes.
+
+The earlier `4e9c5017` entry in the JSON ledger maps these observations to
+original criterion IDs. It records the then-unresolved #1349 target-count
+disposition and the 2,112-case ABI64 proof. The new entry adds the cross-ABI
+machinery and its still-pending actual ABI32 qualification without changing
+that historical record, duplicating target aliases or rewriting the criterion.
+
+## Earlier repair checkpoints
+
+The [CI repair archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/ci-repair-checkpoint/README.md)
 preserves the initial 216-test selection at `59da6ca77` with 208 passes and eight
 failures, and the subsequent runtime selection at `0e111a882` with 306 passes and
 two failures out of 308. Corrected fixtures use decoded method identities,
@@ -32,7 +121,7 @@ with zero failures or skips. The new harnesses now have correctness and rejectio
 tests; prescribed cold/warm p50/p95/p99 and allocation measurements remain
 pending. These are not speedup results or a T12 qualification baseline.
 
-The [A00 contract archive](a05-evidence/integration-validation-20261004/a00-contracts/README.md)
+The [A00 contract archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/a00-contracts/README.md)
 separately retains 81/81 focused tests and 2/2 image-compatibility tests, along with
 the incomplete full-A00 attempt interrupted at a nested resource-slot wait. The
 guard and generated-contract repairs retain exact old/new hashes. Their counts
@@ -40,7 +129,7 @@ are not added together or relabeled as later runs.
 
 After the nested run-slot lease repair, the full manifest-selected A00 run
 passed all 482 tests with zero failures or skips at `c45e90c6a`. The
-[completed gate archive](a05-evidence/integration-validation-20261004/completed-gates/README.md)
+[completed gate archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/completed-gates/README.md)
 preserves that result and its exact command alongside the later local gates:
 24/24 Node browser-heap/Wasm-bridge/native-plan tests, six Python browser-contract
 tests, and `npm run check` at `0e27de925`; then 8/8 observer-cleanup tests, oracle
@@ -49,7 +138,7 @@ Node files with zero unassigned files, zero syntax errors across 4,702 modules,
 and zero import errors across 4,647 inspected / 4,690 linked modules. Those
 commands overlap and their test counts are not combined.
 
-The subsequent [broad regression run](a05-evidence/integration-validation-20261004/broad-a05-7d7fac37a/README.md)
+The subsequent [broad regression run](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/broad-a05-7d7fac37a/README.md)
 completed on clean `7d7fac37a`: **3,369/3,369 passed**, zero failures, skips or
 cancellations, in 390,352.526802 ms on Node v24.19.0. It selected 313 top-level
 `a05-*.test.js` files plus preemption and security limits, using the one-run,
@@ -58,9 +147,9 @@ clean before/after status are retained. This is a broad Node regression result;
 the full repository, separate long numeric/GC-stress protocols, prescribed
 performance measurements and new browser heap/GC executions remain distinct.
 
-The added browser heap/GC path now has local Node and Python contract coverage,
-including cleanup after native compilation refusal; actual execution of that
-new case in the three browsers remains a separate qualification. A passing
+At the 7d checkpoint the added browser heap/GC path had local Node and Python
+contract coverage, including cleanup after native compilation refusal. Its later
+actual execution is now retained in the completed36 archive above. A passing
 strict build likewise does not establish measured build-size growth.
 
 ## Repaired behavior and correctness evidence
@@ -79,8 +168,8 @@ native varargs classification; exact `Unsafe.Unbox<T>` admission and foreign-VM
 reference rejection; Nullable constrained calls; and compiler literal/source
 floating conversion repairs. Actual retained SDK8 DLLs now exercise async replay
 and Unsafe.Unbox, and the retained SDK10 memory DLL exercises the native trace.
-The [native repair archive](a05-evidence/integration-validation-20261004/native-repairs/README.md)
-and [policy/snapshot archive](a05-evidence/integration-validation-20261004/policy-weak-intern/README.md)
+The [native repair archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/native-repairs/README.md)
+and [policy/snapshot archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/policy-weak-intern/README.md)
 preserve the failures that led to these fixes as well as the subsequent passes.
 
 | Selection | Recorded revision or scope | Result |
@@ -93,11 +182,11 @@ preserve the failures that led to these fixes as well as the subsequent passes.
 | Full saved native numeric replay | `139917fe5f` | 10 passed, one failed, zero skips; the 100,000-pair C# test passed all three routes |
 | Repaired complete conversion matrix | Tested source equivalent to `b3673745c` | All 2,112 cases passed in helpers, source, reload and direct CIL |
 
-The [final repair validation archive](a05-evidence/integration-validation-20261004/native-repairs/final/README.md)
+The [final repair validation archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/native-repairs/final/README.md)
 records the latest commands and measured identities. Its results are scoped to
 those selections and revisions. The 3,320-test run does not replace the separately
 recorded long numeric replay. Earlier 3,187-test and 3,236-test results remain in
-the [main reconciliation archive](a05-evidence/integration-validation-20261004/main349/README.md).
+the [main reconciliation archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/main349/README.md).
 Overlapping cohorts are never added into a synthetic total.
 
 The numeric replay now consumes the exact hash-verified `.cs` files that were
@@ -110,7 +199,7 @@ exposed a valid Int64-minimum literal crashing the legacy constant adapter, an
 ambiguous generated native cast, and a source cast that converted a floating
 carrier object to NaN. These were repaired without altering oracle values or
 case counts. Focused literal/constant runs passed 16/16 and 18/18; the complete
-2,112-case matrix then passed separately. The [independent replay archive](a05-evidence/numeric-independent-20261004/README.md)
+2,112-case matrix then passed separately. The [independent replay archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/numeric-independent-20261004/README.md)
 retains both original failed runs and the additive repair proof. It does not
 invent a full 11/11 execution at a later revision.
 
@@ -126,7 +215,7 @@ dependency-boundary repairs through `39055a8527e840b4534c45ffca122f3f89466106`
 separate ManagedFault, delegate call admission and scheduler context completion.
 The strict build passed at clean `807879f511a877ba7e5e1e0e63d9b9b75ba91319`,
 whose relevant source trees match `39055a852`; focused cohorts passed 78/78 and
-19/19. The [build archive](a05-evidence/integration-validation-20261004/build-cycle-repair/README.md)
+19/19. The [build archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/build-cycle-repair/README.md)
 preserves both the original failure and the successful rerun without changing
 the cycle-validation rule.
 
@@ -134,14 +223,32 @@ the cycle-validation rule.
 
 | Target | Exact measured revision | Observed result | Decision |
 | --- | --- | --- | --- |
+| Source Fibonacci | `ef37516ec`, 100 pairs | 1.605549272945154x; 95% CI 1.4364472786404399–1.7696360228862134x | Inconclusive against 1.5x |
+| Virtual-call cache | `10d710b34`, 100 pairs | 1.982710053204195x; 95% CI 1.9063535270623788–2.0961506499612357x | Misses 3x |
+| Source Fibonacci | `36a2af53`, 100 pairs | 1.496181x; 95% CI 1.459995–1.530310x | Inconclusive against 1.5x |
+| Virtual-call cache | `36a2af53`, 100 pairs | 2.283161x; 95% CI 2.201788–2.420406x | Misses 3x |
+| Strict profiler-off | `36a2af53`, 100 pairs for each of six rows | All six 95% intervals cross the required below 1% boundary | Inconclusive; six enabled reporting rows remain separate |
 | Scalar slot time per guest instruction | `48c62243`, 100 pairs | 71.686% reduction; 95% CI 70.380–72.616% | Meets 30% at that revision; final qualification remains separate |
 | Virtual-call cache | `48c62243`, 20 pairs | 2.153884x; 95% CI 1.835978–2.521246x | Misses 3x |
 | Source Fibonacci | `48c62243`, prespecified 100-pair repeat | 1.472784x; 95% CI 1.413465–1.523999x | Inconclusive against 1.5x |
 | Source root scanning | `5909d54f`, 100 pairs | 3.397571x; 95% CI 3.326203–3.482088x | Historical 3x pass; fresh run needed after runtime/root repairs |
 | CIL root scanning | `5909d54f`, 100 pairs | 3.343396x; 95% CI 3.253705–3.506038x | Historical 3x pass; fresh run needed after runtime/root repairs |
 
-The [scalar/virtual reports](a05-evidence/slots-virtual-48c62243/README.md) and
-[both Fibonacci reports](a05-evidence/source-fibonacci-2026-10-04/README.md) remain
+The [source-admission archive][source-ef375] retains both the 39-test pass and
+the separate inconclusive Fibonacci measurement. All 104 observations per mode
+verified identical output and guest work, with one first execution and three
+warmups excluded from the 100 measured pairs. Its passing correctness selection
+does not make the interval qualify. The [preoptimization priority archive][priority-10d]
+retains the virtual miss, earlier inconclusive Fibonacci result and bounded CPU
+diagnostics. No historical results are pooled or discarded, and diagnostic
+profiles do not establish a target speedup.
+
+The [published36 priority reports][priority36] and [strict off report][off36]
+retain every observation, the initial setup failure and exact reference proof.
+No missed/inconclusive result is discarded or promoted by a later implementation.
+
+The [scalar/virtual reports](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/slots-virtual-48c62243/README.md) and
+[both Fibonacci reports](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/source-fibonacci-2026-10-04/README.md) remain
 unchanged. The larger Fibonacci repeat is not selected as a pass. Recorded warm
 managed/frame/storage allocation counters are exact for their scopes; they do
 not measure every host JavaScript allocation. Diagnostic CPU profiles do not
@@ -172,19 +279,26 @@ snapshot retention and full-copy replay, the original float-allocation workload,
 full-size fairness, and specialized Int32/Int64 differential/target runs. Full
 fairness means one million sorted elements with every actual slice checked
 against the 8 ms budget and 16 ms maximum. T12 still needs two complete serial
-runs on the same final revision and runner, within 5% stability, followed by the
-actual candidate gate. Focused tests and an authored harness do not replace
+runs on the same final revision and runner, within 5% stability, plus the
+`--qualify first --repeat second` baseline gate and existing slowed-handler/noise
+gate controls. The original criteria do not require a third full prospective run. Focused tests and an authored harness do not replace
 these measurements.
 
-The added managed-reference and actual compiled-Wasm harnesses supply the
+The added managed-reference, array and actual compiled-Wasm harnesses supply the
 previously missing parent-issue cold/warm latency and allocation measurement
 paths. They retain complete guest work, exact results and backend identities,
 with VM-cold preparation separate from warm execution. Their passing focused
 tests do not close the measurement criteria until prescribed reports execute.
 
-## Platform and publication gates
+The unchanged hosted plan contains 25 commands, including all six strict
+profiler-off rows and six separate enabled-overhead reporting rows. Complete
+size evidence remains a separate operation over all 34 artifact identities;
+the existing policy budgets 29 and leaves five without budgets. No output is
+omitted and no complete size-policy pass is asserted at this checkpoint.
 
-The [native-width/byref harness checkpoint](a05-evidence/integration-validation-20261004/native-width-byref/README.md)
+## Earlier platform and publication checkpoints
+
+The [native-width/byref harness checkpoint](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/native-width-byref/README.md)
 at `46ed6141a` passed 28/28 focused tests with no skips, `npm run check`, and the
 oracle license-policy check. Its exact journal and raw outputs are retained.
 The qualification plan now defines 34 native cases across six SDK/OS cells plus
@@ -193,7 +307,7 @@ The expanded plan subsequently ran against published `312cd9242`; those actual
 results are recorded below. The local harness tests themselves do not establish
 native process width or replace platform qualification.
 
-The [completed `e09324d3` CI matrix](a05-evidence/ci-e09324d3-20261004/README.md)
+The [completed `e09324d3` CI matrix](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-e09324d3-20261004/README.md)
 is retained with its original outcomes: all six native SDK8/SDK10 OS jobs failed,
 with three explicitly unsupported numeric policies per SDK8 cell. Chromium
 passed seven cases; Firefox passed four and failed three Speedscope imports;
@@ -209,7 +323,7 @@ static import validation. Contract and launcher tests passed locally. Original
 screenshots, reports and failed outputs remain byte-for-byte evidence of
 `e09324d3`; the later results do not rewrite that failed matrix.
 
-The [published `312cd9242` archive](a05-evidence/ci-312cd924-20261004/README.md)
+The [published `312cd9242` archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/README.md)
 retains actual Chromium 153.0.8010.12, Firefox 155.0 and WebKit 26.6 reports with
 7/7 cases passing in each browser. Firefox used headed Xvfb; Chromium and WebKit
 were headless, with Playwright 1.63.0. Each report includes actual Wasm execution,
@@ -235,7 +349,7 @@ has these completed coordinator-reviewed job-log outcomes at this checkpoint:
 The unsupported outcomes are three SDK10-only numeric policies in SDK8 cells,
 plus observed CLR managed-varargs rejection on Unix. All six standard cells
 and both targeted x86 jobs have completed. The
-[standard-native archive](a05-evidence/ci-312cd924-20261004/standard-native/README.md)
+[standard-native archive](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-312cd924-20261004/standard-native/README.md)
 now retains all six aggregate reports and their 204 detailed case outcomes,
 separately from the browser and x86 archive. Those case executions contain 191
 passes, zero failures and 13 explicitly unsupported outcomes. All eight native
@@ -268,3 +382,28 @@ The PR remains a draft pending the remaining gates. Push workflows identify the
 actual owned continuation-branch commit while main moves; they do not invent a
 PR merge result. Historical retained branches remain available. This checkpoint
 records no main merge and no blanket Project 7 completion.
+
+## Evidence packaging
+
+Raw observations are retained byte-for-byte in `planning/qualification/a05-evidence/`,
+with a [Git blob/SHA-256 path map](https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence-relocations/initial-20261004.json).
+The shipped [evidence index](a05-evidence/README.md) describes the boundary.
+Historical paths inside raw reports and the acceptance JSON remain unchanged.
+This is a packaging change; complete output size must still be measured with the
+existing build and size policies, and no previous measurement is replaced.
+
+[native36]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/native/README.md
+[browser36]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/README.md
+[core36]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/ci-36a2af53-20261004/ci-status/README.md
+[return-repairs]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/return-array-a01/README.md
+[return-stress]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/return-lifetime-byref/README.md
+[hosted-contract]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/hosted-workflow/README.md
+[hosted-gates]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/hosted-workflow/completed-gates-062b/README.md
+[priority36]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/priority-36a2af532/README.md
+[off36]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/profiler-off-36a2af532/README.md
+[main-aa-4c75]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/main-aa74558-4c75/README.md
+[debugger-3505]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/main-aa74558-debugger-3505/README.md
+[source-ef375]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/source-admission-reuse-ef375-20261004/README.md
+[conversion-e37a]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/conversion-retention-e37a/README.md
+[static-2a9b]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/integration-validation-20261004/main-aa74558-static-structure-2a9b/README.md
+[priority-10d]: https://github.com/wieslawsoltes/SharpForge/blob/codex/a05-e01-started-handoff-20261004/planning/qualification/a05-evidence/main41eb-priority-10d710b34-20261004/README.md

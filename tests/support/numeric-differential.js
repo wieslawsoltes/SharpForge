@@ -51,11 +51,12 @@ function compareExecution(vm, expected, label) {
   return {characters: offset, instructions: vm.instructions};
 }
 
-/** Compare one C# source against native output in source, reloaded source and direct CIL. */
+/** Compare all three routes; an optional observer retains copied assembly bytes before any VM executes. */
 export function numericDifferential(source, expected, options = {}) {
   assert.equal(typeof expected, 'string', 'A native output string is required');
   const compiled = compileToIL(source);
   assert(compiled.success, JSON.stringify(compiled.diagnostics));
+  options.onAssembly?.(Uint8Array.from(compiled.assembly));
   const settings = {nativeIntBits: options.nativeIntBits ?? 32,
     maxOutputCharacters: Math.max(1, expected.length), ...options.vmOptions};
   const engines = [

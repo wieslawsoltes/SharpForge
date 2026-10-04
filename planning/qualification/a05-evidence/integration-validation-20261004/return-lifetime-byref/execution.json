@@ -1,0 +1,48 @@
+{
+  "name": "ordinary-return-byref-gc-stress",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/byref-gc-stress.test.js"
+  ],
+  "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null,
+    "SHARPFORGE_BYREF_STRESS_REPORT": "/workspace/scratch/42f7738360b9/a05-return-stress-20261004/byref-gc-stress.json"
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "6cdd61291d79b609211e05624645225aeaa7d94c",
+    "tree": "009e3ad2814fd596b305129be724c0adc06fb66c",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T20:35:06.802500+00:00",
+  "completedUTC": "2026-10-04T20:35:14.811512+00:00",
+  "elapsedSeconds": 8.008802776996163,
+  "exitCode": 0,
+  "endIdentity": {
+    "commit": "6cdd61291d79b609211e05624645225aeaa7d94c",
+    "tree": "009e3ad2814fd596b305129be724c0adc06fb66c",
+    "status": ""
+  },
+  "artifacts": [
+    {
+      "path": "byref-gc-stress.json",
+      "bytes": 655210,
+      "sha256": "a1cc510a787fb69de4bff4b62ecc80c93379cad9800d459c472faa6b6cebf650"
+    },
+    {
+      "path": "byref-gc-stress.tap",
+      "bytes": 2637,
+      "sha256": "edeaee45095094f8fe608468e8a4cbb8b75288279d52c55e0a97e8f6e61cea8b"
+    }
+  ]
+}

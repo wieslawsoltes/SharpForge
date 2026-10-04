@@ -1,0 +1,96 @@
+{
+  "format": "SharpForge.A01CancellationTriage/1",
+  "mode": "Read-only retained log and committed-source review; no reproduction",
+  "priorCIRevision": "edfa7cc8e11e05b9ceb0f6fdcb43fe071b24e11e",
+  "rerunRevision": "6b3038a154be525c05a64ebae9912dd8b536bedf",
+  "unchangedBlobs": [
+    {
+      "path": "tests/syntax-cancellation.test.js",
+      "priorBlob": "ea674f3e0ea25cb13fa5b63f0acd37a29dfacd97",
+      "rerunBlob": "ea674f3e0ea25cb13fa5b63f0acd37a29dfacd97",
+      "identical": true
+    },
+    {
+      "path": "packages/syntax/bench/incremental.bench.js",
+      "priorBlob": "2c72d2ba23160645c99b5fb33ee2fffbd57ed10a",
+      "rerunBlob": "2c72d2ba23160645c99b5fb33ee2fffbd57ed10a",
+      "identical": true
+    },
+    {
+      "path": "packages/syntax/src/cancellation.js",
+      "priorBlob": "89ed6acca78774980d17ad48b223901aa74bb11e",
+      "rerunBlob": "89ed6acca78774980d17ad48b223901aa74bb11e",
+      "identical": true
+    },
+    {
+      "path": "packages/syntax/src/lexer.js",
+      "priorBlob": "f4fe8e406f454c9735ead714affc39008baa91c8",
+      "rerunBlob": "f4fe8e406f454c9735ead714affc39008baa91c8",
+      "identical": true
+    },
+    {
+      "path": "packages/syntax/src/parser.js",
+      "priorBlob": "5a2b27db46737fec40dd05cb8e5457ec08787304",
+      "rerunBlob": "5a2b27db46737fec40dd05cb8e5457ec08787304",
+      "identical": true
+    },
+    {
+      "path": "packages/syntax/src/syntax-tree.js",
+      "priorBlob": "ade7c829bc0c7c249f955e8df370922e80ca5d3c",
+      "rerunBlob": "ade7c829bc0c7c249f955e8df370922e80ca5d3c",
+      "identical": true
+    },
+    {
+      "path": "packages/text/src/index.js",
+      "priorBlob": "1a46e0fee17c1506a1584242e849a26e7ab061ce",
+      "rerunBlob": "1a46e0fee17c1506a1584242e849a26e7ab061ce",
+      "identical": true
+    },
+    {
+      "path": "tests/support/syntax-edits.js",
+      "priorBlob": "3beeea95ef7e77b8f2fb127faf6246483044e0d3",
+      "rerunBlob": "3beeea95ef7e77b8f2fb127faf6246483044e0d3",
+      "identical": true
+    },
+    {
+      "path": "packages/syntax/src/lexer/scanner.js",
+      "priorBlob": "2f38607f10065a403d6e6ca3ab73cc6be88ad83e",
+      "rerunBlob": "2f38607f10065a403d6e6ca3ab73cc6be88ad83e",
+      "identical": true
+    },
+    {
+      "path": "packages/syntax/src/parser/budget.js",
+      "priorBlob": "9e0dac2c2e55bc504151becc0d95ca98f1fbe1cf",
+      "rerunBlob": "9e0dac2c2e55bc504151becc0d95ca98f1fbe1cf",
+      "identical": true
+    }
+  ],
+  "changedSyntaxAndTextPaths": [
+    "packages/syntax/src/legacy-adapter/statement-forms.js"
+  ],
+  "logObservations": [
+    "V8 reports ineffective mark-compacts near heap limit and JavaScript heap out of memory.",
+    "GC diagnostics show roughly 507\u2013508MB used before SIGABRT.",
+    "Node records one file-level failure for tests/syntax-cancellation.test.js.",
+    "No successful cancellation-test subtest appears before this file-level abort."
+  ],
+  "sourceObservations": [
+    "The fixture constructs a deterministic source string of at least 5,000,000 characters at module scope. The benchmark helper does not run its benchmark on import.",
+    "The first test performs a complete SyntaxTree.parseText calibration with a callback returning false, potentially repeated once, then a complete lex with another non-cancelling callback, before testing mid-parse cancellation.",
+    "SyntaxTree checks cancellation before lexing. SourceText construction wraps the string without eagerly indexing lines; scanner and parser paths contain bounded polling.",
+    "The retained native trace contains no JavaScript allocation stack or per-phase instrumentation. Non-cancelling calibration is a plausible source of memory pressure; exact abort phase remains unattributed.",
+    "The first subtest only reports after all its calibration and cancellation cases complete; absent subtest output does not prove module-setup failure."
+  ],
+  "comparisonLimits": [
+    "Local run used Node v24.19.0 with the recorded 512MiB wrapper control; earlier CI used Node v22.23.3.",
+    "Earlier CI is not a matched-memory reproduction; its cancellation result cannot isolate the cause of this local OOM.",
+    "Unchanged selected blobs are evidence against attributing this to edits in those files, not proof that all transitive code or environmental effects are excluded.",
+    "No A05 or cancellation product regression is established; the full A01 run remains failed."
+  ],
+  "priorCIObservations": {
+    "cancellationCasesPassed": 3,
+    "firstTestDurationMs": 7996.114537,
+    "comparison": "Node v22.23.3, not matched-memory to local Node v24.19.0 with 512 MiB wrapper control"
+  },
+  "classification": "Local resource-cap failure pending phase attribution; no established A05 or cancellation implementation regression."
+}

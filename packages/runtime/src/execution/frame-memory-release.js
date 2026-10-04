@@ -1,9 +1,12 @@
 /** Revoke frame-owned capabilities at logical retirement, before pooled storage is cleared. */
 export function releaseFrameMemory(vm, frame) {
   frame.stackRegions?.clear();
-  for (const lease of frame.pinLeases?.values() ?? []) {
-    lease.active = false;
-    vm.heap.releaseHandle(lease.handle);
+  const leases = frame.pinLeases?.values();
+  if (leases != null) {
+    for (const lease of leases) {
+      lease.active = false;
+      vm.heap.releaseHandle(lease.handle);
+    }
   }
   frame.pinLeases?.clear();
 }

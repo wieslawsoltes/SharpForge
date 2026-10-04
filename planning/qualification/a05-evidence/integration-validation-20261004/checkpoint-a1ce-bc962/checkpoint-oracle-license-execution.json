@@ -1,0 +1,44 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "checkpoint-oracle-license",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "node",
+    "scripts/conformance/oracle/license-policy.js"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": null,
+    "DOTNET_ROOT": null,
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": null,
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "bc9623e72d415e1a9f60d05ba1c76c9eeb9cac07",
+    "tree": "20e36ff9693b314dcef99635892fe13426944984",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T23:21:47.996408+00:00",
+  "completedUTC": "2026-10-04T23:21:48.425011+00:00",
+  "elapsedSeconds": 0.4286077419965295,
+  "exitCode": 0,
+  "endIdentity": {
+    "commit": "bc9623e72d415e1a9f60d05ba1c76c9eeb9cac07",
+    "tree": "20e36ff9693b314dcef99635892fe13426944984",
+    "status": ""
+  },
+  "artifact": {
+    "path": "checkpoint-oracle-license.log",
+    "bytes": 88,
+    "sha256": "6e3fdaba8f6dcd5353cceec61939be1828888cff010ec806e77ce725bfee8a3b"
+  }
+}

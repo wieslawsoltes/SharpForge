@@ -1,0 +1,98 @@
+{
+  "format": "SharpForge.A05ValidationArchive/1",
+  "scope": "Two completed checkpoint commands at their exact separate clean revisions",
+  "archiveBase": {
+    "commit": "bc9623e72d415e1a9f60d05ba1c76c9eeb9cac07",
+    "tree": "20e36ff9693b314dcef99635892fe13426944984"
+  },
+  "rawArtifacts": [
+    {
+      "path": "checkpoint-static.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/checkpoint-static.log",
+      "bytes": 382,
+      "sha256": "282ca24045ca88848297d1e69e855059e22d865e4b1c41d172b2ff67d9b0bba8"
+    },
+    {
+      "path": "checkpoint-static-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/checkpoint-static-execution.json",
+      "bytes": 1289,
+      "sha256": "ea69dd0c34a69503676103cb9ea059429027d9f0d85f3d61a8b30f8c7a29c6e1"
+    },
+    {
+      "path": "checkpoint-oracle-license.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/checkpoint-oracle-license.log",
+      "bytes": 88,
+      "sha256": "6e3fdaba8f6dcd5353cceec61939be1828888cff010ec806e77ce725bfee8a3b"
+    },
+    {
+      "path": "checkpoint-oracle-license-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/checkpoint-oracle-license-execution.json",
+      "bytes": 1335,
+      "sha256": "f40b54d550a925a17a080ee2e0c5a05f902288398142b75cc58f5a36e0729ae6"
+    }
+  ],
+  "runs": [
+    {
+      "name": "checkpoint-static",
+      "testedIdentity": {
+        "commit": "a1ce82342b906845dfa5001c1a45b2af35d06390",
+        "tree": "3275f92ca8f8227191fe3913abb73f9b4cb7f1e9",
+        "status": ""
+      },
+      "endIdentity": {
+        "commit": "a1ce82342b906845dfa5001c1a45b2af35d06390",
+        "tree": "3275f92ca8f8227191fe3913abb73f9b4cb7f1e9",
+        "status": ""
+      },
+      "exitCode": 0,
+      "wallSeconds": 7.35111122699891,
+      "executionRecord": "checkpoint-static-execution.json",
+      "complete": true
+    },
+    {
+      "name": "checkpoint-oracle-license",
+      "testedIdentity": {
+        "commit": "bc9623e72d415e1a9f60d05ba1c76c9eeb9cac07",
+        "tree": "20e36ff9693b314dcef99635892fe13426944984",
+        "status": ""
+      },
+      "endIdentity": {
+        "commit": "bc9623e72d415e1a9f60d05ba1c76c9eeb9cac07",
+        "tree": "20e36ff9693b314dcef99635892fe13426944984",
+        "status": ""
+      },
+      "exitCode": 0,
+      "wallSeconds": 0.4286077419965295,
+      "executionRecord": "checkpoint-oracle-license-execution.json",
+      "complete": true
+    }
+  ],
+  "checkpointStatic": {
+    "passed": true,
+    "areas": 30,
+    "nodeFiles": 1362,
+    "browserScripts": 38,
+    "unassigned": 0,
+    "duplicate": 0,
+    "syntaxModules": 4832,
+    "syntaxErrors": 0,
+    "dynamicInspected": 4776,
+    "dynamicModules": 4823,
+    "dynamicErrors": 0
+  },
+  "checkpointOracleLicense": {
+    "passed": true,
+    "tools": 7,
+    "packages": 14,
+    "actions": 4,
+    "images": 3,
+    "trackedPaths": 18677
+  },
+  "limitations": [
+    "Each command qualifies only its recorded revision and command scope; the archive is not a rerun at its own commit.",
+    "The static checkpoint was tested at a1ce82342b906845dfa5001c1a45b2af35d06390, not at the later license checkpoint.",
+    "These logs contain no unit-test, native parity, browser, performance, build-size, strict-structure or whole-project qualification result.",
+    "The npm warning in the static log is preserved exactly. Both commands exited zero.",
+    "No product or progress-ledger changes and no test, checker, build or benchmark reruns occurred while preparing this archive."
+  ]
+}

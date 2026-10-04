@@ -7,7 +7,7 @@ import {leaveCilMethod} from './cil-method-events.js';
 import {leaveSourceMethod} from './source-runtime-events.js';
 import {abandonInitialization} from './static-init.js';
 import {verifiedMethod} from './token-cache.js';
-import {cilVerificationOptions} from './cil-admission.js';
+import {cilAdmissionOptions} from './cil-admission.js';
 
 const controlFields = ['frames', 'stack', 'state', 'sourcePause', 'currentPoint', 'pendingFault',
   'fault', 'returnValue', 'exitCode', 'onException'];
@@ -23,7 +23,7 @@ function requireMethod(vm, methodId, args) {
   if (vm.inspector && !verifiedMethod(vm, methodId)) {
     const roots = [...new Set([...vm.report.methods, methodId])];
     // Use the same structural limits as initial admission, before adding callback roots.
-    const report = verifyCilAssembly(vm.inspector, {...cilVerificationOptions(vm.scheduler.options),
+    const report = verifyCilAssembly(vm.inspector, {...cilAdmissionOptions(vm.scheduler.options),
       methodToken: vm.report.entryPoint, additionalMethodTokens: roots});
     if (!report.success) throw new ManagedFault('InvalidProgramException', report.issues.map(issue => issue.message).join('; '));
     vm.report = report;

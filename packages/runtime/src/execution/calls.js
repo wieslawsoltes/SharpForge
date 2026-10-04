@@ -52,7 +52,7 @@ export function invoke(vm,instruction) {
   const valueType=target?userValueCallType(vm,descriptor,instruction.name):null;
   if(target&&vm.ensureInitialized(descriptor.ownerToken,trigger,genericIdentity)){caller.pc--;return;}
   const delegate = supportedDelegateCall(vm.inspector, descriptor);
-  const intrinsic = intrinsicDefinition(descriptor), contract = intrinsic?.contract;
+  const intrinsic = target ? null : intrinsicDefinition(descriptor), contract = intrinsic?.contract;
   // Managed delegates copy their inputs before returning; ordinary intrinsics
   // consume them synchronously. Platform contracts may retain an owned array.
   const pool = delegate || !contract ? framePool(vm) : null;

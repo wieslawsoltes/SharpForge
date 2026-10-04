@@ -1,0 +1,121 @@
+{
+  "format": "SharpForge.A05ValidationArchive/1",
+  "scope": "Incomplete full local A05 manifest attempt",
+  "completion": "incomplete",
+  "exitCode": null,
+  "startIdentity": {
+    "commit": "001a5ccc899ae517e430866d4d1ba03d89def346",
+    "tree": "9915d20c63a3ba9a9c81f1153a13dbcf6fbbc99b",
+    "status": ""
+  },
+  "laterObservedIdentity": {
+    "commit": "001a5ccc899ae517e430866d4d1ba03d89def346",
+    "tree": "9915d20c63a3ba9a9c81f1153a13dbcf6fbbc99b",
+    "status": ""
+  },
+  "observationIsCommandEnd": false,
+  "rawArtifacts": [
+    {
+      "path": "full-a05-manifest.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/full-a05-manifest.log",
+      "bytes": 870057,
+      "sha256": "a546d095d17c2d026c025c538e76f9a6d88cce5d7782c8a23c1ef47ca87aef72"
+    },
+    {
+      "path": "full-a05-manifest-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/full-a05-manifest-execution.json",
+      "bytes": 1131,
+      "sha256": "5f68df70b727b07b96f4455120eb3f967771f74d4b56ee2c60be9fdec1e0af64"
+    },
+    {
+      "path": "full-a05-manifest-interrupted-observation.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main41eb-validation-20261004/full-a05-manifest-interrupted-observation.json",
+      "bytes": 1195,
+      "sha256": "37c84b867ac7327235d73ee782f6f0a8dd95131573e6633cd38f4b7a6c8b8e88"
+    }
+  ],
+  "observedTestLines": {
+    "ok": 3775,
+    "notOk": 17,
+    "lastOkNumber": 3792,
+    "hasFinalTapSummary": false,
+    "interpretation": "Observed emitted lines only, not a completed test count or final pass/fail summary"
+  },
+  "observedFailures": [
+    {
+      "number": 1759,
+      "name": "auto-layout state requires the supported interface slots and verified bodies"
+    },
+    {
+      "number": 2687,
+      "name": "T02.2 source generic interface methods: implicit and explicit methods with distinct method arguments"
+    },
+    {
+      "number": 2688,
+      "name": "T02.2 source generic interface methods: closed receiver and method arguments are independent"
+    },
+    {
+      "number": 2689,
+      "name": "T02.2 source generic interface methods: generic default methods retain most-specific override selection"
+    },
+    {
+      "number": 2690,
+      "name": "T02.2 source generic interface methods: implementations created after a generic interface demand become reachable"
+    },
+    {
+      "number": 2732,
+      "name": "T02.2 source interface dispatch: implicit and explicit implementations"
+    },
+    {
+      "number": 2733,
+      "name": "T02.2 source interface dispatch: inherited default body and most specific diamond"
+    },
+    {
+      "number": 2734,
+      "name": "T02.2 source interface dispatch: class implementation dominates defaults"
+    },
+    {
+      "number": 2738,
+      "name": "T02.2 ambiguous runtime metadata faults at the invoked interface declaration in every route"
+    },
+    {
+      "number": 3592,
+      "name": "engine parity: compiler/unsupported/try{Console.WriteLine(1);}catch(Exception e) when(true){}"
+    },
+    {
+      "number": 3625,
+      "name": "engine parity: parity/instruction budget boundary"
+    },
+    {
+      "number": 3630,
+      "name": "engine parity: parity/output budget boundary"
+    },
+    {
+      "number": 3631,
+      "name": "engine parity: parity/uncaught array boundary"
+    },
+    {
+      "number": 3632,
+      "name": "engine parity: parity/uncaught checked overflow"
+    },
+    {
+      "number": 3633,
+      "name": "engine parity: parity/uncaught divide by zero"
+    },
+    {
+      "number": 3634,
+      "name": "engine parity: parity/uncaught user exception"
+    },
+    {
+      "number": 3648,
+      "name": "engine parity: release05/diagnostic/init remains explicit limitation"
+    }
+  ],
+  "limitations": [
+    "No exit code, command completion time, end identity or final aggregate was observed.",
+    "Cause of interruption is not established.",
+    "The independent observation records all five recorded process IDs absent; it is not a successful command completion.",
+    "Passing emitted rows do not qualify the unfinished numeric corpus or full A05 manifest.",
+    "Original bytes are retained; no tests/checks were run while creating the archive."
+  ]
+}

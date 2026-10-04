@@ -1,0 +1,107 @@
+{
+  "url": "http://127.0.0.1:45837/denied.html",
+  "result": {
+    "passed": true,
+    "nativeProbe": {
+      "moduleHex": "0061736d01000000",
+      "compiled": false,
+      "error": {
+        "name": "CompileError",
+        "message": "call to WebAssembly.compile() blocked by CSP",
+        "nativeCompileError": true
+      }
+    },
+    "rejection": {
+      "code": "WASM_COMPILE",
+      "message": "WebAssembly instantiation failed: call to WebAssembly.instantiate() blocked by CSP",
+      "cause": "CompileError",
+      "causeMessage": "call to WebAssembly.instantiate() blocked by CSP"
+    },
+    "statistics": {
+      "enabled": true,
+      "epoch": 1,
+      "invalidated": false,
+      "activeCompilations": 0,
+      "compilationAttempts": 1,
+      "cancellations": 0,
+      "calls": 1,
+      "overflowCalls": 0,
+      "selectedCalls": 0,
+      "selectedInstructions": 0,
+      "osrTransitions": 0,
+      "osrRejectedEntries": 0,
+      "compiledBytes": 0,
+      "methods": [
+        {
+          "token": 100663297,
+          "name": "Fixture.Program::Main",
+          "calls": 1,
+          "status": "fallback",
+          "bytes": 0,
+          "reason": {
+            "code": "WASM_COMPILE",
+            "message": "WebAssembly instantiation failed: call to WebAssembly.instantiate() blocked by CSP"
+          },
+          "backedges": 5,
+          "hottestBackedge": 5,
+          "backedgeOverflow": 0,
+          "backedgeReason": null,
+          "backedgeSites": [
+            {
+              "fromOffset": 8,
+              "toOffset": 2,
+              "count": 5
+            }
+          ]
+        }
+      ]
+    },
+    "instructions": 46,
+    "hostArithmeticCalls": 4,
+    "result": 6,
+    "browserVersion": "155.0",
+    "csp": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+    "blockedRequests": []
+  },
+  "cspEvents": [
+    {
+      "source": "event",
+      "directive": "script-src",
+      "blockedURI": "wasm-eval",
+      "disposition": "enforce",
+      "documentURI": "http://127.0.0.1:45837/denied.html",
+      "policy": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    },
+    {
+      "source": "event",
+      "directive": "script-src",
+      "blockedURI": "wasm-eval",
+      "disposition": "enforce",
+      "documentURI": "http://127.0.0.1:45837/denied.html",
+      "policy": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    },
+    {
+      "source": "event",
+      "directive": "script-src",
+      "blockedURI": "wasm-eval",
+      "disposition": "enforce",
+      "documentURI": "http://127.0.0.1:45837/denied.html",
+      "policy": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    },
+    {
+      "source": "console",
+      "message": "[JavaScript Error: \"Content-Security-Policy: The page\u2019s settings blocked WebAssembly (script-src) from being executed because it violates the following directive: \u201cscript-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\u201d (Missing 'wasm-unsafe-eval' or 'unsafe-eval')\" {file: \"http://127.0.0.1:45837/tests/fixtures/a05-browser/runtime.mjs\" line: 45}]",
+      "url": "http://127.0.0.1:45837/denied.html"
+    },
+    {
+      "source": "console",
+      "message": "[JavaScript Error: \"Content-Security-Policy: The page\u2019s settings blocked WebAssembly (script-src) from being executed because it violates the following directive: \u201cscript-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\u201d (Missing 'wasm-unsafe-eval' or 'unsafe-eval')\" {file: \"http://127.0.0.1:45837/packages/runtime/src/execution/wasm/compile.js\" line: 34}]",
+      "url": "http://127.0.0.1:45837/denied.html"
+    },
+    {
+      "source": "console",
+      "message": "[JavaScript Error: \"Content-Security-Policy: The page\u2019s settings blocked WebAssembly (script-src) from being executed because it violates the following directive: \u201cscript-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8='\u201d (Missing 'wasm-unsafe-eval' or 'unsafe-eval')\" {file: \"http://127.0.0.1:45837/packages/runtime/src/execution/wasm/compile.js\" line: 34}]",
+      "url": "http://127.0.0.1:45837/denied.html"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "driver": "/workspace/scratch/42f7738360b9/a05-leaf-prototype-d3a7a3e71/probe.mjs",
+  "sha256": "1db797a16ce8950f2f431561b9dc7fe151862698bb4f782727c35a7712aa90fe",
+  "bytes": 5646,
+  "revision": "dc37f2c50420d136a076e8bee046c999fa573303",
+  "scope": "one bounded diagnostic; original virtual workload and runner preserved; only preparedLeafCalls toggled; no qualification inference"
+}

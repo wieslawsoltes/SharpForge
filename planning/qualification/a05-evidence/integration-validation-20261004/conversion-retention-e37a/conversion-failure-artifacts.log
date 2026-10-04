@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: conversion-only capture accepts the retained exact native64 corpus without rewriting it
+ok 1 - conversion-only capture accepts the retained exact native64 corpus without rewriting it
+  ---
+  duration_ms: 9.111629
+  type: 'test'
+  ...
+# Subtest: conversion proof rejects invented width, missing operands, reordered rows, abnormal CLR exits and extra output
+ok 2 - conversion proof rejects invented width, missing operands, reordered rows, abnormal CLR exits and extra output
+  ---
+  duration_ms: 126.218158
+  type: 'test'
+  ...
+# Subtest: ABI32 replay compares native-style answers in all three engines including checked conversion failure
+ok 3 - ABI32 replay compares native-style answers in all three engines including checked conversion failure
+  ---
+  duration_ms: 201.93158
+  type: 'test'
+  ...
+# Subtest: a summary cannot qualify an omitted engine or a changed source tree
+ok 4 - a summary cannot qualify an omitted engine or a changed source tree
+  ---
+  duration_ms: 5.460322
+  type: 'test'
+  ...
+# Subtest: capture refuses evidence overwrite and finalization preserves a missing-run failure
+ok 5 - capture refuses evidence overwrite and finalization preserves a missing-run failure
+  ---
+  duration_ms: 4.830758
+  type: 'test'
+  ...
+# Subtest: a non-CLR executable cannot qualify and its actual command output remains available
+ok 6 - a non-CLR executable cannot qualify and its actual command output remains available
+  ---
+  duration_ms: 9.113021
+  type: 'test'
+  ...
+# Subtest: a failed ABI32 replay retains the actual emitted CIL and cannot finalize as qualified
+ok 7 - a failed ABI32 replay retains the actual emitted CIL and cannot finalize as qualified
+  ---
+  duration_ms: 163.399358
+  type: 'test'
+  ...
+# Subtest: the pre-execution assembly observer receives a copy without changing any differential route
+ok 8 - the pre-execution assembly observer receives a copy without changing any differential route
+  ---
+  duration_ms: 19.106474
+  type: 'test'
+  ...
+# Subtest: A05 numeric differential runs the same source through all three routes
+ok 9 - A05 numeric differential runs the same source through all three routes
+  ---
+  duration_ms: 113.194845
+  type: 'test'
+  ...
+# Subtest: A05 numeric differential includes engine, operands and output row on divergence
+ok 10 - A05 numeric differential includes engine, operands and output row on divergence
+  ---
+  duration_ms: 9.404917
+  type: 'test'
+  ...
+# Subtest: A05 numeric differential enforces execution and output quotas
+ok 11 - A05 numeric differential enforces execution and output quotas
+  ---
+  duration_ms: 10.799874
+  type: 'test'
+  ...
+# Subtest: A05 native oracle rejects path escape and tampered fixtures
+ok 12 - A05 native oracle rejects path escape and tampered fixtures
+  ---
+  duration_ms: 2.163373
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4064.751406

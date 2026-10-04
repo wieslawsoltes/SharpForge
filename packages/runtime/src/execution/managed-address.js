@@ -90,7 +90,7 @@ export function createManagedAddress(vm, kind, index, owner, options = {}) {
   }
   if (kind === 'arg' || kind === 'local') captureFrameSlot(frameById(vm, options.frameId ?? vm.top?.id), kind, index);
   return Object.freeze({byref: true, vmOwner: vm.snapshotOwner, kind, index, owner,
-    frameId: options.frameId ?? vm.top?.id, path: Object.freeze([]),
+    frameId: options.frameId ?? vm.top?.id ?? 0, path: Object.freeze([]),
     ...(options.readonly ? {readonly: true} : {}), ...(options.type ? {baseType: vm.heap.methodTables.get(options.type)} : {})});
 }
 

@@ -1,0 +1,43 @@
+{
+  "name": "build",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "npm",
+    "run",
+    "build"
+  ],
+  "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "062b3b899d8dd36a696ee0e028e5951d86e98139",
+    "tree": "a48712f9873d7c4948619ed6e3654d7e53e81d63",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T20:44:53.924809+00:00",
+  "scope": "Functional build on recorded sparse checkout; not complete-asset size or pinned release-toolchain qualification.",
+  "completedUTC": "2026-10-04T20:45:09.565958+00:00",
+  "elapsedSeconds": 15.64094630999898,
+  "exitCode": 0,
+  "endIdentity": {
+    "commit": "062b3b899d8dd36a696ee0e028e5951d86e98139",
+    "tree": "a48712f9873d7c4948619ed6e3654d7e53e81d63",
+    "status": ""
+  },
+  "artifact": {
+    "path": "build.log",
+    "bytes": 206,
+    "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f"
+  },
+  "buildIdentity": {
+    "path": "completed-build-identity.json",
+    "bytes": 2184323,
+    "sha256": "c50a6a80b669d54e87b3a2f0dcda184df9f380e3c8cb18b107c5aea0ecce2edd"
+  }
+}
