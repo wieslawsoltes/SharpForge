@@ -19,6 +19,7 @@ import { needsTypeSpec } from '../generics.js';
 import { TypeTokens, namespaceOf, definitionNameOf } from './type-tokens.js';
 import { assemblyResolverOf } from './reference-identities.js';
 import { planMembers, explicitInterfaceOf } from './member-plan.js';
+import { metadataMemberName, metadataPropertyName } from './explicit-interface-names.js';
 import { typeFlags, genericParameterFlags } from './attribute-flags.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
@@ -27,12 +28,12 @@ import { interfaceReimplementations } from './interface-reimplementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 import { constantTypeOf, constantRowValue, NULL_REFERENCE_CONSTANT } from './constant-metadata.js';
 import { writeParameterConstant } from './parameter-metadata.js';
-import { ExtensionBlockMetadataPlan } from './extension-block-plan.js';
+import { hasReturnAttributes, returnAttributeSource } from './attribute-targets.js';
+import { NullableMetadataPlan } from './nullable-plan.js';
 import { CompilerAttributeRegistry } from './compiler-attribute-registry.js';
+import { ExtensionBlockMetadataPlan } from './extension-block-plan.js';
 import { valueTypeConstraintToken, planUnmanagedAttributes } from './unmanaged-metadata.js';
 import { declarationRefSafetyVersion, hasReadonlyReturn, planRefDeclarationAttributes } from './ref-declaration-metadata.js';
-import { hasReturnAttributes } from './attribute-targets.js';
-import { NullableMetadataPlan } from './nullable-plan.js';
 import { prepareNullableAttributes } from './nullable-attribute-contracts.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
@@ -159,7 +160,7 @@ export class SymbolMetadataWriter {
     for (const type of this.types) {
       const plan = this.plans.get(type),
         // A type initializer that only runs field initializers leaves the type `beforefieldinit`, as Roslyn does.
-        hasStaticConstructor = plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
+        hasStaticConstructor = plan.hasStaticConstructor ?? plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
         base = type.typeKind === TypeKind.Interface ? null : type.baseType;
       builder.addRow('TypeDef', {
         Flags: plan.typeFlags ?? typeFlags(type, { hasStaticConstructor }),
@@ -211,9 +212,9 @@ export class SymbolMetadataWriter {
           Signature: signature,
           ParamList: nextParameter,
         });
-        const returned = method.symbol?.returnType;
-        if ((returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned))) ||
-          hasReturnAttributes(method.symbol) || hasReadonlyReturn(method.symbol) || this.nullableMetadata.needsReturn(method)) {
+        const returnSource = returnAttributeSource(method), returned = returnSource?.returnType;
+        if ((returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned)))
+          || hasReturnAttributes(returnSource) || hasReadonlyReturn(returnSource) || this.nullableMetadata.needsReturn(method)) {
           // The return value has a Param row (sequence 0) only when an attribute is written on it.
           method.returnParameterToken = this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' });
           if (method.symbol) this.returnParameterTokens.set(method.symbol, method.returnParameterToken);
@@ -244,7 +245,9 @@ export class SymbolMetadataWriter {
     if (type.containingType) builder.addRow('NestedClass', { NestedClass: self, EnclosingClass: this.tokens.definitionToken(type.containingType) });
     const hasInstanceField = plan.fields.some(field => !(field.flags & FieldAttributes.Static));
     // `plan.classSize`: the size code generation gives a struct (the buffer struct of a fixed-size buffer).
-    if (plan.classSize) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: plan.classSize, Parent: self });
+    if (plan.classSize) {
+      builder.addRow('ClassLayout', { PackingSize: plan.classPackingSize ?? 0, ClassSize: plan.classSize, Parent: self });
+    }
     else if (type.typeKind === TypeKind.Struct && !hasInstanceField) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: 1, Parent: self });
     this.writeGenericParameters(self, plan.metadataTypeParameters ?? this.allTypeParameters(type), ownTokens);
     for (const method of plan.methods) {
@@ -316,7 +319,7 @@ export class SymbolMetadataWriter {
       defined = this.methodTokens.get(definition);
     // A member of a constructed type (`I<int>.M`) is named through the TypeSpec of the construction.
     if (defined && !needsTypeSpec(method.containingType)) return defined;
-    return this.builder.member(this.tokens.typeToken(method.containingType), definition.metadataName, methodSymbolSignature(this.tokens, definition));
+    return this.builder.member(this.tokens.typeToken(method.containingType), metadataMemberName(definition), methodSymbolSignature(this.tokens, definition));
   }
   /** The type parameters a TypeDef declares: those of its enclosing types first, as VAR numbers them. */
   allTypeParameters(type) {
@@ -351,7 +354,7 @@ export class SymbolMetadataWriter {
     for (const { symbol, getter, setter } of properties) {
       // An indexer is named by its accessors (`Item`, or the name [IndexerName] gives).
       const accessor = getter ?? setter,
-        name = symbol.parameters.length && accessor ? accessor.name.slice(4) : symbol.metadataName,
+        name = metadataPropertyName(symbol, accessor),
         row = builder.addRow('Property', { Flags: 0, Name: name, Type: propertySignature(this.tokens, symbol) });
       this.propertyTokens.set(symbol, row);
       if (getter) builder.addRow('MethodSemantics', { Semantics: SEMANTICS.Getter, Method: getter.token, Association: row });
@@ -365,7 +368,7 @@ export class SymbolMetadataWriter {
       first = (builder.rows[20]?.length ?? 0) + 1;
     builder.addRow('EventMap', { Parent: this.tokens.definitionToken(type), EventList: first });
     for (const { symbol, adder, remover } of events) {
-      const row = builder.addRow('Event', { EventFlags: 0, Name: symbol.name, EventType: this.tokens.typeToken(symbol.type) });
+      const row = builder.addRow('Event', { EventFlags: 0, Name: metadataMemberName(symbol), EventType: this.tokens.typeToken(symbol.type) });
       this.eventTokens.set(symbol, row);
       builder.addRow('MethodSemantics', { Semantics: SEMANTICS.AddOn, Method: adder.token, Association: row });
       builder.addRow('MethodSemantics', { Semantics: SEMANTICS.RemoveOn, Method: remover.token, Association: row });

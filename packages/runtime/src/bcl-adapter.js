@@ -1,5 +1,6 @@
 import {isDecimal, decimalFormat} from './execution/decimal.js';
-import {invokeFrameworkObjectToString} from './execution/framework-object-string.js';
+import {invokeObjectToString} from './execution/managed-object-string.js';
+import {invokeSynchronousHostCallback} from './execution/host-callbacks.js';
 import {createBclRegistry, bclModules} from '@sharpforge/bcl-core';
 import {closedCollectionsModule} from '@sharpforge/bcl-collections';
 import {frameworkType} from '@sharpforge/framework';
@@ -13,7 +14,9 @@ const modules = createBclRegistry([...bclModules, closedCollectionsModule]);
 
 const services = Object.freeze({
   frameworkType,
-  invokeObjectToString: invokeFrameworkObjectToString,
+  isExecutionStopped(platform) { return platform.hostOperations.closed && platform.vm.state === 'terminated'; },
+  invokeObjectToString,
+  invokeSynchronousHostCallback,
   formatDecimal(value, format) {
     return isDecimal(value) ? decimalFormat(value, format, {fault: (name, message) => new ManagedFault(name, message)}) : null;
   },
@@ -24,6 +27,7 @@ const services = Object.freeze({
 /** Attach immutable services; each platform retains its own managed state. */
 export function initializeBclHost(platform) {
   platform.bclHost = services;
+  platform.synchronousHostCallbackDepth = 0;
 }
 
 function invokeCore(platform, descriptor, args, type) {

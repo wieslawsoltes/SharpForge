@@ -1,3 +1,4 @@
+import {isObjectStringOverride} from './object-string-override.js';
 /**
  * Declares the image shape of a program from its source symbols: one image class per source class, its fields and
  * statics, one image method per method, constructor and accessor, and the per-class instance initializer.
@@ -135,7 +136,7 @@ export const Declarations = Base =>
           break;
       }
       const isVirtual = symbol.isAbstract || symbol.isVirtual || symbol.isOverride;
-      if (isVirtual && !this.records.dispatchesStatically(symbol)) this.unsupported('virtual dispatch', at);
+      if (isVirtual && !this.records.dispatchesStatically(symbol) && !isObjectStringOverride(symbol)) this.unsupported('virtual dispatch', at);
       // An extern method has no body to lower. Declaring one is harmless; calling it is reported (see methodOf).
       if (symbol.isExtern) return undefined;
       const isConstructor = symbol.methodKind === MethodKind.Constructor;
@@ -145,6 +146,9 @@ export const Declarations = Base =>
         name = isConstructor ? '.ctor' : symbol.methodKind === MethodKind.StaticConstructor ? '<cctor>' : ordinary;
       const record = this.program.addMethod(owner, name, {
         isStatic: symbol.isStatic,
+        isVirtual,
+        isOverride: symbol.isOverride,
+        isFinal: symbol.isSealed,
         returnType: isConstructor || symbol.methodKind === MethodKind.StaticConstructor ? 'void' : this.types.imageType(symbol.returnType, at),
         parameters: this.parametersOf(symbol),
         node: this.nodeOf(symbol),

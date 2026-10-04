@@ -76,6 +76,9 @@ export const CallTranslation = Base =>
       if (node.isOmitted) return n.nullLiteral('object');
       const method = node.method,
         definition = method.originalDefinition ?? method;
+      if (method.methodKind === MethodKind.FunctionPointerSignature) {
+        return this.unsupported('function pointers (the image has no indirect-call instruction)', node.syntax);
+      }
       if (method.methodKind === MethodKind.DelegateInvoke || node.isDelegateInvoke) {
         const info = this.g.delegates.classOf(node.receiver.type, node.syntax);
         return this.g.delegates.invoke(info, this.expression(node.receiver), this.arguments(node, method));
@@ -149,8 +152,6 @@ export const CallTranslation = Base =>
       return this.withInitializers(node, creation);
     }
     frameworkCreation(node) {
-      if (node.type.specialType === 'System_Object')
-        return this.unsupported("creating 'object' (the framework registry has no System.Object constructor)", node.syntax);
       const ctor = node.constructor,
         exception = this.g.analysis.core.exception;
       if (!node.type.equals(exception) && derivesFrom(node.type, exception))

@@ -15,47 +15,32 @@
  *   RequiredMemberAttribute          on a `required` member and its type; Obsolete + CompilerFeatureRequired on the
  *                                    constructors of such a type that are not marked [SetsRequiredMembers]
  *
- * Pseudo-custom attributes are not rows: the runtime reads them from flags and other tables. `[Serializable]` sets
- * the TypeDef flag; the others (StructLayout, DllImport, MethodImpl, ...) are skipped and listed as a limit.
+ * Pseudo-custom attributes are written through `PseudoAttributeWriter`: CLI flags and layout, import and marshal
+ * tables carry the contract the runtime reads.
  */
-import { encodeCustomAttribute, TypeAttributes, token } from '@sharpforge/cil';
-import { ArrayTypeSymbol, SymbolKind, RefKind } from '../../symbols/types.js';
+import { encodeCustomAttribute, token } from '@sharpforge/cil';
+import { SymbolKind, RefKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { needsTypeSpec } from '../generics.js';
 import { fullNameOf, serializedTypeName } from './serialized-type-names.js';
 import { descriptorOf, valueOf, fixedValues } from './attribute-values.js';
-import { returnAttributeSymbols } from './attribute-targets.js';
+import { returnAttributeSymbols, returnAttributeSource } from './attribute-targets.js';
+import { writeNullableAttributes } from './nullable-attributes.js';
+import { writeTupleRelationAttributes } from './tuple-relation-attributes.js';
+import { writeCompilerAttributeDefinitions } from './compiler-attribute-definitions.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
 import { contractAssemblyOf } from './reference-contracts.js';
+import { explicitInterfaceOf, metadataPropertyName } from './explicit-interface-names.js';
 import { writeParameterAttributes } from './parameter-metadata.js';
 import { writeExtensionBlockAttributes } from './extension-block-attributes.js';
 import { writeUnmanagedAttributes } from './unmanaged-metadata.js';
 import { writeRefSafetyRulesAttribute, writeReadonlyReturnAttribute } from './ref-declaration-metadata.js';
-import { writeCompilerAttributeDefinitions } from './compiler-attribute-definitions.js';
-import { writeNullableAttributes } from './nullable-attributes.js';
-import { writeTupleRelationAttributes } from './tuple-relation-attributes.js';
+import { fixedBufferTypeName } from './fixed-buffer-type-name.js';
+import { applyPseudoAttribute } from './pseudo-attributes.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
-const TYPE_DEF_TABLE = 2;
-const SERIALIZABLE = 'System.SerializableAttribute';
-/** Attributes that are flags or rows of other tables, never CustomAttribute rows. */
-const pseudoAttributes = new Set([
-  SERIALIZABLE,
-  'System.NonSerializedAttribute',
-  'System.Runtime.InteropServices.StructLayoutAttribute',
-  'System.Runtime.InteropServices.FieldOffsetAttribute',
-  'System.Runtime.InteropServices.DllImportAttribute',
-  'System.Runtime.InteropServices.MarshalAsAttribute',
-  'System.Runtime.InteropServices.InAttribute',
-  'System.Runtime.InteropServices.OutAttribute',
-  'System.Runtime.InteropServices.OptionalAttribute',
-  'System.Runtime.InteropServices.ComImportAttribute',
-  'System.Runtime.InteropServices.PreserveSigAttribute',
-  'System.Runtime.CompilerServices.MethodImplAttribute',
-  'System.Runtime.CompilerServices.SpecialNameAttribute',
-]);
 const REQUIRED_MEMBER = 'System.Runtime.CompilerServices.RequiredMemberAttribute';
 const IS_BY_REF_LIKE = 'System.Runtime.CompilerServices.IsByRefLikeAttribute';
 const EXTENSION = 'System.Runtime.CompilerServices.ExtensionAttribute';
@@ -95,6 +80,7 @@ export class CustomAttributeWriter {
     this.types = writer.tokens;
     this.assembly = analysis.assembly;
     this.core = analysis.core;
+    this.pseudo = null;
   }
   write() {
     this.applied(ASSEMBLY_TOKEN, this.assembly, 'assembly');
@@ -109,7 +95,7 @@ export class CustomAttributeWriter {
         declaresExtensions = true;
       }
       // Roslyn writes the attributes it synthesizes for a type before the ones the program applies.
-      if (plan.properties.some(property => property.symbol.parameters.length)) this.defaultMember(typeToken, plan);
+      this.defaultMember(typeToken, plan);
       // The runtime refuses a by-reference-like field (a `Span<T>`) in a struct that is not marked as a ref struct.
       if (type.isRefLikeType) this.wellKnown(typeToken, IS_BY_REF_LIKE);
       if (type.isFixedBufferType) {
@@ -155,6 +141,13 @@ export class CustomAttributeWriter {
     const symbol = planned.symbol,
       owner = symbol?.associatedSymbol;
     if (planned.associatedSymbol) this.applied(planned.token, planned.associatedSymbol, 'method');
+    const returnToken = planned.returnParameterToken, returnSource = returnAttributeSource(planned);
+    if (returnToken && returnSource) {
+      writeReadonlyReturnAttribute(this, returnToken, returnSource);
+      for (const declaration of returnAttributeSymbols(returnSource)) this.applied(returnToken, declaration, 'return');
+      this.tupleElementNames(returnToken, returnSource.returnType);
+      this.dynamic(returnToken, returnSource.returnType, isByReference(returnSource.refKind));
+    }
     if (!symbol) {
       // A synthesized accessor of a field-like event (delegate members are runtime-implemented and carry nothing).
       if (planned.isCompilerGenerated) this.compilerGenerated(planned.token);
@@ -166,13 +159,6 @@ export class CustomAttributeWriter {
     if (owner?.kind === SymbolKind.Property && owner.isAutoProperty) this.compilerGenerated(planned.token);
     // The members a record synthesizes, its copy constructor included.
     if (symbol.recordMember || (symbol.isCopyConstructor && symbol.isImplicitlyDeclared)) this.compilerGenerated(planned.token);
-    const returnToken = planned.returnParameterToken;
-    if (returnToken) {
-      writeReadonlyReturnAttribute(this, returnToken, symbol);
-      for (const declaration of returnAttributeSymbols(symbol)) this.applied(returnToken, declaration, 'return');
-      this.tupleElementNames(returnToken, symbol.returnType);
-      this.dynamic(returnToken, symbol.returnType, isByReference(symbol.refKind));
-    }
     for (const [index, parameter] of symbol.parameters.entries()) {
       const parameterToken = planned.parameterTokens[index];
       if (!parameterToken) continue;
@@ -190,11 +176,7 @@ export class CustomAttributeWriter {
   applied(parent, symbol, location = DEFAULT_LOCATIONS[symbol.kind]) {
     for (const attribute of symbol.boundAttributes ?? []) {
       if (attribute.location !== location) continue;
-      const name = fullNameOf(attribute.attributeClass);
-      if (name === SERIALIZABLE && parent >>> 24 === TYPE_DEF_TABLE) {
-        this.builder.rows[TYPE_DEF_TABLE][(parent & 0xffffff) - 1][0] |= TypeAttributes.Serializable;
-      }
-      if (pseudoAttributes.has(name)) continue;
+      if (applyPseudoAttribute(this, parent, attribute, symbol)) continue;
       this.one(parent, attribute);
     }
   }
@@ -255,7 +237,8 @@ export class CustomAttributeWriter {
   fixedBuffer(parent, { elementType, length }) {
     const shape = { isStatic: false, returnType: this.core.void, parameters: [{ type: this.core.type }, { type: this.core.int }] },
       constructor = this.builder.member(this.builder.typeRef(FIXED_BUFFER), '.ctor', methodSignature(this.types, shape));
-    this.add(parent, constructor, encodeCustomAttribute(['System.Type', 'int'], [serializedTypeName(elementType, this.types), length]));
+    const name = fixedBufferTypeName(this.types, elementType, serializedTypeName(elementType, this.types));
+    this.add(parent, constructor, encodeCustomAttribute(['System.Type', 'int'], [name, length]));
   }
   /**
    * The TypeRef of a framework attribute that is not in the core library's contract: through the reference that
@@ -281,9 +264,10 @@ export class CustomAttributeWriter {
   }
   /** `[DefaultMember]` names the indexer, by the name its accessors have. */
   defaultMember(typeToken, plan) {
-    const indexer = plan.properties.find(property => property.symbol.parameters.length),
-      accessor = indexer.getter ?? indexer.setter;
-    this.wellKnown(typeToken, 'System.Reflection.DefaultMemberAttribute', [accessor.name.slice(4)]);
+    const indexer = plan.properties.find(property => property.symbol.parameters.length && !explicitInterfaceOf(property.symbol));
+    if (!indexer) return;
+    const name = metadataPropertyName(indexer.symbol, indexer.getter ?? indexer.setter);
+    this.wellKnown(typeToken, 'System.Reflection.DefaultMemberAttribute', [name]);
   }
   add(parent, constructor, value) {
     this.builder.addRow('CustomAttribute', { Parent: parent, Type: constructor, Value: value });

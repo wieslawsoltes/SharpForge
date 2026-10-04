@@ -1,4 +1,4 @@
-import {selectMethod} from './entry-selection.js';
+import {verificationInput} from './verify/verification-input.js';
 export {selectMethod} from './entry-selection.js';
 import {FunctionPointerProfile,indirectCallStackEffect} from './function-pointer-profile.js';
 import {SizeOfProfile} from './sizeof-profile.js';
@@ -9,11 +9,11 @@ import {supportedDelegateCall} from './delegate-profile.js';
 import {resolveExecutionMethod} from './call-profile.js';
 import {genericDefinitionContext, verifyGenericType, verifyGenericCall} from './generic-profile.js';
 import {verifyPrimitiveStorageOperand} from './memory-type-profile.js';
-import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
 import {executionStackHeights} from './verify/stack-heights.js';
 import {executionHandlerOffsets} from './verify/execution-handlers.js';
+import {verifyExecutionField} from './verify/execution-fields.js';
 // Broad decoding is deliberately separate from this managed execution allowlist.
 const simple = new Set(('calli constrained. volatile. ldtoken ldftn ldvirtftn nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
 const arithmetic = /^(add|sub|mul)(\.ovf(\.un)?)?$|^(div|rem|shr)(\.un)?$|^(and|or|xor|shl|neg|not|ceq|cgt|clt)(\.un)?$/;
@@ -43,14 +43,15 @@ export function stackEffect(inspector,m,i){
   return [1,1];
 }
 /** Bounded reachable stack heights and lexical EH admission; this runtime profile is not the CLR type verifier. */
-export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethods=10000,...options}={}){
-  const inspector=input instanceof AssemblyInspector?input:new AssemblyInspector(input,options),issues=[],visited=new Set(),pending=[],stackHeights={},entry=selectMethod(inspector,methodToken,args);
+export function verifyCilAssembly(input,configuration={}){
+  const {inspector,pending,entry,maxMethods,options}=verificationInput(input,configuration),issues=[],visited=new Set(),stackHeights={};
   const dispatch=new CilDispatchTable(inspector),verifiedStacks=new Map(),sizes=new SizeOfProfile(inspector),prefixes=new ExecutionPrefixProfile(inspector,dispatch),pointers=new FunctionPointerProfile(inspector,dispatch);
   const issue=(m,i,code,message,details={})=>{if(issues.length<200)issues.push({methodToken:m?.token,method:m?m.owner+'::'+m.name:undefined,offset:i?.offset,code,message,...details});};
   const stackContext={issue,issues,stackEffect,options};
   if(!(inspector.pe.flags&1)||inspector.pe.flags&0x10)issue(null,null,'IL_IMAGE','Only IL-only managed images are executable');pending.push(entry);
   // Static initializers can be reached by allocation, field access or method invocation.
   const enqueueType=t=>{const type=inspector.types.find(x=>x.token===t);for(const m of type?.methods??[])if(m.name==='.cctor')pending.push(m.token);};
+  enqueueType(0x02000001); // The global module constructor is a startup root, including selected library methods.
   while(pending.length){
     const t=pending.pop();if(visited.has(t))continue;visited.add(t);if(visited.size>maxMethods){issue(null,null,'IL_LIMIT','Reachable method limit exceeded');break;}
     let m;try{m=inspector.getMethod(t);}catch(error){issue({token:t},null,'IL_METADATA',error.message);continue;}
@@ -92,7 +93,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
         }catch(error){issue(m,i,'IL_TOKEN',error.message);}
       }
       if(['ldsfld','stsfld','ldsflda','newobj'].includes(i.name)){try{enqueueType((i.name==='newobj'?resolveExecutionMethod(inspector,i.operand,context):resolveExecutionField(inspector,i.operand,context.typeArguments,context.methodArguments)).ownerToken);}catch{/* Reported by token validation. */}}
-      if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name)){try{const d=resolveExecutionField(inspector,i.operand,context.typeArguments,context.methodArguments);if(d.decimalConstant&&i.name==='stsfld')issue(m,i,'IL_FIELD','Decimal constants are readonly');if(d.kind!=='field'||d.token>>>24!==4&&!d.resolvedToken&&!d.decimalConstant)issue(m,i,'IL_FIELD','External fields are inspection-only');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name))verifyExecutionField(inspector,m,i,context,issue);
     }
     const {peak,heights}=executionStackHeights(inspector,m,map,stackContext);
     pointers.verify(m,issue,stackEffect,peak);

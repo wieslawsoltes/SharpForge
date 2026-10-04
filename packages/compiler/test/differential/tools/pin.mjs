@@ -2,12 +2,15 @@
  * Pins real Roslyn results for the differential fixtures (SF-A02-T40).
  *
  *   node packages/compiler/test/differential/tools/pin.mjs [--dotnet <path>] [--scratch <dir>] [--changed] [--list]
+ *     [--only <exact-id[,exact-id...]>] (repeatable)
  *
  * Builds tools/Program.cs + tools/pin.csproj in a scratch directory (default node_modules/.sf/differential/pin), runs
- * every fixture through Roslyn and rewrites pinned/*.json. Needs a .NET SDK; the test run itself never does.
+ * selected fixtures through Roslyn and updates their pins. Needs a .NET SDK; the test run itself never does.
  * Every program runs in a process of its own (see Program.cs), so a pin does not depend on the fixtures around it and
  * a full re-pin of an unchanged corpus rewrites nothing. `--changed` pins only the fixtures whose pin is missing or
  * stale and keeps the other pins as they are (same Roslyn required; a full run is the reference).
+ * `--only` restricts that set to exact fixture ids; unknown, duplicate and empty selections fail before building.
+ * Unrelated pin files remain byte-for-byte unchanged. `--list` prints only the captured ids and their source hashes.
  * The run fails (and writes nothing) when a fixture contradicts its declared kind: an 'output' fixture must compile
  * without errors and finish in time, a 'diagnostics' fixture must produce at least one error or warning.
  */
@@ -15,7 +18,8 @@ import {execFileSync} from 'node:child_process';
 import {mkdirSync,copyFileSync,writeFileSync,readFileSync,existsSync} from 'node:fs';
 import {join,resolve} from 'node:path';
 import {homedir} from 'node:os';
-import {root,loadFixtures,loadPinned,fixtureHash,savePinned} from '../corpus-store.js';
+import {root,pinnedDirectory,loadFixtures,loadPinned,fixtureHash} from '../corpus-store.js';
+import {selectPinnedFixtures,writeSelectedPins} from './pin-selection.mjs';
 
 const args=process.argv.slice(2),option=name=>{const i=args.indexOf(name);return i>=0?args[i+1]:null;};
 const home=join(homedir(),'.dotnet','dotnet');
@@ -23,7 +27,8 @@ const dotnet=option('--dotnet')??process.env.DOTNET??(existsSync(home)?home:'dot
 const scratch=resolve(option('--scratch')??'node_modules/.sf/differential/pin');
 const fixtures=loadFixtures(),previous=loadPinned();
 const current=f=>{const p=previous.results.get(f.id);return !!p&&p.hash===fixtureHash(f)&&p.kind===f.kind;};
-const selected=args.includes('--changed')?fixtures.filter(f=>!current(f)):fixtures;
+const selected=selectPinnedFixtures(args,fixtures,current);
+if(!selected.length){console.log('No fixtures require capture.');process.exit(0);}
 
 mkdirSync(scratch,{recursive:true});
 for(const name of ['Program.cs','pin.csproj'])copyFileSync(join(root,'tools',name),join(scratch,name));
@@ -49,11 +54,17 @@ for(const f of selected){
   if(f.kind==='output'){pinned.output=r.output;if(r.exception)pinned.exception=r.exception;if(r.exitCode!==undefined)pinned.exitCode=r.exitCode;}
   results.set(f.id,pinned);
 }
-if(args.includes('--list'))for(const f of selected){const r=results.get(f.id);if(r)console.log(f.id.padEnd(58),f.kind==='output'?String(JSON.stringify(r.output)).slice(0,60)+(r.exception?' !'+r.exception:''):'',r.diagnostics.map(d=>`${d[0]}${d[3]==='error'?'':'('+d[3][0]+')'}@${d[1]}+${d[2]}`).join(' '));}
+if(args.includes('--list'))for(const f of selected){
+  const r=results.get(f.id);if(!r)continue;
+  const output=f.kind==='output'?String(JSON.stringify(r.output)).slice(0,60)+(r.exception?' !'+r.exception:''):'';
+  const diagnostics=r.diagnostics.map(d=>`${d[0]}${d[3]==='error'?'':'('+d[3][0]+')'}@${d[1]}+${d[2]}`).join(' ');
+  console.log(f.id.padEnd(58),r.hash,output,diagnostics);
+}
 if(problems.length){console.error(`\n${problems.length} fixture problem(s); nothing was pinned:\n`+problems.map(p=>'  '+p).join('\n'));process.exit(1);}
 const meta={version:document.roslyn,informationalVersion:document.informationalVersion,runtime:document.runtime,references:document.references,options:'OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture'};
 if(selected.length<fixtures.length&&previous.meta&&previous.meta.informationalVersion!==meta.informationalVersion){
-  console.error(`The corpus is pinned with Roslyn ${previous.meta.informationalVersion}; this SDK has ${meta.informationalVersion}. Run without --changed.`);process.exit(1);
+  console.error(`The corpus is pinned with Roslyn ${previous.meta.informationalVersion}; this SDK has ${meta.informationalVersion}.`);
+  console.error('Run a full capture without --changed or --only.');process.exit(1);
 }
-savePinned(meta,fixtures,results);
+writeSelectedPins(meta,selected,results,pinnedDirectory,fixtureHash);
 console.log(`Pinned ${selected.length} of ${fixtures.length} fixtures against Roslyn ${document.roslyn} (${document.informationalVersion}).`);

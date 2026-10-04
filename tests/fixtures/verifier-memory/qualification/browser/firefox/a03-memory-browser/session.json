@@ -1,0 +1,11 @@
+{
+  "suite": "a03-memory-browser",
+  "passed": true,
+  "engine": "firefox",
+  "cspViolations": [],
+  "browser": "155.0",
+  "executable": "playwright-managed",
+  "mode": "A03 indirect transfers source modules",
+  "seconds": 1.31984645799821,
+  "diagnosticErrors": []
+}

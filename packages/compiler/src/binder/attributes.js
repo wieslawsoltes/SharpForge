@@ -154,7 +154,7 @@ export const AttributeBinding = Base =>
       const text = simple.identifier.valueText,
         find = candidate => {
           if (!container) return binder.lookup(candidate, 0, scope);
-          if (container.kind === SymbolKind.Namespace) return container.getTypeMembers(candidate, 0)[0] ?? null;
+          if (container.kind === SymbolKind.Namespace) return binder.namespaceTypes(container, candidate, 0, scope)[0] ?? null;
           return (container.originalDefinition ?? container).getTypeMembers?.(candidate, 0)[0] ?? null;
         };
       const plain = find(text),
@@ -243,18 +243,24 @@ export const AttributeBinding = Base =>
         positional = all.filter(argument => !argument.nameEquals).map(argument => binder.argument(argument));
       for (const argument of positional) if (!isValidArgument(argument)) binder.report(argument.syntax, DiagnosticId.CS0182);
       const constructors = attributeClass.getMembers('.ctor').filter(member => member.methodKind === MethodKind.Constructor),
-        accessible = constructors.filter(c => isAccessible(c.originalDefinition ?? c, within, { throughType: attributeClass.originalDefinition }));
+        accessible = constructors.filter(constructor => isAccessible(constructor.originalDefinition ?? constructor, within, {
+          throughType: attributeClass.originalDefinition, withinModule: this.assembly.module,
+        }));
       if (!constructors.length) this.incomplete = true;
       else if (!positional.some(argument => argument.hasErrors)) {
         const result = this.overloads.resolve(accessible, positional, { isConstructor: true });
         if (result.succeeded) {
           bound.attributeConstructor = result.method;
           bound.arguments = binder.finishCall(result, null, positional, syntax, {}).args?.map(argument => argument.expression) ?? [];
-        } else if (!isSourceSymbol(attributeClass) && !attributeClass.attributeUsage && !isImportedType(attributeClass)) this.incomplete = true;
-        else {
-          const error = result.error,
-            args = error.code === DiagnosticId.CS1729 ? [attributeClass.toDisplayString(), positional.length] : error.args;
-          binder.report(binder.errorNode(error, positional, syntax.name), error.code, args);
+        } else {
+          const hidden = constructors.length > accessible.length ? this.overloads.resolve(constructors, positional, { isConstructor: true }) : null;
+          if (hidden?.succeeded) binder.report(syntax.name, DiagnosticId.CS0122, [hidden.method.toDisplayString()]);
+          else if (!isSourceSymbol(attributeClass) && !attributeClass.attributeUsage && !isImportedType(attributeClass)) this.incomplete = true;
+          else {
+            const error = result.error,
+              args = error.code === DiagnosticId.CS1729 ? [attributeClass.toDisplayString(), positional.length] : error.args;
+            binder.report(binder.errorNode(error, positional, syntax.name), error.code, args);
+          }
         }
       }
       const seen = new Set();

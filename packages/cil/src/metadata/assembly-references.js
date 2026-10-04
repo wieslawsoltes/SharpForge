@@ -38,12 +38,26 @@ function fallbackReference(builder, name) {
       ? [0xb7, 0x7a, 0x5c, 0x56, 0x19, 0x34, 0xe0, 0x89] : [0xb0, 0x3f, 0x5f, 0x7f, 0x11, 0xd5, 0x0a, 0x3a]) };
 }
 
+function referenceKey(name) {
+  if (typeof name !== 'string' || !name || name.length > 512) throw new CilError('Invalid assembly reference name');
+  return name.toLowerCase();
+}
+
+function resolveReference(builder, name, lookup = referenceKey(name)) {
+  return builder.referenceIdentities.get(lookup) ?? fallbackReference(builder, name);
+}
+
+/** Resolve the identity emission uses, without adding a row; version and key bytes are defensive copies. */
+export function assemblyReferenceIdentity(builder, name) {
+  const identity = resolveReference(builder, name);
+  return { ...identity, version: [...identity.version], publicKeyOrToken: new Uint8Array(identity.publicKeyOrToken) };
+}
+
 /** Intern one referenced identity, keeping historical fallback profiles unchanged. */
 export function writeAssemblyReference(builder, name) {
-  if (typeof name !== 'string' || !name || name.length > 512) throw new CilError('Invalid assembly reference name');
-  const lookup = name.toLowerCase();
+  const lookup = referenceKey(name);
   if (builder.assemblyRefs.has(lookup)) return builder.assemblyRefs.get(lookup);
-  const identity = builder.referenceIdentities.get(lookup) ?? fallbackReference(builder, name);
+  const identity = resolveReference(builder, name, lookup);
   const result = builder.add(35, [...identity.version, identity.flags, identity.publicKeyOrToken.length ? builder.blob(identity.publicKeyOrToken) : 0,
     builder.string(identity.name), builder.string(identity.culture), 0]);
   builder.assemblyRefs.set(lookup, result);

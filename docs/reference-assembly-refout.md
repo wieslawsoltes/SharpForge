@@ -1,0 +1,302 @@
+# Reference assembly output
+
+`compileToReferenceAssembly(source, { refout: true })` emits a deterministic compile-time contract with the standard
+`System.Runtime.CompilerServices.ReferenceAssemblyAttribute`. The default call continues to emit metadata for every
+declaration, with throw-null method bodies, for existing declaration-inspection consumers.
+
+```js
+import { compileToReferenceAssembly } from '@sharpforge/compiler';
+
+const result = compileToReferenceAssembly(`
+  public class Calculator {
+    public int Add(int first, int second) { return first + second; }
+    private int ImplementationDetail() { return 42; }
+  }
+`, { name: 'Calculator', refout: true });
+
+if (!result.success) throw new Error(result.diagnostics.map(item => item.message).join('\n'));
+// Save or transmit result.assembly, a PE/CLI Uint8Array, as the reference for a consuming compilation.
+```
+
+## Contract and member policy
+
+The policy follows the [Roslyn reference assembly specification](https://github.com/dotnet/roslyn/blob/main/docs/features/refout.md).
+All source types remain, including internal and private nested types. Public, protected and protected-internal members
+remain. Private fields and functions are removed from classes; internal and private-protected members remain only when
+the assembly declares `InternalsVisibleTo`. The following semantic exceptions also remain:
+
+- Virtual methods and explicit interface implementations, with their MethodImpl rows.
+- All struct fields, including private, static and auto-property backing fields.
+- Fixed-buffer field signatures and attributes, including generic and nested generic owners, through the executable emitter's planner.
+- Captured primary-constructor fields through the executable emitter's existing planner.
+- Constructors of attribute classes, including internal constructors needed by applied attributes.
+- Properties and events with retained accessors. A removed private setter has no dangling MethodSemantics row.
+
+Roslyn reference output omits the generated fixed-buffer storage TypeDefs. Their field signatures retain nested
+TypeRefs scoped to the current module, with inherited generic arguments; `FixedBufferAttribute` supplies the element
+type and length. Its serialized element type is qualified with the same canonical AssemblyRef identity the emitter
+uses. Executable output retains its storage TypeDefs and layout rows.
+The captured Roslyn `/refonly` image itself does not support consuming those fixed-buffer fields: SDK 10.0.201 reports
+`CS0648` for ordinary, generic and nested generic accesses because the generated storage definition is absent.
+Reference output follows that native shape. Its non-buffer API surface remains consumable, including ordinary fields
+on the generic owning structs. The original full consumer is retained as a negative diagnostic-parity fixture.
+Retained auto-property and primary-constructor backing fields carry `DebuggerBrowsable(Never)`, and instance struct
+auto-property getters carry `IsReadOnlyAttribute`. These reference-contract attributes leave the historical
+metadata-only profile unchanged.
+
+Attributes on retained declarations use the existing custom-attribute writer. An explicitly applied reference-assembly
+marker is preserved once. Both `ReferenceAssemblyAttribute` and `InternalsVisibleToAttribute` can be written in source
+using the default framework symbol registry, or resolved from supplied metadata references.
+
+Well-known assembly attributes are recognized by their bound top-level, nongeneric source name, as Roslyn recognizes
+them. A generic or nested type with a similar name does not qualify. Same-file types participate in qualified names,
+namespace imports and type aliases before framework types are considered; they do not leak into another file or an
+extern alias. Explicit interface metadata names likewise use the resolved interface, including namespaces, nested
+constructions and expanded tuple types. Only the accessors the binder maps to an interface receive implicit virtual
+slots. Explicit-only indexers do not add `DefaultMemberAttribute` to their implementing type.
+
+There is a source-defined attribute exception to the normal CLR marker contract. When source explicitly applies a
+file-local `System.Runtime.CompilerServices.ReferenceAssemblyAttribute`, Roslyn recognizes its unmangled source name
+and preserves the applied attribute without synthesizing another one. Its emitted type name is mangled, so the image
+has no attribute with the standard CLR name and can load. The analogous file-local `InternalsVisibleToAttribute` keeps
+internal declarations without emitting the standard friend-assembly identity. SharpForge follows that observed
+source behavior. Use the framework attributes for the conventional reference and friend-assembly identities.
+
+Every concrete managed method shares one `ldnull; throw` body. Abstract methods and runtime delegate methods have no
+body. A removed static constructor still determines the type's `BeforeFieldInit` flag. Body edits and edits confined to
+removed declarations leave the emitted bytes unchanged. A primary-constructor capture edit that changes struct storage
+also changes the contract's layout. Changes to a retained constant or public signature change the
+contract bytes. The existing deterministic PE finalizer computes the content-derived MVID and timestamp.
+
+`refout` must be a boolean when supplied. A netmodule request fails with `SF3001`; an assembly manifest is required.
+Fixed buffers in generic and nested generic structs use the compiler's shared storage-type planner; invalid lengths
+still fail with the source diagnostic `CS1665`.
+Source diagnostics still apply, including errors in method bodies. There is no tolerate-errors mode or implicit change
+to executable compilation. Reference output contains no source debug data, PDB, managed resources or native resources.
+`compileToIL` remains the executable compiler API. This option produces one reference output and does not add a CLI
+`/refout` path switch or a second output to `compileToIL`.
+
+## Low-level CIL API
+
+| API | Contract |
+| --- | --- |
+| `referenceAssemblyMemberIncluded(table, flags, context)` | Constant-time policy over `TableId.Field` or `TableId.MethodDef`, unsigned 16-bit flags and boolean `includesInternals`, `isStruct`, `isAttributeConstructor`, `isExplicitImplementation` facts. Invalid values throw `CilError`. |
+| `addReferenceAssemblyAttribute(builder, assembly?)` | Add the standard zero-argument marker through an explicit contract assembly or the builder's framework default. Identical calls are idempotent. A missing Assembly row fails before mutation. Source-defined markers are retained by their caller. |
+| `assemblyReferenceIdentity(builder, name)` | Resolve the configured or fallback identity used for AssemblyRef emission without adding a row. Returned version and key bytes are owned copies; invalid names and missing required profile identities fail exactly as emission does. |
+
+The compiler applies the policy through `SymbolMetadataWriter`'s existing synthesized-member planning seam before token
+allocation. No completed metadata image is rewritten and no token-remapping pass is introduced. Member filtering is
+linear in planned declarations. Attribute ancestry is cached per compilation and rejects cycles or more than 256
+uncached base links; the cache is released with the compilation. There are no process-global caches or dependencies.
+
+## Verification
+
+Focused tests are `tests/a03-22-reference-assemblies.test.js`, `tests/a03-22-reference-interface-members.test.js`,
+`tests/a03-22-reference-synthesized-metadata.test.js`, `tests/a03-22-reference-identity.test.js` and `tests/a03-22-reference-policy.test.js`.
+The source and native observer are in `tests/fixtures/a03-reference-assemblies/`.
+
+```sh
+node scripts/limited.js node --test tests/a03-22-*.test.js
+node scripts/limited.js node packages/cil/tools/capture-reference-assemblies.mjs --dotnet /path/to/dotnet --output artifacts/a03-reference-assemblies
+node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-assemblies.mjs --mode refout --output artifacts/refout-performance.json
+```
+
+The native capture uses the installed SDK's Roslyn `csc.dll` and reference pack directly, without package restore. It
+compares public and friend-assembly metadata through System.Reflection.Metadata: declarations, signatures, constants,
+layout, base/interface relations, custom attributes, MethodImpl and accessor associations. The public and friend
+corpora include fixed buffers in generic and nested generic structs. Both images are consumed independently: a positive
+consumer uses the supported API, the original full consumer retains all three fixed-buffer accesses and compares native
+diagnostic codes, text and exact source spans, and a friend consumer verifies visibility. Compiler commands, raw output
+and SARIF diagnostics are retained. It checks concrete method bodies and compares CoreCLR's reference-loading HRESULT
+against Roslyn while a marker-free control loads successfully. Serialized `typeof` values retain whether an assembly
+identity was supplied, require that identity to match an AssemblyRef, and compare the resolved native runtime identity.
+This preserves qualification differences even when CoreCLR forwards two contract versions to the same runtime type.
+Attribute decoding retains native metadata
+identities: source enums use their `value__` storage signatures, and external enums resolve their exact AssemblyRef
+through the CLR, including framework forwarders. An independent Roslyn observer probe exercises byte and unsigned
+64-bit source enums, an external enum, boxed and array enum values, named arguments and null arrays before comparison.
+The source, both images and each completed observation are retained even if a later stage fails. Every retained observation records SDK,
+compiler, runtime, platform and input hashes. The separate `edge-roslyn.json` observation was captured from
+`edge-source.cs` with SDK 10.0.201 and CoreCLR 10.0.5 on Linux x64, using `/refonly /target:library /deterministic+`
+and `/langversion:latest`, the installed reference-pack assemblies and the observer revision identified in that snapshot. It records source,
+compiler, observer and reference-image hashes, canonical interface names and the file-local attribute exception above.
+The source was named `Source.cs` during capture; file-local name hashes are compiler-specific.
+
+The complete focused gate passed **45 tests, with no failures or skips**, at source revision
+`b40e8f7b5b8f5d06ad992da4a0b7446d667a056e`. This includes the A03-T22 tests, executable generic fixed-buffer regressions
+and existing compiler attribute-emission tests. The native capture then passed both public and friend cases using
+SDK **10.0.201**, Roslyn **5.3.0-2.26153.122**, reference pack/CoreCLR **10.0.5**, on Linux x64. Both cases have 15 source
+types, one standard marker and only throw-null managed bodies (20 public-case bodies, 25 friend-case bodies).
+Both load attempts match Roslyn's `BadImageFormatException` and HRESULT `-2146234280`; the marker-free control loads.
+Positive consumers compile against both images. The original full consumer produces identical `CS0648` diagnostics
+and exact source spans for all three fixed buffers. Friend access succeeds in the friend case and yields the same
+`CS1061` diagnostic in the public case.
+
+[`qualification.json`](../tests/fixtures/a03-reference-assemblies/qualification.json) records the tested source revision,
+tool versions, input and output hashes, test count and native consumer observations. Full image/metadata comparisons,
+raw compiler commands, stdout and SARIF are retained under `artifacts/a03-reference-assemblies-qualified-b40/` by that
+capture. Subsequent documentation and benchmark-driver commits do not change the tested product source identity.
+The completed performance comparison is recorded below.
+Browser, Rust-native and Wasm execution are not qualified by these checks: the output is a compile-time reference
+assembly and its marker deliberately prevents execution loading.
+
+The subsequent merge of main `fbb0b086e05720eeacb954800a4a690a644313cd` was qualified at integrated source
+`51db5c5ffbf870a3c2efd195477732d3e6861829`. The focused refout/shared-attribute gate passed **66 tests, zero failures
+and zero skips**. The unchanged complete public/friend native capture passed again on the same pinned SDK/runtime.
+The two affected main fixtures, `attribute-targets` and `pseudo-attributes`, also produced their pinned genuine Roslyn
+outputs on CoreCLR; these checks used existing expected outputs and did not rebuild or replace the Roslyn fixtures.
+The public/friend SharpForge DLLs, their complete SRM observations and the metadata-control DLL were byte-identical
+to the original b40 capture. This establishes the manually reconciled fixed-buffer type qualification while retaining
+main's attribute-target and pseudo-attribute behavior. Exact commands, outputs, source hashes and full observations
+are retained separately in [integration-51db](evidence/a03-reference-assemblies/integration-51db/README.md).
+
+## Benchmark protocol
+
+The benchmark driver uses this same rich source fixture for every selected compiler checkout. It records compiler and
+driver revisions, source/output hashes, compiler entry path/hash, tracked changes, and each compiler dependency's
+resolved path. Every `@sharpforge` dependency must resolve inside the selected compiler checkout, so a baseline cannot
+silently import current packages. Only a trusted developer-selected local checkout entry point can be loaded.
+
+The first-compilation timing excludes module import. The driver retains 120 repeated timings and heap deltas in
+chronological order, excludes the first 20 from summary statistics, and reports the remaining 100 samples. Median is
+the mean of the two middle sorted samples; p95/p99 use nearest rank. Compile success, marker/private-member policy and
+fixture-type guards run outside timing, and every repeated output must equal the first assembly byte for byte.
+A baseline that silently ignores `refout` fails the marker and private-member guards. With `--expose-gc`, garbage
+collection runs before each sample. Heap-used deltas are not total allocation or retained-heap measurements.
+
+Run each command alone, using a baseline that accepts the rich fixture and has its own workspace aliases:
+
+```sh
+node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-assemblies.mjs --mode metadata --compiler /baseline/packages/compiler/src/index.js --output artifacts/refout-baseline.json
+node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-assemblies.mjs --mode metadata --output artifacts/refout-metadata.json
+node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-assemblies.mjs --mode refout --output artifacts/refout-current.json
+```
+
+The once-only comparison on 2026-10-04 used baseline `c1693a9e322295a43d90c3335885b5b5b3cf8daa` and candidate
+`7c73c877c841fa5d4d124edfab980f5896a7e485`, with Node 24.19.0 on Linux x64, AMD EPYC 9V74, nine visible logical CPUs
+and 10,451,464,192 bytes of visible memory. The three commands ran sequentially in the team's exclusive heavy slot on
+a shared hosted machine; unrelated external workloads were not measured. All three runs passed the mode, compilation
+and byte-determinism guards. Each retained all 120 repeated samples; no run was repeated for favorable results.
+
+| Measurement | Baseline metadata | Candidate metadata | Candidate refout |
+| --- | ---: | ---: | ---: |
+| Median, final 100 samples (ms) | 15.540257 | 15.544988 | 15.166682 |
+| p95, final 100 samples (ms) | 23.672052 | 20.191166 | 19.360906 |
+| p99, final 100 samples (ms) | 31.668122 | 22.964189 | 23.763267 |
+| First compilation, one observation (ms) | 102.270753 | 113.958974 | 127.934818 |
+| Compiler import, one observation (ms) | 643.469601 | 530.611755 | 566.799936 |
+| Median heap-used delta (bytes) | 3,983,120 | 3,982,488 | 3,913,608 |
+| PE image bytes | 4,096 | 4,096 | 4,096 |
+
+Baseline-to-candidate metadata compares whole checkout revisions, including unrelated compiler and package changes;
+it cannot attribute a change to reference assembly support alone. Its median changed by **+0.0304%** and p95 by
+**-14.7046%**. Within the candidate, refout versus metadata changed median by **-2.4336%**, p95 by **-4.1120%** and
+p99 by **+3.4797%**. These modes emit different metadata contracts. Equal PE file lengths include alignment padding
+and do not establish equal metadata payload size; no payload-size or browser bundle-size measurement was taken.
+
+First-compilation observations increased by **11.4287%** across revisions and **12.2639%** between candidate modes.
+Candidate refout's import observation increased by **6.8201%** over candidate metadata. These exceed the 5% latency
+review threshold and are disclosed for coordinator review; they are single observations, not an established startup
+regression estimate or a performance-budget pass. The calculated sum of candidate import and first compilation
+increased by **7.7825%**; that sum excludes other driver startup work. The driver imports its candidate CIL inspector before timing the
+selected compiler import, so the baseline loads a separate CIL copy while the candidate can reuse its preloaded copy.
+Consequently import timing is a harness observation, not an equivalent clean-startup comparison. No measured PE size
+increase exceeds 10%. GC ran before each repeated sample and the wrapper capped V8 old space at 2,048 MiB; heap-used
+deltas include temporary allocations and do not establish total allocation or retained-heap changes.
+
+The [evidence archive](evidence/a03-reference-assemblies/README.md) retains the complete benchmark reports, logs,
+exact command/environment/status records and frozen preparation manifest. It also retains the actual successful
+native `reference.json`, both image pairs, all SRM observations and consumer diagnostics, and the 45-test TAP at b40.
+The benchmark's refout image hash matches that qualified public image. Historical failed captures and the independent
+both-image consumer probe have separate directories and remain labelled as failures or probes.
+
+## Performance after the attribute-emission merge
+
+The main merge changed shared attribute serialization and per-method token bookkeeping inside the timed compilation
+path. After all integrated correctness checks passed, each integrated output mode was measured exactly once with the
+unchanged driver and fixture. The historical baseline was not rerun. These observations compare the whole main merge
+against the saved `7c73` results, including unrelated compiler/package changes; they do not isolate the manual conflict
+resolution or establish a general speedup. All 120 samples per run remain recorded, with the first 20 excluded.
+
+| Mode | 7c73 median (ms) | 51db median (ms) | Change | 7c73 p95 (ms) | 51db p95 (ms) | Change |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Metadata | 15.544988 | 19.001903 | **+22.2381%** | 20.191166 | 21.198717 | +4.9901% |
+| Refout | 15.166682 | 13.762756 | -9.2566% | 19.360906 | 18.920035 | -2.2771% |
+
+The ordinary-metadata median exceeds the 5% review threshold. Its single first-compilation observation also increased
+from 113.958974 ms to 133.244493 ms (**+16.9232%**). These recorded regressions require coordinator review; no
+performance-budget pass is claimed and no retry or optimization preceded these recorded measurements.
+The metadata p99 changed by -4.7681%, while refout p99 changed by -15.4041%. Refout's first-compilation observation
+changed from 127.934818 ms to 108.198931 ms (-15.4265%); import timing remains subject to the harness limits above.
+
+Within the integrated revision, refout versus metadata changed median by -27.5717% and p95 by -10.7492%; these output
+modes have different contracts. Both modes retained their exact pre-integration assembly SHA-256 and 4,096-byte PE
+length, so no output-byte or measured file-size increase occurred. Median heap-used deltas were 4,014,220 bytes for
+metadata and 3,937,796 bytes for refout, changes of +0.7968% and +0.6180% from their respective prior runs. These are
+temporary-inclusive heap observations, not allocation or retained-heap measurements. The host, resource wrapper,
+source and benchmark driver were unchanged; it remained a shared hosted machine with an exclusive team heavy slot.
+The [integrated comparison](evidence/a03-reference-assemblies/integration-51db/comparison.json) retains exact values,
+raw samples, output-hash equality and review thresholds alongside the original results.
+The [source inspection](evidence/a03-reference-assemblies/integration-51db/source-findings.json) records concrete new
+attribute-dispatch and return-attribute allocations without attributing the measured regression to them. Native
+byte equality does not waive review of ordinary metadata performance.
+
+## Qualified allocation follow-up
+
+A separate source change after evidence commit `4f80ef2a5bb952199b35cea7cf5ad83d1b87f6eb` moves the existing
+pseudo-attribute name and set lookup ahead of writer construction. Assemblies with only ordinary attributes no longer
+construct the layout/interop writer and its two maps. The canonical recognition set and every pseudo-attribute handler
+remain unchanged. Return-attribute presence checks scan the existing bound attributes without creating temporary
+symbol arrays or callbacks; only the exact delegate Invoke source symbol inherits the declaration's return contract.
+Token maps, member plans and parameter/interface/generic-constraint rows are preserved.
+
+This is a narrow change to shared compiler metadata emission outside A03's package ownership. It addresses avoidable
+work identified by source inspection, without attributing the measured 22.2381% regression to those constructions.
+The new public-API regression covers ordinary/pseudo/ordinary ordering and exact delegate return targets in executable,
+ordinary metadata and refout modes. The follow-up is frozen at `588f2b271521f170f278a0d0f183f069bd71f41d`;
+the prior correctness and benchmark evidence continues to identify its own source revision.
+
+The unchanged focused cohort plus the new regression passed **67 tests, zero failures and zero skips**. The full
+public/friend metadata and consumer capture and both pinned main native fixtures passed. The native product DLLs,
+complete SRM observations and metadata-control image remain byte-identical to `51db`. The benchmark driver,
+dynamic-import allowlist hash and rich source fixture are unchanged. Each output mode was then measured exactly once,
+with all 120 chronological samples retained and the first 20 excluded from summary statistics. No historical run was
+repeated. The [allocation evidence](evidence/a03-reference-assemblies/allocation-588f/README.md) retains all six commands,
+raw reports, native observations and source identities separately from previous captures.
+
+| Measurement | 51db metadata | 588f metadata | Change | 51db refout | 588f refout | Change |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Median (ms) | 19.001903 | 16.218080 | -14.6502% | 13.762756 | 13.851561 | +0.6453% |
+| p95 (ms) | 21.198717 | 23.102026 | **+8.9784%** | 18.920035 | 19.782001 | +4.5558% |
+| p99 (ms) | 21.869242 | 27.814426 | **+27.1851%** | 20.102753 | 20.979140 | +4.3595% |
+| First compilation (ms) | 133.244493 | 99.538362 | -25.2965% | 108.198931 | 145.724813 | **+34.6823%** |
+| Compiler import (ms) | 404.946498 | 463.052459 | **+14.3490%** | 328.556521 | 553.077104 | **+68.3355%** |
+| Median heap-used delta (bytes) | 4,014,220 | 4,003,668 | -0.2629% | 3,937,796 | 3,929,908 | -0.2003% |
+| PE image bytes | 4,096 | 4,096 | 0% | 4,096 | 4,096 | 0% |
+
+The lower ordinary-metadata median does not waive its p95 and p99 regressions, which exceed the 5% review threshold.
+The larger import and refout first-compilation values are one-shot observations with the startup caveats above, and
+also require review. No performance-budget pass or causal estimate is claimed. Heap deltas do not measure total
+allocation savings. Both benchmark output hashes are unchanged; no PE size increase occurred. The same shared hosted
+machine and resource limits were used, with an exclusive team slot and unmeasured external workloads.
+
+Compared with saved `7c73`, the final metadata median is +4.3300%, p95 +14.4165% and p99 +21.1209%; refout median is
+-8.6711%, p95 +2.1750% and first compilation +13.9055%. These comparisons include the whole intervening main merge.
+Against `c169`, whole-checkout metadata median is +4.3617% and p95 -2.4080%. Within `588f`, refout versus metadata
+median is -14.5919% and p95 -14.3711%, while first compilation is +46.4007% and import +19.4416%; the modes have
+different contracts. Every exact older/newer delta is retained in the comparison JSON. Favorable older comparisons do
+not replace the adverse immediate-before/after observations or the prior `51db` regression record.
+
+## Changes outside A03
+
+The compiler's reference-emission adapter applies the policy, registers the two framework attribute descriptors and
+preserves the static-constructor fact when filtering its member plan. These are narrow integration changes in existing
+metadata modules. Existing fixed-buffer and primary-capture planners supply required struct storage. Fixed-buffer
+type lookup now uses the planner's `byType` index rather than a scan per generated buffer. The source assembly and
+type/attribute binders share a per-file namespace index so qualified well-known attributes retain their bound identity.
+Canonical explicit interface names and precise accessor flags apply to the shared metadata writer. No compiler entry
+point, parser, executable instruction lowering or runtime dispatcher changes. Type references to omitted synthesized
+nested declarations now form a valid local TypeRef chain, and method flags preserve internal virtual override access
+checks while static interface event accessors do not allocate instance virtual slots.
+The compiler's fixed-buffer attribute writer imports the public CIL identity resolver and reuses its existing
+`AssemblyIdentity` formatter; it does not duplicate fallback versions or public-key token computation.

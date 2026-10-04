@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: File hashes admit exact SHA-512 length and reject malformed boundary lengths before requesting bytes
+ok 1 - File hashes admit exact SHA-512 length and reject malformed boundary lengths before requesting bytes
+  ---
+  duration_ms: 14.425879
+  type: 'test'
+  ...
+# Subtest: File hash admission preserves explicit metadata budgets and pre-aborted operation diagnostics
+ok 2 - File hash admission preserves explicit metadata budgets and pre-aborted operation diagnostics
+  ---
+  duration_ms: 1.922023
+  type: 'test'
+  ...
+# Subtest: malformed manifest ranges, names, visibility and implementation tags have bounded image diagnostics
+ok 3 - malformed manifest ranges, names, visibility and implementation tags have bounded image diagnostics
+  ---
+  duration_ms: 20.444939
+  type: 'test'
+  ...
+# Subtest: invalid File declarations and non-module offsets reject before provider invocation
+ok 4 - invalid File declarations and non-module offsets reject before provider invocation
+  ---
+  duration_ms: 5.894297
+  type: 'test'
+  ...
+# Subtest: assembly resource cycles report the path, and missing assembly failures stay distinct
+ok 5 - assembly resource cycles report the path, and missing assembly failures stay distinct
+  ---
+  duration_ms: 3.439181
+  type: 'test'
+  ...
+# Subtest: linked module offsets and length prefixes are bounded without a fallback to the child resource name
+ok 6 - linked module offsets and length prefixes are bounded without a fallback to the child resource name
+  ---
+  duration_ms: 3.178178
+  type: 'test'
+  ...
+# Subtest: all declared file hash algorithms match independent Node hashes, including MD5 padding boundaries
+ok 7 - all declared file hash algorithms match independent Node hashes, including MD5 padding boundaries
+  ---
+  duration_ms: 14.441302
+  type: 'test'
+  ...
+# Subtest: resource, directory, metadata and owned file budgets hold at exact boundaries
+ok 8 - resource, directory, metadata and owned file budgets hold at exact boundaries
+  ---
+  duration_ms: 5.69866
+  type: 'test'
+  ...
+# Subtest: missing or unsupported Web Crypto is explicit and a failed hash backend releases its reservation
+ok 9 - missing or unsupported Web Crypto is explicit and a failed hash backend releases its reservation
+  ---
+  duration_ms: 1.941011
+  type: 'test'
+  ...
+# Subtest: cache byte exhaustion leaves successful files usable and provider failures remain retryable
+ok 10 - cache byte exhaustion leaves successful files usable and provider failures remain retryable
+  ---
+  duration_ms: 3.028789
+  type: 'test'
+  ...
+# Subtest: pending file work is bounded and cancellation/disposal never publish late provider bytes
+ok 11 - pending file work is bounded and cancellation/disposal never publish late provider bytes
+  ---
+  duration_ms: 1.398584
+  type: 'test'
+  ...
+# Subtest: manifest resource reference inputs, generator sources and tool versions are pinned
+ok 12 - manifest resource reference inputs, generator sources and tool versions are pinned
+  ---
+  duration_ms: 2.616683
+  type: 'test'
+  ...
+# Subtest: resource bytes and names match their native readers, with explicit linked-module offset differences
+ok 13 - resource bytes and names match their native readers, with explicit linked-module offset differences
+  ---
+  duration_ms: 23.770544
+  type: 'test'
+  ...
+# Subtest: manifest resources preserve native row order, visibility-independent bytes, ownership and exact names
+ok 14 - manifest resources preserve native row order, visibility-independent bytes, ownership and exact names
+  ---
+  duration_ms: 10.966587
+  type: 'test'
+  ...
+# Subtest: AssemblyRef resource chains resolve through canonical contexts and keep declared name enumeration
+ok 15 - AssemblyRef resource chains resolve through canonical contexts and keep declared name enumeration
+  ---
+  duration_ms: 3.950742
+  type: 'test'
+  ...
+# Subtest: linked data files have explicit host requests, declared hashes and independent pinned snapshots
+ok 16 - linked data files have explicit host requests, declared hashes and independent pinned snapshots
+  ---
+  duration_ms: 3.111861
+  type: 'test'
+  ...
+# Subtest: linked metadata files are inspected for resource data without becoming loaded runtime modules
+ok 17 - linked metadata files are inspected for resource data without becoming loaded runtime modules
+  ---
+  duration_ms: 1.786454
+  type: 'test'
+  ...
+# Subtest: linked module resource inspection permits managed entry points and does not require a child resource row
+ok 18 - linked module resource inspection permits managed entry points and does not require a child resource row
+  ---
+  duration_ms: 1.341019
+  type: 'test'
+  ...
+# Subtest: reader disposal and cancellation guard cold and warm paths, while retained assembly data survives cooperative unloading
+ok 19 - reader disposal and cancellation guard cold and warm paths, while retained assembly data survives cooperative unloading
+  ---
+  duration_ms: 1.252861
+  type: 'test'
+  ...
+# Subtest: stable resource file diagnostics extend rather than renumber the existing registry
+ok 20 - stable resource file diagnostics extend rather than renumber the existing registry
+  ---
+  duration_ms: 0.164361
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1611.082992

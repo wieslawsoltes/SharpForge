@@ -1,0 +1,201 @@
+{
+  "corrected": {
+    "before": {
+      "head": "dcc43cfe1de9326ea1f26a97c13d83203f2fde00",
+      "scriptSha256": "1ffb29df47cf6af19408b29311fad95f2b208edfb36ec0004352db0113bf9edc",
+      "command": "node packages/compiler/bench/portable-pdb.bench.js",
+      "limiter": "node scripts/limited.js python3 - (one serial driver for both child commands)",
+      "measurement": {
+        "node": "v24.19.0",
+        "platform": "linux",
+        "arch": "x64",
+        "cpu": "AMD EPYC 9V74 80-Core Processor",
+        "warmups": 150,
+        "rounds": 40,
+        "samples": 7,
+        "results": [
+          {
+            "portablePdb": false,
+            "assemblyBytes": 4096,
+            "pdbBytes": 0,
+            "samplesMs": [
+              3.907953525000005,
+              3.1758828499999936,
+              3.722665500000005,
+              2.796769525000002,
+              2.6374193750000017,
+              2.8324202499999958,
+              3.1305970500000058
+            ],
+            "medianMs": 3.1305970500000058,
+            "p95Ms": 3.907953525000005
+          },
+          {
+            "portablePdb": true,
+            "assemblyBytes": 4096,
+            "pdbBytes": 0,
+            "samplesMs": [
+              3.8244405749999943,
+              3.8014609250000033,
+              3.806122025000002,
+              3.845911124999998,
+              2.8226496750000023,
+              3.3015910249999934,
+              3.2982202500000084
+            ],
+            "medianMs": 3.8014609250000033,
+            "p95Ms": 3.845911124999998
+          }
+        ]
+      }
+    },
+    "after": {
+      "head": "16a5684c46dbe0aa04d081d81bf8d720e6f40299",
+      "scriptSha256": "1ffb29df47cf6af19408b29311fad95f2b208edfb36ec0004352db0113bf9edc",
+      "command": "node packages/compiler/bench/portable-pdb.bench.js",
+      "limiter": "node scripts/limited.js python3 - (one serial driver for both child commands)",
+      "measurement": {
+        "node": "v24.19.0",
+        "platform": "linux",
+        "arch": "x64",
+        "cpu": "AMD EPYC 9V74 80-Core Processor",
+        "warmups": 150,
+        "rounds": 40,
+        "samples": 7,
+        "results": [
+          {
+            "portablePdb": false,
+            "assemblyBytes": 4096,
+            "pdbBytes": 0,
+            "samplesMs": [
+              3.210114950000002,
+              3.2280922749999945,
+              2.9262635749999957,
+              2.7038487499999975,
+              2.7443570499999965,
+              2.515835100000004,
+              2.6222360250000065
+            ],
+            "medianMs": 2.7443570499999965,
+            "p95Ms": 3.2280922749999945
+          },
+          {
+            "portablePdb": true,
+            "assemblyBytes": 4608,
+            "pdbBytes": 1150,
+            "samplesMs": [
+              4.815253299999995,
+              4.422307325000008,
+              4.136870475,
+              3.392418550000002,
+              4.616473300000007,
+              3.792850450000003,
+              5.658113125
+            ],
+            "medianMs": 4.422307325000008,
+            "p95Ms": 5.658113125
+          }
+        ]
+      }
+    }
+  },
+  "supersededPilot": {
+    "status": "Invalid for before/after conclusions: sequential modes began after only 10 warmups, exposing a strong JIT/order effect even when the baseline ignored the option.",
+    "reports": {
+      "before": {
+        "head": "dcc43cfe1de9326ea1f26a97c13d83203f2fde00",
+        "scriptSha256": "0e668148d230fcb5d31e152c1ac2bb09e01ba5178ba8ae18e954032d71c7efa3",
+        "command": "node scripts/limited.js node packages/compiler/bench/portable-pdb.bench.js",
+        "measurement": {
+          "node": "v24.19.0",
+          "platform": "linux",
+          "arch": "x64",
+          "cpu": "AMD EPYC 9V74 80-Core Processor",
+          "rounds": 20,
+          "samples": 7,
+          "results": [
+            {
+              "portablePdb": false,
+              "medianMs": 7.785832550000009,
+              "p95Ms": 7.933622949999995,
+              "assemblyBytes": 4096,
+              "pdbBytes": 0,
+              "samplesMs": [
+                7.870158100000003,
+                5.3401358999999955,
+                5.433836049999991,
+                7.845708149999996,
+                7.785832550000009,
+                7.552602100000001,
+                7.933622949999995
+              ]
+            },
+            {
+              "portablePdb": true,
+              "medianMs": 3.0170169500000155,
+              "p95Ms": 3.7254953,
+              "assemblyBytes": 4096,
+              "pdbBytes": 0,
+              "samplesMs": [
+                3.7254953,
+                2.785074650000001,
+                3.308085200000005,
+                3.39617025,
+                2.878901700000006,
+                3.0170169500000155,
+                3.0119525000000067
+              ]
+            }
+          ]
+        }
+      },
+      "after": {
+        "head": "0ac4fd7fec948991c2375306058d5847a0276889",
+        "scriptSha256": "0e668148d230fcb5d31e152c1ac2bb09e01ba5178ba8ae18e954032d71c7efa3",
+        "command": "node scripts/limited.js node packages/compiler/bench/portable-pdb.bench.js",
+        "measurement": {
+          "node": "v24.19.0",
+          "platform": "linux",
+          "arch": "x64",
+          "cpu": "AMD EPYC 9V74 80-Core Processor",
+          "rounds": 20,
+          "samples": 7,
+          "results": [
+            {
+              "portablePdb": false,
+              "medianMs": 7.474202300000002,
+              "p95Ms": 10.553175349999993,
+              "assemblyBytes": 4096,
+              "pdbBytes": 0,
+              "samplesMs": [
+                8.298836249999999,
+                5.754278750000003,
+                7.474202300000002,
+                7.278325099999995,
+                8.773848199999998,
+                10.553175349999993,
+                4.936287249999998
+              ]
+            },
+            {
+              "portablePdb": true,
+              "medianMs": 4.761562649999997,
+              "p95Ms": 5.439841150000007,
+              "assemblyBytes": 4608,
+              "pdbBytes": 1150,
+              "samplesMs": [
+                5.439841150000007,
+                4.761562649999997,
+                4.601292899999999,
+                4.943753700000002,
+                4.967711499999996,
+                3.8456366000000117,
+                4.356146649999983
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

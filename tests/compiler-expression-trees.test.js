@@ -93,12 +93,13 @@ test('SF-A02-T07.5 a lambda converted to a delegate is not checked as a tree; a 
   assert.deepEqual(codes(wrap('Expression<Func<int, Func<int, int>>> e = x => y => { return y; };')), ['CS0834']);
 });
 
-test('SF-A02-T07.5 a construct with no factory call is named, not guessed; a program with a tree is not executable yet', () => {
+test('SF-A02-T07.5 lifted arithmetic lowers, while the source-image runtime retains its explicit expression-tree boundary', () => {
   const [lowered] = treesOf(`
     using System;
     using System.Linq.Expressions;
     class P { static void Main() { int captured = 1; Expression<Func<int, int?>> e = x => (int?)x + captured; } }`);
-  assert.match(lowered.unsupported ?? '', /lifted|Convert|expression/);
+  assert.equal(lowered.unsupported, undefined);
+  assert.equal(lowered.tree.body.factory, 'Add');
   const diagnostic = notExecutable(`
     using System;
     using System.Linq.Expressions;

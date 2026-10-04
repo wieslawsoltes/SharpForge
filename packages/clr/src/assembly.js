@@ -8,6 +8,7 @@ import { MetadataAccessors } from './type-system/metadata-accessors.js';
 import { MetadataParameters } from './type-system/metadata-parameters.js';
 import { MetadataPropertyParameters } from './type-system/metadata-property-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
+import { ManifestResources } from './resources/manifest.js';
 
 function namedIdentityRow(row, reference) {
   if (!reference) return { MajorVersion: row[1], MinorVersion: row[2], BuildNumber: row[3], RevisionNumber: row[4],
@@ -335,6 +336,12 @@ export class RuntimeAssembly {
   get referenceCount() { this.ensureUsable(); return this.#pe.metadata.counts[35] ?? 0; }
 
   ensureUsable() { this.#context.ensureUsable(); }
+
+  /** Independent, disposable manifest-resource reader with explicit linked-file input and configurable byte/work budgets. */
+  openManifestResources(options = {}) {
+    this.ensureUsable();
+    return new ManifestResources(this, this.#pe, options);
+  }
 
   /** Decode one AssemblyRef identity, without resolving or loading the referenced assembly. */
   async reference(index, { signal } = {}) {

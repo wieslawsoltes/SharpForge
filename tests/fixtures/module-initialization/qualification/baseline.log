@@ -1,0 +1,323 @@
+✖ module initialization baseline: producer emits a module constructor for plain-main (102.393756ms)
+✔ module initialization baseline: producer emits a module constructor for static-field-main (14.648669ms)
+✔ module initialization baseline: producer emits a module constructor for static-constructor-main (13.862042ms)
+✔ module initialization baseline: producer emits a module constructor for initializer-calls-entry-type (14.638213ms)
+✔ module initialization baseline: direct CIL startup for plain-main (24.778073ms)
+✖ module initialization baseline: direct CIL startup for static-field-main (14.72387ms)
+✖ module initialization baseline: direct CIL startup for static-constructor-main (14.475645ms)
+✖ module initialization baseline: direct CIL startup for initializer-calls-entry-type (10.062246ms)
+✔ module initialization baseline: direct CIL startup for declaration-order-once (15.061285ms)
+✖ module initialization baseline: direct CIL startup for pre-entry-fault (11.896432ms)
+✔ module initialization baseline: direct CIL startup for no-initializers (3.692179ms)
+✖ module initialization baseline: a library owns module startup before a selected static method (4.632471ms)
+✖ module initialization baseline: module constructor preserves source declaration order across files (7.133929ms)
+✔ module initialization baseline: no initializer leaves the module empty (5.749293ms)
+✖ module initialization baseline: independent CIL module startup is verified and runs once (entry) (1.692198ms)
+✖ module initialization baseline: independent CIL module startup is verified and runs once (library) (0.828288ms)
+✖ module initialization baseline: an active module initializer survives snapshot restore and collection (1.942276ms)
+✖ module initialization baseline: pre-entry failure bypasses Main catch and stays cached, rooted, and restorable (2.015374ms)
+✖ module initialization baseline: an invalid module body is rejected before entry execution (0.634293ms)
+✖ module initialization baseline: an invalid module body is rejected before selected method execution (0.630056ms)
+✔ module initialization baseline: an unrelated unreachable invalid body is not a module initialization root (1.115029ms)
+✔ module initialization baseline: compile source-image startup remains a separate control (23.455659ms)
+✔ module initialization baseline: compileToIL source-image startup remains a separate control (11.554739ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 10
+ℹ fail 13
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2257.854321
+
+✖ failing tests:
+
+test at tests/compiler-module-initialization.test.js:49:3
+✖ module initialization baseline: producer emits a module constructor for plain-main (102.393756ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   '.cctor'
+  - ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:52:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ '.cctor' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:66:3
+✖ module initialization baseline: direct CIL startup for static-field-main (14.72387ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'field\n42\n'
+  - 'module\nfield\n42\n'
+  
+      at file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:69:14
+      at withVM (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:33:16)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:67:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'field\n42\n',
+    expected: 'module\nfield\n42\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:66:3
+✖ module initialization baseline: direct CIL startup for static-constructor-main (14.475645ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'type\nmain\n'
+  - 'module\ntype\nmain\n'
+  
+      at file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:69:14
+      at withVM (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:33:16)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:67:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'type\nmain\n',
+    expected: 'module\ntype\nmain\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:66:3
+✖ module initialization baseline: direct CIL startup for initializer-calls-entry-type (10.062246ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'type\n42\n'
+  - 'module-start\ntype\n42\nmodule-end\n42\n'
+  
+      at file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:69:14
+      at withVM (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:33:16)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:67:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'type\n42\n',
+    expected: 'module-start\ntype\n42\nmodule-end\n42\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:66:3
+✖ module initialization baseline: direct CIL startup for pre-entry-fault (11.896432ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'System.Exception'
+  - 'TypeInitializationException'
+  
+      at file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:72:16
+      at withVM (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:33:16)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:67:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'System.Exception',
+    expected: 'TypeInitializationException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:81:1
+✖ module initialization baseline: a library owns module startup before a selected static method (4.632471ms)
+  AssertionError [ERR_ASSERTION]: libraries need the same module constructor as executables
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:85:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:105:1
+✖ module initialization baseline: module constructor preserves source declaration order across files (7.133929ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(initializer)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:109:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:153:3
+✖ module initialization baseline: independent CIL module startup is verified and runs once (entry) (1.692198ms)
+  AssertionError [ERR_ASSERTION]: module constructor is a mandatory verification root
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:160:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:153:3
+✖ module initialization baseline: independent CIL module startup is verified and runs once (library) (0.828288ms)
+  AssertionError [ERR_ASSERTION]: module constructor is a mandatory verification root
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:160:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:174:1
+✖ module initialization baseline: an active module initializer survives snapshot restore and collection (1.942276ms)
+  AssertionError [ERR_ASSERTION]: pause after the module stores its managed reference
+  + actual - expected
+  
+  + undefined
+  - '<Module>'
+  
+      at file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:183:12
+      at withVM (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:33:16)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:175:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '<Module>',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:227:1
+✖ module initialization baseline: pre-entry failure bypasses Main catch and stays cached, rooted, and restorable (2.015374ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'terminated'
+  - 'faulted'
+  
+      at file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:231:12
+      at withVM (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:33:16)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:228:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'terminated',
+    expected: 'faulted',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:253:3
+✖ module initialization baseline: an invalid module body is rejected before entry execution (0.634293ms)
+  AssertionError [ERR_ASSERTION]: module startup must not bypass verifier admission
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:262:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-module-initialization.test.js:253:3
+✖ module initialization baseline: an invalid module body is rejected before selected method execution (0.630056ms)
+  AssertionError [ERR_ASSERTION]: module startup must not bypass verifier admission
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization.test.js:262:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -106,6 +106,11 @@ export function methodFlags(method, { implementsInterface, inInterface }) {
   else if (implementsInterface) flags |= MethodAttributes.Virtual | MethodAttributes.Final | MethodAttributes.NewSlot;
   if ((flags & MethodAttributes.Virtual) && !method.isOverride && kind !== MethodKind.Destructor) flags |= MethodAttributes.NewSlot;
   if (method.isOverride && method.isSealed) flags |= MethodAttributes.Final;
+  const access = flags & MethodAttributes.MemberAccessMask;
+  if ((flags & MethodAttributes.Virtual) && !(flags & MethodAttributes.Final)
+      && (access === MethodAttributes.Assembly || access === MethodAttributes.FamANDAssem)) {
+    flags |= MethodAttributes.Strict;
+  }
   return flags;
 }
 

@@ -3,9 +3,8 @@
  * before any other code of the module. The type initializer of `<Module>` calls them, as in a Roslyn build: the
  * runtime runs it before anything else, so also before the type initializer of the entry point's type.
  *
- * It is declared only for a program whose entry point type has a type initializer. Otherwise the entry point calls
- * the module initializers first (emit-objects.js), which is the same order and also runs on the direct-CIL runtime,
- * which does not run `<Module>::.cctor`.
+ * Libraries and executables use the same module constructor. Host startup owns the once-only initialization
+ * gate; ordinary and synthesized entry-point bodies do not contain duplicate initializer calls.
  */
 import { MethodImplAttributes } from '@sharpforge/cil';
 import { IlBuilder } from './il-builder.js';

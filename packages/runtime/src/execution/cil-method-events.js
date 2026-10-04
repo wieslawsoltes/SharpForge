@@ -1,3 +1,4 @@
+import {callbackFrames} from './callback-frames.js';
 import {RuntimeEventLog, RuntimeEventName} from './runtime-events.js';
 import {observeWasmCall} from './wasm/call-tier-state.js';
 
@@ -45,6 +46,7 @@ export function leaveCilMethod(vm, frame, reason = 'return') {
 function* liveFrames(vm) {
   const current = vm.scheduler?.currentId ?? 1;
   yield* vm.frames;
+  yield* callbackFrames(vm.scheduler);
   for (const [id, context] of vm.scheduler?.contexts ?? []) {
     if (id === current && !vm.scheduler.parked || terminalContexts.has(context.status)) continue;
     yield* context.frames;
@@ -73,7 +75,7 @@ export function flushCilMethodEvents(vm) {
       leaveCilMethod(vm, {id: discarded[index]}, 'canceled');
     }
   }
-  observer.log.flush();
+  if (!vm.scheduler?.callbackScopes?.length) observer.log.flush();
 }
 
 /** A restore starts new observed spans; log history and subscriber cursors never rewind. */
@@ -89,5 +91,5 @@ export function stopCilMethodEvents(vm) {
   const observer = observers.get(vm);
   if (!observer) return;
   for (const active of [...observer.active.values()].reverse()) leaveCilMethod(vm, {id: active.frame}, 'stop');
-  observer.log.flush();
+  if (!vm.scheduler?.callbackScopes?.length) observer.log.flush();
 }

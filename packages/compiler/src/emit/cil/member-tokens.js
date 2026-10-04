@@ -57,6 +57,7 @@ export class MemberTokens {
     this.typeSpecs = new Map();
     this.methodSpecs = new Map();
     this.localSignatures = new Map();
+    this.callSignatures = new Map();
   }
   /**
    * A view of these tokens for the code of a synthesized generic class or method: every type it names is read under
@@ -133,7 +134,9 @@ export class MemberTokens {
       owner = field.containingType,
       defined = this.writer.fieldTokens.get(definition);
     if (defined && !isInstantiation(owner)) return defined;
-    return this.builder.member(this.type(owner), definition.name, fieldSignature(this.definitionTypes, definition.type, definition.refKind));
+    const plan = this.writer.plans.get(definition.containingType);
+    const storage = definition.isFixedSizeBuffer ? plan?.fields.find(entry => entry.symbol === definition)?.type : null;
+    return this.builder.member(this.type(owner), definition.name, fieldSignature(this.definitionTypes, storage ?? definition.type, definition.refKind));
   }
   /**
    * MemberRef token of a framework method named by its signature rather than by a symbol (the members lowering needs
@@ -195,6 +198,17 @@ export class MemberTokens {
   /** The operand of `ldstr`. */
   string(text) {
     return USER_STRING | this.builder.userString(text);
+  }
+  /** StandAloneSig token for calli, preserving convention, ref slots and the current generic substitution. */
+  functionPointer(type) {
+    const bytes = this.types.signature(type).slice(1);
+    const key = bytes.join(',');
+    let token = this.callSignatures.get(key);
+    if (!token) {
+      token = this.builder.addRow('StandAloneSig', { Signature: Uint8Array.from(bytes) });
+      this.callSignatures.set(key, token);
+    }
+    return token;
   }
   /**
    * StandAloneSig token of a local variable signature, or 0 for a method without locals.

@@ -6,6 +6,7 @@ import { NamedTypeSymbol, TypeKind, TypeWithAnnotations } from '../types.js';
 const typeKinds = {
   ClassDeclaration: TypeKind.Class,
   StructDeclaration: TypeKind.Struct,
+  UnionDeclaration: TypeKind.Struct,
   InterfaceDeclaration: TypeKind.Interface,
   EnumDeclaration: TypeKind.Enum,
   DelegateDeclaration: TypeKind.Delegate,

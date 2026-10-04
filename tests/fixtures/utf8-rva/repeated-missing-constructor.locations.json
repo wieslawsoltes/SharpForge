@@ -1,0 +1,32 @@
+[
+  {
+    "code": "CS0656",
+    "message": "Missing compiler required member 'System.ReadOnlySpan`1..ctor'",
+    "file": "Repeated.cs",
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 46
+      },
+      "end": {
+        "line": 2,
+        "character": 51
+      }
+    }
+  },
+  {
+    "code": "CS0656",
+    "message": "Missing compiler required member 'System.ReadOnlySpan`1..ctor'",
+    "file": "Repeated.cs",
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 47
+      },
+      "end": {
+        "line": 3,
+        "character": 52
+      }
+    }
+  }
+]
