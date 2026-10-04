@@ -120,7 +120,7 @@ the existing deferred host flush boundary. Entry-only selections do not gain
 new events in this increment.
 
 The authored OSR regressions are `tests/a05-11-wasm-osr.test.js`. Qualification
-and performance measurement remain pending. Debugger-requested forced
-deoptimization ([#1408](https://github.com/wieslawsoltes/SharpForge/issues/1408))
-is a separate surface; ordinary debugger boundary safety does not require
-conversion because all live values already reside in canonical frame storage.
+and performance measurement remain pending. [Debugger-requested forced
+deoptimization](wasm-debugger-deopt.md) suppresses manual and automatic selection
+for marked live invocations. It needs no value conversion because all live
+values already reside in canonical frame storage.
