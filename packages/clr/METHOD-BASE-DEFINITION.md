@@ -111,21 +111,47 @@ All [600 raw samples and source-resolution evidence](benchmarks/function-pointer
 are retained. No reruns, causal/noise attribution or general speedup claim;
 allocation totals and peak memory remain unmeasured.
 
-Strict (`CheckAccessOnOverride`) matches between top-level, nongeneric methods and
+Strict (`CheckAccessOnOverride`) matches between nongeneric methods and
 types in the same canonical assembly now validate both base accessibility and the
 child/base access widening relation. The existing ancestor walk supplies each
 matched edge: family-and-assembly, assembly, family, family-or-assembly and public
-base methods are accessible; private/private-scope bases reject. Narrowing or
+base methods are accessible; PrivateScope bases reject. Private bases require the
+enclosing/inheritance proof below. Narrowing or
 incompatible access changes reject, including family-or-assembly to family within
 one assembly. Reserved member-access masks report SFCLR005; inaccessible or
 unsupported strict edges report SFCLR012. New-slot boundaries still stop the walk.
 
 This follows [CoreCLR's access and widening checks](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/methodtablebuilder.cpp#L4333).
-Cross-assembly/friend access, nested types and generic owners/methods remain
+Cross-assembly/friend access and generic owners/methods remain
 explicitly unsupported for strict edges. Generic metadata row counts are bounded
 before owner-parameter expansion; existing traversal/cancellation limits still
 apply. No access registry or persistent cache is added, and non-strict paths retain
 their previous behavior. This does not certify full type loading or virtual dispatch.
+
+Nested strict access reuses canonical `TypeDesc.declaringType` and `baseType`
+identities. A private base is accessible only when every inheritance edge from
+the overriding owner to that base also has an enclosing parent, at any lexical
+depth. Merely placing the leaf inside the ultimate base does not suffice if an
+intermediate base does not enclose the leaf. This follows
+[CoreCLR's enclosing-base rule](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/methodtablebuilder.cpp#L4298).
+Once private access is established, all child access masks except PrivateScope
+can preserve or widen it. Ordinary public/family/assembly matching uses the same
+widening table for nested and top-level types; new slots still terminate matching.
+
+The proof walks existing immutable graphs with scalar depth/work counters, no
+name comparisons, duplicate resolver, cache or per-node allocations. Each successful
+inheritance step advances outward in lexical ownership, so a single private
+proof is linear in the visited enclosing chain. Context depth and metadata-work
+limits bound traversal; generic enclosing owners remain explicitly unsupported.
+Inconsistent NestedClass ownership/visibility reports SFCLR005. Cancellation is
+checked by the existing query before caching a root. Method bodies remain unread.
+
+The nested increment prepares six authored test groups and thirteen independent
+native outcomes (positive roots and rejected type loads). Native capture, focused
+tests, one fixed existing strict-path control and the new workload benchmark,
+static/manifests/structure checks are pending a scheduled serial slot. The native
+test requires source/image provenance without a skip. No platform or performance
+result is claimed before that qualification; invocation remains outside this API.
 
 Six authored tests cover the complete 7×7 same-assembly mask matrix, canonical
 queries, cancellation/unload, intermediate edges, new slots, malformed masks,

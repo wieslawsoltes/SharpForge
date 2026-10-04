@@ -55,7 +55,7 @@ export class MethodBaseDefinitions {
       if (!match) continue;
       if (!match.isVirtual) throw fail('A nonvirtual method cannot be overridden');
       if (match.isFinal) throw fail('A final virtual method cannot be overridden');
-      if (match.flags & 0x200) checkStrictOverrideAccess(root, match, this.#maxRows);
+      if (match.flags & 0x200) checkStrictOverrideAccess(root, match, this.#maxRows, this.#maxDepth);
       const constraints = this.#signatures.checkConstraints(root, match, signal);
       if (constraints) await constraints;
       root = match;
