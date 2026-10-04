@@ -1,0 +1,25 @@
+{
+  "workIds": [
+    "SF-A23-T11",
+    "SF-A23-T39"
+  ],
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "tests": {
+    "tests/a23-studio-test-worker.test.js": 5,
+    "tests/a23-native-test-client.test.js": 2
+  },
+  "qualification": {
+    "node22": "Completed native UI scope: 106/106 passed",
+    "node26": "Completed native UI scope: 106/106 passed",
+    "captures": [
+      "planning/evidence/project18/native-studio/node22.log",
+      "planning/evidence/project18/native-studio/node26.log"
+    ]
+  },
+  "extraction": "Native client assertions copied unchanged from the first two a23-studio-test-explorer cases. Worker protocol assertions unchanged.",
+  "outsideWorkstream": "Native service owner approved the two-line default testing contribution registration, retaining all other families.",
+  "remaining": [
+    "Native installed-framework and coverage collector qualification",
+    "Protected Studio entry integration"
+  ]
+}
