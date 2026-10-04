@@ -31,6 +31,9 @@ export { mergeVerificationTypes, mergeVerificationStacks } from './verify/type-r
 export { validateTailPrefixes, tailPrefixDiagnosticCatalog } from './verify/prefix-tail.js';
 
 export {verifiedStackBound} from './verified-stack.js';
+export {parseFunctionPointerType} from './function-pointer-signature.js';
 export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/prefix-memory.js';
 export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/prefix-constrained.js';
+export {isByrefStructForwarder} from './generic-struct-forwarder.js';
 export { createMetadataVerificationTypeSystem, verificationTypeSystemDiagnosticCatalog } from './verify/type-system.js';
+export { createMetadataVerificationContext, verificationMemberDiagnosticCatalog } from './verify/member-system.js';

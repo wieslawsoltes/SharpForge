@@ -1,0 +1,431 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-04",
+  "scope": "Pinned reference-oracle tooling; source license observations do not replace shipped binary terms. This is a repository distribution policy, not native qualification.",
+  "policies": {
+    "oss-notices": {
+      "cache": "private-build-cache",
+      "repository": "no-vendored-tool-binaries",
+      "redistribution": "Only with all applicable license and third-party notices; this repository distributes authored observations, not the tool bundle."
+    },
+    "windows-appsdk-binplaced": {
+      "cache": "private-build-cache",
+      "repository": "no-vendored-tool-binaries",
+      "redistribution": "Package license section3 permits binplaced application files subject to its requirements; standalone SDK redistribution is excluded. No binary redistribution is performed by this oracle."
+    },
+    "windows-appsdk-restricted": {
+      "cache": "private-build-cache",
+      "repository": "no-vendored-tool-binaries",
+      "redistribution": "These exact DWrite/Widgets license files do not contain the umbrella package binplaced-files clause. Download for Windows development/testing; no separate binary redistribution approval is inferred."
+    },
+    "windows-ml": {
+      "cache": "private-build-cache",
+      "repository": "no-vendored-tool-binaries",
+      "redistribution": "AppSDK binplaced-files conditions plus the exact ML package third-party/execution-provider terms; no model/provider downloads or redistribution are part of this oracle."
+    },
+    "windows-sdk-redist": {
+      "cache": "private-build-cache",
+      "repository": "no-vendored-tool-binaries",
+      "redistribution": "Windows SDK development/build rights do not grant arbitrary redistribution; REDIST-listed code has application/platform/notice conditions. Restore for compilation, do not ship reference/build-tool binaries."
+    },
+    "webview2-sdk": {
+      "cache": "private-build-cache",
+      "repository": "no-vendored-tool-binaries",
+      "redistribution": "SDK package permits source/binary redistribution with its three notice/non-endorsement conditions. This does not license a WebView2 browser runtime; none is vendored or exercised here."
+    },
+    "linux-image": {
+      "cache": "local-container-cache",
+      "repository": "no-vendored-images",
+      "redistribution": "Image layers contain independently licensed .NET, Ubuntu and other components. Pull the exact reviewed digest; do not export a redistributed image under the Dockerfile source license."
+    },
+    "hosted-image": {
+      "cache": "provider-managed-only",
+      "repository": "no-vendored-images",
+      "redistribution": "Use the GitHub-hosted VM for this development/test job under provider and bundled OS/software terms. The runner-images source license is not permission to copy the VM or installed software."
+    }
+  },
+  "tools": [
+    {
+      "id": "dotnet-sdk",
+      "version": "10.0.201",
+      "policy": "oss-notices",
+      "sourceLicense": "https://github.com/dotnet/sdk/blob/v10.0.201/LICENSE.TXT",
+      "binaryTerms": {
+        "source": "SDK archives recorded in oracle-toolchain.json/provenance/sdkArchives",
+        "files": [
+          "LICENSE.txt",
+          "ThirdPartyNotices.txt"
+        ]
+      },
+      "notes": "SDK bundle also includes Roslyn, MSBuild, NuGet and runtime components; preserve the complete bundle notices, not only the CLI source license."
+    },
+    {
+      "id": "roslyn",
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "policy": "oss-notices",
+      "sourceLicense": "https://github.com/dotnet/roslyn/blob/8d2c75f24c88ea99a01a8579ecb67e303d566670/License.txt",
+      "binaryTerms": {
+        "source": "The pinned SDK bundle, not a separately redistributed compiler",
+        "files": [
+          "LICENSE.txt",
+          "ThirdPartyNotices.txt"
+        ]
+      },
+      "notes": "The observed compiler build commit is not publicly resolvable as a source-license URL. The immutable source-license link is a separate source observation; binary terms come from the exact SDK distribution."
+    },
+    {
+      "id": "coreclr",
+      "version": "10.0.5",
+      "policy": "oss-notices",
+      "sourceLicense": "https://github.com/dotnet/runtime/blob/v10.0.5/LICENSE.TXT",
+      "notices": "https://github.com/dotnet/runtime/blob/v10.0.5/THIRD-PARTY-NOTICES.TXT"
+    },
+    {
+      "id": "reference-pack",
+      "version": "10.0.5",
+      "policy": "oss-notices",
+      "sourceLicense": "https://github.com/dotnet/runtime/blob/v10.0.5/LICENSE.TXT",
+      "notices": "https://github.com/dotnet/runtime/blob/v10.0.5/THIRD-PARTY-NOTICES.TXT",
+      "notes": "All167 reference assemblies are bound by the toolchain manifest hash; a compiler input reference is not a product runtime payload."
+    },
+    {
+      "id": "windows-sdk-net-ref",
+      "version": "10.0.19041.57",
+      "policy": "windows-sdk-redist",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.Windows.SDK.NET.Ref/10.0.19041.57",
+      "binaryTerms": {
+        "declaredUrl": "https://aka.ms/WinSDKLicenseURL",
+        "url": "https://download.microsoft.com/download/0/F/F/0FF2B061-47DD-4F55-89B6-FD1D8C44F14D/sdk_license.rtf",
+        "sha256": "dd07eb178e00c6bba4148457fc00ff77cd4887eb521d504186fe59c9ec8bbe62"
+      },
+      "notes": "Implicit SDK reference package pinned by WindowsSdkPackageVersion in Oracle.WinUI.csproj; not in its NuGet dependencies lock."
+    },
+    {
+      "id": "node-oracles",
+      "version": "22.23.3",
+      "policy": "oss-notices",
+      "sourceLicense": "https://github.com/nodejs/node/blob/v22.23.3/LICENSE",
+      "notes": "Full LICENSE includes bundled dependency terms; Node runs the harness, not the CLR observations."
+    },
+    {
+      "id": "node-winui-measure",
+      "version": "24.21.0",
+      "policy": "oss-notices",
+      "sourceLicense": "https://github.com/nodejs/node/blob/v24.21.0/LICENSE",
+      "notes": "Full LICENSE includes bundled dependency terms; distinct from the historical harness Node pin."
+    }
+  ],
+  "packages": [
+    {
+      "id": "Microsoft.Web.WebView2",
+      "version": "1.0.3179.45",
+      "contentHash": "3pokSH5CnN0G6rGhGFo1y87inxYhNxBQ2Vdf0wlvBj99KHxQJormjDACmqRnFeUsmuNFIhWwfAL1ztq7wD5qRA==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.Web.WebView2/1.0.3179.45",
+      "license": {
+        "kind": "package-file",
+        "path": "LICENSE.txt",
+        "sha256": "0af8f1b807512aae39c2ac1aa4d0cae65cabecb6fd554b8439a5162a0d6eca55",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.web.webview2/1.0.3179.45/microsoft.web.webview2.1.0.3179.45.nupkg"
+      },
+      "policy": "webview2-sdk"
+    },
+    {
+      "id": "Microsoft.Windows.SDK.BuildTools",
+      "version": "10.0.26100.4654",
+      "contentHash": "2mgcOlj/t2RfSyyw+pVESfO+Tk1RkfQzto9Vrq42M1lUQIfQEwbi8QLha9GXWIOj+TFzeHIEJckIoF25mgiM8A==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools/10.0.26100.4654",
+      "license": {
+        "kind": "external-terms",
+        "url": "https://download.microsoft.com/download/0/F/F/0FF2B061-47DD-4F55-89B6-FD1D8C44F14D/sdk_license.rtf",
+        "sha256": "dd07eb178e00c6bba4148457fc00ff77cd4887eb521d504186fe59c9ec8bbe62",
+        "declaredUrl": "https://aka.ms/WinSDKLicenseURL"
+      },
+      "policy": "windows-sdk-redist"
+    },
+    {
+      "id": "Microsoft.Windows.SDK.BuildTools.MSIX",
+      "version": "1.7.20250829.1",
+      "contentHash": "IMdvRmCIZnBS5GkYnv0po1bcx6U1OF39pqA4TphQ9evDzpCRoSE19/PkDvlUNNrBavTsLIEJgd/TAIFner75ow==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools.MSIX/1.7.20250829.1",
+      "license": {
+        "kind": "package-file",
+        "path": "sdk_license.txt",
+        "sha256": "a7a5c7e7ff998558983d6aca2702117c328aeb0c6404d298cb275f5623c6fd13",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windows.sdk.buildtools.msix/1.7.20250829.1/microsoft.windows.sdk.buildtools.msix.1.7.20250829.1.nupkg"
+      },
+      "policy": "windows-sdk-redist"
+    },
+    {
+      "id": "Microsoft.WindowsAppSDK",
+      "version": "1.8.260921001",
+      "contentHash": "uoES0zOM4rNsy5FMWjzGg4uDUakodMkSQbhpT59Gb4J8ONf2L1XEwcyvZC6Li9Sm8fmCUkPK/mkfYdRUpnlJqQ==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK/1.8.260921001",
+      "license": {
+        "kind": "package-file",
+        "path": "license.txt",
+        "sha256": "5b11e6347756e40fe0274bc08c97f89201b94f0d50181a09a00f1f4740840501",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk/1.8.260921001/microsoft.windowsappsdk.1.8.260921001.nupkg"
+      },
+      "policy": "windows-appsdk-binplaced"
+    },
+    {
+      "id": "Microsoft.WindowsAppSDK.AI",
+      "version": "1.8.79",
+      "contentHash": "28lVLUoYd51EFddxC1REA0NmbrUDYaDgWVV/jQ4Dohz2qArRhXpyYCuggfvQW0D29vWzWFdMjQgNI0qP9CwYyw==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK.AI/1.8.79",
+      "license": {
+        "kind": "package-file",
+        "path": "license.txt",
+        "sha256": "5b11e6347756e40fe0274bc08c97f89201b94f0d50181a09a00f1f4740840501",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk.ai/1.8.79/microsoft.windowsappsdk.ai.1.8.79.nupkg"
+      },
+      "policy": "windows-appsdk-binplaced"
+    },
+    {
+      "id": "Microsoft.WindowsAppSDK.Base",
+      "version": "1.8.251216001",
+      "contentHash": "PS1wriuFknz3W2F2P/e6RvOTM35w89Lsj/f0QmUEPrJjKnc+jM0JLX1vfdytI14y1gNRUTm9uclwP0aH/SVU5w==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK.Base/1.8.251216001",
+      "license": {
+        "kind": "package-file",
+        "path": "license.txt",
+        "sha256": "5b11e6347756e40fe0274bc08c97f89201b94f0d50181a09a00f1f4740840501",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk.base/1.8.251216001/microsoft.windowsappsdk.base.1.8.251216001.nupkg"
+      },
+      "policy": "windows-appsdk-binplaced"
+    },
+    {
+      "id": "Microsoft.WindowsAppSDK.DWrite",
+      "version": "1.8.25122902",
+      "contentHash": "zFNn07i7Cyz62Y8FnPQAyzeZK7ww3m9t42i9pzy4C04pNbyUDQ4fG7pB6VSh6n4EyFuYtuFQuDzt4mKmXFrkrg==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK.DWrite/1.8.25122902",
+      "license": {
+        "kind": "package-file",
+        "path": "license.txt",
+        "sha256": "f9ed00147604bdc48c7e62d127d73245781ce53903cef9c3863f8a7ef8120cc2",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk.dwrite/1.8.25122902/microsoft.windowsappsdk.dwrite.1.8.25122902.nupkg"
+      },
+      "policy": "windows-appsdk-restricted"
+    },
+    {
+      "id": "Microsoft.WindowsAppSDK.Foundation",
+      "version": "1.8.260803002",
+      "contentHash": "V2Mhddgyljl6jULPGbJ/J/kn6Y4D98Nckpr3Y27uK/CfbSnjcGTC6M+3aMJkyjNwoekyGAwEIRdBEYJBUCRRfA==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK.Foundation/1.8.260803002",
+      "license": {
+        "kind": "package-file",
+        "path": "license.txt",
+        "sha256": "5b11e6347756e40fe0274bc08c97f89201b94f0d50181a09a00f1f4740840501",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk.foundation/1.8.260803002/microsoft.windowsappsdk.foundation.1.8.260803002.nupkg"
+      },
+      "policy": "windows-appsdk-binplaced"
+    },
+    {
+      "id": "Microsoft.WindowsAppSDK.InteractiveExperiences",
+      "version": "1.8.260708001",
+      "contentHash": "lKvL9ArPGRhzbQwXUg7Spc8dgB7N2NnMoC6BKD9sn0Mzx9FxcJC55rohV9x52eBCfviHzrn5ZtujwORZthsqbA==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK.InteractiveExperiences/1.8.260708001",
+      "license": {
+        "kind": "package-file",
+        "path": "license.txt",
+        "sha256": "5b11e6347756e40fe0274bc08c97f89201b94f0d50181a09a00f1f4740840501",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk.interactiveexperiences/1.8.260708001/microsoft.windowsappsdk.interactiveexperiences.1.8.260708001.nupkg"
+      },
+      "policy": "windows-appsdk-binplaced"
+    },
+    {
+      "id": "Microsoft.WindowsAppSDK.ML",
+      "version": "1.8.2223",
+      "contentHash": "enVopOqNAmV4U/6zXja3I+FeJBEzLw6L19UhFDNYEPgoPMWqNdc9evGfJQ5qYKXdjTSG6woFye65KVp26dLAmg==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK.ML/1.8.2223",
+      "license": {
+        "kind": "package-file",
+        "path": "license.txt",
+        "sha256": "656aab74c15aa9f9964bcdcc993eb2755cbdb4822d5e0e3bc61d2e281897f758",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk.ml/1.8.2223/microsoft.windowsappsdk.ml.1.8.2223.nupkg"
+      },
+      "policy": "windows-ml"
+    },
+    {
+      "id": "Microsoft.WindowsAppSDK.Runtime",
+      "version": "1.8.260921001",
+      "contentHash": "UX0e2skKg08iM/rUqg9ax23cc0YqBT7OACm6POSqL0NCT6Y+wO43X3BHUdmJ/iEef/hTdJ/8YRizOX9IB+GREQ==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK.Runtime/1.8.260921001",
+      "license": {
+        "kind": "package-file",
+        "path": "license.txt",
+        "sha256": "5b11e6347756e40fe0274bc08c97f89201b94f0d50181a09a00f1f4740840501",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk.runtime/1.8.260921001/microsoft.windowsappsdk.runtime.1.8.260921001.nupkg"
+      },
+      "policy": "windows-appsdk-binplaced"
+    },
+    {
+      "id": "Microsoft.WindowsAppSDK.Widgets",
+      "version": "1.8.251231004",
+      "contentHash": "bIWqQYR8DCoB1SoPOMil5AtgtkTn438wJTdpsHgyO/6o7Eh7PMP5BzrR0KbDsFqy+4LhPWQ4vtwko5k93fECcA==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK.Widgets/1.8.251231004",
+      "license": {
+        "kind": "package-file",
+        "path": "license.txt",
+        "sha256": "f9ed00147604bdc48c7e62d127d73245781ce53903cef9c3863f8a7ef8120cc2",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk.widgets/1.8.251231004/microsoft.windowsappsdk.widgets.1.8.251231004.nupkg"
+      },
+      "policy": "windows-appsdk-restricted"
+    },
+    {
+      "id": "Microsoft.WindowsAppSDK.WinUI",
+      "version": "1.8.260803003",
+      "contentHash": "yQFFlQ6IQj4dpDqGvMghRUQMAYlnu+hhf1unvkf4ymtdWDww+UotPi+MPTJyDc7x+xEyBXfXnlXZVk0NG0eMrA==",
+      "packageUrl": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK.WinUI/1.8.260803003",
+      "license": {
+        "kind": "package-file",
+        "path": "license.txt",
+        "sha256": "5b11e6347756e40fe0274bc08c97f89201b94f0d50181a09a00f1f4740840501",
+        "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk.winui/1.8.260803003/microsoft.windowsappsdk.winui.1.8.260803003.nupkg"
+      },
+      "policy": "windows-appsdk-binplaced"
+    },
+    {
+      "id": "System.Numerics.Tensors",
+      "version": "9.0.0",
+      "contentHash": "hyJB4UlpAi19Xr9AXzu2NuagKC4lPfHObNMEAA0HmqFz2rX7wKgzeYzO/jM/eBHDhnUGFFEjk5cOoJaxqg5J4A==",
+      "packageUrl": "https://www.nuget.org/packages/System.Numerics.Tensors/9.0.0",
+      "license": {
+        "kind": "expression",
+        "expression": "MIT",
+        "url": "https://licenses.nuget.org/MIT"
+      },
+      "policy": "oss-notices"
+    }
+  ],
+  "actions": [
+    {
+      "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+      "policy": "oss-notices",
+      "sourceLicense": "https://github.com/actions/checkout/blob/3d3c42e5aac5ba805825da76410c181273ba90b1/LICENSE"
+    },
+    {
+      "uses": "actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+      "policy": "oss-notices",
+      "sourceLicense": "https://github.com/actions/setup-node/blob/49933ea5288caeca8642d1e84afbd3f7d6820020/LICENSE"
+    },
+    {
+      "uses": "actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+      "policy": "oss-notices",
+      "sourceLicense": "https://github.com/actions/setup-dotnet/blob/67a3573c9a986a3f9c594539f4ab511d57bb3ce9/LICENSE"
+    },
+    {
+      "uses": "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+      "policy": "oss-notices",
+      "sourceLicense": "https://github.com/actions/upload-artifact/blob/ea165f8d65b6e75b540449e92b4886f43607fa02/LICENSE"
+    }
+  ],
+  "images": [
+    {
+      "id": "linux",
+      "pin": {
+        "runner": "ubuntu-24.04",
+        "container": "mcr.microsoft.com/dotnet/sdk:10.0.201-noble@sha256:127d7d4d601ae26b8e04c54efb37e9ce8766931bded0ee59fcd799afd21d6850",
+        "architectureDigests": {
+          "linux-x64": "sha256:c804b88aaca8d6b76f65998427adec3101dcbbf2e52e705e2509eb81263aab0c",
+          "linux-arm64": "sha256:ba9a05e2c5ce6eec597c6e8fe23815b1f11180d8588cf6877ad329bd8597921d"
+        }
+      },
+      "policy": "linux-image",
+      "terms": [
+        "https://github.com/dotnet/dotnet-docker/blob/main/README.sdk.md#license",
+        "https://canonical.com/legal/intellectual-property-policy"
+      ],
+      "notes": "The OCI digest is immutable provenance; the licensing references describe component obligations. This entry covers the x64 runner, not qualification of the unused arm64 manifest."
+    },
+    {
+      "id": "windows",
+      "pin": {
+        "runner": "windows-2025",
+        "imageOS": "win25-vs2026",
+        "imageVersion": "20260925.250.1",
+        "minimumBuild": 19041
+      },
+      "policy": "hosted-image",
+      "terms": [
+        "https://docs.github.com/en/site-policy/github-terms/github-terms-for-additional-products-and-features#actions"
+      ],
+      "notes": "Exact ImageOS/ImageVersion required at runtime, including windows-latest measurement dispatch. Windows and installed VS/SDK terms are distinct from runner-images MIT build scripts."
+    },
+    {
+      "id": "macos",
+      "pin": {
+        "runner": "macos-26",
+        "imageOS": "macos26",
+        "imageVersion": "20260907.0351.1"
+      },
+      "policy": "hosted-image",
+      "terms": [
+        "https://docs.github.com/en/site-policy/github-terms/github-terms-for-additional-products-and-features#actions"
+      ],
+      "notes": "GitHub-hosted Apple software is covered by provider terms; no macOS VM copy is cached/exported by this project."
+    }
+  ],
+  "pathPolicy": {
+    "protectedRoots": [
+      "scripts/conformance/oracle/",
+      "tests/conformance/oracle/",
+      "tests/conformance/bcl/",
+      "tests/conformance/expected/"
+    ],
+    "binaryExtensions": [
+      ".dll",
+      ".exe",
+      ".winmd",
+      ".so",
+      ".dylib",
+      ".a",
+      ".lib",
+      ".nupkg",
+      ".snupkg",
+      ".msix",
+      ".msixbundle",
+      ".appx",
+      ".appxbundle",
+      ".msi",
+      ".cab",
+      ".zip",
+      ".tar",
+      ".gz",
+      ".tgz",
+      ".7z",
+      ".iso",
+      ".vhd",
+      ".vhdx",
+      ".vmdk"
+    ],
+    "toolBasenames": [
+      "csc.dll",
+      "vbc.dll",
+      "Microsoft.CodeAnalysis.dll",
+      "Microsoft.CodeAnalysis.CSharp.dll",
+      "Microsoft.CodeAnalysis.VisualBasic.dll",
+      "Microsoft.UI.Xaml.dll",
+      "Microsoft.WindowsAppRuntime.Bootstrap.dll",
+      "Microsoft.WindowsAppRuntime.dll",
+      "coreclr.dll",
+      "libcoreclr.so",
+      "libcoreclr.dylib",
+      "hostfxr.dll",
+      "libhostfxr.so",
+      "libhostfxr.dylib",
+      "System.Private.CoreLib.dll"
+    ],
+    "packagePrefixes": [
+      "microsoft.windowsappsdk",
+      "microsoft.windows.sdk.",
+      "microsoft.web.webview2",
+      "microsoft.netcore.app.",
+      "system.numerics.tensors",
+      "dotnet-sdk-",
+      "dotnet-runtime-"
+    ],
+    "authoredBinaryExceptions": [],
+    "notes": "A path filter, not a license classifier or archive unpacker. Ordinary authored DLL/PDB fixtures outside the protected oracle roots are allowed. A reviewed generated fixture inside those roots requires exact path/hash/source provenance; upstream tool basenames/package archives are rejected wherever placed."
+  }
+}

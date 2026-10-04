@@ -1,3 +1,4 @@
+import {storeMethodPointer} from './method-pointers.js';
 import {isAggregateType, isValueRecord, createValue} from './value-types.js';
 import {nullableValue, copyNullable} from './nullable-value.js';
 import {resolveCallType} from './generic-calls.js';
@@ -16,6 +17,7 @@ export function staticStorageType(vm, key, write = true) {
 /** CLI enum storage has the width of value__, while its header keeps enum identity. */
 export function storageDefault(vm,type) {
   if(vm.inspector)type=resolveCallType(vm,type);
+  if(typeof type==='string'&&type.startsWith('method '))return null;
   const table=vm.inspector?vm.typeSystem.table(type):null;
   if(table?.flags.nullable)return nullableValue(vm,table);
   if(table&&isAggregateType(table))return createValue(vm,table);
@@ -25,6 +27,7 @@ export function storageDefault(vm,type) {
 export function storageValue(vm,value,type,numericContext) {
   numericContext ??= vm.options;
   if(vm.inspector)type=resolveCallType(vm,type);
+  if(value?.methodPointer||typeof type==='string'&&type.startsWith('method '))return storeMethodPointer(vm,value,type);
   const table=vm.inspector?vm.typeSystem.table(type):null;
   if(table?.flags.nullable)return copyNullable(vm,value,table);
   if(value?.nullableType)throw new ManagedFault('InvalidCastException','Nullable storage requires its exact value type');
