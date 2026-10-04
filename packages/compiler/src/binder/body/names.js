@@ -411,11 +411,11 @@ export const NameBinding = Base =>
         takesReceiver = method => method.name === name && isValidReceiverConversion(this.conversions, left, method.parameters[0].type);
       // For a span receiver any extension method of that name is a candidate: its type arguments are inferred later.
       if (isOpen && !isSpan && !scopes.some(scope => scope.methods.some(takesReceiver))) return this.lenient(syntax);
-      // The name is a method group only when an extension method could take the receiver; otherwise it is unknown.
+      // A name that is not invoked is a method group only when an extension method could take the receiver;
+      // an invoked one always is, and the call reports why no candidate applies (CS0411, CS1929).
       const construction = (from, definition) => findConstruction(from, definition, this.core),
-        isInvoked = !!options.invoked,
-        fits = method => method.name === name && couldTakeReceiver(this.conversions, left, method.parameters[0].type, construction, { isInvoked }),
-        isCandidate = isOpen || isSpan || scopes.some(scope => scope.methods.some(fits)),
+        fits = method => method.name === name && couldTakeReceiver(this.conversions, left, method.parameters[0].type, construction),
+        isCandidate = options.invoked || isOpen || isSpan || scopes.some(scope => scope.methods.some(fits)),
         group = isCandidate ? this.extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments, scopes }) : null;
       if (group) return group;
       if (!isKnownGap && !isSource(type) && type.typeKind !== TypeKind.TypeParameter)

@@ -30,9 +30,10 @@ test('A02-T30 binding against real references does not lose a fixture the regist
   assert.deepEqual(missing, []);
 });
 
-const pack = loadReferencePack();
+const pack = loadReferencePack(),
+  skip = pack ? false : 'no .NET reference pack is installed';
 
-test('A02-T30 every fixture recorded for the references column emits against the reference pack', { skip: pack ? false : 'no .NET reference pack is installed' }, () => {
+test('A02-T30 every fixture recorded for the references column emits against the reference pack', { skip }, () => {
   const failures = [];
   for (const id of baseline.references) {
     const fixture = fixtures.get(id),

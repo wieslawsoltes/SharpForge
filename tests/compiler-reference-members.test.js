@@ -71,7 +71,8 @@ test('A02-T30 params collections: the better collection type decides, also when 
   const text = mainOf('Console.WriteLine(string.Format("none")); Console.WriteLine(string.Format("{0}{1}{2}{3}", 1, 2, 3, 4));');
   assert.match(text, /call System\.ReadOnlySpan`1<object>::op_Implicit; call System\.String::Format/);
   // Before C# 13 only the array is a params collection.
-  assert.deepEqual(errorsOf('class P { static void Main() { System.Console.WriteLine(string.Format("{0}{1}{2}{3}", 1, 2, 3, 4)); } }', { langVersion: '12' }), []);
+  const older = 'class P { static void Main() { System.Console.WriteLine(string.Format("{0}{1}{2}{3}", 1, 2, 3, 4)); } }';
+  assert.deepEqual(errorsOf(older, { langVersion: '12' }), []);
 });
 
 test('A02-T30 OverloadResolutionPriority of a referenced member is honoured', { skip }, () => {
@@ -90,7 +91,9 @@ test('A02-T30 OverloadResolutionPriority of a referenced member is honoured', { 
     emitted = compileToAssembly('class P { static int Main() { return Library.Pick("x") * 10 + Library.Plain("x"); } }', { name: 'Sample', references }),
     inspector = new AssemblyInspector(emitted.assembly),
     signatures = [];
-  for (const row of inspector.metadata.rows[10] ?? []) signatures.push(`${inspector.metadata.string(row[1])}:${[...inspector.metadata.blob(row[2])].join(',')}`);
+  for (const row of inspector.metadata.rows[10] ?? []) {
+    signatures.push(`${inspector.metadata.string(row[1])}:${[...inspector.metadata.blob(row[2])].join(',')}`);
+  }
   // Pick(object): the parameter is ELEMENT_TYPE_OBJECT (0x1c); Plain(string): ELEMENT_TYPE_STRING (0x0e).
   assert.ok(signatures.includes('Pick:0,1,8,28'), signatures.join(' | '));
   assert.ok(signatures.includes('Plain:0,1,8,14'), signatures.join(' | '));
@@ -107,5 +110,4 @@ test('A02-T30 events of referenced types, typeof of an unbound generic type, and
   assert.match(text, /ldtoken spec:/);
   // `Count` exists as an extension method (of spans and sequences), but none takes an int: the name is unknown.
   assert.deepEqual(errorsOf('using System; using System.Linq; class P { static void Main() { int n = 1; var c = n.Count; } }'), ['CS1061']);
-  assert.deepEqual(errorsOf('using System.Linq; class P { static void Main() { int n = 1; n.Count(); } }'), ['CS1061']);
 });

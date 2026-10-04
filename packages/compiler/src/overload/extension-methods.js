@@ -59,9 +59,8 @@ const mentionsTypeParameter = type =>
  * @param {(type, definition) => object|null} constructionOf the construction of a generic definition among the
  *   base types and interfaces of a type
  */
-export function couldTakeReceiver(conversions, receiver, thisType, constructionOf, { isInvoked = false } = {}) {
-  // An invoked non-generic extension stays a candidate whatever the receiver: the call reports CS1929 for it.
-  if (!mentionsTypeParameter(thisType)) return isInvoked || isValidReceiverConversion(conversions, receiver, thisType);
+export function couldTakeReceiver(conversions, receiver, thisType, constructionOf) {
+  if (!mentionsTypeParameter(thisType)) return isValidReceiverConversion(conversions, receiver, thisType);
   const type = receiver.type;
   if (!type || thisType.typeKind === TypeKind.TypeParameter) return !!type;
   if (thisType.elementType) return !!type.elementType;
