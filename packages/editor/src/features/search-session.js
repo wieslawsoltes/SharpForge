@@ -1,6 +1,7 @@
 import {findTextMatches, expandReplacement} from '@sharpforge/text';
-import {readWorkspaceDocument, prepareWorkspaceEdit} from '../services/workspace-edit.js';
+import {prepareWorkspaceEdit} from '../services/workspace-edit.js';
 import {cooperativeLiteralSearch, workerRegexSearch} from './cooperative-search.js';
+import {captureSearchSnapshots, selectionSearchSnapshots, restoreSearchCoordinates, validateSearchSnapshots} from './search-snapshots.js';
 
 export function preserveReplacementCase(replacement, matched) {
   const letters = matched.replace(/[^\p{L}]/gu, '');
@@ -27,42 +28,39 @@ export class EditorSearchSession {
   }
 
   search(query, options = {}) {
+    this.sequence = (this.sequence ?? 0) + 1;
+    this.matches = [];
+    this.documents = new Map();
     this.query = query;
     this.options = {...options};
-    const documents = options.scope === 'open' ? this.workspace.listDocuments?.() ?? [] :
-      [readWorkspaceDocument(this.workspace, options.uri)];
-    const snapshots = documents.map(document => readWorkspaceDocument(this.workspace, document.uri ?? document.source.uri));
-    const result = findTextMatches(snapshots, query, {regex: options.regex, matchCase: options.matchCase,
+    const snapshots = captureSearchSnapshots(this.workspace, options);
+    const inputs = selectionSearchSnapshots(snapshots, options);
+    const found = findTextMatches(inputs, query, {regex: options.regex, matchCase: options.matchCase,
       wholeWord: options.wholeWord, multiline: true, maxMatches: 10_000, maxSteps: options.maxSteps ?? 2_000_000,
       signal: options.signal, timeLimitMs: options.timeLimitMs ?? 12});
-    this.matches = options.scope === 'selection' ? result.matches.filter(match =>
-      match.uri === options.uri && match.start >= options.selection.start && match.end <= options.selection.end) : result.matches;
+    const result = restoreSearchCoordinates(found, inputs, snapshots, options);
+    this.matches = result.matches;
     this.truncated = result.truncated;
     this.documents = new Map(snapshots.map(document => [document.uri, document]));
     return {...result, matches: this.matches};
   }
 
   async searchAsync(query, options = {}) {
-    const documents = options.scope === 'open' ? this.workspace.listDocuments?.() ?? [] :
-      [this.workspace.getDocument(options.uri)];
-    const snapshots = documents.map(document => {
-      if (!document) throw new Error('Search document is unavailable');
-      const source = document.source ?? document.model?.snapshot?.() ?? document;
-      return {uri: document.uri ?? source.uri, version: document.version ?? source.version,
-        length: source.length ?? source.text.length, get text() { return source.text; },
-        getText: (start, end) => source.getText?.(start, end) ?? source.text.slice(start, end)};
-    });
+    const sequence = this.sequence = (this.sequence ?? 0) + 1;
+    this.matches = [];
+    this.documents = new Map();
+    const snapshots = captureSearchSnapshots(this.workspace, options);
+    const inputs = selectionSearchSnapshots(snapshots, options);
     const settings = {...options, maxMatches: 10_000};
-    const result = options.regex ? await workerRegexSearch(snapshots, query, settings) :
-      await cooperativeLiteralSearch(snapshots, query, settings);
+    const found = options.regex ? await workerRegexSearch(inputs, query, settings) :
+      await cooperativeLiteralSearch(inputs, query, settings);
     if (options.signal?.aborted) throw new DOMException('Search cancelled', 'AbortError');
-    for (const snapshot of snapshots) {
-      if (this.workspace.getDocument(snapshot.uri).version !== snapshot.version) throw new Error('Search source changed');
-    }
+    if (sequence !== this.sequence) throw new DOMException('Search superseded', 'AbortError');
+    validateSearchSnapshots(this.workspace, snapshots);
+    const result = restoreSearchCoordinates(found, inputs, snapshots, options);
     this.query = query;
     this.options = {...options};
-    this.matches = options.scope === 'selection' ? result.matches.filter(match =>
-      match.uri === options.uri && match.start >= options.selection.start && match.end <= options.selection.end) : result.matches;
+    this.matches = result.matches;
     this.truncated = result.truncated;
     this.documents = new Map(snapshots.map(document => [document.uri, document]));
     return {...result, matches: this.matches};
