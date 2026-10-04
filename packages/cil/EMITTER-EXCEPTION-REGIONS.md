@@ -22,14 +22,14 @@ It is internal and does not add a package export.
 Construction is O(H log H) in handler count and O(H) extra storage. Handler-entry
 lookup is O(1); membership and leave selection use the existing binary-search
 region index, O(log H), with no per-branch zone arrays. No-handler methods reuse
-an immutable empty layout. Default-path and nested emission timings are prepared
-for the scheduled validation slot, not claimed before capture.
+an immutable empty layout. Default-path and nested emission timings, including
+all chronological samples, are recorded with the reference evidence.
 
 This is a partial #2396 increment. Four C# source cases cover try-in-finally,
 finally-in-catch, three-level nesting and nested rethrow, with source VM, canonical
-CIL reload, ILVerify and CoreCLR checks prepared. Unit cases cover catch priority,
+CIL reload, ILVerify and CoreCLR checks passing. Unit cases cover catch priority,
 all source/target point pairs, malformed geometry, bounds and unchanged input.
-Validation is pending; see the [reference plan](../../tests/fixtures/a03-emitter-regions/README.md).
+Validation passed 323 focused tests and all four native cases; see the [reference evidence](../../tests/fixtures/a03-emitter-regions/README.md).
 
 The source-bytecode producer does not represent catch-when filters. That path
 remains outside this increment; the separate A02 bound-CIL producer already emits
