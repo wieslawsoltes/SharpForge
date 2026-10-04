@@ -139,3 +139,22 @@ test('A02-T30 a null-conditional chain yields null as soon as one receiver is nu
   assert.equal(count(deep, 'initobj System.Nullable`1<int>'), 1, 'one shared null result');
   assert.equal(deep.filter(line => line.startsWith('brfalse')).length, 2);
 });
+
+test('A02-T30 an index from the end is length minus value; a captured primary constructor parameter is a field', () => {
+  const { lines, inspector } = emit(`class Counter(int step) { int total; public int Next() { total += step; return total; } }
+    class C {
+      static int Last(int[] values) { return values[^1]; }
+      static string Middle(string text) { return text[1..^1]; }
+      static void Main() { }
+    }`),
+    last = lines('C', 'Last');
+  assert.ok(last.includes('ldlen') && last.includes('sub') && last.includes('ldelem.i4'));
+  assert.ok(lines('C', 'Middle').includes('callvirt System.String::Substring'));
+  const counter = inspector.types.find(type => type.name === 'Counter');
+  assert.deepEqual(
+    counter.fields.map(field => field.name),
+    ['total', '<step>P'],
+  );
+  assert.deepEqual(lines('Counter', '.ctor').slice(0, 3), ['ldarg.0', 'ldarg.1', 'stfld Counter::<step>P']);
+  assert.ok(lines('Counter', 'Next').includes('ldfld Counter::<step>P'));
+});
