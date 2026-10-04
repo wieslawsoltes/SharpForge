@@ -1,6 +1,7 @@
 import { WorkerClient } from './worker-client.js';
 import { WorkbenchEvents, abortError, requireIdentifier, workbenchError } from './state-events.js';
 import { defaultSessionSettings, sessionLaunchSettings, validateSessionSettings } from './session-settings.js';
+import {appendBindingDiagnostics, bindingOutputId} from './binding-output.js';
 
 const liveStates = new Set(['created', 'launching', 'ready', 'running', 'waiting', 'paused']);
 const controlMethods = new Set([
@@ -117,6 +118,10 @@ export class AppSession {
     } else if (event.event === 'output') {
       this.appendOutput(event.text);
       this.emit('output', { event, text: event.text });
+    } else if (event.event === 'bindingDiagnostics') {
+      let batch;
+      try { batch = appendBindingDiagnostics(this, event); } catch { return false; }
+      this.emit('bindingDiagnostics', {event: batch});
     } else if (event.event === 'state') this.receiveState(event);
     else if (event.event === 'ui') this.emit('ui', { event, commands: event.commands ?? [] });
     else if (['uiComposition', 'uiPrivateValues', 'uiHostRequest', 'uiHostCancel'].includes(event.event)) this.emit('uiHost', { event });
@@ -164,6 +169,7 @@ export class AppSession {
     this.activeRuntimeSettings = structuredClone({ network: launch.network, compute: launch.compute });
     this.lastLaunch = launch;
     this.replaceOutput('');
+    this.output?.clear(bindingOutputId(this));
     this.watchResults.clear();
     this.frameId = null;
     this.threadId = null;
@@ -296,6 +302,7 @@ export class AppSession {
     this.disposed = true;
     this.launchEpoch++;
     this.worker.dispose();
+    this.output?.remove(bindingOutputId(this));
     this.state = 'disposed';
     this.ended = true;
     this.emit('disposed');

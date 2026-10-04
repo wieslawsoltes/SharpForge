@@ -1,5 +1,6 @@
 import {assertUIHostData} from './workers/ui-data.js';
 import {StudioUIEventClient} from './ui-event-client.js';
+import {HostUIFrameRequests} from './ui-frame-requests.js';
 import {WinUIHost} from '@sharpforge/winui';
 import {AnimationClock} from '@sharpforge/framework';
 import {FrameScheduler, CompositionTransportHost} from '@sharpforge/rendering';
@@ -74,6 +75,7 @@ export class StudioUIHostBridge {
     const view = this.root.ownerDocument?.defaultView;
     this.scheduler = new FrameScheduler({requestFrame: view?.requestAnimationFrame?.bind(view),
       cancelFrame: view?.cancelAnimationFrame?.bind(view), ...this.schedulerOptions, onError: this.onError});
+    this.frames = new HostUIFrameRequests(this.scheduler, {isPaused: () => this.paused});
     const input = (method, payload) => this.input(method, payload);
     this.controlServices = createControlServices(this.hostCapabilities);
     const {resources, dispose, ...controlServices} = this.controlServices;
@@ -95,6 +97,7 @@ export class StudioUIHostBridge {
       onLayoutSnapshot: snapshot => input('uiLayoutSnapshot', {snapshot}), onError: this.onError});
     this.composition = this.createComposition();
     this.scheduler.setPaused(this.paused);
+    if (!this.paused) this.frames.resumed();
   }
   createComposition() {
     return new CompositionTransportHost({scheduler: this.scheduler, clockFactory: adapter => new AnimationClock(adapter),
@@ -121,6 +124,7 @@ export class StudioUIHostBridge {
     this.paused = !!paused;
     if (this.paused) this.eventRequests.cancelAll('The managed UI session paused');
     this.scheduler.setPaused(this.paused);
+    if (!this.paused) this.frames.resumed();
     this.root.classList?.toggle('debug-paused', this.paused);
   }
   cancelPending() {
@@ -150,6 +154,7 @@ export class StudioUIHostBridge {
     this.composition.dispose();
     this.host.dispose();
     this.controlServices.dispose();
+    this.frames.dispose();
     this.scheduler.dispose();
     this.sessionId = sessionId;
     this.closed = false;
@@ -190,6 +195,7 @@ export class StudioUIHostBridge {
   }
   async execute(kind, payload, signal) {
     assertUIHostData(payload);
+    if (kind === 'bindingFrame') return this.frames.request(payload, {signal});
     if (kind === 'dropFiles') {
       if (!payload || Object.keys(payload).length !== 1) throw new TypeError('Invalid file-drop request');
       validateDropToken(payload.token);
@@ -259,6 +265,7 @@ export class StudioUIHostBridge {
     this.composition.dispose();
     this.host.dispose();
     this.controlServices.dispose();
+    this.frames.dispose();
     this.scheduler.dispose();
   }
 }
