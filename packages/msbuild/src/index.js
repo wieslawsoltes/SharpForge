@@ -1,3 +1,7 @@
 export * from './contract.js';
 export * from './client.js';
 export * from './solution.js';
+export * from './argument-policy.js';
+export * from './csc-args.js';
+export * from './diagnostics.js';
+export * from './sarif.js';

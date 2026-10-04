@@ -25,7 +25,10 @@
     "tests/project-evaluation-targets.test.js",
     "tests/project-evaluation-build-stages.test.js",
     "tests/project-evaluation-build.test.js",
-    "tests/project-evaluation-contexts.test.js"
+    "tests/project-evaluation-contexts.test.js",
+    "tests/a23-native-command-lines.test.js",
+    "tests/a23-native-process.test.js",
+    "tests/a23-native-engine.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
