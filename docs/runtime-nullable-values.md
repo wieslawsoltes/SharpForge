@@ -11,6 +11,8 @@ forms, `HasValue`, `Value`, both `GetValueOrDefault` overloads and `ToString`.
 An empty `Value` throws `InvalidOperationException`. Normal slots, arguments,
 object/static fields and arrays reuse the existing declared storage boundary.
 Same-VM snapshots preserve immutable payloads and canonical type identity.
+Opt-in stack byte budgets use the aligned Nullable layout, including HasValue,
+so wide payloads are charged fully during admission and snapshot preflight.
 
 Boxing an empty Nullable returns null; boxing a present value copies and boxes
 the underlying T with T's header. `unbox.any Nullable<T>` reconstructs an empty

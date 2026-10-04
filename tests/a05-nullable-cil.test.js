@@ -9,8 +9,8 @@ const point = {name: 'Point', base: 'System.ValueType', flags: 0x100109,
   fields: [{name: 'X', type: 'int'}], methods: []};
 const member = (context, type, name, result, parameters = []) =>
   context.member(context.typeSpec(nullable(type)), name, result, parameters, false);
-function fixture(body, {locals = [nullable('int')], result = 'void', types = []} = {}) {
-  return genericCallFixture([...types, {name: 'Program', methods: [{name: 'Main', locals, result, body}]}]);
+function fixture(body, {locals = [nullable('int')], result = 'void', types = [], maxStack = 16} = {}) {
+  return genericCallFixture([...types, {name: 'Program', methods: [{name: 'Main', locals, result, maxStack, body}]}]);
 }
 
 test('guest CIL Nullable defaults, both constructor forms, properties, boxing and unbox.any agree', () => {
@@ -146,4 +146,24 @@ test('Nullable member admission validates the closed return type', () => {
   const bytes = fixture((writer, context) => writer.op('ldloca.s', 0)
     .op('call', member(context, 'int', 'get_Value', 'long')).op('pop').op('ret'));
   assert.throws(() => new CilVirtualMachine(bytes), /not implemented/);
+});
+
+test('Nullable byte quotas include aligned HasValue and payload widths before allocation and restore', () => {
+  const bytes = fixture(writer => writer.op('ret'), {
+    locals: [nullable('nint'), nullable('long'), nullable('System.Decimal')], maxStack: 0
+  });
+  for (const [nativeIntBits, limit] of [[32, 64], [64, 72]]) {
+    assert.throws(() => new CilVirtualMachine(bytes, {nativeIntBits, maxStackBytes: limit - 1}), {name: 'StackOverflowException'});
+    const vm = new CilVirtualMachine(bytes, {nativeIntBits, maxStackBytes: limit});
+    try {
+      const snapshot = vm.snapshot(), frames = vm.frames, revision = vm.heap.mutationRevision;
+      vm.options.maxStackBytes--;
+      assert.throws(() => vm.restore(snapshot), /Snapshot exceeds managed stack byte budget/);
+      assert.equal(vm.frames, frames);
+      assert.equal(vm.heap.mutationRevision, revision);
+      vm.options.maxStackBytes++;
+      vm.restore(snapshot);
+      assert.equal(vm.run().state, 'terminated');
+    } finally { vm.stop(); }
+  }
 });
