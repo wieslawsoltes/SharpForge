@@ -329,6 +329,19 @@ qualifies binary64 default, general and round-trip output; it does not qualify
 Single or Decimal formatting. Runtime display adapters reuse this helper while
 retaining their engine-specific object, enum and typed integer handling.
 
+`StringBuilder.Append(char)` and `Append(char, int)` preserve individual UTF-16
+units, return the same builder, and append one managed chunk per nonzero call.
+Zero repeats perform no writes or managed allocations. Invalid repeat counts
+and growth beyond `Int32.MaxValue` fail with `ArgumentOutOfRangeException`
+identifying `repeatCount`; this check precedes the separate host allocation cap.
+The two contracts append at A07 IDs 524309–524310. The pinned .NET 10.0.5
+reference covers 37 character, null, repeat and capacity-boundary cases;
+focused source/CIL tests additionally cover GC, snapshots and host allocation
+faults. Existing chunk capacity growth and write-observer partial progress are
+preserved; exact native capacity transitions and remaining StringBuilder
+overloads stay tracked in #2636 and #2637. Repeat expansion costs O(count) time
+and temporary text, bounded by the host limit, with one chunk append afterward.
+
 StringBuilder reports the .NET default `MaxCapacity` of `Int32.MaxValue`
 (`2147483647`) in both metadata and execution. The host separately limits text
 and requested capacity to 1,000,000 UTF-16 code units. Exceeding that allocation

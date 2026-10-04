@@ -195,7 +195,9 @@ test('StringBuilder character append adds two tail contracts and pins exact nati
   assert.equal(builderContract('Append', ['char']).id, 524309);
   assert.equal(builderContract('Append', ['char', 'int']).id, 524310);
   assert.equal(builderContract('AppendFormat', ['string', 'object[]']).id, 524288);
-  assert.equal(findContracts('System.String', 'IndexOf').find(row => row.parameters.length === 3).id, 524308);
+  const indexOf = findContracts('System.String', 'IndexOf')
+    .find(row => row.parameters.join(',') === 'string,int,System.StringComparison');
+  assert.equal(indexOf.id, 524308);
   assert.equal(native.rows.length, 37);
   assert.equal(native.sdk, '10.0.201');
   assert.equal(native.runtime, '10.0.5');
