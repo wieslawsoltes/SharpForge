@@ -25,12 +25,12 @@ custom-struct lowering and portable snapshots remain outside this increment.
 Existing reference-class interface dispatch is unchanged. Full #1366 and its
 native/browser/platform qualification remain open; no performance claim is made.
 
-Prepared guest-CIL tests cover implicit/explicit mappings, repeated calls through
+All 58 focused tests passed at `c74c3a9e`. Guest-CIL coverage includes implicit/explicit mappings, repeated calls through
 the same cached site using distinct boxes, box/original copy isolation, type
 identity, actual GC inside the body, replay, stop/fault cleanup, null and wrong
 interface receivers, and default-interface rejection. Both enabled and disabled
-inline-cache paths are exercised. No tests, builds, checks or native tools were
-run during implementation. Root owns the serial validation slot:
+inline-cache paths are exercised. No builds or native tools were run. Required PR checks follow the completed
+serial local validation:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-boxed-interface-calls.test.js tests/a05-value-instance-calls.test.js tests/a05-value-boxing.test.js tests/a05-02-interface-dispatch.test.js tests/a05-inline-cache.test.js
