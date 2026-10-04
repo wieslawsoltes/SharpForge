@@ -7,7 +7,7 @@ extend merged A00/A29 APIs from source `9ef76da4447eeb7ddd223bd0ec81ef0a3eee3f04
 | Leaf | Implementation and retained boundary |
 | --- | --- |
 | T13 | Explicit `planning-gates.yml` qualification requires a PR number and exact head/base SHAs, resolves API labels, and checks out that head. The runner requires this context for authoritative task/claim/lock identity and ownership/hot-file review, followed by DAG, manifests and contract gates. Every subprocess outcome is retained in JSON and the job summary. |
-| T14 | Existing `ci.yml` merge-group execution is preserved. Planning gates and `merge-queue.yml` remain explicit qualification tools; central queued CI is the automatic merge-group lane. Existing actual incompatible-branch fixture is reused. |
+| T14 | Existing `ci.yml` merge-group execution is preserved. Planning gates and `merge-queue.yml` remain explicit qualification tools; central queued CI is the automatic merge-group lane. Manual queue qualification resolves every actual constituent and checks its ownership/contracts plus the actual combined tree before the full serial area matrix. See [exact merge-group qualification](merge-groups.md). |
 | T15 | Hourly lease workflow reuses `Claims.reap`, `snapshotBacklog` and `syncReady`. Labels expiry/readiness, preserves ownership and suppresses optional comments; no automatic reassignment. |
 | T16 | Core computes a changed-module plan using the existing import graph, ownership and manifest matrix. Node execution is staged for explicit full qualification. The manually dispatched area workflow runs the full manifest-derived Node/browser matrix. |
 | T17 | Failure detector retains every attempt; failure then pass is `flaky`, never silent green. Quarantines require an issue, reason and expiry; expired entries fail core. An explicit manual workflow input can measure named files. |
@@ -42,8 +42,8 @@ so the PR cannot change its own policy to authorize its diff. The PR diff starts
 including exact commits and labels, is retained with the qualification report and artifact.
 
 Repository/Project API tokens are removed from subprocess environments. No broader Project secret or permission is added;
-insufficient Project metadata access remains an explicit failure. Merge-group constituent resolution remains outside this
-manual PR-context lane; a context-free run does not qualify ownership or a combined queue tree.
+insufficient Project metadata access remains an explicit failure. The separate [merge-group lane](merge-groups.md) resolves and gates constituent PRs on the actual combined checkout;
+a context-free run does not qualify ownership or a combined queue tree.
 
 ## Credentials and trust
 
