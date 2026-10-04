@@ -3,6 +3,8 @@ import { isVerificationAssignable } from './type-relations.js';
 import { numericIndex, integerValue, numericResult, numericComparable } from './numeric-tables.js';
 import { primitiveRelations } from './typed-signatures.js';
 
+const conditionKinds = new Set([Kind.Null, Kind.Object, Kind.ManagedPointer]);
+
 function assignable(source, target) {
   return isVerificationAssignable(source, target, primitiveRelations);
 }
@@ -35,7 +37,8 @@ const handlers = Object.freeze({
     state.push(target.address);
   },
   binary(descriptor, instruction, state) {
-    const right = state.pop(), left = state.pop();
+    const right = state.pop();
+    const left = state.pop();
     const floating = descriptor.diagnostic === 'ExpectedNumericType';
     requireNumeric(right, floating, state);
     requireNumeric(left, floating, state);
@@ -44,7 +47,8 @@ const handlers = Object.freeze({
     state.push(result);
   },
   shift(descriptor, instruction, state) {
-    const right = state.pop(), left = state.pop();
+    const right = state.pop();
+    const left = state.pop();
     if (right.kind !== Kind.Int32 && right.kind !== Kind.NativeInt) state.fail('StackUnexpected');
     requireNumeric(left, false, state);
     state.push(numericResult(descriptor.table, left, right));
@@ -64,7 +68,8 @@ const handlers = Object.freeze({
     state.push(descriptor.result);
   },
   compare(descriptor, instruction, state) {
-    const right = state.pop(), left = state.pop();
+    const right = state.pop();
+    const left = state.pop();
     if (!numericComparable(instruction.name, left, right)) state.fail('StackUnexpected');
     if (descriptor.result) state.push(descriptor.result);
   },
@@ -76,7 +81,7 @@ const handlers = Object.freeze({
   discard(descriptor, instruction, state) { state.pop(); },
   condition(descriptor, instruction, state) {
     const value = state.pop();
-    if (!integerValue(value) && ![Kind.Null, Kind.Object, Kind.ManagedPointer].includes(value.kind)) state.fail('StackUnexpected');
+    if (!integerValue(value) && !conditionKinds.has(value.kind)) state.fail('StackUnexpected');
   },
   switch(descriptor, instruction, state) {
     if (state.pop().kind !== Kind.Int32) state.fail('StackUnexpected');

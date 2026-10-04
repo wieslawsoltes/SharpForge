@@ -1,6 +1,7 @@
 import { readExecutionSignatureAst } from '../metadata/execution-signature.js';
 import { signaturePrimitiveNodes } from '../metadata/signature-types.js';
 import { VerificationKind as Kind, verificationType, sameVerificationType } from './types.js';
+import { CilError } from '../binary.js';
 
 const primitiveKinds = Object.freeze({
   bool: Kind.Int32, char: Kind.Int32, sbyte: Kind.Int32, byte: Kind.Int32, short: Kind.Int32, ushort: Kind.Int32,
@@ -31,10 +32,17 @@ function slot(type, fail) {
 
 /** Decode each lossless AST once; canonical primitive identities preserve address element types. */
 export function numericMethodSignature(inspector, method, options, fail) {
-  const signature = readExecutionSignatureAst(inspector.metadata, method.token, options);
+  const read = token => {
+    try { return readExecutionSignatureAst(inspector.metadata, token, options); }
+    catch (error) {
+      if (!(error instanceof CilError)) throw error;
+      fail('SignatureUnavailable', error.message, true);
+    }
+  };
+  const signature = read(method.token);
   if (signature.hasThis || signature.explicitThis || signature.genericArity || signature.callingConvention || signature.sentinel !== -1)
     fail('UnsupportedSignature', 'Instance, generic and vararg method typing requires later verifier policies', true);
-  const locals = method.localSignature ? readExecutionSignatureAst(inspector.metadata, method.localSignature, options).types : [];
+  const locals = method.localSignature ? read(method.localSignature).types : [];
   const returnType = signature.returnType;
   if (returnType.kind === 'byref') fail('UnsupportedSignature', 'Byref returns require lifetime verification', true);
   return {

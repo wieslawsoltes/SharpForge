@@ -67,12 +67,13 @@ export const numericIndex = value => indices[value.kind];
 export const integerValue = value => numericIndex(value) !== undefined && value.kind !== Kind.Float;
 export const numericResult = (table, left, right) => table[numericIndex(left)]?.[numericIndex(right)] ?? null;
 
+const referenceKinds = new Set([Kind.Null, Kind.Object, Kind.Boxed]);
+const referenceComparisons = new Set(['ceq', 'cgt.un', 'beq', 'beq.s', 'bne.un', 'bne.un.s']);
+
 /** ECMA comparability, including reference equality and unsigned object non-equality. */
 export function numericComparable(name, left, right) {
   if (numericResult(arithmetic, left, right)) return true;
-  const reference = value => value.kind === Kind.Null || value.kind === Kind.Object || value.kind === Kind.Boxed;
-  if (reference(left) && reference(right))
-    return ['ceq', 'cgt.un', 'beq', 'beq.s', 'bne.un', 'bne.un.s'].includes(name);
+  if (referenceKinds.has(left.kind) && referenceKinds.has(right.kind)) return referenceComparisons.has(name);
   if (left.kind === Kind.ManagedPointer && right.kind === Kind.ManagedPointer)
     return left.type === right.type;
   return false;
