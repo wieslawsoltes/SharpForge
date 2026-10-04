@@ -32,5 +32,10 @@ resolution, verifier acceptance or execution support. The no. encoding remains
 ECMA-only where the runtime does not implement it. Those checks remain verifier
 work under #2390/#52, and no existing VM is switched to grouped instruction records.
 
-Five focused tests and a native Reflection.Emit observation are prepared. Serial
-validation is pending; no broad platform or native execution claim is made yet.
+Validation: all five prefix tests and 205 branch-layout/compact/opcode/CIL tests
+pass. SDK 10.0.201 / .NET 10.0.5 on macOS ARM64 captures and executes a legal
+volatile/unaligned/volatile indirect load, returning 42; the native bytes round-trip
+exactly. Native build has zero warnings/errors. Required check passes (2462 syntax /
+2458 static modules, zero errors), with no structure findings in this increment's
+files. The observation qualifies this chain only; broader A00/platform work stays
+open. Existing opcode writer and flat-decoder hot loops are unchanged.
