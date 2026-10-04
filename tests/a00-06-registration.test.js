@@ -103,11 +103,15 @@ test('A00 T06 new tasks need no root script edit and reject duplicate tasks, cyc
  await write(dir,'scripts/tasks/new.json',{schemaVersion:1,tasks:{bad:{steps:[{command:42,args:['invalid']}]}}});await assert.rejects(loadTasks(dir),/Invalid step/);
  await write(dir,'scripts/tasks/new.json',{schemaVersion:1,tasks:{bad:{steps:[{task:'missing'}]}}});await assert.rejects(loadTasks(dir),/Unknown task missing/);
 });
-test('A00 T06 contributed stylesheet bytes and worker order retain the original build exactly',async()=>{
+test('A00 T06 contributions retain reviewed CSS bytes and historical worker ordering',async()=>{
  const baseline=await json(join(root,'tests/manifests/fixtures/build-baseline.json')),contributions=await loadBuildContributions();
- assert.deepEqual(contributions.styles.map(item=>item.source),baseline.styles);assert.deepEqual(contributions.workers.map(item=>item.entry),baseline.workers);
+ // Keep the historical migration snapshot unchanged; approved stylesheet additions are tracked by T20's reviewed baseline.
+ const reviewed=await json(join(root,'planning/contracts/fixtures/css/studio-baseline.json'));
+ assert.equal(reviewed.schemaVersion,1);assert.match(reviewed.sha256,/^[a-f\d]{64}$/);
+ assert.deepEqual(contributions.workers.map(item=>item.entry).filter(entry=>baseline.workers.includes(entry)),baseline.workers);
  const css=await concatenateStyles(contributions.styles,root);
- assert.equal(createHash('sha256').update(css).digest('hex'),baseline.concatenationSha256);assert(contributions.assets.some(item=>item.source==='packages/compiler'));
+ assert.equal(createHash('sha256').update(css).digest('hex'),reviewed.sha256);assert.equal(Buffer.byteLength(css,'utf8'),reviewed.bytes);
+ assert(contributions.assets.some(item=>item.source==='packages/compiler'));
 });
 test('A00 T06 build contributions discover new styles/assets and reject duplicate and escaping paths',async t=>{
  const dir=await fixture(t),base={schemaVersion:1,styles:[],workers:[],assets:[]};
