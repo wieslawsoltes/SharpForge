@@ -2,6 +2,9 @@ import {
   addControl, deleteControls, moveControl, duplicateControl, pasteControls,
   groupControls, ungroupControls
 } from './document-tree.js';
+import {immutableDesignData} from './document-data.js';
+import {DesignerPropertyBaseline} from './document-property-baseline.js';
+import {patchDocumentProperties, restoreDocumentProperties} from './document-property-patches.js';
 
 const clone = value => structuredClone(value);
 
@@ -29,14 +32,17 @@ export class DesignDocumentCore {
     this.readOnlyReason = '';
     this.transaction = null;
     this.reindex();
+    this.propertyBaseline = new DesignerPropertyBaseline(this.value);
   }
 
   /** O(n) after a commit; node and parent queries are O(1) between commits. */
   reindex() {
     this.nodesById = new Map();
     this.parentsById = new Map();
-    for (const node of this.value.nodes) {
+    this.nodePositions = new Map();
+    for (const [index, node] of this.value.nodes.entries()) {
       this.nodesById.set(node.id, node);
+      this.nodePositions.set(node.id, index);
       for (const child of node.children) this.parentsById.set(child, node.id);
     }
   }
@@ -68,8 +74,8 @@ export class DesignDocumentCore {
     return () => this.listeners.delete(listener);
   }
 
-  notify(kind) {
-    const event = { kind, revision: this.revision, selection: [...this.selection] };
+  notify(kind, changes) {
+    const event = {kind, revision: this.revision, selection: [...this.selection], ...(changes ? {changes} : {})};
     for (const listener of [...this.listeners]) listener(event);
   }
 
@@ -88,10 +94,8 @@ export class DesignDocumentCore {
   }
 
   historyEntry(label) {
-    return {
-      label, value: this.value, selection: [...this.selection],
-      bytes: JSON.stringify(this.value).length * 2
-    };
+    const value = clone(this.value);
+    return immutableDesignData({label, value, selection: [...this.selection], bytes: JSON.stringify(value).length * 2});
   }
 
   trimHistory(stack) {
@@ -115,6 +119,7 @@ export class DesignDocumentCore {
     this.redoStack.length = 0;
     this.value = valid;
     this.reindex();
+    this.propertyBaseline.reset(valid);
     this.revision++;
     this.selection = this.selection.filter(id => this.nodesById.has(id));
     if (!this.selection.length) this.selection = [valid.root];
@@ -131,6 +136,7 @@ export class DesignDocumentCore {
     this.trimHistory(this.undoStack);
     this.value = valid;
     this.reindex();
+    this.propertyBaseline.reset(valid);
     this.selection = selection.filter(id => this.nodesById.has(id));
     if (!this.selection.length) this.selection = [valid.root];
     this.revision++;
@@ -141,13 +147,16 @@ export class DesignDocumentCore {
     this.assertWritable();
     const source = redo ? this.redoStack : this.undoStack;
     const destination = redo ? this.undoStack : this.redoStack;
-    const entry = source.pop();
+    const entry = source.at(-1);
     if (!entry) return false;
+    if (['properties', 'property-document'].includes(entry.kind)) return restoreDocumentProperties(this, entry, source, destination, redo);
+    source.pop();
     destination.push(this.historyEntry(entry.label));
     this.trimHistory(destination);
-    this.value = entry.value;
+    this.value = clone(entry.value);
     this.selection = [...entry.selection];
     this.reindex();
+    this.propertyBaseline.reset(this.value);
     this.revision++;
     this.notify(redo ? 'redo' : 'undo');
     return true;
@@ -195,6 +204,9 @@ export class DesignDocumentCore {
     });
   }
 
+  /** Atomic local-property patches emit exact changed-key deltas when the validated structure remains unchanged. */
+  patchProperties(changes, options) { return patchDocumentProperties(this, changes, options); }
+
   setReference(property, value, ids = this.selection) {
     if (!['style', 'template'].includes(property)) throw new TypeError('Invalid reference');
     return this.change('Set ' + property, document => {
@@ -216,18 +228,7 @@ export class DesignDocumentCore {
   group(type, ids = this.selection) { return groupControls(this, type, ids); }
   ungroup(id = this.selection[0]) { return ungroupControls(this, id); }
 
-  geometry(rectangles) {
-    return this.change('Move / resize controls', document => {
-      const nodes = new Map(document.nodes.map(node => [node.id, node]));
-      for (const [id, rectangle] of Object.entries(rectangles)) {
-        const node = nodes.get(id);
-        if (!node) throw new TypeError('Unknown geometry target ' + id);
-        for (const [key, value] of Object.entries(rectangle)) {
-          node.properties[key] = this.contracts.normalize(node.type, key, value);
-        }
-      }
-    });
-  }
+  geometry(rectangles, options) { return this.patchProperties(rectangles, {label: 'Move / resize controls', ...options}); }
 
   tracks(id, rows, columns) {
     return this.change('Edit Grid tracks', document => {
