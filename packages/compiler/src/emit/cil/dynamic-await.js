@@ -50,6 +50,7 @@ export function emitDynamicAwait(emitter, node, isUsed) {
   emitter.storeState(emitter.newState(resume));
   il.emit('ldarg', 0).emit('ldloc', slot).emit('stfld', field.token);
   il.emit('ldarg', 0).emit('stloc', emitter.selfSlot);
+  emitter.debug?.awaitPoint(resume);
   schedule(emitter, slot);
   emitter.resumeAt(resume);
   il.emit('ldarg', 0).emit('ldfld', field.token).emit('stloc', slot);

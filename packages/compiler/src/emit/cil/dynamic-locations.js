@@ -11,16 +11,25 @@ export class DynamicLocation {
     this.getter = emitter.program.dynamicSites.of(node);
     this.setter = emitter.program.dynamicSites.of(storeOwner, 'set');
     this.operands = null;
+    this.storeOperands = null;
   }
   capture() {
     if (this.operands) return;
     const emitter = this.emitter;
-    this.operands = this.getter.arguments.map(argument => {
+    this.storeOperands = [];
+    this.operands = this.getter.arguments.map((getterArgument, index) => {
+      const setterArgument = this.setter.arguments[index];
+      const argument = setterArgument.refKind !== RefKind.None ? setterArgument : getterArgument;
       const isByReference = argument.refKind && argument.refKind !== RefKind.None;
       const slot = emitter.temp(argument.type, { isByReference });
       emitDynamicArgument(emitter, argument);
       emitter.il.emit('stloc', slot);
-      return () => emitter.il.emit('ldloc', slot);
+      const load = target => () => {
+        emitter.il.emit('ldloc', slot);
+        if (isByReference && (!target.refKind || target.refKind === RefKind.None)) emitter.loadIndirect(argument.type);
+      };
+      this.storeOperands.push(load(setterArgument));
+      return load(getterArgument);
     });
   }
   load() {
@@ -33,7 +42,7 @@ export class DynamicLocation {
     const emitter = this.emitter;
     const value = emitter.temp(emitter.core.object);
     emitter.il.emit('stloc', value);
-    emitDynamicSite(emitter, this.setter, [...this.operands, () => emitter.il.emit('ldloc', value)]);
+    emitDynamicSite(emitter, this.setter, [...this.storeOperands, () => emitter.il.emit('ldloc', value)]);
     emitter.il.emit('pop');
   }
   address() {

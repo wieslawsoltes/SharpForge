@@ -24,6 +24,7 @@ import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, RefKind, DynamicTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { isRefLike } from './ref-struct.js';
+import { classifyVariable } from './ref-kinds.js';
 
 const dynamicType = DynamicTypeSymbol.instance;
 
@@ -90,6 +91,12 @@ export const DynamicBinding = Base =>
     dynamicNode(kind, syntax, properties, type = dynamicType) {
       return this.node(kind, syntax, type, { ...properties, isDynamic: true });
     }
+    /** The runtime binder may mutate a writable struct receiver through its original storage. */
+    dynamicReceiverRefKind(receiver) {
+      if (!receiver?.type?.isValueType) return RefKind.None;
+      const location = classifyVariable(receiver, this.c);
+      return location.isVariable && location.isWritable ? RefKind.Ref : RefKind.None;
+    }
 
     // ---- members, calls and element access ----
     instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options) {
@@ -139,7 +146,14 @@ export const DynamicBinding = Base =>
       }
       if (!this.checkDynamicArguments(args)) return this.bad(syntax, { args: argumentList(args) });
       for (const method of group.methods) if (!this.quiet) this.d.noteUse?.(method, this.c.uri, syntax);
-      return this.dynamicNode('DynamicInvocation', syntax, { receiver: group, args: argumentList(args) });
+      // Materialize an implicit instance receiver before capture analysis; a lambda containing `M(d)` captures
+      // `this` just as one containing `this.M(d)` does. Keep lexical binding flags independent of generated methods.
+      const implicitInstance = group.implicitReceiver && !group.receiver && !group.viaType && !group.outer
+        && !this.c.isStatic && group.methods.some(method => !method.isStatic);
+      const receiver = implicitInstance ? this.node('This', group.syntax, this.c.containingType, { isImplicit: true }) : group.receiver;
+      const target = { ...group, receiver, receiverRefKind: this.dynamicReceiverRefKind(receiver),
+        invokeSimpleName: group.implicitReceiver && !this.c.isStatic };
+      return this.dynamicNode('DynamicInvocation', syntax, { receiver: target, args: argumentList(args) });
     }
     invokeConditional(target, args, syntax) {
       const isLate = isDynamic(target.type) || (target.kind === 'MethodGroup' && hasDynamicArgument(args));
@@ -161,7 +175,9 @@ export const DynamicBinding = Base =>
         return super.elementAccessOn(target, args, syntax);
       const { node, isLateBound } = this.lateBound(() => super.elementAccessOn(target, args, syntax));
       if (!isLateBound || !this.checkDynamicArguments(args)) return node;
-      return this.dynamicNode('DynamicElementAccess', syntax, { receiver: target, args: argumentList(args) });
+      return this.dynamicNode('DynamicElementAccess', syntax, {
+        receiver: target, args: argumentList(args), receiverRefKind: this.dynamicReceiverRefKind(target),
+      });
     }
     create(type, args, syntax, typeNode, initializer) {
       if (isDynamic(type)) {

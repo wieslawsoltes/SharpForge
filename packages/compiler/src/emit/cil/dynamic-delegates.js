@@ -1,6 +1,7 @@
 /** Delegate signatures for dynamic call sites, including ref/out and large signatures (SF-A02-T55). */
 import { MethodAttributes, MethodImplAttributes } from '@sharpforge/cil';
 import { NamedTypeSymbol, TypeKind, Accessibility, RefKind } from '../../symbols/types.js';
+import { parameterFlags } from '../../codegen/metadata/attribute-flags.js';
 import { frameworkType } from './framework-types.js';
 import { classTypeParameterCopies, substitutionOver, selfTypeOf } from './generic-context.js';
 
@@ -48,7 +49,7 @@ export function dynamicDelegate(plan, operation, context) {
   const invoke = {
     symbol: null, name: 'Invoke', flags: INVOKE_FLAGS, implFlags: MethodImplAttributes.Runtime,
     hasBody: false, isCompilerGenerated: true, shape,
-    parameters: parameters.map((_, index) => ({ name: index === 0 ? 'site' : 'arg' + index, flags: 0 })),
+    parameters: parameters.map((parameter, index) => ({ name: index === 0 ? 'site' : 'arg' + index, flags: parameterFlags(parameter) })),
   };
   plan.types.push(definition);
   plan.additionsTo(definition).methods.push(invoke);

@@ -46,13 +46,8 @@ export function dynamicArgument(expression, core, { refKind = RefKind.None, name
   return { expression, type, refKind: reference ? refKind : RefKind.None, name, flags, staticType };
 }
 
-/** A value-type variable used as a late-bound receiver is passed by reference to preserve mutations. */
-export function dynamicReceiver(expression, core) {
-  const variable = ['Local', 'Parameter', 'FieldAccess', 'ArrayAccess', 'This'].includes(expression.kind);
-  const readOnly = expression.local?.isReadOnly || expression.field?.isReadOnly
-    || expression.local?.refKind === RefKind.RefReadOnly
-    || [RefKind.In, RefKind.RefReadOnlyParameter].includes(expression.parameter?.refKind);
-  const refKind = variable && expression.type?.isValueType && !readOnly ? RefKind.Ref : RefKind.None;
+/** A receiver's storage/ref kind is resolved by binding, including readonly and ref-returning locations. */
+export function dynamicReceiver(expression, core, refKind = RefKind.None) {
   return dynamicArgument(expression, core, { refKind });
 }
 
@@ -61,7 +56,7 @@ export function dynamicGroupReceiver(group, context, core) {
   const isStatic = group.viaType || (!group.receiver && (context.isStatic || group.methods.every(method => method.isStatic)));
   if (isStatic) return dynamicArgument(null, core, { staticType: group.receiverType ?? context.owner });
   const receiver = group.receiver ?? { kind: 'This', type: context.owner, syntax: group.syntax, isImplicit: true };
-  return dynamicReceiver(receiver, core);
+  return dynamicReceiver(receiver, core, group.receiverRefKind);
 }
 
 /** Source-order arguments, before optional/default/params expansion: that work belongs to the runtime binder. */

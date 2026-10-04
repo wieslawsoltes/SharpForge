@@ -25,6 +25,7 @@ struct Counter
 {
     public int Value;
     public void Add(int value) { Value += value; }
+    public int this[int index] { get { Value += 10; return Value + index; } set { Value = value - index; } }
 }
 
 class Truth
@@ -62,6 +63,12 @@ class Program
     {
         dynamic self = this;
         Console.WriteLine((object)self.Secret(7));
+        dynamic argument = 8;
+        Console.WriteLine((object)Secret(argument));
+        Func<object> delayed = () => Secret(argument);
+        Console.WriteLine(delayed());
+        Func<object> staticCall = () => Overload(argument);
+        Console.WriteLine(staticCall());
     }
     static void Invocations()
     {
@@ -87,6 +94,13 @@ class Program
         Console.WriteLine(number + ":" + label);
         Counter counter = new Counter();
         counter.Add(runtime);
+        Console.WriteLine(counter.Value);
+        dynamic index = 1;
+        Console.WriteLine((object)counter[index]);
+        Console.WriteLine(counter.Value);
+        Console.WriteLine((object)(counter[index] = 7));
+        Console.WriteLine(counter.Value);
+        Console.WriteLine((object)(counter[index] += Right()));
         Console.WriteLine(counter.Value);
         dynamic callable = (Func<int, int>)(value => value * 2);
         Console.WriteLine((object)callable(6));
@@ -167,6 +181,12 @@ class Program
         dynamic count = 3L;
         int[] array = new int[count];
         Console.WriteLine(array.Length);
+        dynamic at = 1L;
+        array[at] = 21;
+        Console.WriteLine(array[at]);
+        int[,] grid = new int[count, 2];
+        grid[at, 0] = 22;
+        Console.WriteLine(grid[at, 0]);
     }
     static void Main()
     {

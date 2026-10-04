@@ -18,7 +18,7 @@ export const DynamicMutationEmission = Base =>
       location.capture();
       location.load();
       this.il.emit('dup').emit('brtrue', end).emit('pop');
-      this.dynamicSite(node, 'set', location.operands);
+      this.dynamicSite(node, 'set', location.storeOperands);
       this.il.mark(end);
       if (!isUsed) this.il.emit('pop');
       return isUsed ? undefined : false;

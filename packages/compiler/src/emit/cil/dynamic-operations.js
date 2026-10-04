@@ -20,7 +20,7 @@ export function dynamicStore(target, value, core, { flags = 0 } = {}) {
   return {
     operation: index ? 'SetIndex' : 'SetMember', flags,
     name: index ? null : target.name,
-    arguments: [dynamicReceiver(target.receiver, core), ...(index ? dynamicArguments(target.args, core) : []), value],
+    arguments: [dynamicReceiver(target.receiver, core, target.receiverRefKind), ...(index ? dynamicArguments(target.args, core) : []), value],
     returnType: core.object,
   };
 }
@@ -78,7 +78,7 @@ function invocation(node, core, context, discarded) {
   const member = target.kind === 'DynamicMemberAccess' || target.kind === 'MethodGroup';
   const receiver = target.kind === 'MethodGroup' ? dynamicGroupReceiver(target, context, core)
     : member ? dynamicReceiver(target.receiver, core) : dynamicArgument(target, core);
-  const simple = target.kind === 'MethodGroup' && target.implicitReceiver && !context.isStatic;
+  const simple = target.kind === 'MethodGroup' && target.invokeSimpleName;
   return {
     operation: member ? 'InvokeMember' : 'Invoke',
     flags: (discarded ? Flags.ResultDiscarded : 0) | (simple ? Flags.InvokeSimpleName : 0),
@@ -100,7 +100,11 @@ export function dynamicOperations(node, core, context) {
       return [['value', plain('GetMember', [dynamicReceiver(node.receiver, core)], { name: node.name })],
         ['set', dynamicStore(node, dynamicArgument(null, core), core)]];
     case 'DynamicElementAccess':
-      return [['value', plain('GetIndex', [dynamicReceiver(node.receiver, core), ...dynamicArguments(node.args, core)])],
+      return [...(node.receiver.kind === 'DynamicMemberAccess' ? [['value', plain('GetMember',
+        [dynamicArgument(node.receiver.receiver, core)], {
+          key: node.receiver, name: node.receiver.name, flags: Flags.ResultIndexed,
+        })]] : []),
+      ['value', plain('GetIndex', [dynamicArgument(node.receiver, core), ...dynamicArguments(node.args, core)])],
         ['set', dynamicStore(node, dynamicArgument(null, core), core)]];
     case 'DynamicObjectCreation':
       return [['value', plain('InvokeConstructor', [dynamicArgument(null, core, { staticType: node.type }),
@@ -134,7 +138,8 @@ export function dynamicOperations(node, core, context) {
       return descriptions;
     }
     case 'ArrayCreation':
-      return (node.sizes ?? []).filter(size => size.kind === 'Conversion' && isDynamicConversion(size)).map(size =>
+    case 'ArrayAccess':
+      return (node.sizes ?? node.indices ?? []).filter(size => size.kind === 'Conversion' && isDynamicConversion(size)).map(size =>
         ['value', plain('Convert', [dynamicArgument(size.operand, core)], {
           key: size, returnType: size.type, flags: Flags.ConvertArrayIndex | (size.isChecked ? Flags.CheckedContext : 0),
         })]);
