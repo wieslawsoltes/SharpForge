@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { LoadErrorCode } from '../packages/clr/src/index.js';
 import { arrayContext } from './clr-types-array-fixtures.js';
 import { openClosure, remoteClosure } from './clr-generics-closure-fixtures.js';
+import { openGenerics } from './clr-generics-instantiation-fixtures.js';
 
 const fails = code => error => error.code === code;
 
@@ -51,6 +52,59 @@ test('CLR acyclic expanding edges and a non-generic self interface remain valid'
     }
     assert.equal(module.methodBodyReadCount, 0);
   }
+});
+
+test('CLR completed TypeSpec markers permit non-generic self interfaces through definition and specification entries', async () => {
+  for (const entry of ['definition', 'specification']) {
+    const { types, module, definitions, specs } = await openClosure('non-generic-self-interface');
+    const firstToken = entry === 'definition' ? definitions.plain.metadataToken : specs.plainContract;
+    const first = await types.load(module, firstToken);
+    if (entry === 'definition') assert.equal(first, definitions.plain);
+    else assert.equal(first.genericArguments[0], definitions.plain);
+    const plain = await types.load(module, definitions.plain.metadataToken);
+    const contract = await types.load(module, specs.plainContract);
+    assert.equal(plain.isLoaded, true);
+    assert.equal(contract.isLoaded, true);
+    assert.equal(contract.genericDefinition, definitions.contract);
+    assert.equal(contract.genericArguments[0], plain);
+    assert.ok(plain.interfaces.includes(contract));
+    assert.equal(await types.load(module, firstToken), first);
+    assert.equal(definitions.node.isLoaded, false, 'An unrelated invalid definition is not part of this closure');
+    assert.equal(module.methodBodyReadCount, 0);
+  }
+});
+
+test('CLR actively recursive self and mutual TypeSpec signatures retain scoped cycle guards across retries', async () => {
+  for (const length of [1, 2]) {
+    const state = await openGenerics({ typeOptions: { maxDepth: 16, maxGenericWork: 512 } }, {
+      decorate({ md, specification }) {
+        const first = 0x1b000001 + md.rows[27].length;
+        for (let index = 0; index < length; index++) {
+          specification(`recursive${index}`, { kind: 'class', token: first + (index + 1) % length });
+        }
+      },
+    });
+    for (const options of [{}, { typeArguments: [] }]) {
+      for (let index = 0; index < length; index++) {
+        await assert.rejects(state.types.load(state.module, state.specs[`recursive${index}`], options),
+          error => error.code === LoadErrorCode.TypeLoad && /Circular TypeSpec resolution/.test(error.message));
+      }
+    }
+    assert.equal(await state.types.load(state.module, state.specs.integer), state.types.intrinsic('System.Int32'));
+    assert.equal(state.definitions.box.isLoaded, false);
+    assert.equal(state.module.methodBodyReadCount, 0);
+  }
+});
+
+test('CLR TypeSpec semantic completion preserves incoming nominal inheritance ancestry', async () => {
+  const state = await openGenerics({}, { decorate({ type, base, tokens }) {
+    tokens.circular = type('Circular');
+    base(tokens.circular, { kind: 'class', token: tokens.circular }, 'circularBase');
+  } });
+  await assert.rejects(state.types.load(state.module, state.tokens.circular),
+    error => error.code === LoadErrorCode.TypeLoad && /Circular inheritance involving/.test(error.message));
+  assert.equal(state.definitions.circular.isLoaded, false);
+  assert.equal(state.module.methodBodyReadCount, 0);
 });
 
 test('CLR indirect and array expansion cycles and erased constant-argument cycles reject without loaded publication', async () => {

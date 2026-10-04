@@ -38,7 +38,9 @@ export class TypeSpecifications {
     if (operation.path.has(marker)) throw loadError(LoadErrorCode.TypeLoad, 'Circular TypeSpec resolution');
     const nested = { ...operation, path: new Set([...operation.path, marker]) };
     const type = await this.signature(module, specification.signature, nested);
-    return operation.identityOnly ? type : this.#operations.complete(type, nested);
+    // This signature has finished binding. Semantic closure may read the same TypeSpec again.
+    // Preserve incoming inheritance ancestry without retaining this completed signature's active marker.
+    return operation.identityOnly ? type : this.#operations.complete(type, operation);
   }
 
   signature(module, signature, operation) {
