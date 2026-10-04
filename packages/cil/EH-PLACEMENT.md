@@ -26,4 +26,21 @@ O(clauses log clauses) construction, the pass is O(instructions + regions), with
 bounded decoded-instruction and region stacks. No recursive traversal is used.
 
 Tests reuse existing native captures; no new ILVerify or platform result is
-claimed. Validation is pending the scheduled serial slot.
+claimed. The completed lexical scope passed 228/228 tests in one scheduled serial run,
+including all six placement tests and all parent tree/encoding/CIL compatibility
+checks. Static/manifests passed (2,519 syntax / 2,515 static modules); structure
+reported no changed-file findings. This validates the JavaScript metadata API,
+not execution-backend or full ILVerify qualification.
+
+On Node 24.21.0 / macOS ARM64 / Apple M3 Pro, 10 warmups and 15 GC-separated
+samples measured complete tree-plus-placement median/p95 of 1.050500/1.258916 ms
+for 1,000 shared-try clauses and 7.411083/10.197875 ms for 10,000. Median sampled
+heap deltas were 1,680,000 and 14,497,176 bytes. These are not allocation totals,
+peak or retained memory; no previous equivalent operation or speedup is claimed.
+The development host was shared. All samples are retained in
+`benchmarks/eh-placement-node24.json`.
+
+```sh
+node scripts/limited.js node --test --test-concurrency=1 tests/a03-06-eh-*.test.js tests/cil.test.js
+node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-eh-regions.mjs placement
+```
