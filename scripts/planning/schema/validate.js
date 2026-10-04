@@ -6,6 +6,23 @@ export function validate(schema,value,{supportedVersion=1,maxDepth=128,maxNodes=
   if(value&&typeof value==='object'&&(Object.hasOwn(value,'schemaVersion')&&value.schemaVersion!==supportedVersion||schema.properties?.formatVersion?.const!==undefined&&Object.hasOwn(value,'formatVersion')&&value.formatVersion!==schema.properties.formatVersion.const))fail('SCHEMA_VERSION','Unsupported schemaVersion','$');
   let nodes=0;
   const charge=(path,depth)=>{if(++nodes>maxNodes||depth>maxDepth)fail('SCHEMA_LIMIT','Validation budget exceeded',path);};
+  // Even unconstrained properties and boolean schemas must receive JSON data.
+  const input=(v,path,depth)=>{
+    charge(path,depth);
+    if(v===null||typeof v==='string'||typeof v==='boolean'||typeof v==='number'&&Number.isFinite(v))return;
+    if(Array.isArray(v)){
+      for(let i=0;i<v.length;i++){
+        if(!Object.hasOwn(v,i))fail('SCHEMA_INVALID','Missing array item',`${path}[${i}]`);
+        input(v[i],`${path}[${i}]`,depth+1);
+      }
+      return;
+    }
+    if(v&&typeof v==='object'&&(Object.getPrototypeOf(v)===Object.prototype||Object.getPrototypeOf(v)===null)){
+      for(const k of Object.keys(v))input(v[k],`${path}.${k}`,depth+1);
+      return;
+    }
+    fail('SCHEMA_INVALID','Expected JSON value',path);
+  };
   // JSON objects are unordered; arrays retain their order. Never invoke toJSON.
   const valueKey=(v,path,depth)=>{
     charge(path,depth);
@@ -46,8 +63,8 @@ export function validate(schema,value,{supportedVersion=1,maxDepth=128,maxNodes=
           seen.add(key);
         }
       }
-      if(s.items)v.forEach((item,i)=>visit(s.items,item,`${path}[${i}]`,depth+1));
+      if(Object.hasOwn(s,'items'))for(let i=0;i<v.length;i++)visit(s.items,v[i],`${path}[${i}]`,depth+1);
     }
     if(v!==null&&typeof v==='object'&&!Array.isArray(v)){for(const k of s.required??[])if(!Object.hasOwn(v,k))fail('SCHEMA_INVALID',`Missing ${k}`,path);for(const [k,item] of Object.entries(v)){if(Object.hasOwn(s.properties??{},k))visit(s.properties[k],item,`${path}.${k}`,depth+1);else if(s.additionalProperties===false)fail('SCHEMA_INVALID',`Unknown property ${k}`,path);else if(s.additionalProperties&&typeof s.additionalProperties==='object')visit(s.additionalProperties,item,`${path}.${k}`,depth+1);}}
-  };visit(schema,value,'$',0);return value;
+  };input(value,'$',0);visit(schema,value,'$',0);return value;
 }
