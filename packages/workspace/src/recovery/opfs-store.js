@@ -2,11 +2,14 @@ import {throwIfWorkspaceAborted} from '../content-hash.js';
 import {encodeRecoveryRecord, inspectRecoveryRecord} from './integrity.js';
 import {migrateWorkspaceRecovery} from './schema.js';
 import {readRecoveryText as readText, writeRecoveryText as writeText} from './io.js';
+import {workspaceRecordSource} from '../transaction-records.js';
+import {sanitizeRecoveryRecord} from './prepared-records.js';
 
 /** OPFS double-buffered checkpoints; the committed manifest changes only after the inactive snapshot closes successfully. */
 export class OpfsRecoveryStore {
-  constructor({storage = globalThis.navigator?.storage, directory = null, name = 'sharpforge-recovery', onWarning = () => {}} = {}) {
-    Object.assign(this, {storage, directory, name, onWarning});
+  constructor({storage = globalThis.navigator?.storage, directory = null, name = 'sharpforge-recovery',
+    onWarning = () => {}, limits = {}} = {}) {
+    Object.assign(this, {storage, directory, name, onWarning, limits});
     this.pending = false;
     this.disposed = false;
     this.diagnostics = [];
@@ -46,17 +49,17 @@ export class OpfsRecoveryStore {
   async saveExclusive(value, {signal}) {
     const directory = await this.open();
     const current = await this.manifest(directory);
-    let record = migrateWorkspaceRecovery(value);
-    let text = await encodeRecoveryRecord(record, {signal});
+    let record = migrateWorkspaceRecovery(value, {...this.limits, signal});
+    let text = await encodeRecoveryRecord(record, {...this.limits, signal});
     const estimate = await this.storage?.estimate?.();
     let degraded = false;
     const available = estimate?.quota === undefined ? Infinity : Math.max(0, estimate.quota - (estimate.usage ?? 0));
     if (new TextEncoder().encode(text).length + 4096 > available) {
-      const omitted = record.records.filter(file => file.bytes && typeof file.text !== 'string').map(file => file.path);
+      const omitted = record.records.filter(file => file.bytes && !workspaceRecordSource(file) && typeof file.text !== 'string')
+        .map(file => file.path);
       record = {...record, omittedBinaryFiles: [...new Set([...record.omittedBinaryFiles, ...omitted])],
-        records: record.records.map(({bytes, originalText, ...file}) => typeof file.text === 'string' || file.lazy ? file :
-          {...file, lazy: true, size: bytes.length, recoveryMissing: 'quota'})};
-      text = await encodeRecoveryRecord(record, {signal});
+        records: record.records.map(file => this.textOnlyRecord(file))};
+      text = await encodeRecoveryRecord(record, {...this.limits, signal});
       degraded = true;
       if (new TextEncoder().encode(text).length + 4096 > available) throw new Error('SFW1313: Insufficient recovery quota; old checkpoint retained');
       const warning = {code: 'SFW1313', message: 'Recovery quota permits text only', omittedBinaryFiles: omitted};
@@ -68,6 +71,15 @@ export class OpfsRecoveryStore {
     const manifest = {version: 1, current: next, previous: current.current, sequence: current.sequence + 1};
     await writeText(directory, 'current.json', JSON.stringify(manifest), signal);
     return {saved: true, sequence: manifest.sequence, degraded, omittedBinaryFiles: record.omittedBinaryFiles};
+  }
+
+  textOnlyRecord(record) {
+    const file = sanitizeRecoveryRecord(record);
+    const bytes = file.bytes;
+    delete file.bytes;
+    delete file.originalText;
+    if (workspaceRecordSource(file) || typeof file.text === 'string' || file.lazy) return file;
+    return {...file, lazy: true, size: bytes.length, recoveryMissing: 'quota'};
   }
 
   async quarantine({name, text, report}) {
@@ -90,7 +102,7 @@ export class OpfsRecoveryStore {
       throwIfWorkspaceAborted(signal);
       const text = await readText(directory, name);
       if (text === null) continue;
-      const inspected = await inspectRecoveryRecord(text, {name, signal, quarantine: value => this.quarantine(value)});
+      const inspected = await inspectRecoveryRecord(text, {...this.limits, name, signal, quarantine: value => this.quarantine(value)});
       this.diagnostics.push(...inspected.diagnostics);
       if (inspected.record) return {record: inspected.record, diagnostics: [...this.diagnostics], recoveredPrevious: name !== manifest.current};
       if (inspected.preserved) return {record: null, diagnostics: [...this.diagnostics], preserved: true};

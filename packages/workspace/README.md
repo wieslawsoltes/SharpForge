@@ -102,3 +102,13 @@ Focused validation: `node scripts/limited.js node --test tests/a24-vfs-fsa.test.
 The deterministic handle fixture covers byte identity, permissions, failed
 writes, cancellation and concurrent directory rename. Actual browser handles
 and operating-system folder pickers require separate browser qualification.
+
+## Prepared recovery envelopes
+
+Checksummed recovery retains immutable source and saved-baseline sharing through
+a bounded version-two source table. Plain records keep version-one envelopes;
+workspace schema version one is unchanged. Restore recreates model-free roots,
+retains lazy membership, and uses the existing OPFS generation commit point.
+Write-ahead receipts seal adopted document state once and allocate durable names
+independently of restarted journal ids. The complete format and bounds are in
+[PREPARED_SOURCES.md](PREPARED_SOURCES.md).
