@@ -55,7 +55,7 @@ test('unprepared, non-core and open definitions remain unknown without assembly-
 });
 
 test('the prepared lookup owns the token selection and bounded result records', async () => {
-  const fixture = await coreBindingFixture();
+  const fixture = await coreBindingFixture({ isCollectible: true });
   const tokens = [fixture.input.tokens.object, fixture.input.tokens.object];
   const pending = prepareVerificationCoreTypes(fixture.module, { ...fixture.bindingOptions, tokens });
   tokens.fill(fixture.input.tokens.missing);
