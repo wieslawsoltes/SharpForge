@@ -73,6 +73,35 @@ Existing metadata-name bounds apply; a referenced local type permits at most
 cannot mutate later queries. The native nested C# namespace fixture and SRM
 reference are captured by `scripts/validate-pdb-effective-imports.mjs`.
 
+`symbols.scopeTree(methodToken)` returns fresh lexical root nodes in table order.
+Nodes contain `id`, IL-byte `start`/exclusive `end`, `importScope`, `locals`,
+`constantIds` (rows in `symbols.constants`) and nested `children`. Each local
+retains `id`, slot `index`, `name`, `attributes`, and exposes `compilerGenerated`
+from Portable PDB's DebuggerHidden flag. Equal ranges nest in table order;
+disjoint ranges form siblings. No lexical scope is invented for methods with no
+LocalScope rows. Invalid MethodDef tokens fail; valid methods without scopes
+return `[]`.
+
+Bound `loadSymbols` joins slots to the PDB's StandAloneSig handle, falling back
+to the PE method header when sequence-point data is absent. Locals expose a
+lossless CIL signature AST `type`, declared `typeName`, and `typeReason: null`.
+Generic parameters, custom modifiers, pinned locals and byrefs remain in the
+AST; no generic substitution, referenced-assembly loading or runtime-value
+inference occurs. Standalone/unbound locals have null type/name with
+`typeReason: 'type-metadata-required'`; a missing signature yields
+`'missing-local-signature'`. Invalid signatures and out-of-range slots fail.
+Public PDB records and returned trees/ASTs cannot mutate later queries.
+
+Scope construction is linear; queries cost the returned tree and distinct local
+signature ASTs. Bounds are 100,000 combined scopes/local declarations/constant
+references, depth 256, local names 3,072 UTF-8 bytes/1,024 UTF-16 units each and
+1 MiB aggregate UTF-16 units. Unique local signatures are preflighted at 4 KiB
+each / 128 KiB aggregate before decoding, with depth 32 / 4,096 AST nodes;
+each displayed type uses the existing 256-node and metadata-name limits above.
+Types are snapshotted once per load, and a query clones each used slot's AST
+once even when the slot is declared in multiple scopes. Native nesting and
+local types are compared with SRM by `scripts/validate-pdb-scope-tree.mjs`.
+
 For bound local TypeDef enums, `loadSymbols` verifies the metadata-declared
 framework `System.Enum` base and exactly one special `value__` instance field.
 Its scalar signature must match the constant's encoded kind; mismatches,
