@@ -95,8 +95,12 @@ internal static class Program
                     if (!PublicMethod(reader, methodHandle)) continue;
                     var method = reader.GetMethodDefinition(methodHandle); var signature = method.DecodeSignature(provider, (object?)null); string name = reader.GetString(method.Name);
                     bool isStatic = (method.Attributes & MethodAttributes.Static) != 0;
-                    rows.Add(new { assembly, owner, kind = "method", name, isStatic, result = signature.ReturnType, parameters = signature.ParameterTypes.ToArray(), genericArity = signature.GenericParameterCount,
-                        signature = owner + "::" + name + "``" + signature.GenericParameterCount + "(" + string.Join(",", signature.ParameterTypes) + "):" + signature.ReturnType + (isStatic ? " static" : " instance") });
+                    int signatureHeader = signature.Header.RawValue;
+                    int ordinaryHeader = (isStatic ? 0 : 0x20) | (signature.GenericParameterCount > 0 ? 0x10 : 0);
+                    // Keep ordinary gap identities stable; retain every non-default MethodDefSig header bit (II.23.2.1).
+                    string headerSuffix = signatureHeader == ordinaryHeader ? "" : FormattableString.Invariant($" [header=0x{signatureHeader:X2}]");
+                    rows.Add(new { assembly, owner, kind = "method", name, isStatic, result = signature.ReturnType, parameters = signature.ParameterTypes.ToArray(), genericArity = signature.GenericParameterCount, signatureHeader,
+                        signature = owner + "::" + name + "``" + signature.GenericParameterCount + "(" + string.Join(",", signature.ParameterTypes) + "):" + signature.ReturnType + (isStatic ? " static" : " instance") + headerSuffix });
                 }
                 foreach (var fieldHandle in type.GetFields()) {
                     var field = reader.GetFieldDefinition(fieldHandle); if ((field.Attributes & FieldAttributes.FieldAccessMask) != FieldAttributes.Public) continue;

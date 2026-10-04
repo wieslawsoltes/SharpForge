@@ -10,11 +10,13 @@ const decimalBuiltins = Object.values(Builtins).filter(builtin => builtin.decima
 /** Recognize only the source-visible Decimal overload with its complete CLI signature. */
 export function decodeDecimalBuiltin(target) {
   const signature = target.sig;
-  if (target.owner !== 'System.Decimal' || signature?.kind !== 'method' || signature.isStatic !== true || signature.genericArity ||
+  if ((target.owner !== 'System.Decimal' && target.owner !== 'System.Math') ||
+      signature?.kind !== 'method' || signature.isStatic !== true || signature.genericArity ||
       signature.callingConvention || signature.explicitThis || signature.sentinel != null) return null;
   return decimalBuiltins.find(builtin => {
     const descriptor = builtin.decimal;
-    return target.name === descriptor.name && numericTypeName(signature.returnType) === builtin.result &&
+    return target.owner === descriptor.owner && target.name === descriptor.name &&
+      numericTypeName(signature.returnType) === builtin.result &&
       signature.parameters.length === builtin.params.length &&
       signature.parameters.every((type, index) => numericTypeName(type) === builtin.params[index]);
   }) ?? null;
