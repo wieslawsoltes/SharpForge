@@ -1,17 +1,5 @@
-import { definition, joinPath } from '../common.js';
-import { nativeXamlOptions, xamlNamespace } from './winui-xaml.js';
-
-export const winuiMvvmTemplates = Object.freeze([
-  definition('winui-mvvm-view-model', 'Observable View Model and RelayCommand',
-    'INotifyPropertyChanged and ICommand with no external MVVM dependency.', 'WinUI MVVM', {
-    ...nativeXamlOptions, language: 'C#', fileName: 'MainViewModel.cs', windowsOnly: false, platform: '.NET SDK',
-    targets: ['native-dotnet', 'windows-native'], prerequisites: ['Native .NET SDK with INotifyPropertyChanged and ICommand'], generate: generateMvvmItem
-  }),
-  definition('winui-mvvm-shell', 'MVVM Navigation Shell',
-    'NavigationView, Home and Settings pages, observable model and commands wired end to end.', 'WinUI MVVM', {
-    ...nativeXamlOptions, fileName: 'ShellPage.xaml', generate: generateMvvmItem
-  })
-]);
+import { joinPath } from '../common.js';
+import { xamlNamespace } from './winui-xaml.js';
 
 export function viewModelSource(name, namespace) {
   return `using System.ComponentModel;\nusing System.Runtime.CompilerServices;\n\nnamespace ${namespace};\n\n` +

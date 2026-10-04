@@ -1,21 +1,4 @@
-import { definition, joinPath, TemplateError } from '../common.js';
-
-const definitions = [
-  ['global-json', 'SDK Version Policy', 'global.json', 'JSON'],
-  ['nuget-config', 'NuGet Configuration', 'nuget.config', 'XML'],
-  ['gitignore-dotnet', '.NET Git Ignore', '.gitignore', 'Text'],
-  ['gitattributes', 'Git Attributes', '.gitattributes', 'Text'],
-  ['central-packages', 'Central Package Versions', 'Directory.Packages.props', 'XML'],
-  ['dotnet-tools', 'Local .NET Tools', 'dotnet-tools.json', 'JSON'],
-  ['launch-settings', 'Launch Settings', 'launchSettings.json', 'JSON'],
-  ['app-manifest', 'Windows Application Manifest', 'app.manifest', 'XML'],
-  ['appsettings', 'Application Settings', 'appsettings.json', 'JSON']
-];
-
-export const configFileTemplates = Object.freeze(definitions.map(([id, name, fileName, language]) =>
-  definition(id, name, 'Generate ' + fileName + ' with explicit portable defaults.', 'Configuration', {
-    fileName, language, kind: 'item', targets: ['data'], generate: generateConfigFile
-  })));
+import { joinPath, TemplateError } from '../common.js';
 
 const json = value => JSON.stringify(value, null, 2) + '\n';
 const texts = {

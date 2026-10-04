@@ -1,18 +1,5 @@
-import { definition, joinPath, wrapNamespace } from '../common.js';
-import { nativeXamlOptions, xamlNamespace, xamlPair } from './winui-xaml.js';
-
-export const winuiAnimationTemplates = Object.freeze([
-  definition('winui-storyboard-code', 'Opacity Storyboard (code-first)', 'A working DoubleAnimation factory using the portable animation clock.', 'WinUI', {
-    kind: 'item', fileName: 'FadeAnimation.cs', winui: true, targets: ['browser-managed', 'windows-native'], generate: generateAnimationItem
-  }),
-  ...[
-    ['winui-storyboard-xaml', 'XAML Storyboard', 'FadeStoryboard.xaml'],
-    ['winui-theme-transition', 'Theme Transition', 'TransitionPage.xaml'],
-    ['winui-visual-states', 'Visual States', 'StatePage.xaml']
-  ].map(([id, name, fileName]) => definition(id, name, 'Native WinUI animation markup with explicit target names.', 'WinUI XAML', {
-    ...nativeXamlOptions, fileName, generate: generateAnimationItem
-  }))
-]);
+import { joinPath, wrapNamespace } from '../common.js';
+import { xamlNamespace, xamlPair } from './winui-xaml.js';
 
 export function generateAnimationItem(template, options) {
   if (template.id === 'winui-storyboard-code') {

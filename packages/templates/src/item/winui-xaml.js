@@ -1,4 +1,4 @@
-import { definition, joinPath } from '../common.js';
+import { joinPath } from '../common.js';
 
 export const xamlNamespace = 'xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" ' +
   'xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"';
@@ -6,14 +6,6 @@ export const nativeXamlOptions = Object.freeze({
   kind: 'item', language: 'XAML', windowsOnly: true, nativeOnly: true, platform: 'Windows', targets: ['windows-native'],
   prerequisites: ['Windows App SDK XAML compiler'], qualification: { 'windows-native': 'pending' }
 });
-
-export const winuiXamlTemplates = Object.freeze(['Page', 'Window', 'UserControl', 'ContentDialog'].map(type => definition(
-  'winui-xaml-' + type.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(), 'WinUI XAML ' + type,
-  'Native XAML and code-behind pair with explicit dependent-file metadata.', 'WinUI XAML', {
-    ...nativeXamlOptions, fileName: 'Blank' + type + '.xaml', xamlType: type, generate: generateXamlItem,
-    targets: ['browser-designer', 'windows-native'], designerCompatible: true
-  }
-)));
 
 export function xamlPair({ name, namespace, folder, rootType, body = '', attributes = '' }) {
   const xamlPath = joinPath(folder, name + '.xaml');
