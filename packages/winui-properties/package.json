@@ -1,0 +1,19 @@
+{
+  "name": "@sharpforge/winui-properties",
+  "version": "0.14.0",
+  "description": "Dependency properties, bindings, resources and templates with explicit application lifetimes.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  }
+}

@@ -14,6 +14,7 @@ export * from './model-handle.js';
 export * from './callback-peer.js';
 export * from './member-service.js';
 export * from './member-adapters.js';
+export * from './managed-actions.js';
 export * from './virtual-item-peer.js';
 export * from './visibility.js';
 export * from './state-transport.js';
