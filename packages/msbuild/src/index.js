@@ -6,3 +6,4 @@ export * from './nuget/config.js';
 export * from './nuget/assets.js';
 export * from './nuget/lock-file.js';
 export * from './nuget/central-packages.js';
+export * from './nuget/v3-client.js';
