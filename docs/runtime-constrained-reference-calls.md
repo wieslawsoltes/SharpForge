@@ -21,8 +21,10 @@ The existing [struct interface path](runtime-constrained-interface-calls.md)
 continues to pass the original value address directly. Both paths derive prefix
 state from the verified instruction pair, with no new frame or snapshot fields.
 
-This is a partial increment of #1357. External Object members, generic constraint
-types/members/receivers, default-interface bodies, Object/value boxing fallback,
+Generic parameter operands that resolve to these admitted reference classes are
+covered by the [generic substitution leaf](runtime-constrained-generic-reference.md).
+This is a partial increment of #1357. External Object members, generic receiver
+classes and member declarations, default-interface bodies, Object/value boxing fallback,
 and source frontend lowering remain unsupported. Full native, browser and other
 platform qualification remains pending; no performance improvement is claimed.
 

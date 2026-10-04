@@ -17,7 +17,7 @@ Ordinary frame/byref roots and same-VM snapshots apply without a schema change.
 
 This is a bounded increment of #1357. Nongeneric reference receivers are covered
 by the [separate reference-call leaf](runtime-constrained-reference-calls.md).
-Object/ValueType fallback boxing, enum/primitive receivers, generic constraints and interfaces,
+Object/ValueType fallback boxing, enum/primitive receivers, generic value constraints and interfaces,
 default-interface bodies, readonly/ref-like structs, and source frontend lowering
 remain unsupported. Full #1357 acceptance remains open. This change does not add
 a native or portable snapshot claim, or a performance result.
