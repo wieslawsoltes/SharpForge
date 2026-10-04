@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "styles": [],
+  "workers": [],
+  "assets": [{"source": "packages/bcl-io/src", "target": "packages/bcl-io/src", "order": 720}]
+}
