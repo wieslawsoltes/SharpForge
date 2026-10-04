@@ -25,7 +25,7 @@ async function explorerFixture(t) {
   await loadStudioWorkspace(records, { name: 'Explorer host', entry: projectPath, mode: 'project', updateOnly: true }, context);
   documents.open('B.cs');
   documents.open('A.cs');
-  state.breakpoints = { 'A.cs': [1] };
+  state.breakpoints = { 'A.cs': [{ line: 1 }] };
   context.workspaceSettings = () => ({
     ...context.sessionRecovery.export(), name: state.name, mode: state.workspaceMode,
     entry: state.projectSystem?.solution?.path, startup: state.startupProject,
@@ -104,7 +104,7 @@ test('dirty Explorer rename and undo preserve source roots, baseline history, ac
   assert.equal(documents.models.get('B.cs'), sibling);
   assert.equal(state.active, 'Renamed.cs');
   assert.deepEqual(new Set(state.tabs), new Set(['Renamed.cs', 'B.cs']));
-  assert.deepEqual(state.breakpoints, { 'Renamed.cs': [1] });
+  assert.deepEqual(Object.entries(state.breakpoints), [['Renamed.cs', [{ line: 1 }]]]);
   assert.deepEqual(compilePaths(state), ['B.cs', 'Renamed.cs']);
   assert.equal(commands.history.length, 1);
   assert.throws(() => original.prepareEdits([]), /disposed/);
@@ -118,7 +118,7 @@ test('dirty Explorer rename and undo preserve source roots, baseline history, ac
   assert.equal(documents.models.get('B.cs'), sibling);
   assert.equal(state.active, 'A.cs');
   assert.deepEqual(new Set(state.tabs), new Set(['A.cs', 'B.cs']));
-  assert.deepEqual(state.breakpoints, { 'A.cs': [1] });
+  assert.deepEqual(Object.entries(state.breakpoints), [['A.cs', [{ line: 1 }]]]);
   assert.equal(state.projectSystem.files.get(projectPath).text, projectXml);
   assert.deepEqual(compilePaths(state), ['A.cs', 'B.cs']);
   assert.equal(commands.history.length, 0);
