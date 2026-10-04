@@ -38,6 +38,12 @@ class ProfilerClock {
     return true;
   }
 
+  fail(error) {
+    if (this.failed) return;
+    this.failed = true;
+    this.failure = error;
+  }
+
   reportFailure() {
     if (this.failed) throw this.failure;
   }

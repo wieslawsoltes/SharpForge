@@ -47,6 +47,25 @@ decoding and 1,024 UTF-16 units afterward. These options also apply through
 `loadSymbols`. Native C# examples and offline reference data are in
 `interop/LocalConstants` and `tests/fixtures/portable-pdb-local-constants`.
 
+For bound symbols, `loadSymbols` recognizes a top-level `System.Decimal`
+TypeDef/TypeRef only when its declared assembly scope matches an invariant-culture
+framework identity: `System.Runtime` / `b03f5f7f11d50a3a`,
+`System.Private.CoreLib` / `7cec85d7bea7798e`, or `mscorlib` / `b77a5c561934e089`.
+AssemblyRef tokens and full public keys are supported; TypeDef requires its own
+Assembly public key. This checks declared metadata identity without loading
+assemblies or verifying signatures. Custom-assembly lookalikes remain unresolved.
+The binder caps inspected assembly scopes at 1,024, each public key at 16 KiB
+and aggregate key bytes at 1 MiB before hashing. Decimal
+constants expose `type: 'decimal'`, exact decimal text in `value`, and
+`decimal: { coefficient, scale, negative }`; `coefficient` is an unsigned 96-bit
+BigInt. Trailing fractional zeroes and the sign bit of zero are preserved without
+floating-point conversion. Their complete signature, raw bytes and type token
+remain available. Payload length must be 13 bytes and scale must be 0–28.
+Standalone PDBs and explicitly unbound symbols remain unresolved. TypeSpec,
+nested same-name types, DateTime and other type-dependent payloads remain outside
+this binding increment. The native reference uses SRM `BlobReader.ReadDecimal`;
+constructed boundary cases test the full coefficient, scale and sign encoding.
+
 Source documents accept `hashAlgorithm` and `language` GUIDs and a `hash`
 Uint8Array. SHA-1, SHA-256, SHA-384 and SHA-512 are computed synchronously when omitted;
 supplied hashes are checked against the exact source bytes. Hash inputs are exact source

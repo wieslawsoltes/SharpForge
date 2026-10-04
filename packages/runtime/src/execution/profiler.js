@@ -135,7 +135,15 @@ class ExecutionProfiler {
     if (now === null || !this.durationClock.record(now - start)) return;
     const milliseconds = now - start;
     this.methods[pending.method].exclusiveMilliseconds += milliseconds;
-    for (const method of pending.stack) this.methods[method].inclusiveMilliseconds += milliseconds;
+    for (const method of pending.stack) {
+      const record = this.methods[method], total = record.inclusiveMilliseconds + milliseconds;
+      // Recursive activations can overflow inclusive time even when the elapsed total is finite.
+      if (!Number.isFinite(total)) {
+        this.durationClock.fail(new RangeError('Profiler inclusive duration overflow'));
+        return;
+      }
+      record.inclusiveMilliseconds = total;
+    }
     pending.sample.milliseconds += milliseconds;
     if (pending.overflow) this.overflow.stackMilliseconds += milliseconds;
     if (pending.truncated) this.overflow.stackDepthMilliseconds += milliseconds;
