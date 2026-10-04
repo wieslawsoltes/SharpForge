@@ -31,7 +31,7 @@ semantic binding and the extracted legacy preparation/load/store seam, plus
 existing Item and string execution through both pipelines on source/CIL VMs.
 Real StringBuilder `Chars` execution is qualified by its dependent BCL feature.
 `scripts/benchmarks/a07-registered-indexer-compile.mjs` measures identical existing
-Item/string sources on parent `1ddab235` and candidate, with one warmup and five
+Item/string sources on parent `938d86fe` and candidate, with one warmup and five
 samples for each compiler pipeline. It performs no VM execution; host heap deltas
 are reported separately from elapsed time and are not allocation counts.
 
