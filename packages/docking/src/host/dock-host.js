@@ -4,6 +4,7 @@ import { DockGuideOverlay } from './guides.js';
 import { createNodeView } from './groups.js';
 import { openPopout, reattachPopout } from './popouts.js';
 import { renderDockHost } from './render.js';
+import { updateDockHost } from './updates.js';
 import { showDockMenu } from './menu.js';
 import { moveFloating, pointerSession } from './pointer.js';
 import { redockFloating } from './floating.js';
@@ -36,9 +37,7 @@ export class DockHost {
     this.controller = new AbortController();
     this.guides = new DockGuideOverlay(this);
     this.element.classList.add('sf-dock-host');
-    this.unsubscribe = layout.subscribe(event => {
-      if (!this.dragSizing || !['resize', 'bounds', 'flyoutSize'].includes(event.type)) this.render();
-    });
+    this.unsubscribe = layout.subscribe(event => updateDockHost(this, event));
     const document = element.ownerDocument;
     const signal = this.controller.signal;
     document.addEventListener('pointerdown', event => {
