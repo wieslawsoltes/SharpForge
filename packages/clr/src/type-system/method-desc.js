@@ -40,6 +40,8 @@ export class MethodDesc {
   get parameters() { return this.#parameterMetadata.parameters; }
   get returnParameter() { return this.#parameterMetadata.returnParameter; }
   get genericParameters() { return this.#state.genericParameters ??= this.module.methodGenericParameters(this.metadataToken); }
+  /** Resolve the canonical implicit class override root; unsupported slot families reject with SFCLR012. */
+  getBaseDefinition(options = {}) { return this.loadContext.types.getBaseDefinition(this, options); }
   get signature() {
     if (this.#signature) return this.#signature;
     try {
