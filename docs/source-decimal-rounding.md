@@ -182,5 +182,7 @@ Console.WriteLine(same);
 `tests/a05-source-decimal-comparison.test.js` authors source/reloaded/direct-CIL
 cases for scale, signed zero, close large values, typed result arrays and boxes,
 branching, named-argument effects and rejected operand/result signatures.
-Execution and platform/performance qualification remain deferred; no new native
-evidence or completion of #1350/#1351 is claimed.
+All 39 focused comparison, arithmetic, rounding, and Decimal-operation checks
+passed at `ace585df2a8a693ea7a45b43fd0535b364972801`, using Node 24, one worker,
+and a 512 MB old-space limit. Platform/performance qualification remains deferred;
+no new native evidence or completion of #1350/#1351 is claimed.
