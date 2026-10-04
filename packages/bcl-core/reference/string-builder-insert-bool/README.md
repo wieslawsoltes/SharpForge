@@ -12,12 +12,27 @@ booleans. Extreme indices only operate on tiny builders and fail before growth.
 Native capacity/chunk values remain evidence, not assertions that the current
 managed flattening and capacity policy matches .NET storage.
 
-Root captures the frozen program once in the serial queue, from this directory:
+The frozen capture was generated in the root serial queue from this directory:
 
 ```sh
 dotnet build -c Release --nologo
 dotnet bin/Release/net10.0/StringBuilderInsertBool.dll ../string-builder-insert-bool-net10.json
 ```
 
-Ordinary tests will consume the unchanged snapshot and its source hash. Managed
+Ordinary tests consume the unchanged 71-row snapshot and its source hash.
+The fluent control records receiver/index/value evaluation order 123 and
+`|!FalseaTrueb`, length 13, with the same returned builder identity. Managed
 allocation limits, GC and write observers are separate host-profile controls.
+
+Prepared validation (run by the root serial scheduler):
+
+```sh
+node scripts/limited.js node --test tests/a07-string-builder-insert-bool.test.js
+node --expose-gc scripts/benchmarks/a07-string-builder-insert-bool.mjs 500 50
+```
+
+Copy the identical static benchmark to integrated repro
+`170259473c74f40a6af041a0da19cf04f8a36252` for released-control comparisons.
+The missing Boolean contract is skipped only in the baseline; setup, snapshot
+restoration and output assertions are outside timing. No performance result is
+claimed before that scheduled run.
