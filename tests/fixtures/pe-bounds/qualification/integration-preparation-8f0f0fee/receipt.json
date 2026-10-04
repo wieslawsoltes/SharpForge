@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "8f0f0feec8ed8955e6119a346051ec6fdd965760",
+  "purpose": "Exact pre-parameter benchmark tool bytes; historical outputs and captured 424-source map unchanged. These four files are outside that map.",
+  "files": [
+    {
+      "path": "packages/cil/tools/benchmark-pe-bounds.mjs",
+      "retained": "tests/fixtures/pe-bounds/qualification/integration-preparation-8f0f0fee/benchmark-pe-bounds.mjs.txt",
+      "bytes": 8711,
+      "sha256": "ce75e3fb7f3b5d3a343df296b30d182886d2f4ae8b1ff3419be76cfa888f2970",
+      "gitBlob": "ec5b447160c86d5d7547ce7095d7d86373d48964"
+    },
+    {
+      "path": "packages/cil/tools/pe-bounds-benchmark-shared.mjs",
+      "retained": "tests/fixtures/pe-bounds/qualification/integration-preparation-8f0f0fee/pe-bounds-benchmark-shared.mjs.txt",
+      "bytes": 3493,
+      "sha256": "5f0d294f1fee8219bbbf03580b3eefd324ace743899922569d44682732fac2b3",
+      "gitBlob": "f30ad82f12679097533eee04bd4abac30b2bb3e5"
+    },
+    {
+      "path": "packages/cil/tools/pe-bounds-benchmark-worker.mjs",
+      "retained": "tests/fixtures/pe-bounds/qualification/integration-preparation-8f0f0fee/pe-bounds-benchmark-worker.mjs.txt",
+      "bytes": 4229,
+      "sha256": "5300ed97d89bf47a14ded3288785008e5bd9fc48e67cb82fe3baa64f71d3fc69",
+      "gitBlob": "1fd6993fb86d6b20cc84bf3dc8ebd0f4e4eb9968"
+    },
+    {
+      "path": "scripts/conformance/static/allowlist.json",
+      "retained": "tests/fixtures/pe-bounds/qualification/integration-preparation-8f0f0fee/allowlist.json.txt",
+      "bytes": 30926,
+      "sha256": "533998e5be7b9722252b73492b7f9dd182d2ee458791980fd63222ddf0132d90",
+      "gitBlob": "62b2a3d427fbde3b9d2e69ccd3618ce8b55634ce"
+    }
+  ]
+}
