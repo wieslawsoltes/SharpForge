@@ -62,14 +62,16 @@ publish partial duration as valid evidence.
 
 The focused regressions use controlled clocks and actual guest output to
 exercise nested calls, recursion, slice budgets, snapshots, parked delegates,
-manual CIL stepping and host/guest error priority. They are prepared but unrun.
-They establish no measured overhead, throughput or cross-platform timing claim.
+manual CIL stepping and host/guest error priority. All 84 focused duration,
+instruction-profile, method-event, cancellation and export tests passed serially
+with Node 24.21.0 at `a25e66d3`. They establish no measured overhead, throughput
+or cross-platform timing claim.
 Browser, native .NET and Rust/Wasm comparisons remain pending.
 
-Root owns the serial validation queue. The queued command is:
+Root owns the serial validation queue. The focused command was:
 
 ```sh
-node scripts/limited.js node --test --test-concurrency=1 tests/a05-profiler-duration-leaf.test.js tests/a05-instruction-profiler.test.js tests/a05-cil-method-events.test.js tests/a05-cil-method-events-cancellation.test.js
+node scripts/limited.js node --test --test-concurrency=1 tests/a05-profiler-duration-leaf.test.js tests/a05-instruction-profiler.test.js tests/a05-cil-method-events.test.js tests/a05-cil-method-events-cancellation.test.js tests/a05-10-profile-export.test.js
 ```
 
 The example accepts `node examples/runtime/instruction-profile.mjs --duration`.
