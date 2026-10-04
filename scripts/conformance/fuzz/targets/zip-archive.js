@@ -1,7 +1,8 @@
-import { crc32, deflateStored, readZip, writeZip } from '@sharpforge/archive';
+import { crc32, deflateStored, writeZip } from '@sharpforge/archive';
 import { Writer, utf8 } from '@sharpforge/cil';
 import { binaryAdmission, binaryLimits } from './binary-guards.js';
-import { zipFailure } from './binary-zip-errors.js';
+import { importZipIntoMemory } from './binary-workspace-import.js';
+import { workspaceArchiveSeeds } from './binary-workspace-seeds.js';
 
 function compressedSeed() {
   const name = utf8('note.txt');
@@ -19,7 +20,7 @@ function compressedSeed() {
   return { name: 'small-deflate', input: bytes };
 }
 
-/** Read bounded archives in memory. No extraction, workspace writes or expansion-amplifying corpus generation. */
+/** Import bounded archives through the real workspace APIs into fixed memory-only destination handles. */
 export const target = Object.freeze({
   id: 'zip-archive',
   createSeeds() {
@@ -30,27 +31,21 @@ export const target = Object.freeze({
         { path: 'docs', directory: true }, { path: 'docs/note.txt', text: 'bounded\n' },
       ]) },
       compressedSeed(),
+      ...workspaceArchiveSeeds(),
     ];
   },
-  run(input, context) {
+  async run(input, context) {
     const limits = binaryLimits(input, context);
     const admission = binaryAdmission(input, limits);
     if (admission) return admission;
-    try {
-      const entries = readZip(input, {
-        maxArchiveBytes: limits.maxInputBytes,
-        maxEntries: 32,
-        maxFileBytes: limits.maxOutputBytes,
-        maxTotalBytes: limits.maxOutputBytes,
-        maxPathLength: 128,
-        maxDepth: 8,
-      });
-      let bytes = 0;
-      for (const entry of entries) bytes += entry.bytes.length;
-      if (bytes > limits.maxOutputBytes) throw new Error('ZIP reader exceeded the explicit decoded-byte budget');
-      return { status: 'accepted', code: 'ZIP_READ_IN_MEMORY' };
-    } catch (error) {
-      return zipFailure(error);
-    }
+    const { failure } = await importZipIntoMemory(input, {
+      maxArchiveBytes: limits.maxInputBytes,
+      maxEntries: 32,
+      maxFileBytes: limits.maxOutputBytes,
+      maxTotalBytes: limits.maxOutputBytes,
+      maxPathLength: 128,
+      maxDepth: 8,
+    }, limits.signal);
+    return failure ?? { status: 'accepted', code: 'ZIP_WORKSPACE_IMPORTED_IN_MEMORY' };
   },
 });

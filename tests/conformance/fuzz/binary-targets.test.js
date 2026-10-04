@@ -46,7 +46,7 @@ function renameZipPath(bytes, before, after) {
 }
 
 for (const target of targets) {
-  test(`${target.id}: self-authored seeds are deterministic, owned and accepted`, () => {
+  test(`${target.id}: self-authored seeds are deterministic, owned and accepted`, async () => {
     const first = target.createSeeds();
     const second = target.createSeeds();
     assert.deepEqual(first, second);
@@ -57,27 +57,27 @@ for (const target of targets) {
       assert(seed.input instanceof Uint8Array);
       assert(seed.input.length <= 65536);
       const before = seed.input.slice();
-      assert.equal(target.run(seed.input, context()).status, 'accepted', seed.name);
+      assert.equal((await target.run(seed.input, context())).status, 'accepted', seed.name);
       assert.deepEqual(seed.input, before, 'the parser does not mutate corpus bytes');
       seed.input[0] ^= 1;
       assert.deepEqual(second[index].input, before, 'seeds do not share writable buffers');
     }
   });
 
-  test(`${target.id}: input boundary and pre-cancellation are controlled`, () => {
+  test(`${target.id}: input boundary and pre-cancellation are controlled`, async () => {
     const input = target.createSeeds()[0].input;
-    assert.equal(target.run(input, context({ maxInputBytes: input.length })).status, 'accepted');
-    assert.equal(target.run(input, context({ maxInputBytes: input.length - 1 })).code, 'FUZZ_INPUT_LIMIT');
-    assert.equal(target.run(new Uint8Array(65537), context({ maxInputBytes: 131072 })).code, 'FUZZ_INPUT_LIMIT');
+    assert.equal((await target.run(input, context({ maxInputBytes: input.length }))).status, 'accepted');
+    assert.equal((await target.run(input, context({ maxInputBytes: input.length - 1 }))).code, 'FUZZ_INPUT_LIMIT');
+    assert.equal((await target.run(new Uint8Array(65537), context({ maxInputBytes: 131072 }))).code, 'FUZZ_INPUT_LIMIT');
     const controller = new AbortController();
     controller.abort();
-    assert.equal(target.run(input, context({ signal: controller.signal })).code, 'FUZZ_CANCELLED');
+    assert.equal((await target.run(input, context({ signal: controller.signal }))).code, 'FUZZ_CANCELLED');
   });
 
-  test(`${target.id}: malformed bytes are controlled; harness contract misuse throws`, () => {
-    assert.equal(target.run(new Uint8Array(), context()).status, 'rejected');
-    assert.throws(() => target.run({}, context()), TypeError);
-    assert.throws(() => target.run(new Uint8Array(), context({ maxOutputBytes: 0 })), RangeError);
+  test(`${target.id}: malformed bytes are controlled; harness contract misuse throws`, async () => {
+    assert.equal((await target.run(new Uint8Array(), context())).status, 'rejected');
+    await assert.rejects(async () => target.run({}, context()), TypeError);
+    await assert.rejects(async () => target.run(new Uint8Array(), context({ maxOutputBytes: 0 })), RangeError);
   });
 }
 
@@ -169,41 +169,41 @@ test('Portable PDB: compressed sources respect small decode budgets and unsuppor
   assert.deepEqual(pdb.run(unsupported, context()), { status: 'unsupported', code: 'SF_SYMBOL_UNSUPPORTED_FORMAT' });
 });
 
-test('ZIP: traversal is rejected without filesystem extraction', () => {
+test('ZIP: traversal is rejected without filesystem extraction', async () => {
   const input = renameZipPath(namedSeed(zip, 'single-file'), 'note.txt', '../x.txt');
-  const result = zip.run(input, context());
+  const result = await zip.run(input, context());
   assert.equal(result.code, 'ZIP_VALIDATION');
   assert.match(result.detail, /traversing archive path/);
 });
 
-test('ZIP: duplicate paths and symlink records are rejected as data', () => {
+test('ZIP: duplicate paths and symlink records are rejected as data', async () => {
   const duplicate = renameZipPath(writeZip([
     { path: 'a.txt', text: 'first' }, { path: 'b.txt', text: 'second' },
   ]), 'b.txt', 'a.txt');
-  assert.match(zip.run(duplicate, context()).detail, /Duplicate or case-colliding path/);
+  assert.match((await zip.run(duplicate, context())).detail, /Duplicate or case-colliding path/);
   const link = namedSeed(zip, 'single-file').slice();
   const view = new DataView(link.buffer, link.byteOffset, link.byteLength);
   const directory = view.getUint32(link.length - 22 + 16, true);
   view.setUint16(directory + 4, 0x0314, true);
   view.setUint32(directory + 38, 0xa1ff0000, true);
-  assert.equal(zip.run(link, context()).detail, 'Links and special files are not accepted');
+  assert.equal((await zip.run(link, context())).detail, 'Links and special files are not accepted');
 });
 
-test('ZIP: stored and deflated payloads enforce actual small output budgets', () => {
+test('ZIP: stored and deflated payloads enforce actual small output budgets', async () => {
   for (const name of ['single-file', 'small-deflate']) {
     const input = namedSeed(zip, name);
-    assert.equal(zip.run(input, context({ maxOutputBytes: 14 })).status, 'accepted');
-    assert.equal(zip.run(input, context({ maxOutputBytes: 13 })).code, 'ZIP_VALIDATION');
+    assert.equal((await zip.run(input, context({ maxOutputBytes: 14 }))).status, 'accepted');
+    assert.equal((await zip.run(input, context({ maxOutputBytes: 13 }))).code, 'ZIP_VALIDATION');
   }
 });
 
-test('ZIP: bad checksums and malformed compression are controlled validations', () => {
+test('ZIP: bad checksums and malformed compression are controlled validations', async () => {
   const stored = namedSeed(zip, 'single-file').slice();
   stored[30 + 'note.txt'.length] ^= 1;
-  assert.match(zip.run(stored, context()).detail, /CRC\/length mismatch/);
+  assert.match((await zip.run(stored, context())).detail, /CRC\/length mismatch/);
   const compressed = namedSeed(zip, 'small-deflate').slice();
   compressed[30 + 'note.txt'.length] = 7;
-  assert.equal(zip.run(compressed, context()).detail, 'Reserved DEFLATE block');
+  assert.equal((await zip.run(compressed, context())).detail, 'Reserved DEFLATE block');
 });
 
 test('binary parser errors preserve unknown exceptions as findings', () => {
