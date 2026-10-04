@@ -1,0 +1,159 @@
+{
+  "revisions": {
+    "before": "bd213af2c856423458c6e7984189c49189aa2682",
+    "after": "1382e5fff0839ee43ed99f4e4816a17a0ec60da5",
+    "oldGuard": "b1ade604df6a917164b83628cb915332cfae585a"
+  },
+  "node": "v24.21.0",
+  "host": "darwin arm64 Apple M3 Pro",
+  "startedAt": "2026-10-04T04:47:13.955Z",
+  "protocol": {
+    "pairsPerControl": 20,
+    "loadWarmups": 30,
+    "loadsPerSample": 100,
+    "formatterWarmups": 2000,
+    "formatterBatchesPerSample": 2000,
+    "typesPerFormatterBatch": 3,
+    "order": "AB/BA alternating",
+    "gcBeforeEachSample": true,
+    "median": "mean of positions10and11",
+    "p95": "nearest-rank position19",
+    "dependencies": "Baseline symbols and cil sources archived at exact before revision; unchanged transitive archive/bytecode/framework packages resolve through current workspace."
+  },
+  "fixtures": {
+    "assemblyBytes": 12800,
+    "assemblySha256": "2bc24dbbe692eea3cabc20af34808395d8f3c649ff955b1116edc85cf7b33226",
+    "pdbBytes": 12180,
+    "pdbSha256": "4c4b2edea79e17147cec25dc25dc0543223525c69560b93ce203a855fec9b48e",
+    "formatterAstSha256": "50d7f635eab37e236c23aa0b123cc5f65ff17fb2adbd8b64e47b0da5cabc2360",
+    "harnessSha256": "c4ce9ac4a78c853150086087b15ec5263b9a2d951078594f7d991344e1140fee"
+  },
+  "observations": {
+    "before": {
+      "constants": 18,
+      "enumValue": -1234,
+      "enumType": "short",
+      "enumTypeVerified": true,
+      "displays": [
+        "int",
+        "System.Collections.Generic.Dictionary`2<object, string[]>",
+        "method int *(object&)"
+      ]
+    },
+    "after": {
+      "constants": 18,
+      "enumValue": -1234,
+      "enumType": "short",
+      "enumTypeVerified": true,
+      "displays": [
+        "int",
+        "System.Collections.Generic.Dictionary`2<object, string[]>",
+        "method int *(object&)"
+      ]
+    }
+  },
+  "summaries": {
+    "load": {
+      "before": {
+        "medianMs": 0.5829681249999998,
+        "p95Ms": 0.6286424999999997
+      },
+      "after": {
+        "medianMs": 0.5885587449999997,
+        "p95Ms": 0.6221179200000005
+      }
+    },
+    "formatWithoutCallback": {
+      "before": {
+        "medianMs": 0.0008507397500001161,
+        "p95Ms": 0.0008763335000001006
+      },
+      "after": {
+        "medianMs": 0.0009225624999999127,
+        "p95Ms": 0.0010156875000000127
+      }
+    }
+  },
+  "chronologicalSamples": [
+    {"control":"load","pair":0,"label":"before","startOffsetMs":56.00691699999999,"elapsedMs":66.03295800000004,"perOperationMs":0.6603295800000004},
+    {"control":"load","pair":0,"label":"after","startOffsetMs":126.68116699999999,"elapsedMs":62.00912500000004,"perOperationMs":0.6200912500000004},
+    {"control":"load","pair":1,"label":"after","startOffsetMs":192.022125,"elapsedMs":59.75945899999999,"perOperationMs":0.5975945899999999},
+    {"control":"load","pair":1,"label":"before","startOffsetMs":254.459125,"elapsedMs":61.08016700000002,"perOperationMs":0.6108016700000002},
+    {"control":"load","pair":2,"label":"before","startOffsetMs":318.156167,"elapsedMs":62.86424999999997,"perOperationMs":0.6286424999999997},
+    {"control":"load","pair":2,"label":"after","startOffsetMs":383.5900419999999,"elapsedMs":60.983167000000094,"perOperationMs":0.6098316700000009},
+    {"control":"load","pair":3,"label":"after","startOffsetMs":447.84275,"elapsedMs":64.16004199999998,"perOperationMs":0.6416004199999997},
+    {"control":"load","pair":3,"label":"before","startOffsetMs":514.797792,"elapsedMs":59.941291999999976,"perOperationMs":0.5994129199999998},
+    {"control":"load","pair":4,"label":"before","startOffsetMs":578.109417,"elapsedMs":55.42329199999995,"perOperationMs":0.5542329199999995},
+    {"control":"load","pair":4,"label":"after","startOffsetMs":636.823709,"elapsedMs":58.87216599999999,"perOperationMs":0.5887216599999999},
+    {"control":"load","pair":5,"label":"after","startOffsetMs":698.214709,"elapsedMs":58.69983300000001,"perOperationMs":0.5869983300000001},
+    {"control":"load","pair":5,"label":"before","startOffsetMs":759.392209,"elapsedMs":58.87800000000004,"perOperationMs":0.5887800000000004},
+    {"control":"load","pair":6,"label":"before","startOffsetMs":820.701834,"elapsedMs":58.017291,"perOperationMs":0.58017291},
+    {"control":"load","pair":6,"label":"after","startOffsetMs":881.1618339999999,"elapsedMs":56.9496250000002,"perOperationMs":0.5694962500000019},
+    {"control":"load","pair":7,"label":"after","startOffsetMs":940.5517919999999,"elapsedMs":58.89325000000008,"perOperationMs":0.5889325000000007},
+    {"control":"load","pair":7,"label":"before","startOffsetMs":1002.321542,"elapsedMs":58.96074999999996,"perOperationMs":0.5896074999999996},
+    {"control":"load","pair":8,"label":"before","startOffsetMs":1063.8031250000001,"elapsedMs":58.20191699999987,"perOperationMs":0.5820191699999987},
+    {"control":"load","pair":8,"label":"after","startOffsetMs":1124.483459,"elapsedMs":59.540250000000015,"perOperationMs":0.5954025000000002},
+    {"control":"load","pair":9,"label":"after","startOffsetMs":1186.451125,"elapsedMs":58.19150000000013,"perOperationMs":0.5819150000000013},
+    {"control":"load","pair":9,"label":"before","startOffsetMs":1247.143375,"elapsedMs":58.16170899999997,"perOperationMs":0.5816170899999997},
+    {"control":"load","pair":10,"label":"before","startOffsetMs":1307.801375,"elapsedMs":56.63025000000016,"perOperationMs":0.5663025000000016},
+    {"control":"load","pair":10,"label":"after","startOffsetMs":1366.854542,"elapsedMs":57.08812499999999,"perOperationMs":0.5708812499999999},
+    {"control":"load","pair":11,"label":"after","startOffsetMs":1426.4545420000002,"elapsedMs":57.777874999999995,"perOperationMs":0.5777787499999999},
+    {"control":"load","pair":11,"label":"before","startOffsetMs":1486.6555,"elapsedMs":57.5357919999999,"perOperationMs":0.575357919999999},
+    {"control":"load","pair":12,"label":"before","startOffsetMs":1546.6455,"elapsedMs":55.203833999999915,"perOperationMs":0.5520383399999992},
+    {"control":"load","pair":12,"label":"after","startOffsetMs":1604.266542,"elapsedMs":57.73841700000003,"perOperationMs":0.5773841700000003},
+    {"control":"load","pair":13,"label":"after","startOffsetMs":1664.441792,"elapsedMs":58.249458000000004,"perOperationMs":0.5824945800000001},
+    {"control":"load","pair":13,"label":"before","startOffsetMs":1725.113834,"elapsedMs":57.86304100000007,"perOperationMs":0.5786304100000007},
+    {"control":"load","pair":14,"label":"before","startOffsetMs":1785.4103750000002,"elapsedMs":57.00770899999998,"perOperationMs":0.5700770899999997},
+    {"control":"load","pair":14,"label":"after","startOffsetMs":1845.305292,"elapsedMs":62.21179200000006,"perOperationMs":0.6221179200000005},
+    {"control":"load","pair":15,"label":"after","startOffsetMs":1910.6927500000002,"elapsedMs":60.472334000000046,"perOperationMs":0.6047233400000005},
+    {"control":"load","pair":15,"label":"before","startOffsetMs":1974.0380420000001,"elapsedMs":60.29487500000005,"perOperationMs":0.6029487500000005},
+    {"control":"load","pair":16,"label":"before","startOffsetMs":2037.0140420000002,"elapsedMs":57.887917000000016,"perOperationMs":0.5788791700000001},
+    {"control":"load","pair":16,"label":"after","startOffsetMs":2097.71425,"elapsedMs":56.92558400000007,"perOperationMs":0.5692558400000007},
+    {"control":"load","pair":17,"label":"after","startOffsetMs":2157.3086670000002,"elapsedMs":58.83958299999995,"perOperationMs":0.5883958299999995},
+    {"control":"load","pair":17,"label":"before","startOffsetMs":2218.937667,"elapsedMs":58.91441699999996,"perOperationMs":0.5891441699999995},
+    {"control":"load","pair":18,"label":"before","startOffsetMs":2280.507834,"elapsedMs":58.455625000000055,"perOperationMs":0.5845562500000006},
+    {"control":"load","pair":18,"label":"after","startOffsetMs":2341.639959,"elapsedMs":58.417625000000044,"perOperationMs":0.5841762500000004},
+    {"control":"load","pair":19,"label":"after","startOffsetMs":2402.860709,"elapsedMs":59.845000000000255,"perOperationMs":0.5984500000000026},
+    {"control":"load","pair":19,"label":"before","startOffsetMs":2465.337042,"elapsedMs":58.39170800000011,"perOperationMs":0.5839170800000011},
+    {"control":"formatWithoutCallback","pair":0,"label":"before","startOffsetMs":2531.008542,"elapsedMs":1.857542000000194,"perOperationMs":0.000928771000000097},
+    {"control":"formatWithoutCallback","pair":0,"label":"after","startOffsetMs":2535.6384590000002,"elapsedMs":1.7082080000000133,"perOperationMs":0.0008541040000000067},
+    {"control":"formatWithoutCallback","pair":1,"label":"after","startOffsetMs":2539.80575,"elapsedMs":2.0313750000000255,"perOperationMs":0.0010156875000000127},
+    {"control":"formatWithoutCallback","pair":1,"label":"before","startOffsetMs":2544.3953340000003,"elapsedMs":1.162499999999909,"perOperationMs":0.0005812499999999545},
+    {"control":"formatWithoutCallback","pair":2,"label":"before","startOffsetMs":2548.027792,"elapsedMs":1.5722500000001673,"perOperationMs":0.0007861250000000836},
+    {"control":"formatWithoutCallback","pair":2,"label":"after","startOffsetMs":2551.905709,"elapsedMs":1.9693750000001273,"perOperationMs":0.0009846875000000636},
+    {"control":"formatWithoutCallback","pair":3,"label":"after","startOffsetMs":2556.2091250000003,"elapsedMs":1.4167089999996278,"perOperationMs":0.0007083544999998139},
+    {"control":"formatWithoutCallback","pair":3,"label":"before","startOffsetMs":2560.104584,"elapsedMs":1.7412500000000364,"perOperationMs":0.0008706250000000182},
+    {"control":"formatWithoutCallback","pair":4,"label":"before","startOffsetMs":2564.130125,"elapsedMs":1.4537089999998898,"perOperationMs":0.0007268544999999449},
+    {"control":"formatWithoutCallback","pair":4,"label":"after","startOffsetMs":2568.236167,"elapsedMs":1.8760830000001079,"perOperationMs":0.000938041500000054},
+    {"control":"formatWithoutCallback","pair":5,"label":"after","startOffsetMs":2572.6145,"elapsedMs":2.06833400000005,"perOperationMs":0.0010341670000000248},
+    {"control":"formatWithoutCallback","pair":5,"label":"before","startOffsetMs":2577.110542,"elapsedMs":1.7526670000002014,"perOperationMs":0.0008763335000001006},
+    {"control":"formatWithoutCallback","pair":6,"label":"before","startOffsetMs":2581.370417,"elapsedMs":1.3550829999999223,"perOperationMs":0.0006775414999999612},
+    {"control":"formatWithoutCallback","pair":6,"label":"after","startOffsetMs":2585.2997920000003,"elapsedMs":1.5360419999997248,"perOperationMs":0.0007680209999998624},
+    {"control":"formatWithoutCallback","pair":7,"label":"after","startOffsetMs":2589.4406670000003,"elapsedMs":1.8296249999998508,"perOperationMs":0.0009148124999999255},
+    {"control":"formatWithoutCallback","pair":7,"label":"before","startOffsetMs":2593.8149590000003,"elapsedMs":1.7504999999996471,"perOperationMs":0.0008752499999998235},
+    {"control":"formatWithoutCallback","pair":8,"label":"before","startOffsetMs":2598.086584,"elapsedMs":1.050832999999784,"perOperationMs":0.0005254164999998921},
+    {"control":"formatWithoutCallback","pair":8,"label":"after","startOffsetMs":2601.668084,"elapsedMs":1.9702910000000884,"perOperationMs":0.0009851455000000442},
+    {"control":"formatWithoutCallback","pair":9,"label":"after","startOffsetMs":2606.2390840000003,"elapsedMs":1.4354159999998046,"perOperationMs":0.0007177079999999023},
+    {"control":"formatWithoutCallback","pair":9,"label":"before","startOffsetMs":2610.20925,"elapsedMs":1.7160420000000158,"perOperationMs":0.000858021000000008},
+    {"control":"formatWithoutCallback","pair":10,"label":"before","startOffsetMs":2614.728042,"elapsedMs":1.7404579999997623,"perOperationMs":0.0008702289999998811},
+    {"control":"formatWithoutCallback","pair":10,"label":"after","startOffsetMs":2618.9426670000003,"elapsedMs":1.9042919999997139,"perOperationMs":0.000952145999999857},
+    {"control":"formatWithoutCallback","pair":11,"label":"after","startOffsetMs":2623.497167,"elapsedMs":1.8926249999999527,"perOperationMs":0.0009463124999999764},
+    {"control":"formatWithoutCallback","pair":11,"label":"before","startOffsetMs":2627.957917,"elapsedMs":1.4547499999998763,"perOperationMs":0.0007273749999999381},
+    {"control":"formatWithoutCallback","pair":12,"label":"before","startOffsetMs":2631.9575,"elapsedMs":1.711917000000085,"perOperationMs":0.0008559585000000424},
+    {"control":"formatWithoutCallback","pair":12,"label":"after","startOffsetMs":2636.217542,"elapsedMs":1.496708000000126,"perOperationMs":0.000748354000000063},
+    {"control":"formatWithoutCallback","pair":13,"label":"after","startOffsetMs":2640.541334,"elapsedMs":1.8270410000000084,"perOperationMs":0.0009135205000000042},
+    {"control":"formatWithoutCallback","pair":13,"label":"before","startOffsetMs":2644.8973340000002,"elapsedMs":1.4400409999998374,"perOperationMs":0.0007200204999999187},
+    {"control":"formatWithoutCallback","pair":14,"label":"before","startOffsetMs":2648.978917,"elapsedMs":1.6910420000003796,"perOperationMs":0.0008455210000001899},
+    {"control":"formatWithoutCallback","pair":14,"label":"after","startOffsetMs":2653.325792,"elapsedMs":1.965541999999914,"perOperationMs":0.000982770999999957},
+    {"control":"formatWithoutCallback","pair":15,"label":"after","startOffsetMs":2657.6080420000003,"elapsedMs":1.401082999999744,"perOperationMs":0.0007005414999998721},
+    {"control":"formatWithoutCallback","pair":15,"label":"before","startOffsetMs":2661.572417,"elapsedMs":1.4031670000003942,"perOperationMs":0.000701583500000197},
+    {"control":"formatWithoutCallback","pair":16,"label":"before","startOffsetMs":2665.5436250000002,"elapsedMs":1.717333999999937,"perOperationMs":0.0008586669999999686},
+    {"control":"formatWithoutCallback","pair":16,"label":"after","startOffsetMs":2670.200334,"elapsedMs":1.8606249999998,"perOperationMs":0.0009303124999999},
+    {"control":"formatWithoutCallback","pair":17,"label":"after","startOffsetMs":2674.542334,"elapsedMs":1.866457999999966,"perOperationMs":0.000933228999999983},
+    {"control":"formatWithoutCallback","pair":17,"label":"before","startOffsetMs":2678.933709,"elapsedMs":1.743000000000393,"perOperationMs":0.0008715000000001964},
+    {"control":"formatWithoutCallback","pair":18,"label":"before","startOffsetMs":2683.001167,"elapsedMs":1.4725830000002134,"perOperationMs":0.0007362915000001067},
+    {"control":"formatWithoutCallback","pair":18,"label":"after","startOffsetMs":2687.0167500000002,"elapsedMs":1.5140839999999116,"perOperationMs":0.0007570419999999559},
+    {"control":"formatWithoutCallback","pair":19,"label":"after","startOffsetMs":2691.08575,"elapsedMs":1.8266249999996944,"perOperationMs":0.0009133124999998472},
+    {"control":"formatWithoutCallback","pair":19,"label":"before","startOffsetMs":2695.43375,"elapsedMs":1.7341670000000704,"perOperationMs":0.0008670835000000352}
+  ]
+}

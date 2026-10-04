@@ -46,12 +46,12 @@ export function createMetadataTypeNames(metadata, label = 'Import') {
   }
   adapter.typeName = resolve;
   const displays = new WeakMap();
-  function format(type) {
-    if (displays.has(type)) return displays.get(type);
+  function format(type, formatType) {
+    if (!formatType && displays.has(type)) return displays.get(type);
     references(type, { characters: 0, depth: 0 });
-    const name = formatSignatureType(type, { typeName: resolve }, { maxDepth: 32, maxNodes: 256 });
+    const name = formatSignatureType(type, { typeName: resolve }, { maxDepth: 32, maxNodes: 256, formatType });
     if (name.length > 4096 || (nameChars += name.length) > 1024 * 1024) fail(label + ' type name limit exceeded');
-    displays.set(type, name);
+    if (!formatType) displays.set(type, name);
     return name;
   }
   return { resolve, format };
