@@ -1,0 +1,94 @@
+assembly Attributes
+  [assembly: [System.Runtime.CompilerServices.CompilationRelaxationsAttribute((Int32)8)]]
+  [assembly: [System.Runtime.CompilerServices.RuntimeCompatibilityAttribute(WrapNonExceptionThrows = True)]]
+  [assembly: [System.Diagnostics.DebuggableAttribute((System.Diagnostics.DebuggableAttribute+DebuggingModes)2)]]
+  [assembly: [System.CLSCompliantAttribute((Boolean)False)]]
+  [assembly: [Acme.Marks.NoteAttribute("assembly", (Int32)0)]]
+  [assembly: [System.Runtime.Versioning.TargetFrameworkAttribute(".NETCoreApp,Version=v10.0", FrameworkDisplayName = ".NET 10.0")]]
+type Acme.Marks.Handler : System.MulticastDelegate attrs=Public, Sealed
+  [[Acme.Marks.NoteAttribute("delegate", (Int32)11)]]
+  implements System.ICloneable
+  implements System.Runtime.Serialization.ISerializable
+  method System.IAsyncResult BeginInvoke(System.AsyncCallback callback, System.Object object) attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=CodeTypeMask
+  method .ctor(System.Object object, System.IntPtr method) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=CodeTypeMask
+  method System.Void EndInvoke(System.IAsyncResult result) attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=CodeTypeMask
+  method System.Void Invoke() attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=CodeTypeMask
+type Acme.Marks.IMarked : - attrs=Public, ClassSemanticsMask, Abstract, BeforeFieldInit
+  [[Acme.Marks.NoteAttribute("interface", (Int32)9)]]
+  method System.Void M() attrs=Public, Virtual, HideBySig, VtableLayoutMask, Abstract impl=IL
+    [[Acme.Marks.NoteAttribute("slot", (Int32)10)]]
+type Acme.Marks.Level : System.Enum attrs=Public, Sealed
+  implements System.IComparable
+  implements System.IConvertible
+  implements System.IFormattable
+  implements System.ISpanFormattable
+  field Acme.Marks.Level High attrs=Public, Static, Literal, HasDefault = 2
+  field Acme.Marks.Level Low attrs=Public, Static, Literal, HasDefault = 1
+  field System.Int16 value__ attrs=Public, SpecialName, RTSpecialName
+type Acme.Marks.Marked : System.Object attrs=Public, Serializable, BeforeFieldInit
+  [[System.SerializableAttribute()]]
+  [[System.Reflection.DefaultMemberAttribute("Item")]]
+  [[Acme.Marks.NoteAttribute("type", (Int32)1, Weight = 7, Detail = "named")]]
+  [[Acme.Marks.NoteAttribute((Acme.Marks.Level)2)]]
+  field System.String <Text>k__BackingField attrs=Private
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.Action Changed attrs=Private
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.Int32 Field attrs=Public
+    [[Acme.Marks.NoteAttribute(typeof(Acme.Marks.Marked), new String[2] { "a", "b" })]]
+    [[System.ObsoleteAttribute("use Other", (Boolean)False)]]
+  method System.Int32 get_Item(System.Int32 index) attrs=Public, HideBySig, SpecialName impl=IL
+    param index [[Acme.Marks.NoteAttribute("index", (Int32)6)]]
+  method System.String get_Text() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method .ctor() attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+    [[Acme.Marks.NoteAttribute(typeof(System.Int32[]), new String[0] {  })]]
+  method System.Void add_Changed(System.Action value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Void remove_Changed(System.Action value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Void Run(System.Int32 value, System.Int32[] rest) attrs=Public, HideBySig impl=IL
+    [[Acme.Marks.NoteAttribute("method", (Int32)3)]]
+    param value [[Acme.Marks.NoteAttribute("parameter", (Int32)4)]]
+    param rest [[System.ParamArrayAttribute()]]
+    param rest [[Acme.Marks.NoteAttribute((String)null, (Int32)5)]]
+  method System.Void set_Text(System.String value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  property System.Int32 Item[System.Int32] get=get_Item set=
+  property System.String Text[] get=get_Text set=set_Text
+    [[Acme.Marks.NoteAttribute("property", (Int32)2, Levels = new Acme.Marks.Level[2] { 1, 2 })]]
+  event System.Action Changed add=add_Changed remove=remove_Changed
+type Acme.Marks.NoteAttribute : System.Attribute attrs=Public, Sealed, BeforeFieldInit
+  [[System.AttributeUsageAttribute((System.AttributeTargets)32767, AllowMultiple = True)]]
+  field System.String <Detail>k__BackingField attrs=Private
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field Acme.Marks.Level[] <Levels>k__BackingField attrs=Private
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.Int32 Weight attrs=Public
+  method Acme.Marks.Level[] get_Levels() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String get_Detail() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method .ctor(Acme.Marks.Level level) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+  method .ctor(System.Object boxed) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+  method .ctor(System.String text, System.Int32 rank) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+  method .ctor(System.Type type, System.String[] tags) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+    param tags [[System.ParamArrayAttribute()]]
+  method System.Void set_Detail(System.String value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Void set_Levels(Acme.Marks.Level[] value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  property System.String Detail[] get=get_Detail set=set_Detail
+  property Acme.Marks.Level[] Levels[] get=get_Levels set=set_Levels
+type Acme.Marks.Options : System.Enum attrs=Public, Sealed
+  [[System.FlagsAttribute()]]
+  implements System.IComparable
+  implements System.IConvertible
+  implements System.IFormattable
+  implements System.ISpanFormattable
+  field Acme.Marks.Options First attrs=Public, Static, Literal, HasDefault = 1
+    [[Acme.Marks.NoteAttribute("member", (Int32)8)]]
+  field Acme.Marks.Options None attrs=Public, Static, Literal, HasDefault = 0
+  field System.Int32 value__ attrs=Public, SpecialName, RTSpecialName
+type Acme.Marks.Value : System.ValueType attrs=Public, SequentialLayout, Sealed, BeforeFieldInit
+  [[Acme.Marks.NoteAttribute((Acme.Marks.Level)1)]]

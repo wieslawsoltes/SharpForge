@@ -34,9 +34,27 @@ def _wait_for_function(page, expression, *, arg=None, timeout=None, polling=None
 
 Page.wait_for_function = _wait_for_function
 
-def load_application(page, connect_origins=()):
+def load_application(page, connect_origins=(), *, keep_startup=False):
     if os.getenv('SHARPFORGE_IN_MEMORY') != '1':
-        return load_http(page, connect_origins)
+        load_http(page, connect_origins)
+    else:
+        _load_in_memory(page)
+    if not keep_startup:
+        complete_startup(page)
+    return page
+
+
+def complete_startup(page):
+    """Exercise the first-run/start actions so existing workflow fixtures begin in the editor."""
+    first = page.get_by_role('dialog', name='Choose Your Development Environment', exact=True)
+    if first.is_visible():
+        first.get_by_role('button', name='Start coding', exact=True).click()
+    start = page.get_by_role('dialog', name='Start SharpForge Studio', exact=True)
+    if start.is_visible():
+        start.get_by_role('button', name='Continue without code', exact=True).click()
+
+
+def _load_in_memory(page):
 
     dist = ROOT / 'dist'
     html = (dist / 'index.html').read_text(encoding='utf-8')
@@ -50,15 +68,21 @@ def load_application(page, connect_origins=()):
         const storage = {getItem: key => memory.get(key) ?? null, setItem: (key,value) => memory.set(key,String(value)), removeItem: key => memory.delete(key), clear: () => memory.clear()};
         try { localStorage.getItem('probe'); } catch { Object.defineProperty(window, 'localStorage', {value:storage}); }
         const urls = new Map();
+        const visiting = new Set();
         function resolve(path, from) { return new URL(path, 'https://in-memory.invalid' + from).pathname; }
         function build(path) {
             if (urls.has(path)) return urls.get(path);
+            if (visiting.has(path)) throw new Error('Cyclic module graph: ' + path);
+            visiting.add(path);
             let source = sources[path];
             if (source === undefined) throw new Error('Missing module ' + path);
-            source = source.replace(/new URL\(['"](\.\/[^'"]+\.worker\.js)['"],\s*import\.meta\.url\)/g, (_, child) => 'new URL(' + JSON.stringify(build(resolve(child,path))) + ')');
+            source = source.replace(/new URL\(\s*(['"])(\.[^'"]+\.js)\1,\s*import\.meta\.url\s*\)/g,
+                (_, quote, child) => 'new URL(' + JSON.stringify(build(resolve(child,path))) + ')');
+            source = source.replace(/\bimport\(\s*(['"])(\.[^'"]+)\1\s*\)/g,
+                (_, quote, dependency) => 'import(' + JSON.stringify(build(resolve(dependency,path))) + ')');
             source = source.replace(/(from\s*|import\s*)(['"])(\.[^'"]+)\2/g, (_, prefix, quote, dependency) => prefix + quote + build(resolve(dependency,path)) + quote);
             const url = URL.createObjectURL(new Blob([source], {type:'text/javascript'}));
-            urls.set(path, url); return url;
+            urls.set(path, url); visiting.delete(path); return url;
         }
         window.__sharpforgeTestImport = path => import(build(path));
         window.__moduleReady = import(build('/studio.js')).catch(error => { window.__loaderError = String(error); console.error(error); });

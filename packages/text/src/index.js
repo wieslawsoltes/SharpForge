@@ -122,3 +122,5 @@ export { wordSegments, subwordBoundaries, nextWordOffset, previousWordOffset, wo
 export { graphemeWidth, visualColumnAt, offsetAtVisualColumn, expandTabs } from './columns.js';
 export { diffLines, diffWords, diffCharacters } from './diff.js';
 export { merge3 } from './merge3.js';
+export { VisualColumnIndex } from './visual-column-index.js';
+export { unicodeGraphemeVersion } from './graphemes.js';

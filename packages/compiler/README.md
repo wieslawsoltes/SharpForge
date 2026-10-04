@@ -40,3 +40,21 @@ Executable use additionally requires canonical verification of real SharpForge P
 assembly identity, exact SHA-256 and original metadata tokens in bounded external descriptors; dependency types are never redefined
 inside the consumer. Ordinary references keep strict assembly resolution and unsupported execution diagnostics.
 See [the project-reference contract](docs/project-references.md) for supported operations, bounds and the separate graph loader boundary.
+
+## Source query model
+
+`Compilation.getSourceModel()` lazily returns a revision-local `SourceSemanticModel`
+over the lossless-source binder. Its `symbolAt(uri, offset)`, `referenceAt(uri,
+offset)`, `documentSymbols(uri)` and `metadataAt(uri, offset)` queries use UTF-16
+offsets. `symbols`, `references` and `hints` retain source declaration identity,
+qualified namespaces/base types, read/write/declaration flags, and selected
+argument-to-parameter bindings. `nameof` references are retained without creating
+execution edges; delegate conversions refer to the selected method overload.
+
+`sources` and `result` retain the analyzed snapshots and diagnostics.
+`records`, `symbolsById` and `localInitializerTypes` expose bound symbols/types
+for detached refactoring validation. All returned data belongs to the compilation
+revision and must be treated as read-only. The model never emits or changes
+program code. `Workspace.sourceModel()` in `@sharpforge/workspace` handles source
+and option invalidation for callers. See `docs/editor-language-providers.md` in
+the source distribution for the provider/transaction contracts and evidence.

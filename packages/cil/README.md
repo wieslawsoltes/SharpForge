@@ -137,3 +137,7 @@ loader result shapes.
 It verifies identities, content hashes, definition tokens and access before returning
 an independent linked image plus the retained original modules and source provenance.
 See [PROJECT-ASSEMBLIES.md](./PROJECT-ASSEMBLIES.md) for the public contract and limits.
+
+Opt-in [memory-prefix validation](PREFIX-MEMORY.md) checks volatile/unaligned/no. targets and duplicate prefixes.
+
+Opt-in [type-prefix validation](PREFIX-CONSTRAINED.md) checks constrained/readonly lexical targets and type-token row extents.

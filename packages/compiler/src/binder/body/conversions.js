@@ -71,6 +71,8 @@ export const ConversionBinding = Base =>
         conversion: c,
         isExplicit,
         isImplicitIdentity: c.kind === ConversionKind.Identity,
+        // A numeric conversion in a checked context traps on overflow; code generation reads the context from the node.
+        ...(this.checked ? { isChecked: true } : {}),
       });
       // A constant string converted to ReadOnlySpan<char> by the C# 14 span conversion has no side effect (CS0219 applies).
       if (c.kind === ConversionKind.ImplicitSpan && e.constantValue) result.isCompileTimeValue = true;
