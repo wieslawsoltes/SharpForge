@@ -17,9 +17,8 @@ export function createCsproj({assemblyName='Application',targetFramework='net10.
 export function createSlnx(projects){return `<Solution>\n${projects.map(path=>`  <Project Path="${xmlEscape(normalizePath(path))}" />`).join('\n')}\n</Solution>\n`;}
 export * from './project-edit-exports.js';
 export * from './archive.js';
+export * from './archive-stream.js';
 
 export {decodeWorkspaceFile,encodeWorkspaceFile} from '@sharpforge/archive';
 
 export * from './configuration-exports.js';
-
-export {importWorkspaceRecords,workspaceManifestRecord} from './archive.js';
