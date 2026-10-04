@@ -39,4 +39,8 @@ build resolves its package imports as well as the main editor imports.
 Package contracts are documented in [model.md](docs/model.md), [insights.md](docs/insights.md) and
 [keymaps.md](docs/keymaps.md). Workspace/compiler providers are supplied by the embedding application.
 
+The [A18 integration notes](docs/a18-integration.md) document source snapshot compatibility, synchronous
+model publication, scheduled virtual presentation, and short-lived model/view rollback. They distinguish
+the retired textarea implementation's measured results from qualification of this model/view architecture.
+
 MIT · ES modules · install the declared sibling packages together.

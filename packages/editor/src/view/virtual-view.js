@@ -40,7 +40,11 @@ export class VirtualEditorView {
     this.viewport.addEventListener('pointerdown', this.pointerDown);
     this.pointerMove = event => editor.hover?.(event);
     this.viewport.addEventListener('pointermove', this.pointerMove);
-    this.resizeObserver = new this.document.defaultView.ResizeObserver(() => { this.configure(); this.schedule(); });
+    this.resizeObserver = new this.document.defaultView.ResizeObserver(() => {
+      if (editor.disposed) return;
+      this.configure();
+      this.schedule();
+    });
     this.resizeObserver.observe(editor.element);
     this.configure();
   }
@@ -77,6 +81,8 @@ export class VirtualEditorView {
 
   render() {
     if (this.editor.disposed) return;
+    if (this.frame) this.document.defaultView.cancelAnimationFrame(this.frame);
+    this.frame = null;
     this.configure();
     const rows = this.layout.rows(this.scrollTop, this.viewport.clientHeight || this.editor.element.clientHeight || 400);
     this.scroll.update(rows);
@@ -219,6 +225,7 @@ export class VirtualEditorView {
 
   dispose() {
     if (this.frame) this.document.defaultView.cancelAnimationFrame(this.frame);
+    this.frame = null;
     this.resizeObserver.disconnect();
     this.viewport.removeEventListener('pointerdown', this.pointerDown);
     this.viewport.removeEventListener('pointermove', this.pointerMove);
