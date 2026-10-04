@@ -21,6 +21,11 @@ class ReleaseDesignerControls:
         uri = json.dumps(self.snapshot()['uri'])
         return self.page.locator(f'[data-designer-uri={uri}][data-designer-panel="designer-{name}"]')
 
+    def search_controls(self, value):
+        panel = self.side('toolbox')
+        panel.get_by_role('tab', name='All WinUI', exact=True).click()
+        panel.get_by_role('searchbox', name='Search toolbox').fill(value)
+
     def overflow(self):
         button = self.host.locator('[data-design-action="more"]')
         if button.get_attribute('aria-expanded') != 'true':
