@@ -116,7 +116,7 @@ for (const engine of ['source', 'cil']) {
       assert.throws(() => call('Append', rangeParameters, [value, 1, 1]), {name: 'OutOfMemoryException'});
       heap.maxBytes = budget;
       assert.equal(platform.native(call('ToString')), 'seed|');
-      call('set_Length', ['int'], [MAX - 1]);
+      heap.withRoots([value], () => call('set_Length', ['int'], [MAX - 1]));
       const version = platform.get(reference, '$version');
       assert.throws(() => call('Append', rangeParameters, [null, 1, 1]), {name: 'ArgumentNullException'});
       assert.throws(() => call('Append', rangeParameters, [value, 3, 2]), {name: 'ArgumentOutOfRangeException'});
@@ -131,8 +131,8 @@ for (const engine of ['source', 'cil']) {
 
   test(`StringBuilder range append ${engine}: only the selected text is subject to the host output limit`, () => {
     const builder = builderPlatform(engine);
-    const {platform, call} = builder;
-    const value = platform.heap.string('x'.repeat(MAX) + 'Z');
+    const {platform, reference, call} = builder;
+    const value = platform.heap.string('x'.repeat(MAX) + 'Z', [reference]);
     try {
       call('Append', rangeParameters, [value, MAX, 1]);
       assert.equal(platform.native(call('ToString')), 'seed|Z');
