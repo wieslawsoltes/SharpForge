@@ -1,4 +1,5 @@
-import {contextFrames,threads,parallelStacks,freezeThread,prepareStepOut,stepOutTarget} from './concurrency.js';
+import {threads,parallelStacks,freezeThread,prepareStepOut,stepOutTarget} from './concurrency.js';
+import {sourceStackTrace} from './stack-trace.js';
 import {setNextStatement,gotoTargets,hotReload,evaluateFunction,loadPortableSymbols,releaseEvaluationHandles} from './advanced.js';
 import { VirtualMachine, isReference } from '@sharpforge/runtime';
 import { SourceBreakpointIndex } from './source-locations.js';
@@ -362,17 +363,7 @@ export class DebugSession {
     this.remember(true);if(type==='string'&&typeof value==='string')value=this.vm.heap.string(value);
     frame.locals[local.slot]=value;this.vm.writeRevision++;return {name,value:this.vm.display(value),type:local.type};
   }
-  stackTrace(threadId) {
-    return [...contextFrames(this,threadId)].reverse().filter(frame=>!this.vm.image.methods[frame.methodId].name.startsWith('<startup>')).map(frame=>{
-      const atSequence=frame===this.vm.top&&this.vm.state==='paused'&&this.vm.sourcePause;
-      const instruction=atSequence?frame.pc:Math.max(0,frame.pc-1),point=frame.point&&this.sourceIndex.byId.get(frame.point.id);
-      return {id:frame.id,name:this.vm.image.methods[frame.methodId].asyncOrigin?this.vm.image.methods[frame.methodId].asyncOrigin+' [async]':this.vm.image.methods[frame.methodId].qualifiedName,methodId:frame.methodId,
-        source:point?.uri??null,line:point?.line??0,column:point?.column??0,endLine:point?.endLine,endColumn:point?.endColumn,
-        point:point?{...point}:null,pc:frame.pc,isCurrent:frame===this.vm.top,
-        methodToken:this.vm.image.il?.methodTokens[frame.methodId]??null,
-        ilOffset:this.vm.image.il?.offsets[frame.methodId]?.[instruction]??null};
-    });
-  }
+  stackTrace(threadId) {return sourceStackTrace(this,threadId);}
   locals(frameId) {
     const f=this.frame(frameId),m=this.vm.image.methods[f.methodId],offset=f.point?.start??0;
     return m.locals.filter(l=>(!l.hidden||l.name==='this')&&(l.declaredAt??0)<=offset&&(l.scopeEnd??Infinity)>=offset)
