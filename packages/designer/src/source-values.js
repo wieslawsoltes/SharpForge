@@ -26,9 +26,11 @@ export function readSourceStyleType(node, state) {
   return canonicalType(symbol?.legacy?.fullName ?? (symbol ? state.context.model.symbols.nameOf(symbol) : syntax.type.toString()));
 }
 
-/** Decodes only closed constants and registered framework value constructors; never executes source. */
+/** Closed constants and registered value constructors; an optional scoped constant resolver takes precedence over legacy decoding. */
 export function readSourceValue(node, state, depth = 0) {
   if (!node || depth > 100) failSource('Constant expression depth limit exceeded', node, 'SFSYNC_LIMIT');
+  const constant = state.constantValue?.(node);
+  if (constant?.hasValue) return constant.value;
   const read = child => readSourceValue(child, state, depth + 1);
   if (node.kind === 'Literal') return node.value;
   if (node.kind === 'Unary' && ['-', '+', '!', '~'].includes(node.operator)) {

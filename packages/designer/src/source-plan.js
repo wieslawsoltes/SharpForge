@@ -7,6 +7,8 @@ import {applySourceEdits, coalesceSourceEdits, sameSourceValue, sourceIdentifier
 import {checkSourceCancellation, failSource} from './source-errors.js';
 import {retainSourceDesignMetadata} from './source-design-metadata.js';
 import {sourceCollectionEdits} from './source-edit-collections.js';
+import {sourceResponsiveEdits} from './source-edit-responsive.js';
+import {sourceSpanLookup} from './source-spans.js';
 
 function namesFor(base, document) {
   const names = new Map();
@@ -61,7 +63,7 @@ export function planDesignSourceUpdate(base, design, current = base.text, option
       failSource('Changing a constructed control type requires delete and insert', base.bindings[node.id].creation, 'SFSYNC_OWNERSHIP');
     }
   }
-  for (const key of ['resources', 'themeResources', 'visualStates', 'responsive']) {
+  for (const key of ['resources', 'themeResources', 'visualStates']) {
     if (!sameSourceValue(base.document[key] ?? {}, next[key] ?? {})) {
       failSource(`Source emission for '${key}' requires an explicit framework resource provider`, null, 'SFSYNC_OWNERSHIP');
     }
@@ -81,8 +83,13 @@ export function planDesignSourceUpdate(base, design, current = base.text, option
   sourcePropertyEdits(base, next, names, edits);
   sourceCollectionEdits(base, next, names, edits);
   sourceResourceEdits(base, next, names, edits, external);
-  return finishSourcePlan(base, [...edits.filter(Boolean).map(edit => ({...edit, uri: base.uri})), ...external], {
-    ...options, document: next, structural, identityHints: Object.fromEntries([...names].map(([id, name]) => [name, id]))
+  const adaptive = sourceResponsiveEdits(base, next, names, options);
+  const covered = sourceSpanLookup(adaptive.covered, base.uri);
+  const ordinary = [...edits.filter(Boolean).map(edit => ({...edit, uri: base.uri})), ...external]
+    .filter(edit => edit.start === edit.end || !covered(edit));
+  return finishSourcePlan(base, [...ordinary, ...adaptive.edits], {
+    ...options, document: next, structural: structural || adaptive.structural,
+    identityHints: Object.fromEntries([...names].map(([id, name]) => [name, id]))
   });
 }
 

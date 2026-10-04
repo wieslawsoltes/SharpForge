@@ -17,7 +17,9 @@ that gate. Open the file containing the actual construction.
 
 `readDesignSource`, `analyzeDesignSources`, `planDesignSourceUpdate` and `CSharpDesignSession` read supported declarations, literal
 assignments, object initializers, child/Items additions, attached setters, styles/templates and event subscriptions without executing
-application code. Bound fields and symbols can span partial C# files. Scalar updates retain original UTF-16 source spans and literal
+application code. Owned adaptive helpers round-trip width triggers, baseline resets and state overrides, including initial-width
+calls and typed construction-local targets. Bound fields, helper methods and symbols can span partial C# files. Scalar updates
+retain original UTF-16 source spans and literal
 forms; structural edits require a proven owned region. Dynamic expressions, custom statements, lambdas and multiple event
 subscriptions remain protected or navigation-only. Anonymous inline controls have narrower structural capabilities.
 
@@ -45,7 +47,8 @@ valid preview with a blocking diagnostic. A successful syntax probe or visual pr
 | View recovery | Mode, splitter orientation/ratio, zoom, scroll, selection, snap and bounded guide metadata recover per document. Live attachments and executable objects are excluded. Guide recovery does not change C# text or create undo entries. |
 | Transactional editing | `DesignDocument` supports add/remove/move/duplicate/paste/group/ungroup, property changes, multi-selection geometry, Grid tracks, styles/templates and undo/redo. Validation rejects invalid types, values, references, hierarchy and oversized input before publishing a transaction. |
 | Visual authoring | Studio supplies transformed drag/resize, snapping, guides, alignment/distribution, keyboard transforms, inline text, property/event editors and resource tooling. Sample data and preview settings remain designer metadata. |
-| Staged rich authoring | Gradients, bindings, resource/theme dictionaries, visual states, adaptive layouts and project-control metadata can be authored and previewed within their validated model contracts. Their source and execution support is narrower; unsupported writes remain staged with diagnostics. |
+| Adaptive source | Width-trigger states with supported property overrides round-trip through proved managed helpers and execute at the initial design width. Viewport changes require an application host call to the generated helper; native automatic triggers are unavailable. |
+| Staged rich authoring | Gradients, bindings, resource/theme dictionaries, visual states and project-control metadata can be authored and previewed within their validated model contracts. Their source and execution support is narrower; unsupported writes remain staged with diagnostics. |
 | Resource-class documents | The dedicated resource reader opens its supported generated `ResourceDictionary` factory/constant-markup profile. Studio offers preview, staged changes and candidate export. Applying those changes to C# requires native WinUI compilation, which this host does not provide. |
 
 Standalone model APIs remain supported:

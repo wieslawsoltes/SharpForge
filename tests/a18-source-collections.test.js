@@ -210,17 +210,26 @@ test('source collection analysis enforces the 1000-item bound', () => {
   assert.throws(() => readDesignSource(text), error => error.code === 'SFSYNC_LIMIT');
 });
 
-for (const key of ['states', 'responsive']) {
-  test('runtime authoring metadata requires an explicit source capability: ' + key, () => {
-    const analysis = readDesignSource(source);
-    const document = new DesignDocument(analysis.document);
-    document.change('Runtime state', design => {
-      if (key === 'states') design.nodes.find(node => node.id === 'choices').states = [
-        {name: 'Display', states: [{name: 'Wide', setters: [{target: 'choices', property: 'Width', value: 300}]}]}
-      ];
-      else design.responsive = {version: 1, states: [{id: 'Wide', minWidth: 600, overrides: {choices: {Width: 300}}}]};
-    });
-    assert.throws(() => planDesignSourceUpdate(analysis, document.value), error => error.code === 'SFSYNC_OWNERSHIP');
-    assert.equal(analysis.text, source);
+test('runtime visual-state metadata requires its matching framework source capability', () => {
+  const analysis = readDesignSource(source);
+  const document = new DesignDocument(analysis.document);
+  document.change('Runtime state', design => {
+    design.nodes.find(node => node.id === 'choices').states = [
+      {name: 'Display', states: [{name: 'Wide', setters: [{target: 'choices', property: 'Width', value: 300}]}]}
+    ];
   });
-}
+  assert.throws(() => planDesignSourceUpdate(analysis, document.value), error => error.code === 'SFSYNC_OWNERSHIP');
+  assert.equal(analysis.text, source);
+});
+
+test('adaptive authoring never takes ownership of custom construction calls around Items', () => {
+  const text = source.replace('root.Children.Add(choices);', 'Spare();\n    root.Children.Add(choices);');
+  const analysis = readDesignSource(text);
+  const document = new DesignDocument(analysis.document);
+  document.change('Runtime state', design => {
+    design.responsive = {version: 1, states: [{id: 'Wide', minWidth: 600, overrides: {choices: {Width: 300}}}]};
+  });
+  assert.throws(() => planDesignSourceUpdate(analysis, document.value), error => error.code === 'SFSYNC_OWNERSHIP');
+  assert.equal(analysis.text, text);
+  assert.equal(planDesignSourceUpdate(analysis, analysis.document).text, text);
+});

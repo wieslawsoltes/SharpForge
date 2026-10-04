@@ -1,6 +1,8 @@
 import {normalizeProperty, propertySchema} from './model.js';
 import {geometryInvariant} from './geometry-coordinates.js';
 
+export const responsiveSourceMarker = '// SharpForge adaptive states v1: ';
+
 /** Adaptive states select the highest matching minimum width; ranges are inclusive/exclusive. */
 export function validateResponsiveDesign(document) {
   const responsive = structuredClone(document.responsive ?? {version: 1, states: []});
@@ -85,7 +87,7 @@ function propertyStatement(node, name, value, options) {
   return schema.attached ? `${owner}.Set${member}(${variable}, ${expression});` : `${variable}.${name} = ${expression};`;
 }
 
-/** Emits real managed state changes. Hosts call ApplyAdaptive on viewport resize; no SizeChanged shim is invented. */
+/** Emits real managed state changes. Optional parameters let owned source helpers address construction-local controls. */
 export function generateResponsiveMethods(document, options) {
   const responsive = validateResponsiveDesign(document);
   if (!responsive.states.length) return {methods: [], initialize: [], diagnostics: []};
@@ -99,23 +101,31 @@ export function generateResponsiveMethods(document, options) {
       for (const name of Object.keys(properties)) reset.get(id).add(name);
     }
   }
+  const methodName = options.methodName ?? 'ApplyAdaptive';
+  const widthName = options.widthName ?? 'width';
+  const parameters = options.parameters ?? [];
+  const signature = parameters.map(parameter => `, ${parameter.type} ${parameter.name}`).join('');
+  const argumentsText = parameters.map(parameter => ', ' + parameter.argument).join('');
+  const ordered = [...responsive.states].reverse();
   const methods = ['    // The application host calls this when the available viewport width changes.',
-    '    public static void ApplyAdaptive(double width)', '    {'];
+    `    public static void ${methodName}(double ${widthName}${signature})`, '    {',
+    '        ' + responsiveSourceMarker + JSON.stringify(ordered.map(state => state.id))];
   for (const [id, properties] of reset) {
     const node = nodes.get(id);
     for (const name of properties) methods.push(`        ${propertyStatement(node, name, node.properties[name], options)}`);
   }
-  for (const state of [...responsive.states].reverse()) {
+  for (const state of ordered) {
     const lower = options.csharpValue(state.minWidth, 'double');
-    const upper = state.maxWidth === null ? '' : ` && width < ${options.csharpValue(state.maxWidth, 'double')}`;
-    methods.push(`        if (width >= ${lower}${upper})`, '        {');
+    const upper = state.maxWidth === null ? '' : ` && ${widthName} < ${options.csharpValue(state.maxWidth, 'double')}`;
+    methods.push(`        if (${widthName} >= ${lower}${upper})`, '        {');
     for (const [id, properties] of Object.entries(state.overrides)) {
       for (const [name, value] of Object.entries(properties)) methods.push(`            ${propertyStatement(nodes.get(id), name, value, options)}`);
     }
     methods.push('            return;', '        }');
   }
   methods.push('    }');
-  return {methods, initialize: [`        ApplyAdaptive(${Number.isInteger(document.width) ? `${document.width}.0` : document.width});`],
+  const width = Number.isInteger(document.width) ? `${document.width}.0` : document.width;
+  return {methods, initialize: [`        ${methodName}(${width}${argumentsText});`],
     diagnostics: [{code: 'SFD_RESPONSIVE_HOST_RESIZE', severity: 'info', span: {start: 0, length: 0},
-      message: 'Call ApplyAdaptive(width) from the application viewport resize callback. Automatic native SizeChanged triggers are unavailable.'}]};
+      message: `Call ${methodName}(width) from the application viewport resize callback. Automatic native SizeChanged triggers are unavailable.`}]};
 }
