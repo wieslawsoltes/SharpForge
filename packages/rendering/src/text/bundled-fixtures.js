@@ -1,5 +1,25 @@
 const fixtureFonts = Object.freeze([
   {
+    "file": "SharpForgeSans-Variable.ttf",
+    "family": "SharpForge Sans Fixture",
+    "weight": [
+      100,
+      900
+    ],
+    "style": "normal",
+    "sha256": "d74c27145878d39fd619db868ac59c4414e1b59f83c6a124ca2f88e93ccc5c90"
+  },
+  {
+    "file": "SharpForgeSans-Italic-Variable.ttf",
+    "family": "SharpForge Sans Fixture",
+    "weight": [
+      100,
+      900
+    ],
+    "style": "italic",
+    "sha256": "49e1539bee4fdcbe2f5a7287815eaaa243c5f610f4d1c1852b59f226624006db"
+  },
+  {
     "file": "NotoSans-Regular.ttf",
     "family": "Noto Sans",
     "weight": 400,

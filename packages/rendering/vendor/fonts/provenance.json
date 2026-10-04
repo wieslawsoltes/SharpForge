@@ -16,6 +16,36 @@
       "source": "https://raw.githubusercontent.com/harfbuzz/harfbuzzjs/b2ec00c97159ee8aa563691792aa3081adbc8a50/test/fonts/noto/NotoSans-Regular.ttf",
       "sourceSha256": "4c8d67001d3c2977e5d6bf0a4f8add80cd564bd1df60b7569fd23751e7dda02a",
       "transformation": null
+    },
+    {
+      "file": "SharpForgeSans-Variable.ttf",
+      "family": "SharpForge Sans Fixture",
+      "weight": [
+        100,
+        900
+      ],
+      "style": "normal",
+      "license": "NotoSans-Variable-OFL.txt",
+      "sha256": "d74c27145878d39fd619db868ac59c4414e1b59f83c6a124ca2f88e93ccc5c90",
+      "bytes": 821792,
+      "source": "https://raw.githubusercontent.com/google/fonts/9710da1eacb3be272583c3224dcb70f9da6eadbb/ofl/notosans/NotoSans%5Bwdth%2Cwght%5D.ttf",
+      "sourceSha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d",
+      "transformation": "Subset Latin, combining, Greek, Cyrillic and common punctuation/symbol ranges; preserve shaping and variation tables; rename modified family. Reproduce with tools/subset-font-fixtures.py."
+    },
+    {
+      "file": "SharpForgeSans-Italic-Variable.ttf",
+      "family": "SharpForge Sans Fixture",
+      "weight": [
+        100,
+        900
+      ],
+      "style": "italic",
+      "license": "NotoSans-Variable-OFL.txt",
+      "sha256": "49e1539bee4fdcbe2f5a7287815eaaa243c5f610f4d1c1852b59f226624006db",
+      "bytes": 935072,
+      "source": "https://raw.githubusercontent.com/google/fonts/9710da1eacb3be272583c3224dcb70f9da6eadbb/ofl/notosans/NotoSans-Italic%5Bwdth%2Cwght%5D.ttf",
+      "sourceSha256": "58e6e0ebd1931b29a365aa2d3e2ee9a9e831a3af7cf3ad1462d4e72154f0b291",
+      "transformation": "Subset Latin, combining, Greek, Cyrillic and common punctuation/symbol ranges; preserve shaping and variation tables; rename modified family. Reproduce with tools/subset-font-fixtures.py."
     }
   ]
 }
