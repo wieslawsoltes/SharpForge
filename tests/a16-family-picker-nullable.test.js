@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {propertiesFor} from '@sharpforge/framework';
 import {UIExtensionRegistry} from '@sharpforge/winui-properties';
 import {registerValueAdapters} from '../packages/winui-controls/src/values/adapters.js';
 import {applyControlFamilyInput} from '../packages/winui-controls/src/policy/family-input.js';
@@ -53,4 +54,14 @@ test('present midnight and absent TimePicker.SelectedTime remain distinct withou
   applyControlFamilyInput(context, owner, 'SelectedTimeChanged', {NewTime: null, value: midnight});
   assert.equal(context.read(owner, 'SelectedTime'), null);
   assert.equal(context.read(owner, 'TimeValue'), retained);
+});
+
+test('nullable event payload signatures do not change non-nullable typed companion signatures', () => {
+  for (const [owner, value, element] of [['DatePicker', 'Date', 'System.DateTimeOffset'], ['TimePicker', 'Time', 'System.TimeSpan']]) {
+    const properties = propertiesFor(controls + owner);
+    assert.equal(properties[value + 'Value'].type, element);
+    const args = propertiesFor(controls + owner + 'Selected' + value + 'ChangedEventArgs');
+    assert.equal(args['Old' + value].type, 'System.Nullable`1<' + element + '>');
+    assert.equal(args['New' + value].type, 'System.Nullable`1<' + element + '>');
+  }
 });
