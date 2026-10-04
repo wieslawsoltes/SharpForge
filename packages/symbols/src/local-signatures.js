@@ -42,22 +42,23 @@ export function readLocalSignatures(pe, symbols, limits) {
       signature > (pe.metadata.counts[17] ?? 0)
     )
       fail('Invalid local signature row id');
-    let token = signature ? 0x11000000 + signature : 0,
+    const pdbToken = signature ? 0x11000000 + signature : 0;
+    const definition = pe.metadata.row(method),
+      rva = definition[0];
+    let token = 0,
       reason = null;
-    if (!token) {
-      const definition = pe.metadata.row(method),
-        rva = definition[0];
-      if (!rva) reason = 'no-method-body';
-      else if (definition[1] & 3) reason = 'unsupported-method-body';
-      else {
-        if (!headers.has(rva)) headers.set(rva, readMethodHeader(pe, method).localSignature);
-        token = headers.get(rva);
-      }
+    if (!rva) reason = 'no-method-body';
+    else if (definition[1] & 3) reason = 'unsupported-method-body';
+    else {
+      if (!headers.has(rva)) headers.set(rva, readMethodHeader(pe, method).localSignature);
+      token = headers.get(rva);
     }
+    if (token && (token >>> 24 !== 17 || !(token & 0xffffff) || (token & 0xffffff) > (pe.metadata.counts[17] ?? 0)))
+      fail('Invalid local signature token');
+    if (pdbToken && reason) fail('PDB local signature requires a CIL method body');
+    if (pdbToken && pdbToken !== token) fail('PDB and method-header local signatures differ');
     methods.set(method, { token, reason });
     if (!token || signatures.has(token)) continue;
-    if (token >>> 24 !== 17 || !(token & 0xffffff) || (token & 0xffffff) > (pe.metadata.counts[17] ?? 0))
-      fail('Invalid local signature token');
     const value = pe.metadata.blob(pe.metadata.row(token)[0]);
     if (value.length > 4096 || (bytes += value.length) > 128 * 1024) fail('Local signature byte limit exceeded');
     signatures.set(token, value);

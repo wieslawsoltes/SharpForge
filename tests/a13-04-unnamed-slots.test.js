@@ -9,12 +9,20 @@ import {
   writeMethodBody,
   writePE,
 } from '@sharpforge/cil';
+import { PortablePdbBuilder } from '../packages/symbols/src/pdb-builder.js';
 import { attachPortablePdb, emitPortablePdb, loadSymbols, readPortablePdb } from '@sharpforge/symbols';
 
 const primitive = (name) => ({ kind: 'primitive', name });
-function fixture({ types = [primitive('int'), primitive('string')], scopes = [], tiny = false, noBody = false } = {}) {
+function fixture({
+  types = [primitive('int'), primitive('string')],
+  scopes = [],
+  tiny = false,
+  noBody = false,
+  extraTypes = null,
+} = {}) {
   const metadata = new MetadataBuilder('UnnamedSlots');
   const signature = types.length ? metadata.add(17, [metadata.blob(encodeSignature({ kind: 'locals', types }))]) : 0;
+  if (extraTypes) metadata.add(17, [metadata.blob(encodeSignature({ kind: 'locals', types: extraTypes }))]);
   metadata.add(2, [1, metadata.string('Fixture'), 0, 0, 1, 1]);
   metadata.add(6, [noBody ? 0 : 0x2048, 0, 0x16, metadata.string('Run'), metadata.blob(new Uint8Array([0, 0, 1])), 1]);
   const bytes = metadata.finish();
@@ -24,7 +32,7 @@ function fixture({ types = [primitive('int'), primitive('string')], scopes = [],
   section.bytes(bytes);
   const assembly = writePE(section.finish(), offset, bytes.length, 0);
   const pdb = emitPortablePdb(assembly, { methods: [{ token: 0x06000001, scopes }] }).bytes;
-  return { assembly: attachPortablePdb(assembly, pdb), pdb, signature };
+  return { assembly: attachPortablePdb(assembly, pdb), rawAssembly: assembly, pdb, signature };
 }
 
 test('public header-only reader returns owned tiny/fat facts without decoding exception sections', () => {
@@ -193,4 +201,19 @@ test('Release CLR slot types and SRM declarations match without reconstructing e
   }
   assert(reference.native.methods.find((method) => method.name === 'Sum').slots.some((slot) => slot.unnamed));
   assert.equal(reference.native.methods.find((method) => method.name === 'Gone').slots.length, 0);
+});
+
+test('CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent', () => {
+  const input = fixture({ extraTypes: [primitive('bool')] });
+  const metadata = readPE(input.rawAssembly).metadata;
+  const pdb = new PortablePdbBuilder();
+  pdb.add(49, [0, pdb.blob(new Uint8Array([2]))]);
+  const mismatch = pdb.finish(metadata.counts, 0).bytes;
+  assert.throws(() => loadSymbols(attachPortablePdb(input.rawAssembly, mismatch), mismatch), /local signatures differ/);
+  const absent = fixture({ noBody: true });
+  const noBody = readPE(absent.rawAssembly);
+  const missing = new PortablePdbBuilder();
+  missing.add(49, [0, missing.blob(new Uint8Array([1]))]);
+  const bytes = missing.finish(noBody.metadata.counts, 0).bytes;
+  assert.throws(() => loadSymbols(attachPortablePdb(absent.rawAssembly, bytes), bytes), /requires a CIL method body/);
 });

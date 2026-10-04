@@ -116,6 +116,8 @@ Without a bound PE the result is `{available: false, reason:
 'type-metadata-required', slots: []}`. Missing bodies yield `no-method-body`;
 non-CIL bodies without a PDB local signature yield `unsupported-method-body`.
 An actual tiny body without a signature has an available empty slot list.
+The CLI header is authoritative: nonzero PDB local-signature handles must agree
+with it and cannot assign storage to a method without a CIL body.
 Invalid MethodDef/query/signature tokens, malformed signatures and out-of-range
 recorded slots reject. Distinct names for reused storage remain separate in
 `declarations`. Returned ASTs/declarations and public PDB rows cannot alter later
