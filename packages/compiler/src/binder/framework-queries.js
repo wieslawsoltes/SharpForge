@@ -9,6 +9,7 @@
  *
  * All queries are side-effect free unless `report` is passed.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { canonicalType, frameworkType, frameworkAssignable, enumValue } from '@sharpforge/framework';
 import { Conversion, ConversionKind } from '../conversions/classify.js';
 import { typeText } from '../type-utils.js';
@@ -106,7 +107,7 @@ export const FrameworkQueries = Base =>
       const exact = methods.filter(m => m.returnType === signature.result);
       if (exact.length === 1) methods = exact;
       if (methods.length !== 1) {
-        if (report) this.c.report(node, 'CS0123', [target.name ?? '<expression>', typeText(type)]);
+        if (report) this.c.report(node, DiagnosticId.CS0123, [target.name ?? '<expression>', typeText(type)]);
         return null;
       }
       return { method: methods[0], receiver: group.receiver, node: target };
@@ -154,13 +155,17 @@ export const FrameworkQueries = Base =>
       // Candidates whose delegate parameters match the method groups' return types exactly are preferred as a set.
       const exact = this.framework.hasDelegateParameters(candidates) ? candidates.filter(m => this.bindsDelegatesExactly(m, node.args)) : candidates;
       let result = exact.length && exact.length < candidates.length ? this.framework.resolve(exact, args, { name }) : null;
-      if (!result || (!result.succeeded && result.error.code !== 'CS0121')) result = this.framework.resolve(candidates, args, { name });
+      if (!result || (!result.succeeded && result.error.code !== DiagnosticId.CS0121)) result = this.framework.resolve(candidates, args, { name });
       if (result.succeeded) return { receiver, contract: result.method.contract };
       if (!report) return null;
-      if (result.error.code === 'CS0121') {
+      if (result.error.code === DiagnosticId.CS0121) {
         const [first, second] = result.ambiguous.map(m => typeText(m.contract.owner) + '.' + m.contract.name);
-        this.c.report(node, 'CS0121', [first, second]);
-      } else this.c.report(node, 'CS1501', [name, args.length]);
+        this.c.report(node, DiagnosticId.CS0121, [first, second]);
+      } else {
+        // Roslyn reports the argument count on the member name, not on the whole invocation.
+        const nameSpan = node.target.nameSpan;
+        this.c.report(nameSpan ? { uri: node.uri, ...nameSpan } : node, DiagnosticId.CS1501, [name, args.length]);
+      }
       return null;
     }
 

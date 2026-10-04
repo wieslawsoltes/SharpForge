@@ -3,6 +3,10 @@
   "informationalVersion": "5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a",
   "options": "OutputKind.ConsoleApplication, LanguageVersion.Latest, core library MiniStandard.dll only",
   "assemblies": {
+    "Closed.dll": {
+      "bytes": 2560,
+      "identity": "Closed, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+    },
     "Consumer.Lib1.dll": {
       "bytes": 2560,
       "identity": "Consumer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f"
