@@ -43,9 +43,7 @@ const {$,$$,E,applyRefactoring,build,closeModal,docking,download,empty,loadSampl
  if(panel==='generated'){
   const files=state.result?.generatedSources??[];el.innerHTML=files.length?`<div class="panel-tools"><b>Read-only compiler-generated sources</b><span class="panel-spacer"></span><span>${files.length} files</span></div>`+files.map(f=>`<details open><summary>${E(f.uri)}</summary><pre class="tool-source">${E(f.text)}</pre></details>`).join(''):empty('No generated sources','Enable a built-in generator in the Generators & Analyzers tool.');return true;
  }
- if(panel==='outline'){
-  const symbols=state.result?.symbols.filter(s=>s.uri===state.active&&s.kind!=='local'&&!s.name.startsWith('<'))??[];el.innerHTML=`<div class="panel-tools">${E(state.active??'No source document')}</div>`+symbols.map((s,i)=>`<button class="outline-row" data-outline="${i}"><span class="symbol-kind">${E(s.kind)}</span><span>${E(s.owner?s.owner+'.':'')}${E(s.name)}</span></button>`).join('');for(const b of $$('[data-outline]',el))b.onclick=()=>{const symbol=symbols[Number(b.dataset.outline)];openFile(symbol.uri,symbol.start,symbol.end);};return true;
- }
+ if(panel==='outline')return context.sourceSymbols.renderOutline(el);
  if(panel==='project'){
   if(state.nativeMode){el.innerHTML=`<div class="tool-page"><h2>Native Project Properties</h2><p>${E(state.nativeWorkspace?.root??'')}</p><p>The MSBuild tool selects the solution/project, configuration, platform, framework, runtime and global properties. Evaluate a project for authoritative SDK-resolved values and item metadata.</p><div class="tool-actions"><button class="button" data-command="nativeMSBuild">MSBuild settings</button><button class="button" data-command="nativeEvaluate">Evaluate project</button><button class="button" data-command="tool:project-source">Edit project / solution XML</button></div><p>Native builds compile projects separately. Browser language services and IL execution remain limited to their supported subset.</p></div>`;return true;}
   const snapshot=state.projectSnapshot,project=state.projectSystem?.projects.get(state.startupProject);
