@@ -1,0 +1,381 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-cross-platform-browser-qualification",
+  "scope": "Immutable first Windows/Firefox and macOS/WebKit browser attempts at the same exact source.",
+  "workItems": [
+    "SF-A19-T12.2"
+  ],
+  "closeIssues": false,
+  "allPlatformsQualified": false,
+  "attempts": [
+    {
+      "id": "w1",
+      "workflowRunId": 37184606471,
+      "jobId": 111383814564,
+      "workflowUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37184606471",
+      "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37184606471/job/111383814564",
+      "runConclusion": "success",
+      "jobConclusion": "success",
+      "runAttempt": 1,
+      "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+      "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+      "trigger": "create",
+      "triggerRef": "refs/heads/codex/project16/qualify-windows-firefox-browser-20261004-w1",
+      "stage": "browser",
+      "engine": "firefox",
+      "runnerLabel": "windows-latest",
+      "captureOnly": true,
+      "baselineProfile": null,
+      "createdAt": "2026-10-04T07:02:40Z",
+      "updatedAt": "2026-10-04T07:07:07Z",
+      "startedAt": "2026-10-04T07:03:59.353Z",
+      "finishedAt": "2026-10-04T07:07:01.284Z",
+      "status": "passed",
+      "exitCode": 0,
+      "counts": {
+        "selected": 9,
+        "passed": 9,
+        "failed": 0
+      },
+      "environment": {
+        "host": "Microsoft Windows Server 2025 Datacenter",
+        "version": "10.0.26100",
+        "architecture": "x64",
+        "image": "windows-2025-vs2026",
+        "imageVersion": "20260925.250.1",
+        "node": "v24.21.0",
+        "npm": "11.19.0",
+        "python": "3.12.10",
+        "playwright": "1.63.0",
+        "browser": "155.0",
+        "browserBuild": "1543"
+      },
+      "environmentEvidence": [
+        "docs/evidence/project16-hosted/w1/job.log",
+        "docs/evidence/project16-hosted/w1/browser_a20_view_test/session.json"
+      ],
+      "setupAndBuild": "passed",
+      "scopeCommand": [
+        "node",
+        "scripts/project16-qualification.js",
+        "browser"
+      ],
+      "scopeCommandEvidence": "docs/evidence/project16-hosted/w1/job.log",
+      "suiteCommand": [
+        "python",
+        "tests/conformance/browser/run_suite.py",
+        "<suite>",
+        "--timeout",
+        "1200"
+      ],
+      "outerSuiteTimeoutMs": 1320000,
+      "serial": true,
+      "scopes": [
+        {
+          "id": "browser:workbench-docking",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/w1/suite-workbench-docking.json"
+        },
+        {
+          "id": "browser:workbench-shell",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/w1/suite-workbench-shell.json"
+        },
+        {
+          "id": "browser:workbench-sessions",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/w1/suite-workbench-sessions.json"
+        },
+        {
+          "id": "browser:workbench-lazy",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/w1/suite-workbench-lazy.json"
+        },
+        {
+          "id": "browser:workbench-workflows",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/w1/suite-workbench-workflows.json"
+        },
+        {
+          "id": "browser:workbench-workflows-standalone",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/w1/suite-workbench-workflows-standalone.json"
+        },
+        {
+          "id": "browser:editor-insights",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/w1/suite-editor-insights.json"
+        },
+        {
+          "id": "browser:editor-providers",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/w1/suite-editor-providers.json"
+        },
+        {
+          "id": "browser:editor-view",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/w1/suite-editor-view.json"
+        }
+      ],
+      "standalone": {
+        "passed": true,
+        "mode": "file",
+        "offline": true,
+        "artifactSha256": "da60ffe742f3b723d4b1286fc279c6510067570a7cc54b6550d68e2fcfb855a9",
+        "artifactBytes": 16419776,
+        "completedScenarioCount": 5,
+        "httpAttempts": [],
+        "pageErrors": [],
+        "evidence": "docs/evidence/project16-hosted/w1/vs-workflow-standalone-results.json"
+      },
+      "archiveManifest": "docs/evidence/project16-hosted/w1/manifest.json",
+      "archiveRawFileCount": 41,
+      "archiveRawBytes": 136438,
+      "artifactMemberCount": 36,
+      "artifactMemberBytes": 23644
+    },
+    {
+      "id": "m1",
+      "workflowRunId": 37184861392,
+      "jobId": 111384572220,
+      "workflowUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37184861392",
+      "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37184861392/job/111384572220",
+      "runConclusion": "failure",
+      "jobConclusion": "failure",
+      "runAttempt": 1,
+      "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+      "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+      "trigger": "create",
+      "triggerRef": "refs/heads/codex/project16/qualify-macos-webkit-browser-20261004-m1",
+      "stage": "browser",
+      "engine": "webkit",
+      "runnerLabel": "macos-latest",
+      "captureOnly": true,
+      "baselineProfile": null,
+      "createdAt": "2026-10-04T07:07:56Z",
+      "updatedAt": "2026-10-04T07:09:44Z",
+      "startedAt": "2026-10-04T07:08:37.210Z",
+      "finishedAt": "2026-10-04T07:09:38.068Z",
+      "status": "failed",
+      "exitCode": 1,
+      "counts": {
+        "selected": 9,
+        "passed": 8,
+        "failed": 1
+      },
+      "environment": {
+        "host": "macOS",
+        "version": "26.6.2",
+        "osBuild": "25G83",
+        "architecture": "arm64",
+        "image": "macos-26-arm64",
+        "imageVersion": "20260907.0351.1",
+        "node": "v24.20.0",
+        "npm": "11.19.0",
+        "python": "3.12.10",
+        "playwright": "1.63.0",
+        "browser": "26.6",
+        "browserBuild": "2359"
+      },
+      "environmentEvidence": [
+        "docs/evidence/project16-hosted/m1/job.log",
+        "docs/evidence/project16-hosted/m1/browser_a20_view_test/session.json"
+      ],
+      "setupAndBuild": "passed",
+      "scopeCommand": [
+        "node",
+        "scripts/project16-qualification.js",
+        "browser"
+      ],
+      "scopeCommandEvidence": "docs/evidence/project16-hosted/m1/job.log",
+      "suiteCommand": [
+        "python",
+        "tests/conformance/browser/run_suite.py",
+        "<suite>",
+        "--timeout",
+        "1200"
+      ],
+      "outerSuiteTimeoutMs": 1320000,
+      "serial": true,
+      "scopes": [
+        {
+          "id": "browser:workbench-docking",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/m1/suite-workbench-docking.json"
+        },
+        {
+          "id": "browser:workbench-shell",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/m1/suite-workbench-shell.json"
+        },
+        {
+          "id": "browser:workbench-sessions",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/m1/suite-workbench-sessions.json"
+        },
+        {
+          "id": "browser:workbench-lazy",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/m1/suite-workbench-lazy.json"
+        },
+        {
+          "id": "browser:workbench-workflows",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/m1/suite-workbench-workflows.json"
+        },
+        {
+          "id": "browser:workbench-workflows-standalone",
+          "status": "failed",
+          "exitCode": 1,
+          "evidence": "docs/evidence/project16-hosted/m1/suite-workbench-workflows-standalone.json"
+        },
+        {
+          "id": "browser:editor-insights",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/m1/suite-editor-insights.json"
+        },
+        {
+          "id": "browser:editor-providers",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/m1/suite-editor-providers.json"
+        },
+        {
+          "id": "browser:editor-view",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/m1/suite-editor-view.json"
+        }
+      ],
+      "standalone": {
+        "passed": false,
+        "mode": "file",
+        "offline": true,
+        "artifactSha256": "da60ffe742f3b723d4b1286fc279c6510067570a7cc54b6550d68e2fcfb855a9",
+        "artifactBytes": 16419776,
+        "completedScenarioCount": 0,
+        "httpAttempts": [],
+        "pageErrors": [],
+        "evidence": "docs/evidence/project16-hosted/m1/vs-workflow-standalone-results.json"
+      },
+      "archiveManifest": "docs/evidence/project16-hosted/m1/manifest.json",
+      "archiveRawFileCount": 43,
+      "archiveRawBytes": 200889,
+      "artifactMemberCount": 38,
+      "artifactMemberBytes": 72079
+    }
+  ],
+  "m1Failure": {
+    "scope": "browser:workbench-workflows-standalone",
+    "failure": {
+      "type": "Error",
+      "message": "Page.goto: WebKit encountered an internal error\nCall log:\n  - navigating to \"file:///Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html\", waiting until \"domcontentloaded\"\n"
+    },
+    "observedPhase": "Page.goto for the offline file URL failed while waiting for domcontentloaded; no workflow acceptance check completed.",
+    "cause": "Strong source-based explanation: the pinned Playwright WebKit offline-emulation guard rejects file navigation before request interception.",
+    "timeout": false,
+    "completedScenarioCount": 0,
+    "laterIndependentScopes": [
+      "browser:editor-insights",
+      "browser:editor-providers",
+      "browser:editor-view"
+    ],
+    "laterIndependentScopeOutcome": "all passed; overall run and job remain failed",
+    "evidence": [
+      "docs/evidence/project16-hosted/m1/vs-workflow-standalone-results.json",
+      "docs/evidence/project16-hosted/m1/browser_vs_workflows_standalone_test/console.log",
+      "docs/evidence/project16-hosted/m1/browser_vs_workflows_standalone_test/trace.zip",
+      "docs/evidence/project16-hosted/m1/browser_vs_workflows_standalone_test/screenshot.png"
+    ],
+    "sourceBasedExplanation": {
+      "mode": "read-only pinned-source review; no additional browser probe",
+      "playwrightVersion": "1.63.0",
+      "webkitBuild": "2359",
+      "webkitBaseRevision": "4d05d732e5a84f32675bef4cc135a2e7a9269a87",
+      "mechanism": [
+        "The exact SharpForge driver sets offline=True on the standalone page before file navigation.",
+        "The pinned loader patch returns an internal load failure when offline emulation is enabled, before request interception.",
+        "Earlier local-load exceptions do not exempt file URLs at that point; the failed-load callback produces internalError(url).",
+        "Removing only the HTTP interception cannot bypass the earlier offline guard."
+      ],
+      "interpretation": "Strong explanation of the observed automation failure, not a native Safari result or proof of a SharpForge product defect.",
+      "qualificationOutcomeUnchanged": true,
+      "sources": [
+        {
+          "role": "exact tested driver",
+          "url": "https://github.com/wieslawsoltes/SharpForge/blob/25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e/tests/browser_vs_workflows_test.py#L126"
+        },
+        {
+          "role": "pinned WebKit base",
+          "url": "https://github.com/microsoft/playwright/blob/v1.63.0/browser_patches/webkit/UPSTREAM_CONFIG.sh#L1-L3"
+        },
+        {
+          "role": "offline guard before interception",
+          "url": "https://github.com/microsoft/playwright/blob/v1.63.0/browser_patches/webkit/patches/bootstrap.diff#L18234-L18268"
+        },
+        {
+          "role": "earlier loader exceptions",
+          "url": "https://github.com/WebKit/WebKit/blob/4d05d732e5a84f32675bef4cc135a2e7a9269a87/Source/WebKit/WebProcess/Network/WebLoaderStrategy.cpp#L213-L307"
+        },
+        {
+          "role": "internal error callback",
+          "url": "https://github.com/WebKit/WebKit/blob/4d05d732e5a84f32675bef4cc135a2e7a9269a87/Source/WebKit/WebProcess/Network/WebLoaderStrategy.cpp#L672-L681"
+        }
+      ]
+    }
+  },
+  "linuxChromiumCompanion": {
+    "attempt": "a6",
+    "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+    "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+    "workflowRunId": 37183721322,
+    "jobId": 111381241587,
+    "engine": "chromium",
+    "browser": "153.0.8010.12",
+    "runnerLabel": "ubuntu-latest",
+    "browserCounts": {
+      "selected": 9,
+      "passed": 9,
+      "failed": 0
+    },
+    "overallConclusion": "failure",
+    "overallFailure": "Editor undo p95 relative regression gate; retained in the separate a6 record.",
+    "evidence": [
+      "docs/project16-hosted-a6.md",
+      "docs/project16-hosted-a6.json",
+      "docs/evidence/project16-hosted/a6/qualification-summary.json"
+    ],
+    "counting": "External companion only; no Node, browser or performance totals are added to the W1/M1 attempts."
+  },
+  "interpretation": [
+    "The selected combinations are Linux/Chromium, Windows/Firefox and macOS/WebKit, not a three-by-three OS/engine matrix.",
+    "The browser versions are Playwright-managed engines; the macOS run is not real Safari certification.",
+    "W1/M1 selected only browser functional scopes. Capture-only with null baselines does not mean performance measurements or a regression verdict.",
+    "Positive DOM, keyboard, ARIA, synthetic composition and media-emulation checks do not certify OS clipboard permissions, native IME, screen readers or spoken output.",
+    "The runtime/browser results do not certify native CLR, Rust/native, Wasm, GPU or OS application integrations.",
+    "Core/build success is separate from browser acceptance. Later source changes or retries do not rewrite these exact-source results.",
+    "Historical hosted failures and source fixes remain in their original ledgers; this record does not close issues or assert complete Visual Studio parity."
+  ],
+  "archive": {
+    "rawFileCount": 84,
+    "rawBytes": 337327,
+    "format": "Each attempt preserves its original artifact ZIP, every extracted member, original job log and three supplied API response files.",
+    "integrity": "ZIP/member bytes, read-back copies and all 84 staged Git blobs matched their original bytes/SHA256; archive-scoped Git attributes prevent text normalization.",
+    "additionalValidationExecution": false
+  }
+}
