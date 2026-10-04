@@ -1,6 +1,105 @@
 {
   "schemaVersion": 1,
   "fixtures": [
-    { "id": "button-default", "file": "button-default.xaml", "viewport": { "width": 320, "height": 240 }, "expected": "loaded", "description": "Default button properties, native layout and automation peer." }
+    {
+      "id": "button-default",
+      "file": "button-default.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "Default Button with text content; captures native default layout and automation properties."
+    },
+    {
+      "id": "textblock-wrapped",
+      "file": "textblock-wrapped.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "TextBlock with a fixed width and wrapping enabled."
+    },
+    {
+      "id": "stackpanel-spacing",
+      "file": "stackpanel-spacing.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "Vertical StackPanel with fixed spacing, margin and three different child elements."
+    },
+    {
+      "id": "grid-weighted-columns",
+      "file": "grid-weighted-columns.xaml",
+      "viewport": {
+        "width": 640,
+        "height": 360
+      },
+      "expected": "loaded",
+      "description": "Grid combines fixed and weighted columns, an automatic row and a spanning heading."
+    },
+    {
+      "id": "border-padding",
+      "file": "border-padding.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "Border combines explicit padding, border thickness and rounded corners around text."
+    },
+    {
+      "id": "checkbox-checked",
+      "file": "checkbox-checked.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "Checked CheckBox with a stable content label and automation name."
+    },
+    {
+      "id": "radiobutton-group",
+      "file": "radiobutton-group.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "Two RadioButtons share a group with one explicitly selected item."
+    },
+    {
+      "id": "toggleswitch-off",
+      "file": "toggleswitch-off.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "ToggleSwitch has an explicit off state, header and on/off content."
+    },
+    {
+      "id": "textbox-text",
+      "file": "textbox-text.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "TextBox has fixed text, a header, placeholder and width without requesting focus."
+    },
+    {
+      "id": "combobox-selection",
+      "file": "combobox-selection.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "Closed ComboBox contains three static items and an explicit selection."
+    }
   ]
 }
