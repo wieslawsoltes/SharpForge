@@ -218,6 +218,16 @@ The reduction to fixed symbols is essential for UTF-16 correctness:
    match whose raw endpoint fails. Restarting search there would lose the linear
    bound. The returned core offset subtracts the excluded leading unit.
 
+For a nonempty core with a leading low surrogate, one initial raw scan now skips
+positions that cannot satisfy that required endpoint. It begins at the validated
+start index and stops at the last full-needle window, using the original low unit
+even when it belongs to a source pair whose scalar folds differently. If no raw
+prefix exists, it returns before factorization or folding. Otherwise Two-Way
+starts at the first possible window with zero overlap memory; all later endpoint
+checks and period transitions stay unchanged for both first and last searches.
+This adds at most one O(n) scan and constant counters. It never restarts the scan
+for a rejected core, and leaves empty/raw-only needles on their existing paths.
+
 This gives O(n+m) folded-unit accesses for receiver length n and needle length m,
 plus O(1) endpoint work per considered alignment. Each unit access uses bounded
 lookaround and the fixed pinned mapping table. Needles of at most eight UTF-16
@@ -231,13 +241,19 @@ matches while n and m grow together. Exhaustive small inputs, longer differentia
 cases and both unchanged native search oracles guard boundary and overlap behavior.
 The exhaustive cases also invoke Two-Way directly, independent of the cutoff;
 eight/nine-unit controls exercise dispatch, both compiler pipelines and direct CIL.
+Separate read counters assert that missing raw prefixes do not inspect the core
+or scan outside the eligible start range. Offset controls cover prefixes before
+the lower bound, after the last full window, within a surrogate pair, and before
+later successful or rejected periodic matches.
 
-`scripts/benchmarks/a07-string-search-linear.mjs` runs unchanged on baseline
-`40cf1975` and the candidate. It retains the measured ordinary and repeated-prefix
-inputs and adds raw endpoint rejection workloads. Both source/CIL platforms report
+`scripts/benchmarks/a07-string-search-linear.mjs` runs unchanged on the current
+prefix-filter baseline `72547446` and candidate. It retains the measured ordinary,
+repeated-prefix and raw endpoint rejection inputs, adds prefix-present/window-end
+controls, and includes start-index and LastIndexOf timings. Both source/CIL platforms report
 median/p95 and managed allocation counters after one warmup and five samples;
 setup, optional host GC and assertions are excluded. Host allocation counts and
-other globalization profiles are not claimed. Initial measurements reduced the
+other globalization profiles are not claimed. The original runner against
+`40cf1975` measured the initial Two-Way implementation and reduced the
 20-call Unicode repeated-prefix samples from about 80–83 ms to 1.0–1.1 ms and ASCII
 samples from 6–7 ms to 0.15–0.33 ms. The periodic leading-endpoint-miss workload was
 8–11% slower, a disclosed constant-factor tradeoff. These are measurements of the
@@ -328,6 +344,19 @@ values. The fifty-value .NET 10.0.5 fixture in `reference/double-format-net10.js
 qualifies binary64 default, general and round-trip output; it does not qualify
 Single or Decimal formatting. Runtime display adapters reuse this helper while
 retaining their engine-specific object, enum and typed integer handling.
+
+`StringBuilder.Append(char)` and `Append(char, int)` preserve individual UTF-16
+units, return the same builder, and append one managed chunk per nonzero call.
+Zero repeats perform no writes or managed allocations. Invalid repeat counts
+and growth beyond `Int32.MaxValue` fail with `ArgumentOutOfRangeException`
+identifying `repeatCount`; this check precedes the separate host allocation cap.
+The two contracts append at A07 IDs 524309–524310. The pinned .NET 10.0.5
+reference covers 37 character, null, repeat and capacity-boundary cases;
+focused source/CIL tests additionally cover GC, snapshots and host allocation
+faults. Existing chunk capacity growth and write-observer partial progress are
+preserved; exact native capacity transitions and remaining StringBuilder
+overloads stay tracked in #2636 and #2637. Repeat expansion costs O(count) time
+and temporary text, bounded by the host limit, with one chunk append afterward.
 
 StringBuilder reports the .NET default `MaxCapacity` of `Int32.MaxValue`
 (`2147483647`) in both metadata and execution. The host separately limits text

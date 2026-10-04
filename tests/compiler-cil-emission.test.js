@@ -113,15 +113,15 @@ test('A02-T30 a typed catch clause names its exception type and try regions nest
 });
 
 test('A02-T30 a construct without an emitter is SF2200 naming it, never a wrong assembly', () => {
-  const filter = emit('using System; class C { static void Main() { try { } catch (Exception e) when (e.Message == "x") { } } }');
-  assert.equal(filter.success, false);
-  assert.equal(filter.assembly, null);
+  const pointer = emit('class C { static unsafe void Main() { int x = 1; int* p = &x; *p = 2; } }', { allowUnsafe: true });
+  assert.equal(pointer.success, false);
+  assert.equal(pointer.assembly, null);
   assert.deepEqual(
-    errorsOf(filter).map(entry => entry.code),
+    errorsOf(pointer).map(entry => entry.code),
     ['SF2200'],
   );
-  assert.match(errorsOf(filter)[0].message, /exception filters/);
-  assert.ok(errorsOf(filter)[0].start > 0, 'the diagnostic is at the construct');
+  assert.match(errorsOf(pointer)[0].message, /not executable on this runtime profile: it uses \S/);
+  assert.ok(errorsOf(pointer)[0].start > 0, 'the diagnostic is at the construct');
   const iterator = emit(`using System.Collections.Generic;
     class C { static IEnumerable<int> Numbers() { yield return 1; } static void Main() { } }`);
   assert.equal(iterator.assembly, null);

@@ -59,6 +59,12 @@ function searchCore(source, needle, startIndex, findLast) {
   if (length === 0) return searchRawEndpoints(source, needle, startIndex, findLast);
   let start = startIndex + leading;
   const last = source.length - needle.length + leading;
+  if (leading) {
+    // Skip only impossible initial windows; later endpoint rejections keep the existing period state.
+    const firstUnit = needle.charCodeAt(0);
+    while (start <= last && source.charCodeAt(start - 1) !== firstUnit) start++;
+    if (start > last) return -1;
+  }
   const forward = maximalSuffix(needle, leading, length, false);
   const backward = maximalSuffix(needle, leading, length, true);
   const factor = forward.cut > backward.cut ? forward : backward;

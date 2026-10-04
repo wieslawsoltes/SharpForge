@@ -17,6 +17,7 @@ import { ObjectEmission } from './emit-objects.js';
 import { ArrayEmission } from './emit-arrays.js';
 import { StringEmission } from './emit-strings.js';
 import { ExceptionEmission } from './emit-exceptions.js';
+import { LockEmission } from './emit-lock.js';
 import { AccessorEmission } from './emit-accessors.js';
 import { JumpEmission } from './emit-jumps.js';
 import { NullableEmission } from './emit-nullable.js';
@@ -43,6 +44,7 @@ const families = [
   ArrayEmission,
   StringEmission,
   ExceptionEmission,
+  LockEmission,
   AccessorEmission,
   JumpEmission,
   NullableEmission,
