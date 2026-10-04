@@ -76,6 +76,9 @@ export class MSBuildClient {
   projectContexts(request, options) { return this.service('project', 'contexts', request, options); }
   projectMetadata(request, options) { return this.service('project', 'metadata', request, options); }
 
+  buildGraph(request, options) { return this.service('build', 'graph', request, options); }
+  buildAffected(request, options) { return this.service('build', 'affected', request, options); }
+
   sdkInventory(options) { return this.service('sdk', 'inventory', {}, options); }
   resolveSdk(request, options) { return this.service('sdk', 'resolve', request, options); }
   workloads(request, options) { return this.service('sdk', 'workloads', request, options); }
