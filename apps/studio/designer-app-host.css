@@ -1,0 +1,142 @@
+.designer-app-host {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 0;
+  width: min(740px, calc(100vw - 32px));
+  height: min(560px, calc(100vh - 80px));
+  min-width: min(360px, calc(100vw - 16px));
+  min-height: 220px;
+  max-width: 100vw;
+  max-height: 100vh;
+  resize: both;
+  overflow: hidden;
+  z-index: 600;
+  color: var(--design-foreground);
+  background: var(--design-panel);
+  border: 1px solid var(--design-line);
+  box-shadow: 0 12px 40px var(--design-app-shadow);
+  border-radius: 6px;
+}
+.designer-app-host[open] {
+  display: flex;
+  flex-direction: column;
+}
+.designer-app-host:not([open]) {
+  display: none;
+}
+.designer-app-host-toolbar, .designer-app-host-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px;
+}
+.designer-app-host-toolbar {
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--design-line);
+}
+.designer-app-host-title {
+  flex: 1;
+  min-width: 100px;
+  padding: 5px;
+  font-weight: 600;
+  cursor: move;
+  touch-action: none;
+}
+.designer-app-host-tools {
+  flex-wrap: wrap;
+  border-top: 1px solid var(--design-line);
+  font-size: 11px;
+}
+.designer-app-host-metrics {
+  margin-left: auto;
+  color: var(--design-muted);
+}
+.designer-app-host-button {
+  padding: 4px 8px;
+  border: 1px solid var(--design-line);
+  border-radius: 3px;
+}
+.designer-app-host-button[aria-pressed="true"] {
+  background: var(--design-primary);
+  color: var(--design-on-primary);
+}
+.designer-app-host :focus-visible {
+  outline: 2px solid var(--design-accent);
+  outline-offset: 2px;
+}
+.designer-app-host-body {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+}
+.designer-app-host-viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  position: relative;
+  padding: 12px;
+  background: var(--design-background);
+}
+.designer-app-host-inspector {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--design-line);
+}
+.designer-app-host-inspector[hidden] {
+  display: none;
+}
+.designer-app-host-search {
+  margin: 6px;
+  min-width: 0;
+  width: calc(100% - 12px);
+}
+.designer-app-host-tree {
+  flex: 1;
+  min-height: 100px;
+  overflow: auto;
+}
+.designer-app-host-properties {
+  padding: 8px;
+  margin: 0;
+  max-height: 140px;
+  overflow: auto;
+  font-size: 11px;
+  white-space: pre-wrap;
+}
+.designer-app-host-output {
+  margin: 0;
+  max-height: 100px;
+  padding: 8px;
+  overflow: auto;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+.designer-app-host-output[hidden] {
+  display: none;
+}
+.designer-app-host-selected {
+  outline: 2px solid var(--design-accent) !important;
+  outline-offset: -2px;
+}
+.designer-app-host-inspecting, .designer-app-host-inspecting * {
+  cursor: crosshair !important;
+}
+.designer-app-host-viewport.debug-paused {
+  opacity: .8;
+}
+@media (max-width: 600px) {
+  .designer-app-host {
+    left: 8px !important;
+    top: 48px !important;
+    width: calc(100vw - 16px);
+  }
+  .designer-app-host-inspector {
+    width: min(45vw, 210px);
+  }
+  .designer-app-host-title {
+    flex-basis: 100%;
+  }
+}
