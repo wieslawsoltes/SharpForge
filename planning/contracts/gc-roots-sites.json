@@ -42,6 +42,24 @@
     "provider": "tion* stringRoots(vm) { yield* pool(vm).roots(); } export function clearStrings("
   },
   {
+    "id": "gc/collector.js:roots:1",
+    "file": "packages/runtime/src/gc/collector.js",
+    "line": 188,
+    "provider": "rker.begin(generation); this.marker.roots(this.cycle.extraRoots); this.c"
+  },
+  {
+    "id": "gc/collector.js:roots:2",
+    "file": "packages/runtime/src/gc/collector.js",
+    "line": 199,
+    "provider": "ed = performance.now(); this.marker.roots(this.cycle.extraRoots); this.m"
+  },
+  {
+    "id": "gc/finish-mark.js:roots:1",
+    "file": "packages/runtime/src/gc/finish-mark.js",
+    "line": 3,
+    "provider": "n = true } = {}) { if (rescan) marker.roots(extraRoots); const rescanWork = "
+  },
+  {
     "id": "gc/incremental-mark.js:roots:1",
     "file": "packages/runtime/src/gc/incremental-mark.js",
     "line": 164,
