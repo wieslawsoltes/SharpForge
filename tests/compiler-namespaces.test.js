@@ -29,8 +29,13 @@ test('A02-T16 a unique type name keeps its simple image name, so existing images
 });
 test('A02-T16/T24 a using directive selects between same-named types; two usings are ambiguous (CS0104)',()=>{
   assert.equal(run({...lib,'P.cs':'using A; Item i = new Item(); Console.WriteLine(Item.Where() + i.V);'}).output,'A1\n');assert.equal(run({...lib,'P.cs':'using B; Item i = new Item(); Console.WriteLine(Item.Where() + i.V);'}).output,'B2\n');
-  assert.deepEqual(errors({...lib,'P.cs':'using A; using B; Item i = new Item(); Console.WriteLine(i.V);'}),["CS0104: 'Item' is an ambiguous reference between 'A.Item' and 'B.Item'"]);
-  assert.deepEqual(errors({...lib,'P.cs':'Item i = null; Console.WriteLine(i == null);'}),["CS0104: 'Item' is an ambiguous reference between 'A.Item' and 'B.Item'"],'without a using both candidates are reported');
+  // Roslyn 5.3.0 reports every ambiguous use: the declared type and the created type.
+  const ambiguous="CS0104: 'Item' is an ambiguous reference between 'A.Item' and 'B.Item'";
+  assert.deepEqual(errors({...lib,'P.cs':'using A; using B; Item i = new Item(); Console.WriteLine(i.V);'}),[ambiguous,ambiguous]);
+  assert.deepEqual(compile(files({...lib,'P.cs':'using A; using B; Item i = new Item(); Console.WriteLine(i.V);'})).diagnostics.map(x=>[x.uri,x.start,x.length]),[['P.cs',18,4],['P.cs',31,4]]);
+  assert.deepEqual(errors({...lib,'P.cs':'using A; using B; Item i = null; Console.WriteLine(i == null);'}),[ambiguous]);
+  assert.deepEqual(errors({...lib,'P.cs':'Item i = null; Console.WriteLine(i == null);'}),["CS0246: The type or namespace name 'Item' could not be found (are you missing a using directive or an assembly reference?)"],
+    'without a using neither namespace is searched (Roslyn); the execution profile used to report both candidates as ambiguous');
   const d=compile(files({...lib,'P.cs':'using A; using B; Item i = null;'})).diagnostics.find(x=>x.code==='CS0104');assert.equal(d.uri,'P.cs');assert.deepEqual([d.start,d.length],[18,4],'reported on the type name, as Roslyn does');
 });
 test('A02-T24 enclosing namespaces win over using directives and outer namespaces',()=>{

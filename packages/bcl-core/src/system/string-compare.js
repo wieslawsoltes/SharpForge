@@ -1,4 +1,31 @@
 import {simpleUpperPoint} from './casing.js';
+import {fail} from '../host.js';
+
+function invalidRange(platform, parameter) {
+  fail(platform, 'ArgumentOutOfRangeException', `String comparison range is outside the supported bounds. (Parameter '${parameter}')`);
+}
+
+/** Compare nullable UTF-16 slices without substrings; null ordering precedes all range validation. */
+export function compareOrdinalRange(platform, args) {
+  const [first, indexA, second, indexB, length] = args;
+  if (first === null || second === null) return first === second ? 0 : first === null ? -1 : 1;
+  if (typeof first !== 'string' || typeof second !== 'string') fail(platform, 'ArgumentException', 'Strings are required');
+  if (!Number.isInteger(length) || length < 0 || length > 2147483647) invalidRange(platform, 'length');
+  // Negative indices precede both upper-bound checks, even when the requested length is zero.
+  if (!Number.isInteger(indexA) || indexA < 0) invalidRange(platform, 'indexA');
+  if (!Number.isInteger(indexB) || indexB < 0) invalidRange(platform, 'indexB');
+  const firstLength = Math.min(length, first.length - indexA);
+  const secondLength = Math.min(length, second.length - indexB);
+  if (firstLength < 0) invalidRange(platform, 'indexA');
+  if (secondLength < 0) invalidRange(platform, 'indexB');
+  if (length === 0 || first === second && indexA === indexB) return 0;
+  const compared = Math.min(firstLength, secondLength);
+  for (let offset = 0; offset < compared; offset++) {
+    const difference = first.charCodeAt(indexA + offset) - second.charCodeAt(indexB + offset);
+    if (difference !== 0) return difference;
+  }
+  return firstLength - secondLength;
+}
 
 function ordinalUpper(point) {
   if (point <= 0x7f) return point >= 0x61 && point <= 0x7a ? point - 0x20 : point;
