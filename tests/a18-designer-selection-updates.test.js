@@ -5,6 +5,7 @@ import {DesignerDocumentUpdates} from '../apps/studio/designer-document-updates.
 import {DesignerOutlineProjection} from '../apps/studio/designer-outline-projection.js';
 import {DesignerOutline} from '../apps/studio/designer-outline.js';
 import {DesignerSurfaceController} from '../apps/studio/designer-surface-controller.js';
+import {DesignerSurfaceGestures} from '../apps/studio/designer-surface-gestures.js';
 
 function documentFixture(count = 5000) {
   const nodes = [{id: 'root', type: 'Microsoft.UI.Xaml.Controls.Canvas', properties: {}, children: []}];
@@ -160,6 +161,19 @@ test('coordinator releases docking subscriptions and restores syncing after a fa
   assert.equal(calls.length, before);
 });
 
+test('one geometry delta updates the host once without rebuilding the catalog, guides or asset scene', () => {
+  const {view, updates, calls} = updateFixture();
+  view.document.revision++;
+  updates.update({kind: 'Move controls', changes: {kind: 'properties', nodes: [{id: 'item2', properties: ['Left', 'Top']}]}});
+  assert.equal(calls.filter(name => name === 'preview').length, 1);
+  for (const absent of ['context', 'toolbox', 'rulers', 'assets', 'visibility']) assert.equal(calls.includes(absent), false, absent);
+  assert(calls.includes('source'));
+  calls.length = 0;
+  view.document.revision++;
+  updates.update({kind: 'Set Source', changes: {kind: 'properties', nodes: [{id: 'item2', properties: ['Source']}]}});
+  assert(calls.includes('assets'), 'Source edits must refresh authorized asset previews.');
+});
+
 test('outline selection and scrolling never enumerate or mutate every scene element', () => {
   const document = documentFixture();
   const elements = new Map();
@@ -181,6 +195,15 @@ test('surface selection schedules adorners without rewriting dimensions, guide D
     drawAdorners: () => adorners++};
   DesignerSurfaceController.prototype.onDocumentChanged.call(controller, {kind: 'selection'});
   assert.equal(adorners, 1);
+});
+
+test('a gesture rejected by a changed source capability still clears keyboard ownership and restores adorners', () => {
+  let renders = 0;
+  const gestures = new DesignerSurfaceGestures({view: {}, drawAdorners: () => renders++});
+  gestures.keyboard = {kind: 'geometry', session: {commit: () => { throw new Error('Source property became protected'); }}};
+  assert.throws(() => gestures.finishKeyboard(), /became protected/);
+  assert.equal(gestures.keyboard, null);
+  assert.equal(renders, 1);
 });
 
 test('outline projection preserves inherited visibility and removes stale attributes after unhide or scene replacement', () => {

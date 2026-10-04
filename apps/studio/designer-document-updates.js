@@ -1,4 +1,5 @@
 import {DesignerOutlineProjection} from './designer-outline-projection.js';
+import {DesignerPreviewProjection} from './designer-preview-projection.js';
 
 const selectionPanels = ['designer-properties', 'designer-layout', 'designer-styles'];
 const panelMethods = new Map([
@@ -17,6 +18,7 @@ export class DesignerDocumentUpdates {
   constructor(view) {
     this.view = view;
     this.tree = new DesignerOutlineProjection(view);
+    this.preview = new DesignerPreviewProjection(view);
     this.pending = new Set();
     this.document = null;
     this.revision = -1;
@@ -28,28 +30,32 @@ export class DesignerDocumentUpdates {
     const view = this.view;
     if (!view.initialized || view.disposed || this.disposed) return;
     const selection = event.kind === 'selection' && this.document === view.document && this.revision === view.document.revision;
+    const properties = event.changes?.kind === 'properties' && this.document === view.document && this.revision + 1 === view.document.revision;
+    const contextChanged = !selection && !properties;
     view.syncing = true;
     try {
-      if (!selection) view.resourceContext.update();
+      if (contextChanged) view.resourceContext.update();
       view.surface.onDocumentChanged(event);
       this.updateTree(event);
-      if (!selection) view.updatePreview();
+      if (!selection) view.updatePreview(event);
       for (const id of selectionPanels) this.pending.add(id);
-      if (!selection) this.pending.add('designer-toolbox');
+      if (contextChanged) this.pending.add('designer-toolbox');
       this.flushVisible();
       view.updateButtons();
       const status = view.status + ' · revision ' + view.document.revision;
       if (view.statusElement.textContent !== status) view.statusElement.textContent = status;
       if (!view.resourceDocument) {
-        if (!selection) view.outline.projectVisibility();
+        if (contextChanged) view.outline.projectVisibility();
         view.accessibility.update(event);
         view.liveAttachment.update(event);
       }
       view.chrome.renderSelection(view.resourceContext.breadcrumbContext());
       if (!selection) {
-        view.chrome.rulers();
+        if (contextChanged) view.chrome.rulers();
         if (!view.templateScope) view.sourceSync.designChanged(event);
-        view.safe(() => view.assetPreviewController.refresh());
+        if (contextChanged || event.changes.nodes.some(node => node.properties.includes('Source'))) {
+          view.safe(() => view.assetPreviewController.refresh());
+        }
       }
       this.document = view.document;
       this.revision = view.document.revision;
@@ -85,6 +91,7 @@ export class DesignerDocumentUpdates {
     if (this.disposed) return;
     this.disposed = true;
     this.unsubscribe?.();
+    this.preview.dispose();
     this.pending.clear();
     this.document = null;
   }

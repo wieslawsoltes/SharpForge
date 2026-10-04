@@ -1,6 +1,6 @@
 import {
   DesignDocument, DesignerSession, DesignerOptionsService, DesignerAssetPreviewStore,
-  projectDesignerAuthoringScene, designerPreviewDecorations
+  projectDesignerAuthoringScene
 } from '@sharpforge/designer';
 import {ContextMenu} from '@sharpforge/controls';
 import {WinUIHost} from '@sharpforge/winui';
@@ -202,18 +202,7 @@ export class DesignerTools {
     return this.projectRoots?.project(this.document.value, scene, options).scene ?? scene;
   }
 
-  updatePreview() {
-    this.resourceGallery.render();
-    if (this.resourceDocument) return;
-    const scene = this.buildPreviewScene();
-    this.host.load(scene);
-    this.host.flush();
-    for (const decoration of designerPreviewDecorations(scene)) {
-      const element = this.host.elements.get(decoration.id);
-      if (element) element.style[decoration.property] = decoration.value;
-    }
-    this.resizeArtboard();
-  }
+  updatePreview(event) { return this.updates.preview.update(event); }
 
   updateButtons() {
     for (const [action, disabled] of [['undo', !this.canUndo()], ['redo', !this.canUndo(true)], ['apply', !this.live]]) {
