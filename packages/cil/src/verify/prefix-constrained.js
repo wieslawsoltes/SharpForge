@@ -1,5 +1,6 @@
 import { CilError } from '../binary.js';
 import { decodeInstructionGroups } from '../il-prefixes.js';
+import { ArrayAddressMetadata } from './array-address.js';
 
 export const typePrefixDiagnosticCatalog = Object.freeze({
   CILPC0001: 'Duplicate constrained or readonly prefix on one instruction',
@@ -8,6 +9,8 @@ export const typePrefixDiagnosticCatalog = Object.freeze({
   CILPC0004: 'Prefix type token does not identify an existing TypeDef, TypeRef or TypeSpec row',
   CILPC0005: 'Type-prefix validation requires a metadata row reader',
   CILPC0006: 'Readonly array Address calls require a method-resolution service',
+  CILPC0007: 'Readonly array Address metadata exceeds validation limits',
+  CILPC0008: 'Invalid readonly array Address metadata',
 });
 
 function reject(code, prefix, group, token) {
@@ -36,15 +39,28 @@ function requireTypeToken(token, metadata, prefix, group) {
   if (!row) reject('CILPC0004', prefix, group, token);
 }
 
-function constrained(prefix, group, metadata) {
+function constrained(prefix, group, metadata, arrays) {
   if (group.name !== 'callvirt') reject('CILPC0002', prefix, group);
   requireTypeToken(prefix.operand, metadata, prefix, group);
+  return arrays;
 }
 
-function readonly(prefix, group, metadata) {
-  if (group.name === 'call' || group.name === 'callvirt') reject('CILPC0006', prefix, group);
+function readonly(prefix, group, metadata, arrays, signal) {
+  if (group.name === 'call' || group.name === 'callvirt') {
+    arrays ??= new ArrayAddressMetadata(metadata, signal);
+    let matched;
+    try {
+      matched = arrays.matches(group.operand);
+    } catch (error) {
+      if (!(error instanceof CilError)) throw error;
+      reject(error.code === 'CILPC0007' ? error.code : 'CILPC0008', prefix, group, group.operand);
+    }
+    if (!matched) reject('CILPC0006', prefix, group, group.operand);
+    return arrays;
+  }
   if (group.name !== 'ldelema') reject('CILPC0003', prefix, group);
   requireTypeToken(group.operand, metadata, prefix, group);
+  return arrays;
 }
 
 const checks = Object.freeze({
@@ -60,6 +76,7 @@ const checks = Object.freeze({
 export function validateTypePrefixes(code, metadata, options = {}) {
   if (!metadata || typeof metadata.row !== 'function') reject('CILPC0005');
   const groups = decodeInstructionGroups(code, options);
+  let arrays;
   for (const group of groups) {
     if (options.signal?.aborted) throw new CilError('CIL type prefix validation cancelled', group.offset);
     let seen = 0;
@@ -68,7 +85,7 @@ export function validateTypePrefixes(code, metadata, options = {}) {
       const check = checks[prefix.name];
       if (seen & check.bit) reject('CILPC0001', prefix, group);
       seen |= check.bit;
-      check.validate(prefix, group, metadata);
+      arrays = check.validate(prefix, group, metadata, arrays, options.signal);
     }
   }
   return groups;

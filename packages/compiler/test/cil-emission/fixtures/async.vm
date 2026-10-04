@@ -1,0 +1,5 @@
+IL_REFERENCE: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Create' is not implemented
+IL_REFERENCE: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Start' is not implemented
+IL_REFERENCE: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::get_Task' is not implemented
+IL_REFERENCE: External member 'System.Runtime.CompilerServices.TaskAwaiter::GetResult' is not implemented
+IL_REFERENCE: External member 'System.Threading.Tasks.Task::GetAwaiter' is not implemented

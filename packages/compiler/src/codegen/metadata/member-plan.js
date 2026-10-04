@@ -12,6 +12,7 @@
 import { FieldAttributes, MethodAttributes, MethodImplAttributes } from '@sharpforge/cil';
 import { SymbolKind, TypeKind, RefKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
+import { isInheritedPositional } from '../../symbols/synthesized/records.js';
 import { fieldFlags, methodFlags, memberAccessFlags, parameterFlags } from './attribute-flags.js';
 
 const ENUM_VALUE_FIELD = 'value__';
@@ -39,7 +40,8 @@ export function explicitInterfaceOf(method) {
   return method.explicitInterfaceType ?? method.associatedSymbol?.explicitInterfaceType ?? null;
 }
 
-function plannedMethod(type, method) {
+/** The MethodDef row of a method symbol declared in `type`: `{symbol, name, flags, implFlags, hasBody, parameters}`. */
+export function plannedMethod(type, method) {
   const inInterface = type.typeKind === TypeKind.Interface,
     isAbstract = method.isAbstract || (inInterface && !method.hasBody),
     explicit = !!explicitInterfaceOf(method);
@@ -155,10 +157,14 @@ export function planMembers(type, core, constantOf) {
     else if (member.kind === SymbolKind.Method) {
       // A struct has no parameterless constructor in metadata unless the program declares one.
       const implicitStructConstructor = isStruct && member.isImplicitlyDeclared && member.methodKind === MethodKind.Constructor;
-      if (!implicitStructConstructor) addMethod(member);
+      // A partial method that no part implements is removed from the type, with every call of it (C# 3).
+      if (!implicitStructConstructor && !member.isUnimplementedPartial) addMethod(member);
     }
     else if (member.kind === SymbolKind.Property) {
-      if (member.backingField) addField(member.backingField, privateField(member));
+      // A positional parameter a base record already has a property for declares nothing here.
+      if (isInheritedPositional(type, member)) continue;
+      // The backing field of a property without a `set` accessor (get-only, or `init`) is `initonly`.
+      if (member.backingField) addField(member.backingField, privateField(member) | (member.backingField.isReadOnly ? FieldAttributes.InitOnly : 0));
       const getter = member.getMethod ? addMethod(member.getMethod) : null,
         setter = member.setMethod ? addMethod(member.setMethod) : null;
       plan.properties.push({ symbol: member, getter, setter });

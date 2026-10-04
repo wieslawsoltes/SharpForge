@@ -2,6 +2,7 @@ import { cliSystemName, decodeCoded, decodeSignature, decodeTypeSignature } from
 import { createTypeDesc, completeTypeDesc, TypeDesc, TypeKind } from './type-desc.js';
 import { ConstructedTypes, resolveArrayMethod } from './constructed-types.js';
 import { TypeAssignability } from './casting.js';
+import { MethodBaseDefinitions } from './method-base-definition.js';
 import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
@@ -17,6 +18,7 @@ export class TypeLoader {
   #intrinsics = new Map();
   #constructed;
   #casting;
+  #methodBases;
   #maxConstructedTypes;
   #specMarkers = new WeakMap();
   constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000, maxConstructedTypes = 100000 } = {}) {
@@ -78,6 +80,12 @@ export class TypeLoader {
   isAssignableFrom(target, source, options = {}) {
     this.#casting ??= new TypeAssignability({ maxDepth: this.#maxDepth, maxMetadataRows: this.#maxRows });
     return this.#casting.isAssignableFrom(target, source, options);
+  }
+
+  /** Resolve a canonical MethodDesc's implicit class override ancestry without decoding method bodies. */
+  getBaseDefinition(method, options = {}) {
+    this.#methodBases ??= new MethodBaseDefinitions(this, { maxDepth: this.#maxDepth, maxMetadataRows: this.#maxRows });
+    return this.#methodBases.get(method, options);
   }
 
   #index(module) {

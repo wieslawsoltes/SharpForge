@@ -4,6 +4,7 @@ import {Op,frameworkBuiltin} from '@sharpforge/bytecode';
 import {typeText} from './type-utils.js';
 import {emitValueArgument} from './codegen/value-arguments.js';
 import {memberPath as pathOf} from './binder/member-path.js';
+import {registeredIndexerContract,prepareRegisteredIndexer} from './framework-indexers.js';
 /** Closed framework binder layer (class mixin, composed in method-compiler.js); ordinary user members retain precedence. */
 export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     frameworkReceiver(node) {
@@ -63,14 +64,14 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
       const b=frameworkBuiltin(contract);this.emit(Op.BUILTIN,b.id,b.min);return contract.result;
     }
     frameworkInfer(node) {
-      if(node.kind==='Index')return findContracts(this.infer(node.target),'get_Item',false)[0]?.result;
+      if(node.kind==='Index')return registeredIndexerContract(this.infer(node.target),'get')?.result;
       if(node.kind==='Member')return enumValue(pathOf(node))?.type??this.frameworkProperty(node)?.type;
       if(node.kind==='New')return this.c.findType(node.type,this.m)?undefined:frameworkType(node.type)?.name;
       if(node.kind==='Call')return this.frameworkCall(node)?.contract.result;
       return undefined;
     }
     frameworkExpression(node) {
-      if(node.kind==='Index'){const get=findContracts(this.infer(node.target),'get_Item',false)[0];if(get){this.expr(node.target);this.checkAssign(get.parameters[0],this.expr(node.index),node.index);return this.emitContract(get);}}
+      if(node.kind==='Index'){const get=registeredIndexerContract(this.infer(node.target),'get');if(get){this.expr(node.target);this.checkAssign(get.parameters[0],this.expr(node.index),node.index);return this.emitContract(get);}}
       if(node.kind==='Member') {
         const constant=enumValue(pathOf(node));if(constant){this.emit(Op.ENUM,enumTypes.indexOf(constant.type),constant.value);return constant.type;}
         const p=this.frameworkProperty(node);if(p){if(!p.get){this.c.report(node,DiagnosticId.CS0154,[node.name]);this.emitConstant(null);return p.type;}if(!p.receiver.isStatic)this.expr(p.receiver.node);return this.emitContract(p.get);}
@@ -102,13 +103,7 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
       return undefined;
     }
     prepareFramework(node) {
-      if(node.kind==='Index'){
-        const type=this.infer(node.target),get=findContracts(type,'get_Item',false)[0],set=findContracts(type,'set_Item',false)[0];
-        if(get||set){const keyType=get?.parameters[0]??set.parameters[0],valueType=get?.result??set.parameters[1];if(!set)this.c.report(node,DiagnosticId.CS0200,[typeText(type)+'.this[]']);
-          this.expr(node.target);const receiver=this.temp(type);this.emit(Op.STLOC,receiver);this.emit(Op.POP);
-          this.checkAssign(keyType,this.expr(node.index),node.index);const key=this.temp(keyType);this.emit(Op.STLOC,key);this.emit(Op.POP);
-          return {kind:'framework',type:valueType,receiver,key,property:{get,set}};}
-      }
+      if(node.kind==='Index')return prepareRegisteredIndexer(this,node);
       const p=this.frameworkProperty(node);if(!p)return null;
       if(!p.set)this.c.report(node,DiagnosticId.CS0200,[node.name]);
       let receiver=null;if(!p.receiver.isStatic){this.expr(p.receiver.node);receiver=this.temp(p.receiver.type);this.emit(Op.STLOC,receiver);this.emit(Op.POP);}
