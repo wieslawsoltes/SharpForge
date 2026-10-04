@@ -66,7 +66,10 @@ engine/platform evidence is collected.
 
 This slice does not register additional framework overloads. Numeric library
 methods, parsing APIs and unregistered constructions such as `Task<long>` retain
-their existing explicit unsupported diagnostics. Decimal library APIs are
-available through the separate direct-CIL Decimal intrinsic profile; this source
-slice covers its value operations and conversions. Wider frontend work remains
-with the compiler workstream.
+their existing explicit unsupported diagnostics. Decimal library APIs use a
+separate direct-CIL intrinsic profile. The subsequent
+[source Decimal families](source-decimal-rounding.md) admit Round with one or two
+arguments, Truncate, Ceiling, Floor, Parse(string) and the five static arithmetic
+methods plus static Compare/Equals through that same profile; other source
+Decimal library APIs remain unsupported. Wider frontend work remains with the
+compiler workstream.

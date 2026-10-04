@@ -146,6 +146,16 @@ export const ClosureEmission = Base =>
       this.pushFunctionTarget(plan, false);
       this.arguments(node, method);
       const effect = { pops: plan.parameters.length + (plan.isStatic ? 0 : 1), pushes: isVoid(plan.returnType) ? 0 : 1 };
-      return this.il.emit('call', plan.method.token, effect);
+      return this.il.emit('call', this.functionToken(plan, method), effect);
+    }
+    /**
+     * The token of a function's method as this body names it. A generic method is instantiated over the type
+     * parameters in scope and, for a generic local function, the type arguments of the use.
+     * @param [method] the constructed local function symbol of a call or a method group
+     */
+    functionToken(plan, method = null) {
+      if (!plan.method.typeParameters.length) return plan.method.token;
+      const own = (method?.typeArguments ?? []).map(argument => argument.type ?? argument);
+      return this.tokens.planned(plan.method, plan.declaringType, [...plan.scopeTypeArguments, ...own]);
     }
   };

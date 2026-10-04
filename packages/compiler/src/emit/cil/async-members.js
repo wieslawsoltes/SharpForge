@@ -50,7 +50,7 @@ function moveNextBody(program, machine) {
  */
 export function declareAsync(plan, machine, builder) {
   const core = plan.core,
-    type = machine.type,
+    type = machine.definition,
     methods = plan.additionsTo(type).methods,
     contract = asyncStateMachineInterface(core),
     implement = (name, parameters, parameterNames, emitBody) => {
