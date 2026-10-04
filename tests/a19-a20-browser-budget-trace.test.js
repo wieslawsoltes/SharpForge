@@ -13,10 +13,13 @@ const colors = [
 ];
 
 function fixture() {
-  const result = {id: 'editor-ui-budgets-v1', callerUri: 'Calls.cs', lineCount: 10000, counts: editorBudgetCounts,
+  const result = {id: 'editor-ui-budgets-v1', callerUri: 'Calls.cs', neutralOffset: 0, lineCount: 10000, counts: editorBudgetCounts,
     targets: [{id: 'source-alpha', kind: 'source', uri: 'Alpha.cs', text: 'void RunAlpha() {}', name: 'RunAlpha', offset: 10},
       {id: 'source-beta', kind: 'source', uri: 'Beta.cs', text: 'void RunBeta() {}', name: 'RunBeta', offset: 20},
       {id: 'framework-metadata', kind: 'metadata', offset: 30}]};
+  result.records = [{path: 'Budget.csproj', text: '<Project Sdk="Microsoft.NET.Sdk" />'},
+    ...result.targets.filter(target => target.kind === 'source').map(target => ({path: target.uri, text: target.text})),
+    {path: 'Calls.cs', text: ' class Calls { void Main() { Alpha.RunAlpha(); Beta.RunBeta(); } }'}];
   return {...result, sha256: fixtureDigest(result)};
 }
 
@@ -49,8 +52,15 @@ function trace() {
   const value = fixture();
   const definition = stage('definition', value);
   const overview = stage('overview', value);
-  definition.setup = {uri: 'Calls.cs', projectId: 'Budget.csproj', workspaceRecords: 4};
-  definition.boundaries = {neutralClears: true, rapidCaretUsesLatest: true};
+  definition.setup = {uri: 'Calls.cs', projectId: 'Budget.csproj', sourceVersion: 1, readOnly: true, visible: true,
+    workspace: {version: 1, records: value.records.map(record => ({...record})), projectIds: ['Budget.csproj'],
+      sourceDocuments: value.records.filter(record => record.path.endsWith('.cs')).map(record => ({uri: record.path,
+        text: record.text, version: 1, projectIds: ['Budget.csproj']}))}};
+  definition.boundaries = {neutralClears: true, rapidCaretUsesLatest: true, observations: [
+    {...sample('definition', {id: 'none', offset: value.neutralOffset}, 'boundary', 0),
+      title: 'No source or referenced metadata definition at the caret', text: '', selection: ''},
+    sample('definition', value.targets[1], 'boundary', 1)
+  ]};
   overview.setup = {lineCount: 10000, largeFileActive: false, annotationKinds: colors.map(([kind]) => kind)};
   overview.pointers = ['narrow', 'medium', 'wide'].map(name => ({case: name, previewMatches: true, navigationMatches: true,
     expectedLine: 4210, actualLine: 4210}));
@@ -60,7 +70,10 @@ function trace() {
 }
 
 test('complete format fixture recomputes raw percentiles without claiming a relative or physical-frame pass', () => {
-  const assessment = assessEditorBudgetTrace(trace());
+  const value = trace();
+  assert.equal(value.stages.definition.setup.workspace.records.length, 4);
+  assert.equal(value.stages.definition.setup.workspace.sourceDocuments.length, 3);
+  const assessment = assessEditorBudgetTrace(value);
   assert.equal(assessment.absolutePassed, true);
   assert.equal(assessment.regressionVerdict, null);
   assert.equal(assessment.physicalFrameRateCertified, false);
@@ -75,6 +88,15 @@ test('first-visit and warmup budget violations remain failures even when all mea
   const assessment = assessEditorBudgetTrace(value);
   assert.equal(assessment.absolutePassed, false);
   assert.deepEqual(assessment.failures.map(failure => failure.budgetMs), [300, 16]);
+});
+
+test('definition boundary latency remains subject to the unchanged 300 ms budget', () => {
+  const value = trace();
+  value.stages.definition.boundaries.observations[1].durationMs = 300.01;
+  const assessment = assessEditorBudgetTrace(value);
+  assert.equal(assessment.absolutePassed, false);
+  assert.deepEqual(assessment.failures, [{stage: 'definition', case: 'source-beta', phase: 'boundary', index: 1,
+    durationMs: 300.01, budgetMs: 300}]);
 });
 
 for (const [name, mutate, message] of [
