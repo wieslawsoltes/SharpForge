@@ -142,22 +142,24 @@ for (const engine of ['source', 'cil']) {
     const value = managedCharacters(platform, [65, 66]);
     const budget = heap.maxBytes;
     try {
-      heap.maxBytes = 1;
-      assert.throws(() => call('Append', ['char[]'], [value]), {name: 'OutOfMemoryException'});
-      heap.maxBytes = budget;
-      assert.equal(platform.native(call('ToString')), 'seed|');
-      heap.withRoots([value], () => call('set_Length', ['int'], [MAX - 1]));
-      const data = heap.get(value).data;
-      Object.defineProperty(data, 0, {configurable: true, get() { throw new Error('Unexpected conversion before validation'); }});
-      const version = platform.get(reference, '$version');
-      try {
-        assert.throws(() => call('Append', ['char[]', 'int', 'int'], [value, 3, 0]), {name: 'ArgumentOutOfRangeException'});
+      heap.withRoots([value], () => {
+        heap.maxBytes = 1;
         assert.throws(() => call('Append', ['char[]'], [value]), {name: 'OutOfMemoryException'});
-        assert.deepEqual(call('Append', ['char[]', 'int', 'int'], [value, 0, 0]), reference);
-        assert.equal(platform.get(reference, '$version'), version);
-      } finally { Object.defineProperty(data, 0, {configurable: true, writable: true, enumerable: true, value: 65}); }
-      call('Append', ['char[]', 'int', 'int'], [value, 1, 1]);
-      assert.equal(call('get_Length'), MAX);
+        heap.maxBytes = budget;
+        assert.equal(platform.native(call('ToString')), 'seed|');
+        call('set_Length', ['int'], [MAX - 1]);
+        const data = heap.get(value).data;
+        Object.defineProperty(data, 0, {configurable: true, get() { throw new Error('Unexpected conversion before validation'); }});
+        const version = platform.get(reference, '$version');
+        try {
+          assert.throws(() => call('Append', ['char[]', 'int', 'int'], [value, 3, 0]), {name: 'ArgumentOutOfRangeException'});
+          assert.throws(() => call('Append', ['char[]'], [value]), {name: 'OutOfMemoryException'});
+          assert.deepEqual(call('Append', ['char[]', 'int', 'int'], [value, 0, 0]), reference);
+          assert.equal(platform.get(reference, '$version'), version);
+        } finally { Object.defineProperty(data, 0, {configurable: true, writable: true, enumerable: true, value: 65}); }
+        call('Append', ['char[]', 'int', 'int'], [value, 1, 1]);
+        assert.equal(call('get_Length'), MAX);
+      });
       assert.equal(heap.pins.length, 0);
     } finally { heap.maxBytes = budget; builder.stop(); }
   });
