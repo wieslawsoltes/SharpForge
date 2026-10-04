@@ -15,7 +15,8 @@
     "tests/a23-project-emission.test.js",
     "tests/a23-upstream-emission-composition.test.js",
     "tests/a23-member-definitions.test.js",
-    "tests/a23-cil-project-profile.test.js"
+    "tests/a23-cil-project-profile.test.js",
+    "tests/a23-cil-project-graph-contract.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"

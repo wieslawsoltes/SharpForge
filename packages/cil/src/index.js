@@ -35,5 +35,8 @@ export {verifiedStackBound} from './verified-stack.js';
 export { AssemblyIdentity, AssemblyIdentityParts, IdentityComparison, compareAssemblyIdentity,
   referenceMatchesDefinition, compareVersions, publicKeyToken, sha1 } from './assembly-identity.js';
 export { grantsInternalsAccess } from './assembly-access.js';
+
+export {loadProjectAssembly, projectReferenceDiagnostics} from './project-assembly.js';
+
 export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/prefix-memory.js';
 export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/prefix-constrained.js';
