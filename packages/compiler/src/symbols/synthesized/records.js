@@ -54,9 +54,11 @@ export function synthesizeRecordMembers(type, members, core) {
   };
   const parameter = (name, parameterType, refKind = RefKind.None) => new ParameterSymbol({ name, type: parameterType, refKind });
   const declares = (name, matches) => members.some(member => isMethodNamed(member, name) && matches(member.parameters));
-  const takesSelf = parameters => parameters.length === 1 && parameters[0].type === type;
+  // Inside a generic record its own name is the construction over its type parameters (`Box<T>`), as in declared members.
+  const self = type.typeParameters?.length ? type.construct(type.typeParameters) : type;
+  const takesSelf = parameters => parameters.length === 1 && (parameters[0].type.originalDefinition ?? parameters[0].type) === type;
 
-  if (!declares('Equals', takesSelf)) declare(RecordMember.Equals, core.bool, [parameter('other', type)]);
+  if (!declares('Equals', takesSelf)) declare(RecordMember.Equals, core.bool, [parameter('other', self)]);
   // Overrides of object members: dispatched statically, since nothing derives from the record in a generated image.
   const override = isClass ? DeclarationModifiers.Override : DeclarationModifiers.Override | DeclarationModifiers.ReadOnly;
   const takesObject = parameters => parameters.length === 1 && parameters[0].type === core.object;
@@ -64,7 +66,7 @@ export function synthesizeRecordMembers(type, members, core) {
   if (!declares('GetHashCode', parameters => !parameters.length)) declare(RecordMember.GetHashCode, core.int, [], override);
   if (!declares('ToString', parameters => !parameters.length)) declare(RecordMember.ToString, core.string, [], override);
   for (const kind of [RecordMember.Equality, RecordMember.Inequality]) {
-    const operator = [parameter('left', type), parameter('right', type)];
+    const operator = [parameter('left', self), parameter('right', self)];
     declare(kind, core.bool, operator, DeclarationModifiers.Static, MethodKind.UserDefinedOperator);
     members.at(-1).operatorToken = kind === RecordMember.Equality ? '==' : '!=';
   }
@@ -73,4 +75,23 @@ export function synthesizeRecordMembers(type, members, core) {
     const outs = positional.map(p => parameter(p.name, p.typeWithAnnotations ?? p.type, RefKind.Out));
     declare(RecordMember.Deconstruct, core.void, outs);
   }
+}
+
+/** The record a record class derives from (as written, possibly constructed), or null. */
+export function baseRecordOf(type) {
+  const base = type.typeKind === TypeKind.Class ? type.baseType : null;
+  return base && (base.originalDefinition ?? base).isRecord ? base : null;
+}
+
+/**
+ * True for a positional property the record does not really have: a base record already has a property of that
+ * name, so the parameter is only passed on to the base constructor (Roslyn synthesizes no property then).
+ */
+export function isInheritedPositional(type, property) {
+  if (!property.isPositional) return false;
+  for (let base = baseRecordOf(type); base; base = baseRecordOf(base.originalDefinition ?? base)) {
+    const inherited = (base.originalDefinition ?? base).getMembers(property.name);
+    if (inherited.some(member => member.kind === SymbolKind.Property || member.kind === SymbolKind.Field)) return true;
+  }
+  return false;
 }

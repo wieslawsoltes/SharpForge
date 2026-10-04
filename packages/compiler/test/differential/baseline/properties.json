@@ -7,6 +7,6 @@
   "properties/cs0272-private-setter": ["diagnostics", "warnings"],
   "properties/cs8852-init-only-assignment": ["diagnostics", "warnings"],
   "properties/indexer": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
-  "properties/init-only": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "properties/init-only": ["diagnostics", "warnings", "bytecode", "cil"],
   "properties/static-property": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

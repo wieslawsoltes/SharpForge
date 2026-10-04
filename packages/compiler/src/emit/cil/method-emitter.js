@@ -29,6 +29,7 @@ import { IndexRangeEmission } from './emit-index-range.js';
 import { PrimaryCaptureEmission } from './primary-constructor-captures.js';
 import { TupleEmission } from './emit-tuples.js';
 import { DeconstructionEmission } from './emit-deconstruction.js';
+import { RecordEmission } from './records/emit-records.js';
 
 const families = [
   ConstantEmission,
@@ -57,6 +58,7 @@ const families = [
   PrimaryCaptureEmission,
   TupleEmission,
   DeconstructionEmission,
+  RecordEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}
