@@ -50,6 +50,9 @@ test('document-only mode rejects ambiguous content and malformed checksum record
     { hash: new Uint8Array() },
     { hashAlgorithm: PdbGuids.sha256 },
     { hashAlgorithm: PdbGuids.sha256, hash: [] },
+    { hashAlgorithm: null, hash: new Uint8Array() },
+    { hashAlgorithm: '', hash: new Uint8Array() },
+    { hashAlgorithm: 0, hash: new Uint8Array() },
     { hashAlgorithm: 'invalid', hash: new Uint8Array() },
     { hashAlgorithm: PdbGuids.sha256, hash: new Uint8Array(4097) },
   ]) assert.throws(() => write([{ ...base, ...fields }]), SymbolError);

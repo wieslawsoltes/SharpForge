@@ -44,6 +44,7 @@ function writeDocumentOnly(builder, source) {
   if (source.text !== undefined || source.bytes !== undefined) fail('Document-only source must not include content');
   const hasHash = source.hash !== undefined;
   if (hasHash !== (source.hashAlgorithm !== undefined)) fail('Document-only checksum requires an algorithm and hash');
+  if (hasHash && (typeof source.hashAlgorithm !== 'string' || !source.hashAlgorithm)) fail('Invalid document-only checksum algorithm');
   if (hasHash && (!(source.hash instanceof Uint8Array) || source.hash.length > 4096))
     fail('Invalid or oversized document-only checksum');
   const id = builder.add(48, [
