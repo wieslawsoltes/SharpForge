@@ -8,6 +8,7 @@ import {registerBcl, registerBclCollectionExtensions} from '../bcl-contracts.js'
 import {registerWinUI13} from '../winui13-contracts.js';
 import {registerRuntime14} from '../runtime14-contracts.js';
 import {jsonExtensionContribution} from './json.js';
+import {numericTypeContribution} from './numeric.js';
 /** Released ranges are exact; additions belong in an independently reserved area. */
 export const contributionManifest=Object.freeze([
   ['core-xaml',0,84,registerCoreXaml],['core-controls',84,299,registerCoreControls],
@@ -29,6 +30,9 @@ export const collectionExtensionContribution=Object.freeze({name:'A08', register
 /** Compose released and extension contracts through the same transactional registry. */
 export function createFrameworkRegistry() {
   const registry=createRegistry({reservations:idReservations});
-  registry.registerAll([...contributionManifest,bclExtensionContribution,collectionExtensionContribution,jsonExtensionContribution]);
+  registry.registerAll([
+    ...contributionManifest,bclExtensionContribution,collectionExtensionContribution,jsonExtensionContribution,
+    numericTypeContribution
+  ]);
   return registry;
 }
