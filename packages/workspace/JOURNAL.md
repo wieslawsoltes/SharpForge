@@ -35,3 +35,15 @@ hash and diff helpers use the same path and exact-byte rules as the journal.
 
 Provider adapters, OPFS receipts and actual Explorer commands are dependent batches.
 The focused tests in this batch exercise the complete host-callback contract on Node.
+
+## Prepared sources and adopted errors
+
+Operation records use the public immutable snapshot clone/hash contracts.
+Mutable editor models remain host-owned. Explicit physical bytes are encoded
+under provider limits before effects, and unrelated dirty overlays retain their
+captured sources and baselines.
+
+A host error with `committed: true` reports failed observation after adoption.
+The journal finalizes once and preserves its committed receipt; history moves
+its execute/undo/redo stack once before propagating that error. Rejected
+admission does not advance history. See [prepared-source contracts](PREPARED_SOURCES.md).

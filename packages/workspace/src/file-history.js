@@ -24,6 +24,9 @@ export class FileOperationHistory {
       const receipt = await this.journal.execute(operations, options);
       this.push(receipt);
       return receipt;
+    } catch (error) {
+      if (error.committed && error.receipt) this.push(error.receipt);
+      throw error;
     } finally { this.busy = false; }
   }
 
@@ -60,11 +63,19 @@ export class FileOperationHistory {
         throw new Error('SFW1122: Workspace has newer edits; undo/redo would overwrite them');
       }
       const operations = await diffWorkspaceStates(current, target, options);
-      const receipt = await this.journal.execute(operations,
-        {...options, targetState: target, label: (redo ? 'Redo ' : 'Undo ') + entry.label});
-      source.pop();
-      destination.push(entry);
-      return receipt;
+      try {
+        const receipt = await this.journal.execute(operations,
+          {...options, targetState: target, label: (redo ? 'Redo ' : 'Undo ') + entry.label});
+        source.pop();
+        destination.push(entry);
+        return receipt;
+      } catch (error) {
+        if (error.committed) {
+          source.pop();
+          destination.push(entry);
+        }
+        throw error;
+      }
     } finally { this.busy = false; }
   }
 
