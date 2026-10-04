@@ -1,28 +1,12 @@
-function captureEditor(editor) {
-  if (!editor) return null;
-  return {
-    history: [...editor.history], future: [...editor.future], lastEdit: editor.lastEdit,
-    start: editor.input.selectionStart, end: editor.input.selectionEnd,
-    scrollTop: editor.input.scrollTop, scrollLeft: editor.input.scrollLeft,
-    modalHistory: editor.keymapAdapter?.cm?.getHistory?.() ?? null
-  };
-}
-
-function restoreEditor(editor, snapshot) {
-  if (!editor || !snapshot) return;
-  editor.history = [...snapshot.history];
-  editor.future = [...snapshot.future];
-  editor.lastEdit = snapshot.lastEdit;
-  editor.input.setSelectionRange(Math.min(snapshot.start, editor.value.length), Math.min(snapshot.end, editor.value.length));
-  editor.input.scrollTop = snapshot.scrollTop;
-  editor.input.scrollLeft = snapshot.scrollLeft;
-  if (snapshot.modalHistory) editor.keymapAdapter?.cm?.setHistory?.(snapshot.modalHistory);
-  editor.cursor();
-}
+import {captureDesignerEditorView, restoreDesignerEditorView} from './designer-editor-state.js';
+import {designerHistoryBytes} from './designer-history-budget.js';
 
 /** Atomic multi-file designer history at native source-editor undo boundaries. */
 export class DesignerDocumentHistory {
   constructor({ files, editors, applyEdits, restored, maxEntries = 100, maxBytes = 32 * 1024 * 1024 }) {
+    if (!Number.isSafeInteger(maxEntries) || maxEntries < 1 || !Number.isSafeInteger(maxBytes) || maxBytes < 1) {
+      throw new RangeError('Designer history limits must be positive safe integers');
+    }
     this.files = files;
     this.editors = editors;
     this.applyEdits = applyEdits;
@@ -32,10 +16,22 @@ export class DesignerDocumentHistory {
     this.past = [];
     this.future = [];
     this.applying = false;
+    this.modelIds = new WeakMap();
+    this.nextModelId = 0;
+  }
+
+  modelId(model) {
+    if (!this.modelIds.has(model)) this.modelIds.set(model, ++this.nextModelId);
+    return this.modelIds.get(model);
   }
 
   capture(changes) {
-    return Object.fromEntries(changes.map(change => [change.uri, captureEditor(this.editors.get(change.uri))]));
+    return Object.fromEntries(changes.map(change => {
+      const editor = this.editors.get(change.uri);
+      return [change.uri, editor ? {
+        modelId: this.modelId(editor.model), undo: editor.model.undoStack.checkpoint(), view: captureDesignerEditorView(editor)
+      } : null];
+    }));
   }
 
   record({ uri, changes, beforeAnalysis, afterAnalysis, beforeEditors, label = 'Designer edit' }) {
@@ -43,7 +39,7 @@ export class DesignerDocumentHistory {
     const entry = { uri, label, changes: structuredClone(changes),
       beforeAnalysis: structuredClone(beforeAnalysis), afterAnalysis: structuredClone(afterAnalysis),
       beforeEditors, afterEditors: this.capture(changes) };
-    entry.bytes = JSON.stringify(entry).length * 2;
+    entry.bytes = designerHistoryBytes(entry, this.maxBytes);
     this.past.push(entry);
     this.future.length = 0;
     let bytes = this.past.reduce((sum, item) => sum + item.bytes, 0);
@@ -74,7 +70,9 @@ export class DesignerDocumentHistory {
     if (files.get(primary.uri)?.text !== expected(primary)) return false;
     for (const change of entry.changes) {
       const file = files.get(change.uri);
-      if (file?.text !== expected(change) || file.readOnly || file.readonly) {
+      const editor = this.editors.get(change.uri);
+      if (file?.text !== expected(change) || file.readOnly || file.readonly ||
+          editor && (editor.value !== expected(change) || editor.readOnly || editor.model.readOnly)) {
         throw new Error('Cannot undo the designer transaction because ' + change.uri + ' changed independently');
       }
     }
@@ -86,7 +84,13 @@ export class DesignerDocumentHistory {
       }));
       this.applyEdits(edits);
       const snapshots = redo ? entry.afterEditors : entry.beforeEditors;
-      for (const [changedUri, snapshot] of Object.entries(snapshots)) restoreEditor(this.editors.get(changedUri), snapshot);
+      for (const [changedUri, snapshot] of Object.entries(snapshots)) {
+        const editor = this.editors.get(changedUri);
+        // A reopened source tab has its own native history; never install another model's checkpoint.
+        if (!editor || !snapshot || this.modelId(editor.model) !== snapshot.modelId) continue;
+        editor.model.undoStack.restoreCheckpoint(snapshot.undo);
+        restoreDesignerEditorView(editor, snapshot.view);
+      }
       source.splice(index, 1);
       destination.push(entry);
       this.restored?.(entry.uri, redo ? entry.afterAnalysis : entry.beforeAnalysis);

@@ -1,6 +1,7 @@
 import {designerViewModes} from '../../packages/designer/src/index.js';
 import {DesignerSplitView} from './designer-split-view.js';
 import {disposeFailedDesigner} from './designer-document-errors.js';
+import {captureDesignerEditorView, restoreDesignerEditorView} from './designer-editor-state.js';
 
 export const designerSidePanelIds = Object.freeze([
   'designer-toolbox', 'designer-tree', 'designer-properties', 'designer-layout', 'designer-styles'
@@ -149,23 +150,23 @@ export class DesignerDocumentView {
   }
 
   captureEditorViewport(willBeVisible) {
-    const input = this.editor?.input;
-    if (!input) return;
+    if (!this.editor) return;
     if (!this.codePane.hidden && !willBeVisible) {
-      this.editorViewport = {start: input.selectionStart, end: input.selectionEnd,
-        direction: input.selectionDirection, scrollLeft: input.scrollLeft, scrollTop: input.scrollTop};
+      this.editorViewport = captureDesignerEditorView(this.editor);
+      this.editorViewportModel = this.editor.model;
     }
     if (this.codePane.hidden && willBeVisible) this.pendingEditorViewport = this.editorViewport;
   }
 
   restoreEditorViewport() {
     const saved = this.pendingEditorViewport;
-    const input = this.editor?.input;
-    if (!saved || !input || this.codePane.hidden) return;
-    input.setSelectionRange(saved.start, saved.end, saved.direction);
-    input.scrollLeft = saved.scrollLeft;
-    input.scrollTop = saved.scrollTop;
+    if (!saved || !this.editor || this.codePane.hidden) return;
     this.pendingEditorViewport = null;
+    if (this.editor.model !== this.editorViewportModel) return;
+    const selections = saved.version === this.editor.model.version ? saved : {
+      ...saved, selections: this.editor.getSelections(), primaryIndex: this.editor.primaryIndex
+    };
+    restoreDesignerEditorView(this.editor, selections);
   }
 
   renderState() {
