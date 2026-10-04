@@ -28,7 +28,6 @@ test('production history stays within its DOM row budget at fractional scroll po
   for (const scrollTop of [0, 0.5, 29.5, 3000.25, 150000.75, maximumScroll - 0.5, maximumScroll]) {
     viewport.scrollTop = scrollTop;
     await viewport.dispatch('scroll');
-    await fixture.flush();
     const rows = fixtureDescendants(viewport).filter(element => element.className?.split(' ').includes('git-history-row'));
     assert.ok(rows.length > 0);
     assert.ok(rows.length <= Math.ceil(viewport.clientHeight / 30) + 10, `${rows.length} mounted rows at ${scrollTop}`);
@@ -37,6 +36,7 @@ test('production history stays within its DOM row budget at fractional scroll po
     assert.ok(positions[0] <= Math.floor(scrollTop / 30));
     assert.ok(positions.at(-1) >= Math.min(10000, Math.ceil((scrollTop + viewport.clientHeight) / 30)) - 1);
     assert.ok(rows.every(row => !row.textContent.includes('Loading')));
+    await fixture.flush();
   }
   assert.ok(fixtureDescendants(viewport).some(element => element.className === 'git-history-message' && element.textContent === 'Commit 1'));
   await viewport.dispatch('scroll');

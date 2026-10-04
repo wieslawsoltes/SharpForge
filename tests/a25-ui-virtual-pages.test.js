@@ -25,7 +25,7 @@ function pageFixture(t, options) {
 
 const rows = (start, count) => ({ rows: Array.from({ length: count }, (_, index) => `Row ${start + index}`) });
 
-test('resident virtual pages render in the requested frame without a loading or second draw', async t => {
+test('resident virtual pages cover a jumped viewport in the scroll handler without awaiting a frame', async t => {
   const requested = [];
   const fixture = pageFixture(t, { loadPage(start, count) {
     requested.push(start);
@@ -36,13 +36,38 @@ test('resident virtual pages render in the requested frame without a loading or 
   assert.equal(fixture.frames.size, 0);
   fixture.viewport.scrollTop = 512 * 30;
   await fixture.viewport.dispatch('scroll');
-  assert.equal(fixture.frames.size, 1);
-  fixture.frame();
+  assert.equal(fixture.frames.size, 0);
   assert.equal(fixture.viewport.textContent, 'Row 512');
+  const row = fixture.viewport.children[0].children[0];
+  assert.equal(row.style.top, `${fixture.viewport.scrollTop}px`, 'The rendered row must occupy the current viewport');
   assert.deepEqual(fixture.rendered, ['Row 0', 'Row 512']);
   assert.deepEqual(requested, [0, 512]);
   assert.equal(fixture.frames.size, 0, 'Resident data must not queue a second rendering pass');
   await fixture.flush();
+  assert.deepEqual(fixture.rendered, ['Row 0', 'Row 512']);
+});
+
+test('scroll cancels a pending resize frame and disposal removes both immediate and scheduled work', async t => {
+  const fixture = pageFixture(t, {loadPage: rows});
+  const observer = [...fixture.observers][0];
+  observer.callback();
+  assert.equal(fixture.frames.size, 1, 'Resize stays scheduled');
+  assert.deepEqual(fixture.rendered, ['Row 0']);
+  fixture.viewport.scrollTop = 512 * 30;
+  await fixture.viewport.dispatch('scroll');
+  assert.equal(fixture.frames.size, 0, 'The superseded resize callback must be cancelled');
+  assert.equal(fixture.viewport.textContent, 'Row 512');
+  fixture.frame();
+  assert.deepEqual(fixture.rendered, ['Row 0', 'Row 512'], 'A cancelled callback must not draw twice');
+  observer.callback();
+  assert.equal(fixture.frames.size, 1);
+  fixture.virtual.dispose();
+  assert.equal(fixture.frames.size, 0);
+  assert.equal(fixture.observers.size, 0);
+  fixture.viewport.scrollTop = 1024 * 30;
+  await fixture.viewport.dispatch('scroll');
+  fixture.virtual.refresh();
+  fixture.frame();
   assert.deepEqual(fixture.rendered, ['Row 0', 'Row 512']);
 });
 
@@ -63,10 +88,14 @@ test('asynchronous pages retain pending deduplication and never paint an old vie
   assert.deepEqual(fixture.rendered, []);
   assert.match(fixture.viewport.textContent, /Loading/u);
   pending.get(256)(rows(256, 256));
-  await fixture.flush();
+  await Promise.resolve();
+  assert.equal(fixture.frames.size, 1, 'Asynchronous page completion stays scheduled');
+  assert.match(fixture.viewport.textContent, /Loading/u);
+  fixture.frame();
   assert.equal(fixture.viewport.textContent, 'Row 256');
   assert.deepEqual(fixture.rendered, ['Row 256']);
   assert.deepEqual(requests, [0, 256]);
+  await fixture.flush();
 });
 
 test('thenable pages settle through the asynchronous page contract', async t => {

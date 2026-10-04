@@ -19,7 +19,7 @@ export function virtualRange({ count, rowHeight = 22, scrollTop = 0, viewportHei
   return { start, end, canvasHeight, offset: physicalScroll - logicalScroll };
 }
 
-/** Keep bounded visible rows and eight cached pages; synchronous page results join the current draw. */
+/** Keep bounded rows and eight cached pages; scroll events render immediately, resize and async pages coalesce. */
 export function mountVirtualRows(viewport, { count, rowHeight = 22, overscan = 6, pageSize = 256, loadPage, renderRow,
   initialPage, canvasClass = 'git-diff-canvas', rowClass = 'git-virtual-row', onError = () => {}, signal } = {}) {
   if (!Number.isSafeInteger(pageSize) || pageSize < 1 || pageSize > 1000) throw new RangeError('Invalid virtual page size');
@@ -100,14 +100,20 @@ export function mountVirtualRows(viewport, { count, rowHeight = 22, overscan = 6
     canvas.replaceChildren(fragment);
   }
 
+  function drawNow() {
+    if (disposed) return;
+    if (frame !== null) window.cancelAnimationFrame(frame);
+    draw();
+  }
+
   const observer = new window.ResizeObserver(schedule);
   observer.observe(viewport);
-  viewport.addEventListener('scroll', schedule, { passive: true });
+  viewport.addEventListener('scroll', drawNow, { passive: true });
   function dispose() {
     if (disposed) return;
     disposed = true;
     observer.disconnect();
-    viewport.removeEventListener('scroll', schedule);
+    viewport.removeEventListener('scroll', drawNow);
     signal?.removeEventListener('abort', dispose);
     if (frame !== null) window.cancelAnimationFrame(frame);
     pages.clear();
@@ -115,5 +121,5 @@ export function mountVirtualRows(viewport, { count, rowHeight = 22, overscan = 6
   signal?.addEventListener('abort', dispose, { once: true });
   if (signal?.aborted) dispose();
   draw();
-  return { dispose, refresh: draw };
+  return { dispose, refresh: drawNow };
 }
