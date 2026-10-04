@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-673ef147a4e765615410",
+  "kind": "spec",
+  "sourceText": "record struct R1\n{\n    public R1() { } // ok\n}\n\nrecord struct R2()\n{\n    public R2() { } // error: 'R2' already defines constructor with same parameter types\n}",
+  "sourceSHA256": "ad6a37109b920c5fed3868b182ecf7c9f636160bf2df0c1048d9f4e299e5f5a7",
+  "target": "library",
+  "featureId": "csharp-10-0-record-structs",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/record-structs.md",
+    "sha256": "6648b21cf551cda46a37801f487f82de1b87eb9ee39f08904ad5b5707ee0ae58",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/record-structs.md",
+    "license": "NOASSERTION",
+    "offset": 9164
+  }
+}

@@ -1,3 +1,4 @@
+import {attachExceptionBuiltins} from './exception-builtins.js';
 /**
  * The exception classes of the base class library for compilations bound against the closed framework registry
  * (SF-A02-T44).
@@ -11,7 +12,6 @@
  * Binding a member declared here says nothing about whether the runtime profile can execute it: code generation
  * reports what it cannot lower.
  */
-import {attachExceptionBuiltins} from './exception-builtins.js';
 import { NamedTypeSymbol, Accessibility } from './types.js';
 import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
 
@@ -57,6 +57,7 @@ const hierarchy = [
   ['System.Collections.Generic', 'KeyNotFoundException', 'SystemException', standard],
   ['System.IO', 'IOException', 'SystemException', standard],
   ['System.IO', 'FileNotFoundException', 'IOException', standard],
+  ['System.Threading', 'SynchronizationLockException', 'SystemException', standard],
 ];
 
 function hasConstructor(type, parameterTypes) {

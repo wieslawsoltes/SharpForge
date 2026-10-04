@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-edd4ab4dd6c5296fd054",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M()\n    {\n        object o = 2;\n        if (o is int x1 && Local(x1) == 0)\n        {\n        }\n\n        if (o is int x2 || Local(x2) == 0)\n        {\n        }\n\n        if (!(o is int x3))\n        {\n            void Local2()\n            {\n                x3++;\n            }\n            Local2();\n        }\n        \n        int Local(int i) => i;\n    }\n}",
+  "sourceSHA256": "723ba4c6187143824b85571b29da4fe9d51c3b309efbe3f39aa6176046c5f9e8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "CapturePattern",
+    "offset": 28845
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    void M()\n    {\n        object o = 2;\n        if (o is int x1 && Local(x1) == 0)\n        {\n        }\n\n        if (o is int x2 || Local(x2) == 0)\n        {\n        }\n\n        if (!(o is int x3))\n        {\n            void Local2()\n            {\n                x3++;\n            }\n            Local2();\n        }\n        \n        int Local(int i) => i;\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,34): error CS0165: Use of unassigned local variable 'x2'\n                //         if (o is int x2 || Local(x2) == 0)\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x2\").WithArguments(\"x2\").WithLocation(11, 34),\n                // (21,13): error CS0165: Use of unassigned local variable 'x3'\n                //             Local2();\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"Local2()\").WithArguments(\"x3\").WithLocation(21, 13)",
+  "unsupported": []
+}

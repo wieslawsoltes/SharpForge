@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6390372dd51b556f715b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\npublic class Test\n{\n    [IsByRefLike]\n    public ref readonly int this[[IsByRefLike]in int x] { get { return ref x; } }\n}\n",
+  "sourceSHA256": "f8d6b06beec7758890aad3b90984757893bc6806d727004ff060e6e9515a4d89",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsByRefLike.cs",
+    "sha256": "19c7ba077c968b3abe33b253a5150725342e5db1b86525023701c87adb7d0eae",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsByRefLike.cs",
+    "license": "MIT",
+    "method": "IsByRefLikeAttributeIsDisallowedEverywhereInSource_Indexers",
+    "offset": 12372
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { referenceA })",
+  "options": "(codeB, references: new[] { referenceA })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8335",
+        "severity": "error"
+      },
+      {
+        "code": "CS8335",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,6): error CS8335: Do not use 'System.Runtime.CompilerServices.IsByRefLikeAttribute'. This is reserved for compiler usage.\n                //     [IsByRefLike]\n                Diagnostic(ErrorCode.ERR_ExplicitReservedAttr, \"IsByRefLike\").WithArguments(\"System.Runtime.CompilerServices.IsByRefLikeAttribute\").WithLocation(6, 6),\n                // (7,35): error CS8335: Do not use 'System.Runtime.CompilerServices.IsByRefLikeAttribute'. This is reserved for compiler usage.\n                //     public ref readonly int this[[IsByRefLike]in int x] { get { return ref x; } }\n                Diagnostic(ErrorCode.ERR_ExplicitReservedAttr, \"IsByRefLike\").WithArguments(\"System.Runtime.CompilerServices.IsByRefLikeAttribute\").WithLocation(7, 35)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

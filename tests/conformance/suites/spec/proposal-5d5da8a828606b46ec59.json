@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-5d5da8a828606b46ec59",
+  "kind": "spec",
+  "sourceText": "outer: for (int x = 0; x < xMax; x++)\n{\n    for (int y = 0; y < yMax; y++)\n    {\n        if (ShouldSkipRest(x, y))\n            continue outer;\n        \n        if (ShouldExitAll(x, y))\n            break outer;\n    }\n}",
+  "sourceSHA256": "a2e4050173b2ba0967145085a9d1769eeceb7dc2dfd9113b7cc80a2e09519af0",
+  "target": "library",
+  "featureId": "csharp-15-0-labeled-break-and-continue",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/labeled-break-continue.md",
+    "sha256": "6f7a0240e013201a78340bec20e3835e55470cb1e9942eaa6fb84bffab6e632e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/labeled-break-continue.md",
+    "license": "NOASSERTION",
+    "offset": 3324
+  }
+}

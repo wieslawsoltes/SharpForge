@@ -18,12 +18,17 @@
  */
 import { TypeMap, TypeKind, SymbolKind, NamedTypeSymbol, ArrayTypeSymbol, TypeWithAnnotations, typeOf } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
-import { containsTypeParameter } from '../../symbols/substitution.js';
+import { containsTypeParameter, allTypeParameters, typeMapOf } from '../../symbols/substitution.js';
 import { DefinitionIds, typeKey, typeDepth, instantiationTypeName, instantiationMethodName } from './instantiation-names.js';
+import { provenGrowth } from './instantiation-growth.js';
 
-/** Constructions nested deeper than this come from a generic that instantiates itself with ever larger arguments. */
-const MAX_TYPE_DEPTH = 12;
+/**
+ * Resource limits for a growth that could not be proved (instantiation-growth.js): constructions nested deeper than
+ * this, or more of them than this, are taken to come from a generic that instantiates itself without end.
+ */
+const MAX_TYPE_DEPTH = 64;
 const MAX_INSTANCES = 4096;
+const endless = 'a generic instantiation that does not terminate';
 
 /** A closed construction of a source generic class: `{definition, type, typeArguments, map, key, record}`. */
 export class TypeInstance {
@@ -35,6 +40,9 @@ export class TypeInstance {
     this.key = key;
     this.record = null;
     this.members = new Map();
+    // Who asked for this construction first, and with which arguments as written (instantiation-growth.js).
+    this.parent = null;
+    this.openMap = null;
   }
 }
 
@@ -45,6 +53,8 @@ export class MemberInstance {
     this.definition = definition;
     this.typeArguments = typeArguments;
     this.map = map;
+    this.parent = null;
+    this.openMap = null;
   }
   /** The image name of a constructed generic method; null for a member that is not a generic method. */
   get methodName() {
@@ -66,6 +76,41 @@ export class GenericInstantiations {
     this.plain = new Map();
     this.types = new Map();
     this.methods = new Map();
+    // The construction each substitution belongs to, and the nesting of requests whose target depends on a closed type.
+    this.contexts = new Map();
+    this.opaque = 0;
+  }
+  /** The construction whose code is being declared or lowered, or null outside generic code. */
+  get current() {
+    return this.contexts.get(this.active) ?? null;
+  }
+  /** Runs `action`; constructions it asks for were chosen from a closed type, so their arguments are not known as written. */
+  withClosedTarget(action) {
+    this.opaque++;
+    try {
+      return action();
+    } finally {
+      this.opaque--;
+    }
+  }
+  /**
+   * The type arguments of a requested construction as written, over the type parameters of the construction being
+   * lowered; null when they are not known to be independent of its closed arguments.
+   */
+  openMapOf(mentions, build) {
+    if (!this.current) return TypeMap.empty;
+    return this.opaque === 0 && mentions.some(type => containsTypeParameter(type)) ? build() : null;
+  }
+  /** Links a new construction to the one that asked for it and refuses a cycle that provably grows. */
+  adopt(instance, parameters, openMap, syntax) {
+    instance.parent = this.current;
+    instance.openMap = openMap;
+    this.contexts.set(instance.map, instance);
+    const growing = instance.parent ? provenGrowth(instance.definition, parameters, openMap, instance.parent) : null;
+    if (!growing) return;
+    const name = instance.definition.toDisplayString(),
+      detail = `'${name}' instantiates itself with '${growing.term.toDisplayString()}' for '${growing.parameter.name}'`;
+    this.host.unsupported(`${endless} (${detail}; .NET creates such constructions at run time)`, syntax ?? instance.definition.locations?.[0]);
   }
   /** Runs `action` with `map` as the active substitution and restores the previous one afterwards. */
   withMap(map, action) {
@@ -79,7 +124,8 @@ export class GenericInstantiations {
   }
   /** True for a source class that is generic or nested in a generic class: it exists only as constructions. */
   isGenericClass(type) {
-    return type instanceof NamedTypeSymbol && type.typeKind === TypeKind.Class && type.isGenericType && this.host.isSource(type);
+    return type instanceof NamedTypeSymbol && [TypeKind.Class, TypeKind.Struct, TypeKind.Interface].includes(type.typeKind) &&
+      type.isGenericType && this.host.isSource(type);
   }
   /** True for a source method that has type parameters of its own. */
   isGenericMethod(method) {
@@ -150,12 +196,17 @@ export class GenericInstantiations {
       key = typeKey(closed, this.ids);
     let instance = this.types.get(key);
     if (instance) return instance;
-    if (typeDepth(closed) > MAX_TYPE_DEPTH || this.types.size >= MAX_INSTANCES)
-      this.host.unsupported('a generic instantiation that does not terminate', syntax ?? closed.locations?.[0]);
+    if (typeDepth(closed) > MAX_TYPE_DEPTH || this.types.size >= MAX_INSTANCES) this.host.unsupported(endless, syntax ?? closed.locations?.[0]);
     instance = new TypeInstance(closed, key);
     instance.name = instantiationTypeName(closed);
     // Registered before it is declared: a generic class may mention its own construction (`Node<T> next`).
     this.types.set(key, instance);
+    this.adopt(
+      instance,
+      allTypeParameters(closed),
+      this.openMapOf([type], () => typeMapOf(typeOf(type))),
+      syntax,
+    );
     this.host.declareTypeInstance(instance);
     return instance;
   }
@@ -179,7 +230,16 @@ export class GenericInstantiations {
       generic = this.host.isSource(definition) && this.isGenericMethod(definition);
     if (!owner && !generic) return definition;
     const typeArguments = generic ? symbol.typeArguments.map(argument => this.closed(argument, syntax)) : null;
-    return this.memberInstance(owner, definition, typeArguments, syntax);
+    return this.memberInstance(owner, definition, typeArguments, syntax, symbol);
+  }
+  /** The open map of a member as written at the place that refers to it: its containing construction and its own type arguments. */
+  openMapOfMember(symbol, definition, isGeneric) {
+    const container = symbol.containingType ?? null,
+      written = isGeneric ? symbol.typeArguments.map(typeOf) : [];
+    return this.openMapOf([...(container ? [container] : []), ...written], () => {
+      const outer = container ? typeMapOf(container) : TypeMap.empty;
+      return isGeneric ? outer.with(definition.typeParameters, written) : outer;
+    });
   }
   /** True for a definition whose key is itself: neither a generic class, nor a member of one, nor a generic method. */
   isPlain(definition) {
@@ -189,17 +249,19 @@ export class GenericInstantiations {
     if (container && this.isGenericClass(container)) return false;
     return !(this.host.isSource(definition) && this.isGenericMethod(definition));
   }
-  memberInstance(owner, definition, typeArguments, syntax) {
+  memberInstance(owner, definition, typeArguments, syntax, written = null) {
     const table = owner ? owner.members : this.methods,
       key = this.ids.of(definition) + (typeArguments ? '{' + typeArguments.map(argument => typeKey(argument, this.ids)).join(';') + '}' : '');
     let instance = table.get(key);
     if (instance) return instance;
     if (typeArguments?.some(argument => typeDepth(argument) > MAX_TYPE_DEPTH) || this.methods.size >= MAX_INSTANCES)
-      this.host.unsupported('a generic instantiation that does not terminate', syntax ?? definition.locations?.[0]);
-    const base = owner?.map ?? TypeMap.empty,
-      map = typeArguments ? base.with(definition.typeParameters, typeArguments) : base;
+      this.host.unsupported(endless, syntax ?? definition.locations?.[0]);
+    // A substitution of its own, also for a member without type arguments: the substitution identifies the construction.
+    const map = (owner?.map ?? TypeMap.empty).with(typeArguments ? definition.typeParameters : [], typeArguments ?? []);
     instance = new MemberInstance(owner, definition, typeArguments, map);
     table.set(key, instance);
+    const parameters = [...(owner ? allTypeParameters(owner.type) : []), ...(typeArguments ? definition.typeParameters : [])];
+    this.adopt(instance, parameters, written ? this.openMapOfMember(written, definition, !!typeArguments) : null, syntax);
     // Methods are declared when code first refers to them: declaring every method of a construction with the class
     // would never end for a signature that mentions a larger construction (`Box<Box<T>> Wrap()`).
     if (definition.kind === SymbolKind.Method) this.host.declareMethodInstance(instance);

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-87ca06dfaa35d024dbaf",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public void M()\n    {\n        int x;\n        int Local(int p1) => x++;\n\n        Local(x = 0);\n\n        int z;\n        int Local2(int p1, int p2) => z++;\n        Local2(z = 0, z++);\n    }\n\n    public void M2()\n    {\n        int x;\n        int Local(int p1) => x++;\n        int Local2(int p1) => Local(p1);\n        int Local3(int p1) => x + Local2(p1);\n\n        Local3(x = 0);\n    }\n}",
+  "sourceSHA256": "9774a3417b7b444ed9ce3bafff7bf3762a60f7f33e1b2c3353c09c0e71cb64a5",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "AssignInsideCallToLocalFunc",
+    "offset": 5913
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    public void M()\n    {\n        int x;\n        int Local(int p1) => x++;\n\n        Local(x = 0);\n\n        int z;\n        int Local2(int p1, int p2) => z++;\n        Local2(z = 0, z++);\n    }\n\n    public void M2()\n    {\n        int x;\n        int Local(int p1) => x++;\n        int Local2(int p1) => Local(p1);\n        int Local3(int p1) => x + Local2(p1);\n\n        Local3(x = 0);\n    }\n}\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

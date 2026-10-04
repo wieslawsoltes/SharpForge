@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6d82cf0c089ac44dd8cf",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class A\n{\n    [Obsolete]\n    public virtual event Action E { add { } remove { } }\n    [Obsolete]\n    public virtual int P { get; set; }\n    [Obsolete]\n    public virtual void M() { }\n}\n\npublic class B : A\n{\n    [Obsolete]\n    public override event Action E { add { } remove { } }\n    [Obsolete]\n    public override int P { get; set; }\n    [Obsolete]\n    public override void M() { }\n\n    private void Test()\n    {\n        base.E += null;\n        base.P++;\n        base.M();\n    }\n}\n\npublic class C : B\n{\n    public override event Action E { add { } remove { } }\n    public override int P { get; set; }\n    public override void M() { }\n\n    private void Test()\n    {\n        base.E += null;\n        base.P++;\n        base.M();\n    }\n}\n",
+  "sourceSHA256": "df8f19a45592b041634aa81fbdbd95d1bd924bc1fdec896d37cd74428ec8f02a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ObsoleteOnVirtual_OnBaseAndDerived_BaseCall",
+    "offset": 305155
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0672",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0672",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0672",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (34,25): warning CS0672: Member 'C.P' overrides obsolete member 'A.P'. Add the Obsolete attribute to 'C.P'.\n                //     public override int P { get; set; }\n                Diagnostic(ErrorCode.WRN_NonObsoleteOverridingObsolete, \"P\").WithArguments(\"C.P\", \"A.P\"),\n                // (35,26): warning CS0672: Member 'C.M()' overrides obsolete member 'A.M()'. Add the Obsolete attribute to 'C.M()'.\n                //     public override void M() { }\n                Diagnostic(ErrorCode.WRN_NonObsoleteOverridingObsolete, \"M\").WithArguments(\"C.M()\", \"A.M()\"),\n                // (33,34): warning CS0672: Member 'C.E' overrides obsolete member 'A.E'. Add the Obsolete attribute to 'C.E'.\n                //     public override event Action E { add { } remove { } }\n                Diagnostic(ErrorCode.WRN_NonObsoleteOverridingObsolete, \"E\").WithArguments(\"C.E\", \"A.E\"),\n\n                // (26,9): warning CS0612: 'A.P' is obsolete\n                //         base.P++;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"base.P\").WithArguments(\"A.P\"),\n                // (27,9): warning CS0612: 'A.M()' is obsolete\n                //         base.M();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"base.M()\").WithArguments(\"A.M()\"),\n                // (25,9): warning CS0612: 'A.E' is obsolete\n                //         base.E += null;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"base.E\").WithArguments(\"A.E\"),\n                // (40,9): warning CS0612: 'A.P' is obsolete\n                //         base.P++;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"base.P\").WithArguments(\"A.P\"),\n                // (41,9): warning CS0612: 'A.M()' is obsolete\n                //         base.M();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"base.M()\").WithArguments(\"A.M()\"),\n                // (39,9): warning CS0612: 'A.E' is obsolete\n                //         base.E += null;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"base.E\").WithArguments(\"A.E\")",
+  "unsupported": []
+}

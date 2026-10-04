@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-5fce28f751682a547bfb",
+  "kind": "spec",
+  "sourceText": "namespace System.Threading\n{\n    public sealed class Lock\n    {\n        public void Enter();\n        public void Exit();\n        public Scope EnterScope();\n    \n        public ref struct Scope\n        {\n            public void Dispose();\n        }\n    }\n}",
+  "sourceSHA256": "bd35282ee03b748ab8cc1a066eb3568fd4f8541bd9c760965c8b3d625eff162a",
+  "target": "library",
+  "featureId": "csharp-13-0-lock-object",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/lock-object.md",
+    "sha256": "6a60605a1f68d2463393dba661c1c0d8e1e24ca2abd5e55d56eb415ef8258fb7",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/lock-object.md",
+    "license": "NOASSERTION",
+    "offset": 849
+  }
+}

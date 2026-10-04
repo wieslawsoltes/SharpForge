@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-afab7a58b114d8029cc5",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing static ActiveParent.ObsoleteChild;\nusing static ObsoleteParent.ActiveChild;\nusing static BothObsoleteParent.BothObsoleteChild;\n\nstatic class ActiveParent\n{\n    [Obsolete]\n    public static class ObsoleteChild\n    {\n        public static void ObsoleteChildFunc()\n        {\n\n        }\n    }\n}\n\n[Obsolete]\nstatic class ObsoleteParent\n{\n    public static class ActiveChild\n    {\n        public static void ActiveChildFunc()\n        {\n\n        }\n    }\n}\n\n[Obsolete]\nstatic class BothObsoleteParent\n{\n    [Obsolete]\n    public static class BothObsoleteChild\n    {\n        public static void BothObsoleteFunc()\n        {\n\n        }\n    }\n}\n\nclass Test\n{\n    public static void Main()\n    {\n        ObsoleteChildFunc();\n        ActiveChildFunc();\n        BothObsoleteFunc();\n    }\n}",
+  "sourceSHA256": "13b2bd635bdea93ba838869dcbf787330d5fba1c8d84bc5245eab642507e7f84",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "UsingStaticDirectiveDoesNotIgnoreObsoleteAttribute_NestedClasses",
+    "offset": 478856
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,14): warning CS0612: 'ActiveParent.ObsoleteChild' is obsolete\n                // using static ActiveParent.ObsoleteChild;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"ActiveParent.ObsoleteChild\").WithArguments(\"ActiveParent.ObsoleteChild\").WithLocation(3, 14),\n                // (4,14): warning CS0612: 'ObsoleteParent' is obsolete\n                // using static ObsoleteParent.ActiveChild;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"ObsoleteParent\").WithArguments(\"ObsoleteParent\").WithLocation(4, 14),\n                // (5,14): warning CS0612: 'BothObsoleteParent' is obsolete\n                // using static BothObsoleteParent.BothObsoleteChild;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"BothObsoleteParent\").WithArguments(\"BothObsoleteParent\").WithLocation(5, 14),\n                // (5,14): warning CS0612: 'BothObsoleteParent.BothObsoleteChild' is obsolete\n                // using static BothObsoleteParent.BothObsoleteChild;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"BothObsoleteParent.BothObsoleteChild\").WithArguments(\"BothObsoleteParent.BothObsoleteChild\").WithLocation(5, 14)",
+  "unsupported": []
+}

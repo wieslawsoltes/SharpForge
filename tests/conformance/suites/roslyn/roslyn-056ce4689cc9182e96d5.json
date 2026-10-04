@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-056ce4689cc9182e96d5",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace System.Runtime.CompilerServices\n{\n    public class IsReadOnlyAttribute : System.Attribute\n    {\n        public IsReadOnlyAttribute(int p) { }\n    }\n}\nclass Test\n{\n    public void M(in int x) { }\n}",
+  "sourceSHA256": "8364a9430c9d3f9f91fc9fe50f0caf836a97232a15f04f355748ea6e84977dea",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_RefReadOnly.cs",
+    "sha256": "2665f48f409039e29d4a618fc5f62e300dd7135d0832a11765aad115a6b75db9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_RefReadOnly.cs",
+    "license": "MIT",
+    "method": "IsReadOnlyAttributeExistsWithWrongConstructorSignature_NetModule",
+    "offset": 43139
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.ReleaseModule)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0656",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,19): error CS0656: Missing compiler required member 'System.Runtime.CompilerServices.IsReadOnlyAttribute..ctor'\n                //     public void M(in int x) { }\n                Diagnostic(ErrorCode.ERR_MissingPredefinedMember, \"in int x\").WithArguments(\"System.Runtime.CompilerServices.IsReadOnlyAttribute\", \".ctor\").WithLocation(11, 19)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

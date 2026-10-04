@@ -1,0 +1,1656 @@
+{
+  "schemaVersion": 1,
+  "kind": "project16-a5-bounded-changed-source-inspection",
+  "comparisonBase": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+  "sourceSha": "e89257052957f4c736512e9c2b46162bb6f23eae",
+  "sourceTree": "9e33eca9a91361201b2e14fea3cded5cbd584d88",
+  "startedAt": "2026-10-04T06:10:35.219080+00:00",
+  "finishedAt": "2026-10-04T06:10:35.643899+00:00",
+  "pythonVersion": "3.12.14",
+  "command": [
+    "python",
+    "docs/evidence/project16-a5-changed-source/inspect.py"
+  ],
+  "inspectionScriptSha256": "e189b744a42854193d43d884c2c99a7fa3d0b178c688a7dfae1f361284479451",
+  "gitCommands": [
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae^{tree}"
+    ],
+    [
+      "git",
+      "diff",
+      "--name-only",
+      "--diff-filter=AM",
+      "-z",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+      "e89257052957f4c736512e9c2b46162bb6f23eae"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:CONTRIBUTING.md"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:scripts/quality/check-structure.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:scripts/quality/structure-baseline.json"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:scripts/quality/structure-baseline.json"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/compiler.worker.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/compiler.worker.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/compiler.worker.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/compiler.worker.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/studio.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/studio.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/studio.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/studio.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/compiler-source-policy.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workbench/compiler-source-policy.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/compiler-source-policy.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/language-actions.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workbench/language-actions.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workbench/language-actions.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/language-actions.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/studio-editor.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workbench/studio-editor.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workbench/studio-editor.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/studio-editor.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/studio-execution.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workbench/studio-execution.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workbench/studio-execution.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/studio-execution.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/studio-projects.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workbench/studio-projects.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workbench/studio-projects.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/studio-projects.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/tools/execution-capture.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workbench/tools/execution-capture.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workbench/tools/execution-capture.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workbench/tools/execution-capture.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workers/compiler-limits.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workers/compiler-limits.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workers/compiler-limits.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workers/compiler-workspace.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workers/compiler-workspace.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workers/compiler-workspace.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workers/host-timers.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workers/host-timers.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workers/host-timers.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workers/runtime-activity.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workers/runtime-activity.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:apps/studio/workers/runtime-activity.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:apps/studio/workers/runtime-activity.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:packages/editor/src/features/context.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:packages/editor/src/features/context.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:packages/editor/src/features/context.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:packages/editor/src/features/context.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:packages/editor/src/keymaps/resolve.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:packages/editor/src/keymaps/resolve.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:packages/editor/src/keymaps/resolve.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:packages/editor/src/keymaps/resolve.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:scripts/benchmarks/a19-correction-paths.mjs"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:scripts/benchmarks/a19-correction-paths.mjs"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:scripts/benchmarks/a19-correction-paths.mjs"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:scripts/benchmarks/a19-correction-report.mjs"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:scripts/benchmarks/a19-correction-report.mjs"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:scripts/benchmarks/a19-correction-report.mjs"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:scripts/benchmarks/a19-correction-workloads.mjs"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:scripts/benchmarks/a19-correction-workloads.mjs"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:scripts/benchmarks/a19-correction-workloads.mjs"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-a20-browser-budget-trace.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a19-a20-browser-budget-trace.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a19-a20-browser-budget-trace.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-a20-browser-budget-trace.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-code-definition-budget-proof.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a19-code-definition-budget-proof.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-code-definition-budget-proof.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-correction-benchmark.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a19-correction-benchmark.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-correction-benchmark.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-runtime-host-timers.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a19-runtime-host-timers.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-runtime-host-timers.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-studio-compiler-source-policy.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a19-studio-compiler-source-policy.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-studio-compiler-source-policy.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-studio-composition.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a19-studio-composition.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a19-studio-composition.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-studio-composition.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-studio-large-source-composition.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a19-studio-large-source-composition.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-studio-large-source-composition.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-studio-runtime-timers.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a19-studio-runtime-timers.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a19-studio-runtime-timers.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a20-fix-all.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a20-fix-all.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a20-fix-all.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a20-fix-all.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a20-keymap-host-timers.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a20-keymap-host-timers.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a20-keymap-host-timers.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a20-language-availability.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a20-language-availability.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a20-language-availability.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a20-studio-streamed-workspace.test.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a20-studio-streamed-workspace.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/a20-studio-streamed-workspace.test.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/a20-studio-streamed-workspace.test.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/browser_editor_budgets_test.py"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/browser_editor_budgets_test.py"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/browser_editor_budgets_test.py"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/browser_editor_budgets_test.py"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/editor-budget-trace.mjs"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/editor-budget-trace.mjs"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/editor-budget-trace.mjs"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/editor-budget-trace.mjs"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/fixtures/a19/install-browser-timers.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/fixtures/a19/install-browser-timers.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/fixtures/a19/install-browser-timers.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/fixtures/a19/runtime-worker-browser-timers.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/fixtures/a19/runtime-worker-browser-timers.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/fixtures/a19/runtime-worker-browser-timers.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/fixtures/code-definition-budget.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/fixtures/code-definition-budget.js"
+    ],
+    [
+      "git",
+      "show",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/fixtures/code-definition-budget.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/fixtures/code-definition-budget.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/support/browser-global-timers.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/support/browser-global-timers.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/support/browser-global-timers.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/support/studio-runtime-timers.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/support/studio-runtime-timers.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/support/studio-runtime-timers.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/support/studio-source-policy.js"
+    ],
+    [
+      "git",
+      "cat-file",
+      "-e",
+      "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c:tests/support/studio-source-policy.js"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/support/studio-source-policy.js"
+    ],
+    [
+      "git",
+      "show",
+      "e89257052957f4c736512e9c2b46162bb6f23eae:tests/browser_editor_budgets_test.py"
+    ]
+  ],
+  "policyFiles": [
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "d0ec90f2229c7ebb14bc0f96d35001f9777e3ca7eb5afdd66be5536dc7b1283f"
+    },
+    {
+      "path": "scripts/quality/check-structure.js",
+      "sha256": "03e92adea2c29b881459ee38f8470f0d7bf70ad5a2a07019f255118686c69f94"
+    },
+    {
+      "path": "scripts/quality/structure-baseline.json",
+      "sha256": "b3ff90df9502985e3df99ec38db2396e1ba8d0af8415c96fd91978b82ecc7572"
+    }
+  ],
+  "limits": {
+    "lines": 500,
+    "bytes": 40000,
+    "lineLength": 160
+  },
+  "baselineUnchanged": true,
+  "method": {
+    "lines": "UTF-8 source split on LF, including the trailing empty element, matching the official gate.",
+    "bytes": "Exact tracked Git blob byte length.",
+    "lineLength": "UTF-16 code units, matching JavaScript String.length in the official gate.",
+    "introducedLines": "Content-multiset comparison against the base; moved unchanged lines are not introduced.",
+    "officialSubset": "Only changed files matching the official roots, extensions and exclusions.",
+    "supplement": "Changed test/fixture/Python source outside that filter, explicitly checked for file size and introduced long lines.",
+    "notChecked": "Function length, parameter counts, nesting and semantic architecture are not inferred by this file-dimension inspection."
+  },
+  "scopeCounts": {
+    "changedTrackedPaths": 102,
+    "sourceFiles": 37,
+    "officialRootSubset": 17,
+    "supplementalTestFixtureSource": 20
+  },
+  "files": [
+    {
+      "path": "apps/studio/compiler.worker.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "f228a73410464b11201c9e4402eed96a8417edc0",
+      "sha256": "f71d16b7aa9b8f20b1cd8620e23715edf6e664b507cfd315fc526edfb9562ae0",
+      "before": {
+        "lines": 53,
+        "bytes": 8553,
+        "lineLength": 817
+      },
+      "after": {
+        "lines": 52,
+        "bytes": 8394,
+        "lineLength": 817
+      },
+      "historicalBaseline": {
+        "lines": 64,
+        "bytes": 8227,
+        "lineLength": 817
+      },
+      "delta": {
+        "lines": -1,
+        "bytes": -159,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": [
+        {
+          "line": 39,
+          "length": 518,
+          "sha256": "5a354bfb6c4308f0ed47a56d1bf2376234df78b1372eda73a23d2cf2a1d256f4"
+        },
+        {
+          "line": 41,
+          "length": 308,
+          "sha256": "06bc3fa93a6d92223019de43ba184488600d9d4f28e4f2249da5d3382ed5355c"
+        },
+        {
+          "line": 48,
+          "length": 562,
+          "sha256": "bba32341bdddc48fb223220b0894c2d229904bbd5fdb1c516757de7ad8908ab5"
+        }
+      ]
+    },
+    {
+      "path": "apps/studio/studio.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "c0533101ee8dae94c5216aae6ded4fb9d1be87c0",
+      "sha256": "55f24ec5fce75566b51b3755699f6fb98bb4e1b3f281e2059f223bb652540d05",
+      "before": {
+        "lines": 747,
+        "bytes": 104451,
+        "lineLength": 2140
+      },
+      "after": {
+        "lines": 747,
+        "bytes": 104362,
+        "lineLength": 2140
+      },
+      "historicalBaseline": {
+        "lines": 751,
+        "bytes": 190682,
+        "lineLength": 6074
+      },
+      "delta": {
+        "lines": 0,
+        "bytes": -89,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/compiler-source-policy.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "2219961074387b45200e785c2e33a6077d52b792",
+      "sha256": "450bf1258126071d5a369a2711e55c51b94376fa2d9a66df609f7816f950e29f",
+      "before": null,
+      "after": {
+        "lines": 31,
+        "bytes": 1624,
+        "lineLength": 143
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/language-actions.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "a385d8917d00f83cc0fae2e99d5d83eb2ebfbf41",
+      "sha256": "6cac024eee6c4634d35bf2f01af3035f977ff7e546d49392405e7a5a0ac920ff",
+      "before": {
+        "lines": 160,
+        "bytes": 9026,
+        "lineLength": 136
+      },
+      "after": {
+        "lines": 161,
+        "bytes": 9156,
+        "lineLength": 136
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 1,
+        "bytes": 130,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/studio-editor.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "0311e4dacfef2115734609e344ce3b612c86e186",
+      "sha256": "2d8a5db8d67095b8b164857b22bfcfcbd86e55ef71d710a268842745970cfd64",
+      "before": {
+        "lines": 90,
+        "bytes": 4845,
+        "lineLength": 140
+      },
+      "after": {
+        "lines": 91,
+        "bytes": 4970,
+        "lineLength": 140
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 1,
+        "bytes": 125,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/studio-execution.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "baf8ba4227017d959b821fa924557e6820e21afe",
+      "sha256": "6e7ff4b23225e0d6c522c2614880f88984c66e635ef5d7f8dd0c51678820bd73",
+      "before": {
+        "lines": 155,
+        "bytes": 6763,
+        "lineLength": 150
+      },
+      "after": {
+        "lines": 162,
+        "bytes": 7075,
+        "lineLength": 150
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 7,
+        "bytes": 312,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/studio-projects.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "0ee71e7b60c58d4de4689e127aa1c5c3664fc913",
+      "sha256": "ce69aba3bd60b611424501ac98e0687a6592a11ff400e607483b0c127f4685fa",
+      "before": {
+        "lines": 138,
+        "bytes": 6405,
+        "lineLength": 144
+      },
+      "after": {
+        "lines": 157,
+        "bytes": 7338,
+        "lineLength": 144
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 19,
+        "bytes": 933,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "apps/studio/workbench/tools/execution-capture.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "f47dcf807191f0cb240c7c7de970e26125e5ed16",
+      "sha256": "5997b085ff82cb7accb9e09c505cb0f02e10a21bd898bcbff19a967818b35d2e",
+      "before": {
+        "lines": 140,
+        "bytes": 7400,
+        "lineLength": 154
+      },
+      "after": {
+        "lines": 141,
+        "bytes": 7479,
+        "lineLength": 154
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 1,
+        "bytes": 79,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "apps/studio/workers/compiler-limits.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "d8089b6038cd4289b2b31bebce8553640fcbae78",
+      "sha256": "b3e2ba36f578f95a3f5cef6e14a19debd6bca1942916995b82e80f59900d0172",
+      "before": null,
+      "after": {
+        "lines": 3,
+        "bytes": 205,
+        "lineLength": 103
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "apps/studio/workers/compiler-workspace.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "e00e61012225847404c0f3a8f7fdfe911171d4b2",
+      "sha256": "1f3bc168333ea3e8bef89d0c4710f66d5895d9bea05ad5b2abcbc90adb37b206",
+      "before": null,
+      "after": {
+        "lines": 15,
+        "bytes": 644,
+        "lineLength": 99
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "apps/studio/workers/host-timers.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "befdc0e4fb6aaa62bb23b00150fc02c08dde24ab",
+      "sha256": "3af43168294c8c220b15adb0af328e82597b1d94f78aa18571bf90e64dcf7a10",
+      "before": null,
+      "after": {
+        "lines": 10,
+        "bytes": 378,
+        "lineLength": 113
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "apps/studio/workers/runtime-activity.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "51ee97d90a3b26ebab41d914d98ac8c4f058ae68",
+      "sha256": "fd0b713eb442bf857fe1d7528fb6881b68339dc2c492644a5a44a93d886471bd",
+      "before": {
+        "lines": 141,
+        "bytes": 5128,
+        "lineLength": 130
+      },
+      "after": {
+        "lines": 142,
+        "bytes": 5195,
+        "lineLength": 130
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 1,
+        "bytes": 67,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "packages/editor/src/features/context.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "6bc729a85c0db7d29f1de2d7694ecb8a0977984f",
+      "sha256": "f7cb349a3419026ce507a8d436577cf6fd6ec37e460f5b089bc998e9b95baaaa",
+      "before": {
+        "lines": 88,
+        "bytes": 4815,
+        "lineLength": 152
+      },
+      "after": {
+        "lines": 94,
+        "bytes": 5130,
+        "lineLength": 152
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 6,
+        "bytes": 315,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "packages/editor/src/keymaps/resolve.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "75b2958e18efd29ad4ea179e7d3baa11dbd9539f",
+      "sha256": "34923f26a7e94a9c58b52a8fd2bee12bdec1f946115c283c06071e4213cb025c",
+      "before": {
+        "lines": 190,
+        "bytes": 8311,
+        "lineLength": 133
+      },
+      "after": {
+        "lines": 193,
+        "bytes": 8429,
+        "lineLength": 133
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 3,
+        "bytes": 118,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "scripts/benchmarks/a19-correction-paths.mjs",
+      "scope": "official-root-subset",
+      "sourceBlob": "108d57ce172b5bcf8c13c9058fef0ab41abf1a43",
+      "sha256": "87827deddeda04d6fdb6b055ff7448c3d8fe221759a5accf87ca6ab301ce5a3c",
+      "before": null,
+      "after": {
+        "lines": 167,
+        "bytes": 8639,
+        "lineLength": 143
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "scripts/benchmarks/a19-correction-report.mjs",
+      "scope": "official-root-subset",
+      "sourceBlob": "feb536ab64aff11b014b3170e26117ab0ab2dd7d",
+      "sha256": "3db8cd841cc216d2736add64ade75966e1fa84de07c320be6055e8078f3d9ee0",
+      "before": null,
+      "after": {
+        "lines": 99,
+        "bytes": 6396,
+        "lineLength": 138
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "scripts/benchmarks/a19-correction-workloads.mjs",
+      "scope": "official-root-subset",
+      "sourceBlob": "d22f45cbf3d0beddbb43935654aa1da7d8d28d25",
+      "sha256": "201402c8efd769e14ca01ab1921e56e8ee195927211069164e0d236d804238c5",
+      "before": null,
+      "after": {
+        "lines": 107,
+        "bytes": 5429,
+        "lineLength": 139
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a19-a20-browser-budget-trace.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "9782316c9efb3a853863daa719c79b3561996c4a",
+      "sha256": "bb95e61bc341e5898930fece7727eeb14c73d53aeccc8626dbd38fcf070d0bbd",
+      "before": {
+        "lines": 100,
+        "bytes": 7202,
+        "lineLength": 144
+      },
+      "after": {
+        "lines": 122,
+        "bytes": 8763,
+        "lineLength": 144
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 22,
+        "bytes": 1561,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a19-code-definition-budget-proof.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "d5d260a0589b6d14ea03f86c5b773831bfb2a61b",
+      "sha256": "24561b1422262edf14571c2e19ffebe09d24ea9d0cb58dd2022364ac1a20c816",
+      "before": null,
+      "after": {
+        "lines": 78,
+        "bytes": 5938,
+        "lineLength": 145
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a19-correction-benchmark.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "077513a76d996903fc8fb4bc185362c030d41c81",
+      "sha256": "4e8bbe5ced480a941e0c5a34e970ebecef58919aea06e452b14270c8bf994d94",
+      "before": null,
+      "after": {
+        "lines": 98,
+        "bytes": 5465,
+        "lineLength": 122
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a19-runtime-host-timers.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "8b05f4ed71e088be9dbc005b7112c177f02bca8a",
+      "sha256": "18865aa0b7a299a09ec58012df48752ac1e15df61303b3b784d0d526aa504b1c",
+      "before": null,
+      "after": {
+        "lines": 92,
+        "bytes": 4127,
+        "lineLength": 120
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a19-studio-compiler-source-policy.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "8ec1b59aafaf0556372eb4a3c699aa2ba9ebb02c",
+      "sha256": "1080e9d443cde25a8b04e3a2b4f070d22d5624a17660cf5d768720e8d9984c8b",
+      "before": null,
+      "after": {
+        "lines": 138,
+        "bytes": 8553,
+        "lineLength": 133
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a19-studio-composition.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "659d9f4168e46ad3fc21325721acba47743c270f",
+      "sha256": "451a693eaa0e05c1bac4efd5364fc670778e05a5df9a1f90c970fb50cc1e29e0",
+      "before": {
+        "lines": 221,
+        "bytes": 12626,
+        "lineLength": 141
+      },
+      "after": {
+        "lines": 225,
+        "bytes": 12999,
+        "lineLength": 141
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 4,
+        "bytes": 373,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a19-studio-large-source-composition.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "b654cff5ef0f2fdf0a76150e362a2fd4a11b3e1b",
+      "sha256": "23d8d5e3fae8b26c988c72c78bfc4340cb1318425aeb0111dd16b9ccd1d38d86",
+      "before": null,
+      "after": {
+        "lines": 118,
+        "bytes": 7336,
+        "lineLength": 132
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a19-studio-runtime-timers.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "012179153a75e3d7742d5db9f8e700d79f4d085e",
+      "sha256": "12d667c8998026ec9d75e9f8eecc4c49c97173f6565769172c3726d7292f9e04",
+      "before": null,
+      "after": {
+        "lines": 113,
+        "bytes": 6231,
+        "lineLength": 139
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a20-fix-all.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "75494d697c094dbf6cfcf7eef3b7ff9a1c8224f1",
+      "sha256": "7fd260dfe546c58144569aca2965a840848b469efab180328e7a0cbdf0a4616b",
+      "before": {
+        "lines": 192,
+        "bytes": 11440,
+        "lineLength": 142
+      },
+      "after": {
+        "lines": 192,
+        "bytes": 11486,
+        "lineLength": 142
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 0,
+        "bytes": 46,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a20-keymap-host-timers.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "81d85914bf37eb978097486c2e71319f1e65b89e",
+      "sha256": "cafa6ba093dc485ab98cbedad5135a9f25615d6772e007b7327c3f77d435f850",
+      "before": null,
+      "after": {
+        "lines": 177,
+        "bytes": 6543,
+        "lineLength": 115
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a20-language-availability.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "a2e52b42d6940eb5618d45dc05e14cf4401e5b59",
+      "sha256": "f455007c24092bf44242429f2e1bf9f5db619e4d2f2e33e12cbfe6518e716834",
+      "before": null,
+      "after": {
+        "lines": 68,
+        "bytes": 3732,
+        "lineLength": 143
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/a20-studio-streamed-workspace.test.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "91240aed8d58b45f0189e110dd70e3cbd0e64887",
+      "sha256": "396d2d2d3c180ea6466608e2388b4ec278ebb2e1d9f1e7d89bebd9210537820b",
+      "before": {
+        "lines": 135,
+        "bytes": 8024,
+        "lineLength": 129
+      },
+      "after": {
+        "lines": 138,
+        "bytes": 8318,
+        "lineLength": 129
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 3,
+        "bytes": 294,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/browser_editor_budgets_test.py",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "18b3e1db243e2ae7a44d4da0006c940ce4ef0c2b",
+      "sha256": "a3f52ab661f54aaac83930814bc09e171a86c57908c203b50a5c649dd8c9ae80",
+      "before": {
+        "lines": 242,
+        "bytes": 13180,
+        "lineLength": 134
+      },
+      "after": {
+        "lines": 243,
+        "bytes": 13274,
+        "lineLength": 134
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 1,
+        "bytes": 94,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/editor-budget-trace.mjs",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "5108c360d0e47bb2e3159f9161d62ba9b712971d",
+      "sha256": "27997a7e9602315da4a8ac6791f85689f34aea6b446509e1fc4913c3245d5816",
+      "before": {
+        "lines": 172,
+        "bytes": 11138,
+        "lineLength": 136
+      },
+      "after": {
+        "lines": 224,
+        "bytes": 14900,
+        "lineLength": 139
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 52,
+        "bytes": 3762,
+        "lineLength": 3
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/fixtures/a19/install-browser-timers.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "5d66e64db91c75b4a7d3a9ab5aaeea2c4c1d839e",
+      "sha256": "1e84e3935fae15163ff89b81f0d5b8a1755a6819729bee42966446eee0c71ca6",
+      "before": null,
+      "after": {
+        "lines": 5,
+        "bytes": 233,
+        "lineLength": 103
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/fixtures/a19/runtime-worker-browser-timers.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "57722e82503bf8a9ef0617cf00ba90c100e04e54",
+      "sha256": "1da487f62784bcb7e61015967115307ac1f526012762ed31b395191bee06676a",
+      "before": null,
+      "after": {
+        "lines": 3,
+        "bytes": 73,
+        "lineLength": 37
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/fixtures/code-definition-budget.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "4ae565d8ed9baee5334294da7237679504c01253",
+      "sha256": "3b007c9065399bd7d02dc565507db8632c51d6dde983c1b01d4da36b72e67073",
+      "before": {
+        "lines": 107,
+        "bytes": 5506,
+        "lineLength": 128
+      },
+      "after": {
+        "lines": 129,
+        "bytes": 7146,
+        "lineLength": 129
+      },
+      "historicalBaseline": null,
+      "delta": {
+        "lines": 22,
+        "bytes": 1640,
+        "lineLength": 1
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/support/browser-global-timers.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "15923034bf360cb902b6c323d863a782c2bf6f52",
+      "sha256": "1faa675641efe377143f743e8e474fa6a04fce96e6b56f8c972911dd6037510d",
+      "before": null,
+      "after": {
+        "lines": 17,
+        "bytes": 711,
+        "lineLength": 124
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/support/studio-runtime-timers.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "ea58287fe5b8ae609eec7afaf70782112a361993",
+      "sha256": "d5a8e302fd6cf01f23376b2d544ad2d57daeeefdd905cd307cd65244aa549488",
+      "before": null,
+      "after": {
+        "lines": 68,
+        "bytes": 3075,
+        "lineLength": 128
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    },
+    {
+      "path": "tests/support/studio-source-policy.js",
+      "scope": "supplemental-test-fixture-source",
+      "sourceBlob": "fbcec750e472d04e6b7b578eb7fae34c92bcae3a",
+      "sha256": "a44844200dcb4b8bce2b885e15f6d9e801cdd8bfa763b0c068ee390a902bc22e",
+      "before": null,
+      "after": {
+        "lines": 50,
+        "bytes": 3059,
+        "lineLength": 129
+      },
+      "historicalBaseline": null,
+      "delta": null,
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    }
+  ],
+  "violations": [
+    {
+      "path": "apps/studio/compiler.worker.js",
+      "scope": "official-root-subset",
+      "sourceBlob": "f228a73410464b11201c9e4402eed96a8417edc0",
+      "sha256": "f71d16b7aa9b8f20b1cd8620e23715edf6e664b507cfd315fc526edfb9562ae0",
+      "before": {
+        "lines": 53,
+        "bytes": 8553,
+        "lineLength": 817
+      },
+      "after": {
+        "lines": 52,
+        "bytes": 8394,
+        "lineLength": 817
+      },
+      "historicalBaseline": {
+        "lines": 64,
+        "bytes": 8227,
+        "lineLength": 817
+      },
+      "delta": {
+        "lines": -1,
+        "bytes": -159,
+        "lineLength": 0
+      },
+      "officialGateViolations": [],
+      "frozenGrowthFromComparisonBase": [],
+      "supplementalSizeViolations": [],
+      "introducedLongLines": [
+        {
+          "line": 39,
+          "length": 518,
+          "sha256": "5a354bfb6c4308f0ed47a56d1bf2376234df78b1372eda73a23d2cf2a1d256f4"
+        },
+        {
+          "line": 41,
+          "length": 308,
+          "sha256": "06bc3fa93a6d92223019de43ba184488600d9d4f28e4f2249da5d3382ed5355c"
+        },
+        {
+          "line": 48,
+          "length": 562,
+          "sha256": "bba32341bdddc48fb223220b0894c2d229904bbd5fdb1c516757de7ad8908ab5"
+        }
+      ]
+    }
+  ],
+  "pythonAst": {
+    "path": "tests/browser_editor_budgets_test.py",
+    "sha256": "a3f52ab661f54aaac83930814bc09e171a86c57908c203b50a5c649dd8c9ae80",
+    "status": "parsed",
+    "operation": "ast.parse(decoded UTF-8 Git blob, filename=path); no imports or execution."
+  },
+  "status": "findings",
+  "limitsOfEvidence": [
+    "Not a whole-repository structure gate.",
+    "No Node, tests, builds, benchmarks or browser execution.",
+    "No baseline changes; unrelated untracked files are outside the pinned Git scope."
+  ]
+}

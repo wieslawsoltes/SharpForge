@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3a4e518a0fedbabea6a9",
+  "kind": "diagnostics",
+  "sourceText": "\n\npublic class VarArgs\n{\n    public int Invoke(__arglist) => throw null;\n}\n\nclass MyVarArgs : VarArgs, IVarArgs\n{\n\n}\n\nclass MyVarArgs2 : IVarArgs\n{\n    public int Invoke(__arglist) => throw null;\n}\n\nclass MyVarArgs3 : IVarArgs\n{\n    // this is ok, modifiers are copied\n    int IVarArgs.Invoke(__arglist) => throw null;\n}\n\npublic static class P\n{\n    public static void Main()\n    {\n        IVarArgs iv = new MyVarArgs3();\n\n        iv.Invoke(__arglist(1, 2, 3, 4));\n    }\n}\n",
+  "sourceSHA256": "22cb30455b7b869f08117f27d90f909de28cc9c85441aa8a7ef8b7ed50c28d09",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "sha256": "dae53259abfabce8d6076c19e32fbeece50934d98a2aa892d9416a8e94b054d4",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "license": "MIT",
+    "method": "VarargBridgeSourceModopt",
+    "offset": 335860
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { reference })",
+  "options": "(code, references: new[] { reference })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0630",
+        "severity": "error"
+      },
+      {
+        "code": "CS0630",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (15,16): error CS0630: 'MyVarArgs2.Invoke(__arglist)' cannot implement interface member 'IVarArgs.Invoke(__arglist)' in type 'MyVarArgs2' because it has an __arglist parameter\n                //     public int Invoke(__arglist) => throw null;\n                Diagnostic(ErrorCode.ERR_InterfaceImplementedImplicitlyByVariadic, \"Invoke\").WithArguments(\"MyVarArgs2.Invoke(__arglist)\", \"IVarArgs.Invoke(__arglist)\", \"MyVarArgs2\").WithLocation(15, 16),\n                // (8,28): error CS0630: 'VarArgs.Invoke(__arglist)' cannot implement interface member 'IVarArgs.Invoke(__arglist)' in type 'MyVarArgs' because it has an __arglist parameter\n                // class MyVarArgs : VarArgs, IVarArgs\n                Diagnostic(ErrorCode.ERR_InterfaceImplementedImplicitlyByVariadic, \"IVarArgs\").WithArguments(\"VarArgs.Invoke(__arglist)\", \"IVarArgs.Invoke(__arglist)\", \"MyVarArgs\").WithLocation(8, 28)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

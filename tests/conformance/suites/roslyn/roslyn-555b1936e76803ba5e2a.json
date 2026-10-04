@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-555b1936e76803ba5e2a",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Threading.Tasks;\n\nclass Program\n{\n    static Task M(bool b) => M2(async () =>\n        b ? await Task.Delay(1) : await Task.Delay(2));\n\n    static T M2<T>(Func<T> f) => f();\n}",
+  "sourceSHA256": "3c33cad9c5f5c2cb495a0444e9f88688a1a3ced5e439fe96b86a63837bdc1c55",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncTests.cs",
+    "sha256": "e775ebaa8455ffef5e68e336ab005933d69d5f2188f336f62d29b2cf0329a6aa",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncTests.cs",
+    "license": "MIT",
+    "method": "AsyncLambdaWithAwaitedTasksInTernary",
+    "offset": 262757
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0201",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,9): error CS0201: Only assignment, call, increment, decrement, await, and new object expressions can be used as a statement\n                //         b ? await Task.Delay(1) : await Task.Delay(2));\n                Diagnostic(ErrorCode.ERR_IllegalStatement, \"b ? await Task.Delay(1) : await Task.Delay(2)\").WithLocation(8, 9)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

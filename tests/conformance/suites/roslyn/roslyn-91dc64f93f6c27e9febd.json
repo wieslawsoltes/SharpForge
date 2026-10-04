@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-91dc64f93f6c27e9febd",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Collections.Generic;\npublic class Derived : Base2<int>\n{\n    public override void Method<T>(int x) { Console.WriteLine(\"Derived.Method<T>(int x)\"); }\n    public override void Method(List<int> x, int y) { Console.WriteLine(\"Derived.Method(List<int> x, int y)\"); }\n    public override List<int> Property { set { Console.WriteLine(\"Derived.set_Property\"); } }\n}\n\npublic class Test\n{\n    public static void Main()\n    {\n        Base<int> b = new Derived();\n        Base2<int> b2 = new Derived();\n\n        b.Method<long>(1);\n        b.Method(new List<int>(), 1);\n        List<int> x = null;\n        b.Property = x;\n        \n        b2.Method<long>(1);\n        b2.Method(new List<int>(), 1);\n        b2.Property = x;\n    }\n}",
+  "sourceSHA256": "c5974533f09a13ef27a1dff01b371300da1276d522c60d54b0f71aec64b12efb",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "sha256": "1362359003a56088beb732c1b01d57e4b0e4b8b408037adca585b20ae29b4f98",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "license": "MIT",
+    "method": "TestHideWithInaccessibleVirtualMember",
+    "offset": 108327
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source2,\n                    new[] { new CSharpCompilationReference(referencedCompilation) },\n                    options: TestOptions.ReleaseExe,\n                    assemblyName: \"OHI_CodeGen_TestHideWithInaccessibleVirtualMember2\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

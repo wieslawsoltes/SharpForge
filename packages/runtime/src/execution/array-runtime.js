@@ -1,21 +1,17 @@
 import {arrayRuntimeDefinition} from '@sharpforge/cil';
 import {ManagedFault, isReference} from '../heap.js';
-import {arrayRecord, arrayShape, createArray, arrayGet, arraySet} from './arrays.js';
+import {arrayRecord, arrayShape, createArray} from './arrays.js';
 import {arrayInteger} from './array-limits.js';
-import {storageRead, storageWrite, rawArrayBytes} from './array-storage.js';
-import {copyValue, boxValue, unboxValue} from './value-types.js';
-import {storageDefault} from './storage.js';
-import {checkArrayStore} from './casting.js';
-import {number} from './numeric-ops.js';
-import {fieldRvaData} from './field-rva.js';
+import {unboxValue} from './boxing.js';
+import {storageDefault, storageValue} from './storage.js';
+import {checkElementStore} from './casting.js';
+import {arrayCopyKind} from './array-element-copy.js';
+import {arrayInitializer} from './array-initializers.js';
+import {beginArrayOperation} from './array-continuations.js';
 
-function argumentArray(vm, reference) {
+export function argumentArray(vm, reference) {
   if (reference === null) throw new ManagedFault('ArgumentNullException', 'Array argument is null');
   return arrayRecord(vm, reference);
-}
-
-function writable(vm, reference) {
-  return vm.heap.ensureWritable ? vm.heap.ensureWritable(reference) : vm.heap.get(reference).data;
 }
 
 function range(record, start, count) {
@@ -28,150 +24,120 @@ function range(record, start, count) {
   return {offset, length};
 }
 
-export function copyArray(vm, source, sourceIndex, destination, destinationIndex, length) {
-  return vm.heap.withRoots([source, destination], () => {
-    const from = argumentArray(vm, source);
-    const to = argumentArray(vm, destination);
+/** Copy validates both complete ranges before mutation and retains memmove direction across yields. */
+export function copyArray(vm, source, destination, options = {}) {
+  return vm.heap.withRoots([source, destination, options.resultAddress], () => {
+    const from = argumentArray(vm, source), to = argumentArray(vm, destination);
     if (arrayShape(from).rank !== arrayShape(to).rank) throw new ManagedFault('RankException', 'Array ranks differ');
-    const input = range(from, sourceIndex, length);
-    const output = range(to, destinationIndex, length);
-    const sourceType = from.methodTable.elementType;
-    const targetType = to.methodTable.elementType;
-    const target = writable(vm, destination);
-    if (sourceType === targetType && ArrayBuffer.isView(target)) {
-      target.set(from.data.subarray(input.offset, input.offset + input.length), output.offset);
-      return;
+    const length = options.length ?? from.data.length;
+    const input = range(from, options.sourceIndex ?? arrayShape(from).lowerBounds[0], length);
+    const output = range(to, options.destinationIndex ?? arrayShape(to).lowerBounds[0], length);
+    const copyKind = arrayCopyKind(vm.heap.methodTables, from.methodTable.elementType, to.methodTable.elementType);
+    if (input.length === 0) {
+      if (options.resultAddress) vm.dereference(options.resultAddress, true, destination);
+      return options.resultKind === 'destination' ? destination : null;
     }
-    const backwards = source.h === destination.h && output.offset > input.offset;
-    for (let step = 0; step < input.length; step++) {
-      const index = backwards ? input.length - step - 1 : step;
-      let value = storageRead(from.data, input.offset + index, sourceType, {source: !!vm.image && !vm.inspector});
-      if (sourceType.flags.valueType && !targetType.flags.valueType) value = boxValue(vm, value, sourceType);
-      else if (!sourceType.flags.valueType && targetType.flags.valueType) value = unboxValue(vm, value, targetType);
-      else if (sourceType !== targetType && sourceType.flags.valueType && targetType.flags.valueType) {
-        // Reflection conversion implements the CLI primitive widening matrix.
-        const boxed = boxValue(vm, value, sourceType);
-        const flat = output.offset + index;
-        const indices = indicesForOffset(to, flat);
-        arraySet(vm, destination, indices, boxed, {reflection: true});
-        continue;
-      }
-      value = copyValue(vm, value, targetType);
-      checkArrayStore(vm.heap, to, value);
-      storageWrite(target, output.offset + index, value);
-    }
+    return beginArrayOperation(vm, {operation: 'Copy', source, destination, length: input.length,
+      sourceIndex: input.offset, destinationIndex: output.offset, copyKind,
+      backwards: source.h === destination.h && source.g === destination.g && output.offset > input.offset,
+      resultKind: options.resultKind ?? 'void', resultAddress: options.resultAddress ?? null},
+    {synchronous: options.synchronous !== false, returns: !!options.returns});
   });
 }
 
-function indicesForOffset(record, offset) {
-  const shape = arrayShape(record);
-  return shape.strides.map((stride, index) => {
-    const value = Math.floor(offset / stride);
-    offset %= stride;
-    return value + shape.lowerBounds[index];
+export function fillArray(vm, reference, value, options = {}) {
+  return vm.heap.withRoots([reference, value], () => {
+    const record = argumentArray(vm, reference);
+    const bounds = range(record, options.start ?? arrayShape(record).lowerBounds[0], options.length ?? record.data.length);
+    const element = record.methodTable.elementType;
+    const stored = storageValue(vm, value, element);
+    checkElementStore(vm.heap, element, stored);
+    if (!bounds.length) return null;
+    return beginArrayOperation(vm, {operation: options.operation ?? 'Fill', destination: reference,
+      destinationIndex: bounds.offset, length: bounds.length, value: stored}, {synchronous: options.synchronous !== false});
   });
 }
 
-export function clearArray(vm, reference, start = null, length = null) {
+export function clearArray(vm, reference, options = {}) {
   const record = argumentArray(vm, reference);
-  const lower = arrayShape(record).lowerBounds[0];
-  const bounds = range(record, start ?? lower, length ?? record.data.length);
-  const data = writable(vm, reference);
-  const zero = storageDefault(vm, record.methodTable.elementType);
-  for (let index = bounds.offset; index < bounds.offset + bounds.length; index++) storageWrite(data, index, zero);
+  return fillArray(vm, reference, storageDefault(vm, record.methodTable.elementType), {...options, operation: 'Clear'});
 }
 
-export function cloneArray(vm, reference) {
-  const record = argumentArray(vm, reference);
-  const shape = arrayShape(record);
+export function cloneArray(vm, reference, {synchronous = true} = {}) {
+  const record = argumentArray(vm, reference), shape = arrayShape(record);
   return vm.heap.withRoots([reference], () => {
     const clone = createArray(vm, record.methodTable.elementType, [...shape.lengths], [...shape.lowerBounds]);
-    copyArray(vm, reference, shape.lowerBounds[0], clone, shape.lowerBounds[0], record.data.length);
-    return clone;
+    return copyArray(vm, reference, clone, {synchronous, resultKind: 'destination', returns: true});
   });
 }
 
-function equalValue(vm, left, right) {
-  if (left === null || right === null) return left === right;
-  if (isReference(left) !== isReference(right)) return false;
-  if (isReference(left) && isReference(right)) {
-    const a = vm.heap.get(left);
-    const b = vm.heap.get(right);
-    if (a.kind === 'string' && b.kind === 'string') return a.data === b.data;
-    if (a.kind === 'box' && b.kind === 'box') return a.methodTable === b.methodTable && equalValue(vm, a.data[0], b.data[0]);
-    return left.h === right.h && left.g === right.g;
-  }
-  if (left?.valueType && right?.valueType) {
-    return left.valueType === right.valueType && left.fields.every((value, index) => equalValue(vm, value, right.fields[index]));
-  }
-  if(left?.enumType||right?.enumType)return left?.enumType===right?.enumType&&left?.value===right?.value;
-  const a = number(left);
-  const b = number(right);
-  return a === b || typeof a === 'number' && typeof b === 'number' && Number.isNaN(a) && Number.isNaN(b);
-}
-
-export function indexOfArray(vm, reference, value, start = null, length = null, boxed = false) {
-  const record = argumentArray(vm, reference);
-  const shape = arrayShape(record);
-  if (shape.rank !== 1) throw new ManagedFault('RankException', 'IndexOf requires a vector');
+export function indexOfArray(vm, reference, value, options = {}) {
+  const record = argumentArray(vm, reference), shape = arrayShape(record);
+  if (shape.rank !== 1) throw new ManagedFault('RankException', 'IndexOf requires one dimension');
   const lower = shape.lowerBounds[0];
-  const first = start ?? lower;
-  const bounds = range(record, first, length ?? record.data.length - (first - lower));
-  const element = record.methodTable.elementType;
-  if (boxed && element.flags.valueType) {
+  let start = options.start ?? lower;
+  let length = options.length ?? record.data.length - (start - lower);
+  if (options.backwards) {
+    start = options.start ?? lower + record.data.length - 1;
+    length = options.length ?? start - lower + 1;
+    start -= length - 1;
+  }
+  const bounds = range(record, start, length), element = record.methodTable.elementType;
+  if (options.boxed && element.flags.valueType) {
     if (value === null || !isReference(value) || vm.heap.get(value).methodTable !== element) return lower - 1;
     value = unboxValue(vm, value, element);
   }
-  for (let index = bounds.offset; index < bounds.offset + bounds.length; index++) {
-    if (equalValue(vm, storageRead(record.data, index, element, {source:!!vm.image&&!vm.inspector}), value)) return index + lower;
-  }
-  return lower - 1;
+  if (!bounds.length) return lower - 1;
+  return vm.heap.withRoots([reference, value], () => beginArrayOperation(vm, {
+    operation: 'IndexOf', source: reference, sourceIndex: bounds.offset, length: bounds.length,
+    lowerBound: lower, value, backwards: !!options.backwards, comparisonPending: false, resultKind: 'search', result: lower - 1
+  }, {synchronous: options.synchronous !== false, returns: true}));
 }
 
-export function initializeArray(vm, reference, handle) {
-  const record = argumentArray(vm, reference);
-  const data = fieldRvaData(vm, handle);
-  let bytes;
-  try { bytes = rawArrayBytes(writable(vm, reference)); }
-  catch { throw new ManagedFault('ArgumentException', 'InitializeArray requires primitive storage'); }
-  if (bytes.length > data.length) throw new ManagedFault('ArgumentException', 'Field initializer is smaller than the array');
-  bytes.set(data.subarray(0, bytes.length));
-  return null;
+export function initializeArray(vm, reference, handle, {synchronous = true} = {}) {
+  const record = argumentArray(vm, reference), plan = arrayInitializer(vm, record, handle);
+  if (!plan.length) return null;
+  return beginArrayOperation(vm, {operation: 'InitializeArray', destination: reference, ...plan}, {synchronous});
 }
 
+function resizeArray(vm, definition, args) {
+  const previous = vm.dereference(args[0]);
+  const length = arrayInteger(args[1], 'ArgumentOutOfRangeException');
+  if (length < 0) throw new ManagedFault('ArgumentOutOfRangeException', 'Resize length is negative');
+  if (previous !== null && length === arrayRecord(vm, previous).data.length) return null;
+  return vm.heap.withRoots([previous, args[0]], () => {
+    const replacement = createArray(vm, definition.element, [length]);
+    if (previous === null) {
+      vm.dereference(args[0], true, replacement);
+      return null;
+    }
+    return copyArray(vm, previous, replacement, {length: Math.min(length, arrayRecord(vm, previous).data.length),
+      resultAddress: args[0], synchronous: false});
+  });
+}
+
+const implementations = Object.freeze({
+  initialize: (vm, _definition, args) => initializeArray(vm, args[0], args[1], {synchronous: false}),
+  clone: (vm, _definition, args) => {
+    arrayRecord(vm, args[0]);
+    return cloneArray(vm, args[0], {synchronous: false});
+  },
+  clear: (vm, _definition, args) => clearArray(vm, args[0], {start: args[1], length: args[2], synchronous: false}),
+  copy: (vm, _definition, args) => args.length === 3
+    ? copyArray(vm, args[0], args[1], {length: args[2], synchronous: false})
+    : copyArray(vm, args[0], args[2], {sourceIndex: args[1], destinationIndex: args[3], length: args[4], synchronous: false}),
+  indexOf: (vm, definition, args) => indexOfArray(vm, args[0], args[1], {
+    start: args[2], length: args[3], boxed: !definition.element, synchronous: false
+  }),
+  resize: resizeArray
+});
+
+/** Paired CIL profile admission selects a complete runtime operation before any fallback call path. */
 export function arrayRuntimeCall(vm, descriptor, args) {
   const definition = arrayRuntimeDefinition(descriptor);
   if (!definition) return {handled: false};
-  let value = null;
-  switch (definition.operation) {
-    case 'initialize': value = initializeArray(vm, args[0], args[1]); break;
-    case 'clone':
-      arrayRecord(vm, args[0]); // Instance calls use NullReferenceException for a null receiver.
-      value = cloneArray(vm, args[0]);
-      break;
-    case 'clear': clearArray(vm, args[0], args[1] ?? null, args[2] ?? null); break;
-    case 'copy':
-      if (args.length === 3) {
-        const from = arrayShape(argumentArray(vm, args[0])).lowerBounds[0];
-        const to = arrayShape(argumentArray(vm, args[1])).lowerBounds[0];
-        copyArray(vm, args[0], from, args[1], to, args[2]);
-      } else copyArray(vm, args[0], args[1], args[2], args[3], args[4]);
-      break;
-    case 'indexOf': value = indexOfArray(vm, args[0], args[1], args[2] ?? null, args[3] ?? null, !definition.element); break;
-    case 'resize': {
-      const previous = vm.dereference(args[0]);
-      const length = arrayInteger(args[1], 'ArgumentOutOfRangeException');
-      if (length < 0) throw new ManagedFault('ArgumentOutOfRangeException', 'Resize length is negative');
-      if (previous !== null && length === arrayRecord(vm, previous).data.length) break;
-      vm.heap.withRoots([previous, args[0]], () => {
-        const replacement = createArray(vm, definition.element, [length]);
-        vm.heap.withRoots([replacement], () => {
-          if (previous !== null) copyArray(vm, previous, 0, replacement, 0, Math.min(length, arrayRecord(vm, previous).data.length));
-          vm.dereference(args[0], true, replacement);
-        });
-      });
-      break;
-    }
-  }
+  const implementation = implementations[definition.operation];
+  if (!implementation) throw new ManagedFault('MissingMethodException', 'Unregistered array operation');
+  const value = implementation(vm, definition, args);
   return {handled: true, returns: descriptor.signature.returnType !== 'void', value};
 }

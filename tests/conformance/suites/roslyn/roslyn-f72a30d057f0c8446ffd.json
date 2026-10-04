@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f72a30d057f0c8446ffd",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass Test\n{\n    Class1 field1;\n    Class1 Prop1 { get; set; }\n    void Method1(Class1 c) {}\n\n    public static void Main()\n    {\n        Class1 c = null;\n        Test t = new Test();\n        t.field1 = c;\n        t.Prop1 = c;\n        t.Method1(new Class1());\n\n        Mydeleg x = (i) => i;\n    }\n}\n\n[Obsolete(\"Do not use this type\", true)]\nclass Class1 {}\n\n[Obsolete]\n[SelfRecursive]\nclass SelfRecursiveAttribute : Attribute {}\n\n[Obsolete(\"Do not use A1\", false)]\n[A2]\nclass A1 : Attribute {}\n\n[Obsolete]\n[A1]\nclass A2: Attribute {}\n\n[A1]\nclass A3: Attribute {}\n\nclass AttrWithType : Attribute\n{\n    public AttrWithType(Type t) {}\n}\n\n[Obsolete]\n[Another]\nclass G<T, U> {}\n\n[Obsolete]\n[AttrWithType(typeof(G<int, AnotherAttribute>))]\nclass AnotherAttribute: Attribute {}\n\n[AttrWithType(typeof(G<int, AnotherAttribute>))]\nclass AnotherAttribute1: Attribute {}\n\n[System.Obsolete(\"This message\" + \" should be concat'ed\", !(false))]\n[SelfRecursive1]\nclass SelfRecursive1Attribute : Attribute {}\n\n[Obsolete]\npublic delegate int Mydeleg(int x);\n\n[GooAttribute.BarAttribute.Baz]\n[Obsolete(\"Blah\")]\nclass GooAttribute : Attribute\n{\n    class BazAttribute : Attribute { }\n\n    class BarAttribute : GooAttribute { }\n}\n\nnamespace TypeClashWithNS\n{\n    class BarAttribute : Attribute {}\n}\n\n[TypeClashWithNS.Bar]\nclass TypeClashWithNS : Attribute\n{\n    class BarAttribute : Attribute { }\n}\n\ninterface IGoo<T> {}\n[Obsolete]\nclass SelfReferenceInBase : IGoo<SelfReferenceInBase> {}\n\nclass SelfReferenceInBase1 : IGoo<SelfReferenceInBase> {}\n\n",
+  "sourceSHA256": "e998521ccefb6f66c24f9e900b4e593913cba4fd0fdf915aa38f3d78be4d672d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeOnTypes",
+    "offset": 224706
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0101",
+        "severity": "error"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (78,7): error CS0101: The namespace '<global namespace>' already contains a definition for 'TypeClashWithNS'\n                // class TypeClashWithNS : Attribute\n                Diagnostic(ErrorCode.ERR_DuplicateNameInNS, \"TypeClashWithNS\").WithArguments(\"TypeClashWithNS\", \"<global namespace>\").WithLocation(78, 7),\n                // (53,29): warning CS0612: 'AnotherAttribute' is obsolete\n                // [AttrWithType(typeof(G<int, AnotherAttribute>))]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"AnotherAttribute\").WithArguments(\"AnotherAttribute\").WithLocation(53, 29),\n                // (53,22): warning CS0612: 'G<int, AnotherAttribute>' is obsolete\n                // [AttrWithType(typeof(G<int, AnotherAttribute>))]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"G<int, AnotherAttribute>\").WithArguments(\"G<int, AnotherAttribute>\").WithLocation(53, 22),\n                // (7,5): error CS0619: 'Class1' is obsolete: 'Do not use this type'\n                //     Class1 Prop1 { get; set; }\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Class1\").WithArguments(\"Class1\", \"Do not use this type\").WithLocation(7, 5),\n                // (87,35): warning CS0612: 'SelfReferenceInBase' is obsolete\n                // class SelfReferenceInBase1 : IGoo<SelfReferenceInBase> {}\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"SelfReferenceInBase\").WithArguments(\"SelfReferenceInBase\").WithLocation(87, 35),\n                // (6,5): error CS0619: 'Class1' is obsolete: 'Do not use this type'\n                //     Class1 field1;\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Class1\").WithArguments(\"Class1\", \"Do not use this type\").WithLocation(6, 5),\n                // (37,2): warning CS0618: 'A1' is obsolete: 'Do not use A1'\n                // [A1]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"A1\").WithArguments(\"A1\", \"Do not use A1\").WithLocation(37, 2),\n                // (8,18): error CS0619: 'Class1' is obsolete: 'Do not use this type'\n                //     void Method1(Class1 c) {}\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Class1\").WithArguments(\"Class1\", \"Do not use this type\").WithLocation(8, 18),\n                // (12,9): error CS0619: 'Class1' is obsolete: 'Do not use this type'\n                //         Class1 c = null;\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Class1\").WithArguments(\"Class1\", \"Do not use this type\").WithLocation(12, 9),\n                // (16,23): error CS0619: 'Class1' is obsolete: 'Do not use this type'\n                //         t.Method1(new Class1());\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Class1\").WithArguments(\"Class1\", \"Do not use this type\").WithLocation(16, 23),\n                // (18,9): warning CS0612: 'Mydeleg' is obsolete\n                //         Mydeleg x = (i) => i;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"Mydeleg\").WithArguments(\"Mydeleg\").WithLocation(18, 9)",
+  "unsupported": []
+}

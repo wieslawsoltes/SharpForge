@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7813bbf69914446d28b9",
+  "kind": "diagnostics",
+  "sourceText": "\n#pragma warning disable 169\n\nusing System.Runtime.InteropServices;\n\nclass X\n{\n    public static void f1(\n        [MarshalAs(UnmanagedType.ByValArray)]\n        int ByValArray,\n\n        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1)]\n        int ByValTStr\n    ) \n    {\n    }\n\n    [return: MarshalAs(UnmanagedType.ByValArray)]\n    public static int f2() { return 0; }\n\n    [return: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1)]\n    public static int f3() { return 0; }\n\n    [MarshalAs(UnmanagedType.VBByRefStr)]\n    public int field;\n}\n",
+  "sourceSHA256": "b4a43a6a76c7414f783e032ebe518ac04f4f6d37041e23e9b400a5ba82a900f2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "sha256": "bb4e4ad059ab1c1eda93b5a74e4516301a4d849e95af99ceb05f3e76a1b628a0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "license": "MIT",
+    "method": "Parameters_Errors",
+    "offset": 77426
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7055",
+        "severity": "error"
+      },
+      {
+        "code": "CS7055",
+        "severity": "error"
+      },
+      {
+        "code": "CS7055",
+        "severity": "error"
+      },
+      {
+        "code": "CS7055",
+        "severity": "error"
+      },
+      {
+        "code": "CS7054",
+        "severity": "error"
+      },
+      {
+        "code": "CS0649",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,20): error CS7055: Unmanaged type 'ByValArray' is only valid for fields.\n                Diagnostic(ErrorCode.ERR_MarshalUnmanagedTypeOnlyValidForFields, \"UnmanagedType.ByValArray\").WithArguments(\"ByValArray\"),\n                // (10,20): error CS7055: Unmanaged type 'ByValTStr' is only valid for fields.\n                Diagnostic(ErrorCode.ERR_MarshalUnmanagedTypeOnlyValidForFields, \"UnmanagedType.ByValTStr\").WithArguments(\"ByValTStr\"),\n                // (16,24): error CS7055: Unmanaged type 'ByValArray' is only valid for fields.\n                Diagnostic(ErrorCode.ERR_MarshalUnmanagedTypeOnlyValidForFields, \"UnmanagedType.ByValArray\").WithArguments(\"ByValArray\"),\n                // (19,24): error CS7055: Unmanaged type 'ByValTStr' is only valid for fields.\n                Diagnostic(ErrorCode.ERR_MarshalUnmanagedTypeOnlyValidForFields, \"UnmanagedType.ByValTStr\").WithArguments(\"ByValTStr\"),\n                // (22,16): error CS7054: Unmanaged type 'VBByRefStr' not valid for fields.\n                Diagnostic(ErrorCode.ERR_MarshalUnmanagedTypeNotValidForFields, \"UnmanagedType.VBByRefStr\").WithArguments(\"VBByRefStr\"),\n\n                // TODO (tomat): remove\n\n                // (23,16): warning CS0649: Field 'X.field' is never assigned to, and will always have its default value 0\n                Diagnostic(ErrorCode.WRN_UnassignedInternalField, \"field\").WithArguments(\"X.field\", \"0\")",
+  "unsupported": []
+}

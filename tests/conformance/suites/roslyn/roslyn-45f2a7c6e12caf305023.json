@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-45f2a7c6e12caf305023",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\n[Obsolete]\npublic class C { }",
+  "sourceSHA256": "62dc4a18c21d2ff4123f224322fc74daa6c731ced70c3651a7b0cc530cadddec",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticAnalyzerTests.cs",
+    "sha256": "44af3a2b3a9902d6a7259ce0c742c45e4a6948fa26f70a2cd52f9e39ce49587c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "DiagnosticAnalyzerSyntaxNodeAndSymbolAnalysis",
+    "offset": 14013
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: options)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

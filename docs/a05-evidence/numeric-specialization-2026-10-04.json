@@ -1,0 +1,450 @@
+{
+  "testedCommit": "1b162c88173dec2eed5b2b996ea7771f3d0acd2c",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "arch": "x64",
+  "results": [
+    {
+      "width": 32,
+      "requested": 1000000,
+      "completed": 1000000,
+      "requiredForAcceptance": 1000000,
+      "status": "passed",
+      "operations": [
+        {
+          "operation": "add",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "add_i4"
+        },
+        {
+          "operation": "sub",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "sub_i4"
+        },
+        {
+          "operation": "mul",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "mul_i4"
+        },
+        {
+          "operation": "and",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "and_i4"
+        },
+        {
+          "operation": "or",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "or_i4"
+        },
+        {
+          "operation": "xor",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "xor_i4"
+        },
+        {
+          "operation": "shl",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "shl_i4"
+        },
+        {
+          "operation": "shr",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "shr_i4"
+        },
+        {
+          "operation": "shr.un",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "shr_un_i4"
+        },
+        {
+          "operation": "div",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 13,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "div_i4"
+        },
+        {
+          "operation": "rem",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 13,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "rem_i4"
+        },
+        {
+          "operation": "div.un",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 12,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "div_un_i4"
+        },
+        {
+          "operation": "rem.un",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 12,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "rem_un_i4"
+        },
+        {
+          "operation": "add.ovf",
+          "requested": 38462,
+          "completed": 38462,
+          "faults": 9538,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "add_ovf_i4"
+        },
+        {
+          "operation": "sub.ovf",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 9595,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "sub_ovf_i4"
+        },
+        {
+          "operation": "mul.ovf",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 38379,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "mul_ovf_i4"
+        },
+        {
+          "operation": "add.ovf.un",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 19096,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "add_ovf_un_i4"
+        },
+        {
+          "operation": "sub.ovf.un",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 19361,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "sub_ovf_un_i4"
+        },
+        {
+          "operation": "mul.ovf.un",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 38397,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "mul_ovf_un_i4"
+        },
+        {
+          "operation": "neg",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "neg_i4"
+        },
+        {
+          "operation": "not",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "not_i4"
+        },
+        {
+          "operation": "ceq",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "ceq_i4"
+        },
+        {
+          "operation": "clt",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "clt_i4"
+        },
+        {
+          "operation": "clt.un",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "clt_un_i4"
+        },
+        {
+          "operation": "cgt",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "cgt_i4"
+        },
+        {
+          "operation": "cgt.un",
+          "requested": 38461,
+          "completed": 38461,
+          "faults": 0,
+          "safeInt64Operands": 0,
+          "wideInt64Operands": 0,
+          "handler": "cgt_un_i4"
+        }
+      ],
+      "backend": "JavaScript direct CIL, verifier-selected instruction handlers",
+      "reference": "Generic CLI handlers",
+      "nativeQualification": false,
+      "elapsedMs": 3405.4822919999997,
+      "meetsAcceptanceCount": true
+    },
+    {
+      "width": 64,
+      "requested": 10000000,
+      "completed": 10000000,
+      "requiredForAcceptance": 10000000,
+      "status": "passed",
+      "operations": [
+        {
+          "operation": "add",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 0,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "add_small_i8"
+        },
+        {
+          "operation": "sub",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 0,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "sub_small_i8"
+        },
+        {
+          "operation": "mul",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 0,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "mul_small_i8"
+        },
+        {
+          "operation": "div",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 5164,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "div_small_i8"
+        },
+        {
+          "operation": "rem",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 5189,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "rem_small_i8"
+        },
+        {
+          "operation": "div.un",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 5214,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "div_un_small_i8"
+        },
+        {
+          "operation": "rem.un",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 5259,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "rem_un_small_i8"
+        },
+        {
+          "operation": "add.ovf",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 21832,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "add_ovf_small_i8"
+        },
+        {
+          "operation": "sub.ovf",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 22086,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "sub_ovf_small_i8"
+        },
+        {
+          "operation": "mul.ovf",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 175455,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "mul_ovf_small_i8"
+        },
+        {
+          "operation": "add.ovf.un",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 175250,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "add_ovf_un_small_i8"
+        },
+        {
+          "operation": "sub.ovf.un",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 175237,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "sub_ovf_un_small_i8"
+        },
+        {
+          "operation": "mul.ovf.un",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 345660,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "mul_ovf_un_small_i8"
+        },
+        {
+          "operation": "neg",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 0,
+          "safeInt64Operands": 438633,
+          "wideInt64Operands": 87683,
+          "handler": "neg_small_i8"
+        },
+        {
+          "operation": "ceq",
+          "requested": 526316,
+          "completed": 526316,
+          "faults": 0,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87791,
+          "handler": "ceq_small_i8"
+        },
+        {
+          "operation": "clt",
+          "requested": 526315,
+          "completed": 526315,
+          "faults": 0,
+          "safeInt64Operands": 438524,
+          "wideInt64Operands": 87791,
+          "handler": "clt_small_i8"
+        },
+        {
+          "operation": "clt.un",
+          "requested": 526315,
+          "completed": 526315,
+          "faults": 0,
+          "safeInt64Operands": 438524,
+          "wideInt64Operands": 87791,
+          "handler": "clt_un_small_i8"
+        },
+        {
+          "operation": "cgt",
+          "requested": 526315,
+          "completed": 526315,
+          "faults": 0,
+          "safeInt64Operands": 438525,
+          "wideInt64Operands": 87790,
+          "handler": "cgt_small_i8"
+        },
+        {
+          "operation": "cgt.un",
+          "requested": 526315,
+          "completed": 526315,
+          "faults": 0,
+          "safeInt64Operands": 438524,
+          "wideInt64Operands": 87791,
+          "handler": "cgt_un_small_i8"
+        }
+      ],
+      "backend": "JavaScript direct CIL, verifier-selected instruction handlers",
+      "reference": "Generic pure-BigInt CLI handlers",
+      "nativeQualification": false,
+      "elapsedMs": 74574.323582,
+      "meetsAcceptanceCount": true
+    }
+  ],
+  "testedTree": "6244d8fc4f1ba540245ac81a1797561110b8df80",
+  "options": {
+    "nativeBits": 64,
+    "seed": 1397113141,
+    "timeoutSeconds": 300,
+    "int32Cases": 1000000,
+    "int64Cases": 10000000
+  },
+  "purpose": "Correctness qualification of actual verifier-selected specialized dispatch against generic CLI handlers; not a timing comparison or fresh native CLR run."
+}

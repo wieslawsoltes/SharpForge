@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3c93e773419d1473ea94",
+  "kind": "diagnostics",
+  "sourceText": "\n[assembly: System.Runtime.CompilerServices.InternalsVisibleTo(\"asm3\")]\n\npublic class B : A\n{\n    internal override void M() { }\n    internal override int P { get { return 0; } }\n    internal override event System.Action E { add { } remove { } }\n}\n",
+  "sourceSHA256": "de1e341e5cfcbe6a7f39252f71581a0617861431a8a4c1e7263d431785d9ebe6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "IvtVirtualCall1",
+    "offset": 99873
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source2, new[] { ref1 }, options: TestOptions.SigningReleaseDll, assemblyName: \"asm2\", parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

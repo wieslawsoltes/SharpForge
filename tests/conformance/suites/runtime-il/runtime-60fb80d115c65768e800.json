@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-60fb80d115c65768e800",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\nusing System;\nusing System.Runtime.CompilerServices;\n\n\nnamespace Test_unusedindir_cs\n{\npublic class Program\n{\n    struct NotPromoted\n    {\n        public int a, b, c, d, e, f;\n    }\n\n    class TypeWithStruct\n    {\n        public NotPromoted small;\n\n        public TypeWithStruct() => small.c = 100;\n    }\n\n    [MethodImpl(MethodImplOptions.NoInlining)]\n    static void Escape(bool b)\n    {\n    }\n\n    [MethodImpl(MethodImplOptions.NoInlining)]\n    static NotPromoted Test(TypeWithStruct obj)\n    {\n        NotPromoted t = obj.small;\n        // Try to create an OBJ(ADDR(LCL_VAR)) tree that gtTryRemoveBoxUpstreamEffects\n        // does not remove due to a spurios exception side effect nor it parents it to\n        // a COMMA like many other unused trees are.\n        Escape(Unsafe.As<NotPromoted, NotPromoted>(ref t).GetType() == typeof(NotPromoted));\n        return t;\n    }\n\n    \n    public static int Main() => Test(new TypeWithStruct()).c;\n}\n}\n",
+  "language": "csharp",
+  "unsupported": [],
+  "opcodeFamilies": [],
+  "sourceSHA256": "737283148454ff8b205ee223c61667d188b7f6245198ef61a8451d9be6e2111a",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\nusing System;\nusing System.Runtime.CompilerServices;\nusing Xunit;\n\nnamespace Test_unusedindir_cs\n{\npublic class Program\n{\n    struct NotPromoted\n    {\n        public int a, b, c, d, e, f;\n    }\n\n    class TypeWithStruct\n    {\n        public NotPromoted small;\n\n        public TypeWithStruct() => small.c = 100;\n    }\n\n    [MethodImpl(MethodImplOptions.NoInlining)]\n    static void Escape(bool b)\n    {\n    }\n\n    [MethodImpl(MethodImplOptions.NoInlining)]\n    static NotPromoted Test(TypeWithStruct obj)\n    {\n        NotPromoted t = obj.small;\n        // Try to create an OBJ(ADDR(LCL_VAR)) tree that gtTryRemoveBoxUpstreamEffects\n        // does not remove due to a spurios exception side effect nor it parents it to\n        // a COMMA like many other unused trees are.\n        Escape(Unsafe.As<NotPromoted, NotPromoted>(ref t).GetType() == typeof(NotPromoted));\n        return t;\n    }\n\n    [Fact]\n    public static int TestEntryPoint() => Test(new TypeWithStruct()).c;\n}\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/Methodical/Boxing/misc/unusedindir.cs",
+    "sha256": "7f2ec6f0c780bcc22734b87e2bc87c9865a47206d1c3cdbebb1313588f07efda",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/Methodical/Boxing/misc/unusedindir.cs",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Remove Fact/OuterLoop discovery attributes and Xunit using; rename TestEntryPoint to Main. Test body unchanged."
+}

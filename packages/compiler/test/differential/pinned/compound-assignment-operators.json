@@ -1,0 +1,5 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "compound-assignment-operators/instance-operators-update-in-place":{"hash":"95fda07d862b0dc3","kind":"output","langVersion":"14.0","diagnostics":[],"output":"five\n+= 5\n6 True\n4 False\n16\n+= 3\n+= 4\n3 5\n"},
+  "compound-assignment-operators/cs9308-cs9310-cs0106-cs9340-cs0019":{"hash":"ccdddff8a6f306f9","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0649",27,1,"warning"],["CS9308",48,2,"error"],["CS9310",86,2,"error"],["CS0106",142,2,"error"],["CS9340",282,2,"error"],["CS0019",296,6,"error"]]},
+  "compound-assignment-operators/cs9260-below-csharp-14":{"hash":"37d9c35748f184d5","kind":"diagnostics","langVersion":"13.0","diagnostics":[["CS9260",47,2,"error"],["CS0019",127,6,"error"]]}
+}}

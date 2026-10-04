@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e1f2eb13ae68f38efac3",
+  "kind": "spec",
+  "sourceText": "public record struct IntOrBool\n{\n    private bool _isBool;\n    private int _value;\n\n    public IntOrBool(int value) => (_isBool, _value) = (false, value);\n    public IntOrBool(bool value) => (_isBool, _value) = (true, value ? 1 : 0);\n\n    public object Value => _isBool ? _value is 1 : _value;\n\n    public bool HasValue => true;\n    public bool TryGetValue(out int value)\n    {\n        value = _value;\n        return !_isBool;\n    }\n    public bool TryGetValue(out bool value)\n    {\n        value = _isBool && _value is 1;\n        return _isBool;\n    }\n}",
+  "sourceSHA256": "bd410c6523c8bf0ad04c52f82ac29659c5f5dce23707c029086f302e0bd1178f",
+  "target": "library",
+  "featureId": "csharp-15-0-unions",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/unions.md",
+    "sha256": "eb6de7e24e702567a909286e0b4b6d5b409ae3e7016fadd87ab4fc8c16c9fa4a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/unions.md",
+    "license": "NOASSERTION",
+    "offset": 9227
+  }
+}

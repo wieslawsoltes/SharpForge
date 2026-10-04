@@ -1,0 +1,120 @@
+{
+  "runtime": ".NET 10.0.5",
+  "architecture": "Arm64",
+  "observations": [
+    {
+      "platform": "anycpu",
+      "resources": [
+        {
+          "name": "public.binary",
+          "flags": 1,
+          "offset": 0
+        },
+        {
+          "name": "private.\u7A7A",
+          "flags": 2,
+          "offset": 264
+        },
+        {
+          "name": "empty",
+          "flags": 1,
+          "offset": 288
+        }
+      ],
+      "payloads": [
+        {
+          "name": "public.binary",
+          "bytes": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0\u002BP0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn\u002BAgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq\u002BwsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5\u002Bjp6uvs7e7v8PHy8/T19vf4\u002Bfr7/P3\u002B/w=="
+        },
+        {
+          "name": "private.\u7A7A",
+          "bytes": "ZW1iZWRkZWQAcmVzb3VyY2U="
+        },
+        {
+          "name": "empty",
+          "bytes": ""
+        }
+      ],
+      "execution": "passed"
+    },
+    {
+      "platform": "arm64",
+      "resources": [
+        {
+          "name": "public.binary",
+          "flags": 1,
+          "offset": 0
+        },
+        {
+          "name": "private.\u7A7A",
+          "flags": 2,
+          "offset": 264
+        },
+        {
+          "name": "empty",
+          "flags": 1,
+          "offset": 288
+        }
+      ],
+      "payloads": [
+        {
+          "name": "public.binary",
+          "bytes": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0\u002BP0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn\u002BAgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq\u002BwsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5\u002Bjp6uvs7e7v8PHy8/T19vf4\u002Bfr7/P3\u002B/w=="
+        },
+        {
+          "name": "private.\u7A7A",
+          "bytes": "ZW1iZWRkZWQAcmVzb3VyY2U="
+        },
+        {
+          "name": "empty",
+          "bytes": ""
+        }
+      ],
+      "execution": "passed"
+    },
+    {
+      "platform": "x64",
+      "resources": [
+        {
+          "name": "public.binary",
+          "flags": 1,
+          "offset": 0
+        },
+        {
+          "name": "private.\u7A7A",
+          "flags": 2,
+          "offset": 264
+        },
+        {
+          "name": "empty",
+          "flags": 1,
+          "offset": 288
+        }
+      ],
+      "payloads": [],
+      "execution": "unsupported-host"
+    },
+    {
+      "platform": "x86",
+      "resources": [
+        {
+          "name": "public.binary",
+          "flags": 1,
+          "offset": 0
+        },
+        {
+          "name": "private.\u7A7A",
+          "flags": 2,
+          "offset": 264
+        },
+        {
+          "name": "empty",
+          "flags": 1,
+          "offset": 288
+        }
+      ],
+      "payloads": [],
+      "execution": "unsupported-host"
+    }
+  ]
+}

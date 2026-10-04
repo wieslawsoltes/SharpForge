@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-263b82ef3206c0df12f3",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass A : Attribute\n{\n    public Type PublicField; // No CS0649\n    private Type PrivateField; // No CS0649\n    protected Type ProtectedField; // No CS0649\n    internal Type InternalField; // No CS0649\n    \n    [A(PublicField = typeof(int))]\n    [A(PrivateField = typeof(int))]\n    [A(ProtectedField = typeof(int))]\n    [A(InternalField = typeof(int))]\n    static void Main()\n    {\n    }\n}",
+  "sourceSHA256": "ba2d380e2df7b08a11d97a9be2bb3a860af3bcabc7fc36479944077649fa6e5a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "No_Warnings_For_Assigned_AttributeTypeFields",
+    "offset": 318355
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0617",
+        "severity": "error"
+      },
+      {
+        "code": "CS0617",
+        "severity": "error"
+      },
+      {
+        "code": "CS0617",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (13,8): error CS0617: 'PrivateField' is not a valid named attribute argument. Named attribute arguments must be fields which are not readonly, static, or const, or read-write properties which are public and not static.\n                //     [A(PrivateField = typeof(int))]\n                Diagnostic(ErrorCode.ERR_BadNamedAttributeArgument, \"PrivateField\").WithArguments(\"PrivateField\"),\n                // (14,8): error CS0617: 'ProtectedField' is not a valid named attribute argument. Named attribute arguments must be fields which are not readonly, static, or const, or read-write properties which are public and not static.\n                //     [A(ProtectedField = typeof(int))]\n                Diagnostic(ErrorCode.ERR_BadNamedAttributeArgument, \"ProtectedField\").WithArguments(\"ProtectedField\"),\n                // (15,8): error CS0617: 'InternalField' is not a valid named attribute argument. Named attribute arguments must be fields which are not readonly, static, or const, or read-write properties which are public and not static.\n                //     [A(InternalField = typeof(int))]\n                Diagnostic(ErrorCode.ERR_BadNamedAttributeArgument, \"InternalField\").WithArguments(\"InternalField\")",
+  "unsupported": []
+}

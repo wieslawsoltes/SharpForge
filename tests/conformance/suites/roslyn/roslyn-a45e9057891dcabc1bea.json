@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a45e9057891dcabc1bea",
+  "kind": "diagnostics",
+  "sourceText": "\n[IsReadOnly]\npublic class Test\n{\n\tpublic ref readonly int M(in int p) => ref p;\n}",
+  "sourceSHA256": "577e175d27611532e32a66aa1ea3da67f3af75fe40eb9d6c0e2d7ad57a3957d8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_RefReadOnly.cs",
+    "sha256": "2665f48f409039e29d4a618fc5f62e300dd7135d0832a11765aad115a6b75db9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_RefReadOnly.cs",
+    "license": "MIT",
+    "method": "UserReferencingIsReadOnlyAttributeShouldResultInAnError",
+    "offset": 34964
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,2): error CS0246: The type or namespace name 'IsReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                // [IsReadOnly]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"IsReadOnly\").WithArguments(\"IsReadOnlyAttribute\").WithLocation(2, 2),\n                // (2,2): error CS0246: The type or namespace name 'IsReadOnly' could not be found (are you missing a using directive or an assembly reference?)\n                // [IsReadOnly]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"IsReadOnly\").WithArguments(\"IsReadOnly\").WithLocation(2, 2)",
+  "unsupported": []
+}

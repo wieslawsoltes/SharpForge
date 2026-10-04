@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-b4ab38dc16e2370697b4",
+  "kind": "spec",
+  "sourceText": "string text = \"red\";\nint number = 14;\nconst int width = -4;",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [
+      "CS0219"
+    ]
+  },
+  "sourceSHA256": "b32c7466a0d6a030e7af95004647f71ab7ee00112c85e6f7bcdebdc31dbc8ebb",
+  "originalSource": "string text = \"red\";\nint number = 14;\nconst int width = -4;",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "InterpolatedStringExpressions",
+    "ignoredWarnings": [
+      "CS0219"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "InterpolatedStringExpressions",
+    "offsetInUnquotedMarkdown": 127568
+  }
+}

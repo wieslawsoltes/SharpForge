@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-987c552a4100fd88eae4",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static void M(in int arg1, in (int Alice, int Bob) arg2)\n    {\n        ref var y = ref arg1;\n        ref int a = ref arg2.Alice;\n    }\n}\n",
+  "sourceSHA256": "1b886b47bf157a9c38cb5576bd4aa7573c90cef5371baa4f2b901fbaf0b9ac0d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenInParametersTests.cs",
+    "sha256": "3dd7ab02ad53d49f5790678503b441f11393da95c6ca4e54ac9a4ee30296af53",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenInParametersTests.cs",
+    "license": "MIT",
+    "method": "InParamCannotAssignByref",
+    "offset": 28881
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8329",
+        "severity": "error"
+      },
+      {
+        "code": "CS8330",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,25): error CS8329: Cannot use variable 'arg1' as a ref or out value because it is a readonly variable\n                //         ref var y = ref arg1;\n                Diagnostic(ErrorCode.ERR_RefReadonlyNotField, \"arg1\").WithArguments(\"variable\", \"arg1\").WithLocation(6, 25),\n                // (7,25): error CS8330: Members of variable 'arg2' cannot be used as a ref or out value because it is a readonly variable\n                //         ref int a = ref arg2.Alice;\n                Diagnostic(ErrorCode.ERR_RefReadonlyNotField2, \"arg2.Alice\").WithArguments(\"variable\", \"arg2\").WithLocation(7, 25)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

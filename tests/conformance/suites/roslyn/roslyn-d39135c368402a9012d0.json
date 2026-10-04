@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d39135c368402a9012d0",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void M()\n    {\n        var x = (\"Alice\", \"Bob\");\n        System.Console.WriteLine($\"{x.Item1}\");\n    }\n}\n\nnamespace System\n{\n    public struct ValueTuple<T1, T2>\n    {\n        public string Item1; // Not T1\n        public int Item2;\n\n        public ValueTuple(T1 item1, T2 item2)\n        {\n            this.Item1 = \"1\";\n            this.Item2 = 2;\n        }\n\n        (T1, T2) M1() => throw null;\n        (T1 a, T2 b) M2() => throw null;\n    }\n}\n",
+  "sourceSHA256": "caee5af28075d2be066ddecf7caeda62f7ff801c3c1b14835c8fde60994a2d32",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "UnderlyingTypeMemberWithWrongSignature_1",
+    "offset": 156389
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, assemblyName: \"comp\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0229",
+        "severity": "error"
+      },
+      {
+        "code": "CS0229",
+        "severity": "error"
+      },
+      {
+        "code": "CS0229",
+        "severity": "error"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (20,18): error CS0229: Ambiguity between '(T1, T2).Item1' and '(T1, T2).Item1'\n                //             this.Item1 = \"1\";\n                Diagnostic(ErrorCode.ERR_AmbigMember, \"Item1\").WithArguments(\"(T1, T2).Item1\", \"(T1, T2).Item1\").WithLocation(20, 18),\n                // (21,18): error CS0229: Ambiguity between '(T1, T2).Item2' and '(T1, T2).Item2'\n                //             this.Item2 = 2;\n                Diagnostic(ErrorCode.ERR_AmbigMember, \"Item2\").WithArguments(\"(T1, T2).Item2\", \"(T1, T2).Item2\").WithLocation(21, 18),\n                // (7,39): error CS0229: Ambiguity between '(string, string).Item1' and '(string, string).Item1'\n                //         System.Console.WriteLine($\"{x.Item1}\");\n                Diagnostic(ErrorCode.ERR_AmbigMember, \"Item1\").WithArguments(\"(string, string).Item1\", \"(string, string).Item1\").WithLocation(7, 39),\n                // (6,13): warning CS0219: The variable 'x' is assigned but its value is never used\n                //         var x = (\"Alice\", \"Bob\");\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"x\").WithArguments(\"x\").WithLocation(6, 13)\n                ",
+  "unsupported": []
+}

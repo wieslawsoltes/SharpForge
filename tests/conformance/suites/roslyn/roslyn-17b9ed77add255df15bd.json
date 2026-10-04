@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-17b9ed77add255df15bd",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Threading.Tasks;\npublic class C\n{\n    public static async Task Main()\n    {\n        await foreach (var i in $\" \")\n        {\n            Console.Write(i);\n        }\n    }\n    public sealed class Enumerator\n    {\n        public int Current { get; private set; }\n        public Task<bool> MoveNextAsync() => Task.FromResult(Current++ != 3);\n    }\n}\npublic static class Extensions\n{\n    public static C.Enumerator GetAsyncEnumerator(this FormattableString self) => throw null;\n}",
+  "sourceSHA256": "acd9dcfab640d42594897bf3887ebdbc41b83cd52e300260bfed2a51e76cb4be",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestGetAsyncEnumeratorPatternViaExtensionsWithFormattableStringConversion3",
+    "offset": 486950
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1929",
+        "severity": "error"
+      },
+      {
+        "code": "CS8415",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (8,33): error CS1929: 'string' does not contain a definition for 'GetAsyncEnumerator' and the best extension method overload 'Extensions.GetAsyncEnumerator(FormattableString)' requires a receiver of type 'FormattableString'\n                    //         await foreach (var i in $\" \")\n                    Diagnostic(ErrorCode.ERR_BadInstanceArgType, @\"$\"\" \"\"\").WithArguments(\"string\", \"GetAsyncEnumerator\", \"Extensions.GetAsyncEnumerator(System.FormattableString)\", \"System.FormattableString\").WithLocation(8, 33),\n                    // (8,33): error CS8415: Asynchronous foreach statement cannot operate on variables of type 'string' because 'string' does not contain a public instance or extension definition for 'GetAsyncEnumerator'. Did you mean 'foreach' rather than 'await foreach'?\n                    //         await foreach (var i in $\" \")\n                    Diagnostic(ErrorCode.ERR_AwaitForEachMissingMemberWrongAsync, @\"$\"\" \"\"\").WithArguments(\"string\", \"GetAsyncEnumerator\").WithLocation(8, 33)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

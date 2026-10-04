@@ -1,11 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {compileToIL} from '@sharpforge/compiler';
-import {loadAssembly} from '@sharpforge/cil';
-import {VirtualMachine, CilVirtualMachine, serializeSnapshot, restoreSerializedSnapshot} from '@sharpforge/runtime';
+import {
+  compileToIL
+} from '@sharpforge/compiler';
+import {
+  loadAssembly
+} from '@sharpforge/cil';
+import {
+  VirtualMachine,
+  CilVirtualMachine,
+  serializeSnapshot,
+  restoreSerializedSnapshot
+} from '@sharpforge/runtime';
 
-const cases = [
-  {
+const cases = [{
     name: 'cross-frame filters precede cleanup',
     members: 'static void Fail(){try{Console.WriteLine("throw");throw new Exception("original");}' +
       'finally{Console.WriteLine("cleanup");}}' +
@@ -78,10 +86,15 @@ for (const [engine, create] of Object.entries(engines)) {
     const artifact = build(cases[0]);
     const original = create(artifact);
     for (let steps = 0; steps < 1000 && !original.frames.some(frame => frame.filterSearch); steps++) {
-      original.runSlice({instructionBudget: 1, timeBudgetMs: 1000});
+      original.runSlice({
+        instructionBudget: 1,
+        timeBudgetMs: 1000
+      });
     }
     assert(original.frames.some(frame => frame.filterSearch));
-    const payload = await serializeSnapshot(original, original.snapshot(), {json: true});
+    const payload = await serializeSnapshot(original, original.snapshot(), {
+      json: true
+    });
     original.stop();
     original.heap.collect();
     const fresh = create(artifact);

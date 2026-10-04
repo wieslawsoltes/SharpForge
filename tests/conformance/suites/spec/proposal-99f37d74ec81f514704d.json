@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-99f37d74ec81f514704d",
+  "kind": "spec",
+  "sourceText": "// File1.cs\nnamespace NS1\n{\n    file class C\n    {\n        public static void M() { }\n    }\n}\n\nnamespace NS2\n{\n    class Program\n    {\n        public static void M()\n        {\n            C.M(); // error: C is not in scope\n            NS1.C.M(); // ok: C can be accessed through NS1.\n        }\n    }\n}",
+  "sourceSHA256": "06ee6cf15a37f5c4f6dcf16387befee8d7c36ec568b821ee165291ece5ebeb4d",
+  "target": "library",
+  "featureId": "csharp-11-0-file-local-types",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/file-local-types.md",
+    "sha256": "c9907c62543e8698e69f8bd26b0435b3365ebd1e7405b79536b18134385374b6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/file-local-types.md",
+    "license": "NOASSERTION",
+    "offset": 4807
+  }
+}

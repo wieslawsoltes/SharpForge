@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f45348eb8483c7c8c1f8",
+  "kind": "diagnostics",
+  "sourceText": "partial class C\n{\n    partial event System.Action E, F = null;\n    partial event System.Action E { add { } remove { } }\n    partial event System.Action F { add { } remove { } }\n}",
+  "sourceSHA256": "5b844c40ca9f1d4c83c842f02b732debb9177512d18ed1dd16cac8be71be6d5a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "EventInitializer_Multiple_01",
+    "offset": 35973
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9279",
+        "severity": "error"
+      },
+      {
+        "code": "CS0414",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,36): error CS9279: 'C.F': partial event cannot have initializer\n            //     partial event System.Action E, F = null;\n            Diagnostic(ErrorCode.ERR_PartialEventInitializer, \"F\").WithArguments(\"C.F\").WithLocation(3, 36),\n            // (3,36): warning CS0414: The field 'C.F' is assigned but its value is never used\n            //     partial event System.Action E, F = null;\n            Diagnostic(ErrorCode.WRN_UnreferencedFieldAssg, \"F\").WithArguments(\"C.F\").WithLocation(3, 36)",
+  "unsupported": []
+}

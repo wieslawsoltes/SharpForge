@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-b6462b5001791cef9ca9",
+  "kind": "spec",
+  "sourceText": "namespace System.Runtime.CompilerServices\n{\n    public static class RuntimeHelpers\n    {\n        public static T[] GetSubArray<T>(T[] array, System.Range range);\n    }\n}",
+  "sourceSHA256": "b0be69d1ad6f37dd135f217d0405f59e9c3afec85ec40b365d50b26db3738221",
+  "target": "library",
+  "featureId": "csharp-8-0-ranges-and-indexes",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/ranges.md",
+    "sha256": "9419e0ac1a7ac5309d11cf3ee4ea64a38c2abbf82e8197f5211e7d93ec077363",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/ranges.md",
+    "license": "NOASSERTION",
+    "offset": 1771
+  }
+}

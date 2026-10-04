@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9b5591a889ed799d9045",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class B\n{\n    void M2() { return A.M(); }\n}\n",
+  "sourceSHA256": "43b194940e1a57394eb1b5f9432e7561b406f9402469da59ce2ddbfd586febf4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "RetargetTupleErrorType",
+    "offset": 975219
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { lib.ToMetadataReference() })",
+  "options": "(source, references: new[] { lib.ToMetadataReference() })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0012",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,24): error CS0012: The type '(, )' is defined in an assembly that is not referenced. You must add a reference to assembly 'System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51'.\n                //     void M2() { return A.M(); }\n                Diagnostic(ErrorCode.ERR_NoTypeDef, \"A.M\").WithArguments(\"(, )\", \"System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51\").WithLocation(4, 24)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

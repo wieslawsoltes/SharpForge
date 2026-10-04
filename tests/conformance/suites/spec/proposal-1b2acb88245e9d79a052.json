@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-1b2acb88245e9d79a052",
+  "kind": "spec",
+  "sourceText": "new C2().M([1, 2, 3]); // Will print Ext2 ReadOnlySpan\n\nstatic class Ext1\n{\n    [OverloadResolutionPriority(1)]\n    public static void M(this C2 c, Span<int> s) => Console.WriteLine(\"Ext1 Span\");\n    [OverloadResolutionPriority(0)]\n    public static void M(this C2 c, ReadOnlySpan<int> s) => Console.WriteLine(\"Ext1 ReadOnlySpan\");\n}\n\nstatic class Ext2\n{\n    [OverloadResolutionPriority(0)]\n    public static void M(this C2 c, ReadOnlySpan<int> s) => Console.WriteLine(\"Ext2 ReadOnlySpan\");\n}\n\nclass C2 {}",
+  "sourceSHA256": "91c6ad5f65b1dd5522546667f822e84c13084980ebc368b3027fcbe6ceea58e5",
+  "target": "library",
+  "featureId": "csharp-13-0-overload-resolution-priority",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/overload-resolution-priority.md",
+    "sha256": "3ae409649aa5fc38d1b6a2d6a156f641c7c72feba0e394ce5765522d2322138b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/overload-resolution-priority.md",
+    "license": "NOASSERTION",
+    "offset": 10613
+  }
+}

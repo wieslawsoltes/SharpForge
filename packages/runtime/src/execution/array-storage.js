@@ -20,6 +20,18 @@ export function cloneArrayStorage(data) {
   return data?.readonlySnapshotArray ? data.toMutableArray() : data.slice();
 }
 
+/** Normalize to the declared primitive width; replacement callers always request independent ownership. */
+export function normalizeArrayStorage(element, data, copy = false) {
+  const constructor = primitiveArrayConstructor(element);
+  if (!constructor || data instanceof constructor) return copy ? cloneArrayStorage(data) : data;
+  if (data?.readonlySnapshotArray && data.typedArrayName === constructor.name) return cloneArrayStorage(data);
+  const result = new constructor(data.length);
+  for (let index = 0; index < data.length; index++) {
+    storageWrite(result, index, data?.readonlySnapshotArray ? data.read(index) : data[index]);
+  }
+  return result;
+}
+
 export function primitiveArrayConstructor(element) {
   const type = element.enumUnderlyingType ?? element;
   if (['System.IntPtr', 'System.UIntPtr'].includes(type.name)) {

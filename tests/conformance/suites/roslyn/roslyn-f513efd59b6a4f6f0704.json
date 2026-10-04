@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f513efd59b6a4f6f0704",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    int F1;\n    const int F2 = 2;\n    readonly int F3;\n    int F4;\n    int F5;\n    int F6 = 6;\n    int F7;\n    int F8 = 8;\n    S F9;\n    C1 F10 = new C1();\n\n    public C()\n    {\n        F1 = 1;\n        F3 = 3;\n        F4 = 4;\n        F5 = 5;\n    }\n\n    public void M0()\n    {\n        int x = F1;\n        x = F2;\n        x = F3;\n        x = F4;\n        x = F5;\n        x = F6;\n        x = F7;\n\n        F4 = 4;\n        F7 = 7;\n        M1(out F1, F5);\n        F8++;\n        F9.A = 10;\n        F9.B = 20;\n        F10.A = F9.A;\n        F10.B = F9.B;\n    }\n\n    public void M1(out int x, int y)\n    {\n        x = 10;\n    }\n\n    struct S\n    {\n        public int A;\n        public int B;\n    }\n\n    class C1\n    {\n        public int A;\n        public int B;\n    }\n}\n",
+  "sourceSHA256": "c7d4f3828d5485b8dc8325d5eaebd3b0e13c5555d12ba26dd2f1bc8fde7a30b8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "FieldCouldBeReadOnlyCSharp",
+    "offset": 13760
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

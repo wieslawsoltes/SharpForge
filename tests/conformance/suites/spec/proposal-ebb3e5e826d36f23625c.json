@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-ebb3e5e826d36f23625c",
+  "kind": "spec",
+  "sourceText": "class Program\n{\n    static void Main()\n    {\n        // Old scenarios\n        C.M1(); // Ambiguous since params arrays were introduced\n        C.M1([]); // Ambiguous since params arrays were introduced\n\n        // New scenarios\n        C.M2(); // Ambiguous in C# 13\n        C.M2([]); // Ambiguous in C# 13\n        C.M3(); // Ambiguous in C# 13\n        C.M3([]); // Ambiguous in C# 13\n    }\n\n    public static void M1(params int[] a) {\n    }\n    \n    public static void M1(params int?[] a) {\n    }\n    \n    public static void M2(params ReadOnlySpan<int> a) {\n    }\n    \n    public static void M2(params Span<int?> a) {\n    }\n    \n    public static void M3(params ReadOnlySpan<int> a) {\n    }\n    \n    public static void M3(params ReadOnlySpan<int?> a) {\n    }\n}",
+  "sourceSHA256": "f17c6d1fa821af2a8e007b5c615b0401302ddc06b587ca2c1d3f0fc8fcf8e207",
+  "target": "library",
+  "featureId": "csharp-13-0-params-collections",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/params-collections.md",
+    "sha256": "a92891ae4d2c1757b25061047db228f8e7d77f103c67991c9791dab9add7190e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/params-collections.md",
+    "license": "NOASSERTION",
+    "offset": 16698
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-95cafb3d1d1336c72246",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Base\n{\n    public virtual (T a, T b) M1<T>() { return (default(T), default(T)); }\n    public virtual (T a, T b) M2<T>() { return (default(T), default(T)); }\n    public virtual (T a, T b)[] M3<T>() { return new[] { (default(T), default(T)) }; }\n    public virtual System.Nullable<(T a, T b)> M4<T>() { return (default(T), default(T)); }\n    public virtual ((T a, T b) c, T d) M5<T>() { return ((default(T), default(T)), default(T)); }\n    public virtual (dynamic a, dynamic b) M6<T>() { return (default(T), default(T)); }\n}\npublic class Derived : Base\n{\n    public override (T a, T b) M1<T>() { return (default(T), default(T)); }\n    public override (T notA, T notB) M2<T>() { return (default(T), default(T)); }\n    public override (T notA, T notB)[] M3<T>() { return new[] { (default(T), default(T)) }; }\n    public override System.Nullable<(T notA, T notB)> M4<T>() { return (default(T), default(T)); }\n    public override ((T notA, T notB) c, T d) M5<T>() { return ((default(T), default(T)), default(T)); }\n    public override (dynamic notA, dynamic) M6<T>() { return (default(T), default(T)); }\n}\n",
+  "sourceSHA256": "146dd589daa9c742800d4847e4e2ff0ff1a8a042a8772ae366f75eeee40bafba",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "OverriddenMethodWithDifferentTupleNamesInReturnUsingTypeArg",
+    "offset": 861781
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { CSharpRef })",
+  "options": "(source, references: new[] { CSharpRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8139",
+        "severity": "error"
+      },
+      {
+        "code": "CS8139",
+        "severity": "error"
+      },
+      {
+        "code": "CS8139",
+        "severity": "error"
+      },
+      {
+        "code": "CS8139",
+        "severity": "error"
+      },
+      {
+        "code": "CS8139",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (14,38): error CS8139: 'Derived.M2<T>()': cannot change tuple element names when overriding inherited member 'Base.M2<T>()'\n                //     public override (T notA, T notB) M2<T>() { return (default(T), default(T)); }\n                Diagnostic(ErrorCode.ERR_CantChangeTupleNamesOnOverride, \"M2\").WithArguments(\"Derived.M2<T>()\", \"Base.M2<T>()\").WithLocation(14, 38),\n                // (15,40): error CS8139: 'Derived.M3<T>()': cannot change tuple element names when overriding inherited member 'Base.M3<T>()'\n                //     public override (T notA, T notB)[] M3<T>() { return new[] { (default(T), default(T)) }; }\n                Diagnostic(ErrorCode.ERR_CantChangeTupleNamesOnOverride, \"M3\").WithArguments(\"Derived.M3<T>()\", \"Base.M3<T>()\").WithLocation(15, 40),\n                // (16,55): error CS8139: 'Derived.M4<T>()': cannot change tuple element names when overriding inherited member 'Base.M4<T>()'\n                //     public override System.Nullable<(T notA, T notB)> M4<T>() { return (default(T), default(T)); }\n                Diagnostic(ErrorCode.ERR_CantChangeTupleNamesOnOverride, \"M4\").WithArguments(\"Derived.M4<T>()\", \"Base.M4<T>()\").WithLocation(16, 55),\n                // (17,47): error CS8139: 'Derived.M5<T>()': cannot change tuple element names when overriding inherited member 'Base.M5<T>()'\n                //     public override ((T notA, T notB) c, T d) M5<T>() { return ((default(T), default(T)), default(T)); }\n                Diagnostic(ErrorCode.ERR_CantChangeTupleNamesOnOverride, \"M5\").WithArguments(\"Derived.M5<T>()\", \"Base.M5<T>()\").WithLocation(17, 47),\n                // (18,45): error CS8139: 'Derived.M6<T>()': cannot change tuple element names when overriding inherited member 'Base.M6<T>()'\n                //     public override (dynamic notA, dynamic) M6<T>() { return (default(T), default(T)); }\n                Diagnostic(ErrorCode.ERR_CantChangeTupleNamesOnOverride, \"M6\").WithArguments(\"Derived.M6<T>()\", \"Base.M6<T>()\").WithLocation(18, 45)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

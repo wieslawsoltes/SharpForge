@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "purpose": "One predetermined steady-state literal verifier benchmark cohort after cache correction; not a retry-until-pass run.",
+  "sampleCount": 120,
+  "warmupSamples": 20,
+  "measuredSamples": 100,
+  "iterationsPerSample": 5000,
+  "median": "mean of measured sorted positions 49 and 50 (zero based)",
+  "p95": "measured sorted position 94 (zero based)",
+  "host": "shared workspace; no isolation or quiet-host guarantee",
+  "heapDeltas": "Raw process heapUsed changes per sample; garbage collection is included. These are not allocation counts.",
+  "worktrees": {
+    "baseline": {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "sourceCommit": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "coreCaptureSHA256": "f15a760763f38c0469ba8fd9b343b77ed929620cf8aea56067f775808d049f2a"
+    },
+    "candidate": {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-verify",
+      "sourceCommit": "6f775dcad0c3e00a7483fc62226b50c8d9f81ef1",
+      "coreCaptureSHA256": "f15a760763f38c0469ba8fd9b343b77ed929620cf8aea56067f775808d049f2a"
+    }
+  },
+  "drivers": {
+    "numeric": {
+      "originalPath": "packages/cil/tools/benchmark-numeric-verifier.mjs",
+      "originalSHA256": "09bffe659bed2270867ddd3ec12816f1999fec0389ba95b013e46b838e582e13",
+      "retainedSource": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/numeric-driver.mjs",
+      "derivedSHA256": "52cc1bc86d81d3f7a2cf6e3b2254f21bfc2c8532fdd07400ca64b13f011f2a96",
+      "temporaryCopies": {
+        "baseline": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+        "candidate": "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs"
+      },
+      "replacements": {
+        "sample < 12": "sample < 120",
+        "iteration < 1000": "iteration < 5000",
+        "samples.slice(3)": "samples.slice(20)",
+        "iterations: 1000": "iterations: 5000",
+        "medianMs: sorted[4]": "medianMs: (sorted[49] + sorted[50]) / 2",
+        "p95Ms: sorted[8]": "p95Ms: sorted[94]",
+        "warmupSamples: 3": "warmupSamples: 20",
+        "for (const name of ['Add_0_0', 'Diamond', 'MixedJoin']) {": "const selectedCase = process.argv[3];\nif (!['Add_0_0', 'Diamond', 'MixedJoin'].includes(selectedCase)) throw new Error('Pass one numeric case');\nfor (const name of [selectedCase]) {"
+      }
+    },
+    "authority": {
+      "originalPath": "packages/cil/tools/benchmark-field-verifier.mjs",
+      "originalSHA256": "b462a34be0094ef6f8c83173cc7c80333a2ce52cab5fd0cbee7fdb14eb3015a7",
+      "retainedSource": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/authority-driver.mjs",
+      "derivedSHA256": "b997b93cd3fa89e7821236d5b19d79e0a27f6dbc652a9d3ca18f38a0da4ef706",
+      "temporaryCopies": {
+        "baseline": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-authority.tmp.mjs",
+        "candidate": "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-authority.tmp.mjs"
+      },
+      "replacements": {
+        "sample < 12": "sample < 120",
+        "iteration < 1000": "iteration < 5000",
+        "samples.slice(3)": "samples.slice(20)",
+        "iterations: 1000": "iterations: 5000",
+        "medianMs: sorted[4]": "medianMs: (sorted[49] + sorted[50]) / 2",
+        "p95Ms: sorted[8]": "p95Ms: sorted[94]",
+        "warmupSamples: 3": "warmupSamples: 20"
+      }
+    }
+  },
+  "jobs": [
+    {
+      "order": 1,
+      "name": "01-baseline-Add_0_0",
+      "revision": "baseline",
+      "kind": "numeric",
+      "selection": "Add_0_0",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "driver": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+      "output": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/01-baseline-Add_0_0.json",
+      "stdout": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/01-baseline-Add_0_0.stdout.log",
+      "stderr": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/01-baseline-Add_0_0.stderr.log"
+    },
+    {
+      "order": 2,
+      "name": "02-candidate-Add_0_0",
+      "revision": "candidate",
+      "kind": "numeric",
+      "selection": "Add_0_0",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-verify",
+      "driver": "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+      "output": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/02-candidate-Add_0_0.json",
+      "stdout": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/02-candidate-Add_0_0.stdout.log",
+      "stderr": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/02-candidate-Add_0_0.stderr.log"
+    },
+    {
+      "order": 3,
+      "name": "03-candidate-Diamond",
+      "revision": "candidate",
+      "kind": "numeric",
+      "selection": "Diamond",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-verify",
+      "driver": "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+      "output": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/03-candidate-Diamond.json",
+      "stdout": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/03-candidate-Diamond.stdout.log",
+      "stderr": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/03-candidate-Diamond.stderr.log"
+    },
+    {
+      "order": 4,
+      "name": "04-baseline-Diamond",
+      "revision": "baseline",
+      "kind": "numeric",
+      "selection": "Diamond",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "driver": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+      "output": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/04-baseline-Diamond.json",
+      "stdout": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/04-baseline-Diamond.stdout.log",
+      "stderr": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/04-baseline-Diamond.stderr.log"
+    },
+    {
+      "order": 5,
+      "name": "05-baseline-MixedJoin",
+      "revision": "baseline",
+      "kind": "numeric",
+      "selection": "MixedJoin",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "driver": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+      "output": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/05-baseline-MixedJoin.json",
+      "stdout": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/05-baseline-MixedJoin.stdout.log",
+      "stderr": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/05-baseline-MixedJoin.stderr.log"
+    },
+    {
+      "order": 6,
+      "name": "06-candidate-MixedJoin",
+      "revision": "candidate",
+      "kind": "numeric",
+      "selection": "MixedJoin",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-verify",
+      "driver": "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+      "output": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/06-candidate-MixedJoin.json",
+      "stdout": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/06-candidate-MixedJoin.stdout.log",
+      "stderr": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/06-candidate-MixedJoin.stderr.log"
+    },
+    {
+      "order": 7,
+      "name": "07-candidate-Authority",
+      "revision": "candidate",
+      "kind": "authority",
+      "selection": "baseline",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-verify",
+      "driver": "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-authority.tmp.mjs",
+      "output": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/07-candidate-Authority.json",
+      "stdout": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/07-candidate-Authority.stdout.log",
+      "stderr": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/07-candidate-Authority.stderr.log"
+    },
+    {
+      "order": 8,
+      "name": "08-baseline-Authority",
+      "revision": "baseline",
+      "kind": "authority",
+      "selection": "baseline",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "driver": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-authority.tmp.mjs",
+      "output": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/08-baseline-Authority.json",
+      "stdout": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/08-baseline-Authority.stdout.log",
+      "stderr": "/workspace/scratch/7e3d2a445c44/project6-literal-steady/08-baseline-Authority.stderr.log"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ac9a944ddaf9c9cf193e",
+  "kind": "diagnostics",
+  "sourceText": "\npublic struct A\n{\n    static System.Func<int> d = () => { int j; return j * 9000; };\n\n    public static void Main()\n    {\n    }\n}\n",
+  "sourceSHA256": "1aa3b3ce601ea0540ef429339037636347fbef219b60f81b2d2be0f39f6424a2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "StaticInitializer",
+    "offset": 34600
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"j\").WithArguments(\"j\")\n                ",
+  "unsupported": []
+}

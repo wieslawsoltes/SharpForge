@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b880821ec9e9d974d5d0",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main(string[] args)\n    {\n        int i;\n        int? j = (int?)1 ?? i; //dev10 accepts, since it treats the RHS as unreachable.\n\n        int k;\n        int? l = ((int?)1 ?? j) ?? k; // If the LHS of the LHS is non-null, then the LHS should be non-null, but dev10 only handles casts.\n\n        int m;\n        int? n = ((int?)1).HasValue ? ((int?)1).Value : m; //dev10 does not strip casts in a comparable conditional operator\n    }\n}\n",
+  "sourceSHA256": "e1747721eb75d3c5bbe4ca7ee29216198c6351349672d145b722b8b23ac4e04d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "CastOnLhsOfConditionalOperator",
+    "offset": 30428
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // This is new in Roslyn.\n\n                // (7,29): error CS0165: Use of unassigned local variable 'i'\n                //         int? j = (int?)1 ?? i; //dev10 accepts, since it treats the RHS as unreachable.\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"i\").WithArguments(\"i\"),\n\n                // These match Dev10.\n\n                // (10,36): error CS0165: Use of unassigned local variable 'k'\n                //         int? l = ((int?)1 ?? j) ?? k; // If the LHS of the LHS is non-null, then the LHS should be non-null, but dev10 only handles casts.\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"k\").WithArguments(\"k\"),\n                // (13,57): error CS0165: Use of unassigned local variable 'm'\n                //         int? n = ((int?)1).HasValue ? ((int?)1).Value : m; //dev10 does not strip casts in a comparable conditional operator\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"m\").WithArguments(\"m\")",
+  "unsupported": []
+}

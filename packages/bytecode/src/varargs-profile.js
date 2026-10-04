@@ -1,7 +1,14 @@
 const definitions = [];
+
 function add(owner, name, parameters, returnType, isStatic = false) {
-  definitions.push(Object.freeze({owner, name, parameters: Object.freeze(parameters), returnType, isStatic,
-    implementation: 'varargs'}));
+  definitions.push(Object.freeze({
+    owner,
+    name,
+    parameters: Object.freeze(parameters),
+    returnType,
+    isStatic,
+    implementation: 'varargs'
+  }));
 }
 add('System.ArgIterator', '.ctor', ['System.RuntimeArgumentHandle'], 'void');
 add('System.ArgIterator', 'GetRemainingCount', [], 'int');
@@ -16,13 +23,27 @@ export const varargsIntrinsicDefinitions = Object.freeze(definitions);
 
 /** Pure MethodTable contribution for runtime-provided CLI argument structures. */
 export function varargsTypeDefinition(name) {
-  const size = {'System.ArgIterator': 24, 'System.RuntimeArgumentHandle': 8, 'System.TypedReference': 16}[name];
-  return size ? {base: 'System.ValueType', flags: {valueType: true, sealed: true}, valueSize: size, fields: []} : null;
+  const size = {
+    'System.ArgIterator': 24,
+    'System.RuntimeArgumentHandle': 8,
+    'System.TypedReference': 16
+  } [name];
+  return size ? {
+    base: 'System.ValueType',
+    flags: {
+      valueType: true,
+      sealed: true
+    },
+    valueSize: size,
+    fields: []
+  } : null;
 }
 
 export function fixedCallSignature(signature) {
-  return signature.callingConvention === 5 && signature.sentinel !== undefined ?
-    {...signature, parameters: signature.parameters.slice(0, signature.sentinel)} : signature;
+  return signature.callingConvention === 5 && signature.sentinel !== undefined ? {
+    ...signature,
+    parameters: signature.parameters.slice(0, signature.sentinel)
+  } : signature;
 }
 
 /** The call site's sentinel separates the exact MethodDef signature from optional slots. */

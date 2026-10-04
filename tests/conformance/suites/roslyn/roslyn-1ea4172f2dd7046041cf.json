@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1ea4172f2dd7046041cf",
+  "kind": "diagnostics",
+  "sourceText": "public class C\n{\n    nint M1(nint x, int count) => x >>> count;\n    nuint M2(nuint x, int count) => x >>> count;\n    nint M3(nint x, int count) => checked(x >>> count);\n    nuint M4(nuint x, int count) => checked(x >>> count);\n\n    System.IntPtr M5(System.IntPtr x, int count) => x >>> count;\n    System.UIntPtr M6(System.UIntPtr x, int count) => x >>> count;\n}",
+  "sourceSHA256": "af95a85b80763562274800ab6d1cb3ae48697cdf940a1760145019dfa7f5f6aa",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "UnsignedRightShift",
+    "offset": 589517
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

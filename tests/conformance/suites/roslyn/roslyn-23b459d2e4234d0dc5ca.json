@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-23b459d2e4234d0dc5ca",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass Test\n{\n    static void Main()\n    {\n    }\n}\n\nclass C \n{\n    static public void F1(C c) \n    {\n        System.Console.WriteLine(\"F1\");\n        Func<object> a = () => c?.M();\n    }\n\n    static public object F2(C c) => c?.M();\n\n    static public object P1 => (new C())?.M();\n\n    void M() => System.Console.WriteLine(\"M\");\n}\n",
+  "sourceSHA256": "b19b8ea4b005a709e74b5b1357a9902c1706e1c5e1d03ec32d96283850fc3f1b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenShortCircuitOperatorTests.cs",
+    "sha256": "76e836298b951ce9e660abe5f24642099fc9fdb667cf314eb00d3de71ece4e8f",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenShortCircuitOperatorTests.cs",
+    "license": "MIT",
+    "method": "Bug1109164_02",
+    "offset": 133650
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0029",
+        "severity": "error"
+      },
+      {
+        "code": "CS1662",
+        "severity": "error"
+      },
+      {
+        "code": "CS0029",
+        "severity": "error"
+      },
+      {
+        "code": "CS0029",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n    // (16,32): error CS0029: Cannot implicitly convert type 'void' to 'object'\n    //         Func<object> a = () => c?.M();\n    Diagnostic(ErrorCode.ERR_NoImplicitConv, \"c?.M()\").WithArguments(\"void\", \"object\").WithLocation(16, 32),\n    // (16,32): error CS1662: Cannot convert lambda expression to intended delegate type because some of the return types in the block are not implicitly convertible to the delegate return type\n    //         Func<object> a = () => c?.M();\n    Diagnostic(ErrorCode.ERR_CantConvAnonMethReturns, \"c?.M()\").WithArguments(\"lambda expression\").WithLocation(16, 32),\n    // (19,37): error CS0029: Cannot implicitly convert type 'void' to 'object'\n    //     static public object F2(C c) => c?.M();\n    Diagnostic(ErrorCode.ERR_NoImplicitConv, \"c?.M()\").WithArguments(\"void\", \"object\").WithLocation(19, 37),\n    // (21,32): error CS0029: Cannot implicitly convert type 'void' to 'object'\n    //     static public object P1 => (new C())?.M();\n    Diagnostic(ErrorCode.ERR_NoImplicitConv, \"(new C())?.M()\").WithArguments(\"void\", \"object\").WithLocation(21, 32)\n                ",
+  "unsupported": []
+}

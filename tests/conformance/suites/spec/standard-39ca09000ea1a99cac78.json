@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-39ca09000ea1a99cac78",
+  "kind": "spec",
+  "sourceText": "class X<T>\n{\n    public class Y{}\n}\n\nclass Z : X<Z.Y> {}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0146",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "3f9ad8196ceedf31c3a2456de2f3ec23d0b16d5af15e1ff03303b7ee03e02c5b",
+  "originalSource": "class X<T>\n{\n    public class Y{}\n}\n\nclass Z : X<Z.Y> {}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "RecursiveBaseClassSpecification",
+    "expectedErrors": [
+      "CS0146"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "RecursiveBaseClassSpecification",
+    "offsetInUnquotedMarkdown": 15297
+  }
+}

@@ -60,7 +60,7 @@ export const declarationExpressionMethods = {
       type = this.type(),
       designation = this.designation(false);
     // Roslyn names the whole declaration in an initializer but only the variable in a query clause.
-    this.expressionVariable((this.queryDepth ?? 0) > 0 ? this.tokens[this.i - 1] : start, this.tokens[this.i - 1]);
+    this.expressionVariable(this.restrictedVariables === 'clause' ? this.tokens[this.i - 1] : start, this.tokens[this.i - 1]);
     return this.n('DeclarationExpression', type, designation);
   },
   /** A designation. `report` is false when the caller records the expression variable for the whole declaration itself. */

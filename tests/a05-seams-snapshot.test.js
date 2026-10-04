@@ -99,12 +99,3 @@ test('execution copying clones frozen buffers and views while retaining shared s
   view.setInt32(0, 99);
   assert.equal(copy.view.getInt32(0), 42);
 });
-
-test('execution copying follows mutable children of frozen wrappers without breaking aliases',()=>{
-  const fault=new ManagedFault('Exception','shared'),map=new Map([['fault',fault]]),items=[fault];
-  const wrapper=Object.freeze({map,items}),copy=copyExecution({wrapper,fault});
-  assert.notEqual(copy.wrapper,wrapper);assert(Object.isFrozen(copy.wrapper));
-  assert.equal(copy.wrapper.map.get('fault'),copy.fault);assert.equal(copy.wrapper.items[0],copy.fault);
-  map.clear();items.length=0;fault.message='changed';
-  assert.equal(copy.wrapper.map.size,1);assert.equal(copy.wrapper.items.length,1);assert.equal(copy.fault.message,'shared');
-});

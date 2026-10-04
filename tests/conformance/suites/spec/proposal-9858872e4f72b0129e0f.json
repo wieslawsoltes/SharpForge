@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9858872e4f72b0129e0f",
+  "kind": "spec",
+  "sourceText": "static void Main()\nstatic void Main(string[])\nstatic int Main()\nstatic int Main(string[])",
+  "sourceSHA256": "b2e8b4c623d839297b1731eed5ac34ef6e7402aee35745046c0c8b108cd69d56",
+  "target": "library",
+  "featureId": "csharp-7-1-async-main",
+  "langVersion": "7.1",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.1/async-main.md",
+    "sha256": "71e3b468c4b32f7e378540b96c553a599f31e250ae3c5b208da5ff5749cf388c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.1/async-main.md",
+    "license": "NOASSERTION",
+    "offset": 1095
+  }
+}

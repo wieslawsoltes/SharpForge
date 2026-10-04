@@ -1,4 +1,3 @@
-import {scalarMemoryExpression} from './scalars-memory.js';
 import { LegacyTypeAdapter } from './types.js';
 import { expressionForms } from './expression-forms.js';
 /** Legacy AST adapter for expressions: operators here, every other form through the table in expression-forms.js. */
@@ -36,11 +35,7 @@ export class LegacyExpressionAdapter extends LegacyTypeAdapter {
   // ---- expressions ------------------------------------------------------------------------------------------------
   args(list, what = 'Named and by-reference arguments') {
     return list.arguments.map(a => {
-      if (a.nameColon) this.fail(a, 'SF1017', `${what} are not implemented in this profile`);
-      if (a.refKindKeyword) return this.node('RefArgument', a, {
-        modifier: a.refKindKeyword.valueText,
-        expression: this.expression(a.expression)
-      });
+      if (a.nameColon || a.refKindKeyword) this.fail(a, 'SF1017', `${what} are not implemented in this profile`);
       return this.expression(a.expression);
     });
   }
@@ -100,8 +95,6 @@ export class LegacyExpressionAdapter extends LegacyTypeAdapter {
     return result;
   }
   expressionCore(red) {
-    const scalarMemory = scalarMemoryExpression(this,red);
-    if(scalarMemory !== undefined)return scalarMemory;
     const kind = red.kind;
     if (binaryKinds.has(kind)) {
       const left = this.expression(red.left);

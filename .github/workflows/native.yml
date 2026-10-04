@@ -1,32 +1,12 @@
 name: Native platform qualification
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
-    paths:
-      - ".github/workflows/native.yml"
-      - "scripts/conformance/**"
-      - "tests/conformance/native/**"
-      - "packages/**"
-      - "apps/cli/**"
-      - "planning/qualification/native/**"
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/native.yml"
-      - "scripts/conformance/**"
-      - "tests/conformance/native/**"
-      - "packages/**"
-      - "apps/cli/**"
-      - "planning/qualification/native/**"
   workflow_dispatch:
   workflow_call:
-  schedule:
-    - cron: "17 5 * * 3"
 permissions:
   contents: read
 concurrency:
   group: native-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: false
 env:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   DOTNET_NOLOGO: "1"
@@ -37,7 +17,6 @@ defaults:
     shell: bash
 jobs:
   sdk:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     name: SDK ${{ matrix.sdk }} / ${{ matrix.target.platform }}-${{ matrix.target.architecture }}
     runs-on: ${{ matrix.target.runner }}
     timeout-minutes: 45
@@ -46,6 +25,7 @@ jobs:
       NATIVE_ARCH: ${{ matrix.target.architecture }}
       NATIVE_VERSION: ${{ matrix.sdk }}
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         sdk: ["8.0.425", "10.0.201"]
@@ -82,7 +62,7 @@ jobs:
           path: artifacts/results/native/
           if-no-files-found: error
   node:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: sdk
     name: Node ${{ matrix.node }} / ${{ matrix.target.platform }}-${{ matrix.target.architecture }}
     runs-on: ${{ matrix.target.runner }}
     timeout-minutes: 45
@@ -91,6 +71,7 @@ jobs:
       NATIVE_ARCH: ${{ matrix.target.architecture }}
       NATIVE_VERSION: ${{ matrix.node }}
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         node: ["22.23.3", "26.10.0"]
@@ -124,7 +105,7 @@ jobs:
           path: artifacts/results/native/
           if-no-files-found: error
   matrix:
-    if: ${{ always() && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
+    if: ${{ always() }}
     needs: [sdk, node]
     runs-on: ubuntu-24.04
     timeout-minutes: 10

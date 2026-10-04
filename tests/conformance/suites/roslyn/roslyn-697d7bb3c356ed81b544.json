@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-697d7bb3c356ed81b544",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public static void Main()\n    {\n        var b1 = (1, 2) == new C();\n    }\n    public void Deconstruct(out int x, out int y)\n    {\n        x = 1;\n        y = 2;\n    }\n}\n",
+  "sourceSHA256": "6eb9731d02197e871c9ea71e66bfdb8fdad0bb81e695d999152fd3cb3898b2ad",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestComparisonWithDeconstruction",
+    "offset": 91649
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,18): error CS0019: Operator '==' cannot be applied to operands of type '(int, int)' and 'C'\n                //         var b1 = (1, 2) == new C();\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(1, 2) == new C()\").WithArguments(\"==\", \"(int, int)\", \"C\").WithLocation(6, 18)\n                ",
+  "unsupported": []
+}

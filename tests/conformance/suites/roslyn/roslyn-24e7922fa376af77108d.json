@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-24e7922fa376af77108d",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static void M()\n    {\n        int i = 0;\n        ref System.Int32 x = ref i;\n    }\n}\n",
+  "sourceSHA256": "cdba61f0a8ef4279c289da9593d681d7bed955e0632c93de95382f97750ec5eb",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefLocalTests.cs",
+    "sha256": "71f20094d8395168a5d8f8cd8a1597366ab80ab701c4cbbb76991cef9d1c0517",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefLocalTests.cs",
+    "license": "MIT",
+    "method": "RefIntSemanticModel",
+    "offset": 93806
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

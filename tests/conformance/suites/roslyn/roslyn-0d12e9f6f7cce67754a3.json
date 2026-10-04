@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0d12e9f6f7cce67754a3",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Reflection;\nusing System.Runtime.CompilerServices;\n\nclass MyAttribute : Attribute\n{\n    public MyAttribute(int a = 1, [CallerArgumentExpression(\"a\")] int expr_a = 0)\n    {\n        Console.WriteLine($\"'{a}', '{expr_a}'\");\n    }\n}\n\n[My(1+2)]\nclass Program\n{\n    static void Main()\n    {\n        typeof(Program).GetCustomAttribute(typeof(MyAttribute));\n    }\n}",
+  "sourceSHA256": "14451762866a192c12b85a4cf609e3cd918bd5c3c880c3ecab7de27982e47838",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "sha256": "afc3ea7577c9e597760812239c750126e0cb09ea32cb52bdc8e9850a45ebeac9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "license": "MIT",
+    "method": "TestArgumentExpression_ImplicitConversionFromStringDoesNotExists",
+    "offset": 77413
+  },
+  "langVersion": "10",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.NetCoreApp, options: TestOptions.ReleaseExe, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8959",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,36): error CS8913: CallerArgumentExpressionAttribute cannot be applied because there are no standard conversions from type 'string' to type 'int'\n                //     public MyAttribute(int a = 1, [CallerArgumentExpression(\"a\")] int expr_a = 0)\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerArgumentExpressionParam, \"CallerArgumentExpression\").WithArguments(\"string\", \"int\").WithLocation(8, 36)\n            ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

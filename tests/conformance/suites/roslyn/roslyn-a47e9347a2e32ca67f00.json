@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a47e9347a2e32ca67f00",
+  "kind": "diagnostics",
+  "sourceText": "\nclass A { }\nclass C\n{\n    static void M()\n    {\n        System.Console.Write(new C() == new A());\n        System.Console.Write((1, new C()) == (1, new A()));\n    }\n}\n",
+  "sourceSHA256": "8a5534b263d944f8b1841d611b3f45f72ffc61a821514426ec8aa7a7d294de6e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestOfTwoUnrelatedTypes",
+    "offset": 115379
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,30): error CS0019: Operator '==' cannot be applied to operands of type 'C' and 'A'\n                //         System.Console.Write(new C() == new A());\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"new C() == new A()\").WithArguments(\"==\", \"C\", \"A\").WithLocation(7, 30),\n                // (8,30): error CS0019: Operator '==' cannot be applied to operands of type 'C' and 'A'\n                //         System.Console.Write((1, new C()) == (1, new A()));\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(1, new C()) == (1, new A())\").WithArguments(\"==\", \"C\", \"A\").WithLocation(8, 30)\n                ",
+  "unsupported": []
+}

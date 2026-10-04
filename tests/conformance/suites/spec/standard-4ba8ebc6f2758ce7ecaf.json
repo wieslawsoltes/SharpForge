@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-4ba8ebc6f2758ce7ecaf",
+  "kind": "spec",
+  "sourceText": "public partial class Customer\n{\n    private int id;\n    private string name;\n    private string address;\n    private List<Order> orders;\n\n    public Customer()\n    {\n        ...\n    }\n}\n\n// File: Customer2.cs\npublic partial class Customer\n{\n    public void SubmitOrder(Order orderSubmitted) => orders.Add(orderSubmitted);\n\n    public bool HasOutstandingOrders() => orders.Count > 0;\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0649",
+        "severity": "warning"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "3f98220269a801e233da09e9928fc264e2c7ccbda6977208cb1063e4b3e50fa2",
+  "originalSource": "public partial class Customer\n{\n    private int id;\n    private string name;\n    private string address;\n    private List<Order> orders;\n\n    public Customer()\n    {\n        ...\n    }\n}\n\n// File: Customer2.cs\npublic partial class Customer\n{\n    public void SubmitOrder(Order orderSubmitted) => orders.Add(orderSubmitted);\n\n    public bool HasOutstandingOrders() => orders.Count > 0;\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "PartialDeclarations1",
+    "replaceEllipsis": true,
+    "expectedWarnings": [
+      "CS0169",
+      "CS0169",
+      "CS0169",
+      "CS0649"
+    ],
+    "additionalFiles": [
+      "Order.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "PartialDeclarations1",
+    "offsetInUnquotedMarkdown": 41410
+  }
+}

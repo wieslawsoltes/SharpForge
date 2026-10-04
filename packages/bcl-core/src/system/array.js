@@ -1,4 +1,6 @@
+import {searchWithComparer, binarySearchIndices} from './array-search.js';
 import {nativeEqual as equal, fail, integer} from '../host.js';
+import {defaultStringOrdering} from '../globalization/string-ordering.js';
 
 const owner = 'System.Array';
 
@@ -24,7 +26,7 @@ function contracts({define, member}) {
 
 function write(p, reference, record, index, value) {
   const oldValue = record.data[index];
-  p.heap.writeData(record, index, value);
+  record.data[index] = value;
   p.vm.notifyWrite({kind: 'array', handle: reference.h, generation: reference.g, index, value, oldValue});
 }
 
@@ -93,23 +95,20 @@ function isObject(value) {
 }
 
 function binarySearch(p, source, args, native) {
+  if (args.length === 3) return searchWithComparer(p, source, args);
   if (isObject(native[1]) || source.data.some(value => isObject(p.native(value)))) {
     fail(p, 'InvalidOperationException', 'Binary search requires registered comparable primitive elements');
   }
-  let lower = 0;
-  let upper = source.data.length - 1;
   const value = native[1];
-  while (lower <= upper) {
-    const middle = (lower + upper) >>> 1;
-    const current = p.native(source.data[middle]);
-    if (equal(p, source.data[middle], args[1])) return middle;
+  return binarySearchIndices(source.data.length, index => {
+    const current = p.native(source.data[index]);
+    if (typeof current === 'string' && typeof value === 'string') return defaultStringOrdering(p).compare(current, value);
+    if (equal(p, source.data[index], args[1])) return 0;
     const less = current === null || typeof current === 'number' && Number.isNaN(current)
       ? true
       : value === null || typeof value === 'number' && Number.isNaN(value) ? false : current < value;
-    if (less) lower = middle + 1;
-    else upper = middle - 1;
-  }
-  return ~lower;
+    return less ? -1 : 1;
+  });
 }
 
 const operations = Object.freeze({

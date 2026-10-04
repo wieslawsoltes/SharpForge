@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a3c1d4b2a83697ae2db0",
+  "kind": "spec",
+  "sourceText": "var addWithDefault = (int addTo = 2) => addTo + 1;\nint AddWithDefaultMethod(int addTo = 2)\n{\n    return addTo + 1;\n}\n\nvar defaultParm = addWithDefault.Method.GetParameters()[0].DefaultValue; // 2\n\nvar add1 = AddWithDefaultMethod;\ndefaultParm = add1.Method.GetParameters()[0].DefaultValue; // 2",
+  "sourceSHA256": "9ad6a1aa3761cf26211f6c01aaf141493d48e0795b88fd49cf64ed42be93dd82",
+  "target": "library",
+  "featureId": "csharp-12-0-lambda-optional-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "license": "NOASSERTION",
+    "offset": 15096
+  }
+}

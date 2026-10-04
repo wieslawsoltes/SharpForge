@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-569fa32a349efa07fb7f",
+  "kind": "spec",
+  "sourceText": "public sealed override bool Equals(Base? other);",
+  "sourceSHA256": "92fd2b6f53984810ca387c750e520cb2c276e71ea864b1f1b064001fcbec9b35",
+  "target": "library",
+  "featureId": "csharp-9-0-records",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/records.md",
+    "sha256": "a3198542cb3ddbad72e522fdf5442c5762254d2e6d571bf1dfba2a11110f15e6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/records.md",
+    "license": "NOASSERTION",
+    "offset": 5289
+  }
+}

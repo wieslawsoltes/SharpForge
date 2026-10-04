@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-36863e7b456332d5796d",
+  "kind": "spec",
+  "sourceText": "// The handler that will actually \"build\" the interpolated string\"\n[InterpolatedStringHandler]\npublic ref struct TraceLoggerParamsInterpolatedStringHandler\n{\n    // Storage for the built-up string\n\n    private bool _logLevelEnabled;\n\n    public TraceLoggerParamsInterpolatedStringHandler(int literalLength, int formattedCount, Logger logger, out bool handlerIsValid)\n    {\n        if (!logger._logLevelEnabled)\n        {\n            handlerIsValid = false;\n            return;\n        }\n\n        handlerIsValid = true;\n        _logLevelEnabled = logger.EnabledLevel;\n    }\n\n    public void AppendLiteral(string s)\n    {\n        // Store and format part as required\n    }\n\n    public void AppendFormatted<T>(T t)\n    {\n        // Store and format part as required\n    }\n}\n\n// The logger class. The user has an instance of this, accesses it via static state, or some other access\n// mechanism\npublic class Logger\n{\n    // Initialization code omitted\n    public LogLevel EnabledLevel;\n\n    public void LogTrace([InterpolatedStringHandlerArguments(\"\")]TraceLoggerParamsInterpolatedStringHandler handler)\n    {\n        // Impl of logging\n    }\n}\n\nLogger logger = GetLogger(LogLevel.Info);\n\n// Given the above definitions, usage looks like this:\nvar name = \"Fred Silberberg\";\nlogger.LogTrace($\"{name} will never be printed because info is < trace!\");\n\n// This is converted to:\nvar name = \"Fred Silberberg\";\nvar receiverTemp = logger;\nvar handler = new TraceLoggerParamsInterpolatedStringHandler(literalLength: 47, formattedCount: 1, receiverTemp, out var handlerIsValid);\nif (handlerIsValid)\n{\n    handler.AppendFormatted(name);\n    handler.AppendLiteral(\" will never be printed because info is < trace!\");\n}\nreceiverTemp.LogTrace(handler);",
+  "sourceSHA256": "3025ba5620d02cf794770f00f4f78efc7173b5e59183d810c198a480ce2cc111",
+  "target": "library",
+  "featureId": "csharp-10-0-interpolated-string-handlers",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/improved-interpolated-strings.md",
+    "sha256": "a9232653b4497eae44487404a0c446af954667024beea4be2ad9a642b257b02c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-interpolated-strings.md",
+    "license": "NOASSERTION",
+    "offset": 3683
+  }
+}

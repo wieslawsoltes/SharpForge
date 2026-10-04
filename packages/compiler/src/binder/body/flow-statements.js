@@ -1,7 +1,8 @@
 /**
  * foreach over every enumeration pattern, switch statements with patterns and return.
  */
-import { SymbolKind, TypeKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
+import {DiagnosticId} from '../../diagnostics/codes.js';
+import { SymbolKind, TypeKind, RefKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
 import { lookupMembers } from '../inheritance.js';
 import { findConstruction, implementsInterface } from '../../symbols/substitution.js';
@@ -10,8 +11,15 @@ import { numericKind } from '../../conversions/numeric.js';
 import { reportAwaitOutsideAsync } from '../async.js';
 import { bindAsyncForEach, isOnlyAsyncEnumerable } from '../async-streams.js';
 import { extensionEnumeratorMethod } from '../foreach-extension.js';
+import { inlineArrayShape } from '../inline-arrays.js';
+import { classifyVariable } from '../ref-kinds.js';
+import { stripNullable } from '../../conversions/nullable.js';
 
 const unknown = ErrorTypeSymbol.unknown;
+/** The types a switch statement governs on without patterns (C# 6), by special type; enums are handled by type kind. */
+const classicSwitchTypes = new Set(
+  ['SByte', 'Byte', 'Int16', 'UInt16', 'Int32', 'UInt32', 'Int64', 'UInt64', 'Char', 'String', 'Boolean'].map(name => 'System_' + name),
+);
 /** `Span<T>` and `ReadOnlySpan<T>` enumerate their elements (their enumerator is a ref struct the registry bridge does not declare). */
 const isSpanType = (type, core) => type.originalDefinition === core.span || type.originalDefinition === core.readOnlySpan;
 const isSourceType = t => {
@@ -29,16 +37,32 @@ export const FlowStatementBinding = Base =>
       try {
         let element = null,
           enumeration = null,
-          extension = null;
+          extension = null,
+          // How `Current` yields the element: by value, or by reference (`foreach (ref var x in ...)` needs one).
+          currentRefKind = RefKind.None;
         const type = collection.type;
         if (syntax.awaitKeyword) reportAwaitOutsideAsync(this, syntax.awaitKeyword);
         if (!collection.hasErrors && type && !type.isErrorType()) {
-          if (syntax.awaitKeyword) {
+          if (type.typeKind === TypeKind.Dynamic) {
+            // The enumerator is found at run time; an asynchronous one cannot be.
+            if (syntax.awaitKeyword) this.report(syntax.expression, DiagnosticId.CS8416);
+            element = syntax.awaitKeyword ? unknown : type;
+          } else if (syntax.awaitKeyword) {
             enumeration = bindAsyncForEach(this, collection, syntax.expression);
             element = enumeration?.elementType ?? unknown;
           } else if (type instanceof ArrayTypeSymbol) element = type.elementType;
           else if (type.specialType === 'System_String') element = this.core.char;
-          else if (isSpanType(type, this.core)) element = type.typeArguments[0].type;
+          else if (inlineArrayShape(type)) {
+            // C# 12 inline-array enumeration takes precedence over a declared GetEnumerator or interface.
+            this.d.gate(this.c.uri, syntax.expression, 'InlineArrays');
+            element = inlineArrayShape(type).elementType;
+            const variable = classifyVariable(collection, this.variableContext);
+            currentRefKind = !variable.isVariable ? RefKind.None : variable.isWritable ? RefKind.Ref : RefKind.RefReadOnly;
+          }
+          else if (isSpanType(type, this.core)) {
+            element = type.typeArguments[0].type;
+            currentRefKind = type.originalDefinition === this.core.span ? RefKind.Ref : RefKind.RefReadOnly;
+          }
           else {
             const getEnumerator = lookupMembers(type, 'GetEnumerator', this.core, { within: this.c.containingType }).members.find(
               m => m.kind === SymbolKind.Method && !m.isStatic && !m.parameters.length && m.declaredAccessibility === 'public',
@@ -47,12 +71,14 @@ export const FlowStatementBinding = Base =>
               const current = lookupMembers(getEnumerator.returnType, 'Current', this.core, { within: this.c.containingType }).members.find(
                 m => m.kind === SymbolKind.Property,
               );
-              if (current) element = current.type;
-              else {
+              if (current) {
+                element = current.type;
+                currentRefKind = current.refKind ?? RefKind.None;
+              } else {
                 const generic = findConstruction(getEnumerator.returnType, this.core.ienumeratorT, this.core);
                 element = generic ? generic.typeArguments[0].type : isSourceType(getEnumerator.returnType) ? null : unknown;
                 if (!element) {
-                  this.report(syntax.expression, 'CS0117', [this.display(getEnumerator.returnType), 'Current']);
+                  this.report(syntax.expression, DiagnosticId.CS0117, [this.display(getEnumerator.returnType), 'Current']);
                   element = unknown;
                 }
               }
@@ -67,8 +93,9 @@ export const FlowStatementBinding = Base =>
                   m => m.kind === SymbolKind.Property,
                 );
                 element = current?.type ?? unknown;
+                currentRefKind = current?.refKind ?? RefKind.None;
               } else if (isOnlyAsyncEnumerable(type, this.core, this.c.containingType)) {
-                this.report(syntax.expression, 'CS8414', [this.display(type), 'GetEnumerator']);
+                this.report(syntax.expression, DiagnosticId.CS8414, [this.display(type), 'GetEnumerator']);
                 element = unknown;
               } else if (
                 !isSourceType(type) &&
@@ -80,13 +107,13 @@ export const FlowStatementBinding = Base =>
                 element = unknown;
                 this.incomplete = this.d.incomplete = true;
               } else {
-                this.report(syntax.expression, 'CS1579', [this.display(type), 'GetEnumerator']);
+                this.report(syntax.expression, DiagnosticId.CS1579, [this.display(type), 'GetEnumerator']);
                 element = unknown;
               }
             }
           }
         } else if (!collection.hasErrors && !type) {
-          this.report(syntax.expression, 'CS0186');
+          this.report(syntax.expression, DiagnosticId.CS0186);
         }
         element ??= unknown;
         // `foreach (var (a, b) in items)`: each element is deconstructed into the variables (binder/body/deconstruction.js).
@@ -94,15 +121,19 @@ export const FlowStatementBinding = Base =>
           return this.forEachDeconstruction(syntax, { collection, elementType: element, enumeration, extensionGetEnumerator: extension });
         const bound = this.bindType(syntax.type.kind === 'RefType' ? syntax.type.type : syntax.type, { allowVar: true }),
           iterationType = bound.isVar ? element : bound.type;
+        let elementConversion = null;
         if (!bound.isVar && !element.isErrorType() && !iterationType.isErrorType()) {
           const c = this.conversions.classifyExplicit(element, iterationType);
-          if (!c.exists) this.report(syntax.forEachKeyword, 'CS0030', [this.display(element), this.display(iterationType)]);
+          if (!c.exists) this.report(syntax.forEachKeyword, DiagnosticId.CS0030, [this.display(element), this.display(iterationType)]);
+          // A user-defined conversion is a call: code generation needs the operator.
+          else if (c.isUserDefined) elementConversion = c;
         }
         const name = syntax.identifier.valueText,
           local = this.newLocal(name, iterationType, syntax.identifier, LocalDeclarationKind.Foreach);
         local.writes++;
         local.nonConstantWrite = true;
         local.reads++;
+        this.refIterationVariable(syntax, local, currentRefKind, !collection.hasErrors && !element.isErrorType());
         this.declare(name, local, syntax.identifier);
         const loop = this.enterLoop(),
           body = this.embedded(syntax.statement);
@@ -111,6 +142,7 @@ export const FlowStatementBinding = Base =>
           collection,
           local,
           elementType: element,
+          elementConversion,
           body,
           isAwait: !!syntax.awaitKeyword,
           enumeration,
@@ -120,8 +152,41 @@ export const FlowStatementBinding = Base =>
         this.popScope();
       }
     }
+    /**
+     * `foreach (ref var x in e)` / `foreach (ref readonly var x in e)` (C# 7.3): the iteration variable is a
+     * reference to the element `Current` returns. CS1510 when `Current` returns a value; CS8331 when the variable
+     * is writable and `Current` returns a read-only reference.
+     */
+    refIterationVariable(syntax, local, currentRefKind, isEnumerable) {
+      if (syntax.type.kind !== 'RefType') return;
+      local.refKind = syntax.type.readOnlyKeyword ? RefKind.RefReadOnly : RefKind.Ref;
+      if (!isEnumerable) return;
+      if (currentRefKind === RefKind.None) this.report(syntax.expression, DiagnosticId.CS1510);
+      else if (local.refKind === RefKind.Ref && currentRefKind === RefKind.RefReadOnly) {
+        this.report(syntax.expression, DiagnosticId.CS8331, ['property', 'Current']);
+      }
+    }
+    /**
+     * The governing expression of a switch statement. A value whose own type is not one a C# 6 switch takes
+     * (integral, `char`, `string`, `bool`, an enum) is converted by its user-defined implicit conversion to such a
+     * type when it has exactly one; otherwise the statement matches patterns against the value as it is.
+     */
+    switchGoverning(syntax) {
+      const value = this.value(syntax),
+        type = value.hasErrors ? null : stripNullable(value.type);
+      if (!type || classicSwitchTypes.has(type.specialType) || (type.typeKind !== TypeKind.Class && type.typeKind !== TypeKind.Struct)) return value;
+      const targets = [];
+      for (let owner = type; owner; owner = owner.baseType) {
+        for (const operator of owner.getMembers('op_Implicit')) {
+          const target = operator.returnType && stripNullable(operator.returnType);
+          const isConversion = operator.kind === SymbolKind.Method && operator.parameters?.length === 1;
+          if (isConversion && classicSwitchTypes.has(target?.specialType)) targets.push(operator.returnType);
+        }
+      }
+      return targets.length === 1 ? this.convert(value, targets[0], syntax) : value;
+    }
     switchStatement(syntax) {
-      const governing = this.value(syntax.expression),
+      const governing = this.switchGoverning(syntax.expression),
         sw = Object.assign(this.enterLoop(false), { syntax, governing }),
         sections = [],
         seen = new Map();
@@ -141,7 +206,7 @@ export const FlowStatementBinding = Base =>
             shared = new Set(switchScope.keys());
           for (const label of section.labels) {
             if (label.kind === 'DefaultSwitchLabel') {
-              if (hasDefault) this.report(label, 'CS0152', ['default']);
+              if (hasDefault) this.report(label, DiagnosticId.CS0152, ['default']);
               hasDefault = true;
               labels.push({ kind: 'default' });
               continue;
@@ -152,7 +217,7 @@ export const FlowStatementBinding = Base =>
               if (p.kind === 'ConstantPattern' && p.value?.constantValue) {
                 const key = p.value.constantValue.toString();
                 if (seen.has(key))
-                  this.report(label, 'CS0152', [
+                  this.report(label, DiagnosticId.CS0152, [
                     p.value.constantValue.isNull
                       ? 'null'
                       : p.value.constantValue.type === 'string'
@@ -176,7 +241,7 @@ export const FlowStatementBinding = Base =>
                 last.kind === 'DefaultSwitchLabel'
                   ? 'default:'
                   : 'case ' + (last.value ?? last.pattern).toString() + (last.whenClause ? ' ' + last.whenClause.toString() : '') + ':';
-            this.report(last, index === syntax.sections.length - 1 ? 'CS8070' : 'CS0163', [text]);
+            this.report(last, index === syntax.sections.length - 1 ? DiagnosticId.CS8070 : DiagnosticId.CS0163, [text]);
           }
           if (body.completes) anyCompletes = true;
           for (const name of ofLabels) switchScope.delete(name);
@@ -190,7 +255,14 @@ export const FlowStatementBinding = Base =>
       if (governing.type)
         this.reportSwitchArms(
           governing.type,
-          sections.flatMap(s => s.labels.map((label, i) => ({ pattern: label, when: label.when ?? null, node: s.syntax.labels[i].value ?? s.syntax.labels[i].pattern ?? s.syntax.labels[i], isDefault: label.kind === 'default' }))),
+          sections.flatMap(s =>
+            s.labels.map((label, i) => ({
+              pattern: label,
+              when: label.when ?? null,
+              node: s.syntax.labels[i].value ?? s.syntax.labels[i].pattern ?? s.syntax.labels[i],
+              isDefault: label.kind === 'default',
+            })),
+          ),
           { isExpression: false, node: syntax },
         );
       const exhaustive =
@@ -207,10 +279,10 @@ export const FlowStatementBinding = Base =>
     }
     returnStatement(syntax) {
       this.sawReturn = true;
-      if (this.finallyDepth) this.report(syntax.returnKeyword, 'CS0157');
+      if (this.finallyDepth) this.report(syntax.returnKeyword, DiagnosticId.CS0157);
       if (this.c.isIterator && !this.c.isLambda) {
         if (syntax.expression) this.value(syntax.expression);
-        this.report(syntax.returnKeyword ?? syntax, 'CS1622');
+        this.report(syntax.returnKeyword ?? syntax, DiagnosticId.CS1622);
         return stmt('Return', syntax, false, {});
       }
       const isRefReturn = syntax.expression?.kind === 'RefExpression',
@@ -223,7 +295,7 @@ export const FlowStatementBinding = Base =>
       const type = this.c.returnType;
       if (!expressionSyntax) {
         if (type && type.specialType !== 'System_Void' && !type.isErrorType() && !this.c.isTopLevel)
-          this.report(syntax.returnKeyword, 'CS0126', [this.display(type)]);
+          this.report(syntax.returnKeyword, DiagnosticId.CS0126, [this.display(type)]);
         return stmt('Return', syntax, false, {});
       }
       const e = this.value(expressionSyntax);
@@ -235,10 +307,10 @@ export const FlowStatementBinding = Base =>
           this.report(
             syntax.returnKeyword,
             this.c.isAsync && this.c.declaredReturnType && this.c.declaredReturnType.equals(this.core.task)
-              ? 'CS1997'
+              ? DiagnosticId.CS1997
               : this.c.isLambda
-                ? 'CS8030'
-                : 'CS0127',
+                ? DiagnosticId.CS8030
+                : DiagnosticId.CS0127,
             this.c.isAsync && this.c.declaredReturnType?.equals(this.core.task)
               ? [this.c.method?.toDisplayString() ?? 'lambda expression', 'Task']
               : [
@@ -256,14 +328,14 @@ export const FlowStatementBinding = Base =>
         escapeCheckedByFlow: !this.c.isLambda,
       });
       if (refError && !e.hasErrors)
-        this.report(refError.code === 'CS8150' || refError.code === 'CS8149' ? syntax : expressionSyntax, refError.code, refError.args);
+        this.report(refError.code === DiagnosticId.CS8150 || refError.code === DiagnosticId.CS8149 ? syntax : expressionSyntax, refError.code, refError.args);
       if (isRefReturn) {
         this.markAliased(e);
         if (!e.hasErrors && e.type && !e.type.equals(type) && !type.isErrorType())
-          this.report(expressionSyntax, 'CS8151', [this.display(type)]);
+          this.report(expressionSyntax, DiagnosticId.CS8151, [this.display(type)]);
         return stmt('Return', syntax, false, { expression: e, isRef: true });
       }
-      const converted = this.convert(e, type, expressionSyntax);
+      const converted = this.convertReturned(e, type, expressionSyntax);
       if (e.form === 'lambda' && !converted.hasErrors) this.finishLambda(e, type);
       return stmt('Return', syntax, false, { expression: converted });
     }

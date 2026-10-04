@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-24d340fde9e6775ee8f0",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nstruct S\n{\n    public int x;\n    public event EventHandler Event;\n\n    public void Fire() => Event(null, EventArgs.Empty);\n}\n\nclass C\n{\n    void PartialAssign()\n    {\n        S s1;\n        Local1();\n        S s2 = s1;\n        void Local1()\n        {\n            s1.x = 0;\n        }\n    }\n    void FullAssign()\n    {\n        S s1;\n        Local1();\n        S s2 = s1;\n        void Local1()\n        {\n            s1 = new S();\n            s1.x = 0;\n            s1.Event += Handler1;\n            s1.Fire();\n\n            void Handler1(object sender, EventArgs args)\n            {\n                s1.x++;\n            }\n        }\n\n        S s3;\n        void Local2()\n        {\n            s3.x = 0;\n            s3.Event += Handler2;\n\n            void Handler2(object sender, EventArgs args)\n            {\n                s1.x++;\n                s3.x++;\n            }\n        }\n        S s4 = s3;\n        Local2();\n    }\n}",
+  "sourceSHA256": "653ff64a074debbcb53c9fd8adf7834285f0719bdc3f728e35ff2afff8b2977b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "EventReadAndWrite",
+    "offset": 26392
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\n\nstruct S\n{\n    public int x;\n    public event EventHandler Event;\n\n    public void Fire() => Event(null, EventArgs.Empty);\n}\n\nclass C\n{\n    void PartialAssign()\n    {\n        S s1;\n        Local1();\n        S s2 = s1;\n        void Local1()\n        {\n            s1.x = 0;\n        }\n    }\n    void FullAssign()\n    {\n        S s1;\n        Local1();\n        S s2 = s1;\n        void Local1()\n        {\n            s1 = new S();\n            s1.x = 0;\n            s1.Event += Handler1;\n            s1.Fire();\n\n            void Handler1(object sender, EventArgs args)\n            {\n                s1.x++;\n            }\n        }\n\n        S s3;\n        void Local2()\n        {\n            s3.x = 0;\n            s3.Event += Handler2;\n\n            void Handler2(object sender, EventArgs args)\n            {\n                s1.x++;\n                s3.x++;\n            }\n        }\n        S s4 = s3;\n        Local2();\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0170",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (18,16): error CS0165: Use of unassigned local variable 's1'\n                //         S s2 = s1;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"s1\").WithArguments(\"s1\").WithLocation(18, 16),\n                // (54,16): error CS0165: Use of unassigned local variable 's3'\n                //         S s4 = s3;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"s3\").WithArguments(\"s3\").WithLocation(54, 16),\n                // (55,9): error CS0170: Use of possibly unassigned field 'Event'\n                //         Local2();\n                Diagnostic(ErrorCode.ERR_UseDefViolationField, \"Local2()\").WithArguments(\"Event\").WithLocation(55, 9)",
+  "unsupported": []
+}

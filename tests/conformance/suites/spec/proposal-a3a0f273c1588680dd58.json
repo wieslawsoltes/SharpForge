@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a3a0f273c1588680dd58",
+  "kind": "spec",
+  "sourceText": "[Serializable]\npublic class Foo\n{\n    [field: NonSerialized]\n    public event EventHandler MyEvent;\n}",
+  "sourceSHA256": "b75fab1768d54e9467ec18be40223a2550a185af62ed173c69e085733011e0a3",
+  "target": "library",
+  "featureId": "csharp-7-3-attributes-on-backing-fields",
+  "langVersion": "7.3",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.3/auto-prop-field-attrs.md",
+    "sha256": "d008d5c54299f1fe025c2f0b298f039b941e798a1ab71b83fa459183e1d57e81",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/auto-prop-field-attrs.md",
+    "license": "NOASSERTION",
+    "offset": 1474
+  }
+}

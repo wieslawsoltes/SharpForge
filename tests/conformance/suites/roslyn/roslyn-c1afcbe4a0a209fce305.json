@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c1afcbe4a0a209fce305",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\nclass Program1\n{\n    [MethodImpl((short)0)]              // ok\n    void f0() { }\n\n    [MethodImpl(1)]                     // error\n    void f1() { }\n                                        \n    [MethodImpl(2)]                     // error\n    void f2() { }                     \n                                       \n    [MethodImpl(3)]                     // error\n    void f3() { }                     \n                                      \n    [MethodImpl(4)]                     // ok\n    void f4() { }                      \n                                      \n    [MethodImpl(5)]                     // error\n    void f5() { } \n\n    [MethodImpl((MethodImplOptions)2)]  // error\n    void f6() { } \n\n    [MethodImpl(4, MethodCodeType = (MethodCodeType)8, MethodCodeType = (MethodCodeType)9)]  // errors\n    void f7() { } \n}\n",
+  "sourceSHA256": "797df040471a9a1b353e3006c3cd205be4f3b65edb0ea93730c4846d2175514c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "MethodImplAttribute_Errors",
+    "offset": 132322
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0643",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,17): error CS0591: Invalid value for argument to 'MethodImpl' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"1\").WithArguments(\"MethodImpl\"),\n                // (12,17): error CS0591: Invalid value for argument to 'MethodImpl' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"2\").WithArguments(\"MethodImpl\"),\n                // (15,17): error CS0591: Invalid value for argument to 'MethodImpl' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"3\").WithArguments(\"MethodImpl\"),\n                // (21,17): error CS0591: Invalid value for argument to 'MethodImpl' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"5\").WithArguments(\"MethodImpl\"),\n                // (27,17): error CS0591: Invalid value for argument to 'MethodImpl' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"(MethodImplOptions)2\").WithArguments(\"MethodImpl\"),\n                // (27,56): error CS0643: 'MethodCodeType' duplicate named attribute argument\n                Diagnostic(ErrorCode.ERR_DuplicateNamedAttributeArgument, \"MethodCodeType = (MethodCodeType)9\").WithArguments(\"MethodCodeType\"),\n                // (27,20): error CS0599: Invalid value for named attribute argument 'MethodCodeType'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"MethodCodeType = (MethodCodeType)8\").WithArguments(\"MethodCodeType\"),\n                // (27,56): error CS0599: Invalid value for named attribute argument 'MethodCodeType'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"MethodCodeType = (MethodCodeType)9\").WithArguments(\"MethodCodeType\")",
+  "unsupported": []
+}

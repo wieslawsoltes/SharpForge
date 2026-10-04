@@ -2,6 +2,7 @@
  * The source assembly: declares every type of every file (names, arity, containers, partial merging) and
  * builds the member list of a type on first use.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { mergeGlobalUsings } from '../../binder/global-usings.js';
 import { mergePartialMembers } from './partial-members.js';
 import { synthesizeRecordMembers } from '../synthesized/records.js';
@@ -87,8 +88,11 @@ export class SourceAssemblyCore {
       modifiers = words(syntax.modifiers),
       arity = syntax.typeParameterList?.parameters.length ?? 0,
       kind = typeKindOf(syntax);
+    // C# 11: a `file` type is declared in the scope of its file, not in the namespace, so only that file finds it.
+    const isFileLocal = modifiers.includes('file') && !container,
+      fileKey = name + '`' + arity;
     const declaration = { syntax, scope, uri, file },
-      siblings = container ? container._nested : namespace.getTypeMembers(),
+      siblings = isFileLocal ? [...(scope.fileTypes?.values() ?? [])] : container ? container._nested : namespace.getTypeMembers(name, arity),
       existing = siblings.find(t => t.name === name && t.arity === arity && t.isSource);
     if (existing) {
       const partial = modifiers.includes('partial'),
@@ -103,18 +107,18 @@ export class SourceAssemblyCore {
           access(modifiers) &&
           existing.declarations.some(d => access(words(d.syntax.modifiers)) && access(words(d.syntax.modifiers)) !== access(modifiers))
         )
-          this.report(existing.declarations[0].uri, existing.declarations[0].syntax.identifier, 'CS0262', [name]);
+          this.report(existing.declarations[0].uri, existing.declarations[0].syntax.identifier, DiagnosticId.CS0262, [name]);
         existing.declarations.push(declaration);
         this.declareNested(syntax, existing, declaration, file);
         return existing;
       }
       if (partial !== allPartial || (partial && existing.typeKind !== kind))
-        this.report(uri, syntax.identifier, existing.typeKind !== kind ? 'CS0261' : 'CS0260', [name]);
+        this.report(uri, syntax.identifier, existing.typeKind !== kind ? DiagnosticId.CS0261 : DiagnosticId.CS0260, [name]);
       else
         this.report(
           uri,
           syntax.identifier,
-          container ? 'CS0102' : 'CS0101',
+          isFileLocal ? DiagnosticId.CS9071 : container ? DiagnosticId.CS0102 : DiagnosticId.CS0101,
           container
             ? [container.toDisplayString(), name]
             : [name, namespace.isGlobalNamespace ? '<global namespace>' : namespace.toDisplayString()],
@@ -151,10 +155,11 @@ export class SourceAssemblyCore {
     type.typeParameters = Object.freeze(declareTypeParameters(syntax.typeParameterList, type, uri, (n, c, a) => this.report(uri, n, c, a)));
     type._typeArguments = null;
     type.modifierWords = modifiers;
-    if (!existing) {
-      if (container) container._nested.push(type);
-      else namespace.addType(type);
-    } else type.isDuplicate = true;
+    type.isFileLocal = isFileLocal;
+    if (existing) type.isDuplicate = true;
+    else if (isFileLocal) (scope.fileTypes ??= new Map()).set(fileKey, type);
+    else if (container) container._nested.push(type);
+    else namespace.addType(type);
     if (container) type.containingSymbol = container;
     this.types.push(type);
     this.declareNested(syntax, type, declaration, file);

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-273c124301941964c8ef",
+  "kind": "spec",
+  "sourceText": ">  (in int x) => x                                                     // lambda expression  \n>  TValue this[in TKey index];                                         // indexer\n>  public static Vector3 operator +(in Vector3 x, in Vector3 y) => ... // operator\n>  ```\n\n- `in` is not allowed in combination with `out` or with anything that `out` does not combine with.\n\n- It is not permitted to overload on `ref`/`out`/`in` differences.\n\n- It is permitted to overload on ordinary byval and `in` differences.\n\n- For the purpose of OHI (Overloading, Hiding, Implementing), `in` behaves similarly to an `out` parameter.\nAll the same rules apply.\nFor example the overriding method will have to match `in` parameters with `in` parameters of an identity-convertible type.\n\n- For the purpose of delegate/lambda/method group conversions, `in` behaves similarly to an `out` parameter.\nLambdas and applicable method group conversion candidates will have to match `in` parameters of the target delegate with `in` parameters of an identity-convertible type.\n\n- For the purpose of generic variance, `in` parameters are nonvariant.\n\n> NOTE: There are no warnings on `in` parameters that have reference or primitives types.\nIt may be pointless in general, but in some cases user must/want to pass primitives as `in`. Examples - overriding a generic method like `Method(in T param)` when `T` was substituted to be `int`, or when having methods like `Volatile.Read(in int location)`\n>\n> It is conceivable to have an analyzer that warns in cases of inefficient use of `in` parameters, but the rules for such analysis would be too fuzzy to be a part of a language specification.\n\n### Use of `in` at call sites. (`in` arguments)\n\nThere are two ways to pass arguments to `in` parameters.\n\n#### `in` arguments can match `in` parameters:\n\nAn argument with an `in` modifier at the call site can match `in` parameters.\n",
+  "sourceSHA256": "fc661863aec0c7783e42d8511bad55e48b9a5f434110b5bbc0617f40df4c36d0",
+  "target": "library",
+  "featureId": "csharp-7-2-in-parameters-and-readonly-references",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/readonly-ref.md",
+    "sha256": "d859c5f6e0e030570288248c429a08d0e4b8d5c0eecd6bf9042317e99198122b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+    "license": "NOASSERTION",
+    "offset": 2997
+  }
+}

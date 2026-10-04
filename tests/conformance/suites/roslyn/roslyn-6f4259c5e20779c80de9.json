@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6f4259c5e20779c80de9",
+  "kind": "diagnostics",
+  "sourceText": "\npublic interface I1<T>\n{\n    void M1();\n    void M2();\n}\npublic class C1 : I1<(int a, int b)>\n{\n    public void M1() => System.Console.WriteLine(\"C1.M1\");\n    void I1<(int a, int b)>.M2() => System.Console.WriteLine(\"C1.M2\");\n}\n\npublic class C2 : C1, I1<(int c, int d)>\n{\n    new public void M1() => System.Console.WriteLine(\"C2.M1\");\n    void I1<(int c, int d)>.M2() => System.Console.WriteLine(\"C2.M2\");\n\n    static void Main()\n    {\n        var x = (C1)new C2();\n        var y = (I1<(int a, int b)>)x;\n        y.M1();\n        y.M2();\n    }\n}\n",
+  "sourceSHA256": "60885c0fbb2a5b899462dd9ee580570767562b78c83349211dec6bdeaa4db467",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "DuplicateInterfaceDetectionWithDifferentTupleNames_03",
+    "offset": 906561
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

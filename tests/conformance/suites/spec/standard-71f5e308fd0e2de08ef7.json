@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-71f5e308fd0e2de08ef7",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass A\n{\n    ~A()\n    {\n        Console.WriteLine(\"A's finalizer\");\n    }\n}\n\nclass B : A\n{\n    ~B()\n    {\n        Console.WriteLine(\"B's finalizer\");\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        B b = new B();\n        b = null;\n        GC.Collect();\n        GC.WaitForPendingFinalizers();\n    }\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "e0397b70f70dba970fce89cfa022158204f610c10a168c2c20ec164844a4fcf1",
+  "originalSource": "class A\n{\n    ~A()\n    {\n        Console.WriteLine(\"A's finalizer\");\n    }\n}\n\nclass B : A\n{\n    ~B()\n    {\n        Console.WriteLine(\"B's finalizer\");\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        B b = new B();\n        b = null;\n        GC.Collect();\n        GC.WaitForPendingFinalizers();\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "Finalizers1",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "Finalizers1",
+    "offsetInUnquotedMarkdown": 266939
+  }
+}

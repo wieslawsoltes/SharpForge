@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8f2d7b24e13400ad2150",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass Attr<T> : Attribute { }\n\nunsafe class Outer\n{\n    [Attr<int*>] // 1\n    class C1 { }\n\n    [Attr<delegate*<int, void>>] // 2\n    class C2 { }\n\n    [Attr<TypedReference>] // 3\n    class C3 { }\n}\n",
+  "sourceSHA256": "9244327c3c20c597daecd6d051c79649a6ab5843075da0bdc26a03c228b6053b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "GenericAttributeRestrictedTypeArgument_UnsafeContext",
+    "offset": 430889
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,11): error CS0306: The type 'int*' may not be used as a type argument\n                //     [Attr<int*>] // 1\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(7, 11),\n                // (10,11): error CS0306: The type 'delegate*<int, void>' may not be used as a type argument\n                //     [Attr<delegate*<int, void>>] // 2\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"delegate*<int, void>\").WithArguments(\"delegate*<int, void>\").WithLocation(10, 11),\n                // (13,11): error CS0306: The type 'TypedReference' may not be used as a type argument\n                //     [Attr<TypedReference>] // 3\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"TypedReference\").WithArguments(\"System.TypedReference\").WithLocation(13, 11)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

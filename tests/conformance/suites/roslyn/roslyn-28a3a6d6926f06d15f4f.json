@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-28a3a6d6926f06d15f4f",
+  "kind": "diagnostics",
+  "sourceText": "#nullable enable\n\nvar c = new C(0, null);\nc = new C(null, 0);\nc.E += null;\nc.E -= null;\nc.F += null;\nc.F -= null;\n\npartial class C\n{\n    public partial C(int x, string? y);\n    public partial C(string x, int y);\n    public partial event System.Action E;\n    public partial event System.Action? F;\n}\n\npartial class C\n{\n    public partial C(int x, string y)\n    {\n        y.ToString();\n    }\n    public partial C(string? x, int y)\n    {\n        x.ToString();\n    }\n    public partial event System.Action? E { add { value(); } remove { value(); } }\n    public partial event System.Action F { add { value(); } remove { value(); } }\n}",
+  "sourceSHA256": "812962d575d77c848e08e83181b4d6793617a4963b7e267dafb0a949420543d3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Difference_NullabilityAnalysis",
+    "offset": 137501
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8625",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9256",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9256",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8602",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9256",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8602",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8602",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9256",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (4,11): warning CS8625: Cannot convert null literal to non-nullable reference type.\n            // c = new C(null, 0);\n            Diagnostic(ErrorCode.WRN_NullAsNonNullable, \"null\").WithLocation(4, 11),\n            // (20,20): warning CS9256: Partial member declarations 'C.C(int x, string? y)' and 'C.C(int x, string y)' have signature differences.\n            //     public partial C(int x, string y)\n            Diagnostic(ErrorCode.WRN_PartialMemberSignatureDifference, \"C\").WithArguments(\"C.C(int x, string? y)\", \"C.C(int x, string y)\").WithLocation(20, 20),\n            // (24,20): warning CS9256: Partial member declarations 'C.C(string x, int y)' and 'C.C(string? x, int y)' have signature differences.\n            //     public partial C(string? x, int y)\n            Diagnostic(ErrorCode.WRN_PartialMemberSignatureDifference, \"C\").WithArguments(\"C.C(string x, int y)\", \"C.C(string? x, int y)\").WithLocation(24, 20),\n            // (26,9): warning CS8602: Dereference of a possibly null reference.\n            //         x.ToString();\n            Diagnostic(ErrorCode.WRN_NullReferenceReceiver, \"x\").WithLocation(26, 9),\n            // (28,41): warning CS9256: Partial member declarations 'event Action C.E' and 'event Action? C.E' have signature differences.\n            //     public partial event System.Action? E { add { value(); } remove { value(); } }\n            Diagnostic(ErrorCode.WRN_PartialMemberSignatureDifference, \"E\").WithArguments(\"event Action C.E\", \"event Action? C.E\").WithLocation(28, 41),\n            // (28,51): warning CS8602: Dereference of a possibly null reference.\n            //     public partial event System.Action? E { add { value(); } remove { value(); } }\n            Diagnostic(ErrorCode.WRN_NullReferenceReceiver, \"value\").WithLocation(28, 51),\n            // (28,71): warning CS8602: Dereference of a possibly null reference.\n            //     public partial event System.Action? E { add { value(); } remove { value(); } }\n            Diagnostic(ErrorCode.WRN_NullReferenceReceiver, \"value\").WithLocation(28, 71),\n            // (29,40): warning CS9256: Partial member declarations 'event Action? C.F' and 'event Action C.F' have signature differences.\n            //     public partial event System.Action F { add { value(); } remove { value(); } }\n            Diagnostic(ErrorCode.WRN_PartialMemberSignatureDifference, \"F\").WithArguments(\"event Action? C.F\", \"event Action C.F\").WithLocation(29, 40)",
+  "unsupported": []
+}

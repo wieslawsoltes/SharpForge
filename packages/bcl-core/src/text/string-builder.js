@@ -1,30 +1,58 @@
-import {MAX, bclScalar, bounded, fail, integer, makeArray, string, text} from '../host.js';
-import {compositeFormat} from '../formatting/composite-format.js';
+import {MAX, array, bclScalar, bounded, fail, integer, makeArray, string, text} from '../host.js';
+import {appendCompositeFormat} from '../formatting/composite-format.js';
+import {appendBuilderCharacter} from './string-builder-append.js';
+import {accessBuilderCharacter} from './string-builder-indexer.js';
+import {copyBuilderCharacters} from './string-builder-copy.js';
+import {appendBuilderRange} from './string-builder-append-range.js';
+import {appendBuilderArray} from './string-builder-append-array.js';
+import {appendBuilderValue} from './string-builder-append-builder.js';
+import {appendBuilderValueRange} from './string-builder-append-builder-range.js';
+import {builderEquals} from './string-builder-equality.js';
+import {
+  replaceBuilderCharacters, insertBuilderCharacter, insertBuilderBoolean, insertBuilderRepeatedString
+} from './string-builder-edit.js';
+import {removeBuilderRange} from './string-builder-remove.js';
+import {replaceBuilderStringRange} from './string-builder-replace-range.js';
+import {insertBuilderNumeric, insertBuilderString} from './string-builder-insert-values.js';
+import {insertBuilderArray} from './string-builder-insert-array.js';
+import {insertBuilderObject} from './string-builder-insert-object.js';
 
 const owner = 'System.Text.StringBuilder';
+const maximumCapacity = 2147483647;
 
-/** Register StringBuilder in its released ABI order, including the released capacity metadata. */
+/** Register StringBuilder in its released ABI order with the .NET default MaxCapacity. */
 export function registerStringBuilder({define, member, ctor, prop}) {
-  define(owner, {kind: 'bcl', family: 'builder'});
+  define(owner, {kind: 'bcl', family: 'builder', defaultMember: 'Chars'});
   for (const parameters of [[], ['int'], ['string'], ['string', 'int']]) ctor(owner, parameters);
   prop(owner, 'Length', 'int', 0);
   prop(owner, 'Capacity', 'int', 16);
-  prop(owner, 'MaxCapacity', 'int', 1048576, true);
+  prop(owner, 'MaxCapacity', 'int', maximumCapacity, true);
   for (const type of ['int', 'double', 'bool', 'string', 'object']) member(owner, 'Append', [type], owner);
   for (const parameters of [[], ['string']]) member(owner, 'AppendLine', parameters, owner);
   const methods = [
     ['Clear', [], owner],
-    ['ToString', [], 'string'],
+    ['ToString', [], 'string', {objectToStringOverride: true}],
     ['ToString', ['int', 'int'], 'string'],
     ['Insert', ['int', 'string'], owner],
     ['Remove', ['int', 'int'], owner],
     ['Replace', ['string', 'string'], owner],
     ['EnsureCapacity', ['int'], 'int']
   ];
-  for (const [name, parameters, result] of methods) member(owner, name, parameters, result);
+  for (const [name, parameters, result, options] of methods) member(owner, name, parameters, result, options);
   for (let count = 1; count <= 3; count++) {
     member(owner, 'AppendFormat', ['string', ...Array(count).fill('object')], owner);
   }
+}
+
+/** Add genuine params-array binding in A07's reserved range without moving released contracts. */
+export function registerStringBuilderExtensions({member}) {
+  member(owner, 'AppendFormat', ['string', 'object[]'], owner, {paramsIndex: 1});
+}
+
+function capacity(platform, value, minimum = 0) {
+  integer(platform, value, minimum, maximumCapacity);
+  if (value > MAX) fail(platform, 'OutOfMemoryException', 'StringBuilder host text allocation limit exceeded');
+  return value;
 }
 
 function chunks(platform, reference) {
@@ -48,7 +76,8 @@ function commitChunks(platform, reference, items) {
   reserve(platform, reference, items.length);
   const next = Array(chunks(platform, reference).length).fill(null);
   items.forEach((value, index) => { next[index] = value; });
-  platform.heap.replaceData(platform.get(reference, '$data'), next);
+  const storage = platform.get(reference, '$data');
+  if (storage) platform.heap.replaceData(storage, next);
   platform.set(reference, '$count', items.length);
   platform.set(reference, '$version', platform.get(reference, '$version', 0) + 1);
 }
@@ -59,7 +88,7 @@ function appendChunk(platform, reference, value) {
   const storage = platform.get(reference, '$data');
   const record = platform.heap.get(storage);
   const oldValue = record.data[count];
-  platform.heap.writeData(record, count, value);
+  record.data[count] = value;
   platform.vm.notifyWrite?.({kind: 'array', handle: storage.h, generation: storage.g, index: count, oldValue, value});
   platform.set(reference, '$count', count + 1);
   platform.set(reference, '$version', platform.get(reference, '$version', 0) + 1);
@@ -92,14 +121,22 @@ function appendText(platform, reference, value) {
 }
 
 function construct(platform, descriptor, scalars) {
-  if (scalars.length === 1 && typeof scalars[0] === 'number') integer(platform, scalars[0]);
-  if (scalars.length === 2) integer(platform, scalars[1]);
+  if (scalars.length === 1 && typeof scalars[0] === 'number') capacity(platform, scalars[0]);
+  if (scalars.length === 2) capacity(platform, scalars[1]);
   const reference = platform.make(descriptor.owner, {'$count': 0, '$version': 0});
   platform.heap.pins.push(reference);
-  const capacity = scalars.length === 1 && typeof scalars[0] === 'number' ? scalars[0] : scalars[1] ?? 16;
-  platform.set(reference, '$capacity', capacity);
+  const initialCapacity = scalars.length === 1 && typeof scalars[0] === 'number' ? scalars[0] : scalars[1] ?? 16;
+  platform.set(reference, '$capacity', initialCapacity || 16);
   platform.set(reference, '$length', 0);
   if (typeof scalars[0] === 'string') appendText(platform, reference, scalars[0]);
+  return reference;
+}
+
+function insertText(platform, reference, index, value) {
+  const previous = bufferText(platform, reference);
+  const start = integer(platform, index, 0, previous.length);
+  capacity(platform, previous.length + (value?.length ?? 0));
+  setBuffer(platform, reference, previous.slice(0, start) + (value ?? '') + previous.slice(start));
   return reference;
 }
 
@@ -109,51 +146,72 @@ function mutateBuffer(platform, reference, name, values, scalars) {
       setBuffer(platform, reference, '');
       return reference;
     case 'set_Length': {
-      const length = integer(platform, scalars[0]);
+      const length = capacity(platform, scalars[0]);
       const previous = bufferText(platform, reference);
       setBuffer(platform, reference, length > previous.length
         ? previous + '\0'.repeat(length - previous.length)
         : previous.slice(0, length));
       return null;
     }
-    case 'Insert': {
-      const previous = bufferText(platform, reference);
-      const start = integer(platform, scalars[0], 0, previous.length);
-      setBuffer(platform, reference, previous.slice(0, start) + (scalars[1] ?? '') + previous.slice(start));
-      return reference;
-    }
-    case 'Remove': {
-      const previous = bufferText(platform, reference);
-      const start = integer(platform, scalars[0], 0, previous.length);
-      const length = integer(platform, scalars[1], 0, previous.length - start);
-      setBuffer(platform, reference, previous.slice(0, start) + previous.slice(start + length));
-      return reference;
-    }
+    case 'Remove': return removeBuilderRange(platform, reference, scalars, bufferText, setBuffer);
     case 'Replace': {
       const previous = string(platform, values[0]);
       if (!previous) fail(platform, 'ArgumentException', 'Old value cannot be empty');
-      setBuffer(platform, reference, bufferText(platform, reference).split(previous).join(scalars[1] ?? ''));
+      const source = bufferText(platform, reference);
+      const replacement = scalars[1] ?? '';
+      if (replacement.length > previous.length) {
+        let occurrences = 0;
+        let position = source.indexOf(previous);
+        while (position >= 0) {
+          occurrences++;
+          position = source.indexOf(previous, position + previous.length);
+        }
+        const length = source.length + occurrences * (replacement.length - previous.length);
+        if (length > MAX) fail(platform, 'OutOfMemoryException', 'StringBuilder host text allocation limit exceeded');
+      }
+      setBuffer(platform, reference, source.split(previous).join(replacement));
       return reference;
     }
     default: fail(platform, 'MissingMethodException', name);
   }
 }
 
+function appendFormat(platform, descriptor, reference, values) {
+  const format = string(platform, values[0]);
+  let args = values.slice(1);
+  if (descriptor.paramsIndex === 1) {
+    if (values[1] === null) fail(platform, 'ArgumentNullException', 'Format arguments are required');
+    args = array(platform, values[1]);
+  }
+  appendCompositeFormat(platform, format, args, value => appendText(platform, reference, value));
+  return reference;
+}
+
 function invokeMember(platform, descriptor, reference, values, scalars) {
   switch (descriptor.name) {
+    case 'CopyTo': return copyBuilderCharacters(platform, reference, values, scalars);
+    case 'get_Chars':
+    case 'set_Chars': return accessBuilderCharacter(platform, reference, scalars);
     case 'get_Length': return platform.get(reference, '$length', 0);
     case 'get_Capacity': return platform.get(reference, '$capacity', 16);
-    case 'get_MaxCapacity': return MAX;
+    case 'get_MaxCapacity': return maximumCapacity;
     case 'set_Capacity':
-      integer(platform, scalars[0], platform.get(reference, '$length', 0));
+      capacity(platform, scalars[0], platform.get(reference, '$length', 0));
       platform.set(reference, '$capacity', scalars[0]);
       return null;
-    case 'Append': return appendText(platform, reference, text(platform, values[0], descriptor.parameters[0]));
+    case 'Append':
+      if (descriptor.parameters[0] === 'char[]') return appendBuilderArray(platform, reference, values, scalars, appendText);
+      if (descriptor.parameters[0] === owner) return descriptor.parameters.length === 3
+        ? appendBuilderValueRange(platform, reference, values, scalars, appendText)
+        : appendBuilderValue(platform, reference, values[0], bufferText, appendText);
+      if (descriptor.parameters.length === 3) return appendBuilderRange(platform, reference, scalars, appendText);
+      return descriptor.parameters[0] === 'char'
+        ? appendBuilderCharacter(platform, reference, scalars, appendText)
+        : appendText(platform, reference, text(platform, values[0], descriptor.parameters[0]));
     case 'AppendLine': return appendText(platform, reference, (values.length ? text(platform, values[0]) : '') + '\n');
-    case 'AppendFormat':
-      return appendText(platform, reference, compositeFormat(platform, string(platform, values[0]), values.slice(1)));
+    case 'AppendFormat': return appendFormat(platform, descriptor, reference, values);
     case 'EnsureCapacity':
-      integer(platform, scalars[0]);
+      capacity(platform, scalars[0]);
       platform.set(reference, '$capacity', Math.max(scalars[0], platform.get(reference, '$capacity', 16)));
       return platform.get(reference, '$capacity');
     case 'ToString': {
@@ -162,6 +220,19 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       const length = values.length ? integer(platform, scalars[1], 0, value.length - start) : value.length;
       return platform.heap.string(value.slice(start, start + length));
     }
+    case 'Equals': return builderEquals(platform, reference, values[0]);
+    case 'Insert':
+      if (descriptor.parameters.length === 3) return insertBuilderRepeatedString(platform, reference, scalars, insertText);
+      if (descriptor.parameters[1] === 'char') return insertBuilderCharacter(platform, reference, scalars, insertText);
+      if (descriptor.parameters[1] === 'bool') return insertBuilderBoolean(platform, reference, scalars, insertText);
+      if (descriptor.parameters[1] === 'char[]') return insertBuilderArray(platform, reference, values, insertText);
+      if (descriptor.parameters[1] === 'object') return insertBuilderObject(platform, reference, values, insertText);
+      if (descriptor.parameters[1] === 'string') return insertBuilderString(platform, reference, scalars, insertText);
+      return insertBuilderNumeric(platform, descriptor, reference, values, insertText);
+    case 'Replace':
+      if (descriptor.parameters[0] === 'char') return replaceBuilderCharacters(platform, reference, scalars);
+      if (descriptor.parameters.length === 4) return replaceBuilderStringRange(platform, reference, scalars, bufferText, setBuffer);
+      return mutateBuffer(platform, reference, descriptor.name, values, scalars);
     default: return mutateBuffer(platform, reference, descriptor.name, values, scalars);
   }
 }
@@ -180,5 +251,6 @@ export const stringBuilderModule = Object.freeze({
   name: 'string-builder',
   families: Object.freeze(['builder']),
   contracts: registerStringBuilder,
+  extensionContracts: registerStringBuilderExtensions,
   invoke: invokeStringBuilder
 });

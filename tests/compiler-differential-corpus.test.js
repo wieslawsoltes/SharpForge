@@ -7,12 +7,11 @@ import { discoverFixtures, fixtureModuleNames, validateFixtures, fixturesDirecto
 import {
   loadBaseline,
   saveBaseline,
-  loadLegacyBaseline,
   BASELINE_AXES,
   baselineDirectory,
 } from '../packages/compiler/test/differential/baseline-store.js';
 import { loadFixtures, savePinned } from '../packages/compiler/test/differential/corpus-store.js';
-import { loadFixtures as loadRegisteredFixtures } from '../packages/compiler/test/differential/corpus.js';
+import { loadFixtures as loadReexportedFixtures } from '../packages/compiler/test/differential/corpus.js';
 
 // SF-A02-T40: the differential corpus is discovered from fixtures/ and its baseline is stored per feature, so that
 // parallel pull requests do not meet on one registry line or one baseline file.
@@ -88,13 +87,14 @@ test('A02-T40 baseline: one file per feature, one fixture per line, and a lossle
     warnings: ['alpha/one', 'beta/one'],
     bytecode: ['alpha/one'],
     cil: ['alpha/one', 'beta/two'],
+    directCil: ['beta/two'],
   };
   saveBaseline(baseline, directory);
   assert.deepEqual(readdirSync(directory).sort(), ['alpha.json', 'beta.json']);
   assert.equal(readFileSync(join(directory, 'alpha.json'), 'utf8'), '{\n  "alpha/one": ["diagnostics", "warnings", "bytecode", "cil"]\n}\n');
   assert.equal(
     readFileSync(join(directory, 'beta.json'), 'utf8'),
-    '{\n  "beta/one": ["diagnostics", "warnings"],\n  "beta/two": ["diagnostics", "cil"]\n}\n',
+    '{\n  "beta/one": ["diagnostics", "warnings"],\n  "beta/two": ["diagnostics", "cil", "directCil"]\n}\n',
   );
   const reloaded = loadBaseline(directory);
   for (const axis of BASELINE_AXES) assert.deepEqual(reloaded[axis], [...baseline[axis]].sort(), axis);
@@ -114,7 +114,7 @@ test('A02-T40 baseline: saving removes features that no longer pass and leaves u
 
 test('A02-T40 baseline: a missing directory is an empty baseline; misplaced ids and unknown axes are rejected', t => {
   const directory = join(scratch(t), 'baseline');
-  assert.deepEqual(loadBaseline(directory), { diagnostics: [], warnings: [], bytecode: [], cil: [] });
+  assert.deepEqual(loadBaseline(directory), { diagnostics: [], warnings: [], bytecode: [], cil: [], directCil: [] });
   mkdirSync(directory);
   writeFileSync(join(directory, 'alpha.json'), '{"beta/one": ["diagnostics"]}\n');
   assert.throws(() => loadBaseline(directory), /baseline\/alpha\.json: beta\/one belongs to feature 'beta'/);
@@ -129,15 +129,6 @@ test('A02-T40 baseline: the checked-in baseline only names fixtures of the corpu
     assert.ok(baseline[axis].length > 0, `${axis} has entries`);
     for (const id of baseline[axis]) assert.ok(ids.has(id), `${axis}: ${id} is not a fixture`);
   }
-});
-
-test('A02-T40 baseline: passes recorded in the legacy baseline.json are accepted and never required', t => {
-  const directory = scratch(t);
-  assert.deepEqual([...loadLegacyBaseline(join(directory, 'baseline.json')).diagnostics], []);
-  writeFileSync(join(directory, 'baseline.json'), '{"diagnostics":["alpha/one"],"cil":["alpha/two"]}');
-  const legacy = loadLegacyBaseline(join(directory, 'baseline.json'));
-  assert.deepEqual(Object.keys(legacy), [...BASELINE_AXES]);
-  assert.ok(legacy.diagnostics.has('alpha/one') && legacy.cil.has('alpha/two') && !legacy.bytecode.has('alpha/one'));
 });
 
 test('A02-T40 pins: a pinned fixture keeps its line and new fixtures are appended', t => {
@@ -157,8 +148,9 @@ test('A02-T40 pins: a pinned fixture keeps its line and new fixtures are appende
   assert.deepEqual(idsOf(), ['alpha/one', 'alpha/three']);
 });
 
-test('A02-T40 transition: the registry in corpus.js and discovery yield the same fixtures', () => {
-  // corpus.js is kept unchanged while open branches still add imports to it; discovery is what the harness uses.
-  const registered = new Set(loadRegisteredFixtures().map(f => f.id));
-  for (const id of registered) assert.ok(loadFixtures().some(f => f.id === id), id + ' is discovered');
+test('A02-T40 corpus.js re-exports the discovered corpus', () => {
+  assert.deepEqual(
+    loadReexportedFixtures().map(f => f.id),
+    loadFixtures().map(f => f.id),
+  );
 });

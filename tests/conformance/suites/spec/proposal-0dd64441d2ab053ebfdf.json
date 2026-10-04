@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-0dd64441d2ab053ebfdf",
+  "kind": "spec",
+  "sourceText": "// this can be called on either RValue or an LValue\npublic static void Reader(in this Guid self)\n{\n    // do something nonmutating.\n    WriteLine(self == default(Guid));\n}\n\n// this can be called only on an LValue\npublic static void Mutator(ref this Guid self)\n{\n    // can mutate self\n    self = new Guid();\n}",
+  "sourceSHA256": "63e2bd3774be47719e5a1717b23c0035af2c0f6ad20c082128ac00f29cff1bbf",
+  "target": "library",
+  "featureId": "csharp-7-2-in-parameters-and-readonly-references",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/readonly-ref.md",
+    "sha256": "d859c5f6e0e030570288248c429a08d0e4b8d5c0eecd6bf9042317e99198122b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+    "license": "NOASSERTION",
+    "offset": 25214
+  }
+}

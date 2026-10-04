@@ -41,3 +41,7 @@ hashes are in `planning/qualification/supply/python-lock.json`. Their installed
 wheel distributions retain their own license notices. jsonschema validates the full
 official schema; PyYAML parses actual workflow semantics instead of approximating
 YAML with a regular expression.
+
+## Captured browser trace source licenses
+
+The exact Project16 trace archives recorded in `planning/qualification/supply/licenses.json` contain unchanged pyee 13.0.1 `base.py` and `asyncio.py` (MIT), CPython 3.12.14 `contextlib.py` (PSF-2.0), and SharpForge source and generated reports (MIT). The a4 archive also retains Unicode 16.0.0 grapheme tables in its generated language-worker bundle (Unicode-3.0). The complete source notices are retained in [trace-python.txt](planning/qualification/supply/licenses/trace-python.txt). These are recorded evidence archives; listing them does not assert that their captured test runs passed.

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-194401d7b4114343eed5",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    async System.Threading.Tasks.Task M()\n    {\n        await foreach (var i in new C())\n        {\n        }\n    }\n    [System.Obsolete]\n    public Enumerator GetAsyncEnumerator(System.Threading.CancellationToken token = default)\n    {\n        throw null;\n    }\n    public sealed class Enumerator\n    {\n        [System.Obsolete]\n        public System.Threading.Tasks.Task<bool> MoveNextAsync()\n        {\n            throw null;\n        }\n        [System.Obsolete]\n        public int Current\n        {\n            get => throw null;\n        }\n     }\n}",
+  "sourceSHA256": "207b173a2e403a2548426cdf72427b35658a5927b538bae55e97d8637e03665a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestWithObsoletePatternMethods",
+    "offset": 22588
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,15): warning CS0612: 'C.GetAsyncEnumerator(CancellationToken)' is obsolete\n                //         await foreach (var i in new C())\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"foreach\").WithArguments(\"C.GetAsyncEnumerator(System.Threading.CancellationToken)\").WithLocation(6, 15),\n                // (6,15): warning CS0612: 'C.Enumerator.MoveNextAsync()' is obsolete\n                //         await foreach (var i in new C())\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"foreach\").WithArguments(\"C.Enumerator.MoveNextAsync()\").WithLocation(6, 15),\n                // (6,15): warning CS0612: 'C.Enumerator.Current' is obsolete\n                //         await foreach (var i in new C())\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"foreach\").WithArguments(\"C.Enumerator.Current\").WithLocation(6, 15)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

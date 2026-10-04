@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d321f50b2de88c45034b",
+  "kind": "diagnostics",
+  "sourceText": "partial class C\n{\n    extern partial event System.Action E;\n    partial event System.Action E { add { } remove { } }\n\n    extern partial C();\n    partial C() { }\n}",
+  "sourceSHA256": "f651eb15856e1fa817d78c57227e2194a3702c3df498d90b85a1f41c55db924a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Extern_03",
+    "offset": 86619
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9276",
+        "severity": "error"
+      },
+      {
+        "code": "CS9278",
+        "severity": "error"
+      },
+      {
+        "code": "CS0102",
+        "severity": "error"
+      },
+      {
+        "code": "CS9276",
+        "severity": "error"
+      },
+      {
+        "code": "CS9278",
+        "severity": "error"
+      },
+      {
+        "code": "CS0111",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,40): error CS9276: Partial member 'C.E' must have a definition part.\n            //     extern partial event System.Action E;\n            Diagnostic(ErrorCode.ERR_PartialMemberMissingDefinition, \"E\").WithArguments(\"C.E\").WithLocation(3, 40),\n            // (4,33): error CS9278: Partial member 'C.E' may not have multiple implementing declarations.\n            //     partial event System.Action E { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_PartialMemberDuplicateImplementation, \"E\").WithArguments(\"C.E\").WithLocation(4, 33),\n            // (4,33): error CS0102: The type 'C' already contains a definition for 'E'\n            //     partial event System.Action E { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_DuplicateNameInClass, \"E\").WithArguments(\"C\", \"E\").WithLocation(4, 33),\n            // (6,20): error CS9276: Partial member 'C.C()' must have a definition part.\n            //     extern partial C();\n            Diagnostic(ErrorCode.ERR_PartialMemberMissingDefinition, \"C\").WithArguments(\"C.C()\").WithLocation(6, 20),\n            // (7,13): error CS9278: Partial member 'C.C()' may not have multiple implementing declarations.\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_PartialMemberDuplicateImplementation, \"C\").WithArguments(\"C.C()\").WithLocation(7, 13),\n            // (7,13): error CS0111: Type 'C' already defines a member called 'C' with the same parameter types\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_MemberAlreadyExists, \"C\").WithArguments(\"C\", \"C\").WithLocation(7, 13)",
+  "unsupported": []
+}

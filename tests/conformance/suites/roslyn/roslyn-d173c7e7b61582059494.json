@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d173c7e7b61582059494",
+  "kind": "diagnostics",
+  "sourceText": "#pragma warning disable CS8321 // The local function is declared but never used\n\nstatic void bug(out int a)\n{\n    bool hasLevel() => true;\n}",
+  "sourceSHA256": "ba388f2d5aa3daa6ace3230e083efebe20d6f6433dba8b17eeb2bf9d93c3cb30",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "OutParameterIsNotAssigned_02",
+    "offset": 261261
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0177",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,13): error CS0177: The out parameter 'a' must be assigned to before control leaves the current method\n                // static void bug(out int a)\n                Diagnostic(ErrorCode.ERR_ParamUnassigned, \"bug\").WithArguments(\"a\").WithLocation(3, 13)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5c7d2e5107520c9a349e",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\npublic class SomeClass\n{\n    [property: Test]\n    public string Name;\n}\n\ninternal class TestAttribute : Attribute\n{\n}",
+  "sourceSHA256": "b0025253511e1e14cf64c6108abf97002f3a58660676598b054b1269b725b7bd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/GetDiagnosticsTests.cs",
+    "sha256": "9ab09c3bfef48a81c3602779a3a3ecaadb1b5d894ac1d0f4466377966756175d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/GetDiagnosticsTests.cs",
+    "license": "MIT",
+    "method": "TestDiagnosticSuppressor_GetAnalysisResultAsyncCrash",
+    "offset": 94523
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0657",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,6): warning CS0657: 'property' is not a valid attribute location for this declaration. Valid attribute locations for this declaration are 'field'. All attributes in this block will be ignored.\n                //     [property: Test]\n                Diagnostic(ErrorCode.WRN_AttributeLocationOnBadDeclaration, \"property\").WithArguments(\"property\", \"field\").WithLocation(5, 6)",
+  "unsupported": []
+}

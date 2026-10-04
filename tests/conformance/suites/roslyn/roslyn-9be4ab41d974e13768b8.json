@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9be4ab41d974e13768b8",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace System\n{\n    public struct ValueTuple<T1, T2>\n    {\n        public T1 Item1;\n        public T2 Item2;\n\n        public ValueTuple(T1 item1, T2 item2)\n        {\n            this.Item1 = item1;\n            this.Item2 = item2;\n        }\n\n        public static bool operator ==(ValueTuple<T1, T2> t1, ValueTuple<T1, T2> t2)\n            => throw null;\n        public static bool operator !=(ValueTuple<T1, T2> t1, ValueTuple<T1, T2> t2)\n            => throw null;\n\n        public override bool Equals(object o)\n            => throw null;\n        public override int GetHashCode()\n            => throw null;\n    }\n}\npublic class C\n{\n    public static void Main()\n    {\n        var t1 = (1, 1);\n        var t2 = (2, 2);\n        System.Console.Write(t1 == t2);\n        System.Console.Write(t1 != t2);\n    }\n}\n",
+  "sourceSHA256": "55a11bb74df117136610b394a6cdbf92c2a817839d40eb785b79969895463e63",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestTupleEqualityPreferredOverCustomOperator",
+    "offset": 84193
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

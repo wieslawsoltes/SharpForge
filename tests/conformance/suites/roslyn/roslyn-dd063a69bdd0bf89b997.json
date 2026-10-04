@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-dd063a69bdd0bf89b997",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C1\n{\n    public virtual void goo() {}\n}\nclass C2 : C1\n{\n    [Obsolete]\n    public override void goo() {}\n}\nclass C3 : C1\n{\n    [Obsolete]\n    public new void goo() {}\n}\nclass C4 : C1\n{\n    public override void goo() {}\n}\nclass C5 : C4\n{\n    [Obsolete]\n    public override void goo() {}\n}\nclass C6 : C5\n{\n    public override void goo() {}\n}\n\nclass D1\n{\n    [Obsolete]\n    public virtual void goo() {}\n}\nclass D2 : D1\n{\n    public override void goo() {}\n}\nclass D3 : D1\n{\n    public new void goo() {}\n}\nclass D4 : D1\n{\n    [Obsolete]\n    public override void goo() {}\n}\nclass D5 : D4\n{\n    public override void goo() {}\n}\nclass D6 : D5\n{\n    [Obsolete]\n    public override void goo() {}\n}\n\nclass E1\n{\n    public virtual int Goo {get; set;}\n}\nclass E2 : E1\n{\n    public override int Goo { [Obsolete] get; set;}\n}\nclass E3 : E1\n{\n    public new int Goo { [Obsolete] get; set;}\n}\nclass E4 : E1\n{\n    public override int Goo {get; set;}\n}\nclass E5 : E4\n{\n    public override int Goo { [Obsolete] get; set;}\n}\nclass E6 : E5\n{\n    public override int Goo {get; set;}\n}\n\nclass F1\n{\n    public virtual int Goo { [Obsolete] get; set;}\n}\nclass F2 : F1\n{\n    public override int Goo {get; set;}\n}\nclass F3 : F1\n{\n    public new int Goo {get; set;}\n}\nclass F4 : F1\n{\n    public override int Goo { [Obsolete] get; set;}\n}\nclass F5 : F4\n{\n    public override int Goo {get; set;}\n}\nclass F6 : F5\n{\n    public override int Goo { [Obsolete] get; set;}\n}\n",
+  "sourceSHA256": "5b1f1228a4b8da50e10c26b1a1eec9f34112b823f969108d8c722da8f7e86560",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeOnOverriddenMembers",
+    "offset": 248678
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0809",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0672",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0809",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0672",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0672",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0809",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0672",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0809",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,26): warning CS0809: Obsolete member 'C2.goo()' overrides non-obsolete member 'C1.goo()'\n                //     public override void goo() {}\n                Diagnostic(ErrorCode.WRN_ObsoleteOverridingNonObsolete, \"goo\").WithArguments(\"C2.goo()\", \"C1.goo()\").WithLocation(10, 26),\n                // (90,30): warning CS0672: Member 'F2.Goo.get' overrides obsolete member 'F1.Goo.get'. Add the Obsolete attribute to 'F2.Goo.get'.\n                //     public override int Goo {get; set;}\n                Diagnostic(ErrorCode.WRN_NonObsoleteOverridingObsolete, \"get\").WithArguments(\"F2.Goo.get\", \"F1.Goo.get\").WithLocation(90, 30),\n                // (77,42): warning CS0809: Obsolete member 'E5.Goo.get' overrides non-obsolete member 'E1.Goo.get'\n                //     public override int Goo { [Obsolete] get; set;}\n                Diagnostic(ErrorCode.WRN_ObsoleteOverridingNonObsolete, \"get\").WithArguments(\"E5.Goo.get\", \"E1.Goo.get\").WithLocation(77, 42),\n                // (51,26): warning CS0672: Member 'D5.goo()' overrides obsolete member 'D1.goo()'. Add the Obsolete attribute to 'D5.goo()'.\n                //     public override void goo() {}\n                Diagnostic(ErrorCode.WRN_NonObsoleteOverridingObsolete, \"goo\").WithArguments(\"D5.goo()\", \"D1.goo()\").WithLocation(51, 26),\n                // (38,26): warning CS0672: Member 'D2.goo()' overrides obsolete member 'D1.goo()'. Add the Obsolete attribute to 'D2.goo()'.\n                //     public override void goo() {}\n                Diagnostic(ErrorCode.WRN_NonObsoleteOverridingObsolete, \"goo\").WithArguments(\"D2.goo()\", \"D1.goo()\").WithLocation(38, 26),\n                // (24,26): warning CS0809: Obsolete member 'C5.goo()' overrides non-obsolete member 'C1.goo()'\n                //     public override void goo() {}\n                Diagnostic(ErrorCode.WRN_ObsoleteOverridingNonObsolete, \"goo\").WithArguments(\"C5.goo()\", \"C1.goo()\").WithLocation(24, 26),\n                // (102,30): warning CS0672: Member 'F5.Goo.get' overrides obsolete member 'F1.Goo.get'. Add the Obsolete attribute to 'F5.Goo.get'.\n                //     public override int Goo {get; set;}\n                Diagnostic(ErrorCode.WRN_NonObsoleteOverridingObsolete, \"get\").WithArguments(\"F5.Goo.get\", \"F1.Goo.get\").WithLocation(102, 30),\n                // (65,42): warning CS0809: Obsolete member 'E2.Goo.get' overrides non-obsolete member 'E1.Goo.get'\n                //     public override int Goo { [Obsolete] get; set;}\n                Diagnostic(ErrorCode.WRN_ObsoleteOverridingNonObsolete, \"get\").WithArguments(\"E2.Goo.get\", \"E1.Goo.get\").WithLocation(65, 42)",
+  "unsupported": []
+}

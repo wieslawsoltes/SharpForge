@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3ff7b50ab19d7f9bf32b",
+  "kind": "diagnostics",
+  "sourceText": "#pragma warning disable CS9113 // warning CS9113: Parameter 'a' is unread.\nclass Base(int a) { }\n\nclass Derived(int a) : Base(a);",
+  "sourceSHA256": "a5aead931676ec6b2bb01ad62a4f520085cf8ba1dead14ce988a2dab03236222",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticAnalyzerTests.cs",
+    "sha256": "44af3a2b3a9902d6a7259ce0c742c45e4a6948fa26f70a2cd52f9e39ce49587c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "TestNoDuplicateCallbacksForPrimaryConstructorBaseType",
+    "offset": 213560
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

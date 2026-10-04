@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-81f1df479009fe1fdcc0",
+  "kind": "diagnostics",
+  "sourceText": "interface I1 { }\ninterface I2 { }\nclass C\n{\n    string M1(I1 o, in int i, in int j, in int k) => \"1\";\n    string M1(I2 o, in int i, in int j, in int k) => \"2\";\n    static void Main()\n    {\n        int i = 5;\n        System.Console.Write(new C().M1(null, in i, ref i, ref i));\n    }\n}",
+  "sourceSHA256": "7947d7f1d8cf4a6cc1e57f1d82ddea34f131a82b0332fb0f99497cfc50344a6b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "OverloadResolution_10",
+    "offset": 177440
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0121",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (10,38): error CS0121: The call is ambiguous between the following methods or properties: 'C.M1(I1, in int, in int, in int)' and 'C.M1(I2, in int, in int, in int)'\n            //         System.Console.Write(new C().M1(null, in i, ref i, ref i));\n            Diagnostic(ErrorCode.ERR_AmbigCall, \"M1\").WithArguments(\"C.M1(I1, in int, in int, in int)\", \"C.M1(I2, in int, in int, in int)\").WithLocation(10, 38)",
+  "unsupported": []
+}

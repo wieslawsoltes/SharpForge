@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8d2f3640cebde873c065",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass Program\n{\n    static void Main(string[] args)\n    {\n        int n = 0;\n        using (new MyManagedClass1())\n            if (true) n++;\n    }\n}\nclass MyManagedClass1 : IDisposable\n{\n    void IDisposable.Dispose()\n    {  }\n}\n",
+  "sourceSHA256": "397a64e63910d87e00cf257cacba439fa3de73cb89a3ad62b863d0b4e8b890f3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "sha256": "d8229f7c312c9ee5a778889d6e4283a10543e441e97b4e3da14145b6744b1b4e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "license": "MIT",
+    "method": "IfFollowingUsing",
+    "offset": 64494
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

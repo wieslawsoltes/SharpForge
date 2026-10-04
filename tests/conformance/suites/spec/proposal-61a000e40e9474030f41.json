@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-61a000e40e9474030f41",
+  "kind": "spec",
+  "sourceText": "namespace System\n{\n    public readonly struct Index\n    {\n        public Index(int value, bool fromEnd);\n    }\n}",
+  "sourceSHA256": "a3cccff121bf5e2d2b53303159c1a2aa4fcff2899a77b7be3a9c99b9702dbf4e",
+  "target": "library",
+  "featureId": "csharp-8-0-ranges-and-indexes",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/ranges.md",
+    "sha256": "9419e0ac1a7ac5309d11cf3ee4ea64a38c2abbf82e8197f5211e7d93ec077363",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/ranges.md",
+    "license": "NOASSERTION",
+    "offset": 593
+  }
+}

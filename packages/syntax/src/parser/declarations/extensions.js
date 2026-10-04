@@ -71,8 +71,11 @@ export const extensionMethods = {
       const before = this.i,
         attributeLists = this.attributeLists(),
         modifiers = this.parameterModifiers(),
-        type = this.type();
-      parameters.push(this.n('Parameter', attributeLists, modifiers, type, this.isId() ? this.take('IdentifierToken') : null, null));
+        type = this.type(),
+        identifier = this.isId() ? this.take('IdentifierToken') : null,
+        // A receiver cannot have a default value; Roslyn parses it and reports CS9284 while binding.
+        defaultValue = this.parameterDefault();
+      parameters.push(this.n('Parameter', attributeLists, modifiers, type, identifier, defaultValue));
       if (this.at(',')) parameters.push(this.take());
       else break;
       if (before === this.i) break;

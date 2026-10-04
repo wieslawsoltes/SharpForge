@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a36963c6f308146c3f24",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass C\n{\n    static void Main()\n    {\n        int x = 42;\n        Action fn = static () =>\n        {\n            int y = x;\n            x = 43;\n            Console.Write(y);\n        };\n        fn();\n    }\n}\n",
+  "sourceSHA256": "dfce45085407652f274d5e425ef94d4200074a379714aad6d6418adeb6b5600a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/RegionAnalysisTests.cs",
+    "sha256": "ede4ad7870eb13fc1b41cf8dfa93369f828c8146ac3ad88e361e120b9a79ad41",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/RegionAnalysisTests.cs",
+    "license": "MIT",
+    "method": "StaticLambda_02",
+    "offset": 196254
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8820",
+        "severity": "error"
+      },
+      {
+        "code": "CS8820",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,21): error CS8820: A static anonymous function cannot contain a reference to 'x'.\n                //             int y = x;\n                Diagnostic(ErrorCode.ERR_StaticAnonymousFunctionCannotCaptureVariable, \"x\").WithArguments(\"x\").WithLocation(11, 21),\n                // (12,13): error CS8820: A static anonymous function cannot contain a reference to 'x'.\n                //             x = 43;\n                Diagnostic(ErrorCode.ERR_StaticAnonymousFunctionCannotCaptureVariable, \"x\").WithArguments(\"x\").WithLocation(12, 13)\n                ",
+  "unsupported": []
+}

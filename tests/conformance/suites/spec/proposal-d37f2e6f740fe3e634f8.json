@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d37f2e6f740fe3e634f8",
+  "kind": "spec",
+  "sourceText": "static ReadOnlySpan<int> AsSpanConstants()\n{\n    return [1, 2, 3]; // ok: span refers to assembly data section\n}\n\nstatic ReadOnlySpan<T> AsSpan2<T>(T x, T y)\n{\n    return [x, y];    // error: span may refer to stack data\n}\n\nstatic ReadOnlySpan<T> AsSpan3<T>(T x, T y, T z)\n{\n    return (T[])[x, y, z]; // ok: span refers to T[] on heap\n}",
+  "sourceSHA256": "769fb192cc5096f14bbe84cc752e390dd95adf9a4b97d6bd8817b97c69c4e522",
+  "target": "library",
+  "featureId": "csharp-12-0-collection-expressions",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/collection-expressions.md",
+    "sha256": "20d62bfc544dcdb95590930444205d98f916f935f7ce72834dddddddf33ad78b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/collection-expressions.md",
+    "license": "NOASSERTION",
+    "offset": 28519
+  }
+}

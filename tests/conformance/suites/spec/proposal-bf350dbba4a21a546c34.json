@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-bf350dbba4a21a546c34",
+  "kind": "spec",
+  "sourceText": "var array = new int[] { 1, 2, 3, 4, 5 };\nvar slice1 = array[2..^3];    // array[new Range(2, new Index(3, fromEnd: true))]\nvar slice2 = array[..^3];     // array[Range.EndAt(new Index(3, fromEnd: true))]\nvar slice3 = array[2..];      // array[Range.StartAt(2)]\nvar slice4 = array[..];       // array[Range.All]",
+  "sourceSHA256": "fe44e723b491518bf69e9bd7067973e802d55a0d2a2fdb11994dd16c3af8d6d1",
+  "target": "library",
+  "featureId": "csharp-8-0-ranges-and-indexes",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/ranges.md",
+    "sha256": "9419e0ac1a7ac5309d11cf3ee4ea64a38c2abbf82e8197f5211e7d93ec077363",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/ranges.md",
+    "license": "NOASSERTION",
+    "offset": 4585
+  }
+}

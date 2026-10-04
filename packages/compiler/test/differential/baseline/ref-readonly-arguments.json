@@ -1,0 +1,4 @@
+{
+  "ref-readonly-arguments/cs9192-cs9193-cs9191-cs9200": ["diagnostics", "warnings"],
+  "ref-readonly-arguments/cs9194-ref-for-in-below-12": ["diagnostics", "warnings"]
+}

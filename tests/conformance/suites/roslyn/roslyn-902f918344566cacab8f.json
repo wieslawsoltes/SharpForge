@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-902f918344566cacab8f",
+  "kind": "diagnostics",
+  "sourceText": "using System.Runtime.CompilerServices;\nusing System.Runtime.InteropServices;\npartial class C\n{\n    partial void F1([DefaultParameterValue(1)]int o) {}\n    partial void F9([DefaultParameterValue(0)]int o);\n}\npartial class C\n{\n    partial void F1(int o = 2);\n    partial void F9([DecimalConstant(0, 0, 0, 0, 0), DateTimeConstant(0)]int o) {}\n}",
+  "sourceSHA256": "d2d1dc0613b06d44d5b5d41286b40d3a83d5eb12aadc278e46a36435a1034d27",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/OptionalArgumentsTests.cs",
+    "sha256": "933f05d101ca784a87ab174caeae4001bd61d9080a2e77fbe0c932b8ed9319e9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/OptionalArgumentsTests.cs",
+    "license": "MIT",
+    "method": "TestDuplicateConstantAttributesDifferentValues_PartialMethods",
+    "offset": 17630
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8017",
+        "severity": "error"
+      },
+      {
+        "code": "CS8017",
+        "severity": "error"
+      },
+      {
+        "code": "CS8017",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,22): error CS8017: The parameter has multiple distinct default values.\n                //     partial void F9([DefaultParameterValue(0)]int o);\n                Diagnostic(ErrorCode.ERR_ParamDefaultValueDiffersFromAttribute, \"DefaultParameterValue(0)\"),\n                // (10,29): error CS8017: The parameter has multiple distinct default values.\n                //     partial void F1(int o = 2);\n                Diagnostic(ErrorCode.ERR_ParamDefaultValueDiffersFromAttribute, \"2\"),\n                // (11,54): error CS8017: The parameter has multiple distinct default values.\n                //     partial void F9([DecimalConstant(0, 0, 0, 0, 0), DateTimeConstant(0)]int o) {}\n                Diagnostic(ErrorCode.ERR_ParamDefaultValueDiffersFromAttribute, \"DateTimeConstant(0)\")",
+  "unsupported": []
+}

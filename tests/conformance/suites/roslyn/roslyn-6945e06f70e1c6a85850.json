@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6945e06f70e1c6a85850",
+  "kind": "diagnostics",
+  "sourceText": "struct S<T>\n{\n    S<T[]>? P { get; set; }\n}",
+  "sourceSHA256": "9c9788cecd65c23f2bb62553e7a25293148d560a815f18808628f1c71efb8119",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "sha256": "0d6911ec2e8d7c03c9c20562c37c9d1959883735b8a2e5c0af7af46861c1379a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "license": "MIT",
+    "method": "GenericStructWithPropertyUsingStruct",
+    "offset": 5931
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.Mscorlib461)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0523",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,13): error CS0523: Struct member 'S<T>.P' of type 'S<T[]>?' causes a cycle in the struct layout\n                //     S<T[]>? P { get; set; }\n                Diagnostic(ErrorCode.ERR_StructLayoutCycle, \"P\").WithArguments(\"S<T>.P\", \"S<T[]>?\").WithLocation(3, 13)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

@@ -1,3 +1,5 @@
+import {isDecimal, decimalFormat} from './execution/decimal.js';
+import {invokeObjectToString} from './execution/managed-object-string.js';
 import {createBclRegistry, bclModules} from '@sharpforge/bcl-core';
 import {closedCollectionsModule} from '@sharpforge/bcl-collections';
 import {frameworkType} from '@sharpforge/framework';
@@ -6,17 +8,19 @@ import {invokeBcl} from './bcl.js';
 import {invokeJson} from './json.js';
 import {invokeNetwork} from './network.js';
 import {invokeNumeric} from './numeric.js';
-import {invokeExceptionEvent} from './execution/exception-events.js';
-import {formatBclScalar, boxBclScalar} from './execution/bcl-scalars.js';
+import {invokePlatformArray} from './execution/platform-array-calls.js';
 
 const modules = createBclRegistry([...bclModules, closedCollectionsModule]);
+const runtimeFamilies = new Map([['array', invokePlatformArray]]);
 
 const services = Object.freeze({
   frameworkType,
+  invokeObjectToString,
+  formatDecimal(value, format) {
+    return isDecimal(value) ? decimalFormat(value, format, {fault: (name, message) => new ManagedFault(name, message)}) : null;
+  },
   isReference,
-  formatScalar: formatBclScalar,
-  boxScalar: boxBclScalar,
-  fault(type, message) { throw new ManagedFault(type, message); }
+  fault(type, message, reference = null) { throw new ManagedFault(type, message, reference); }
 });
 
 /** Attach immutable services; each platform retains its own managed state. */
@@ -30,12 +34,13 @@ function invokeCore(platform, descriptor, args, type) {
 }
 
 function invokeRuntime14(platform, descriptor, args, type) {
+  const adapted = runtimeFamilies.get(type.family)?.(platform, descriptor, args);
+  if (adapted?.handled) return adapted;
   return type.family?.startsWith('json') ? invokeJson(platform, descriptor, args) :
     modules.invoke(platform, descriptor, args, type);
 }
 
 const handlers = Object.freeze({
-  'exception-events': (platform, descriptor, args) => invokeExceptionEvent(platform.vm, descriptor, args),
   bcl: invokeCore,
   bcl14: invokeRuntime14,
   network: invokeNetwork,

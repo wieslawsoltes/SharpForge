@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-ddd27302de3751fa35ee",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass A\n{\n    class B\n    {\n        static void F()\n        {\n            Console.WriteLine(\"A.B.F\");\n        }\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "7ca269e11f7a929922d6a0466c65680bbeb5f7de655b203997ca0c3e7c1f2417",
+  "originalSource": "class A\n{\n    class B\n    {\n        static void F()\n        {\n            Console.WriteLine(\"A.B.F\");\n        }\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "NestedTypes"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "NestedTypes",
+    "offsetInUnquotedMarkdown": 62214
+  }
+}

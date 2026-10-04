@@ -1,4 +1,5 @@
-import {Reader} from '@sharpforge/cil';
+import {DiagnosticId} from '../diagnostics/codes.js';
+import {decodeCustomAttribute} from '@sharpforge/cil';
 import {TypeWithAnnotations,NullableAnnotation,NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,PointerTypeSymbol,FunctionPointerTypeSymbol,TypeParameterSymbol,ErrorTypeSymbol,DynamicTypeSymbol,RefKind,SymbolDisplayFormat} from '../symbols/types.js';
 /**
  * Custom-attribute decoding for imported metadata (ECMA-335 II.23.3) and the well-known attributes the
@@ -23,52 +24,18 @@ export const WellKnownAttribute=Object.freeze({
 export const ByRefLikeObsoleteMarker='Types with embedded references are not supported in this version of your compiler.';
 export const RequiredMembersObsoleteMarker='Constructors of types with required members are not supported in this version of your compiler.';
 /** Compiler features this compiler understands; any other CompilerFeatureRequired name makes a symbol unusable. */
-export const supportedCompilerFeatures=Object.freeze(['RefStructs','RequiredMembers']);
-const primitiveNames=Object.freeze({2:'System.Boolean',3:'System.Char',4:'System.SByte',5:'System.Byte',6:'System.Int16',7:'System.UInt16',8:'System.Int32',9:'System.UInt32',10:'System.Int64',11:'System.UInt64',12:'System.Single',13:'System.Double',14:'System.String'});
-const constant=(kind,type,value)=>Object.freeze({kind,type,value});
-const wide=v=>Number.isSafeInteger(Number(v))?Number(v):v;
-function serString(r){if(r.bytes[r.position]===0xff){r.u8();return null;}return new TextDecoder('utf-8').decode(r.take(r.compressed()));}
-function primitive(r,code){
-  switch(code){
-    case 2:return r.u8()!==0;case 3:return String.fromCharCode(r.u16());case 4:return r.u8()<<24>>24;case 5:return r.u8();case 6:return r.u16()<<16>>16;case 7:return r.u16();
-    case 8:return r.i32();case 9:return r.u32();case 10:return wide(r.i64());case 11:return wide(BigInt.asUintN(64,r.i64()));case 12:return r.f32();case 13:return r.f64();case 14:return serString(r);
-    default:throw new RangeError(`Invalid custom attribute element type 0x${code.toString(16)}`);
-  }
-}
-/** Reads a FieldOrPropType (II.23.3): {code} | {code:0x50} Type | {code:0x51} boxed | {code:0x55,enumName} | {code:0x1d,element}. */
-function fieldOrPropType(r){const code=r.u8();if(code===0x55)return {code,enumName:serString(r)};if(code===0x1d)return {code,element:fieldOrPropType(r)};return {code};}
-function elementValue(r,descriptor,env){
-  const {code}=descriptor;
-  if(code===0x50)return constant('type','System.Type',serString(r));
-  if(code===0x51||code===28)return elementValue(r,fieldOrPropType(r),env);
-  if(code===0x55){const underlying=env.enumUnderlyingType?.(descriptor.enumName,null)??8;return constant('enum',descriptor.enumName,primitive(r,underlying));}
-  if(code===0x1d){const count=r.u32();if(count===0xffffffff)return constant('array',null,null);if(count>r.end-r.position)throw new RangeError('Custom attribute array is too long');return constant('array',null,Array.from({length:count},()=>elementValue(r,descriptor.element,env)));}
-  return constant('primitive',primitiveNames[code],primitive(r,code));
-}
-/** Maps a constructor parameter signature node to a FieldOrPropType-like descriptor. */
-function descriptorOf(node,env){
-  if(node.kind==='primitive')return {code:node.code};
-  if(node.kind==='szarray')return {code:0x1d,element:descriptorOf(node.element,env)};
-  if(node.kind==='type'){const name=env.typeName?.(node.token)??'';if(name==='System.Type')return {code:0x50};if(name==='System.Object')return {code:0x51};return {code:0x55,enumName:name,token:node.token};}
-  throw new RangeError('Unsupported custom attribute parameter type');
-}
-/**
- * Decodes a custom attribute value blob.
- * @param {Uint8Array} blob the value (prolog 0x0001, fixed arguments, named arguments)
- * @param {object[]} parameterTypes signature nodes of the constructor parameters
- * @param {object} [env] typeName(token) -> full name of a TypeDef/TypeRef parameter type;
- *   enumUnderlyingType(name,token) -> element type code of an enum (defaults to int)
- * @returns {{constructorArguments:object[],namedArguments:object[],hasErrors:boolean}} typed constants are
- *   {kind:'primitive'|'enum'|'type'|'array',type,value}; named arguments are {name,isField,value}
- */
-export function decodeAttributeBlob(blob,parameterTypes=[],env={}){
-  try{
-    const r=new Reader(blob);if(r.u16()!==1)throw new RangeError('Invalid custom attribute prolog');
-    const constructorArguments=parameterTypes.map(node=>{const d=descriptorOf(node,env);if(d.code===0x55){const underlying=env.enumUnderlyingType?.(d.enumName,d.token)??8;return constant('enum',d.enumName,primitive(r,underlying));}return elementValue(r,d,env);});
-    const namedArguments=[],count=r.position<r.end?r.u16():0;
-    for(let i=0;i<count;i++){const tag=r.u8();if(tag!==0x53&&tag!==0x54)throw new RangeError('Invalid named argument');const type=fieldOrPropType(r),name=serString(r);namedArguments.push(Object.freeze({name,isField:tag===0x53,value:elementValue(r,type,env)}));}
-    return {constructorArguments,namedArguments,hasErrors:false};
-  }catch{return {constructorArguments:[],namedArguments:[],hasErrors:true};}
+export const supportedCompilerFeatures=Object.freeze(['RefStructs','RequiredMembers','ClosedClasses']);
+/** Adapt the shared CIL codec to the compiler's existing typed-constant result shape. */
+export function decodeAttributeBlob(blob, parameterTypes = [], env = {}) {
+  // Legacy callers have always treated unresolved enum storage as Int32.
+  // The public CIL API requires an explicit underlying type and reports MD0104 otherwise.
+  const options = { ...env, enumUnderlyingType: (name, token) => env.enumUnderlyingType?.(name, token) ?? 8 };
+  const result = decodeCustomAttribute(blob, parameterTypes, options);
+  return {
+    constructorArguments: result.constructorArguments,
+    namedArguments: result.namedArguments,
+    hasErrors: !result.success,
+  };
 }
 const named=(decoded,name)=>decoded.namedArguments.find(a=>a.name===name)?.value.value;
 const values=constantValue=>constantValue?.kind==='array'?constantValue.value?.map(v=>v.value)??null:null;
@@ -119,7 +86,7 @@ export function unsupportedCompilerFeature(data,supported=supportedCompilerFeatu
  */
 export function obsoleteDiagnostic(symbol){
   const o=symbol?.obsolete;if(!o)return null;const display=symbol.toDisplayString(SymbolDisplayFormat.ErrorMessage);
-  const base=o.message==null?{code:'CS0612',args:[display]}:{code:o.isError?'CS0619':'CS0618',args:[display,o.message]};
+  const base=o.message==null?{code:DiagnosticId.CS0612,args:[display]}:{code:o.isError?DiagnosticId.CS0619:DiagnosticId.CS0618,args:[display,o.message]};
   return o.diagnosticId?{...base,customId:o.diagnosticId,helpLink:o.urlFormat?o.urlFormat.replace('{0}',o.diagnosticId):null}:base;
 }
 /**
@@ -229,9 +196,9 @@ export function applyTupleElementNames(type,names){
     if(s instanceof FunctionPointerTypeSymbol)return t.withType(functionPointerWith(s,a=>visit(a)));
     if(s instanceof NamedTypeSymbol&&!(s instanceof ErrorTypeSymbol)){
       let own=null;const tuple=s.isTupleType&&!s.isDefinition;
-      if(tuple&&!isRest){const count=tupleCardinality(s);if(position+count>names.length)throw Mismatch;own=names.slice(position,position+count);position+=count;}
+      if(tuple){const count=tupleCardinality(s);if(position+count>names.length)throw Mismatch;own=names.slice(position,position+count);position+=count;}
       const args=flatArguments(s),rebuilt=rebuild(s,args.map((a,i)=>visit(a,tuple&&s.originalDefinition.arity===8&&i===args.length-1)));
-      return own&&own.some(n=>n!=null)?t.withType(rebuilt.withTupleElementNames(own)):t.withType(rebuilt);
+      return own&&!isRest&&own.some(n=>n!=null)?t.withType(rebuilt.withTupleElementNames(own)):t.withType(rebuilt);
     }
     return t;
   };

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f18b78907ea323900a9e",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing Metadata;\n\nclass Test\n{\n    static void Main()\n    {\n            ICSGenDerivedDerived<short> ddobj = new ICSGenDerivedDerived<short>();\n            ICSGenDerived<short> dobj = ddobj;\n            ICSGenImpl<short, string> obj = dobj;\n            ICSGen<short, string> iobj = dobj;\n\n            sbyte sb = -128;\n            short sh = 12345;\n            DFoo<short> dfoo = null;\n            // (base)virtual (D)override seal (DD) -\n            obj.M01(sb, sh);\n            iobj.M01(sb, sh);\n            Console.WriteLine();\n\n            // (base)virtual (D)_ (DD) new\n            iobj.M01(3, sb, sh); // DD\n            ddobj.M01(sh, sb, 1); // DD\n            dobj.M01(sh, sb, 1); // b\n            obj.M01(sb, 2, sh); // b\n            Console.WriteLine();\n\n            // (base)virtual (D)_ (DD) override\n            short[] ary = new short[] { 1, 2, 3 };\n            // all DD\n            iobj.M01(new short[] { 1, 2 });\n            ddobj.M01(ary);\n            dobj.M01(new short[] { 1 });\n            obj.M01(ary);\n            Console.WriteLine();\n\n            // (base)abstract (D) override (DD) new\n            iobj.M01(-128, ref sh, out dfoo);\n            ddobj.M01(sb, ref sh, out dfoo);\n            dobj.M01(sh, ref sh, out dfoo); // Roslyn (40,38): error CS1620: Argument 3 must be passed with the 'ref' keyword\n            obj.M01(127, ref sh, out dfoo);\n            Console.WriteLine();\n\n            // (base)None (D) new virtual (DD) override \n            string str = \"Hi\";\n            iobj.M01(str, \"Hey\");\n            ddobj.M01(\"Hey\", str);\n            dobj.M01(str, str);\n            obj.M01(str, \"Hey\");\n            Console.WriteLine();\n\n            // (base)virtual (D)override (DD) override_seal\n            object oo = null;\n            iobj.M01(str, oo);\n            ddobj.M01(str, oo);\n            dobj.M01(str, new object());\n            obj.M01(str, oo);\n            Console.WriteLine();\n\n            // (base)virtual (D) abstract override (DD) override seal\n            iobj.M01(str, str, null);\n            ddobj.M01(null, str, null); // Roslyn (62,23): error CS1503: Argument 1: cannot convert from '<null>' to 'short etc.\n            dobj.M01(str, null, str, null);  // Roslyn (63,13): error CS1501: No overload for method 'M01' takes 4 arguments\n            obj.M01(null, null, str, str); \n    }\n}\n",
+  "sourceSHA256": "32e2cbb80733cc9c82522737cfcf11f7db5118d3191a4339c0aae22eb7e19c60",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "sha256": "1362359003a56088beb732c1b01d57e4b0e4b8b408037adca585b20ae29b4f98",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "license": "MIT",
+    "method": "TestGenericDDerivedImplWithBaseInMetadata",
+    "offset": 130394
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "references: refs, assemblyName: \"OHI_GenericDDeriveBaseInMetadata003\",\n                            options: TestOptions.ReleaseExe)",
+  "options": "(text3, references: refs, assemblyName: \"OHI_GenericDDeriveBaseInMetadata003\",\n                            options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

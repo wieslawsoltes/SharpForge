@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-45d7283de58bc11a0e08",
+  "kind": "diagnostics",
+  "sourceText": "static class C\n{\n    public static void M(scoped ref readonly int p) => throw null;\n}",
+  "sourceSHA256": "97adfc2f1ea1c92685364780249ff2b4d0daafd6f0fe23f758f4e9ec6ececf6c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "RefReadonlyWithScoped_01",
+    "offset": 101856
+  },
+  "langVersion": "11",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular11)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9058",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,37): error CS9058: Feature 'ref readonly parameters' is not available in C# 11.0. Please use language version 12.0 or greater.\n            //     public static void M(scoped ref readonly int p) => throw null;\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion11, \"readonly\").WithArguments(\"ref readonly parameters\", \"12.0\").WithLocation(3, 37)",
+  "unsupported": []
+}

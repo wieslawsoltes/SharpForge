@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1e5186d89ac05f7d410f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic struct S1\n{\n    public void M1() {}\n    public readonly void M2() {}\n\n    public int P1 { get; set; }\n    public readonly int P2 => 42;\n    public int P3 { readonly get => 123; set {} }\n    public int P4 { get => 123; readonly set {} }\n    public static int P5 { get; set; }\n    public readonly event Action<EventArgs> E { add {} remove {} }\n}\n\npublic readonly struct S2\n{\n    public void M1() {}\n    public int P1 { get; }\n    public int P2 => 42;\n    public int P3 { set {} }\n    public static int P4 { get; set; }\n    public event Action<EventArgs> E { add {} remove {} }\n}\n",
+  "sourceSHA256": "468b6b28a49a92f76ec73c303beeac6c9d9fad9df73e55bae4ad50afc009305d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenReadonlyStructTests.cs",
+    "sha256": "7bf77b449f87c2dc32e3f64ca03cbbf58cf4105ea9b9df2a131ac7fff7ffa306",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenReadonlyStructTests.cs",
+    "license": "MIT",
+    "method": "ReadOnlyMembers_MetadataRoundTrip",
+    "offset": 54778
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(external)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

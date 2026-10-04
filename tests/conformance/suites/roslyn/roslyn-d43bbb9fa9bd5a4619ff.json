@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d43bbb9fa9bd5a4619ff",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Threading.Tasks;\nclass C\n{\n    void M()\n    {\n        _ = local();\n        async System.Collections.Generic.IAsyncEnumerable<int> local() { await Task.CompletedTask; yield return 3; }\n    }\n}\n",
+  "sourceSHA256": "dd4d5d3cc82fa9943fdfe842c633a0d141c4b4e323a182b788b4e72d16ab8418",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncIteratorTests.cs",
+    "sha256": "2a479a205fe4eddf9b52c9f60cf9113b2a7281ac99d38dbe85934dd132a12c5b",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncIteratorTests.cs",
+    "license": "MIT",
+    "method": "MissingTypeAndMembers_IAsyncEnumerable",
+    "offset": 71804
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System.Threading.Tasks;\nclass C\n{\n    void M()\n    {\n        _ = local();\n        async System.Collections.Generic.IAsyncEnumerable<int> local() { await Task.CompletedTask; yield return 3; }\n    }\n}\n\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0234",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,42): error CS0234: The type or namespace name 'IAsyncEnumerable<>' does not exist in the namespace 'System.Collections.Generic' (are you missing an assembly reference?)\n                //         async System.Collections.Generic.IAsyncEnumerable<int> local() { await Task.CompletedTask; yield return 3; }\n                Diagnostic(ErrorCode.ERR_DottedTypeNameNotFoundInNS, \"IAsyncEnumerable<int>\").WithArguments(\"IAsyncEnumerable<>\", \"System.Collections.Generic\").WithLocation(8, 42)\n                ",
+  "unsupported": []
+}

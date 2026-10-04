@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-52a008225e270c604112",
+  "kind": "diagnostics",
+  "sourceText": "\n[assembly: AssemblyKeyName()]\n[assembly: System.Reflection.AssemblyKeyName(\"roslynTestContainer\")]\npublic class A\n{\n}",
+  "sourceSHA256": "2bd6c073fc7e22670cf0edeabf31ddf4e02d435715697629163cc3257e4beefd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "IVTDeferredFailKeyMismatch_AssemblyKeyName",
+    "offset": 60301
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\n    @\"\n[assembly: AssemblyKeyName()]\n[assembly: System.Reflection.AssemblyKeyName(\"\"roslynTestContainer\"\")]\npublic class A\n{\n}\",\n                new MetadataReference[] { new CSharpCompilationReference(other) },\n                assemblyName: \"John\",\n                options: TestOptions.SigningReleaseDll,\n                parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0281",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // error CS0281: Friend access was granted by 'Paul, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce65828c82a341f2',\n                // but the public key of the output assembly ('John, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce65828c82a341f2')\n                // does not match that specified by the InternalsVisibleTo attribute in the granting assembly.\n                Diagnostic(ErrorCode.ERR_FriendRefNotEqualToThis)\n                    .WithArguments(\"Paul, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce65828c82a341f2\", \"John, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce65828c82a341f2\")\n                    .WithLocation(1, 1),\n                // (2,12): error CS0122: 'AssemblyKeyNameAttribute' is inaccessible due to its protection level\n                // [assembly: AssemblyKeyName()]\n                Diagnostic(ErrorCode.ERR_BadAccess, \"AssemblyKeyName\").WithArguments(\"AssemblyKeyNameAttribute\").WithLocation(2, 12)\n                ",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

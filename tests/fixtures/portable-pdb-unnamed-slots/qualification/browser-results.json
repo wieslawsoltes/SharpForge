@@ -1,0 +1,123 @@
+{
+  "attempts": [
+    {
+      "revision": "8970944e41969541e8230e7284bab760d6898b3c",
+      "moduleSha256": "d786c8463d288225d96ed39f88cbeec2a1f82a91afaa889c46cedf23654c9541",
+      "mode": "HTTP source modules/import map, CSP enabled",
+      "engines": [
+        {
+          "engine": "chromium",
+          "passed": false,
+          "version": "153.0.8010.12",
+          "error": {
+            "type": "Error",
+            "message": "Page.evaluate: Error: native scope tree: values differ\n    at equal (http://127.0.0.1:59011/__a13__.mjs:4:66)\n    at Module.run (http://127.0.0.1:59011/__a13__.mjs:53:3)\n    at async <anonymous>:337:30"
+          }
+        }
+      ],
+      "passed": false
+    },
+    {
+      "revision": "8970944e41969541e8230e7284bab760d6898b3c",
+      "moduleSha256": "b34315129bfccab2bb487d934cd3f18c1dd8fd81922739679b3efc9bdc37d3f9",
+      "mode": "HTTP source modules/import map, CSP enabled",
+      "engines": [
+        {
+          "engine": "chromium",
+          "passed": true,
+          "version": "153.0.8010.12",
+          "checks": [
+            "native effective imports",
+            "import ownership/invalid scope",
+            "native typed scope tree",
+            "scope ownership/invalid method",
+            "authored dynamic/tuple/constant joins",
+            "annotation ownership/shared formatter budget",
+            "Release native unnamed slots/no invented names",
+            "slot ownership/unbound/bounds/cancellation"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "passed": true,
+          "version": "155.0",
+          "checks": [
+            "native effective imports",
+            "import ownership/invalid scope",
+            "native typed scope tree",
+            "scope ownership/invalid method",
+            "authored dynamic/tuple/constant joins",
+            "annotation ownership/shared formatter budget",
+            "Release native unnamed slots/no invented names",
+            "slot ownership/unbound/bounds/cancellation"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "passed": false,
+          "error": {
+            "type": "Error",
+            "message": "BrowserType.launch: Executable doesn't exist at /Users/wieslawsoltes/Library/Caches/ms-playwright/webkit-2359/pw_run.sh\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d"
+          }
+        }
+      ],
+      "passed": false
+    },
+    {
+      "revision": "54c856db3a1b569ce177c3ad4b8af8f39e3f4398",
+      "host": "macOS-26.6-arm64-arm-64bit-Mach-O",
+      "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+      "playwright": "1.63.0",
+      "moduleSha256": "4ca08e801bcc8018361824ac96cf25c74d69cd46219110827723697356bd45bd",
+      "mode": "HTTP source modules/import map, CSP enabled",
+      "engines": [
+        {
+          "engine": "chromium",
+          "passed": true,
+          "version": "153.0.8010.12",
+          "checks": [
+            "native effective imports",
+            "import ownership/invalid scope",
+            "native typed scope tree",
+            "scope ownership/invalid method",
+            "authored dynamic/tuple/constant joins",
+            "annotation ownership/shared formatter budget",
+            "Release native unnamed slots/no invented names",
+            "slot ownership/unbound/bounds/cancellation"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "passed": true,
+          "version": "155.0",
+          "checks": [
+            "native effective imports",
+            "import ownership/invalid scope",
+            "native typed scope tree",
+            "scope ownership/invalid method",
+            "authored dynamic/tuple/constant joins",
+            "annotation ownership/shared formatter budget",
+            "Release native unnamed slots/no invented names",
+            "slot ownership/unbound/bounds/cancellation"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "passed": true,
+          "version": "26.6",
+          "checks": [
+            "native effective imports",
+            "import ownership/invalid scope",
+            "native typed scope tree",
+            "scope ownership/invalid method",
+            "authored dynamic/tuple/constant joins",
+            "annotation ownership/shared formatter budget",
+            "Release native unnamed slots/no invented names",
+            "slot ownership/unbound/bounds/cancellation"
+          ]
+        }
+      ],
+      "passed": true
+    }
+  ]
+}

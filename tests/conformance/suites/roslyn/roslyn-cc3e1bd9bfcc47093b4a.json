@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-cc3e1bd9bfcc47093b4a",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public void M()\n    {\n        var t = M2((a: 1, b: 2), (a: 1, c: 3));\n        System.Console.Write(t.a);\n        System.Console.Write(t.b);\n        System.Console.Write(t.c);\n        M2((1, 2), (c: 1, d: 3));\n        M2(new[] { (a: 1, b: 2) }, new[] { (1, 3) });\n    }\n    public T M2<T>(T x1, T x2)\n    {\n        return x1;\n    }\n}\n",
+  "sourceSHA256": "952d6e63c3435f1c69a582b5a5c1feae3ffa34779a38896471c958791339b7c5",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "MethodTypeInferenceMergesTupleNames",
+    "offset": 849005
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,27): warning CS8123: The tuple element name 'b' is ignored because a different name is specified by the target type '(int a, int)'.\n                //         var t = M2((a: 1, b: 2), (a: 1, c: 3));\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"b: 2\").WithArguments(\"b\", \"(int a, int)\").WithLocation(6, 27),\n                // (6,41): warning CS8123: The tuple element name 'c' is ignored because a different name is specified by the target type '(int a, int)'.\n                //         var t = M2((a: 1, b: 2), (a: 1, c: 3));\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"c: 3\").WithArguments(\"c\", \"(int a, int)\").WithLocation(6, 41),\n                // (8,32): error CS1061: '(int a, int)' does not contain a definition for 'b' and no extension method 'b' accepting a first argument of type '(int a, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.Write(t.b);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"b\").WithArguments(\"(int a, int)\", \"b\").WithLocation(8, 32),\n                // (9,32): error CS1061: '(int a, int)' does not contain a definition for 'c' and no extension method 'c' accepting a first argument of type '(int a, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.Write(t.c);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"c\").WithArguments(\"(int a, int)\", \"c\").WithLocation(9, 32),\n                // (10,21): warning CS8123: The tuple element name 'c' is ignored because a different name is specified by the target type '(int, int)'.\n                //         M2((1, 2), (c: 1, d: 3));\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"c: 1\").WithArguments(\"c\", \"(int, int)\").WithLocation(10, 21),\n                // (10,27): warning CS8123: The tuple element name 'd' is ignored because a different name is specified by the target type '(int, int)'.\n                //         M2((1, 2), (c: 1, d: 3));\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"d: 3\").WithArguments(\"d\", \"(int, int)\").WithLocation(10, 27)\n                ",
+  "unsupported": []
+}

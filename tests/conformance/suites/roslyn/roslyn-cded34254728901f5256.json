@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-cded34254728901f5256",
+  "kind": "diagnostics",
+  "sourceText": "\nusing alias1 = System.Runtime.CompilerServices.TypeForwardedToAttribute;\n[assembly: RefersToLib] // to bind this, we'll need to find type C in 'lib'\n[assembly: alias1(typeof(C))] // but C is forwarded via alias\n",
+  "sourceSHA256": "e61d5da0c236b386d6e5c83eee373fc44965379493ad3dd56d19b3e380ea5ec7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeWithTypeReferenceToCurrentCompilation_WithTypeForward_WithRelevantType_WithAlias",
+    "offset": 18144
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { compWithReferenceToLib.EmitToImageReference(), newComp.EmitToImageReference() }, assemblyName: \"lib\")",
+  "options": "(newLib_cs,\n                references: new[] { compWithReferenceToLib.EmitToImageReference(), newComp.EmitToImageReference() }, assemblyName: \"lib\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

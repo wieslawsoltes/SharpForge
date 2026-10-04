@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8a50a5e2db527c974235",
+  "kind": "diagnostics",
+  "sourceText": "extern alias span2;\nspan2::System.ReadOnlySpan<char> s = source();\nstatic string source() => \"\";",
+  "sourceSHA256": "554923c371a4a37b4bdb5fc85a7dfc9537346dc7e1b325e7439d39b5bad44c7f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "sha256": "99be7ba6d5e067485b6142b5e65214b7e83d1dbf3a681e7b98e309631ef90315",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "license": "MIT",
+    "method": "Conversion_string_ReadOnlySpan_Implicit_MultipleSpans_03",
+    "offset": 119503
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, [span2], assemblyName: \"Consumer\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0656",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (2,38): error CS0656: Missing compiler required member 'System.MemoryExtensions.AsSpan'\n            // span2::System.ReadOnlySpan<char> s = source();\n            Diagnostic(ErrorCode.ERR_MissingPredefinedMember, \"source()\").WithArguments(\"System.MemoryExtensions\", \"AsSpan\").WithLocation(2, 38)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

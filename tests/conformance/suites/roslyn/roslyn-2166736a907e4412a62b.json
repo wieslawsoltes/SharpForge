@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2166736a907e4412a62b",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M()\n    {\n        int x;\n        goto live;\n        void L1() => x = 0;\n        live:\n        L1();\n        var z = x;\n    }\n    void M2()\n    {\n        int x;\n        goto live;\n        void L1()\n        {\n            if (\"\".Length == 1)\n                x = 0;\n            else\n                return;\n        }\n        live:\n        L1();\n        var z = x;\n    }\n}",
+  "sourceSHA256": "65767aca627b539be1a9059fd71e323021709d114954d2dc37ed94b6c1b9f9e1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "DeadCode",
+    "offset": 32924
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    void M()\n    {\n        int x;\n        goto live;\n        void L1() => x = 0;\n        live:\n        L1();\n        var z = x;\n    }\n    void M2()\n    {\n        int x;\n        goto live;\n        void L1()\n        {\n            if (\"\"\"\".Length == 1)\n                x = 0;\n            else\n                return;\n        }\n        live:\n        L1();\n        var z = x;\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (26,17): error CS0165: Use of unassigned local variable 'x'\n                //         var z = x;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(26, 17)",
+  "unsupported": []
+}

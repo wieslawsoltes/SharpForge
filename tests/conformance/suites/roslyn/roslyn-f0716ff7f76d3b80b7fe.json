@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f0716ff7f76d3b80b7fe",
+  "kind": "diagnostics",
+  "sourceText": "\n#pragma warning disable 169\n\nusing System.Runtime.InteropServices;\n\nclass X\n{\n    [MarshalAs((UnmanagedType)(-1))]\n    X MinValue_1;\n\n    [MarshalAs((UnmanagedType)0x20000000)]\n    X MaxValue_1;\n}\n",
+  "sourceSHA256": "3e46d1178019baecbba095e03130dc1d965793425ed5bb60e3e4ab6b06ef4be3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "sha256": "bb4e4ad059ab1c1eda93b5a74e4516301a4d849e95af99ceb05f3e76a1b628a0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "license": "MIT",
+    "method": "SimpleTypes_Errors",
+    "offset": 14869
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,16): error CS0591: Invalid value for argument to 'MarshalAs' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"(UnmanagedType)(-1)\").WithArguments(\"MarshalAs\"),\n                // (9,16): error CS0591: Invalid value for argument to 'MarshalAs' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"(UnmanagedType)0x20000000\").WithArguments(\"MarshalAs\")",
+  "unsupported": []
+}

@@ -149,13 +149,8 @@ export const ConditionalAccessLowering = Base =>
       // A primitive in an `object` slot is its own box on both back ends (see `box` in translate-expressions.js).
       const access = this.liftedAccess(node);
       if (!boxedTypes.has(access.value().legacyType)) return this.unsupported('nullable value types', node.syntax);
-      // The box is stored by a statement: the CIL back end types both arms of a conditional alike and would box the null.
-      const boxed = this.temp('object', 'boxed'),
-        store = n.ifStatement(n.not(access.absent()), n.expressionStatement(n.assign(n.local(boxed), access.value())));
-      return n.sequence(
-        [...access.locals, boxed],
-        [...access.effects, n.assign(n.local(boxed), n.nullLiteral('object')), store],
-        n.local(boxed),
-      );
+      // The null and the primitive must not meet on the evaluation stack: `choose` stores each through an object slot.
+      const boxed = this.choose(n.not(access.absent()), access.value(), n.nullLiteral('object'), 'object');
+      return n.sequence(access.locals, access.effects, boxed);
     }
   };

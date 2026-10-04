@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-15088c8fcd05af97c663",
+  "kind": "spec",
+  "sourceText": "struct Handler1\n{\n    public Handler1(int literalLength, int formattedCount, C c) => ...;\n    // AppendX... methods as necessary\n}\nstruct Handler2\n{\n    public Handler2(int literalLength, int formattedCount, C c) => ...;\n    // AppendX... methods as necessary\n}\n\nclass C\n{\n    void M(Handler1 handler) => ...;\n    void M(Handler2 handler) => ...;\n}\n\nc.M($\"{X}\"); // Ambiguous between the M overloads",
+  "sourceSHA256": "5fa41f3eeeab76e34e6cffde7cb96c3e5e323ac1a1295995cfd389e268d08826",
+  "target": "library",
+  "featureId": "csharp-10-0-interpolated-string-handlers",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/improved-interpolated-strings.md",
+    "sha256": "a9232653b4497eae44487404a0c446af954667024beea4be2ad9a642b257b02c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-interpolated-strings.md",
+    "license": "NOASSERTION",
+    "offset": 39717
+  }
+}

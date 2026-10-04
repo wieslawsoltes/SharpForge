@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-ef271841217382fa0400",
+  "kind": "spec",
+  "sourceText": "struct Point\n{\n    int x, y;\n\n    public Point(int x, int y) \n    {\n        this.x = x;\n        this.y = y;\n    }\n}\n\nclass A\n{\n    static void Main()\n    {\n        Point p1 = new Point();\n        Point p2 = new Point(0, 0);\n    }\n}",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [
+      "CS0219"
+    ]
+  },
+  "sourceSHA256": "a209fcb03d6b1bfd7bbc71ca5be65c022c5c43c7eafe99235216d88e04d3d3f2",
+  "originalSource": "struct Point\n{\n    int x, y;\n\n    public Point(int x, int y) \n    {\n        this.x = x;\n        this.y = y;\n    }\n}\n\nclass A\n{\n    static void Main()\n    {\n        Point p1 = new Point();\n        Point p2 = new Point(0, 0);\n    }\n}",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "Constructors1",
+    "ignoredWarnings": [
+      "CS0219"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-structs",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/structs.md",
+    "sha256": "53de26bf64c1dda02bf6edd00cbb816c260511bdd95d302f759970333c1ea663",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/structs.md",
+    "license": "MIT",
+    "example": "Constructors1",
+    "offsetInUnquotedMarkdown": 24089
+  }
+}

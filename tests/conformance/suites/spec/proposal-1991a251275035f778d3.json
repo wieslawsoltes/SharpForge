@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-1991a251275035f778d3",
+  "kind": "spec",
+  "sourceText": "class R1 : IEquatable<R1>\n{\n    public T1 P1 { get; init; }\n    \n    protected virtual bool PrintMembers(StringBuilder builder)\n    {\n        builder.Append(nameof(P1));\n        builder.Append(\" = \");\n        builder.Append(this.P1); // or builder.Append(this.P1.ToString()); if T1 is a value type\n        \n        return true;\n    }\n    \n    public override string ToString()\n    {\n        var builder = new StringBuilder();\n        builder.Append(nameof(R1));\n        builder.Append(\" { \");\n\n        if (PrintMembers(builder))\n            builder.Append(\" \");\n\n        builder.Append(\"}\");\n        return builder.ToString();\n    }\n}\n\nclass R2 : R1, IEquatable<R2>\n{\n    public T2 P2 { get; init; }\n    public T3 P3 { get; init; }\n    \n    protected override bool PrintMembers(StringBuilder builder)\n    {\n        if (base.PrintMembers(builder))\n            builder.Append(\", \");\n            \n        builder.Append(nameof(P2));\n        builder.Append(\" = \");\n        builder.Append(this.P2); // or builder.Append(this.P2); if T2 is a value type\n        \n        builder.Append(\", \");\n        \n        builder.Append(nameof(P3));\n        builder.Append(\" = \");\n        builder.Append(this.P3); // or builder.Append(this.P3); if T3 is a value type\n        \n        return true;\n    }\n    \n    public override string ToString()\n    {\n        var builder = new StringBuilder();\n        builder.Append(nameof(R2));\n        builder.Append(\" { \");\n\n        if (PrintMembers(builder))\n            builder.Append(\" \");\n\n        builder.Append(\"}\");\n        return builder.ToString();\n    }\n}",
+  "sourceSHA256": "6ac812596943d8bbc4e623aac57d4f2fa3e95209259a20387f3337eb4bea4849",
+  "target": "library",
+  "featureId": "csharp-9-0-records",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/records.md",
+    "sha256": "a3198542cb3ddbad72e522fdf5442c5762254d2e6d571bf1dfba2a11110f15e6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/records.md",
+    "license": "NOASSERTION",
+    "offset": 14978
+  }
+}

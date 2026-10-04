@@ -11,6 +11,8 @@ import {ciMatrix} from '../scripts/planning/ci-matrix.js';
 import {taskPlan, loadTasks} from '../scripts/run.js';
 import {loadBuildContributions, concatenateStyles} from '../scripts/build-contributions.js';
 import {discoverPackages, validatePacked} from '../scripts/verify-packages.js';
+import {serialTestArgs} from '../scripts/planning/run-tests.js';
+import {globPattern} from '../scripts/planning/lib/paths.js';
 const root=repositoryRoot;
 const json=async path=>JSON.parse(await readFile(path,'utf8'));
 async function write(root,path,value){const target=join(root,path);await mkdir(resolve(target,'..'),{recursive:true});await writeFile(target,typeof value==='string'?value:JSON.stringify(value));}
@@ -27,7 +29,12 @@ test('A00 T06 strict schema validates all thirty manifests and rejects unknown f
 test('A00 T06 discovery assigns files once and includes nested contract/conformance suites',async()=>{
  const manifests=await discoverManifests(),files=manifests.flatMap(m=>[...m.nodeFiles,...m.browserScripts]);
  assert.equal(new Set(files).size,files.length);assert(files.includes('planning/contracts/tests/value-abi.test.js'));assert(files.includes('tests/conformance/qualification.test.js'));assert(files.includes('tests/conformance/browser/test_launch.py'));
- const editor=selectManifests(manifests,'A20');assert.equal(editor.length,1);assert(editor[0].nodeFiles.every(path=>path.includes('editor')));assert.throws(()=>selectManifests(manifests,'A99'),/Unknown area/);
+ const editor=selectManifests(manifests,'A20'),declared=await json(join(root,'tests/manifests/A20.json'));
+ assert.deepEqual(editor.map(manifest=>manifest.area),['A20']);
+ assert.deepEqual(editor[0].nodeGlobs,declared.nodeGlobs);assert.deepEqual(editor[0].browserScripts,declared.browserScripts);
+ const patterns=declared.nodeGlobs.map(globPattern);
+ assert.deepEqual([...editor[0].nodeFiles].sort(),files.filter(path=>patterns.some(pattern=>pattern.test(path))).sort());
+ assert.throws(()=>selectManifests(manifests,'A99'),/Unknown area/);
 });
 test('A00 T06 missing, duplicate, stale, unsafe and mismatched manifest entries fail with offending paths',async t=>{
  const dir=await fixture(t);await write(dir,'tests/editor.test.js','');
@@ -74,10 +81,15 @@ test('A00 T06 every historical npm name dispatches to its original commands with
   assert.equal(pkg.scripts[name],`node scripts/run.js ${name}`);
   const plan=await taskPlan(name);assert(plan.length);
   if(name==='test'){assert.deepEqual(plan[0].args,['scripts/planning/run-tests.js']);continue;}
-  if(name==='check'){assert.deepEqual(plan.map(p=>p.args[0]),['scripts/planning/check-test-manifests.js','scripts/check.js']);continue;}
+  if(name==='check'){
+   assert.deepEqual(plan.map(p=>p.args),[
+    ['scripts/planning/check-test-manifests.js'],['scripts/check.js'],
+    ['scripts/conformance/static/check-imports.js','--output','artifacts/security/static-imports.json']
+   ]);continue;
+  }
   if(name==='standalone'){assert.deepEqual(plan.map(p=>p.args[0]),['scripts/build.js','scripts/standalone.js']);continue;}
   const [executable,...args]=command.split(' ');assert.equal(plan[0].command,executable==='node'?process.execPath:process.env.PYTHON||'python');
-  if(!args.some(arg=>arg.includes('*')))assert.deepEqual(plan[0].args,args);
+  if(!args.some(arg=>arg.includes('*')))assert.deepEqual(plan[0].args,executable==='node'?serialTestArgs(args):args);
   else assert(plan[0].args.includes('--test')&&plan[0].args.some(arg=>arg.endsWith('.test.js'))&&!plan[0].args.some(arg=>arg.includes('*')));
  }
  const literal='literal $(do-not-run) `nor-this` spaces';assert.equal((await taskPlan('cli',[literal]))[0].args.at(-1),literal);
@@ -91,11 +103,15 @@ test('A00 T06 new tasks need no root script edit and reject duplicate tasks, cyc
  await write(dir,'scripts/tasks/new.json',{schemaVersion:1,tasks:{bad:{steps:[{command:42,args:['invalid']}]}}});await assert.rejects(loadTasks(dir),/Invalid step/);
  await write(dir,'scripts/tasks/new.json',{schemaVersion:1,tasks:{bad:{steps:[{task:'missing'}]}}});await assert.rejects(loadTasks(dir),/Unknown task missing/);
 });
-test('A00 T06 contributed stylesheet bytes and worker order retain the original build exactly',async()=>{
+test('A00 T06 contributions retain reviewed CSS bytes and historical worker ordering',async()=>{
  const baseline=await json(join(root,'tests/manifests/fixtures/build-baseline.json')),contributions=await loadBuildContributions();
- assert.deepEqual(contributions.styles.map(item=>item.source),baseline.styles);assert.deepEqual(contributions.workers.map(item=>item.entry),baseline.workers);
+ // Keep the historical migration snapshot unchanged; approved stylesheet additions are tracked by T20's reviewed baseline.
+ const reviewed=await json(join(root,'planning/contracts/fixtures/css/studio-baseline.json'));
+ assert.equal(reviewed.schemaVersion,1);assert.match(reviewed.sha256,/^[a-f\d]{64}$/);
+ assert.deepEqual(contributions.workers.map(item=>item.entry).filter(entry=>baseline.workers.includes(entry)),baseline.workers);
  const css=await concatenateStyles(contributions.styles,root);
- assert.equal(createHash('sha256').update(css).digest('hex'),baseline.concatenationSha256);assert(contributions.assets.some(item=>item.source==='packages/compiler'));
+ assert.equal(createHash('sha256').update(css).digest('hex'),reviewed.sha256);assert.equal(Buffer.byteLength(css,'utf8'),reviewed.bytes);
+ assert(contributions.assets.some(item=>item.source==='packages/compiler'));
 });
 test('A00 T06 build contributions discover new styles/assets and reject duplicate and escaping paths',async t=>{
  const dir=await fixture(t),base={schemaVersion:1,styles:[],workers:[],assets:[]};
@@ -127,4 +143,22 @@ test('A00 T06 twenty-six contributed packages pack, install offline, and run the
  const script=`import {verifyPackages} from ${JSON.stringify(new URL('../scripts/verify-packages.js',import.meta.url).href)};await verifyPackages(${JSON.stringify(dir)});`;
  const result=spawnSync(process.execPath,['--input-type=module','--eval',script],{encoding:'utf8',timeout:120000,env:{...process.env,SHARPFORGE_RESULTS_DIR:join(dir,'results')}});
  assert.equal(result.status,0,result.stderr);const report=await json(join(dir,'results/package-results.json'));assert.equal(report.passed,true);assert.equal(report.tarballs.length,26);assert.equal(Object.keys(report.packages).length,26);
+});
+
+test('A00 serial Node policy preserves script arguments and rejects concurrent overrides', () => {
+ assert.deepEqual(serialTestArgs(['script.js','--test','--test-concurrency=4']),['script.js','--test','--test-concurrency=4']);
+ assert.deepEqual(serialTestArgs(['--test','--test-concurrency','1','a.test.js']),['--test','--test-concurrency=1','a.test.js']);
+ for(const args of [['--test-concurrency=2'],['--test-concurrency','4'],['--test-concurrency']])
+  assert.throws(()=>serialTestArgs(['--test',...args]),/must be 1/);
+});
+test('A00 manifest runner prevents overlapping test files', async t => {
+ const dir=await fixture(t);await write(dir,'package.json',{type:'module'});
+ const source=`import test from 'node:test';import {mkdirSync,rmdirSync} from 'node:fs';
+ test('exclusive shared validation resource',async()=>{mkdirSync('validation-slot');try{
+ await new Promise(resolve=>setTimeout(resolve,100));}finally{rmdirSync('validation-slot');}});`;
+ await write(dir,'tests/one.test.js',source);await write(dir,'tests/two.test.js',source);
+ await write(dir,'tests/manifests/A20.json',manifest('A20',{nodeGlobs:['tests/*.test.js']}));
+ const result=spawnSync(process.execPath,[join(root,'scripts/planning/run-tests.js'),'--root',dir,'--area','A20'],
+  {encoding:'utf8',env:{...process.env,NODE_TEST_CONTEXT:undefined}});
+ assert.equal(result.status,0,result.stdout+result.stderr);
 });

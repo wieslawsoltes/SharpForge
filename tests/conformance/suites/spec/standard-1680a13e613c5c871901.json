@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-1680a13e613c5c871901",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nRectangle r = new Rectangle();\nr.A.X = 10;\nr.A.Y = 10;\nr.B.X = 100;\nr.B.Y = 100;",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1612",
+        "severity": "error"
+      },
+      {
+        "code": "CS1612",
+        "severity": "error"
+      },
+      {
+        "code": "CS1612",
+        "severity": "error"
+      },
+      {
+        "code": "CS1612",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "2dc2ef78914c024b345a613a3adf4871847194da764a568d9ec374c70cd3233c",
+  "originalSource": "Rectangle r = new Rectangle();\nr.A.X = 10;\nr.A.Y = 10;\nr.B.X = 100;\nr.B.Y = 100;",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "SimpleAssignment4",
+    "expectedErrors": [
+      "CS1612",
+      "CS1612",
+      "CS1612",
+      "CS1612"
+    ],
+    "additionalFiles": [
+      "PointStruct.cs",
+      "RectangleStruct.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "SimpleAssignment4",
+    "offsetInUnquotedMarkdown": 418193
+  }
+}

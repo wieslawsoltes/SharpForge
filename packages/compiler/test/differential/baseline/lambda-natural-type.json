@@ -1,0 +1,6 @@
+{
+  "lambda-natural-type/cs8917-no-natural-type": ["diagnostics", "warnings"],
+  "lambda-natural-type/explicit-return-type-must-match": ["diagnostics", "warnings"],
+  "lambda-natural-type/natural-types-in-csharp-9": ["diagnostics", "warnings"],
+  "lambda-natural-type/var-takes-the-natural-delegate-type": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
+}

@@ -1,22 +1,11 @@
 import {bclScalar, bounded, fail, integer, text, typeOf} from '../host.js';
+import {formatDoubleGeneral, roundDoubleToDecimal} from './double-format.js';
 
 // Round the exact binary64 value to decimal with midpoint-to-even semantics.
 function fixedEven(value, digits) {
   if (!Number.isFinite(value)) return String(value);
   const negative = value < 0 || Object.is(value, -0);
-  const bytes = new DataView(new ArrayBuffer(8));
-  bytes.setFloat64(0, Math.abs(value), false);
-  const bits = bytes.getBigUint64(0, false);
-  const exponent = Number((bits >> 52n) & 2047n);
-  const fraction = bits & ((1n << 52n) - 1n);
-  let numerator = (exponent ? fraction + (1n << 52n) : fraction) * 10n ** BigInt(digits);
-  const power = (exponent ? exponent - 1023 : -1022) - 52;
-  let denominator = 1n;
-  if (power >= 0) numerator <<= BigInt(power);
-  else denominator <<= BigInt(-power);
-  let quotient = numerator / denominator;
-  const remainder = numerator % denominator;
-  if (remainder * 2n > denominator || remainder * 2n === denominator && (quotient & 1n)) quotient++;
+  const quotient = roundDoubleToDecimal(Math.abs(value), digits);
   let result = quotient.toString().padStart(digits + 1, '0');
   if (digits) result = result.slice(0, -digits) + '.' + result.slice(-digits);
   return (negative ? '-' : '') + result;
@@ -50,15 +39,11 @@ function decimalFormat(value, code, precision) {
 /** Format a managed value using the released numeric subset and bounded character alignment. */
 export function formatBclValue(platform, value, format = '', alignment = 0, type = null) {
   integer(platform, alignment, -100000, 100000);
-  const exact = platform.bclHost.formatScalar?.(platform, value, format || 'G', type);
-  if (exact !== undefined) {
-    return bounded(platform, alignment > 0 ? exact.padStart(alignment) : exact.padEnd(-alignment));
-  }
   const scalar = bclScalar(platform, value);
   const valueType = type ?? typeOf(platform, value);
-  let result = text(platform, value, valueType);
+  let result = platform.bclHost.formatDecimal?.(scalar, format) ?? text(platform, value, valueType);
   if (scalar !== null && typeof scalar === 'number' && format) {
-    const match = /^([dDxXfFnNeEgGpP])(\d{0,2})$/.exec(format);
+    const match = /^([dDxXfFnNeEgGpPrR])(\d{0,2})$/.exec(format);
     if (!match) fail(platform, 'FormatException', 'Unsupported numeric format ' + format);
     const code = match[1];
     const precision = match[2] ? Number(match[2]) : null;
@@ -69,7 +54,13 @@ export function formatBclValue(platform, value, format = '', alignment = 0, type
       result = scalar.toExponential(precision ?? 6).replace(/e([+-])(\d+)$/, (_, sign, digits) =>
         (code === 'E' ? 'E' : 'e') + sign + digits.padStart(3, '0'));
     }
-    if (/[gG]/.test(code) && precision) result = Number(scalar.toPrecision(precision)).toString();
+    if (/[gG]/.test(code)) result = formatDoubleGeneral(scalar, precision || null, code === 'g');
+    if (/[rR]/.test(code)) {
+      if (!['double', 'System.Double', 'float', 'System.Single'].includes(valueType)) {
+        fail(platform, 'FormatException', 'Round-trip format requires a floating-point type');
+      }
+      result = formatDoubleGeneral(scalar, null, code === 'r');
+    }
   }
   if (alignment > 0) result = result.padStart(alignment);
   else if (alignment < 0) result = result.padEnd(-alignment);

@@ -1,0 +1,1533 @@
+{
+  "runtime": ".NET 10.0.5",
+  "sourceSha256": {
+    "Program.cs": "C59CF99DD7855222F9F45ECAA9F5BDA221290F3BF19D6BDD81AC84DFA6EC50C9",
+    "Fixtures.cs": "A3CAD7D1A59475F13C4721CFCB52D1AB70138721EB1D6B611BC441D6FC9E9B9D",
+    "Provider.cs": "D5A58B06DA9076A5B0ADE39F9191D7ACC64540F2E053F2692C1BBAE60A9AFE22",
+    "AttributeOracle.csproj": "C60D823D31B5D42786C579CEDFC433D41F22B981F650EF38AED93C84E7619A06"
+  },
+  "enums": {
+    "AttributeFixture.Signed": "System.Int64",
+    "AttributeFixture.Unsigned": "System.UInt64"
+  },
+  "cases": [
+    {
+      "id": "CaseFull",
+      "blob": "010001A90380FF0080FFFF00000080FFFFFFFF0000000000000080FFFFFFFFFFFFFFFF0000A03F00000000000000800A68C3A96C6C6FF09F98806153797374656D2E537472696E672C2053797374656D2E52756E74696D652C2056657273696F6E3D31302E302E302E302C2043756C747572653D6E65757472616C2C205075626C69634B6579546F6B656E3D62303366356637663131643530613361FFFFFFFFFFFFFF7F0300000000000000FFFFFFFFFFFFFF7F05FF0500530E054669656C64056E616D6564545105426F7865641D51050000000E03626F78082A0000005519417474726962757465466978747572652E556E7369676E6564FFFFFFFFFFFFFFFF506053797374656D2E496E7433322C2053797374656D2E52756E74696D652C2056657273696F6E3D31302E302E302E302C2043756C747572653D6E65757472616C2C205075626C69634B6579546F6B656E3D623033663566376631316435306133610EFF54500654617267657421417474726962757465466978747572652E5061796C6F6164417474726962757465545517417474726962757465466978747572652E5369676E656409456E756D56616C75650000000000000080541D0E07537472696E67730300000000FF03E29C93",
+      "constructor": 100663426,
+      "parameters": [
+        {
+          "kind": "primitive",
+          "name": "System.Boolean"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Char"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.SByte"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Byte"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Int16"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.UInt16"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Int32"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.UInt32"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Int64"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.UInt64"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Single"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Double"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.String"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Type"
+        },
+        {
+          "kind": "enum",
+          "name": "AttributeFixture.Signed",
+          "underlying": "System.Int64"
+        },
+        {
+          "kind": "szarray",
+          "element": {
+            "kind": "primitive",
+            "name": "System.Int32"
+          }
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Object"
+        }
+      ],
+      "blobOffset": 32667,
+      "values": [
+        true,
+        "\u03A9",
+        -128,
+        255,
+        -32768,
+        65535,
+        -2147483648,
+        4294967295,
+        {
+          "$bigint": "-9223372036854775808"
+        },
+        {
+          "$bigint": "18446744073709551615"
+        },
+        1.25,
+        {
+          "$number": "-0"
+        },
+        "h\u00E9llo\uD83D\uDE00",
+        "System.String, System.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+        {
+          "$bigint": "9223372036854775807"
+        },
+        [
+          0,
+          -1,
+          2147483647
+        ],
+        {
+          "type": {
+            "kind": "primitive",
+            "name": "System.Byte"
+          },
+          "value": 255
+        }
+      ],
+      "constructorArguments": [
+        {
+          "kind": "primitive",
+          "type": "System.Boolean",
+          "value": true
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Char",
+          "value": "\u03A9"
+        },
+        {
+          "kind": "primitive",
+          "type": "System.SByte",
+          "value": -128
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Byte",
+          "value": 255
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int16",
+          "value": -32768
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt16",
+          "value": 65535
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int32",
+          "value": -2147483648
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt32",
+          "value": 4294967295
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int64",
+          "value": {
+            "$bigint": "-9223372036854775808"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt64",
+          "value": {
+            "$bigint": "18446744073709551615"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Single",
+          "value": 1.25
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Double",
+          "value": {
+            "$number": "-0"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.String",
+          "value": "h\u00E9llo\uD83D\uDE00"
+        },
+        {
+          "kind": "type",
+          "type": "System.Type",
+          "value": "System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"
+        },
+        {
+          "kind": "enum",
+          "type": "AttributeFixture.Signed",
+          "value": {
+            "$bigint": "9223372036854775807"
+          }
+        },
+        {
+          "kind": "array",
+          "type": null,
+          "value": [
+            {
+              "kind": "primitive",
+              "type": "System.Int32",
+              "value": 0
+            },
+            {
+              "kind": "primitive",
+              "type": "System.Int32",
+              "value": -1
+            },
+            {
+              "kind": "primitive",
+              "type": "System.Int32",
+              "value": 2147483647
+            }
+          ]
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Byte",
+          "value": 255
+        }
+      ],
+      "decodedConstructorArguments": [
+        {
+          "kind": "primitive",
+          "type": "System.Boolean",
+          "value": true
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Char",
+          "value": "\u03A9"
+        },
+        {
+          "kind": "primitive",
+          "type": "System.SByte",
+          "value": -128
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Byte",
+          "value": 255
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int16",
+          "value": -32768
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt16",
+          "value": 65535
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int32",
+          "value": -2147483648
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt32",
+          "value": 4294967295
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int64",
+          "value": {
+            "$bigint": "-9223372036854775808"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt64",
+          "value": {
+            "$bigint": "18446744073709551615"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Single",
+          "value": 1.25
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Double",
+          "value": {
+            "$number": "-0"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.String",
+          "value": "h\u00E9llo\uD83D\uDE00"
+        },
+        {
+          "kind": "type",
+          "type": "System.Type",
+          "value": "System.String, System.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+        },
+        {
+          "kind": "enum",
+          "type": "AttributeFixture.Signed",
+          "value": {
+            "$bigint": "9223372036854775807"
+          }
+        },
+        {
+          "kind": "array",
+          "type": null,
+          "value": [
+            {
+              "kind": "primitive",
+              "type": "System.Int32",
+              "value": 0
+            },
+            {
+              "kind": "primitive",
+              "type": "System.Int32",
+              "value": -1
+            },
+            {
+              "kind": "primitive",
+              "type": "System.Int32",
+              "value": 2147483647
+            }
+          ]
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Byte",
+          "value": 255
+        }
+      ],
+      "decodedNamedArguments": [
+        {
+          "name": "Field",
+          "isField": true,
+          "value": {
+            "kind": "primitive",
+            "type": "System.String",
+            "value": "named"
+          }
+        },
+        {
+          "name": "Boxed",
+          "isField": false,
+          "value": {
+            "kind": "array",
+            "type": null,
+            "value": [
+              {
+                "kind": "primitive",
+                "type": "System.String",
+                "value": "box"
+              },
+              {
+                "kind": "primitive",
+                "type": "System.Int32",
+                "value": 42
+              },
+              {
+                "kind": "enum",
+                "type": "AttributeFixture.Unsigned",
+                "value": {
+                  "$bigint": "18446744073709551615"
+                }
+              },
+              {
+                "kind": "type",
+                "type": "System.Type",
+                "value": "System.Int32, System.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+              },
+              {
+                "kind": "primitive",
+                "type": "System.String",
+                "value": null
+              }
+            ]
+          }
+        },
+        {
+          "name": "Target",
+          "isField": false,
+          "value": {
+            "kind": "type",
+            "type": "System.Type",
+            "value": "AttributeFixture.PayloadAttribute"
+          }
+        },
+        {
+          "name": "EnumValue",
+          "isField": false,
+          "value": {
+            "kind": "enum",
+            "type": "AttributeFixture.Signed",
+            "value": {
+              "$bigint": "-9223372036854775808"
+            }
+          }
+        },
+        {
+          "name": "Strings",
+          "isField": false,
+          "value": {
+            "kind": "array",
+            "type": null,
+            "value": [
+              {
+                "kind": "primitive",
+                "type": "System.String",
+                "value": ""
+              },
+              {
+                "kind": "primitive",
+                "type": "System.String",
+                "value": null
+              },
+              {
+                "kind": "primitive",
+                "type": "System.String",
+                "value": "\u2713"
+              }
+            ]
+          }
+        }
+      ],
+      "namedArguments": [
+        {
+          "name": "Field",
+          "isField": true,
+          "value": {
+            "kind": "primitive",
+            "type": "System.String",
+            "value": "named"
+          },
+          "descriptor": {
+            "kind": "primitive",
+            "name": "System.String"
+          },
+          "inputValue": "named"
+        },
+        {
+          "name": "Boxed",
+          "isField": false,
+          "value": {
+            "kind": "array",
+            "type": null,
+            "value": [
+              {
+                "kind": "primitive",
+                "type": "System.String",
+                "value": "box"
+              },
+              {
+                "kind": "primitive",
+                "type": "System.Int32",
+                "value": 42
+              },
+              {
+                "kind": "enum",
+                "type": "AttributeFixture.Unsigned",
+                "value": {
+                  "$bigint": "18446744073709551615"
+                }
+              },
+              {
+                "kind": "type",
+                "type": "System.Type",
+                "value": "System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"
+              },
+              {
+                "kind": "primitive",
+                "type": "System.String",
+                "value": null
+              }
+            ]
+          },
+          "descriptor": {
+            "kind": "primitive",
+            "name": "System.Object"
+          },
+          "inputValue": {
+            "type": {
+              "kind": "szarray",
+              "element": {
+                "kind": "primitive",
+                "name": "System.Object"
+              }
+            },
+            "value": [
+              {
+                "type": {
+                  "kind": "primitive",
+                  "name": "System.String"
+                },
+                "value": "box"
+              },
+              {
+                "type": {
+                  "kind": "primitive",
+                  "name": "System.Int32"
+                },
+                "value": 42
+              },
+              {
+                "type": {
+                  "kind": "enum",
+                  "name": "AttributeFixture.Unsigned",
+                  "underlying": "System.UInt64"
+                },
+                "value": {
+                  "$bigint": "18446744073709551615"
+                }
+              },
+              {
+                "type": {
+                  "kind": "primitive",
+                  "name": "System.Type"
+                },
+                "value": "System.Int32, System.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+              },
+              {
+                "type": {
+                  "kind": "primitive",
+                  "name": "System.String"
+                },
+                "value": null
+              }
+            ]
+          }
+        },
+        {
+          "name": "Target",
+          "isField": false,
+          "value": {
+            "kind": "type",
+            "type": "System.Type",
+            "value": "AttributeFixture.PayloadAttribute, AttributeOracle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+          },
+          "descriptor": {
+            "kind": "primitive",
+            "name": "System.Type"
+          },
+          "inputValue": "AttributeFixture.PayloadAttribute"
+        },
+        {
+          "name": "EnumValue",
+          "isField": false,
+          "value": {
+            "kind": "enum",
+            "type": "AttributeFixture.Signed",
+            "value": {
+              "$bigint": "-9223372036854775808"
+            }
+          },
+          "descriptor": {
+            "kind": "enum",
+            "name": "AttributeFixture.Signed",
+            "underlying": "System.Int64"
+          },
+          "inputValue": {
+            "$bigint": "-9223372036854775808"
+          }
+        },
+        {
+          "name": "Strings",
+          "isField": false,
+          "value": {
+            "kind": "array",
+            "type": null,
+            "value": [
+              {
+                "kind": "primitive",
+                "type": "System.String",
+                "value": ""
+              },
+              {
+                "kind": "primitive",
+                "type": "System.String",
+                "value": null
+              },
+              {
+                "kind": "primitive",
+                "type": "System.String",
+                "value": "\u2713"
+              }
+            ]
+          },
+          "descriptor": {
+            "kind": "szarray",
+            "element": {
+              "kind": "primitive",
+              "name": "System.String"
+            }
+          },
+          "inputValue": [
+            "",
+            null,
+            "\u2713"
+          ]
+        }
+      ],
+      "actual": {
+        "values": [
+          true,
+          "\u03A9",
+          -128,
+          255,
+          -32768,
+          65535,
+          -2147483648,
+          4294967295,
+          {
+            "$bigint": "-9223372036854775808"
+          },
+          {
+            "$bigint": "18446744073709551615"
+          },
+          1.25,
+          {
+            "$number": "-0"
+          },
+          "h\u00E9llo\uD83D\uDE00",
+          "System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          {
+            "$bigint": "9223372036854775807"
+          },
+          [
+            0,
+            -1,
+            2147483647
+          ],
+          255
+        ],
+        "field": "named",
+        "boxed": [
+          "box",
+          42,
+          {
+            "$bigint": "18446744073709551615"
+          },
+          "System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          null
+        ],
+        "target": "AttributeFixture.PayloadAttribute, AttributeOracle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "enumValue": {
+          "$bigint": "-9223372036854775808"
+        },
+        "strings": [
+          "",
+          null,
+          "\u2713"
+        ]
+      }
+    },
+    {
+      "id": "CaseNull",
+      "blob": "010000FFFF0000000000000000000000000000000000000000000000000000000000000000C0FF000000000000F07FFFFF0000000000000080FFFFFFFF0EFF0400530E054669656C64FF545105426F7865640EFF545006546172676574FF541D0E07537472696E6773FFFFFFFF",
+      "constructor": 100663426,
+      "parameters": [
+        {
+          "kind": "primitive",
+          "name": "System.Boolean"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Char"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.SByte"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Byte"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Int16"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.UInt16"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Int32"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.UInt32"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Int64"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.UInt64"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Single"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Double"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.String"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Type"
+        },
+        {
+          "kind": "enum",
+          "name": "AttributeFixture.Signed",
+          "underlying": "System.Int64"
+        },
+        {
+          "kind": "szarray",
+          "element": {
+            "kind": "primitive",
+            "name": "System.Int32"
+          }
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Object"
+        }
+      ],
+      "blobOffset": 33133,
+      "values": [
+        false,
+        "\uFFFF",
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        {
+          "$number": "-NaN"
+        },
+        {
+          "$number": "Infinity"
+        },
+        null,
+        null,
+        {
+          "$bigint": "-9223372036854775808"
+        },
+        null,
+        {
+          "type": {
+            "kind": "primitive",
+            "name": "System.String"
+          },
+          "value": null
+        }
+      ],
+      "constructorArguments": [
+        {
+          "kind": "primitive",
+          "type": "System.Boolean",
+          "value": false
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Char",
+          "value": "\uFFFF"
+        },
+        {
+          "kind": "primitive",
+          "type": "System.SByte",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Byte",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int16",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt16",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int32",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt32",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int64",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt64",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Single",
+          "value": {
+            "$number": "-NaN"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Double",
+          "value": {
+            "$number": "Infinity"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.String",
+          "value": null
+        },
+        {
+          "kind": "type",
+          "type": "System.Type",
+          "value": null
+        },
+        {
+          "kind": "enum",
+          "type": "AttributeFixture.Signed",
+          "value": {
+            "$bigint": "-9223372036854775808"
+          }
+        },
+        {
+          "kind": "array",
+          "type": null,
+          "value": null
+        },
+        {
+          "kind": "primitive",
+          "type": "System.String",
+          "value": null
+        }
+      ],
+      "decodedConstructorArguments": [
+        {
+          "kind": "primitive",
+          "type": "System.Boolean",
+          "value": false
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Char",
+          "value": "\uFFFF"
+        },
+        {
+          "kind": "primitive",
+          "type": "System.SByte",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Byte",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int16",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt16",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int32",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt32",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int64",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt64",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Single",
+          "value": {
+            "$number": "-NaN"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Double",
+          "value": {
+            "$number": "Infinity"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.String",
+          "value": null
+        },
+        {
+          "kind": "type",
+          "type": "System.Type",
+          "value": null
+        },
+        {
+          "kind": "enum",
+          "type": "AttributeFixture.Signed",
+          "value": {
+            "$bigint": "-9223372036854775808"
+          }
+        },
+        {
+          "kind": "array",
+          "type": null,
+          "value": null
+        },
+        {
+          "kind": "primitive",
+          "type": "System.String",
+          "value": null
+        }
+      ],
+      "decodedNamedArguments": [
+        {
+          "name": "Field",
+          "isField": true,
+          "value": {
+            "kind": "primitive",
+            "type": "System.String",
+            "value": null
+          }
+        },
+        {
+          "name": "Boxed",
+          "isField": false,
+          "value": {
+            "kind": "primitive",
+            "type": "System.String",
+            "value": null
+          }
+        },
+        {
+          "name": "Target",
+          "isField": false,
+          "value": {
+            "kind": "type",
+            "type": "System.Type",
+            "value": null
+          }
+        },
+        {
+          "name": "Strings",
+          "isField": false,
+          "value": {
+            "kind": "array",
+            "type": null,
+            "value": null
+          }
+        }
+      ],
+      "namedArguments": [
+        {
+          "name": "Field",
+          "isField": true,
+          "value": {
+            "kind": "primitive",
+            "type": "System.String",
+            "value": null
+          },
+          "descriptor": {
+            "kind": "primitive",
+            "name": "System.String"
+          },
+          "inputValue": null
+        },
+        {
+          "name": "Boxed",
+          "isField": false,
+          "value": {
+            "kind": "primitive",
+            "type": "System.String",
+            "value": null
+          },
+          "descriptor": {
+            "kind": "primitive",
+            "name": "System.Object"
+          },
+          "inputValue": {
+            "type": {
+              "kind": "primitive",
+              "name": "System.String"
+            },
+            "value": null
+          }
+        },
+        {
+          "name": "Target",
+          "isField": false,
+          "value": {
+            "kind": "type",
+            "type": "System.Type",
+            "value": null
+          },
+          "descriptor": {
+            "kind": "primitive",
+            "name": "System.Type"
+          },
+          "inputValue": null
+        },
+        {
+          "name": "Strings",
+          "isField": false,
+          "value": {
+            "kind": "array",
+            "type": null,
+            "value": null
+          },
+          "descriptor": {
+            "kind": "szarray",
+            "element": {
+              "kind": "primitive",
+              "name": "System.String"
+            }
+          },
+          "inputValue": null
+        }
+      ],
+      "actual": {
+        "values": [
+          false,
+          "\uFFFF",
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          {
+            "$number": "-NaN"
+          },
+          {
+            "$number": "Infinity"
+          },
+          null,
+          null,
+          {
+            "$bigint": "-9223372036854775808"
+          },
+          null,
+          null
+        ],
+        "field": null,
+        "boxed": null,
+        "target": null,
+        "enumValue": 0,
+        "strings": null
+      }
+    },
+    {
+      "id": "CaseBoxed",
+      "blob": "01000100007F00FF7F0000FFFFFF7F00000000FFFFFFFFFFFFFF7F0000000000000000000080FF000000000000F8FF006253797374656D2E496E7433325B5D2C2053797374656D2E52756E74696D652C2056657273696F6E3D31302E302E302E302C2043756C747572653D6E65757472616C2C205075626C69634B6579546F6B656E3D623033663566376631316435306133610000000000000080000000000E04746578740200545105426F7865641D050200000000FF530E054669656C6400",
+      "constructor": 100663426,
+      "parameters": [
+        {
+          "kind": "primitive",
+          "name": "System.Boolean"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Char"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.SByte"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Byte"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Int16"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.UInt16"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Int32"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.UInt32"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Int64"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.UInt64"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Single"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Double"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.String"
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Type"
+        },
+        {
+          "kind": "enum",
+          "name": "AttributeFixture.Signed",
+          "underlying": "System.Int64"
+        },
+        {
+          "kind": "szarray",
+          "element": {
+            "kind": "primitive",
+            "name": "System.Int32"
+          }
+        },
+        {
+          "kind": "primitive",
+          "name": "System.Object"
+        }
+      ],
+      "blobOffset": 33244,
+      "values": [
+        true,
+        "\u0000",
+        127,
+        0,
+        32767,
+        0,
+        2147483647,
+        0,
+        {
+          "$bigint": "9223372036854775807"
+        },
+        0,
+        {
+          "$number": "-Infinity"
+        },
+        {
+          "$number": "-NaN"
+        },
+        "",
+        "System.Int32[], System.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+        {
+          "$bigint": "-9223372036854775808"
+        },
+        [],
+        {
+          "type": {
+            "kind": "primitive",
+            "name": "System.String"
+          },
+          "value": "text"
+        }
+      ],
+      "constructorArguments": [
+        {
+          "kind": "primitive",
+          "type": "System.Boolean",
+          "value": true
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Char",
+          "value": "\u0000"
+        },
+        {
+          "kind": "primitive",
+          "type": "System.SByte",
+          "value": 127
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Byte",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int16",
+          "value": 32767
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt16",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int32",
+          "value": 2147483647
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt32",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int64",
+          "value": {
+            "$bigint": "9223372036854775807"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt64",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Single",
+          "value": {
+            "$number": "-Infinity"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Double",
+          "value": {
+            "$number": "-NaN"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.String",
+          "value": ""
+        },
+        {
+          "kind": "type",
+          "type": "System.Type",
+          "value": "System.Int32[], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"
+        },
+        {
+          "kind": "enum",
+          "type": "AttributeFixture.Signed",
+          "value": {
+            "$bigint": "-9223372036854775808"
+          }
+        },
+        {
+          "kind": "array",
+          "type": null,
+          "value": []
+        },
+        {
+          "kind": "primitive",
+          "type": "System.String",
+          "value": "text"
+        }
+      ],
+      "decodedConstructorArguments": [
+        {
+          "kind": "primitive",
+          "type": "System.Boolean",
+          "value": true
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Char",
+          "value": "\u0000"
+        },
+        {
+          "kind": "primitive",
+          "type": "System.SByte",
+          "value": 127
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Byte",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int16",
+          "value": 32767
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt16",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int32",
+          "value": 2147483647
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt32",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Int64",
+          "value": {
+            "$bigint": "9223372036854775807"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.UInt64",
+          "value": 0
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Single",
+          "value": {
+            "$number": "-Infinity"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.Double",
+          "value": {
+            "$number": "-NaN"
+          }
+        },
+        {
+          "kind": "primitive",
+          "type": "System.String",
+          "value": ""
+        },
+        {
+          "kind": "type",
+          "type": "System.Type",
+          "value": "System.Int32[], System.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+        },
+        {
+          "kind": "enum",
+          "type": "AttributeFixture.Signed",
+          "value": {
+            "$bigint": "-9223372036854775808"
+          }
+        },
+        {
+          "kind": "array",
+          "type": null,
+          "value": []
+        },
+        {
+          "kind": "primitive",
+          "type": "System.String",
+          "value": "text"
+        }
+      ],
+      "decodedNamedArguments": [
+        {
+          "name": "Boxed",
+          "isField": false,
+          "value": {
+            "kind": "array",
+            "type": null,
+            "value": [
+              {
+                "kind": "primitive",
+                "type": "System.Byte",
+                "value": 0
+              },
+              {
+                "kind": "primitive",
+                "type": "System.Byte",
+                "value": 255
+              }
+            ]
+          }
+        },
+        {
+          "name": "Field",
+          "isField": true,
+          "value": {
+            "kind": "primitive",
+            "type": "System.String",
+            "value": ""
+          }
+        }
+      ],
+      "namedArguments": [
+        {
+          "name": "Boxed",
+          "isField": false,
+          "value": {
+            "kind": "array",
+            "type": null,
+            "value": [
+              {
+                "kind": "primitive",
+                "type": "System.Byte",
+                "value": 0
+              },
+              {
+                "kind": "primitive",
+                "type": "System.Byte",
+                "value": 255
+              }
+            ]
+          },
+          "descriptor": {
+            "kind": "primitive",
+            "name": "System.Object"
+          },
+          "inputValue": {
+            "type": {
+              "kind": "szarray",
+              "element": {
+                "kind": "primitive",
+                "name": "System.Byte"
+              }
+            },
+            "value": [
+              0,
+              255
+            ]
+          }
+        },
+        {
+          "name": "Field",
+          "isField": true,
+          "value": {
+            "kind": "primitive",
+            "type": "System.String",
+            "value": ""
+          },
+          "descriptor": {
+            "kind": "primitive",
+            "name": "System.String"
+          },
+          "inputValue": ""
+        }
+      ],
+      "actual": {
+        "values": [
+          true,
+          "\u0000",
+          127,
+          0,
+          32767,
+          0,
+          2147483647,
+          0,
+          {
+            "$bigint": "9223372036854775807"
+          },
+          0,
+          {
+            "$number": "-Infinity"
+          },
+          {
+            "$number": "-NaN"
+          },
+          "",
+          "System.Int32[], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          {
+            "$bigint": "-9223372036854775808"
+          },
+          [],
+          "text"
+        ],
+        "field": "",
+        "boxed": [
+          0,
+          255
+        ],
+        "target": null,
+        "enumValue": 0,
+        "strings": null
+      }
+    }
+  ]
+}

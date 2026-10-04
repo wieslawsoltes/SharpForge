@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-0a533dc3be3c3f1cdbf2",
+  "kind": "spec",
+  "sourceText": "[HttpGet(\"/\")] Todo GetTodo() => new(Id: 0, Name: \"Name\");\napp.MapAction((Func<Todo>)GetTodo);\n\n[HttpPost(\"/\")] Todo PostTodo([FromBody] Todo todo) => todo;\napp.MapAction((Func<Todo, Todo>)PostTodo);",
+  "sourceSHA256": "14d5c331038caa2b34b2a668d8f8e3d9bcc42dd59a97768027386645c29ad538",
+  "target": "library",
+  "featureId": "csharp-10-0-lambda-improvements",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/lambda-improvements.md",
+    "sha256": "43e4ead0e264a6e6580875a4178ad3f09374d22c739ffc682b6b5f5cfbfc752f",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/lambda-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 1331
+  }
+}

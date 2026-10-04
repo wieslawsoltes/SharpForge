@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1a652e00cf49e816914f",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    private int i;\n    public static void Main()\n    {\n        var c = new C(2);\n        System.Console.Write(c == (1, 1));\n        System.Console.Write((1, 1) == c);\n    }\n    public static implicit operator C((int, int) x)\n    {\n        return new C(x.Item1 + x.Item2);\n    }\n    public static bool operator ==(C c1, C c2)\n        => c1.i == c2.i;\n    public static bool operator !=(C c1, C c2)\n        => throw null;\n    public override int GetHashCode()\n        => throw null;\n    public override bool Equals(object other)\n        => throw null;\n    C(int i) { this.i = i; }\n}\n",
+  "sourceSHA256": "5bbe862f0516f02263be207e5cb8ec478daf1d51b6dee9ab3ee3e182b0e33998",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestEqualityOfTypeConvertingFromTuple",
+    "offset": 114117
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

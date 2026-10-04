@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-3a9625f31969e6d09187",
+  "kind": "spec",
+  "sourceText": "interface I\n{\n    int Prop1 { get; }\n}\npublic class Base\n{\n    public virtual int Prop2 { get; set; }\n\n    protected required int _field; // Error: _field is not at least as visible as Base. Open question below about the protected constructor scenario\n\n    public required readonly int _field2; // Error: required fields cannot be readonly\n    protected Base() { }\n\n    protected class Inner\n    {\n        protected required int PropInner { get; set; } // Error: PropInner cannot be set inside Base or Derived\n    }\n}\npublic class Derived : Base, I\n{\n    required int I.Prop1 { get; } // Error: explicit interface implementions cannot be required as they cannot be set in an object initializer\n\n    public required override int Prop2 { get; set; } // Error: this property is hidden by Derived.Prop2 and cannot be set in an object initializer\n    public new int Prop2 { get; }\n\n    public required int Prop3 { get; } // Error: Required member must have a setter or initer\n\n    public required int Prop4 { get; internal set; } // Error: Required member setter must be at least as visible as the constructor of Derived\n}",
+  "sourceSHA256": "a4f83f643aee3fa0dbc7a258400fb504eba9f1ba164e0c6cecd792922ce22ed6",
+  "target": "library",
+  "featureId": "csharp-11-0-required-members",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/required-members.md",
+    "sha256": "0f731d503b589797298f8926899fe7ca9be3843141d8782b074f52d1822f1ed3",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/required-members.md",
+    "license": "NOASSERTION",
+    "offset": 9616
+  }
+}

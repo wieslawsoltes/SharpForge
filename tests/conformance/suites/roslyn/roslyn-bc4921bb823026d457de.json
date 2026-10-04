@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bc4921bb823026d457de",
+  "kind": "diagnostics",
+  "sourceText": "bool x = false;\nif (x is var y and (x is var z)) { }",
+  "sourceSHA256": "e7adf4abcc72cea9aa42ced5e0f9c9c55b45e419cce58d52209e80bf099ce868",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/PatternsVsRegions.cs",
+    "sha256": "51b4c05d593366400090e7faa42bb90b533e351790eb3ce6018268465a18bde7",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/PatternsVsRegions.cs",
+    "license": "MIT",
+    "method": "RegionWithinSubpattern03",
+    "offset": 18078
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\"\"\"\n                bool x = false;\n                if (x is var y and (x is var z)) { }\n                \"\"\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9135",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,21): error CS9135: A constant value of type 'bool' is expected\n                // if (x is var y and (x is var z)) { }\n                Diagnostic(ErrorCode.ERR_ConstantValueOfTypeExpected, \"x is var z\").WithArguments(\"bool\").WithLocation(2, 21)",
+  "unsupported": []
+}

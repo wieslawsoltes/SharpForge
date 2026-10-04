@@ -1,4 +1,4 @@
-import {typedReferenceExpression} from './expressions/typed-references.js';
+import {parseTypedReference} from './typed-references.js';
 import { Precedence, binaryOperators, assignmentOperators, prefixOperators } from '../lexer/operators.js';
 /** Expression parsing by precedence climbing: assignment, conditional, binary, unary, postfix and primary forms. */
 const P = Precedence;
@@ -17,7 +17,9 @@ export const expressionMethods = {
     }
   },
   expressionOrRef() {
-    return this.at('ref') ? this.n('RefExpression', this.take(), this.expression()) : this.expression();
+    // `ref int () => ref x` is a lambda with a ref return type, not a ref expression.
+    const isRef = this.at('ref') && this.lambdaShape(this.i) !== 'typed';
+    return isRef ? this.n('RefExpression', this.take(), this.expression()) : this.expression();
   },
   /** Parses an expression whose binary operators all bind at least as tightly as `min`. */
   expression(min = P.Expression) {
@@ -159,7 +161,7 @@ export const expressionMethods = {
         'throw',
         'stackalloc',
         'ref',
-        '__arglist'
+        '__arglist', '__makeref', '__reftype', '__refvalue'
       ].includes(kind) ||
       this.isPredefined(next)
     );
@@ -184,13 +186,13 @@ export const expressionMethods = {
     }
   },
   primary(min) {
-    const typedReference=typedReferenceExpression(this);if(typedReference)return typedReference;
     const token = this.current,
       kind = token.kind;
     if (kind === 'interpolated') return this.interpolatedString();
     const literal = this.literalExpression();
     if (literal) return literal;
     switch (kind) {
+      case '__makeref': case '__reftype': case '__refvalue': return parseTypedReference(this);
       case 'default':
         return this.defaultExpression();
       case 'typeof':

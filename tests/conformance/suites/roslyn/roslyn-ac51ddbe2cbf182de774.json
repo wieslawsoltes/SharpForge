@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ac51ddbe2cbf182de774",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    static void Main()\n    {\n        Console.Write(M1(1));\n        Console.Write(M2(1));\n        Console.Write(M3(1));\n        Console.Write(M4(1));\n        Console.Write(M5(1));\n        Console.Write(M6(1));\n        Console.Write(M7(1));\n        Console.Write(M8(1));\n        Console.Write(M9(1));\n    }\n    public static int M1(int x)\n    {\n        return x switch { _ when (++x) == 5 => 1, 1 => 2, _ => 3 };\n    }\n    public static int M2(int x)\n    {\n        return x switch { _ when (x+=1) == 5 => 1, 1 => 2, _ => 3 };\n    }\n    public static int M3(int x)\n    {\n        return x switch { _ when ((x, _) = (5, 6)) == (0, 0) => 1, 1 => 2, _ => 3 };\n    }\n    public static int M4(int x)\n    {\n        dynamic d = new Program();\n        return x switch { _ when d.M(ref x) => 1, 1 => 2, _ => 3 };\n    }\n    bool M(ref int x) { x = 100; return false; }\n    public static int M5(int x)\n    {\n        return x switch { _ when new Program(ref x).P => 1, 1 => 2, _ => 3 };\n    }\n    public static int M6(int x)\n    {\n        dynamic d = x;\n        return x switch { _ when new Program(d, ref x).P => 1, 1 => 2, _ => 3 };\n    }\n    public static int M7(int x)\n    {\n        return x switch { _ when new Program(ref x).P && new Program().P => 1, 1 => 2, _ => 3 };\n    }\n    public static int M8(int x)\n    {\n        dynamic d = x;\n        return x switch { _ when new Program(d, ref x).P && new Program().P => 1, 1 => 2, _ => 3 };\n    }\n    public static int M9(int x)\n    {\n        return x switch { _ when (x=100) == 1 => 1, 1 => 2, _ => 3 };\n    }\n    Program() { }\n    Program(ref int x) { x = 100; }\n    Program(int a, ref int x) { x = 100; }\n    bool P => false;\n}\n",
+  "sourceSHA256": "487839ba7252da8c4c39522e12d476fdfe3df09c8a187b4578a0e3df04699a54",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "DoNotShareInputForMutatingWhenClause",
+    "offset": 93856
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "references: new[] { CSharpRef })",
+  "options": "(source, options: TestOptions.ReleaseExe, references: new[] { CSharpRef })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

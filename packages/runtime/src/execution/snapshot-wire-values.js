@@ -1,6 +1,8 @@
 import {ManagedFault, isReference} from './managed-fault.js';
 import {ReadonlySnapshotArray} from './snapshot-buffers.js';
-import {instantiatedMethod} from './generic-calls.js';
+import {instantiatedMethod} from './generics.js';
+import {createHeapReference, ownsHeapReference} from './heap-reference.js';
+import {createMethodPointer, isMethodPointer} from './method-pointers.js';
 
 const views = new Map([
   ['Int8Array', Int8Array], ['Uint8Array', Uint8Array], ['Uint8ClampedArray', Uint8ClampedArray],
@@ -76,7 +78,7 @@ export function readWireAtom(atom, nodes) {
     return nodes[value];
   }
   if (kind === 'undefined' && atom.length === 1) return undefined;
-  if (kind === 'integer' && atom.length === 2 && typeof value === 'string' && /^-?(0|[1-9]\d*)$/.test(value)) {
+  if (kind === 'integer' && atom.length === 2 && typeof value === 'string' && value.length <= 2048 && /^-?(0|[1-9]\d*)$/.test(value)) {
     return BigInt(value);
   }
   if (kind === 'number' && atom.length === 2) {
@@ -102,10 +104,14 @@ export function ownedWireValue(vm, value) {
     snapshotFormatError('SNAPSHOT_OWNER', 'A memory value type belongs to another VM');
   }
   if (isReference(value)) {
-    if (value.heapOwner !== undefined && value.heapOwner !== vm.heap.handleOwner) {
+    if (!ownsHeapReference(vm.heap, value)) {
       snapshotFormatError('SNAPSHOT_OWNER', 'A managed reference belongs to another heap');
     }
     return {kind: 'handle', handle: value.h, generation: value.g};
+  }
+  if (value.methodPointer) {
+    if (!isMethodPointer(vm, value)) snapshotFormatError('SNAPSHOT_OWNER', 'Unissued managed method pointer');
+    return {kind: 'methodPointer', token: value.token};
   }
   if (value.registry === vm.heap.methodTables && value.flags && typeof value.name === 'string') {
     return {kind: 'type', name: value.name};
@@ -131,7 +137,13 @@ export function restoreWireIdentity(vm, node) {
         || !Number.isSafeInteger(node.generation) || node.generation < 1) {
       snapshotFormatError('SNAPSHOT_HANDLE', 'Invalid managed snapshot handle');
     }
-    return Object.freeze(Object.defineProperty({h: node.handle, g: node.generation}, 'heapOwner', {value: vm.heap.handleOwner}));
+    return createHeapReference(vm.heap, node.handle, node.generation);
+  }
+  if (node.kind === 'methodPointer') {
+    if (!vm.inspector || !Number.isSafeInteger(node.token) || !vm.report.methods.includes(node.token)) {
+      snapshotFormatError('SNAPSHOT_IDENTITY', 'Invalid managed method pointer token');
+    }
+    return createMethodPointer(vm, node.token);
   }
   if (node.kind === 'type' && typeof node.name === 'string' && node.name.length <= 16384) {
     return vm.heap.methodTables.get(node.name);

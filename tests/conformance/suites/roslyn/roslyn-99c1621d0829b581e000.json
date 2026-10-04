@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-99c1621d0829b581e000",
+  "kind": "diagnostics",
+  "sourceText": "\npublic interface I\n{\n    void M();\n    int P { get; set; }\n    event System.Action E;\n}\n",
+  "sourceSHA256": "7830c9873acc91fbafb63e1ef4fec89e878ea7ed033198e2c19c76bcf47fc8e1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExplicitImplementationTests.cs",
+    "sha256": "f3667bc33870c0d203a2f26fd6aba2159ff4ef2f8584f3713295352a09aa3a5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExplicitImplementationTests.cs",
+    "license": "MIT",
+    "method": "TestImplementMultipleExternAliasInterfaces",
+    "offset": 39705
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(libSource, assemblyName: \"lib2\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

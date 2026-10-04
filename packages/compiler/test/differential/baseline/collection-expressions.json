@@ -1,0 +1,7 @@
+{
+  "collection-expressions/arrays": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "collection-expressions/collection-expressions-in-csharp-11": ["diagnostics", "warnings"],
+  "collection-expressions/collection-types": ["diagnostics", "warnings", "bytecode", "cil"],
+  "collection-expressions/spreads": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "collection-expressions/target-and-element-errors": ["diagnostics", "warnings"]
+}

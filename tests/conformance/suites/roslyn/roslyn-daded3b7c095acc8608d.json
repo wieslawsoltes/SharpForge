@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-daded3b7c095acc8608d",
+  "kind": "diagnostics",
+  "sourceText": "using System.Collections.Generic;\nclass MyCollection<T>\n{\n    public readonly List<T> Items;\n    public MyCollection(params T[] items) { Items = new(items); }\n}\nstatic class Extensions\n{\n    public static IEnumerator<T> GetEnumerator<T>(this MyCollection<T> c) => c.Items.GetEnumerator();\n}\nclass Program\n{\n    static void Main()\n    {\n        MyCollection<int> x = new(1, 2, 3);\n        int total = 0;\n        foreach (var y in x)\n            total += y;\n    }\n}",
+  "sourceSHA256": "837df1628b28a0d867299da556cf6ba424b456c8c1be2008ac0de3e1e4b708e9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/ForeachTest.cs",
+    "sha256": "eed7a5336863eb0f5f5836677ef4c0563d3bcb5c451b7f70bacfc3c2cfa570f7",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/ForeachTest.cs",
+    "license": "MIT",
+    "method": "Var_ExtensionGetEnumerator",
+    "offset": 41745
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.RegularDefault.WithFeature(Feature.RunNullableAnalysis, \"never\"))",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

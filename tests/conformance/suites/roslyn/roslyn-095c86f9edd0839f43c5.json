@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-095c86f9edd0839f43c5",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        var x = (CompareTo: 2, Create: 3, Deconstruct: 4, Equals: 5, GetHashCode: 6, Rest: 8, ToString: 10);\n    }\n}\n",
+  "sourceSHA256": "72e6c5d7d6913c3da423b878130f66885d2929a212862a201f116fabebd5c653",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "TupleWithExistingUnderlyingMemberNames",
+    "offset": 106320
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8126",
+        "severity": "error"
+      },
+      {
+        "code": "CS8126",
+        "severity": "error"
+      },
+      {
+        "code": "CS8126",
+        "severity": "error"
+      },
+      {
+        "code": "CS8126",
+        "severity": "error"
+      },
+      {
+        "code": "CS8126",
+        "severity": "error"
+      },
+      {
+        "code": "CS8126",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,18): error CS8126: Tuple member name 'CompareTo' is disallowed at any position.\n                //         var x = (CompareTo: 2, Create: 3, Deconstruct: 4, Equals: 5, GetHashCode: 6, Rest: 8, ToString: 10);\n                Diagnostic(ErrorCode.ERR_TupleReservedElementNameAnyPosition, \"CompareTo\").WithArguments(\"CompareTo\").WithLocation(6, 18),\n                // (6,43): error CS8126: Tuple member name 'Deconstruct' is disallowed at any position.\n                //         var x = (CompareTo: 2, Create: 3, Deconstruct: 4, Equals: 5, GetHashCode: 6, Rest: 8, ToString: 10);\n                Diagnostic(ErrorCode.ERR_TupleReservedElementNameAnyPosition, \"Deconstruct\").WithArguments(\"Deconstruct\").WithLocation(6, 43),\n                // (6,59): error CS8126: Tuple member name 'Equals' is disallowed at any position.\n                //         var x = (CompareTo: 2, Create: 3, Deconstruct: 4, Equals: 5, GetHashCode: 6, Rest: 8, ToString: 10);\n                Diagnostic(ErrorCode.ERR_TupleReservedElementNameAnyPosition, \"Equals\").WithArguments(\"Equals\").WithLocation(6, 59),\n                // (6,70): error CS8126: Tuple member name 'GetHashCode' is disallowed at any position.\n                //         var x = (CompareTo: 2, Create: 3, Deconstruct: 4, Equals: 5, GetHashCode: 6, Rest: 8, ToString: 10);\n                Diagnostic(ErrorCode.ERR_TupleReservedElementNameAnyPosition, \"GetHashCode\").WithArguments(\"GetHashCode\").WithLocation(6, 70),\n                // (6,86): error CS8126: Tuple member name 'Rest' is disallowed at any position.\n                //         var x = (CompareTo: 2, Create: 3, Deconstruct: 4, Equals: 5, GetHashCode: 6, Rest: 8, ToString: 10);\n                Diagnostic(ErrorCode.ERR_TupleReservedElementNameAnyPosition, \"Rest\").WithArguments(\"Rest\").WithLocation(6, 86),\n                // (6,95): error CS8126: Tuple member name 'ToString' is disallowed at any position.\n                //         var x = (CompareTo: 2, Create: 3, Deconstruct: 4, Equals: 5, GetHashCode: 6, Rest: 8, ToString: 10);\n                Diagnostic(ErrorCode.ERR_TupleReservedElementNameAnyPosition, \"ToString\").WithArguments(\"ToString\").WithLocation(6, 95)\n                ",
+  "unsupported": []
+}

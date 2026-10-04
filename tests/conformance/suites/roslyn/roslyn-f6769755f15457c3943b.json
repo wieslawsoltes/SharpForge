@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f6769755f15457c3943b",
+  "kind": "diagnostics",
+  "sourceText": "public class C\n{\n    static int M1(bool? b1, bool b2)\n    {\n        switch (b1)\n        {\n            case null:\n                return 1;\n            case var _ when b2:\n                return 2;\n            case true:\n                return 3;\n            case false:\n                return 4;\n        }\n    }\n\n    static int M2(object o, bool b)\n    {\n        switch (o)\n        {\n            case string a when b:\n                return 1;\n            case string a:\n                return 2;\n        }\n        return 3;\n    }\n}",
+  "sourceSHA256": "4488bdccaebd15edc28664fe528d133e12d35768216c67d83a0bc69dd7a608f0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "RedundantNullCheck",
+    "offset": 23685
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

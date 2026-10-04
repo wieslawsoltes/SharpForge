@@ -11,6 +11,8 @@
  * CS0405 (duplicate constraint), CS0406 (class type not first), CS0701 (sealed type or non-class as constraint),
  * CS0702 (special class), CS0454 (circular constraint dependency), CS0080 (clause on a non-generic declaration).
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
+import { isDynamicType, containsDynamic } from '../dynamic-types.js';
 import { TypeParameterSymbol, Variance, TypeKind } from '../types.js';
 
 const span = node => {
@@ -25,7 +27,7 @@ export function declareTypeParameters(list, owner, uri, report = () => {}) {
   list.parameters.forEach((p, ordinal) => {
     const name = p.identifier.valueText,
       variance = p.varianceKeyword ? (p.varianceKeyword.text === 'out' ? Variance.Out : Variance.In) : Variance.None;
-    if (seen.has(name)) report(p.identifier, 'CS0692', [name]);
+    if (seen.has(name)) report(p.identifier, DiagnosticId.CS0692, [name]);
     seen.add(name);
     const symbol = new TypeParameterSymbol({
       name,
@@ -57,11 +59,11 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
     const name = clause.name.identifier.valueText,
       parameter = parameters.find(p => p.name === name);
     if (!parameter) {
-      report(clause.name, parameters.length ? 'CS0699' : 'CS0080', parameters.length ? [options.ownerDisplay ?? '', name] : []);
+      report(clause.name, parameters.length ? DiagnosticId.CS0699 : DiagnosticId.CS0080, parameters.length ? [options.ownerDisplay ?? '', name] : []);
       continue;
     }
     if (done.has(parameter)) {
-      report(clause.name, 'CS0409', [name]);
+      report(clause.name, DiagnosticId.CS0409, [name]);
       continue;
     }
     done.add(parameter);
@@ -71,34 +73,34 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
       const last = index === constraints.length - 1;
       switch (c.kind) {
         case 'ClassConstraint':
-          if (index !== 0) report(c, 'CS0449');
+          if (index !== 0) report(c, DiagnosticId.CS0449);
           else {
             parameter.hasReferenceTypeConstraint = true;
             parameter.referenceTypeConstraintIsNullable = !!c.questionToken;
           }
           break;
         case 'StructConstraint':
-          if (index !== 0) report(c, 'CS0449');
+          if (index !== 0) report(c, DiagnosticId.CS0449);
           else parameter.hasValueTypeConstraint = true;
           break;
         case 'DefaultConstraint':
-          if (index !== 0) report(c, 'CS0449');
+          if (index !== 0) report(c, DiagnosticId.CS0449);
           else parameter.hasDefaultConstraint = true;
           break;
         case 'ConstructorConstraint':
-          if (!last && constraints[index + 1]?.kind !== 'AllowsConstraintClause') report(c, 'CS0401');
-          if (parameter.hasUnmanagedTypeConstraint) report(c.newKeyword ?? c, 'CS8375');
-          else if (parameter.hasValueTypeConstraint) report(c, 'CS0451');
+          if (!last && constraints[index + 1]?.kind !== 'AllowsConstraintClause') report(c.newKeyword ?? c, DiagnosticId.CS0401);
+          if (parameter.hasUnmanagedTypeConstraint) report(c.newKeyword ?? c, DiagnosticId.CS8375);
+          else if (parameter.hasValueTypeConstraint) report(c, DiagnosticId.CS0451);
           else parameter.hasConstructorConstraint = true;
           break;
         case 'AllowsConstraintClause':
-          if (!last) report(c, 'CS9242');
+          if (!last) report(c, DiagnosticId.CS9242);
           if (c.constraints.some(x => x.kind === 'RefStructConstraint')) parameter.allowsRefLikeType = true;
           break;
         case 'TypeConstraint': {
           const text = c.type.toString();
           if (text === 'unmanaged' && c.type.kind === 'IdentifierName') {
-            if (index !== 0) report(c, 'CS0449');
+            if (index !== 0) report(c, DiagnosticId.CS0449);
             else {
               parameter.hasUnmanagedTypeConstraint = true;
               parameter.hasValueTypeConstraint = true;
@@ -106,7 +108,7 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
             break;
           }
           if (text === 'notnull' && c.type.kind === 'IdentifierName') {
-            if (index !== 0) report(c, 'CS0449');
+            if (index !== 0) report(c, DiagnosticId.CS0449);
             else parameter.hasNotNullConstraint = true;
             break;
           }
@@ -116,7 +118,11 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
             break;
           }
           if (types.some(t => t.equals(type))) {
-            report(c, 'CS0405', [type.toDisplayString(), parameter.name]);
+            report(c, DiagnosticId.CS0405, [type.toDisplayString(), parameter.name]);
+            break;
+          }
+          if (containsDynamic(type)) {
+            report(c.type, ...(isDynamicType(type) ? [DiagnosticId.CS1967] : [DiagnosticId.CS1968, [type.toDisplayString()]]));
             break;
           }
           const isClass = type.typeKind === TypeKind.Class,
@@ -128,28 +134,30 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
             type.typeKind === TypeKind.Array ||
             (isClass && type.isSealed && !type.isStatic)
           ) {
-            report(c.type, 'CS0701', [type.toDisplayString()]);
+            report(c.type, DiagnosticId.CS0701, [type.toDisplayString()]);
             break;
           }
           if (isClass && type.isStatic) {
-            report(c.type, 'CS0717', [type.toDisplayString()]);
+            report(c.type, DiagnosticId.CS0717, [type.toDisplayString()]);
             break;
           }
           if (forbiddenClasses.has(type.specialType)) {
-            report(c.type, 'CS0702', [type.toDisplayString()]);
+            report(c.type, DiagnosticId.CS0702, [type.toDisplayString()]);
             break;
           }
           if (isClass && (types.length || (index !== 0 && !primaryTaken))) {
-            report(c.type, 'CS0406', [type.toDisplayString()]);
+            report(c.type, DiagnosticId.CS0406, [type.toDisplayString()]);
             break;
           }
           if (isClass && primaryTaken && !['System_Enum', 'System_Delegate', 'System_MulticastDelegate'].includes(type.specialType)) {
-            report(c.type, 'CS0450', [type.toDisplayString()]);
+            report(c.type, DiagnosticId.CS0450, [type.toDisplayString()]);
             break;
           }
           // `Enum`, `Delegate` and `MulticastDelegate` are constraints from C# 7.3 (the name may come from a using directive).
           if (constraintFeatures[type.specialType]) options.useFeature?.(c.type, constraintFeatures[type.specialType]);
           types.push(type);
+          // `where T : Shape?`: a nullable constraint type accepts nullable type arguments (nullable/constraint-checks.js).
+          if (c.type.kind === 'NullableType') (parameter.nullableConstraintTypes ??= new Set()).add(type);
           break;
         }
       }
@@ -160,7 +168,7 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
   for (const p of parameters) {
     for (const constraint of p.constraintTypes) {
       if (constraint.typeKind !== TypeKind.TypeParameter || !constraint.hasValueTypeConstraint) continue;
-      report(p.syntax?.identifier ?? p.syntax, constraint.hasUnmanagedTypeConstraint ? 'CS8379' : 'CS0456', [p.name, constraint.name]);
+      report(p.syntax?.identifier ?? p.syntax, constraint.hasUnmanagedTypeConstraint ? DiagnosticId.CS8379 : DiagnosticId.CS0456, [p.name, constraint.name]);
     }
   }
   // Circular dependencies: T : U, U : T.
@@ -173,7 +181,7 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
       };
     if (walk(p)) {
       const other = p.constraintTypes.find(c => c.typeKind === TypeKind.TypeParameter);
-      report(p.syntax?.identifier ?? p.syntax, 'CS0454', [other?.name ?? p.name, p.name]);
+      report(p.syntax?.identifier ?? p.syntax, DiagnosticId.CS0454, [other?.name ?? p.name, p.name]);
       p._constraintTypes = p.constraintTypes.filter(c => c.typeKind !== TypeKind.TypeParameter);
     }
   }

@@ -2,6 +2,7 @@
  * Property and indexer symbols with their accessors and auto-property backing fields, delegate Invoke
  * methods, primary constructors (with positional record properties) and implicit constructors.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { TypeKind, Accessibility, RefKind, SymbolKind } from '../types.js';
 import {
   MethodSymbol,
@@ -85,10 +86,12 @@ export const PropertySymbolBuilder = Base =>
       for (const a of accessors) {
         const k = a.keyword.text;
         if (k === 'get') {
-          if (getMethod) this.report(uri, a.keyword, 'CS1007');
+          // An accessor list next to an expression body is reported once for the member (CS8057, binder/member-bodies.js).
+          if (getMethod && !syntax.expressionBody) this.report(uri, a.keyword, DiagnosticId.CS1007);
+          else if (getMethod) continue;
           else getMethod = accessor('get', a);
         } else if (k === 'set' || k === 'init') {
-          if (setMethod) this.report(uri, a.keyword, 'CS1007');
+          if (setMethod) this.report(uri, a.keyword, DiagnosticId.CS1007);
           else setMethod = accessor(k, a);
         }
       }
@@ -173,7 +176,8 @@ export const PropertySymbolBuilder = Base =>
         returnType: this.core.void,
         parameters,
         containingSymbol: type,
-        declaredAccessibility: Accessibility.Public,
+        // The primary constructor of an abstract record is protected.
+        declaredAccessibility: type.isRecord && type.isAbstract ? Accessibility.Protected : Accessibility.Public,
         modifiers: 0,
         locations: [{ uri, ...spanOf(syntax.identifier) }],
         syntax: syntax.parameterList,
@@ -185,10 +189,9 @@ export const PropertySymbolBuilder = Base =>
       type.primaryConstructor = ctor;
       members.push(ctor);
       const base = syntax.baseList?.types.find(t => t.kind === 'PrimaryConstructorBaseType');
-      if (base) {
-        ctor.baseArgumentsSyntax = base.argumentList;
-        this.bodies.push(ctor);
-      }
+      if (base) ctor.baseArgumentsSyntax = base.argumentList;
+      // Bound later for its base arguments and for the default values of its optional parameters.
+      if (base || parameters.some(p => p.defaultSyntax)) this.bodies.push(ctor);
       // Positional record parameters become public init-only (record class) or settable (record struct) properties.
       if (type.isRecord)
         for (const p of parameters) {
@@ -230,6 +233,17 @@ export const PropertySymbolBuilder = Base =>
           });
           property.isAutoProperty = true;
           property.isPositional = true;
+          // The storage of the property, as for a declared auto-property (it is not a member of its own).
+          property.backingField = new FieldSymbol({
+            name: `<${p.name}>k__BackingField`,
+            type: p.typeWithAnnotations,
+            containingSymbol: type,
+            declaredAccessibility: Accessibility.Private,
+            modifiers: property.setMethod.isInitOnly ? DeclarationModifiers.ReadOnly : 0,
+            associatedSymbol: property,
+            isImplicitlyDeclared: true,
+          });
+          for (const accessor of [property.getMethod, property.setMethod]) accessor.associatedSymbol = property;
           members.push(property);
         }
     }
@@ -253,19 +267,22 @@ export const PropertySymbolBuilder = Base =>
         ctor.isImplicitConstructor = true;
         members.push(ctor);
       }
+      // A constructor a record class declares over its own type is its copy constructor (it need not chain to `this`).
+      const takesOwnType = c => c.parameters.length === 1 && (c.parameters[0].type.originalDefinition ?? c.parameters[0].type) === type;
+      if (type.isRecord && type.typeKind === TypeKind.Class) for (const c of declared) if (takesOwnType(c)) c.isCopyConstructor = true;
       // Records get a copy constructor so `with` and derived records can clone.
       if (
         type.isRecord &&
         type.typeKind === TypeKind.Class &&
-        !declared.some(c => c.parameters.length === 1 && c.parameters[0].type === type)
+        !declared.some(c => c.parameters.length === 1 && (c.parameters[0].type.originalDefinition ?? c.parameters[0].type) === type)
       ) {
         const copy = new MethodSymbol({
           name: '.ctor',
           methodKind: MethodKind.Constructor,
           returnType: this.core.void,
-          parameters: [new ParameterSymbol({ name: 'original', type })],
+          parameters: [new ParameterSymbol({ name: 'original', type: type.typeParameters?.length ? type.construct(type.typeParameters) : type })],
           containingSymbol: type,
-          declaredAccessibility: Accessibility.Protected,
+          declaredAccessibility: type.isSealed ? Accessibility.Private : Accessibility.Protected,
           modifiers: 0,
           isImplicitlyDeclared: true,
         });

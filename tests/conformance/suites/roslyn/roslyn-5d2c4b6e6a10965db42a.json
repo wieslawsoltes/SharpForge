@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5d2c4b6e6a10965db42a",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    delegate int D1(int i);\n    static void Main()\n    {\n        D1 d1;\n        int r1 = 0;\n        d1 = unchecked(delegate (int i) { r1 = int.MaxValue + 1; r1++; return checked(int.MaxValue + 1); });\n        d1 = unchecked(i => int.MaxValue + 1 + checked(0 + 0));\n        d1 = unchecked(i => 0 + 0 + checked(int.MaxValue + 1));\n        d1 = unchecked(d1 = delegate (int i) { r1 = int.MaxValue + 1; return checked(int.MaxValue + 1); });\n        d1 = unchecked(d1 = i => int.MaxValue + 1 + checked(0 + 0));\n        d1 = unchecked(d1 = i => 0 + 0 + checked(int.MaxValue + 1));\n        d1 = unchecked(new D1(delegate (int i) { r1 = int.MaxValue + 1; return checked(int.MaxValue + 1); }));\n        d1 = unchecked(new D1(i => int.MaxValue + 1 + checked(0 + 0)));\n        d1 = unchecked(new D1(i => 0 + 0 + checked(int.MaxValue + 1)));\n    }\n}\n",
+  "sourceSHA256": "d4430fd72ac3ffc9f61fd4a89c87cd2c5da5e7b7a18534a8272f6211e49f7ff2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenCheckedTests.cs",
+    "sha256": "f2262713714ec42eed0da78ca7f3380b90b319605a9e172f651873904588a77f",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenCheckedTests.cs",
+    "license": "MIT",
+    "method": "AnonymousFunctionExpressionInUncheckedOperator",
+    "offset": 41584
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0220",
+        "severity": "error"
+      },
+      {
+        "code": "CS0220",
+        "severity": "error"
+      },
+      {
+        "code": "CS0220",
+        "severity": "error"
+      },
+      {
+        "code": "CS0220",
+        "severity": "error"
+      },
+      {
+        "code": "CS0220",
+        "severity": "error"
+      },
+      {
+        "code": "CS0220",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,81): error CS0220: The operation overflows at compile time in checked mode\n                //         d1 = unchecked(delegate (int i) { r1 = int.MaxValue + 1; return checked(int.MaxValue + 1); });\n                Diagnostic(ErrorCode.ERR_CheckedOverflow, \"int.MaxValue + 1\"),\n                // (11,45): error CS0220: The operation overflows at compile time in checked mode\n                //         d1 = unchecked(i => 0 + 0 + checked(int.MaxValue + 1));\n                Diagnostic(ErrorCode.ERR_CheckedOverflow, \"int.MaxValue + 1\"),\n                // (12,86): error CS0220: The operation overflows at compile time in checked mode\n                //         d1 = unchecked(d1 = delegate (int i) { r1 = int.MaxValue + 1; return checked(int.MaxValue + 1); });\n                Diagnostic(ErrorCode.ERR_CheckedOverflow, \"int.MaxValue + 1\"),\n                // (14,50): error CS0220: The operation overflows at compile time in checked mode\n                //         d1 = unchecked(d1 = i => 0 + 0 + checked(int.MaxValue + 1));\n                Diagnostic(ErrorCode.ERR_CheckedOverflow, \"int.MaxValue + 1\"),\n                // (15,88): error CS0220: The operation overflows at compile time in checked mode\n                //         d1 = unchecked(new D1(delegate (int i) { r1 = int.MaxValue + 1; return checked(int.MaxValue + 1); }));\n                Diagnostic(ErrorCode.ERR_CheckedOverflow, \"int.MaxValue + 1\"),\n                // (17,52): error CS0220: The operation overflows at compile time in checked mode\n                //         d1 = unchecked(new D1(i => 0 + 0 + checked(int.MaxValue + 1)));\n                Diagnostic(ErrorCode.ERR_CheckedOverflow, \"int.MaxValue + 1\")",
+  "unsupported": []
+}

@@ -1,18 +1,24 @@
-import {objectEquals, objectHashCode, objectToString} from './object-intrinsics.js';
-import {memoryCall} from './memory-calls.js';
-import {varargsCall} from './varargs.js';
+import {ieeeRemainder} from '@sharpforge/bytecode';
 import {exceptionConstructor, exceptionIntrinsic} from './exception-intrinsics.js';
+import {varargsCall} from './varargs.js';
 import {invokeAsyncIntrinsic} from './async-runtime.js';
-import {arrayCall} from './array-calls.js';
-import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
+import {invokeSynchronization} from './sync-primitives.js';
+import {invokeDecimal} from './decimal-intrinsics.js';
+import {unsignedMathExtremum, smallMathExtremum} from './math-extrema.js';
+import {mathSign} from './math-sign.js';
+import {valueIntrinsicHandler} from './value-intrinsics.js';
+import {invokeBitConverter} from './bit-converter.js';
+import {nativeSize} from './native-int.js';
 import {invokeLegacyBclBuiltin} from '@sharpforge/bcl-core';
 import {mutateArray} from './array-ops.js';
 import {intrinsicDefinition,intrinsicDefinitions} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {float} from './numeric-ops.js';
+import {floatingMathExtremum} from './float-extrema.js';
 import {internString,isInternedString,referenceEquals,stringChar,stringFromChars} from './strings.js';
 import {enumToString,enumHasFlag} from './enums.js';
 import {objectType,typeFromHandle,typeEquals,typeName,typeHandle,typeProperty,runtimeTypeText} from './tokens.js';
+import {objectValueIntrinsics} from './object-intrinsics.js';
 
 function legacyHost(vm, formatType = null) {
   const cache = vm.platform;
@@ -44,15 +50,22 @@ function stringReceiver(context) {
   return value;
 }
 const implementations={
-  varargs:({vm,descriptor,self,parameters})=>varargsCall(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
-  synchronization:({vm,descriptor,self,parameters})=>vm.sync.invoke(descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
-  decimal:({vm,descriptor,self,parameters})=>invokeNumericIntrinsic(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
+  ...objectValueIntrinsics,
+  ieeeRemainder: ({parameters}) => float(ieeeRemainder(parameters[0], parameters[1])),
+  exception: ({vm,descriptor,self,parameters}) => exceptionIntrinsic(vm,descriptor,self,parameters),
+  synchronization: ({vm,descriptor,parameters}) => invokeSynchronization(vm,descriptor,parameters).value,
+  varargs: ({vm,descriptor,self,parameters}) => varargsCall(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
+  mathSign: ({descriptor, values}) => mathSign(descriptor.signature.parameters[0], values[0]),
+  smallMathExtremum: ({descriptor, values}) =>
+    smallMathExtremum(descriptor.name, descriptor.signature.returnType, values[0], values[1]),
+  unsignedMathExtremum: ({descriptor, values}) =>
+    unsignedMathExtremum(descriptor.name, descriptor.signature.returnType, values[0], values[1]),
+  decimal:({vm,descriptor,self,parameters})=>invokeDecimal(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
+  bitConverter:({descriptor,parameters})=>invokeBitConverter(descriptor,parameters),
+  nativeSize:({vm})=>nativeSize(vm.options),
   arrayMutate:({vm,descriptor,parameters})=>mutateArray(vm,descriptor.name,parameters[0]),
   console:({vm,descriptor,parameters})=>{vm.emitOutput((parameters.length?vm.format(parameters[0],descriptor.signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return null;},
   objectCtor:()=>null,
-  objectToString:({vm,self})=>objectToString(vm,self),
-  objectEquals:({vm,self,parameters})=>objectEquals(vm,self,parameters[0])?1:0,
-  objectHashCode:({vm,self})=>objectHashCode(vm,self),
   objectGetType:({vm,self})=>objectType(vm,self),
   typeFromHandle:({vm,parameters})=>typeFromHandle(vm,parameters[0]),
   typeCompare:({vm,descriptor,parameters})=>typeEquals(vm,parameters[0],parameters[1])!==(descriptor.name==='op_Inequality')?1:0,
@@ -65,7 +78,8 @@ const implementations={
   enumToString:({vm,self})=>{const text=enumToString(vm,self);if(text===null)throw new ManagedFault('ArgumentException','Enum receiver required');return vm.heap.string(text);},
   enumHasFlag:({vm,self,parameters})=>enumHasFlag(vm,self,parameters[0])?1:0,
   exceptionCtor:({vm,descriptor,self,parameters})=>exceptionConstructor(vm,descriptor,self,parameters),
-  exception:({vm,descriptor,self,parameters})=>exceptionIntrinsic(vm,descriptor,self,parameters),
+  exceptionMessage:({vm,self})=>vm.heap.get(self).data[0],
+  exceptionInner:({vm,self})=>vm.heap.get(self).data[1]??null,
   stringCtor:({vm,parameters})=>stringFromChars(vm,parameters[0]),
   stringConcat:legacyString,
   stringCompare:({descriptor,values})=>(values[0]===values[1])!==(descriptor.name==='op_Inequality')?1:0,
@@ -84,7 +98,26 @@ const implementations={
   stringSubstring:legacyString,
   stringReplace:legacyString,
   stringSearch:legacyString,
-  math:({vm,descriptor,parameters})=>invokeNumericIntrinsic(vm,descriptor,parameters).value,
+  math:({descriptor,parameters,values})=>{
+    const name=descriptor.name,signature=descriptor.signature;
+    if ((name === 'Min' || name === 'Max') && (signature.returnType === 'float' || signature.returnType === 'double')) {
+      return floatingMathExtremum(name, signature.returnType, parameters[0], parameters[1]);
+    }
+    let result;
+    if(typeof values[0]==='bigint') {
+      if(name==='Abs') {
+        if(values[0]===-(1n<<63n))throw new ManagedFault('OverflowException','Int64 absolute value overflow');
+        result=values[0]<0?-values[0]:values[0];
+      } else result=name==='Min'?values[0]<values[1]?values[0]:values[1]:values[0]>values[1]?values[0]:values[1];
+    } else if(name==='Round') {
+      const floor=Math.floor(values[0]),fraction=values[0]-floor;
+      result=fraction===0.5?(floor%2===0?floor:floor+1):Math.round(values[0]);
+    } else {
+      if(name==='Abs'&&signature.returnType==='int'&&values[0]===-2147483648)throw new ManagedFault('OverflowException','Int32 absolute value overflow');
+      result=Math[name==='Ceiling'?'ceil':name.toLowerCase()](...values);
+    }
+    return signature.returnType==='double'||signature.returnType==='float'?float(result,signature.returnType==='float'?'r4':'r8'):result;
+  },
   gcCollect:({vm})=>{vm.heap.collect();return null;},
   gcMemory:({vm,values})=>{if(values[0])vm.heap.collect();return BigInt(vm.heap.stats.liveBytes);},
   gcCount:({vm,values})=>{
@@ -111,26 +144,24 @@ const implementations={
 
 };
 
-const sharedConversions = new Set(['convertInt32', 'convertDouble', 'convertString']);
+const sharedConversions = new Set(['convertInt32', 'convertDouble', 'convertString', 'decimal']);
 
 /** Closed owner::name(signature) registry shared with verifier acceptance. */
 export const intrinsicHandlers=new Map(intrinsicDefinitions.map(definition=>{
   if(!definition.contract&&!implementations[definition.implementation])throw new Error(`Missing intrinsic implementation '${definition.implementation}'`);
-  return [definition.key,(vm,descriptor,args,selected=definition)=>{
+  return [definition.key,(vm,descriptor,args,selected=definition,isVirtual=false)=>{
     if(selected.contract)return vm.platform.invoke(selected.contract,args);
     const self=descriptor.signature.isStatic?null:args[0],parameters=descriptor.signature.isStatic?args:args.slice(1);
     if(!descriptor.signature.isStatic&&self===null)throw new ManagedFault('NullReferenceException','Null instance receiver');
     // Shared conversions decode their own arguments through the host adapter.
     const values = sharedConversions.has(selected.implementation) ? null : parameters.map(value => vm.value(value));
-    return implementations[selected.implementation]({vm,descriptor,self,parameters,values});
+    return implementations[selected.implementation]({vm,descriptor,self,parameters,values,isVirtual});
   }];
 }));
-export function invokeIntrinsic(vm,descriptor,args) {
-  const memory=memoryCall(vm,descriptor,args);if(memory.handled)return memory.value;
-  const array=arrayCall(vm,descriptor,args);if(array.handled)return array.value;
+export function invokeIntrinsic(vm,descriptor,args,isVirtual=false) {
   const async=invokeAsyncIntrinsic(vm,descriptor,args);if(async.handled)return async.value;
-  const sync=vm.sync?.invoke(descriptor,args);if(sync?.handled)return sync.value;
-  const definition=intrinsicDefinition(descriptor),handler=definition&&intrinsicHandlers.get(definition.key);
+  const sync=invokeSynchronization(vm,descriptor,args);if(sync.handled)return sync.value;
+  const definition=intrinsicDefinition(descriptor),handler=definition&&(intrinsicHandlers.get(definition.key)??valueIntrinsicHandler(definition));
   if(!handler)throw new ManagedFault('MissingMethodException',`${descriptor.owner}::${descriptor.name}`);
-  return handler(vm,descriptor,args,definition);
+  return handler(vm,descriptor,args,definition,isVirtual);
 }

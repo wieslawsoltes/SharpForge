@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e009d42ee49d04c7ff5d",
+  "kind": "spec",
+  "sourceText": "Expression<Func<int[], int, bool>> exp = (array, num) => array.Contains(num);\nexp.Compile(preferInterpretation: true); // fails at runtime in C# 14\n\nExpression<Func<int[], int, bool>> exp2 = (array, num) => Enumerable.Contains(array, num); // workaround\nexp2.Compile(preferInterpretation: true); // ok",
+  "sourceSHA256": "ed9b626dca9055d5a9680a50c0c2390a6cfe043f3db6896da4de2f6403ed30de",
+  "target": "library",
+  "featureId": "csharp-14-0-first-class-span-types",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/first-class-span-types.md",
+    "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+    "license": "NOASSERTION",
+    "offset": 25373
+  }
+}

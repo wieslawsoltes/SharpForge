@@ -1,7 +1,7 @@
-/** Boxable Decimal96 value-kind contract shared by source and direct CIL execution. */
+/** Shared exact Decimal value operations; both execution engines use this representation. */
 export {
-  decimalMaxCoefficient, isDecimal, decimal, decimalZero, decimalFromBits, decimalBits,
+  decimal, decimalZero, decimalMaxCoefficient, isDecimal, decimalFromBits, decimalBits,
   decimalParse, decimalFromInteger, decimalFromFloat, decimalToInteger, decimalToFloat,
-  decimalCompare, decimalNegate, decimalAbs, decimalAdd, decimalMultiply, decimalDivide,
-  decimalRemainder, decimalRound, decimalFormat, decimalBinary,
+  decimalCompare, decimalNegate, decimalAbs, decimalAdd, decimalMultiply, decimalDivide, decimalRemainder,
+  decimalRound, decimalBinary, decimalFormat
 } from '@sharpforge/bytecode';

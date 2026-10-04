@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a1f2519f9689290282ee",
+  "kind": "diagnostics",
+  "sourceText": "assert(\"00100000\");\nassert(\"00100001\");\nassert(\"00010000\");\nassert(\"00010001\");\nassert(\"00001000\");\nassert(\"00001001\");\nassert(\"00000100\");\nassert(null, \"default\");\nassert(\"\", \"default\");\nassert(\"other\", \"default\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, string expected = null)\n{\n    if (C.M(input) != (expected ?? input))\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static string M(string value)\n    {\n        return value switch\n        {\n            \"00100000\" => \"00100000\",\n            \"00100001\" => \"00100001\",\n            \"00010000\" => \"00010000\",\n            \"00010001\" => \"00010001\",\n            \"00001000\" => \"00001000\",\n            \"00001001\" => \"00001001\",\n            \"00000100\" => \"00000100\",\n            \"00000101\" => \"00000101\",\n            _ => \"default\"\n        };\n    }\n}",
+  "sourceSHA256": "793e4c2e6ddcae0fd661abefbecd3f99fbe7be07aa7b74e398021d5ec4992aca",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "EmitMatchCharacterClass_2",
+    "offset": 356148
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

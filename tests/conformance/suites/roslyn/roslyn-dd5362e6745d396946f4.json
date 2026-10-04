@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-dd5362e6745d396946f4",
+  "kind": "diagnostics",
+  "sourceText": "\nclass P\n{\n    static void M()\n    {\n        var x = (a: 1, b: 1) as (int c, int d)?;\n        var y = (1, 1) as (int, long)?;\n    }\n}",
+  "sourceSHA256": "378b685649ca45fd4e2b50b6d4703bf182ad715d92f7fbc436488d1d431430d6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "NullableTupleInAsOperator2",
+    "offset": 1095994
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "options": "(source, references: new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0458",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,17): warning CS0458: The result of the expression is always 'null' of type '(int, long)?'\n                //         var y = (1, 1) as (int, long)?;\n                Diagnostic(ErrorCode.WRN_AlwaysNull, \"(1, 1) as (int, long)?\").WithArguments(\"(int, long)?\").WithLocation(7, 17)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

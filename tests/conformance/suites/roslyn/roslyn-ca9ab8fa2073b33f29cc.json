@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ca9ab8fa2073b33f29cc",
+  "kind": "diagnostics",
+  "sourceText": "abstract class B\n{\n    protected B(int x) { }\n}\n\npartial class C : B\n{\n    partial C() : base(1) { }\n    partial C() : base(2);\n}",
+  "sourceSHA256": "44eabdf31c17b829ef65bc16ea552472732d1fab315b2d36a74c6d59cf262db2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "ConstructorInitializers_Base_Duplicate",
+    "offset": 76095
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9280",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (9,17): error CS9280: 'C.C()': only the implementing declaration of a partial constructor can have an initializer\n            //     partial C() : base(2);\n            Diagnostic(ErrorCode.ERR_PartialConstructorInitializer, \": base(2)\").WithArguments(\"C.C()\").WithLocation(9, 17)",
+  "unsupported": []
+}

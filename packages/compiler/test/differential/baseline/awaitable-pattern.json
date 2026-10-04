@@ -1,0 +1,6 @@
+{
+  "awaitable-pattern/completed-awaiters-instance-and-extension": ["diagnostics", "warnings", "bytecode", "cil"],
+  "awaitable-pattern/cs0117-cs4011-cs4027-cs1986-each-missing-piece": ["diagnostics", "warnings"],
+  "awaitable-pattern/cs0815-void-result-and-forwarding-to-task-awaiters": ["diagnostics", "warnings"],
+  "awaitable-pattern/cs4032-cs4033-cs4034-cs1996-cs4004-where-await-is-allowed": ["diagnostics", "warnings"]
+}

@@ -1,7 +1,0 @@
-42
-reference
-7
-0
-True
-True
-True

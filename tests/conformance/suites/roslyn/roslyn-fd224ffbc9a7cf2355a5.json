@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fd224ffbc9a7cf2355a5",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass X: Attribute {}\nclass XAttribute: Attribute {}\n\nclass A { [return:X] void M() { } }  // Ambiguous\nclass B { [@return:X] void M() { } }  // Ambiguous\nclass C { [return:@X] void M() { } }  // Fine, binds to X\nclass D { [@return:@X] void M() { } }  // Fine, binds to X\n",
+  "sourceSHA256": "3a59c240a320b5a3ef7371021d738d00099c2f508d4974adf5db629a5cc0df2b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Locations.cs",
+    "sha256": "3dbd3d9ee7d2dee3cdc924e1c4cf0ede1fb1f8fe46564b3dc0cc69c717a92256",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Locations.cs",
+    "license": "MIT",
+    "method": "CS0246ERR_SingleTypeNameNotFound_VerbatimIdentifierAttributeTargetAndAttribute",
+    "offset": 90925
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1614",
+        "severity": "error"
+      },
+      {
+        "code": "CS1614",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,19): error CS1614: 'X' is ambiguous between 'X' and 'XAttribute'; use either '@X' or 'XAttribute'\n                // class A { [return:X] void M() { } }  // Ambiguous\n                Diagnostic(ErrorCode.ERR_AmbiguousAttribute, \"X\").WithArguments(\"X\", \"X\", \"XAttribute\"),\n                // (8,20): error CS1614: 'X' is ambiguous between 'X' and 'XAttribute'; use either '@X' or 'XAttribute'\n                // class B { [@return:X] void M() { } }  // Ambiguous\n                Diagnostic(ErrorCode.ERR_AmbiguousAttribute, \"X\").WithArguments(\"X\", \"X\", \"XAttribute\")",
+  "unsupported": []
+}

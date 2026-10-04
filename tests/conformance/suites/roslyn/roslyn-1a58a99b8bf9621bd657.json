@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1a58a99b8bf9621bd657",
+  "kind": "diagnostics",
+  "sourceText": "Buffer10 b = default;\nb[^1] = 42; // 1\n\n_ = new Buffer10() { [^1] = 42 }; // 2\n\nstruct Buffer10\n{\n    public Buffer10() { }\n\n    public int Length => throw null;\n    public int this[int x, int y = 0]\n    {\n        get => throw null;\n        set => throw null;\n    }\n}",
+  "sourceSHA256": "b2948504ca4edfa6dfc6fbbbe38a1a0e464130d3353f50e57e7265cc2e6c563b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/IndexAndRangeTests.cs",
+    "sha256": "a5bc66f188cd46c37d21137d5030c350782aae648af5cc9cf55e0f5accb5c0c4",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/IndexAndRangeTests.cs",
+    "license": "MIT",
+    "method": "InObjectInitializer_Index_OptionalParameter",
+    "offset": 48687
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,3): error CS1503: Argument 1: cannot convert from 'System.Index' to 'int'\n                // b[^1] = 42; // 1\n                Diagnostic(ErrorCode.ERR_BadArgType, \"^1\").WithArguments(\"1\", \"System.Index\", \"int\").WithLocation(2, 3),\n                // (4,23): error CS1503: Argument 1: cannot convert from 'System.Index' to 'int'\n                // _ = new Buffer10() { [^1] = 42 }; // 2\n                Diagnostic(ErrorCode.ERR_BadArgType, \"^1\").WithArguments(\"1\", \"System.Index\", \"int\").WithLocation(4, 23)\n                ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

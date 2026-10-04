@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "status": "not-run",
+  "qualification": "unknown",
+  "recordings": [],
+  "reason": "No actual VS Code client session has been captured in this environment. Synthetic protocol tests are tooling checks, not client recordings."
+}

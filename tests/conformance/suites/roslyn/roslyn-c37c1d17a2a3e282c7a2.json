@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c37c1d17a2a3e282c7a2",
+  "kind": "diagnostics",
+  "sourceText": "class C { }",
+  "sourceSHA256": "a078bba8e8b1e13be863807dcecc4b0d14ef06d39b1452e195c664d136ec7c25",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/PDB/PDBTests.cs",
+    "sha256": "aadcd07e0944d99a1634255c9107a08fdc0098047388f2d7dfc6d7410f6e5726",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/PDB/PDBTests.cs",
+    "license": "MIT",
+    "method": "SourceGeneratedFiles",
+    "offset": 4758
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\"class C { }\", options: TestOptions.DebugDll, parseOptions: TestOptions.Regular)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

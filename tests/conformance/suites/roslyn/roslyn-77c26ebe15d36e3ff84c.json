@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-77c26ebe15d36e3ff84c",
+  "kind": "diagnostics",
+  "sourceText": "static class C\n{\n    static private protected int Field1 = 2;\n}\nsealed class D\n{\n    static private protected int Field2 = 2;\n}\n",
+  "sourceSHA256": "2fabc1bc97378019545162d2497afb988e4ebb4f6117cac2934c3f051ead9256",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "NotInStaticClass",
+    "offset": 16706
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0628",
+        "severity": "warning"
+      },
+      {
+        "code": "CS1057",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,34): warning CS0628: 'D.Field2': new protected member declared in sealed type\n                //     static private protected int Field2 = 2;\n                Diagnostic(ErrorCode.WRN_ProtectedInSealed, \"Field2\").WithArguments(\"D.Field2\").WithLocation(7, 34),\n                // (3,34): error CS1057: 'C.Field1': static classes cannot contain protected members\n                //     static private protected int Field1 = 2;\n                Diagnostic(ErrorCode.ERR_ProtectedInStatic, \"Field1\").WithArguments(\"C.Field1\").WithLocation(3, 34)\n                ",
+  "unsupported": []
+}

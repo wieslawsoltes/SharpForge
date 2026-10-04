@@ -123,7 +123,6 @@ export class LegacyAdapter extends LegacyStatementAdapter {
   parameters(list) {
     return list.parameters.map(p => {
       this.attributes(p);
-      if (p.identifier.valueText === '__arglist') this.fail(p, 'SF1018', 'Variable arguments require semantic lowering');
       for (const modifier of p.modifiers) this.fail(modifier, 'SF1017', 'Parameter modifiers are not implemented');
       if (p.default) this.fail(p.default, 'SF1018', 'Optional parameters are not implemented in this profile');
       return this.node(
@@ -136,6 +135,10 @@ export class LegacyAdapter extends LegacyStatementAdapter {
   }
   /** A block body, or the synthesized block of an expression body: `=> e;` becomes `{ return e; }` (or an expression statement for void). */
   body(red, asReturn, owner = red) {
+    // Roslyn keeps both bodies for the binder to report (CS8057); this profile has one body per member.
+    if (red.body && red.expressionBody) {
+      this.fail(red.expressionBody, 'SF1018', 'Members with both a block body and an expression body are not implemented in this profile');
+    }
     if (red.body) return this.block(red.body);
     const arrow = red.expressionBody;
     if (!arrow) {

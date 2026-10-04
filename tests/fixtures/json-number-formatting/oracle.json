@@ -1,0 +1,358 @@
+{
+  "schemaVersion": 1,
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "03b7ebd123e438012571f863aedc5c234caa38032edcd2726908790371143cc1",
+  "cases": [
+    {
+      "name": "zero",
+      "bits": "0000000000000000",
+      "scalar": "0",
+      "array": "[0,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:0,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "negative-zero",
+      "bits": "8000000000000000",
+      "scalar": "-0",
+      "array": "[-0,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:-0,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "epsilon",
+      "bits": "0000000000000001",
+      "scalar": "5E-324",
+      "array": "[5E-324,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:5E-324,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "negative-epsilon",
+      "bits": "8000000000000001",
+      "scalar": "-5E-324",
+      "array": "[-5E-324,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:-5E-324,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "minimum-normal",
+      "bits": "0010000000000000",
+      "scalar": "2.2250738585072014E-308",
+      "array": "[2.2250738585072014E-308,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:2.2250738585072014E-308,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "maximum-subnormal",
+      "bits": "000fffffffffffff",
+      "scalar": "2.225073858507201E-308",
+      "array": "[2.225073858507201E-308,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:2.225073858507201E-308,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "maximum",
+      "bits": "7fefffffffffffff",
+      "scalar": "1.7976931348623157E\u002B308",
+      "array": "[1.7976931348623157E\u002B308,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1.7976931348623157E\u002B308,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "negative-maximum",
+      "bits": "ffefffffffffffff",
+      "scalar": "-1.7976931348623157E\u002B308",
+      "array": "[-1.7976931348623157E\u002B308,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:-1.7976931348623157E\u002B308,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "nan",
+      "bits": "fff8000000000000",
+      "exception": "ArgumentException"
+    },
+    {
+      "name": "positive-infinity",
+      "bits": "7ff0000000000000",
+      "exception": "ArgumentException"
+    },
+    {
+      "name": "negative-infinity",
+      "bits": "fff0000000000000",
+      "exception": "ArgumentException"
+    },
+    {
+      "name": "one",
+      "bits": "3ff0000000000000",
+      "scalar": "1",
+      "array": "[1,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "negative-one",
+      "bits": "bff0000000000000",
+      "scalar": "-1",
+      "array": "[-1,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:-1,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "tenth",
+      "bits": "3fb999999999999a",
+      "scalar": "0.1",
+      "array": "[0.1,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:0.1,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "negative-tenth",
+      "bits": "bfb999999999999a",
+      "scalar": "-0.1",
+      "array": "[-0.1,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:-0.1,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "one-and-half",
+      "bits": "3ff8000000000000",
+      "scalar": "1.5",
+      "array": "[1.5,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1.5,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "one-and-quarter",
+      "bits": "3ff4000000000000",
+      "scalar": "1.25",
+      "array": "[1.25,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1.25,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "even-midpoint",
+      "bits": "3ff2000000000000",
+      "scalar": "1.125",
+      "array": "[1.125,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1.125,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "odd-midpoint",
+      "bits": "3ff6000000000000",
+      "scalar": "1.375",
+      "array": "[1.375,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1.375,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "decimal-midpoint-below",
+      "bits": "4023fd70a3d70a3d",
+      "scalar": "9.995",
+      "array": "[9.995,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:9.995,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "decimal-round-carry",
+      "bits": "4023ffbe76c8b439",
+      "scalar": "9.9995",
+      "array": "[9.9995,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:9.9995,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "integer-round-carry",
+      "bits": "408f3c0000000000",
+      "scalar": "999.5",
+      "array": "[999.5,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:999.5,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "above-integer-midpoint",
+      "bits": "408f3c0000000001",
+      "scalar": "999.5000000000001",
+      "array": "[999.5000000000001,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:999.5000000000001,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "below-integer-midpoint",
+      "bits": "408f3bffffffffff",
+      "scalar": "999.4999999999999",
+      "array": "[999.4999999999999,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:999.4999999999999,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "seven-digits",
+      "bits": "4132d68700000000",
+      "scalar": "1234567",
+      "array": "[1234567,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1234567,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "negative-seven-digits",
+      "bits": "c132d68700000000",
+      "scalar": "-1234567",
+      "array": "[-1234567,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:-1234567,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "small-fixed-threshold",
+      "bits": "3f1a36e2eb1c432d",
+      "scalar": "0.0001",
+      "array": "[0.0001,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:0.0001,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "below-small-fixed-threshold",
+      "bits": "3f1a36e2eb1c432c",
+      "scalar": "9.999999999999999E-05",
+      "array": "[9.999999999999999E-05,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:9.999999999999999E-05,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "above-small-fixed-threshold",
+      "bits": "3f1a36e2eb1c432e",
+      "scalar": "0.00010000000000000002",
+      "array": "[0.00010000000000000002,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:0.00010000000000000002,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "small-scientific",
+      "bits": "3ee4f8b588e368f1",
+      "scalar": "1E-05",
+      "array": "[1E-05,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1E-05,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "millionth",
+      "bits": "3eb0c6f7a0b5ed8d",
+      "scalar": "1E-06",
+      "array": "[1E-06,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1E-06,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "ten-millionth",
+      "bits": "3e7ad7f29abcaf48",
+      "scalar": "1E-07",
+      "array": "[1E-07,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1E-07,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "large-fixed",
+      "bits": "4341c37937e08000",
+      "scalar": "10000000000000000",
+      "array": "[10000000000000000,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:10000000000000000,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "below-large-fixed",
+      "bits": "4341c37937e07fff",
+      "scalar": "9999999999999998",
+      "array": "[9999999999999998,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:9999999999999998,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "above-large-fixed",
+      "bits": "4341c37937e08001",
+      "scalar": "10000000000000002",
+      "array": "[10000000000000002,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:10000000000000002,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "large-scientific-threshold",
+      "bits": "4376345785d8a000",
+      "scalar": "1E\u002B17",
+      "array": "[1E\u002B17,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1E\u002B17,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "below-large-scientific-threshold",
+      "bits": "4376345785d89fff",
+      "scalar": "99999999999999980",
+      "array": "[99999999999999980,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:99999999999999980,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "above-large-scientific-threshold",
+      "bits": "4376345785d8a001",
+      "scalar": "1.0000000000000002E\u002B17",
+      "array": "[1.0000000000000002E\u002B17,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1.0000000000000002E\u002B17,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "twenty-digit-power",
+      "bits": "4415af1d78b58c40",
+      "scalar": "1E\u002B20",
+      "array": "[1E\u002B20,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1E\u002B20,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "javascript-scientific-threshold",
+      "bits": "444b1ae4d6e2ef50",
+      "scalar": "1E\u002B21",
+      "array": "[1E\u002B21,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1E\u002B21,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "twenty-three-digit-power",
+      "bits": "44b52d02c7e14af6",
+      "scalar": "1E\u002B23",
+      "array": "[1E\u002B23,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1E\u002B23,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "seventeen-significant-digits",
+      "bits": "3ff3c0ca428c59fb",
+      "scalar": "1.2345678901234567",
+      "array": "[1.2345678901234567,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1.2345678901234567,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "roundtrip-sensitive",
+      "bits": "3feb0e7009b61ce0",
+      "scalar": "0.8455124082255701",
+      "array": "[0.8455124082255701,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:0.8455124082255701,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "pi",
+      "bits": "400921fb54442d18",
+      "scalar": "3.141592653589793",
+      "array": "[3.141592653589793,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:3.141592653589793,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "e",
+      "bits": "4005bf0a8b145769",
+      "scalar": "2.718281828459045",
+      "array": "[2.718281828459045,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:2.718281828459045,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "above-one",
+      "bits": "3ff0000000000001",
+      "scalar": "1.0000000000000002",
+      "array": "[1.0000000000000002,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1.0000000000000002,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "below-one",
+      "bits": "3fefffffffffffff",
+      "scalar": "0.9999999999999999",
+      "array": "[0.9999999999999999,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:0.9999999999999999,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "below-maximum",
+      "bits": "7feffffffffffffe",
+      "scalar": "1.7976931348623155E\u002B308",
+      "array": "[1.7976931348623155E\u002B308,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:1.7976931348623155E\u002B308,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "maximum-exact-integer",
+      "bits": "433fffffffffffff",
+      "scalar": "9007199254740991",
+      "array": "[9007199254740991,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:9007199254740991,\u0022zero\u0022:-0}"
+    },
+    {
+      "name": "next-exact-integer",
+      "bits": "4340000000000000",
+      "scalar": "9007199254740992",
+      "array": "[9007199254740992,-0,42,\u00221e\\u002B21 \\u003C\\u00E9\\u003E\u0022]",
+      "dictionary": "{\u0022n\\u003C\\u00E9\\u002B\\u003E\u0022:9007199254740992,\u0022zero\u0022:-0}"
+    }
+  ],
+  "controls": {
+    "int-min": "-2147483648",
+    "int-max": "2147483647",
+    "null": "null",
+    "string": "\u00221e\\u002B21 -0 1e-7 \\u003C\\u00E9\\u003E\u0022"
+  }
+}

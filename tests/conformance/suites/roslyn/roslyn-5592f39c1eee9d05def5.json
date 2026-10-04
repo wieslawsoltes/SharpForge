@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5592f39c1eee9d05def5",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.CompilerServices;\n\n[assembly: MetadataUpdateDeleted]\n[module: MetadataUpdateDeleted]\n\n[MetadataUpdateDeleted] class TestClass<[MetadataUpdateDeleted] T>\n{\n    [MetadataUpdateDeleted] public TestClass()\n    {\n        field = 1;\n        Event?.Invoke();\n    }\n\n    [MetadataUpdateDeleted] public int field;\n    [MetadataUpdateDeleted] public int Property\n    {\n        [MetadataUpdateDeleted] get;\n        [MetadataUpdateDeleted] set;\n    }\n    [MetadataUpdateDeleted] public int this[int a] { get => a; }\n    [MetadataUpdateDeleted] [return: MetadataUpdateDeleted] public int Method(\n        [MetadataUpdateDeleted] int x) => x;\n\n    [MetadataUpdateDeleted] public event Action Event;\n    [MetadataUpdateDeleted] public event Action Event2\n    {\n        [MetadataUpdateDeleted] add {}\n        [MetadataUpdateDeleted] remove {}\n    }\n}\n\nnamespace System.Runtime.CompilerServices\n{\n    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]\n    public sealed class MetadataUpdateDeletedAttribute : Attribute\n    {\n    }\n}\n",
+  "sourceSHA256": "748f356f41b565958038f31e68fc8d86bb1d84c245c2033f3c0ff54160af42ea",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "MetadataUpdateDeletedAttribute_ErrorWhenManuallyApplied",
+    "offset": 459560
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9331",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,12): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                // [assembly: MetadataUpdateDeleted]\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(5, 12),\n                // (6,10): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                // [module: MetadataUpdateDeleted]\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(6, 10),\n                // (8,2): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                // [MetadataUpdateDeleted] class TestClass<[MetadataUpdateDeleted] T>\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(8, 2),\n                // (8,42): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                // [MetadataUpdateDeleted] class TestClass<[MetadataUpdateDeleted] T>\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(8, 42),\n                // (10,6): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //     [MetadataUpdateDeleted] public TestClass()\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(10, 6),\n                // (16,6): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //     [MetadataUpdateDeleted] public int field;\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(16, 6),\n                // (17,6): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //     [MetadataUpdateDeleted] public int Property\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(17, 6),\n                // (19,10): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //         [MetadataUpdateDeleted] get;\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(19, 10),\n                // (20,10): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //         [MetadataUpdateDeleted] set;\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(20, 10),\n                // (22,6): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //     [MetadataUpdateDeleted] public int this[int a] { get => a; }\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(22, 6),\n                // (23,6): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //     [MetadataUpdateDeleted] [return: MetadataUpdateDeleted] public int Method(\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(23, 6),\n                // (23,38): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //     [MetadataUpdateDeleted] [return: MetadataUpdateDeleted] public int Method(\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(23, 38),\n                // (24,10): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //         [MetadataUpdateDeleted] int x) => x;\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(24, 10),\n                // (26,6): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //     [MetadataUpdateDeleted] public event Action Event;\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(26, 6),\n                // (27,6): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //     [MetadataUpdateDeleted] public event Action Event2\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(27, 6),\n                // (29,10): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //         [MetadataUpdateDeleted] add {}\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(29, 10),\n                // (30,10): error CS9331: 'System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute' cannot be applied manually.\n                //         [MetadataUpdateDeleted] remove {}\n                Diagnostic(ErrorCode.ERR_AttributeCannotBeAppliedManually, \"MetadataUpdateDeleted\").WithArguments(\"System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute\").WithLocation(30, 10)",
+  "unsupported": []
+}

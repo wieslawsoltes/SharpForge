@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-092c14bf8a8f9966d698",
+  "kind": "spec",
+  "sourceText": "public static async void Main() => await $MainTask();\n\nprivate static void $EntrypointMain() => Main().GetAwaiter().GetResult();\n\nprivate static async Task $MainTask()\n{\n    ... // await code\n}",
+  "sourceSHA256": "4d7b33324af6951c68329f7abba2a905127284b7fa6b5bda180d947b72d693e4",
+  "target": "library",
+  "featureId": "csharp-7-1-async-main",
+  "langVersion": "7.1",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.1/async-main.md",
+    "sha256": "71e3b468c4b32f7e378540b96c553a599f31e250ae3c5b208da5ff5749cf388c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.1/async-main.md",
+    "license": "NOASSERTION",
+    "offset": 3262
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fff70fba7e3fe295f2a3",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class MainClass\n{\n    public static int Main ()\n    {\n        var a = new IWorksheet();\n        return 0;\n    }\n}",
+  "sourceSHA256": "ba558d5c3bddc895a403e7ac3223f8cd3e30fdae54524177a8fa32cc853c13b1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestCoClassAttribute_NewOnInterface_FromMetadata_StructTypeInCoClassAttribute",
+    "offset": 165020
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { compDll.EmitToImageReference() })",
+  "options": "(source2, references: new[] { compDll.EmitToImageReference() })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0144",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,17): error CS0144: Cannot create an instance of the abstract type or interface 'IWorksheet'\n                //         var a = new IWorksheet();\n                Diagnostic(ErrorCode.ERR_NoNewAbstract, \"new IWorksheet()\").WithArguments(\"IWorksheet\").WithLocation(6, 17)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

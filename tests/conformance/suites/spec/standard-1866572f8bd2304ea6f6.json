@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-1866572f8bd2304ea6f6",
+  "kind": "spec",
+  "sourceText": "(long l, string) t1 = (l: 1, null); // literal has no type, use implicit conversion\nvar t2 = (i: 2, \"Two\");             // (int i, string)\nvar t3 = (i: 3, null);              // Error: no type",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0815",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": [
+      "CS0219"
+    ]
+  },
+  "sourceSHA256": "63847e902e86049fabd4309303f959b20ef6f8d4e45571510e37fbe4a7795412",
+  "originalSource": "(long l, string) t1 = (l: 1, null); // literal has no type, use implicit conversion\nvar t2 = (i: 2, \"Two\");             // (int i, string)\nvar t3 = (i: 3, null);              // Error: no type",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "TupleExpressions1",
+    "expectedErrors": [
+      "CS0815"
+    ],
+    "ignoredWarnings": [
+      "CS0219"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "TupleExpressions1",
+    "offsetInUnquotedMarkdown": 137168
+  }
+}

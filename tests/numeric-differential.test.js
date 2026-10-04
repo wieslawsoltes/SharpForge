@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {binary, compare, convert, float, nativeInteger, number, numericFormat} from '@sharpforge/bytecode';
+import {convert, float, nativeInteger, number} from '@sharpforge/bytecode';
 import {CilVirtualMachine} from '@sharpforge/runtime';
+import {binary, compare} from '../packages/runtime/src/execution/numeric-ops.js';
+import {formatSourceNumber} from '../packages/runtime/src/execution/source-number-format.js';
 import {numericOracle, numericDifferential} from './support/numeric-differential.js';
 import {int64Pairs, int64Operations, int64OracleSource, uint32OracleSource, smallStorageOracleSource, numericFamilies, numericPairCount}
   from './support/numeric-oracle-spec.js';
@@ -39,7 +41,8 @@ test('T01.1/T01.10 100,000 native operand pairs cover every signed and unsigned 
     for (const {opcode} of int64Operations) {
       const row = expected.next();
       assert.equal(row.done, false, 'Truncated native Int64 table');
-      assert.equal(wideResult(opcode, left, right), row.value, `${opcode}(${left},${right}), pair ${pairs}`);
+      const actual = wideResult(opcode, left, right);
+      if (actual !== row.value) assert.equal(actual, row.value, `${opcode}(${left},${right}), pair ${pairs}`);
     }
     pairs++;
   }
@@ -50,7 +53,7 @@ test('T01.1/T01.10 100,000 native operand pairs cover every signed and unsigned 
 test('T01.8/T01.10 the same 100,000-pair C# program matches native in all three execution routes', () => {
   const {text, provenance} = numericOracle('int64.txt.gz');
   numericDifferential(int64OracleSource(), text, {
-    family: '100k Int64 matrix', streamOutput: true, nativeIntBits: provenance.nativeIntBits,
+    family: '100k Int64 matrix', nativeIntBits: provenance.nativeIntBits,
     vmOptions: {maxInstructions: 2_000_000_000, maxOutputCharacters: 256 * 1024 * 1024},
   });
 });
@@ -80,7 +83,7 @@ function matrixResult(item) {
       view.setFloat64(0, result.value, true);
       return String(view.getBigInt64(0, true));
     }
-    return numericFormat(result, item.target, 'G', {nativeIntBits: item.nativeIntBits});
+    return formatSourceNumber({options: {nativeIntBits: item.nativeIntBits}}, result, item.target);
   } catch (error) {
     return '!' + error.name;
   }

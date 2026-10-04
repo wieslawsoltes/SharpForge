@@ -1,3 +1,4 @@
+import {translateExceptionStatement} from './exception-translation.js';
 /**
  * Lowering of statements: blocks and declarations, control flow, loops over arrays and enumerators, exception
  * handling and resource disposal.
@@ -8,7 +9,7 @@ import { implementsInterface } from '../../symbols/substitution.js';
 import { yieldBreak } from '../../lowering/iterators.js';
 import { yieldReturn, openRegion, closeRegion } from '../../lowering/iterators/try-regions.js';
 import { n } from './node-factory.js';
-import { exceptionTypeName } from '../../symbols/exception-identity.js';
+import {disposeMethod} from './dispose-method.js';
 
 /** True when a `yield return` of the enclosing iterator suspends inside `node`. */
 const suspendsInside = node => {
@@ -326,7 +327,7 @@ export const StatementTranslation = Base =>
     disposeCall(resource, syntax) {
       const iterator = this.g.iterators.infoOf(this.imageType(resource.type, syntax));
       if (iterator) return n.call(iterator.dispose, null, [resource.read()]);
-      const dispose = resource.type.getMembers('Dispose').find(m => m.kind === SymbolKind.Method && !m.parameters.length);
+      const dispose = disposeMethod(resource.type, this.g.analysis.core, this.g.bridge);
       if (!dispose) return this.unsupported('using a resource without a Dispose method', syntax);
       return this.memberCall(dispose, resource.read(), [], syntax);
     }
@@ -355,35 +356,7 @@ export const StatementTranslation = Base =>
       return this.statement(node.block);
     }
     stmtTry(node) {
-      const catches = node.catches.map(clause => {
-        const type = exceptionTypeName(clause.type);
-        let variable = null;
-        let filter = null;
-        const body = this.scoped(() => {
-          let initializers = [];
-          if (clause.local) {
-            variable = n.newLocal(clause.local.name, type, n.spanOf(clause.local.syntax, this.frame.uri), { hidden: false });
-            if (this.frame.captures.isCaptured(clause.local)) {
-              initializers = this.declareVariable(clause.local, n.local(variable));
-            } else this.frame.vars.set(clause.local, () => n.local(variable));
-          }
-          filter = clause.filter ? this.expression(clause.filter) : null;
-          // The same cell is visible to closures created in the filter and in its accepted body.
-          if (filter && initializers.length) {
-            filter = n.sequence([], initializers, filter);
-            initializers = [];
-          }
-          return [...initializers, this.statement(clause.block)];
-        });
-        body.syntax = this.span(clause.block.syntax);
-        return { kind: 'CatchBlock', exceptionType: type, local: variable, filter, body };
-      });
-      const span = this.span(node.syntax);
-      if (!catches.length && node.finallyBlock) {
-        const statement = this.protect(node.body, () => this.statement(node.body), () => this.statement(node.finallyBlock));
-        return statement.kind === 'TryStatement' ? { ...statement, syntax: span } : statement;
-      }
-      return n.tryStatement(this.statement(node.body), catches, node.finallyBlock ? this.statement(node.finallyBlock) : null, span);
+      return translateExceptionStatement(this, node);
     }
     /** `using (R r = e) body` is `{ R r = e; try body finally { if (r != null) r.Dispose(); } }`. */
     stmtUsing(node) {

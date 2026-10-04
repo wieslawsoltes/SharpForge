@@ -1,0 +1,8 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "params-collections/lists-sets-constructors-indexers-delegates":{"hash":"e47b81ade095cc69","kind":"output","langVersion":"14.0","diagnostics":[],"output":"2\n0\n1\nnext\n1-5-3-\n9\n7\nexactparamsparams\n2\n3\n3\n2\n3\n"},
+  "params-collections/better-collection-and-element-type":{"hash":"f0478a6321adfb41","kind":"output","langVersion":"14.0","diagnostics":[],"output":"list\narray\nint\ndouble\n"},
+  "params-collections/cs9202-below-csharp-13":{"hash":"7489d53e726841bf","kind":"diagnostics","langVersion":"12.0","diagnostics":[["CS9202",69,22,"error"],["CS9202",131,26,"error"]]},
+  "params-collections/cs0225-cs1729-cs0117-cs9228-parameter-types":{"hash":"c726c845f62639ba","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0225",256,6,"error"],["CS1729",292,15,"error"],["CS0225",331,6,"error"],["CS0117",370,14,"error"],["CS9228",408,15,"error"],["CS0231",447,19,"error"],["CS1751",501,6,"error"],["CS0225",600,6,"error"]]},
+  "params-collections/cs0121-list-against-array-and-interfaces":{"hash":"f3e43a0cc28759b1","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0121",375,1,"error"],["CS0121",411,4,"error"]]},
+  "params-collections/cs1503-element-conversions":{"hash":"8cea7d5e23cd2538","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1503",169,1,"error"],["CS1503",185,15,"error"]]}
+}}

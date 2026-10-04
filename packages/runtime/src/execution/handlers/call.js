@@ -1,29 +1,27 @@
-import {continueExceptionEvent} from '../exception-events.js';
-import {markUnhandled} from '../unhandled.js';
-import {jumpMethod} from '../tailcall.js';
-import {ManagedFault} from '../../heap.js';
+import {continueControlReturn} from '../return-control.js';
+import {popPooledFrame} from '../frame-retirement.js';
+import {isNativeStorageType} from '../native-int.js';
 import {completeInitialization} from '../static-init.js';
-import {methodPointer} from '../calls.js';
-import {continueDelegate} from '../delegate-calls.js';
-import {unboxValue} from '../value-types.js';
-import {validatePointer} from '../managed-pointers.js';
-import {popFrame} from '../frame-stack.js';
+import {leaveCilMethod} from '../cil-method-events.js';
+import {delegateMethodPointer} from '../delegate-targets.js';
+import {valueCallResult} from '../value-calls.js';
 
-const handlers=new Map([['jmp',jumpMethod]]);
+const handlers=new Map();
 for(const name of ['call','callvirt','newobj'])handlers.set(name,(vm,frame,instruction)=>vm.invoke(instruction));
-handlers.set('ldftn',(vm,frame,instruction)=>vm.push(methodPointer(vm,instruction.operand)));
-handlers.set('ldvirtftn',(vm,frame,instruction)=>vm.push(methodPointer(vm,instruction.operand,vm.pop())));
-handlers.set('tail.',(vm,frame)=>{frame.tailCall=true;});
+handlers.set('ldftn',(vm,frame,instruction)=>{
+  vm.push(delegateMethodPointer(vm,instruction.operand));
+});
 handlers.set('ret',(vm,frame)=>{
-  let result=frame.method.signature.returnType==='void'?null:vm.storage(vm.pop(),frame.method.signature.returnType);
-  if(result?.byref){validatePointer(vm,result);if(result.frameId===frame.id)throw new ManagedFault('InvalidProgramException','A return reference cannot outlive its local frame');}
+  const type=frame.method.signature.returnType;
+  let result=type==='void'?null:vm.pop();
+  if(isNativeStorageType(type)||type.startsWith('method '))result=vm.storage(result,type);
+  let value=valueCallResult(vm,frame,result);
   if(frame.initializes)completeInitialization(vm,frame);
-  popFrame(vm);
-  if(frame.valueConstructor)result=unboxValue(vm,frame.returnObject,frame.valueConstructorType);
-  const continuation=continueDelegate(vm,frame,result);if(continuation.continued)return;
-  const event=continueExceptionEvent(vm,frame);
-  if(event){if(!event.continued){if(event.phase==='unhandled')markUnhandled(vm,event.fault);else vm.raise(event.fault);}return;}
-  const value=frame.valueConstructor?continuation.result:frame.returnObject??continuation.result;
+  leaveCilMethod(vm, frame);
+  popPooledFrame(vm);
+  const control=continueControlReturn(vm,frame,value);
+  if(control.handled)return;
+  value=control.value;
   if(vm.top){if(frame.returnObject||frame.method.signature.returnType!=='void')vm.push(value);}
   else {vm.returnValue=value;vm.exitCode=frame.method.signature.returnType==='int'?Number(value)|0:0;vm.state='terminated';}
 });

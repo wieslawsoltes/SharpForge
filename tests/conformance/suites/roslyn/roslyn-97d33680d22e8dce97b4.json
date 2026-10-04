@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-97d33680d22e8dce97b4",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\npublic class Test\n{\n    private int x = 0;\n\n    [IsReadOnly]\n    public ref readonly int Property => ref x;\n}\n",
+  "sourceSHA256": "03b9f24135d9f85dc8f66e26042f669c693c7a8157842537ce9349014560e89b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_ReadOnlyStruct.cs",
+    "sha256": "801e0fb4a138c65b6d6993c2d56363bbcc9723b18371ce67b8a06b0238718451",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_ReadOnlyStruct.cs",
+    "license": "MIT",
+    "method": "IsReadOnlyAttributeIsDisallowedEverywhereInSource_Properties",
+    "offset": 8214
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { referenceA })",
+  "options": "(codeB, references: new[] { referenceA })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8335",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,6): error CS8335: Do not use 'System.Runtime.CompilerServices.IsReadOnlyAttribute'. This is reserved for compiler usage.\n                //     [IsReadOnly]\n                Diagnostic(ErrorCode.ERR_ExplicitReservedAttr, \"IsReadOnly\").WithArguments(\"System.Runtime.CompilerServices.IsReadOnlyAttribute\").WithLocation(8, 6)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

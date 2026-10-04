@@ -77,7 +77,7 @@ export async function runImpacted(plan, root = process.cwd()) {
   const expected = selected.flatMap(manifest => manifest.nodeFiles);
   if (JSON.stringify(expected) !== JSON.stringify(plan.nodeFiles)) throw new Error('Plan test membership drift');
   if (!expected.length) throw new Error('Impacted plan has no Node tests');
-  return runProcess(process.execPath, ['--test', '--test-timeout=' + Math.max(...selected.map(item => item.timeout)), ...expected], { cwd: root });
+  return runProcess(process.execPath, ['--test', '--test-concurrency=1', '--test-timeout=' + Math.max(...selected.map(item => item.timeout)), ...expected], { cwd: root });
 }
 
 if (isMain(import.meta.url)) {

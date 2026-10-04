@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0b87d3e3c44ff74df334",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class C\n{\n    [Obsolete(\"error\", error: true)]\n    public int Slice(int i, int j) => 0;\n\n    public int this[int i]\n    {\n        [Obsolete(\"error\", error: true)]\n        get => 0;\n    }\n\n    public int Count\n    {\n        [Obsolete(\"error\", error: true)]\n        get => 0;\n    }\n\n    public void M()\n    {\n        _ = this[^1]; // 1, 2\n        _ = this[..]; // 3, 4\n    }\n}\n",
+  "sourceSHA256": "e09b9d09df1af90cc9928da95f72212af28ea5916be9e2d2713ac0fe2e34c563",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteIndexerSlice_ObsoleteCountAccessor",
+    "offset": 493170
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code, targetFramework: TargetFramework.NetCoreApp)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (23,13): error CS0619: 'C.Count.get' is obsolete: 'error'\n                //         _ = this[^1]; // 1, 2\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"this[^1]\").WithArguments(\"C.Count.get\", \"error\").WithLocation(23, 13),\n                // (23,13): error CS0619: 'C.this[int].get' is obsolete: 'error'\n                //         _ = this[^1]; // 1, 2\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"this[^1]\").WithArguments(\"C.this[int].get\", \"error\").WithLocation(23, 13),\n                // (24,13): error CS0619: 'C.Count.get' is obsolete: 'error'\n                //         _ = this[..]; // 3, 4\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"this[..]\").WithArguments(\"C.Count.get\", \"error\").WithLocation(24, 13),\n                // (24,13): error CS0619: 'C.Slice(int, int)' is obsolete: 'error'\n                //         _ = this[..]; // 3, 4\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"this[..]\").WithArguments(\"C.Slice(int, int)\", \"error\").WithLocation(24, 13)\n                ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-12c987bbbdf45040adb0",
+  "kind": "diagnostics",
+  "sourceText": "using System.Runtime.CompilerServices;\npublic class C\n{\n    public object F([DecimalConstant(0, 0, 0, 0, 1)]decimal o = 1)\n    {\n        return o;\n    }\n    public object this[decimal a, [DecimalConstant(0, 0, 0, 0, 2)]decimal b = 2]\n    {\n        get { return b; }\n        set { }\n    }\n    public static object D(decimal o)\n    {\n        return o;\n    }\n}\npublic delegate object D([DecimalConstant(0, 0, 0, 0, 3)]decimal o = 3);\n",
+  "sourceSHA256": "5b399e5dd2b7dd6717b802b904b17e04c2156f73ce69aa79826a9e2e1037390a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/OptionalArgumentsTests.cs",
+    "sha256": "933f05d101ca784a87ab174caeae4001bd61d9080a2e77fbe0c932b8ed9319e9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/OptionalArgumentsTests.cs",
+    "license": "MIT",
+    "method": "TestDuplicateConstantAttributesSameValues",
+    "offset": 6803
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source1, options: TestOptions.DebugDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

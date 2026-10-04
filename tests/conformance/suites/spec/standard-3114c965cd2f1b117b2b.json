@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-3114c965cd2f1b117b2b",
+  "kind": "spec",
+  "sourceText": "interface IMethods\n{\n    void F();\n    void G();\n    void H();\n    void I();\n}\n\nclass Base : IMethods\n{\n    void IMethods.F() {}\n    void IMethods.G() {}\n    public void H() {}\n    public void I() {}\n}\n\nclass Derived : Base, IMethods\n{\n    public void F() {}\n    void IMethods.H() {}\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "08010ea0d3911c1a15155990dfb531f1800ae2a01c9011054172650dbdec7fd0",
+  "originalSource": "interface IMethods\n{\n    void F();\n    void G();\n    void H();\n    void I();\n}\n\nclass Base : IMethods\n{\n    void IMethods.F() {}\n    void IMethods.G() {}\n    public void H() {}\n    public void I() {}\n}\n\nclass Derived : Base, IMethods\n{\n    public void F() {}\n    void IMethods.H() {}\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "InterfaceRe-implementation2"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-interfaces",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/interfaces.md",
+    "sha256": "bcdf69f454a7bd5894c0b08364553fc6587a0a6ee444a93bc91c58138ff95f53",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/interfaces.md",
+    "license": "MIT",
+    "example": "InterfaceRe-implementation2",
+    "offsetInUnquotedMarkdown": 65597
+  }
+}

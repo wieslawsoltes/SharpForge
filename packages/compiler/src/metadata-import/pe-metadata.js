@@ -1,4 +1,4 @@
-import {readPE,Reader,decodeCoded,CilError} from '@sharpforge/cil';
+import {readPE,Reader,decodeCoded,decodeConstant,CilError} from '@sharpforge/cil';
 import {AssemblyIdentity} from './assembly-identity.js';
 /**
  * A read-only view over the ECMA-335 tables of one module, built on the @sharpforge/cil reader.
@@ -91,15 +91,7 @@ export class MetadataView {
   /** The constant of a Field, Param or Property token as `{value}`, or undefined when there is none. */
   constant(parentToken){
     const entry=this._lazy('constants',()=>new Map(this.rows(Table.Constant).map(row=>[decodeCoded('HasConstant',row[1]),row]))).get(parentToken);if(!entry)return undefined;
-    const type=entry[0]&0xff,bytes=this.blob(entry[2]),view=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength),wide=v=>Number.isSafeInteger(Number(v))?Number(v):v;
-    switch(type){
-      case ElementType.Boolean:return {value:bytes[0]!==0};case ElementType.Char:return {value:String.fromCharCode(view.getUint16(0,true))};
-      case ElementType.I1:return {value:view.getInt8(0)};case ElementType.U1:return {value:view.getUint8(0)};case ElementType.I2:return {value:view.getInt16(0,true)};case ElementType.U2:return {value:view.getUint16(0,true)};
-      case ElementType.I4:return {value:view.getInt32(0,true)};case ElementType.U4:return {value:view.getUint32(0,true)};case ElementType.I8:return {value:wide(view.getBigInt64(0,true))};case ElementType.U8:return {value:wide(view.getBigUint64(0,true))};
-      case ElementType.R4:return {value:view.getFloat32(0,true)};case ElementType.R8:return {value:view.getFloat64(0,true)};
-      case ElementType.String:{let s='';for(let i=0;i+1<bytes.length;i+=2)s+=String.fromCharCode(view.getUint16(i,true));return {value:s};}
-      default:return {value:null};
-    }
+    return {value:decodeConstant(entry[0],this.blob(entry[2]))};
   }
   /** Declaring type name and signature blob of a custom-attribute constructor (MethodDef or MemberRef). */
   attributeConstructor(token){

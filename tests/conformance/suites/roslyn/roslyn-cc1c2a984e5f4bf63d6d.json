@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-cc1c2a984e5f4bf63d6d",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        foreach (_ in M())\n        {\n        }\n    }\n    static System.Collections.Generic.IEnumerable<int> M()\n    {\n        yield return 1;\n    }\n}\n",
+  "sourceSHA256": "05d679e4bbd1f7c30ecda486bd50eefd382a27d8b4393a061ef85a6ac8d20baf",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "ShortDiscardDisallowedInForeach",
+    "offset": 242253
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8186",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,18): error CS8186: A foreach loop must declare its iteration variables.\n                //         foreach (_ in M())\n                Diagnostic(ErrorCode.ERR_MustDeclareForeachIteration, \"_\").WithLocation(6, 18)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

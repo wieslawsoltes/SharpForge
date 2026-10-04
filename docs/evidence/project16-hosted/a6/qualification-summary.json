@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-qualification",
+  "stage": "all",
+  "engine": "chromium",
+  "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+  "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+  "workflowRunId": "37183721322",
+  "startedAt": "2026-10-04T06:46:05.437Z",
+  "finishedAt": "2026-10-04T06:57:31.596Z",
+  "status": "failed",
+  "exitCode": 1,
+  "scopes": [
+    {
+      "id": "node:A19",
+      "phase": "node",
+      "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+      "args": [
+        "scripts/planning/run-tests.js",
+        "--area",
+        "A19"
+      ],
+      "timeoutMs": 1200000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:46:05.438Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:47:00.067Z"
+    },
+    {
+      "id": "node:A20",
+      "phase": "node",
+      "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+      "args": [
+        "scripts/planning/run-tests.js",
+        "--area",
+        "A20"
+      ],
+      "timeoutMs": 1200000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:47:00.068Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:47:38.211Z"
+    },
+    {
+      "id": "browser:workbench-docking",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-docking",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:47:38.212Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:47:40.176Z"
+    },
+    {
+      "id": "browser:workbench-shell",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-shell",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:47:40.176Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:47:45.862Z"
+    },
+    {
+      "id": "browser:workbench-sessions",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-sessions",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:47:45.863Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:47:53.055Z"
+    },
+    {
+      "id": "browser:workbench-lazy",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-lazy",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:47:53.056Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:47:57.931Z"
+    },
+    {
+      "id": "browser:workbench-workflows",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-workflows",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:47:57.931Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:48:03.614Z"
+    },
+    {
+      "id": "browser:workbench-workflows-standalone",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-workflows-standalone",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:48:03.615Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:48:08.588Z"
+    },
+    {
+      "id": "browser:editor-insights",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "editor-insights",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:48:08.589Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:48:11.208Z"
+    },
+    {
+      "id": "browser:editor-providers",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "editor-providers",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:48:11.208Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:48:14.778Z"
+    },
+    {
+      "id": "browser:editor-view",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "editor-view",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:48:14.779Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:48:17.796Z"
+    },
+    {
+      "id": "performance",
+      "phase": "performance",
+      "status": "failed",
+      "startedAt": "2026-10-04T06:48:17.797Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Editor latency budget failed",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T06:53:50.688Z"
+    },
+    {
+      "id": "performance:editor-budgets",
+      "phase": "performance",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "editor-budgets",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:53:50.689Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:54:11.227Z"
+    },
+    {
+      "id": "performance:studio-large-file",
+      "phase": "performance",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "studio-large-file",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:54:11.228Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:54:33.660Z"
+    },
+    {
+      "id": "performance:instrumentation",
+      "phase": "performance",
+      "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+      "args": [
+        "scripts/limited.js",
+        "node",
+        "scripts/bench-workbench-overhead.js",
+        "--browser",
+        "chromium",
+        "--output",
+        "/home/runner/work/SharpForge/SharpForge/artifacts/results/project16/instrumentation-overhead.json"
+      ],
+      "timeoutMs": 1200000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:54:33.661Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:56:17.115Z"
+    },
+    {
+      "id": "performance:lazy-evaluation",
+      "phase": "performance",
+      "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+      "args": [
+        "scripts/limited.js",
+        "node",
+        "scripts/bench-workbench-lazy-evaluation.js",
+        "--browser",
+        "chromium",
+        "--output",
+        "/home/runner/work/SharpForge/SharpForge/artifacts/results/project16/lazy-evaluation.json"
+      ],
+      "timeoutMs": 1200000,
+      "status": "passed",
+      "startedAt": "2026-10-04T06:56:17.116Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T06:57:31.595Z"
+    }
+  ],
+  "counts": {
+    "selected": 16,
+    "passed": 15,
+    "failed": 1
+  }
+}

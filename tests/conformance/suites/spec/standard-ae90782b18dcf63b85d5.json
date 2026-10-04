@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-ae90782b18dcf63b85d5",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Base\n{\n    protected void F() => Console.WriteLine(\"Base.F\");\n}\n\nclass Derived: Base\n{\n    public class Nested\n    {\n        public void G()\n        {\n            Derived d = new Derived();\n            d.F(); // ok\n        }\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        Derived.Nested n = new Derived.Nested();\n        n.G();\n    }\n}",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [],
+    "stdout": "Base.F\n",
+    "exitCode": 0
+  },
+  "sourceSHA256": "c8d2d090d0a3baf73e2451a8b21b429fe10f29bc1fc0fcc087ccd3cb7ccb30bc",
+  "originalSource": "class Base\n{\n    protected void F() => Console.WriteLine(\"Base.F\");\n}\n\nclass Derived: Base\n{\n    public class Nested\n    {\n        public void G()\n        {\n            Derived d = new Derived();\n            d.F(); // ok\n        }\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        Derived.Nested n = new Derived.Nested();\n        n.G();\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "AccessToPrivateAndProtectedMembers2",
+    "expectedOutput": [
+      "Base.F"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "AccessToPrivateAndProtectedMembers2",
+    "offsetInUnquotedMarkdown": 67733
+  }
+}

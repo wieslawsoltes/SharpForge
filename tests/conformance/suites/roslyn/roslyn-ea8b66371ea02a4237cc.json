@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ea8b66371ea02a4237cc",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\nvar a = new();\n\n[Obsolete(\"error\", true)]\npublic class var\n{\n}",
+  "sourceSHA256": "18203336dd0dbdafbd2b707d5341023da91910e67ceea418b0500db7633f5a12",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ObsoleteVarType",
+    "offset": 501958
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS8981",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,1): error CS0619: 'var' is obsolete: 'error'\n                // var a = new();\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"var\").WithArguments(\"var\", \"error\").WithLocation(3, 1),\n                // (6,14): warning CS8981: The type name 'var' only contains lower-cased ascii characters. Such names may become reserved for the language.\n                // public class var\n                Diagnostic(ErrorCode.WRN_LowerCaseTypeName, \"var\").WithArguments(\"var\").WithLocation(6, 14)\n            ",
+  "unsupported": []
+}

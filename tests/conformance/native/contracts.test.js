@@ -280,16 +280,16 @@ test("T10 p95/p99 measurement requires enough finite correctness-gated samples",
   assert.throws(() => quantiles([1, 2]), /Twenty/);
   assert.throws(() => quantiles(Array(20).fill(NaN)), /finite/);
 });
-test("T10 workflow keeps ordinary PR native jobs gated and pins every matrix version", async () => {
+test("T10 workflow is explicit, serial and pins every matrix version", async () => {
   const source = await readFile(
     new URL("../../../.github/workflows/native.yml", import.meta.url),
     "utf8",
   );
-  assert.match(source, /branches: \[main\]/);
-  assert.equal(
-    (source.match(/github.event_name != 'pull_request'/g) || []).length,
-    3,
-  );
+  assert.match(source, /workflow_dispatch:/);
+  assert.match(source, /workflow_call:/);
+  assert.doesNotMatch(source, /^  (?:push|pull_request|schedule|merge_group):/m);
+  assert.match(source, /node:\n    needs: sdk/);
+  assert.equal((source.match(/max-parallel: 1/g) || []).length, 2);
   for (const pin of [...pins.nodes, ...pins.sdks])
     assert(
       source.includes(`'${pin.version}'`) ||

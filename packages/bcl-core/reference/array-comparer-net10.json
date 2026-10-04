@@ -1,0 +1,307 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "framework": ".NET 10.0.5",
+  "os": "macOS 26.6.0",
+  "culture": "",
+  "sourceSha256": "1e41118ed935ab0d551842d4b5e0a5d9fe5f9ec962f433544302a23ab885a729",
+  "cases": [
+    {
+      "id": "both-null",
+      "expression": "cmp.Compare(null, null)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": 0,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "null-first",
+      "expression": "cmp.Compare(null, \u0022\u0022)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": -1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "null-second",
+      "expression": "cmp.Compare(\u0022\u0022, null)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": 1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "ordinal",
+      "expression": "cmp.Compare(\u0022a\u0022, \u0022A\u0022)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": 1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "ints",
+      "expression": "cmp.Compare(1, 2)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": -1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "doubles",
+      "expression": "cmp.Compare(1.5, 2.5)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": -1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "bools",
+      "expression": "cmp.Compare(false, true)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": -1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "different-boxes",
+      "expression": "cmp.Compare(1, 1.0)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": null,
+      "error": "ArgumentException",
+      "inner": null
+    },
+    {
+      "id": "number-string",
+      "expression": "cmp.Compare(1, \u00221\u0022)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": null,
+      "error": "ArgumentException",
+      "inner": null
+    },
+    {
+      "id": "string-number",
+      "expression": "cmp.Compare(\u00221\u0022, 1)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": null,
+      "error": "ArgumentException",
+      "inner": null
+    },
+    {
+      "id": "opaque-same",
+      "expression": "cmp.Compare(shared, shared)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": 0,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "opaque-distinct",
+      "expression": "cmp.Compare(new object(), new object())",
+      "sign": true,
+      "nativeOnly": false,
+      "value": null,
+      "error": "ArgumentException",
+      "inner": null
+    },
+    {
+      "id": "nan-equal",
+      "expression": "cmp.Compare(double.NaN, double.NaN)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": 0,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "nan-first",
+      "expression": "cmp.Compare(double.NaN, 0.0)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": -1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "signed-zero",
+      "expression": "cmp.Compare(-0.0, 0.0)",
+      "sign": true,
+      "nativeOnly": false,
+      "value": 0,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "search-null",
+      "expression": "Array.BinarySearch((Array)new string[] {null, \u0022\u0022, \u0022A\u0022, \u0022a\u0022, \u0022b\u0022}, null, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": 0,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "search-",
+      "expression": "Array.BinarySearch((Array)new string[] {null, \u0022\u0022, \u0022A\u0022, \u0022a\u0022, \u0022b\u0022}, \u0022\u0022, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": 1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "search-0",
+      "expression": "Array.BinarySearch((Array)new string[] {null, \u0022\u0022, \u0022A\u0022, \u0022a\u0022, \u0022b\u0022}, \u00220\u0022, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": -3,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "search-A",
+      "expression": "Array.BinarySearch((Array)new string[] {null, \u0022\u0022, \u0022A\u0022, \u0022a\u0022, \u0022b\u0022}, \u0022A\u0022, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": 2,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "search-B",
+      "expression": "Array.BinarySearch((Array)new string[] {null, \u0022\u0022, \u0022A\u0022, \u0022a\u0022, \u0022b\u0022}, \u0022B\u0022, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": -4,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "search-a",
+      "expression": "Array.BinarySearch((Array)new string[] {null, \u0022\u0022, \u0022A\u0022, \u0022a\u0022, \u0022b\u0022}, \u0022a\u0022, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": 3,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "search-aa",
+      "expression": "Array.BinarySearch((Array)new string[] {null, \u0022\u0022, \u0022A\u0022, \u0022a\u0022, \u0022b\u0022}, \u0022aa\u0022, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": -5,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "search-b",
+      "expression": "Array.BinarySearch((Array)new string[] {null, \u0022\u0022, \u0022A\u0022, \u0022a\u0022, \u0022b\u0022}, \u0022b\u0022, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": 4,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "search-z",
+      "expression": "Array.BinarySearch((Array)new string[] {null, \u0022\u0022, \u0022A\u0022, \u0022a\u0022, \u0022b\u0022}, \u0022z\u0022, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": -6,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "empty",
+      "expression": "Array.BinarySearch((Array)new string[] {}, 1, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": -1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "null-array",
+      "expression": "Array.BinarySearch((Array)null, \u0022a\u0022, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": null,
+      "error": "ArgumentNullException",
+      "inner": null
+    },
+    {
+      "id": "int-array",
+      "expression": "Array.BinarySearch((Array)new int[] {1, 2, 3}, 2, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": 1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "boxed-array",
+      "expression": "Array.BinarySearch((Array)new object[] {1, 2, 3}, 2, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": 1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "mixed-search",
+      "expression": "Array.BinarySearch((Array)new int[] {1, 2, 3}, 2.0, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": null,
+      "error": "InvalidOperationException",
+      "inner": "ArgumentException"
+    },
+    {
+      "id": "string-search-number",
+      "expression": "Array.BinarySearch((Array)new string[] {\u0022a\u0022}, 2, cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": null,
+      "error": "InvalidOperationException",
+      "inner": "ArgumentException"
+    },
+    {
+      "id": "opaque-search",
+      "expression": "Array.BinarySearch((Array)new object[] {new object()}, new object(), cmp)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": null,
+      "error": "InvalidOperationException",
+      "inner": "ArgumentException"
+    },
+    {
+      "id": "null-comparer",
+      "expression": "Array.BinarySearch((Array)new int[] {1, 2, 3}, 2, null)",
+      "sign": false,
+      "nativeOnly": false,
+      "value": 1,
+      "error": null,
+      "inner": null
+    },
+    {
+      "id": "rank-two",
+      "expression": "Array.BinarySearch((Array)new int[,] {{1}}, 1, cmp)",
+      "sign": false,
+      "nativeOnly": true,
+      "value": null,
+      "error": "RankException",
+      "inner": null
+    }
+  ]
+}

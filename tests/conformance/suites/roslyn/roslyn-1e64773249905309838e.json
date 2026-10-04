@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1e64773249905309838e",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C\n{\n    void M()\n    {\n        Span<byte> s1 = new Span<byte>();\n        s1 ??= new Span<byte>();\n        Span<byte>? s2 = null;\n        s2 ??= new Span<byte>();\n    }\n}",
+  "sourceSHA256": "9cd4304bf5ef0153dd198881a42c7e375f47ca2df7338c40b0949541f3ab3865",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "SpanNotAllowedLHS",
+    "offset": 86352
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\nclass C\n{\n    void M()\n    {\n        Span<byte> s1 = new Span<byte>();\n        s1 ??= new Span<byte>();\n        Span<byte>? s2 = null;\n        s2 ??= new Span<byte>();\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS9244",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,9): error CS0019: Operator '??=' cannot be applied to operands of type 'Span<byte>' and 'Span<byte>'\n                //         s1 ??= new Span<byte>();\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"s1 ??= new Span<byte>()\").WithArguments(\"??=\", \"System.Span<byte>\", \"System.Span<byte>\").WithLocation(8, 9),\n                // (9,9): error CS9244: The type 'Span<byte>' may not be a ref struct or a type parameter allowing ref structs in order to use it as parameter 'T' in the generic type or method 'Nullable<T>'\n                //         Span<byte>? s2 = null;\n                Diagnostic(ErrorCode.ERR_NotRefStructConstraintNotSatisfied, \"Span<byte>?\").WithArguments(\"System.Nullable<T>\", \"T\", \"System.Span<byte>\").WithLocation(9, 9)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

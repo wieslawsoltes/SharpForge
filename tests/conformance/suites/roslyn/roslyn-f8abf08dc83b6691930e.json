@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f8abf08dc83b6691930e",
+  "kind": "diagnostics",
+  "sourceText": "using System;\npublic class C\n{\n    public static void M<T, U>(U x) where T : U\n    {\n        // when T is not known to be a reference type, there is an unboxing conversion from\n        // a type parameter U to T, provided T depends on U.\n        switch (x)\n        {\n            case T i:\n                Console.Write(i);\n                break;\n        }\n    }\n}",
+  "sourceSHA256": "7caa8a09d44109ef6e118b14d6034317a559a6c63c6141a75fc5ecd99da7cfae",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "RedundantBox",
+    "offset": 34454
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

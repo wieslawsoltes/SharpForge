@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-762dcf67b10badebea8d",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public static void Main()\n    {\n        Assert(MakeLongTuple(1) == MakeLongTuple(1));\n        Assert(!(MakeLongTuple(1) != MakeLongTuple(1)));\n\n        Assert(MakeLongTuple(1) == (1, 1, 1, 1, 1, 1, 1, 1, 1));\n        Assert(!(MakeLongTuple(1) != (1, 1, 1, 1, 1, 1, 1, 1, 1)));\n\n        Assert(MakeLongTuple(1) == MakeLongTuple(1, 1));\n        Assert(!(MakeLongTuple(1) != MakeLongTuple(1, 1)));\n\n        Assert(!(MakeLongTuple(1) == MakeLongTuple(1, 2)));\n        Assert(!(MakeLongTuple(1) == MakeLongTuple(2, 1)));\n        Assert(MakeLongTuple(1) != MakeLongTuple(1, 2));\n        Assert(MakeLongTuple(1) != MakeLongTuple(2, 1));\n\n        System.Console.Write(\"Success\");\n    }\n    private static (int, int, int, int, int, int, int, int, int) MakeLongTuple(int x)\n        => (x, x, x, x, x, x, x, x, x);\n\n    private static (int?, int, int?, int, int?, int, int?, int, int?)? MakeLongTuple(int? x, int y)\n        => (x, y, x, y, x, y, x, y, x);\n\n    private static void Assert(bool test)\n    {\n        if (!test)\n        {\n            throw null;\n        }\n    }\n}\n",
+  "sourceSHA256": "32c86f48cc26e9b0c24945b3cedea75e151438b1a80d88fa155287cfbc5e5a64",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestOnLongTuple",
+    "offset": 158452
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

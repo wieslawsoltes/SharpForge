@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-62602db15311dd2032d9",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass Program\n{\n    public static void Main()\n    {\n        Console.Write(M(false));\n        Console.Write(M(true));\n    }\n    static object M(bool b)\n    {\n        int result = b switch { false => new A(), true => new B() };\n        return result;\n    }\n}\nclass A\n{\n    public static implicit operator int(A a) => throw null;\n    public static implicit operator B(A a) => new B();\n}\nclass B\n{\n    public static implicit operator int(B b) => (b == null) ? throw null : 2;\n}\n",
+  "sourceSHA256": "b26e57db61b56e67242f496a198a2178173741d23f94e3663d04e77dcabedaae",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "TargetTypedSwitch_Assignment",
+    "offset": 138430
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

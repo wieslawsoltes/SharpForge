@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1f70a19c8a8ee57137a9",
+  "kind": "diagnostics",
+  "sourceText": "\nclass B\n{\n}\nstatic class Extension\n{\n    public static int Main(this B x)\n    { return 1; }\n}\n",
+  "sourceSHA256": "59b2631dac4149a3ba929cddd20b00e21a997320d18878f30fb5cb7d4985df33",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "MainAsExtensionMethod_1",
+    "offset": 40921
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0028",
+        "severity": "warning"
+      },
+      {
+        "code": "CS5001",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "// (8,23): warning CS0028: 'Extension.Main(B)' has the wrong signature to be an entry point\n                                                                                                                    //     public static int Main(this B x)\n                Diagnostic(ErrorCode.WRN_InvalidMainSig, \"Main\").WithArguments(\"Extension.Main(B)\"),\n                // error CS5001: Program does not contain a static 'Main' method suitable for an entry point\n                Diagnostic(ErrorCode.ERR_NoEntryPoint)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

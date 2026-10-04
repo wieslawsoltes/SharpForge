@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c0c0b086bdfaad750c49",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Threading.Tasks;\n\nclass A\n{\n    static Task<int> Main()\n    {\n        return Task.Factory.StartNew(() => 5);\n    }\n}",
+  "sourceSHA256": "ba210e568544af0b0cd1756d31ece3b970894011a4987a033cbe74088fa65233",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncMainTests.cs",
+    "sha256": "a054148624c5e3228e0a73409b001a77e8a758febc8c750adbb6f8a881e42915",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncMainTests.cs",
+    "license": "MIT",
+    "method": "MainCantBeAsyncAndGenericOnInt_CSharp7_NoAsync",
+    "offset": 46593
+  },
+  "langVersion": "7",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe, parseOptions: TestOptions.Regular.WithLanguageVersion(LanguageVersion.CSharp7))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8107",
+        "severity": "error"
+      },
+      {
+        "code": "CS5001",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,18): error CS8107: Feature 'async main' is not available in C# 7. Please use language version 7.1 or greater.\n                //     async static Task<int> Main()\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion7, \"Task<int>\").WithArguments(\"async main\", \"7.1\").WithLocation(6, 12),\n                // error CS5001: Program does not contain a static 'Main' method suitable for an entry point\n                Diagnostic(ErrorCode.ERR_NoEntryPoint).WithLocation(1, 1)",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

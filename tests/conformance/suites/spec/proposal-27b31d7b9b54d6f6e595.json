@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-27b31d7b9b54d6f6e595",
+  "kind": "spec",
+  "sourceText": "using System.Runtime.CompilerServices;\n\nint i = 1;\nvar c = new C3();\nc.M1(i); // Will call C3.M1(long), even though there's an identity conversion for M1(int)\nc.M2(i); // Will call C3.M2(int, string), even though C3.M1(int) has less default parameters\n\nclass C3\n{\n    public void M1(int i) {}\n    [OverloadResolutionPriority(1)]\n    public void M1(long l) {}\n\n    [Conditional(\"DEBUG\")]\n    public void M2(int i) {}\n    [OverloadResolutionPriority(1), Conditional(\"DEBUG\")]\n    public void M2(int i, [CallerArgumentExpression(nameof(i))] string s = \"\") {}\n\n    public void M3(string s) {}\n    [OverloadResolutionPriority(1)]\n    public void M3(object o) {}\n}",
+  "sourceSHA256": "4f2a7e2cb69b9beaf9c408d56f7affc8d4ba26652a1623ff485d25c1c6085527",
+  "target": "library",
+  "featureId": "csharp-13-0-overload-resolution-priority",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/overload-resolution-priority.md",
+    "sha256": "3ae409649aa5fc38d1b6a2d6a156f641c7c72feba0e394ce5765522d2322138b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/overload-resolution-priority.md",
+    "license": "NOASSERTION",
+    "offset": 8997
+  }
+}

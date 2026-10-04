@@ -6,5 +6,5 @@
   "syntax/cs1026-missing-close-paren": ["diagnostics", "warnings"],
   "syntax/cs1513-missing-close-brace": ["warnings"],
   "syntax/cs1525-invalid-expression-term": ["diagnostics", "warnings"],
-  "syntax/cs8803-statement-after-type": ["warnings"]
+  "syntax/cs8803-statement-after-type": ["diagnostics", "warnings"]
 }

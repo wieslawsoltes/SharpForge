@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4d70b6ec9687ec6d2372",
+  "kind": "diagnostics",
+  "sourceText": "\n#nullable enable\nusing System;\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass Attr<T> : Attribute { }\n\n[Attr<nint>]\n[Attr<D<nint>>]\n[Attr<nuint>]\n[Attr<D<nuint>>]\nclass C1 { }\n\n[Attr<IntPtr>]\n[Attr<D<IntPtr>>]\n[Attr<UIntPtr>]\n[Attr<D<UIntPtr>>]\nclass C2 { }\n\nclass D<T> { }\n",
+  "sourceSHA256": "2bd271ce58f37836fdcba30af6e17778d9b6d49567b6550bbbdea85a66caed68",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "GenericAttribute_AttributeDependentTypes",
+    "offset": 574248
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

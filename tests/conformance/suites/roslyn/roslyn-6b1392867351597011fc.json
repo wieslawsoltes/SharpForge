@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6b1392867351597011fc",
+  "kind": "diagnostics",
+  "sourceText": "public class Base\n{\n    private protected int Field1;\n    protected private int Field2;\n}\n\npublic class Derived : Base\n{\n    void M()\n    {\n        Field1 = 1;\n        Field2 = 2;\n    }\n}\n",
+  "sourceSHA256": "1be8e4962cb2f5e4cac1797c0b0039b14e60ff7a8a3053300ebcbde7857ea460",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "AccessibleWhereRequired_01",
+    "offset": 2969
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                ",
+  "unsupported": []
+}

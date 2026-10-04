@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-02d5ba4e2d42d47a53d7",
+  "kind": "diagnostics",
+  "sourceText": "class Class\n{\n    public int Prop1 { get; private protected set; }\n    protected internal int Prop2 { get; private protected set; }\n    protected int Prop3 { get; private protected set; }\n    internal int Prop4 { get; private protected set; }\n    private protected int Prop5 { get; private set; }\n}",
+  "sourceSHA256": "f0491fc587f318101eebd5fd8242c785a0dfed88292ddb98ad0f069fd884e972",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "PermittedAccessorProtection",
+    "offset": 19359
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-f07041ac3e9db51639eb",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\ndelegate void D();\nclass Test\n{\n    static D[] F()\n    {\n        D[] result = new D[3];\n        for (int i = 0; i < 3; i++)\n        {\n            int x = i * 2 + 1;\n            result[i] = () => Console.WriteLine(x);\n        }\n        return result;\n    }\n\n    static void Main()\n    {\n        foreach (D d in F())\n        {\n            d();\n        }\n    }\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "8e764b6a0caf52cb9026fdbd963a43f12a941a3a9f273119c25c15b32b424018",
+  "originalSource": "delegate void D();\nclass Test\n{\n    static D[] F()\n    {\n        D[] result = new D[3];\n        for (int i = 0; i < 3; i++)\n        {\n            int x = i * 2 + 1;\n            result[i] = () => Console.WriteLine(x);\n        }\n        return result;\n    }\n\n    static void Main()\n    {\n        foreach (D d in F())\n        {\n            d();\n        }\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "InstantiationOfLocalVariables3",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "InstantiationOfLocalVariables3",
+    "offsetInUnquotedMarkdown": 376769
+  }
+}

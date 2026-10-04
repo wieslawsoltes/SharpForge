@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6b710a21b938ce05246b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass A : Attribute\n{\n    public object X;\n}\n \nclass C<T>\n{\n    [A(X = C<T>.E.V)] \n    public enum E { V }\n}",
+  "sourceSHA256": "fd6a09bfdcf7f9d53b994dfabcf21f03cd6d9f48662ab7349001c7c07c1e74b8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "CS0182_ERR_BadAttributeArgument_OpenType_ConstantValue",
+    "offset": 323617
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0182",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,12): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                //     [A(X = C<T>.E.V)]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"C<T>.E.V\").WithLocation(11, 12)",
+  "unsupported": []
+}

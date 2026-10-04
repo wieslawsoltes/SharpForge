@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d6b965cf147077e98058",
+  "kind": "spec",
+  "sourceText": "struct S\n{\n    public int X\n    {\n        get => field;\n        set => field = field < value ? value : field;\n    }\n\n    public S() // error: backing field of 'S.X' is implicitly initialized to 'default'.\n    {\n        X = 1;\n    }\n}",
+  "sourceSHA256": "26486b65649c0e276b0e25fb55b69a8cd2346c25c2fe08f3f5053653617a1645",
+  "target": "library",
+  "featureId": "csharp-11-0-auto-default-structs",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/auto-default-structs.md",
+    "sha256": "ef94c71a977016911c9fb1ac490aaf2c63d30ee809982111f21ef945f4dda24a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/auto-default-structs.md",
+    "license": "NOASSERTION",
+    "offset": 5604
+  }
+}

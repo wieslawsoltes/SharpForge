@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6ecacc8b4653058fe292",
+  "kind": "diagnostics",
+  "sourceText": "\npartial struct S\n{\n    public static int x;\n}\n\npartial struct S\n{\n    public static int y;\n}",
+  "sourceSHA256": "c85c4bf5525071b2630abe9ca7da7dd26c87f237f6461033c2a564f489e9ffd0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "StaticSequential",
+    "offset": 31844
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0649",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0649",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,23): warning CS0649: Field 'S.x' is never assigned to, and will always have its default value 0\n                //     public static int x;\n                Diagnostic(ErrorCode.WRN_UnassignedInternalField, \"x\").WithArguments(\"S.x\", \"0\"),\n                // (9,23): warning CS0649: Field 'S.y' is never assigned to, and will always have its default value 0\n                //     public static int y;\n                Diagnostic(ErrorCode.WRN_UnassignedInternalField, \"y\").WithArguments(\"S.y\", \"0\")\n                ",
+  "unsupported": []
+}

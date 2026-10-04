@@ -10,7 +10,12 @@ Every built distribution file is hashed, including worker bundles and CSS.
 `node scripts/planning/golden-output.js --base BASE --labels seam` additionally
 rejects edits to the committed lock, preventing a refactor from hiding differences
 by updating its own expected result. All changes report before and after hashes
-with exact paths. A29 owns workflow label forwarding and required-check wiring.
+with exact paths. The existing `core` PR check runs
+`node scripts/planning/review-gates.js` to compare committed locks using GitHub's
+event label snapshot and pinned PR base/head. It checks the exact checkout SHA
+before accepting those labels, including the parents of GitHub's merge checkout.
+Label additions and removals rerun the gate. This lightweight review does not
+regenerate golden outputs; the command above remains the full output comparison.
 
 For an intentional reviewed output change, use
 `node scripts/planning/golden-output.js --write` and commit the visible lock diff in

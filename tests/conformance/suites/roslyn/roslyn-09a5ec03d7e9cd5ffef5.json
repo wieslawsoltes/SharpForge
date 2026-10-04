@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-09a5ec03d7e9cd5ffef5",
+  "kind": "diagnostics",
+  "sourceText": "\nunsafe class A\n{\n    public unsafe struct ListNode\n    {\n        internal ListNode(int data, ListNode* pNext)\n        {\n        }\n    }\n}\n",
+  "sourceSHA256": "ed161853f971c30cd4295e1923c47dade6655e2a9666f6f731f853a600d01fe3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "sha256": "424f034ea20a9add3b40a8a1c0094fffc5ef30885511f2c90ae10bd80b976073",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "license": "MIT",
+    "method": "Repro748530",
+    "offset": 310295
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

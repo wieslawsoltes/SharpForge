@@ -1,2 +1,0 @@
-/** Shared pure scalar implementation used by both engines and the compiler. */
-export {decimalMaxCoefficient,isDecimal,decimal,decimalZero,decimalFromBits,decimalBits,decimalParse,decimalFromInteger,decimalFromFloat,decimalToInteger,decimalToFloat,decimalCompare,decimalNegate,decimalAbs,decimalAdd,decimalMultiply,decimalDivide,decimalRemainder,decimalRound,decimalFormat,decimalBinary} from '@sharpforge/bytecode';

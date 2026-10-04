@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c6e7192521bc5bb44144",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Collections;\n\nclass Test\n{\n    public static void Main()\n    {\n        B coll = new B { 1, new B(), \"a\", false };\n    }\n}\n\npublic class B : IEnumerable\n{\n    [Obsolete()]\n    public void Add(long i)\n    {\n    }\n    [Obsolete(\"Don't use this overload\")]\n    public void Add(B i)\n    {\n    }\n    [Obsolete(\"Don't use this overload\", true)]\n    public void Add(string s)\n    {\n    }\n    [Obsolete(null, true)]\n    public void Add(bool s)\n    {\n    }\n    IEnumerator IEnumerable.GetEnumerator()\n    {\n        return null;\n    }\n}\n",
+  "sourceSHA256": "4b5971f853c0ea740e1229fcf179d8740b34f86e7ab4a61353a8b0e2a0713f58",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeOnCollectionInitializer",
+    "offset": 265849
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1064",
+        "severity": "warning"
+      },
+      {
+        "code": "CS1062",
+        "severity": "warning"
+      },
+      {
+        "code": "CS1063",
+        "severity": "error"
+      },
+      {
+        "code": "CS1064",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,26): warning CS1064: The best overloaded Add method 'B.Add(long)' for the collection initializer element is obsolete.\n                //         B coll = new B { 1, new B(), \"a\", false };\n                Diagnostic(ErrorCode.WRN_DeprecatedCollectionInitAdd, \"1\").WithArguments(\"B.Add(long)\"),\n                // (9,29): warning CS1062: The best overloaded Add method 'B.Add(B)' for the collection initializer element is obsolete. Don't use this overload\n                //         B coll = new B { 1, new B(), \"a\", false };\n                Diagnostic(ErrorCode.WRN_DeprecatedCollectionInitAddStr, \"new B()\").WithArguments(\"B.Add(B)\", \"Don't use this overload\"),\n                // (9,38): error CS1063: The best overloaded Add method 'B.Add(string)' for the collection initializer element is obsolete. Don't use this overload\n                //         B coll = new B { 1, new B(), \"a\", false };\n                Diagnostic(ErrorCode.ERR_DeprecatedCollectionInitAddStr, @\"\"\"a\"\"\").WithArguments(\"B.Add(string)\", \"Don't use this overload\"),\n                // (9,43): warning CS1064: The best overloaded Add method 'B.Add(bool)' for the collection initializer element is obsolete.\n                //         B coll = new B { 1, new B(), \"a\", false };\n                Diagnostic(ErrorCode.WRN_DeprecatedCollectionInitAdd, \"false\").WithArguments(\"B.Add(bool)\")",
+  "unsupported": []
+}

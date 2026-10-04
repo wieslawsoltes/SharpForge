@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-3f522332f014efef3582",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Test\n{\n    static void Main()\n    {\n        Console.WriteLine($\"{B.Y} {A.X}\");\n    }\n\n    public static int F(string s)\n    {\n        Console.WriteLine(s);\n        return 1;\n    }\n}\n\nclass A\n{\n    static A() {}\n    public static int X = Test.F(\"Init A\");\n}\n\nclass B\n{\n    static B() {}\n    public static int Y = Test.F(\"Init B\");\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "b8686b044757cf4b06558f725dc0cbc477dd450118c747bb21aff440b89a8515",
+  "originalSource": "class Test\n{\n    static void Main()\n    {\n        Console.WriteLine($\"{B.Y} {A.X}\");\n    }\n\n    public static int F(string s)\n    {\n        Console.WriteLine(s);\n        return 1;\n    }\n}\n\nclass A\n{\n    static A() {}\n    public static int X = Test.F(\"Init A\");\n}\n\nclass B\n{\n    static B() {}\n    public static int Y = Test.F(\"Init B\");\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "StaticFieldInitialization2",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "StaticFieldInitialization2",
+    "offsetInUnquotedMarkdown": 98528
+  }
+}

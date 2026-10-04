@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e8101af5f5afb36df0f9",
+  "kind": "spec",
+  "sourceText": "string[] s = new[] { \"a\" };\nobject[] o = s;\n\nC.R(o); // wrote 1 previously, now crashes in Span<T> constructor with ArrayTypeMismatchException\nC.R(o.AsEnumerable()); // workaround\n\nstatic class C\n{\n    public static void R<T>(IEnumerable<T> e) => Console.Write(1);\n    public static void R<T>(Span<T> s) => Console.Write(2);\n    // another workaround:\n    public static void R<T>(ReadOnlySpan<T> s) => Console.Write(3);\n}",
+  "sourceSHA256": "b2e6fca197837c654344d5536a8d595355aa47f27a1813dbcd806c8dfde3547c",
+  "target": "library",
+  "featureId": "csharp-14-0-first-class-span-types",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/first-class-span-types.md",
+    "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+    "license": "NOASSERTION",
+    "offset": 23732
+  }
+}

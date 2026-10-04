@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6f0d4120c9b90a538ec3",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class MemberInitializerTest\n{\n    delegate void D<T>();\n    public static void GenericMethod<T>() { }\n    public static void Run()\n    {\n        Goo f = new Goo {\n            genD = (D<int>) GenericMethod<((System.Linq.Expressions.Expression<System.Func<int>>)(() => int)).Compile()()> \n        };\n    }\n}",
+  "sourceSHA256": "a89652623bf8d3396bb214f766425f3475be5a079e2dcbfc517d4843db5e56fc",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "sha256": "6ded88d14b8dc1163d157ec2de9f3f9566d5ff0a7e20170d6687ea20cf6d1f00",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "license": "MIT",
+    "method": "ExprTreeInTypeArgument",
+    "offset": 161471
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1525",
+        "severity": "error"
+      },
+      {
+        "code": "CS1525",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0411",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,105): error CS1525: Invalid expression term 'int'\n                //             genD = (D<int>) GenericMethod<((System.Linq.Expressions.Expression<System.Func<int>>)(() => int)).Compile()()> \n                Diagnostic(ErrorCode.ERR_InvalidExprTerm, \"int\").WithArguments(\"int\").WithLocation(9, 105),\n                // (9,123): error CS1525: Invalid expression term '}'\n                //             genD = (D<int>) GenericMethod<((System.Linq.Expressions.Expression<System.Func<int>>)(() => int)).Compile()()> \n                Diagnostic(ErrorCode.ERR_InvalidExprTerm, \"\").WithArguments(\"}\").WithLocation(9, 123),\n                // (8,9): error CS0246: The type or namespace name 'Goo' could not be found (are you missing a using directive or an assembly reference?)\n                //         Goo f = new Goo {\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"Goo\").WithArguments(\"Goo\").WithLocation(8, 9),\n                // (8,21): error CS0246: The type or namespace name 'Goo' could not be found (are you missing a using directive or an assembly reference?)\n                //         Goo f = new Goo {\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"Goo\").WithArguments(\"Goo\").WithLocation(8, 21),\n                // (9,29): error CS0411: The type arguments for method 'MemberInitializerTest.GenericMethod<T>()' cannot be inferred from the usage. Try specifying the type arguments explicitly.\n                //             genD = (D<int>) GenericMethod<((System.Linq.Expressions.Expression<System.Func<int>>)(() => int)).Compile()()> \n                Diagnostic(ErrorCode.ERR_CantInferMethTypeArgs, \"GenericMethod\").WithArguments(\"MemberInitializerTest.GenericMethod<T>()\").WithLocation(9, 29)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

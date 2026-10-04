@@ -1,8 +1,8 @@
-import {notifyFirstChance,failedExceptionEvent} from './exception-events.js';
+import {notifyFirstChance,continueExceptionEvent,firstChanceCallbackFailure} from './exception-events.js';
 import {prepareException, faultFromException} from './exception-object.js';
 import {ManagedFault} from '../heap.js';
 import {failInitialization} from './static-init.js';
-import {popFrame} from './frame-stack.js';
+import {retireExceptionFrame as popFrame} from './control-frames.js';
 import {frameById} from './frame-lifetimes.js';
 import {enterFilter, finishFilter} from './eh-filters.js';
 import {activeClauses, stageExceptionalUnwind, stageLeave, enterSelectedCatch} from './eh-nesting.js';
@@ -45,6 +45,8 @@ function searchStep(vm, search) {
       }
     }
     if (frame.exceptionEventContinuation) {
+      const fatal = firstChanceCallbackFailure(frame, search.error);
+      if (fatal) { markUnhandled(vm, fatal); return null; }
       search.selection = {kind: 'event-failure', frameId: frame.id};
       return {phase: 'unwind', search};
     }
@@ -66,7 +68,7 @@ function finishPending(vm, frame) {
   if (pending.handlers.length) {
     pending.active = pending.handlers.shift();
     frame.pc = frame.offsets.get(pending.active.target);
-    frame.stack = [];
+    frame.stack.length = 0;
     return null;
   }
   frame.unwinds.pop();
@@ -78,10 +80,11 @@ function finishPending(vm, frame) {
     return {phase: 'search', search: finishFilter(vm, 0)};
   }
   if (search?.selection?.kind === 'event-failure' && search.selection.frameId === frame.id) {
-    const fault = failedExceptionEvent(frame, pending.error);
     popFrame(vm);
-    markUnhandled(vm, fault);
-    return null;
+    const event = continueExceptionEvent(vm, frame);
+    if (event.continued) return null;
+    if (event.phase === 'unhandled') { markUnhandled(vm, event.fault); return null; }
+    return {phase: 'raise', error: event.fault};
   }
   const error = frame.initializes ? failInitialization(vm, frame, pending.error) : pending.error;
   popFrame(vm);
@@ -99,8 +102,8 @@ function unwindStep(vm, search) {
 function raiseStep(vm, fault) {
   vm.fault = fault;
   if (isFatalFault(fault)) { markUnhandled(vm, fault); return null; }
-  prepareException(vm, fault);
   if (notifyFirstChance(vm, fault)) return null;
+  prepareException(vm, fault);
   fault.phase = 'search';
   if (!vm.top) { markUnhandled(vm, fault); return null; }
   vm.top.volatileAccess = false;

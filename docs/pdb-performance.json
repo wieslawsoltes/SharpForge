@@ -1,0 +1,74 @@
+{
+  "node": "v24.21.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "cpu": "Apple M3 Pro",
+  "samples": 30,
+  "allocationNote": "Observed heap/ArrayBuffer deltas, not total allocation counters",
+  "results": [
+    {
+      "name": "/Users/wieslawsoltes/GitHub/SharpForge",
+      "sourceBytes": 9800,
+      "pdbBytes": 10151,
+      "assemblyBytes": 12800,
+      "emit": {
+        "coldMs": 5.608875000000012,
+        "medianMs": 0.8037080000000287,
+        "p95Ms": 1.8473749999999995,
+        "p99Ms": 1.9451250000000186,
+        "heapDeltaBytes": 11840280,
+        "arrayBufferDeltaBytes": 923479
+      },
+      "read": {
+        "coldMs": 0.35916700000001356,
+        "medianMs": 0.06795799999997598,
+        "p95Ms": 0.11054100000001199,
+        "p99Ms": 0.13345800000001873,
+        "heapDeltaBytes": 1239616,
+        "arrayBufferDeltaBytes": 1071180
+      },
+      "load": {
+        "coldMs": 1.3286669999999958,
+        "medianMs": 0.2875410000000329,
+        "p95Ms": 0.5136249999999905,
+        "p99Ms": 0.5175839999999994,
+        "heapDeltaBytes": 6293856,
+        "arrayBufferDeltaBytes": 2187972
+      }
+    },
+    {
+      "name": "current",
+      "sourceBytes": 9800,
+      "pdbBytes": 479,
+      "assemblyBytes": 3072,
+      "emit": {
+        "coldMs": 5.509832999999958,
+        "medianMs": 0.40745899999996027,
+        "p95Ms": 0.47037499999999,
+        "p99Ms": 0.5961250000000291,
+        "heapDeltaBytes": 8384768,
+        "arrayBufferDeltaBytes": 11318918
+      },
+      "read": {
+        "coldMs": 0.8666249999999991,
+        "medianMs": 0.1861669999999549,
+        "p95Ms": 0.5296669999999608,
+        "p99Ms": 0.6722090000000094,
+        "heapDeltaBytes": 3376464,
+        "arrayBufferDeltaBytes": -15079752
+      },
+      "load": {
+        "coldMs": 1.3582920000000058,
+        "medianMs": 0.20674999999999955,
+        "p95Ms": 0.5559580000000324,
+        "p99Ms": 0.5952909999999747,
+        "heapDeltaBytes": 7516080,
+        "arrayBufferDeltaBytes": 447264
+      }
+    }
+  ],
+  "baselineCommit": "9e40334955213d0c9960a5649c975d80ada64496",
+  "implementationCommit": "53a4a646",
+  "command": "node --expose-gc scripts/bench-pdb.js --baseline /Users/wieslawsoltes/GitHub/SharpForge",
+  "interpretation": "The compressed fixture shrinks PDB/source bytes; reading includes real source inflation. Observed memory deltas include garbage collection and are not allocation counts. Single-host microbenchmark, not broad performance qualification."
+}

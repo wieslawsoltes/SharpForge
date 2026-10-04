@@ -8,6 +8,11 @@ import {SymbolKind,SymbolDisplayFormat as F} from '../packages/compiler/src/symb
 import {MethodKind} from '../packages/compiler/src/symbols/members.js';
 import {analyzeRegion,regionStatements} from '../packages/compiler/src/flow/region-analysis.js';
 const source=`using System.Collections.Generic;
+var cart = new Shop.Cart("ann");
+var items = new List<int> { 1, 2 };
+int total = cart.Add(3) + items.Count;
+foreach (var item in items) { total += item; }
+Console.WriteLine($"{cart.Owner}: {total}");
 namespace Shop
 {
     class Cart
@@ -26,11 +31,6 @@ namespace Shop
         public static double Half(double value) { return value / 2; }
     }
 }
-var cart = new Shop.Cart("ann");
-var items = new List<int> { 1, 2 };
-int total = cart.Add(3) + items.Count;
-foreach (var item in items) { total += item; }
-Console.WriteLine($"{cart.Owner}: {total}");
 `;
 const {model,result,compilation}=SemanticModel.create([{uri:'Shop.cs',text:source}]),root=compilation.inputFiles[0].root,nodes=[];walk(root,n=>nodes.push(n));
 const text=n=>source.slice(n.start,n.end),find=(kind,snippet,index=0)=>{const hits=nodes.filter(n=>n.kind===kind&&text(n)===snippet);assert(hits.length>index,`no ${kind} node '${snippet}'`);return hits[index];},at=(snippet,occurrence=0)=>{let i=-1;for(let k=0;k<=occurrence;k++)i=source.indexOf(snippet,i+1);assert(i>=0,snippet);return i;};

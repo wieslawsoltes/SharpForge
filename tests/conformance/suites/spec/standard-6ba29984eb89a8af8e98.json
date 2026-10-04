@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-6ba29984eb89a8af8e98",
+  "kind": "spec",
+  "sourceText": "void F(int i, Convertible<int> n)\n{\n    i = n;                    // Error\n    i = (int)n;               // User-defined explicit conversion\n    n = i;                    // User-defined implicit conversion\n    n = (Convertible<int>)i;  // User-defined implicit conversion\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0266",
+        "severity": "error"
+      },
+      {
+        "code": "CS8321",
+        "severity": "warning"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "34d79ab5298613586057cb9dad4be512460e15f7e3abf05128d931f52d0cd5c1",
+  "originalSource": "void F(int i, Convertible<int> n)\n{\n    i = n;                    // Error\n    i = (int)n;               // User-defined explicit conversion\n    n = i;                    // User-defined implicit conversion\n    n = (Convertible<int>)i;  // User-defined implicit conversion\n}",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "ConversionOperators3",
+    "expectedErrors": [
+      "CS0266"
+    ],
+    "expectedWarnings": [
+      "CS8321"
+    ],
+    "additionalFiles": [
+      "ConvertibleT.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "ConversionOperators3",
+    "offsetInUnquotedMarkdown": 242931
+  }
+}

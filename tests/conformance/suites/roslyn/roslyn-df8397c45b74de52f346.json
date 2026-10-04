@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-df8397c45b74de52f346",
+  "kind": "diagnostics",
+  "sourceText": "\nclass A { }\nclass C\n{\n    static void M(string s, System.Exception e)\n    {\n        System.Console.Write(s == 3);\n        System.Console.Write((1, s) == (1, e));\n    }\n}\n",
+  "sourceSHA256": "39c7635f7c988d290829bf9b884489b786db5299ca9a233c9cd0a63ffc640555",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestOfTwoUnrelatedTypes2",
+    "offset": 116391
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,30): error CS0019: Operator '==' cannot be applied to operands of type 'string' and 'int'\n                //         System.Console.Write(s == 3);\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"s == 3\").WithArguments(\"==\", \"string\", \"int\").WithLocation(7, 30),\n                // (8,30): error CS0019: Operator '==' cannot be applied to operands of type 'string' and 'Exception'\n                //         System.Console.Write((1, s) == (1, e));\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(1, s) == (1, e)\").WithArguments(\"==\", \"string\", \"System.Exception\").WithLocation(8, 30)\n                ",
+  "unsupported": []
+}

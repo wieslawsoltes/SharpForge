@@ -75,9 +75,12 @@ test('A05 heap headers survive collection, snapshots and metadata registry repla
   assert.equal(heap.get(parent).methodTable,table);
   assert.equal(heap.get(box).methodTable,heap.methodTables.get('int'));
   assert.equal(heap.get(array).methodTable.elementType,heap.methodTables.get('int'));
-  assert.deepEqual(heap.get(array).data,Int32Array.of(0,0));
-  assert.deepEqual(heap.get(heap.array('System.Boolean',1)).data,Uint8Array.of(0));
-  assert.deepEqual(heap.get(heap.array('long',1)).data,BigInt64Array.of(0n));
+  assert(heap.get(array).data instanceof Int32Array);
+  assert.deepEqual([...heap.get(array).data],[0,0]);
+  const booleans=heap.get(heap.array('System.Boolean',1));
+  assert(booleans.data instanceof Uint8Array);assert.deepEqual([...booleans.data],[0]);
+  const longs=heap.get(heap.array('long',1));
+  assert(longs.data instanceof BigInt64Array);assert.deepEqual([...longs.data],[0n]);
   const saved=heap.snapshot(),copied=copyExecution(saved);
   assert.equal(copied.records[parent.h].methodTable,table);
   heap.collect([parent,array,box]);assert.equal(heap.get(child).data,'retained');
@@ -116,7 +119,7 @@ test('A05 CIL headers distinguish namespaced virtual method declarations',()=>{
   const vm=new CilVirtualMachine(namespaceAssembly()),result=vm.run();
   assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.returnValue,12);
   const first=vm.typeSystem.table('First.Widget'),second=vm.typeSystem.table('Second.Widget');
-  assert.notEqual(first,second);assert.equal(first.vtable.get('First.Widget::'+0x06000002),0x06000002);assert.equal(second.vtable.get('Second.Widget::'+0x06000004),0x06000004);
+  assert.notEqual(first,second);assert.equal(first.vtable.get(0x06000002),0x06000002);assert.equal(second.vtable.get(0x06000004),0x06000004);
   const firstObject=vm.heap.records.find(record=>record?.methodTable===first),secondObject=vm.heap.records.find(record=>record?.methodTable===second);
   assert(firstObject);assert(secondObject);
 });

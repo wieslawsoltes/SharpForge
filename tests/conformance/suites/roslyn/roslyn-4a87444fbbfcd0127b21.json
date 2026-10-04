@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4a87444fbbfcd0127b21",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Threading.Tasks;\n\nclass A\n{\n    async static Task Main()\n    {\n        await Task.Factory.StartNew(() => { });\n    }\n}",
+  "sourceSHA256": "72d125129ccd4fd23b475dc429d8f5e8ec80190bfdd8532b24223d4e67512df0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncMainTests.cs",
+    "sha256": "a054148624c5e3228e0a73409b001a77e8a758febc8c750adbb6f8a881e42915",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncMainTests.cs",
+    "license": "MIT",
+    "method": "MainCanReturnTask",
+    "offset": 33057
+  },
+  "langVersion": "7.1",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe, parseOptions: TestOptions.Regular.WithLanguageVersion(LanguageVersion.CSharp7_1))",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

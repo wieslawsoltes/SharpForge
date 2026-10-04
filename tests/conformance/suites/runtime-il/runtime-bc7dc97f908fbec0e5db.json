@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-bc7dc97f908fbec0e5db",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n\n.class public _br_s {\n\n\n\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack       10\n        \n\n        br.s PASS\n\n\nFAIL:\n        ldc.i4  0x0\n        ret\n\nPASS:\n        ldc.i4 100\n        ret\n}\n}\n\n.assembly br_s {}\n",
+  "unsupported": [
+    "Upstream IL preprocessor/legacy assembly rewrite required"
+  ],
+  "language": "il",
+  "opcodeFamilies": [
+    "arithmetic",
+    "branches",
+    "calls"
+  ],
+  "sourceSHA256": "5588c182b83d42186d1cda0fdf973b63c7c31e3a75bb2f272940d03370260578",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n\n.class public _br_s {\n\n\n\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack       10\n        \n\n        br.s PASS\n\n\nFAIL:\n        ldc.i4  0x0\n        ret\n\nPASS:\n        ldc.i4 100\n        ret\n}\n}\n\n.assembly br_s {}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/IL_Conformance/Old/Base/br_s.il",
+    "sha256": "5588c182b83d42186d1cda0fdf973b63c7c31e3a75bb2f272940d03370260578",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/IL_Conformance/Old/Base/br_s.il",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Unmodified upstream IL. Native ILAsm required; no IL simulation."
+}

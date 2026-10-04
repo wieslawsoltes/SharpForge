@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1a4dec92d9be2b9a069b",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    static void M(ref readonly int p) => System.Console.Write(p);\n    static void Main()\n    {\n        M(ref 6);\n        M(in 7);\n    }\n}",
+  "sourceSHA256": "1fbc589bdf6c85feb38e98aa8c189d4cf71bf94eb9e296736f8f7668018cbff7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "RefReadonlyParameter_RValue_RefOrInArgument",
+    "offset": 117286
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1510",
+        "severity": "error"
+      },
+      {
+        "code": "CS8156",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (6,15): error CS1510: A ref or out value must be an assignable variable\n            //         M(ref 6);\n            Diagnostic(ErrorCode.ERR_RefLvalueExpected, \"6\").WithLocation(6, 15),\n            // (7,14): error CS8156: An expression cannot be used in this context because it may not be passed or returned by reference\n            //         M(in 7);\n            Diagnostic(ErrorCode.ERR_RefReturnLvalueExpected, \"7\").WithLocation(7, 14)",
+  "unsupported": []
+}

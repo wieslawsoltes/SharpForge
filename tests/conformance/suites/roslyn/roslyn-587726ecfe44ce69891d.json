@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-587726ecfe44ce69891d",
+  "kind": "diagnostics",
+  "sourceText": "#nullable enable\nclass Program\n{\n    static void Main()\n    {\n        A.FA.ToString();\n        B.FB.ToString(); // warning\n    }\n}",
+  "sourceSHA256": "65ab5f24796a04e77c96be19b7cc811da26594880ddc2ca6785267d0400729b2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NullableContext.cs",
+    "sha256": "d18f1c1a81f856139d7eb070ad7efe225eeb161a021fc85344f8be1ca08443fe",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NullableContext.cs",
+    "license": "MIT",
+    "method": "ExplicitAttribute_Module",
+    "offset": 11114
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { ref1 })",
+  "options": "(source2, references: new[] { ref1 })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8602",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,9): warning CS8602: Dereference of a possibly null reference.\n                //         B.FB.ToString(); // warning\n                Diagnostic(ErrorCode.WRN_NullReferenceReceiver, \"B.FB\").WithLocation(7, 9)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

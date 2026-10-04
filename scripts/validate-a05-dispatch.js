@@ -33,6 +33,7 @@ const revision=execute('git',['rev-parse','HEAD'],{cwd:root}).trim();
 const directory=await mkdtemp(join(tmpdir(),'sharpforge-dispatch-'));
 let report;
 try {
+  await writeFile(join(directory,'global.json'),JSON.stringify({sdk:{version:sdk,rollForward:'disable'}})+'\n');
   await writeFile(join(directory,'VirtualDispatch.csproj'),`<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>${framework}</TargetFramework><ImplicitUsings>disable</ImplicitUsings><Nullable>disable</Nullable><DebugType>none</DebugType><Deterministic>true</Deterministic></PropertyGroup></Project>\n`);
   await copyFile(sourcePath,join(directory,'Program.cs'));
   await writeFile(join(directory,'NuGet.Config'),'<configuration><packageSources><clear /></packageSources></configuration>\n');

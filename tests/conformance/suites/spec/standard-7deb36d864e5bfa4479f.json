@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-7deb36d864e5bfa4479f",
+  "kind": "spec",
+  "sourceText": "class Message\n{\n    object sender;\n    string text;\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [
+      "CS0169"
+    ]
+  },
+  "sourceSHA256": "5fe309a58dd5b5b4bda541603f447ba29a9b4e0789fb3f1306a4f94557db8cf4",
+  "originalSource": "class Message\n{\n    object sender;\n    string text;\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "DefaultConstructors3",
+    "ignoredWarnings": [
+      "CS0169"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "DefaultConstructors3",
+    "offsetInUnquotedMarkdown": 257195
+  }
+}

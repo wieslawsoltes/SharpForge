@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-838d694bbbc5f024a336",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\ndelegate void D();\n\nclass Test\n{\n    static void F()\n    {\n        D d = new D(__Method1);\n    }\n\n    static void __Method1()\n    {\n        Console.WriteLine(\"test\");\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "12faad0350ca07c3e4c2a304e32c14e2f196224c90784685766ee747a5053e88",
+  "originalSource": "delegate void D();\n\nclass Test\n{\n    static void F()\n    {\n        D d = new D(__Method1);\n    }\n\n    static void __Method1()\n    {\n        Console.WriteLine(\"test\");\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "AnonFunctionImplementationExample2"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "AnonFunctionImplementationExample2",
+    "offsetInUnquotedMarkdown": 382036
+  }
+}

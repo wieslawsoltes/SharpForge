@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-b61c8c5169172202ef25",
+  "kind": "spec",
+  "sourceText": "T M<T>(T a, T b) => a ?? b;\n\nstring s = M(null, \"text\");\nint i = M(19, 23);",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "fdb59b7b924fb085ac27a939d31f3b1613782a40a4b721d7e081b01484c4d7e6",
+  "originalSource": "T M<T>(T a, T b) => a ?? b;\n\nstring s = M(null, \"text\");\nint i = M(19, 23);",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "NullCoalescingGenerics"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "NullCoalescingGenerics",
+    "offsetInUnquotedMarkdown": 347651
+  }
+}

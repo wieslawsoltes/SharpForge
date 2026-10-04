@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-fc8ab035410f86b668f5",
+  "kind": "spec",
+  "sourceText": "public class Person\n{\n    // The default constructor requires that FirstName and LastName be set at construction time\n    public required string FirstName { get; init; }\n    public string MiddleName { get; init; } = \"\";\n    public required string LastName { get; init; }\n}",
+  "sourceSHA256": "471f5a8f4e5bc7ddc02c5c810c25355579003c5b2b34d293cfc86319435161f8",
+  "target": "library",
+  "featureId": "csharp-11-0-required-members",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/required-members.md",
+    "sha256": "0f731d503b589797298f8926899fe7ca9be3843141d8782b074f52d1822f1ed3",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/required-members.md",
+    "license": "NOASSERTION",
+    "offset": 5058
+  }
+}

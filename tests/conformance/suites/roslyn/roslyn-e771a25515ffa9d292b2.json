@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e771a25515ffa9d292b2",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic static class C \n{\n    static void Main<T>() { Console.WriteLine(1); }\n\n    public static class CC<T>\n    {\n        static void Main() { Console.WriteLine(2); }\n    }\n}\n\npublic static class D<T>\n{\n    static void Main() { Console.WriteLine(3); }\n\n    public static class DD\n    {\n        static void Main() { Console.WriteLine(4); }\n    }\n}\n\npublic static class E\n{\n    static void Main() { Console.WriteLine(5); }\n}\n",
+  "sourceSHA256": "faa499f70dd6fd9d7b522455b7963dca56fd17bfd43eaa17211798d89aba8b93",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "GenericMainMethods",
+    "offset": 17468
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(cs, options: TestOptions.ReleaseExe.WithMainTypeName(\"C\"))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0402",
+        "severity": "warning"
+      },
+      {
+        "code": "CS1558",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,17): warning CS0402: 'C.Main<T>()': an entry point cannot be generic or in a generic type\n                Diagnostic(ErrorCode.WRN_MainCantBeGeneric, \"Main\").WithArguments(\"C.Main<T>()\"),\n                // (4,21): error CS1558: 'C' does not have a suitable static Main method\n                Diagnostic(ErrorCode.ERR_NoMainInClass, \"C\").WithArguments(\"C\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

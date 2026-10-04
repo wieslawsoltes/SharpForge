@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f2952805058ad3400ad4",
+  "kind": "spec",
+  "sourceText": "  ...\n  nint operator *(nint x, nint y);\n  nuint operator *(nuint x, nuint y);\n  ```\n\n### 12.10.3 Division operator\n\nThe predefined division operators are listed below. The operators all compute the quotient of `x` and `y`.\n\n- Integer division:\n\n  ```csharp\n  ...\n  nint operator /(nint x, nint y);\n  nuint operator /(nuint x, nuint y);\n  ```\n\n### 12.10.4 Remainder operator\n\nThe predefined remainder operators are listed below. The operators all compute the remainder of the division between `x` and `y`.\n\n- Integer remainder:\n\n  ```csharp\n  ...\n  nint operator %(nint x, nint y);\n  nuint operator %(nuint x, nuint y);\n  ```\n\n### 12.10.5 Addition operator\n\n- Integer addition:\n\n  ```csharp\n  ...\n  nint operator +(nint x, nint y);\n  nuint operator +(nuint x, nuint y);\n  ```\n\n### 12.10.6 Subtraction operator\n\n- Integer subtraction:\n\n  ```csharp\n  ...\n  nint operator –(nint x, nint y);\n  nuint operator –(nuint x, nuint y);\n  ```\n\n## 12.11 Shift operators\n\nThe predefined shift operators are listed below.\n\n- Shift left:\n\n  ```csharp\n  ...\n  nint operator <<(nint x, int count);\n  nuint operator <<(nuint x, int count);\n  ```\n\n- Shift right:\n\n  ```csharp\n  ...\n  nint operator >>(nint x, int count);\n  nuint operator >>(nuint x, int count);\n  ```\n\n  The `>>` operator shifts `x` right by a number of bits computed as described below.\n\n  When `x` is of type `int`, **`nint`** or `long`, the low-order bits of `x` are discarded, the remaining bits are shifted right, and the high-order empty bit positions are set to zero if `x` is non-negative and set to one if `x` is negative.\n\n  When `x` is of type `uint`, **`nuint`** or `ulong`, the low-order bits of `x` are discarded, the remaining bits are shifted right, and the high-order empty bit positions are set to zero.\n\n- Unsigned shift right:\n\n  ```csharp\n  ...\n  nint operator >>>(nint x, int count);\n  nuint operator >>>(nuint x, int count);\n  ```\n\nFor the predefined operators, the number of bits to shift is computed as follows:\n\\[...]\n- When the type of `x` is `nint` or `nuint`, the shift count is given by the low-order five bits of `count` on a 32 bit platform, or the lower-order six bits of `count` on a 64 bit platform.  \n\n\n## 12.12 Relational and type-testing operators\n\n### 12.12.2 Integer comparison operators\n\nThe predefined integer comparison operators are:\n",
+  "sourceSHA256": "de1b62276c5fc9cac78352b0ec140c957d8eed647eb8397fa2cc049465aadede",
+  "target": "library",
+  "featureId": "csharp-11-0-numeric-intptr",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/numeric-intptr.md",
+    "sha256": "b6fa2f3916ac2f585240e1ac40182daa372d04f4a8ea5a289855cf172af02f40",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/numeric-intptr.md",
+    "license": "NOASSERTION",
+    "offset": 9009
+  }
+}

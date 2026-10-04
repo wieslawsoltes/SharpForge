@@ -7,8 +7,10 @@ export const languageFixtures=[
   {id:'parity/uncaught checked overflow',source:'int maximum=2147483647;Console.WriteLine(checked(maximum+1));',expected:{state:'faulted',output:'',exceptionType:'System.OverflowException'}},
   {id:'parity/uncaught array boundary',source:'int[] values=new int[0];Console.WriteLine(values[0]);',expected:{state:'faulted',output:'',exceptionType:'System.IndexOutOfRangeException'}},
   {id:'parity/uncaught user exception',source:'throw new Exception("failure");',expected:{state:'faulted',output:'',exceptionType:'System.Exception'}},
-  {id:'parity/output budget boundary',source:'Console.WriteLine("four");',runtimeOptions:{maxOutputCharacters:3},expected:{state:'faulted',output:'',exceptionType:'System.ExecutionEngineException'}},
-  {id:'parity/instruction budget boundary',source:'while(true){}',runtimeOptions:{maxInstructions:64},expected:{state:'faulted',output:'',exceptionType:'System.ExecutionEngineException'}},
+  {id:'parity/output budget boundary',source:'Console.WriteLine("four");',runtimeOptions:{maxOutputCharacters:3},
+    expected:{state:'faulted',output:'',exceptionType:'System.ExecutionEngineException',diagnosticName:'OutputLimitException'}},
+  {id:'parity/instruction budget boundary',source:'while(true){}',runtimeOptions:{maxInstructions:64},
+    expected:{state:'faulted',output:'',exceptionType:'System.ExecutionEngineException',diagnosticName:'InstructionLimitException'}},
   {id:'parity/UTF16 output boundary',source:'Console.WriteLine("A😀Z");',expected:{output:'A😀Z\n'}},
   {id:'parity/multiple files',source:[{uri:'Program.cs',text:'Console.WriteLine(Value.Read());'},{uri:'Value.cs',text:'class Value { public static int Read()=>42; }'}],expected:{output:'42\n'}}
 ];

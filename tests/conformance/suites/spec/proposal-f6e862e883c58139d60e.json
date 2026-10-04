@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f6e862e883c58139d60e",
+  "kind": "spec",
+  "sourceText": "interface IGetEnumerator<TEnumerator> where TEnumerator : allows ref struct \n{\n    TEnumerator GetEnumerator();\n}\n\nclass C\n{\n    static void Test1<TEnumerable, TEnumerator>(TEnumerable t)\n        where TEnumerable : IGetEnumerator<TEnumerator>, allows ref struct\n        where TEnumerator : IEnumerator, IDisposable, allows ref struct \n    {\n        foreach (var i in t) // IEnumerator.MoveNext/Current\n        {\n        }\n    }\n\n    static void Test2<TEnumerable, TEnumerator>(TEnumerable t)\n        where TEnumerable : IGetEnumerator<TEnumerator>, allows ref struct\n        where TEnumerator : IEnumerator<int>, allows ref struct \n    {\n        foreach (var i in t) // IEnumerator<int>.MoveNext/Current\n        {\n        }\n    }\n\n    static void Test3<TEnumerable, TEnumerator>(TEnumerable t)\n        where TEnumerable : IGetEnumerator<TEnumerator>, allows ref struct\n        where TEnumerator : IMyEnumerator<int>, allows ref struct \n    {\n        foreach (var i in t) // IMyEnumerator<int>.MoveNext/Current\n        {\n        }\n    }\n}\n\ninterface IMyEnumerator<T> : System.IDisposable\n{\n    T Current {get;}\n    bool MoveNext();\n}",
+  "sourceSHA256": "1bf97242d1cc14173b4d3f57a142246f73831f761d374ffd4f241156035c2401",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 15056
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-28c5be871950f3b97a72",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Base\n{\n    public virtual void M1((int a, int b) x) { }\n    public virtual void M2((int a, int b)[] x) { }\n    public virtual void M3(System.Nullable<(int a, int b)> x) { }\n    public virtual void M4(((int a, int b) c, int d) x) { }\n}\npublic class Derived : Base\n{\n    public override void M1((int notA, int notB) y) { }\n    public override void M2((int notA, int notB)[] x) { }\n    public override void M3(System.Nullable<(int notA, int notB)> x) { }\n    public override void M4(((int notA, int notB) c, int d) x) { }\n}\n",
+  "sourceSHA256": "137ce68647d9cd79bde75ae5f268339780d883640059904fda088756b8437695",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "OverriddenMethodWithDifferentTupleNamesInParameters",
+    "offset": 864622
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8139",
+        "severity": "error"
+      },
+      {
+        "code": "CS8139",
+        "severity": "error"
+      },
+      {
+        "code": "CS8139",
+        "severity": "error"
+      },
+      {
+        "code": "CS8139",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,26): error CS8139: 'Derived.M2((int notA, int notB)[])': cannot change tuple element names when overriding inherited member 'Base.M2((int a, int b)[])'\n                //     public override void M2((int notA, int notB)[] x) { }\n                Diagnostic(ErrorCode.ERR_CantChangeTupleNamesOnOverride, \"M2\").WithArguments(\"Derived.M2((int notA, int notB)[])\", \"Base.M2((int a, int b)[])\").WithLocation(12, 26),\n                // (13,26): error CS8139: 'Derived.M3((int notA, int notB)?)': cannot change tuple element names when overriding inherited member 'Base.M3((int a, int b)?)'\n                //     public override void M3(System.Nullable<(int notA, int notB)> x) { }\n                Diagnostic(ErrorCode.ERR_CantChangeTupleNamesOnOverride, \"M3\").WithArguments(\"Derived.M3((int notA, int notB)?)\", \"Base.M3((int a, int b)?)\").WithLocation(13, 26),\n                // (14,26): error CS8139: 'Derived.M4(((int notA, int notB) c, int d))': cannot change tuple element names when overriding inherited member 'Base.M4(((int a, int b) c, int d))'\n                //     public override void M4(((int notA, int notB) c, int d) x) { }\n                Diagnostic(ErrorCode.ERR_CantChangeTupleNamesOnOverride, \"M4\").WithArguments(\"Derived.M4(((int notA, int notB) c, int d))\", \"Base.M4(((int a, int b) c, int d))\").WithLocation(14, 26),\n                // (11,26): error CS8139: 'Derived.M1((int notA, int notB))': cannot change tuple element names when overriding inherited member 'Base.M1((int a, int b))'\n                //     public override void M1((int notA, int notB) y) { }\n                Diagnostic(ErrorCode.ERR_CantChangeTupleNamesOnOverride, \"M1\").WithArguments(\"Derived.M1((int notA, int notB))\", \"Base.M1((int a, int b))\").WithLocation(11, 26)\n                ",
+  "unsupported": []
+}

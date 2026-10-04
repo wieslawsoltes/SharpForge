@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-b0c3e6d9cd73b7ffd243",
+  "kind": "spec",
+  "sourceText": "interface IMyAsyncDisposable1\n{\n    ValueTask DisposeAsync();\n}\n\ninterface IMyAsyncDisposable2\n{\n    ValueTask DisposeAsync();\n}\n\nclass C\n{\n    static async Task Test<T>() where T : IMyAsyncDisposable1, IMyAsyncDisposable2, IAsyncDisposable, new(), allows ref struct\n    {\n        await using (new T())\n        {\n            System.Console.Write(123);\n        } // IAsyncDisposable.DisposeAsync\n    }\n}",
+  "sourceSHA256": "05e7ce940416222749bdfdf83570b2eeb2aa9aac8801266dfde7de5e3bdc7364",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 12641
+  }
+}

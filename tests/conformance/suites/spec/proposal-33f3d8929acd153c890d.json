@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-33f3d8929acd153c890d",
+  "kind": "spec",
+  "sourceText": "async void M()\n{\n    await ...;\n    ref int x = ...; // error previously, proposed to be allowed\n    x.ToString();\n    await ...;\n    // x.ToString(); // still error\n}",
+  "sourceSHA256": "912c119e597caff83f08eef291ee8b5ec0318c04b871508e17b2cee3015baae0",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-unsafe-in-iterators-async",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-unsafe-in-iterators-async.md",
+    "sha256": "ed4db38af450526d24d556f7c1424168e3fb20df13a77900399cb9ca82b502fd",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-unsafe-in-iterators-async.md",
+    "license": "NOASSERTION",
+    "offset": 701
+  }
+}

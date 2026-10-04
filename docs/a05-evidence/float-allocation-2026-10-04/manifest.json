@@ -1,0 +1,388 @@
+{
+  "format": "SharpForge.FloatEvidenceArchive/1",
+  "qualification": "partial; exact total host object count unqualified",
+  "runs": [
+    {
+      "report": "a05-float-allocation.json",
+      "reportSHA256": "1d1d1c249364ff49238fc80de330562849ea55f20abfeeb6a892d63d5ecc4e70",
+      "revision": "b0a2ed28e30ce7ed3bafc2d0cd97a22d2fcaf742",
+      "completedRevision": "b0a2ed28e30ce7ed3bafc2d0cd97a22d2fcaf742",
+      "worktreeStatus": "",
+      "completedWorktreeStatus": "",
+      "protocol": {
+        "name": "float-allocation-v1",
+        "iterations": 1000000,
+        "warmup": 100000,
+        "runner": "a05-linux-x64-node24",
+        "out": "artifacts/a05-float-allocation.json"
+      },
+      "traceArchive": "a05-float-allocation.traces.tar.gz",
+      "archiveSHA256": "beda5a61818dfaf650ebc33f1f3b0ec4407f4870cc76b3e840bf07c2d67ba209",
+      "members": [
+        {
+          "name": "a05-float-allocation.json.typed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation.json.typed.0.log",
+          "bytes": 33858,
+          "sha256": "ebbd88d99013e0459548726bfb8fdccd05129e366ef877b5eefbe49dbd435679"
+        },
+        {
+          "name": "a05-float-allocation.json.typed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation.json.typed.100000.log",
+          "bytes": 37813,
+          "sha256": "8ddb8a5e13ec8864d16605253974c06c84ed2e8ae1aee1b1c02f0473d520fc82"
+        },
+        {
+          "name": "a05-float-allocation.json.typed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation.json.typed.1000000.log",
+          "bytes": 70483,
+          "sha256": "76cb10c2292e77472178b0acdf4505dce99ea050b57f5d1bfae693630b2edb41"
+        },
+        {
+          "name": "a05-float-allocation.json.mixed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation.json.mixed.0.log",
+          "bytes": 32568,
+          "sha256": "f53d40bcdb4fdc2fbc63d1ec6f2418db92ebe0ea022da5da9b372a2842dc6994"
+        },
+        {
+          "name": "a05-float-allocation.json.mixed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation.json.mixed.100000.log",
+          "bytes": 36518,
+          "sha256": "c211d21333b1392d1e26b1a999dec061b389a3d640f1e8ca6da6434b0f572db4"
+        },
+        {
+          "name": "a05-float-allocation.json.mixed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation.json.mixed.1000000.log",
+          "bytes": 60045,
+          "sha256": "81ac1c8eb0d9fd522f9c5ae983fababa2b04bac885df5a1b8e5e328f4c3e59c9"
+        },
+        {
+          "name": "a05-float-allocation.json.reference.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation.json.reference.log",
+          "bytes": 29942,
+          "sha256": "ec78417736e2c6701de4b7edd5cdf18a7561414f1c10cae0db6070b697fa65cb"
+        }
+      ]
+    },
+    {
+      "report": "a05-float-allocation-retained.json",
+      "reportSHA256": "754d75c23bf9c58154c39537023d61ca8be2596f5af2e14c91b9681bf9b8ad1f",
+      "revision": "4e716d790634675a887724ff8be6f80262e59434",
+      "completedRevision": "4e716d790634675a887724ff8be6f80262e59434",
+      "worktreeStatus": "",
+      "completedWorktreeStatus": "",
+      "protocol": {
+        "name": "float-allocation-v1",
+        "iterations": 1000000,
+        "warmup": 100000,
+        "runner": "a05-linux-x64-node24",
+        "out": "artifacts/a05-float-allocation-retained.json"
+      },
+      "traceArchive": "a05-float-allocation-retained.traces.tar.gz",
+      "archiveSHA256": "f3ff2a5263415a16b013420f1372cf825e9932dafe1e3a391b4d297b09fc4ddf",
+      "members": [
+        {
+          "name": "a05-float-allocation-retained.json.typed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.typed.0.log",
+          "bytes": 27294,
+          "sha256": "b22a99d82b8cdf3a123222d83862fe01aedb8b951b80835e1a52e3c2c221fffc"
+        },
+        {
+          "name": "a05-float-allocation-retained.json.typed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.typed.100000.log",
+          "bytes": 27319,
+          "sha256": "e74efdd9ea210cd7a54877f8c91ef58096f1a059e40b851f414271e50c6e98a6"
+        },
+        {
+          "name": "a05-float-allocation-retained.json.typed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.typed.1000000.log",
+          "bytes": 27319,
+          "sha256": "2364d4f2a8b36db807c4c1cf3db7924b2552ff7aed19ad1ac2778080f57d37ee"
+        },
+        {
+          "name": "a05-float-allocation-retained.json.mixed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.mixed.0.log",
+          "bytes": 27310,
+          "sha256": "9b5b51034a10f61747d33a8990d7f7ce16439207ca299074ee63f19a97af5098"
+        },
+        {
+          "name": "a05-float-allocation-retained.json.mixed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.mixed.100000.log",
+          "bytes": 27335,
+          "sha256": "41f1643817ca6c1c17588c6112109a102a3e36276999cd52c0a0c19fe3a17994"
+        },
+        {
+          "name": "a05-float-allocation-retained.json.mixed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.mixed.1000000.log",
+          "bytes": 27339,
+          "sha256": "97b0f4cb41c8d07b2b3679d174b0c666736c1f4d409d9af621e0079cd9c0fad9"
+        },
+        {
+          "name": "a05-float-allocation-retained.json.reference.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-retained.json.reference.log",
+          "bytes": 33865,
+          "sha256": "c115d4348820f4d863f8f220dc070b9e1d76f69f77662b17fb81d76d4a23be92"
+        }
+      ]
+    },
+    {
+      "report": "a05-float-allocation-unlimited.json",
+      "reportSHA256": "edc2546a951998689b9f5e7b0c1767e57d38912367ebc74c6db777ee9c5def32",
+      "revision": "bb61b47f3276d1fd435a15d8ae09976d9bafbf25",
+      "completedRevision": "bb61b47f3276d1fd435a15d8ae09976d9bafbf25",
+      "worktreeStatus": "",
+      "completedWorktreeStatus": "",
+      "protocol": {
+        "name": "float-allocation-v1",
+        "iterations": 1000000,
+        "warmup": 100000,
+        "warmupSlices": 1,
+        "runner": "a05-linux-x64-node24",
+        "out": "artifacts/a05-float-allocation-unlimited.json"
+      },
+      "traceArchive": "a05-float-allocation-unlimited.traces.tar.gz",
+      "archiveSHA256": "8e19696e2be01c4948dad9c6bc7dd971702e85d27e1e9ce701f2400730b8a4cc",
+      "members": [
+        {
+          "name": "a05-float-allocation-unlimited.json.typed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-unlimited.json.typed.0.log",
+          "bytes": 27310,
+          "sha256": "0cb7733af343fdc7cd9d8eba9b6cb8b05e6256513959ad592f0cfc36bce55b8c"
+        },
+        {
+          "name": "a05-float-allocation-unlimited.json.typed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-unlimited.json.typed.100000.log",
+          "bytes": 27332,
+          "sha256": "1ef6382519d962bfe811616aad0b7037132f0d110ff6a1450a4a90f4f22ad3b0"
+        },
+        {
+          "name": "a05-float-allocation-unlimited.json.typed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-unlimited.json.typed.1000000.log",
+          "bytes": 27343,
+          "sha256": "0e18d27492c27eb601c23afe94b33d797e9d0885bc7ac34eee79a311555175c1"
+        },
+        {
+          "name": "a05-float-allocation-unlimited.json.mixed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-unlimited.json.mixed.0.log",
+          "bytes": 27358,
+          "sha256": "c3318528885a6b902a45ce3e6cb938ee17521374bbb4a733909b45f43a6a3c73"
+        },
+        {
+          "name": "a05-float-allocation-unlimited.json.mixed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-unlimited.json.mixed.100000.log",
+          "bytes": 27371,
+          "sha256": "0a704055d1e4862d7a349f3a4f3f032a916a0ccc11e054d5bc6fee689cdc6cf2"
+        },
+        {
+          "name": "a05-float-allocation-unlimited.json.mixed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-unlimited.json.mixed.1000000.log",
+          "bytes": 27373,
+          "sha256": "4663ac9db38cd18e78ef452f587038a839bd2e90f40d45245a7ec105a888ca56"
+        },
+        {
+          "name": "a05-float-allocation-unlimited.json.reference.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-unlimited.json.reference.log",
+          "bytes": 33916,
+          "sha256": "1033ed612339e5e089a5d147d0c1c9c2f166a66afa3681705eabc26ee6cdb19b"
+        }
+      ]
+    },
+    {
+      "report": "a05-float-allocation-warm-slices.json",
+      "reportSHA256": "153b0b18699582b5448f86ad4465060831a597dc87e666b4a791412cba7544b5",
+      "revision": "bb61b47f3276d1fd435a15d8ae09976d9bafbf25",
+      "completedRevision": "bb61b47f3276d1fd435a15d8ae09976d9bafbf25",
+      "worktreeStatus": "",
+      "completedWorktreeStatus": "",
+      "protocol": {
+        "name": "float-allocation-v1",
+        "iterations": 1000000,
+        "warmup": 100000,
+        "warmupSlices": 10,
+        "runner": "a05-linux-x64-node24",
+        "out": "artifacts/a05-float-allocation-warm-slices.json"
+      },
+      "traceArchive": "a05-float-allocation-warm-slices.traces.tar.gz",
+      "archiveSHA256": "610615b8d21af95e18496133c3bfc871e08deead73fdc25df6655be9f738faf7",
+      "members": [
+        {
+          "name": "a05-float-allocation-warm-slices.json.typed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-warm-slices.json.typed.0.log",
+          "bytes": 27307,
+          "sha256": "30c2628960169b03d456cdee600452466ec416de947b87bc1d40eb306df3ee75"
+        },
+        {
+          "name": "a05-float-allocation-warm-slices.json.typed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-warm-slices.json.typed.100000.log",
+          "bytes": 27332,
+          "sha256": "c4a1616803bc60ec27bc3894a5ee388513a56728f30327c31c4525932e67b9af"
+        },
+        {
+          "name": "a05-float-allocation-warm-slices.json.typed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-warm-slices.json.typed.1000000.log",
+          "bytes": 27338,
+          "sha256": "cc9944e8833193924bbc7a26b657a2d92757812299a0a204123c809742fb259a"
+        },
+        {
+          "name": "a05-float-allocation-warm-slices.json.mixed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-warm-slices.json.mixed.0.log",
+          "bytes": 27333,
+          "sha256": "fccd848501165b87052f99678aa6bf79c2cd9dcdc0ee81c74dd1c9e51a0f75f5"
+        },
+        {
+          "name": "a05-float-allocation-warm-slices.json.mixed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-warm-slices.json.mixed.100000.log",
+          "bytes": 27348,
+          "sha256": "857eabd53bd18059bb9e1d8a6fe0df0e4fb61eb1e003f56fd9536415ab2c6f0d"
+        },
+        {
+          "name": "a05-float-allocation-warm-slices.json.mixed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-warm-slices.json.mixed.1000000.log",
+          "bytes": 27357,
+          "sha256": "c19aeaf72a521b1a5d4ed7cb5607bfde0e1770f9caf9d9cb3640f0cd4c551bed"
+        },
+        {
+          "name": "a05-float-allocation-warm-slices.json.reference.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-warm-slices.json.reference.log",
+          "bytes": 33899,
+          "sha256": "fc9faf74a2d90b679ffb3d9cecee37084caf45761da7b99ab11134bbfcd27466"
+        }
+      ]
+    },
+    {
+      "report": "a05-float-allocation-single-boundary.json",
+      "reportSHA256": "a39ef764e7dddf85281fbfe355d8236a949fde774b3c5108f0e2684b7d316844",
+      "revision": "b0b1a20db65f36b5c6985f90237914613d037a7f",
+      "completedRevision": "b0b1a20db65f36b5c6985f90237914613d037a7f",
+      "worktreeStatus": "",
+      "completedWorktreeStatus": "",
+      "protocol": {
+        "name": "float-allocation-v1",
+        "iterations": 1000000,
+        "warmup": 100000,
+        "warmupSlices": 1,
+        "runner": "a05-linux-x64-node24",
+        "out": "artifacts/a05-float-allocation-single-boundary.json"
+      },
+      "traceArchive": "a05-float-allocation-single-boundary.traces.tar.gz",
+      "archiveSHA256": "05f6e77b8cbcb11ac8418f8b6e36dd60e8ba71f9a6941a680053053cfab128dc",
+      "members": [
+        {
+          "name": "a05-float-allocation-single-boundary.json.typed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary.json.typed.0.log",
+          "bytes": 27323,
+          "sha256": "5281aaf45675fb4656eb9c347e87576e34b6114b3cb967089f16abfb40d4dbf3"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary.json.typed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary.json.typed.100000.log",
+          "bytes": 27333,
+          "sha256": "7fb80d1aaa49c6f7e10f6a62aa7975f1a107c8c72bec065ada730c732abdc3f7"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary.json.typed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary.json.typed.1000000.log",
+          "bytes": 27332,
+          "sha256": "b2e3bfd4d690b5887acc9b4bf75c2fde5cbc0ac86a979cce0fc3f2e7aa99b07b"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary.json.mixed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary.json.mixed.0.log",
+          "bytes": 27338,
+          "sha256": "18f6f69b02a6dbd625d8c3b555433cf0d217bde6ff7052ff06e8720a67c01cc1"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary.json.mixed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary.json.mixed.100000.log",
+          "bytes": 27359,
+          "sha256": "4ea00783291b90a9973a938adf5b0bfeecc650d58c283f1145834c7ab802208b"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary.json.mixed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary.json.mixed.1000000.log",
+          "bytes": 27354,
+          "sha256": "5d65b2d7fb6931aa07c1350cca17f3757fd8fb4634317cca2e2b7ce77e58947e"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary.json.reference.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary.json.reference.log",
+          "bytes": 33897,
+          "sha256": "8fcd32dd8d4137267c0930fd4bed73d9b331ff2c8bfe87d85924a9ca57901686"
+        }
+      ]
+    },
+    {
+      "report": "a05-float-allocation-single-boundary-warm-slices.json",
+      "reportSHA256": "6d6d9b94a5367ee8faae0246a17ae2d21ba38ad29f728d6a05e7e8439ac45514",
+      "revision": "b0b1a20db65f36b5c6985f90237914613d037a7f",
+      "completedRevision": "b0b1a20db65f36b5c6985f90237914613d037a7f",
+      "worktreeStatus": "",
+      "completedWorktreeStatus": "",
+      "protocol": {
+        "name": "float-allocation-v1",
+        "iterations": 1000000,
+        "warmup": 100000,
+        "warmupSlices": 10,
+        "runner": "a05-linux-x64-node24",
+        "out": "artifacts/a05-float-allocation-single-boundary-warm-slices.json"
+      },
+      "traceArchive": "a05-float-allocation-single-boundary-warm-slices.traces.tar.gz",
+      "archiveSHA256": "acf9c67377e4b662bf6a36986d99ae7890ae225a3b41b70e578e30be75371aeb",
+      "members": [
+        {
+          "name": "a05-float-allocation-single-boundary-warm-slices.json.typed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary-warm-slices.json.typed.0.log",
+          "bytes": 27311,
+          "sha256": "002ba9cbd932c6694b5106d77e13e0a9ae4c657aaab9dd588f11ac64aad2c9c7"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary-warm-slices.json.typed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary-warm-slices.json.typed.100000.log",
+          "bytes": 27333,
+          "sha256": "47dbcef4b46c63785941c209011eb58110812ae8bed8e14c7595eb8c93e9223a"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary-warm-slices.json.typed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary-warm-slices.json.typed.1000000.log",
+          "bytes": 27326,
+          "sha256": "6c6ca68fd0b68e75dcc03c3e939be04d72c7efcedc9c56032f42bd775a549ba5"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary-warm-slices.json.mixed.0.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary-warm-slices.json.mixed.0.log",
+          "bytes": 27339,
+          "sha256": "9b8780ef6e222686432fdbd18950f9d8b90b1dc3ccd11f529a1ca5eb156faca4"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary-warm-slices.json.mixed.100000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary-warm-slices.json.mixed.100000.log",
+          "bytes": 27352,
+          "sha256": "9af60a08047fb40ed6c3d0462a176944b2ec35797b7f1697956828b5bc669dcd"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary-warm-slices.json.mixed.1000000.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary-warm-slices.json.mixed.1000000.log",
+          "bytes": 27351,
+          "sha256": "f8b45945f8012161554e99e2a5e4f2017afce4d0b35b4a92a3017f09e3bb2e4b"
+        },
+        {
+          "name": "a05-float-allocation-single-boundary-warm-slices.json.reference.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-performance/artifacts/a05-float-allocation-single-boundary-warm-slices.json.reference.log",
+          "bytes": 33890,
+          "sha256": "f1c2ba3e58e2add72094087a2391fb49cb637c2aa80a7d6c8bd099cf1ab264d0"
+        },
+        {
+          "name": "validation/initial-focused.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-numeric-boundary-root-validation.log",
+          "bytes": 7336,
+          "sha256": "3aa05e714bc0926e0cb5916c98e87e5c35d76614c504ce5efbb74174f1194c31"
+        },
+        {
+          "name": "validation/return-carrier-correction.log",
+          "originalPath": "/workspace/scratch/42f7738360b9/a05-numeric-boundary-return-validation.log",
+          "bytes": 436,
+          "sha256": "49bd970d2feb3fb7cfed9046c18fd216ffae5828f3e85e618e93850540477435"
+        }
+      ]
+    }
+  ]
+}

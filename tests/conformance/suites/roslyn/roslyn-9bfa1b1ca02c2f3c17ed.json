@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9bfa1b1ca02c2f3c17ed",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\nclass C\n{\n    public static void M([In]out int p) { p = 0; }\n}",
+  "sourceSHA256": "23cb81f2a883458f14ec8ad1a7392d296e7a310063951d2488ea4ed714ca7fdf",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "InAttribute_OutParameter",
+    "offset": 83816
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System.Runtime.InteropServices;\nclass C\n{\n    public static void M([In]out int p) { p = 0; }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0036",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,38): error CS0036: An out parameter cannot have the In attribute\n                //     public static void M([In]out int p) { p = 0; }\n                Diagnostic(ErrorCode.ERR_InAttrOnOutParam, \"p\").WithLocation(5, 38)",
+  "unsupported": []
+}

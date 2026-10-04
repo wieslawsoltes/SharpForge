@@ -1,6 +1,0 @@
-disposed
-42
-True
-20
-disposed
-reset-rejected

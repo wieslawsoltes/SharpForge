@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-183bbff0d2a18f6fd23c",
+  "kind": "spec",
+  "sourceText": "abstract class A\n{\n    public abstract void F();\n}\n\nclass B : A\n{\n    // Error, base.F is abstract\n    public override void F() => base.F();\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0205",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "d54e0caadbe06ad08e15c0a293bf93f860efe106476363517773288075ffc49c",
+  "originalSource": "abstract class A\n{\n    public abstract void F();\n}\n\nclass B : A\n{\n    // Error, base.F is abstract\n    public override void F() => base.F();\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "AbstractMethods2",
+    "expectedErrors": [
+      "CS0205"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "AbstractMethods2",
+    "offsetInUnquotedMarkdown": 145091
+  }
+}

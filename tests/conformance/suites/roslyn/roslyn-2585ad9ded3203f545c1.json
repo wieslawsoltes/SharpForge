@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2585ad9ded3203f545c1",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.CompilerServices;\n\nclass C\n{\n    [DecimalConstant(0, 0, 0, 0, 0)] public decimal F0 = 1;\n\n    [DateTimeConstant(0)] public DateTime F1 = default(DateTime);\n\n    [DecimalConstant(0, 0, 0, 0, 0), DecimalConstant(0, 0, 0, 0, 0)] public DateTime F2 = default(DateTime);\n\n    [DateTimeConstant(0), DateTimeConstant(0)] public DateTime F3 = default(DateTime);\n\n    [DecimalConstant(0, 0, 0, 0, 0), DecimalConstant(0, 0, 0, 0, 1)] public decimal F4 = 0;\n\n    [DateTimeConstant(1), DateTimeConstant(0)] public DateTime F5 = default(DateTime);\n\n    [DecimalConstant(0, 0, 0, 0, 0), DateTimeConstant(0)] public DateTime F6 = default(DateTime);\n\n    [DecimalConstant(0, 0, 0, 0, 0), DateTimeConstant(0)] public decimal F7 = 0;\n\n    [DecimalConstant(0, 0, 0, 0, 0), DateTimeConstant(0)] public int F8 = 0;\n\n    [DecimalConstant(0, 0, 0, 0, 0)] public const int F9 = 0;\n\n    [DateTimeConstant(0)] public const int F10 = 0;\n\n    [DateTimeConstant(0)] public const decimal F12 = 0;\n\n    [DecimalConstant(0, 0, 0, 0, 0)] public const decimal F14 = 1;\n}",
+  "sourceSHA256": "e31fe73a9e7adc35b3298a0eecf7f58483b2479dab03cc80955f0801e0566543",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/OptionalArgumentsTests.cs",
+    "sha256": "933f05d101ca784a87ab174caeae4001bd61d9080a2e77fbe0c932b8ed9319e9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/OptionalArgumentsTests.cs",
+    "license": "MIT",
+    "method": "TestExplicitConstantAttributesOnFields_Errors",
+    "offset": 22075
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS8027",
+        "severity": "error"
+      },
+      {
+        "code": "CS8027",
+        "severity": "error"
+      },
+      {
+        "code": "CS8027",
+        "severity": "error"
+      },
+      {
+        "code": "CS8027",
+        "severity": "error"
+      },
+      {
+        "code": "CS8027",
+        "severity": "error"
+      },
+      {
+        "code": "CS8027",
+        "severity": "error"
+      },
+      {
+        "code": "CS8027",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n// (11,38): error CS0579: Duplicate 'DecimalConstant' attribute\n//     [DecimalConstant(0, 0, 0, 0, 0), DecimalConstant(0, 0, 0, 0, 0)] public DateTime F2 = default(DateTime);\nDiagnostic(ErrorCode.ERR_DuplicateAttribute, \"DecimalConstant\").WithArguments(\"DecimalConstant\"),\n// (13,27): error CS0579: Duplicate 'DateTimeConstant' attribute\n//     [DateTimeConstant(0), DateTimeConstant(0)] public DateTime F3 = default(DateTime);\nDiagnostic(ErrorCode.ERR_DuplicateAttribute, \"DateTimeConstant\").WithArguments(\"DateTimeConstant\"),\n// (15,38): error CS0579: Duplicate 'DecimalConstant' attribute\n//     [DecimalConstant(0, 0, 0, 0, 0), DecimalConstant(0, 0, 0, 0, 1)] public decimal F4 = 0;\nDiagnostic(ErrorCode.ERR_DuplicateAttribute, \"DecimalConstant\").WithArguments(\"DecimalConstant\"),\n// (17,27): error CS0579: Duplicate 'DateTimeConstant' attribute\n//     [DateTimeConstant(1), DateTimeConstant(0)] public DateTime F5 = default(DateTime);\nDiagnostic(ErrorCode.ERR_DuplicateAttribute, \"DateTimeConstant\").WithArguments(\"DateTimeConstant\"),\n// (19,38): error CS8027: The field has multiple distinct constant values.\n//     [DecimalConstant(0, 0, 0, 0, 0), DateTimeConstant(0)] public DateTime F6 = default(DateTime);\nDiagnostic(ErrorCode.ERR_FieldHasMultipleDistinctConstantValues, \"DateTimeConstant(0)\"),\n// (21,38): error CS8027: The field has multiple distinct constant values.\n//     [DecimalConstant(0, 0, 0, 0, 0), DateTimeConstant(0)] public decimal F7 = 0;\nDiagnostic(ErrorCode.ERR_FieldHasMultipleDistinctConstantValues, \"DateTimeConstant(0)\"),\n// (23,38): error CS8027: The field has multiple distinct constant values.\n//     [DecimalConstant(0, 0, 0, 0, 0), DateTimeConstant(0)] public int F8 = 0;\nDiagnostic(ErrorCode.ERR_FieldHasMultipleDistinctConstantValues, \"DateTimeConstant(0)\"),\n// (25,6): error CS8027: The field has multiple distinct constant values.\n//     [DecimalConstant(0, 0, 0, 0, 0)] public const int F9 = 0;\nDiagnostic(ErrorCode.ERR_FieldHasMultipleDistinctConstantValues, \"DecimalConstant(0, 0, 0, 0, 0)\"),\n// (27,6): error CS8027: The field has multiple distinct constant values.\n//     [DateTimeConstant(0)] public const int F10 = 0;\nDiagnostic(ErrorCode.ERR_FieldHasMultipleDistinctConstantValues, \"DateTimeConstant(0)\"),\n// (29,6): error CS8027: The field has multiple distinct constant values.\n//     [DateTimeConstant(0)] public const decimal F12 = 0;\nDiagnostic(ErrorCode.ERR_FieldHasMultipleDistinctConstantValues, \"DateTimeConstant(0)\"),\n// (31,6): error CS8027: The field has multiple distinct constant values.\n//     [DecimalConstant(0, 0, 0, 0, 0)] public const decimal F14 = 1;\nDiagnostic(ErrorCode.ERR_FieldHasMultipleDistinctConstantValues, \"DecimalConstant(0, 0, 0, 0, 0)\")\n                ",
+  "unsupported": []
+}

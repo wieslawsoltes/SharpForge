@@ -43,7 +43,7 @@ allocation benchmark and do not claim a performance qualification.
 | Cross-runner match | `aggregate.js` | Missing/duplicate/failed platform or any output mismatch fails | Linux x64 + macOS arm64 + Windows x64 |
 | Offline release rebuild | `offline.js --archive … --cache … --assets …` | Unverified source/cache, missing artifact, stale example or unexplained hash difference fails | Node host; Linux namespace separately qualified |
 | Committed example freshness | `examples.js` | Lists exact stale paths and generator-order differences, including generated Studio mirrors | All six generators, forward and reverse |
-| Documentation links | `link-check.js` | Relative targets must exist in Git or in a verified release payload set | Local links; external HEAD requests only on schedule |
+| Documentation links | `link-check.js` | Relative targets must exist in Git or in a verified release payload set | Local links; external HEAD requests only on explicit dispatch |
 
 The integrated release workflow calls
 `node scripts/conformance/repro/package-release.js` after downloading the
@@ -85,9 +85,10 @@ runs the complete rebuild and example generation under `unshare --net`, verifies
 the separate network namespace and failed egress, then compares release assets.
 For a branch/manual run without a release tag the comparison assets are the
 independent Linux build; the report must not be described as a published-release
-rebuild. Ordinary PRs perform no native reproducibility jobs unless explicitly
-labelled `full-ci`; manual/main and release-published events retain qualification.
-External links run only on the weekly schedule. Nothing publishes a release.
+rebuild. Ordinary PR/main pushes and schedules perform no native reproducibility jobs.
+Manual and product release-published events retain serial qualification; historical
+evidence-archive releases are excluded. External links run only with the explicit
+`external_links` dispatch input instead of rebuilding. Nothing publishes a release.
 
 `offline.js` also runs locally with npm offline mode; without
 `--require-network-isolation` its report explicitly does not qualify kernel

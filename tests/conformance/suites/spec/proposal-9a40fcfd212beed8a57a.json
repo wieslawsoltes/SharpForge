@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9a40fcfd212beed8a57a",
+  "kind": "spec",
+  "sourceText": "readonly ref struct Span<T>\n{\n    public readonly ref T _data;\n    public readonly int _length;\n\n    public Span(T[] array) { ... }\n\n    public static implicit operator Span<T>(T[]? array) { }\n \n    public static implicit operator Span<T>(ArraySegment<T> segment) { }\n}",
+  "sourceSHA256": "aa9d0e1bea77cc25bf58556d5bd4cacc054522cf265542e6055f1f302652bba8",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 35430
+  }
+}

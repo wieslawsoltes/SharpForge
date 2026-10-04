@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-819c711082e5fa1ca305",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass MarkAttribute : Attribute\n{\n    public MarkAttribute(bool a, params object[] b)\n    {\n    }\n}\n\n[Mark(b: new string[] { \"Hello\", \"World\" }, a: true)]\n[Mark(b: \"Hello\", true)]\nstatic class Program\n{\n}",
+  "sourceSHA256": "8888c0351ee9e04d29d4966b96e7b18d7f136be2933853527a8f2773840017e1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "TestNamedArgumentOnStringParamsArgument",
+    "offset": 24127
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\n\nclass MarkAttribute : Attribute\n{\n    public MarkAttribute(bool a, params object[] b)\n    {\n    }\n}\n\n[Mark(b: new string[] { \"\"Hello\"\", \"\"World\"\" }, a: true)]\n[Mark(b: \"\"Hello\"\", true)]\nstatic class Program\n{\n}\", parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS8323",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,2): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [Mark(b: new string[] { \"Hello\", \"World\" }, a: true)]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, @\"Mark(b: new string[] { \"\"Hello\"\", \"\"World\"\" }, a: true)\").WithLocation(11, 2),\n                // (12,7): error CS8323: Named argument 'b' is used out-of-position but is followed by an unnamed argument\n                // [Mark(b: \"Hello\", true)]\n                Diagnostic(ErrorCode.ERR_BadNonTrailingNamedArgument, \"b\").WithArguments(\"b\").WithLocation(12, 7)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

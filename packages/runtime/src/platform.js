@@ -1,13 +1,13 @@
-import {float} from './execution/numeric-ops.js';
-import {clearExceptionEvents} from './execution/exception-events.js';
-import {delegatesEqual} from './execution/delegate-calls.js';
+import {delegatesEqual} from './execution/delegate-invocations.js';
+import {invokeControl} from './execution/control-contracts.js';
 import {initializeBclHost,invokeBclPlatform} from './bcl-adapter.js';
+import {constructBoundDelegate} from './execution/delegate-targets.js';
 import {HostOperations} from './host-operations.js';
 import {invokeAnimation,createManagedAnimationClock,advanceManagedAnimations} from './animation.js';
 import {refreshStyle,refreshStyles,applyTemplate,updateBindings,invokeStyling} from './styling.js';
 import {canonicalType,frameworkType,propertiesFor,eventsFor,frameworkAssignable,colorValues,XAML,CONTROLS,MEDIA,TASK,THREAD,taskResult} from '@sharpforge/framework';
 import {ManagedFault,isReference} from './heap.js';
-export {SUSPENDED} from './execution/suspension.js';
+export {SUSPENDED} from './suspension.js';
 const identity=r=>`${r.h}:${r.g}`;
 const equal=(a,b)=>a===b||isReference(a)&&isReference(b)&&a.h===b.h&&a.g===b.g;
 /** A data-only boundary between managed execution and the browser. No DOM or host eval. */
@@ -25,11 +25,11 @@ export class ManagedPlatform {
     const r=this.record(ref),at=this.propertyIndex(r).get(key),index=at===undefined?r.data.length:at,old=at===undefined?null:r.data[index+1];
     // Existing slots have fixed size; mutate once, retaining GC/write-barrier bookkeeping.
     // Snapshots own copies, and restore replaces records, invalidating the WeakMap naturally.
-    if(at===undefined)this.heap.replaceData(ref,[...r.data,key,value]);else{this.heap.writeData(r,index+1,value);}
+    if(at===undefined)this.heap.replaceData(ref,[...r.data,key,value]);else{r.data[index+1]=value;this.heap.mutationRevision++;}
     this.vm.notifyWrite?.({kind:'field',handle:ref.h,generation:ref.g,index:index+1,value,oldValue:old,property:key});return value;
   }
   native(v){if(v?.byref)return this.native(this.vm.dereference(v));return this.vm.value(v);}
-  managed(v,type){if(v===null||v===undefined)return null;if(type==='string')return this.heap.string(String(v));if(this.vm.inspector){if(type==='double')return float(Number(v));if(type==='bool')return v?1:0;}return v;}
+  managed(v,type){if(v===null||v===undefined)return null;if(type==='string')return this.heap.string(String(v));if(this.vm.inspector){if(type==='double')return {float:'r8',value:Number(v)};if(type==='bool')return v?1:0;}return v;}
   make(type,values={},kind='host'){const data=[];return this.heap.withRoots(Object.values(values),()=>{for(const [k,v]of Object.entries(values)){data.push(k,v);if(isReference(v))this.heap.pins.push(v);}return this.heap.allocate(kind,type,data);});}
   command(command){if(command.op==='set'&&this.animations){const [h,g]=String(command.id).split(':').map(Number),ref={h,g},prop=['Left','Top'].includes(command.property)?'$'+command.property:command.property;if(this.animations.bases.has(this.animations.key(ref,prop)))command={...command,value:this.exportValue(this.get(ref,prop))};}const value={...command,sequence:++this.sequence};if(this.transaction){if(this.transaction.length>=this.maxCommands)throw new ManagedFault('ExecutionLimitException','UI transaction command limit exceeded');this.transaction.push(value);}else this.options.onUICommand?.(value);}
   beginTransaction(){if(this.transaction)throw new ManagedFault('InvalidOperationException','Nested platform transaction');const t=[];this.transaction=t;return t;}
@@ -43,10 +43,10 @@ export class ManagedPlatform {
   styleMutation(callback){if(this.styleDepth)return callback();const heap=this.heap.snapshot(),platform=this.snapshot(),pending=this.vm.pendingWrite,existing=this.transaction,offset=existing?.length??0,t=existing??this.beginTransaction();this.styleDepth++;
     try{const result=callback();if(!existing)this.commitTransaction(t);return result;}catch(error){this.heap.restore(heap);this.restore(platform);this.vm.pendingWrite=pending;if(existing)existing.length=offset;else this.rollbackTransaction(t);throw error;}finally{this.styleDepth--;}}
   delegate(type,method,receiver){return this.make(type,{method,receiver},'delegate');}
-  delegateEquals(a,b){if(this.vm.inspector)return delegatesEqual(this.vm,a,b);if(equal(a,b))return true;if(!isReference(a)||!isReference(b))return false;const x=this.heap.get(a),y=this.heap.get(b);return x.kind==='delegate'&&y.kind==='delegate'&&x.type===y.type&&this.get(a,'method')===this.get(b,'method')&&equal(this.get(a,'receiver'),this.get(b,'receiver'));}
+  delegateEquals(a,b){return delegatesEqual(this.vm,a,b);}
   construct(type,args){
     const t=frameworkType(type);if(!t)throw new ManagedFault('TypeLoadException',`Unknown framework type ${type}`);
-    if(t.kind==='delegate'){if(!args[1]?.methodPointer)throw new ManagedFault('InvalidProgramException','Delegate construction requires a verified method pointer');return this.delegate(type,args[1].token,args[0]);}
+    if(t.kind==='delegate')return constructBoundDelegate(this.vm,type,args[0],args[1]);
     if(type===THREAD)return this.vm.scheduler.createThread(args[0]);
     const values={};const ps=propertiesFor(type);for(const [key,p]of Object.entries(ps))if(!p.isStatic&&p.value!==null){values[key]=this.managed(p.value,p.type);if(isReference(values[key]))this.heap.pins.push(values[key]);}
     const n=args.map(v=>this.native(v));
@@ -112,6 +112,7 @@ export class ManagedPlatform {
   color(css){const hex=css.replace('#',''),n=parseInt(hex,16);return this.make('Windows.UI.Color',{A:hex.length===8?n&255:255,R:hex.length===8?n>>>24:n>>>16&255,G:hex.length===8?n>>>16&255:n>>>8&255,B:hex.length===8?n>>>8&255:n&255});}
   advanceAnimations(delta){return advanceManagedAnimations(this,delta);}
   invoke(d,args){return this.heap.withRoots(args,()=>{
+    const control=invokeControl(this.vm,d,args);if(control.handled)return control.value;
     // Closed ABI dispatch: a collection call must not probe every added subsystem.
     // Resolve only once and keep the common BCL path independent of networking/SIMD.
     const handled=invokeBclPlatform(this,d,args,frameworkType(d.owner));
@@ -144,7 +145,7 @@ export class ManagedPlatform {
       nodes.push(node);
     }return {version:1,windows:[...this.windows.keys()],nodes};}
   updateLayout(changes){if(!Array.isArray(changes)||changes.length>10000)throw new RangeError('Layout update limit');const visible=new Set(this.scene().nodes.map(n=>n.id));for(const c of changes){if(!visible.has(c.id)||!Number.isFinite(c.width)||!Number.isFinite(c.height)||c.width<0||c.height<0||c.width>100000||c.height>100000)throw new TypeError('Invalid visual layout measurement');}for(const c of changes){const [h,g]=c.id.split(':').map(Number),ref=Object.freeze({h,g});for(const [name,value]of [['ActualWidth',c.width],['ActualHeight',c.height]])if(Object.hasOwn(propertiesFor(this.record(ref).type),name))this.set(ref,name,this.managed(value,'double'));}return changes.length;}
-  closeAll(){clearExceptionEvents(this);this.hostOperations.dispose();this.httpTransport?.dispose();this.computePool?.dispose();this.windows.clear();this.pending=[];this.command({op:'reset',snapshot:{version:1,windows:[],nodes:[]}});}
+  closeAll(){this.hostOperations.dispose();this.httpTransport?.dispose();this.computePool?.dispose();this.windows.clear();this.pending=[];this.command({op:'reset',snapshot:{version:1,windows:[],nodes:[]}});}
   dispatchEvent(id,event,payload={}){if(typeof id!=='string'||typeof event!=='string'||!payload||typeof payload!=='object')throw new TypeError('Invalid UI event');const [h,g]=id.split(':').map(Number),ref=Object.freeze({h,g}),r=this.record(ref),known=eventsFor(r.type);if(!Object.hasOwn(known,event))throw new ManagedFault('InvalidOperationException','Unregistered event');const visible=this.scene().nodes.some(n=>n.id===id);if(!visible)throw new ManagedFault('InvalidOperationException','Event target is not in an active visual tree');if(this.native(this.get(ref,'IsEnabled',true))===false||this.native(this.get(ref,'IsEnabled',true))===0||this.native(this.get(ref,'IsHitTestVisible',true))===false||this.native(this.get(ref,'IsHitTestVisible',true))===0)return [];
     if((r.type===CONTROLS+'InfoBar'&&event==='Closed')||(r.type===CONTROLS+'ContentDialog'&&event.endsWith('ButtonClick')))this.set(ref,'IsOpen',this.managed(false,'bool'));
     const inputKeys={TextChanged:'Text',PasswordChanged:'Password',Toggled:'IsOn',Checked:'IsChecked',Unchecked:'IsChecked',ValueChanged:'Value',SelectionChanged:'SelectedIndex',Expanding:'IsExpanded',Collapsed:'IsExpanded',DateChanged:'Date',TimeChanged:'Time'};

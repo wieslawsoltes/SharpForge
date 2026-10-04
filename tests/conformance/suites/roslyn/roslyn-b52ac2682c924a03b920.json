@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b52ac2682c924a03b920",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    T M<T>(T x, T y) => throw null;\n    void M2()\n    {\n        var t = M((a: 1, b: \"hello\"), (a: default, b: null));\n        t.a.ToString();\n        t.b.ToString();\n\n        var t2 = M((a: 1, b: \"hello\"), (a: default, z: null)); // 1\n        t2.a.ToString();\n        t2.b.ToString();\n\n        var t3 = M((1, \"hello\"), (a: default, b: null)); // 2, 3\n        t3.a.ToString(); // 4\n        t3.b.ToString(); // 5\n    }\n}\n",
+  "sourceSHA256": "fac3bd3efcbe16b28673975585c8845e0ee8506f3a595bcb2c96ee35d5fb0014",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "MergeNamesFromTypelessTuple",
+    "offset": 8411
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(src)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,53): warning CS8123: The tuple element name 'z' is ignored because a different name or no name is specified by the target type '(int a, string b)'.\n                //         var t2 = M((a: 1, b: \"hello\"), (a: default, z: null)); // 1\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"z: null\").WithArguments(\"z\", \"(int a, string b)\").WithLocation(11, 53),\n                // (15,35): warning CS8123: The tuple element name 'a' is ignored because a different name or no name is specified by the target type '(int, string)'.\n                //         var t3 = M((1, \"hello\"), (a: default, b: null)); // 2, 3\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"a: default\").WithArguments(\"a\", \"(int, string)\").WithLocation(15, 35),\n                // (15,47): warning CS8123: The tuple element name 'b' is ignored because a different name or no name is specified by the target type '(int, string)'.\n                //         var t3 = M((1, \"hello\"), (a: default, b: null)); // 2, 3\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"b: null\").WithArguments(\"b\", \"(int, string)\").WithLocation(15, 47),\n                // (16,12): error CS1061: '(int, string)' does not contain a definition for 'a' and no accessible extension method 'a' accepting a first argument of type '(int, string)' could be found (are you missing a using directive or an assembly reference?)\n                //         t3.a.ToString(); // 4\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"a\").WithArguments(\"(int, string)\", \"a\").WithLocation(16, 12),\n                // (17,12): error CS1061: '(int, string)' does not contain a definition for 'b' and no accessible extension method 'b' accepting a first argument of type '(int, string)' could be found (are you missing a using directive or an assembly reference?)\n                //         t3.b.ToString(); // 5\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"b\").WithArguments(\"(int, string)\", \"b\").WithLocation(17, 12)\n                ",
+  "unsupported": []
+}

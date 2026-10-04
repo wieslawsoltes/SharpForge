@@ -1,10 +1,13 @@
-import {exceptionTypeDefinition} from './exception-layout.js';
-import {genericTypeParts,asyncTypeDefinition,varargsTypeDefinition} from '@sharpforge/cil';
-import {nativeIntegerBits} from '@sharpforge/bytecode';
+import {nativeIntegerBits, sourceTypeIdentities} from '@sharpforge/bytecode';
+import {sourceVirtualSlots} from './source-object-slots.js';
+import {frameworkMethodTable} from './framework-method-table.js';
 import {frameworkType, canonicalType} from '@sharpforge/framework';
 import {exceptionTypeName} from './exception-types.js';
+import {memoryMethodTable} from './memory-method-table.js';
+import {exceptionTypeDefinition} from './exception-layout.js';
+import {asyncTypeDefinition,varargsTypeDefinition} from '@sharpforge/cil';
 
-const aliases = {object:'System.Object',string:'System.String',bool:'System.Boolean',char:'System.Char',sbyte:'System.SByte',byte:'System.Byte',short:'System.Int16',ushort:'System.UInt16',int:'System.Int32',uint:'System.UInt32',long:'System.Int64',ulong:'System.UInt64',float:'System.Single',double:'System.Double',decimal:'System.Decimal',nint:'System.IntPtr',nuint:'System.UIntPtr',void:'System.Void',typedref:'System.TypedReference'};
+const aliases = {object:'System.Object',string:'System.String',bool:'System.Boolean',char:'System.Char',sbyte:'System.SByte',byte:'System.Byte',short:'System.Int16',ushort:'System.UInt16',int:'System.Int32',uint:'System.UInt32',long:'System.Int64',ulong:'System.UInt64',float:'System.Single',double:'System.Double',decimal:'System.Decimal',nint:'System.IntPtr',nuint:'System.UIntPtr',void:'System.Void'};
 const primitiveSizes = {'System.Boolean':1,'System.Char':2,'System.SByte':1,'System.Byte':1,'System.Int16':2,'System.UInt16':2,'System.Int32':4,'System.UInt32':4,'System.Int64':8,'System.UInt64':8,'System.Single':4,'System.Double':8,'System.Decimal':16,'System.IntPtr':4,'System.UIntPtr':4,'System.Void':0};
 const genericPrefix = 'System.Collections.Generic.';
 const genericNames = new Set(['IEnumerable','IEnumerator','ICollection','IList','IReadOnlyCollection','IReadOnlyList','IComparer','IEqualityComparer','List','Dictionary','HashSet','Queue','Stack']);
@@ -32,18 +35,22 @@ export function runtimeTypeName(input) {
   }
   if(name.endsWith('?'))return 'System.Nullable`1<'+runtimeTypeName(name.slice(0,-1))+'>';
   if(name.endsWith('&')||name.endsWith('*'))return runtimeTypeName(name.slice(0,-1))+name.at(-1);
-  const parts=genericTypeParts(name);
-  if(parts.arguments.length) {
-    const arguments_=parts.arguments;
-    let definition=parts.definition.trim();
-    if(!/`\d+$/.test(definition)){const short=definition.replace(/^System\.Collections\.Generic\./,'');definition+='`'+(genericNames.has(short)?short==='Dictionary'?2:1:arguments_.length);}
+  const start=name.indexOf('<');
+  if(start>=0) {
+    if(!name.endsWith('>'))throw new TypeError('Unbalanced runtime type name');
+    const arguments_=splitTypeArguments(name.slice(start+1,-1));
+    let definition=name.slice(0,start).trim();
+    if (!/`\d+(?:\+|$)/.test(definition)) {
+      const short = definition.replace(/^System\.Collections\.Generic\./, '');
+      definition += '`' + (genericNames.has(short) ? short === 'Dictionary' ? 2 : 1 : arguments_.length);
+    }
     return runtimeTypeName(definition)+'<'+arguments_.map(argument=>argument?runtimeTypeName(argument):'').join(', ')+'>';
   }
   const stem=name.replace(/`\d+$/,'');
-  if(/[<>\[\]]/.test(name.replace(/<[^<>]*>(?=[A-Za-z0-9_])/g,'')))throw new TypeError('Unbalanced runtime type name');
+  if(/[<>\[\]]/.test(name))throw new TypeError('Unbalanced runtime type name');
   if(genericNames.has(stem))return genericPrefix+name;
-  if(/^(Nullable|Span|ReadOnlySpan|Action|Func|IComparable|IEquatable)`\d+$/.test(name))return 'System.'+name;
-  return aliases[name]??exceptionTypeName(canonicalType(name));
+  if(/^(Nullable|Action|Func|IComparable|IEquatable)`\d+$/.test(name))return 'System.'+name;
+  return name === 'typedref' ? 'System.TypedReference' : aliases[name]??exceptionTypeName(canonicalType(name));
 }
 
 /** Per-runtime type identity. The header points at this object, never at a name. */
@@ -51,8 +58,9 @@ export class MethodTable {
   constructor(registry,name,token) {this.registry=registry;this.name=name;this.token=token;}
 }
 
-function builtin(name) {
-  const async=asyncTypeDefinition(name)??varargsTypeDefinition(name);if(async)return async;
+function builtin(name, nativeIntBits = 32) {
+  const memory = memoryMethodTable(name, nativeIntBits);
+  if(memory)return memory;
   if(name==='System.Object')return {base:null};
   if(name==='System.ValueType')return {base:'System.Object'};
   if(name==='System.Enum')return {base:'System.ValueType',interfaces:['System.IComparable','System.IFormattable','System.IConvertible']};
@@ -65,11 +73,11 @@ function builtin(name) {
   if(name==='System.RuntimeType')return {base:'System.Reflection.TypeInfo',flags:{sealed:true}};
   if(name in primitiveSizes) {
     const interfaces=name==='System.Void'?[]:['System.IComparable',...(name==='System.Boolean'?[]:['System.IFormattable']),'System.IConvertible','System.IComparable`1<'+name+'>','System.IEquatable`1<'+name+'>'];
-    return {base:'System.ValueType',flags:{valueType:true,primitive:!['System.Decimal','System.Void'].includes(name),sealed:true},valueSize:primitiveSizes[name],interfaces};
+    return {base:'System.ValueType',flags:{valueType:true,primitive:!['System.Decimal','System.Void'].includes(name),sealed:true},valueSize:name==='System.IntPtr'||name==='System.UIntPtr'?nativeIntBits/8:primitiveSizes[name],interfaces};
   }
   if(name==='System.String')return {base:'System.Object',instanceSize:24,flags:{sealed:true},interfaces:['System.IComparable','System.ICloneable','System.IConvertible','System.IComparable`1<System.String>','System.IEquatable`1<System.String>','System.Collections.IEnumerable',genericPrefix+'IEnumerable`1<System.Char>']};
-  if(['System.Span`1','System.ReadOnlySpan`1'].includes(name))return {base:'System.ValueType',flags:{valueType:true,refStruct:true,sealed:true},variance:[0]};
-  const exception=exceptionTypeDefinition(name);if(exception)return exception;
+  const runtime = exceptionTypeDefinition(name) ?? asyncTypeDefinition(name) ?? varargsTypeDefinition(name);
+  if (runtime) return runtime;
   if(name==='System.Nullable`1')return {base:'System.ValueType',flags:{valueType:true,nullable:true,sealed:true},variance:[0]};
   if(/^System\.(Action|Func)`\d+$/.test(name)) {
     const arity=Number(name.split('`')[1]);return {base:'System.MulticastDelegate',flags:{delegate:true,sealed:true},variance:Array.from({length:arity},(_,i)=>name.startsWith('System.Func')&&i===arity-1?1:-1)};
@@ -87,15 +95,15 @@ function builtin(name) {
   if(name==='System.Collections.ICollection')return {flags:{interface:true},interfaces:['System.Collections.IEnumerable']};
   if(['System.IComparable','System.IFormattable','System.IConvertible','System.ICloneable','System.IDisposable','System.Collections.IEnumerable','System.Collections.IEnumerator','System.Collections.IStructuralComparable','System.Collections.IStructuralEquatable','System.Runtime.Serialization.ISerializable'].includes(name))return {flags:{interface:true}};
   const framework=frameworkType(name);
-  if(framework)return {base:framework.base??(framework.kind==='enum'?'System.Enum':framework.kind==='value'?'System.ValueType':framework.kind==='delegate'?'System.MulticastDelegate':'System.Object'),flags:{valueType:['value','enum'].includes(framework.kind),enum:framework.kind==='enum',delegate:framework.kind==='delegate',dynamic:true},enumUnderlyingType:framework.kind==='enum'?'int':null,fields:[]};
+  if(framework)return frameworkMethodTable(framework);
   return {base:'System.Object',flags:{external:true,dynamic:true}};
 }
 
 const substitute=(name,args)=>name.replace(/!!?\d+/g,match=>match.startsWith('!!')?match:args[Number(match.slice(1))]?.name??match);
 
 export class MethodTableRegistry {
-  constructor(options={}) {
-    const {tokenResolver=null}=options;this.nativeIntBits=nativeIntegerBits(options);
+  constructor({tokenResolver=null,nativeIntBits=32}={}) {
+    Object.defineProperty(this,'nativeIntBits',{value:nativeIntegerBits({nativeIntBits}),enumerable:true});
     this.tokenResolver=tokenResolver;this.descriptors=new Map();this.descriptorTokens=new Map();this.tables=new Map();this.tokens=new Map();this.nextToken=-1;this.building=new Set();
   }
   define(descriptor) {
@@ -129,9 +137,9 @@ export class MethodTableRegistry {
     }
     if(!descriptor&&(name.endsWith('&')||name.endsWith('*')))descriptor={name,base:null,elementType:name.slice(0,-1),flags:{byRef:name.endsWith('&'),pointer:name.endsWith('*')}};
     if(!descriptor&&/^!\d+$/.test(name))descriptor={name,base:null,flags:{genericParameter:true}};
-    const generic=genericTypeParts(name);
-    if(!descriptor&&generic.arguments.length) {
-      const definition=this.get(generic.definition),typeArguments=generic.arguments;
+    const angle=name.indexOf('<');
+    if(!descriptor&&angle>=0) {
+      const definition=this.get(name.slice(0,angle)),typeArguments=splitTypeArguments(name.slice(angle+1,-1));
       if(typeArguments.every(argument=>!argument))return definition;
       if(typeArguments.length!==definition.genericArity||typeArguments.some(argument=>!argument))throw new TypeError('Generic type argument count does not match definition');
       const args=typeArguments.map(argument=>this.get(argument));
@@ -139,20 +147,22 @@ export class MethodTableRegistry {
       if(this.tables.has(name))return this.tables.get(name);
       // Read the definition descriptor so recursive fields (Node<T>.Next) do
       // not depend on the open table having finished materializing its fields.
-      const template=this.descriptors.get(definition.name)??builtin(definition.name);
+      const template=this.descriptors.get(definition.name)??builtin(definition.name,this.nativeIntBits);
       descriptor={name,genericDefinition:definition,typeArguments:args,base:template.base===null?null:substitute(template.base??'System.Object',args),
         interfaces:(template.interfaces??[]).map(type=>substitute(type,args)),flags:{...definition.flags,genericDefinition:false},variance:template.variance??definition.variance,
         fields:(template.fields??[]).map(field=>({...field,type:substitute(field.type,args),...(field.storageType?{storageType:substitute(field.storageType,args)}:{})})),enumUnderlyingType:template.enumUnderlyingType,vtable:template.vtable??definition.vtable,
         valueSize:template.valueSize};
     }
-    descriptor??={name,...builtin(name)};
+    descriptor??={name,...builtin(name,this.nativeIntBits)};
     const token=descriptor.token??this.nextToken--,table=new MethodTable(this,name,token);
     this.tables.set(name,table);this.tokens.set(token,table);this.building.add(name);
     try {
-      const arity=Number(/`(\d+)$/.exec(name)?.[1]??0);
+      // CLI nested types redeclare enclosing parameters, independently of their own name suffix.
+      const arity=descriptor.genericArity??descriptor.genericDefinition?.genericArity??Number(/`(\d+)$/.exec(name)?.[1]??0);
       table.flags=Object.freeze({interface:false,valueType:false,enum:false,array:false,szArray:false,delegate:false,nullable:false,primitive:false,byRef:false,pointer:false,genericParameter:false,genericDefinition:arity>0,...descriptor.flags});
-      table.genericArity=descriptor.genericDefinition?.genericArity??arity;
+      table.genericArity=arity;
       table.genericDefinition=descriptor.genericDefinition??null;
+      table.sourceIdentity=descriptor.sourceIdentity??null;
       table.definitionToken=table.genericDefinition?.definitionToken??token;
       table.typeArguments=Object.freeze([...(descriptor.typeArguments??[])]);
       table.containsGenericParameters=table.flags.genericDefinition||table.flags.genericParameter||table.typeArguments.some(argument=>argument.containsGenericParameters);
@@ -173,11 +183,11 @@ export class MethodTableRegistry {
       for(const type of table.interfaces){table.interfaceMap.set(type,type.vtable??new Map());for(const [parent,slots] of type.interfaceMap??[])table.interfaceMap.set(parent,slots);}
       for(const [type,slots] of table.interfaceMap)table.interfaceMap.set(type,new Map([...slots].map(([declaration,body])=>[declaration,table.vtable.get(declaration)??body])));
       table.declaredFields=Object.freeze((descriptor.fields??[]).map(field=>Object.freeze({...field,type:this.get(field.type)})));
-      table.fields=Object.freeze(table.nullableType?[{name:'hasValue',type:this.get('bool')},{name:'value',type:table.nullableType}]:[...(table.base?.fields??[]),...table.declaredFields]);
+      table.fields=Object.freeze([...(table.base?.fields??[]),...table.declaredFields]);
       const referenceSlot=type=>!type.flags.valueType||type.gcBitmap?.some(Boolean)||false;
       table.gcBitmap=Object.freeze(table.flags.array?[referenceSlot(table.elementType)]:table.fields.map(field=>referenceSlot(field.type)));
       table.instanceSize=descriptor.instanceSize??32+table.fields.length*8;
-      table.valueSize=['System.IntPtr','System.UIntPtr'].includes(name)?this.nativeIntBits/8:descriptor.valueSize??(table.enumUnderlyingType?.valueSize??table.fields.length*8);
+      table.valueSize=descriptor.valueSize??(table.enumUnderlyingType?.valueSize??table.fields.length*8);
       return Object.freeze(table);
     } catch(error) {this.tables.delete(name);this.tokens.delete(token);throw error;}
     finally {this.building.delete(name);}
@@ -187,8 +197,23 @@ export class MethodTableRegistry {
 /** Source and CIL heaps use the same headers; source fields retain their IR slots. */
 export function createSourceMethodTables(image,options={}) {
   const registry=new MethodTableRegistry(options);
-  for(const [index,type] of (image.types??[]).entries())registry.define({name:type.name,token:type.token??0x02000001+(type.id??index),base:type.base??(type.enum?'System.Enum':type.valueType||type.kind==='struct'?'System.ValueType':'System.Object'),interfaces:type.interfaces??[],fields:type.fields??[],flags:{enum:!!type.enum,valueType:!!type.enum||!!type.valueType||type.kind==='struct'},enumUnderlyingType:type.enum?type.underlyingType??'int':null,
-    vtable:(image.methods??[]).filter(method=>method.owner===type.name&&!method.isStatic).map(method=>[method.id,method.id])});
+  const identities=sourceTypeIdentities(image.types??[]);
+  for (const [index, type] of(image.types ?? []).entries()) registry.define({
+    name: type.name,
+    sourceIdentity: identities.get(type.name),
+    token: type.token ?? 0x02000001 + (type.id ?? index),
+    base: type.base ?? (type.valueType ? 'System.ValueType' : 'System.Object'),
+    interfaces: type.interfaces ?? [],
+    fields: type.fields ?? [],
+    flags: {
+      interface: !!type.interface,
+      enum: !!type.enum,
+      valueType: !!type.enum || !!type.valueType,
+      runtimeValue: !!type.valueType
+    },
+    enumUnderlyingType: type.enum ? type.underlyingType ?? 'int' : null,
+    vtable: sourceVirtualSlots(image, type.name)
+  });
   for(const type of image.types??[])registry.get(type.name);
   return registry;
 }

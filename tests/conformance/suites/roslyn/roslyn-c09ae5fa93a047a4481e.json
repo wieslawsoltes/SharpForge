@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c09ae5fa93a047a4481e",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M()\n    {\n        {\n            Goo();\n            int x = 0;\n            void Goo() => x++;\n        }\n        {\n            System.Action a = Goo;\n            int x = 0;\n            void Goo() => x++;\n        }\n    }\n}",
+  "sourceSHA256": "d25a0486e66bb42605028f53f2e33b5af39ef8284c69a6522abbb738d7f796f8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "UnassignedUndefinedVariable",
+    "offset": 34445
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    void M()\n    {\n        {\n            Goo();\n            int x = 0;\n            void Goo() => x++;\n        }\n        {\n            System.Action a = Goo;\n            int x = 0;\n            void Goo() => x++;\n        }\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,13): error CS0165: Use of unassigned local variable 'x'\n                //             Goo();\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"Goo()\").WithArguments(\"x\").WithLocation(7, 13),\n                // (12,31): error CS0165: Use of unassigned local variable 'x'\n                //             System.Action a = Goo;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"Goo\").WithArguments(\"x\").WithLocation(12, 31)",
+  "unsupported": []
+}

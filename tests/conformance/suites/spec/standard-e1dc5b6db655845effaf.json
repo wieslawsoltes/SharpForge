@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-e1dc5b6db655845effaf",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass A\n{\n    public virtual void F() => Console.WriteLine(\"A.F\");\n}\n\nabstract class B: A\n{\n    public abstract override void F();\n}\n\nclass C : B\n{\n    public override void F() => Console.WriteLine(\"C.F\");\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "daff9762fdf620b45c56cc6280539e63a2393e5250f680b293609fd83070d042",
+  "originalSource": "class A\n{\n    public virtual void F() => Console.WriteLine(\"A.F\");\n}\n\nabstract class B: A\n{\n    public abstract override void F();\n}\n\nclass C : B\n{\n    public override void F() => Console.WriteLine(\"C.F\");\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "AbstractMethods3"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "AbstractMethods3",
+    "offsetInUnquotedMarkdown": 145747
+  }
+}

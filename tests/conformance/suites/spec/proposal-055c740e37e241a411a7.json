@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-055c740e37e241a411a7",
+  "kind": "spec",
+  "sourceText": "using System;\nclass C\n{\n    static void Main()\n    {\n        var y = (C2)\"dog\"u8; // error CS0030: Cannot convert type 'byte[]' to 'C2'\n        var z = (C3)\"cat\"u8; // error CS0030: Cannot convert type 'byte[]' to 'C3'\n    }\n}\n\nclass C2\n{\n    public static implicit operator C2(Span<byte> x) => new C2();\n}\n\nclass C3\n{\n    public static explicit operator C3(ReadOnlySpan<byte> x) => new C3();\n}",
+  "sourceSHA256": "92947d564b0fd251090c3c1bbf90cc9e4e11bc764686f7999dc811db9eab63a9",
+  "target": "library",
+  "featureId": "csharp-11-0-utf-8-string-literals",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/utf8-string-literals.md",
+    "sha256": "365dc2aa1232a94b2920bc8ce136313146e9ed9fc904b94c550ecf94ffcaf045",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/utf8-string-literals.md",
+    "license": "NOASSERTION",
+    "offset": 19593
+  }
+}

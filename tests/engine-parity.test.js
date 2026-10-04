@@ -34,6 +34,14 @@ test('engine parity automatically includes a newly added catalog and fixture row
   } finally {await rm(directory,{recursive:true,force:true});}
 });
 const success={state:'terminated',output:'42\n',exceptionType:null,exitCode:0};
+test('engine parity preserves explicit raw fault-name assertions after managed alias normalization',()=>{
+  const fixture={id:'resource fault',expected:{state:'faulted',output:'',
+    exceptionType:'System.ExecutionEngineException',diagnosticName:'InstructionLimitException'}};
+  const source={...success,...fixture.expected};
+  compareEngineResults(fixture,{source,cil:{...source}});
+  assert.throws(()=>compareEngineResults(fixture,{source,cil:{...source,diagnosticName:'System.ExecutionEngineException'}}),
+    /cil expected diagnosticName/);
+});
 const sampleAllowance={fixture:'sample/gc',owner:'A05 runtime (@wieslawsoltes)',reason:'Synthetic comparator test permits only representation-dependent heap byte counts.',issue:'https://github.com/wieslawsoltes/SharpForge/issues/724',outputReplacements:[{pattern:/^(Before|After): \d+ bytes$/gm,replacement:'$1: <heap-bytes> bytes'}]};
 test('engine parity canonicalizes known System exceptions while retaining user type identity',()=>{
   assert.equal(canonicalFaultType({name:'Exception'}),canonicalFaultType({name:'System.Exception'}));
@@ -60,7 +68,8 @@ test('engine parity requires an owner, reason and exact fixture for every allowa
 });
 test('engine parity observed heap allowances reject new values and unrelated changes',()=>{
   for(const [id,sourceOutput,cilOutput,unexpected] of [
-    ['sample/gc','Before: 136 bytes\nCollections: 1\nAfter: 242 bytes\n','Before: 136 bytes\nCollections: 1\nAfter: 338 bytes\n','Before: 136 bytes\nCollections: 1\nAfter: 999 bytes\n']
+    ['sample/gc','Before: 136 bytes\nCollections: 1\nAfter: 216 bytes\n','Before: 136 bytes\nCollections: 1\nAfter: 352 bytes\n','Before: 136 bytes\nCollections: 1\nAfter: 999 bytes\n'],
+    ['sample/particles','Managed memory: 1178 bytes\n','Managed memory: 1498 bytes\n','Managed memory: 9999 bytes\n']
   ]) {
     const fixture={id},source={...success,output:sourceOutput},cil={...success,output:cilOutput};
     compareEngineResults(fixture,{source,cil},engineParityAllowlist);

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ceb5a413df5426658ad0",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C \n{\n    int Main(bool b) { return 1; }\n    static int Main() { return 1; }\n    static int Main(string a) { return 1; }\n    static int Main(int a) { return 1; }  \n    static int Main<T>() { return 1; }      \n}\n",
+  "sourceSHA256": "7fed30adf46e825b3d5b9cc0430d22c384e7ec51a6fa4a0c8ee9130f464e6623",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "ExplicitMainTypeHasMultipleMains_SingleViable",
+    "offset": 23454
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe.WithMainTypeName(\"C\"))",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

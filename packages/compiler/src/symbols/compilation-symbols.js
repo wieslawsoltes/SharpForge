@@ -1,4 +1,3 @@
-import {executionBuiltinSymbol} from './execution-builtins.js';
 import {NamedTypeSymbol,Accessibility,TypeKind} from './types.js';
 import {MethodSymbol,FieldSymbol,PropertySymbol,ParameterSymbol,MethodKind,modifiersFromSyntax,accessibilityFromSyntax,DeclarationModifiers} from './members.js';
 import {NamespaceSymbol,NamespaceExtent,mergeGlobalNamespaces} from './namespaces.js';
@@ -54,5 +53,5 @@ export class CompilationSymbols {
   symbolFor(record){return this.records.get(record)??(record.declarations?this.type(record):record.accessors!==undefined||record.get!==undefined?this.property(record):record.parameters?this.method(record):this.field(record));}
   /** Framework member symbols. */
   contract(contract){return contract?this.bridge.symbolForContract(contract):null;}
-  builtin(builtin){return builtin?this.bridge.symbolForBuiltin(builtin)??executionBuiltinSymbol(this,builtin):null;}
+  builtin(builtin){return builtin?this.bridge.symbolForBuiltin(builtin):null;}
 }

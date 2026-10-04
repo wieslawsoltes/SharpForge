@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3b25621f2564ecfd7d21",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Collections.Generic;\n\n[AttributeUsage(AttributeTargets.All)]\npublic class XAttribute : Attribute \n{\n    public XAttribute(Type t) { }\n}\n\nclass G<T>\n{\n    [X(typeof(T))] T t1;                 // Error: open type in attribute\n    [X(typeof(List<T>))] T t2;           // Error: open type in attribute\n}\n\nclass X\n{\n    [X(typeof(List<int>))] int x;       // okay: X refers to XAttribute and List<int> is a closed constructed type\n    [X(typeof(List<>))] int y;          // okay: X refers to XAttribute and List<> is an unbound generic type\n}\n",
+  "sourceSHA256": "5b55fed8484679f7eeff8245792761fa82f59f0c3e7406f784885e705e0ff2f0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeOpenTypeInAttribute",
+    "offset": 243146
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0416",
+        "severity": "error"
+      },
+      {
+        "code": "CS0416",
+        "severity": "error"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (13,8): error CS0416: 'T': an attribute argument cannot use type parameters\n                //     [X(typeof(T))] T t1;                 // Error: open type in attribute\n                Diagnostic(ErrorCode.ERR_AttrArgWithTypeVars, \"typeof(T)\").WithArguments(\"T\"),\n                // (14,8): error CS0416: 'System.Collections.Generic.List<T>': an attribute argument cannot use type parameters\n                //     [X(typeof(List<T>))] T t2;           // Error: open type in attribute\n                Diagnostic(ErrorCode.ERR_AttrArgWithTypeVars, \"typeof(List<T>)\").WithArguments(\"System.Collections.Generic.List<T>\"),\n                // (13,22): warning CS0169: The field 'G<T>.t1' is never used\n                //     [X(typeof(T))] T t1;                 // Error: open type in attribute\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"t1\").WithArguments(\"G<T>.t1\"),\n                // (14,28): warning CS0169: The field 'G<T>.t2' is never used\n                //     [X(typeof(List<T>))] T t2;           // Error: open type in attribute\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"t2\").WithArguments(\"G<T>.t2\"),\n                // (19,32): warning CS0169: The field 'X.x' is never used\n                //     [X(typeof(List<int>))] int x;       // okay: X refers to XAttribute and List<int> is a closed constructed type\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"x\").WithArguments(\"X.x\"),\n                // (20,29): warning CS0169: The field 'X.y' is never used\n                //     [X(typeof(List<>))] int y;          // okay: X refers to XAttribute and List<> is an unbound generic type\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"y\").WithArguments(\"X.y\")\n                ",
+  "unsupported": []
+}

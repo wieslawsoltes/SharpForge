@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3adf22ccdeac32bda938",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass ObsoleteAttribute<T> : Attribute { }\n\nclass C\n{\n    [Obsolete<int>]\n    void M0() { }\n\n    void M1() => M0();\n\n    [Obsolete]\n    void M2() { }\n\n    void M3() => M2(); // 1\n}\n",
+  "sourceSHA256": "961637916454f49d5ec3f4f86dbf87630968708a77148e1cc723417a147d62b2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "GenericAttributeSimilarToWellKnownAttribute",
+    "offset": 435666
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (15,18): warning CS0612: 'C.M2()' is obsolete\n                //     void M3() => M2(); // 1\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"M2()\").WithArguments(\"C.M2()\").WithLocation(15, 18)",
+  "unsupported": []
+}

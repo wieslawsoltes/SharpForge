@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-5f5bf62fc363aeb16e23",
+  "kind": "spec",
+  "sourceText": "public static class Debug\n{\n    public static void Assert(bool condition, [CallerArgumentExpression(\"condition\")] string message = null);\n}",
+  "sourceSHA256": "0576a2dce774e7ddb71b3d1be0b3d69ba224382af215a47dc56c49cd44e92d70",
+  "target": "library",
+  "featureId": "csharp-10-0-callerargumentexpression",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/caller-argument-expression.md",
+    "sha256": "3382a8fb87efebf49fa27820b08a3cbdba61bcc72e54120bf4d6a8623ac7ae01",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/caller-argument-expression.md",
+    "license": "NOASSERTION",
+    "offset": 2369
+  }
+}

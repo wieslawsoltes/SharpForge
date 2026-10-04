@@ -1,0 +1,10 @@
+{
+  "dynamic/cs0111-cs1964-cs1971-cs1975-dynamic-is-object-in-signatures": ["diagnostics", "warnings"],
+  "dynamic/cs1061-cs1501-what-stays-statically-bound": ["diagnostics", "warnings"],
+  "dynamic/cs1962-cs1981-cs8386-cs8133-the-dynamic-type-itself": ["diagnostics", "warnings"],
+  "dynamic/cs1963-cs1979-expression-trees-and-queries": ["diagnostics", "warnings"],
+  "dynamic/cs1965-cs1966-cs1967-cs1968-dynamic-in-declarations": ["diagnostics", "warnings"],
+  "dynamic/cs1973-cs1976-cs1977-cs1978-arguments-of-a-dynamic-operation": ["diagnostics", "warnings"],
+  "dynamic/late-bound-operations-are-not-checked": ["diagnostics", "warnings"],
+  "dynamic/values-stored-and-passed-as-objects": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
+}

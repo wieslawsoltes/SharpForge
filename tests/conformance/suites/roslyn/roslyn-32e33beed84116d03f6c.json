@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-32e33beed84116d03f6c",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\npublic interface IDo<T>\n{\n    IResult<TReturn> Do<TReturn>(Func<T, TReturn> fn);\n}\n\npublic interface IResult<TReturn>\n{\n}\n\npublic class Class1\n{\n    public void Test1(IDo<(int, int)> impl)\n    {\n        var case3 = impl.Do(((int x, int y) a) => a.x * a.y);\n    }\n}",
+  "sourceSHA256": "c460a4209fb1947a4acf64266ba968f46d81994da0f4d068128b78a208706673",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "InferenceWithTuple_AddingNames",
+    "offset": 1130409
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

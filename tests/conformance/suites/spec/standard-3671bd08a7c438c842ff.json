@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-3671bd08a7c438c842ff",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass A\n{\n    public virtual void F() => Console.WriteLine(\"A.F\");\n    public virtual void G() => Console.WriteLine(\"A.G\");\n}\n\nclass B : A\n{\n    public sealed override void F() => Console.WriteLine(\"B.F\");\n    public override void G()        => Console.WriteLine(\"B.G\");\n}\n\nclass C : B\n{\n    public override void G() => Console.WriteLine(\"C.G\");\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "c6a15140b202ad62df9cca5aeffb4c473424588e6f3510be66ead000370d3e8a",
+  "originalSource": "class A\n{\n    public virtual void F() => Console.WriteLine(\"A.F\");\n    public virtual void G() => Console.WriteLine(\"A.G\");\n}\n\nclass B : A\n{\n    public sealed override void F() => Console.WriteLine(\"B.F\");\n    public override void G()        => Console.WriteLine(\"B.G\");\n}\n\nclass C : B\n{\n    public override void G() => Console.WriteLine(\"C.G\");\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "SealedMethods"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "SealedMethods",
+    "offsetInUnquotedMarkdown": 142613
+  }
+}

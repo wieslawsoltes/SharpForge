@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9e38d64203c8c755afb3",
+  "kind": "spec",
+  "sourceText": "using System.Runtime.CompilerServices;\n\nvar d = new Derived();\nd.M([1, 2, 3]); // Prints \"Derived\", because members from Base are not considered due to finding an applicable member in Derived\n\nclass Base\n{\n    [OverloadResolutionPriority(1)]\n    public void M(ReadOnlySpan<int> s) => Console.WriteLine(\"Base\");\n}\n\nclass Derived : Base\n{\n    public void M(int[] a) => Console.WriteLine(\"Derived\");\n}",
+  "sourceSHA256": "0aaaa7b3d54e742289ec6640daa3cd3642dcc559081a8749a40717936fc8d24b",
+  "target": "library",
+  "featureId": "csharp-13-0-overload-resolution-priority",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/overload-resolution-priority.md",
+    "sha256": "3ae409649aa5fc38d1b6a2d6a156f641c7c72feba0e394ce5765522d2322138b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/overload-resolution-priority.md",
+    "license": "NOASSERTION",
+    "offset": 6410
+  }
+}

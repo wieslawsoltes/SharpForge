@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9e51cefb522731889196",
+  "kind": "spec",
+  "sourceText": "public async ValueTask<T> ExampleAsync() { ... }",
+  "sourceSHA256": "0459c3ecd9c176997988c566101db1b4cfebc4c35af252ec6ec32deffa3586c5",
+  "target": "library",
+  "featureId": "csharp-10-0-method-level-asyncmethodbuilder",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/async-method-builders.md",
+    "sha256": "3009c96c763c1c09ace540653215bb589b435fe481e6e8a8368c559ae8e5f5d1",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/async-method-builders.md",
+    "license": "NOASSERTION",
+    "offset": 8472
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-547920c79a86faf5d400",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    int _value;\n    public C(int v) { _value = v; }\n\n    public static void Main()\n    {\n        Compare(null, null);\n        Compare(null, (1, new C(20)));\n        Compare((new C(30), 3), null);\n        Compare((new C(4), 4), (4, new C(4)));\n        Compare((new C(5), 5), (10, new C(10)));\n        Compare((new C(6), 6), (6, new C(20)));\n    }\n    private static void Compare((C, int)? nt1, (int, C)? nt2)\n    {\n        System.Console.Write($\"{nt1 == nt2} \");\n    }\n    public static implicit operator int(C c)\n    {\n        System.Console.Write($\"Convert{c._value} \");\n        return c._value;\n    }\n}\n",
+  "sourceSHA256": "c845293c4cf71cca65591b76ad96faed36c5530d76f7b91a18fa5df02b3bee29",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestOnNullableVsNullableTuples_WithImplicitCustomConversion",
+    "offset": 147149
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

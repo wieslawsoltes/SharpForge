@@ -1,0 +1,1 @@
+<Button xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="fixture" Content="Standard XAML button" IsEnabled="true" Width="120" />

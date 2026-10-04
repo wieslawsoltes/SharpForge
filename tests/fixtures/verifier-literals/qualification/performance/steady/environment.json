@@ -1,0 +1,12 @@
+{
+  "node": "v24.19.0",
+  "platform": "linux",
+  "arch": "x64",
+  "osRelease": "6.18.44",
+  "cpuModel": "AMD EPYC 9V74 80-Core Processor",
+  "logicalCpus": 9,
+  "totalMemoryBytes": 10451464192,
+  "nodeOptions": "--max-old-space-size=2048",
+  "host": "shared workspace; no isolation or quiet-host guarantee",
+  "heapDeltaMeaning": "Raw process heapUsed changes per sample; garbage collection is included. These are not allocation counts."
+}

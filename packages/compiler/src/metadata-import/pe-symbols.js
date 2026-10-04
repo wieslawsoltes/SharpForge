@@ -1,9 +1,13 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {SymbolBase,SymbolKind,TypeKind,Accessibility,NullableAnnotation,Variance,RefKind,TypeWithAnnotations,NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,PointerTypeSymbol,FunctionPointerTypeSymbol,TypeParameterSymbol,ErrorTypeSymbol} from '../symbols/types.js';
 import {MethodSymbol,FieldSymbol,PropertySymbol,EventSymbol,ParameterSymbol,MethodKind,DeclarationModifiers} from '../symbols/members.js';
 import {NamespaceSymbol,NamespaceExtent} from '../symbols/namespaces.js';
 import {AssemblyIdentity} from './assembly-identity.js';
 import {MetadataView,Table,tokenOf,tableOf,ridOf,parseMethodSignature,parseFieldSignature,parseTypeSignature} from './pe-metadata.js';
+import {attachSignatureModifiers} from './signature-modifiers.js';
+import { readImportedExtensionMembers } from './extension-blocks.js';
 import {decodeWellKnownAttributes,decodeAttributeBlob,applyTypeTransforms,unsupportedCompilerFeature,grantsInternalsAccess,RequiredMembersObsoleteMarker} from './attributes.js';
+import { importedParameterDefault } from './parameter-defaults.js';
 /**
  * Symbols imported from a referenced assembly (ECMA-335 metadata read through @sharpforge/cil).
  *
@@ -41,6 +45,7 @@ export class PENamedTypeSymbol extends NamedTypeSymbol {
     /** The first CompilerFeatureRequired feature this compiler does not know (the type is then unusable), or null. */
     this.unsupportedCompilerFeature=unsupportedCompilerFeature(extra.data);this.mightContainExtensionMethods=extra.mightContainExtensionMethods;this.nullableContext=extra.nullableContext;this._allTypeParameters=extra.allTypeParameters;
     lazy(this,'attributes',()=>assembly._attributes(this.metadataToken));
+    if (extra.mightContainExtensionMethods) lazy(this, 'extensionMembers', () => readImportedExtensionMembers(this));
   }
   get metadataName(){return this._metadataName;}
   /** The underlying integral type of an enum (the type of its value__ field), or null. */
@@ -105,15 +110,15 @@ export class PEAssemblySymbol extends SymbolBase {
   resolveType(metadataName){const result=this._resolveTopLevel(metadataName,[]);return result?result.type??this._missing(metadataName,result.error):null;}
   _resolveTopLevel(metadataName,visited){
     const own=this._topLevel.get(metadataName);if(own)return {type:own};const index=this._forwarders.get(metadataName);if(index===undefined)return null;
-    if(visited.includes(this))return {error:{code:'CS0731',args:[displayName(metadataName),this.identity.getDisplayName()]}};
-    const target=this._bound[index];if(!target)return {error:{code:'CS0012',args:[missingTypeName(metadataName),this.referencedAssemblyIdentities[index].getDisplayName()]}};
-    return target._resolveTopLevel(metadataName,[...visited,this])??{error:{code:'CS7069',args:[displayName(metadataName),target.name]}};
+    if(visited.includes(this))return {error:{code:DiagnosticId.CS0731,args:[displayName(metadataName),this.identity.getDisplayName()]}};
+    const target=this._bound[index];if(!target)return {error:{code:DiagnosticId.CS0012,args:[missingTypeName(metadataName),this.referencedAssemblyIdentities[index].getDisplayName()]}};
+    return target._resolveTopLevel(metadataName,[...visited,this])??{error:{code:DiagnosticId.CS7069,args:[displayName(metadataName),target.name]}};
   }
   _missing(metadataName,reason,nestedName){const dot=metadataName.lastIndexOf('.'),{name,arity}=unmangle(nestedName??metadataName.slice(dot+1)),error=new ErrorTypeSymbol(name,arity,{reason});error.metadataFullName=nestedName?metadataName+'+'+nestedName:metadataName;return error;}
   /** The special type with this id (for example System_Int32) from the core library, or an ErrorTypeSymbol with CS0518. */
   getSpecialType(id){
     const cached=this._special.get(id);if(cached)return cached;const metadataName=specialNames.get(id),type=metadataName?this.corLibrary?._topLevel.get(metadataName)??null:null;
-    if(type){this._special.set(id,type);return type;}return this._missing(metadataName??id,{code:'CS0518',args:[metadataName??id]});
+    if(type){this._special.set(id,type);return type;}return this._missing(metadataName??id,{code:DiagnosticId.CS0518,args:[metadataName??id]});
   }
   /** The symbol a TypeDef, TypeRef or TypeSpec token of this module denotes. */
   typeFromToken(token){return this._typeFromToken(token,{type:null,methodTypeParameters:[]});}
@@ -207,7 +212,7 @@ export class PEAssemblySymbol extends SymbolBase {
     else if(access<=1&&name.includes('.'))methodKind=MethodKind.ExplicitInterfaceImplementation;
     const isExtensionMethod=methodKind===MethodKind.Ordinary&&isStatic&&data.isExtension&&signature.parameters.length>0&&type.mightContainExtensionMethods;
     const parameters=signature.parameters.map((node,i)=>{
-      const row=rows.get(i+1),paramToken=row?tokenOf(Table.Param,row.rid):0,slot=this._slot(node,context,paramToken,nullableContext,{flags:row?.flags??0}),constant=row&&row.flags&0x1000?md.constant(paramToken):undefined;
+      const row=rows.get(i+1),paramToken=row?tokenOf(Table.Param,row.rid):0,slot=this._slot(node,context,paramToken,nullableContext,{flags:row?.flags??0}),constant=row?importedParameterDefault(md,paramToken,row.flags):undefined;
       const parameter=new ParameterSymbol({name:row?.name??'',type:slot.type,refKind:slot.refKind,isParams:slot.data.isParamArray||slot.data.isParamCollection,isOptional:!!((row?.flags??0)&0x10),isThis:isExtensionMethod&&i===0,...(constant?{explicitDefaultValue:constant}:{})});
       parameter.metadataToken=paramToken;if(paramToken)lazy(parameter,'attributes',()=>this._attributes(paramToken));return parameter;
     });
@@ -217,6 +222,7 @@ export class PEAssemblySymbol extends SymbolBase {
     const isConstructor=methodKind===MethodKind.Constructor;
     const method=new MethodSymbol({name,methodKind,returnType:returnSlot.type,refKind:returnSlot.refKind,parameters,typeParameters,containingSymbol:type,declaredAccessibility:memberAccess[access],modifiers,isExtensionMethod,isVararg:signature.callingConvention===5,
       isInitOnly:this._hasRequiredModifier(signature.returnType,'IsExternalInit'),obsolete:isConstructor&&data.obsolete?.message===RequiredMembersObsoleteMarker?null:data.obsolete});
+    attachSignatureModifiers(method,signature,modifierToken=>this._typeFromToken(modifierToken,context));
     method.conditionalSymbols=Object.freeze([...data.conditionalSymbols]);method.setsRequiredMembers=data.setsRequiredMembers;
     return this._finish(method,token,data);
   }
@@ -261,12 +267,12 @@ export class PEAssemblySymbol extends SymbolBase {
   }
   _typeRef(rid){
     const cached=this._typeRefs.get(rid);if(cached)return cached;const md=this.metadata,row=md.row(Table.TypeRef,rid),metadataName=md.string(row[1]),full=qualified(md.string(row[2]),metadataName),scope=row[0]?decodeScope(row[0]):0;let result;
-    if(tableOf(scope)===Table.TypeRef&&scope){const outer=this._typeRef(ridOf(scope));result=outer instanceof ErrorTypeSymbol?this._missing(outer.metadataFullName??outer.name,outer.reason,metadataName):outer.containingAssembly._nested.get(outer)?.get(metadataName)??this._missing(outer.metadataFullName,{code:'CS7069',args:[displayName(outer.metadataFullName+'+'+metadataName),outer.containingAssembly.name]},metadataName);}
+    if(tableOf(scope)===Table.TypeRef&&scope){const outer=this._typeRef(ridOf(scope));result=outer instanceof ErrorTypeSymbol?this._missing(outer.metadataFullName??outer.name,outer.reason,metadataName):outer.containingAssembly._nested.get(outer)?.get(metadataName)??this._missing(outer.metadataFullName,{code:DiagnosticId.CS7069,args:[displayName(outer.metadataFullName+'+'+metadataName),outer.containingAssembly.name]},metadataName);}
     else if(tableOf(scope)===Table.AssemblyRef&&scope){const index=ridOf(scope)-1,target=this._bound[index];
-      if(!target)result=this._missing(full,{code:'CS0012',args:[missingTypeName(full),this.referencedAssemblyIdentities[index].getDisplayName()]});
-      else{const found=target._resolveTopLevel(full,[]);result=found?found.type??this._missing(full,found.error):this._missing(full,{code:'CS7069',args:[displayName(full),target.name]});}}
-    else if(tableOf(scope)===Table.ModuleRef&&scope)result=this._missing(full,{code:'CS7069',args:[displayName(full),this.name]});
-    else{const found=this._resolveTopLevel(full,[]);result=found?found.type??this._missing(full,found.error):this._missing(full,{code:'CS7069',args:[displayName(full),this.name]});}
+      if(!target)result=this._missing(full,{code:DiagnosticId.CS0012,args:[missingTypeName(full),this.referencedAssemblyIdentities[index].getDisplayName()]});
+      else{const found=target._resolveTopLevel(full,[]);result=found?found.type??this._missing(full,found.error):this._missing(full,{code:DiagnosticId.CS7069,args:[displayName(full),target.name]});}}
+    else if(tableOf(scope)===Table.ModuleRef&&scope)result=this._missing(full,{code:DiagnosticId.CS7069,args:[displayName(full),this.name]});
+    else{const found=this._resolveTopLevel(full,[]);result=found?found.type??this._missing(full,found.error):this._missing(full,{code:DiagnosticId.CS7069,args:[displayName(full),this.name]});}
     this._typeRefs.set(rid,result);return result;
   }
   /** Signature node -> TypeWithAnnotations (custom modifiers kept, nullability oblivious until the Nullable transform). */

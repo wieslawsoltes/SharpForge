@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-653423ec4708d7517b32",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    void M(ref params readonly int[] p) => throw null;\n}",
+  "sourceSHA256": "5f1d7c13be01fe9bbe50c199d53e5aa885f0e25dbdfc481dbdd2394953617ed1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "Modifier_Invalid_01",
+    "offset": 81356
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8328",
+        "severity": "error"
+      },
+      {
+        "code": "CS9190",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,16): error CS8328:  The parameter modifier 'params' cannot be used with 'ref'\n            //     void M(ref params readonly int[] p) => throw null;\n            Diagnostic(ErrorCode.ERR_BadParameterModifiers, \"params\").WithArguments(\"params\", \"ref\").WithLocation(3, 16),\n            // (3,23): error CS9190: 'readonly' modifier must be specified after 'ref'.\n            //     void M(ref params readonly int[] p) => throw null;\n            Diagnostic(ErrorCode.ERR_RefReadOnlyWrongOrdering, \"readonly\").WithLocation(3, 23)",
+  "unsupported": []
+}

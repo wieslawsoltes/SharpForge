@@ -1,0 +1,4 @@
+{
+  "ref-struct-interfaces/cs9202-below-csharp-13": ["diagnostics", "warnings"],
+  "ref-struct-interfaces/cs9244-cs0029-cs0315": ["diagnostics", "warnings"]
+}

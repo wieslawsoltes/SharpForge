@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-16f12fcec771ead5bcf9",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Threading.Tasks;\nclass Foo\n{\n    async Task A(string s, Task<int> task)\n    {\n        C(in s, await task);\n    }\n\n    void C(in object obj, int length) {}\n}",
+  "sourceSHA256": "530b964ad760967d7ad5d84bdfdb7d357e4d1e84c9354183dc83fd1ad47c47ce",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncSpillTests.cs",
+    "sha256": "d53a41f5a22e30f0369be8a24a0d430582966a9ef2840b365b86f1f68ce5f3b1",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncSpillTests.cs",
+    "license": "MIT",
+    "method": "AwaitWithInParameter_ArgModifier",
+    "offset": 371000
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System.Threading.Tasks;\nclass Foo\n{\n    async Task A(string s, Task<int> task)\n    {\n        C(in s, await task);\n    }\n\n    void C(in object obj, int length) {}\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1503",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,14): error CS1503: Argument 1: cannot convert from 'in string' to 'in object'\n                //         C(in s, await task);\n                Diagnostic(ErrorCode.ERR_BadArgType, \"s\").WithArguments(\"1\", \"in string\", \"in object\").WithLocation(7, 14)",
+  "unsupported": []
+}

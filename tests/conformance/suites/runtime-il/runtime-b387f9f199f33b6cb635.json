@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-b387f9f199f33b6cb635",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern System.Console\n{\n  .publickeytoken = (B0 3F 5F 7F 11 D5 0A 3A )\n  .ver 4:0:0:0\n}\n.assembly extern xunit.core {}\n\n.assembly 'implicitConv' {}\n.assembly extern mscorlib{auto}\n\n.class public ILGEN_0xc60e022c {\n\n.method static int16  Method_0xf7bb2d95() {\n.zeroinit \n.maxstack\t3\n\n BLOCK_1:\n    ldc.r4 float32(0x4ec956e5)\n    conv.i4\n    ret\n}\n.method public static int32 Main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack\t15\n\n    //If the implicit conversion below is not correct, the test will return a non 100 (FAIL) return code.\n    call int16  ILGEN_0xc60e022c::Method_0xf7bb2d95()\n    conv.i4\n    ldc.i4 29212\n    sub\n    dup\n    call void [System.Console]System.Console::WriteLine(int32)\n    ret\n}\n\n}\n\n\n",
+  "unsupported": [],
+  "language": "il",
+  "opcodeFamilies": [
+    "arithmetic",
+    "calls",
+    "conversions"
+  ],
+  "sourceSHA256": "ce9f73f64fe18993cb0a89402fcc1df0112216800209978b6572920db89773cc",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern System.Console\n{\n  .publickeytoken = (B0 3F 5F 7F 11 D5 0A 3A )\n  .ver 4:0:0:0\n}\n.assembly extern xunit.core {}\n\n.assembly 'implicitConv' {}\n.assembly extern mscorlib{auto}\n\n.class public ILGEN_0xc60e022c {\n\n.method static int16  Method_0xf7bb2d95() {\n.zeroinit \n.maxstack\t3\n\n BLOCK_1:\n    ldc.r4 float32(0x4ec956e5)\n    conv.i4\n    ret\n}\n.method public static int32 Main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack\t15\n\n    //If the implicit conversion below is not correct, the test will return a non 100 (FAIL) return code.\n    call int16  ILGEN_0xc60e022c::Method_0xf7bb2d95()\n    conv.i4\n    ldc.i4 29212\n    sub\n    dup\n    call void [System.Console]System.Console::WriteLine(int32)\n    ret\n}\n\n}\n\n\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/Directed/Convert/implicitConv.il",
+    "sha256": "ce9f73f64fe18993cb0a89402fcc1df0112216800209978b6572920db89773cc",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/Directed/Convert/implicitConv.il",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Unmodified upstream IL. Native ILAsm required; no IL simulation."
+}

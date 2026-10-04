@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fe3a5b513594f867afcb",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct Bar\n{\n    public bool Field;\n}\n\nclass Goo\n{\n    public int Field;\n    public string Property1 { set; get; }\n    public Bar Property2 { set; get; }\n}\n\nclass C\n{\n    public void M1()\n    {\n        var x1 = new Goo();\n        var x2 = new Goo() { Field = 2};\n        var x3 = new Goo() { Property1 = \"\"};\n        var x4 = new Goo() { Property1 = \"\", Field = 2};\n        var x5 = new Goo() { Property2 = new Bar { Field = true } };\n    }\n\n    public void M2()\n    {\n        var x1 = new Goo() { Property2 = new Bar { Field = true } };\n        x1.Field = 10;\n        x1.Property1 = null;\n\n        var x2 = new Bar();\n        x2.Field = true;\n    }\n}\n",
+  "sourceSHA256": "a9d8b44a448f535a240f0e7636e4625b6afee17da2d1994d37833676ed355e35",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "AssignmentCSharp",
+    "offset": 31284
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

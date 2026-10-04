@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-65091e14bf3748e5fd1c",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Base\n{\n    public virtual (int a, int b) M1() { return (1, 2); }\n}\npublic class Derived : Base\n{\n    public (int, int) M1() { return (1, 2); }\n}\n",
+  "sourceSHA256": "9654566f3a8d429f5c55e4609d4f3b71db29a1cd9996c16de396ce24e98ac7ab",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "HiddenMethodsWithNoNames",
+    "offset": 881872
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0114",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,23): warning CS0114: 'Derived.M1()' hides inherited member 'Base.M1()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.\n                //     public (int, int) M1() { return (1, 2); }\n                Diagnostic(ErrorCode.WRN_NewOrOverrideExpected, \"M1\").WithArguments(\"Derived.M1()\", \"Base.M1()\").WithLocation(8, 23)\n                ",
+  "unsupported": []
+}

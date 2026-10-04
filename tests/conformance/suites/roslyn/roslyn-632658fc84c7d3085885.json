@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-632658fc84c7d3085885",
+  "kind": "diagnostics",
+  "sourceText": "\n[assembly: System.Reflection.AssemblyVersion(\"1.0.0.2\")]\n\npublic class D { }\n",
+  "sourceSHA256": "8330ea58278890cb19b4e331c7208920b322d9dac7eac9e478adc7efa8fa0037",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/EditAndContinue/AssemblyReferencesTests.cs",
+    "sha256": "eadcd3c3a0d1cfba94f9486b3f4da456d8c8a6e7dbbc29fa50da8229d754944a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/EditAndContinue/AssemblyReferencesTests.cs",
+    "license": "MIT",
+    "method": "DependencyVersionWildcardsCollisions",
+    "offset": 18929
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(srcLib02, assemblyName: \"Lib\", options: s_signedDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

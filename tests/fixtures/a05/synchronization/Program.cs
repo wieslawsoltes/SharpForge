@@ -1,86 +1,92 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
-class SynchronizationReference
+class Gate { }
+static class Program
 {
-    static object gate = new object();
-    static int phase;
-    static int counter;
-    static long published;
+    static Gate gate = new Gate();
+    static int calls;
+    static Gate Get() { calls++; return gate; }
+    static int ReturnInsideLock() { lock (gate) { return 7; } }
 
-    static void Ping()
+    static void Locks()
     {
-        for (int i = 0; i < 3; i++)
+        lock (Get())
         {
-            Monitor.Enter(gate);
-            while (phase % 2 != 1) Monitor.Wait(gate);
-            Console.WriteLine(phase);
-            phase++;
-            Monitor.Pulse(gate);
-            Monitor.Exit(gate);
+            Console.WriteLine(Monitor.IsEntered(gate));
+            lock (gate) { Console.WriteLine(Monitor.IsEntered(gate)); }
         }
-    }
-
-    static void Count()
-    {
-        for (int i = 0; i < 1000; i++) Interlocked.Increment(ref counter);
-    }
-
-    static void Main()
-    {
-        Monitor.Enter(gate);
-        Monitor.Enter(gate);
-        Console.WriteLine(Monitor.Wait(gate, 0));
-        Monitor.Exit(gate);
         Console.WriteLine(Monitor.IsEntered(gate));
-        Monitor.Exit(gate);
+        Console.WriteLine(calls);
+        Console.WriteLine(ReturnInsideLock());
         Console.WriteLine(Monitor.IsEntered(gate));
-        try { Monitor.Exit(gate); }
-        catch (Exception error) { Console.WriteLine(error.GetType().Name); }
-
+        try { lock (gate) { throw new InvalidOperationException("saved"); } }
+        catch (InvalidOperationException) { Console.WriteLine("caught"); }
+        Console.WriteLine(Monitor.IsEntered(gate));
         bool taken = false;
         Monitor.Enter(gate, ref taken);
         Console.WriteLine(taken);
         Monitor.Exit(gate);
+        try { Monitor.Exit(gate); } catch (SynchronizationLockException) { Console.WriteLine("unowned"); }
+        try { Monitor.Enter(null); } catch (ArgumentNullException) { Console.WriteLine("null"); }
+        taken = true;
+        try { Monitor.Enter(gate, ref taken); } catch (ArgumentException) { Console.WriteLine("flag"); }
+        Console.WriteLine(Monitor.IsEntered(gate));
+    }
 
-        Thread ping = new Thread(Ping);
-        ping.Start();
-        for (int i = 0; i < 3; i++)
-        {
-            Monitor.Enter(gate);
-            while (phase % 2 != 0) Monitor.Wait(gate);
-            Console.WriteLine(phase);
-            phase++;
-            Monitor.Pulse(gate);
-            Monitor.Exit(gate);
-        }
-        ping.Join();
-
-        Thread first = new Thread(Count);
-        Thread second = new Thread(Count);
-        first.Start();
-        second.Start();
-        first.Join();
-        second.Join();
-        Console.WriteLine(counter);
-
-        long wide = 9223372036854775807L;
-        Console.WriteLine(Interlocked.Increment(ref wide));
-        Console.WriteLine(Interlocked.CompareExchange(ref wide, 42L, -9223372036854775808L));
-        Console.WriteLine(wide);
-        int mask = 15;
-        Console.WriteLine(Interlocked.And(ref mask, 3));
-        Console.WriteLine(Interlocked.Or(ref mask, 8));
-        Console.WriteLine(mask);
-
-        double zero = -0.0;
-        Interlocked.CompareExchange(ref zero, 1.0, 0.0);
-        Console.WriteLine(BitConverter.DoubleToInt64Bits(zero));
-        Interlocked.CompareExchange(ref zero, 1.0, -0.0);
-        Console.WriteLine(zero);
-
-        Volatile.Write(ref published, 9223372036854775807L);
-        Console.WriteLine(Volatile.Read(ref published));
+    static void Atomics()
+    {
+        int value = 1;
+        Console.WriteLine(Interlocked.Increment(ref value));
+        Console.WriteLine(Interlocked.CompareExchange(ref value, 7, 2));
+        Console.WriteLine(value);
+        Console.WriteLine(Interlocked.Add(ref value, 3));
+        bool flag = false;
+        Volatile.Write(ref flag, true);
+        Console.WriteLine(Volatile.Read(ref flag));
+        Thread.MemoryBarrier();
         Interlocked.MemoryBarrier();
+        string text = "first";
+        Console.WriteLine(Interlocked.Exchange<string>(ref text, "second"));
+        Console.WriteLine(Interlocked.CompareExchange<string>(ref text, "third", "second"));
+        Console.WriteLine(Volatile.Read<string>(ref text));
+        Volatile.Write<string>(ref text, "fourth");
+        Console.WriteLine(text);
+    }
+
+    static void Queues()
+    {
+        Gate queue = new Gate();
+        int turn = 0;
+        Action action = () => {
+            lock (queue)
+            {
+                while (turn == 0) Monitor.Wait(queue);
+                Console.WriteLine(turn);
+                turn = 2;
+                Monitor.Pulse(queue);
+            }
+        };
+        Task first = Task.Run(action);
+        Task second = Task.Run(() => {
+            lock (queue)
+            {
+                turn = 1;
+                Monitor.Pulse(queue);
+                while (turn != 2) Monitor.Wait(queue);
+                Console.WriteLine(turn);
+            }
+        });
+        first.Wait();
+        second.Wait();
+        Console.WriteLine(Monitor.IsEntered(queue));
+    }
+
+    static void Main()
+    {
+        Locks();
+        Atomics();
+        Queues();
     }
 }

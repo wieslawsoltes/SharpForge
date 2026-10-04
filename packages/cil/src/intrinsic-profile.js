@@ -1,20 +1,17 @@
-import {memoryMethodDefinition} from './memory-profile.js';
-import {varargsIntrinsicDefinitions} from './varargs-profile.js';
-import {exceptionIntrinsicDefinitions} from './exception-profile.js';
+import {builtinSignatureType} from './intrinsic-signature-types.js';
+import {exceptionIntrinsicDefinitions, syncIntrinsicDefinitions, isSynchronizationIntrinsic, varargsIntrinsicDefinitions} from '@sharpforge/bytecode';
 import {asyncMethodDefinition} from './async-profile.js';
-import {numericAliases} from '@sharpforge/bytecode';
+import {decimalIntrinsicDefinitions} from '@sharpforge/bytecode';
+import {nullableMethodDefinition} from './nullable-profile.js';
 import {arrayMethodDefinition} from './array-profile.js';
-import {syncIntrinsicDefinitions,isSynchronizationIntrinsic} from './sync-intrinsic-profile.js';
-import {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
-import {canonicalType,contracts,types} from '@sharpforge/framework';
+import {memoryMethodDefinition} from './memory-profile.js';
+import {canonicalType,contracts,types,memberSignatureType} from '@sharpforge/framework';
 
-const aliases={object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean',decimal:'System.Decimal',float:'System.Single',uint:'System.UInt32',ulong:'System.UInt64',nint:'System.IntPtr',nuint:'System.UIntPtr'};
+const aliases={decimal:'System.Decimal',object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean'};
 export const systemType=name=>aliases[name]??name;
 /** Include return type and staticness: parameter-only keys can accept invalid MemberRefs. */
-const signatureType=type=>type.replace(/[A-Za-z_][\w.+`]+/g,name=>numericAliases[name]??({'System.Object':'object','System.String':'string','System.Void':'void','System.Exception':'Exception'}[name])??name);
 function signatureKey(owner,name,parameters,result,isStatic) {
-  parameters=parameters.map(signatureType);result=signatureType(result);
-  return signatureType(owner)+'::'+name+'('+JSON.stringify(parameters)+'):'+JSON.stringify(result)+':'+(isStatic?'static':'instance');
+  return owner+'::'+name+'('+JSON.stringify(parameters)+'):'+JSON.stringify(result)+':'+(isStatic?'static':'instance');
 }
 export function intrinsicKey(descriptor) {
   const signature=descriptor.signature;
@@ -26,17 +23,18 @@ function add(owner,name,parameters,returnType,isStatic,implementation,contract=n
   const key=intrinsicKey(descriptor);
   definitions.set(key,Object.freeze({key,descriptor,implementation,contract}));
 }
-const primitive=['int','uint','long','ulong','double','float','bool','char','string','object','System.Decimal'];
+for(const [name,parameter,result] of [['SingleToInt32Bits','float','int'],['DoubleToInt64Bits','double','long'],['Int32BitsToSingle','int','float'],['Int64BitsToDouble','long','double']])add('System.BitConverter',name,[parameter],result,true,'bitConverter');
+for(const owner of ['System.IntPtr','System.UIntPtr'])add(owner,'get_Size',[],'int',true,'nativeSize');
+add('System.Math','IEEERemainder',['double','double'],'double',true,'ieeeRemainder');
+for(const descriptor of decimalIntrinsicDefinitions)add(descriptor.owner,descriptor.name,descriptor.parameters,descriptor.returnType,descriptor.isStatic,'decimal');
+const primitive=['System.Decimal','int','uint','long','ulong','double','float','bool','char','string','object'];
 for(const name of ['Write','WriteLine'])for(const type of primitive)add('System.Console',name,[type],'void',true,'console');
 add('System.Console','WriteLine',[],'void',true,'console');
 add('System.Object','.ctor',[],'void',false,'objectCtor');
 add('System.Object','ToString',[],'string',false,'objectToString');
+add('System.Object','Equals',['object'],'bool',false,'objectEquals');
+add('System.Object','GetHashCode',[],'int',false,'objectHashCode');
 add('System.Object','GetType',[],'System.Type',false,'objectGetType');
-for(const owner of ['System.Object','System.ValueType','System.Enum']) {
-  add(owner,'ToString',[],'string',false,'objectToString');
-  add(owner,'Equals',['object'],'bool',false,'objectEquals');
-  add(owner,'GetHashCode',[],'int',false,'objectHashCode');
-}
 add('System.Type','GetTypeFromHandle',['System.RuntimeTypeHandle'],'System.Type',true,'typeFromHandle');
 for(const name of ['op_Equality','op_Inequality'])add('System.Type',name,['System.Type','System.Type'],'bool',true,'typeCompare');
 for(const parameter of ['System.Type','object'])add('System.Type','Equals',[parameter],'bool',false,'typeEquals');
@@ -48,7 +46,11 @@ for(const name of ['IsGenericType','IsGenericTypeDefinition','ContainsGenericPar
 add('System.Object','ReferenceEquals',['object','object'],'bool',true,'objectReferenceEquals');
 add('System.Enum','ToString',[],'string',false,'enumToString');
 add('System.Enum','HasFlag',['System.Enum'],'bool',false,'enumHasFlag');
-for(const d of exceptionIntrinsicDefinitions){add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation);if(d.name==='get_Message')add(d.owner,'GetType',[],'System.Type',false,'objectGetType');}
+for(const parameters of [[],['string']])add('System.Exception','.ctor',parameters,'void',false,'exceptionCtor');
+add('System.Exception','get_Message',[],'string',false,'exceptionMessage');
+for(const result of ['Exception','System.Exception'])add('System.Exception','get_InnerException',[],result,false,'exceptionInner');
+add('System.TypeInitializationException','get_Message',[],'string',false,'exceptionMessage');
+for(const result of ['Exception','System.Exception'])add('System.TypeInitializationException','get_InnerException',[],result,false,'exceptionInner');
 for(const name of ['Sort','Reverse'])add('System.Array',name,['System.Array'],'void',true,'arrayMutate');
 add('System.String','.ctor',['char[]'],'void',false,'stringCtor');
 for(const count of [2,3,4])add('System.String','Concat',Array(count).fill('string'),'string',true,'stringConcat');
@@ -65,6 +67,15 @@ add('System.String','IndexOf',['string'],'int',false,'stringSearch');
 add('System.String','Replace',['string','string'],'string',false,'stringReplace');
 for(const parameters of [['int'],['int','int']])add('System.String','Substring',parameters,'string',false,'stringSubstring');
 for(const name of ['Abs','Min','Max'])for(const type of ['int','double','long','float'])add('System.Math',name,Array(name==='Abs'?1:2).fill(type),type,true,'math');
+for (const type of ['sbyte', 'short', 'int', 'long', 'float', 'double']) {
+  add('System.Math', 'Sign', [type], 'int', true, 'mathSign');
+}
+for (const name of ['Min', 'Max']) {
+  for (const type of ['uint', 'ulong']) add('System.Math', name, [type, type], type, true, 'unsignedMathExtremum');
+  for (const type of ['sbyte', 'byte', 'short', 'ushort']) {
+    add('System.Math', name, [type, type], type, true, 'smallMathExtremum');
+  }
+}
 for(const name of ['Sqrt','Floor','Ceiling','Round','Sin','Cos','Tan','Log','Exp','Pow'])add('System.Math',name,Array(name==='Pow'?2:1).fill('double'),'double',true,'math');
 add('System.GC','Collect',[],'void',true,'gcCollect');
 add('System.GC','GetTotalMemory',['bool'],'long',true,'gcMemory');
@@ -74,13 +85,17 @@ for(const type of ['int','double','string'])add('System.Convert','ToDouble',[typ
 for(const type of primitive)add('System.Convert','ToString',[type],'string',true,'convertString');
 for(const [owner,result] of [['System.Int32','int'],['System.Double','double'],['System.Int64','long']])add(owner,'Parse',['string'],result,true,'parse');
 
-for(const d of numericIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation==='object'?'objectCtor':d.implementation);
-
-for(const d of syncIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation==='object'?'objectCtor':d.implementation);
-
-for(const d of varargsIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation);
-
+for (const descriptor of [...exceptionIntrinsicDefinitions, ...syncIntrinsicDefinitions.filter(item => !item.genericArity), ...varargsIntrinsicDefinitions]) {
+  add(descriptor.owner, descriptor.name, descriptor.parameters, descriptor.returnType, descriptor.isStatic, descriptor.implementation);
+}
 const builtinDefinitions=new Map(definitions),frameworkDefinitions=new Map();
+
+const frameworkSignatureType = type => memberSignatureType(canonicalType(type));
+function frameworkKey(descriptor) {
+  const signature = descriptor.signature;
+  return signatureKey(canonicalType(descriptor.owner), descriptor.name, signature.parameters.map(frameworkSignatureType),
+    frameworkSignatureType(signature.returnType), signature.isStatic);
+}
 
 // Expand inherited framework members once. Runtime lookup does not walk the type tree.
 // Preserve contractForMember's nearest declaration and registration-order preference.
@@ -96,11 +111,12 @@ for(const owner of new Set([...types.keys(),...declared.keys()])) {
     seenTypes.add(current);
     for(const contract of declared.get(current)??[]) {
       const result=contract.kind==='constructor'?'void':contract.result;
-      const key=intrinsicKey({owner,name:contract.name,signature:{parameters:contract.parameters,returnType:result,isStatic:contract.isStatic}});
+      const descriptor={owner,name:contract.name,signature:{parameters:contract.parameters,returnType:result,isStatic:contract.isStatic}};
+      const key=frameworkKey(descriptor);
       if(seenMembers.has(key))continue;
       seenMembers.add(key);
       add(owner,contract.name,contract.parameters,result,contract.isStatic,'framework',contract);
-      frameworkDefinitions.set(key,definitions.get(key));
+      frameworkDefinitions.set(key,definitions.get(intrinsicKey(descriptor)));
     }
     current=types.get(current)?.base;
   }
@@ -109,21 +125,17 @@ export const intrinsicDefinitions=Object.freeze([...definitions.values()]);
 export function intrinsicDefinition(descriptor) {
   if(descriptor?.kind!=='method'||!descriptor.signature||!Array.isArray(descriptor.signature.parameters))return null;
   const signature=descriptor.signature;
-  if(!signature.genericArity&&(descriptor.genericArguments!==undefined||descriptor.methodArguments?.length))return null;
-  if(!signature.genericArity&&!signature.callingConvention) {
-    const contract=frameworkDefinitions.get(signatureKey(canonicalType(descriptor.owner),descriptor.name,signature.parameters.map(canonicalType),canonicalType(signature.returnType),signature.isStatic));
-    if(contract)return contract;
-    const registered=builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters.map(type=>type==='Array'?'System.Array':type),signature.returnType,signature.isStatic));
-    if(registered)return registered;
+  const async = asyncMethodDefinition(descriptor);
+  if (async) return async;
+  if (isSynchronizationIntrinsic(descriptor)) {
+    return builtinDefinitions.get(intrinsicKey(descriptor)) ?? {implementation:'synchronization',descriptor};
   }
-  const memory=memoryMethodDefinition(descriptor);if(memory)return memory;
-  const array=arrayMethodDefinition(descriptor);if(array)return array;
-  const async=asyncMethodDefinition(descriptor);if(async)return async;
-  if(isSynchronizationIntrinsic(descriptor))return {key:intrinsicKey(descriptor),descriptor,implementation:'synchronization',contract:null};
   // Framework canonical aliases and built-in CLI aliases intentionally differ.
   // This preserves the verifier's previous contract-first selection policy.
-  const contract=frameworkDefinitions.get(signatureKey(canonicalType(descriptor.owner),descriptor.name,signature.parameters.map(canonicalType),canonicalType(signature.returnType),signature.isStatic));
+  const contract=frameworkDefinitions.get(frameworkKey(descriptor));
   if(contract)return contract;
+  const nullable=nullableMethodDefinition(descriptor);if(nullable)return nullable;
+  const memory=memoryMethodDefinition(descriptor)??arrayMethodDefinition(descriptor);if(memory)return memory;
   if(descriptor.genericArguments||signature.genericArity||signature.callingConvention)return null;
-  return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters.map(type=>type==='Array'?'System.Array':type),signature.returnType,signature.isStatic))??null;
+  return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters.map(builtinSignatureType),builtinSignatureType(signature.returnType),signature.isStatic))??null;
 }

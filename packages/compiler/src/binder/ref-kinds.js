@@ -12,6 +12,7 @@
  * `argumentRefKind` reads the modifier of an Argument syntax, and `byRefEmission` describes how a back end passes
  * the argument (address of a local, field, element or temporary copy for `in` rvalues).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind, SymbolKind, TypeKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 
@@ -30,6 +31,7 @@ const inConstructorOf = (context, field) => {
     ? m.methodKind === MethodKind.StaticConstructor
     : m.methodKind === MethodKind.Constructor || (m.isInitOnly && m.methodKind === MethodKind.PropertySet);
 };
+const isRefFieldKind = refKind => refKind === RefKind.Ref || refKind === RefKind.RefReadOnly;
 /**
  * @param expression a bound expression  @param {{method,containingType,isFieldInitializer?,isStatic?,inObjectInitializer?}} context
  * @returns {{isVariable:boolean,isWritable:boolean,reason?:string,symbol?:object,detail?:string}}
@@ -43,7 +45,12 @@ export function classifyVariable(expression, context = {}) {
     case 'Local': {
       const l = expression.local;
       if (l.isConst) return no('constant', { symbol: l });
-      if (l.readOnlyReason) return { isVariable: true, isWritable: false, reason: 'readonlyLocal', symbol: l, detail: l.readOnlyReason };
+      // `foreach (ref var x in ...)`: the variable cannot be made to denote another element, but the element it
+      // denotes is written through it.
+      const isRefIteration = l.isForEach && l.refKind === RefKind.Ref;
+      if (l.readOnlyReason && !isRefIteration) {
+        return { isVariable: true, isWritable: false, reason: 'readonlyLocal', symbol: l, detail: l.readOnlyReason };
+      }
       if (l.refKind === RefKind.RefReadOnly)
         return { isVariable: true, isWritable: false, reason: 'readonlyRef', symbol: l, detail: 'variable' };
       return yes;
@@ -54,28 +61,43 @@ export function classifyVariable(expression, context = {}) {
         return { isVariable: true, isWritable: false, reason: 'readonlyRef', symbol: p, detail: 'variable' };
       return yes;
     }
+    // The object an initializer fills in is a fresh variable, also when its type is a struct.
+    case 'ImplicitReceiver':
     case 'Discard':
     case 'DeclarationExpression':
+    case 'PointerIndirection':
+    case 'PointerElementAccess':
       return yes;
-    case 'TypedReferenceValue':
     case 'ArrayAccess':
     case 'PointerIndirection':
       return yes;
     case 'This': {
       const t = context.containingType;
       if (!t || t.typeKind !== TypeKind.Struct) return { isVariable: false, isWritable: false, reason: 'this' };
-      // `readonly` on a constructor is an error of its own (CS0106); the constructor still assigns the fields.
-      const inReadOnlyMember = !!context.method?.isReadOnly && !context.method.isConstructor;
-      if (t.isReadOnly || inReadOnlyMember) return { isVariable: true, isWritable: false, reason: 'this' };
+      // `readonly` on a constructor is an error of its own (CS0106); the constructor still assigns the fields, and
+      // so does the constructor (and an `init` accessor) of a `readonly struct`: there `this` is being built.
+      const method = context.method,
+        builds = !!method && (method.isConstructor || method.isInitOnly),
+        inReadOnlyMember = !!method?.isReadOnly && !method.isConstructor;
+      if ((t.isReadOnly && !builds) || inReadOnlyMember) return { isVariable: true, isWritable: false, reason: 'this' };
       return yes;
     }
     case 'FieldAccess': {
       const f = expression.field;
       if (f.isConst) return no('constant', { symbol: f });
+      // A `ref` field (C# 11) denotes the variable it refers to: `readonly ref int` fixes the reference, not that
+      // variable, and `ref readonly int` the variable, not the reference. `f = ref x` re-targets the reference, which
+      // is what `readonly` on the field forbids, so a ref assignment follows the rules of an ordinary field below.
+      if (isRefFieldKind(f.refKind) && !context.isRefAssignment) {
+        if (f.refKind === RefKind.Ref) return yes;
+        return { isVariable: true, isWritable: false, reason: 'readonlyRef', symbol: { name: f.toDisplayString?.() ?? f.name }, detail: 'field' };
+      }
       if (f.isReadOnly && !inConstructorOf(context, f)) return { isVariable: true, isWritable: false, reason: 'readonlyField', symbol: f };
       if (f.isStatic || !expression.receiver || expression.receiver.type?.isValueType !== true) return yes;
       // An instance field of a struct is a variable exactly when the struct expression is.
-      const outer = classifyVariable(expression.receiver, context);
+      // ... and the object an initializer fills in (`new S { X = 1 }`) is a fresh variable whatever created it.
+      const isInitializedObject = expression.isInitializerTarget && !expression.receiver.isInitializerTarget,
+        outer = isInitializedObject ? yes : classifyVariable(expression.receiver, context);
       if (!outer.isVariable) return no('rvalueStructMember', { symbol: expression.receiver.symbol ?? f, receiver: expression.receiver });
       if (!outer.isWritable)
         return {
@@ -103,6 +125,9 @@ export function classifyVariable(expression, context = {}) {
             receiver: expression.receiver,
           };
       }
+      // The members of an anonymous type have no setter; a `with` expression gives them their values in a new instance.
+      if (!p.setMethod && context.inObjectInitializer && expression.receiver?.kind === 'WithCopy' && p.containingType?.isAnonymousType)
+        return { isVariable: false, isWritable: true, isProperty: true, symbol: p };
       if (!p.setMethod) {
         // A get-only auto-property can be assigned in a constructor of its type.
         if (p.isAutoProperty && inConstructorOf(context, p) && (!expression.receiver || expression.receiver.kind === 'This'))
@@ -117,15 +142,27 @@ export function classifyVariable(expression, context = {}) {
         return { isVariable: false, isWritable: false, reason: 'initOnly', isProperty: true, symbol: p };
       return { isVariable: false, isWritable: true, isProperty: true, symbol: p };
     }
+    case 'InlineArrayAccess': {
+      // An element of an inline array is a variable exactly when the array is, and read-only when the array is.
+      const outer = classifyVariable(expression.receiver, context);
+      if (!outer.isVariable) return no('notVariable');
+      const symbol = outer.symbol ?? { name: expression.receiver.syntax?.toString() ?? 'this' };
+      return outer.isWritable ? yes : { isVariable: true, isWritable: false, reason: 'readonlyRef', symbol, detail: 'variable' };
+    }
     case 'ImplicitIndexerAccess':
       // `a[^1]` is as assignable as the element or indexer it stands for; a slice (`a[1..2]`) is a value.
       return expression.accessKind === 'index' ? classifyVariable(expression.access, context) : no('notVariable');
     case 'EventAccess':
       return { isVariable: true, isWritable: true };
+    case 'DynamicMemberAccess':
+    case 'DynamicElementAccess':
+      // Whether the member can be written is known only at run time.
+      return { isVariable: false, isWritable: true, isProperty: true };
     case 'Call':
       if (expression.method?.refKind && expression.method.refKind !== RefKind.None)
         return { isVariable: true, isWritable: expression.method.refKind === RefKind.Ref };
       return no('notVariable');
+    case 'TypedReferenceValue':
     case 'RefConditional':
       return yes;
     case 'MethodGroup':
@@ -149,33 +186,33 @@ export function checkWritable(expression, use, context = {}) {
   if (expression.type?.isErrorType?.() || expression.hasErrors) return null;
   const c = classifyVariable(expression, context),
     byRef = use === 'ref' || use === 'out';
-  if (byRef && c.isProperty) return { code: 'CS0206', args: [] };
+  if (byRef && c.isProperty) return { code: DiagnosticId.CS0206, args: [] };
   if (c.isWritable && (c.isVariable || !byRef)) return null;
   const name = c.symbol?.toDisplayString?.() ?? c.symbol?.name ?? '';
   switch (c.reason) {
     case 'readonlyLocal':
-      return { code: byRef ? 'CS1657' : 'CS1656', args: [c.symbol.name, c.detail] };
+      return { code: byRef ? DiagnosticId.CS1657 : DiagnosticId.CS1656, args: [c.symbol.name, c.detail] };
     case 'readonlyRef':
-      return { code: byRef ? 'CS8329' : 'CS8331', args: [c.detail, c.symbol.name] };
+      return { code: byRef ? DiagnosticId.CS8329 : DiagnosticId.CS8331, args: [c.detail, c.symbol.name] };
     case 'readonlyField':
-      return c.symbol.isStatic ? { code: byRef ? 'CS0199' : 'CS0198', args: [] } : { code: byRef ? 'CS0192' : 'CS0191', args: [] };
+      return c.symbol.isStatic ? { code: byRef ? DiagnosticId.CS0199 : DiagnosticId.CS0198, args: [] } : { code: byRef ? DiagnosticId.CS0192 : DiagnosticId.CS0191, args: [] };
     case 'readonlyFieldMember':
-      return { code: byRef ? 'CS1649' : 'CS1648', args: [name] };
+      return { code: byRef ? DiagnosticId.CS1649 : DiagnosticId.CS1648, args: [name] };
     case 'this':
-      return { code: byRef ? 'CS1605' : 'CS1604', args: ['this'] };
+      return { code: byRef ? DiagnosticId.CS1605 : DiagnosticId.CS1604, args: ['this'] };
     case 'rvalueStructMember':
-      return { code: 'CS1612', args: [describe(c.receiver)] };
+      return { code: DiagnosticId.CS1612, args: [describe(c.receiver)] };
     case 'noSetter':
-      return { code: 'CS0200', args: [name] };
+      return { code: DiagnosticId.CS0200, args: [name] };
     case 'initOnly':
-      return { code: 'CS8852', args: [name] };
+      return { code: DiagnosticId.CS8852, args: [name] };
     case 'methodGroup':
-      return { code: byRef ? 'CS1657' : 'CS1656', args: [expression.name ?? '', 'method group'] };
+      return { code: byRef ? DiagnosticId.CS1657 : DiagnosticId.CS1656, args: [expression.name ?? '', 'method group'] };
     case 'constant':
-      if (!byRef) return { code: use === 'increment' ? 'CS1059' : 'CS0131', args: [] };
+      if (!byRef) return { code: use === 'increment' ? DiagnosticId.CS1059 : DiagnosticId.CS0131, args: [] };
     // falls through
     default:
-      return { code: byRef ? 'CS1510' : use === 'increment' ? 'CS1059' : 'CS0131', args: [] };
+      return { code: byRef ? DiagnosticId.CS1510 : use === 'increment' ? DiagnosticId.CS1059 : DiagnosticId.CS0131, args: [] };
   }
 }
 const describe = e =>

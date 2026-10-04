@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-0a863ef0c10106a7c507",
+  "kind": "spec",
+  "sourceText": "file class FileBase\n{\n}\n\npublic class Derived : FileBase // error\n{\n    private FileBase M2() => new FileBase() // error\n}\n\nfile class FileDerived : FileBase // ok\n{\n    private FileBase M2() => new FileBase(); // ok\n}",
+  "sourceSHA256": "943959bf97213fc251c582b9365c1d230d86a60dd465c6cc465d39f612bcb3c4",
+  "target": "library",
+  "featureId": "csharp-11-0-file-local-types",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/file-local-types.md",
+    "sha256": "c9907c62543e8698e69f8bd26b0435b3365ebd1e7405b79536b18134385374b6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/file-local-types.md",
+    "license": "NOASSERTION",
+    "offset": 7156
+  }
+}

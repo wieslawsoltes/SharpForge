@@ -1,130 +1,120 @@
+import {decodeCoded} from '@sharpforge/cil';
 import {frameworkType} from '@sharpforge/framework';
-import {ManagedFault,isReference} from '../heap.js';
-import {defaults,storage as numericStorage} from './numeric-ops.js';
-import {enumInfo,enumUnderlying,enumValue} from './enums.js';
-import {explicitLayout} from './explicit-layout.js';
-import {createExplicitValue,copyExplicitValue,replaceExplicitField} from './explicit-values.js';
+import {ManagedFault, isReference} from '../heap.js';
+import {defaults, storage as numericStorage} from './numeric-ops.js';
+import {valueLayout} from './value-layout.js';
+import {executionCodeState} from './code-version.js';
+import {byteLayout, hasExplicitLayout} from './explicit-layout.js';
+import {createExplicitValue, copyExplicitValue, replaceExplicitField} from './explicit-values.js';
+import {castCacheFor} from './casting.js';
+import {ownsHeapReference} from './heap-reference.js';
 
-const aliases={'System.Void':'void','System.Boolean':'bool','System.Char':'char','System.SByte':'sbyte','System.Byte':'byte','System.Int16':'short','System.UInt16':'ushort','System.Int32':'int','System.UInt32':'uint','System.Int64':'long','System.UInt64':'ulong','System.Single':'float','System.Double':'double','System.Decimal':'decimal','System.IntPtr':'nint','System.UIntPtr':'nuint'};
-export const isValueTypeValue=value=>!!value?.valueType&&Array.isArray(value.fields);
-export const isAggregateType=table=>table.flags.valueType&&!table.flags.primitive&&!table.flags.enum&&!table.flags.dynamic&&!Object.hasOwn(aliases,table.name)&&!table.flags.nullable;
-function tableFor(vm,type) {try{return vm.inspector?vm.typeSystem.table(type):vm.heap.methodTables.get(type);}catch{throw new ManagedFault('InvalidProgramException','Value type belongs to another VM or is invalid');}}
-function checkDepth(depth) {if(depth>128)throw new ManagedFault('InvalidProgramException','Value-type nesting limit exceeded');}
+const plans = new WeakMap();
+const invalid = message => { throw new ManagedFault('InvalidProgramException', message); };
+const unsupported = name => { throw new ManagedFault('NotSupportedException', 'Struct storage is not implemented: ' + name); };
+export const isValueRecord = value => !!value?.valueType && Array.isArray(value.fields);
+export const isAggregateType = table => table.flags.valueType && !table.flags.primitive && !table.flags.enum && !table.flags.refStruct &&
+  table.name !== 'System.Decimal' && !(table.flags.dynamic && frameworkType(table.name)?.kind === 'value');
 
-/** Structs are immutable typed records. Every assignment copies nested values;
- * managed object references inside them deliberately retain reference identity. */
-export function createValue(vm,type,fields=null,depth=0) {
-  checkDepth(depth);const table=tableFor(vm,type);
-  if(!isAggregateType(table))throw new ManagedFault('InvalidProgramException','Aggregate value type required');
-  explicitLayout(vm,table);
-  if(fields!==null&&(!Array.isArray(fields)||fields.length!==table.fields.length))throw new ManagedFault('InvalidProgramException','Struct field count does not match its type');
-  return vm.heap.withRoots(fields??[],()=>{
-    const copied=[];
-    for(const [index,field] of table.fields.entries()) {
-      const value=fields===null?valueDefault(vm,field.type,depth+1):copyValue(vm,fields[index],field.type,undefined,depth+1);
-      copied.push(value);vm.heap.pins.push(value);
+function cacheFor(vm) {
+  const epoch = executionCodeState(vm);
+  let cache = plans.get(epoch);
+  if (!cache) {
+    const restricted = new Set();
+    const attributes = vm.inspector?.metadata.rows[12] ?? [];
+    if (attributes.length > 262_144) unsupported('custom attribute work budget exceeded');
+    for (const row of attributes) {
+      const parent = decodeCoded('HasCustomAttribute', row[0]);
+      if (parent >>> 24 !== 2) continue;
+      const attribute = vm.inspector.resolveToken(decodeCoded('CustomAttributeType', row[1]));
+      if (['System.Runtime.CompilerServices.IsByRefLikeAttribute', 'System.Runtime.CompilerServices.IsReadOnlyAttribute']
+        .includes(attribute.owner)) restricted.add(parent);
     }
-    return createExplicitValue(vm,table,copied)??Object.freeze({valueType:table,fields:Object.freeze(copied)});
-  });
-}
-export function valueDefault(vm,type,depth=0) {
-  checkDepth(depth);const table=tableFor(vm,type);
-  if(table.flags.refStruct)return Object.freeze({span:true,vmOwner:vm.snapshotOwner,elementType:table.typeArguments[0],pointer:null,length:0,readonly:table.name.startsWith('System.ReadOnlySpan')});
-  if(table.flags.nullable)return nullableValue(vm,table);
-  if(isAggregateType(table))return createValue(vm,table,null,depth+1);
-  const info=table.flags.enum?enumInfo(vm,table.name):null;
-  if(info)return vm.image&&!vm.inspector?enumValue(vm,table.name,0):enumUnderlying(0,info.underlyingType);
-  if(table.flags.enum)return numericStorage(0,table.enumUnderlyingType.name);
-  if(table.name==='System.Boolean'&&vm.image&&!vm.inspector)return false;
-  return defaults(aliases[table.name]??table.name,vm.options);
-}
-export function copyValue(vm,value,type=null,numericContext,depth=0) {
-  checkDepth(depth);
-  const table=type===null?(isValueTypeValue(value)?tableFor(vm,value.valueType):null):tableFor(vm,type);
-  if(value?.span) {
-    const readonly = table?.name.startsWith('System.ReadOnlySpan');
-    if (!table?.flags.refStruct || table.typeArguments[0] !== value.elementType || value.vmOwner !== vm.snapshotOwner ||
-        !Object.isFrozen(value) || value.readonly && !readonly) {
-      throw new ManagedFault('InvalidCastException', 'Span type mismatch');
-    }
-    return readonly && !value.readonly ? Object.freeze({...value, readonly: true}) : value;
+    cache = {types: new WeakSet(), restricted};
+    plans.set(epoch, cache);
   }
-  if(value?.nullableType&&table!==value.nullableType)throw new ManagedFault('InvalidCastException','Nullable type identity mismatch');
-  if(table?.flags.nullable)return nullableValue(vm,table,value?.nullableType?value.value:value,value?.nullableType?value.hasValue:value!==null);
-  if(value?.nullableType)throw new ManagedFault('InvalidCastException','Nullable type identity mismatch');
-  if(value?.byref)throw new ManagedFault('InvalidProgramException','Managed pointers cannot be stored in value fields or boxes');
-  if(isValueTypeValue(value)) {
-    let actual;try{actual=tableFor(vm,value.valueType);}catch{throw new ManagedFault('InvalidProgramException','Value belongs to another VM');}
-    if(table!==actual)throw new ManagedFault('InvalidCastException','Value type identity mismatch');
-    if(value.explicitBytes)return copyExplicitValue(vm,value);
-    return createValue(vm,actual,value.fields,depth+1);
+  return cache;
+}
+
+/** Validate the existing storage profile without allocating a default value. */
+export function requireValueStorage(vm, table) {
+  const cache = cacheFor(vm);
+  if (cache.types.has(table)) return;
+  const definition = vm.typeSystem?.types.get(table.definitionToken);
+  const layoutKind = definition?.flags & 0x18;
+  if ((!definition || layoutKind !== 8 && layoutKind !== 0x10) && !table.flags.runtimeValue ||
+      table.flags.nullable || table.flags.refStruct ||
+      cache.restricted.has(table.definitionToken)) unsupported(table.name);
+  valueLayout(vm, table);
+  if (hasExplicitLayout(vm, table)) byteLayout(vm, table);
+  cache.types.add(table);
+}
+
+function fieldValue(vm, type, value, budget, defaulting = false) {
+  if (type.flags.nullable) {
+    if (defaulting) return Object.freeze({nullableType: type, hasValue: false, value: null});
+    return vm.storage(value, type.name);
   }
-  if(table&&isAggregateType(table))throw new ManagedFault('InvalidCastException','A struct value is required');
-  if(isReference(value)) {
-    const record=vm.heap.get(value);
-    if(table?.flags.valueType) {
-      // Existing framework value adapters use private heap records. Copy that
-      // record at the boundary without turning user structs into heap objects.
-      if(frameworkType(table.name)?.kind!=='value'||record.methodTable!==table)throw new ManagedFault('InvalidCastException','Value type identity mismatch');
-      return vm.heap.withRoots([value],()=>{const data=[];for(const item of record.data){const copied=copyValue(vm,item);data.push(copied);vm.heap.pins.push(copied);}return vm.heap.allocate(record.kind,table,data);});
+  if (isAggregateType(type)) {
+    if (!defaulting && value === null) invalid('Nested struct field requires a value');
+    return record(vm, type, defaulting ? null : value, budget);
+  }
+  if (!type.flags.valueType) {
+    if (defaulting || value === null) return null;
+    if (!isReference(value) || !ownsHeapReference(vm.heap, value) ||
+        !castCacheFor(vm.heap.methodTables).isAssignableFrom(type, vm.heap.get(value).methodTable)) {
+      invalid('Struct reference field requires an owned assignable managed reference');
     }
     return value;
   }
-  if(table&&!table.flags.valueType&&value!==null)
-    throw new ManagedFault('InvalidCastException','Reference storage requires a managed reference');
-  if(table?.flags.enum) {
-    const underlying=table.enumUnderlyingType?.name??enumInfo(vm,table.name)?.underlyingType??'int';
-    if(vm.image&&!vm.inspector&&enumInfo(vm,table.name))return enumValue(vm,table.name,value);
-    return numericStorage(enumUnderlying(value,underlying),underlying,numericContext??vm.options);
+  if (defaulting) value = defaults(type.enumUnderlyingType?.name ?? type.name, vm.options);
+  if (value === undefined || isReference(value) || value?.byref || value?.valueType || value?.methodPointer) {
+    invalid('Struct scalar field has an incompatible value');
   }
-  if(table?.name==='System.Boolean'&&typeof value==='boolean'&&vm.image&&!vm.inspector)return value;
-  if(table&&Object.hasOwn(aliases,table.name))return numericStorage(typeof value==='boolean'?Number(value):value,aliases[table.name],numericContext??vm.options);
-  if(value!==null&&typeof value==='object'&&!Object.isFrozen(value))throw new ManagedFault('InvalidProgramException','Mutable host objects are not managed values');
-  return value;
-}
-export function replaceValueField(vm,value,index,replacement) {
-  if(!isValueTypeValue(value)||!Number.isInteger(index)||index<0||index>=value.fields.length)throw new ManagedFault('InvalidProgramException','Invalid value-type field');
-  if(value.explicitBytes) {
-    const copied = copyValue(vm,replacement,value.valueType.fields[index].type);
-    return replaceExplicitField(vm,value,index,copied);
-  }
-  const fields=[...value.fields];fields[index]=replacement;return createValue(vm,value.valueType,fields);
-}
-export function boxValue(vm,value,type) {
-  const table=tableFor(vm,type);
-  if(table.flags.refStruct)throw new ManagedFault('InvalidProgramException','Ref structs cannot be boxed');
-  if(table.flags.nullable) {
-    const nullable=copyValue(vm,value,table);
-    return nullable.hasValue?boxValue(vm,nullable.value,table.nullableType):null;
-  }
-  if(!table.flags.valueType) {
-    if(value!==null&&!isReference(value))throw new ManagedFault('InvalidCastException','Reference boxing requires a managed reference');
-    if(value!==null)vm.heap.get(value);return value;
-  }
-  return vm.heap.withRoots([value],()=>{const copied=copyValue(vm,value,table);return vm.heap.allocate('box',table,[copied],[copied]);});
-}
-export function unboxCompatible(boxed, requested) {
-  if(boxed===requested)return true;
-  return boxed.flags.enum&&boxed.enumUnderlyingType===requested || requested.flags.enum&&requested.enumUnderlyingType===boxed;
-}
-export function unboxValue(vm,reference,type) {
-  const table=tableFor(vm,type);
-  if(table.flags.nullable) {
-    if(reference===null)return nullableValue(vm,table);
-    return nullableValue(vm,table,unboxValue(vm,reference,table.nullableType),true);
-  }
-  const record=vm.heap.get(reference);
-  if(record.kind!=='box'||!unboxCompatible(record.methodTable,table))throw new ManagedFault('InvalidCastException','Boxed type mismatch');
-  const value=record.methodTable.flags.enum&&!table.flags.enum?enumUnderlying(record.data[0],record.methodTable.enumUnderlyingType.name):record.data[0];
-  return copyValue(vm,value,table);
-}
-export function nullableValue(vm,type,value=null,hasValue=value!==null) {
-  const table=tableFor(vm,type);
-  if(!table.nullableType)throw new ManagedFault('InvalidProgramException','Closed Nullable<T> type required');
-  if(value?.nullableType&&value.nullableType!==table)throw new ManagedFault('InvalidCastException','Nullable type identity mismatch');
-  return Object.freeze({nullableType:table,hasValue:!!hasValue,value:hasValue?copyValue(vm,value,table.nullableType):null});
+  return numericStorage(value, type.enumUnderlyingType?.name ?? type.name, vm.options);
 }
 
-/** Source IR can opt into value storage before struct syntax is implemented. */
-export function sourceValue(vm,type,fields=null) {return createValue(vm,type,fields);}
-export function sourceValueCopy(vm,value,type=null) {return copyValue(vm,value,type);}
+function record(vm, table, source, budget) {
+  requireValueStorage(vm, table);
+  if (source !== null && (!isValueRecord(source) || source.valueType !== table || !Object.isFrozen(source) ||
+      !Object.isFrozen(source.fields) || source.fields.length !== table.fields.length)) {
+    invalid('Struct payload or type identity does not match its declared storage');
+  }
+  budget.fields -= table.fields.length;
+  if (budget.fields < 0) throw new ManagedFault('OutOfMemoryException', 'Struct copy exceeds its field budget');
+  const fields = table.fields.map((field, index) => fieldValue(vm, field.type, source?.fields[index], budget, source === null));
+  if (source && Object.hasOwn(source, 'explicitBytes')) return copyExplicitValue(vm, table, source, fields, budget);
+  if (hasExplicitLayout(vm, table)) {
+    if (source !== null) invalid('Explicit scalar copies require immutable byte storage');
+    return createExplicitValue(vm, table, budget);
+  }
+  return Object.freeze({valueType: table, fields: Object.freeze(fields)});
+}
+
+/** Inline values copy nested fields and preserve owned managed-reference identities. */
+export function createValue(vm, table, source = null) {
+  if (table.registry !== vm.heap.methodTables) invalid('Struct type belongs to another VM');
+  return record(vm, table, source, {fields: 65_536});
+}
+
+/** Normalize synthetic runtime aggregate fields through the same copy and ownership checks. */
+export function createValueFromFields(vm, table, fields) {
+  if (!Array.isArray(fields)) invalid('Struct fields must be an array');
+  return createValue(vm, table, Object.freeze({valueType: table, fields: Object.freeze([...fields])}));
+}
+
+export function replaceValueField(vm, value, index, replacement) {
+  const table = value.valueType;
+  if (table.registry !== vm.heap.methodTables || !Number.isInteger(index) || index < 0 || index >= table.fields.length) {
+    invalid('Invalid struct field address');
+  }
+  if (Object.hasOwn(value, 'explicitBytes') || hasExplicitLayout(vm, table)) {
+    const budget = {fields: 65_536};
+    const original = record(vm, table, value, budget);
+    const next = fieldValue(vm, table.fields[index].type, replacement, budget);
+    return replaceExplicitField(vm, original, index, next, budget);
+  }
+  const fields = [...value.fields];
+  fields[index] = replacement;
+  return createValue(vm, table, Object.freeze({valueType: table, fields: Object.freeze(fields)}));
+}

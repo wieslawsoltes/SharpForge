@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3c8c8f63576d16e0ca67",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine(nameof(nint));\n        Console.WriteLine(nameof(nuint));\n    }\n}",
+  "sourceSHA256": "d27f7f39498348304b983803374c69235400b2a49d726b67e6240484fd8a18e4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "NameOf_01",
+    "offset": 48566
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0103",
+        "severity": "error"
+      },
+      {
+        "code": "CS0103",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,34): error CS0103: The name 'nint' does not exist in the current context\n                //         Console.WriteLine(nameof(nint));\n                Diagnostic(ErrorCode.ERR_NameNotInContext, \"nint\").WithArguments(\"nint\").WithLocation(6, 34),\n                // (7,34): error CS0103: The name 'nuint' does not exist in the current context\n                //         Console.WriteLine(nameof(nuint));\n                Diagnostic(ErrorCode.ERR_NameNotInContext, \"nuint\").WithArguments(\"nuint\").WithLocation(7, 34)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-3e2d66c032a3957e9581",
+  "kind": "spec",
+  "sourceText": "class C : I1, I2, I3\n{\n    C IN.M();\n}",
+  "sourceSHA256": "4fa6923e916133b2da9b42e4423062716f93faf1d2463623a45fc7b2475a24ac",
+  "target": "library",
+  "featureId": "csharp-9-0-covariant-return-types",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/covariant-returns.md",
+    "sha256": "d4cd5b8a1abcb4485c77a7e933a062927432e2087f2e961945a0c53e654d5cfa",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/covariant-returns.md",
+    "license": "NOASSERTION",
+    "offset": 13965
+  }
+}

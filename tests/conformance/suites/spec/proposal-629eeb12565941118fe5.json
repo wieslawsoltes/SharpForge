@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-629eeb12565941118fe5",
+  "kind": "spec",
+  "sourceText": "namespace System.Runtime.CompilerServices\n{\n    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = false)]\n    public sealed class RequiredMemberAttribute : Attribute\n    {\n        public RequiredMemberAttribute() {}\n    }\n}\n\nnamespace System.Diagnostics.CodeAnalysis\n{\n    [AttributeUsage(AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]\n    public sealed class SetsRequiredMembersAttribute : Attribute\n    {\n        public SetsRequiredMembersAttribute() {}\n    }\n}",
+  "sourceSHA256": "3f646c042895afafc3e5a5a2e9124454035b147d2cbb31c102634bd8df6b90ed",
+  "target": "library",
+  "featureId": "csharp-11-0-required-members",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/required-members.md",
+    "sha256": "0f731d503b589797298f8926899fe7ca9be3843141d8782b074f52d1822f1ed3",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/required-members.md",
+    "license": "NOASSERTION",
+    "offset": 13311
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-37d63dac3332dbb736d8",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing System.Collections.Generic;\npublic class C\n{\n    public static void Main()\n    {\n        foreach (var s in M())\n        {\n            Console.Write($\"M:{s} \");\n        }\n        Console.Write(\"MainDone\");\n    }\n    public static IEnumerable<string> M()\n    {\n        foreach (ref var s in new C())\n        {\n            s.F++;\n            yield return s.ToString();\n        }\n        yield return \"Done\";\n    }\n    public Enumerator GetEnumerator() => new Enumerator();\n    public sealed class Enumerator\n    {\n        S _current;\n        public ref S Current => ref _current;\n        public bool MoveNext()\n        {\n            Current = new S(Current.F + 1);\n            return Current.F < 4;\n        }\n    }\n}\npublic struct S\n{\n    public int F;\n    public S(int i)\n    {\n        this.F = i;\n    }\n    public override string ToString() => F.ToString();\n}",
+  "sourceSHA256": "68a518c08560059b9c09b167df0765a79d3030c44a1ad2c3e1a129bc8bb08a30",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestWithPattern_RefReturningCurrent_Iterator_RefVariable_01",
+    "offset": 185476
+  },
+  "langVersion": "12",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular12)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9202",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (15,26): error CS9202: Feature 'ref and unsafe in async and iterator methods' is not available in C# 12.0. Please use language version 13.0 or greater.\n                //         foreach (ref var s in new C())\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion12, \"s\").WithArguments(\"ref and unsafe in async and iterator methods\", \"13.0\").WithLocation(15, 26)",
+  "unsupported": []
+}

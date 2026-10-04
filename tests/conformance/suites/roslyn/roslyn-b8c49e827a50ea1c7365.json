@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b8c49e827a50ea1c7365",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public event System.Action PrivateAdder { private add { } remove { } }\n    public event System.Action PrivateRemover { add { } private remove { } }\n}\n",
+  "sourceSHA256": "f97cd2cea2b41980289434e00152b2e7db9af50d928fe3841132856e6b66134b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "sha256": "a146aeb41311a33fd51733055804d5bdd45ba0e5302ca02348a06cb7e94dd243",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "license": "MIT",
+    "method": "EmitRefAssembly_PrivateAccessorOnEvent",
+    "offset": 28965
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\npublic class C\n{\n    public event System.Action PrivateAdder { private add { } remove { } }\n    public event System.Action PrivateRemover { add { } private remove { } }\n}\n\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1609",
+        "severity": "error"
+      },
+      {
+        "code": "CS1609",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,47): error CS1609: Modifiers cannot be placed on event accessor declarations\n                //     public event System.Action PrivateAdder { private add { } remove { } }\n                Diagnostic(ErrorCode.ERR_NoModifiersOnAccessor, \"private\").WithLocation(4, 47),\n                // (5,57): error CS1609: Modifiers cannot be placed on event accessor declarations\n                //     public event System.Action PrivateRemover { add { } private remove { } }\n                Diagnostic(ErrorCode.ERR_NoModifiersOnAccessor, \"private\").WithLocation(5, 57)\n                ",
+  "unsupported": []
+}

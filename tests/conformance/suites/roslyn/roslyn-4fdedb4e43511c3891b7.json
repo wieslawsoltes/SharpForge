@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4fdedb4e43511c3891b7",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        (int, int, int, int, int, int, int, int) x = (\"Alice\", 2, 3, 4, 5, 6, 7, 8);\n        (int, int, int, int, int, int, int, int) y = (1, 2, 3, 4, 5, 6, 7, 8, 9);\n    }\n}\n",
+  "sourceSHA256": "583073b248aeaa8cdfa9387b59f71de1bc27bebbbe1338f60e995a0461fa3582",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "LongTupleTypeMismatch",
+    "offset": 54498
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "options": "(source, references: new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0029",
+        "severity": "error"
+      },
+      {
+        "code": "CS0029",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,55): error CS0029: Cannot implicitly convert type 'string' to 'int'\n                //         (int, int, int, int, int, int, int, int) x = (\"Alice\", 2, 3, 4, 5, 6, 7, 8);\n                Diagnostic(ErrorCode.ERR_NoImplicitConv, @\"\"\"Alice\"\"\").WithArguments(\"string\", \"int\").WithLocation(6, 55),\n                // (7,54): error CS0029: Cannot implicitly convert type '(int, int, int, int, int, int, int, int, int)' to '(int, int, int, int, int, int, int, int)'\n                //         (int, int, int, int, int, int, int, int) y = (1, 2, 3, 4, 5, 6, 7, 8, 9);\n                Diagnostic(ErrorCode.ERR_NoImplicitConv, \"(1, 2, 3, 4, 5, 6, 7, 8, 9)\").WithArguments(\"(int, int, int, int, int, int, int, int, int)\", \"(int, int, int, int, int, int, int, int)\").WithLocation(7, 54)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

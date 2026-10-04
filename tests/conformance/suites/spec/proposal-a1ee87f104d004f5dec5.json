@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a1ee87f104d004f5dec5",
+  "kind": "spec",
+  "sourceText": "closed class C;\nclass D1 : C;\nclass D2 : C;\n\nclass Program\n{\n    int M1<X>(X x) where X : C\n        => x switch\n        {\n            D1 => 1,\n            D2 => 2,\n        };\n\n    int M2<X>(X x) where X : C\n        => x switch\n        {\n            D1 => 1,\n            D2 => 2,\n            C => 3, // error: 'C' is subsumed by the previous cases\n        };\n}",
+  "sourceSHA256": "bb70a0b888c9f04997c8d2f463261f38febfbd87483674d3d481f4ba349d5ed7",
+  "target": "library",
+  "featureId": "csharp-15-0-closed-hierarchies",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/closed-hierarchies.md",
+    "sha256": "42fefd4135df4a6d52f32ec44f95ddcf6f1a755a105a5fefe1cbf57d888feb96",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/closed-hierarchies.md",
+    "license": "NOASSERTION",
+    "offset": 7323
+  }
+}

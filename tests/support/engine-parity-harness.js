@@ -1,5 +1,4 @@
 import assert from 'node:assert/strict';
-import {unhandledExceptionExitCode} from '../../packages/runtime/src/execution/unhandled.js';
 import {compile,compileToIL} from '@sharpforge/compiler';
 import {loadAssembly} from '@sharpforge/cil';
 import {VirtualMachine,CilVirtualMachine} from '@sharpforge/runtime';
@@ -30,7 +29,7 @@ export function compareEngineResults(fixture,results,allowlist=[],used=new Set()
     assert.deepEqual(normalize(result),normalize(baseline),`${fixture.id}: ${name} differs from ${baselineName}${result.error?'\n'+result.error.message:''}`);
     if(allowance&&result.output!==baseline.output)used.add(allowance.fixture);
   }
-  const expected={state:'terminated',exceptionType:null,exitCode:fixture.expected?.state==='faulted'?unhandledExceptionExitCode:0,...fixture.expected};
+  const expected={state:'terminated',exceptionType:null,exitCode:0,...fixture.expected};
   for(const [name,result] of entries)for(const [field,value] of Object.entries(expected))assert.deepEqual(result[field],value,`${fixture.id}: ${name} expected ${field}`);
 }
 
@@ -40,9 +39,11 @@ async function execute(create,signal) {
   let vm;
   try {
     vm=create();const result=await vm.runAsync({signal});
-    return {state:result.state,output:result.output,exceptionType:canonicalFaultType(result.fault),exitCode:result.exitCode};
+    return {state:result.state,output:result.output,exceptionType:canonicalFaultType(result.fault),
+      diagnosticName:result.fault?.name??null,exitCode:result.exitCode};
   } catch(error) {
-    return {state:vm?'host-error':'load-error',output:vm?.output.join('')??'',exceptionType:canonicalFaultType(error),exitCode:vm?.exitCode??null,error:{message:error.message,stack:error.stack}};
+    return {state:vm?'host-error':'load-error',output:vm?.output.join('')??'',exceptionType:canonicalFaultType(error),
+      diagnosticName:error.name,exitCode:vm?.exitCode??null,error:{message:error.message,stack:error.stack}};
   } finally {vm?.stop();}
 }
 

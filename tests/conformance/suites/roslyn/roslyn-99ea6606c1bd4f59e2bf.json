@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-99ea6606c1bd4f59e2bf",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Threading.Tasks;\n\npublic interface I2<T, TResult>\n{\n    Task<TResult> ExecuteAsync(T parameter);\n}\n\npublic interface I1<T> : I2<T, (object a, object b)>\n{\n}\n",
+  "sourceSHA256": "16467a53315e23d7d25b3682d8084c079076cf71c34e826e61177f6d1d882786",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "sha256": "32f83728594c49ce50d234006777d1af71d49e0e2cd7cc5c8982c5b2ac7fa714",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "license": "MIT",
+    "method": "SynthesizeTupleElementNamesAttributeBasedOnInterfacesToEmit_IndirectInterfaces",
+    "offset": 9758
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { getReference(valueTuple_comp), getReference(tupleElementNamesAttribute_comp) })",
+  "options": "(lib1_source, references: new[] { getReference(valueTuple_comp), getReference(tupleElementNamesAttribute_comp) })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f24c2f73352b543c3e24",
+  "kind": "diagnostics",
+  "sourceText": "\n    using System;\n\n    public class Program\n    {\n        public static void Main()\n        {\n            const int c = 10;\n            static void Local(int arg = c) => Console.WriteLine(arg);\n            \n            Local();\n        }\n\n    }\n",
+  "sourceSHA256": "b7b9860d17b5db2618b53c2f4099007f5f116209c2fecd65a36e4b1ff7ccedfd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "LocalConstantUsedInLocalFunctionDefaultParameterValue",
+    "offset": 257618
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

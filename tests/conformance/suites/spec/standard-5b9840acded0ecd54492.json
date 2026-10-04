@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-5b9840acded0ecd54492",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Test\n{\n    static void SplitPath(string path, out string dir, out string name)\n    {\n        int i = path.Length;\n        while (i > 0)\n        {\n            char ch = path[i - 1];\n            if (ch == '\\\\' || ch == '/' || ch == ':')\n            {\n                break;\n            }\n            i--;\n        }\n        dir = path.Substring(0, i);\n        name = path.Substring(i);\n    }\n\n    static void Main()\n    {\n        string dir, name;\n        SplitPath(@\"c:\\Windows\\System\\hello.txt\", out dir, out name);\n        Console.WriteLine(dir);\n        Console.WriteLine(name);\n    }\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "b7ab4978b3badbced199790dfe730306b12a6d485f56cb2407749852370733b5",
+  "originalSource": "class Test\n{\n    static void SplitPath(string path, out string dir, out string name)\n    {\n        int i = path.Length;\n        while (i > 0)\n        {\n            char ch = path[i - 1];\n            if (ch == '\\\\' || ch == '/' || ch == ':')\n            {\n                break;\n            }\n            i--;\n        }\n        dir = path.Substring(0, i);\n        name = path.Substring(i);\n    }\n\n    static void Main()\n    {\n        string dir, name;\n        SplitPath(@\"c:\\Windows\\System\\hello.txt\", out dir, out name);\n        Console.WriteLine(dir);\n        Console.WriteLine(name);\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "OutputParameters",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "OutputParameters",
+    "offsetInUnquotedMarkdown": 121564
+  }
+}

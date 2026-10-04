@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d5692cd8cd592ebd8eaa",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\nclass C\n{\n    public static void M()\n    {\n        IntPtr a = default;\n        bool b = a == IntPtr.Zero;\n        a += 1;\n        _ = a + 1;\n    }\n}",
+  "sourceSHA256": "67fb0f2901870a96d1eaf8655972e33b022e5c8e94954063ecd6d6ef1a0ce99d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "IntPtrOperator_OnPlatformWithoutNumericIntPtr",
+    "offset": 74893
+  },
+  "langVersion": "7.3",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_3)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

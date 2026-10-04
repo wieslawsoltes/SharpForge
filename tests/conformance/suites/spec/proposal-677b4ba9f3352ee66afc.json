@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-677b4ba9f3352ee66afc",
+  "kind": "spec",
+  "sourceText": "struct CallerInfo\n{\n    public string MemberName { get; set; }\n    public string TypeName { get; set; }\n    public string Namespace { get; set; }\n    public string FullTypeName { get; set; }\n    public string FilePath { get; set; }\n    public int LineNumber { get; set; }\n    public int ColumnNumber { get; set; }\n    public Type Type { get; set; }\n    public MethodBase Method { get; set; }\n    public string[] ArgumentExpressions { get; set; }\n}\n\n[Flags]\nenum CallerInfoOptions\n{\n    MemberName = 1, TypeName = 2, ...\n}\n\npublic static class Debug\n{\n    public static void Assert(bool condition,\n        // If a flag is not set here, the corresponding CallerInfo member is not populated by the caller, so it's\n        // pay-for-play friendly.\n        [CallerInfo(CallerInfoOptions.FilePath | CallerInfoOptions.Method | CallerInfoOptions.ArgumentExpressions)] CallerInfo callerInfo = default(CallerInfo))\n    {\n        string filePath = callerInfo.FilePath;\n        MethodBase method = callerInfo.Method;\n        string conditionExpression = callerInfo.ArgumentExpressions[0];\n        //...\n    }\n}\n\nclass Bar\n{\n    void Foo()\n    {\n        Debug.Assert(false);\n\n        // Translates to:\n\n        var callerInfo = new CallerInfo();\n        callerInfo.FilePath = @\"C:\\Bar.cs\";\n        callerInfo.Method = MethodBase.GetCurrentMethod();\n        callerInfo.ArgumentExpressions = new string[] { \"false\" };\n        Debug.Assert(false, callerInfo);\n    }\n}",
+  "sourceSHA256": "ba84d00b98c2b28df0880e2d24cec31a47d3047fac1d1576e684cadd8186c58a",
+  "target": "library",
+  "featureId": "csharp-10-0-callerargumentexpression",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/caller-argument-expression.md",
+    "sha256": "3382a8fb87efebf49fa27820b08a3cbdba61bcc72e54120bf4d6a8623ac7ae01",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/caller-argument-expression.md",
+    "license": "NOASSERTION",
+    "offset": 9353
+  }
+}

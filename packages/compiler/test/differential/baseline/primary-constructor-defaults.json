@@ -1,0 +1,4 @@
+{
+  "primary-constructor-defaults/cs1750-cs1736-invalid-defaults": ["diagnostics", "warnings"],
+  "primary-constructor-defaults/records-and-classes": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
+}

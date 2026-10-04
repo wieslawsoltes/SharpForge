@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-79d3c3965e1abcec1d10",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\n[AttributeUsage(AttributeTargets.All)]\npublic class ExampleAttribute : Attribute\n{}\n\n[Example]            // Refers to ExampleAttribute\nclass Class1 {}\n\n[ExampleAttribute]   // Refers to ExampleAttribute\nclass Class2 {}\n\n[@Example]           // Error: no attribute named “Example”\nclass Class3 {}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "33225cd315d815bcb035b3a323b8b68938e8203924af0c54630849cd7f896c42",
+  "originalSource": "[AttributeUsage(AttributeTargets.All)]\npublic class ExampleAttribute : Attribute\n{}\n\n[Example]            // Refers to ExampleAttribute\nclass Class1 {}\n\n[ExampleAttribute]   // Refers to ExampleAttribute\nclass Class2 {}\n\n[@Example]           // Error: no attribute named “Example”\nclass Class3 {}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "AttributeSpecification3",
+    "expectedErrors": [
+      "CS0246"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-attributes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/attributes.md",
+    "sha256": "9ab07c36a912273dd0eb341141ca62153c76e5f32f422e70950477a6b89c5242",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/attributes.md",
+    "license": "MIT",
+    "example": "AttributeSpecification3",
+    "offsetInUnquotedMarkdown": 19453
+  }
+}

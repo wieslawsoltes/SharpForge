@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7b08b2ad50ec6aa5780c",
+  "kind": "diagnostics",
+  "sourceText": "public class Derived : Base\n{\n    void M()\n    {\n        Field1 = Constant;\n        Field2 = Constant;\n        Method();\n        Event1 += null;\n        Property1 = Constant;\n        Property2 = Constant;\n        this[1] = 2;\n        this[string.Empty] = 4;\n    }\n    Derived(int x) : base() {}\n    Derived(long x) {} // implicit base()\n}\n",
+  "sourceSHA256": "7cd46656e3154d5c66c7497124ce8be94aea560c8310cb482d272ea38917f79e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "AccessibleWhereRequired_02",
+    "offset": 14163
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "references: new[] { MetadataReference.CreateFromImage(baseCompilation.EmitToArray()) },\n                assemblyName: \"WantsIVTAccess\",\n                options: TestOptions.SigningReleaseDll)",
+  "options": "(source2, parseOptions: TestOptions.Regular7_2,\n                references: new[] { MetadataReference.CreateFromImage(baseCompilation.EmitToArray()) },\n                assemblyName: \"WantsIVTAccess\",\n                options: TestOptions.SigningReleaseDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

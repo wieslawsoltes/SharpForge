@@ -1,1 +1,7 @@
-export {varargsIntrinsicDefinitions, varargsTypeDefinition, fixedCallSignature, validVarargsSignature} from '@sharpforge/bytecode';
+export {
+  varargsIntrinsicDefinitions,
+  varargsTypeDefinition,
+  fixedCallSignature,
+  validVarargsSignature
+}
+from '@sharpforge/bytecode';

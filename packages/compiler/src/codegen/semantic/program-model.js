@@ -1,3 +1,4 @@
+import {imageMethod} from '../image-method.js';
 /**
  * The program being generated from semantic bound trees: image classes, fields, statics, methods, the constant pool
  * and sequence points. It is the `compilation` the IR emitter writes into, and it serialises to the bytecode image
@@ -20,8 +21,7 @@ export class ProgramModel {
     this.constants = [];
     this.constantMap = new Map();
     this.sequencePoints = [];
-    // The IR emitter asks the compilation for the image name of a catch type; every handler is a catch of Exception.
-    this.semantic = { nameOf: () => 'Exception' };
+    this.semantic = {nameOf: type => typeof type === 'string' ? type : type?.toDisplayString() ?? 'System.Exception'};
   }
   /** Interns a constant and returns its pool index (same keying as the execution pipeline). */
   constant(value) {
@@ -40,8 +40,9 @@ export class ProgramModel {
     for (let i = 1; ; i++) if (!this.typesByName.has(name + '#' + i)) return name + '#' + i;
   }
   /** Declares an image class. `node` is `{uri,start,end}` of its declaration (or nothing for synthesized classes). */
-  addClass(name, node = null) {
+  addClass(name, node = null, shape = {}) {
     const record = {
+      ...shape,
       id: this.types.length,
       name: this.uniqueTypeName(name),
       fields: [],
@@ -80,8 +81,11 @@ export class ProgramModel {
       qualifiedName: (owner ? owner.name + '.' : '') + name,
       owner,
       isStatic: signature.isStatic,
+      callingConvention: signature.callingConvention ?? 0,
+      objectSlot: signature.objectSlot ?? null,
+      isOverride: signature.isOverride,
+      ...dispatchShape(signature),
       returnType: signature.returnType,
-      callingConvention: signature.callingConvention??0,
       parameters: signature.parameters.map(p => ({ start: node.start, end: node.end, ...p })),
       node,
       hasSource: !!signature.hasSource,
@@ -106,28 +110,27 @@ export class ProgramModel {
       sequencePoints: this.sequencePoints,
       sources: files.map(f => ({ uri: f.source.uri, text: f.source.text, version: f.source.version })),
       types: this.types.map(t => ({
+        ...(t.valueType ? {valueType: true, base: t.base} : {}),
+        ...(t.interface ? {interface: true, abstract: true} : {}),
+        ...(t.interfaces.length ? {interfaces: t.interfaces} : {}),
+        ...(t.sourceIdentity ? {sourceIdentity: t.sourceIdentity} : {}),
         id: t.id,
         name: t.name,
         fields: t.fields.map(f => ({ name: f.name, type: f.type, index: f.index, ...(f.backing ? { backing: true } : {}) })),
         initializer: t.initializer,
       })),
       statics: this.statics.map(f => ({ name: `${f.owner.name}.${f.name}`, type: f.type, value: defaultValue(f.type) })),
-      methods: this.methods.map(m => ({
-        ...(m.hasSource && m.node.uri ? { sourceRange: { uri: m.node.uri, start: m.node.start, end: m.node.end } } : {}),
-        ...(m.asyncRole ? { asyncRole: m.asyncRole, asyncOrigin: m.asyncOrigin } : {}),
-        id: m.id,
-        name: m.name,
-        qualifiedName: m.qualifiedName,
-        owner: m.owner?.name ?? null,
-        isStatic: m.isStatic,
-        returnType: m.returnType,
-        ...(m.callingConvention?{callingConvention:m.callingConvention}:{}),
-        ...(m.accessor ? { accessor: m.accessor } : {}),
-        parameters: m.parameters.map(p => ({name: p.name, type: p.type, ...(p.refKind && p.refKind !== 'none' ? {refKind: p.refKind} : {})})),
-        locals: m.locals,
-        code: m.code,
-        handlers: m.handlers,
+      methods: this.methods.map(method => ({
+        ...imageMethod(method),
+        ...dispatchShape(method),
+        ...(method.callingConvention ? {callingConvention: method.callingConvention} : {}),
+        ...(method.objectSlot ? {objectSlot: method.objectSlot} : {}),
       })),
     };
   }
+}
+
+function dispatchShape(method) {
+  return Object.fromEntries(['isVirtual', 'isAbstract', 'isFinal', 'isNewSlot', 'access', 'explicitInterfaceImplementations']
+    .filter(key => method[key] !== undefined).map(key => [key, method[key]]));
 }

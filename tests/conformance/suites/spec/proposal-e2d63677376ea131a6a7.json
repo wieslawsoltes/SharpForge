@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e2d63677376ea131a6a7",
+  "kind": "spec",
+  "sourceText": "class C<T> where T : allows ref struct\n{\n    void M1(T t) { if (t is T x) { } } // ok (T is T)\n    void M2(R r) { if (r is R x) { } } // ok (R is R)\n    void M3(T t) { if (t is R x) { } } // error (T is R)\n    void M4(R r) { if (r is T x) { } } // error (R is T)\n}\nref struct R { }",
+  "sourceSHA256": "a45407924063508850534ff335ef1301223031ac60e1f45a442a7109a61e6272",
+  "target": "library",
+  "featureId": "csharp-14-0-first-class-span-types",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/first-class-span-types.md",
+    "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+    "license": "NOASSERTION",
+    "offset": 9263
+  }
+}

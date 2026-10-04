@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c92c81f9aa93838e32e5",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Threading.Tasks;\n\nclass C\n{\n    public static void M2()\n    {\n        int a=0, x, y, z;\n        L1();\n        a++;\n        x++;\n        y++;\n        z++;\n\n        async void L1()\n        {\n            x = 0;\n            await Task.Delay(0);\n            y = 0;\n        }\n    }\n}",
+  "sourceSHA256": "15189d461b71d0fdc8c1e182716a284177d2044b35e4978623aa3c2816b3ae32",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "AssignsInAsync",
+    "offset": 10899
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System.Threading.Tasks;\n\nclass C\n{\n    public static void M2()\n    {\n        int a=0, x, y, z;\n        L1();\n        a++;\n        x++;\n        y++;\n        z++;\n\n        async void L1()\n        {\n            x = 0;\n            await Task.Delay(0);\n            y = 0;\n        }\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,9): error CS0165: Use of unassigned local variable 'x'\n                //         x++;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(11, 9),\n                // (12,9): error CS0165: Use of unassigned local variable 'y'\n                //         y++;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(12, 9),\n                // (13,9): error CS0165: Use of unassigned local variable 'z'\n                //         z++;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"z\").WithArguments(\"z\").WithLocation(13, 9)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

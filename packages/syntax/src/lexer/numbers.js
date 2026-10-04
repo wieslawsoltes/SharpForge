@@ -53,6 +53,8 @@ export function scanNumber(text, start) {
     type = 'ulong';
   }
   const legacy = clean ? Number(value) : NaN;
+  if (suffix) profile.push({ code: 'SF1003', message: 'decimal, long and unsigned literals are not implemented' });
+  else if (legacy > 2147483648) profile.push({ code: 'SF1004', message: 'This profile supports signed 32-bit integer literals' });
   return {
     end: i,
     kind: 'integer',

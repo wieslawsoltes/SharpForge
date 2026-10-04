@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-70adc3482353a4030bcf",
+  "kind": "spec",
+  "sourceText": "[Union] public record struct Pet\n{\n    // Creation members = case types are 'Dog' and 'Cat'\n    public Pet(Dog value) => Value = value;\n    public Pet(Cat value) => Value = value;\n\n    // 'Value' property\n    public object? Value { get; }\n}",
+  "sourceSHA256": "4d0a257c5ebfbdde8bbfb17e7af52f278e10c762381124708d5f9ac1dbe3336a",
+  "target": "library",
+  "featureId": "csharp-15-0-unions",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/unions.md",
+    "sha256": "eb6de7e24e702567a909286e0b4b6d5b409ae3e7016fadd87ab4fc8c16c9fa4a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/unions.md",
+    "license": "NOASSERTION",
+    "offset": 8891
+  }
+}

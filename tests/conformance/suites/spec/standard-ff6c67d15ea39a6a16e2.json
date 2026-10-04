@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-ff6c67d15ea39a6a16e2",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nstring[] sa = new string[10];\nobject[] oa = sa;\noa[0] = null;              // OK\noa[1] = \"Hello\";           // OK\noa[2] = new ArrayList();   // ArrayTypeMismatchException",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "ad1e5214e41264f562167e8938ddff0161161d36a6a24e3f70e801127acb38d4",
+  "originalSource": "string[] sa = new string[10];\nobject[] oa = sa;\noa[0] = null;              // OK\noa[1] = \"Hello\";           // OK\noa[2] = new ArrayList();   // ArrayTypeMismatchException",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "SimpleAssignment1",
+    "expectedException": "ArrayTypeMismatchException"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "SimpleAssignment1",
+    "offsetInUnquotedMarkdown": 415863
+  }
+}

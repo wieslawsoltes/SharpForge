@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { compile } from '@sharpforge/compiler';
-import { notExecutable } from './support/semantic-codegen.js';
+import { linesOf } from './support/semantic-codegen.js';
 
 // SF-A02-T66: stackalloc as a Span<T>, its shape rules and gates.
 
@@ -19,9 +19,8 @@ test('SF-A02-T66 stackalloc is a Span of its element type, with and without an i
   assert.deepEqual(errorsOf(inMain(statements)), []);
 });
 
-test('SF-A02-T66 a program that uses spans is reported as not executable, not as invalid C#', () => {
-  const reported = notExecutable(inMain('Span<int> s = stackalloc int[3]; int sum = 0; foreach (var x in s) sum += x; Console.WriteLine(sum);'));
-  assert.match(reported.message, /Span<int>/);
+test('SF-A02-T66 spans execute on both backends after binding', () => {
+  assert.deepEqual(linesOf(inMain('Span<int> s = stackalloc int[] { 1, 2, 3 }; int sum = 0; foreach (var x in s) sum += x; Console.WriteLine(sum);')), ['6']);
 });
 
 test('SF-A02-T66 shape rules: element type, size and initializer (CS0208, CS1586, CS0247, CS0847)', () => {

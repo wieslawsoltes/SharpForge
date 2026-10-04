@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e8f5bcc449047f2a52bc",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    static void M(ref readonly int p, __arglist) => System.Console.WriteLine(p);\n    static void Main()\n    {\n        int x = 111;\n        M(out x, __arglist(x));\n    }\n}",
+  "sourceSHA256": "860485c2f1d97bdf64a4515dad31c05a52e6ce5dabd36e20a20ab2483dae1dbb",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "RefReadonlyParameter_Arglist_OutArgument",
+    "offset": 142498
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1615",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (7,15): error CS1615: Argument 1 may not be passed with the 'out' keyword\n            //         M(out x, __arglist(x));\n            Diagnostic(ErrorCode.ERR_BadArgExtraRef, \"x\").WithArguments(\"1\", \"out\").WithLocation(7, 15)",
+  "unsupported": []
+}

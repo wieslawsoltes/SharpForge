@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-7205ceeb46bf07283848",
+  "kind": "spec",
+  "sourceText": "    finally {\n        await e.DisposeAsync();\n    }\n    ```\n- Otherwise, if there is an implicit conversion from `E` to the `System.IAsyncDisposable` interface, then\n  - If `E` is a non-nullable value type then the `finally` clause is expanded to the semantic equivalent of:\n  ```csharp\n    finally {\n        await ((System.IAsyncDisposable)e).DisposeAsync();\n    }\n    ```\n  - Otherwise the `finally` clause is expanded to the semantic equivalent of:\n    ```csharp\n    finally {\n        System.IAsyncDisposable d = e as System.IAsyncDisposable;\n        if (d != null) await d.DisposeAsync();\n    }\n    ```\n    except that if `E` is a value type, or a type parameter instantiated to a value type, then the conversion of `e` to `System.IAsyncDisposable` shall not cause boxing to occur.\n- Otherwise, the `finally` clause is expanded to an empty block:\n  ```csharp\n  finally {\n  }\n  ```\n\n### ConfigureAwait\n\nThis pattern-based compilation will allow `ConfigureAwait` to be used on all of the awaits, via a `ConfigureAwait` extension method:\n",
+  "sourceSHA256": "699f58ff1c20006166ad7c190b498715d81bd813b38e1311a78f6b615c733187",
+  "target": "library",
+  "featureId": "csharp-8-0-async-streams",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/async-streams.md",
+    "sha256": "944a31911115989c66e44f5c9e7eca2eeb960622f6f819166a48b91af8247c6a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/async-streams.md",
+    "license": "NOASSERTION",
+    "offset": 21543
+  }
+}

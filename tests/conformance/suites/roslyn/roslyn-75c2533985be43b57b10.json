@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-75c2533985be43b57b10",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        long x;\n        string y;\n\n        (x, y) = new C1();\n    }\n}\nclass C1\n{\n    public void Deconstruct<T>(out int a, out T b)\n    {\n        a = 2;\n        b = default(T);\n    }\n}\n",
+  "sourceSHA256": "3055721b1cad2fc2d76443f5f8792c4d0f65981c8068cf2d843c037e79e990e1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "DeconstructGenericMethod",
+    "offset": 77649
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0411",
+        "severity": "error"
+      },
+      {
+        "code": "CS8129",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,18): error CS0411: The type arguments for method 'C1.Deconstruct<T>(out int, out T)' cannot be inferred from the usage. Try specifying the type arguments explicitly.\n                //         (x, y) = new C1();\n                Diagnostic(ErrorCode.ERR_CantInferMethTypeArgs, \"new C1()\").WithArguments(\"C1.Deconstruct<T>(out int, out T)\").WithLocation(9, 18),\n                // (9,18): error CS8129: No Deconstruct instance or extension method was found for type 'C1', with 2 out parameters and a void return type.\n                //         (x, y) = new C1();\n                Diagnostic(ErrorCode.ERR_MissingDeconstruct, \"new C1()\").WithArguments(\"C1\", \"2\").WithLocation(9, 18)\n                ",
+  "unsupported": []
+}

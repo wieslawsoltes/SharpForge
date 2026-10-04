@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-cccb4a129192f0e9a658",
+  "kind": "diagnostics",
+  "sourceText": "\nclass A\n{\n    public void Do()\n    {\n        const object o1 = null;\n        const string o2 = (string)o1; // Dev10 reports CS0133\n    }\n}\n",
+  "sourceSHA256": "7417ba0678a6d987ee22c13647c927732109e98050bcca730920478491cc8fd7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "CS0133ERR_NotConstantExpression05",
+    "offset": 1422
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,22): warning CS0219: The variable 'o2' is assigned but its value is never used\n                //         const string o2 = (string)o1; // Dev10 reports CS0133\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"o2\").WithArguments(\"o2\")\n                ",
+  "unsupported": []
+}

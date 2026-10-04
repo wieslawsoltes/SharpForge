@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-dd957913c65a06234c0a",
+  "kind": "spec",
+  "sourceText": "interface I1\n{\n    // Virtual method with default implementation\n    void M() { }\n}\n\n// Invocation of a virtual instance method with default implementation in a generic method that has the `allows ref struct`\n// anti-constraint\nvoid M<T>(T p)\n    where T : allows ref struct, I1\n{\n    p.M(); // Warn?\n}",
+  "sourceSHA256": "9f80dd32bba86527f2ebd0a412eead1b89a2c2acb13f7ee82e8610ef770801a5",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 31020
+  }
+}

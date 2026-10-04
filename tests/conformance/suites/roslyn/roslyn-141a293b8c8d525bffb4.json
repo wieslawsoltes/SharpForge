@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-141a293b8c8d525bffb4",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n#pragma warning disable 436\n\npublic enum E1 { A, B }\n\nnamespace System\n{\n    public class ObsoleteAttribute : Attribute\n    {\n        public byte Byte { get; set; }\n        public sbyte SByte { get; set; }\n        public bool Bool { get; set; }\n        public short Short { get; set; }\n        public ushort UShort { get; set; }\n        public char Char { get; set; }\n        public int Int { get; set; }\n        public uint UInt { get; set; }\n        public float Float { get; set; }\n        public long Long { get; set; }\n        public ulong ULong { get; set; }\n        public double Double { get; set; }\n        public E1 Enum { get; set; }\n        public string DiagnosticId { get; set; }\n    }\n}\n\npublic class C1\n{\n    [Obsolete(\n        Byte = 0,\n        SByte = 0,\n        Bool = false,\n        Short = 0,\n        UShort = 0,\n        Char = '\\0',\n        Int = 0,\n        UInt = 0,\n        Float = 0,\n        Long = 0,\n        ULong = 0,\n        Double = 0,\n        Enum = E1.A,\n        DiagnosticId = \"TEST1\")]\n    public void M1() { }\n}\n",
+  "sourceSHA256": "30102957beaac9379481bf0041d6361fce82bd04182a373bf425293a3af12fc4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "Obsolete_CustomDiagnosticId_BadMetadata_03",
+    "offset": 346330
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source1)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bb223ac24e6a26e3413b",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public void M()\n    {\n        // Explicit numeric conversion\n        int? i1 = null;\n        i1 ??= 1.0;\n\n        // Explicit reference conversion\n        D d1 = null;\n        d1 ??= new C();\n\n        // Explicit user-defined conversion\n        C c1 = null;\n        c1 ??= new E();\n\n        // No conversion between lhs and rhs\n        C c2 = null;\n        c2 ??= new F();\n    }\n\n    static public explicit operator C(E e) => null;\n}\nclass D : C {}\nclass E {}\nclass F {}\n",
+  "sourceSHA256": "f0fa7f8e353e327b6e1f27829c6449ac8bf53b8c02fafe9fd36267083f062786",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "InvalidRHSConversions",
+    "offset": 42306
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    public void M()\n    {\n        // Explicit numeric conversion\n        int? i1 = null;\n        i1 ??= 1.0;\n\n        // Explicit reference conversion\n        D d1 = null;\n        d1 ??= new C();\n\n        // Explicit user-defined conversion\n        C c1 = null;\n        c1 ??= new E();\n\n        // No conversion between lhs and rhs\n        C c2 = null;\n        c2 ??= new F();\n    }\n\n    static public explicit operator C(E e) => null;\n}\nclass D : C {}\nclass E {}\nclass F {}\n\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,9): error CS0019: Operator '??=' cannot be applied to operands of type 'int?' and 'double'\n                //         i1 ??= 1.0;\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"i1 ??= 1.0\").WithArguments(\"??=\", \"int?\", \"double\").WithLocation(8, 9),\n                // (12,9): error CS0019: Operator '??=' cannot be applied to operands of type 'D' and 'C'\n                //         d1 ??= new C();\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"d1 ??= new C()\").WithArguments(\"??=\", \"D\", \"C\").WithLocation(12, 9),\n                // (16,9): error CS0019: Operator '??=' cannot be applied to operands of type 'C' and 'E'\n                //         c1 ??= new E();\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"c1 ??= new E()\").WithArguments(\"??=\", \"C\", \"E\").WithLocation(16, 9),\n                // (20,9): error CS0019: Operator '??=' cannot be applied to operands of type 'C' and 'F'\n                //         c2 ??= new F();\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"c2 ??= new F()\").WithArguments(\"??=\", \"C\", \"F\").WithLocation(20, 9)\n            ",
+  "unsupported": []
+}

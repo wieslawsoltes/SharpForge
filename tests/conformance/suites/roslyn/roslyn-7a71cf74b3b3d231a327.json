@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7a71cf74b3b3d231a327",
+  "kind": "diagnostics",
+  "sourceText": "\nstatic class C\n{\n    static string M(this (int x, long y) self) => self.ToString();\n    static string M1(this (int x, long? y) self) => self.ToString();\n\n    static void Main()\n    {\n        // implicit constant conversion\n        System.Console.WriteLine((1, 2).M());\n\n        // identity conversion (this one is OK)\n        System.Console.WriteLine((1, 2L).M());\n\n        // implicit nullable conversion\n        System.Console.WriteLine((First: 1, Second: 2L).M1());\n\n        // null literal conversion\n        System.Console.WriteLine((1, null).M1());\n\n        // implicit numeric conversion\n        var notAliteral = (A: 1, B: 2);\n        System.Console.WriteLine(notAliteral.M());\n    }\n}\n",
+  "sourceSHA256": "ff87a5e0a33f4b3e699da232cab8a7b98bb307bde8f2513ad77dd5fa92081e25",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ExtensionMethodOnConvertedTuple003",
+    "offset": 1086563
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1929",
+        "severity": "error"
+      },
+      {
+        "code": "CS1929",
+        "severity": "error"
+      },
+      {
+        "code": "CS0117",
+        "severity": "error"
+      },
+      {
+        "code": "CS1929",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,34): error CS1929: '(int, int)' does not contain a definition for 'M' and the best extension method overload 'C.M((int x, long y))' requires a receiver of type '(int x, long y)'\n                //         System.Console.WriteLine((1, 2).M());\n                Diagnostic(ErrorCode.ERR_BadInstanceArgType, \"(1, 2)\").WithArguments(\"(int, int)\", \"M\", \"C.M((int x, long y))\", \"(int x, long y)\").WithLocation(10, 34),\n                // (16,34): error CS1929: '(int, long)' does not contain a definition for 'M1' and the best extension method overload 'C.M1((int x, long? y))' requires a receiver of type '(int x, long? y)'\n                //         System.Console.WriteLine((First: 1, Second: 2L).M1());\n                Diagnostic(ErrorCode.ERR_BadInstanceArgType, \"(First: 1, Second: 2L)\").WithArguments(\"(int, long)\", \"M1\", \"C.M1((int x, long? y))\", \"(int x, long? y)\").WithLocation(16, 34),\n                // (19,44): error CS0117: '(int, <null>)' does not contain a definition for 'M1'\n                //         System.Console.WriteLine((1, null).M1());\n                Diagnostic(ErrorCode.ERR_NoSuchMember, \"M1\").WithArguments(\"(int, <null>)\", \"M1\"),\n                // (23,34): error CS1929: '(int A, int B)' does not contain a definition for 'M' and the best extension method overload 'C.M((int x, long y))' requires a receiver of type '(int x, long y)'\n                //         System.Console.WriteLine(notAliteral.M());\n                Diagnostic(ErrorCode.ERR_BadInstanceArgType, \"notAliteral\").WithArguments(\"(int A, int B)\", \"M\", \"C.M((int x, long y))\", \"(int x, long y)\").WithLocation(23, 34)\n                ",
+  "unsupported": []
+}

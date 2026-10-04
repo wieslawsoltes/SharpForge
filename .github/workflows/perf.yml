@@ -1,30 +1,30 @@
 name: Performance regression service
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
-  schedule:
-    - cron: '23 3 * * *'
   workflow_dispatch:
     inputs:
       base:
         description: Exact baseline revision (defaults to previous commit)
         required: false
         type: string
+      baseline_reviewed:
+        description: Confirm the initial committed baseline policy has been reviewed
+        required: false
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
   group: performance-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: false
 jobs:
   paired:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     env:
       SHARPFORGE_RESULTS_DIR: artifacts/results
       PERF_BASE: ${{ github.event.pull_request.base.sha || inputs.base || 'HEAD^' }}
       PERF_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
-      BASELINE_REVIEWED: ${{ contains(github.event.pull_request.labels.*.name, 'performance-baseline-reviewed') }}
+      BASELINE_REVIEWED: ${{ inputs.baseline_reviewed }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -35,7 +35,7 @@ jobs:
           node-version: '24.21.0'
       - run: npm ci
       - name: Performance service correctness
-        run: node --test tests/conformance/performance/*.test.js
+        run: node --test --test-concurrency=1 tests/conformance/performance/*.test.js
       - name: Timed A/A and injected-slowdown calibration
         run: node scripts/conformance/perf/controls.js
       - name: Resolve reviewed policy
@@ -46,7 +46,7 @@ jobs:
           elif [ "$BASELINE_REVIEWED" = "true" ]; then
             echo "PERF_POLICY=$PERF_HEAD" >> "$GITHUB_ENV"
           else
-            echo "Initial policy requires the performance-baseline-reviewed label after review."
+            echo "Initial policy requires baseline_reviewed after review."
             exit 1
           fi
       - name: Run interleaved independent base/head samples
@@ -73,10 +73,11 @@ jobs:
           retention-days: 30
           if-no-files-found: error
   browser:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: paired
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         engine: [chromium, firefox, webkit]

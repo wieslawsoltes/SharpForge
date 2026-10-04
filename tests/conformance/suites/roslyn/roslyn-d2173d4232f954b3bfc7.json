@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d2173d4232f954b3bfc7",
+  "kind": "diagnostics",
+  "sourceText": "\npublic struct S\n{\n    public static void Main()\n    {\n        S? ns = new S();\n        System.Console.Write((null, ns) == (null, default));\n        System.Console.Write((ns, null) != (default, null));\n    }\n    public static bool operator==(S s1, S s2) => throw null;\n    public static bool operator!=(S s1, S s2) => throw null;\n    public override int GetHashCode() => throw null;\n    public override bool Equals(object o) => throw null;\n}",
+  "sourceSHA256": "3e07a66ac8b76bdf8d489787a431a9d092284747b837330a235d165d493ce75f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestNestedDefaultWithNullableNonTupleType_WithComparisonOperator",
+    "offset": 43828
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

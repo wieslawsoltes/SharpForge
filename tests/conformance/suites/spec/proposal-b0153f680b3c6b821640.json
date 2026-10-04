@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-b0153f680b3c6b821640",
+  "kind": "spec",
+  "sourceText": "    extension([System.Diagnostics.CodeAnalysis.NotNullIfNotNull(\"o\")] ref int? i)\n    {\n        public void M(object? o)  => throw null!;\n    }",
+  "sourceSHA256": "6793f1f3b9a0e9bac3b1684d4a7db4bfd6d963c36a6a1ffb97ee9458e198eed7",
+  "target": "library",
+  "featureId": "csharp-14-0-extension-methods-and-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/extensions.md",
+    "sha256": "3fdd337fb3fb0c08967571801abae3b932a4928fba8d916303d296ef90bdf7d5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/extensions.md",
+    "license": "NOASSERTION",
+    "offset": 45791
+  }
+}

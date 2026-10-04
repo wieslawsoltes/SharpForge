@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3c65aa1088002f0bbd3b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\n\nclass C\n{\n    [DllImport(null)]\n    public extern static void F1();\n\n    [DllImport(\"\")]\n    public extern static void F2();\n\n    [DllImport(\"goo\", EntryPoint = null)]\n    public extern static void F3();\n\n    [DllImport(\"goo\", EntryPoint = \"\")]\n    public extern static void F4();\n\n    [DllImport(null, EntryPoint = null)]\n    public extern static void F5();\n\n    [DllImport(\"\\0\")]\n    static extern void Empty1();\n\n    [DllImport(\"\\0b\")]\n    static extern void Empty2();\n\n    [DllImport(\"b\\0\")]\n    static extern void Empty3();\n\n    [DllImport(\"x\\0y\")]\n    static extern void Empty4();\n\n    [DllImport(\"x\", EntryPoint = \"x\\0y\")]\n    static extern void Empty5();\n\n    [DllImport(\"\\uD800\")]\n    static extern void LeadingSurrogate();\n\n    [DllImport(\"\\uDC00\")]\n    static extern void TrailingSurrogate();\n\n    [DllImport(\"\\uDC00\\uD800\")]\n    static extern void ReversedSurrogates1();\n\n    [DllImport(\"x\", EntryPoint = \"\\uDC00\\uD800\")]\n    static extern void ReversedSurrogates2();\n}\n",
+  "sourceSHA256": "9dbfa1b81a2f17f2b37c24599098db91706d36c072b4040ee9153f3ecc5702ab",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "DllImport_InvalidArgs1",
+    "offset": 96346
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,16): error CS0591: Invalid value for argument to 'DllImport' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"null\").WithArguments(\"DllImport\"),\n                // (9,16): error CS0591: Invalid value for argument to 'DllImport' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"\"\"\").WithArguments(\"DllImport\"),\n                // (12,23): error CS0599: Invalid value for named attribute argument 'EntryPoint'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"EntryPoint = null\").WithArguments(\"EntryPoint\"),\n                // (15,23): error CS0599: Invalid value for named attribute argument 'EntryPoint'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, @\"EntryPoint = \"\"\"\"\").WithArguments(\"EntryPoint\"),\n                // (18,16): error CS0591: Invalid value for argument to 'DllImport' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"null\").WithArguments(\"DllImport\"),\n                // (18,22): error CS0599: Invalid value for named attribute argument 'EntryPoint'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"EntryPoint = null\").WithArguments(\"EntryPoint\"),\n                // (21,16): error CS0591: Invalid value for argument to 'DllImport' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"\\0\"\"\").WithArguments(\"DllImport\"),\n                // (24,16): error CS0591: Invalid value for argument to 'DllImport' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"\\0b\"\"\").WithArguments(\"DllImport\"),\n                // (27,16): error CS0591: Invalid value for argument to 'DllImport' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"b\\0\"\"\").WithArguments(\"DllImport\"),\n                // (30,16): error CS0591: Invalid value for argument to 'DllImport' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"x\\0y\"\"\").WithArguments(\"DllImport\"),\n                // (33,21): error CS0599: Invalid value for named attribute argument 'EntryPoint'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, @\"EntryPoint = \"\"x\\0y\"\"\").WithArguments(\"EntryPoint\"),\n                // (36,16): error CS0591: Invalid value for argument to 'DllImport' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"\\uD800\"\"\").WithArguments(\"DllImport\"),\n                // (39,16): error CS0591: Invalid value for argument to 'DllImport' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"\\uDC00\"\"\").WithArguments(\"DllImport\"),\n                // (42,16): error CS0591: Invalid value for argument to 'DllImport' attribute\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"\\uDC00\\uD800\"\"\").WithArguments(\"DllImport\"),\n                // (45,21): error CS0599: Invalid value for named attribute argument 'EntryPoint'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, @\"EntryPoint = \"\"\\uDC00\\uD800\"\"\").WithArguments(\"EntryPoint\")",
+  "unsupported": []
+}

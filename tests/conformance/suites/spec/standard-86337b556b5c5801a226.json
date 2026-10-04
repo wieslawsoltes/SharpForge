@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-86337b556b5c5801a226",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Test\n{\n    static void Swap(ref int x, ref int y)\n    {\n        int temp = x;\n        x = y;\n        y = temp;\n    }\n\n    static void Main()\n    {\n        int i = 1, j = 2;\n        Swap(ref i, ref j);\n        Console.WriteLine($\"i = {i}, j = {j}\");\n    }\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "f39e9ccf9e37475a054d14c846bb598cc8d82abfd00fd8855c1853999387349a",
+  "originalSource": "class Test\n{\n    static void Swap(ref int x, ref int y)\n    {\n        int temp = x;\n        x = y;\n        y = temp;\n    }\n\n    static void Main()\n    {\n        int i = 1, j = 2;\n        Swap(ref i, ref j);\n        Console.WriteLine($\"i = {i}, j = {j}\");\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "ReferenceParameters1",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "ReferenceParameters1",
+    "offsetInUnquotedMarkdown": 119530
+  }
+}

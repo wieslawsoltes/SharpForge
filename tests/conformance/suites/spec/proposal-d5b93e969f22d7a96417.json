@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d5b93e969f22d7a96417",
+  "kind": "spec",
+  "sourceText": "[InlineArray(3)] struct __InlineArray3<T> { private T _element0; }\n\nSpan<int> __tmp = new __InlineArray3<int>();\n__tmp[0] = 1;\n__tmp[1] = 2;\n__tmp[2] = 3;\nImmutableArray<int> ia =\n    ImmutableArray.Create((ReadOnlySpan<int>)__tmp);",
+  "sourceSHA256": "4e7fa51d832104b951cadd9864406b99d6ac45014ec015afaef299fafe6460ab",
+  "target": "library",
+  "featureId": "csharp-12-0-collection-expressions",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/collection-expressions.md",
+    "sha256": "20d62bfc544dcdb95590930444205d98f916f935f7ce72834dddddddf33ad78b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/collection-expressions.md",
+    "license": "NOASSERTION",
+    "offset": 17170
+  }
+}

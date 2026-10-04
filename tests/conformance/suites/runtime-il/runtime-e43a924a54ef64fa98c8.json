@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-e43a924a54ef64fa98c8",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\nusing System;\n\n\nnamespace BoxTest_nestval_cs\n{\n    internal struct MyBool { public bool val; }\n    internal struct MyInt { public int val; }\n\n    internal struct ArgInfo\n    {\n        public MyBool m_flag;\n        public MyInt m_num;\n    }\n\n    public class Test\n    {\n        protected object Fibonacci(object args)\n        {\n            if (args.GetType() != typeof(ArgInfo))\n                throw new Exception();\n            return FibonacciImpl(args);\n        }\n\n        protected object FibonacciImpl(object args)\n        {\n            object N;\n            if (((ArgInfo)args).m_num.val <= 1)\n                N = ((ArgInfo)args).m_num.val;\n            else\n            {\n                ArgInfo newargs1 = new ArgInfo();\n                newargs1.m_num.val = ((ArgInfo)args).m_num.val - 2;\n                newargs1.m_flag.val = false;\n                ArgInfo newargs2 = new ArgInfo();\n                newargs2.m_num.val = ((ArgInfo)args).m_num.val - 1;\n                newargs2.m_flag.val = ((ArgInfo)args).m_flag.val;\n                N = (int)Fibonacci(newargs1) + (int)Fibonacci(newargs2);\n            }\n            if (((ArgInfo)args).m_flag.val)\n            {\n                if ((((ArgInfo)args).m_num.val % 2) == 0)\n                    Console.Write(N.ToString() + \" \");\n                else\n                    Console.Write(N.ToString() + \" \");\n            }\n            return N;\n        }\n\n        \n        \n        public static void Main()\n        {\n            ArgInfo args = new ArgInfo();\n            args.m_flag.val = true;\n            args.m_num.val = 20;\n            new Test().Fibonacci(args);\n            Console.WriteLine();\n            Console.WriteLine(\"*** PASSED ***\");\n        }\n    }\n}\n",
+  "language": "csharp",
+  "unsupported": [
+    "Requires exactly one static int test entry point"
+  ],
+  "opcodeFamilies": [],
+  "sourceSHA256": "9666961cfb1a6b18f73ee697f41aa3a7aa6620f0b3729276073e55b84fca8dab",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\nusing System;\nusing Xunit;\n\nnamespace BoxTest_nestval_cs\n{\n    internal struct MyBool { public bool val; }\n    internal struct MyInt { public int val; }\n\n    internal struct ArgInfo\n    {\n        public MyBool m_flag;\n        public MyInt m_num;\n    }\n\n    public class Test\n    {\n        protected object Fibonacci(object args)\n        {\n            if (args.GetType() != typeof(ArgInfo))\n                throw new Exception();\n            return FibonacciImpl(args);\n        }\n\n        protected object FibonacciImpl(object args)\n        {\n            object N;\n            if (((ArgInfo)args).m_num.val <= 1)\n                N = ((ArgInfo)args).m_num.val;\n            else\n            {\n                ArgInfo newargs1 = new ArgInfo();\n                newargs1.m_num.val = ((ArgInfo)args).m_num.val - 2;\n                newargs1.m_flag.val = false;\n                ArgInfo newargs2 = new ArgInfo();\n                newargs2.m_num.val = ((ArgInfo)args).m_num.val - 1;\n                newargs2.m_flag.val = ((ArgInfo)args).m_flag.val;\n                N = (int)Fibonacci(newargs1) + (int)Fibonacci(newargs2);\n            }\n            if (((ArgInfo)args).m_flag.val)\n            {\n                if ((((ArgInfo)args).m_num.val % 2) == 0)\n                    Console.Write(N.ToString() + \" \");\n                else\n                    Console.Write(N.ToString() + \" \");\n            }\n            return N;\n        }\n\n        [Fact]\n        [OuterLoop]\n        public static void TestEntryPoint()\n        {\n            ArgInfo args = new ArgInfo();\n            args.m_flag.val = true;\n            args.m_num.val = 20;\n            new Test().Fibonacci(args);\n            Console.WriteLine();\n            Console.WriteLine(\"*** PASSED ***\");\n        }\n    }\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/Methodical/Boxing/misc/nestval.cs",
+    "sha256": "eb0529b5a20dda6e0365e7a3fda18518c3f09a44d0fd353da0d217caf3ca7830",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/Methodical/Boxing/misc/nestval.cs",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Remove Fact/OuterLoop discovery attributes and Xunit using; rename TestEntryPoint to Main. Test body unchanged."
+}

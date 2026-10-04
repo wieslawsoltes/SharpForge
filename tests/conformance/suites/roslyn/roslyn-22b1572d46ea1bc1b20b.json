@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-22b1572d46ea1bc1b20b",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M1()\n    {\n        int[] arr1 = new int[0];                       \n        byte[] arr2 = { };                             \n        C[] arr3 = new C[] { };                        \n\n        int[] arr4 = new int[] { 1, 2, 3 };            \n        byte[] arr5 = { 1, 2, 3 };                     \n        C[] arr6 = new C[] { null, null, null };       \n\n        int[] arr7 = new int[] { 1, 2, 3, 4, 5, 6 };                // LargeList\n        byte[] arr8 = { 1, 2, 3, 4, 5, 6 };                         // LargeList\n        C[] arr9 = new C[] { null, null, null, null, null, null };  // LargeList\n\n        int[,] arr10 = new int[,] { { 1, 2, 3, 4, 5, 6 } };     // LargeList\n        byte[,] arr11 = {                                      \n                          { 1, 2, 3, 4, 5, 6 },                 // LargeList\n                          { 7, 8, 9, 10, 11, 12 }                  // LargeList\n                        };\n        C[,] arr12 = new C[,] {                                 \n                                { null, null, null, null, null, null }  // LargeList\n                              };\n\n        int[][] arr13 = new int[][] { new[] { 1,2,3 }, new int[5] };\n        int[][] arr14 = new int[][] { new int[] { 1,2,3 }, new[] { 1, 2, 3, 4, 5, 6 } };  // LargeList\n    }\n}",
+  "sourceSHA256": "b7a858bb8abd12397d7b67ce2d49a054094dd4a8ad2e48e962fc9e413143e5e6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "ArrayInitializerCSharp",
+    "offset": 33985
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

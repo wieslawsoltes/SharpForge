@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "library-501f727044d30eda3d18",
+  "kind": "library",
+  "namespace": "System.Runtime",
+  "sourceText": "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Linq;\nusing Xunit;\nclass SuiteProgram { static int Main() {\n\n            foreach (char c in GetTestChars(UnicodeCategory.UppercaseLetter))\n                Assert.True(char.IsUpper(c));\n\n            foreach (char c in GetTestCharsNotInCategory(UnicodeCategory.UppercaseLetter))\n                Assert.False(char.IsUpper(c));\n        \nreturn 0; } }\n// SharpForge's deliberately small test adapter. Assertions fail by throwing.\n\nnamespace Xunit\n{\n    public static class Assert\n    {\n        public static void True(bool value) { if (!value) throw new Exception(\"Assert.True\"); }\n        public static void False(bool value) { if (value) throw new Exception(\"Assert.False\"); }\n        public static void Null(object value) { if (value != null) throw new Exception(\"Assert.Null\"); }\n        public static void NotNull(object value) { if (value == null) throw new Exception(\"Assert.NotNull\"); }\n        public static void Same(object expected, object actual)\n        { if (!object.ReferenceEquals(expected, actual)) throw new Exception(\"Assert.Same\"); }\n        public static void Equal<T>(T expected, T actual)\n        {\n            if (expected is System.Collections.IEnumerable && !(expected is string))\n                throw new NotSupportedException(\"Shim Equal supports scalar values only, not sequence equality\");\n            if (!object.Equals(expected, actual)) throw new Exception(\"Assert.Equal\");\n        }\n        public static T Throws<T>(Action action) where T : Exception\n        {\n            try { action(); }\n            catch (Exception error)\n            {\n                if (error.GetType() != typeof(T)) throw new Exception(\"Assert.Throws: wrong exception type\");\n                return (T)error;\n            }\n            throw new Exception(\"Assert.Throws: no exception\");\n        }\n    }\n}\n",
+  "sourceSHA256": "727eb5003a7f191f79ae2ae801a00a17a00ad9b938e56aa67a0b3260750c96f6",
+  "originalSource": "public static void IsUpper_Char()\n        {\n            foreach (char c in GetTestChars(UnicodeCategory.UppercaseLetter))\n                Assert.True(char.IsUpper(c));\n\n            foreach (char c in GetTestCharsNotInCategory(UnicodeCategory.UppercaseLetter))\n                Assert.False(char.IsUpper(c));\n        }",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/libraries/System.Runtime/tests/System.Runtime.Tests/System/CharTests.cs",
+    "sha256": "5eb09f3536b5ed7da6538669737a8ffe73d57b6d976bb3c32c8bec3b89bd8e96",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/libraries/System.Runtime/tests/System.Runtime.Tests/System/CharTests.cs",
+    "license": "MIT",
+    "method": "IsUpper_Char",
+    "offset": 33394
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack",
+    "local XunitShim.cs"
+  ],
+  "expected": {
+    "exitCode": 0
+  },
+  "unsupported": [],
+  "adaptation": "Original method body in standalone Main; no base fixture/helpers imported. Native compilation preflight detects unresolved dependencies; scalar assertions, reference identity and exact exception assertions execute."
+}

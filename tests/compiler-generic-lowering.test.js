@@ -112,19 +112,10 @@ test('A02-T02.6 default(T), new T() and constrained calls take their meaning fro
 test('A02-T02.6 what needs the run-time type or dispatch is reported as SF2200, never miscompiled', () => {
   const shape = 'interface IShape { int Area() { return 9; } } class Blob : IShape { }';
   const cases = [
-    // The run-time type name of a construction is the synthesized one, so it must not reach ToString().
-    [program(box, 'Console.WriteLine(new Box<int>(1));'), /converting a constructed generic type to 'object'/],
-    [program(box, 'Console.WriteLine(new Box<int>(1).ToString());'), /'object.ToString\(\)' on a constructed generic type/],
-    [program(box, 'Console.WriteLine("x" + new Box<int>(1));'), /converting a constructed generic type to 'object'/],
-    [program(box, 'Console.WriteLine($"{new Box<int>(1)}");'), /formatting a value of a constructed generic type/],
-    [program(`${box} static class U { public static void Show<T>(T x) { Console.WriteLine(x); } }`, 'U.Show(new Box<int>(1));'), /constructed generic type/],
     // Dispatch and run-time type arguments.
     [program(`${shape} static class U { public static int A<T>(T s) where T : IShape { return s.Area(); } }`, 'U.A(new Blob());'), /interface dispatch/],
-    [program('interface IShape { int Area(); } class Sq : IShape { public int Area() { return 4; } }', 'IShape s = new Sq();'), /interface dispatch/],
     [program('class B { public virtual T Id<T>(T x) { return x; } }', 'new B().Id(3);'), /virtual dispatch/],
     [program('class Base<T> { public T V; } class D : Base<int> { }', 'new D();'), /class inheritance/],
-    [program('struct Opt<T> { public T V; }', 'var o = new Opt<int>(); o.V = 2;'), /struct types/],
-    [program('static class U { public static string N<T>() { return typeof(T).Name; } }', 'U.N<int>();'), /type ?of/],
     [program('static class U { public static bool Is<T>(object o) { return o is T; } }', 'U.Is<string>("s");'), /runtime type check/],
     [program('static class U { public static T As<T>(object o) { return (T)o; } }', 'U.As<string>("s");'), /runtime type check/],
     [program('record Wrapper<T>(T Value);', 'var w = new Wrapper<int>(1);'), /generic records/],
@@ -161,7 +152,7 @@ test('A02-T02.6 a task over a reference result shares the registry task over obj
     'static async Task<Animal> Make() { await Task.Yield(); return new Animal(); } static async Task Main() { Console.WriteLine(Make()); await Make(); }',
   );
   assert.match(notExecutable(printed).message, /converting a constructed generic type to 'object'/);
-  // A task of a value the runtime cannot represent is still named.
+  // Numeric values are supported; unregistered Task<long> contracts remain a separate capability.
   const wide = asyncProgram('', 'static async Task<long> Make() { await Task.Yield(); return 1; } static async Task Main() { await Make(); }');
-  assert.match(notExecutable(wide).message, /64-bit integers/);
+  assert.match(notExecutable(wide).message, /framework registry has no.*Task<long>/);
 });

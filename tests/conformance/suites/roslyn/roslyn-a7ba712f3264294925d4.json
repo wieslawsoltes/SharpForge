@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a7ba712f3264294925d4",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public static void Main()\n    {\n        var a = new { A = 1 };\n        var b = new { B = 2 };\n\n        System.Console.Write((a, b) == (b, a));\n    }\n}\n",
+  "sourceSHA256": "c3b3f5dcee311ac38e29d2c1a5b1fb07f034773f5af2da4477133e1c82c5d194",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestWithAnonymousTypes2",
+    "offset": 199060
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,30): error CS0019: Operator '==' cannot be applied to operands of type '<anonymous type: int A>' and '<anonymous type: int B>'\n                //         System.Console.Write((a, b) == (b, a));\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(a, b) == (b, a)\").WithArguments(\"==\", \"<anonymous type: int A>\", \"<anonymous type: int B>\").WithLocation(9, 30),\n                // (9,30): error CS0019: Operator '==' cannot be applied to operands of type '<anonymous type: int B>' and '<anonymous type: int A>'\n                //         System.Console.Write((a, b) == (b, a));\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(a, b) == (b, a)\").WithArguments(\"==\", \"<anonymous type: int B>\", \"<anonymous type: int A>\").WithLocation(9, 30)\n                ",
+  "unsupported": []
+}

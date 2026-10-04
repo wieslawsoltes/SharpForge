@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b0477275795c048ece39",
+  "kind": "diagnostics",
+  "sourceText": "using System;\npublic class C\n{\n    public static void Main()\n    {\n        if (Get() is Assignment(int left, var right)) { }\n        Console.WriteLine(left);\n        Console.WriteLine(right);\n    }\n\n    public static Assignment Get()\n    {\n        Console.WriteLine(\"eval\");\n        return new Assignment(1, 2);\n    }\n}\npublic struct Assignment\n{\n    public int Left, Right;\n    public Assignment(int left, int right) => (Left, Right) = (left, right);\n    public void Deconstruct(out int left, out int right) => (left, right) = (Left, Right);\n}\n",
+  "sourceSHA256": "102af1d47bc77fff22373dbd0325df1d97a4bc87c80d7c54c877171924276d27",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "IrrefutablePatternInIs02",
+    "offset": 78341
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe, parseOptions: TestOptions.RegularWithRecursivePatterns)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

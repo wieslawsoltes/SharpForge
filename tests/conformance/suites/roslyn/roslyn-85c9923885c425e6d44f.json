@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-85c9923885c425e6d44f",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    ref int M(ref readonly int x)\n    {\n        return ref x;\n    }\n}",
+  "sourceSHA256": "5dc421289061a46669289f79cc05d41a6ef15c249d1fae49437f6ffef467a85d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "RefReturn_ReadonlyToMutable",
+    "offset": 129847
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8333",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (5,20): error CS8333: Cannot return variable 'x' by writable reference because it is a readonly variable\n            //         return ref x;\n            Diagnostic(ErrorCode.ERR_RefReturnReadonlyNotField, \"x\").WithArguments(\"variable\", \"x\").WithLocation(5, 20)",
+  "unsupported": []
+}

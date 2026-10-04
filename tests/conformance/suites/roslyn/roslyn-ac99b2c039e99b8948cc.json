@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ac99b2c039e99b8948cc",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct S { }\nstruct S2\n{ \n    public int x;\n    public S s;\n}\nclass C\n{\n    public void M()\n    {\n        S2 s2;\n        void Local1()\n        {\n            s2.x = 0;\n            S2 s4 = s2;\n        }\n        Local1();\n        S2 s3 = s2;\n    }\n\n    public void M2()\n    {\n        S2 s3;\n        void Local2()\n        {\n            s3.s = new S();\n            S2 s4 = s3;\n        }\n        Local2();\n    }\n\n    public void M3()\n    {\n        S2 s5;\n        void Local3()\n        {\n            s5.s = new S();\n        }\n        Local3();\n        S2 s6 = s5;\n    }\n}",
+  "sourceSHA256": "8abfecfc78ec18ca7556c85889a1e1feae9f288768c750b6a6abf7f28df9f563",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "PiecewiseStructAssign3",
+    "offset": 37112
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nstruct S { }\nstruct S2\n{ \n    public int x;\n    public S s;\n}\nclass C\n{\n    public void M()\n    {\n        S2 s2;\n        void Local1()\n        {\n            s2.x = 0;\n            S2 s4 = s2;\n        }\n        Local1();\n        S2 s3 = s2;\n    }\n\n    public void M2()\n    {\n        S2 s3;\n        void Local2()\n        {\n            s3.s = new S();\n            S2 s4 = s3;\n        }\n        Local2();\n    }\n\n    public void M3()\n    {\n        S2 s5;\n        void Local3()\n        {\n            s5.s = new S();\n        }\n        Local3();\n        S2 s6 = s5;\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0170",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (30,9): error CS0170: Use of possibly unassigned field 'x'\n                //         Local2();\n                Diagnostic(ErrorCode.ERR_UseDefViolationField, \"Local2()\").WithArguments(\"x\").WithLocation(30, 9),\n                // (41,17): error CS0165: Use of unassigned local variable 's5'\n                //         S2 s6 = s5;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"s5\").WithArguments(\"s5\").WithLocation(41, 17)",
+  "unsupported": []
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9b9f7fb98d60cf5e4d03",
+  "kind": "spec",
+  "sourceText": "public static class Verify\n{\n    public static void Argument(bool condition, string message, [CallerArgumentExpression(\"condition\")] string conditionExpression = null)\n    {\n        if (!condition) throw new ArgumentException(message: message, paramName: conditionExpression);\n    }\n\n    public static void InRange(int argument, int low, int high,\n        [CallerArgumentExpression(\"argument\")] string argumentExpression = null,\n        [CallerArgumentExpression(\"low\")] string lowExpression = null,\n        [CallerArgumentExpression(\"high\")] string highExpression = null)\n    {\n        if (argument < low)\n        {\n            throw new ArgumentOutOfRangeException(paramName: argumentExpression,\n                message: $\"{argumentExpression} ({argument}) cannot be less than {lowExpression} ({low}).\");\n        }\n\n        if (argument > high)\n        {\n            throw new ArgumentOutOfRangeException(paramName: argumentExpression,\n                message: $\"{argumentExpression} ({argument}) cannot be greater than {highExpression} ({high}).\");\n        }\n    }\n\n    public static void NotNull<T>(T argument, [CallerArgumentExpression(\"argument\")] string argumentExpression = null)\n        where T : class\n    {\n        if (argument == null) throw new ArgumentNullException(paramName: argumentExpression);\n    }\n}\n\nstatic T Single<T>(this T[] array)\n{\n    Verify.NotNull(array); // paramName: \"array\"\n    Verify.Argument(array.Length == 1, \"Array must contain a single element.\"); // paramName: \"array.Length == 1\"\n\n    return array[0];\n}\n\nstatic T ElementAt<T>(this T[] array, int index)\n{\n    Verify.NotNull(array); // paramName: \"array\"\n    // paramName: \"index\"\n    // message: \"index (-1) cannot be less than 0 (0).\", or\n    //          \"index (6) cannot be greater than array.Length - 1 (5).\"\n    Verify.InRange(index, 0, array.Length - 1);\n\n    return array[index];\n}",
+  "sourceSHA256": "8dffdc0d152570a080dcebe30955a3bb4325800c89b14170cb36b51c8e7d162b",
+  "target": "library",
+  "featureId": "csharp-10-0-callerargumentexpression",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/caller-argument-expression.md",
+    "sha256": "3382a8fb87efebf49fa27820b08a3cbdba61bcc72e54120bf4d6a8623ac7ae01",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/caller-argument-expression.md",
+    "license": "NOASSERTION",
+    "offset": 3260
+  }
+}

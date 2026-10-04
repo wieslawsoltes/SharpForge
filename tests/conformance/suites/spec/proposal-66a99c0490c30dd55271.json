@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-66a99c0490c30dd55271",
+  "kind": "spec",
+  "sourceText": "     // no copies\n     (arr != null ? ref arr[0]: ref otherArr[0]).StructMethod();\n\n     // invoked on a copy.\n     // The receiver is `readonly` because readOnlyField is readonly.\n     (arr != null ? ref arr[0]: ref obj.readOnlyField).StructMethod();\n\n     // no copies. `ReadonlyStructMethod` is a method on a `readonly` struct\n     // and can be invoked directly on a readonly receiver\n     (arr != null ? ref arr[0]: ref obj.readOnlyField).ReadonlyStructMethod();",
+  "sourceSHA256": "cfedd070b94a490166475b593ff2e11c8c46d4a71e8676a4babf7bf48ab60d9d",
+  "target": "library",
+  "featureId": "csharp-7-2-in-parameters-and-readonly-references",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/readonly-ref.md",
+    "sha256": "d859c5f6e0e030570288248c429a08d0e4b8d5c0eecd6bf9042317e99198122b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+    "license": "NOASSERTION",
+    "offset": 31401
+  }
+}

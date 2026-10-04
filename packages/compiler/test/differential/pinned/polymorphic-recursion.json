@@ -1,0 +1,5 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "polymorphic-recursion/cycles-with-a-finite-set-of-constructions":{"hash":"dc96f5857af9cd92","kind":"output","langVersion":"14.0","diagnostics":[],"output":"s1 1s\n3 3\n2\n1 0\nf1\n"},
+  "polymorphic-recursion/deep-constructions-without-a-cycle":{"hash":"04f4108c3904a680","kind":"output","langVersion":"14.0","diagnostics":[],"output":"14\n7\n"},
+  "polymorphic-recursion/a-growing-call-behind-a-constant-that-is-false":{"hash":"0751f4aea3f80741","kind":"output","langVersion":"14.0","diagnostics":[["CS0162",266,6,"warning"],["CS0162",404,6,"warning"]],"output":"4\n"}
+}}

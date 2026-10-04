@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d47b898b18f74ce04fb7",
+  "kind": "diagnostics",
+  "sourceText": "\npublic abstract class ParentTest\n{\n    public abstract ref readonly int M();\n}\npublic class Test : ParentTest\n{\n    public override int M() => 0;\n}",
+  "sourceSHA256": "059ef0e700ca332d36418ec23fd2c07181d2af6256d444b117f5633a60a10afe",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "sha256": "fed7c6d5beeb0e3296094c4c3973b927e627482323c4609b726e7af2365eb925",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "license": "MIT",
+    "method": "OverridingMethodSymbolDoesNotCopyModifiersIfItWasRefKindNone_Class",
+    "offset": 171950
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8148",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,25): error CS8148: 'Test.M()' must match by reference return of overridden member 'ParentTest.M()'\n                //     public override int M() => 0;\n                Diagnostic(ErrorCode.ERR_CantChangeRefReturnOnOverride, \"M\").WithArguments(\"Test.M()\", \"ParentTest.M()\").WithLocation(8, 25)",
+  "unsupported": []
+}

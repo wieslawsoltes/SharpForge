@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d456b69fa586c841b9cb",
+  "kind": "spec",
+  "sourceText": "static Vector3 Add (in Vector3 v1, in Vector3 v2)\n{\n    // not OK!!\n    v1 = default(Vector3);\n\n    // not OK!!\n    v1.X = 0;\n\n    // not OK!!\n    foo(ref v1.X);\n\n    // OK\n    return new Vector3(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);\n}",
+  "sourceSHA256": "66b1ffe83b18613592626c98f2afd54c70c687f0e89deb97e7de3a68aa5093c8",
+  "target": "library",
+  "featureId": "csharp-7-2-in-parameters-and-readonly-references",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/readonly-ref.md",
+    "sha256": "d859c5f6e0e030570288248c429a08d0e4b8d5c0eecd6bf9042317e99198122b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+    "license": "NOASSERTION",
+    "offset": 2561
+  }
+}

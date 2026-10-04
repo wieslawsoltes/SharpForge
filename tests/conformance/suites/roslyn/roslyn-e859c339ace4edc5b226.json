@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e859c339ace4edc5b226",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass Test\n{\n    static void Main()\n    {\n    }\n}\n\nclass C<T> \n{\n    static public void F1(C<T> c) \n    {\n        Func<object> a = () => c?.M();\n    }\n\n    static public object F2(C<T> c) => c?.M();\n\n    static public object P1 => (new C<T>())?.M();\n\n    T M() \n    {\n        return default(T);\n    }\n}\n",
+  "sourceSHA256": "5caf7abb7852dfecb772862962dd215ce0f832bd6c13b3cd20ad574cf789e40d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenShortCircuitOperatorTests.cs",
+    "sha256": "76e836298b951ce9e660abe5f24642099fc9fdb667cf314eb00d3de71ece4e8f",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenShortCircuitOperatorTests.cs",
+    "license": "MIT",
+    "method": "Bug1109164_04",
+    "offset": 137027
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8978",
+        "severity": "error"
+      },
+      {
+        "code": "CS8978",
+        "severity": "error"
+      },
+      {
+        "code": "CS8978",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (15,34): error CS8977: 'T' cannot be made nullable.\n                //         Func<object> a = () => c?.M();\n                Diagnostic(ErrorCode.ERR_CannotBeMadeNullable, \".M()\").WithArguments(\"T\").WithLocation(15, 34),\n                // (18,42): error CS8977: 'T' cannot be made nullable.\n                //     static public object F2(C<T> c) => c?.M();\n                Diagnostic(ErrorCode.ERR_CannotBeMadeNullable, \".M()\").WithArguments(\"T\").WithLocation(18, 42),\n                // (20,45): error CS8977: 'T' cannot be made nullable.\n                //     static public object P1 => (new C<T>())?.M();\n                Diagnostic(ErrorCode.ERR_CannotBeMadeNullable, \".M()\").WithArguments(\"T\").WithLocation(20, 45)\n                ",
+  "unsupported": []
+}

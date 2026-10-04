@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-3ba5a64e3d45d0e3d3da",
+  "kind": "spec",
+  "sourceText": "void F(object o, Convertible<object> n)\n{\n    o = n;                       // Pre-defined boxing conversion\n    o = (object)n;               // Pre-defined boxing conversion\n    n = o;                       // User-defined implicit conversion\n    n = (Convertible<object>)o;  // Pre-defined unboxing conversion\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8321",
+        "severity": "warning"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "51cc65cc1da29baa80a2bd14ac549bc0e14f4e26769522d370f6834bfdc7c860",
+  "originalSource": "void F(object o, Convertible<object> n)\n{\n    o = n;                       // Pre-defined boxing conversion\n    o = (object)n;               // Pre-defined boxing conversion\n    n = o;                       // User-defined implicit conversion\n    n = (Convertible<object>)o;  // Pre-defined unboxing conversion\n}",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "ConversionOperators4",
+    "expectedWarnings": [
+      "CS8321"
+    ],
+    "additionalFiles": [
+      "ConvertibleT.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "ConversionOperators4",
+    "offsetInUnquotedMarkdown": 243516
+  }
+}

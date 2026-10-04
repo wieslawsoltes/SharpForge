@@ -7,25 +7,57 @@ export * from './loader.js';
 export * from './disassembler.js';
 export * from './inspector.js';
 export * from './execution-profile.js';
+export {analyzeMethod} from './analysis.js';
 export {intrinsicKey,intrinsicDefinitions,intrinsicDefinition} from './intrinsic-profile.js';
+export {arrayMethodDefinition} from './array-profile.js';
+export {arrayRuntimeDefinition} from './array-runtime-profile.js';
+export {memoryMethodDefinition} from './memory-profile.js';
 export * from './il-document.js';
 export * from './decompiler.js';
 export {CilDispatchTable} from './dispatch-profile.js';
+export {managedDelegateSignature, supportedDelegateCall} from './delegate-profile.js';
 
 export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './field-profile.js';
+export {executionFieldAccessError} from './external-field-profile.js';
+export {normalizeCallType, substituteCallType, instantiateSignature, callSignatureKey,
+  resolveExecutionMethod, methodGenericParameters} from './call-profile.js';
+export { sha256 } from './binary/hash.js';
+export { sha1 } from './binary/sha1.js';
+export { win32VersionFromAssembly } from './pe/version-attributes.js';
+export { decodeMarshalDescriptor, marshalDiagnosticCatalog } from './metadata/marshal-descriptors.js';
+export { linkAssemblyModules } from './pe/module-linker.js';
+export { readAssemblyModules } from './pe/module-reader.js';
+export { decodeBinaryPermissionSet, securityDiagnosticCatalog } from './metadata/security-declarations.js';
+export { buildExceptionRegionTree, exceptionRegionDiagnosticCatalog } from './eh-regions.js';
+export { validateExceptionInstructionPlacement, exceptionPlacementDiagnosticCatalog } from './eh-control-flow.js';
+export { validateExceptionBranches, exceptionBranchDiagnosticCatalog } from './eh-branches.js';
+export { validateExceptionControlFlow, exceptionLeaveDiagnosticCatalog } from './eh-leave.js';
+export { VerificationKind, verificationType, verificationDiagnosticCatalog } from './verify/types.js';
+export { mergeVerificationTypes, mergeVerificationStacks } from './verify/type-relations.js';
+export { verifyCilMethodTypes } from './verify/typed-flow.js';
+export { validateTailPrefixes, tailPrefixDiagnosticCatalog } from './verify/prefix-tail.js';
 
-export {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
-export {analyzeMethod} from './analysis.js';
-export {normalizeCallType,substituteCallType,callStorageType,instantiateSignature,callSignatureKey,resolveExecutionMethod,methodGenericParameters,managedDelegateSignature,supportedDelegateCall} from './call-profile.js';
+export {verifiedStackBound} from './verified-stack.js';
+export {parseFunctionPointerType} from './function-pointer-signature.js';
+export {VirtualPointerProfile} from './virtual-pointer-profile.js';
+export {InstanceCalliTargets} from './instance-calli-targets.js';
+export {instancePointerLocalSignature} from './instance-pointer-local.js';
+export {readExecutionSignatureAst, signatureSlotType} from './metadata/execution-signature.js';
+export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/prefix-memory.js';
+export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/prefix-constrained.js';
+export {isByrefStructForwarder} from './generic-struct-forwarder.js';
+export {isSizeOfOnlyMethod} from './generic-sizeof-method.js';
+export { createMetadataVerificationTypeSystem, verificationTypeSystemDiagnosticCatalog } from './verify/type-system.js';
+export {ConstrainedObjectProfile} from './constrained-object-profile.js';
+export {ConstrainedReferenceObjectProfile} from './constrained-reference-object-profile.js';
+export { createMetadataVerificationContext, verificationMemberDiagnosticCatalog } from './verify/member-system.js';
 
-export {arrayMethodDefinition} from './array-profile.js';
-export {syncIntrinsicDefinitions,isSynchronizationIntrinsic} from './sync-intrinsic-profile.js';
-export {numericFieldDefinition} from './numeric-field-profile.js';
-export {asyncIntrinsicDefinitions,asyncMethodDefinition,asyncTypeDefinition,reachableAsyncMethods} from './async-profile.js';
+export { AssemblySymbolIndex } from './browser/index.js';
+export { AssemblyTypeHierarchy } from './browser/hierarchy.js';
 
-export {memoryMethodDefinition} from './memory-profile.js';
-
-export {exceptionIntrinsicDefinitions} from './exception-profile.js';
-
-export {arrayRuntimeDefinition} from './array-runtime-profile.js';
-export {varargsIntrinsicDefinitions,varargsTypeDefinition} from './varargs-profile.js';
+export {asyncMethodDefinition, asyncTypeDefinition, reachableAsyncMethods} from './async-profile.js';
+export {syncIntrinsicDefinitions, isSynchronizationIntrinsic} from '@sharpforge/bytecode';
+export {varargsIntrinsicDefinitions, varargsTypeDefinition, fixedCallSignature, validVarargsSignature} from './varargs-profile.js';
+export { AssemblyUsageAnalysis } from './browser/analyzers.js';
+export { MetadataTableInspector } from './inspector-tables.js';
+export {readSourceTypeIdentities} from './source-type-identities.js';

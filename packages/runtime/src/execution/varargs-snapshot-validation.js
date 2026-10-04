@@ -1,4 +1,6 @@
-function reject(message) { throw new TypeError('Invalid varargs snapshot: ' + message); }
+function reject(message) {
+  throw new TypeError('Invalid varargs snapshot: ' + message);
+}
 
 /** Pure validation against saved frames; live pointer/frame indexes are never consulted. */
 export function validateVarargsSnapshot(vm, snapshot) {
@@ -19,7 +21,7 @@ export function validateVarargsSnapshot(vm, snapshot) {
     if (!Array.isArray(slots) || slots.length !== fixed + frame.varargs.length) reject('packet and argument count disagree');
     for (const [index, item] of frame.varargs.entries()) {
       if (item.index !== fixed + index || item.type?.registry !== vm.heap.methodTables ||
-          item.type.containsGenericParameters || item.type.name === 'System.Void') reject('malformed argument slot');
+        item.type.containsGenericParameters || item.type.name === 'System.Void') reject('malformed argument slot');
     }
   }
   const pending = [...frames.values()];
@@ -37,15 +39,17 @@ export function validateVarargsSnapshot(vm, snapshot) {
     }
     if (value.typedReference) {
       if (!Object.isFrozen(value) || value.vmOwner !== vm.snapshotOwner ||
-          value.type?.registry !== vm.heap.methodTables || !value.pointer?.byref) reject('malformed typed reference');
+        value.type?.registry !== vm.heap.methodTables || !value.pointer?.byref) reject('malformed typed reference');
       pending.push(value.pointer);
       continue;
     }
     if (value.registry || value.methodPointer || value.runtimeHandle || Number.isInteger(value.h)) continue;
-    if (value instanceof Map) { for (const item of value.values()) pending.push(item); }
-    else if (Array.isArray(value)) pending.push(...value);
-    else for (const [key, item] of Object.entries(value)) {
-      if (key !== 'method' && key !== 'offsets' && key !== 'vmOwner') pending.push(item);
-    }
+    if (value instanceof Map) {
+      for (const item of value.values()) pending.push(item);
+    } else if (Array.isArray(value)) pending.push(...value);
+    else
+      for (const [key, item] of Object.entries(value)) {
+        if (key !== 'method' && key !== 'offsets' && key !== 'vmOwner') pending.push(item);
+      }
   }
 }

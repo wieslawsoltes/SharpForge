@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e0e58431eab7a8979cd2",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct Program\n{\n    public int X { get; private set; }\n    public Program(int x)\n    {\n    }\n    public static void Main(string[] args)\n    {\n    }\n}",
+  "sourceSHA256": "68c9acd56eb6d0bc25667465758f0d0637ef3e29663a5b52e49aed8447ef613f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "AutoPropInitialization1",
+    "offset": 39685
+  },
+  "langVersion": "10",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0843",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,12): error CS0843: Auto-implemented property 'Program.X' must be fully assigned before control is returned to the caller. Consider updating to language version '11.0' to auto-default the property.\n                //     public Program(int x)\n                Diagnostic(ErrorCode.ERR_UnassignedThisAutoPropertyUnsupportedVersion, \"Program\").WithArguments(\"Program.X\", \"11.0\").WithLocation(5, 12)",
+  "unsupported": []
+}

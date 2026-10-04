@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a8937d7d6150d5a6acc1",
+  "kind": "spec",
+  "sourceText": "static T* AddLeftS(nint x, T* y) => x + y;   // T* operator +(long left, T* right)\nstatic T* AddLeftU(nuint x, T* y) => x + y;  // T* operator +(ulong left, T* right)\nstatic T* AddRightS(T* x, nint y) => x + y;  // T* operator +(T* left, long right)\nstatic T* AddRightU(T* x, nuint y) => x + y; // T* operator +(T* left, ulong right)\nstatic T* SubRightS(T* x, nint y) => x - y;  // T* operator -(T* left, long right)\nstatic T* SubRightU(T* x, nuint y) => x - y; // T* operator -(T* left, ulong right)",
+  "sourceSHA256": "9ecfbfdb5f85ff169db28420b49d91489f6494cfd55e6a2e29510d9d40bfa52c",
+  "target": "library",
+  "featureId": "csharp-9-0-native-sized-integers",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/native-integers.md",
+    "sha256": "d0b0b6f2a77880d7ea7898939dd15177557aacb592d26800e709b4f7749c9496",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/native-integers.md",
+    "license": "NOASSERTION",
+    "offset": 13201
+  }
+}

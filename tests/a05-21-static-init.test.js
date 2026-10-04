@@ -36,7 +36,7 @@ test('A05 T21 initializer failure caches a rooted TypeInitializationException an
   assert.equal(wrapped.name,'TypeInitializationException');assert.equal(wrapped.innerException,original);
   assert.equal(vm.heap.get(wrapped.reference).data[1],original.reference);
   assert.throws(()=>ensureTypeInitialized(vm,1),error=>error===wrapped);
-  vm.heap.collect();assert.equal(vm.heap.get(original.reference).type,'System.InvalidOperationException');
+  vm.heap.collect();assert.equal(vm.heap.get(original.reference).type,'InvalidOperationException');
   assert.throws(()=>ensureTypeInitialized(vm,1),error=>error===wrapped);assert.equal(calls.length,1);
 });
 test('A05 T21 another scheduler context waits then retries after initialization',()=>{

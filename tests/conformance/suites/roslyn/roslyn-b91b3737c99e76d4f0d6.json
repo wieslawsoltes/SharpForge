@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b91b3737c99e76d4f0d6",
+  "kind": "diagnostics",
+  "sourceText": "\nclass B\n{\n    public B(int x)\n    {\n    }\n}\n\nclass C : B\n{\n    int InstanceMethod(int x)\n    {\n        return x;\n    }\n\n    static int field = (int)InstanceMethod((dynamic)2);\n    static int Property\n    {\n        get\n        {\n            return (int)InstanceMethod((dynamic)2);\n        }\n    }\n    static int Method()\n    {\n        return (int)InstanceMethod((dynamic)2);\n    }\n\n    // these are all still static contexts, even though they're related to instance things\n    int instanceField = (int)InstanceMethod((dynamic)2);\n    public C(int x) : base((int)InstanceMethod((dynamic)x))\n    {\n    }\n    public C() : this((int)InstanceMethod((dynamic)2))\n    {\n    }\n}\n\nclass M\n{\n    static void Main()\n    {\n        // attempting to even load C will cause runtime errors in all cases of calling C.InstanceMethod\n        System.Console.Write(5);\n    }\n}\n",
+  "sourceSHA256": "bb99a7329e058508e6b63e976d992f042c2adf5107748a877cb5081b82845ac5",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "sha256": "dae53259abfabce8d6076c19e32fbeece50934d98a2aa892d9416a8e94b054d4",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "license": "MIT",
+    "method": "CallingInstanceDynamicallyFromStaticContext",
+    "offset": 400628
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0236",
+        "severity": "error"
+      },
+      {
+        "code": "CS0236",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (16,29): error CS0236: A field initializer cannot reference the non-static field, method, or property 'C.InstanceMethod(int)'\n                //     static int field = (int)InstanceMethod((dynamic)2);\n                Diagnostic(ErrorCode.ERR_FieldInitRefNonstatic, \"InstanceMethod\").WithArguments(\"C.InstanceMethod(int)\").WithLocation(16, 29),\n                // (30,30): error CS0236: A field initializer cannot reference the non-static field, method, or property 'C.InstanceMethod(int)'\n                //     int instanceField = (int)InstanceMethod((dynamic)2);\n                Diagnostic(ErrorCode.ERR_FieldInitRefNonstatic, \"InstanceMethod\").WithArguments(\"C.InstanceMethod(int)\").WithLocation(30, 30),\n                // (21,25): error CS0120: An object reference is required for the non-static field, method, or property 'C.InstanceMethod(int)'\n                //             return (int)InstanceMethod((dynamic)2);\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"InstanceMethod\").WithArguments(\"C.InstanceMethod(int)\").WithLocation(21, 25),\n                // (26,21): error CS0120: An object reference is required for the non-static field, method, or property 'C.InstanceMethod(int)'\n                //         return (int)InstanceMethod((dynamic)2);\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"InstanceMethod\").WithArguments(\"C.InstanceMethod(int)\").WithLocation(26, 21),\n                // (31,33): error CS0120: An object reference is required for the non-static field, method, or property 'C.InstanceMethod(int)'\n                //     public C(int x) : base((int)InstanceMethod((dynamic)x))\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"InstanceMethod\").WithArguments(\"C.InstanceMethod(int)\").WithLocation(31, 33),\n                // (34,28): error CS0120: An object reference is required for the non-static field, method, or property 'C.InstanceMethod(int)'\n                //     public C() : this((int)InstanceMethod((dynamic)2))\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"InstanceMethod\").WithArguments(\"C.InstanceMethod(int)\").WithLocation(34, 28)\n            ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

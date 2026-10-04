@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f23fddefabc5363a6539",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    private C(string s, ref int i) => System.Console.WriteLine(\"string\" + i);\n    private C(object o, in int i) => System.Console.WriteLine(\"object\" + i);\n    private C(C c, ref readonly int i) => System.Console.WriteLine(\"c\" + i);\n    static void Main()\n    {\n        int i = 5;\n        new C(null, ref i);\n    }\n}",
+  "sourceSHA256": "aab30c93b897d74f3b4b3ef4d7df670516634d695c2e54f0d79898bf86fb4685",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "RefReadonlyParameter_RefArgument_OverloadResolution_01_Ctor",
+    "offset": 152949
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0121",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (9,13): error CS0121: The call is ambiguous between the following methods or properties: 'C.C(string, ref int)' and 'C.C(C, ref readonly int)'\n            //         new C(null, ref i);\n            Diagnostic(ErrorCode.ERR_AmbigCall, \"C\").WithArguments(\"C.C(string, ref int)\", \"C.C(C, ref readonly int)\").WithLocation(9, 13)",
+  "unsupported": []
+}

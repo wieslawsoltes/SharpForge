@@ -1,0 +1,1127 @@
+{
+  "baselineRevision": "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+  "candidateRevision": "1699e53a664bb54752a216a98f59a9f947da5eeb",
+  "warning": "Descriptive before/after measurements only; shared-host noise and statistical significance are not inferred.",
+  "rows": [
+    {
+      "case": "instance-overloads",
+      "phase": "compile",
+      "comparison": "before-after",
+      "baseline": {
+        "elapsedMs": {
+          "median": 10.708038000000215,
+          "p95": 17.371676999999977,
+          "minimum": 9.498223999999936,
+          "maximum": 17.371676999999977
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 69456,
+          "p95": 198416,
+          "minimum": 52104,
+          "maximum": 198416
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 3211808,
+          "p95": 3538232,
+          "minimum": 3135456,
+          "maximum": 3538232
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 10.341676000000007,
+          "p95": 11.902618999999959,
+          "minimum": 9.503101000000015,
+          "maximum": 11.902618999999959
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 78472,
+          "p95": 372320,
+          "minimum": 52432,
+          "maximum": 372320
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 3215568,
+          "p95": 3744816,
+          "minimum": 3134776,
+          "maximum": 3744816
+        }
+      },
+      "medianChangePercent": -3.4213737381227127,
+      "p95ChangePercent": -31.48261391228967,
+      "retainedHeapMedianDifferenceBytes": 9016,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "instance-overloads",
+      "phase": "source-model-bind",
+      "comparison": "before-after",
+      "baseline": {
+        "elapsedMs": {
+          "median": 16.67903400000023,
+          "p95": 19.853069000000005,
+          "minimum": 14.757184999999936,
+          "maximum": 19.853069000000005
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 531344,
+          "p95": 617808,
+          "minimum": 465880,
+          "maximum": 617808
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6179656,
+          "p95": 6596256,
+          "minimum": 6136320,
+          "maximum": 6596256
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 15.34248700000012,
+          "p95": 17.75819000000024,
+          "minimum": 13.863867999999911,
+          "maximum": 17.75819000000024
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 592384,
+          "p95": 676408,
+          "minimum": 507656,
+          "maximum": 676408
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6220024,
+          "p95": 6607432,
+          "minimum": 6154936,
+          "maximum": 6607432
+        }
+      },
+      "medianChangePercent": -8.013335784315156,
+      "p95ChangePercent": -10.551915172408677,
+      "retainedHeapMedianDifferenceBytes": 61040,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "instance-overloads",
+      "phase": "signature-first-query",
+      "comparison": "candidate-only",
+      "baseline": {
+        "available": false,
+        "reason": "This revision has no public SourceSemanticModel.signatureHelp API."
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 0.2608330000002752,
+          "p95": 0.3915999999990163,
+          "minimum": 0.16066200000022945,
+          "maximum": 0.3915999999990163
+        },
+        "queryCount": 1,
+        "elapsedPerQueryMs": {
+          "median": 0.2608330000002752,
+          "p95": 0.3915999999990163,
+          "minimum": 0.16066200000022945,
+          "maximum": 0.3915999999990163
+        },
+        "retainedHeapDeltaBytes": {
+          "median": -4472,
+          "p95": 12480,
+          "minimum": -27632,
+          "maximum": 12480
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 66016,
+          "p95": 70280,
+          "minimum": 66016,
+          "maximum": 70280
+        },
+        "evidence": {
+          "binding": {
+            "declarations": [
+              [
+                "class",
+                "Receiver",
+                6,
+                14
+              ],
+              [
+                "method",
+                "F",
+                28,
+                29
+              ],
+              [
+                "method",
+                "F",
+                69,
+                70
+              ],
+              [
+                "class",
+                "Calls",
+                104,
+                109
+              ],
+              [
+                "method",
+                "Run",
+                123,
+                126
+              ]
+            ],
+            "probe": [
+              "method",
+              "F",
+              "instance-overloads.cs"
+            ]
+          },
+          "signature": {
+            "activeSignature": 0,
+            "activeParameter": 0,
+            "signatures": [
+              {
+                "label": "int Receiver.F(int value)",
+                "parameters": [
+                  {
+                    "label": "int value"
+                  }
+                ]
+              },
+              {
+                "label": "int Receiver.F(string value)",
+                "parameters": [
+                  {
+                    "label": "string value"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "instance-overloads",
+      "phase": "signature-repeated-query",
+      "comparison": "candidate-only",
+      "baseline": {
+        "available": false,
+        "reason": "This revision has no public SourceSemanticModel.signatureHelp API."
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 0.49168100000133563,
+          "p95": 0.6181420000011713,
+          "minimum": 0.3825269999997545,
+          "maximum": 0.6181420000011713
+        },
+        "queryCount": 64,
+        "elapsedPerQueryMs": {
+          "median": 0.007682515625020869,
+          "p95": 0.0096584687500183,
+          "minimum": 0.005976984374996164,
+          "maximum": 0.0096584687500183
+        },
+        "retainedHeapDeltaBytes": {
+          "median": -9968,
+          "p95": 192888,
+          "minimum": -72904,
+          "maximum": 192888
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 276200,
+          "p95": 288448,
+          "minimum": 269032,
+          "maximum": 288448
+        },
+        "evidence": {
+          "binding": {
+            "declarations": [
+              [
+                "class",
+                "Receiver",
+                6,
+                14
+              ],
+              [
+                "method",
+                "F",
+                28,
+                29
+              ],
+              [
+                "method",
+                "F",
+                69,
+                70
+              ],
+              [
+                "class",
+                "Calls",
+                104,
+                109
+              ],
+              [
+                "method",
+                "Run",
+                123,
+                126
+              ]
+            ],
+            "probe": [
+              "method",
+              "F",
+              "instance-overloads.cs"
+            ]
+          },
+          "signature": {
+            "activeSignature": 0,
+            "activeParameter": 0,
+            "signatures": [
+              {
+                "label": "int Receiver.F(int value)",
+                "parameters": [
+                  {
+                    "label": "int value"
+                  }
+                ]
+              },
+              {
+                "label": "int Receiver.F(string value)",
+                "parameters": [
+                  {
+                    "label": "string value"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "constructed-generic-receiver",
+      "phase": "compile",
+      "comparison": "before-after",
+      "baseline": {
+        "elapsedMs": {
+          "median": 44.97781900000018,
+          "p95": 62.135163000000375,
+          "minimum": 40.1055409999999,
+          "maximum": 62.135163000000375
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 161696,
+          "p95": 204136,
+          "minimum": 107464,
+          "maximum": 204136
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 14932064,
+          "p95": 15079976,
+          "minimum": 14826904,
+          "maximum": 15079976
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 40.508640000000014,
+          "p95": 47.38760299999967,
+          "minimum": 35.8921049999999,
+          "maximum": 47.38760299999967
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 159024,
+          "p95": 206200,
+          "minimum": 68120,
+          "maximum": 206200
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 14940048,
+          "p95": 15102712,
+          "minimum": 14687152,
+          "maximum": 15102712
+        }
+      },
+      "medianChangePercent": -9.936406654133567,
+      "p95ChangePercent": -23.734644423481456,
+      "retainedHeapMedianDifferenceBytes": -2672,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "constructed-generic-receiver",
+      "phase": "source-model-bind",
+      "comparison": "before-after",
+      "baseline": {
+        "elapsedMs": {
+          "median": 24.73554299999978,
+          "p95": 27.54587999999967,
+          "minimum": 22.728094999999485,
+          "maximum": 27.54587999999967
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 1087216,
+          "p95": 1146280,
+          "minimum": 1014120,
+          "maximum": 1146280
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 11367936,
+          "p95": 11431720,
+          "minimum": 11340048,
+          "maximum": 11431720
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 24.777565000000322,
+          "p95": 36.099619000000075,
+          "minimum": 23.023299000000407,
+          "maximum": 36.099619000000075
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 1197352,
+          "p95": 1257168,
+          "minimum": 1139872,
+          "maximum": 1257168
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 11410616,
+          "p95": 11463960,
+          "minimum": 11384200,
+          "maximum": 11463960
+        }
+      },
+      "medianChangePercent": 0.16988509207396252,
+      "p95ChangePercent": 31.052698261956092,
+      "retainedHeapMedianDifferenceBytes": 110136,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "constructed-generic-receiver",
+      "phase": "signature-first-query",
+      "comparison": "candidate-only",
+      "baseline": {
+        "available": false,
+        "reason": "This revision has no public SourceSemanticModel.signatureHelp API."
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 0.27091900000050373,
+          "p95": 0.3705389999995532,
+          "minimum": 0.2444889999987936,
+          "maximum": 0.3705389999995532
+        },
+        "queryCount": 1,
+        "elapsedPerQueryMs": {
+          "median": 0.27091900000050373,
+          "p95": 0.3705389999995532,
+          "minimum": 0.2444889999987936,
+          "maximum": 0.3705389999995532
+        },
+        "retainedHeapDeltaBytes": {
+          "median": -8184,
+          "p95": 12696,
+          "minimum": -293568,
+          "maximum": 12696
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 123512,
+          "p95": 123512,
+          "minimum": -119360,
+          "maximum": 123512
+        },
+        "evidence": {
+          "binding": {
+            "declarations": [
+              [
+                "class",
+                "Receiver",
+                6,
+                14
+              ],
+              [
+                "method",
+                "Echo",
+                27,
+                31
+              ],
+              [
+                "method",
+                "Identity",
+                64,
+                72
+              ],
+              [
+                "class",
+                "Calls",
+                107,
+                112
+              ],
+              [
+                "method",
+                "Run",
+                124,
+                127
+              ]
+            ],
+            "probe": [
+              "method",
+              "Echo",
+              "constructed-generic-receiver.cs"
+            ]
+          },
+          "signature": {
+            "activeSignature": 0,
+            "activeParameter": 0,
+            "signatures": [
+              {
+                "label": "int Receiver<int>.Echo(int value)",
+                "parameters": [
+                  {
+                    "label": "int value"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "constructed-generic-receiver",
+      "phase": "signature-repeated-query",
+      "comparison": "candidate-only",
+      "baseline": {
+        "available": false,
+        "reason": "This revision has no public SourceSemanticModel.signatureHelp API."
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 0.31260199999996985,
+          "p95": 0.37485500000002503,
+          "minimum": 0.30260699999962526,
+          "maximum": 0.37485500000002503
+        },
+        "queryCount": 64,
+        "elapsedPerQueryMs": {
+          "median": 0.004884406249999529,
+          "p95": 0.005857109375000391,
+          "minimum": 0.004728234374994145,
+          "maximum": 0.005857109375000391
+        },
+        "retainedHeapDeltaBytes": {
+          "median": -31864,
+          "p95": -6824,
+          "minimum": -82112,
+          "maximum": -6824
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 200912,
+          "p95": 201936,
+          "minimum": 200912,
+          "maximum": 201936
+        },
+        "evidence": {
+          "binding": {
+            "declarations": [
+              [
+                "class",
+                "Receiver",
+                6,
+                14
+              ],
+              [
+                "method",
+                "Echo",
+                27,
+                31
+              ],
+              [
+                "method",
+                "Identity",
+                64,
+                72
+              ],
+              [
+                "class",
+                "Calls",
+                107,
+                112
+              ],
+              [
+                "method",
+                "Run",
+                124,
+                127
+              ]
+            ],
+            "probe": [
+              "method",
+              "Echo",
+              "constructed-generic-receiver.cs"
+            ]
+          },
+          "signature": {
+            "activeSignature": 0,
+            "activeParameter": 0,
+            "signatures": [
+              {
+                "label": "int Receiver<int>.Echo(int value)",
+                "parameters": [
+                  {
+                    "label": "int value"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "local-functions",
+      "phase": "compile",
+      "comparison": "before-after",
+      "baseline": {
+        "elapsedMs": {
+          "median": 17.277345000000423,
+          "p95": 23.23551000000043,
+          "minimum": 15.641688000000613,
+          "maximum": 23.23551000000043
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 69656,
+          "p95": 92520,
+          "minimum": 30920,
+          "maximum": 92520
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6155120,
+          "p95": 6215464,
+          "minimum": 6037904,
+          "maximum": 6215464
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 17.239387999999963,
+          "p95": 19.915812999999616,
+          "minimum": 15.730631999999787,
+          "maximum": 19.915812999999616
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 68504,
+          "p95": 95936,
+          "minimum": 24960,
+          "maximum": 95936
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6163224,
+          "p95": 6216672,
+          "minimum": 6038936,
+          "maximum": 6216672
+        }
+      },
+      "medianChangePercent": -0.2196923196269962,
+      "p95ChangePercent": -14.287170800213778,
+      "retainedHeapMedianDifferenceBytes": -1152,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "local-functions",
+      "phase": "source-model-bind",
+      "comparison": "before-after",
+      "baseline": {
+        "elapsedMs": {
+          "median": 10.037827999999536,
+          "p95": 10.482727999999952,
+          "minimum": 8.908754000000044,
+          "maximum": 10.482727999999952
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 394512,
+          "p95": 415056,
+          "minimum": 369392,
+          "maximum": 415056
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 4636392,
+          "p95": 4664312,
+          "minimum": 4549336,
+          "maximum": 4664312
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 9.09337300000061,
+          "p95": 9.902313000000504,
+          "minimum": 8.493868999999904,
+          "maximum": 9.902313000000504
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 428680,
+          "p95": 446512,
+          "minimum": 396704,
+          "maximum": 446512
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 4655520,
+          "p95": 4676496,
+          "minimum": 4544480,
+          "maximum": 4676496
+        }
+      },
+      "medianChangePercent": -9.408957794444861,
+      "p95ChangePercent": -5.536869791903887,
+      "retainedHeapMedianDifferenceBytes": 34168,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "local-functions",
+      "phase": "signature-first-query",
+      "comparison": "candidate-only",
+      "baseline": {
+        "available": false,
+        "reason": "This revision has no public SourceSemanticModel.signatureHelp API."
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 0.1722300000001269,
+          "p95": 0.25250099999902886,
+          "minimum": 0.1517679999997199,
+          "maximum": 0.25250099999902886
+        },
+        "queryCount": 1,
+        "elapsedPerQueryMs": {
+          "median": 0.1722300000001269,
+          "p95": 0.25250099999902886,
+          "minimum": 0.1517679999997199,
+          "maximum": 0.25250099999902886
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 232,
+          "p95": 16680,
+          "minimum": -18912,
+          "maximum": 16680
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 64104,
+          "p95": 64840,
+          "minimum": 64104,
+          "maximum": 64840
+        },
+        "evidence": {
+          "binding": {
+            "declarations": [
+              [
+                "class",
+                "Calls",
+                6,
+                11
+              ],
+              [
+                "method",
+                "Run",
+                30,
+                33
+              ],
+              [
+                "method",
+                "Next",
+                40,
+                44
+              ]
+            ],
+            "probe": [
+              "method",
+              "Next",
+              "local-functions.cs"
+            ]
+          },
+          "signature": {
+            "activeSignature": 0,
+            "activeParameter": 0,
+            "signatures": [
+              {
+                "label": "int Next(int value)",
+                "parameters": [
+                  {
+                    "label": "int value"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "local-functions",
+      "phase": "signature-repeated-query",
+      "comparison": "candidate-only",
+      "baseline": {
+        "available": false,
+        "reason": "This revision has no public SourceSemanticModel.signatureHelp API."
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 0.39841100000012375,
+          "p95": 1.7771300000003976,
+          "minimum": 0.334725000000617,
+          "maximum": 1.7771300000003976
+        },
+        "queryCount": 64,
+        "elapsedPerQueryMs": {
+          "median": 0.006225171875001934,
+          "p95": 0.027767656250006212,
+          "minimum": 0.005230078125009641,
+          "maximum": 0.027767656250006212
+        },
+        "retainedHeapDeltaBytes": {
+          "median": -7016,
+          "p95": 688,
+          "minimum": -24648,
+          "maximum": 688
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 176080,
+          "p95": 189264,
+          "minimum": 176080,
+          "maximum": 189264
+        },
+        "evidence": {
+          "binding": {
+            "declarations": [
+              [
+                "class",
+                "Calls",
+                6,
+                11
+              ],
+              [
+                "method",
+                "Run",
+                30,
+                33
+              ],
+              [
+                "method",
+                "Next",
+                40,
+                44
+              ]
+            ],
+            "probe": [
+              "method",
+              "Next",
+              "local-functions.cs"
+            ]
+          },
+          "signature": {
+            "activeSignature": 0,
+            "activeParameter": 0,
+            "signatures": [
+              {
+                "label": "int Next(int value)",
+                "parameters": [
+                  {
+                    "label": "int value"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "incomplete-instance-call",
+      "phase": "compile",
+      "comparison": "before-after",
+      "baseline": {
+        "elapsedMs": {
+          "median": 21.494684999999663,
+          "p95": 24.468469999999797,
+          "minimum": 20.487725999999384,
+          "maximum": 24.468469999999797
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 91408,
+          "p95": 149256,
+          "minimum": 68496,
+          "maximum": 149256
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 8102520,
+          "p95": 8134480,
+          "minimum": 8070592,
+          "maximum": 8134480
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 20.851263000000472,
+          "p95": 25.32172999999966,
+          "minimum": 19.989093999999568,
+          "maximum": 25.32172999999966
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 89392,
+          "p95": 170008,
+          "minimum": 67088,
+          "maximum": 170008
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 8108424,
+          "p95": 8164936,
+          "minimum": 8090176,
+          "maximum": 8164936
+        }
+      },
+      "medianChangePercent": -2.9934004615522425,
+      "p95ChangePercent": 3.4871816668548217,
+      "retainedHeapMedianDifferenceBytes": -2016,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "incomplete-instance-call",
+      "phase": "source-model-bind",
+      "comparison": "before-after",
+      "baseline": {
+        "elapsedMs": {
+          "median": 13.649885000000722,
+          "p95": 14.992630000000645,
+          "minimum": 12.353019000000131,
+          "maximum": 14.992630000000645
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 498080,
+          "p95": 531408,
+          "minimum": 475696,
+          "maximum": 531408
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6267552,
+          "p95": 6291560,
+          "minimum": 6143464,
+          "maximum": 6291560
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 13.343231000000742,
+          "p95": 14.573406999999861,
+          "minimum": 12.00843900000018,
+          "maximum": 14.573406999999861
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 559488,
+          "p95": 592880,
+          "minimum": 525616,
+          "maximum": 592880
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6279568,
+          "p95": 6325840,
+          "minimum": 6158920,
+          "maximum": 6325840
+        }
+      },
+      "medianChangePercent": -2.2465683776820455,
+      "p95ChangePercent": -2.796193863256591,
+      "retainedHeapMedianDifferenceBytes": 61408,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "incomplete-instance-call",
+      "phase": "signature-first-query",
+      "comparison": "candidate-only",
+      "baseline": {
+        "available": false,
+        "reason": "This revision has no public SourceSemanticModel.signatureHelp API."
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 0.25530499999877065,
+          "p95": 0.2967879999996512,
+          "minimum": 0.19155899999896064,
+          "maximum": 0.2967879999996512
+        },
+        "queryCount": 1,
+        "elapsedPerQueryMs": {
+          "median": 0.25530499999877065,
+          "p95": 0.2967879999996512,
+          "minimum": 0.19155899999896064,
+          "maximum": 0.2967879999996512
+        },
+        "retainedHeapDeltaBytes": {
+          "median": -2280,
+          "p95": 18240,
+          "minimum": -18920,
+          "maximum": 18240
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 65744,
+          "p95": 65936,
+          "minimum": 65744,
+          "maximum": 65936
+        },
+        "evidence": {
+          "binding": {
+            "declarations": [
+              [
+                "class",
+                "Receiver",
+                6,
+                14
+              ],
+              [
+                "method",
+                "F",
+                28,
+                29
+              ],
+              [
+                "method",
+                "F",
+                69,
+                70
+              ],
+              [
+                "class",
+                "Calls",
+                104,
+                109
+              ],
+              [
+                "method",
+                "Run",
+                123,
+                126
+              ]
+            ],
+            "probe": null
+          },
+          "signature": {
+            "activeSignature": 0,
+            "activeParameter": 0,
+            "signatures": [
+              {
+                "label": "int Receiver.F(int value)",
+                "parameters": [
+                  {
+                    "label": "int value"
+                  }
+                ]
+              },
+              {
+                "label": "int Receiver.F(string value)",
+                "parameters": [
+                  {
+                    "label": "string value"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "incomplete-instance-call",
+      "phase": "signature-repeated-query",
+      "comparison": "candidate-only",
+      "baseline": {
+        "available": false,
+        "reason": "This revision has no public SourceSemanticModel.signatureHelp API."
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 0.5194830000000366,
+          "p95": 0.8192850000014005,
+          "minimum": 0.46627300000000105,
+          "maximum": 0.8192850000014005
+        },
+        "queryCount": 64,
+        "elapsedPerQueryMs": {
+          "median": 0.008116921875000571,
+          "p95": 0.012801328125021882,
+          "minimum": 0.007285515625000016,
+          "maximum": 0.012801328125021882
+        },
+        "retainedHeapDeltaBytes": {
+          "median": -9776,
+          "p95": 1264,
+          "minimum": -30112,
+          "maximum": 1264
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 227024,
+          "p95": 244848,
+          "minimum": 227024,
+          "maximum": 244848
+        },
+        "evidence": {
+          "binding": {
+            "declarations": [
+              [
+                "class",
+                "Receiver",
+                6,
+                14
+              ],
+              [
+                "method",
+                "F",
+                28,
+                29
+              ],
+              [
+                "method",
+                "F",
+                69,
+                70
+              ],
+              [
+                "class",
+                "Calls",
+                104,
+                109
+              ],
+              [
+                "method",
+                "Run",
+                123,
+                126
+              ]
+            ],
+            "probe": null
+          },
+          "signature": {
+            "activeSignature": 0,
+            "activeParameter": 0,
+            "signatures": [
+              {
+                "label": "int Receiver.F(int value)",
+                "parameters": [
+                  {
+                    "label": "int value"
+                  }
+                ]
+              },
+              {
+                "label": "int Receiver.F(string value)",
+                "parameters": [
+                  {
+                    "label": "string value"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

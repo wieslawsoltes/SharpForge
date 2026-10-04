@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-11a6dfd6a38e606548fe",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    public static void Main(string[] args)\n    {\n        Console.Write(M1<int>(2));\n        Console.Write(M2<int>(3));\n        Console.Write(M1<int>(1.1));\n        Console.Write(M2<int>(1.1));\n    }\n    public static T M1<T>(ValueType o)\n    {\n        return o is T t ? t : default(T);\n    }\n    public static T M2<T>(ValueType o)\n    {\n        switch (o)\n        {\n            case T t:\n                return t;\n            default:\n                return default(T);\n        }\n    }\n}\n",
+  "sourceSHA256": "cdb724a6ef03276696ab59a2524e6da4581f9f16ef04ddbde1a69d659a6da876",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/SwitchTests.cs",
+    "sha256": "8a2559010768d72741326ab4614a72fc6d01c52c1dbef1652639b4fae3d66229",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/SwitchTests.cs",
+    "license": "MIT",
+    "method": "TestMatchWithTypeParameter_01",
+    "offset": 280749
+  },
+  "langVersion": "7",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8314",
+        "severity": "error"
+      },
+      {
+        "code": "CS8314",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (13,21): error CS8413: An expression of type 'ValueType' cannot be handled by a pattern of type 'T' in C# 7.0. Please use language version 7.1 or greater.\n                //         return o is T t ? t : default(T);\n                Diagnostic(ErrorCode.ERR_PatternWrongGenericTypeInVersion, \"T\").WithArguments(\"System.ValueType\", \"T\", \"7.0\", \"7.1\").WithLocation(13, 21),\n                // (19,18): error CS8413: An expression of type 'ValueType' cannot be handled by a pattern of type 'T' in C# 7.0. Please use language version 7.1 or greater.\n                //             case T t:\n                Diagnostic(ErrorCode.ERR_PatternWrongGenericTypeInVersion, \"T\").WithArguments(\"System.ValueType\", \"T\", \"7.0\", \"7.1\").WithLocation(19, 18)\n                ",
+  "unsupported": []
+}

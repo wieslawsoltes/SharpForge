@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b5cc00a52344cdd6c648",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace System.Collections.Generic\n{\n    public interface IAsyncEnumerable<out T>\n    {\n    }\n}\nclass C\n{\n    async System.Threading.Tasks.Task M(System.Collections.Generic.IAsyncEnumerable<int> collection)\n    {\n        await foreach (var i in collection)\n        {\n        }\n    }\n}",
+  "sourceSHA256": "4834e443d53b0a153098866168a07f4aa203dc827bd3841fe96b799d42758755",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestWithIncompleteInterface",
+    "offset": 92343
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8411",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,33): error CS8411: Async foreach statement cannot operate on variables of type 'IAsyncEnumerable<int>' because 'IAsyncEnumerable<int>' does not contain a suitable public instance or extension definition for 'GetAsyncEnumerator'\n                //         await foreach (var i in collection)\n                Diagnostic(ErrorCode.ERR_AwaitForEachMissingMember, \"collection\").WithArguments(\"System.Collections.Generic.IAsyncEnumerable<int>\", \"GetAsyncEnumerator\").WithLocation(12, 33)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

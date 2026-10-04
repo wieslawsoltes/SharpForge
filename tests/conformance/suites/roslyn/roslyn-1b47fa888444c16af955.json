@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1b47fa888444c16af955",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    public static void Main()\n    {\n        string k;\n        switch (1)\n        {\n        case 1:\n        }\n        string s = k;\n    }\n}",
+  "sourceSHA256": "c4217c7ff931d6b24896e75f31111097a46106381eb80751ff657a28b330a081",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "CascadedUnreachableCode",
+    "offset": 83199
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8070",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,9): error CS8070: Control cannot fall out of switch from final case label ('case 1:')\n                //         case 1:\n                Diagnostic(ErrorCode.ERR_SwitchFallOut, \"case 1:\").WithArguments(\"case 1:\").WithLocation(8, 9),\n                // (10,20): error CS0165: Use of unassigned local variable 'k'\n                //         string s = k;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"k\").WithArguments(\"k\").WithLocation(10, 20)\n                ",
+  "unsupported": []
+}

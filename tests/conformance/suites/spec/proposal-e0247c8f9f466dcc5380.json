@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e0247c8f9f466dcc5380",
+  "kind": "spec",
+  "sourceText": "namespace System\n{\n    public readonly struct Range\n    {\n        public Range(System.Index start, System.Index end);\n        public static Range StartAt(System.Index start);\n        public static Range EndAt(System.Index end);\n        public static Range All { get; }\n    }\n}",
+  "sourceSHA256": "f2870860399d08db8e616fbc7807465868857b511cb2ba95287a8e22c19874fe",
+  "target": "library",
+  "featureId": "csharp-8-0-ranges-and-indexes",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/ranges.md",
+    "sha256": "9419e0ac1a7ac5309d11cf3ee4ea64a38c2abbf82e8197f5211e7d93ec077363",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/ranges.md",
+    "license": "NOASSERTION",
+    "offset": 1008
+  }
+}

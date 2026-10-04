@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+
+var set = new HashSet<object>();
+Console.WriteLine("set");
+Console.WriteLine(set.Add(1));
+Console.WriteLine(set.Add(1.0));
+Console.WriteLine(set.Count);
+Console.WriteLine(set.Add(1));
+Console.WriteLine(set.Add(1.0));
+Console.WriteLine(set.Remove(1.0));
+Console.WriteLine(set.Contains(1));
+Console.WriteLine(set.Contains(1.0));
+Console.WriteLine(set.Count);
+
+var list = new List<object>();
+list.Add(1);
+Console.WriteLine("list");
+Console.WriteLine(list.Contains(1.0));
+Console.WriteLine(list.IndexOf(1.0));
+Console.WriteLine(list.Remove(1.0));
+Console.WriteLine(list.Contains(1));
+Console.WriteLine(list.Count);
+list.Add(1.0);
+Console.WriteLine(list.IndexOf(1.0));
+Console.WriteLine(list.Remove(1));
+Console.WriteLine(list.Contains(1.0));
+Console.WriteLine(list.Contains(1));
+
+var dictionary = new Dictionary<string, object>();
+dictionary.Add("one", 1);
+Console.WriteLine("dictionary");
+Console.WriteLine(dictionary.ContainsValue(1.0));
+Console.WriteLine(dictionary.ContainsValue(1));
+dictionary.Add("double", 1.0);
+Console.WriteLine(dictionary.ContainsValue(1.0));
+Console.WriteLine(dictionary.Count);
+
+var queue = new Queue<object>();
+queue.Enqueue(1);
+var stack = new Stack<object>();
+stack.Push(1);
+Console.WriteLine("queue-stack");
+Console.WriteLine(queue.Contains(1.0));
+Console.WriteLine(queue.Contains(1));
+Console.WriteLine(stack.Contains(1.0));
+Console.WriteLine(stack.Contains(1));
+
+set.Clear();
+Console.WriteLine("controls");
+Console.WriteLine(set.Add(null));
+Console.WriteLine(set.Add(null));
+Console.WriteLine(set.Add("same"));
+Console.WriteLine(set.Add(string.Concat("sa", "me")));
+Console.WriteLine(set.Add(true));
+Console.WriteLine(set.Add(1));
+Console.WriteLine(set.Add(0.0));
+Console.WriteLine(set.Add(-0.0));
+Console.WriteLine(set.Add(Math.Sqrt(-1.0)));
+Console.WriteLine(set.Add(Math.Sqrt(-1.0)));
+Console.WriteLine(set.Contains(Math.Sqrt(-1.0)));
+Console.WriteLine(set.Count);

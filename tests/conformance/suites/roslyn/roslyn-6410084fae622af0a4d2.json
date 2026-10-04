@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6410084fae622af0a4d2",
+  "kind": "diagnostics",
+  "sourceText": "static void F()\n{\nL:\n    return;\n}\ngoto L;",
+  "sourceSHA256": "aa44970eaf320a9ca5af52b40db21f25234335eddbd2b5b42369055e9acb3176",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/GotoTest.cs",
+    "sha256": "182c0d7d83157c6a708cb42175539e3cf571db358532ff37f3ec99521dce2e92",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/GotoTest.cs",
+    "license": "MIT",
+    "method": "IntoScriptMethod",
+    "offset": 26584
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "references: new[] { SystemCoreRef }, parseOptions: TestOptions.Script)",
+  "options": "(source, references: new[] { SystemCoreRef }, parseOptions: TestOptions.Script)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0159",
+        "severity": "error"
+      },
+      {
+        "code": "CS0164",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,6): error CS0159: No such label 'L' within the scope of the goto statement\n                // goto L;\n                Diagnostic(ErrorCode.ERR_LabelNotFound, \"L\").WithArguments(\"L\").WithLocation(6, 6),\n                // (3,1): warning CS0164: This label has not been referenced\n                // L:\n                Diagnostic(ErrorCode.WRN_UnreferencedLabel, \"L\").WithLocation(3, 1)",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

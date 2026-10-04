@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "testedCommit": "860416ba05a1ad989c546a3ced272e7c7494b533",
+  "dirty": false,
+  "platform": "darwin-arm64",
+  "node": "24.21.0",
+  "sourceKind": "synthetic-production-probe",
+  "qualification": "unknown",
+  "status": "failed",
+  "results": [
+    {
+      "protocol": "lsp",
+      "status": "passed",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "sharpforge/unsupported"
+      },
+      "actual": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": -32601,
+          "message": "Method 'sharpforge/unsupported' is not implemented"
+        }
+      }
+    },
+    {
+      "protocol": "dap",
+      "status": "failed",
+      "request": {
+        "seq": 1,
+        "type": "request",
+        "command": "unsupportedCommand"
+      },
+      "actual": {
+        "seq": 1,
+        "type": "response",
+        "request_seq": 1,
+        "command": "unsupportedCommand",
+        "success": false,
+        "message": "DAP request 'unsupportedCommand' is not implemented"
+      },
+      "error": "$.body: missing required property"
+    }
+  ]
+}

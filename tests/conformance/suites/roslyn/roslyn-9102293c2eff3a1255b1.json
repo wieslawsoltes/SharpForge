@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9102293c2eff3a1255b1",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    public static void Main(string[] args)\n    {\n    }\n\n    [System.Security.Permissions.HostProtectionAttribute(UI = true)]\n    public void M()\n    {\n    }\n}",
+  "sourceSHA256": "9698fe26bcda9f48e0be80cbe17a6cd7501e2cd58cecc72191e57bf3bb2bf66e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenMscorlib.cs",
+    "sha256": "da229ac68da8b72b94f829196315897bab271c57c5e2f4290dab1060bef996f0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenMscorlib.cs",
+    "license": "MIT",
+    "method": "CoreLibrary2",
+    "offset": 5958
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

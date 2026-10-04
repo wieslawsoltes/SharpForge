@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e54758c5963cb6dc8f4a",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n   unsafe public void M1()\n   {\n      int a = 0, b = 0;\n      int *i = &(a + b);   // CS0211, the addition of two local variables\n\n      int *j = &a;\n   }\n\n   unsafe public void M2()\n   {\n       int x;\n       int* p = &x;\n       p = &(*p);\n       p = &p[0];\n   }\n}\n\nclass A\n{\n    public unsafe void M1()\n    {\n        int[] ints = new int[] { 1, 2, 3 };\n        foreach (int i in ints)\n        {\n            int *j = &i;  \n        }\n\n        fixed (int *i = &_i)\n        {\n            int **j = &i;  \n        }\n    }\n\n    private int _i = 0;\n}",
+  "sourceSHA256": "d3b7145821041979bc41890957963c86845b829bd883e1c95d3f7e04bbcb5956",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "AddressOfExpressionCSharp",
+    "offset": 49799
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0211",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "Diagnostic(ErrorCode.ERR_InvalidAddrOp, \"a + b\").WithLocation(7, 18)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,16 +1,14 @@
 name: Deterministic GC traces
 on:
   workflow_dispatch:
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
 permissions:
   contents: read
 jobs:
   trace:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         seed: [0, 1, 4294967295]

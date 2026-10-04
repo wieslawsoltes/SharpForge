@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-918af4dc2c322b321e5b",
+  "kind": "diagnostics",
+  "sourceText": "Test.M(1);",
+  "sourceSHA256": "0cac4d7a9bc2d83b47fc02a442d45df54b5c481c621d4936c793e193ea21bcc6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Embedded.cs",
+    "sha256": "3ba2e87803d797ee289ab5dc11406a9c3b62d3390fdf134b841246294a574f40",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Embedded.cs",
+    "license": "MIT",
+    "method": "EmbeddedAttributeFromSourceValidation_Valid",
+    "offset": 9431
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: [reference], targetFramework: TargetFramework.NetStandard20)",
+  "options": "(\"\"\"\n                Test.M(1);\n                \"\"\", references: [reference], targetFramework: TargetFramework.NetStandard20)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0103",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (1,1): error CS0103: The name 'Test' does not exist in the current context\n                // Test.M(1);\n                Diagnostic(ErrorCode.ERR_NameNotInContext, \"Test\").WithArguments(\"Test\").WithLocation(1, 1)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

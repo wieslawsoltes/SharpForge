@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4c3e63959555567b0cd0",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public static bool M()\n    {\n        var x1 = MakeLongTuple(1).Rest;\n\n        bool b1 = x1 == x1;\n        bool b2 = x1 != x1;\n\n        return b1 && b2;\n    }\n    private static (int, int, int, int, int, int, int, int?) MakeLongTuple(int? x)\n        => throw null;\n\n    public bool Unused((int, int, int, int, int, int, int, int?) t)\n    {\n        return t.Rest == t.Rest;\n    }\n}\n",
+  "sourceSHA256": "ab3bd5381038a58cf58115c861f1e7507fdd920181f327e83c4afe29b211711d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestOn1Tuple_FromRest",
+    "offset": 159140
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,19): error CS0019: Operator '==' cannot be applied to operands of type 'ValueTuple<int?>' and 'ValueTuple<int?>'\n                //         bool b1 = x1 == x1;\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"x1 == x1\").WithArguments(\"==\", \"System.ValueTuple<int?>\", \"System.ValueTuple<int?>\").WithLocation(8, 19),\n                // (9,19): error CS0019: Operator '!=' cannot be applied to operands of type 'ValueTuple<int?>' and 'ValueTuple<int?>'\n                //         bool b2 = x1 != x1;\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"x1 != x1\").WithArguments(\"!=\", \"System.ValueTuple<int?>\", \"System.ValueTuple<int?>\").WithLocation(9, 19),\n                // (18,16): error CS0019: Operator '==' cannot be applied to operands of type 'ValueTuple<int?>' and 'ValueTuple<int?>'\n                //         return t.Rest == t.Rest;\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"t.Rest == t.Rest\").WithArguments(\"==\", \"System.ValueTuple<int?>\", \"System.ValueTuple<int?>\").WithLocation(18, 16)\n                ",
+  "unsupported": []
+}

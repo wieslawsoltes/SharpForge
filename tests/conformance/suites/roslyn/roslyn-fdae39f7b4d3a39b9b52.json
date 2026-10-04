@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fdae39f7b4d3a39b9b52",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    static void M(ref readonly int i) => throw null;\n    static void Main()\n    {\n        string x = null;\n        M(x);\n        M(ref x);\n        M(in x);\n    }\n}",
+  "sourceSHA256": "9fb9339f8a8189fc2bcb23c9efc652e8f65a11f5130fed2aad2242e6005b9994",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "RefReadonlyParameter_WrongType",
+    "offset": 204632
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (7,11): error CS1503: Argument 1: cannot convert from 'string' to 'ref readonly int'\n            //         M(x);\n            Diagnostic(ErrorCode.ERR_BadArgType, \"x\").WithArguments(\"1\", \"string\", \"ref readonly int\").WithLocation(7, 11),\n            // (8,15): error CS1503: Argument 1: cannot convert from 'ref string' to 'ref readonly int'\n            //         M(ref x);\n            Diagnostic(ErrorCode.ERR_BadArgType, \"x\").WithArguments(\"1\", \"ref string\", \"ref readonly int\").WithLocation(8, 15),\n            // (9,14): error CS1503: Argument 1: cannot convert from 'in string' to 'ref readonly int'\n            //         M(in x);\n            Diagnostic(ErrorCode.ERR_BadArgType, \"x\").WithArguments(\"1\", \"in string\", \"ref readonly int\").WithLocation(9, 14)",
+  "unsupported": []
+}

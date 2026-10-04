@@ -3,6 +3,7 @@
  * CS0266, CS0031, CS0037, CS0428, CS1660 ...), constant folding of converted constants, value and condition contexts,
  * read/write bookkeeping for unused-symbol warnings and the best common type of a set of expressions.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { bestCommonType } from '../implicit-types.js';
 import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
@@ -16,6 +17,7 @@ import { delegateInvoke } from '../../overload/type-inference.js';
 import { isAccessible } from '../accessibility.js';
 import { anonymousFunctionAnchor } from '../anonymous-methods.js';
 import { reportTupleLiteralFailure } from '../tuples.js';
+import { isWriteAUse } from '../../flow/write-is-a-use.js';
 
 const keywordOf = type =>
   numericKind(type) ??
@@ -38,7 +40,7 @@ export const ConversionBinding = Base =>
       if (!type || e.hasErrors || hasErrorElement(type) || e.type?.isErrorType?.()) return e;
       if (isFunctionExpression(e) && this.isFunctionTypeTarget(type)) return this.convertThroughFunctionType(e, type, node);
       if (e.kind === 'TypeExpression' || e.kind === 'NamespaceExpression') {
-        this.report(e.syntax, 'CS0119', [
+        this.report(e.syntax, DiagnosticId.CS0119, [
           e.kind === 'TypeExpression' ? this.display(e.referencedType) : e.namespace.toDisplayString(),
           e.kind === 'TypeExpression' ? 'type' : 'namespace',
         ]);
@@ -50,6 +52,18 @@ export const ConversionBinding = Base =>
       this.reportConversionFailure(e, type, node, c);
       return this.bad(node, { operand: e });
     }
+    /**
+     * The operand of a user-defined conversion whose parameter is a tuple (`implicit operator Vec2((double X, double
+     * Y) t)` for `Vec2 v = (1.5, -2)`): the tuple conversion that precedes the operator is part of the bound tree,
+     * because it works element by element and cannot be done on the finished value like a numeric conversion.
+     */
+    tupleOperandOfUserConversion(e, c, node) {
+      const parameterType = c.method?.parameters?.[0]?.type;
+      if (!parameterType?.isTupleType || (e.type && e.type.equals(parameterType))) return e;
+      if (e.form !== 'tupleLiteral' && !e.type?.isTupleType) return e;
+      const standard = this.conversions.classifyFromExpression(e, parameterType);
+      return standard.exists && !standard.isUserDefined ? this.applyConversion(e, parameterType, standard, node) : e;
+    }
     applyConversion(e, type, c, node = e.syntax, isExplicit = false) {
       if (c.kind === ConversionKind.Identity && e.type && !e.constantValue?.isEnum && e.type.equals(type)) return e;
       if (
@@ -60,17 +74,30 @@ export const ConversionBinding = Base =>
           e.isTargetTypedSwitch)
       )
         return e.materialize(type);
+      if (e.form === 'tupleLiteral') this.finishTupleLiteralElements(e, type, c);
       if (e.form === 'lambda' && c.kind === ConversionKind.AnonymousFunction) {
         e.boundAs = type;
+        // The body is bound for the delegate type here, whoever converts the lambda (an initializer value, an operand
+        // of `?:`, an element of a tuple or a collection); a speculative conversion leaves it to the final one.
+        if (!this.quiet && !e.hasErrors) this.finishLambda(e, type);
         return this.node('Conversion', node, type, { operand: e, conversion: c, isExplicit });
+      }
+      e = this.tupleOperandOfUserConversion(e, c, node);
+      // `null` through a user-defined operator is first a value of the operator's parameter type.
+      if (e.literal === 'null' && c.isUserDefined && c.method) {
+        const parameterType = c.method.parameters[0].type;
+        e = this.applyConversion(e, parameterType, this.conversions.classifyFromExpression(e, parameterType), node);
       }
       const result = this.node('Conversion', node, type, {
         operand: e,
         conversion: c,
         isExplicit,
         isImplicitIdentity: c.kind === ConversionKind.Identity,
-        isChecked: this.checked,
+        // A numeric conversion in a checked context traps on overflow; code generation reads the context from the node.
+        ...(this.checked ? { isChecked: true } : {}),
       });
+      // A constant string converted to ReadOnlySpan<char> by the C# 14 span conversion has no side effect (CS0219 applies).
+      if (c.kind === ConversionKind.ImplicitSpan && e.constantValue) result.isCompileTimeValue = true;
       if (e.constantValue) {
         const target = type.typeKind === TypeKind.Enum ? type : keywordOf(stripNullable(type));
         if (target && !isNullableType(type)) {
@@ -87,7 +114,7 @@ export const ConversionBinding = Base =>
     reportConversionFailure(e, type, node, c) {
       const to = this.display(type);
       if (c?.isAmbiguous) {
-        this.report(node, 'CS0457', [
+        this.report(node, DiagnosticId.CS0457, [
           c.candidates[0].toDisplayString(),
           c.candidates[1]?.toDisplayString() ?? '',
           this.display(e.type),
@@ -96,7 +123,7 @@ export const ConversionBinding = Base =>
         return;
       }
       if (e.literal === 'null') {
-        this.report(node, 'CS0037', [to]);
+        this.report(node, DiagnosticId.CS0037, [to]);
         return;
       }
       if (e.form === 'tupleLiteral' && reportTupleLiteralFailure(this, e, type)) return;
@@ -105,31 +132,35 @@ export const ConversionBinding = Base =>
           at = e.nameNode && node === e.syntax ? e.nameNode : node;
         if (r && delegateInvoke(type)) {
           // A wrong return type is reported on the whole method group expression, the other mismatches on the method name.
-          this.report(r.code === 'CS0407' ? node : at, r.code, r.args);
+          this.report(r.code === DiagnosticId.CS0407 || r.code === DiagnosticId.CS1113 ? node : at, r.code, r.args);
           return;
         }
-        this.report(at, 'CS0428', [e.name, to]);
+        this.report(at, DiagnosticId.CS0428, [e.name, to]);
         return;
       }
       if (e.form === 'lambda') {
         const r = e.lastConversionError;
         if (r) for (const x of r) this.report(x.node ?? node, x.code, x.args);
         else if (e.isAnonymousMethod && ['System_Object', 'System_Delegate', 'System_MulticastDelegate'].includes(type.specialType))
-          this.report(anonymousFunctionAnchor(e.syntax, node), 'CS8917');
-        else this.report(anonymousFunctionAnchor(e.syntax, node), 'CS1660', [e.isAnonymousMethod ? 'anonymous method' : 'lambda expression', to]);
+          this.report(anonymousFunctionAnchor(e.syntax, node), DiagnosticId.CS8917);
+        else this.report(anonymousFunctionAnchor(e.syntax, node), DiagnosticId.CS1660, [e.isAnonymousMethod ? 'anonymous method' : 'lambda expression', to]);
         return;
       }
       if (this.reportTargetTypedFailure(e, type)) return;
+      if (e.form === 'collection' && e.elements) {
+        this.reportCollectionFailure(e, type);
+        return;
+      }
       if (e.form === 'implicitNew') {
-        this.report(node, 'CS8752', [to]);
+        this.report(node, DiagnosticId.CS8752, [to]);
         return;
       }
       if (!e.type) {
-        this.report(node, 'CS0029', ['?', to]);
+        this.report(node, DiagnosticId.CS0029, ['?', to]);
         return;
       }
       if (e.type.specialType === 'System_Void') {
-        this.report(node, 'CS0029', ['void', to]);
+        this.report(node, DiagnosticId.CS0029, ['void', to]);
         return;
       }
       const from = this.display(e.type);
@@ -142,14 +173,14 @@ export const ConversionBinding = Base =>
             isRealLiteral: e.kind === 'Literal' && a === 'double',
             display: e.constantValue.displayValue,
           });
-          if (r && r.code && r.code !== 'CS0266') {
+          if (r && r.code && r.code !== DiagnosticId.CS0266) {
             this.report(node, r.code, r.args);
             return;
           }
         }
       }
       const explicit = this.conversions.classifyExplicit(e.type, type);
-      this.report(node, explicit.exists ? 'CS0266' : 'CS0029', [from, to]);
+      this.report(node, explicit.exists ? DiagnosticId.CS0266 : DiagnosticId.CS0029, [from, to]);
     }
     /** Binds an expression that must produce a value (not a type, namespace or bare method group). */
     value(syntax, options) {
@@ -161,17 +192,17 @@ export const ConversionBinding = Base =>
         return e;
       }
       if (e.kind === 'TypeExpression') {
-        this.report(e.syntax, 'CS0119', [this.display(e.referencedType), 'type']);
+        this.report(e.syntax, DiagnosticId.CS0119, [this.display(e.referencedType), 'type']);
         return this.bad(e.syntax);
       }
       if (e.kind === 'NamespaceExpression') {
-        this.report(e.syntax, 'CS0119', [e.namespace.toDisplayString(), 'namespace']);
+        this.report(e.syntax, DiagnosticId.CS0119, [e.namespace.toDisplayString(), 'namespace']);
         return this.bad(e.syntax);
       }
       // Outside its declaring type an event is not a value: it can only be subscribed to (SF-A02-T07.6).
       if (e.kind === 'EventAccess' && !this.inDeclaringType(e.event)) {
         const at = e.syntax.kind === 'SimpleMemberAccessExpression' ? e.syntax.name : e.syntax;
-        this.report(at, 'CS0070', [e.event.toDisplayString(), this.display(e.event.containingType)]);
+        this.report(at, DiagnosticId.CS0070, [e.event.toDisplayString(), this.display(e.event.containingType)]);
         return this.bad(e.syntax);
       }
       return this.markRead(e);
@@ -180,7 +211,7 @@ export const ConversionBinding = Base =>
       if ((e.kind === 'PropertyAccess' || (e.kind === 'IndexerAccess' && e.property.containingType)) && !e.readChecked) {
         e.readChecked = true;
         const p = e.property;
-        if (!p.getMethod && p.setMethod) this.report(e.syntax, 'CS0154', [p.toDisplayString()]);
+        if (!p.getMethod && p.setMethod) this.report(e.syntax, DiagnosticId.CS0154, [p.toDisplayString()]);
         else if (
           p.getMethod &&
           p.getMethod.declaredAccessibility !== p.declaredAccessibility &&
@@ -188,7 +219,7 @@ export const ConversionBinding = Base =>
             withinModule: this.d.assembly.module,
           })
         )
-          this.report(e.syntax, 'CS0271', [p.toDisplayString()]);
+          this.report(e.syntax, DiagnosticId.CS0271, [p.toDisplayString()]);
       }
       if (e.kind === 'Local') {
         e.local.reads++;
@@ -202,7 +233,7 @@ export const ConversionBinding = Base =>
     markWrite(e, value) {
       if (e.kind === 'Local') {
         e.local.writes++;
-        if (value && !(value.constantValue || value.literal || value.kind === 'Default')) e.local.nonConstantWrite = true;
+        if (value && isWriteAUse(e.local.type, value)) e.local.nonConstantWrite = true;
       } else if (e.kind === 'FieldAccess') {
         const f = e.field.originalDefinition ?? e.field;
         f.writes = (f.writes ?? 0) + 1;
@@ -214,6 +245,11 @@ export const ConversionBinding = Base =>
     /** A field whose reference is taken (`ref o.f`) may be written through the alias: it counts as assigned (no CS0649). */
     markAliased(e) {
       if (e.kind === 'FieldAccess') this.markWrite(e, null);
+      else if (e.kind === 'RefConditional') {
+        // `ref (c ? ref a.Left : ref a.Right)` aliases either field.
+        this.markAliased(e.whenTrue);
+        this.markAliased(e.whenFalse);
+      } else if (e.kind === 'Ref' && e.operand) this.markAliased(e.operand);
       return e;
     }
     /** Binds and converts to bool (conditions), accepting `operator true`. */
@@ -237,7 +273,7 @@ export const ConversionBinding = Base =>
     convertThroughFunctionType(e, type, node) {
       const natural = this.naturalFunctionType(e);
       if (!natural) {
-        this.report(anonymousFunctionAnchor(e.syntax, node), 'CS8917');
+        this.report(anonymousFunctionAnchor(e.syntax, node), DiagnosticId.CS8917);
         return this.bad(node, { operand: e });
       }
       const delegate = this.convert(e, natural, node);

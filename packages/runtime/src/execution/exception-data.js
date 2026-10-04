@@ -1,5 +1,13 @@
-import {ManagedFault, isReference} from '../heap.js';
-import {referenceEquals} from './strings.js';
+import {
+  writeExceptionSlot
+} from './exception-object.js';
+import {
+  ManagedFault,
+  isReference
+} from '../heap.js';
+import {
+  referenceEquals
+} from './strings.js';
 
 function keyEquals(vm, left, right) {
   if (referenceEquals(left, right)) return true;
@@ -26,7 +34,10 @@ export function exceptionDataCall(vm, reference, name, args) {
   if (key === null) throw new ManagedFault('ArgumentNullException', 'key');
   let index = -1;
   for (let current = 0; current < record.data.length; current += 2) {
-    if (keyEquals(vm, record.data[current], key)) { index = current; break; }
+    if (keyEquals(vm, record.data[current], key)) {
+      index = current;
+      break;
+    }
   }
   if (name === 'get_Item') return index < 0 ? null : record.data[index + 1];
   if (name === 'Contains') return index >= 0 ? 1 : 0;
@@ -37,6 +48,6 @@ export function exceptionDataCall(vm, reference, name, args) {
   if (name !== 'Add' && name !== 'set_Item') throw new ManagedFault('MissingMethodException', name);
   if (name === 'Add' && index >= 0) throw new ManagedFault('ArgumentException', 'The key already exists');
   if (index < 0) vm.heap.replaceData(reference, [...record.data, key, value]);
-  else vm.heap.writeData(reference, index + 1, value);
+  else writeExceptionSlot(vm, reference, index + 1, value);
   return null;
 }

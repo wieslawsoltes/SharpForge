@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-bc8a0650277fe19851c6",
+  "kind": "spec",
+  "sourceText": "static IEnumerable<int> MyIterator()\n{\n    try\n    {\n        for (int i = 0; i < 100; i++)\n        {\n            Thread.Sleep(1000);\n            yield return i;\n        }\n    }\n    finally\n    {\n        Thread.Sleep(200);\n        Console.WriteLine(\"finally\");\n    }\n}",
+  "sourceSHA256": "71905da21afd097e2661eef7244dcfb2090de5571674026a7bceefc1dca725a2",
+  "target": "library",
+  "featureId": "csharp-8-0-async-streams",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/async-streams.md",
+    "sha256": "944a31911115989c66e44f5c9e7eca2eeb960622f6f819166a48b91af8247c6a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/async-streams.md",
+    "license": "NOASSERTION",
+    "offset": 25643
+  }
+}

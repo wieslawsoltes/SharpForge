@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d95efcd6c0f6b8887c21",
+  "kind": "spec",
+  "sourceText": "IDictionary<string, int> d;\nIReadOnlyDictionary<string, int> r;\n\nd = [with(StringComparer.Ordinal)]; // new Dictionary<string, int>(StringComparer.Ordinal)\nr = [with(StringComparer.Ordinal)]; // new $PrivateImpl<string, int>(StringComparer.Ordinal)\n\nd = [with(capacity: 2)]; // new Dictionary<string, int>(capacity: 2)\nr = [with(capacity: 2)]; // error: 'capacity' parameter not recognized\nd = [with()];            // Legal: empty arguments supported for interfaces",
+  "sourceSHA256": "c037c3f5f001c896f066992de18eadfd2cef90a4d3d9a618ea44221238fed87d",
+  "target": "library",
+  "featureId": "csharp-15-0-collection-expression-arguments",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/collection-expression-arguments.md",
+    "sha256": "491b1497fe1e4ebb212a7e14e84d7d4705d9e9c0c9644e27fa50f5a0432c2824",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/collection-expression-arguments.md",
+    "license": "NOASSERTION",
+    "offset": 21380
+  }
+}

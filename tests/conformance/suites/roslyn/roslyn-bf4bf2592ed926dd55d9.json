@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bf4bf2592ed926dd55d9",
+  "kind": "diagnostics",
+  "sourceText": "using A = System.Action;\npartial class C\n{\n    partial event System.Action E, F;\n    partial event System.Action<(int X, int Y)> G;\n    partial event System.Action<(string X, string Y)> H;\n    partial event System.Action<dynamic> I;\n    partial event A J;\n}\npartial class C\n{\n    partial event System.Func<int> E { add { } remove { } }\n    partial event System.Action F { add { } remove { } }\n    partial event System.Action<(int A, int B)> G { add { } remove { } }\n    partial event System.Action<(int A, int B)> H { add { } remove { } }\n    partial event System.Action<object> I { add { } remove { } }\n    partial event System.Action J { add { } remove { } }\n}",
+  "sourceSHA256": "addf08d06ffb34d089ab28829ea4cfeb570af241b60d918c553a8f0da8f5cb25",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Difference_Type",
+    "offset": 127291
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9255",
+        "severity": "error"
+      },
+      {
+        "code": "CS8142",
+        "severity": "error"
+      },
+      {
+        "code": "CS9255",
+        "severity": "error"
+      },
+      {
+        "code": "CS9256",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (12,36): error CS9255: Both partial member declarations must have the same type.\n            //     partial event System.Func<int> E { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_PartialMemberTypeDifference, \"E\").WithLocation(12, 36),\n            // (14,49): error CS8142: Both partial member declarations, 'C.G' and 'C.G', must use the same tuple element names.\n            //     partial event System.Action<(int A, int B)> G { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_PartialMemberInconsistentTupleNames, \"G\").WithArguments(\"C.G\", \"C.G\").WithLocation(14, 49),\n            // (15,49): error CS9255: Both partial member declarations must have the same type.\n            //     partial event System.Action<(int A, int B)> H { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_PartialMemberTypeDifference, \"H\").WithLocation(15, 49),\n            // (16,41): warning CS9256: Partial member declarations 'event Action<dynamic> C.I' and 'event Action<object> C.I' have signature differences.\n            //     partial event System.Action<object> I { add { } remove { } }\n            Diagnostic(ErrorCode.WRN_PartialMemberSignatureDifference, \"I\").WithArguments(\"event Action<dynamic> C.I\", \"event Action<object> C.I\").WithLocation(16, 41)",
+  "unsupported": []
+}

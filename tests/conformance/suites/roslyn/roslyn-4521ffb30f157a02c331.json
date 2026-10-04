@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4521ffb30f157a02c331",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public static void Main()\n    {\n        int x;\n        bool L1() => x == 0;\n        System.Func<bool> f = L1;\n        x = 0;\n        f();\n    }\n}",
+  "sourceSHA256": "fcee8a2243d474f01670c0b506cd03ff17cb4e8d925dd0ed0e07c8f5116bb28a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "ConvertBeforeDefined",
+    "offset": 16575
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    public static void Main()\n    {\n        int x;\n        bool L1() => x == 0;\n        System.Func<bool> f = L1;\n        x = 0;\n        f();\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,31): error CS0165: Use of unassigned local variable 'x'\n                //         System.Func<bool> f = L1;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"L1\").WithArguments(\"x\").WithLocation(8, 31)",
+  "unsupported": []
+}

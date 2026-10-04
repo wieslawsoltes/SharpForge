@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e12464d3f6fb758e6ad6",
+  "kind": "diagnostics",
+  "sourceText": "\n                // warning CS1522: Empty switch block\n                class C\n                {\n                    void M(int i)\n                    {\n                        switch (i)\n                        {\n                        }\n                    }\n                }\n\n                public abstract class MyAbstractClass\n                {\n                    // error CS0180: Methods cannot be both extern and abstract -- this is a declaration error\n                    public extern abstract void MyFaultyMethod()\n                    {\n                    }\n                }",
+  "sourceSHA256": "2810e708c2a3bd5f14073171b9449912e04866385c4c3f1bfc073e95bc803be2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticSuppressorTests.cs",
+    "sha256": "2d1674a241e37ca2731874ceafe86e8d6649456d14d548f1232b85883a39a3d8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticSuppressorTests.cs",
+    "license": "MIT",
+    "method": "TestSuppression_CompilerSyntaxDeclarationError_AndSuppressibleWarning",
+    "offset": 5593
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(SourceCode)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1522",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0180",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,25): warning CS1522: Empty switch block\n                //         {\n                Diagnostic(ErrorCode.WRN_EmptySwitch, \"{\", isSuppressed: false).WithLocation(line: 8, column: 25),\n                // (16,49): error CS0180: 'MyAbstractClass.MyFaultyMethod()' cannot be both extern and abstract\n                //                     public extern abstract void MyFaultyMethod()\n                Diagnostic(ErrorCode.ERR_AbstractAndExtern, \"MyFaultyMethod\").WithArguments(\"MyAbstractClass.MyFaultyMethod()\").WithLocation(16, 49)",
+  "unsupported": []
+}

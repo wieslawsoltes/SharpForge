@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5cecb247dfed5c020b80",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class C\n{\n    public bool BoolValue;\n\n    static void Main()\n    {\n        C obj = null;\n        Console.Write(obj?.BoolValue | true);\n        Console.Write(obj?.BoolValue & false);\n    }\n}\n",
+  "sourceSHA256": "d897de74a2457c9a3cee82f215b2f42574652eaca1eae0ffaff1dbf13703283c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOperators.cs",
+    "sha256": "c60a5aa4e7fd7845ee7f036dfa55b03e5f3a9cd9572f96a1f7db994aa786e54e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOperators.cs",
+    "license": "MIT",
+    "method": "NullableBoolOperatorSemantics_02",
+    "offset": 162940
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

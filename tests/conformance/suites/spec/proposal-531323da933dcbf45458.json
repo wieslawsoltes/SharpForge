@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-531323da933dcbf45458",
+  "kind": "spec",
+  "sourceText": "{\n\t  Resource r = new Resource();\n\t  try {\n\t\t    // statements\n\t  }\n\t  finally {\n\t\t    if (r != null) r.Dispose();\n\t  }\n}",
+  "sourceSHA256": "8f03474acda5a4419982aab388df8d34fc4432c72925f60d3f7b22b9cf13eeea",
+  "target": "library",
+  "featureId": "csharp-8-0-enhanced-using",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/using.md",
+    "sha256": "85be627f42d371f521b9fa56fbd08b4a324964adbe6895318428deaaf4a2c355",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/using.md",
+    "license": "NOASSERTION",
+    "offset": 4304
+  }
+}

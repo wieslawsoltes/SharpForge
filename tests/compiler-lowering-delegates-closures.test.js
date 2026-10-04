@@ -1,12 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { compile } from '@sharpforge/compiler';
-import { VirtualMachine } from '@sharpforge/runtime';
+import { compile, compileToIL } from '@sharpforge/compiler';
+import { loadAssembly } from '@sharpforge/cil';
+import { VirtualMachine, CilVirtualMachine } from '@sharpforge/runtime';
 import { analyzeCaptures } from '../packages/compiler/src/lowering/closures.js';
 import { analyze } from '../packages/compiler/src/semantic-analysis.js';
 import { parse } from '@sharpforge/syntax';
 import { SourceText } from '@sharpforge/text';
-import { linesOf, runOnBothBackEnds, notExecutable } from './support/semantic-codegen.js';
+import { linesOf, runOnBothBackEnds } from './support/semantic-codegen.js';
 
 const program = body => `using System;\nclass Program {\n${body}\n}\n`;
 
@@ -245,11 +246,29 @@ test('SF-A02-T07.6 raising an event outside its type reports CS0070', () => {
   assert.equal(result.image, null);
 });
 
-test('a delegate passed to a framework method is reported, not miscompiled', () => {
-  const reported = notExecutable(`
+test('a registered delegate variable crosses Task.Run while custom delegates retain source dispatch', async () => {
+  const compiled = compileToIL(`
     using System;
     using System.Threading.Tasks;
     delegate void Work();
-    class Program { static void Main() { Action work = () => Console.WriteLine("x"); Task.Run(work); Work w = null; if (w != null) w(); } }`);
-  assert.match(reported.message, /delegate/);
+    class Program {
+      static void Main() {
+        Action work = () => Console.WriteLine("x");
+        Task.Run(work).Wait();
+        Work custom = () => Console.WriteLine("custom");
+        custom();
+        Work missing = null;
+        if (missing != null) missing();
+      }
+    }`);
+  assert(compiled.success, JSON.stringify(compiled.diagnostics));
+  for (const engine of ['source', 'reload', 'cil']) {
+    const vm = engine === 'cil' ? new CilVirtualMachine(compiled.assembly, {virtualTime: true})
+      : new VirtualMachine(engine === 'reload' ? loadAssembly(compiled.assembly) : compiled.image, {virtualTime: true});
+    try {
+      const result = await vm.runAsync();
+      assert.equal(result.state, 'terminated', `${engine}: ${result.fault?.stack}`);
+      assert.equal(result.output, 'x\ncustom\n', engine);
+    } finally { vm.stop(); }
+  }
 });

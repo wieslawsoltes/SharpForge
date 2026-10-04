@@ -1,0 +1,4 @@
+{
+  "lambda-parameter-modifiers/cs1676-cs1677-against-the-delegate": ["diagnostics", "warnings"],
+  "lambda-parameter-modifiers/cs9260-below-csharp-14": ["diagnostics", "warnings"]
+}

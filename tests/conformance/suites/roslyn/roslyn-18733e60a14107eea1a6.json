@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-18733e60a14107eea1a6",
+  "kind": "diagnostics",
+  "sourceText": "struct scoped { }\nstatic class C\n{\n    public static void M(ref readonly scoped scoped) => throw null;\n}",
+  "sourceSHA256": "9d25c1c29b33f65726ea48d422a685e786af9866ea032b2b301fb2bbc5b103a6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "RefReadonly_ScopedBothNames",
+    "offset": 110394
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8981",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8773",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (1,8): warning CS8981: The type name 'scoped' only contains lower-cased ascii characters. Such names may become reserved for the language.\n            // struct scoped { }\n            Diagnostic(ErrorCode.WRN_LowerCaseTypeName, \"scoped\").WithArguments(\"scoped\").WithLocation(1, 8),\n            // (4,30): error CS8773: Feature 'ref readonly parameters' is not available in C# 9.0. Please use language version 12.0 or greater.\n            //     public static void M(ref readonly scoped scoped) => throw null;\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion9, \"readonly\").WithArguments(\"ref readonly parameters\", \"12.0\").WithLocation(4, 30)",
+  "unsupported": []
+}

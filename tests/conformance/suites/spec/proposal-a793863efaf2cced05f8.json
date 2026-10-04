@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a793863efaf2cced05f8",
+  "kind": "spec",
+  "sourceText": "      {\n          set\n          {\n              if (field == value) return;\n              field = value;\n              SendEvent(nameof(Prop), value);\n          }\n      }\n      ```\n   1. ```cs\n      {\n          get => unrelated;\n          set\n          {\n              if (field == value) return;\n              field = value;\n              SendEvent(nameof(Prop), value);\n          }\n      }\n      ```\n\n#### Answer\n\nOnly disallow what is already disallowed today in auto properties, the bodyless `set;`.\n\n### `field` in event accessor\n\nShould `field` be a keyword in an event accessor, and should the compiler generate a backing field?\n",
+  "sourceSHA256": "e8667524b40a9acb0b399663c0bbbd645e21893800f1befdc8aad8ec32661b8d",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 31641
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-dc6fc07123ba3a0e28af",
+  "kind": "diagnostics",
+  "sourceText": "class A\n{\n    public int F = B.F1;\n}\nclass B\n{\n    public const int F1 = F2;\n    public static int F2 = 0;\n}",
+  "sourceSHA256": "baf2b77b8f64d4e407ec3e9a1804dd97f95fdee46684efefae3e84d2f859a6ab",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenFieldInitTests.cs",
+    "sha256": "7e4b3b6635a424175d8e568d175d483227299154c0be947a62c06d68bcbb28c1",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenFieldInitTests.cs",
+    "license": "MIT",
+    "method": "FieldInitializerWithBadConstantValueSameModule",
+    "offset": 14935
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0133",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,27): error CS0133: The expression being assigned to 'B.F1' must be constant\n                Diagnostic(ErrorCode.ERR_NotConstantExpression, \"F2\").WithArguments(\"B.F1\").WithLocation(7, 27)",
+  "unsupported": []
+}

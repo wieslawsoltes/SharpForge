@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d2ff90d8705071c66f6f",
+  "kind": "diagnostics",
+  "sourceText": "\n                public class Test { }\n                ",
+  "sourceSHA256": "f49fb44fff618ea1ff7be4e5807ffb276b9899793a0dea0e1940f7f04eb010d7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "sha256": "5af75c081b993313ae994c6bb25a5aa25038b265d6fc6300e8d89976fd96811a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "license": "MIT",
+    "method": "Bug16910",
+    "offset": 94422
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { netModuleRef }, options: TestOptions.ReleaseDll)",
+  "options": "(app, references: new[] { netModuleRef }, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0012",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // error CS0012: The type 'ExtensionAttribute' is defined in an assembly that is not referenced. You must add a reference to assembly 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.\n                Diagnostic(ErrorCode.ERR_NoTypeDef).WithArguments(\"System.Runtime.CompilerServices.ExtensionAttribute\", \"System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\").WithLocation(1, 1)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

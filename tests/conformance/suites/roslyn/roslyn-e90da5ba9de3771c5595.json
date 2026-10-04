@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e90da5ba9de3771c5595",
+  "kind": "diagnostics",
+  "sourceText": "\n\nclass C\n{\n    static void Main()\n    {\n        var v4 = M4 ();\n        System.Console.WriteLine(v4.Rest.a4);\n        System.Console.WriteLine(v4.Rest.b4);\n        System.Console.WriteLine(v4.Rest.c4);\n        System.Console.WriteLine(v4.Rest.d4);\n        System.Console.WriteLine(v4.Rest.e4);\n        System.Console.WriteLine(v4.Rest.f4);\n        System.Console.WriteLine(v4.Rest.g4);\n        System.Console.WriteLine(v4.Rest.h4);\n        System.Console.WriteLine(v4.Rest.i4);\n    }\n\n    static (int a4, int b4, int c4, int d4, int e4, int f4, int g4, int h4, int i4) M4()\n    {\n        return (41, 42, 43, 44, 45, 46, 47, 48, 49);\n    }\n}\n",
+  "sourceSHA256": "e2cff1126a010bf38cc51f4635c823b9e4e009589f1b6855f8858b0011cc662d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "DefaultAndFriendlyElementNames_04",
+    "offset": 505220
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,42): error CS1061: '(int, int)' does not contain a definition for 'a4' and no extension method 'a4' accepting a first argument of type '(int, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.WriteLine(v4.Rest.a4);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"a4\").WithArguments(\"(int, int)\", \"a4\").WithLocation(8, 42),\n                // (9,42): error CS1061: '(int, int)' does not contain a definition for 'b4' and no extension method 'b4' accepting a first argument of type '(int, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.WriteLine(v4.Rest.b4);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"b4\").WithArguments(\"(int, int)\", \"b4\").WithLocation(9, 42),\n                // (10,42): error CS1061: '(int, int)' does not contain a definition for 'c4' and no extension method 'c4' accepting a first argument of type '(int, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.WriteLine(v4.Rest.c4);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"c4\").WithArguments(\"(int, int)\", \"c4\").WithLocation(10, 42),\n                // (11,42): error CS1061: '(int, int)' does not contain a definition for 'd4' and no extension method 'd4' accepting a first argument of type '(int, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.WriteLine(v4.Rest.d4);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"d4\").WithArguments(\"(int, int)\", \"d4\").WithLocation(11, 42),\n                // (12,42): error CS1061: '(int, int)' does not contain a definition for 'e4' and no extension method 'e4' accepting a first argument of type '(int, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.WriteLine(v4.Rest.e4);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"e4\").WithArguments(\"(int, int)\", \"e4\").WithLocation(12, 42),\n                // (13,42): error CS1061: '(int, int)' does not contain a definition for 'f4' and no extension method 'f4' accepting a first argument of type '(int, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.WriteLine(v4.Rest.f4);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"f4\").WithArguments(\"(int, int)\", \"f4\").WithLocation(13, 42),\n                // (14,42): error CS1061: '(int, int)' does not contain a definition for 'g4' and no extension method 'g4' accepting a first argument of type '(int, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.WriteLine(v4.Rest.g4);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"g4\").WithArguments(\"(int, int)\", \"g4\").WithLocation(14, 42),\n                // (15,42): error CS1061: '(int, int)' does not contain a definition for 'h4' and no extension method 'h4' accepting a first argument of type '(int, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.WriteLine(v4.Rest.h4);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"h4\").WithArguments(\"(int, int)\", \"h4\").WithLocation(15, 42),\n                // (16,42): error CS1061: '(int, int)' does not contain a definition for 'i4' and no extension method 'i4' accepting a first argument of type '(int, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.WriteLine(v4.Rest.i4);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"i4\").WithArguments(\"(int, int)\", \"i4\").WithLocation(16, 42)\n                ",
+  "unsupported": []
+}

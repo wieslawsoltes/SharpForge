@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d4342a73595ac0334484",
+  "kind": "spec",
+  "sourceText": "partial class C\n{\n    public partial string Prop { get; set; }\n    public partial string Prop { get => field; set => field = value; }\n\n    public C() // warning CS8618: Non-nullable property 'Prop' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.\n    {\n    }\n}",
+  "sourceSHA256": "0330b5340a07ebca1d9ae1df2d29f6c3dd2607e5df5e01c33179097c93ad35d2",
+  "target": "library",
+  "featureId": "csharp-13-0-partial-properties",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/partial-properties.md",
+    "sha256": "743e4ee38f66cc2149a2117435ea0179d508e3e253074e4f91240212206590ae",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/partial-properties.md",
+    "license": "NOASSERTION",
+    "offset": 3753
+  }
+}

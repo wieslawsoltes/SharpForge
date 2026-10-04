@@ -2,6 +2,8 @@ import {bclScalar, fail} from '../host.js';
 import {formatBclValue} from './number-format.js';
 
 const owner = 'SharpForge.Runtime.Formatting';
+const boxable = new Set(['int', 'double', 'bool', 'sbyte', 'byte', 'short', 'ushort', 'uint',
+  'long', 'ulong', 'char', 'float', 'decimal', 'nint', 'nuint']);
 
 /** Register the compiler formatting bridge in its released ABI order. */
 export function registerFormatting({define, member}) {
@@ -14,10 +16,7 @@ export function registerFormatting({define, member}) {
 export function invokeFormatting(platform, descriptor, args) {
   const scalars = args.map(value => bclScalar(platform, value));
   if (descriptor.name === 'BoxValue') {
-    if (platform.bclHost.boxScalar) {
-      return {handled: true, value: platform.bclHost.boxScalar(platform, args[0], scalars[1])};
-    }
-    if (!['int', 'double', 'bool'].includes(scalars[1])) {
+    if (!boxable.has(scalars[1])) {
       fail(platform, 'InvalidOperationException', 'Unknown primitive box');
     }
     const value = platform.heap.allocate('box', scalars[1], [platform.managed(scalars[0], scalars[1])]);

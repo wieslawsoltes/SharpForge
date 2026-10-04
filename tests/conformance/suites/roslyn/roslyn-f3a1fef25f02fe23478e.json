@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f3a1fef25f02fe23478e",
+  "kind": "diagnostics",
+  "sourceText": "using System.Runtime.InteropServices;\nclass C\n{\n    static void M([DefaultParameterValue(1)] ref readonly int i = 1) => throw null;\n}",
+  "sourceSHA256": "79a492dbf351825d485ac5ee2b45fbc929c6890d7f592f851dc9cee137bbc119",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "DefaultParameterValue_AttributeAndEqualsValue",
+    "offset": 210293
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1745",
+        "severity": "error"
+      },
+      {
+        "code": "CS9200",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8017",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (4,20): error CS1745: Cannot specify default parameter value in conjunction with DefaultParameterAttribute or OptionalAttribute\n            //     static void M([DefaultParameterValue(1)] ref readonly int i = 1) => throw null;\n            Diagnostic(ErrorCode.ERR_DefaultValueUsedWithAttributes, \"DefaultParameterValue\").WithLocation(4, 20),\n            // (4,67): warning CS9200: A default value is specified for 'ref readonly' parameter 'i', but 'ref readonly' should be used only for references. Consider declaring the parameter as 'in'.\n            //     static void M([DefaultParameterValue(1)] ref readonly int i = 1) => throw null;\n            Diagnostic(ErrorCode.WRN_RefReadonlyParameterDefaultValue, \"1\").WithArguments(\"i\").WithLocation(4, 67),\n            // (4,67): error CS8017: The parameter has multiple distinct default values.\n            //     static void M([DefaultParameterValue(1)] ref readonly int i = 1) => throw null;\n            Diagnostic(ErrorCode.ERR_ParamDefaultValueDiffersFromAttribute, \"1\").WithLocation(4, 67)",
+  "unsupported": []
+}

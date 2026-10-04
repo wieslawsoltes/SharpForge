@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-32f9033cb572c3b4027e",
+  "kind": "spec",
+  "sourceText": "class Person\n{\n    public string FirstName { get; }\n    public string MiddleName { get; }\n    public string LastName { get; }\n\n    public Person(string firstName, string lastName, string? middleName = null)\n    {\n        FirstName = firstName;\n        LastName = lastName;\n        MiddleName = middleName ?? string.Empty;\n    }\n}\n\nclass Student : Person\n{\n    public int ID { get; }\n    public Student(int id, string firstName, string lastName, string? middleName = null)\n        : base(firstName, lastName, middleName)\n    {\n        ID = id;\n    }\n}",
+  "sourceSHA256": "b0aeebfa82462cd5e1fe7162be49d7ec01bbdf1399eef1f68f33d29e5c53a8ad",
+  "target": "library",
+  "featureId": "csharp-11-0-required-members",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/required-members.md",
+    "sha256": "0f731d503b589797298f8926899fe7ca9be3843141d8782b074f52d1822f1ed3",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/required-members.md",
+    "license": "NOASSERTION",
+    "offset": 596
+  }
+}

@@ -1,0 +1,16 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "breaking-changes/foreach-capture-csharp-4":{"hash":"7e7fd4751a2ae67a","kind":"output","langVersion":"4","diagnostics":[],"output":"1\n2\n3\n"},
+  "breaking-changes/foreach-capture-csharp-5":{"hash":"0ab3a60ef4940273","kind":"output","langVersion":"5","diagnostics":[],"output":"1\n2\n3\n"},
+  "breaking-changes/inferred-tuple-names-csharp-7":{"hash":"abe638e799de5d48","kind":"diagnostics","langVersion":"7.0","diagnostics":[["CS8306",105,1,"error"]]},
+  "breaking-changes/inferred-tuple-names-csharp-7-1":{"hash":"8724bffe8aafd6f6","kind":"output","langVersion":"7.1","diagnostics":[],"output":"1\n"},
+  "breaking-changes/target-typed-conditional-csharp-8":{"hash":"7e7356f2a373631d","kind":"diagnostics","langVersion":"8.0","diagnostics":[["CS8957",75,12,"error"]]},
+  "breaking-changes/target-typed-conditional-csharp-9":{"hash":"94ad4377ea0dc62c","kind":"output","langVersion":"9.0","diagnostics":[],"output":"1\n"},
+  "breaking-changes/record-type-name-csharp-8":{"hash":"fdb27ab20982ce04","kind":"output","langVersion":"8.0","diagnostics":[],"output":"1\n"},
+  "breaking-changes/record-type-name-csharp-9":{"hash":"3784f004ce1880ba","kind":"output","langVersion":"9.0","diagnostics":[["CS8860",20,6,"warning"]],"output":"1\n"},
+  "breaking-changes/required-scoped-file-type-names-csharp-10":{"hash":"a988b5edb3c5b4a3","kind":"output","langVersion":"10.0","diagnostics":[],"output":"6\n"},
+  "breaking-changes/required-scoped-file-type-names-csharp-11":{"hash":"04102adb164fb087","kind":"diagnostics","langVersion":"11.0","diagnostics":[["CS9029",20,8,"error"],["CS9062",57,6,"error"],["CS9056",92,4,"error"]]},
+  "breaking-changes/extension-type-name-csharp-13":{"hash":"160552c3f7943f2b","kind":"output","langVersion":"13.0","diagnostics":[],"output":"1\n"},
+  "breaking-changes/extension-type-name-csharp-14":{"hash":"458aa7306bb98dae","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS9306",20,9,"error"]]},
+  "breaking-changes/field-keyword-csharp-13":{"hash":"87bb33e69f662ce3","kind":"output","langVersion":"13.0","diagnostics":[],"output":"5\n7\n"},
+  "breaking-changes/field-keyword-csharp-14":{"hash":"6da646bbb2ce9db2","kind":"output","langVersion":"14.0","diagnostics":[["CS0414",28,5,"warning"],["CS9258",67,5,"warning"],["CS9258",82,5,"warning"]],"output":"0\n7\n"}
+}}

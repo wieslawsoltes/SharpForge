@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5bf598bcfcf72d09c086",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Container\n{\n    private public int Field;                           // 1\n    private public int Property { get; set; }           // 2\n    private public int M() => 1;                        // 3\n    private public class C {}                           // 4\n    private public struct S {}                          // 5\n    private public enum E {}                            // 6\n    private public event System.Action V;               // 7\n    private public interface I {}                       // 8\n    private public int this[int index] => 1;            // 9\n    void Q() { V.Invoke(); V = null; }\n}\n",
+  "sourceSHA256": "5dadfc5dfd56da26ba9dac8652ff72ac239732a037b3d6ed81eeed2246999e1c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "DuplicateAccessInBinder",
+    "offset": 24683
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,26): error CS0107: More than one protection modifier\n                //     private public class C {}                           // 4\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"C\").WithLocation(7, 26),\n                // (8,27): error CS0107: More than one protection modifier\n                //     private public struct S {}                          // 5\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"S\").WithLocation(8, 27),\n                // (9,25): error CS0107: More than one protection modifier\n                //     private public enum E {}                            // 6\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"E\").WithLocation(9, 25),\n                // (11,30): error CS0107: More than one protection modifier\n                //     private public interface I {}                       // 8\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"I\").WithLocation(11, 30),\n                // (4,24): error CS0107: More than one protection modifier\n                //     private public int Field;                           // 1\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"Field\").WithLocation(4, 24),\n                // (5,24): error CS0107: More than one protection modifier\n                //     private public int Property { get; set; }           // 2\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"Property\").WithLocation(5, 24),\n                // (6,24): error CS0107: More than one protection modifier\n                //     private public int M() => 1;                        // 3\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"M\").WithLocation(6, 24),\n                // (10,40): error CS0107: More than one protection modifier\n                //     private public event System.Action V;               // 7\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"V\").WithLocation(10, 40),\n                // (12,24): error CS0107: More than one protection modifier\n                //     private public int this[int index] => 1;            // 9\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"this\").WithLocation(12, 24)\n                ",
+  "unsupported": []
+}

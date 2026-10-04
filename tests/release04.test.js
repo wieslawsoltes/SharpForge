@@ -20,8 +20,8 @@ async function executeBoth(source,expected,options){const r=ok(compileToIL(sourc
 for(const sample of samples.filter(s=>s.expectedOutput))test('0.4 example exact output on IR / loader / direct CIL: '+sample.id,()=>executeBoth(sampleSources(sample),sample.expectedOutput,sample.compilationOptions));
 for(const [name,source,expected]of [
  ['unassigned name','int unassigned;Console.WriteLine(nameof(unassigned));','unassigned\n'],
- ['method group','class C { public static int M(){return 1;} public static int M(int x){return x;} } Console.WriteLine(nameof(C.M));','M\n'],
- ['instance name no dereference','class C {public int Value;} C c=null;Console.WriteLine(nameof(c.Value));','Value\n'],
+ ['method group','Console.WriteLine(nameof(C.M)); class C { public static int M(){return 1;} public static int M(int x){return x;} }','M\n'],
+ ['instance name no dereference','C c=null; Console.WriteLine(nameof(c.Value)); class C {public int Value;}','Value\n'],
  ['shadowed contextual method','string nameof(int value){return "method";} Console.WriteLine(nameof(42));','method\n'],
  ['nameof in switch','string s="x";int x=0; switch(s){case nameof(x):Console.WriteLine(42);break;}','42\n'],
  ['file namespace partial',[{uri:'A.cs',text:'namespace Demo; public partial class C { public static int Add(){return Value;} }'},{uri:'B.cs',text:'namespace Demo; public partial class C { public static int Value=42; } class Program { static void Main(){Console.WriteLine(C.Add());} }'}],'42\n'],
@@ -34,7 +34,7 @@ for(const [name,source,code] of [
  ['distinct namespaces not conflated',[{uri:'A.cs',text:'namespace A; partial class C {}'},{uri:'B.cs',text:'namespace B; partial class C {}'}],'CS5001'],
  ['partial methods rejected','partial class C { partial void M(); }','SF2010'],
 ])test('0.4 C# explicit diagnostic '+name,()=>{const r=compile(source);assert(!r.success);assert(r.diagnostics.some(d=>d.code===code),JSON.stringify(r.diagnostics));});
-test('0.4 partial cached syntax is not mutated by repeated compilation',()=>{const w=ws('partial class C {public static int M(){return 42;}}Console.WriteLine(C.M());');w.update('C.cs','partial class C {public int Value;}',1);const before=JSON.stringify(w.syntax('Program.cs').root);for(let i=0;i<4;i++){ok(w.compile({name:'Build'+i}));assert.equal(JSON.stringify(w.syntax('Program.cs').root),before);}});
+test('0.4 partial cached syntax is not mutated by repeated compilation',()=>{const w=ws('Console.WriteLine(C.M());partial class C {public static int M(){return 42;}}');w.update('C.cs','partial class C {public int Value;}',1);const before=JSON.stringify(w.syntax('Program.cs').root);for(let i=0;i<4;i++){ok(w.compile({name:'Build'+i}));assert.equal(JSON.stringify(w.syntax('Program.cs').root),before);}});
 const librarySource='public class MathLib { public static int Bias=40; public static int Add(int a,int b){return Bias+a+b;} }';
 for(const debug of [true,false])test('0.4 library no Main, real cctor, roundtrip and invocation debug='+debug,()=>{const r=ok(compileToIL(librarySource,{outputKind:'library',includeDebug:debug})),inspector=new AssemblyInspector(r.assembly);assert.equal(inspector.pe.entryPoint,0);const vm=new CilVirtualMachine(r.assembly,{methodToken:'MathLib::Add',arguments:[1,1]});const e=vm.run();assert.equal(e.fault,null);assert.equal(e.returnValue,42);const rebuilt=assembleILDocument(formatILDocument(r.assembly));assert.equal(new CilVirtualMachine(rebuilt.bytes,{methodToken:'MathLib::Add',arguments:[2,3]}).run().returnValue,45);if(debug)assert.equal(loadAssembly(r.assembly).entryPoint,null);});
 test('0.4 library permits empty class',()=>ok(compileToIL('public class Empty {}',{outputKind:'library'})));

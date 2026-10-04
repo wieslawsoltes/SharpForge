@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-7e707a36df68ddca5b2f",
+  "kind": "spec",
+  "sourceText": "interface I1\n{\n    [UnscopedRef]\n    ref int P1 { get; }\n    ref int P2 { get; }\n}\n\nstruct S1\n{\n    internal ref int P1 { get {...} }\n    internal ref int P2 { get {...} }\n}\n\nstruct S2\n{\n    [UnscopedRef]\n    internal ref int P1 { get {...} }\n    internal ref int P2 { get {...} }\n}\n\nstruct S3 : I1\n{\n    internal ref int P1 { get {...} }\n    // Error: P2 is marked with [UnscopedRef] and cannot implement I1.P2 as is not marked \n    // with [UnscopedRef]\n    [UnscopedRef]\n    internal ref int P2 { get {...} }\n}\n\nclass C1 : I1\n{\n    internal ref int P1 { get {...} }\n    internal ref int P2 { get {...} }\n}",
+  "sourceSHA256": "93e74b083093ee3b9478115455af237360aea5f4e67a2c4505a1c19fef9ef597",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 2905
+  }
+}

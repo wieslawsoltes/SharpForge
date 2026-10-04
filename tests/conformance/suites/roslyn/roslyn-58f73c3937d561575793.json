@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-58f73c3937d561575793",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nnamespace X\n{ \n\tpublic delegate void D(int k);\n\n\tpublic sealed class TestCase\n\t{\n\t\tstatic TestCase()\n\t\t{\n\t\t}\n\n\t\tpublic TestCase(int rr)\n\t\t{\n\t\t}\n\t\t\n\t\tpublic event D E;\n\t\t\n\t\tpublic event Action E2;\n\t\t\n\t\tpublic int P { get; set; }\n\t\t\n\t\tpublic int P2 \n\t\t{ \n\t\t\tget{ return 1; }\n\t\t\tset{}\n\t\t}\n\t\t\n\t\tpublic int this[int a]\n\t\t{\n\t\t\tget{ return 1; }\n\t\t\tset{}\n\t\t}\n\t}\n}",
+  "sourceSHA256": "3a2e3124bb0b14ecf46b79059a66344276054bfcc09f7c71820ee755cffe7445",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/PDB/PDBWinMdExpTests.cs",
+    "sha256": "163ecae94fc35975b5376031fec87fad6b73ea52cf66e8f022437c471a95b283",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/PDB/PDBWinMdExpTests.cs",
+    "license": "MIT",
+    "method": "TestWinMdExpData_Property_Event",
+    "offset": 12707
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\n                text,\n                options: TestOptions.ReleaseWinMD,\n                sourceFileName: \"source.cs\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0067",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0067",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    Diagnostic(ErrorCode.WRN_UnreferencedEvent, \"E\").WithArguments(\"X.TestCase.E\"),\n                    Diagnostic(ErrorCode.WRN_UnreferencedEvent, \"E2\").WithArguments(\"X.TestCase.E2\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

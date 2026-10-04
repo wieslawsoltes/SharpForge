@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-dfc9e454641a66325cdb",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct Program\n{\n    struct S1\n    {\n        public int i;\n        public int ii { get; }\n    }\n\n    S1 x { get; set;}\n    S1 x2 { get; set;}\n\n\n    public Program(int dummy)\n    {\n        x.i = 1;\n        System.Console.WriteLine(x2.ii);\n    }\n\n    public void Goo()\n    {\n    }\n\n    static void Main(string[] args)\n    {\n\n    }\n}",
+  "sourceSHA256": "b9cea4f4282d3533a879430d8e65b1b2e6817f6f1d6b56fa76a12e2042199441",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "AutoPropInitialization5",
+    "offset": 47364
+  },
+  "langVersion": "11",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.DebugDll.WithSpecificDiagnosticOptions(ReportStructInitializationWarnings), parseOptions: TestOptions.Regular11)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9021",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9021",
+        "severity": "warning"
+      },
+      {
+        "code": "CS1612",
+        "severity": "error"
+      },
+      {
+        "code": "CS9019",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9018",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (14,12): warning CS9020: Control is returned to caller before auto-implemented property 'Program.x' is explicitly assigned, causing a preceding implicit assignment of 'default'.\n                //     public Program(int dummy)\n                Diagnostic(ErrorCode.WRN_UnassignedThisAutoPropertySupportedVersion, \"Program\").WithArguments(\"Program.x\").WithLocation(14, 12),\n                // (14,12): warning CS9020: Control is returned to caller before auto-implemented property 'Program.x2' is explicitly assigned, causing a preceding implicit assignment of 'default'.\n                //     public Program(int dummy)\n                Diagnostic(ErrorCode.WRN_UnassignedThisAutoPropertySupportedVersion, \"Program\").WithArguments(\"Program.x2\").WithLocation(14, 12),\n                // (16,9): error CS1612: Cannot modify the return value of 'Program.x' because it is not a variable\n                //         x.i = 1;\n                Diagnostic(ErrorCode.ERR_ReturnNotLValue, \"x\").WithArguments(\"Program.x\").WithLocation(16, 9),\n                // (16,9): warning CS9018: Field 'i' is read before being explicitly assigned, causing a preceding implicit assignment of 'default'.\n                //         x.i = 1;\n                Diagnostic(ErrorCode.WRN_UseDefViolationFieldSupportedVersion, \"x.i\").WithArguments(\"i\").WithLocation(16, 9),\n                // (17,34): warning CS9017: Auto-implemented property 'x2' is read before being explicitly assigned, causing a preceding implicit assignment of 'default'.\n                //         System.Console.WriteLine(x2.ii);\n                Diagnostic(ErrorCode.WRN_UseDefViolationPropertySupportedVersion, \"x2\").WithArguments(\"x2\").WithLocation(17, 34)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

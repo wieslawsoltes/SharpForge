@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-22f42f949ea060f787c8",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    static void F()\n    {\n        B.F1(default);\n        B.F2(default);\n        B.F3(default);\n        B.F4(default);\n    }\n}",
+  "sourceSHA256": "319d785fc423b5f1ac1a6f972a8e0307575812295db8ac50a52a15bd7a89a340",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NativeInteger.cs",
+    "sha256": "ba6cbd3462b4f24e7b1edcedb260b4b6046e0b9b58ff785f93c1b090d324064a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NativeInteger.cs",
+    "license": "MIT",
+    "method": "Metadata_UnexpectedTarget",
+    "offset": 32136
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source1, new[] { ref0 }, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0570",
+        "severity": "error"
+      },
+      {
+        "code": "CS0570",
+        "severity": "error"
+      },
+      {
+        "code": "CS0570",
+        "severity": "error"
+      },
+      {
+        "code": "CS0570",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,11): error CS0570: 'B.F1(?)' is not supported by the language\n                //         B.F1(default);\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"F1\").WithArguments(\"B.F1(?)\").WithLocation(5, 11),\n                // (6,11): error CS0570: 'B.F2(?)' is not supported by the language\n                //         B.F2(default);\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"F2\").WithArguments(\"B.F2(?)\").WithLocation(6, 11),\n                // (7,11): error CS0570: 'B.F3(?)' is not supported by the language\n                //         B.F3(default);\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"F3\").WithArguments(\"B.F3(?)\").WithLocation(7, 11),\n                // (8,11): error CS0570: 'B.F4(?)' is not supported by the language\n                //         B.F4(default);\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"F4\").WithArguments(\"B.F4(?)\").WithLocation(8, 11)\n            ",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1993f6e65b2214a28b74",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace ConsoleApplication74\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Test.Goo();\n            Test.Bar();\n        }\n    }\n}\n",
+  "sourceSHA256": "bb0dc07bc1d310b28a02cfba15c187fef3620ca4da7f62e41466e66002958740",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestDeprecatedAttributeTH1",
+    "offset": 379641
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source2, new[] { new CSharpCompilationReference(compilation1) })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n    // (8,13): warning CS0618: 'Test.Goo()' is obsolete: 'hello'\n    //             Test.Goo();\n    Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"Test.Goo()\").WithArguments(\"Test.Goo()\", \"hello\").WithLocation(8, 13),\n    // (9,13): warning CS0618: 'Test.Bar()' is obsolete: 'hi'\n    //             Test.Bar();\n    Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"Test.Bar()\").WithArguments(\"Test.Bar()\", \"hi\").WithLocation(9, 13)\n",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

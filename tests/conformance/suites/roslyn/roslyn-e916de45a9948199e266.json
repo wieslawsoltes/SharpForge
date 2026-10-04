@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e916de45a9948199e266",
+  "kind": "diagnostics",
+  "sourceText": "#nullable enable\nclass C : I\n{\n    public void M1(int x) { }\n    public void M2(int[]? x) { }\n    public void M3(int x, object? y) { }\n}",
+  "sourceSHA256": "b650420d26ec4f0b83a421a4ad725e7e8e3a88b8f5bff7060397204ba23884c7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "sha256": "32f83728594c49ce50d234006777d1af71d49e0e2cd7cc5c8982c5b2ac7fa714",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "license": "MIT",
+    "method": "EmitAttribute_ValueTypes_09",
+    "offset": 183425
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { ref0 })",
+  "options": "(source2, references: new[] { ref0 })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

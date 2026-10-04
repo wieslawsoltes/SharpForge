@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-493f44cec54a740f5b04",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\n\nclass C\n{\n    static async IAsyncEnumerable<Func<string, Task<string>>> BarAsync()\n    {\n        yield return async s =>\n        {\n            s // 1\n            await Task.CompletedTask;\n            throw new NotImplementedException();\n        };\n    }\n}",
+  "sourceSHA256": "dc8985f7306fe64489b9c77cdc464ce3be3d81f28728d795c22135b23b3b19fe",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncIteratorTests.cs",
+    "sha256": "2a479a205fe4eddf9b52c9f60cf9113b2a7281ac99d38dbe85934dd132a12c5b",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncIteratorTests.cs",
+    "license": "MIT",
+    "method": "LambdaWithBindingErrorInYieldReturn",
+    "offset": 381912
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(src, targetFramework: TargetFramework.Net80)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0118",
+        "severity": "error"
+      },
+      {
+        "code": "CS4003",
+        "severity": "error"
+      },
+      {
+        "code": "CS0168",
+        "severity": "warning"
+      },
+      {
+        "code": "CS1002",
+        "severity": "error"
+      },
+      {
+        "code": "CS0201",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,13): error CS0118: 's' is a variable but is used like a type\n                //             s // 1\n                Diagnostic(ErrorCode.ERR_BadSKknown, \"s\").WithArguments(\"s\", \"variable\", \"type\").WithLocation(11, 13),\n                // (12,13): error CS4003: 'await' cannot be used as an identifier within an async method or lambda expression\n                //             await Task.CompletedTask;\n                Diagnostic(ErrorCode.ERR_BadAwaitAsIdentifier, \"await\").WithLocation(12, 13),\n                // (12,13): warning CS0168: The variable 'await' is declared but never used\n                //             await Task.CompletedTask;\n                Diagnostic(ErrorCode.WRN_UnreferencedVar, \"await\").WithArguments(\"await\").WithLocation(12, 13),\n                // (12,19): error CS1002: ; expected\n                //             await Task.CompletedTask;\n                Diagnostic(ErrorCode.ERR_SemicolonExpected, \"Task\").WithLocation(12, 19),\n                // (12,19): error CS0201: Only assignment, call, increment, decrement, await, and new object expressions can be used as a statement\n                //             await Task.CompletedTask;\n                Diagnostic(ErrorCode.ERR_IllegalStatement, \"Task.CompletedTask\").WithLocation(12, 19)\n            ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

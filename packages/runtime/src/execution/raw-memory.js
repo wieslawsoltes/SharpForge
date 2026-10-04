@@ -4,10 +4,12 @@ import {pinnedRecord} from './pinned.js';
 import {arrayInteger} from './array-limits.js';
 import {rawArrayBytes, arrayElementBytes} from './array-storage.js';
 import {valueLayout} from './value-layout.js';
-import {createValue} from './value-types.js';
+import {sameMemoryAllocation} from './memory-allocation-identity.js';
+import {createValue, createValueFromFields, isAggregateType} from './value-types.js';
 import {number, storage} from './numeric-ops.js';
-import {scalarAccess, readScalarBytes, writeScalarBytes} from './scalar-bytes.js';
-import {readExplicitBytes, writeExplicitBytes} from './explicit-values.js';
+import {scalarAccess} from './scalar-bytes.js';
+import {hasExplicitLayout} from './explicit-layout.js';
+import {explicitValueFromBytes} from './explicit-values.js';
 
 function checkedBytes(pointer, bytes) {
   if (pointer.index > bytes.length) throw new ManagedFault('IndexOutOfRangeException', 'Memory address exceeds its allocation');
@@ -15,7 +17,9 @@ function checkedBytes(pointer, bytes) {
 }
 
 export function validateMemoryPointer(vm, pointer, {write = false} = {}) {
-  if (!pointer?.memoryPointer || !Object.isFrozen(pointer) || pointer.vmOwner !== vm.snapshotOwner ||
+  if (pointer?.memoryPointer !== true || pointer.byref !== true || !Object.isFrozen(pointer) ||
+      pointer.vmOwner !== vm.snapshotOwner || typeof pointer.readonly !== 'boolean' ||
+      !Array.isArray(pointer.path) || !Object.isFrozen(pointer.path) || pointer.path.length ||
       !Number.isSafeInteger(pointer.index) || pointer.index < 0 || pointer.baseType?.registry !== vm.heap.methodTables) {
     throw new ManagedFault('InvalidProgramException', 'Malformed or foreign memory address');
   }
@@ -23,7 +27,7 @@ export function validateMemoryPointer(vm, pointer, {write = false} = {}) {
   if (pointer.kind === 'stack') return checkedBytes(pointer, stackRegion(vm, pointer).bytes);
   if (pointer.kind === 'pinned') {
     const record = pinnedRecord(vm, pointer);
-    const data = write && vm.heap.ensureWritable ? vm.heap.ensureWritable(pointer.owner) : record.data;
+    const data = write ? vm.heap.ensureWritable(pointer.owner).data : record.data;
     return checkedBytes(pointer, rawArrayBytes(data));
   }
   if (pointer.kind === 'reinterpret') {
@@ -44,17 +48,17 @@ export function rawMemoryView(vm, pointer, byteLength, {write = false} = {}) {
   if (pointer?.memoryPointer) {
     bytes = validateMemoryPointer(vm, pointer, {write});
     offset = pointer.index;
-  } else if (pointer?.byref && pointer.kind === 'array' && !pointer.path.length) {
-    if (pointer.vmOwner !== vm.snapshotOwner || write && pointer.readonly) {
+  } else if (pointer?.byref && pointer.kind === 'array' && Array.isArray(pointer.path) && !pointer.path.length) {
+    if (!Object.isFrozen(pointer) || !Object.isFrozen(pointer.path) || pointer.vmOwner !== vm.snapshotOwner || write && pointer.readonly) {
       throw new ManagedFault('InvalidProgramException', 'Foreign or read-only managed address');
     }
     const record = vm.heap.get(pointer.owner);
-    const data = write && vm.heap.ensureWritable ? vm.heap.ensureWritable(pointer.owner) : record.data;
+    const data = write ? vm.heap.ensureWritable(pointer.owner).data : record.data;
     try { bytes = rawArrayBytes(data); }
     catch { throw new ManagedFault('NotSupportedException', 'Raw memory cannot contain managed references'); }
     offset = pointer.index * arrayElementBytes(record.methodTable.elementType);
   } else if (pointer?.byref && pointer.kind === 'static' && vm.inspector) {
-    if (pointer.vmOwner !== vm.snapshotOwner || write) {
+    if (!Object.isFrozen(pointer) || pointer.vmOwner !== vm.snapshotOwner || write) {
       throw new ManagedFault('InvalidProgramException', 'RVA initialization data is read-only');
     }
     const token = typeof pointer.index === 'string' ? JSON.parse(pointer.index)[0] : pointer.index;
@@ -94,7 +98,7 @@ export function reinterpretPointer(vm, source, fromType, toType) {
   if (source.memoryPointer) return pointerOffset(vm, source, 0, target);
   const pointer = memoryPointer(vm, {
     kind: 'reinterpret', source, sourceType, owner: source.owner, frameId: source.frameId,
-    index: 0, baseType: target, readonly: source.readonly
+    index: 0, baseType: target, readonly: !!source.readonly
   });
   validateMemoryPointer(vm, pointer);
   return pointer;
@@ -104,8 +108,7 @@ export function pointerBinary(vm, operation, left, right) {
   if (left?.memoryPointer && right?.memoryPointer) {
     validateMemoryPointer(vm, left);
     validateMemoryPointer(vm, right);
-    const same = left.kind === right.kind && left.frameId === right.frameId &&
-      left.regionId === right.regionId && left.leaseId === right.leaseId && left.source === right.source;
+    const same = sameMemoryAllocation(left, right);
     if (operation !== 'sub' || !same) throw new ManagedFault('InvalidProgramException', 'Pointer arithmetic requires one allocation');
     return storage(BigInt(left.index - right.index), 'nint', vm.options);
   }
@@ -120,7 +123,8 @@ export function pointerBinary(vm, operation, left, right) {
 function readValue(vm, view, offset, table) {
   const access = scalarAccess(table);
   if (access) {
-    return readScalarBytes(vm, view, offset, table);
+    const value=storage(view['get' + access](offset, true), table.enumUnderlyingType?.name ?? table.name, vm.options);
+    return table.name==='System.Boolean'&&vm.image&&!vm.inspector?!!value:value;
   }
   if (table.name === 'System.Decimal') {
     const flags = view.getUint32(offset, true);
@@ -130,16 +134,17 @@ function readValue(vm, view, offset, table) {
     if (scale > 28 || flags & 0x7f00ffff) throw new ManagedFault('ArgumentException', 'Invalid Decimal bit layout');
     return Object.freeze({decimal: true, coefficient, scale, negative: !!(flags & 0x80000000)});
   }
-  const explicit = readExplicitBytes(vm, table, view, offset);
-  if (explicit) return explicit;
   const layout = valueLayout(vm, table);
-  return createValue(vm, table, table.fields.map((field, index) => readValue(vm, view, offset + layout.offsets[index], field.type)));
+  if (hasExplicitLayout(vm, table)) return explicitValueFromBytes(vm, table, view, offset);
+  return createValueFromFields(vm, table, table.fields.map((field, index) => readValue(vm, view, offset + layout.offsets[index], field.type)));
 }
 
 function writeValue(vm, view, offset, value, table) {
   const access = scalarAccess(table);
   if (access) {
-    writeScalarBytes(view, offset, value, table);
+    let raw = number(value?.enumType ? value.value : value);
+    if (access.startsWith('Big')) raw = BigInt(raw);
+    view['set' + access](offset, typeof raw === 'boolean' ? Number(raw) : raw, true);
     return;
   }
   if (table.name === 'System.Decimal') {
@@ -149,8 +154,11 @@ function writeValue(vm, view, offset, value, table) {
     view.setUint32(offset + 12, Number(value.coefficient >> 32n & 0xffffffffn), true);
     return;
   }
-  if (writeExplicitBytes(vm, table, value, view, offset)) return;
   const layout = valueLayout(vm, table);
+  if (value.explicitBytes) {
+    new Uint8Array(view.buffer, view.byteOffset + offset, layout.size).set(value.explicitBytes);
+    return;
+  }
   table.fields.forEach((field, index) => writeValue(vm, view, offset + layout.offsets[index], value.fields[index], field.type));
 }
 
@@ -165,6 +173,8 @@ export function writeMemory(vm, pointer, value, type = pointer.baseType) {
   const table = vm.heap.methodTables.get(type);
   const layout = valueLayout(vm, table);
   if (layout.containsReferences) throw new ManagedFault('NotSupportedException', 'Raw memory cannot contain managed references');
+  value = isAggregateType(table) ? createValue(vm, table, value)
+    : storage(value, table.enumUnderlyingType?.name ?? table.name, vm.options);
   if (pointer.kind === 'reinterpret') {
     const bytes = validateMemoryPointer(vm, pointer, {write: true});
     if (pointer.index > bytes.length - layout.size) throw new ManagedFault('IndexOutOfRangeException', 'Reinterpretation exceeds storage');
@@ -172,6 +182,8 @@ export function writeMemory(vm, pointer, value, type = pointer.baseType) {
     writeValue(vm, view, pointer.index, value, table);
     vm.dereference(pointer.source, true, readValue(vm, view, 0, pointer.sourceType));
   } else writeValue(vm, rawMemoryView(vm, pointer, layout.size, {write: true}), 0, value, table);
+  vm.writeRevision++;
+  if (pointer.owner) vm.heap.mutationRevision++;
   return value;
 }
 
@@ -181,10 +193,14 @@ export function copyBlock(vm, destination, source, length) {
   const to = rawMemoryView(vm, destination, length, {write: true});
   const sourceBytes = new Uint8Array(from.buffer, from.byteOffset, from.byteLength);
   new Uint8Array(to.buffer, to.byteOffset, to.byteLength).set(sourceBytes);
+  vm.writeRevision++;
+  if (destination.owner) vm.heap.mutationRevision++;
 }
 
 export function initializeBlock(vm, destination, value, length) {
   if (destination?.kind === 'reinterpret') throw new ManagedFault('NotSupportedException', 'Block target needs contiguous storage');
   const view = rawMemoryView(vm, destination, length, {write: true});
   new Uint8Array(view.buffer, view.byteOffset, view.byteLength).fill(Number(number(value)) & 0xff);
+  vm.writeRevision++;
+  if (destination.owner) vm.heap.mutationRevision++;
 }

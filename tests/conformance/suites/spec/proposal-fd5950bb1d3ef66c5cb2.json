@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-fd5950bb1d3ef66c5cb2",
+  "kind": "spec",
+  "sourceText": "record struct R0;                  // ok\nrecord struct R1 { int F = 42; }   // error: 'struct' with field initializers must include an explicitly declared constructor\nrecord struct R2() { int F = 42; } // ok\nrecord struct R3(int F);           // ok",
+  "sourceSHA256": "4bf0c2783516fafcf0bc64873112aaae90b78c4fe6ba7fe7b613b2390631cf8b",
+  "target": "library",
+  "featureId": "csharp-10-0-parameterless-struct-constructors",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/parameterless-struct-constructors.md",
+    "sha256": "8449fc73d19ead4997183738e4fb6162c4155a1325207005bfd3751aeb9eadc0",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/parameterless-struct-constructors.md",
+    "license": "NOASSERTION",
+    "offset": 5444
+  }
+}

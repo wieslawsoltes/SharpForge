@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-f99be404ffa2bc9ff8a7",
+  "kind": "spec",
+  "sourceText": "public class Button : Control\n{\n    private string caption;\n\n    public string Caption\n    {\n        get => caption;\n        set\n        {\n            if (caption != value)\n            {\n                caption = value;\n                Repaint();\n            }\n        }\n    }\n\n    public override void Paint(Graphics g, Rectangle r)\n    {\n        // Painting code goes here\n    }\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "df115b3e560742f8beaaed11cb4cffbae9e077443d8dd35def3e8df4ad3ec250",
+  "originalSource": "public class Button : Control\n{\n    private string caption;\n\n    public string Caption\n    {\n        get => caption;\n        set\n        {\n            if (caption != value)\n            {\n                caption = value;\n                Repaint();\n            }\n        }\n    }\n\n    public override void Paint(Graphics g, Rectangle r)\n    {\n        // Painting code goes here\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "Accessors1",
+    "additionalFiles": [
+      "Graphics.cs",
+      "RectangleNoPoint.cs",
+      "Control.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "Accessors1",
+    "offsetInUnquotedMarkdown": 177868
+  }
+}

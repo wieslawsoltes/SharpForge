@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-5ca6c8dd788f2a0e0663",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\n[SimpleAttribute] class Class1 {...}\n[SimpleAttribute] interface Interface1 {...}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "537be20dbc9da9014fd419b668a2d57289f7b8dbee44e3b1897ae2f5914c3dc0",
+  "originalSource": "[SimpleAttribute] class Class1 {...}\n[SimpleAttribute] interface Interface1 {...}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "AttributeUsage2",
+    "replaceEllipsis": true,
+    "additionalFiles": [
+      "SimpleAttribute.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-attributes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/attributes.md",
+    "sha256": "9ab07c36a912273dd0eb341141ca62153c76e5f32f422e70950477a6b89c5242",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/attributes.md",
+    "license": "MIT",
+    "example": "AttributeUsage2",
+    "offsetInUnquotedMarkdown": 3456
+  }
+}

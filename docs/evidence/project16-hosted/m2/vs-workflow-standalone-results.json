@@ -1,0 +1,117 @@
+{
+  "suite": "browser_vs_workflows_standalone_test",
+  "mode": "file",
+  "engine": "chromium",
+  "passed": true,
+  "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+  "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+  "checks": [
+    {
+      "scenario": "create-console-project",
+      "passed": true,
+      "emptyNameRejected": true
+    },
+    {
+      "scenario": "edit-and-build-shared-document",
+      "passed": true
+    },
+    {
+      "scenario": "breakpoint-step-continue",
+      "passed": true,
+      "backend": "ECMA-335",
+      "runtimeStatistics": {
+        "artifactFormat": "ECMA-335",
+        "assembly": {
+          "bytes": 4096,
+          "loadMs": 10.400000000023283,
+          "decodeMs": 3,
+          "verificationMs": 7.400000000023283
+        },
+        "instructions": 14,
+        "elapsedMs": 2.5,
+        "frames": 0,
+        "heap": {
+          "allocatedBytes": 0,
+          "hostStrongHandles": 0,
+          "hostWeakHandles": 0,
+          "rootsScanned": 0,
+          "edgesScanned": 0,
+          "markedObjects": 0,
+          "maxPauseMs": 0,
+          "markMs": 0,
+          "sweepMs": 0,
+          "liveBytes": 0,
+          "liveObjects": 0,
+          "allocations": 0,
+          "collections": 0,
+          "freedObjects": 0,
+          "freedBytes": 0,
+          "lastPauseMs": 0,
+          "totalPauseMs": 0,
+          "peakBytes": 0,
+          "maxBytes": 33554432,
+          "threshold": 65536
+        }
+      }
+    },
+    {
+      "scenario": "designer-edit-undo-redo-save",
+      "passed": true
+    },
+    {
+      "scenario": "export-project-and-design",
+      "passed": true
+    }
+  ],
+  "navigation": {
+    "mode": "file",
+    "url": "file:///Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+    "offline": true,
+    "artifact": "/Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+    "artifactSha256": "f8850e1bc7d2fc1bae8153b4337f0bed1f124218bcbefba33288426b8797701a",
+    "bytes": 16625302,
+    "policy": {
+      "value": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-8kb8ftwYHmdaE2K0vEJxLVIy3cKvZNLpIMtLQtFzSsY='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'",
+      "transport": "meta"
+    }
+  },
+  "httpAttempts": [],
+  "pageErrors": [],
+  "browser": "153.0.8010.12",
+  "lazyTools": [
+    {
+      "tool": "assembly",
+      "passed": true,
+      "mountedHosts": 1,
+      "reopened": true
+    },
+    {
+      "tool": "disassembly",
+      "passed": true,
+      "mountedHosts": 1,
+      "reopened": true
+    },
+    {
+      "tool": "msbuild",
+      "passed": true,
+      "mountedHosts": 1,
+      "reopened": true
+    },
+    {
+      "tool": "wizard",
+      "passed": true,
+      "reopened": true
+    },
+    {
+      "tool": "designer",
+      "passed": true,
+      "mountedHosts": 1,
+      "reopened": true,
+      "documentRetained": true
+    }
+  ],
+  "lazyMeasurement": {
+    "controllerConstructionCount": "unavailable: no public construction counter",
+    "scriptEvaluationReduction": "not measured by this correctness workflow"
+  }
+}

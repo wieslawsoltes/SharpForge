@@ -3,12 +3,32 @@
   "area": "A20",
   "nodeGlobs": [
     "tests/release05-editor-refactoring.test.js",
-    "tests/release06-editor-refactoring.test.js"
+    "tests/release06-editor-refactoring.test.js",
+    "tests/a20-*.test.js",
+    "tests/editor-model-selections.test.js",
+    "tests/editor-vim.test.js",
+    "tests/text-buffer.test.js",
+    "tests/text-diff-merge.test.js",
+    "tests/text-search-regex.test.js",
+    "tests/text-unicode.test.js",
+    "tests/text-visual-columns.test.js",
+    "tests/text-cooperative-edits.test.js"
   ],
-  "browserScripts": [],
-  "requiredServices": [],
-  "timeout": 300000,
+  "browserScripts": [
+    "tests/browser_a20_insights_test.py",
+    "tests/browser_a20_language_providers_test.py",
+    "tests/browser_a20_view_test.py",
+    "tests/browser_a20_studio_large_file_test.py"
+  ],
+  "requiredServices": [
+    "studio-http",
+    "chromium"
+  ],
+  "timeout": 1200000,
   "tags": [
-    "legacy"
+    "editor",
+    "scope-qualification",
+    "completed-scope",
+    "staged-validation"
   ]
 }

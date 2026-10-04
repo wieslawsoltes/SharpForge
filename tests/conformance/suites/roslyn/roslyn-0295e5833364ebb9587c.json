@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0295e5833364ebb9587c",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.CompilerServices;\n\npublic class LineNumber2NullableIntAttribute : Attribute\n{\n    public LineNumber2NullableIntAttribute([CallerLineNumber] int? lineNumber = null)\n    {\n        Console.WriteLine(lineNumber);\n    }\n}\n\npublic class LineNumber2ValueTypeAttribute : Attribute\n{\n    public LineNumber2ValueTypeAttribute([CallerLineNumber] ValueType lineNumber = null)\n    {\n        Console.WriteLine(lineNumber);\n    }\n}\n\n[LineNumber2NullableInt, LineNumber2ValueType]\nclass Program\n{\n    static void Main()\n    {\n        typeof(Program).GetCustomAttributes(typeof(LineNumber2NullableIntAttribute), false);\n        typeof(Program).GetCustomAttributes(typeof(LineNumber2ValueTypeAttribute), false);\n    }\n}\n",
+  "sourceSHA256": "2d89a70401951b4a4cebc1ca81f0116f2ecd99fdeb43a0661f19cfd48957bfed",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "sha256": "afc3ea7577c9e597760812239c750126e0cb09ea32cb52bdc8e9850a45ebeac9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "license": "MIT",
+    "method": "TestBadAttributeParameterTypeWithCallerLineNumber",
+    "offset": 158927
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0181",
+        "severity": "error"
+      },
+      {
+        "code": "CS0181",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (21,2): error CS0181: Attribute constructor parameter 'lineNumber' has type 'int?', which is not a valid attribute parameter type\n                // [LineNumber2NullableInt, LineNumber2ValueType]\n                Diagnostic(ErrorCode.ERR_BadAttributeParamType, \"LineNumber2NullableInt\").WithArguments(\"lineNumber\", \"int?\"),\n                // (21,26): error CS0181: Attribute constructor parameter 'lineNumber' has type 'System.ValueType', which is not a valid attribute parameter type\n                // [LineNumber2NullableInt, LineNumber2ValueType]\n                Diagnostic(ErrorCode.ERR_BadAttributeParamType, \"LineNumber2ValueType\").WithArguments(\"lineNumber\", \"System.ValueType\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

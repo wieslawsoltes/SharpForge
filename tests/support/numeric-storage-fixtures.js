@@ -1,7 +1,8 @@
 import {controlFixture} from './control-fixture.js';
 import {numericAliases} from '@sharpforge/bytecode';
 
-const metadataNames = Object.freeze(Object.fromEntries(Object.entries(numericAliases).map(([name, alias]) => [alias, name])));
+const metadataNames = Object.freeze({bool: 'System.Boolean',
+  ...Object.fromEntries(Object.entries(numericAliases).map(([name, alias]) => [alias, name]))});
 
 export const smallStorageTypes = Object.freeze([
   {type: 'sbyte', suffix: 'i1', minimum: -128, maximum: 127},

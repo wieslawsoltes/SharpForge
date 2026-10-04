@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-3c56b9c24a8c3c763154",
+  "kind": "spec",
+  "sourceText": "public void DoSomething(bool isEmployed, string personName, int personAge) { ... }\n\nDoSomething(isEmployed:true, name, age); // currently CS1738, but would become legal\nDoSomething(true, personName:name, age); // currently CS1738, but would become legal\nDoSomething(name, isEmployed:true, age); // remains illegal\nDoSomething(name, age, isEmployed:true); // remains illegal\nDoSomething(true, personAge:age, personName:name); // already legal",
+  "sourceSHA256": "809e0cb02abffb1a885d4595b6037d69d900e63ae4b6ba455a389eb612b653c1",
+  "target": "library",
+  "featureId": "csharp-7-2-non-trailing-named-arguments",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/non-trailing-named-arguments.md",
+    "sha256": "3ae5349c9be454d4548de620ac41e3e042bb9e5202bca3cd383b3add71883ab0",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/non-trailing-named-arguments.md",
+    "license": "NOASSERTION",
+    "offset": 906
+  }
+}

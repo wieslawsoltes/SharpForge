@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "protocol": "lsp",
+      "repository": "https://github.com/microsoft/language-server-protocol",
+      "commit": "f8c4bc9834703b7317c98c8e8053a28fa4b6b997",
+      "path": "_specifications/lsp/3.17/metaModel/metaModel.json",
+      "url": "https://raw.githubusercontent.com/microsoft/language-server-protocol/f8c4bc9834703b7317c98c8e8053a28fa4b6b997/_specifications/lsp/3.17/metaModel/metaModel.json",
+      "sha256": "c207890d9e0f54d8f9e462a924670f563423ec9af90a0a369645ff55384c8d6d",
+      "licensePath": "License-code.txt",
+      "licenseSHA256": "18d3bb3458bb9dabcdf5e74dacf256a339b8a6486338ab09a97ba865d3214928"
+    },
+    {
+      "protocol": "dap",
+      "repository": "https://github.com/microsoft/debug-adapter-protocol",
+      "commit": "701c28841af3d62977d1cd9ffa8fc5c89a693881",
+      "path": "debugAdapterProtocol.json",
+      "url": "https://raw.githubusercontent.com/microsoft/debug-adapter-protocol/701c28841af3d62977d1cd9ffa8fc5c89a693881/debugAdapterProtocol.json",
+      "sha256": "ff8ae4c6cfd588a050e9346c35fd104748a27ef4518d1c3268529ca6f8ff5818",
+      "licensePath": "License-code.txt",
+      "licenseSHA256": "646f8936b8ddcd14e13e578ff6857e368780b0d1a4f6066bee89211923a373e2"
+    }
+  ]
+}

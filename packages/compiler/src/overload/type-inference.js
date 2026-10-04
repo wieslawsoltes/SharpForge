@@ -9,6 +9,7 @@
  * Fixing picks, among the candidate bounds, the unique type every other candidate converts to after discarding those
  * that violate an exact, lower or upper bound.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {
   TypeKind,
   SymbolKind,
@@ -23,6 +24,9 @@ import {
 } from '../symbols/types.js';
 import { baseTypeChain, allInterfacesOf, containsTypeParameter } from '../symbols/substitution.js';
 import { isNullableType } from '../conversions/nullable.js';
+import { spanInferencePair } from '../conversions/span.js';
+import { collectionInferenceArguments } from './collection-inference.js';
+import { inferPointerBounds, InferenceBoundKind } from './pointer-inference.js';
 
 class Bounds {
   constructor() {
@@ -35,6 +39,17 @@ class Bounds {
 const add = (list, type) => {
   if (type && !type.isErrorType() && type.specialType !== 'System_Void' && !list.some(t => t.equals(type))) list.push(type);
 };
+
+/**
+ * The inferred return type of an async lambda is `Task<X>`; when the delegate returns another generic task type
+ * (`ValueTask<TOut>`) the result `X` is what `TOut` is inferred from (C# spec: inferred return type of an async
+ * function against a task-like return type).
+ */
+function asyncResultFor(inferred, output) {
+  const isGenericTask = type => type?.typeArguments?.length === 1 && type.containingNamespace?.name === 'Tasks';
+  if (!isGenericTask(inferred) || inferred.name !== 'Task' || !isGenericTask(output) || output.name !== 'ValueTask') return inferred;
+  return (output.originalDefinition ?? output).construct([inferred.typeArguments[0]]);
+}
 
 export class TypeInferrer {
   /**
@@ -67,6 +82,10 @@ export class TypeInferrer {
     return typeOf(this.map.substituteType(type));
   }
 
+  /** The element types of a C# 14 span inference from `u` to `v` (conversions/span.js), or null. */
+  spanPair(u, v) {
+    return this.conversions?.firstClassSpans ? spanInferencePair(u, v) : null;
+  }
   exact(u, v) {
     u = typeOf(u);
     v = typeOf(v);
@@ -75,12 +94,19 @@ export class TypeInferrer {
       add(this.bounds.get(v).exact, u);
       return;
     }
+    if ((u.kind === SymbolKind.PointerType || u.kind === SymbolKind.FunctionPointerType) &&
+      inferPointerBounds(this, u, v, InferenceBoundKind.Exact)) return;
     if (u instanceof ArrayTypeSymbol && v instanceof ArrayTypeSymbol && u.rank === v.rank) {
       this.exact(u.elementType, v.elementType);
       return;
     }
     if (isNullableType(u) && isNullableType(v)) {
       this.exact(u.nullableUnderlyingType, v.nullableUnderlyingType);
+      return;
+    }
+    const span = this.spanPair(u, v);
+    if (span) {
+      this.exact(span.source, span.target);
       return;
     }
     if (
@@ -101,6 +127,8 @@ export class TypeInferrer {
       add(this.bounds.get(v).lower, u);
       return;
     }
+    if ((u.kind === SymbolKind.PointerType || u.kind === SymbolKind.FunctionPointerType) &&
+      inferPointerBounds(this, u, v, InferenceBoundKind.Lower)) return;
     if (isNullableType(v) && isNullableType(u)) {
       this.lower(u.nullableUnderlyingType, v.nullableUnderlyingType);
       return;
@@ -108,6 +136,13 @@ export class TypeInferrer {
     // A non-nullable U still infers through V1? (C# 8+): int to T? gives T = int.
     if (isNullableType(v) && u.isValueType === true && !isNullableType(u)) {
       this.exact(u, v.nullableUnderlyingType);
+      return;
+    }
+    const span = this.spanPair(u, v);
+    if (span) {
+      // To a Span<V1> the inference is exact; to a ReadOnlySpan<V1> it is a lower bound for a reference type.
+      if (span.isSpanTarget || span.source.isReferenceType !== true) this.exact(span.source, span.target);
+      else this.lower(span.source, span.target);
       return;
     }
     if (u instanceof ArrayTypeSymbol) {
@@ -154,6 +189,8 @@ export class TypeInferrer {
       add(this.bounds.get(v).upper, u);
       return;
     }
+    if ((u.kind === SymbolKind.PointerType || u.kind === SymbolKind.FunctionPointerType) &&
+      inferPointerBounds(this, u, v, InferenceBoundKind.Upper)) return;
     if (u instanceof ArrayTypeSymbol && v instanceof ArrayTypeSymbol && u.rank === v.rank) {
       if (u.elementType.isReferenceType === true) this.upper(u.elementType, v.elementType);
       else this.exact(u.elementType, v.elementType);
@@ -190,7 +227,9 @@ export class TypeInferrer {
     let candidates = [];
     for (const t of [...b.exact, ...b.lower, ...b.upper]) add(candidates, t);
     if (!candidates.length) return false;
-    const implicit = (x, y) => x.equals(y) || this.conversions.classifyImplicit(x, y).exists;
+    // The conversion from `dynamic` exists for expressions only: as a bound, `dynamic` converts to itself and `object`.
+    const fromDynamic = (x, y) => x.typeKind === TypeKind.Dynamic && y.specialType !== 'System_Object';
+    const implicit = (x, y) => x.equals(y) || (!fromDynamic(x, y) && this.conversions.classifyImplicit(x, y).exists);
     for (const e of b.exact) candidates = candidates.filter(c => c.equals(e));
     for (const l of b.lower) candidates = candidates.filter(c => implicit(l, c));
     for (const u of b.upper) candidates = candidates.filter(c => implicit(c, u));
@@ -207,6 +246,8 @@ export class TypeInferrer {
    * @returns {TypeSymbol[]|null} the inferred type arguments in type-parameter order, or null (CS0411)
    */
   infer(parameterTypes, args) {
+    const collectionInputs = collectionInferenceArguments(parameterTypes, args);
+    if (collectionInputs) ({ parameterTypes, args } = collectionInputs);
     // Phase 1
     args.forEach((arg, i) => {
       const t = parameterTypes[i];
@@ -220,7 +261,10 @@ export class TypeInferrer {
         return;
       }
       if (!arg.type || arg.literal) return;
-      if (arg.refKind && arg.refKind !== RefKind.None && arg.refKind !== 'none' && arg.refKind !== RefKind.In) this.exact(arg.type, t);
+      // Pointer-typed inputs infer exactly; raw pointer output types make no lower-bound inference (C# 12.6.3).
+      const exactInput = arg.type.kind === SymbolKind.PointerType ||
+        (arg.refKind && arg.refKind !== RefKind.None && arg.refKind !== 'none' && arg.refKind !== RefKind.In);
+      if (exactInput) this.exact(arg.type, t);
       else this.lower(arg.type, t);
     });
     // Phase 2
@@ -263,7 +307,7 @@ export class TypeInferrer {
       arg.outputDone = true;
       if (!result) return;
       const before = this.boundCount();
-      this.lower(result, io.output);
+      this.lower(asyncResultFor(result, io.output), io.output);
       if (this.boundCount() !== before) progress = true;
     });
     for (const arg of args) delete arg.outputDone;
@@ -298,6 +342,6 @@ export function inferMethodTypeArguments(method, parameterTypes, args, conversio
   const definition = method.constructedFrom ?? method,
     inferrer = new TypeInferrer([...definition.typeParameters], conversions, core);
   const result = inferrer.infer(parameterTypes, args);
-  return result ? { typeArguments: result } : { error: { code: 'CS0411', args: [definition.toDisplayString()] } };
+  return result ? { typeArguments: result } : { error: { code: DiagnosticId.CS0411, args: [definition.toDisplayString()] } };
 }
 export { SymbolKind, TypeWithAnnotations };

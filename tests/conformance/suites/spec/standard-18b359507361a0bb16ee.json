@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-18b359507361a0bb16ee",
+  "kind": "spec",
+  "sourceText": "class Sealed<S,T>\n    where S : T\n    where T : struct // Error, `T` is sealed\n{\n    ...\n}\n\nclass A {...}\nclass B {...}\n\nclass Incompat<S,T>\n    where S : A, T\n    where T : B // Error, incompatible class-type constraints\n{\n    ...\n}\n\nclass StructWithClass<S,T,U>\n    where S : struct, T\n    where T : U\n    where U : A // Error, A incompatible with struct\n{\n    ...\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0456",
+        "severity": "error"
+      },
+      {
+        "code": "CS0455",
+        "severity": "error"
+      },
+      {
+        "code": "CS0455",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "491c749dae0ac3907ad453bba7a1d5c606e8aabdd3648844d7a8e186126e060f",
+  "originalSource": "class Sealed<S,T>\n    where S : T\n    where T : struct // Error, `T` is sealed\n{\n    ...\n}\n\nclass A {...}\nclass B {...}\n\nclass Incompat<S,T>\n    where S : A, T\n    where T : B // Error, incompatible class-type constraints\n{\n    ...\n}\n\nclass StructWithClass<S,T,U>\n    where S : struct, T\n    where T : U\n    where U : A // Error, A incompatible with struct\n{\n    ...\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "TypeParameterConstraints3",
+    "replaceEllipsis": true,
+    "expectedErrors": [
+      "CS0456",
+      "CS0455",
+      "CS0455"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "TypeParameterConstraints3",
+    "offsetInUnquotedMarkdown": 34337
+  }
+}

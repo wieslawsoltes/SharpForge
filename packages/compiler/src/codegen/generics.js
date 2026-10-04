@@ -12,6 +12,7 @@
  * the emitter refuses instead of miscompiling.
  */
 import { SymbolKind, TypeKind, ArrayTypeSymbol, NamedTypeSymbol, PointerTypeSymbol } from '../symbols/types.js';
+import { encodeFunctionPointerSignature } from './function-pointer-signatures.js';
 
 /** ECMA-335 II.23.1.16 element types used by generic signatures. */
 export const ElementType = Object.freeze({
@@ -37,6 +38,7 @@ export const ElementType = Object.freeze({
   GenericInst: 0x15,
   IntPtr: 0x18,
   UIntPtr: 0x19,
+  FnPtr: 0x1b,
   Object: 0x1c,
   SZArray: 0x1d,
   MVar: 0x1e,
@@ -90,17 +92,27 @@ export function typeParameterOrdinal(parameter) {
   return ordinal;
 }
 
-/** The type arguments of a constructed type including those of its enclosing constructed types, outermost first. */
+/** The type parameters a definition stands over in its own code: those of its enclosing types, then its own. */
+export function allTypeParameters(type) {
+  const outer = type.containingType ? allTypeParameters(type.containingType.originalDefinition) : [];
+  return [...outer, ...type.typeParameters];
+}
+
+/**
+ * The type arguments of a constructed type including those of its enclosing types, outermost first. An enclosing
+ * type that is not constructed stands for itself in its own code (`Cache<TValue>` named inside `Outer<TKey>` is
+ * `Outer<TKey>.Cache<TValue>`): its type parameters are the arguments.
+ */
 export function allTypeArguments(type) {
-  const container = type.containingType;
-  const outer = container && !container.isDefinition ? allTypeArguments(container) : [];
+  const container = type.containingType,
+    outer = !container ? [] : container.isDefinition ? allTypeParameters(container) : allTypeArguments(container);
   return [...outer, ...type.typeArguments.map(argument => argument.type)];
 }
 
 /**
  * Encodes a type as a signature blob (without the leading calling convention).
  * @param type a TypeSymbol
- * @param {(definition: NamedTypeSymbol) => number} tokenOf TypeDef or TypeRef token of a type definition
+ * @param {(definition: NamedTypeSymbol|string) => number} tokenOf TypeDef/TypeRef of a symbol or modifier's full metadata name
  * @returns {number[]} signature bytes
  */
 export function encodeTypeSignature(type, tokenOf) {
@@ -111,7 +123,18 @@ export function encodeTypeSignature(type, tokenOf) {
   }
   if (type instanceof ArrayTypeSymbol) return encodeArraySignature(type, tokenOf);
   if (type instanceof PointerTypeSymbol) return [ElementType.Ptr, ...encodeTypeSignature(type.pointedAtType, tokenOf)];
+  if (type.typeKind === TypeKind.FunctionPointer) {
+    return [ElementType.FnPtr, ...encodeFunctionPointerSignature(type.signature, {
+      type: value => encodeTypeSignature(value, tokenOf),
+      count: compressUnsigned,
+      modifier: name => typeDefOrRefEncoded(tokenOf(name)),
+    })];
+  }
+  // `dynamic` is `object` in metadata; a `[Dynamic]` attribute on the declaration says which objects are dynamic.
+  if (type.typeKind === TypeKind.Dynamic) return [ElementType.Object];
   if (!(type instanceof NamedTypeSymbol)) throw new TypeError(`Cannot encode '${type.toDisplayString()}' in a signature`);
+  // An anonymous type is written as the construction of the generic class that declares it.
+  if (type.isAnonymousType) return encodeTypeSignature(type.metadataForm(), tokenOf);
 
   const primitive = primitiveElementTypes[type.specialType];
   if (primitive !== undefined && !type.typeArguments.length) return [primitive];
@@ -119,10 +142,8 @@ export function encodeTypeSignature(type, tokenOf) {
   const definition = type.originalDefinition;
   const classOrValueType = type.isValueType ? ElementType.ValueType : ElementType.Class;
   const reference = [classOrValueType, ...typeDefOrRefEncoded(tokenOf(definition))];
-  const isOpenDefinition = type.isDefinition && !type.arity && !(type.containingType && !type.containingType.isDefinition);
-  if (isOpenDefinition) return reference;
-
-  const typeArguments = type.isDefinition ? type.typeArguments.map(argument => argument.type) : allTypeArguments(type);
+  // A definition named in its own code is the instantiation over its type parameters, enclosing ones included.
+  const typeArguments = type.isDefinition ? allTypeParameters(type) : allTypeArguments(type);
   if (!typeArguments.length) return reference;
   const encodedArguments = typeArguments.flatMap(argument => encodeTypeSignature(argument, tokenOf));
   return [ElementType.GenericInst, ...reference, ...compressUnsigned(typeArguments.length), ...encodedArguments];
@@ -151,7 +172,9 @@ export function methodSpecBlob(method, tokenOf) {
 
 /** True when a type reference needs a TypeSpec row rather than a TypeDef/TypeRef token. */
 export function needsTypeSpec(type) {
+  if (type.typeKind === TypeKind.FunctionPointer) return true;
   if (type.kind === SymbolKind.TypeParameter || type instanceof ArrayTypeSymbol || type instanceof PointerTypeSymbol) return true;
+  if (type.isAnonymousType) return needsTypeSpec(type.metadataForm());
   return type instanceof NamedTypeSymbol && !type.isDefinition && allTypeArguments(type).length > 0;
 }
 

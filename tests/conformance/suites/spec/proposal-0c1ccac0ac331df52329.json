@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-0c1ccac0ac331df52329",
+  "kind": "spec",
+  "sourceText": "class A<TItem, TCollection> where TCollection : IReadOnlyCollection<TItem>\n{\n    public TCollection B { get; }\n}",
+  "sourceSHA256": "a054a72856650306511174a32d5c54b363fb846afc7eacae5a8f6123c647cc6a",
+  "target": "library",
+  "featureId": "csharp-14-0-unbound-generic-types-in-nameof",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/unbound-generic-types-in-nameof.md",
+    "sha256": "97c1104338b4cfa815dbae58a3fd7017f1bd3e5c5e0986605cf17ec12110010a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/unbound-generic-types-in-nameof.md",
+    "license": "NOASSERTION",
+    "offset": 2450
+  }
+}

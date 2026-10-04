@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-79f6804c9162b4915337",
+  "kind": "spec",
+  "sourceText": "...\nnint operator +(nint x);\nnuint operator +(nuint x);",
+  "sourceSHA256": "8006886abb95b094902390cea9efd9e3625374e4d3ec9c6ef8e1113961e966c3",
+  "target": "library",
+  "featureId": "csharp-11-0-numeric-intptr",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/numeric-intptr.md",
+    "sha256": "b6fa2f3916ac2f585240e1ac40182daa372d04f4a8ea5a289855cf172af02f40",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/numeric-intptr.md",
+    "license": "NOASSERTION",
+    "offset": 7566
+  }
+}

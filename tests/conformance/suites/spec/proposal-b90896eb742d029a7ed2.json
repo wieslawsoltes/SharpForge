@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-b90896eb742d029a7ed2",
+  "kind": "spec",
+  "sourceText": "    123      // permitted in C# 1.0 and later\n    1_2_3    // permitted in C# 7.0 and later\n    0x1_2_3  // permitted in C# 7.0 and later\n    0b101    // binary literals added in C# 7.0\n    0b1_0_1  // permitted in C# 7.0 and later\n\n    // in C# 7.2, _ is permitted after the `0x` or `0b`\n    0x_1_2   // permitted in C# 7.2 and later\n    0b_1_0_1 // permitted in C# 7.2 and later",
+  "sourceSHA256": "f686a785d57b215e4b852642345ed12341fc8484b547eed602b60502bbbdef89",
+  "target": "library",
+  "featureId": "csharp-7-2-digit-separator-after-base-specifier",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/leading-separator.md",
+    "sha256": "3f851a13bbcbad2be569966af1139602180ef1db35ddde23f8959a835771011c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/leading-separator.md",
+    "license": "NOASSERTION",
+    "offset": 481
+  }
+}

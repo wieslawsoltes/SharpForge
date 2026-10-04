@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4e55e2673e14b7bfaf71",
+  "kind": "diagnostics",
+  "sourceText": "partial interface I\n{\n    partial event System.Action E;\n    partial event System.Action E { add { } remove { } }\n}",
+  "sourceSHA256": "5e2bd79aca71e14279d141265bcdbc38fbcedd2c58872fa30a013f794335a89f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "InInterface",
+    "offset": 52025
+  },
+  "langVersion": "7",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.Net60, parseOptions: TestOptions.Regular7)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8703",
+        "severity": "error"
+      },
+      {
+        "code": "CS8107",
+        "severity": "error"
+      },
+      {
+        "code": "CS8107",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,33): error CS8703: The modifier 'partial' is not valid for this item in C# 7.0. Please use language version '14.0' or greater.\n            //     partial event System.Action E;\n            Diagnostic(ErrorCode.ERR_InvalidModifierForLanguageVersion, \"E\").WithArguments(\"partial\", \"7.0\", \"14.0\").WithLocation(3, 33),\n            // (4,37): error CS8107: Feature 'default interface implementation' is not available in C# 7.0. Please use language version 8.0 or greater.\n            //     partial event System.Action E { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion7, \"add\").WithArguments(\"default interface implementation\", \"8.0\").WithLocation(4, 37),\n            // (4,45): error CS8107: Feature 'default interface implementation' is not available in C# 7.0. Please use language version 8.0 or greater.\n            //     partial event System.Action E { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion7, \"remove\").WithArguments(\"default interface implementation\", \"8.0\").WithLocation(4, 45)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

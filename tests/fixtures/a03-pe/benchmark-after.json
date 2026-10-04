@@ -1,0 +1,22 @@
+{
+  "node": "v24.21.0",
+  "os": "darwin",
+  "architecture": "arm64",
+  "cpu": "Apple M3 Pro",
+  "bytes": 66560,
+  "write": {
+    "coldMs": 0.1732499999999959,
+    "medianMs": 0.08262500000000017,
+    "p95Ms": 0.1581249999999983,
+    "p99Ms": 0.1732499999999959,
+    "medianHeapDeltaBytes": 18712
+  },
+  "read": {
+    "coldMs": 0.7554159999999968,
+    "medianMs": 0.10349999999999682,
+    "p95Ms": 0.23175000000000523,
+    "p99Ms": 0.7554159999999968,
+    "medianHeapDeltaBytes": 42152
+  },
+  "allocationMethod": "heapUsed delta with explicit GC before each operation"
+}

@@ -1,7 +1,8 @@
+import { deterministicContentId } from './binary/content-id.js';
+import { CilError } from './binary/error.js';
+export { CilError } from './binary/error.js';
+export { utf8, text } from './binary/text.js';
 /** Bounded little-endian primitives shared by PE, CLI metadata and CIL codecs. */
-export class CilError extends Error {
-  constructor(message, offset) { super(offset === undefined ? message : `${message} at 0x${offset.toString(16)}`); this.name = 'CilError'; this.offset = offset; }
-}
 export function align(value, boundary = 4) { return Math.ceil(value / boundary) * boundary; }
 export class Writer {
   constructor(capacity = 256) { this.buffer = new Uint8Array(capacity); this.length = 0; this.view = new DataView(this.buffer.buffer); }
@@ -33,8 +34,6 @@ export class Reader {
   take(n) { this.need(n); const v = this.bytes.subarray(this.position, this.position + n); this.position += n; return v; }
   compressed() { const b = this.u8(); if (!(b & 0x80)) return b; if ((b & 0xc0) === 0x80) return ((b & 0x3f) << 8) | this.u8(); if ((b & 0xe0) === 0xc0) return ((b & 0x1f) * 0x1000000) + (this.u8() << 16) + (this.u8() << 8) + this.u8(); throw new CilError('Invalid compressed integer', this.position - 1); }
 }
-export function utf8(text) { return new TextEncoder().encode(text); }
-export function text(bytes) { return new TextDecoder('utf-8', { fatal: true }).decode(bytes); }
 export function equalBytes(a, b) { if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false; return true; }
-/** Deterministic build identifier, not a security hash or an authentication mechanism. */
-export function buildId(bytes) { const w = new Writer(16); for (const seed of [2166136261, 2654435761, 2246822519, 3266489917]) { let h = seed; for (const b of bytes) h = Math.imul(h ^ b, 16777619); w.u32(h); } const id = w.finish(); id[7] = (id[7] & 15) | 0x40; id[8] = (id[8] & 63) | 0x80; return id; }
+/** Deterministic SHA-256-derived UUID (16 bytes), using the standard content-ID bit layout. */
+export function buildId(bytes) { return deterministicContentId(bytes).id; }

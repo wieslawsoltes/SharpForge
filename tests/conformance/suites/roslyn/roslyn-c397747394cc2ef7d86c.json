@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c397747394cc2ef7d86c",
+  "kind": "diagnostics",
+  "sourceText": "\ndynamic x = 0;\n",
+  "sourceSHA256": "08ed99b86679fbdcacd7b936d4073e9c6dd1d563b070a42af4403d7c18ce4cd4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Dynamic.cs",
+    "sha256": "820f741675ec86f59a8098c3c7033bb9a2db6a58bafbf7ae3f3ef848279509da",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Dynamic.cs",
+    "license": "MIT",
+    "method": "TestDynamicAttributeForScript_NoCore",
+    "offset": 83393
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Script)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1980",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,1): error CS1980: Cannot define a class or member that utilizes 'dynamic' because the compiler required type 'System.Runtime.CompilerServices.DynamicAttribute' cannot be found. Are you missing a reference?\n                // dynamic x = 0;\n                Diagnostic(ErrorCode.ERR_DynamicAttributeMissing, \"dynamic\").WithArguments(\"System.Runtime.CompilerServices.DynamicAttribute\")",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,9 +1,11 @@
 /** Shared language cases: original regression suite and automatic engine parity discovery. */
 export const cases=[
- ['Int64 local','long x=1;Console.WriteLine(x);','1\n'],
- ['Single literal','var x=1.2f;Console.WriteLine(x);','1.2\n'],
- ['Decimal literal','Console.WriteLine(1m);','1\n'],
- ['catch filter','try{Console.WriteLine(1);}catch(Exception e) when(true){}','1\n'],
+ // Semantic fallback now retains Console shorthand for these already supported declarations.
+ ['generic declaration with profile Console','Console.WriteLine(1);class A<T>{}','1\n'],
+ ['init declaration with profile Console','Console.WriteLine(1);class A{public int X{get;init;}}','1\n'],
+ ['long source mode','long x=2147483647L;x++;Console.WriteLine(x);','2147483648\n'],
+ ['float source mode','float x=1.25f;Console.WriteLine(x);','1.25\n'],
+ ['decimal source mode','decimal x=1.0m;Console.WriteLine(x);','1.0\n'],
  ['hello','Console.WriteLine("Hello, managed world");','Hello, managed world\n'],
  ['precedence','Console.WriteLine(2 + 3 * 4);','14\n'],
  ['Int32 wrap','int x = 2147483647; x++; Console.WriteLine(x);','-2147483648\n'],
@@ -32,10 +34,10 @@ export const cases=[
  ['expression body','class P { static int Twice(int n)=>n*2; static void Main(){Console.WriteLine(Twice(21));}}','42\n'],
  ['overloads','class P {static int F(int x)=>1;static int F(double x)=>2;static void Main(){Console.WriteLine(F(1));Console.WriteLine(F(1.5));}}','1\n2\n'],
  ['objects constructor fields','class C{public int Value=2;public C(int v){Value=v;}public int Get(){return Value;}} class P{static void Main(){var c=new C(42);Console.WriteLine(c.Get());}}','42\n'],
- ['object initializer','class C{public int X;}var c=new C(){X=17};Console.WriteLine(c.X);','17\n'],
+ ['object initializer','var c=new C(){X=17};Console.WriteLine(c.X);class C{public int X;}','17\n'],
  ['static initializer dependency','class P{static int A=4;static int B=A+2;static void Main(){Console.WriteLine(B);}}','6\n'],
  ['string value equality','string a="abc";string b="a"+"bc";Console.WriteLine(a==b);','True\n'],
- ['object identity','class N{}var a=new N();var b=new N();Console.WriteLine(a==b);Console.WriteLine(a==a);','False\nTrue\n'],
+ ['object identity','var a=new N();var b=new N();Console.WriteLine(a==b);Console.WriteLine(a==a);class N{}','False\nTrue\n'],
  ['string library','string s=" Abc ";Console.WriteLine(s.Trim().ToUpper());Console.WriteLine(s.Contains("bc"));','ABC\nTrue\n'],
  ['length','Console.WriteLine("😀".Length);','2\n'],
  ['numeric parse','Console.WriteLine(int.Parse("42"));Console.WriteLine(double.Parse("1.5"));','42\n1.5\n'],
@@ -54,8 +56,8 @@ export const diagnosticCases=[
  ['short circuit definite assignment','int x;bool b=false && (x=2)>0;Console.WriteLine(x);','CS0165'],
  ['branch definite assignment','bool c=false;int x;if(c)x=1;Console.WriteLine(x);','CS0165'],
  ['unknown name','Console.WriteLine(missing);','CS0103'],
- ['duplicate type','class A{}class A{}Console.WriteLine(1);','CS0101'],
- ['duplicate member','class A{int X;int X;}Console.WriteLine(1);','CS0102'],
+ ['duplicate type','Console.WriteLine(1);class A{}class A{}','CS0101'],
+ ['duplicate member','Console.WriteLine(1);class A{int X;int X;}','CS0102'],
  ['multiple Main','class A{static void Main(){}}class B{static void Main(){}}','CS0017'],
  ['missing return','int F(int x){if(x>0)return 1;}Console.WriteLine(F(2));','CS0161'],
  ['break outside loop','break;','CS0139'],
@@ -67,10 +69,9 @@ export const diagnosticCases=[
  ['invalid condition','if(1)Console.WriteLine(1);','CS0029']
 ];
 export const unsupportedCases=[
- 'class A<T>{}Console.WriteLine(1);',
- 'class A{public int X{get;init;}}Console.WriteLine(1);',
- 'class B{}class A:B{}Console.WriteLine(1);',
- 'class A{static async void Main(){}}'
+ 'Console.WriteLine(1);class B{}class A:B{}',
+ 'class A{static async void Main(){}}',
+ 'try{Console.WriteLine(1);}catch(Exception e) when(true){}',
 ];
 export const languageFixtures=[
  ...cases.map(([name,source,output])=>({id:'compiler/'+name,source,expected:{output}})),

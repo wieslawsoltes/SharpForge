@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1e1aa7cfeb25c5bf8bbb",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\nC.M(new int[] { 7, 8, 9 });\n\nstatic class C\n{\n    public static void M(int[] arg) => arg.E();\n    public static void E(this Span<int> arg) { }\n}\n\nnamespace System\n{\n    public readonly ref struct Span<T>\n    {\n    }\n}",
+  "sourceSHA256": "5cdcdaa4f3960837d845fcdb9118b9610af4dd37e6f041703549048edd8be877",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "sha256": "99be7ba6d5e067485b6142b5e65214b7e83d1dbf3a681e7b98e309631ef90315",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "license": "MIT",
+    "method": "Conversion_Array_Span_ExtensionMethodReceiver_Implicit_MissingHelper",
+    "offset": 322627
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0656",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (7,40): error CS0656: Missing compiler required member 'System.Span<T>.op_Implicit'\n            //     public static void M(int[] arg) => arg.E();\n            Diagnostic(ErrorCode.ERR_MissingPredefinedMember, \"arg\").WithArguments(\"System.Span<T>\", \"op_Implicit\").WithLocation(7, 40)",
+  "unsupported": []
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-35899d6a69c7183f5351",
+  "kind": "spec",
+  "sourceText": "int.M();\n\nstatic class E1\n{\n    extension(int)\n    {\n        public static void M() { }\n    }\n}\nstatic class E2\n{\n    extension(in int i)\n    {\n        public static void M() => throw null;\n    }\n}",
+  "sourceSHA256": "baa9f4f89be6dafa3a326ac58bdba59cc3e10e6a36c6f8bb88e7907eb99eb578",
+  "target": "library",
+  "featureId": "csharp-14-0-extension-methods-and-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/extensions.md",
+    "sha256": "3fdd337fb3fb0c08967571801abae3b932a4928fba8d916303d296ef90bdf7d5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/extensions.md",
+    "license": "NOASSERTION",
+    "offset": 49499
+  }
+}

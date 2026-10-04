@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b61d1074eb1e2c80d34b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.InteropServices;\n \n[ComImport]\n[Guid(\"69D3E2A0-BB0F-4FE3-9860-ED714C510756\")]\n[CoClass(typeof(StackOverflowException))]\ninterface I { }\n \nclass A\n{\n    static void Main()\n    {\n        var x = new I(); // error CS0030: Cannot convert type 'System.StackOverflowException' to 'I'\n    }\n}\n",
+  "sourceSHA256": "55bddb77704be5ab045cc377eca427ff30f5841b53fc20094872d6c0b242001d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestCoClassAttribute_NewOnInterface_NoConversion",
+    "offset": 174611
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0030",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (14,17): error CS0030: Cannot convert type 'System.StackOverflowException' to 'I'\n                //         var x = new I(); // error CS0030: Cannot convert type 'System.StackOverflowException' to 'I'\n                Diagnostic(ErrorCode.ERR_NoExplicitConv, \"new I()\").WithArguments(\"System.StackOverflowException\", \"I\").WithLocation(14, 17)",
+  "unsupported": []
+}

@@ -6,10 +6,6 @@
  * Pinned results live in `pinned/<feature>.json`, one fixture per line, keyed by fixture id and guarded by a content
  * hash so that an edited fixture with a stale pin is detected instead of silently compared against old results.
  * The pass baseline lives in `baseline/<feature>.json` (see baseline-store.js).
- *
- * Transition: `corpus.js` (the hand-maintained registry) and `baseline.json` are left in place, unchanged, while open
- * branches still edit them; the harness, the pinning tool and the tests read this module. Both are to be removed once
- * no open branch changes them.
  */
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, rmSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -17,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { discoverFixtures, validateFixtures } from './fixture-discovery.js';
 
-export { loadBaseline, saveBaseline, loadLegacyBaseline, baselineDirectory } from './baseline-store.js';
+export { loadBaseline, saveBaseline, baselineDirectory } from './baseline-store.js';
 
 /** Directory of the differential harness. */
 export const root = dirname(fileURLToPath(import.meta.url));
@@ -32,7 +28,7 @@ const discovered = validateFixtures(await discoverFixtures());
 /** Stable content hash of what Roslyn was shown for a fixture (language version + source). */
 export function fixtureHash(fixture) {
   return createHash('sha256')
-    .update((fixture.langVersion ?? '') + '\0' + fixture.source)
+    .update((fixture.langVersion ?? '') + '\0' + fixture.source + (fixture.allowUnsafe ? '\0unsafe' : ''))
     .digest('hex')
     .slice(0, 16);
 }

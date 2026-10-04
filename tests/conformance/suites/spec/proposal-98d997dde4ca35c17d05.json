@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-98d997dde4ca35c17d05",
+  "kind": "spec",
+  "sourceText": "  ReadOnlySpan<byte> operator +(ReadOnlySpan<byte> x, ReadOnlySpan<byte> y);\n  ```\n\n  This binary `+` operator performs byte sequences concatenation and is applicable if and only if both operands are semantically UTF8 byte representations.\n  An operand is semantically a UTF8 byte representation when it is either a value of a `u8` literal, or a value produced by the UTF8 byte representation concatenation operator. \n\n  The result of the UTF8 byte representation concatenation is a `ReadOnlySpan<byte>` that consists of the bytes of the left operand followed by the bytes of the right operand. A null terminator is placed beyond the last byte in memory (and outside the length of the `ReadOnlySpan<byte>`) in order to handle some\ninterop scenarios where the call expects null terminated strings.\n\n### Lowering\n\nThe language will lower the UTF8 encoded strings exactly as if the developer had typed the resulting `byte[]` literal in code. For example:\n",
+  "sourceSHA256": "df91e2f752202a96a4bf436c8e38f572d75cbe24f71c8618b4fad93a93a53097",
+  "target": "library",
+  "featureId": "csharp-11-0-utf-8-string-literals",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/utf8-string-literals.md",
+    "sha256": "365dc2aa1232a94b2920bc8ce136313146e9ed9fc904b94c550ecf94ffcaf045",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/utf8-string-literals.md",
+    "license": "NOASSERTION",
+    "offset": 4461
+  }
+}

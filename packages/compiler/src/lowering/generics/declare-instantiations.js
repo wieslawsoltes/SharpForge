@@ -1,3 +1,7 @@
+import {connectSourceInterfaceType} from '../../codegen/semantic/interface-shape.js';
+import {sourceTypeShape} from '../../codegen/semantic/source-type-shape.js';
+import {sourceConstructionIdentity} from './source-type-identity.js';
+import {declareConstructedObjectOverrides} from './source-object-overrides.js';
 /**
  * Declaration of generic constructions in the image (SF-A02-T02.6): the generator half of monomorphization.
  *
@@ -17,7 +21,8 @@ export const GenericDeclarations = Base =>
         generics = this.generics,
         at = definition.locations?.[0];
       if (definition.isRecord) this.unsupported('generic records', at);
-      instance.record = this.program.addClass(instance.name, this.nodeOf(definition));
+      instance.record = this.program.addClass(instance.name, this.nodeOf(definition), sourceTypeShape(definition));
+      instance.record.sourceIdentity = sourceConstructionIdentity(this, instance.type);
       generics.withMap(instance.map, () => {
         this.checkClassShape(definition);
         const deferred = generics.deferMethods;
@@ -27,6 +32,8 @@ export const GenericDeclarations = Base =>
         } finally {
           generics.deferMethods = deferred;
         }
+        connectSourceInterfaceType(this, definition, instance.record);
+        declareConstructedObjectOverrides(this, instance);
         const instanceWork = this.declareInstanceInitializer(definition, instance.record),
           typeWork = this.declareTypeInitializer(definition, instance.record);
         if (!instanceWork && !typeWork) return;
@@ -46,7 +53,9 @@ export const GenericDeclarations = Base =>
         generics = this.generics,
         container = definition.containingType,
         at = definition.locations?.[0];
-      if (!container || container.typeKind !== TypeKind.Class) this.unsupported('a generic method of a type that is not a class', at);
+      if (!container || ![TypeKind.Class, TypeKind.Struct, TypeKind.Interface].includes(container.typeKind)) {
+        this.unsupported('a generic method of a type that is not a class', at);
+      }
       generics.withMap(instance.map, () => {
         const deferred = generics.deferMethods;
         generics.deferMethods = false;
@@ -56,6 +65,7 @@ export const GenericDeclarations = Base =>
           generics.deferMethods = deferred;
         }
       });
+      this.interfaceMethods.registerMethod(instance);
     }
     declareMethod(owner, symbol) {
       // A generic method exists only as its constructions, and the methods of a construction of a generic class are

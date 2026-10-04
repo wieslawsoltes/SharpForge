@@ -1,35 +1,64 @@
 # @sharpforge/docking
 
-Independent MIT-licensed docking model and DOM host. No Studio, compiler, renderer or framework dependency.
+A dependency-free docking model and browser DOM host for document and tool workspaces. The package retains panel DOM and editor state while supporting splits, tab groups, explicit dock targets, floating nested groups, auto-hide, undo/redo, keyboard operation and same-origin popouts.
+
+## Quick start
 
 ```js
 import { DockLayout, DockHost } from '@sharpforge/docking';
-// Also load @sharpforge/docking/style.css using your host's CSS pipeline.
+
 const layout = new DockLayout([
-  { id: 'editor', title: 'Program.cs', kind: 'document' },
+  { id: 'source', title: 'Program.cs', kind: 'document' },
   { id: 'output', title: 'Output', kind: 'tool' }
 ]);
-layout.open('editor');
-layout.dockRoot('output', 'bottom');
-const contents = new Map([
-  ['editor', document.createElement('textarea')],
-  ['output', document.createElement('pre')]
-]);
 const host = new DockHost(document.querySelector('#workspace'), layout, {
-  resolveContent: id => contents.get(id),
-  onActivate: id => console.log('Activated', id),
-  onError: error => console.error(error)
+  resolveContent: id => panels.get(id),
+  requestClose: id => closeService.close(id),
+  onActivate: id => activatePanel(id),
+  onWindowKeyDown: event => routeShortcut(event),
+  onError: error => reportError(error)
 });
-const saved = layout.serialize();
-layout.float('output', { x: 60, y: 60, width: 500, height: 280 });
-layout.restore(saved);
-// On teardown: host.dispose().
+layout.open('source');
+layout.dockRoot('output', 'bottom');
 ```
 
-Model operations: register/unregister, locate, groups, open/activate/close, dock center/edge, dockRoot, float, autoHide, resize, bounds, snapshot/serialize/validate/restore, undo/redo, and subscribe. Every registered panel has exactly one placement (group, shelf or closed). Mutations validate and roll back; the default history is 50 layout changes. Trees allow 512 nodes / 32 nesting levels / 64 floating groups. Empty document groups remain usable drop targets.
+Load the distributed `src/style.css`. Serve `examples/index.html` for a runnable standalone example with retained textareas, nine drop targets, whole-group floating, undo/redo and popouts.
 
-The DOM host moves and caches content elements, preserving host-owned editor buffers and listeners. It supplies nested resizable groups, scrollable tab strips, drag/drop guides, floating move/resize, auto-hide shelves, tab context menus, keyboard tab navigation, keyboard splitters, and same-origin browser popouts. Use `popout(id)` / `returnPopout(id)` for tools **or documents**. Popup blocking is reported. Closing a popup returns its exact DOM; a short-lived host watchdog also handles forced browser-window closure. `onWindowKeyDown` can forward host shortcuts.
+The example uses external JavaScript and CSS and is included in the package.
+In this repository, build the completed scope once with `npm run build`, start
+`node scripts/serve.js`, and open
+`http://127.0.0.1:4173/packages/docking/examples/index.html`.
+The production server applies the same Content Security Policy as Studio.
+Studio contributes `src/host/workbench.css` at order 1999 to extend its retained
+base host styles before the editor styles and later Studio theme overrides.
 
-Hosts own storage and document state; the model does not save application buffers. Popout OS position is not persisted. No native desktop cross-process docking, arbitrary cross-origin window transport, tab tear-off between unrelated pages, or pixel-exact Visual Studio parity is claimed. See `docs/docking.md` and the model/browser tests.
+## Public API
 
-External controls that toggle an auto-hide panel can declare `data-dock-toggle="panel-id"`. A pointer press on the active panel's toggle preserves the popup until its click handler toggles it closed; other outside presses still dismiss it. This avoids a dismiss-on-pointerdown/reopen-on-click race without canceling normal pointer or keyboard activation.
+| API | Contract |
+| --- | --- |
+| `DockLayout` | One placement per registered panel; bounded validated transactional state |
+| `createGroup`, `createSplit`, `walkLayout`, `panelIds` | Explicit serializable tree helpers |
+| `dock`, `dockRoot`, `float`, `autoHide`, `pin` | Individual panel placement and identity-based restoration |
+| `floatGroup(nodeId,bounds)`, `dockGroup(nodeId,targetId,side,{root})` | Whole group/split moves with one undo step |
+| `transaction(type,action)`, `finishInteraction(snapshot,{cancel,type})` | Coalesced operations and cancel-safe pointer history |
+| `setTabState(id,{pinned,preview})`, `resizeFlyout(id,size)` | Persisted tab partition and flyout dimensions |
+| `restore` | Strict atomic restore; migration from schema v1 is lossless |
+| `restorePersisted`, `restorePersistedLayout` | Recovery with explicit unknown/duplicate/corrupt diagnostics |
+| `DOCK_LAYOUT_VERSION`, `DOCK_LAYOUT_LIMITS`, `migrateLayout` | Versioned schema contract and bounded input |
+| `clampFloatingBounds` | CSS-pixel viewport bounds correction |
+| `dockGuideTargets`, `hitDockGuide`, `DockGuideOverlay` | Nine explicit targets shared by geometry and DOM |
+| `DockHost` | Retained DOM rendering, accessible tab menus, pointer capture, keyboard docking and popouts |
+
+`DockHost` accepts `resolveContent`, `onActivate`, `onError`, `onClose`, `requestClose`, `onWindowKeyDown`, `onWindowFocus`, `onPopoutDocument`, `onTabDoubleClick` and `menuProvider`. `requestClose` delegates dirty-document policy to the application. The core layout does not persist buffers or decide whether source changes can be discarded.
+
+External auto-hide toggles may set `data-dock-toggle="panel-id"` to preserve the existing pointerdown/click toggle race fix. Pointer and keyboard resizing preserves focused content and selection; active tabs are revealed horizontally without scrolling document or tool bodies.
+
+Popouts adopt the exact panel element into a real same-origin child and return it on close. Popup blocking is reported as `SFDOCK004`. The opener must remain alive. Native cross-process docking, unrelated browser-tab merging, arbitrary cross-origin transport and persistent OS window geometry are outside the contract.
+
+`host.returnPopout(id, {reopen = true, render = true})` closes the child and returns its retained content.
+The defaults preserve normal close, rendering, and window-focus notification behavior.
+Workspace owners may use `{reopen: false, render: false}` while removing or replacing documents, then render
+after their complete layout transaction. This prevents content resolution against an intermediate old workspace;
+`render: false` does not defer a layout notification caused by `reopen: true`.
+
+Studio's higher-level `DocumentTabs`, navigation, shared views and Window menus are documented in [`docs/a19-docking-workbench.md`](../../docs/a19-docking-workbench.md).

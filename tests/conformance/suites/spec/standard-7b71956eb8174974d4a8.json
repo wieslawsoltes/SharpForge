@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-7b71956eb8174974d4a8",
+  "kind": "spec",
+  "sourceText": "partial class A\n{\n    int x;                   // Error, cannot declare x more than once\n    partial void M();        // Ok, defining partial method declaration\n\n    partial class Inner      // Ok, Inner is a partial type\n    {\n        int y;\n    }\n}\n\npartial class A\n{\n    int x;                   // Error, cannot declare x more than once\n    partial void M() { }     // Ok, implementing partial method declaration\n\n    partial class Inner      // Ok, Inner is a partial type\n    {\n        int z;\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0102",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": [
+      "CS0169"
+    ]
+  },
+  "sourceSHA256": "7ca79aa70202d73ffcc481bcb98f96f997bd6daa39c7961f7bcabcbb5f272764",
+  "originalSource": "partial class A\n{\n    int x;                   // Error, cannot declare x more than once\n    partial void M();        // Ok, defining partial method declaration\n\n    partial class Inner      // Ok, Inner is a partial type\n    {\n        int y;\n    }\n}\n\npartial class A\n{\n    int x;                   // Error, cannot declare x more than once\n    partial void M() { }     // Ok, implementing partial method declaration\n\n    partial class Inner      // Ok, Inner is a partial type\n    {\n        int z;\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "ClassMembers",
+    "expectedErrors": [
+      "CS0102"
+    ],
+    "ignoredWarnings": [
+      "CS0169"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "ClassMembers",
+    "offsetInUnquotedMarkdown": 48266
+  }
+}

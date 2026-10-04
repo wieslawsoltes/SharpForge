@@ -33,6 +33,17 @@ function integerRangeOf(type) {
   const underlying = type.typeKind === TypeKind.Enum ? (type.enumUnderlyingType ?? type.originalDefinition?.enumUnderlyingType) : type;
   return integerRanges[numericKind(underlying)] ?? (type.typeKind === TypeKind.Enum && !underlying ? integerRanges.int : null);
 }
+/**
+ * C# 15 preview (provisional, csharplang/proposals/closed-enums.md revision 1): a closed enum has no values other
+ * than its declared members, so those are all the values of the type.
+ */
+function closedEnumRanges(type) {
+  const values = type
+    .getMembers()
+    .filter(member => member.isEnumMember && member.enumValue !== null && member.enumValue !== undefined)
+    .map(member => Number(member.enumValue));
+  return [...new Set(values)].sort((a, b) => a - b).map(value => [value, value]);
+}
 const isNullable = type => type.isNullableValueType === true && !type.isDefinition;
 const isReference = type => type.isReferenceType === true || type.typeKind === TypeKind.TypeParameter;
 
@@ -98,11 +109,13 @@ export const objectAtom = (parts = new Map()) => ({ parts });
  * handle it outside a nullable context); the null of `Nullable<T>` always counts.
  */
 export function universe(type, withReferenceNull = true) {
+  // The subtype part of a closed class (flow/closed-hierarchy.js): one value per subtype.
+  if (type.subtypeTags) return [{ values: stringValues(type.subtypeTags) }];
   if (isNullable(type)) return [nullAtom, ...universe(type.typeArguments[0].type, withReferenceNull)];
   const kind = scalarKind(type);
   const nulls = isReference(type) && withReferenceNull ? [nullAtom] : [];
   if (kind === 'bool') return [{ values: boolValues(true, true) }];
-  if (kind === 'int') return [{ values: integerValues([integerRangeOf(type)]) }];
+  if (kind === 'int') return [{ values: integerValues(type.isClosedEnum ? closedEnumRanges(type) : [integerRangeOf(type)]) }];
   if (kind === 'string') return [...nulls, { values: stringValues([], true) }];
   return [...nulls, objectAtom()];
 }
@@ -157,3 +170,21 @@ export function subtract(a, b, options) {
   return result;
 }
 export const union = (a, b) => [...a, ...b];
+
+// ---- closed classes (C# 15 preview, provisional: csharplang/proposals/csharp-15.0/closed-hierarchies.md revision 1) ----
+/** The key of the part that says which subtype a value of a closed class is. */
+export const subtypePartKey = '$subtype';
+/**
+ * The pseudo type of the subtype part: its values are the display names of the subtypes, plus the closed class
+ * itself when the hierarchy is open (a value no subtype pattern handles).
+ */
+export function subtypeTagType(hierarchy) {
+  const tags = hierarchy.subtypes.map(subtype => subtype.toDisplayString());
+  if (hierarchy.isOpen) tags.push(hierarchy.closedType.toDisplayString());
+  return { subtypeTags: tags };
+}
+/** The tag of `testedType` when it is one of the subtypes of the hierarchy, else null. */
+export function subtypeTagOf(hierarchy, testedType) {
+  const subtype = hierarchy.subtypes.find(candidate => candidate.equals(testedType));
+  return subtype ? subtype.toDisplayString() : null;
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2880d2385abe254201c5",
+  "kind": "diagnostics",
+  "sourceText": "class A : System.Attribute\n{\n    public A(object value) { }\n}\n\n[A(default(delegate*<void>))]\nunsafe class C { }",
+  "sourceSHA256": "7e76e06466d7a30483303e3c5811d696683871fb4165347475d840e6e664542a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenFunctionPointersTests.cs",
+    "sha256": "6ae3195a3dd105e6e2f998eb4dd574db2a2568f521c73ec47e2d10473bed0787",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenFunctionPointersTests.cs",
+    "license": "MIT",
+    "method": "Attribute_ObjectDefault_Standalone",
+    "offset": 460170
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1503",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,4): error CS1503: Argument 1: cannot convert from 'delegate*<void>' to 'object'\n                // [A(default(delegate*<void>))]\n                Diagnostic(ErrorCode.ERR_BadArgType, \"default(delegate*<void>)\").WithArguments(\"1\", \"delegate*<void>\", \"object\").WithLocation(6, 4)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

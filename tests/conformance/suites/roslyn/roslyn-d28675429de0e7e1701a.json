@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d28675429de0e7e1701a",
+  "kind": "diagnostics",
+  "sourceText": "class B : A // CS0534\n{\n    override private protected void F() {}\n}\n",
+  "sourceSHA256": "2a5d6026d0972c3591dee7a60e7c4457bdb04c1143d3a14c49142f034ada9565",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "ImplementInaccessible",
+    "offset": 37007
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "references: new[] { new CSharpCompilationReference(compilation1) })",
+  "options": "(source2, parseOptions: TestOptions.Regular7_2,\n                references: new[] { new CSharpCompilationReference(compilation1) })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0115",
+        "severity": "error"
+      },
+      {
+        "code": "CS0534",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,37): error CS0115: 'B.F()': no suitable method found to override\n                //     override private protected void F() {}\n                Diagnostic(ErrorCode.ERR_OverrideNotExpected, \"F\").WithArguments(\"B.F()\").WithLocation(3, 37),\n                // (1,7): error CS0534: 'B' does not implement inherited abstract member 'A.F()'\n                // class B : A // CS0534\n                Diagnostic(ErrorCode.ERR_UnimplementedAbstractMethod, \"B\").WithArguments(\"B\", \"A.F()\").WithLocation(1, 7)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

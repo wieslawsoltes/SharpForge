@@ -28,7 +28,7 @@ node scripts/conformance/supply/secret-scan.js . dist artifacts
 
 Activate the isolated environment, or use its absolute Python path for every Python command. Windows uses `Scripts/python.exe`. The security workflow runs the same commands on Ubuntu 24.04, Windows 2025 and macOS 26. Those configured jobs are not evidence of successful executions; actual local and hosted results belong in the evidence record. The Python lock includes official wheels for all available platforms, not a claim that every wheel has been executed.
 
-Ordinary pull requests retain the existing single `core` execution. Security matrix and CodeQL jobs run on main, schedules, manual dispatch, and pull requests explicitly labeled `full-ci`. There are no branch-push duplicates or `pull_request_target` jobs. Tag release qualification uses the existing reusable CI workflow.
+Ordinary pull requests retain the existing single `core` execution. Security matrix and CodeQL jobs run serially on explicit manual dispatch. There are no branch-push duplicates or `pull_request_target` jobs. Tag release qualification uses the existing reusable CI workflow.
 
 ## Action and Python lock review
 
@@ -37,12 +37,12 @@ Ordinary pull requests retain the existing single `core` execution. Security mat
 Regenerate the Python lock in an isolated environment with an explicit complete dependency resolution:
 
 ```sh
-python -m pip install --dry-run --ignore-installed --only-binary=:all: --report /tmp/supply-resolution.json playwright==1.57.0 jsonschema==4.26.0 PyYAML==6.0.3
+python -m pip install --dry-run --ignore-installed --only-binary=:all: --report /tmp/supply-resolution.json playwright==1.63.0 jsonschema==4.26.0 PyYAML==6.0.3
 python scripts/conformance/supply/lock-python.py --resolution /tmp/supply-resolution.json --date YYYY-MM-DD
 python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
 ```
 
-The writer obtains wheel hashes from exact PyPI version metadata and keeps all wheel URLs and dependency declarations in `python-lock.json`. Review transitive versions and licenses as well as the root versions. A regenerated metadata record may need an explicit upstream license citation when PyPI omits its license field. Do not remove hashes, use source distributions, or accept a tampered wheel to make installation pass. The regression suite creates an owned local wheel and demonstrates actual pip acceptance/rejection without a network dependency.
+The writer obtains wheel hashes from exact PyPI version metadata and keeps all wheel URLs and dependency declarations in `python-lock.json`. It records roots using the resolved versions of entries marked `requested` in the pip report. Review transitive versions and licenses as well as the root versions. A regenerated metadata record may need an explicit upstream license citation when PyPI omits its license field. Do not remove hashes, use source distributions, or accept a tampered wheel to make installation pass. The regression suite creates an owned local wheel and demonstrates actual pip acceptance/rejection without a network dependency.
 
 Test-only `jsonschema` and `PyYAML` were explicitly authorized for this scope. The existing Node schema subset cannot validate the complete official CycloneDX Draft 7 schema, and regex parsing cannot enforce YAML semantics. Reimplementing either standard would increase the attack surface and miss valid/invalid cases. These two tools and all transitives are confined to the hash-pinned qualification environment; none enter npm packages, browser bundles or application runtime imports.
 

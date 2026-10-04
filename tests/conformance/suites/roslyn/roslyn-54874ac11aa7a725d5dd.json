@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-54874ac11aa7a725d5dd",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    void M(readonly ref readonly int p) { }\n}",
+  "sourceSHA256": "5dcd0d22a78b19c64a038c5d6504862854fb9b37b4f1968896a7036a7ae40165",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "DuplicateModifier_03",
+    "offset": 85531
+  },
+  "langVersion": "11",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular11)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9190",
+        "severity": "error"
+      },
+      {
+        "code": "CS9058",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,12): error CS9190: 'readonly' modifier must be specified after 'ref'.\n            //     void M(readonly ref readonly int p) { }\n            Diagnostic(ErrorCode.ERR_RefReadOnlyWrongOrdering, \"readonly\").WithLocation(3, 12),\n            // (3,25): error CS9058: Feature 'ref readonly parameters' is not available in C# 11.0. Please use language version 12.0 or greater.\n            //     void M(readonly ref readonly int p) { }\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion11, \"readonly\").WithArguments(\"ref readonly parameters\", \"12.0\").WithLocation(3, 25)",
+  "unsupported": []
+}

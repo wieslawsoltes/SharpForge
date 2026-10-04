@@ -1,0 +1,4 @@
+{
+  "struct-object-initializers/cs1612-cs1918-members-of-a-value": ["diagnostics", "warnings"],
+  "struct-object-initializers/fields-and-properties": ["directCil"]
+}

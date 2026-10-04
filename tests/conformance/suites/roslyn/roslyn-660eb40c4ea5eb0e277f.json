@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-660eb40c4ea5eb0e277f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n[assembly: InternalsVisibleTo(\"WantsIVTAccess\")]\npublic class C\n{\n  static void Main() {}\n}\n",
+  "sourceSHA256": "31cb7690ca09cd93444b03331a7337035f8d03894a35ead7ccf2da70b9410582",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "IVTNoKey",
+    "offset": 70420
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\n            @\"\nusing System.Runtime.CompilerServices;\n[assembly: InternalsVisibleTo(\"\"WantsIVTAccess\"\")]\npublic class C\n{\n  static void Main() {}\n}\n\", options: TestOptions.SigningReleaseExe.WithCryptoKeyFile(s_keyPairFile), parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1726",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "Diagnostic(ErrorCode.ERR_FriendAssemblySNReq, @\"InternalsVisibleTo(\"\"WantsIVTAccess\"\")\").WithArguments(\"WantsIVTAccess\")",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

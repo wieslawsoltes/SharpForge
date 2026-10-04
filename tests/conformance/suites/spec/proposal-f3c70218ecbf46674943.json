@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f3c70218ecbf46674943",
+  "kind": "spec",
+  "sourceText": "interface IB\n{\n    public void Increment() { P += 1; }\n    public int P { get; set; }\n}\nstruct T : IB\n{\n    public int P { get; set; } // auto-property\n}\n\nT t = default(T);\nConsole.WriteLine(t.P); // prints 0\n(t as IB).Increment();\nConsole.WriteLine(t.P); // prints 0",
+  "sourceSHA256": "6b6694e392872a60896fd3525096934e9a2ca46941300b3d69a6d5bab716bc25",
+  "target": "library",
+  "featureId": "csharp-8-0-default-interface-members",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/default-interface-methods.md",
+    "sha256": "feebc11b0983ad0c24c2017ac76706a9f3ff81b9cf1cc2703ec12d4829f24c42",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/default-interface-methods.md",
+    "license": "NOASSERTION",
+    "offset": 26777
+  }
+}

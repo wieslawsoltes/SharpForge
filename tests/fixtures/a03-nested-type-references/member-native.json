@@ -1,0 +1,43 @@
+{
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16"
+    },
+    "referenceAssemblies": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    }
+  },
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "templateSHA256": "3c0aba25c4b1a8b40fe62a624d34c59b3702cfcb674bc28b0c7ef405fa86973f",
+  "sourceSHA256": "ee8fa8764f5e69e22f2e2ee9c990846483dd34e1d4b965848f8551d1ee1b5563",
+  "fixtureSHA256": "31320b3c683bf4c20daf8c1c46ea5d2d020707541230729143b33d2f6644107f",
+  "inputSHA256": "a42ca619bcd375c93edec9af00bb7be8f68e8a5c5ee46df3d1b0715f03066ecf",
+  "compilation": {
+    "exitCode": 0,
+    "diagnostics": [],
+    "assemblySHA256": "fc8f68f671726722b6c4249dd17b75747c752ba4a28071c6fe04e6417ce435b8"
+  },
+  "execution": {
+    "stdout": "{\"runtime\":\"10.0.5\",\"members\":[{\"token\":167772172,\"success\":true,\"definition\":67108865,\"owner\":33554434,\"name\":\"Number\",\"kind\":\"field\",\"flags\":22,\"error\":\"\"},{\"token\":167772173,\"success\":true,\"definition\":100663301,\"owner\":33554435,\"name\":\"Pick\",\"kind\":\"method\",\"flags\":150,\"error\":\"\"},{\"token\":167772174,\"success\":true,\"definition\":100663298,\"owner\":33554434,\"name\":\"Pick\",\"kind\":\"method\",\"flags\":150,\"error\":\"\"},{\"token\":167772175,\"success\":true,\"definition\":100663299,\"owner\":33554434,\"name\":\"Secret\",\"kind\":\"method\",\"flags\":145,\"error\":\"\"},{\"token\":167772176,\"success\":true,\"definition\":100663302,\"owner\":33554435,\"name\":\".ctor\",\"kind\":\"method\",\"flags\":6278,\"error\":\"\"},{\"token\":167772177,\"success\":false,\"definition\":0,\"owner\":0,\"name\":\"\",\"kind\":\"\",\"flags\":0,\"error\":\"ArgumentOutOfRangeException\"},{\"token\":167772178,\"success\":false,\"definition\":0,\"owner\":0,\"name\":\"\",\"kind\":\"\",\"flags\":0,\"error\":\"MissingMethodException\"},{\"token\":167772179,\"success\":false,\"definition\":0,\"owner\":0,\"name\":\"\",\"kind\":\"\",\"flags\":0,\"error\":\"MissingMethodException\"}]}",
+    "stderr": "",
+    "exitCode": 0,
+    "signal": null,
+    "unhandledException": null
+  }
+}

@@ -1,3 +1,4 @@
+import {sourceThis} from './source-type-shape.js';
 /**
  * Initialization order (SF-A02-T10): field and auto-property initializers, constructor chaining and type
  * initialization, in the order .NET runs them.
@@ -76,7 +77,7 @@ export const Initialization = Base =>
       if (!constructors.length) {
         const implicit = this.program.addMethod(owner, '.ctor', { isStatic: false, returnType: 'void', parameters: [], node: owner.node });
         this.implicitConstructors.set(type, implicit);
-        this.bodies.push({ method: implicit, body: n.block([n.expressionStatement(n.call(method, n.thisReference(owner.name), []))]) });
+        this.bodies.push({ method: implicit, body: n.block([n.expressionStatement(n.call(method, sourceThis(owner), []))]) });
       }
       return { type, method, initializers };
     }

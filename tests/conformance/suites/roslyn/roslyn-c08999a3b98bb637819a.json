@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c08999a3b98bb637819a",
+  "kind": "diagnostics",
+  "sourceText": "class B : A\n{\n    new void F() { } // CS0109\n}\n",
+  "sourceSHA256": "7ea02537b713c90f5b5bec88fc789efa02f505af7825929c1481ddd77eb3ccff",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "HidingInaccessible",
+    "offset": 35152
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "references: new[] { new CSharpCompilationReference(compilation1) })",
+  "options": "(source2, parseOptions: TestOptions.Regular7_2,\n                references: new[] { new CSharpCompilationReference(compilation1) })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0109",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,14): warning CS0109: The member 'B.F()' does not hide an accessible member. The new keyword is not required.\n                //     new void F() { } // CS0109\n                Diagnostic(ErrorCode.WRN_NewNotRequired, \"F\").WithArguments(\"B.F()\").WithLocation(3, 14)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

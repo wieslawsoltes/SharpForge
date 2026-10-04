@@ -1,5 +1,14 @@
-import {decodeCoded, methodGenericParameters, substituteCallType} from '@sharpforge/cil';
+import {decodeCoded, methodGenericParameters, substituteCallType, primitiveSizes} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
+import {isAggregateType, requireValueStorage} from './value-types.js';
+import {valueLayout} from './value-layout.js';
+
+/** Canonical method admission is derived from the code epoch, never snapshot or heap state. */
+export function requireGenericStructArgument(vm, owner, type) {
+  valueLayout(vm, type);
+  const element = type.flags.nullable ? type.nullableType : type;
+  if (isAggregateType(element)) requireValueStorage(vm, element);
+}
 
 function invalid(message) {
   throw new ManagedFault('InvalidProgramException', message);
@@ -15,7 +24,7 @@ function supportsConstructor(vm, type) {
 
 /** Validate ECMA generic constraints against closed MethodTable identities. */
 export function validateGenericArguments(vm, owner, arguments_, context) {
-  const {typeArguments, methodArguments, arity = null} = context;
+  const {typeArguments, methodArguments, arity = null, layoutOnly = false} = context;
   const parameters = methodGenericParameters(vm.inspector, owner);
   if (arguments_.length !== parameters.length || arity !== null && parameters.length !== arity ||
       parameters.some((parameter, index) => parameter.index !== index)) {
@@ -25,6 +34,13 @@ export function validateGenericArguments(vm, owner, arguments_, context) {
     const type = vm.typeSystem.table(arguments_[parameter.index]);
     if (type.containsGenericParameters || type.flags.byRef || type.flags.pointer || type.name === 'System.Void') {
       invalid('Generic arguments must be closed managed types');
+    }
+    if (type.flags.external) {
+      throw new ManagedFault('NotSupportedException', 'Unregistered external generic argument is inspection-only');
+    }
+    if (type.flags.valueType && !type.flags.primitive && !type.flags.enum && !primitiveSizes[type.name]) {
+      if (layoutOnly) valueLayout(vm, type);
+      else requireGenericStructArgument(vm, owner, type);
     }
     const badReference = parameter.flags & 4 && type.flags.valueType;
     const badValue = parameter.flags & 8 && (!type.flags.valueType || type.flags.nullable);

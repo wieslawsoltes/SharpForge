@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-eba62cb07fe91ff2ffcc",
+  "kind": "spec",
+  "sourceText": "delegate int D1(int i, double d);\ndelegate int D2(int c, double d);\ndelegate object D3(string s);\n\nclass A\n{\n    public static int M1(int a, double b) {...}\n}\n\nclass B\n{\n    public static int M1(int f, double g) {...}\n    public static void M2(int k, double l) {...}\n    public static int M3(int g) {...}\n    public static void M4(int g) {...}\n    public static object M5(string s) {...}\n    public static int[] M6(object o) {...}\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "8a4e8d3e0aec436f4f7e7023ff4eda4d09945417248fda03f81ac6c1746f98ec",
+  "originalSource": "delegate int D1(int i, double d);\ndelegate int D2(int c, double d);\ndelegate object D3(string s);\n\nclass A\n{\n    public static int M1(int a, double b) {...}\n}\n\nclass B\n{\n    public static int M1(int f, double g) {...}\n    public static void M2(int k, double l) {...}\n    public static int M3(int g) {...}\n    public static void M4(int g) {...}\n    public static object M5(string s) {...}\n    public static int[] M6(object o) {...}\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "DelegateCompatibility1",
+    "replaceEllipsis": true,
+    "customEllipsisReplacements": [
+      "return default;",
+      "return default;",
+      "return;",
+      "return default;",
+      "return;",
+      "return default;",
+      "return default;"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-delegates",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/delegates.md",
+    "sha256": "9455f48c0c2b89946fa49f010b25134e63d575781fea98dcd54cdba081865907",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/delegates.md",
+    "license": "MIT",
+    "example": "DelegateCompatibility1",
+    "offsetInUnquotedMarkdown": 7847
+  }
+}

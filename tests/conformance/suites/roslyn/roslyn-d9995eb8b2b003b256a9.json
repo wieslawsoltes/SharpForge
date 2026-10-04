@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d9995eb8b2b003b256a9",
+  "kind": "diagnostics",
+  "sourceText": "class C(out int a) : Base(Test(() =>\n                          {\n                              System.Func<bool> hasLevel = () => true;\n                              return hasLevel();\n                          }))\n{\n    int F = Test(() =>\n                 {\n                     System.Func<bool> hasLevel = () => true;\n                     return hasLevel();\n                 });\n\n    static int Test(System.Func<bool> x) => 0;\n}\n\nclass Base\n{\n    public Base(int x){}    \n}",
+  "sourceSHA256": "4ee9318d8d5d570ca85976605e3d8810e01b663b757cff107f52ccfe7b2f261b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "OutParameterIsNotAssigned_07",
+    "offset": 265985
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0177",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (1,7): error CS0177: The out parameter 'a' must be assigned to before control leaves the current method\n                // class C(out int a) : Base(Test(() =>\n                Diagnostic(ErrorCode.ERR_ParamUnassigned, \"C\").WithArguments(\"a\").WithLocation(1, 7)\n                ",
+  "unsupported": []
+}

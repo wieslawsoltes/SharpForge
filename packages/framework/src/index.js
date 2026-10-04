@@ -1,11 +1,11 @@
-import {registerRuntimeNumerics} from './contributions/runtime-numerics.js';
 import {ABI_VERSION} from './registry.js';
 import {createFrameworkRegistry} from './contributions/manifest.js';
+import {createContractResolver} from './member-signatures.js';
+export {memberSignatureType} from './member-signatures.js';
 export {ABI_VERSION,XAML,CONTROLS,MEDIA,TASK,THREAD,createRegistry} from './registry.js';
 export {colorValues} from './contributions/core-xaml.js';
 export {contributionManifest,areaReservations,idReservations} from './contributions/manifest.js';
 const registry=createFrameworkRegistry();
-registry.register({name:'A05',register:registerRuntimeNumerics});
 export const types=registry.types;
 export const contracts=registry.contracts;
 export const canonicalType=registry.canonicalType;
@@ -18,10 +18,7 @@ export function findContracts(owner, name, isStatic) {
   while(owner&&!seen.has(owner)){seen.add(owner);result.push(...(memberIndex.get(owner+'::'+name)??[]).filter(d=>isStatic===undefined||d.isStatic===isStatic));owner=types.get(owner)?.base;}
   return result;
 }
-export function contractForMember(d) {
-  if(!d?.signature)return null;const owner=canonicalType(d.owner);
-  return findContracts(owner,d.name,d.signature.isStatic).find(c=>c.parameters.length===d.signature.parameters.length&&c.parameters.every((t,i)=>t===canonicalType(d.signature.parameters[i]))&&(c.kind==='constructor'?'void':c.result)===canonicalType(d.signature.returnType))??null;
-}
+export const contractForMember=createContractResolver(findContracts,canonicalType);
 export function propertiesFor(type) {
   const list=[];const seen=new Set();while(types.has(type)&&!seen.has(type)){seen.add(type);list.unshift(types.get(type));type=types.get(type).base;}
   return Object.assign({},...list.map(t=>t.properties));

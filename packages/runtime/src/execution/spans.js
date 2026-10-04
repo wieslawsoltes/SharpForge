@@ -2,9 +2,14 @@ import {ManagedFault} from '../heap.js';
 import {arrayInteger} from './array-limits.js';
 import {arrayRecord, arrayAddress, arrayGet, arraySet, createArray} from './arrays.js';
 import {stackAllocate} from './stack-memory.js';
-import {pointerOffset, rawMemoryView, readMemory, writeMemory, validateMemoryPointer} from './raw-memory.js';
+import {pointerOffset, rawMemoryView, readMemory, writeMemory} from './raw-memory.js';
 import {valueLayout} from './value-layout.js';
 import {castCacheFor} from './casting.js';
+import {createManagedAddress} from './managed-address.js';
+import {validateSpan} from './span-validation.js';
+import {stringSpanLocation, stringSpanPointer, stringSpanValue} from './string-span.js';
+export {validateSpan} from './span-validation.js';
+export {spanFromString} from './string-span.js';
 
 function fail(message) {
   throw new ManagedFault('ArgumentOutOfRangeException', message);
@@ -19,12 +24,21 @@ export function spanCreate(vm, elementType, pointer, length, {readonly = false} 
   if (pointer?.readonly && !readonly) {
     throw new ManagedFault('InvalidProgramException', 'A readonly address cannot create a mutable Span');
   }
+  if (pointer !== null && (!pointer?.byref || !Object.isFrozen(pointer) ||
+      !Array.isArray(pointer.path) || !Object.isFrozen(pointer.path))) {
+    throw new ManagedFault('InvalidProgramException', 'Span requires an immutable owned address');
+  }
   if (pointer?.memoryPointer) {
     const layout = valueLayout(vm, element);
     if (layout.containsReferences) throw new ManagedFault('ArgumentException', 'Pointer-backed Span elements must be unmanaged');
     rawMemoryView(vm, pointer, count * layout.size);
   }
-  else if (pointer !== null) {
+  else if (pointer?.kind === 'string') {
+    const record = stringSpanLocation(vm, pointer, true);
+    if (!readonly || element !== vm.heap.methodTables.get('char') || pointer.index > record.data.length - count) {
+      throw new ManagedFault('InvalidProgramException', 'String-backed spans require readonly character storage');
+    }
+  } else if (pointer !== null) {
     if (pointer?.kind !== 'array' || pointer.path?.length || pointer.vmOwner !== vm.snapshotOwner) {
       throw new ManagedFault('InvalidProgramException', 'Span requires an owned array or stack address');
     }
@@ -64,19 +78,11 @@ export function spanFromArray(vm, element, reference, start = 0, length = null, 
   if (!record.methodTable.flags.szArray || !compatible) {
     throw new ManagedFault('ArrayTypeMismatchException', 'Span requires a compatible vector');
   }
-  if (count === 0) return spanCreate(vm, element, null, 0, options);
-  const pointer = arrayAddress(vm, reference, [index], {type: element, readonly: !!options.readonly});
+  const pointer = count === 0 ? createManagedAddress(vm, 'array', index, reference, options)
+    : arrayAddress(vm, reference, [index], {type: element, readonly: !!options.readonly});
   return spanCreate(vm, element, pointer, count, options);
 }
 
-export function validateSpan(vm, value) {
-  if (!value?.span || !Object.isFrozen(value) || value.vmOwner !== vm.snapshotOwner || value.elementType.registry !== vm.heap.methodTables) {
-    throw new ManagedFault('InvalidProgramException', 'Malformed or foreign Span');
-  }
-  if (value.pointer?.memoryPointer) validateMemoryPointer(vm, value.pointer);
-  else if (value.pointer) vm.heap.get(value.pointer.owner);
-  return value;
-}
 
 export function spanLength(vm, value) {
   return validateSpan(vm, value).length;
@@ -90,12 +96,14 @@ export function spanAddress(vm, value, index) {
     const pointer = pointerOffset(vm, value.pointer, offset * valueLayout(vm, value.elementType).size, value.elementType);
     return Object.freeze({...pointer, readonly: value.readonly || pointer.readonly});
   }
+  if (value.pointer.kind === 'string') return stringSpanPointer(vm, value.pointer.owner, value.pointer.index + offset);
   return arrayAddress(vm, value.pointer.owner, [value.pointer.index + offset], {type: value.elementType, readonly: value.readonly});
 }
 
 export function spanGet(vm, value, index) {
   const pointer = spanAddress(vm, value, index);
-  return pointer.memoryPointer ? readMemory(vm, pointer) : arrayGet(vm, pointer.owner, [pointer.index]);
+  return pointer.memoryPointer ? readMemory(vm, pointer) : pointer.kind === 'string'
+    ? stringSpanValue(vm, pointer) : arrayGet(vm, pointer.owner, [pointer.index]);
 }
 
 export function spanSet(vm, value, index, replacement) {
@@ -109,7 +117,10 @@ export function spanSlice(vm, value, start, length = null) {
   const index = arrayInteger(start, 'ArgumentOutOfRangeException');
   const count = length === null ? value.length - index : arrayInteger(length, 'ArgumentOutOfRangeException');
   if (index < 0 || count < 0 || index > value.length - count) fail('Slice is outside the span');
-  const pointer = count ? spanAddress(vm, value, index) : null;
+  const pointer = count ? spanAddress(vm, value, index) : value.pointer?.memoryPointer
+    ? pointerOffset(vm, value.pointer, index * valueLayout(vm, value.elementType).size, value.elementType)
+    : value.pointer?.kind === 'string' ? stringSpanPointer(vm, value.pointer.owner, value.pointer.index + index)
+      : value.pointer ? createManagedAddress(vm, 'array', value.pointer.index + index, value.pointer.owner, {readonly: value.readonly}) : null;
   return spanCreate(vm, value.elementType, pointer, count, {readonly: value.readonly});
 }
 

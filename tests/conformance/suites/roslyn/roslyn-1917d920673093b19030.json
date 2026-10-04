@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1917d920673093b19030",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Derived : Base\n{\n    public override void M<T>(T x)\n    {\n        foreach (var y in x)\n        {\n            System.Console.WriteLine(y.a);\n        }\n    }\n}",
+  "sourceSHA256": "74255e0579cc49a5c853a5508ce99d9fdd80637dc15185994f0090dfe57ea148",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ConstraintsAndNames",
+    "offset": 856889
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { comp2.EmitToImageReference() })",
+  "options": "(source2, references: new[] { comp2.EmitToImageReference() })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

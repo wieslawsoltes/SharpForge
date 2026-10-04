@@ -1,0 +1,5 @@
+{
+  "inline-arrays/cs9167-cs9169-length-and-fields": ["diagnostics", "warnings"],
+  "inline-arrays/element-access-rules": ["diagnostics", "warnings"],
+  "inline-arrays/gate-below-12": ["diagnostics", "warnings"]
+}

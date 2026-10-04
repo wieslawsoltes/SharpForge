@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-82489dc6f9c39713605a",
+  "kind": "spec",
+  "sourceText": "ref struct S\n{\n    ref int refField;\n\n    void Use(ref int parameter)\n    {\n        // error: this needs to be an error else every call to this.Use(ref local) would fail \n        // because compiler would assume the `ref` was captured by ref.\n        this.refField = ref parameter;\n    }\n}\n\n// Maps to \n\nref struct S<out $this>\n{\n    ref<$this> int refField;\n    \n    // Using static form of this method signature so the type of this is explicit. \n    static void Use<$ro, $cm>(ref<$local> S<$cm> @this, ref<$ro> int parameter)\n    {\n        // error: the types here are:\n        //  - refField is ref<$cm> int\n        //  - ref parameter is ref<$ro> int\n        // That means the RHS is not convertible to the LHS ($ro is not covertible to $cm) and \n        // hence this reassignment is illegal\n        @this.refField = ref<$ro> parameter;\n    }\n}",
+  "sourceSHA256": "af61ee859875c8706ddeac659b112a113aee6d0fe6d3988ab862f81d1c49d082",
+  "target": "library",
+  "featureId": "csharp-11-0-ref-fields",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/low-level-struct-improvements.md",
+    "sha256": "48173c4aaa1ffb3cbd8f7602f52fbf0b38a57f1e4fc50a725ba5305f30a5ff54",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/low-level-struct-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 67684
+  }
+}

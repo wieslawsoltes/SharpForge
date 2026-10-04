@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a9fdd902759e81a488c2",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\nunsafe delegate byte* D();\nclass C\n{\n    [UnmanagedCallersOnly]\n    unsafe static byte* F() => default;\n    unsafe static D M1() => new D(F);\n    static D M2() => new D(F);\n}\n\nnamespace System.Runtime.InteropServices\n{\n    [AttributeUsage(AttributeTargets.Method, Inherited = false)]\n    public sealed class UnmanagedCallersOnlyAttribute : Attribute\n    {\n        public UnmanagedCallersOnlyAttribute()\n        {\n        }\n        public Type[] CallConvs;\n        public string EntryPoint;\n    }\n}",
+  "sourceSHA256": "509e2ad17fb9000b99a2b0cf57d59ccb65874a856912614c6801d396a81b2146",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "UnmanagedAttributeWithUnsafeError",
+    "offset": 401153
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8902",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,35): error CS8902: 'C.F()' is attributed with 'UnmanagedCallersOnly' and cannot be converted to a delegate type. Obtain a function pointer to this method.\n                //     unsafe static D M1() => new D(F);\n                Diagnostic(ErrorCode.ERR_UnmanagedCallersOnlyMethodsCannotBeConvertedToDelegate, \"F\").WithArguments(\"C.F()\").WithLocation(8, 35),\n                // (9,28): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //     static D M2() => new D(F);\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"F\").WithLocation(9, 28)\n            ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

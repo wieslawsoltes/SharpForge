@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-b71fd1f4dd6ec9254ba7",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\npublic class Console\n{\n    private static TextReader reader;\n    private static TextWriter writer;\n    private static TextWriter error;\n\n    public static TextReader In\n    {\n        get\n        {\n            if (reader == null)\n            {\n                reader = new StreamReader(Console.OpenStandardInput());\n            }\n            return reader;\n        }\n    }\n\n    public static TextWriter Out\n    {\n        get\n        {\n            if (writer == null)\n            {\n                writer = new StreamWriter(Console.OpenStandardOutput());\n            }\n            return writer;\n        }\n    }\n\n    public static TextWriter Error\n    {\n        get\n        {\n            if (error == null)\n            {\n                error = new StreamWriter(Console.OpenStandardError());\n            }\n            return error;\n        }\n    }\n...\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "6c2c320463221ac67e19740e6411c2c8d3b8dd2fa725c8d9a8e847a0a7abd2a9",
+  "originalSource": "public class Console\n{\n    private static TextReader reader;\n    private static TextWriter writer;\n    private static TextWriter error;\n\n    public static TextReader In\n    {\n        get\n        {\n            if (reader == null)\n            {\n                reader = new StreamReader(Console.OpenStandardInput());\n            }\n            return reader;\n        }\n    }\n\n    public static TextWriter Out\n    {\n        get\n        {\n            if (writer == null)\n            {\n                writer = new StreamWriter(Console.OpenStandardOutput());\n            }\n            return writer;\n        }\n    }\n\n    public static TextWriter Error\n    {\n        get\n        {\n            if (error == null)\n            {\n                error = new StreamWriter(Console.OpenStandardError());\n            }\n            return error;\n        }\n    }\n...\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "Accessors7",
+    "replaceEllipsis": true,
+    "customEllipsisReplacements": [
+      "static Stream OpenStandardInput() => null; static Stream OpenStandardOutput() => null; static Stream OpenStandardError() => null; "
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "Accessors7",
+    "offsetInUnquotedMarkdown": 184514
+  }
+}

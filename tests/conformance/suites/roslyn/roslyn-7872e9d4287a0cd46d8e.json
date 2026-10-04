@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7872e9d4287a0cd46d8e",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    public static void Main(string[] args)\n    {\n        using var sr = new System.IO.StringReader(\"fiz\\nbar\");\n        var r = (sr.ReadLine(), sr.ReadLine()) switch\n        {\n            (\"fiz\", \"bar\") => \"Yep, all good!\",\n            var (a, b) => $\"Wait, what? I got ({a}, {b})!\",\n        };\n        Console.WriteLine(r);\n    }\n}\n",
+  "sourceSHA256": "4a8b8731e83c7a535ce55bb251d3ff98d216e769beee508e6881a311633981c7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/SwitchTests.cs",
+    "sha256": "8a2559010768d72741326ab4614a72fc6d01c52c1dbef1652639b4fae3d66229",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/SwitchTests.cs",
+    "license": "MIT",
+    "method": "OrderOfEvaluationOfTupleAsSwitchExpressionArgument",
+    "offset": 322984
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

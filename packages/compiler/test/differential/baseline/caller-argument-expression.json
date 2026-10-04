@@ -1,0 +1,4 @@
+{
+  "caller-argument-expression/attribute-rules": ["diagnostics", "warnings"],
+  "caller-argument-expression/omitted-arguments-take-the-source-text": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "bf5ed78110a864d9771849ac7845f0139d1986c4",
+  "candidate": "a1263d5ae42eb95d0c64891f8e39b6c521ea245b",
+  "copied": {
+    "tests/fixtures/verifier-dataflow/input.js": "295bd41af1ac06ecda72781b736c9869e3d30587507df06fb01e538df7c1935b",
+    "tests/fixtures/verifier-dataflow/baseline.mjs": "5e5b4e9eeb32893400e196d6f41b994f6bfffaa4f5288288ef29fa0cfa0120ea"
+  },
+  "controls": {
+    "packages/cil/tools/benchmark-handler-entry.mjs": "5dc5e33f125cacaaea56af8cbcb35c8870891de05715a0a6f04a91524a2f32de",
+    "tests/fixtures/a03-handler-entry/input.js": "9304f74af0c75b14d515648781aad8af5691995dff2abe08747dedc5eb7b292c"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-58c8a4f658a11981aeb8",
+  "kind": "spec",
+  "sourceText": "int AddWithDefault(int addTo = 2) {\n  return addTo + 1;\n}\n\nvar add1 = AddWithDefault; \nadd1(); // ok, default parameter value will be used\n\nint Counter(params int[] xs) {\n  return xs.Length;\n}\n\nvar counter1 = Counter;\ncounter1(1, 2, 3); // ok, `params` will be used",
+  "sourceSHA256": "94719465c009538f161fbdfcd625876f8078f13234f87fe051a62df2f3f7bc96",
+  "target": "library",
+  "featureId": "csharp-12-0-lambda-optional-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "license": "NOASSERTION",
+    "offset": 4479
+  }
+}

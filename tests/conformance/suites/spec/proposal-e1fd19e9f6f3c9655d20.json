@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e1fd19e9f6f3c9655d20",
+  "kind": "spec",
+  "sourceText": "void WriteInt(int i = 0) {\n  Console.Write(i);\n}\n\nvar writeInt = WriteInt; // Inferred as anonymous delegate type\nDoAction(writeInt, 3); // Error, cannot convert from anonymous delegate type to Action\n\nvoid DoAction(Action<int> a, int p) {\n  a(p);\n}\n\nint Count(params int[] xs) {\n  return xs.Length;\n}\nvar counter = Count; // Inferred as anonymous delegate type\nDoFunction(counter, 3); // Error, cannot convert from anonymous delegate type to Func\n\nint DoFunction(Func<int[], int> f, int p) {\n  return f(new[] { p });\n}",
+  "sourceSHA256": "af41fd67c9124fc8c5432158f8b649edb67417da4af595b23be87ca7be7c314b",
+  "target": "library",
+  "featureId": "csharp-12-0-lambda-optional-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "license": "NOASSERTION",
+    "offset": 5448
+  }
+}

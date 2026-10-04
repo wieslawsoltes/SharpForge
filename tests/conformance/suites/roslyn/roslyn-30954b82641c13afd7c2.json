@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-30954b82641c13afd7c2",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.InteropServices;\n\n[assembly: ImportedFromTypeLib(\"GeneralPIA.dll\")]\n[assembly: Guid(\"f9c2d51d-4f44-45f0-9eda-c9d599b58257\")]\n\n[ComImport()]\n[Guid(\"f9c2d51d-4f44-45f0-9eda-c9d599b58279\")]\npublic interface ITest30\n{\n    [System.Runtime.InteropServices.DispIdAttribute(124, Something = 10)]\n    void M1();\n}\n",
+  "sourceSHA256": "bc716dbf167aa78589df1368732b3f61dd2d8be26bb71c24c0472753000835c0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/NoPiaEmbedTypes.cs",
+    "sha256": "d4fb71a05d5bdb188c493265406890202ab55d0c8d1103cf6c84ab62fb5a3644",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/NoPiaEmbedTypes.cs",
+    "license": "MIT",
+    "method": "DispIdAttribute_04",
+    "offset": 118305
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(pia, options: TestOptions.ReleaseDll, assemblyName: \"Pia\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,58): error CS0246: The type or namespace name 'Something' could not be found (are you missing a using directive or an assembly reference?)\n                //     [System.Runtime.InteropServices.DispIdAttribute(124, Something = 10)]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"Something\").WithArguments(\"Something\").WithLocation(12, 58)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

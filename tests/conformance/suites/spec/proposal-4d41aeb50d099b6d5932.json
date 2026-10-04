@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-4d41aeb50d099b6d5932",
+  "kind": "spec",
+  "sourceText": "(a?.b, c?.d) = (x, y); // error",
+  "sourceSHA256": "118d3525afa090e0b182d3ee0cab19a060646d493dfd8db6c2312144fa22bc35",
+  "target": "library",
+  "featureId": "csharp-14-0-null-conditional-assignment",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/null-conditional-assignment.md",
+    "sha256": "95de9584c9e9e98ae1f5d46ef4c79eb395665f25bc8d002b7af1a0c5a4ac6daa",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/null-conditional-assignment.md",
+    "license": "NOASSERTION",
+    "offset": 2499
+  }
+}

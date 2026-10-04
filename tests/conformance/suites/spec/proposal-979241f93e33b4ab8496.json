@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-979241f93e33b4ab8496",
+  "kind": "spec",
+  "sourceText": "     ref var r = ref (arr != null ? ref arr[0]: ref otherArr[0]);",
+  "sourceSHA256": "93400dd67a2ba2216ffc338897b5806b6d76bfee915ec4d6d05fc41bbb84b3ba",
+  "target": "library",
+  "featureId": "csharp-7-2-ref-conditional",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/conditional-ref.md",
+    "sha256": "0690f63744b2894157b0ecb3f25a4bcdfa2b42b90bd3cb74b555cda05de3f8c4",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/conditional-ref.md",
+    "license": "NOASSERTION",
+    "offset": 990
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f32507f52015ef7bc4ef",
+  "kind": "diagnostics",
+  "sourceText": "partial class C1\n{\n    partial C1(string x);\n    partial C1(int x) { }\n}\npartial class C2\n{\n    partial C2(dynamic x);\n    partial C2(object x) { }\n}\npartial class C3\n{\n    partial C3((int X, int Y) x);\n    partial C3((int A, int B) x) { }\n}\npartial class C4\n{\n    partial C4((int X, int Y) x);\n    partial C4((string A, string B) x) { }\n}",
+  "sourceSHA256": "893b82c30bdb6fcc3a326cdbb1d8a23e6f6581aaaccd4cf1655a19938c598f02",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Difference_ParameterType",
+    "offset": 129324
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9275",
+        "severity": "error"
+      },
+      {
+        "code": "CS9276",
+        "severity": "error"
+      },
+      {
+        "code": "CS9256",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8142",
+        "severity": "error"
+      },
+      {
+        "code": "CS9275",
+        "severity": "error"
+      },
+      {
+        "code": "CS9276",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,13): error CS9275: Partial member 'C1.C1(string)' must have an implementation part.\n            //     partial C1(string x);\n            Diagnostic(ErrorCode.ERR_PartialMemberMissingImplementation, \"C1\").WithArguments(\"C1.C1(string)\").WithLocation(3, 13),\n            // (4,13): error CS9276: Partial member 'C1.C1(int)' must have a definition part.\n            //     partial C1(int x) { }\n            Diagnostic(ErrorCode.ERR_PartialMemberMissingDefinition, \"C1\").WithArguments(\"C1.C1(int)\").WithLocation(4, 13),\n            // (9,13): warning CS9256: Partial member declarations 'C2.C2(dynamic x)' and 'C2.C2(object x)' have signature differences.\n            //     partial C2(object x) { }\n            Diagnostic(ErrorCode.WRN_PartialMemberSignatureDifference, \"C2\").WithArguments(\"C2.C2(dynamic x)\", \"C2.C2(object x)\").WithLocation(9, 13),\n            // (14,13): error CS8142: Both partial member declarations, 'C3.C3((int X, int Y))' and 'C3.C3((int A, int B))', must use the same tuple element names.\n            //     partial C3((int A, int B) x) { }\n            Diagnostic(ErrorCode.ERR_PartialMemberInconsistentTupleNames, \"C3\").WithArguments(\"C3.C3((int X, int Y))\", \"C3.C3((int A, int B))\").WithLocation(14, 13),\n            // (18,13): error CS9275: Partial member 'C4.C4((int X, int Y))' must have an implementation part.\n            //     partial C4((int X, int Y) x);\n            Diagnostic(ErrorCode.ERR_PartialMemberMissingImplementation, \"C4\").WithArguments(\"C4.C4((int X, int Y))\").WithLocation(18, 13),\n            // (19,13): error CS9276: Partial member 'C4.C4((string A, string B))' must have a definition part.\n            //     partial C4((string A, string B) x) { }\n            Diagnostic(ErrorCode.ERR_PartialMemberMissingDefinition, \"C4\").WithArguments(\"C4.C4((string A, string B))\").WithLocation(19, 13)",
+  "unsupported": []
+}

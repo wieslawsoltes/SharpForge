@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-94f6475c24945e427dac",
+  "kind": "diagnostics",
+  "sourceText": "\nref struct S1\n{\n    public void Use() { }\n}\n\nunsafe struct S\n{\n    public fixed S1 x[10];\n}\n\nclass Program\n{\n    unsafe static void Main()\n    {\n        S s = new S();\n        S1 s1 = s.x[3];\n        s1.Use();\n    }\n}\n",
+  "sourceSHA256": "99aec739be55a7f2e8cf430ad71c27460a880162e6b2ea87d060c89e81df5307",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/FixedSizeBufferTests.cs",
+    "sha256": "5f39ababded2b14153c2b7df0aba5621d48ffeb53005371ba6aad3896c37e080",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/FixedSizeBufferTests.cs",
+    "license": "MIT",
+    "method": "SimpleFixedBufferOfRefStructErr",
+    "offset": 7971
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1663",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,18): error CS1663: Fixed size buffer type must be one of the following: bool, byte, short, int, long, char, sbyte, ushort, uint, ulong, float or double\n                //     public fixed S1 x[10];\n                Diagnostic(ErrorCode.ERR_IllegalFixedType, \"S1\").WithLocation(9, 18)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

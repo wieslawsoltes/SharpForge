@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f094db2942f90ef677ec",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass Attr : Attribute\n{\n    public Attr(bool b, int i, params object?[] parameters) { }\n}\n\n[Attr(i: 1, b: true, \"a\")]\n[Attr(i: 1, b: true, \"a\", \"b\")]\nclass Program { }\n",
+  "sourceSHA256": "6ad6bf98d1b6b02d9662ecddcbe96fd42d75388545647df5dc57ab6da7944532",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "TestParamArrayWithReorderedArguments_02",
+    "offset": 46441
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: WithNullableEnable())",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8323",
+        "severity": "error"
+      },
+      {
+        "code": "CS8323",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,7): error CS8323: Named argument 'i' is used out-of-position but is followed by an unnamed argument\n                // [Attr(i: 1, b: true, \"a\")]\n                Diagnostic(ErrorCode.ERR_BadNonTrailingNamedArgument, \"i\").WithArguments(\"i\").WithLocation(10, 7),\n                // (11,7): error CS8323: Named argument 'i' is used out-of-position but is followed by an unnamed argument\n                // [Attr(i: 1, b: true, \"a\", \"b\")]\n                Diagnostic(ErrorCode.ERR_BadNonTrailingNamedArgument, \"i\").WithArguments(\"i\").WithLocation(11, 7)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

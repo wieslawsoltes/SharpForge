@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f6d21e8e714794fd0414",
+  "kind": "diagnostics",
+  "sourceText": "interface I<T> { }\nclass C1 : I<nint>, I<nint> { }\nclass C2 : I<nint>, I<System.IntPtr> { }\nclass C3 : I<System.UIntPtr>, I<System.IntPtr>, I<nuint> { }\n",
+  "sourceSHA256": "8403405ea0715ac89f10bf990f5218a6964f3375ad28fe4a9854e619b943b4fe",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "DuplicateInterface_01",
+    "offset": 542331
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0528",
+        "severity": "error"
+      },
+      {
+        "code": "CS0528",
+        "severity": "error"
+      },
+      {
+        "code": "CS0528",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,21): error CS0528: 'I<nint>' is already listed in interface list\n                // class C1 : I<nint>, I<nint> { }\n                Diagnostic(ErrorCode.ERR_DuplicateInterfaceInBaseList, \"I<nint>\").WithArguments(\"I<nint>\").WithLocation(2, 21),\n                // (3,21): error CS0528: 'I<nint>' is already listed in interface list\n                // class C2 : I<nint>, I<System.IntPtr> { }\n                Diagnostic(ErrorCode.ERR_DuplicateInterfaceInBaseList, \"I<System.IntPtr>\").WithArguments(\"I<nint>\").WithLocation(3, 21),\n                // (4,49): error CS0528: 'I<nuint>' is already listed in interface list\n                // class C3 : I<System.UIntPtr>, I<System.IntPtr>, I<nuint> { }\n                Diagnostic(ErrorCode.ERR_DuplicateInterfaceInBaseList, \"I<nuint>\").WithArguments(\"I<nuint>\").WithLocation(4, 49)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

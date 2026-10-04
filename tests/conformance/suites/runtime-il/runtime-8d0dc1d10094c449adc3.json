@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-8d0dc1d10094c449adc3",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n//\n\nusing System;\n\n\n// Do a simple 5 dimensional Jagged array.\n\npublic class Simple_Array_Test\n{\n\t\n\tpublic static int Main()\n\t{\n\t\tConsole.WriteLine(\"Starting...\");\n\t\tint SIZE = 10;\n\n\t//Create an array that is jagged.\n\t// in last 2d, the array looks like:\n\t//  Int32\n\t//  Int32 Int32 \n\t//  Int32 Int32 Int32 \n\t//  Int32 Int32 Int32 Int32 \n\t//  Int32 Int32 Int32 Int32 Int32 \n\t//\n\n\t\tInt32 [][][][][] foo = new Int32[SIZE][][][][];\n\t\tint i,j,k,l,m;\n                Int64 sum=0;\n\n\t\tfor(i=0;i<SIZE;i++)\n\t\t{\n\t\t\tfoo[i] = new Int32[i][][][];\n\t\t\tfor(j=0;j<i;j++)\n\t\t\t{\n\t\t\t\tfoo[i][j] = new Int32[j][][];\n\t\t\t\tfor(k=0;k<j;k++)\n\t\t\t\t{\n\t\t\t\t\tfoo[i][j][k] = new Int32[k][];\n\t\t\t\t\tfor(l=0;l<k;l++)\n\t\t\t\t\t{\n\t\t\t\t\t\tfoo[i][j][k][l] = new Int32[l];\n\t\t\t\t\t\tfor(m=0;m<l;m++)\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tfoo[i][j][k][l][m] = i*j*k*l*m;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\tfor(i=0;i<SIZE;i++)\n\t\t\tfor(j=0;j<i;j++)\n\t\t\t\tfor(k=0;k<j;k++)\n\t\t\t\t\tfor(l=0;l<k;l++)\n\t\t\t\t\t for(m=0;m<l;m++)\n\t\t\t\t\t { \n\t\t\t\t\t  //Console.Write(\" \"+foo[i][j][k][l][m].ToString());\n                                          sum+=foo[i][j][k][l][m];\n\t\t\t\t\t }\n                if(sum==269325)\n                {\n \t\t  Console.WriteLine(\"Everything Worked!\");\n        \t  return 100;\n                }\n                else\n                {\n \t\t  Console.WriteLine(\"Something is broken!\");\n        \t  return 1;\n                }\n        \n\t}\n}\n",
+  "language": "csharp",
+  "unsupported": [],
+  "opcodeFamilies": [],
+  "sourceSHA256": "2fb4fb8c4dff5ba5f3314aa8b003ff14aec0fa1cace0b9c30d02446068fd98b5",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n//\n\nusing System;\nusing Xunit;\n\n// Do a simple 5 dimensional Jagged array.\n\npublic class Simple_Array_Test\n{\n\t[Fact]\n\tpublic static int TestEntryPoint()\n\t{\n\t\tConsole.WriteLine(\"Starting...\");\n\t\tint SIZE = 10;\n\n\t//Create an array that is jagged.\n\t// in last 2d, the array looks like:\n\t//  Int32\n\t//  Int32 Int32 \n\t//  Int32 Int32 Int32 \n\t//  Int32 Int32 Int32 Int32 \n\t//  Int32 Int32 Int32 Int32 Int32 \n\t//\n\n\t\tInt32 [][][][][] foo = new Int32[SIZE][][][][];\n\t\tint i,j,k,l,m;\n                Int64 sum=0;\n\n\t\tfor(i=0;i<SIZE;i++)\n\t\t{\n\t\t\tfoo[i] = new Int32[i][][][];\n\t\t\tfor(j=0;j<i;j++)\n\t\t\t{\n\t\t\t\tfoo[i][j] = new Int32[j][][];\n\t\t\t\tfor(k=0;k<j;k++)\n\t\t\t\t{\n\t\t\t\t\tfoo[i][j][k] = new Int32[k][];\n\t\t\t\t\tfor(l=0;l<k;l++)\n\t\t\t\t\t{\n\t\t\t\t\t\tfoo[i][j][k][l] = new Int32[l];\n\t\t\t\t\t\tfor(m=0;m<l;m++)\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tfoo[i][j][k][l][m] = i*j*k*l*m;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\tfor(i=0;i<SIZE;i++)\n\t\t\tfor(j=0;j<i;j++)\n\t\t\t\tfor(k=0;k<j;k++)\n\t\t\t\t\tfor(l=0;l<k;l++)\n\t\t\t\t\t for(m=0;m<l;m++)\n\t\t\t\t\t { \n\t\t\t\t\t  //Console.Write(\" \"+foo[i][j][k][l][m].ToString());\n                                          sum+=foo[i][j][k][l][m];\n\t\t\t\t\t }\n                if(sum==269325)\n                {\n \t\t  Console.WriteLine(\"Everything Worked!\");\n        \t  return 100;\n                }\n                else\n                {\n \t\t  Console.WriteLine(\"Something is broken!\");\n        \t  return 1;\n                }\n        \n\t}\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/Directed/Arrays/simple1.cs",
+    "sha256": "8c9c9bcff15efa4764c3c9c3eebf6f9d992f013347189682513c038783fe02c2",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/Directed/Arrays/simple1.cs",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Remove Fact/OuterLoop discovery attributes and Xunit using; rename TestEntryPoint to Main. Test body unchanged."
+}

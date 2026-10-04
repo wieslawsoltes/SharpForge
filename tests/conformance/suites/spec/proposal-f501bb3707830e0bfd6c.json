@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f501bb3707830e0bfd6c",
+  "kind": "spec",
+  "sourceText": "#line spanof('Html.Helper(() => { ... })') 13 \"a.razor\"\n_builder.Add(Html.Helper(() => \n#line lineof('{') \"a.razor\"\n{\n#line spanof('DateTime.Now') 13 \"a.razor\"\n_builder.Add(DateTime.Now);\n#line lineof('}') \"a.razor\"\n}\n#line hidden\n)",
+  "sourceSHA256": "e900d5e6b03b35e9abfa5d01c4c1e0eb4bdc8e1ff25987635120b25341f058ca",
+  "target": "library",
+  "featureId": "csharp-10-0-line-span-directive",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/enhanced-line-directives.md",
+    "sha256": "7bc14b928ee5e5e920a3b4c7fa01d40aaa74d31f3af8810e3dbf9b8963a9a3fa",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/enhanced-line-directives.md",
+    "license": "NOASSERTION",
+    "offset": 9637
+  }
+}

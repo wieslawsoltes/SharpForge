@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7e206c0003a7bc65b833",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass C\n{\n    void TestFunc(int i)\n    {\n        int x;\n        if (i is int j)\n        {\n            Console.WriteLine(\"matched\");\n        }\n        else\n        {\n            x = x + 1; // reachable, and x is definitely assigned here\n        }\n\n        Console.WriteLine(j);\n    }\n}\n",
+  "sourceSHA256": "ba50794bb4b1365f2894768316870cefae5b65cdaed2dfe1fac48328c7248510",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "IrrefutablePattern_1",
+    "offset": 242315
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

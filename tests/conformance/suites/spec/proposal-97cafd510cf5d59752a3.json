@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-97cafd510cf5d59752a3",
+  "kind": "spec",
+  "sourceText": "[IsClosedType]\nclass C1\n{\n    [CompilerFeatureRequired(\"ClosedClasses\")]\n    public C1() { }\n    [CompilerFeatureRequired(\"ClosedClasses\")]\n    public C1(int param) { }\n}",
+  "sourceSHA256": "8dddb205ffe2dc89e65aa089b99a61e8dc90d524d3f100ea31f47a639de42e5f",
+  "target": "library",
+  "featureId": "csharp-15-0-closed-hierarchies",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/closed-hierarchies.md",
+    "sha256": "42fefd4135df4a6d52f32ec44f95ddcf6f1a755a105a5fefe1cbf57d888feb96",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/closed-hierarchies.md",
+    "license": "NOASSERTION",
+    "offset": 10726
+  }
+}

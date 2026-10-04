@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5f88b90abbb5cda0e1b7",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public unsafe static void M()\n    {\n        int x = 234;\n        int y = 236;\n        int* p1 = &x;\n        int* p2 = &y;\n        _ = (p1, p2) == (p1, p2);\n    }\n}\n",
+  "sourceSHA256": "832d01023155e457d173d99d3cc639d00666c9c5611f5480374fa6786e1b22f9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestWithPointer",
+    "offset": 202476
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,14): error CS0306: The type 'int*' may not be used as a type argument\n                //         _ = (p1, p2) == (p1, p2);\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p1\").WithArguments(\"int*\").WithLocation(10, 14),\n                // (10,18): error CS0306: The type 'int*' may not be used as a type argument\n                //         _ = (p1, p2) == (p1, p2);\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p2\").WithArguments(\"int*\").WithLocation(10, 18),\n                // (10,26): error CS0306: The type 'int*' may not be used as a type argument\n                //         _ = (p1, p2) == (p1, p2);\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p1\").WithArguments(\"int*\").WithLocation(10, 26),\n                // (10,30): error CS0306: The type 'int*' may not be used as a type argument\n                //         _ = (p1, p2) == (p1, p2);\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p2\").WithArguments(\"int*\").WithLocation(10, 30),\n                // (10,14): error CS0306: The type 'void*' may not be used as a type argument\n                //         _ = (p1, p2) == (p1, p2);\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p1\").WithArguments(\"void*\").WithLocation(10, 14),\n                // (10,18): error CS0306: The type 'void*' may not be used as a type argument\n                //         _ = (p1, p2) == (p1, p2);\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p2\").WithArguments(\"void*\").WithLocation(10, 18),\n                // (10,26): error CS0306: The type 'void*' may not be used as a type argument\n                //         _ = (p1, p2) == (p1, p2);\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p1\").WithArguments(\"void*\").WithLocation(10, 26),\n                // (10,30): error CS0306: The type 'void*' may not be used as a type argument\n                //         _ = (p1, p2) == (p1, p2);\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p2\").WithArguments(\"void*\").WithLocation(10, 30)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

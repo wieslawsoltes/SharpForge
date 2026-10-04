@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-e8b0f6c252be709a6e21",
+  "kind": "spec",
+  "sourceText": "using System.Runtime.CompilerServices; \n[AsyncMethodBuilder(typeof(MyTaskMethodBuilder<>))]\nclass MyTask<T>\n{\n    public Awaiter<T> GetAwaiter() { ... }\n}\n\nclass Awaiter<T> : INotifyCompletion\n{\n    public void OnCompleted(Action completion) { ... }\n    public bool IsCompleted { get; }\n    public T GetResult() { ... }\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "dc777ad77dd1f0aee032a5e7fcf44a535968a91203ffa86bb82164325f12daef",
+  "originalSource": "using System.Runtime.CompilerServices; \n[AsyncMethodBuilder(typeof(MyTaskMethodBuilder<>))]\nclass MyTask<T>\n{\n    public Awaiter<T> GetAwaiter() { ... }\n}\n\nclass Awaiter<T> : INotifyCompletion\n{\n    public void OnCompleted(Action completion) { ... }\n    public bool IsCompleted { get; }\n    public T GetResult() { ... }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "AsyncFunctions1",
+    "replaceEllipsis": true,
+    "customEllipsisReplacements": [
+      "return new Awaiter<T>();",
+      "",
+      "return default(T);"
+    ],
+    "additionalFiles": [
+      "MyTaskMethodBuilderT.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "AsyncFunctions1",
+    "offsetInUnquotedMarkdown": 271038
+  }
+}

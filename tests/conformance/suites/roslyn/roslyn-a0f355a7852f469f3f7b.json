@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a0f355a7852f469f3f7b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\nclass C\n{\n    [MethodImpl(MethodImplOptions.Unmanaged)]\n    public static void Unmanaged()  { System.Console.WriteLine(1); }          // peverify: type load failed\n                                                                              \n    [MethodImpl(MethodCodeType = MethodCodeType.Native)]                      \n    public static void Native()  { System.Console.WriteLine(2); }             // peverify: type load failed\n                                                                              \n    [MethodImpl(MethodCodeType = MethodCodeType.OPTIL)]                       \n    public static void OPTIL()  { System.Console.WriteLine(3); }              // peverify: type load failed\n\n    [MethodImpl(MethodCodeType = MethodCodeType.Runtime)]\n    public static void Runtime() { System.Console.WriteLine(4); }             // peverify: Runtime method shouldn't have a body\n\n    [MethodImpl(MethodImplOptions.InternalCall)]\n    public static void InternalCallStatic() { System.Console.WriteLine(5); }  // peverify: InternalCall method shouldn't have a body\n\n    [MethodImpl(MethodImplOptions.InternalCall)]\n    public extern static void InternalCallGeneric1<T>();                      // peverify: type load failed (InternalCall method can't be generic)\n}\n\nclass C<T>\n{\n    [MethodImpl(MethodImplOptions.InternalCall)]\n    public extern static void InternalCallGeneric2();                         // peverify: type load failed (InternalCall method can't be in a generic type)\n}\n",
+  "sourceSHA256": "6be1c839ec53031d4f9204474237638a1538839eaaa907aa139ce55538b76765",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestMethodImplAttribute_UnverifiableMD",
+    "offset": 122643
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System.Runtime.CompilerServices;\n\nclass C\n{\n    [MethodImpl(MethodImplOptions.Unmanaged)]\n    public static void Unmanaged()  { System.Console.WriteLine(1); }          // peverify: type load failed\n                                                                              \n    [MethodImpl(MethodCodeType = MethodCodeType.Native)]                      \n    public static void Native()  { System.Console.WriteLine(2); }             // peverify: type load failed\n                                                                              \n    [MethodImpl(MethodCodeType = MethodCodeType.OPTIL)]                       \n    public static void OPTIL()  { System.Console.WriteLine(3); }              // peverify: type load failed\n\n    [MethodImpl(MethodCodeType = MethodCodeType.Runtime)]\n    public static void Runtime() { System.Console.WriteLine(4); }             // peverify: Runtime method shouldn't have a body\n\n    [MethodImpl(MethodImplOptions.InternalCall)]\n    public static void InternalCallStatic() { System.Console.WriteLine(5); }  // peverify: InternalCall method shouldn't have a body\n\n    [MethodImpl(MethodImplOptions.InternalCall)]\n    public extern static void InternalCallGeneric1<T>();                      // peverify: type load failed (InternalCall method can't be generic)\n}\n\nclass C<T>\n{\n    [MethodImpl(MethodImplOptions.InternalCall)]\n    public extern static void InternalCallGeneric2();                         // peverify: type load failed (InternalCall method can't be in a generic type)\n}\n\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

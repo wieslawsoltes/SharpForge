@@ -1,0 +1,4 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "struct-object-initializers/fields-and-properties":{"hash":"546f7623018d4d1c","kind":"output","langVersion":"14.0","diagnostics":[],"output":"4 2\n5\n"},
+  "struct-object-initializers/cs1612-cs1918-members-of-a-value":{"hash":"0bcb63f5c9db50e6","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1612",164,13,"error"],["CS1918",219,8,"error"],["CS1612",251,15,"error"]]}
+}}

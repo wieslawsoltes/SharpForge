@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ac4dab5a0d4c7749671f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Threading.Tasks;\npublic struct C\n{\n    public static async Task Main()\n    {\n        var c = new C();\n        await foreach (var i in c)\n        {\n            Console.Write(i);\n        }\n    }\n    public struct Enumerator\n    {\n        public int Current { get; private set; }\n        public Task<bool> MoveNextAsync() => Task.FromResult(Current++ != 3);\n    }\n}\npublic static class Extensions\n{\n    public static C.Enumerator GetAsyncEnumerator(this ref C self) => new C.Enumerator();\n}",
+  "sourceSHA256": "0629c505fea3921e02c0bb509f15457950b565d188ab6e85771dc500211e12a4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestGetAsyncEnumeratorPatternViaRefExtensionOnAssignableVariable",
+    "offset": 563449
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1510",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,33): error CS1510: A ref or out value must be an assignable variable\n                //         await foreach (var i in c)\n                Diagnostic(ErrorCode.ERR_RefLvalueExpected, \"c\").WithLocation(9, 33)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b60f132e22d4e0083d9a",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C { }",
+  "sourceSHA256": "0e3a5712ae436d30b6a9fedb698cb943bb7d938d4572a027637757ee531aa52e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticSuppressorTests.cs",
+    "sha256": "2d1674a241e37ca2731874ceafe86e8d6649456d14d548f1232b85883a39a3d8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticSuppressorTests.cs",
+    "license": "MIT",
+    "method": "TestSuppression_AnalyzerDiagnostics_SeveritiesAndConfigurableMatrix",
+    "offset": 15908
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

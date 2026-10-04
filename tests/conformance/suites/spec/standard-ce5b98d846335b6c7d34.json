@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-ce5b98d846335b6c7d34",
+  "kind": "spec",
+  "sourceText": "class Label\n{\n    private int x, y;\n    private string caption;\n\n    public Label(int x, int y, string caption)\n    {\n        this.x = x;\n        this.y = y;\n        this.caption = caption;\n    }\n\n    public int X => x;\n    public int Y => y;\n    public Point Location => new Point(x, y);\n    public string Caption => caption;\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "a49e5d451b54ccc982e75c7343ec5fd9646c79a557d1152111a7b3e9096bc9c1",
+  "originalSource": "class Label\n{\n    private int x, y;\n    private string caption;\n\n    public Label(int x, int y, string caption)\n    {\n        this.x = x;\n        this.y = y;\n        this.caption = caption;\n    }\n\n    public int X => x;\n    public int Y => y;\n    public Point Location => new Point(x, y);\n    public string Caption => caption;\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "Accessors4",
+    "additionalFiles": [
+      "Point.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "Accessors4",
+    "offsetInUnquotedMarkdown": 181338
+  }
+}

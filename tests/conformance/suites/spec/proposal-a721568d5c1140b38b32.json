@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a721568d5c1140b38b32",
+  "kind": "spec",
+  "sourceText": "int i = 0;\ni[42, null] = new object(); // fails inference\nE.set_Item(i, 42, null, new object()); // infer `E.set_Item<object>`\n\npublic static class E\n{\n    extension<T>(int i)\n    {\n        public T this[int j, T t] { set { } }\n    }\n}",
+  "sourceSHA256": "bef31be68d6022dbe6a9acef3a316d70c03b4df23a406ec793963b5c59e06a47",
+  "target": "library",
+  "featureId": "csharp-15-0-extension-indexers",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/extension-indexers.md",
+    "sha256": "6fdfef3bd21d446da98e03ac7e0318fb3cdc6aa1029182357f71887752a4dd88",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/extension-indexers.md",
+    "license": "NOASSERTION",
+    "offset": 10913
+  }
+}

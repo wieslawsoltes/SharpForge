@@ -1,0 +1,4 @@
+{
+  "partial-constructors-events/cs9275-cs9276-cs9277-cs9279-cs9280-cs0751": ["diagnostics", "warnings"],
+  "partial-constructors-events/defining-and-implementing-parts": ["diagnostics", "warnings", "bytecode", "cil"]
+}

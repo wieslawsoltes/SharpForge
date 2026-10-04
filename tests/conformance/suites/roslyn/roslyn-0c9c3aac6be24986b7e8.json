@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0c9c3aac6be24986b7e8",
+  "kind": "diagnostics",
+  "sourceText": "\npublic interface I<in T>\n{\n    void M((bool, T)[] x);\n}\n",
+  "sourceSHA256": "d765782538f3a088a7fd27f2b455820b3fa2e840a8780eab4fbe08161724d468",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "TupleContraVariance",
+    "offset": 995229
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1961",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,12): error CS1961: Invalid variance: The type parameter 'T' must be invariantly valid on 'I<T>.M((bool, T)[])'. 'T' is contravariant.\n                //     void M((bool, T)[] x);\n                Diagnostic(ErrorCode.ERR_UnexpectedVariance, \"(bool, T)[]\").WithArguments(\"I<T>.M((bool, T)[])\", \"T\", \"contravariant\", \"invariantly\").WithLocation(4, 12)\n                ",
+  "unsupported": []
+}

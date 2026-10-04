@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-09424d59161db41dd2cf",
+  "kind": "spec",
+  "sourceText": "> F(G<A,B>(7));\n> ```\n> could be interpreted as a call to `F` with two arguments, `G < A` and `B > (7)`. Alternatively, it could be interpreted as a call to `F` with one argument, which is a call to a generic method `G` with two type arguments and one regular argument.\n\n> If a sequence of tokens can be parsed (in context) as a *simple-name* (§7.6.3), *member-access* (§7.6.5), or *pointer-member-access* (§18.5.2) ending with a *type-argument-list* (§4.4.1), the token immediately following the closing `>` token is examined. If it is one of\n> ```none\n> (  )  ]  }  :  ;  ,  .  ?  ==  !=  |  ^\n> ```\n> then the *type-argument-list* is retained as part of the *simple-name*, *member-access* or *pointer-member-access* and any other possible parse of the sequence of tokens is discarded. Otherwise, the *type-argument-list* is not considered to be part of the *simple-name*, *member-access* or > *pointer-member-access*, even if there is no other possible parse of the sequence of tokens. Note that these rules are not applied when parsing a *type-argument-list* in a *namespace-or-type-name* (§3.8). The statement\n> ```csharp\n> F(G<A,B>(7));\n> ```\n> will, according to this rule, be interpreted as a call to `F` with one argument, which is a call to a generic method `G` with two type arguments and one regular argument. The statements\n> ```csharp\n> F(G < A, B > 7);\n> F(G < A, B >> 7);\n> ```\n> will each be interpreted as a call to `F` with two arguments. The statement\n> ```csharp\n> x = F < A > +y;\n> ```\n> will be interpreted as a less than operator, greater than operator, and unary plus operator, as if the statement had been written `x = (F < A) > (+y)`, instead of as a *simple-name* with a *type-argument-list* followed by a binary plus operator. In the statement\n> ```csharp\n> x = y is C<T> + z;\n> ```\n> the tokens `C<T>` are interpreted as a *namespace-or-type-name* with a *type-argument-list*.\n\nThere are a number of changes being introduced in C# 7 that make these disambiguation rules no longer sufficient to handle the complexity of the language.\n\n### Out variable declarations\n\nIt is now possible to declare a variable in an out argument:\n",
+  "sourceSHA256": "7f0369ec24b318f96f44726b5a531731ed7056ae15a83dd308bed946a1fbe567",
+  "target": "library",
+  "featureId": "csharp-7-0-pattern-matching",
+  "langVersion": "7.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.0/pattern-matching.md",
+    "sha256": "35006167fb2be5d0587fbc69a197155609a68160b199a4fbb9d87f72e1b46b53",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/pattern-matching.md",
+    "license": "NOASSERTION",
+    "offset": 10676
+  }
+}

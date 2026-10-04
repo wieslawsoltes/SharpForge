@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-8c68493d7e6571c0b987",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Chooser\n{\n    static Random rand = new Random();\n\n    public static T Choose<T>(T first, T second) =>\n        rand.Next(2) == 0 ? first : second;\n}\n\nclass A\n{\n    static void M()\n    {\n        int i = Chooser.Choose(5, 213); // Calls Choose<int>\n        string s = Chooser.Choose(\"apple\", \"banana\"); // Calls Choose<string>\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "279a69f55e18bf1310a162ada9d1589645224122a688be68c918699fb455972f",
+  "originalSource": "class Chooser\n{\n    static Random rand = new Random();\n\n    public static T Choose<T>(T first, T second) =>\n        rand.Next(2) == 0 ? first : second;\n}\n\nclass A\n{\n    static void M()\n    {\n        int i = Chooser.Choose(5, 213); // Calls Choose<int>\n        string s = Chooser.Choose(\"apple\", \"banana\"); // Calls Choose<string>\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "TypeInference"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "TypeInference",
+    "offsetInUnquotedMarkdown": 66499
+  }
+}

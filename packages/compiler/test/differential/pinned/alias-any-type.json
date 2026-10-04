@@ -1,0 +1,4 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "alias-any-type/tuples-and-arrays":{"hash":"1ba39bce423ca156","kind":"output","langVersion":"14.0","diagnostics":[],"output":"5\n"},
+  "alias-any-type/alias-any-type-in-csharp-11":{"hash":"ab034b938530ad6a","kind":"diagnostics","langVersion":"11.0","diagnostics":[["CS9058",11,14,"error"],["CS9058",39,5,"error"]]}
+}}

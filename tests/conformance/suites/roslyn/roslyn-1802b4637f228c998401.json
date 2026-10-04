@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1802b4637f228c998401",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nSpan<int> s = arr();\nstatic int[] arr() => throw null;\n\nnamespace System\n{\n    public readonly ref struct Span<T>\n    {\n    }\n}",
+  "sourceSHA256": "df2404e6c69cebb4862f04c2e6614ff9e6664f72efc4b5086cdec1947d9409ea",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "sha256": "99be7ba6d5e067485b6142b5e65214b7e83d1dbf3a681e7b98e309631ef90315",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "license": "MIT",
+    "method": "Conversion_Array_Span_Implicit_MissingHelper",
+    "offset": 54561
+  },
+  "langVersion": "13",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular13)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0029",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (2,15): error CS0029: Cannot implicitly convert type 'int[]' to 'System.Span<int>'\n            // Span<int> s = arr();\n            Diagnostic(ErrorCode.ERR_NoImplicitConv, \"arr()\").WithArguments(\"int[]\", \"System.Span<int>\").WithLocation(2, 15)",
+  "unsupported": []
+}

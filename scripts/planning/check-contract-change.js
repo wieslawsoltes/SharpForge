@@ -20,6 +20,22 @@ export function additive(before, after, key = '') {
   return true;
 }
 
+function additiveStringPatternUnion(before, after, annotations) {
+  const stringPattern = schema => {
+    if (!schema || typeof schema !== 'object' || Array.isArray(schema) ||
+      schema.type !== 'string' || typeof schema.pattern !== 'string' ||
+      !Object.keys(schema).every(key => key === 'type' || key === 'pattern' || annotations.has(key))) return false;
+    try { new RegExp(schema.pattern, 'u'); } catch { return false; }
+    return true;
+  };
+  // Preserve the complete predicate as one union branch. Restrict every branch
+  // to string patterns: relocating references or adding constraints is not a proof.
+  return stringPattern(before) &&
+    Object.keys(after).every(key => key === 'anyOf' || annotations.has(key)) &&
+    Array.isArray(after.anyOf) && after.anyOf.every(stringPattern) &&
+    after.anyOf.some(branch => isDeepStrictEqual(before, branch));
+}
+
 // A deliberately conservative schema proof: unknown validation keywords and
 // conjunction/exclusive-union extensions may narrow acceptance and need a bump.
 export function additiveSchema(before,after) {
@@ -27,6 +43,7 @@ export function additiveSchema(before,after) {
   if(before===false)return true;
   if(!before||!after||typeof before!=='object'||typeof after!=='object'||Array.isArray(before)||Array.isArray(after))return false;
   const annotation=new Set(['title','description','$comment','examples']);
+  if(additiveStringPatternUnion(before,after,annotation))return true;
   for(const [name,value] of Object.entries(before)){
     if(annotation.has(name))continue;
     if(!Object.hasOwn(after,name))return false;
@@ -98,8 +115,15 @@ export function contractsAt(ref, root = process.cwd()) {
   const paths = git(['ls-tree','-r','--name-only',ref,'--','planning/contracts'],root).trim().split('\n').filter(path => /(?:\.lock|\.schema)\.json$/.test(path) || /^planning\/contracts\/schema\/[^/]+\.json$/.test(path) || path==='planning/contracts/spec-revisions.json');
   return Object.fromEntries(paths.map(path=>[path,JSON.parse(git(['show',`${ref}:${path}`],root))]));
 }
+export function versionsAt(ref, root = process.cwd()) {
+  const path = 'planning/contracts/versions.json';
+  return git(['ls-tree', '--name-only', ref, '--', path], root).trim()
+    ? JSON.parse(git(['show', `${ref}:${path}`], root)) : {};
+}
 if (isMain(import.meta.url)) {
   const {values} = parseArgs({options:{base:{type:'string',default:'origin/main'},head:{type:'string',default:'HEAD'},labels:{type:'string',default:''}}});
-  const versions = ref => git(['ls-tree','--name-only',ref,'--','planning/contracts/versions.json']).trim() ? JSON.parse(git(['show',`${ref}:planning/contracts/versions.json`])) : {};
-  report(checkContractChange({before:contractsAt(values.base),after:contractsAt(values.head),beforeVersions:versions(values.base),afterVersions:versions(values.head),labels:values.labels.split(',')}));
+  report(checkContractChange({
+    before: contractsAt(values.base), after: contractsAt(values.head),
+    beforeVersions: versionsAt(values.base), afterVersions: versionsAt(values.head), labels: values.labels.split(','),
+  }));
 }

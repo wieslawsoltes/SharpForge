@@ -9,6 +9,7 @@
  *                               x must be returnable: not a by-value parameter (CS8166), not a local (CS8168) or a
  *                               ref local initialised from something non-returnable (CS8157)
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind } from '../symbols/types.js';
 import { classifyVariable } from './ref-kinds.js';
 
@@ -21,12 +22,12 @@ export const refConditionalFeature = Object.freeze({ name: 'ref conditional expr
  * @returns {null|{code,args}}
  */
 export function checkRefLocalInitializer(localIsRef, initializerIsRef, initializer, context) {
-  if (localIsRef && !initializer) return { code: 'CS8174', args: [] };
-  if (localIsRef && !initializerIsRef) return { code: 'CS8172', args: [] };
-  if (!localIsRef && initializerIsRef) return { code: 'CS8171', args: [] };
+  if (localIsRef && !initializer) return { code: DiagnosticId.CS8174, args: [] };
+  if (localIsRef && !initializerIsRef) return { code: DiagnosticId.CS8172, args: [] };
+  if (!localIsRef && initializerIsRef) return { code: DiagnosticId.CS8171, args: [] };
   if (!localIsRef) return null;
   const c = classifyVariable(initializer, context);
-  if (!c.isVariable) return { code: c.isProperty ? 'CS0206' : 'CS1510', args: [] };
+  if (!c.isVariable) return { code: c.isProperty ? DiagnosticId.CS0206 : DiagnosticId.CS1510, args: [] };
   return null;
 }
 /** A `ref` (non-readonly) local or return needs a writable variable; `ref readonly` accepts read-only ones. */
@@ -34,9 +35,9 @@ export function checkRefWritability(expression, targetIsReadonly, context) {
   if (targetIsReadonly) return null;
   const c = classifyVariable(expression, context);
   if (c.isVariable && !c.isWritable) {
-    if (c.reason === 'readonlyField') return { code: c.symbol.isStatic ? 'CS0199' : 'CS0192', args: [] };
-    if (c.reason === 'readonlyRef') return { code: 'CS8329', args: [c.detail, c.symbol.name] };
-    if (c.reason === 'readonlyLocal') return { code: 'CS1657', args: [c.symbol.name, c.detail] };
+    if (c.reason === 'readonlyField') return { code: c.symbol.isStatic ? DiagnosticId.CS0199 : DiagnosticId.CS0192, args: [] };
+    if (c.reason === 'readonlyRef') return { code: DiagnosticId.CS8329, args: [c.detail, c.symbol.name] };
+    if (c.reason === 'readonlyLocal') return { code: DiagnosticId.CS1657, args: [c.symbol.name, c.detail] };
   }
   return null;
 }
@@ -49,41 +50,41 @@ export function refReturnability(expression, context = {}) {
   switch (expression.kind) {
     case 'Local': {
       const l = expression.local;
-      if (l.refKind === RefKind.None) return { code: 'CS8168', args: [l.name] };
-      if (l.refReturnable === false) return { code: 'CS8157', args: [l.name] };
+      if (l.refKind === RefKind.None) return { code: DiagnosticId.CS8168, args: [l.name] };
+      if (l.refReturnable === false) return { code: DiagnosticId.CS8157, args: [l.name] };
       return 'returnable';
     }
     case 'Parameter': {
       const p = expression.parameter;
-      if (p.refKind === RefKind.None) return { code: 'CS8166', args: [p.name] };
-      if (p.scoped) return { code: 'CS9075', args: [p.name] };
+      if (p.refKind === RefKind.None) return { code: DiagnosticId.CS8166, args: [p.name] };
+      if (p.scoped) return { code: DiagnosticId.CS9075, args: [p.name] };
       return 'returnable';
     }
     case 'ArrayAccess':
       return 'returnable';
     case 'This':
-      return context.containingType?.isValueType ? { code: 'CS8170', args: [] } : 'returnable';
+      return context.containingType?.isValueType ? { code: DiagnosticId.CS8170, args: [] } : 'returnable';
     case 'FieldAccess': {
       if (expression.field.isStatic || !expression.receiver || expression.receiver.type?.isValueType !== true) return 'returnable';
       const inner = refReturnability(expression.receiver, context);
       if (inner === 'returnable') return inner;
       // A field of a non-returnable struct variable: Roslyn names the member (CS8167/CS8169) or `this` (CS8170).
-      if (inner.code === 'CS8166') return { code: 'CS8167', args: inner.args };
-      if (inner.code === 'CS8168') return { code: 'CS8169', args: inner.args };
+      if (inner.code === DiagnosticId.CS8166) return { code: DiagnosticId.CS8167, args: inner.args };
+      if (inner.code === DiagnosticId.CS8168) return { code: DiagnosticId.CS8169, args: inner.args };
       return inner;
     }
     case 'Call':
     case 'PropertyAccess':
     case 'IndexerAccess': {
       const refKind = expression.method?.refKind ?? expression.property?.refKind;
-      if (!refKind || refKind === RefKind.None) return { code: 'CS8156', args: [] };
+      if (!refKind || refKind === RefKind.None) return { code: DiagnosticId.CS8156, args: [] };
       // A ref-returning call is returnable when every by-ref argument (and a struct receiver) is.
       for (const a of expression.args ?? []) {
         if (a.refKind && a.refKind !== RefKind.None && a.refKind !== RefKind.Out) {
           const r = refReturnability(a.expression ?? a, context);
           if (r !== 'returnable')
             return {
-              code: 'CS8347',
+              code: DiagnosticId.CS8347,
               args: [(expression.method ?? expression.property).toDisplayString(), a.parameterName ?? ''],
               inner: r,
             };
@@ -91,13 +92,16 @@ export function refReturnability(expression, context = {}) {
       }
       return 'returnable';
     }
+    case 'ImplicitIndexerAccess':
+      // `a[^1]` is returnable when the element or indexer result it stands for is.
+      return expression.accessKind === 'index' && expression.access ? refReturnability(expression.access, context) : { code: DiagnosticId.CS8156, args: [] };
     case 'RefConditional': {
       const a = refReturnability(expression.whenTrue, context);
       if (a !== 'returnable') return a;
       return refReturnability(expression.whenFalse, context);
     }
     default:
-      return { code: 'CS8156', args: [] };
+      return { code: DiagnosticId.CS8156, args: [] };
   }
 }
 /**
@@ -106,14 +110,14 @@ export function refReturnability(expression, context = {}) {
  */
 export function checkRefReturn(methodRefKind, returnIsRef, expression, context) {
   const byRef = methodRefKind && methodRefKind !== RefKind.None;
-  if (byRef && !returnIsRef) return { code: 'CS8150', args: [] };
-  if (!byRef && returnIsRef) return { code: 'CS8149', args: [] };
+  if (byRef && !returnIsRef) return { code: DiagnosticId.CS8150, args: [] };
+  if (!byRef && returnIsRef) return { code: DiagnosticId.CS8149, args: [] };
   if (!byRef || !expression) return null;
   const c = classifyVariable(expression, context);
-  if (!c.isVariable) return { code: 'CS8156', args: [] };
+  if (!c.isVariable) return { code: DiagnosticId.CS8156, args: [] };
   const writable = checkRefWritability(expression, methodRefKind === RefKind.RefReadOnly, context);
   if (writable)
-    return { code: writable.code === 'CS0192' ? 'CS8160' : writable.code === 'CS0199' ? 'CS8161' : writable.code, args: writable.args };
+    return { code: writable.code === DiagnosticId.CS0192 ? DiagnosticId.CS8160 : writable.code === DiagnosticId.CS0199 ? DiagnosticId.CS8161 : writable.code, args: writable.args };
   // Whether the referent may leave the method is decided by ref safety (flow/ref-safety.js) for method bodies.
   if (context.escapeCheckedByFlow) return null;
   const r = refReturnability(expression, context);
@@ -126,9 +130,9 @@ export function recordRefLocal(local, initializer, context) {
 }
 /** Both arms of `c ? ref a : ref b` must be variables with identical types (CS8326/CS8327). */
 export function checkRefConditional(whenTrue, whenFalse, trueIsRef, falseIsRef, context) {
-  if (trueIsRef !== falseIsRef) return { code: 'CS8326', args: [] };
+  if (trueIsRef !== falseIsRef) return { code: DiagnosticId.CS8326, args: [] };
   if (!trueIsRef) return null;
-  for (const e of [whenTrue, whenFalse]) if (!classifyVariable(e, context).isVariable) return { code: 'CS1510', args: [] };
-  if (whenTrue.type && whenFalse.type && !whenTrue.type.equals(whenFalse.type)) return { code: 'CS8327', args: [] };
+  for (const e of [whenTrue, whenFalse]) if (!classifyVariable(e, context).isVariable) return { code: DiagnosticId.CS1510, args: [] };
+  if (whenTrue.type && whenFalse.type && !whenTrue.type.equals(whenFalse.type)) return { code: DiagnosticId.CS8327, args: [] };
   return null;
 }

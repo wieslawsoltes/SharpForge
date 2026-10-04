@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e942340a0d3068c38cd3",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.InteropServices;\n\npublic class Wrapper\n{\n    private class WorksheetClass : IWorksheet\n    {\n    }\n\n    [ComImport, Guid(\"00020810-0000-0000-C000-000000000046\")]\n    [CoClass(typeof(WorksheetClass))]\n    public interface IWorksheet\n    {\n    }\n}\n\npublic class MainClass\n{\n    public static int Main ()\n    {\n        var a = new Wrapper.IWorksheet();\n        return 0;\n    }\n}",
+  "sourceSHA256": "126ff81677b6bb88672bdc0b3590e0033ad95fc5d0b8e2ed21296748e86d29b6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestCoClassAttribute_NewOnInterface_FromSource_InaccessibleCoClass",
+    "offset": 157203
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0122",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (22,21): error CS0122: 'Wrapper.WorksheetClass.WorksheetClass()' is inaccessible due to its protection level\n                //         var a = new Wrapper.IWorksheet();\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Wrapper.IWorksheet\").WithArguments(\"Wrapper.WorksheetClass.WorksheetClass()\").WithLocation(22, 21)",
+  "unsupported": []
+}

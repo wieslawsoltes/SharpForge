@@ -6,13 +6,10 @@ on:
         description: Area ID (empty runs all manifests)
         type: string
         default: ''
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
 permissions:
   contents: read
 jobs:
   coverage:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:

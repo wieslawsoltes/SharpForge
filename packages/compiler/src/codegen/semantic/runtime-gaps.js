@@ -17,6 +17,7 @@ export const RuntimeGapTranslation = Base =>
       return this.unsupported('a fixed statement (the runtime has no pointers or pinning)', node.syntax.fixedKeyword);
     }
     stmtUnsafe(node) {
-      return this.unsupported('an unsafe block (the runtime has no pointers)', node.syntax.unsafeKeyword);
+      // The block itself changes nothing at run time; a pointer inside it is reported where it is used.
+      return this.statement(node.block);
     }
   };

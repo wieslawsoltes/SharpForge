@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-15f19d01840742e007d1",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C\n{\n    void M()\n    {\n        C c = null;\n        c ??= new D();\n        c ??= new E();\n    }\n}\nclass D\n{\n    [Obsolete(\"D is obsolete\", true)]\n    public static implicit operator C(D d) => null;\n}\nclass E\n{\n    [Obsolete(\"E is obsolete\", false)]\n    public static implicit operator C(E e) => null;\n}",
+  "sourceSHA256": "915f64a2c66878144989d5d6663b5b459dbd1a639d227244efdba7424d530fa6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "ObsoleteConversion",
+    "offset": 83668
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,15): error CS0619: 'D.implicit operator C(D)' is obsolete: 'D is obsolete'\n                //         c ??= new D();\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"new D()\").WithArguments(\"D.implicit operator C(D)\", \"D is obsolete\").WithLocation(8, 15),\n                // (9,15): warning CS0618: 'E.implicit operator C(E)' is obsolete: 'E is obsolete'\n                //         c ??= new E();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"new E()\").WithArguments(\"E.implicit operator C(E)\", \"E is obsolete\").WithLocation(9, 15)\n            ",
+  "unsupported": []
+}

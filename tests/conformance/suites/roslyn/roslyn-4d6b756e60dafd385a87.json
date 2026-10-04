@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4d6b756e60dafd385a87",
+  "kind": "diagnostics",
+  "sourceText": "#pragma warning disable CS0169 // The field is never used\nstruct E\n{}\n\nstruct X<T>\n{\n    static T _t;\n}\n\nstruct Y\n{\n    static X<Z> xz;\n}\n\nstruct Z\n{\n    static X<E> xe;\n    static X<Y> xy;\n}\n",
+  "sourceSHA256": "7207e8240d56d1de5db68c276f4bde8c6c0c0bb51af5e34be1434c2bfc7b4ae3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "sha256": "0d6911ec2e8d7c03c9c20562c37c9d1959883735b8a2e5c0af7af46861c1379a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "license": "MIT",
+    "method": "StaticMemberExplosion_03",
+    "offset": 15506
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // Errors are expected here, see https://github.com/dotnet/roslyn/issues/75701.\n                ",
+  "unsupported": []
+}

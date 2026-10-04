@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f722c3e7050d0d79f71a",
+  "kind": "spec",
+  "sourceText": "namespace System\n{\n    public static class MemoryExtensions\n    {\n        public static bool Contains<T>(this ReadOnlySpan<T> span, T value, IEqualityComparer<T>? comparer = null);\n    }\n}\n\nExpression<Func<int?[], int, bool>> e;\n        \ne = (a, i) => a.Contains(i); // error CS0854: expression tree may not contain a call that uses optional arguments\ne = (a, i) => a.Contains(i, comparer: null); // error CS0853: expression tree may not contain a named argument specification",
+  "sourceSHA256": "8a84157ff76a0db8921b014ee116b91526f56eff674cd80e5b2f6f6812459c3a",
+  "target": "library",
+  "featureId": "csharp-14-0-optional-and-named-arguments-in-expression-trees",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/optional-and-named-parameters-in-expression-trees.md",
+    "sha256": "0a7589f220abae512c9cd08af57f434d7d36fd19b7380fca0478e0de40e68113",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/optional-and-named-parameters-in-expression-trees.md",
+    "license": "NOASSERTION",
+    "offset": 886
+  }
+}

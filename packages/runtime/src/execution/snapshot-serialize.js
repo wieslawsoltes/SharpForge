@@ -1,8 +1,11 @@
 import {validateSnapshotState} from '../snapshot-validation.js';
-import {validateGenericInstantiations} from './generics.js';
+import {prepareGenericInstantiations, snapshotResolutionContext} from './generic-snapshot.js';
+import {validateSnapshotHeader} from '../snapshot.js';
 import {encodeSnapshotGraph, decodeSnapshotGraph} from './snapshot-wire-graph.js';
 import {SnapshotFormatError, snapshotFormatError, snapshotLimits} from './snapshot-wire-values.js';
 import {snapshotSchemaVersion} from './snapshot-version.js';
+import {resolveSnapshotTypes} from './snapshot-type-resolution.js';
+import {assertSnapshotJSON, assertSnapshotText, snapshotJSONString} from './snapshot-json.js';
 
 export const portableSnapshotVersion = 1;
 
@@ -21,17 +24,15 @@ function imageText(image) {
 
 async function codeIdentity(vm) {
   if (!globalThis.crypto?.subtle) snapshotFormatError('SNAPSHOT_CRYPTO', 'Portable snapshots require Web Crypto SHA-256');
-  const bytes = vm.inspector?.pe.bytes ?? new TextEncoder().encode(imageText(vm.image));
+  const owner = vm.inspector ?? vm.image;
+  const source = vm.inspector ? null : imageText(vm.image);
+  const currentBytes = vm.inspector?.pe.bytes;
+  const bytes = currentBytes ? new Uint8Array(currentBytes).slice() : new TextEncoder().encode(source);
   const digest = new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256', bytes));
+  const changed = owner !== (vm.inspector ?? vm.image) || (source !== null ? imageText(vm.image) !== source
+    : vm.inspector.pe.bytes.length !== bytes.length || bytes.some((value, index) => value !== vm.inspector.pe.bytes[index]));
+  if (changed) snapshotFormatError('SNAPSHOT_CODE', 'Code changed during portable snapshot identity validation');
   return [...digest].map(value => value.toString(16).padStart(2, '0')).join('');
-}
-
-function jsonBytes(value, maximum) {
-  const text = JSON.stringify(value);
-  if (new TextEncoder().encode(text).byteLength > maximum) {
-    snapshotFormatError('SNAPSHOT_LIMIT', 'Portable snapshot byte limit exceeded');
-  }
-  return text;
 }
 
 /** Export a JSON/structured-clone safe graph tied to exact code bytes and ABI. */
@@ -40,6 +41,8 @@ export async function serializeSnapshot(vm, snapshot = vm.snapshot(), options = 
   if (snapshot?.owner !== vm.snapshotOwner || snapshot.codeOwner !== (vm.inspector ?? vm.image)) {
     snapshotFormatError('SNAPSHOT_OWNER', 'Snapshot belongs to another VM or code generation');
   }
+  validateSnapshotHeader(vm, snapshot, snapshot.engine);
+  validateSnapshotState(vm, snapshot, snapshot.engine);
   vm.platform.hostOperations.checkRestore(snapshot.hostRevision);
   const graph = encodeSnapshotGraph(vm, snapshot, limits);
   const identity = await codeIdentity(vm);
@@ -50,51 +53,22 @@ export async function serializeSnapshot(vm, snapshot = vm.snapshot(), options = 
     engine: snapshot.engine, codeIdentity: identity, nativeIntBits: vm.heap.methodTables.nativeIntBits,
     hostRevision: snapshot.hostRevision, entryToken: vm.entryToken ?? vm.report?.entryPoint ?? null, graph
   };
-  const text = jsonBytes(wire, limits.maxBytes);
+  const text = snapshotJSONString(wire, limits);
   return options.json ? text : wire;
 }
 
 function readPayload(payload, limits) {
   if (typeof payload !== 'string') {
-    assertWireTree(payload, limits);
-    return JSON.parse(jsonBytes(payload, limits.maxBytes));
+    return JSON.parse(snapshotJSONString(payload, limits));
   }
-  if (new TextEncoder().encode(payload).byteLength > limits.maxBytes) {
-    snapshotFormatError('SNAPSHOT_LIMIT', 'Portable snapshot byte limit exceeded');
-  }
+  assertSnapshotText(payload, limits);
   try {
-    return JSON.parse(payload);
+    const wire = JSON.parse(payload);
+    assertSnapshotJSON(wire, limits);
+    return wire;
   } catch (error) {
+    if (error instanceof SnapshotFormatError) throw error;
     snapshotFormatError('SNAPSHOT_JSON', 'Invalid portable snapshot JSON: ' + error.message);
-  }
-}
-
-function assertWireTree(root, limits) {
-  const pending = [[root, 0]];
-  const seen = new Set();
-  let items = 0;
-  let bytes = 0;
-  while (pending.length) {
-    const [value, depth] = pending.pop();
-    if (++items > limits.maxItems || depth > 128) snapshotFormatError('SNAPSHOT_LIMIT', 'Snapshot JSON nesting limit exceeded');
-    if (typeof value === 'string') {
-      bytes += value.length * 2;
-      if (bytes > limits.maxBytes) snapshotFormatError('SNAPSHOT_LIMIT', 'Snapshot JSON string limit exceeded');
-    } else if (value !== null && typeof value === 'object') {
-      if (seen.has(value)) snapshotFormatError('SNAPSHOT_JSON', 'Wire aliases must use numbered graph references');
-      seen.add(value);
-      if (!Array.isArray(value) && ![Object.prototype, null].includes(Object.getPrototypeOf(value))) {
-        snapshotFormatError('SNAPSHOT_JSON', 'Wire objects must be plain JSON records');
-      }
-      for (const key of Object.keys(value)) {
-        const property = Object.getOwnPropertyDescriptor(value, key);
-        if (!Object.hasOwn(property, 'value')) snapshotFormatError('SNAPSHOT_JSON', 'Wire accessors are not supported');
-        pending.push([property.value, depth + 1]);
-      }
-    } else if (value !== null && typeof value !== 'boolean'
-        && !(typeof value === 'number' && Number.isFinite(value))) {
-      snapshotFormatError('SNAPSHOT_JSON', 'Wire values must be JSON scalars');
-    }
   }
 }
 
@@ -126,15 +100,17 @@ export async function deserializeSnapshot(vm, payload, options = {}) {
   }
   try {
     // Resolve portable method keys in an isolated cache, including on malformed input.
-    const decoding = Object.create(vm);
-    Object.defineProperty(decoding, 'genericInstantiations', {value: null, writable: true});
-    const snapshot = decodeSnapshotGraph(decoding, wire.graph, limits);
-    if (snapshot?.schemaVersion !== wire.schemaVersion || snapshot.engine !== engine
-        || snapshot.hostRevision !== wire.hostRevision || snapshot.owner !== vm.snapshotOwner
-        || snapshot.codeOwner !== owner) snapshotFormatError('SNAPSHOT_HEADER', 'Snapshot graph and header disagree');
-    validateSnapshotState(vm, snapshot, engine);
-    if (engine === 'cil') validateGenericInstantiations(vm, snapshot.genericCacheKeys);
-    return snapshot;
+    return resolveSnapshotTypes(vm, () => {
+      const decoding = snapshotResolutionContext(vm);
+      const snapshot = decodeSnapshotGraph(decoding, wire.graph, limits);
+      if (snapshot?.schemaVersion !== wire.schemaVersion || snapshot.engine !== engine
+          || snapshot.hostRevision !== wire.hostRevision || snapshot.owner !== vm.snapshotOwner
+          || snapshot.codeOwner !== owner) snapshotFormatError('SNAPSHOT_HEADER', 'Snapshot graph and header disagree');
+      validateSnapshotHeader(vm, snapshot, engine);
+      validateSnapshotState(vm, snapshot, engine);
+      if (engine === 'cil') prepareGenericInstantiations(vm, snapshot.genericCacheKeys);
+      return snapshot;
+    });
   } catch (error) {
     if (error instanceof SnapshotFormatError) throw error;
     snapshotFormatError('SNAPSHOT_GRAPH', 'Invalid portable snapshot graph: ' + error.message);

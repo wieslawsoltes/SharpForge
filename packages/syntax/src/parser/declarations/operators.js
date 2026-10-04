@@ -8,18 +8,13 @@ export const operatorMethods = {
     const keyword = this.take(),
       parameters = this.bracketedParameterList(),
       bodies = this.accessorBodies,
-      nameToken = this.memberName,
-      tail = this.i;
-    let accessors = null,
-      expressionBody = null,
-      semicolon = null;
-    if (this.at('=>')) {
-      expressionBody = this.arrowExpressionClause('ExpressionBodiedIndexer');
-      semicolon = this.expect(';');
-    } else if (this.at('{')) {
-      accessors = this.accessorList();
-      semicolon = this.match(';');
-    } else this.error(this.current, 'CS1514', '{ expected');
+      nameToken = this.memberName;
+    // Roslyn keeps an accessor list and an expression body when both are written (the binder reports CS8056).
+    if (!this.at('{') && !this.at('=>')) this.error(this.current, 'CS1514', '{ expected');
+    const accessors = this.at('{') ? this.accessorList() : null,
+      tail = this.i,
+      expressionBody = this.at('=>') ? this.arrowExpressionClause('ExpressionBodiedIndexer') : null,
+      semicolon = expressionBody ? this.expect(';') : accessors ? this.match(';') : null;
     this.accessorMemberForm(nameToken, bodies, expressionBody ? tail + 1 : -1);
     return this.n('IndexerDeclaration', attributeLists, modifiers, type, explicit, keyword, parameters, accessors, expressionBody, semicolon);
   },

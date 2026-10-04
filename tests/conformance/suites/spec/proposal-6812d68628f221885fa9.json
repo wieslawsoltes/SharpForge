@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-6812d68628f221885fa9",
+  "kind": "spec",
+  "sourceText": "int C(int[] xs) {\n  return xs.Length;\n}\n\nint D(params int[] xs) {\n  return xs.Length;\n}\n\nvar a = (int[] xs) => xs.Length;\n// internal delegate int a'(int[] xs);\nvar b = (params int[] xs) => xs.Length;\n// internal delegate int b'(params int[] xs);\n\nvar c = C;\n// internal delegate int a'(int[] xs);\nvar d = D;\n// internal delegate int b'(params int[] xs);\n\na = b; // Not allowed\na = c; // Allowed\nb = c; // Not allowed\nb = d; // Allowed\n\nc = (params int[] xs) => xs.Length; // Warning: different delegate types; no implicit conversion\nd = (int[] xs) => xs.Length; // OK. `d` is `delegate int (params int[] arg)`",
+  "sourceSHA256": "0778262096584e93ebdf8c357b72b4f82e0d78869bdd96efb3ea912c8a46d254",
+  "target": "library",
+  "featureId": "csharp-12-0-lambda-optional-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "license": "NOASSERTION",
+    "offset": 11965
+  }
+}

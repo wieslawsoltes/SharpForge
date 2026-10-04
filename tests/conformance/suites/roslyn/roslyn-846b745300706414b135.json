@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-846b745300706414b135",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public static void Main()\n    {\n        dynamic d1 = (1, \"hello\");\n        dynamic d2 = (1, \"hello\");\n        dynamic d3 = ((byte)1, 2);\n        PrintException(() => d1 == d2);\n        PrintException(() => d1 == d3);\n    }\n    public static void PrintException(System.Func<bool> action)\n    {\n        System.Globalization.CultureInfo saveUICulture = System.Threading.Thread.CurrentThread.CurrentUICulture;\n        System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;\n\n        try\n        {\n            action();\n        }\n        catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException e)\n        {\n            System.Console.WriteLine(e.Message);\n        }\n        finally\n        {\n            System.Threading.Thread.CurrentThread.CurrentUICulture = saveUICulture;\n        }\n    }\n}\n",
+  "sourceSHA256": "a555c9f85afaa294519c7c82bea734390ccc81b6aca5de9dcec169355e8a2430",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestComparisonOfDynamicTuple",
+    "offset": 189381
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.StandardAndCSharp, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

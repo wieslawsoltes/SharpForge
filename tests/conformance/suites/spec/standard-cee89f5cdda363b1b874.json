@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-cee89f5cdda363b1b874",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\ndelegate void D();\n\nclass Test\n{\n   int x;\n\n   void F()\n   {\n       int y = 123;\n       for (int i = 0; i < 10; i++)\n       {\n           int z = i * 2;\n           D d = () => Console.WriteLine(x + y + z);\n       }\n   }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [
+      "CS0649"
+    ]
+  },
+  "sourceSHA256": "f486b67548e0aab77ac26541dc07b76bec76700004ee5f2a8fd975bf119ef014",
+  "originalSource": "delegate void D();\n\nclass Test\n{\n   int x;\n\n   void F()\n   {\n       int y = 123;\n       for (int i = 0; i < 10; i++)\n       {\n           int z = i * 2;\n           D d = () => Console.WriteLine(x + y + z);\n       }\n   }\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "AnonFunctionImplementationExample7",
+    "ignoredWarnings": [
+      "CS0649"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "AnonFunctionImplementationExample7",
+    "offsetInUnquotedMarkdown": 384493
+  }
+}

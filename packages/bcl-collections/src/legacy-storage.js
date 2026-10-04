@@ -1,4 +1,9 @@
-import {MAX, integer, makeArray, bclScalar} from '@sharpforge/bcl-core';
+import {MAX, integer, makeArray} from '@sharpforge/bcl-core';
+import {keyOf} from './object-equality.js';
+
+export {keyOf} from './object-equality.js';
+
+export const ACTIVE_SLOT = -2;
 
 export function count(p, reference) {
   return p.get(reference, '$count', 0);
@@ -40,11 +45,28 @@ export function commitItems(p, reference, items, slots = 1) {
 }
 
 export function write(p, reference, index, value) {
-  const storage = p.get(reference, '$data');
+  writeArray(p, p.get(reference, '$data'), index, value);
+}
+
+export function writeArray(p, storage, index, value) {
   const record = p.heap.get(storage);
   const oldValue = record.data[index];
-  p.heap.writeData(record, index, value);
+  record.data[index] = value;
   p.vm.notifyWrite?.({kind: 'array', handle: storage.h, generation: storage.g, index, oldValue, value});
+}
+
+/** Dense collections retain their prefix; indexed collections skip released slots. */
+export function* positions(p, reference) {
+  const slots = p.get(reference, '$slots');
+  const states = slots ? p.heap.get(slots).data : null;
+  const length = states ? p.get(reference, '$used', 0) : count(p, reference);
+  for (let position = 0; position < length; position++) {
+    if (!states || states[position] === ACTIVE_SLOT) yield position;
+  }
+}
+
+export function rememberIndex(p, reference, index) {
+  p.bclIndexes.set(p.record(reference), {version: version(p, reference), index});
 }
 
 export function queueItems(p, reference) {
@@ -77,13 +99,6 @@ export function append(p, reference, value) {
   change(p, reference);
 }
 
-export function keyOf(p, value) {
-  const scalar = bclScalar(p, value);
-  if (scalar === null) return 'null';
-  if (p.bclHost.isReference(scalar)) return 'r:' + scalar.h + ':' + scalar.g;
-  return typeof scalar + ':' + String(scalar);
-}
-
 export function indexMap(p, reference, slots = 1) {
   const record = p.record(reference);
   const revision = version(p, reference);
@@ -92,7 +107,7 @@ export function indexMap(p, reference, slots = 1) {
   if (cache?.version !== revision) {
     const index = new Map();
     const items = data(p, reference);
-    for (let position = 0; position < count(p, reference); position++) {
+    for (const position of positions(p, reference)) {
       index.set(keyOf(p, items[position * slots]), position);
     }
     cache = {version: revision, index};

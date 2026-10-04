@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e56fb66ddea0b6c88eda",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    public override bool Equals(object obj) =>\n        obj switch\n        {\n            C x1 when x1 is var x2 => x2 is var x3 && x3 is {},\n            _ => false\n        };\n    public override int GetHashCode() => 1;\n    public static void Main()\n    {\n        C c = new C();\n        System.Console.Write(c.Equals(new C()));\n        System.Console.Write(c.Equals(new object()));\n    }\n}\n",
+  "sourceSHA256": "75ec9dee70a97739110a72c068362e948ec598eb64715f7375b698ff1cceea6f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "VariablesInSwitchExpressionArms",
+    "offset": 83425
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-bbfca4faf141e86a252d",
+  "kind": "spec",
+  "sourceText": "int Hash(Point point) { ... } \nint Hash(TimeSpan timeSpan) { ... } ",
+  "sourceSHA256": "7d961a2afd2600ceea20112a9548d692874be9e0c9698c01f93b5d1a0330a504",
+  "target": "library",
+  "featureId": "csharp-7-3-enum-delegate-unmanaged-constraints",
+  "langVersion": "7.3",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.3/blittable.md",
+    "sha256": "b4e487f453bc07bc46640486ab48bb96516e752bd5a411250472fc3dba6146f6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/blittable.md",
+    "license": "NOASSERTION",
+    "offset": 828
+  }
+}

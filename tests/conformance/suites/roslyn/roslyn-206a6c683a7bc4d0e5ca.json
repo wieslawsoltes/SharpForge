@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-206a6c683a7bc4d0e5ca",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct S\n{\n    int _x;\n    public S(int x)\n    {\n        var s = this;\n        void Local()\n        {\n            s._x = _x;\n        }\n        Local();\n    }\n}",
+  "sourceSHA256": "0bafbac24056f61ce3a273cd92d8eaafb8e56616a7b2883c591bbd846bc24797",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "UnassignedInStruct",
+    "offset": 20856
+  },
+  "langVersion": "11",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular11)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1673",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,20): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             s._x = _x;\n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"_x\").WithLocation(10, 20)",
+  "unsupported": []
+}

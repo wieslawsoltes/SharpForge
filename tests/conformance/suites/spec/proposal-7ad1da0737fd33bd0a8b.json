@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-7ad1da0737fd33bd0a8b",
+  "kind": "spec",
+  "sourceText": "[AsyncStateMachine(typeof(<ExampleAsync>d__29))]\n[CompilerGenerated]\nstatic ValueTask<int> ExampleAsync()\n{\n    <ExampleAsync>d__29 stateMachine;\n    stateMachine.<>t__builder = AsyncValueTaskMethodBuilder<int>.Create();\n    stateMachine.<>1__state = -1;\n    stateMachine.<>t__builder.Start(ref stateMachine);\n    return stateMachine.<>t__builder.Task;\n}",
+  "sourceSHA256": "858305be363f50b7d61435b80c03327de5ae88e5f4c457a6b5450bf98b7c4cc6",
+  "target": "library",
+  "featureId": "csharp-10-0-method-level-asyncmethodbuilder",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/async-method-builders.md",
+    "sha256": "3009c96c763c1c09ace540653215bb589b435fe481e6e8a8368c559ae8e5f5d1",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/async-method-builders.md",
+    "license": "NOASSERTION",
+    "offset": 8572
+  }
+}

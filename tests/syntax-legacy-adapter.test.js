@@ -67,7 +67,7 @@ test('legacy adapter: syntax the back end cannot bind keeps a not-supported diag
   }
 });
 test('legacy adapter: newly accepted syntax that maps onto existing nodes compiles', () => {
-  for (const source of ['class C { public int a = 1, b = 2; } var c = new C(); Console.WriteLine(c.a + c.b);', '#if DEBUG\nint x = bad;\n#else\nint x = 2;\n#endif\n#region r\nConsole.WriteLine(x);\n#endregion', 'Console.WriteLine("""raw "quoted" text""");', 'int x = 1; x <<= 2; x >>= 1; Console.WriteLine(x);', '#nullable enable\n#pragma warning disable CS0168\nConsole.WriteLine(1);']) {
+  for (const source of ['var c = new C(); Console.WriteLine(c.a + c.b); class C { public int a = 1, b = 2; }', '#if DEBUG\nint x = bad;\n#else\nint x = 2;\n#endif\n#region r\nConsole.WriteLine(x);\n#endregion', 'Console.WriteLine("""raw "quoted" text""");', 'int x = 1; x <<= 2; x >>= 1; Console.WriteLine(x);', '#nullable enable\n#pragma warning disable CS0168\nConsole.WriteLine(1);']) {
     const result = compile(source); assert.equal(result.success, true, source + ' ' + JSON.stringify(result.diagnostics.map(d => d.code + ' ' + d.message)));
   }
   assert(new SourceText('x') instanceof SourceText);

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "library-9dca2596f6db8fc0f990",
+  "kind": "library",
+  "namespace": "System.Runtime",
+  "sourceText": "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Linq;\nusing Xunit;\nclass SuiteProgram { static int Main() {\n\n            AssertExtensions.Throws<ArgumentException>(null, () => 123.CompareTo(value));\n        \nreturn 0; } }\n// SharpForge's deliberately small test adapter. Assertions fail by throwing.\n\nnamespace Xunit\n{\n    public static class Assert\n    {\n        public static void True(bool value) { if (!value) throw new Exception(\"Assert.True\"); }\n        public static void False(bool value) { if (value) throw new Exception(\"Assert.False\"); }\n        public static void Null(object value) { if (value != null) throw new Exception(\"Assert.Null\"); }\n        public static void NotNull(object value) { if (value == null) throw new Exception(\"Assert.NotNull\"); }\n        public static void Same(object expected, object actual)\n        { if (!object.ReferenceEquals(expected, actual)) throw new Exception(\"Assert.Same\"); }\n        public static void Equal<T>(T expected, T actual)\n        {\n            if (expected is System.Collections.IEnumerable && !(expected is string))\n                throw new NotSupportedException(\"Shim Equal supports scalar values only, not sequence equality\");\n            if (!object.Equals(expected, actual)) throw new Exception(\"Assert.Equal\");\n        }\n        public static T Throws<T>(Action action) where T : Exception\n        {\n            try { action(); }\n            catch (Exception error)\n            {\n                if (error.GetType() != typeof(T)) throw new Exception(\"Assert.Throws: wrong exception type\");\n                return (T)error;\n            }\n            throw new Exception(\"Assert.Throws: no exception\");\n        }\n    }\n}\n",
+  "sourceSHA256": "5fbd819351b191212c07b2340c4dec4c0e14583fcd56878bb7dd4f0d752878bb",
+  "originalSource": "public void CompareTo_ObjectNotInt_ThrowsArgumentException(object value)\n        {\n            AssertExtensions.Throws<ArgumentException>(null, () => 123.CompareTo(value));\n        }",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/libraries/System.Runtime/tests/System.Runtime.Tests/System/Int32Tests.cs",
+    "sha256": "6875bc15b763c0ac334002874d893562da35c3467ef7d5fb63feeb27ac55e8ab",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/libraries/System.Runtime/tests/System.Runtime.Tests/System/Int32Tests.cs",
+    "license": "MIT",
+    "method": "CompareTo_ObjectNotInt_ThrowsArgumentException",
+    "offset": 1918
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack",
+    "local XunitShim.cs"
+  ],
+  "expected": {
+    "exitCode": 0
+  },
+  "unsupported": [
+    "Parameterized theory/member data needs explicit argument materialization",
+    "Upstream helper, fixture state, or platform-specific dependency",
+    "No directly supported assertion; helper-based assertions require adaptation"
+  ],
+  "adaptation": "Original method body in standalone Main; no base fixture/helpers imported. Native compilation preflight detects unresolved dependencies; scalar assertions, reference identity and exact exception assertions execute."
+}

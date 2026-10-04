@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ed23a4c349eefdc4fe28",
+  "kind": "diagnostics",
+  "sourceText": "\nenum @esbyte : sbyte { e0, e1 };\npublic class z_1495j12\n{\npublic static void Main()\n{\nif (esbyte.e0 == esbyte.e0)\n{\n  System.Console.WriteLine(\"T\");\n}\n}}\n",
+  "sourceSHA256": "1966e670feb3b9eeaae50eaf99fd4569fab7f2893d44a5732b7a513cee17de4c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "CS1718WRN_ComparisonToSelf_Roslyn",
+    "offset": 44125
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1718",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,5): warning CS1718: Comparison made to same variable; did you mean to compare something else?\n                Diagnostic(ErrorCode.WRN_ComparisonToSelf, \"esbyte.e0 == esbyte.e0\")",
+  "unsupported": []
+}

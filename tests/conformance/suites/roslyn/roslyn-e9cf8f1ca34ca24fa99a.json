@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e9cf8f1ca34ca24fa99a",
+  "kind": "diagnostics",
+  "sourceText": "interface ISomething\n{\n    private protected int M();\n}",
+  "sourceSHA256": "5ed5e4738450f93b96552365f895261984cea0455ca0ba6b88c6efa8a9a5fe46",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "ForbiddenAccessorProtection_02",
+    "offset": 20898
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8703",
+        "severity": "error"
+      },
+      {
+        "code": "CS8707",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,27): error CS8503: The modifier 'private protected' is not valid for this item in C# 7.2. Please use language version '8.0' or greater.\n                //     private protected int M();\n                Diagnostic(ErrorCode.ERR_InvalidModifierForLanguageVersion, \"M\").WithArguments(\"private protected\", \"7.2\", \"8.0\").WithLocation(3, 27),\n                // (3,27): error CS8707: Target runtime doesn't support 'protected', 'protected internal', or 'private protected' accessibility for a member of an interface.\n                //     private protected int M();\n                Diagnostic(ErrorCode.ERR_RuntimeDoesNotSupportProtectedAccessForInterfaceMember, \"M\").WithLocation(3, 27)\n                ",
+  "unsupported": []
+}

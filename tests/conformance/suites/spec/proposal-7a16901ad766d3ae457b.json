@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-7a16901ad766d3ae457b",
+  "kind": "spec",
+  "sourceText": "class Complex\n{\n    readonly int Field1;\n    int Field2;\n    int Prop1 { get; init; }\n    int Prop2\n    {\n        get => 42;\n        init\n        {\n            Field1 = 13; // okay\n            Field2 = 13; // okay\n            Prop1 = 13; // okay\n        }\n    }\n}",
+  "sourceSHA256": "4efc42dfcdeb1a67392f76dc0b3f9c5715e400ae8a36f975c9f25c4f7feb652d",
+  "target": "library",
+  "featureId": "csharp-9-0-init-only-setters",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/init.md",
+    "sha256": "299746635180451088968dc21830e0e4ef886be903357c63780a90434b5034e5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/init.md",
+    "license": "NOASSERTION",
+    "offset": 3809
+  }
+}

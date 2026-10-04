@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-116aa9c8ab62fefcb278",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n.assembly 'cgt'{}\n\n.namespace cgt_\n{\n.class public _cgt {\n\n.field public static   int32 i4\n.field public static   int32 u4\n.field public static   int64 i8\n.field public static   int64 u8\n.field public static   float32 r4\n.field public static   float32 unr4\n.field public static   float64 r8\n.field public static   float64 unr8\n.field public static   int32 u\n\n.method public void _cgt() {\n\tret\n}\n\n.method public static void initialize() {\n        ldc.i4  0x7FFFFFFF\n        stsfld  int32 cgt_._cgt::i4\n        ldc.i4  0xFFFFFFFF\n        stsfld  int32 cgt_._cgt::u4\n        ldc.i8  0x7FFFFFFFFFFFFFFF\n        stsfld  int64 cgt_._cgt::i8\n        ldc.i8  0xFFFFFFFFFFFFFFFF\n        stsfld  int64 cgt_._cgt::u8\n        ldc.r4  float32(0x7F7FFFFF)\n        stsfld  float32 cgt_._cgt::r4\n        ldc.r8  float64(0x7FEFFFFFFFFFFFFF)\n        stsfld  float64 cgt_._cgt::r8\n        ldc.i4  0x000000FF      \n        stsfld  int32 cgt_._cgt::u\n        ret\n}\n\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack\t10\n\tcall\tvoid cgt_._cgt::initialize()\n        ldsfld  int32 cgt_._cgt::i4\n        ldc.i4  0x00000001\n        cgt\n        brfalse FAIL    \n\n        ldsfld  int32 cgt_._cgt::u4\n        ldc.i4  0x00000001\n        cgt.un\n        brfalse FAIL    \n        ldsfld  int64 cgt_._cgt::i8\n        ldc.i8  0x0000000000000001\n        cgt\n        brfalse FAIL    \n\n        ldsfld  int64 cgt_._cgt::u8\n        ldc.i8  0x0000000000000001\n        cgt.un\n        brfalse FAIL    \n        ldsfld  float32 cgt_._cgt::r4\n        ldc.r4  float32(0x3F800000)\n        cgt\n        brfalse FAIL    \n\n        ldsfld  float32 cgt_._cgt::r4\n        ldc.r4  float32(0x7FC00000)\n        cgt.un\n        brfalse FAIL    \n\n        ldsfld  float64 cgt_._cgt::r8\n        ldc.r8  float64(0x3FF0000000000000)\n        cgt\n        brfalse FAIL    \n\n        ldsfld  float64 cgt_._cgt::r8\n        ldc.r8  float64(0x7FF8000000000000)\n        cgt.un\n        brfalse FAIL    \n        ldsfld  int32 cgt_._cgt::u\n        ldc.i4  0x00000001\n        cgt\n        brfalse FAIL    \n\n\nPASS:\n\tldc.i4 100\n\tret\nFAIL:\n\tldc.i4\t0x0\n\tret\n}\n}\n}\n",
+  "unsupported": [
+    "Upstream IL preprocessor/legacy assembly rewrite required"
+  ],
+  "language": "il",
+  "opcodeFamilies": [
+    "arithmetic",
+    "branches",
+    "calls",
+    "objects"
+  ],
+  "sourceSHA256": "1fdba7c4a7e403d3b554dc739eb5b3e977c1c901a66a38b78a002e5d86a602bf",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n.assembly 'cgt'{}\n\n.namespace cgt_\n{\n.class public _cgt {\n\n.field public static   int32 i4\n.field public static   int32 u4\n.field public static   int64 i8\n.field public static   int64 u8\n.field public static   float32 r4\n.field public static   float32 unr4\n.field public static   float64 r8\n.field public static   float64 unr8\n.field public static   int32 u\n\n.method public void _cgt() {\n\tret\n}\n\n.method public static void initialize() {\n        ldc.i4  0x7FFFFFFF\n        stsfld  int32 cgt_._cgt::i4\n        ldc.i4  0xFFFFFFFF\n        stsfld  int32 cgt_._cgt::u4\n        ldc.i8  0x7FFFFFFFFFFFFFFF\n        stsfld  int64 cgt_._cgt::i8\n        ldc.i8  0xFFFFFFFFFFFFFFFF\n        stsfld  int64 cgt_._cgt::u8\n        ldc.r4  float32(0x7F7FFFFF)\n        stsfld  float32 cgt_._cgt::r4\n        ldc.r8  float64(0x7FEFFFFFFFFFFFFF)\n        stsfld  float64 cgt_._cgt::r8\n        ldc.i4  0x000000FF      \n        stsfld  int32 cgt_._cgt::u\n        ret\n}\n\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack\t10\n\tcall\tvoid cgt_._cgt::initialize()\n        ldsfld  int32 cgt_._cgt::i4\n        ldc.i4  0x00000001\n        cgt\n        brfalse FAIL    \n\n        ldsfld  int32 cgt_._cgt::u4\n        ldc.i4  0x00000001\n        cgt.un\n        brfalse FAIL    \n        ldsfld  int64 cgt_._cgt::i8\n        ldc.i8  0x0000000000000001\n        cgt\n        brfalse FAIL    \n\n        ldsfld  int64 cgt_._cgt::u8\n        ldc.i8  0x0000000000000001\n        cgt.un\n        brfalse FAIL    \n        ldsfld  float32 cgt_._cgt::r4\n        ldc.r4  float32(0x3F800000)\n        cgt\n        brfalse FAIL    \n\n        ldsfld  float32 cgt_._cgt::r4\n        ldc.r4  float32(0x7FC00000)\n        cgt.un\n        brfalse FAIL    \n\n        ldsfld  float64 cgt_._cgt::r8\n        ldc.r8  float64(0x3FF0000000000000)\n        cgt\n        brfalse FAIL    \n\n        ldsfld  float64 cgt_._cgt::r8\n        ldc.r8  float64(0x7FF8000000000000)\n        cgt.un\n        brfalse FAIL    \n        ldsfld  int32 cgt_._cgt::u\n        ldc.i4  0x00000001\n        cgt\n        brfalse FAIL    \n\n\nPASS:\n\tldc.i4 100\n\tret\nFAIL:\n\tldc.i4\t0x0\n\tret\n}\n}\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/IL_Conformance/Old/Base/cgt.il",
+    "sha256": "1fdba7c4a7e403d3b554dc739eb5b3e977c1c901a66a38b78a002e5d86a602bf",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/IL_Conformance/Old/Base/cgt.il",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Unmodified upstream IL. Native ILAsm required; no IL simulation."
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-8b5e30094d051bf8496d",
+  "kind": "spec",
+  "sourceText": "(int a, int b) t = new(1, 2); // \"new\" is redundant\nAction a = new(() => {}); // \"new\" is redundant\n\n(int a, int b) t = new(); // OK; same as (0, 0)\nAction a = new(); // no constructor found",
+  "sourceSHA256": "dc7d9525f83fb74d9d1af3901889330872dc4bbdf0ca706d671791105a2349e7",
+  "target": "library",
+  "featureId": "csharp-9-0-target-typed-new-expressions",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/target-typed-new.md",
+    "sha256": "57832c908e368a18ab43b20db3fe4bde28b595af56d0fe5b4ae3740b54318e4e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/target-typed-new.md",
+    "license": "NOASSERTION",
+    "offset": 2156
+  }
+}

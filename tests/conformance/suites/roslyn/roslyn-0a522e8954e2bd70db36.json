@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0a522e8954e2bd70db36",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M()\n    {\n        int? x = null, y = null;\n        (x, y) ??= (1, 2);\n    }\n}",
+  "sourceSHA256": "3ff9bdf5efdf6e616e0ad8393a36b048a88eeb40074c41478dedebc85ea9f098",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "DestructuringSyntaxDoesNotWork",
+    "offset": 84567
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0131",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,9): error CS0131: The left-hand side of an assignment must be a variable, property or indexer\n                //         (x, y) ??= (1, 2);\n                Diagnostic(ErrorCode.ERR_AssgLvalueExpected, \"(x, y)\").WithLocation(7, 9)\n            ",
+  "unsupported": []
+}

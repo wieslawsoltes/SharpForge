@@ -1,20 +1,52 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {ManagedHeap} from '@sharpforge/runtime';
-import {ManagedFault} from '../packages/runtime/src/heap.js';
 import {
-  createException, exceptionField, exceptionFields, setExceptionHResult, prepareException,
-  exceptionStackTrace, faultFromException, baseException
+  ManagedHeap
+} from '@sharpforge/runtime';
+import {
+  ManagedFault
+} from '../packages/runtime/src/heap.js';
+import {
+  createException,
+  exceptionField,
+  exceptionFields,
+  setExceptionHResult,
+  prepareException,
+  exceptionStackTrace,
+  faultFromException,
+  baseException
 } from '../packages/runtime/src/execution/exception-object.js';
-import {captureExceptionDispatch, throwExceptionDispatch} from '../packages/runtime/src/execution/exception-dispatch.js';
-import {exceptionDataCall} from '../packages/runtime/src/execution/exception-data.js';
-import {initializeAggregate, aggregateInnerList, flattenAggregate} from '../packages/runtime/src/execution/aggregate-exception.js';
+import {
+  captureExceptionDispatch,
+  throwExceptionDispatch
+} from '../packages/runtime/src/execution/exception-dispatch.js';
+import {
+  exceptionDataCall
+} from '../packages/runtime/src/execution/exception-data.js';
+import {
+  initializeAggregate,
+  aggregateInnerList,
+  flattenAggregate
+} from '../packages/runtime/src/execution/aggregate-exception.js';
 
 function services() {
   const heap = new ManagedHeap();
-  return {heap, options: {}, frames: [], value: reference => reference === null ? null : heap.get(reference).data};
+  return {
+    heap,
+    options: {},
+    frames: [],
+    value: reference => reference === null ? null : heap.get(reference).data
+  };
 }
-const frame = (name, id) => ({id, method: {owner: 'Program', name, token: 0x06000000 + id}, lastOffset: id});
+const frame = (name, id) => ({
+  id,
+  method: {
+    owner: 'Program',
+    name,
+    token: 0x06000000 + id
+  },
+  lastOffset: id
+});
 
 function raised(vm, name = 'DivideByZeroException') {
   const fault = new ManagedFault(name, 'failure');
@@ -57,12 +89,18 @@ test('T04.5 EDI captures a trace independently of later throws of the same excep
   prepareException(vm, faultFromException(vm, fault.reference));
   vm.frames = [frame('Dispatch', 4)];
   let resumed;
-  try { throwExceptionDispatch(vm, dispatch); } catch (error) { resumed = error; }
+  try {
+    throwExceptionDispatch(vm, dispatch);
+  } catch (error) {
+    resumed = error;
+  }
   assert.equal(resumed.reference, fault.reference);
   prepareException(vm, resumed);
   assert.match(exceptionStackTrace(vm, fault.reference), /Program\.Origin[\s\S]*previous location[\s\S]*Program\.Dispatch/);
   assert.doesNotMatch(exceptionStackTrace(vm, fault.reference), /Program\.Reset/);
-  assert.throws(() => captureExceptionDispatch(vm, null), {name: 'ArgumentNullException'});
+  assert.throws(() => captureExceptionDispatch(vm, null), {
+    name: 'ArgumentNullException'
+  });
 });
 
 test('T04.5 Data identity, contents and inner exception chains are traced by the heap', () => {
@@ -79,8 +117,12 @@ test('T04.5 Data identity, contents and inner exception chains are traced by the
   assert.equal(exceptionField(vm, outer, 'InnerException'), inner);
   assert.equal(vm.value(exceptionDataCall(vm, dictionary, 'get_Item', [vm.heap.string('payload')])), 'retained');
   assert.equal(exceptionDataCall(vm, dictionary, 'get_Count', []), 1);
-  assert.throws(() => exceptionDataCall(vm, dictionary, 'Add', [key, value]), {name: 'ArgumentException'});
-  assert.throws(() => exceptionDataCall(vm, dictionary, 'set_Item', [null, value]), {name: 'ArgumentNullException'});
+  assert.throws(() => exceptionDataCall(vm, dictionary, 'Add', [key, value]), {
+    name: 'ArgumentException'
+  });
+  assert.throws(() => exceptionDataCall(vm, dictionary, 'set_Item', [null, value]), {
+    name: 'ArgumentNullException'
+  });
 });
 
 test('T04.5 flattened aggregates retain breadth-first leaf ordering and independent lists', () => {
@@ -89,7 +131,9 @@ test('T04.5 flattened aggregates retain breadth-first leaf ordering and independ
   const make = items => {
     const array = vm.heap.allocate('array', 'System.Exception[]', items);
     const aggregate = createException(vm, 'System.AggregateException');
-    return initializeAggregate(vm, aggregate, [array], {parameters: ['System.Exception[]']});
+    return initializeAggregate(vm, aggregate, [array], {
+      parameters: ['System.Exception[]']
+    });
   };
   const nested = make(leaves.slice(0, 2));
   const original = make([nested, leaves[2]]);

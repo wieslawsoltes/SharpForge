@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-17e0cf22a4f34f01ebed",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Program {\npublic void Log(\n    [CallerLineNumber] int line = -1,\n    [CallerFilePath] string path = null,\n    [CallerMemberName] string name = null\n)\n{\n    Console.WriteLine((line < 0) ? \"No line\" : \"Line \"+ line);\n    Console.WriteLine((path == null) ? \"No file path\" : path);\n    Console.WriteLine((name == null) ? \"No member name\" : name);\n}\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "76754f15756e59e917cb9034816c2d734a2c22172cee0770bf58448132081006",
+  "originalSource": "public void Log(\n    [CallerLineNumber] int line = -1,\n    [CallerFilePath] string path = null,\n    [CallerMemberName] string name = null\n)\n{\n    Console.WriteLine((line < 0) ? \"No line\" : \"Line \"+ line);\n    Console.WriteLine((path == null) ? \"No file path\" : path);\n    Console.WriteLine((name == null) ? \"No member name\" : name);\n}",
+  "metadata": {
+    "template": "code-in-class-lib",
+    "name": "CallerInfoAttributes"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-attributes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/attributes.md",
+    "sha256": "9ab07c36a912273dd0eb341141ca62153c76e5f32f422e70950477a6b89c5242",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/attributes.md",
+    "license": "MIT",
+    "example": "CallerInfoAttributes",
+    "offsetInUnquotedMarkdown": 38289
+  }
+}

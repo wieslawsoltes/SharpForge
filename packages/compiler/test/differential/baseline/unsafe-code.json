@@ -1,0 +1,5 @@
+{
+  "unsafe-code/pointer-rules": ["diagnostics", "warnings"],
+  "unsafe-code/unsafe-contexts-around-safe-code": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "unsafe-code/unsafe-needs-the-option": ["diagnostics", "warnings"]
+}

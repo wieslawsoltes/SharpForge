@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "sourceSha": "876baeb099c9697f20fd09e7ffa39ebda284770e",
+  "sourceTree": "bb8661834ea08234b6cbf499dbdd7b8c53322cb9",
+  "worktree": "/workspace/scratch/6b99131ca908/p16-a5-baseline-profile",
+  "trackedCleanBefore": true,
+  "untrackedPaths": [],
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "tests/a19-qualification-profiles.test.js",
+    "tests/a19-qualification-trigger.test.js",
+    "tests/a19-qualification-preflight.test.js",
+    "tests/a19-qualification-outcomes.test.js"
+  ],
+  "nodeVersion": "v24.19.0",
+  "startedAt": "2026-10-04T06:28:50.308925+00:00",
+  "finishedAt": "2026-10-04T06:28:50.964269+00:00",
+  "wallSeconds": 0.6820260179956676,
+  "exitCode": 0,
+  "counts": {
+    "tests": 35,
+    "suites": 0,
+    "pass": 35,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 510.205138
+  },
+  "sourceUnchanged": true,
+  "log": {
+    "path": "tests.log",
+    "bytes": 8125,
+    "sha256": "fc285ea68ecf380504b050be8cb7310e539a098a2e5db9a3c0c0c7579e5effec"
+  }
+}

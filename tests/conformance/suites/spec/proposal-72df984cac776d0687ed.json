@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-72df984cac776d0687ed",
+  "kind": "spec",
+  "sourceText": "struct S\n{\n    private int _x;\n    public int X\n    {\n        get => _x;\n        set => _x = value >= 0 ? value : throw new ArgumentOutOfRangeException();\n    }\n\n    // Solution 1: assign some value in the constructor before \"really\" assigning through the property setter.\n    public S(int x)\n    {\n        _x = default;\n        X = x;\n    }\n\n    // Solution 2: assign the field once in the constructor, repeating the implementation of the setter.\n    public S(int x)\n    {\n        _x = x >= 0 ? x : throw new ArgumentOutOfRangeException();\n    }\n}",
+  "sourceSHA256": "a1a1b07bdf9e1e04b9e2be993c67c4091d960e927ff253d3f5985033cd22c18f",
+  "target": "library",
+  "featureId": "csharp-11-0-auto-default-structs",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/auto-default-structs.md",
+    "sha256": "ef94c71a977016911c9fb1ac490aaf2c63d30ee809982111f21ef945f4dda24a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/auto-default-structs.md",
+    "license": "NOASSERTION",
+    "offset": 1832
+  }
+}

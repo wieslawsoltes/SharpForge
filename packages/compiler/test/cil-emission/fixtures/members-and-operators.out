@@ -1,0 +1,14 @@
+[make 1][false 1][make 2][&] 1
+[make -1][false -1] -1
+[make 3][true 3] 3
+[make 0][true 0][make 4][|] 4
+[make 5][true 5] yes
+[make 0][true 0] no
+-7
+201c False True 2.01
+log a
+count 2
+8
+a!!
+special 0 made
+here:True:Main True

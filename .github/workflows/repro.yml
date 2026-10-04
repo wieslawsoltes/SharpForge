@@ -1,29 +1,26 @@
 name: Reproducible release qualification
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
-    paths: ['scripts/conformance/repro/**', 'scripts/conformance/source-manifest.js', 'tests/conformance/repro/**', 'planning/qualification/repro/**', '.github/workflows/repro.yml']
-  push:
-    branches: [main]
-    paths: ['scripts/conformance/repro/**', 'scripts/conformance/source-manifest.js', 'scripts/build*.js', 'scripts/standalone.js', 'packages/**', 'examples/**', 'package*.json', '.github/workflows/repro.yml']
   workflow_dispatch:
     inputs:
       tag:
         description: Existing release tag whose exact source and published assets must reproduce (empty checks HEAD)
         type: string
         required: false
+      external_links:
+        description: Check external documentation links instead of rebuilding
+        type: boolean
+        default: false
+        required: false
   release:
     types: [published]
-  schedule:
-    - cron: '23 7 * * 1'
 permissions:
   contents: read
 concurrency:
   group: repro-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   prepare:
-    if: github.event_name != 'schedule' && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci'))
+    if: ${{ !inputs.external_links && (github.event_name != 'release' || !startsWith(github.event.release.tag_name, 'evidence-archive-')) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     outputs:
@@ -58,6 +55,7 @@ jobs:
   build:
     needs: prepare
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-24.04, windows-2025, macos-26]
@@ -119,7 +117,7 @@ jobs:
           path: artifacts/results/repro/cross-runner.json
           if-no-files-found: error
   offline:
-    needs: [prepare, build]
+    needs: [prepare, build, cross-runner]
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
@@ -157,7 +155,7 @@ jobs:
           path: artifacts/results/repro/offline.json
           if-no-files-found: error
   external-links:
-    if: github.event_name == 'schedule'
+    if: github.event_name == 'workflow_dispatch' && inputs.external_links
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8ad70ddfe6bf3386c5d9",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void M(X x)\n    {\n        throw x;\n    }\n}\nclass X\n{\n    public static implicit operator System.NullReferenceException(X x) => new System.NullReferenceException();\n}\n",
+  "sourceSHA256": "09e8b2430a781f93c57a43af29afcfd17c52b5bbd52653c0b61fa1c5865f381c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenThrowTests.cs",
+    "sha256": "a711979ba8d93724356177aad833569de0e201b5ad1380c8dd60779ed1771b8a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenThrowTests.cs",
+    "license": "MIT",
+    "method": "TestThrowConvertedValue",
+    "offset": 6559
+  },
+  "langVersion": "7.3",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_3)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0155",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,15): error CS0155: The type caught or thrown must be derived from System.Exception\n                //         throw x;\n                Diagnostic(ErrorCode.ERR_BadExceptionType, \"x\").WithLocation(6, 15)\n                ",
+  "unsupported": []
+}

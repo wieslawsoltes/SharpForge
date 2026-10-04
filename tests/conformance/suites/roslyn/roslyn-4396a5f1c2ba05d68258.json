@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4396a5f1c2ba05d68258",
+  "kind": "diagnostics",
+  "sourceText": "\n\nunsafe struct S\n{\n    public fixed int x[10];\n}\n\nclass Program\n{\n    static void Main()\n    {\n        S s = new S();\n        // indexing in unmovable context\n        System.Console.WriteLine(s.x[3]);\n\n        S[] a = new[]{new S()};\n        // indexing in movable context\n        System.Console.WriteLine(a[0].x[3]);\n    }\n}\n",
+  "sourceSHA256": "58c787c42a2b0361c2263fc5df7ab3dee7ce66b894a93ae5689f37a709dcf824",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/FixedSizeBufferTests.cs",
+    "sha256": "5f39ababded2b14153c2b7df0aba5621d48ffeb53005371ba6aad3896c37e080",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/FixedSizeBufferTests.cs",
+    "license": "MIT",
+    "method": "SimpleFixedBufferIndexingNoUnsafe",
+    "offset": 8841
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (14,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         System.Console.WriteLine(s.x[3]);\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"s.x\").WithLocation(14, 34),\n                // (18,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         System.Console.WriteLine(a[0].x[3]);\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"a[0].x\").WithLocation(18, 34)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-69475f2386fd6a1d5a37",
+  "kind": "spec",
+  "sourceText": "abstract class A\n{\n    public abstract void F();\n}\n\nabstract class B : A\n{\n    public void G() {}\n}\n\nclass C : B\n{\n    public override void F()\n    {\n        // Actual implementation of F\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "627b0690c7a654b1c837b715cefc39221395247deead49538f744cf2c59619ca",
+  "originalSource": "abstract class A\n{\n    public abstract void F();\n}\n\nabstract class B : A\n{\n    public void G() {}\n}\n\nclass C : B\n{\n    public override void F()\n    {\n        // Actual implementation of F\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "AbstractMethodImplementation"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "AbstractMethodImplementation",
+    "offsetInUnquotedMarkdown": 5099
+  }
+}

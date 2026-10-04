@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6c001da5aa024ce38f63",
+  "kind": "diagnostics",
+  "sourceText": "\nstatic class Extensions\n{\n    static private protected void SomeExtension(this string s) { } // error: no pp in static class\n}\n\nclass Client\n{\n    public static void M(string s)\n    {\n        s.SomeExtension(); // error: no accessible SomeExtension\n    }\n}\n",
+  "sourceSHA256": "8a1ef4f7b2efc5f1cc36aedd1df4857addcadbc72aeca490175f5c782867b02d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "VerifyPPExtension",
+    "offset": 38138
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1057",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,35): error CS1057: 'Extensions.SomeExtension(string)': static classes cannot contain protected members\n                //     static private protected void SomeExtension(this string s) { } // error: no pp in static class\n                Diagnostic(ErrorCode.ERR_ProtectedInStatic, \"SomeExtension\").WithArguments(\"Extensions.SomeExtension(string)\").WithLocation(4, 35),\n                // (11,11): error CS1061: 'string' does not contain a definition for 'SomeExtension' and no accessible extension method 'SomeExtension' accepting a first argument of type 'string' could be found (are you missing a using directive or an assembly reference?)\n                //         s.SomeExtension(); // error: no accessible SomeExtension\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"SomeExtension\").WithArguments(\"string\", \"SomeExtension\").WithLocation(11, 11)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

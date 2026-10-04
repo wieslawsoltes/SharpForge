@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3ad7d8a41491726a9bfc",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n[AttributeUsage(AttributeTargets.Parameter)]\nclass A : Attribute\n{\n    public int Prop { get; set; }\n}\nclass Program\n{\n    static void Main()\n    {\n        const int N = 10;\n        const int Unused = 20;\n        var lam = ([A(Prop = N)] int x) => { };\n        lam(100);\n    }\n}",
+  "sourceSHA256": "0b60428351e38c25e74eacbf3d5d737520c533d1522f00b5f84bd03ef54fd011",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "Lambda_ParameterAttribute_NamedArguments",
+    "offset": 249052
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,19): warning CS0219: The variable 'Unused' is assigned but its value is never used\n                //         const int Unused = 20;\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"Unused\").WithArguments(\"Unused\").WithLocation(12, 19)",
+  "unsupported": []
+}

@@ -4,18 +4,20 @@
  * argument is decided here from the closed type:
  *
  *   t.Member(...)  on a `T` constrained to an interface   ->  the implementing member of the closed type, called directly
+ *   T.Member(...), T.Property, a + b through a static     ->  the static member or operator of the closed type that
+ *     abstract member of an interface T is constrained to       implements it, called directly
  *   new T()                                               ->  creation of the closed type with its parameterless constructor
  *   default(T), T locals, T[]                             ->  the closed type (the type mapper closes every type it maps)
  *
- * Refused (SF2200) instead of miscompiled: converting a construction to `object` or calling an `object` member on
- * it - its run-time type name is the synthesized one, not `Box`1[System.Int32]` - and members that only dispatch
- * could reach (default interface members, explicit implementations inside a generic class).
+ * Source constructions preserve logical type identities beside their physical monomorphized owners. Framework
+ * constructions erased to a shared registry type still reject operations that would expose the erased identity.
  */
 import { TypeKind, SymbolKind, ConstructedNamedTypeSymbol } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { findImplementation } from '../../binder/interface-impl.js';
+import { constrainedTypeParameter } from '../../overload/interface-operators.js';
 import { n } from '../../codegen/semantic/node-factory.js';
-import {isByReference, indirectReference} from '../by-reference.js';
+import {sourceValueObjectOverride} from '../../codegen/semantic/object-slots.js';
 
 const toObjectConversions = new Set(['Boxing', 'ImplicitReference', 'Identity']);
 
@@ -30,13 +32,12 @@ export const GenericTranslation = Base =>
       return type?.typeKind === TypeKind.TypeParameter;
     }
     /**
-     * True for a construction whose run-time type name is not the .NET one: a closed construction of a source generic
-     * class (its image class has a synthesized name) or a framework generic that shares the construction over `object`.
+     * True for a framework construction that shares its runtime identity with the construction over `object`.
      */
     isConstruction(type) {
       const closed = this.closedType(type);
       if (!closed) return false;
-      return this.g.generics.isGenericClass(closed) || !!this.g.frameworkConstructions.registryConstruction(closed)?.erased;
+      return !!this.g.frameworkConstructions.registryConstruction(closed)?.erased;
     }
     /**
      * The member of the closed receiver type that a member reached through a type parameter stands for, as a symbol
@@ -93,14 +94,23 @@ export const GenericTranslation = Base =>
         if (definition.typeParameters?.length) {
           const typeArguments = method.typeArguments.map(argument => this.g.generics.closed(argument, node.syntax)),
             entry = this.genericLocalFunction(definition, typeArguments, node.syntax);
-          const value = this.callLocalFunctionEntry(entry, this.arguments(node, method));
-          return isByReference(method) ? indirectReference(value) : value;
+          return this.callLocalFunctionEntry(entry, this.arguments(node, method));
         }
       }
+      // `T.Member(...)`: a static abstract member of a constraint interface, implemented by the closed type.
+      if (method?.kind === SymbolKind.Method && !receiverType && this.isTypeParameter(node.constrainedTo)) {
+        const target = this.memberOfClosedReceiver(method, node.constrainedTo, node.syntax);
+        if (target !== method) return this.g.generics.withClosedTarget(() => super.exprCall({ ...node, method: target, constrainedTo: null }));
+      }
       if (method?.kind === SymbolKind.Method && method.methodKind !== MethodKind.LocalFunction && receiverType) {
+        const valueTarget = sourceValueObjectOverride(method, this.closedType(receiverType));
+        if (valueTarget && this.g.isSource(valueTarget)) {
+          return this.g.generics.withClosedTarget(() => super.exprCall({...node, method: valueTarget}));
+        }
         if (this.isTypeParameter(receiverType)) {
           const target = this.memberOfClosedReceiver(method, receiverType, node.syntax);
-          if (target !== method) return super.exprCall({ ...node, method: target });
+          // The target was chosen from the closed receiver type: what it asks for is not written in this body.
+          if (target !== method) return this.g.generics.withClosedTarget(() => super.exprCall({ ...node, method: target }));
         }
         if (this.isConstruction(receiverType) && !this.g.isSource(method) && !this.isFrameworkGenericMember(method))
           return this.unsupported(`'${method.toDisplayString()}' on a constructed generic type`, node.syntax);
@@ -108,14 +118,16 @@ export const GenericTranslation = Base =>
       return super.exprCall(node);
     }
     exprPropertyAccess(node) {
-      return super.exprPropertyAccess(this.closedProperty(node));
+      const closed = this.closedProperty(node);
+      return closed === node ? super.exprPropertyAccess(node) : this.g.generics.withClosedTarget(() => super.exprPropertyAccess(closed));
     }
     propertyReference(node) {
-      return super.propertyReference(this.closedProperty(node));
+      const closed = this.closedProperty(node);
+      return closed === node ? super.propertyReference(node) : this.g.generics.withClosedTarget(() => super.propertyReference(closed));
     }
     /** A property read or written through a type parameter, rebound to the property of the closed type. */
     closedProperty(node) {
-      const receiverType = node.receiver?.type;
+      const receiverType = node.receiver?.type ?? node.constrainedTo;
       if (!receiverType || !this.isTypeParameter(receiverType) || !node.property) return node;
       const target = this.memberOfClosedReceiver(node.property, receiverType, node.syntax);
       return target === node.property ? node : { ...node, property: target };
@@ -134,6 +146,25 @@ export const GenericTranslation = Base =>
       if (!this.types.isReference(imageType)) return this.defaultValue(imageType);
       return this.unsupported(`creating '${closed.toDisplayString()}' through a type parameter`, node.syntax);
     }
+    /**
+     * An operator node whose method is a static abstract operator of an interface, reached through the type parameter
+     * of an operand: the same node with the operator of the closed type that implements it.
+     */
+    closedOperator(node, operandTypes) {
+      const through = node.method ? constrainedTypeParameter(node.method, operandTypes, this.g.analysis.core) : null;
+      if (!through) return node;
+      const target = this.memberOfClosedReceiver(node.method, through, node.syntax);
+      return target === node.method ? node : { ...node, method: target };
+    }
+    exprUnary(node) {
+      const closed = this.closedOperator(node, [node.operand?.type]);
+      return closed === node ? super.exprUnary(node) : this.g.generics.withClosedTarget(() => super.exprUnary(closed));
+    }
+    /** `++x` / `x--` through a static abstract operator (lowering/members/operators.js computes the stepped value). */
+    stepped(node, value, type) {
+      const closed = this.closedOperator(node, [node.operand?.type]);
+      return closed === node ? super.stepped(node, value, type) : this.g.generics.withClosedTarget(() => super.stepped(closed, value, type));
+    }
     /** True for a reference conversion of a construction to `object`. */
     isConstructionToObject(node) {
       return (
@@ -151,6 +182,8 @@ export const GenericTranslation = Base =>
     }
     /** Reference equality compares the objects themselves: the conversions of its operands to `object` are dropped. */
     exprBinary(node) {
+      const closed = this.closedOperator(node, [node.left?.type, node.right?.type]);
+      if (closed !== node) return this.g.generics.withClosedTarget(() => super.exprBinary(closed));
       if ((node.operator !== '==' && node.operator !== '!=') || node.method) return super.exprBinary(node);
       const operand = side => (this.isConstructionToObject(side) ? side.operand : side);
       const left = operand(node.left),
@@ -169,6 +202,17 @@ export const GenericTranslation = Base =>
       if (!shared?.erased || value.legacyType === 'object') return value;
       const result = this.temp(value.legacyType, 'awaited');
       return n.sequence([result], [n.assign(n.local(result), value)], n.local(result));
+    }
+    /**
+     * In generic code a branch that a constant condition rules out is not lowered, as Roslyn does not emit it: it
+     * would ask for constructions .NET never creates (a recursive call with a larger type argument behind a
+     * constant that is false).
+     */
+    stmtIf(node) {
+      const constant = node.condition?.constantValue;
+      if (this.g.generics.active.isEmpty || typeof constant?.value !== 'boolean') return super.stmtIf(node);
+      const live = constant.value ? node.then : node.otherwise;
+      return live ? this.embedded(live) : n.noOp();
     }
     exprInterpolatedString(node) {
       for (const part of node.parts ?? []) {

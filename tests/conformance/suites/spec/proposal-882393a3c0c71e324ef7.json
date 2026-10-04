@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-882393a3c0c71e324ef7",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\n\npublic class Attr<T1> : Attribute { }\n\npublic class Program<T2>\n{\n    [Attr<T2>] // error\n    [Attr<List<T2>>] // error\n    void M() { }\n}",
+  "sourceSHA256": "2026f2f59bf7ce34dd5d8375150ef0319bd5ccd4151ede6f82c3482b26a9608a",
+  "target": "library",
+  "featureId": "csharp-11-0-generic-attributes",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/generic-attributes.md",
+    "sha256": "80f24f79c8fb3ad0a6ae00a997d6647dbece411d443bcf935163ba25ce12e349",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/generic-attributes.md",
+    "license": "NOASSERTION",
+    "offset": 2029
+  }
+}

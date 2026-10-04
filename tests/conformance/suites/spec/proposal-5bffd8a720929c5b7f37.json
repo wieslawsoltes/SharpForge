@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-5bffd8a720929c5b7f37",
+  "kind": "spec",
+  "sourceText": "fixed(byte* ptr = thing.GetPinnableReference())\n{ \n    // <BODY>\n}",
+  "sourceSHA256": "db6447c716146308fd1c60ddd57b60a2b531b791bfce1b781c0902acd2c04e6f",
+  "target": "library",
+  "featureId": "csharp-7-3-custom-fixed-statement",
+  "langVersion": "7.3",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.3/pattern-based-fixed.md",
+    "sha256": "d82206462b219c18f6ad7b035a925fb741570de59bd6e6c04726810dd14968b3",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/pattern-based-fixed.md",
+    "license": "NOASSERTION",
+    "offset": 3949
+  }
+}

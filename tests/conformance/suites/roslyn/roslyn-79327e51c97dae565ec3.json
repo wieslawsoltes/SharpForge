@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-79327e51c97dae565ec3",
+  "kind": "diagnostics",
+  "sourceText": "\npublic readonly struct S1{}\n",
+  "sourceSHA256": "349bbcac6aa15932b016c3d7b51bcc5aac67234638d5d7f57f8ecf6e4047c193",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_ReadOnlyStruct.cs",
+    "sha256": "801e0fb4a138c65b6d6993c2d56363bbcc9723b18371ce67b8a06b0238718451",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_ReadOnlyStruct.cs",
+    "license": "MIT",
+    "method": "BuildingAModuleRequiresIsReadOnlyAttributeToBeThere_Missing_SourceMethod",
+    "offset": 14519
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code, options: TestOptions.ReleaseModule)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0518",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,19): error CS0518: Predefined type 'System.Runtime.CompilerServices.IsReadOnlyAttribute' is not defined or imported\n                // public readonly struct S1{}\n                Diagnostic(ErrorCode.ERR_PredefinedTypeNotFound, \"S1\").WithArguments(\"System.Runtime.CompilerServices.IsReadOnlyAttribute\").WithLocation(2, 24)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

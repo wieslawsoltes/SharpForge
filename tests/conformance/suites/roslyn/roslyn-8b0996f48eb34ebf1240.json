@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8b0996f48eb34ebf1240",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static ref int M(in int arg1, in (int Alice, int Bob) arg2)\n    {\n        bool b = true;\n\n        if (b)\n        {\n            return ref arg1;\n        }\n        else\n        {\n            return ref arg2.Alice;\n        }\n    }\n}\n",
+  "sourceSHA256": "e5d846adc2045d97651b82f91bdadef6c0510b961d68f6cb0c49e86e033a0bde",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenInParametersTests.cs",
+    "sha256": "3dd7ab02ad53d49f5790678503b441f11393da95c6ca4e54ac9a4ee30296af53",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenInParametersTests.cs",
+    "license": "MIT",
+    "method": "InParamCannotReturnByOrdinaryRef",
+    "offset": 31216
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8333",
+        "severity": "error"
+      },
+      {
+        "code": "CS8334",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,24): error CS8333: Cannot return variable 'arg1' by writable reference because it is a readonly variable\n                //             return ref arg1;\n                Diagnostic(ErrorCode.ERR_RefReturnReadonlyNotField, \"arg1\").WithArguments(\"variable\", \"arg1\").WithLocation(10, 24),\n                // (14,24): error CS8334: Members of variable 'arg2' cannot be returned by writable reference because it is a readonly variable\n                //             return ref arg2.Alice;\n                Diagnostic(ErrorCode.ERR_RefReturnReadonlyNotField2, \"arg2.Alice\").WithArguments(\"variable\", \"arg2\").WithLocation(14, 24)\n            ",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

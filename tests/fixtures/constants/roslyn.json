@@ -1,0 +1,241 @@
+{
+  "runtime": ".NET 10.0.5",
+  "sourceSha256": {
+    "Program.cs": "B14809E56CAB3B381C3BD5059142DA9615D9811F7DC2F63EDD6F56FB89C38873",
+    "Fixtures.cs": "F5C8702DCADD26B7903D02A076D07F9429F50F9E054279CF7D6B22A3575FEED9",
+    "ConstantOracle.csproj": "C60D823D31B5D42786C579CEDFC433D41F22B981F650EF38AED93C84E7619A06"
+  },
+  "cases": [
+    {
+      "id": "Boolean",
+      "type": 2,
+      "blob": "01",
+      "value": true,
+      "srm": true
+    },
+    {
+      "id": "Character",
+      "type": 3,
+      "blob": "00D8",
+      "value": {
+        "utf16": [
+          55296
+        ]
+      },
+      "srm": {
+        "utf16": [
+          55296
+        ]
+      }
+    },
+    {
+      "id": "SignedByte",
+      "type": 4,
+      "blob": "80",
+      "value": -128,
+      "srm": -128
+    },
+    {
+      "id": "Byte",
+      "type": 5,
+      "blob": "FF",
+      "value": 255,
+      "srm": 255
+    },
+    {
+      "id": "SignedShort",
+      "type": 6,
+      "blob": "0080",
+      "value": -32768,
+      "srm": -32768
+    },
+    {
+      "id": "Short",
+      "type": 7,
+      "blob": "FFFF",
+      "value": 65535,
+      "srm": 65535
+    },
+    {
+      "id": "SignedInt",
+      "type": 8,
+      "blob": "00000080",
+      "value": -2147483648,
+      "srm": -2147483648
+    },
+    {
+      "id": "Int",
+      "type": 9,
+      "blob": "FFFFFFFF",
+      "value": 4294967295,
+      "srm": 4294967295
+    },
+    {
+      "id": "SignedLong",
+      "type": 10,
+      "blob": "0000000000000080",
+      "value": {
+        "integer": "-9223372036854775808"
+      },
+      "srm": {
+        "integer": "-9223372036854775808"
+      }
+    },
+    {
+      "id": "Long",
+      "type": 11,
+      "blob": "FFFFFFFFFFFFFFFF",
+      "value": {
+        "integer": "18446744073709551615"
+      },
+      "srm": {
+        "integer": "18446744073709551615"
+      }
+    },
+    {
+      "id": "Single",
+      "type": 12,
+      "blob": "0000807F",
+      "value": {
+        "number": "Infinity"
+      },
+      "srm": {
+        "number": "Infinity"
+      }
+    },
+    {
+      "id": "Double",
+      "type": 13,
+      "blob": "000000000000F0FF",
+      "value": {
+        "number": "-Infinity"
+      },
+      "srm": {
+        "number": "-Infinity"
+      }
+    },
+    {
+      "id": "NaN",
+      "type": 13,
+      "blob": "000000000000F8FF",
+      "value": {
+        "number": "-NaN"
+      },
+      "srm": {
+        "number": "-NaN"
+      }
+    },
+    {
+      "id": "NegativeZero",
+      "type": 13,
+      "blob": "0000000000000080",
+      "value": {
+        "number": "-0"
+      },
+      "srm": {
+        "number": "-0"
+      }
+    },
+    {
+      "id": "Text",
+      "type": 14,
+      "blob": "FFFE6100620000007A7A00D87800FFDF",
+      "value": {
+        "utf16": [
+          65279,
+          97,
+          98,
+          0,
+          31354,
+          55296,
+          120,
+          57343
+        ]
+      },
+      "srm": {
+        "utf16": [
+          65279,
+          97,
+          98,
+          0,
+          31354,
+          55296,
+          120,
+          57343
+        ]
+      }
+    },
+    {
+      "id": "Empty",
+      "type": 14,
+      "blob": "",
+      "value": {
+        "utf16": []
+      },
+      "srm": {
+        "utf16": []
+      }
+    },
+    {
+      "id": "NullString",
+      "type": 18,
+      "blob": "00000000",
+      "value": null,
+      "srm": null
+    },
+    {
+      "id": "NullObject",
+      "type": 18,
+      "blob": "00000000",
+      "value": null,
+      "srm": null
+    },
+    {
+      "id": "Enumeration",
+      "type": 10,
+      "blob": "0000000000000080",
+      "value": {
+        "integer": "-9223372036854775808"
+      },
+      "srm": {
+        "integer": "-9223372036854775808"
+      }
+    },
+    {
+      "id": "Optional.number",
+      "type": 8,
+      "blob": "D6FFFFFF",
+      "value": -42,
+      "srm": -42
+    },
+    {
+      "id": "Optional.letter",
+      "type": 3,
+      "blob": "7A7A",
+      "value": {
+        "utf16": [
+          31354
+        ]
+      },
+      "srm": {
+        "utf16": [
+          31354
+        ]
+      }
+    },
+    {
+      "id": "Optional.text",
+      "type": 18,
+      "blob": "00000000",
+      "value": null,
+      "srm": null
+    },
+    {
+      "id": "Optional.value",
+      "type": 18,
+      "blob": "00000000",
+      "value": null,
+      "srm": null
+    }
+  ]
+}

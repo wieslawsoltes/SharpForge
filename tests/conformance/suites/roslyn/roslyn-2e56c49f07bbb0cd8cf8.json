@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2e56c49f07bbb0cd8cf8",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct A<T>\n{\n    static A<A<T>> x;\n}\n\nstruct B<T>\n{\n    static A<B<T>> x;\n}\n\nstruct C<T>\n{\n    static D<T> x;\n}\nstruct D<T>\n{\n    static C<D<T>> x;\n}\n#pragma warning disable CS0067 // The event 'E<T>.x' is never used\nstruct E<T>\n{\n    static event E<E<T>> x;\n}\n",
+  "sourceSHA256": "f8f23633bbc2e9954a68ba71e7c6377eba9668e054575332bf7a49a641ddf20c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "StaticMemberExplosion",
+    "offset": 29275
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0523",
+        "severity": "error"
+      },
+      {
+        "code": "CS0523",
+        "severity": "error"
+      },
+      {
+        "code": "CS0523",
+        "severity": "error"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0523",
+        "severity": "error"
+      },
+      {
+        "code": "CS0066",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (14,17): error CS0523: Struct member 'C<T>.x' of type 'D<T>' causes a cycle in the struct layout\n                //     static D<T> x;\n                Diagnostic(ErrorCode.ERR_StructLayoutCycle, \"x\").WithArguments(\"C<T>.x\", \"D<T>\").WithLocation(14, 17),\n                // (18,20): error CS0523: Struct member 'D<T>.x' of type 'C<D<T>>' causes a cycle in the struct layout\n                //     static C<D<T>> x;\n                Diagnostic(ErrorCode.ERR_StructLayoutCycle, \"x\").WithArguments(\"D<T>.x\", \"C<D<T>>\").WithLocation(18, 20),\n                // (4,20): error CS0523: Struct member 'A<T>.x' of type 'A<A<T>>' causes a cycle in the struct layout\n                //     static A<A<T>> x;\n                Diagnostic(ErrorCode.ERR_StructLayoutCycle, \"x\").WithArguments(\"A<T>.x\", \"A<A<T>>\").WithLocation(4, 20),\n                // (9,20): warning CS0169: The field 'B<T>.x' is never used\n                //     static A<B<T>> x;\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"x\").WithArguments(\"B<T>.x\").WithLocation(9, 20),\n                // (4,20): warning CS0169: The field 'A<T>.x' is never used\n                //     static A<A<T>> x;\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"x\").WithArguments(\"A<T>.x\").WithLocation(4, 20),\n                // (18,20): warning CS0169: The field 'D<T>.x' is never used\n                //     static C<D<T>> x;\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"x\").WithArguments(\"D<T>.x\").WithLocation(18, 20),\n                // (14,17): warning CS0169: The field 'C<T>.x' is never used\n                //     static D<T> x;\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"x\").WithArguments(\"C<T>.x\").WithLocation(14, 17),\n                // (23,26): error CS0523: Struct member 'E<T>.x' of type 'E<E<T>>' causes a cycle in the struct layout\n                //     static event E<E<T>> x;\n                Diagnostic(ErrorCode.ERR_StructLayoutCycle, \"x\").WithArguments(\"E<T>.x\", \"E<E<T>>\").WithLocation(23, 26),\n                // (23,26): error CS0066: 'E<T>.x': event must be of a delegate type\n                //     static event E<E<T>> x;\n                Diagnostic(ErrorCode.ERR_EventNotDelegate, \"x\").WithArguments(\"E<T>.x\").WithLocation(23, 26)\n                ",
+  "unsupported": []
+}

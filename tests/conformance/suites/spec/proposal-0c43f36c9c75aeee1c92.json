@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-0c43f36c9c75aeee1c92",
+  "kind": "spec",
+  "sourceText": "partial class C\n{\n    // Okay because no definition is required here\n    partial void M1();\n\n    // Okay because M2 has a definition\n    private partial void M2();\n\n    // Error: partial method M3 must have a definition\n    private partial void M3();\n}\n\npartial class C\n{\n    private partial void M2() { }\n}",
+  "sourceSHA256": "302c9a92dbf77a5c70331426e2f0f48023affe6d00e5f7cfcd34633ac2f5c85d",
+  "target": "library",
+  "featureId": "csharp-9-0-partial-methods-with-returned-values",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/extending-partial-methods.md",
+    "sha256": "6152b1fd3ccc1c2b91306b6395d48bfb438428c54472c37fcb4de1545723d7df",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/extending-partial-methods.md",
+    "license": "NOASSERTION",
+    "offset": 4598
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6a884aa56ab011363a05",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\nclass NullCoalescingTest\n{\n    public static void Main()\n    {\n        int? a;\n        int c;\n        var x = (a = null) ?? (c = 123);\n        Console.WriteLine(c);\n    }\n}\n",
+  "sourceSHA256": "8a2cf46afb1feceffac1c7dbbf1f6af683a51735bd17e63e0fd54d818a686c2d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "AssignmentNullCoalescingOperator",
+    "offset": 27063
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,27): error CS0165: Use of unassigned local variable 'c'\n                //         Console.WriteLine(c);\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"c\").WithArguments(\"c\"),\n                // (7,14): warning CS0219: The variable 'a' is assigned but its value is never used\n                //         int? a;\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"a\").WithArguments(\"a\")",
+  "unsupported": []
+}

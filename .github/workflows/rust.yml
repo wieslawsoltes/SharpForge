@@ -1,15 +1,13 @@
 name: Rust and Wasm workspace
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
-  merge_group:
-    types: [checks_requested]
   workflow_dispatch:
 permissions:
   contents: read
+env:
+  CARGO_BUILD_JOBS: '1'
+  RUST_TEST_THREADS: '1'
 jobs:
   rust:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:

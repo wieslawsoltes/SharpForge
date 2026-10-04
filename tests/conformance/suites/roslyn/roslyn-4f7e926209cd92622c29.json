@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4f7e926209cd92622c29",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Threading.Tasks;\nclass C\n{\n    static void Main()\n    {\n        System.Console.Write(C.M().Result);\n    }\n    static async Task<int> M()\n    {\n        await Task.Delay(0);\n        var (x, y) = (1, 2);\n        return x + y;\n    }\n}\n",
+  "sourceSHA256": "369ac03fbe598d5ba9d739423748292f0bcb3da9f0ac4a75e2b78b8c0decffda",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "VerifyDeconstructionInAsync",
+    "offset": 279055
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "references: s_valueTupleRefs, options: TestOptions.DebugExe)",
+  "options": "(source, references: s_valueTupleRefs, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

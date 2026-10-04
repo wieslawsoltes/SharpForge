@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a5cced4f4cca52530455",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass Program\n{\n    [My(Value = 1 switch { 1 => 1, _ => 2 })]\n    public static void M1() { }\n\n    [My(Value = 1 switch { 1 => new A(), _ => new B() })]\n    public static void M2() { }\n\n    [My(Value = 1 switch { 1 => 1, _ => string.Empty })]\n    public static void M3() { }\n}\npublic class MyAttribute : Attribute\n{\n    public MyAttribute() { }\n    public int Value { get; set; }\n}\npublic class A\n{\n    public static implicit operator int(A a) => 4;\n}\npublic class B\n{\n    public static implicit operator int(B b) => 2;\n}\n",
+  "sourceSHA256": "39105ec22589135db48c43fe5eaeefdb4323a43e37726e0632507cd9381ae908",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "TargetTypedSwitch_Attribute_NamedArgument",
+    "offset": 152420
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0029",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,17): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                //     [My(Value = 1 switch { 1 => 1, _ => 2 })]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"1 switch { 1 => 1, _ => 2 }\").WithLocation(5, 17),\n                // (8,17): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                //     [My(Value = 1 switch { 1 => new A(), _ => new B() })]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"1 switch { 1 => new A(), _ => new B() }\").WithLocation(8, 17),\n                // (11,41): error CS0029: Cannot implicitly convert type 'string' to 'int'\n                //     [My(Value = 1 switch { 1 => 1, _ => string.Empty })]\n                Diagnostic(ErrorCode.ERR_NoImplicitConv, \"string.Empty\").WithArguments(\"string\", \"int\").WithLocation(11, 41)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f45d85204e46679901bd",
+  "kind": "diagnostics",
+  "sourceText": "\n    public class Program\n    {\n        static void Main(string[] args)\n        {\n            Test();\n        }\n\n        public static void Test()\n        {\n            object obj;\n\n            try\n            {\n                goto l3;\n\n                l1:\n                goto l2;\n\n                l3:\n                goto l1;\n\n\n                l2:\n\n                // Should be compile error\n                // 'obj' is uninitialized\n                obj.ToString();\n            }\n            finally\n            {\n                obj = 1;\n            }\n        }\n    }\n",
+  "sourceSHA256": "25a009dbc67eb2b7840e121fad9bb297910d9456fb31c563cce7536517e64012",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "AssignedInFinallyUsedInTry",
+    "offset": 244891
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (28,17): error CS0165: Use of unassigned local variable 'obj'\n                //                 obj.ToString();\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"obj\").WithArguments(\"obj\").WithLocation(28, 17)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

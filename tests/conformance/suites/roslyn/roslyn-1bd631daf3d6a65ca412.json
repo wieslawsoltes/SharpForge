@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1bd631daf3d6a65ca412",
+  "kind": "diagnostics",
+  "sourceText": "partial class C\n{\n    partial static C();\n    partial static C() { }\n}",
+  "sourceSHA256": "02eff2195c2a85e7ce89bb3fae82af728b8775ba69813fb07ef0625e4bbb9163",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "StaticPartialConstructor_02",
+    "offset": 40427
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0267",
+        "severity": "error"
+      },
+      {
+        "code": "CS0267",
+        "severity": "error"
+      },
+      {
+        "code": "CS0267",
+        "severity": "error"
+      },
+      {
+        "code": "CS0267",
+        "severity": "error"
+      },
+      {
+        "code": "CS0111",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,5): error CS0267: The 'partial' modifier can only appear immediately before 'class', 'record', 'struct', 'interface', 'event', an instance constructor name, or a method or property return type.\n            //     partial static C();\n            Diagnostic(ErrorCode.ERR_PartialMisplaced, \"partial\").WithLocation(3, 5),\n            // (3,5): error CS0267: The 'partial' modifier can only appear immediately before 'class', 'record', 'struct', 'interface', 'event', an instance constructor name, or a method or property return type.\n            //     partial static C();\n            Diagnostic(ErrorCode.ERR_PartialMisplaced, \"partial\").WithLocation(3, 5),\n            // (4,5): error CS0267: The 'partial' modifier can only appear immediately before 'class', 'record', 'struct', 'interface', 'event', an instance constructor name, or a method or property return type.\n            //     partial static C() { }\n            Diagnostic(ErrorCode.ERR_PartialMisplaced, \"partial\").WithLocation(4, 5),\n            // (4,5): error CS0267: The 'partial' modifier can only appear immediately before 'class', 'record', 'struct', 'interface', 'event', an instance constructor name, or a method or property return type.\n            //     partial static C() { }\n            Diagnostic(ErrorCode.ERR_PartialMisplaced, \"partial\").WithLocation(4, 5),\n            // (4,20): error CS0111: Type 'C' already defines a member called 'C' with the same parameter types\n            //     partial static C() { }\n            Diagnostic(ErrorCode.ERR_MemberAlreadyExists, \"C\").WithArguments(\"C\", \"C\").WithLocation(4, 20)",
+  "unsupported": []
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "tasks": {
+    "a02:bench:complexity": {
+      "description": "Compile time and inference work for chained and nested expressions, by depth",
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "packages/compiler/bench/compile-complexity.bench.js"
+          ]
+        }
+      ]
+    },
+    "a02:bench:compile": {
+      "description": "Compile time of compile() on the bench corpus and on 5,000-line synthetic programs",
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "--expose-gc",
+            "packages/compiler/bench/compile-time.bench.js"
+          ]
+        }
+      ]
+    }
+  }
+}

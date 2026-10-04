@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-43bd30bc99ee945f24bb",
+  "kind": "diagnostics",
+  "sourceText": "assert(null, false);\nassert(\"\", false);\nassert(\"a\", false);\nassert(\"aa\", false);\nassert(\"text/xml\");\nassert(\"text/css\");\nassert(\"text/csv\");\nassert(\"image/gif\");\nassert(\"image/png\");\nassert(\"text/html\");\nassert(\"text/plain\");\nassert(\"image/jpeg\");\nassert(\"application/pdf\");\nassert(\"application/xml\");\nassert(\"application/zip\");\nassert(\"application/grpc\");\nassert(\"application/json\");\nassert(\"multipart/form-data\");\nassert(\"application/javascript\");\nassert(\"application/octet-stream\");\nassert(\"text/html; charset=utf-8\");\nassert(\"text/plain; charset=utf-8\");\nassert(\"application/json; charset=utf-8\");\nassert(\"application/x-www-form-urlencoded\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, bool expected = true)\n{\n    if (C.M(input) != expected)\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static bool M(string contentTypeValue)\n    {\n        switch (contentTypeValue)\n        {\n            case \"text/xml\":\n            case \"text/css\":\n            case \"text/csv\":\n            case \"image/gif\":\n            case \"image/png\":\n            case \"text/html\":\n            case \"text/plain\":\n            case \"image/jpeg\":\n            case \"application/pdf\":\n            case \"application/xml\":\n            case \"application/zip\":\n            case \"application/grpc\":\n            case \"application/json\":\n            case \"multipart/form-data\":\n            case \"application/javascript\":\n            case \"application/octet-stream\":\n            case \"text/html; charset=utf-8\":\n            case \"text/plain; charset=utf-8\":\n            case \"application/json; charset=utf-8\":\n            case \"application/x-www-form-urlencoded\":\n                return true;\n        }\n        return false;\n    }\n}",
+  "sourceSHA256": "8fde71da4313dce2c01eb7d9083d9e15eb90dd6253914b6672c2b35130de3a8b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "ContentType",
+    "offset": 87759
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

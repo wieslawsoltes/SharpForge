@@ -1,8 +1,9 @@
+import {beginHeapCollection, endHeapCollection} from './heap-events.js';
 import {forEachValueReference} from './value-references.js';
-import {isReference} from './managed-fault.js';
 
-/** Trace generation-checked handles and sweep unreachable records without moving them. */
-export function collectHeap(heap, extraRoots = []) {
+/** Existing non-moving mark/sweep policy, shared by standalone and VM heaps. */
+export function collectHeap(heap, extraRoots, isReference) {
+  beginHeapCollection(heap);
   heap.mutationRevision++;
   const start = performance.now();
   if (heap.marks.length < heap.records.length) {
@@ -12,75 +13,63 @@ export function collectHeap(heap, extraRoots = []) {
     heap.marks.fill(0);
     heap.markEpoch = 1;
   }
-  const marked = heap.marks;
-  const epoch = heap.markEpoch;
-  const work = heap.markWork;
+  const marked = heap.marks, epoch = heap.markEpoch, work = heap.markWork;
   work.length = 0;
-  const metrics = {rootsScanned: 0, edgesScanned: 0, markedObjects: 0};
-  const mark = value => {
-    const owned = value.heapOwner === undefined || value.heapOwner === heap.handleOwner;
-    if (!owned || heap.generations[value.h] !== value.g || !heap.records[value.h] || marked[value.h] === epoch) return;
-    marked[value.h] = epoch;
-    metrics.markedObjects++;
-    work.push(value.h);
+  let rootsScanned = 0, edgesScanned = 0, markedObjects = 0;
+  const add = value => {
+    if (isReference(value) && heap.generations[value.h] === value.g && heap.records[value.h] && marked[value.h] !== epoch) {
+      marked[value.h] = epoch;
+      markedObjects++;
+      work.push(value.h);
+    }
   };
-  const add = value => forEachValueReference(value, mark);
-  for (const roots of [heap.rootProvider(), heap.pins, extraRoots]) {
-    for (const value of roots) {
-      metrics.rootsScanned++;
-      add(value);
-    }
-  }
-  for (const handle of heap.handles.values()) {
-    if (!handle.weak) {
-      metrics.rootsScanned++;
-      add(handle.value);
-    }
-  }
+  const visit = value => {
+    rootsScanned++;
+    forEachValueReference(value, add);
+  };
+  const provided = heap.rootProvider(visit);
+  if (provided !== undefined) for (const value of provided) visit(value);
+  for (const value of heap.pins) visit(value);
+  for (const value of extraRoots) visit(value);
+  for (const handle of heap.handles.values()) if (!handle.weak) visit(handle.value);
   while (work.length) {
     const record = heap.records[work.pop()];
-    if (record.kind === 'string') continue;
-    for (const value of record.data) {
-      metrics.edgesScanned++;
-      add(value);
+    if (record.kind !== 'string' && !ArrayBuffer.isView(record.data)) for (const value of record.data) {
+      edgesScanned++;
+      forEachValueReference(value, add);
     }
   }
   const markEnd = performance.now();
-  let objects = 0;
-  let bytes = 0;
+  let objects = 0, bytes = 0;
   for (let index = 0; index < heap.records.length; index++) {
     const record = heap.records[index];
-    if (!record || marked[index] === epoch) continue;
-    objects++;
-    bytes += record.size;
-    heap.records[index] = null;
-    heap.free.push(index);
-    heap.snapshotRecords.delete(index);
-  }
-  for (const handle of heap.handles.values()) {
-    const value = handle.value;
-    if (handle.weak && isReference(value) && (heap.generations[value.h] !== value.g || !heap.records[value.h])) {
-      handle.value = null;
+    if (record && marked[index] !== epoch) {
+      objects++;
+      bytes += record.size;
+      heap.records[index] = null;
+      heap.free.push(index);
     }
   }
-  return finishCollection(heap, {start, markEnd, objects, bytes, ...metrics});
-}
-
-function finishCollection(heap, metrics) {
+  for (const handle of heap.handles.values()) {
+    if (handle.weak && isReference(handle.value) &&
+        (heap.generations[handle.value.h] !== handle.value.g || !heap.records[handle.value.h])) handle.value = null;
+  }
   const stats = heap.stats;
-  stats.rootsScanned = metrics.rootsScanned;
-  stats.edgesScanned = metrics.edgesScanned;
-  stats.markedObjects = metrics.markedObjects;
-  stats.markMs = metrics.markEnd - metrics.start;
-  stats.sweepMs = performance.now() - metrics.markEnd;
-  stats.liveBytes -= metrics.bytes;
-  stats.liveObjects -= metrics.objects;
-  stats.freedBytes += metrics.bytes;
-  stats.freedObjects += metrics.objects;
+  stats.rootsScanned = rootsScanned;
+  stats.edgesScanned = edgesScanned;
+  stats.markedObjects = markedObjects;
+  stats.markMs = markEnd - start;
+  stats.sweepMs = performance.now() - markEnd;
+  stats.liveBytes -= bytes;
+  stats.liveObjects -= objects;
+  stats.freedBytes += bytes;
+  stats.freedObjects += objects;
   stats.collections++;
-  stats.lastPauseMs = performance.now() - metrics.start;
+  stats.lastPauseMs = performance.now() - start;
   stats.totalPauseMs += stats.lastPauseMs;
   stats.maxPauseMs = Math.max(stats.maxPauseMs, stats.lastPauseMs);
   heap.threshold = Math.min(heap.maxBytes, Math.max(64 * 1024, stats.liveBytes * 2 + 1024));
-  return {...stats, freedThisCollection: metrics.objects, bytesThisCollection: metrics.bytes};
+  const result = {...stats, freedThisCollection: objects, bytesThisCollection: bytes};
+  endHeapCollection(heap, result);
+  return result;
 }

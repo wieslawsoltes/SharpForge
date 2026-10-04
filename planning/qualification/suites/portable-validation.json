@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "implementationCommit": "c3ebb535c39f241b369089f8a5b058f6c5b1a2f6",
+  "policy": "Executed sequentially through /tmp/sharpforge-project4-validation.py; no native or imported-program execution",
+  "portable": {
+    "command": "node --test --test-concurrency=1 tests/conformance/suites/extraction.test.js tests/conformance/suites/corpus.test.js",
+    "tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0
+  },
+  "structure": {
+    "command": "node scripts/quality/check-structure.js --strict",
+    "exitCode": 1,
+    "preExistingViolations": 257,
+    "ownViolations": 0,
+    "fix": "Split one string literal without changing its value"
+  },
+  "diff": {
+    "command": "git diff HEAD^ HEAD --check",
+    "exitCode": 0
+  },
+  "nativePlatformQualification": "unmeasured"
+}

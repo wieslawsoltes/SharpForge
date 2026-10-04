@@ -1,3 +1,4 @@
+import {declareVarargsTypes} from './varargs-types.js';
 /**
  * The predefined types the type-system modules reason about, resolved once against the core library of a compilation
  * (the framework registry bridge): `core.int`, `core.object`, `core.nullableOf(T)`, `core.keyword('ulong')`...
@@ -12,11 +13,15 @@ import { Accessibility } from './types.js';
 import { declareSpanTypes } from './span-types.js';
 import { declareIndexRangeTypes } from './index-range-types.js';
 import { declareAsyncEnumeration } from './async-enumeration.js';
+import { declareAwaiterTypes } from './awaiter-types.js';
+import { declareFormattableTypes } from './formattable-types.js';
 import { declareExpressionTreeTypes } from './expression-tree-types.js';
 import { declareCoreTypeRelations } from './core-type-relations.js';
 import { declareExceptionTypes } from './exception-types.js';
 import { declareAttributeTypes } from './attribute-types.js';
 import { declareArrayMembers } from './array-members.js';
+import { declareComparisonInterfaces } from './comparison-interfaces.js';
+import { declareNumericConstants } from './numeric-constants.js';
 
 const keywordNames = [
   'object',
@@ -74,18 +79,23 @@ export class CoreTypes {
     this.ireadOnlyListT = bridge.coreType('System_Collections_Generic_IReadOnlyList_T');
     this.ireadOnlyCollectionT = bridge.coreType('System_Collections_Generic_IReadOnlyCollection_T');
     this.augment();
+    declareNumericConstants(this);
     declareExceptionTypes(this);
+    declareVarargsTypes(bridge);
     Object.assign(this, declareSpanTypes(this), declareIndexRangeTypes(this), declareCoreTypeRelations(this));
     this.task = bridge.coreType('System_Threading_Tasks_Task');
     this.taskT = bridge.coreType('System_Threading_Tasks_Task_T');
     this.valueTask = bridge.coreType('System_Threading_Tasks_ValueTask');
     this.valueTaskT = bridge.coreType('System_Threading_Tasks_ValueTask_T');
     declareAsyncEnumeration(this);
+    declareAwaiterTypes(this);
+    declareFormattableTypes(this);
     declareExpressionTreeTypes(this);
     this.type = bridge.coreType('System_Type');
     this.attribute = bridge.coreType('System_Attribute');
     declareAttributeTypes(this);
     declareArrayMembers(this);
+    Object.assign(this, declareComparisonInterfaces(this));
   }
   /**
    * Members every C# program may use but the closed registry does not list: the System.Object surface (so user types
@@ -121,7 +131,15 @@ export class CoreTypes {
     const V = DeclarationModifiers.Virtual,
       S = DeclarationModifiers.Static,
       o = this.object;
-    for (const m of o.getMembers('ToString')) m.modifiers |= V;
+    // Registry builtins may already declare these slots before augmentation; retain their exact virtual contract.
+    for (const [name, result, parameters] of [['ToString', this.string, []], ['Equals', this.bool, [o]], ['GetHashCode', this.int, []]]) {
+      for (const m of o.getMembers(name)) {
+        if (m.kind === 'Method' && !m.isStatic && !m.arity && m.returnType === result &&
+            m.parameters.length === parameters.length && m.parameters.every((parameter, index) => parameter.type === parameters[index])) {
+          m.modifiers |= V;
+        }
+      }
+    }
     method(o, 'ToString', this.string, [], V);
     method(o, 'Equals', this.bool, [['obj', o]], V);
     method(o, 'GetHashCode', this.int, [], V);
@@ -171,6 +189,14 @@ export class CoreTypes {
           new PropertySymbol({ name, type, getMethod: get, declaredAccessibility: Accessibility.Public, isImplicitlyDeclared: true }),
         );
       };
+      n.addMember(new MethodSymbol({
+        name: '.ctor',
+        methodKind: MethodKind.Constructor,
+        returnType: this.void,
+        parameters: [new ParameterSymbol({name: 'value', type: t})],
+        declaredAccessibility: Accessibility.Public,
+        isImplicitlyDeclared: true,
+      }));
       getter('HasValue', this.bool);
       getter('Value', t);
       n.addMember(

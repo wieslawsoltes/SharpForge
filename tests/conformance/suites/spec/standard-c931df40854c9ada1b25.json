@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-c931df40854c9ada1b25",
+  "kind": "spec",
+  "sourceText": "public class Point\n{\n    public int X { get; set; } // Automatically implemented\n    public int Y { get; set; } // Automatically implemented\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "6b31c2617674c90c3d6d5e2d78bf5bf3d1340e4e523b65ceb2d44e4b43e6b46c",
+  "originalSource": "public class Point\n{\n    public int X { get; set; } // Automatically implemented\n    public int Y { get; set; } // Automatically implemented\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "AutomaticProperties1"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "AutomaticProperties1",
+    "offsetInUnquotedMarkdown": 187554
+  }
+}

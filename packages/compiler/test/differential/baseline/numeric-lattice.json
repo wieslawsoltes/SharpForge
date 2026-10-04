@@ -3,6 +3,7 @@
   "numeric-lattice/cs0023-negate-ulong": ["diagnostics", "warnings"],
   "numeric-lattice/cs0031-byte-constant": ["diagnostics"],
   "numeric-lattice/cs0034-ulong-plus-int": ["diagnostics", "warnings"],
-  "numeric-lattice/cs0220-checked-constant-overflow": ["warnings"],
-  "numeric-lattice/cs0266-narrowing": ["diagnostics", "warnings"]
+  "numeric-lattice/cs0220-checked-constant-overflow": ["diagnostics", "warnings"],
+  "numeric-lattice/cs0266-narrowing": ["diagnostics", "warnings"],
+  "numeric-lattice/promotion-and-widths": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

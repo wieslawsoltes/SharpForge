@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bd1587f124bebdc6b490",
+  "kind": "diagnostics",
+  "sourceText": "public class D : C, B { }",
+  "sourceSHA256": "4374c20ea05f8be5037bdd7895360be86059cf154b3b13c6532000db1e6fc08a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "sha256": "1362359003a56088beb732c1b01d57e4b0e4b8b408037adca585b20ae29b4f98",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "license": "MIT",
+    "method": "MissingAssemblyReference02",
+    "offset": 171695
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { new CSharpCompilationReference(B), new CSharpCompilationReference(C) }, assemblyName: \"D\")",
+  "options": "(@\"public class D : C, B { }\", references: new[] { new CSharpCompilationReference(B), new CSharpCompilationReference(C) }, assemblyName: \"D\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0012",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (1,14): error CS0012: The type 'A' is defined in an assembly that is not referenced. You must add a reference to assembly 'A, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.\n                // public class D : C, B { }\n                Diagnostic(ErrorCode.ERR_NoTypeDef, \"D\").WithArguments(\"A\", \"A, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

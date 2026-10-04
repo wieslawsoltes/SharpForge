@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-54f969344082e8bef6c1",
+  "kind": "spec",
+  "sourceText": "interface IInteger\n{\n    void Add(int i);\n}\n\ninterface IDouble\n{\n    void Add(double d);\n}\n\ninterface INumber : IInteger, IDouble {}\n\nclass C\n{\n    void Test(INumber n)\n    {\n        n.Add(1);             // Invokes IInteger.Add\n        n.Add(1.0);           // Only IDouble.Add is applicable\n        ((IInteger)n).Add(1); // Only IInteger.Add is a candidate\n        ((IDouble)n).Add(1);  // Only IDouble.Add is a candidate\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "19935fab6f6bc5d4059233b92f1628b035a4dfdedfbf8ebf0066c5e94b81574a",
+  "originalSource": "interface IInteger\n{\n    void Add(int i);\n}\n\ninterface IDouble\n{\n    void Add(double d);\n}\n\ninterface INumber : IInteger, IDouble {}\n\nclass C\n{\n    void Test(INumber n)\n    {\n        n.Add(1);             // Invokes IInteger.Add\n        n.Add(1.0);           // Only IDouble.Add is applicable\n        ((IInteger)n).Add(1); // Only IInteger.Add is a candidate\n        ((IDouble)n).Add(1);  // Only IDouble.Add is a candidate\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "InterfaceMemberAccess2"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-interfaces",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/interfaces.md",
+    "sha256": "bcdf69f454a7bd5894c0b08364553fc6587a0a6ee444a93bc91c58138ff95f53",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/interfaces.md",
+    "license": "MIT",
+    "example": "InterfaceMemberAccess2",
+    "offsetInUnquotedMarkdown": 32862
+  }
+}

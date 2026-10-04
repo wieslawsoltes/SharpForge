@@ -211,6 +211,5 @@ regression batch and clean-checkout check. The expected store now has 58 native
 records across the three pinned platforms. This qualifies the reference harness,
 not SharpForge feature parity.
 
-Ordinary pull requests run the shared core check only. Native reference jobs run
-after relevant main changes, by manual dispatch, or on pull requests explicitly
-labelled `full-ci`, following the main branch's reduced-check policy.
+Ordinary pull requests run the shared core check only. Native reference jobs run only by explicit manual dispatch, serially across
+platforms, following the [validation schedule](serial-validation.md).

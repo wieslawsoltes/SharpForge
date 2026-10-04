@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-82f082f400eb05acdbfa",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    private int i;\n    void M()\n    {\n        System.Console.Write(this == (1, 1));\n        System.Console.Write((1, 1) == this);\n    }\n    public static implicit operator (int, int)(C c)\n    {\n        return (c.i, c.i);\n    }\n    C(int i) { this.i = i; }\n}\n",
+  "sourceSHA256": "2bae3417de4ad3e562c6a486f440ac609b707e15ec5692549599aecd9b23362a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestEqualityOfTypeConvertingToTuple",
+    "offset": 112671
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,30): error CS0019: Operator '==' cannot be applied to operands of type 'C' and '(int, int)'\n                //         System.Console.Write(this == (1, 1));\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"this == (1, 1)\").WithArguments(\"==\", \"C\", \"(int, int)\").WithLocation(7, 30),\n                // (8,30): error CS0019: Operator '==' cannot be applied to operands of type '(int, int)' and 'C'\n                //         System.Console.Write((1, 1) == this);\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(1, 1) == this\").WithArguments(\"==\", \"(int, int)\", \"C\").WithLocation(8, 30)\n                ",
+  "unsupported": []
+}

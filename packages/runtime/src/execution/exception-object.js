@@ -1,8 +1,20 @@
-import {ManagedFault} from '../heap.js';
-import {exceptionTypeName, exceptionHResult} from './exception-types.js';
+import {
+  ManagedFault
+} from '../heap.js';
+import {
+  exceptionTypeName,
+  exceptionHResult
+} from './exception-types.js';
 
-import {exceptionFields, exceptionSlots} from './exception-layout.js';
-export {exceptionFields, exceptionSlots} from './exception-layout.js';
+import {
+  exceptionFields,
+  exceptionSlots
+} from './exception-layout.js';
+export {
+  exceptionFields,
+  exceptionSlots
+}
+from './exception-layout.js';
 
 function isException(vm, reference) {
   const record = vm.heap.get(reference);
@@ -62,14 +74,14 @@ export function exceptionField(vm, reference, name) {
   if (name !== 'Data' || record.data[slot] !== null) return record.data[slot];
   return vm.heap.withRoots([reference], () => {
     const data = vm.heap.allocate('exception-data', 'System.Collections.Hashtable', []);
-    vm.heap.writeData(reference, slot, data);
+    writeExceptionSlot(vm, reference, slot, data);
     return data;
   });
 }
 
 export function setExceptionHResult(vm, reference, value) {
   recordFor(vm, reference);
-  vm.heap.writeData(reference, exceptionSlots.HResult, Number(value) | 0);
+  writeExceptionSlot(vm, reference, exceptionSlots.HResult, Number(value) | 0);
 }
 
 /** Plain owned records only: no frame objects, methods, closures or native stacks. */
@@ -77,10 +89,17 @@ export function managedStackTrace(vm) {
   return [...vm.frames].reverse().filter(frame => !frame.filterSearch).map(frame => {
     if (frame.method) return {
       method: frame.method.owner + '::' + frame.method.name,
-      methodToken: frame.method.token, ilOffset: frame.lastOffset
+      methodToken: frame.method.token,
+      ilOffset: frame.lastOffset
     };
-    return {method: vm.image.methods[frame.methodId].qualifiedName,
-      methodId: frame.methodId, instruction: frame.pc - 1, point: frame.point ? {...frame.point} : null};
+    return {
+      method: vm.image.methods[frame.methodId].qualifiedName,
+      methodId: frame.methodId,
+      instruction: frame.pc - 1,
+      point: frame.point ? {
+        ...frame.point
+      } : null
+    };
   });
 }
 
@@ -93,16 +112,25 @@ export function exceptionStackTrace(vm, reference) {
 
 /** Materialize a runtime fault and record this throw unless it is a rethrow/EDI continuation. */
 export function prepareException(vm, fault) {
-  fault.frames ??= managedStackTrace(vm);
   if (!fault.reference) {
     const inner = fault.innerException?.reference ?? null;
-    fault.reference = vm.heap.withRoots([inner], () => createException(vm, fault.name, vm.heap.string(fault.message), inner));
+    try {
+      fault.reference = vm.heap.withRoots([inner], () => createException(vm, fault.name, vm.heap.string(fault.message), inner));
+    } catch (failure) {
+      if (exceptionTypeName(fault.name) !== 'System.OutOfMemoryException') throw failure;
+      // Materializing an allocation failure must not replace its identity with a secondary allocator failure.
+      fault.frames ??= managedStackTrace(vm);
+      fault.fatal = true;
+      throw fault;
+    }
   }
   recordFor(vm, fault.reference);
   if (!fault.preserveExceptionTrace || exceptionField(vm, fault.reference, '_stackTrace') === null) {
-    const frames = fault.dispatchTrace ? [...fault.dispatchTrace, {previousThrow: true}, ...managedStackTrace(vm)] : managedStackTrace(vm);
+    const frames = fault.dispatchTrace ? [...fault.dispatchTrace, {
+      previousThrow: true
+    }, ...managedStackTrace(vm)] : managedStackTrace(vm);
     fault.frames = frames;
-    vm.heap.writeData(fault.reference, exceptionSlots._stackTrace, frames);
+    writeExceptionSlot(vm, fault.reference, exceptionSlots._stackTrace, frames);
   } else {
     fault.frames = exceptionField(vm, fault.reference, '_stackTrace');
   }
@@ -136,4 +164,11 @@ export function exceptionText(vm, reference) {
   const message = vm.value(record.data[exceptionSlots.Message]);
   const trace = exceptionStackTrace(vm, reference);
   return record.methodTable.name + (message ? ': ' + message : '') + (trace === null ? '' : '\n' + trace);
+}
+
+/** Change one managed field through the heap mutation and allocation barrier. */
+export function writeExceptionSlot(vm, reference, slot, value) {
+  const data = [...vm.heap.get(reference).data];
+  data[slot] = value;
+  vm.heap.replaceData(reference, data);
 }

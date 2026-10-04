@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-80aab741265713897ddc",
+  "kind": "diagnostics",
+  "sourceText": "\ninterface I<TA, TB> where TB : TA\n{\n   (TA returnA, TB returnB) M((TA paramA, TB paramB) x);\n}\n\nclass C : I<(int b, int a), (int a, int b)>\n{\n    public virtual ((int, int) x, (int, int) y) M(((int, int), (int, int)) x)\n    {\n        throw new System.Exception();\n    }\n}\n\nclass D : C, I<(int a, int b), (int c, int d)>\n{\n    public override ((int b, int a), (int b, int a)) M(((int a, int b), (int b, int a)) y)\n    {\n        return y;\n    }\n}\n",
+  "sourceSHA256": "98dab991f9247f695a79b3817ad28b374d8e547326553145af7ecb2a0481a449",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "OverrideGenericInterfaceWithDifferentNames",
+    "offset": 427683
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8141",
+        "severity": "error"
+      },
+      {
+        "code": "CS8139",
+        "severity": "error"
+      },
+      {
+        "code": "CS8141",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,49): error CS8141: The tuple element names in the signature of method 'C.M(((int, int), (int, int)))' must match the tuple element names of interface method 'I<(int b, int a), (int a, int b)>.M(((int b, int a) paramA, (int a, int b) paramB))' (including on the return type).\n                //     public virtual ((int, int) x, (int, int) y) M(((int, int), (int, int)) x)\n                Diagnostic(ErrorCode.ERR_ImplBadTupleNames, \"M\").WithArguments(\"C.M(((int, int), (int, int)))\", \"I<(int b, int a), (int a, int b)>.M(((int b, int a) paramA, (int a, int b) paramB))\").WithLocation(9, 49),\n                // (17,54): error CS8139: 'D.M(((int a, int b), (int b, int a)))': cannot change tuple element names when overriding inherited member 'C.M(((int, int), (int, int)))'\n                //     public override ((int b, int a), (int b, int a)) M(((int a, int b), (int b, int a)) y)\n                Diagnostic(ErrorCode.ERR_CantChangeTupleNamesOnOverride, \"M\").WithArguments(\"D.M(((int a, int b), (int b, int a)))\", \"C.M(((int, int), (int, int)))\").WithLocation(17, 54),\n                // (17,54): error CS8141: The tuple element names in the signature of method 'D.M(((int a, int b), (int b, int a)))' must match the tuple element names of interface method 'I<(int a, int b), (int c, int d)>.M(((int a, int b) paramA, (int c, int d) paramB))' (including on the return type).\n                //     public override ((int b, int a), (int b, int a)) M(((int a, int b), (int b, int a)) y)\n                Diagnostic(ErrorCode.ERR_ImplBadTupleNames, \"M\").WithArguments(\"D.M(((int a, int b), (int b, int a)))\", \"I<(int a, int b), (int c, int d)>.M(((int a, int b) paramA, (int c, int d) paramB))\").WithLocation(17, 54)\n                ",
+  "unsupported": []
+}

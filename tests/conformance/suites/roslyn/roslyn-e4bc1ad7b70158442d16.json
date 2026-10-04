@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e4bc1ad7b70158442d16",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C3\n{\n    public static void Main()\n    {\n        \"x\".M1((1, null, 1, null, 1, null, 1, null, 1, null));\n    }\n}\n",
+  "sourceSHA256": "975971217f3cac2769d8ac776e9b81bdae1ee2b7d78636bfbe60ccaecc6503f8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "LongLiteralsAndAmbiguousVT_02",
+    "offset": 748529
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "references: new[] { comp1.ToMetadataReference(), comp2.ToMetadataReference() },\n                parseOptions: TestOptions.Regular,\n                options: TestOptions.DebugExe)",
+  "options": "(source3,\n                references: new[] { comp1.ToMetadataReference(), comp2.ToMetadataReference() },\n                parseOptions: TestOptions.Regular,\n                options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8356",
+        "severity": "error"
+      },
+      {
+        "code": "CS8356",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,16): error CS8356: Predefined type 'System.ValueTuple`3' is declared in multiple referenced assemblies: 'comp1, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' and 'comp2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'\n                //         \"x\".M1((1, null, 1, null, 1, null, 1, null, 1, null));\n                Diagnostic(ErrorCode.ERR_PredefinedTypeAmbiguous, \"(1, null, 1, null, 1, null, 1, null, 1, null)\").WithArguments(\"System.ValueTuple`3\", \"comp1, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\", \"comp2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\").WithLocation(6, 16),\n                // (6,16): error CS8356: Predefined type 'System.ValueTuple`8' is declared in multiple referenced assemblies: 'comp1, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' and 'comp2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'\n                //         \"x\".M1((1, null, 1, null, 1, null, 1, null, 1, null));\n                Diagnostic(ErrorCode.ERR_PredefinedTypeAmbiguous, \"(1, null, 1, null, 1, null, 1, null, 1, null)\").WithArguments(\"System.ValueTuple`8\", \"comp1, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\", \"comp2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\").WithLocation(6, 16)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

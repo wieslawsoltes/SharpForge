@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6053a8aefd2f5895d838",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C\n{\n    public delegate R RefFunc<A, R>(ref A a);\n    public static void Main()\n    {\n        int failcount = 0;\n        failcount += Equal(M((char?)null, (ref int x) => \"hi\"), typeof(int), typeof(string)); //nullable lifted\n    }\n    public static Type[] M<T, U>(T? t, RefFunc<T, U> f) where T : struct\n    {\n        return new Type[] { typeof(T), typeof(U) };\n    }\n    public static int Equal(Type[] actual, params Type[] expected)\n    {\n        return 1;\n    }\n}\n",
+  "sourceSHA256": "ec66095c6b0cce9048ceb1829e89d5cd63aeeda92fee39901f15b0f258423953",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "sha256": "dae53259abfabce8d6076c19e32fbeece50934d98a2aa892d9416a8e94b054d4",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "license": "MIT",
+    "method": "NullableAsArgsForTypeParameter",
+    "offset": 230845
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\nclass C\n{\n    public delegate R RefFunc<A, R>(ref A a);\n    public static void Main()\n    {\n        int failcount = 0;\n        failcount += Equal(M((char?)null, (ref int x) => \"\"hi\"\"), typeof(int), typeof(string)); //nullable lifted\n    }\n    public static Type[] M<T, U>(T? t, RefFunc<T, U> f) where T : struct\n    {\n        return new Type[] { typeof(T), typeof(U) };\n    }\n    public static int Equal(Type[] actual, params Type[] expected)\n    {\n        return 1;\n    }\n}\n\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

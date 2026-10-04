@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bfac5aa6b6d2565cf333",
+  "kind": "diagnostics",
+  "sourceText": "\n                [assembly: UserDefinedAssemblyAttrNoAllowMultiple(\"UserDefinedAssemblyAttrNoAllowMultiple (from source)\")]\n\n                class Program\n                {\n                    static void Main(string[] args) { }\n                }\n                ",
+  "sourceSHA256": "a0d65272fa8da2ff0c12c8c6cc63db34665b39553434e9d8069e3640a5e40f2c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "sha256": "5af75c081b993313ae994c6bb25a5aa25038b265d6fc6300e8d89976fd96811a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "license": "MIT",
+    "method": "AssemblyAttributesFromNetModuleBadMulti",
+    "offset": 72147
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "references: new[] { netmodule1Ref }, options: TestOptions.ReleaseExe)",
+  "options": "(consoleappSource, references: new[] { netmodule1Ref }, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7061",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // error CS7061: Duplicate 'UserDefinedAssemblyAttrNoAllowMultipleAttribute' attribute in 'Test.netmodule'\n                Diagnostic(ErrorCode.ERR_DuplicateAttributeInNetModule).WithArguments(\"UserDefinedAssemblyAttrNoAllowMultipleAttribute\", netmodule1Ref.Display)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

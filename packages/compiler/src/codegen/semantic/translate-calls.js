@@ -5,10 +5,12 @@
 import { BuiltinMap } from '@sharpforge/bytecode';
 import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
+import { defaultSourceOf } from '../../overload/override-parameters.js';
 import { n } from './node-factory.js';
-import {frameworkEventAssignment, frameworkDelegateValue} from './framework-events.js';
+import {objectSlotSymbol} from './object-slots.js';
 
 const primitiveToString = new Set(['int', 'double', 'bool', 'string']);
+
 
 /** Class mixin: calls, creation, properties, indexers, events. */
 export const CallTranslation = Base =>
@@ -22,14 +24,7 @@ export const CallTranslation = Base =>
         args = node.args ?? [],
         mapping = node.mapping;
       for (const a of args) if (a.refKind && a.refKind !== 'none') this.unsupported('ref, out and in arguments', a.expression?.syntax ?? node.syntax);
-      let values = args.map((argument, index) => {
-        const position = mapping?.parameterOf?.[index] ?? index;
-        const parameter = parameters[position];
-        if (method?.contract && parameter?.type?.typeKind === TypeKind.Delegate) {
-          return frameworkDelegateValue(this, argument.expression, method.contract.parameters[position]);
-        }
-        return this.expression(argument.expression);
-      });
+      let values = args.map(a => this.expression(a.expression));
       if (!mapping?.parameterOf || !parameters.length) return values;
       const positions = mapping.parameterOf,
         inOrder = positions.every((p, i) => i === 0 || p >= positions[i - 1]);
@@ -43,26 +38,28 @@ export const CallTranslation = Base =>
         fixed = mapping.expanded ? last : parameters.length,
         slots = new Array(fixed).fill(null),
         rest = [];
+      const elementType = mapping.expanded ? this.imageType(parameters[last].type.elementType, node.syntax) : null;
       values.forEach((value, i) => {
-        if (mapping.expanded && positions[i] === last) rest.push(value);
+        if (mapping.expanded && positions[i] === last) rest.push(this.objectArgument(value, elementType));
         else slots[positions[i]] = value;
       });
-      const lowered = slots.map((value, i) => value ?? this.defaultArgument(parameters[i], node));
+      const lowered = slots.map((value, i) => value ?? this.defaultArgument(defaultSourceOf(node, parameters[i], i), node, i));
       if (mapping.expanded) {
-        const elementType = this.imageType(parameters[last].type.elementType, node.syntax);
         lowered.push(n.newArray(elementType, n.literal(rest.length, 'int'), rest));
       }
       if (prefix && lowered.length) lowered[0] = n.sequence(prefix.locals, prefix.effects, lowered[0]);
       return lowered;
     }
-    defaultArgument(parameter, node) {
+    defaultArgument(parameter, node, index) {
       const type = this.imageType(parameter.type, node.syntax),
         value = parameter.explicitDefaultValue ?? parameter.defaultValue;
       // Caller info replaces the declared default (binder/caller-info.js).
       const callerInfo = node.callerInfo?.get(parameter.ordinal);
       if (callerInfo !== undefined) {
         const supplied = typeof callerInfo === 'number' ? 'int' : 'string';
-        if (type !== supplied && type !== 'object') return this.unsupported('caller info for a parameter of this type', node.syntax);
+        // The line number converts like any `int` constant: to `double` at compile time.
+        if (supplied === 'int' && type === 'double') return n.literal(callerInfo, 'double');
+        if (type !== supplied && type !== 'object') return this.unsupported(`caller info for a parameter of type '${type}'`, node.syntax);
         return n.literal(callerInfo, supplied);
       }
       // A default that was never bound must not silently become zero.
@@ -77,6 +74,9 @@ export const CallTranslation = Base =>
       if (node.isOmitted) return n.nullLiteral('object');
       const method = node.method,
         definition = method.originalDefinition ?? method;
+      if (method.methodKind === MethodKind.FunctionPointerSignature) {
+        return this.unsupported('function pointers (the image has no indirect-call instruction)', node.syntax);
+      }
       if (method.methodKind === MethodKind.DelegateInvoke || node.isDelegateInvoke) {
         const info = this.g.delegates.classOf(node.receiver.type, node.syntax);
         return this.g.delegates.invoke(info, this.expression(node.receiver), this.arguments(node, method));
@@ -99,8 +99,19 @@ export const CallTranslation = Base =>
     }
     frameworkInvocation(node, method) {
       const type = this.imageType(node.type, node.syntax);
+      const objectSlot = method.containingType.specialType === 'System_Object' && objectSlotSymbol(method);
+      if (objectSlot && node.receiver) {
+        if (node.receiver.kind === 'Base') return this.unsupported('base member access', node.syntax);
+        let receiver = this.expression(node.receiver);
+        if (!this.types.isReference(receiver.legacyType)) receiver = {
+          kind: 'BoxValue', legacyType: 'object', isExpression: true, operand: receiver, valueType: receiver.legacyType
+        };
+        return n.frameworkCall({builtin: BuiltinMap.get('object.' + objectSlot)}, null,
+          [receiver, ...this.arguments(node, method)], type);
+      }
       if (method.contract || method.builtin) {
         const receiver = method.isStatic || !node.receiver ? null : this.expression(node.receiver);
+        this.checkFrameworkParameters(method, node.syntax);
         return n.frameworkCall(method, receiver, this.contractArguments(method.contract, this.arguments(node, method)), type);
       }
       const iterator = node.receiver && !method.isStatic ? this.g.iterators.infoOf(this.imageType(node.receiver.type, node.syntax)) : null;
@@ -129,6 +140,10 @@ export const CallTranslation = Base =>
           return this.unsupported(`'${method.toDisplayString()}' on an iterator`, syntax);
       }
     }
+    /** Lowered delegates are image classes; the framework expects its own delegate objects. */
+    checkFrameworkParameters(method, syntax) {
+      if (method.parameters.some(p => p.type?.typeKind === TypeKind.Delegate)) this.unsupported('passing a delegate to a framework method', syntax);
+    }
     exprObjectCreation(node) {
       const type = node.type;
       if (type.typeKind === TypeKind.Delegate) return this.unsupported('this delegate creation form', node.syntax);
@@ -145,12 +160,11 @@ export const CallTranslation = Base =>
       return this.withInitializers(node, creation);
     }
     frameworkCreation(node) {
-      if (node.type.specialType === 'System_Object')
-        return this.unsupported("creating 'object' (the framework registry has no System.Object constructor)", node.syntax);
       const ctor = node.constructor;
       const name = this.imageType(node.type, node.syntax);
       if (!ctor || typeof ctor !== 'object' || !(ctor.contract || ctor.builtin))
         return this.unsupported(`creating '${node.type.toDisplayString()}' (constructor not in the framework registry)`, node.syntax);
+      this.checkFrameworkParameters(ctor, node.syntax);
       return {
         kind: 'ObjectCreationExpression',
         legacyType: name,
@@ -233,9 +247,9 @@ export const CallTranslation = Base =>
       // The event as written (its containing construction selects the image field); `hasBody` is known to the definition.
       const event = node.event,
         definition = event.originalDefinition ?? event,
+        handler = this.expression(node.handler),
         adding = node.operator === '+=';
-      if (!this.g.isSource(event)) return frameworkEventAssignment(this, node, event);
-      const handler = this.expression(node.handler);
+      if (!this.g.isSource(event)) return this.unsupported('framework events with lowered delegates', node.syntax);
       const accessor = adding ? definition.addMethod : definition.removeMethod;
       if (accessor?.hasBody) {
         const record = this.g.methodOf(adding ? event.addMethod : event.removeMethod, node.syntax);

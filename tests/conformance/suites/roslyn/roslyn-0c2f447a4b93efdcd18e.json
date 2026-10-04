@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0c2f447a4b93efdcd18e",
+  "kind": "diagnostics",
+  "sourceText": "using System.Diagnostics;\nclass Program\n{\n    [Conditional(\"A\")]\n    [Conditional(null)]\n    [Conditional(\"B\")]\n    static void Main()\n    {\n    }\n}",
+  "sourceSHA256": "6d9452aa78ed5f2db82c1368c9f7c9c1d6283469681f3491d2d9404ebd41a98d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Conditional.cs",
+    "sha256": "d7f1dac60647477e2a514cf967444bc2f3edc083ce65a0f57eedbe89563e5212",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Conditional.cs",
+    "license": "MIT",
+    "method": "ConditionalAttributeArgument_Null",
+    "offset": 27054
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0633",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,18): error CS0633: The argument to the 'Conditional' attribute must be a valid identifier\n                //     [Conditional(null)]\n                Diagnostic(ErrorCode.ERR_BadArgumentToAttribute, \"null\").WithArguments(\"Conditional\").WithLocation(5, 18)",
+  "unsupported": []
+}

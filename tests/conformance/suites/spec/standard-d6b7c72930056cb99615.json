@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-d6b7c72930056cb99615",
+  "kind": "spec",
+  "sourceText": "// standard deconstructor\n(int a, long b) = (1, 2); // a is 1, b is 2\n\n// equivalent abridged_deconstructor\nvar (c, d) = (1, 2L);     // note the L suffix so d is inferred as long",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "26037ee8358dd250db4641928022e2ab2e4fc5b4cb55f651cac6aeb10729abf5",
+  "originalSource": "// standard deconstructor\n(int a, long b) = (1, 2); // a is 1, b is 2\n\n// equivalent abridged_deconstructor\nvar (c, d) = (1, 2L);     // note the L suffix so d is inferred as long",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "DiscardExpressions1"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "DiscardExpressions1",
+    "offsetInUnquotedMarkdown": 426331
+  }
+}

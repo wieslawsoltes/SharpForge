@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-0c8ab47bfe35dfa5cf63",
+  "kind": "spec",
+  "sourceText": "// tuple has element names \"f1\" and \"f2\" \nvar tuple = ((x.f1, x?.f2) = (1, 2));",
+  "sourceSHA256": "7c27c388d9db0a7113c39ba491e15118cf0939b124d63adcb2a966a46c3950c9",
+  "target": "library",
+  "featureId": "csharp-7-1-inferred-tuple-element-names",
+  "langVersion": "7.1",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.1/infer-tuple-names.md",
+    "sha256": "788d02fde920dc3f09c43f6a43666618adc914d1043fb463fe4875d3c3df8642",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.1/infer-tuple-names.md",
+    "license": "NOASSERTION",
+    "offset": 1987
+  }
+}

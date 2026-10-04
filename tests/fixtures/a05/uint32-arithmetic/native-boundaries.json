@@ -1,0 +1,42 @@
+{
+  "reference": {
+    "runtime": ".NET 10.0.5",
+    "sdk": "10.0.201",
+    "architecture": "osx-arm64",
+    "sourceCommit": "a466e3ca",
+    "sourcePath": "tests/fixtures/a05/numeric-oracle/uint32-matrix.cs",
+    "sourceSha256": "e08b49ecd4a2af0a762c4061654ce0c1fc2e576c2f3b17251379a8a1c9c4e1dd",
+    "outputPath": "tests/fixtures/a05/numeric-oracle/uint32-matrix.txt",
+    "outputSha256": "1ada8aafcdc6454fbbbf42bd067b82ca9cd80c8ba0b35137ad42e90c83c1bb5c",
+    "note": "Unchanged existing CLR output. Branch results use corresponding native relational operators. sourceLines contains one-based offsets for the first operand pair; later pairs add 29 per row."
+  },
+  "operations": ["add", "sub", "mul", "div.un", "rem.un", "shr.un", "add.ovf.un", "sub.ovf.un", "mul.ovf.un", "clt.un", "cgt.un", "blt.un", "ble.un", "bgt.un", "bge.un", "bne.un"],
+  "sourceLines": [1, 2, 3, 11, 12, 13, 17, 18, 19, 26, 28, 26, 27, 28, 29, 21],
+  "rows": [
+    {"left": 0, "right": 0, "results": ["0", "0", "0", "!DivideByZeroException", "!DivideByZeroException", "0", "0", "0", "0", "0", "0", "0", "1", "0", "1", "0"]},
+    {"left": 0, "right": 1, "results": ["1", "-1", "0", "0", "0", "0", "1", "!OverflowException", "0", "1", "0", "1", "1", "0", "0", "1"]},
+    {"left": 0, "right": 2147483647, "results": ["2147483647", "-2147483647", "0", "0", "0", "0", "2147483647", "!OverflowException", "0", "1", "0", "1", "1", "0", "0", "1"]},
+    {"left": 0, "right": -2147483648, "results": ["-2147483648", "-2147483648", "0", "0", "0", "0", "-2147483648", "!OverflowException", "0", "1", "0", "1", "1", "0", "0", "1"]},
+    {"left": 0, "right": -1, "results": ["-1", "1", "0", "0", "0", "0", "-1", "!OverflowException", "0", "1", "0", "1", "1", "0", "0", "1"]},
+    {"left": 1, "right": 0, "results": ["1", "1", "0", "!DivideByZeroException", "!DivideByZeroException", "1", "1", "1", "0", "0", "1", "0", "0", "1", "1", "1"]},
+    {"left": 1, "right": 1, "results": ["2", "0", "1", "1", "0", "0", "2", "0", "1", "0", "0", "0", "1", "0", "1", "0"]},
+    {"left": 1, "right": 2147483647, "results": ["-2147483648", "-2147483646", "2147483647", "0", "1", "0", "-2147483648", "!OverflowException", "2147483647", "1", "0", "1", "1", "0", "0", "1"]},
+    {"left": 1, "right": -2147483648, "results": ["-2147483647", "-2147483647", "-2147483648", "0", "1", "1", "-2147483647", "!OverflowException", "-2147483648", "1", "0", "1", "1", "0", "0", "1"]},
+    {"left": 1, "right": -1, "results": ["0", "2", "-1", "0", "1", "0", "!OverflowException", "!OverflowException", "-1", "1", "0", "1", "1", "0", "0", "1"]},
+    {"left": 2147483647, "right": 0, "results": ["2147483647", "2147483647", "0", "!DivideByZeroException", "!DivideByZeroException", "2147483647", "2147483647", "2147483647", "0", "0", "1", "0", "0", "1", "1", "1"]},
+    {"left": 2147483647, "right": 1, "results": ["-2147483648", "2147483646", "2147483647", "2147483647", "0", "1073741823", "-2147483648", "2147483646", "2147483647", "0", "1", "0", "0", "1", "1", "1"]},
+    {"left": 2147483647, "right": 2147483647, "results": ["-2", "0", "1", "1", "0", "0", "-2", "0", "!OverflowException", "0", "0", "0", "1", "0", "1", "0"]},
+    {"left": 2147483647, "right": -2147483648, "results": ["-1", "-1", "-2147483648", "0", "2147483647", "2147483647", "-1", "!OverflowException", "!OverflowException", "1", "0", "1", "1", "0", "0", "1"]},
+    {"left": 2147483647, "right": -1, "results": ["2147483646", "-2147483648", "-2147483647", "0", "2147483647", "0", "!OverflowException", "!OverflowException", "!OverflowException", "1", "0", "1", "1", "0", "0", "1"]},
+    {"left": -2147483648, "right": 0, "results": ["-2147483648", "-2147483648", "0", "!DivideByZeroException", "!DivideByZeroException", "-2147483648", "-2147483648", "-2147483648", "0", "0", "1", "0", "0", "1", "1", "1"]},
+    {"left": -2147483648, "right": 1, "results": ["-2147483647", "2147483647", "-2147483648", "-2147483648", "0", "1073741824", "-2147483647", "2147483647", "-2147483648", "0", "1", "0", "0", "1", "1", "1"]},
+    {"left": -2147483648, "right": 2147483647, "results": ["-1", "1", "-2147483648", "1", "1", "1", "-1", "1", "!OverflowException", "0", "1", "0", "0", "1", "1", "1"]},
+    {"left": -2147483648, "right": -2147483648, "results": ["0", "0", "0", "1", "0", "-2147483648", "!OverflowException", "0", "!OverflowException", "0", "0", "0", "1", "0", "1", "0"]},
+    {"left": -2147483648, "right": -1, "results": ["2147483647", "-2147483647", "-2147483648", "0", "-2147483648", "1", "!OverflowException", "!OverflowException", "!OverflowException", "1", "0", "1", "1", "0", "0", "1"]},
+    {"left": -1, "right": 0, "results": ["-1", "-1", "0", "!DivideByZeroException", "!DivideByZeroException", "-1", "-1", "-1", "0", "0", "1", "0", "0", "1", "1", "1"]},
+    {"left": -1, "right": 1, "results": ["0", "-2", "-1", "-1", "0", "2147483647", "!OverflowException", "-2", "-1", "0", "1", "0", "0", "1", "1", "1"]},
+    {"left": -1, "right": 2147483647, "results": ["2147483646", "-2147483648", "-2147483647", "2", "1", "1", "!OverflowException", "-2147483648", "!OverflowException", "0", "1", "0", "0", "1", "1", "1"]},
+    {"left": -1, "right": -2147483648, "results": ["2147483647", "2147483647", "-2147483648", "1", "2147483647", "-1", "!OverflowException", "2147483647", "!OverflowException", "0", "1", "0", "0", "1", "1", "1"]},
+    {"left": -1, "right": -1, "results": ["-2", "0", "1", "1", "0", "1", "!OverflowException", "0", "!OverflowException", "0", "0", "0", "1", "0", "1", "0"]}
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c43f4a718c825407c73f",
+  "kind": "diagnostics",
+  "sourceText": "\nunsafe class C\n{\n    public static void Main()\n    {\n        fixed (int* p = new Fixable(1))\n        {\n            System.Console.Write(p[1]);\n        }\n    }\n}\n\npublic struct Fixable\n{\n    public Fixable(int arg){}\n}\n\npublic static class FixableExt\n{\n    private static ref int GetPinnableReference(this Fixable f)\n    {\n        return ref (new int[]{1,2,3})[0];\n    }\n}\n\n",
+  "sourceSHA256": "81f4c7fada7a2d02bdfc23b2de1988b2c5387556542f8cf64c2254ef7153ebc8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "sha256": "424f034ea20a9add3b40a8a1c0094fffc5ef30885511f2c90ae10bd80b976073",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "license": "MIT",
+    "method": "CustomFixedStructVariousErr01",
+    "offset": 131953
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.UnsafeReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8385",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,25): error CS8385: The given expression cannot be used in a fixed statement\n                //         fixed (int* p = new Fixable(1))\n                Diagnostic(ErrorCode.ERR_ExprCannotBeFixed, \"new Fixable(1)\").WithLocation(6, 25)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

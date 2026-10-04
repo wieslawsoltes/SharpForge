@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-80ffda377539ca48a55a",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Threading.Tasks;\npublic enum E { Default }\npublic class C\n{\n    public static async Task Main()\n    {\n        await foreach (var i in E.Default)\n        {\n            Console.Write(i);\n        }\n    }\n    public sealed class Enumerator\n    {\n        public int Current { get; private set; }\n        public Task<bool> MoveNextAsync() => Task.FromResult(Current++ != 3);\n    }\n}\npublic static class Extensions\n{\n    public static C.Enumerator GetAsyncEnumerator(this E self) => new C.Enumerator();\n}",
+  "sourceSHA256": "65ff6c5cd3444edfa517a312559016768817e6769048e04c3d7f79d0d35e69f0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestGetAsyncEnumeratorPatternViaExtensionsOnEnum",
+    "offset": 497473
+  },
+  "langVersion": "9",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

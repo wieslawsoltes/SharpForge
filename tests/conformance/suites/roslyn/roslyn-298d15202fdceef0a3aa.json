@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-298d15202fdceef0a3aa",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass Program\n{\n    static void Main(string[] args)\n    {\n        using (MyManagedClass1 res1 = new MyManagedClass1(), res2)// Invalid\n        {\n        }\n    }\n}\nstruct MyManagedClass1 : IDisposable\n{\n    void IDisposable.Dispose()\n    { }\n}\n",
+  "sourceSHA256": "b9ad41e8dc7c1f81c26c7372605e01bd699ce20aefd50816aa25090c5842c365",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "sha256": "d8229f7c312c9ee5a778889d6e4283a10543e441e97b4e3da14145b6744b1b4e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "license": "MIT",
+    "method": "MultipleResourceInUsing_2",
+    "offset": 61293
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0210",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "Diagnostic(ErrorCode.ERR_FixedMustInit, \"res2\")",
+  "unsupported": []
+}

@@ -1,0 +1,7 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "collection-expressions/arrays":{"hash":"2bffe67ae6e9c9a8","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3\n0\n2\n9\nb\n7\n3\n3.5\n"},
+  "collection-expressions/collection-types":{"hash":"739ec9d8e1b0dddf","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3\n2\n1\n3\n11\n0\n"},
+  "collection-expressions/spreads":{"hash":"5bdb5af1a15a341c","kind":"output","langVersion":"14.0","diagnostics":[],"output":"9\n3\n6\n"},
+  "collection-expressions/target-and-element-errors":{"hash":"8d1cc68a3a422e56","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS9176",461,6,"error"],["CS9174",485,3,"error"],["CS9174",509,3,"error"],["CS0029",540,3,"error"],["CS9174",565,3,"error"],["CS1061",589,3,"error"],["CS9214",621,3,"error"],["CS9212",648,1,"error"],["CS0029",733,1,"error"],["CS9174",781,3,"error"],["CS9176",795,3,"error"]]},
+  "collection-expressions/collection-expressions-in-csharp-11":{"hash":"68d04c1c7e9f56db","kind":"diagnostics","langVersion":"11.0","diagnostics":[["CS9058",47,1,"error"]]}
+}}

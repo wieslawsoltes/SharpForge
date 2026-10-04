@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-03b7808def17258000c8",
+  "kind": "spec",
+  "sourceText": "ref readonly Vector3 Test1()\n{\n    // can pass an RValue as \"in\" (via a temp copy)\n    // but the result is not safe to return\n    // because the RValue argument was not safe to return by reference\n    return ref Test2(default(Vector3));\n}\n\nref readonly Vector3 Test2(in Vector3 r)\n{\n    // this is ok, r is returnable\n    return ref r;\n}",
+  "sourceSHA256": "1fb7ee2343c5f2de89222a5e100ca758ad28c1ce0ea3ae19d4285e7acb1af1ab",
+  "target": "library",
+  "featureId": "csharp-7-2-in-parameters-and-readonly-references",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/readonly-ref.md",
+    "sha256": "d859c5f6e0e030570288248c429a08d0e4b8d5c0eecd6bf9042317e99198122b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+    "license": "NOASSERTION",
+    "offset": 17782
+  }
+}

@@ -1,4 +1,4 @@
-import {referenceArgumentFlow} from './reference-arguments.js';
+import {appendCatchFlow} from './exception-filters.js';
 /**
  * Control-flow graph construction over the bound tree (the binder's output, before lowering).
  *
@@ -50,7 +50,6 @@ class Builder {
   }
   expr(node){
     if(!node)return;
-    if(referenceArgumentFlow(this,node))return;
     switch(node.kind){
       case 'Local':this.op('read',node.local,node);return;
       case 'Parameter':this.op('read',node.parameter,node);return;
@@ -129,24 +128,7 @@ class Builder {
         this.mark(node);const after=this.block();
         const guarded=()=>{
           const entry=this.block();this.start(entry);this.stmt(node.tryBlock);const ends=[this.current];
-          for(const clause of node.catchBlocks){
-            const handler=this.block();
-            handler.exceptionSources.push(entry);
-            this.current=handler;
-            if(clause.local){
-              this.graph.locals.add(clause.local);
-              this.op('write',clause.local,clause,{value:null,catchVariable:true});
-            }
-            if(clause.filter){
-              const accepted=this.block(),rejected=this.block();
-              this.condition(clause.filter,accepted,rejected);
-              this.current=rejected;
-              this.terminate({kind:'throw',node:clause});
-              this.current=accepted;
-            }
-            this.stmt(clause.body);
-            ends.push(this.current);
-          }
+          for(const c of node.catchBlocks)appendCatchFlow(this,c,entry,ends);
           const join=this.block();for(const end of ends){this.current=end;this.jump(join);}this.current=join;
         };
         if(node.finallyBlock)this.protect(guarded,()=>this.stmt(node.finallyBlock));else guarded();

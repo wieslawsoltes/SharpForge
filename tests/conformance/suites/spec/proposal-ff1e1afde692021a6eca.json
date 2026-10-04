@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-ff1e1afde692021a6eca",
+  "kind": "spec",
+  "sourceText": "/// <package name=\"Microsoft.CodeAnalysis\" version=\"4.14.0\" />",
+  "sourceSHA256": "f8da8668857513fefeb0641d26824197823e66fbf53fab23523e66a69f6ef746",
+  "target": "library",
+  "featureId": "csharp-14-0-ignored-directives",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/ignored-directives.md",
+    "sha256": "1e9b3cb474fbaa16299eb04748a732a3ca35b667cb39f9dccdfa0bd5dd5b5573",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/ignored-directives.md",
+    "license": "NOASSERTION",
+    "offset": 5371
+  }
+}

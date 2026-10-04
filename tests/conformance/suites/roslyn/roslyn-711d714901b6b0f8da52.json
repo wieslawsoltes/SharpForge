@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-711d714901b6b0f8da52",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing System.Threading;\nusing System.Threading.Tasks;\n\nnamespace X\n{ \n\tclass DynamicMembers\n\t{\n\t\tpublic Func<Task<int>> Prop { get; set; }\n\t}\n\tpublic sealed partial class TestCase\n\t{\n\t\tprivate static int Count = 0;\n\t\tpublic async void Run()\n\t\t{\n\t\t\tDynamicMembers dc2 = new DynamicMembers();\n\t\t\tdc2.Prop = async () => { await Task.Delay(10000); return 3; };\n\t\t\tvar rez2 = await dc2.Prop();\n\t\t\tif (rez2 == 3) Count++;\n\t \n\t\t\tDriver.Result = TestCase.Count - 1;\n\t\t\t//When test complete, set the flag.\n\t\t\tDriver.CompletedSignal.Set();\n\t\t}\n\n        static  partial void Goo();\n        static  partial void Bar();\n\t}\n\n\tpublic sealed partial class TestCase\n    {\n        static partial void Bar(){}\n    }\n\n\tclass Driver\n\t{\n\t\tpublic static int Result = -1;\n\t\tpublic static AutoResetEvent CompletedSignal = new AutoResetEvent(false);\n\t\tstatic int Main()\n\t\t{\n\t\t\tvar t = new TestCase();\n\t\t\tt.Run();\n\t \n\t\t\tCompletedSignal.WaitOne();\n\t\t\treturn Driver.Result;\n\t\t}\n\t}\n}\n\nstatic class Ext\n{\n    public static void M1(this int i) { }    \n\n    extension(int i)\n    {\n        public void M2() { }\n    }\n\n    extension(int i)\n    {\n        public void M3() { }\n    }\n\n    extension(long l)\n    {\n        public void M4() { }\n    }\n\n    extension(long l)\n    {\n        public long P5 {  get => l; set {}}\n    }\n}\n",
+  "sourceSHA256": "c69b22d350fd918716e12a1de7b540c5a1c71710788da05714608c8f5f5d6625",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/PDB/PDBWinMdExpTests.cs",
+    "sha256": "163ecae94fc35975b5376031fec87fad6b73ea52cf66e8f022437c471a95b283",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/PDB/PDBWinMdExpTests.cs",
+    "license": "MIT",
+    "method": "TestWinMdExpData_Basic",
+    "offset": 5952
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\n                text,\n                options: TestOptions.ReleaseWinMD,\n                sourceFileName: \"source.cs\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

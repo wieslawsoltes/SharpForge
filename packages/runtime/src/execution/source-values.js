@@ -1,16 +1,15 @@
+import {number} from '@sharpforge/bytecode';
 import {enumTypes} from '@sharpforge/framework';
 import {isReference} from '../heap.js';
 import {enumValue} from './enums.js';
-import {number, isNativeInteger} from './numeric-ops.js';
 
 /** Primitive source values need no object lookup; references still pass through heap validation. */
 export function sourceValue(heap, value) {
   if (value === null || typeof value !== 'object') return value;
   if (value.enumType) return value.value;
-  if (value.float || isNativeInteger(value)) return number(value);
+  if (value.float || value.nativeInt) return number(value);
   if (!isReference(value)) return value;
   const record = heap.get(value);
-  if (record.kind === 'box') return sourceValue(heap, record.data[0]);
   return record.kind === 'string' ? record.data : value;
 }
 

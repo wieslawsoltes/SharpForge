@@ -68,9 +68,6 @@ export const statementForms = Object.freeze({
       body: this.statement(red.statement)
     });
   },
-  LockStatement(red) {
-    return this.node('Lock', red, {expression: this.expression(red.expression), body: this.statement(red.statement)});
-  },
   IfStatement(red) {
     return this.node('If', red, {
       condition: this.expression(red.condition),

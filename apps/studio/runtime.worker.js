@@ -1,64 +1,38 @@
 import {createWorkerProtocol,readWorkerRequest} from './workers/protocol.js';
-import {applyDesignPatch} from '../../packages/runtime/src/index.js';
-import { loadAssembly, equalBytes } from '../../packages/cil/src/index.js';
-import { DebugSession, CilDebugSession } from '../../packages/debugger/src/index.js';
-let session=null,timer=null,lastSent=0,uiCommands=[],output=[],loadedModule=null,sessionSerial=0,animationTimer=null,animationLast=0,manualAnimations=false;
+import {applyDesignPatch} from '@sharpforge/runtime';
+import {loadAssembly, equalBytes} from '@sharpforge/cil';
+import {createRuntimeLaunchCandidate} from './workers/runtime-launch.js';
+import {RuntimeActivity} from './workers/runtime-activity.js';
+let session=null,uiCommands=[],output=[],loadedModule=null,sessionSerial=0;
+const activity=new RuntimeActivity({getSession:()=>session,getSerial:()=>sessionSerial,flush,publishState:state,
+  onError:error=>self.postMessage({event:'error',sessionId:sessionSerial,message:error.message})});
 function flush(){if(uiCommands.length){self.postMessage({event:'ui',sessionId:sessionSerial,commands:uiCommands});uiCommands=[];}if(output.length){self.postMessage({event:'output',sessionId:sessionSerial,text:output.join('')});output=[];}}
-function state(){scheduleAnimations();flush();if(session)self.postMessage({event:'state',sessionId:sessionSerial,...session.state(),assemblyLoad:session.assemblyLoad??null});}
-// The UI clock is independent of managed instruction pumping. It freezes at debugger stops.
-function scheduleAnimations(){
-  const platform=session?.vm.platform,active=!manualAnimations&&session?.vm.state!=='paused'&&platform?.windows?.size>0&&platform?.animations?.running;
-  if(!active){if(animationTimer!==null)clearTimeout(animationTimer);animationTimer=null;animationLast=0;return;}
-  if(animationTimer!==null)return;const serial=sessionSerial;if(!animationLast)animationLast=performance.now();
-  animationTimer=setTimeout(()=>{animationTimer=null;if(!session||serial!==sessionSerial)return;const now=performance.now(),delta=Math.max(0,now-animationLast);animationLast=now;
-    if(session.vm.state!=='paused'){try{session.vm.platform.advanceAnimations(delta);flush();schedule();}catch(error){session.vm.platform.animations.clear();self.postMessage({event:'error',sessionId:sessionSerial,message:error.message});}}
-    scheduleAnimations();
-  },16);
-}
+function state(){activity.observeState();flush();if(session)self.postMessage({event:'state',sessionId:sessionSerial,...session.state(),assemblyLoad:session.assemblyLoad??null});}
+function schedule(){activity.schedule();}
+function scheduleAnimations(){activity.scheduleAnimations();}
 function executable(params){
   if(!params.assembly)return {image:params.image,load:null};
   const started=performance.now(),hit=loadedModule&&equalBytes(loadedModule.bytes,params.assembly);
   if(!hit)loadedModule={bytes:params.assembly.slice(),image:loadAssembly(params.assembly)};
   return {image:loadedModule.image,load:{format:'ECMA-335',cacheHit:!!hit,milliseconds:performance.now()-started,bytes:params.assembly.length}};
 }
-function schedule(){
-  if(timer!==null||!session||!['ready','running','waiting'].includes(session.vm.state))return;const serial=sessionSerial;const delay=session.vm.state==='waiting'?session.vm.scheduler.nextDelay():0;if(delay===null)return;
-  timer=setTimeout(()=>{
-    timer=null;if(!session||serial!==sessionSerial)return;
-    try{session.pump({instructionBudget:15000,timeBudgetMs:6});}
-    catch(error){session.pause();session.reason={reason:'error',description:error.message};self.postMessage({event:'error',sessionId:sessionSerial,message:error.message});state();return;}
-    scheduleAnimations();flush();if(['running','waiting'].includes(session.vm.state)){if(session.vm.state==='waiting'||performance.now()-lastSent>150){lastSent=performance.now();state();}schedule();}else state();
-  },Math.min(50,Math.max(0,delay)));
-}
 function launch(params){
-  const debug=params.debug!==false,options={network:params.network??{},compute:params.compute??{},recordHistory:debug&&params.recordHistory!==false,
-    maxHistory:params.maxHistory,maxHistoryBytes:params.maxHistoryBytes,stepOverProperties:params.stepOverProperties===true,
-    breakpointsEnabled:params.breakpointsEnabled!==false,maxInstructions:params.maxInstructions??20_000_000,onOutput:text=>output.push(text),onUICommand:command=>{uiCommands.push(command);if(uiCommands.length>=1024)flush();}};
   // Fully construct and bind a candidate first. A malformed replacement must not destroy a live session.
-  let candidate;
-  if(params.managedIL){
-    candidate=new CilDebugSession(params.assembly,{...options,methodToken:params.methodToken,arguments:params.arguments,pdb:params.pdb,sources:params.sources});
-    candidate.assemblyLoad={format:'ECMA-335',cacheHit:false,milliseconds:candidate.vm.loadMs,bytes:params.assembly.length};
-    if(debug)candidate.setInstructionBreakpoints(params.instructionBreakpoints??[]);
-  }else{
-    const module=executable(params);candidate=new DebugSession(module.image,options);candidate.assemblyLoad=module.load;
-  }
-  if(debug){for(const [uri,bps]of Object.entries(params.breakpoints??{}))candidate.setBreakpoints(uri,bps);
-    candidate.setFunctionBreakpoints(params.functionBreakpoints??[]);
-    candidate.setExceptionBreakpoints({mode:params.exceptionBreak??'uncaught',rules:params.exceptionRules??[]});}
-  if(params.runToCursor){if(params.managedIL)throw new Error('Use run-to-instruction for managed IL');candidate.runToCursor(params.runToCursor.uri,params.runToCursor.line,params.runToCursor.column);}
-  else candidate.start(debug&&params.stopOnEntry===true);
-  if(timer!==null){clearTimeout(timer);timer=null;}session?.stop();session=candidate;sessionSerial++;output=[];uiCommands=[];self.postMessage({event:'ui',sessionId:sessionSerial,commands:[{op:'reset',snapshot:{version:1,windows:[],nodes:[]}}]});lastSent=0;animationLast=0;manualAnimations=!!params.manualAnimations;
+  const {candidate,capabilities}=createRuntimeLaunchCandidate(params,{
+    executable,onOutput:text=>output.push(text),
+    onUICommand:command=>{uiCommands.push(command);if(uiCommands.length>=1024)flush();}
+  });
+  activity.stop();session?.stop();session=candidate;sessionSerial++;output=[];uiCommands=[];self.postMessage({event:'ui',sessionId:sessionSerial,commands:[{op:'reset',snapshot:{version:1,windows:[],nodes:[]}}]});activity.start({manualAnimations:!!params.manualAnimations});
   self.postMessage({event:'loaded',sessionId:sessionSerial,sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});
   state();schedule();
-  return {started:true,sessionId:sessionSerial,profile:params.managedIL?'SharpForge.ManagedIL/1':'SharpForge.CIL',
+  return {started:true,sessionId:sessionSerial,capabilities,profile:params.managedIL?'SharpForge.ManagedIL/1':'SharpForge.CIL',
     sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text,version:s.version}))};
 }
 const handlers=createWorkerProtocol('runtime');
 for(const method of ["launch"])handlers.registerHandler(method,(params,method)=>{let result;result=launch(params);return result;});
 for(const method of ["resume"])handlers.registerHandler(method,(params,method)=>{let result;session.resume(params.mode,{granularity:params.granularity});state();schedule();return result;});
 for(const method of ["pause"])handlers.registerHandler(method,(params,method)=>{let result;session.pause();state();return result;});
-for(const method of ["stop"])handlers.registerHandler(method,(params,method)=>{let result;session?.stop();if(timer!==null){clearTimeout(timer);timer=null;}state();return result;});
+for(const method of ["stop"])handlers.registerHandler(method,(params,method)=>{let result;session?.stop();activity.stop();state();return result;});
 for(const method of ["stepBack"])handlers.registerHandler(method,(params,method)=>{let result;session.stepBack();state();return result;});
 for(const method of ["reverseContinue"])handlers.registerHandler(method,(params,method)=>{let result;session.reverseContinue();state();return result;});
 for(const method of ["dataBreakpointInfo"])handlers.registerHandler(method,(params,method)=>{let result;result=session.dataBreakpointInfo(params);return result;});
@@ -75,17 +49,52 @@ for(const method of ["runToCursor"])handlers.registerHandler(method,(params,meth
 for(const method of ["disassemble"])handlers.registerHandler(method,(params,method)=>{let result;result=session.disassemble(params.reference,params);return result;});
 for(const method of ["gotoTargets"])handlers.registerHandler(method,(params,method)=>{let result;result=session.gotoTargets(params);return result;});
 for(const method of ["setNextStatement"])handlers.registerHandler(method,(params,method)=>{let result;result=session.setNextStatement(params);state();return result;});
-for(const method of ["hotReload"])handlers.registerHandler(method,(params,method)=>{let result;result=session.applyChanges(params.image??params.assembly,{expectedVersion:params.expectedVersion});self.postMessage({event:'loaded',sessionId:sessionSerial,sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});state();return result;});
+for(const method of ["hotReload"])handlers.registerHandler(method,(params,method)=>{
+  let result;
+  result=session.applyChanges(params.image??params.assembly,{expectedVersion:params.expectedVersion});
+  self.postMessage({event:'loaded',sessionId:sessionSerial,
+    sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});
+  state();
+  return result;
+});
 for(const method of ["evaluateFunction"])handlers.registerHandler(method,(params,method)=>{let result;result=session.evaluateFunction(params.expression,{...params,allowSideEffects:params.allowSideEffects===true});state();return result;});
-for(const method of ["loadSymbols"])handlers.registerHandler(method,(params,method)=>{let result;result=session.loadSymbols(params.pdb??null,params.sources??{});self.postMessage({event:'loaded',sessionId:sessionSerial,sources:(session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});state();return result;});
-for(const method of ["symbolInfo"])handlers.registerHandler(method,(params,method)=>{let result;result=session.symbolBinding?{id:session.symbols.idHex,documents:session.symbolBinding.documents.map(({embedded,hash,...d})=>({...d,text:undefined,hash:[...hash]})),methods:session.symbols.methods.length,stateMachines:session.symbols.stateMachines}:null;return result;});
+for(const method of ["loadSymbols"])handlers.registerHandler(method,(params,method)=>{
+  let result;
+  result=session.loadSymbols(params.pdb??null,params.sources??{});
+  self.postMessage({event:'loaded',sessionId:sessionSerial,
+    sources:(session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});
+  state();
+  return result;
+});
+for(const method of ["symbolInfo"])handlers.registerHandler(method,(params,method)=>{
+  let result;
+  result=session.symbolBinding?{id:session.symbols.idHex,
+    documents:session.symbolBinding.documents.map(({embedded,hash,...d})=>({...d,text:undefined,hash:[...hash]})),
+    methods:session.symbols.methods.length,stateMachines:session.symbols.stateMachines}:null;
+  return result;
+});
 for(const method of ["threads"])handlers.registerHandler(method,(params,method)=>{let result;result=session.threads();return result;});
 for(const method of ["parallelStacks"])handlers.registerHandler(method,(params,method)=>{let result;result=session.parallelStacks();return result;});
 for(const method of ["stackTrace"])handlers.registerHandler(method,(params,method)=>{let result;result=session.stackTrace(params.threadId);return result;});
 for(const method of ["freezeThread"])handlers.registerHandler(method,(params,method)=>{let result;result=session.freezeThread(params.threadId,params.frozen);state();schedule();return result;});
-for(const method of ["uiEvent"])handlers.registerHandler(method,(params,method)=>{let result;if(session.vm.state==='paused')throw new Error('Continue execution before interacting with the managed application');result=session.vm.platform.dispatchEvent(params.id,params.event,params.payload);state();schedule();return result;});
-for(const method of ["uiAnimationAdvance"])handlers.registerHandler(method,(params,method)=>{let result;if(session.vm.state==='paused')throw new Error('Animation clock is frozen while paused');result=session.vm.platform.advanceAnimations(params.milliseconds);flush();schedule();scheduleAnimations();return result;});
-for(const method of ["uiAnimationMode"])handlers.registerHandler(method,(params,method)=>{let result;manualAnimations=!!params.manual;scheduleAnimations();result={manual:manualAnimations};return result;});
+for(const method of ["uiEvent"])handlers.registerHandler(method,(params,method)=>{
+  let result;
+  if(session.vm.state==='paused')throw new Error('Continue execution before interacting with the managed application');
+  result=session.vm.platform.dispatchEvent(params.id,params.event,params.payload);
+  state();
+  schedule();
+  return result;
+});
+for(const method of ["uiAnimationAdvance"])handlers.registerHandler(method,(params,method)=>{
+  let result;
+  if(session.vm.state==='paused')throw new Error('Animation clock is frozen while paused');
+  result=session.vm.platform.advanceAnimations(params.milliseconds);
+  flush();
+  schedule();
+  scheduleAnimations();
+  return result;
+});
+for(const method of ["uiAnimationMode"])handlers.registerHandler(method,(params,method)=>{let result;activity.manualAnimations=!!params.manual;scheduleAnimations();result={manual:activity.manualAnimations};return result;});
 for(const method of ["runtimeInfo"])handlers.registerHandler(method,(params,method)=>{let result;result=session.vm.platform.runtimeInfo();return result;});
 for(const method of ["uiScene"])handlers.registerHandler(method,(params,method)=>{let result;result=session.vm.platform.scene();return result;});
 for(const method of ["designSnapshot"])handlers.registerHandler(method,(params,method)=>{let result;result={scene:session.vm.platform.scene(),revision:session.designRevision??0};return result;});
@@ -98,6 +107,7 @@ for(const method of ["children"])handlers.registerHandler(method,(params,method)
 for(const method of ["collect"])handlers.registerHandler(method,(params,method)=>{let result;result=session.collect();state();return result;});
 for(const method of ["heapPage"])handlers.registerHandler(method,(params,method)=>{let result;result=session.vm.heap.inspectPage(params);return result;});
 for(const method of ["heapCensus"])handlers.registerHandler(method,(params,method)=>{let result;result=session.vm.heap.census();return result;});
+handlers.registerHandler('executionMetrics',params=>activity.execution.read(params));
 for(const method of ["retentionPath"])handlers.registerHandler(method,(params,method)=>{let result;result=session.vm.heap.retentionPath(params.reference,params.options);return result;});
 for(const method of ["heap"])handlers.registerHandler(method,(params,method)=>{let result;result=session.vm.heap.inspect(params.limit??200);return result;});
 for(const method of ["state"])handlers.registerHandler(method,(params,method)=>{let result;result=session?.state()??null;return result;});
@@ -109,7 +119,7 @@ self.onmessage=event=>{
     handlers.assertMethod(method);
     if(method!=='launch'&&params.sessionId!==undefined&&params.sessionId!==sessionSerial)throw new Error('Debug session changed; retry the command in the current session');
     if(!session&&!['launch','stop','state'].includes(method))throw new Error('Start a debug session first');
-    result=handlers.dispatch(method,params);
+    result=activity.dispatch(method,params,handlers.dispatch);
     if(id!==undefined)self.postMessage({id,result});
   }catch(error){if(id!==undefined)self.postMessage({id,error:{message:error.message,name:error.name,code:error.code}});else self.postMessage({event:'error',sessionId:sessionSerial,message:error.message,name:error.name,code:error.code});}
 };

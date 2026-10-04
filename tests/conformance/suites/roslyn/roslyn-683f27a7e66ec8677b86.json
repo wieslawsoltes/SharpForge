@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-683f27a7e66ec8677b86",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n \nnamespace AttributeTest\n{\n    [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\n    [A(3, z: 5, X = 6, y: 1)]\n    [A(3, z: 5, 1)]\n    [A(3, 1, X = 6, z: 5)]\n    [A(X = 6, 0)]\n    [A(X = 6, x: 0)]\n    public class A : Attribute\n    {\n        public int X;\n        public A(int x, int y = 4, int z = 0) { Console.WriteLine(x); Console.WriteLine(y); Console.WriteLine(z); }\n    \n        static void Main()\n        {\n            typeof(A).GetCustomAttributes(false);\n        }\n    }\n\n    public class B\n    {\n    }\n}\n",
+  "sourceSHA256": "12d47e248fb040a5fa1dd18d1a75dbb8793a6667e4082bdd2662a68f918d0c09",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "TestAttributesWithInvalidArgumentsOrder",
+    "offset": 267965
+  },
+  "langVersion": "7.1",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_1)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1016",
+        "severity": "error"
+      },
+      {
+        "code": "CS1738",
+        "severity": "error"
+      },
+      {
+        "code": "CS8323",
+        "severity": "error"
+      },
+      {
+        "code": "CS1016",
+        "severity": "error"
+      },
+      {
+        "code": "CS1016",
+        "severity": "error"
+      },
+      {
+        "code": "CS1016",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,27): error CS1016: Named attribute argument expected\n                //     [A(3, z: 5, X = 6, y: 1)]\n                Diagnostic(ErrorCode.ERR_NamedArgumentExpected, \"1\").WithLocation(7, 27),\n                // (8,17): error CS1738: Named argument specifications must appear after all fixed arguments have been specified. Please use language version 7.2 or greater to allow non-trailing named arguments.\n                //     [A(3, z: 5, 1)]\n                Diagnostic(ErrorCode.ERR_NamedArgumentSpecificationBeforeFixedArgument, \"1\").WithArguments(\"7.2\").WithLocation(8, 17),\n                // (8,11): error CS8321: Named argument 'z' is used out-of-position but is followed by an unnamed argument\n                //     [A(3, z: 5, 1)]\n                Diagnostic(ErrorCode.ERR_BadNonTrailingNamedArgument, \"z\").WithArguments(\"z\").WithLocation(8, 11),\n                // (9,24): error CS1016: Named attribute argument expected\n                //     [A(3, 1, X = 6, z: 5)]\n                Diagnostic(ErrorCode.ERR_NamedArgumentExpected, \"5\").WithLocation(9, 24),\n                // (10,15): error CS1016: Named attribute argument expected\n                //     [A(X = 6, 0)]\n                Diagnostic(ErrorCode.ERR_NamedArgumentExpected, \"0\").WithLocation(10, 15),\n                // (11,18): error CS1016: Named attribute argument expected\n                //     [A(X = 6, x: 0)]\n                Diagnostic(ErrorCode.ERR_NamedArgumentExpected, \"0\").WithLocation(11, 18)\n                ",
+  "unsupported": []
+}

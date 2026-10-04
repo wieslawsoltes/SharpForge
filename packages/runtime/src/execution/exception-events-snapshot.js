@@ -1,8 +1,13 @@
-import {ManagedFault, isReference} from '../heap.js';
+import {
+  ManagedFault,
+  isReference
+} from '../heap.js';
 
 /** Preflight owned event continuations against saved records, with no live heap reads. */
 export function validateExceptionEventsSnapshot(vm, snapshot) {
-  const fail = part => { throw new TypeError('Invalid snapshot exception events ' + part); };
+  const fail = part => {
+    throw new TypeError('Invalid snapshot exception events ' + part);
+  };
   const same = (left, right) => isReference(left) && isReference(right) && left.h === right.h && left.g === right.g;
   const record = reference => {
     if (!isReference(reference) || reference.heapOwner !== undefined && reference.heapOwner !== vm.heap.handleOwner) fail('owner');
@@ -12,11 +17,12 @@ export function validateExceptionEventsSnapshot(vm, snapshot) {
   };
   const property = (value, name) => {
     if (value.kind !== 'host' || !Array.isArray(value.data) || value.data.length % 2) fail('property backing');
-    for (let index = 0; index < value.data.length; index += 2) if (value.data[index] === name) return value.data[index + 1];
+    for (let index = 0; index < value.data.length; index += 2)
+      if (value.data[index] === name) return value.data[index + 1];
     return null;
   };
-  const delegateType = first => first ? 'System.EventHandler`1<System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs>'
-    : 'System.UnhandledExceptionEventHandler';
+  const delegateType = first => first ? 'System.EventHandler`1<System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs>' :
+    'System.UnhandledExceptionEventHandler';
   const subscriber = (reference, first) => {
     const value = record(reference);
     if (value.kind !== 'delegate' || value.type !== delegateType(first)) fail('subscriber');
@@ -35,17 +41,18 @@ export function validateExceptionEventsSnapshot(vm, snapshot) {
     }
   }
   const frames = new Set(snapshot.frames);
-  for (const [, context] of snapshot.scheduler?.contexts ?? []) for (const frame of context.frames) frames.add(frame);
+  for (const [, context] of snapshot.scheduler?.contexts ?? [])
+    for (const frame of context.frames) frames.add(frame);
   for (const frame of frames) {
     const event = frame.exceptionEventContinuation;
     if (!event) continue;
-    if (!['firstChance', 'unhandled'].includes(event.phase) || !(event.fault instanceof ManagedFault)
-      || typeof event.fault.name !== 'string' || typeof event.fault.message !== 'string') fail('phase or fault');
+    if (!['firstChance', 'unhandled'].includes(event.phase) || !(event.fault instanceof ManagedFault) ||
+      typeof event.fault.name !== 'string' || typeof event.fault.message !== 'string') fail('phase or fault');
     if (!Array.isArray(event.handlers) || !Number.isInteger(event.index) || event.index < 1 || event.index > event.handlers.length) fail('cursor');
     if (event.handlers.length > (vm.options.maxExceptionEventHandlers ?? 1024)) fail('captured handler limit');
     const first = event.phase === 'firstChance';
-    if (!Array.isArray(event.args) || event.args.length !== 2
-        || (first ? !same(event.args[0], domain) : event.args[0] !== null)) fail('arguments');
+    if (!Array.isArray(event.args) || event.args.length !== 2 ||
+      (first ? !same(event.args[0], domain) : event.args[0] !== null)) fail('arguments');
     record(event.fault.reference);
     const args = record(event.args[1]);
     for (const handler of event.handlers) subscriber(handler, first);

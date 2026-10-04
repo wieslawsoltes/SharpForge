@@ -1,4 +1,3 @@
-import {scalarMemoryType} from './scalars-memory.js';
 /**
  * Base of the legacy AST adapter: node construction, profile diagnostics, modifiers, and types flattened to the strings
  * the current compiler binds (`System.Collections.Generic.List<int>`, `int[]`).
@@ -76,8 +75,6 @@ export class LegacyTypeAdapter {
   }
   /** The legacy string form of a type: `System.Collections.Generic.List<int>[]`. */
   type(red, prefix = '') {
-    const scalarMemory = scalarMemoryType(this,red,prefix);
-    if(scalarMemory !== undefined)return scalarMemory;
     switch (red.kind) {
       case 'PredefinedType':
         return red.keyword.text;

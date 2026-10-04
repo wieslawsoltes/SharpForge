@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f272fbd984bb7fbcf633",
+  "kind": "spec",
+  "sourceText": "if (e is MethodCallExpression { Method: { Name: \"MethodName\" } })",
+  "sourceSHA256": "ebb25091f5d19cacbf333b24c81cd9beb25a6b7ac9f594aa28df10ef74c62645",
+  "target": "library",
+  "featureId": "csharp-10-0-extended-property-patterns",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/extended-property-patterns.md",
+    "sha256": "c4cfde2503d2498d6412d3193e851a64da69cb43657143632ca983e1af304e31",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/extended-property-patterns.md",
+    "license": "NOASSERTION",
+    "offset": 341
+  }
+}

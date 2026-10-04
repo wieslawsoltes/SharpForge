@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-04b7112add75da493dbf",
+  "kind": "spec",
+  "sourceText": "f = [A] () => { };        // [A] lambda\nf = [return:A] x => x;    // syntax error at '=>'\nf = [return:A] (x) => x;  // [A] lambda\nf = [A] static x => x;    // syntax error at '=>'\n\nf = ([A] x) => x;         // [A] x\nf = ([A] ref int x) => x; // [A] x",
+  "sourceSHA256": "df090750d84b9e889f3650c03bfbbb13b2e66670e2207cf0f4a2f13f4544e6e3",
+  "target": "library",
+  "featureId": "csharp-10-0-lambda-improvements",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/lambda-improvements.md",
+    "sha256": "43e4ead0e264a6e6580875a4178ad3f09374d22c739ffc682b6b5f5cfbfc752f",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/lambda-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 2375
+  }
+}

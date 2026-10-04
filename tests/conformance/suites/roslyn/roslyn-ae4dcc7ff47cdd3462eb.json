@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ae4dcc7ff47cdd3462eb",
+  "kind": "diagnostics",
+  "sourceText": "namespace System.Linq.Expressions\n{\n    public class Expression\n    {\n        public static ConstantExpression Constant(object o, Type t) { return null; }\n        protected static Expression Convert(object e, Type t) { return null; }\n        public static Expression Convert(Expression e, object t) { return null; }\n        protected static Expression<T> Lambda<T>(Expression e, ParameterExpression[] args) { return null; }\n        public static Expression<T> Lambda<T>(Expression e, Expression[] args) { return null; }\n    }\n    public class Expression<T> { }\n    public class ParameterExpression : Expression { }\n    public class ConstantExpression : Expression { }\n}",
+  "sourceSHA256": "0195750bda4c5639c3e1997a37eba2c6118e64e0cca5bca60356f54fbd041946",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "sha256": "6ded88d14b8dc1163d157ec2de9f3f9566d5ff0a7e20170d6687ea20cf6d1f00",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "license": "MIT",
+    "method": "IgnoreInaccessibleExpressionMembers_01",
+    "offset": 211749
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source1)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

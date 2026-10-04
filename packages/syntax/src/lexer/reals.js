@@ -73,9 +73,11 @@ export function scanReal(text, start) {
       errors.push({ code: 'CS0594', message: "Floating-point constant is outside the range of type 'decimal'" });
       value = { mantissa: 0n, scale: 0 };
     }
+    profile.push({ code: 'SF1003', message: 'decimal, long and unsigned literals are not implemented' });
   } else {
     value = type === 'float' ? Math.fround(double) : double;
     if (!Number.isFinite(value)) errors.push({ code: 'CS0594', message: `Floating-point constant is outside the range of type '${type}'` });
+    if (type === 'float') profile.push({ code: 'SF1005', message: 'Single-precision float literals are not implemented' });
   }
   return { end: i, kind: 'double', value: double, literal: { type, value }, suffix, errors, features, profile };
 }

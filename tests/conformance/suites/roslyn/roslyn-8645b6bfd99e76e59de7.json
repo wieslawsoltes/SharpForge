@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8645b6bfd99e76e59de7",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M<T>(T t1, T t2)\n    {\n        t1 = t1 ?? t2;\n    }\n}",
+  "sourceSHA256": "165e75d07b5051e828f68e898e42c6369f2ab3794aef775812f663bdd81de99c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOperators.cs",
+    "sha256": "c60a5aa4e7fd7845ee7f036dfa55b03e5f3a9cd9572f96a1f7db994aa786e54e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOperators.cs",
+    "license": "MIT",
+    "method": "TestNullCoalesce_UnconstrainedTypeParameter_OldLanguageVersion",
+    "offset": 158881
+  },
+  "langVersion": "7.3",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_3)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8370",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,14): error CS8652: The feature 'unconstrained type parameters in null coalescing operator' is not available in C# 7.3. Please use language version 8.0 or greater.\n                //         t1 = t1 ?? t2;\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion7_3, \"t1 ?? t2\").WithArguments(\"unconstrained type parameters in null coalescing operator\", \"8.0\").WithLocation(6, 14)",
+  "unsupported": []
+}

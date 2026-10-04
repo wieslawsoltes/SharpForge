@@ -1,0 +1,5 @@
+{
+  "compound-assignment-operators/cs9260-below-csharp-14": ["diagnostics", "warnings"],
+  "compound-assignment-operators/cs9308-cs9310-cs0106-cs9340-cs0019": ["diagnostics", "warnings"],
+  "compound-assignment-operators/instance-operators-update-in-place": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
+}

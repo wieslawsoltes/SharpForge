@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-839279cad3b889c15541",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public static void Main()\n    {\n        dynamic d1 = 1;\n        dynamic d2 = 2;\n        System.Console.Write((d1, 2) == (() => 1, d2));\n    }\n}",
+  "sourceSHA256": "1bf9fa7dad2162c5f22b8591d254a1f2a19e234172a88c8f46e93042ffc76049",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestDynamic_WithTypelessExpression",
+    "offset": 74834
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.StandardAndCSharp, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,30): error CS0019: Operator '==' cannot be applied to operands of type 'dynamic' and 'lambda expression'\n                //         System.Console.Write((d1, 2) == (() => 1, d2));\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(d1, 2) == (() => 1, d2)\").WithArguments(\"==\", \"dynamic\", \"lambda expression\").WithLocation(8, 30)\n                ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

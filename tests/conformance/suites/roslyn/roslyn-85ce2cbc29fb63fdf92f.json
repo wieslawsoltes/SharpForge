@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-85ce2cbc29fb63fdf92f",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void FullyAssigned()\n    {\n        int x;\n        int y = 0;\n        void Local()\n        {\n            if (y == 0)\n                x = 0;\n            else\n                Local2();\n        }\n        void Local2()\n        {\n            x = 0;\n        }\n        Local();\n        y = x;\n    }\n    void PartiallyAssigned()\n    {\n        int x;\n        int y = 0;\n        void Local()\n        {\n            if (y == 0)\n                x = 0;\n            else\n                Local2();\n        }\n        void Local2()\n        {\n            //x = 0;\n        }\n        Local();\n        y = x; // unassigned\n    }\n}",
+  "sourceSHA256": "cb2c20a82dc8e793c70439e95d1934b35bef1a7d673579b166e6f5e7d9c9937a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "NotAssignedControlFlow",
+    "offset": 29864
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    void FullyAssigned()\n    {\n        int x;\n        int y = 0;\n        void Local()\n        {\n            if (y == 0)\n                x = 0;\n            else\n                Local2();\n        }\n        void Local2()\n        {\n            x = 0;\n        }\n        Local();\n        y = x;\n    }\n    void PartiallyAssigned()\n    {\n        int x;\n        int y = 0;\n        void Local()\n        {\n            if (y == 0)\n                x = 0;\n            else\n                Local2();\n        }\n        void Local2()\n        {\n            //x = 0;\n        }\n        Local();\n        y = x; // unassigned\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (38,13): error CS0165: Use of unassigned local variable 'x'\n                //         y = x; // unassigned\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(38, 13)",
+  "unsupported": []
+}

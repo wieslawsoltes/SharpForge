@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-cf4de9407b12ba0b209d",
+  "kind": "spec",
+  "sourceText": "var addWithDefault = AddWithDefaultMethod;\naddWithDefault(); // 3\naddWithDefault(5); // 6\n\nvar counter = CountMethod;\ncounter(); // 0\ncounter(1, 2); // 2\n\nint AddWithDefaultMethod(int addTo = 2) {\n  return addTo + 1;\n}\nint CountMethod(params int[] xs) {\n  return xs.Length;\n}",
+  "sourceSHA256": "edf1ef68090ba335c59f5307d3b8238f9c6c7fa8bde39fa70a2615de6be535b3",
+  "target": "library",
+  "featureId": "csharp-12-0-lambda-optional-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "license": "NOASSERTION",
+    "offset": 762
+  }
+}

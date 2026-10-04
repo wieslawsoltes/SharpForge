@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-07c98957682fb919b0e0",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    public Buffer10 F = new Buffer10();\n}\n\nclass Program\n{\n    static void M(Buffer10 b)\n    {\n        b[^1] = 123;\n    }\n\n    static Buffer10 M2() => new Buffer10() { [^1] = 111 };\n    static C M3() => new C() { F = {[^1] = 111} };\n}\n\nstruct Buffer10\n{\n    public int[] _array = new int[10];\n    public Buffer10() { }\n\n    public int Length => 10;\n    public int this[int x]\n    {\n        get => _array[x];\n    }\n}",
+  "sourceSHA256": "52d7f060a99ad43a605e865cddf350feb0ed673e8d448dbe79e0e4452a50140b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/IndexAndRangeTests.cs",
+    "sha256": "a5bc66f188cd46c37d21137d5030c350782aae648af5cc9cf55e0f5accb5c0c4",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/IndexAndRangeTests.cs",
+    "license": "MIT",
+    "method": "InObjectInitializer_Index_Readonly",
+    "offset": 51677
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0200",
+        "severity": "error"
+      },
+      {
+        "code": "CS0200",
+        "severity": "error"
+      },
+      {
+        "code": "CS0200",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,9): error CS0200: Property or indexer 'Buffer10.this[int]' cannot be assigned to -- it is read only\n                //         b[^1] = 123;\n                Diagnostic(ErrorCode.ERR_AssgReadonlyProp, \"b[^1]\").WithArguments(\"Buffer10.this[int]\").WithLocation(10, 9),\n                // (13,46): error CS0200: Property or indexer 'Buffer10.this[int]' cannot be assigned to -- it is read only\n                //     static Buffer10 M2() => new Buffer10() { [^1] = 111 };\n                Diagnostic(ErrorCode.ERR_AssgReadonlyProp, \"[^1]\").WithArguments(\"Buffer10.this[int]\").WithLocation(13, 46),\n                // (14,37): error CS0200: Property or indexer 'Buffer10.this[int]' cannot be assigned to -- it is read only\n                //     static C M3() => new C() { F = {[^1] = 111} };\n                Diagnostic(ErrorCode.ERR_AssgReadonlyProp, \"[^1]\").WithArguments(\"Buffer10.this[int]\").WithLocation(14, 37)\n                ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

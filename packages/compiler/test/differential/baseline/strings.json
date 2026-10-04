@@ -1,14 +1,15 @@
 {
-  "strings/concat-and-length": ["diagnostics", "warnings", "bytecode", "cil"],
+  "strings/concat-and-length": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "strings/cs0200-assign-char-index": ["diagnostics", "warnings"],
   "strings/cs0200-assign-length": ["diagnostics", "warnings"],
   "strings/cs1012-too-many-chars": ["warnings"],
   "strings/cs1061-misspelled-length": ["diagnostics", "warnings"],
   "strings/equality-and-compare": ["warnings"],
-  "strings/escapes-and-verbatim": ["diagnostics", "warnings", "bytecode", "cil"],
+  "strings/escapes-and-verbatim": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "strings/format-and-tostring": ["warnings"],
-  "strings/null-concat": ["diagnostics", "warnings", "bytecode", "cil"],
-  "strings/search-and-slice": ["diagnostics", "warnings", "bytecode", "cil"],
+  "strings/null-concat": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "strings/search-and-slice": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "strings/split-and-join": ["warnings"],
+  "strings/string-builder": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "strings/transform": ["warnings"]
 }

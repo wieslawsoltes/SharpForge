@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-745e7368abaed1fc35b9",
+  "kind": "diagnostics",
+  "sourceText": "class Base\n{\n    private protected void M()\n    {\n        System.Console.WriteLine(this.GetType().Name);\n    }\n}\n\nclass Derived : Base\n{\n    public void Main()\n    {\n        Derived derived = new Derived();\n        derived.M();\n        Base bb = new Base();\n        bb.M(); // error 1\n        Other other = new Other();\n        other.M(); // error 2\n    }\n}\n\nclass Other : Base\n{\n}",
+  "sourceSHA256": "52e99e6d9906a23552720c2e54d4875098a2f8d37a063c0e2331fe8b5093d8ef",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "VerifyProtectedSemantics",
+    "offset": 33488
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1540",
+        "severity": "error"
+      },
+      {
+        "code": "CS1540",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (16,12): error CS1540: Cannot access protected member 'Base.M()' via a qualifier of type 'Base'; the qualifier must be of type 'Derived' (or derived from it)\n                //         bb.M(); // error 1\n                Diagnostic(ErrorCode.ERR_BadProtectedAccess, \"M\").WithArguments(\"Base.M()\", \"Base\", \"Derived\").WithLocation(16, 12),\n                // (18,15): error CS1540: Cannot access protected member 'Base.M()' via a qualifier of type 'Other'; the qualifier must be of type 'Derived' (or derived from it)\n                //         other.M(); // error 2\n                Diagnostic(ErrorCode.ERR_BadProtectedAccess, \"M\").WithArguments(\"Base.M()\", \"Other\", \"Derived\").WithLocation(18, 15)\n                ",
+  "unsupported": []
+}

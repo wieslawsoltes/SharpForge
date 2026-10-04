@@ -1,0 +1,41 @@
+✔ generic signatures normalize aliases without changing opaque metadata identifiers (1.384985ms)
+✔ closed method cache uses canonical handles and shares the original instruction body (31.112054ms)
+✔ generic cache limits and malformed contexts are rejected without changing existing methods (7.03583ms)
+✔ nested generic class fields and constructors retain their closed owner (16.167861ms)
+✔ default(T), initobj, typeof(T), generic arrays and box T use the current frame (9.445331ms)
+✔ generic type context and generic method context are substituted independently (5.344324ms)
+✔ snapshot retains a suspended concrete frame while derived instantiation caches are discarded (6.424472ms)
+✔ generic reference constraints reject a value argument before entering its method body (3.454247ms)
+✔ malformed generic variables and missing MethodSpec are verification diagnostics (2.104532ms)
+✔ generic virtual overrides execute with the selected declaring type and method arguments (39.315149ms)
+✔ explicit implementations of two closed interfaces with the same MethodDef stay distinct (12.706924ms)
+✔ closed static fields and initialization are independent even inside a generic caller (8.025434ms)
+✔ inherited generic fields use the declaring base context, including nested array substitutions (7.815235ms)
+✔ aggregate generic arguments are admitted while unknown external generic methods remain rejected (4.411183ms)
+✔ closed generic Decimal default and initobj retain the scalar storage contract (2.46371ms)
+✔ A05 native plan keeps SDK policy, unsafe compilation and replay evidence explicit (1.21159ms)
+FAILED failed: /tmp/sharpforge-a05-plan-u0W8v4/failed/result.json
+BLOCKED dependent: /tmp/sharpforge-a05-plan-u0W8v4/dependent/result.json
+UNSUPPORTED sdk-policy: /tmp/sharpforge-a05-plan-u0W8v4/sdk-policy/result.json
+PASSED last: /tmp/sharpforge-a05-plan-u0W8v4/last/result.json
+✔ A05 native aggregation continues independent failures and never counts unavailable evidence as a pass (18.132469ms)
+BLOCKED fixture: /tmp/sharpforge-a05-missing-sdk-t4bXCX/fixture/result.json
+✔ A05 native missing SDK blocks every case and retains a complete failed report (3.075941ms)
+✔ actual CLI nested generic metadata counts inherited and introduced parameters (126.465159ms)
+✔ nested types without introduced parameters retain enclosing substitutions through fields and calls (74.37843ms)
+✔ logical generic names preserve boxing, distinct type identities and formatting in all source routes (273.589699ms)
+✔ source identity descriptors roundtrip as owned immutable data, including debug-stripped CIL (32.245149ms)
+✔ boxing through a substituted method parameter uses the closed struct storage category (31.401744ms)
+✔ malformed, cyclic, overdeep and colliding logical descriptors fail source admission (25.942086ms)
+✔ independent real CLI generic metadata retains its actual definition and type arguments (4.384764ms)
+✔ bound-tree native CIL emission retains true generic metadata without source identity projection (15.56186ms)
+✔ logical identities reject collisions with unprojected physical CLI definitions (8.686315ms)
+✔ a separate closed logical name leaves its physical CLI owner unchanged (1.544259ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5154.214664

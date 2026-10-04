@@ -1,15 +1,56 @@
-/** Maps semantic scalar, array, Span, framework and source symbols to runtime image type names. */
-import { TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
-import {isReference} from '../../type-utils.js';
-import { unsupported } from './unsupported.js';
+import {
+  isNullableType
+} from '../../conversions/nullable.js';
+import {
+  sourceNullableElement
+} from '@sharpforge/bytecode';
+import {
+  numericTypeId,
+  exceptionBaseType
+} from '@sharpforge/bytecode';
+import {
+  exceptionTypeName
+} from '../../symbols/exception-identity.js';
+/**
+ * Maps type symbols to image type names. The bytecode image knows all numeric scalar widths, `bool`, `string`, `object`,
+ * `Exception`, framework registry types, classes declared in the image and single-dimensional arrays of those.
+ * Rectangular arrays and managed references retain their storage shapes.
+ * Everything else either lowers to one of them (enums to `int`, delegate types to a synthesized class) or is
+ * reported as not executable on this runtime.
+ */
+import {
+  TypeKind,
+  ArrayTypeSymbol
+} from '../../symbols/types.js';
+import {
+  unsupported
+} from './unsupported.js';
 
 const specialNames = Object.freeze({
-  System_Int32: 'int', System_UInt32: 'uint', System_Int64: 'long', System_UInt64: 'ulong',
-  System_Byte: 'byte', System_SByte: 'sbyte', System_Int16: 'short', System_UInt16: 'ushort', System_Char: 'char',
-  System_Double: 'double', System_Single: 'float', System_Decimal: 'decimal',
-  System_IntPtr: 'nint', System_UIntPtr: 'nuint', System_Boolean: 'bool',
-  System_String: 'string', System_Object: 'object', System_Void: 'void', System_TypedReference:'typedref',
+  System_SByte: 'sbyte',
+  System_Byte: 'byte',
+  System_Int16: 'short',
+  System_UInt16: 'ushort',
+  System_UInt32: 'uint',
+  System_Int64: 'long',
+  System_UInt64: 'ulong',
+  System_Char: 'char',
+  System_Single: 'float',
+  System_Decimal: 'decimal',
+  System_IntPtr: 'nint',
+  System_UIntPtr: 'nuint',
+  System_TypedReference: 'typedref',
+  System_ArgIterator: 'System.ArgIterator',
+  System_RuntimeArgumentHandle: 'System.RuntimeArgumentHandle',
+  System_RuntimeTypeHandle: 'System.RuntimeTypeHandle',
+  System_Int32: 'int',
+  System_Double: 'double',
+  System_Boolean: 'bool',
+  System_String: 'string',
+  System_Object: 'object',
+  System_Void: 'void',
 });
+
 
 export class TypeMapper {
   /**
@@ -38,20 +79,19 @@ export class TypeMapper {
     if (type instanceof ArrayTypeSymbol) {
       return this.imageType(type.elementType, syntax) + '[' + ','.repeat(type.rank - 1) + ']';
     }
+    // A dynamic value is an object; what is done with it is late bound and reported there (lowering/dynamic.js).
+    if (type.typeKind === TypeKind.Dynamic) return 'object';
+    if (type.typeKind === TypeKind.Pointer) return this.imageType(type.pointedAtType, syntax) + '*';
+    if (isNullableType(type)) return 'System.Nullable`1<' + this.imageType(type.nullableUnderlyingType, syntax) + '>';
     const special = type.specialType;
     if (special && specialNames[special]) return specialNames[special];
     if (type.isErrorType?.()) unsupported('a type the framework registry does not list', syntax);
+    const exceptionName = exceptionTypeName(type);
+    if (exceptionBaseType(exceptionName)) return exceptionName;
     const core = this.host.analysis.core,
       definition = type.originalDefinition;
-    if (definition === core.span || definition === core.readOnlySpan) {
-      const name = definition === core.span ? 'Span' : 'ReadOnlySpan';
-      return 'System.' + name + '`1<' + this.imageType(type.typeArguments[0].type, syntax) + '>';
-    }
-    if (type.typeKind === TypeKind.Class && !this.host.isSource(type)) {
-      for (let base = type, depth = 0; base && depth < 64; base = base.baseType, depth++) {
-        if (base === core.exception) return type.toDisplayString();
-      }
-    }
+    if ([core.span, core.readOnlySpan].includes(definition) && type.typeArguments?.length === 1)
+      return 'System.' + (definition === core.span ? 'Span' : 'ReadOnlySpan') + '<' + this.imageType(type.typeArguments[0].type, syntax) + '>';
     const sequences = [core.ienumerableT, core.ienumeratorT, core.iasyncEnumerableT, core.iasyncEnumeratorT];
     if (sequences.includes(definition) && type.typeArguments?.length === 1)
       return this.host.iterators.classOf(this.imageType(type.typeArguments[0].type, syntax)).record.name;
@@ -72,10 +112,10 @@ export class TypeMapper {
         unsupported('user-defined generics', syntax);
         break;
       case TypeKind.Struct:
-        if (this.host.isSource(type)) unsupported('struct types', syntax);
+        if (this.host.isSource(type)) return this.host.classOf(type, syntax).name;
         break;
       case TypeKind.Interface:
-        if (this.host.isSource(type)) unsupported('interface dispatch', syntax);
+        if (this.host.isSource(type)) return this.host.classOf(type, syntax).name;
         break;
       case TypeKind.Class:
         if (this.host.isSource(type)) return this.host.classOf(type, syntax).name;
@@ -83,7 +123,6 @@ export class TypeMapper {
       default:
         break;
     }
-    if (type.originalDefinition?.specialType === 'System_Nullable_T') unsupported('nullable value types', syntax);
     // A framework generic over a type the registry does not list shares the construction over `object` (lowering/generics).
     const registry = this.host.bridge.registryName(type) ?? this.host.frameworkConstructions.imageTypeOf(type);
     if (registry) return registry;
@@ -93,6 +132,7 @@ export class TypeMapper {
   }
   /** True when values of the image type are references (cleared at scope exit, comparable with null). */
   isReference(imageType) {
-    return isReference(imageType);
+    return !sourceNullableElement(imageType) && !this.host.program.typesByName.get(imageType)?.valueType && imageType !== 'bool' && numericTypeId(
+      imageType) === undefined;
   }
 }

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-01473c85a7dcfc8b2466",
+  "kind": "diagnostics",
+  "sourceText": "\n#pragma warning disable 169\n\nusing System.Runtime.InteropServices;\n\npublic class X\n{\n    [MarshalAs(UnmanagedType.SafeArray, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]   int SafeArray_e1;\n    [MarshalAs(UnmanagedType.SafeArray, ArraySubType = UnmanagedType.ByValTStr)]                                                                                                                int SafeArray_e2;\n    [MarshalAs(UnmanagedType.SafeArray, SizeConst = 1)]                                                                                                                                         int SafeArray_e3;\n    [MarshalAs(UnmanagedType.SafeArray, SizeParamIndex = 1)]                                                                                                                                    int SafeArray_e4;\n    [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null)]                                                                                int SafeArray_e5;\n    [MarshalAs(UnmanagedType.SafeArray, SafeArrayUserDefinedSubType = null, SafeArraySubType = VarEnum.VT_BLOB)]                                                                                int SafeArray_e6;\n    [MarshalAs(UnmanagedType.SafeArray, SafeArrayUserDefinedSubType = typeof(int), SafeArraySubType = 0)]                                                                                       int SafeArray_e7;\n}\n",
+  "sourceSHA256": "70dbb7662e6df7a5ae6d9f0cf2dd96541c2c4f6d7db753d382c30ff45b7e619c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "sha256": "bb4e4ad059ab1c1eda93b5a74e4516301a4d849e95af99ceb05f3e76a1b628a0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "license": "MIT",
+    "method": "NativeTypeSafeArray_Errors",
+    "offset": 50407
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,41): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.SafeArray, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]   int SafeArray_e1;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"ArraySubType = UnmanagedType.ByValTStr\"),\n                // (8,153): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.SafeArray, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]   int SafeArray_e1;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SizeConst = -1\"),\n                // (8,169): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.SafeArray, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]   int SafeArray_e1;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SizeParamIndex = -1\"),\n                // (8,117): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.SafeArray, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]   int SafeArray_e1;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SafeArrayUserDefinedSubType = null\"),\n                // (9,41): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.SafeArray, ArraySubType = UnmanagedType.ByValTStr)]                                                                                                                int SafeArray_e2;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"ArraySubType = UnmanagedType.ByValTStr\"),\n                // (10,41): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.SafeArray, SizeConst = 1)]                                                                                                                                         int SafeArray_e3;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SizeConst = 1\"),\n                // (11,41): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.SafeArray, SizeParamIndex = 1)]                                                                                                                                    int SafeArray_e4;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SizeParamIndex = 1\"),\n                // (12,77): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null)]                                                                                int SafeArray_e5;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SafeArrayUserDefinedSubType = null\"),\n                // (13,41): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.SafeArray, SafeArrayUserDefinedSubType = null, SafeArraySubType = VarEnum.VT_BLOB)]                                                                                int SafeArray_e6;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SafeArrayUserDefinedSubType = null\"),\n                // (14,41): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.SafeArray, SafeArrayUserDefinedSubType = typeof(int), SafeArraySubType = 0)]                                                                                       int SafeArray_e7;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SafeArrayUserDefinedSubType = typeof(int)\")",
+  "unsupported": []
+}

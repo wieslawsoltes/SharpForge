@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-eba8d9594346c3bb3435",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\npublic class C\n{\n    public static void Main()\n    {\n        foreach (var i in () => 42)\n        {\n            Console.Write(i);\n        }\n    }\n    public sealed class Enumerator\n    {\n        public int Current { get; private set; }\n        public bool MoveNext() => Current++ != 3;\n    }\n}\npublic static class Extensions\n{\n    public static C.Enumerator GetEnumerator(this Func<int> self) => new C.Enumerator();\n}",
+  "sourceSHA256": "511aa17fbc998ae33505b3ab82bbe92dea2e39d4209894d94231d45d6d0404fe",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "sha256": "a8916f977bf7fcd541545be2f5e4bdc8faf297975fa81f0c7ad4833e9a24ce17",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "license": "MIT",
+    "method": "TestGetEnumeratorPatternViaExtensionsWithDelegateConversion",
+    "offset": 80735
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0446",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (7,27): error CS0446: Foreach cannot operate on a 'lambda expression'. Did you intend to invoke the 'lambda expression'?\n                    //         foreach (var i in () => 42)\n                    Diagnostic(ErrorCode.ERR_AnonMethGrpInForEach, \"() => 42\").WithArguments(\"lambda expression\").WithLocation(7, 27)\n                    ",
+  "unsupported": []
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a1a1056ecf88ce1128f8",
+  "kind": "spec",
+  "sourceText": "var f1 = () => default;           // error: cannot infer type\nvar f2 = x => x;                  // error: cannot infer type\nvar f3 = () => 1;                 // System.Func<int>\nvar f4 = string () => null;       // System.Func<string>\nvar f5 = delegate (object o) { }; // System.Action<object>\n\nstatic void F1() { }\nstatic void F1<T>(this T t) { }\nstatic void F2(this string s) { }\n\nvar f6 = F1;    // error: multiple methods\nvar f7 = \"\".F1; // error: the delegate type could not be inferred\nvar f8 = F2;    // System.Action<string> ",
+  "sourceSHA256": "245e71c6ac0c0262f7b89443419a1c02461ae691840ac8a491ceccfb54e6b300",
+  "target": "library",
+  "featureId": "csharp-10-0-lambda-improvements",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/lambda-improvements.md",
+    "sha256": "43e4ead0e264a6e6580875a4178ad3f09374d22c739ffc682b6b5f5cfbfc752f",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/lambda-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 14485
+  }
+}

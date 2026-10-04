@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ff8fce39f7cf55024e81",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static void M()\n    {\n        int a = 1;\n        try { }\n        catch when (a == 2) { }\n        catch (System.Exception) when (a == 3) { }\n        catch { }\n    }\n}\n",
+  "sourceSHA256": "3cb946016147b75f7e2d509f0580fdf2a496c9995db66d831b7fcafc4bdac510",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTryFinally.cs",
+    "sha256": "3ed12e5626219fd67ecf94aafa47a6210fddedaa37ed37a87d35bcb102b1c856",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTryFinally.cs",
+    "license": "MIT",
+    "method": "ExceptionAlreadyCaught3",
+    "offset": 67157
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

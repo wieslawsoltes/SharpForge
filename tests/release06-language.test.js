@@ -13,7 +13,7 @@ for(const [name,source,output] of cases)for(const route of ['IR','canonical','di
  const result=vm.run();assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.output,output);
 });
 for(const [name,source,code] of diagnosticCases)test(`0.6 language diagnostic: ${name}`,()=>{const r=compile(source);assert(!r.success);assert(r.diagnostics.some(d=>d.code===code),JSON.stringify(r.diagnostics));});
-test('0.6 real IDisposable metadata survives canonical reload',()=>{const r=compileToIL(resource+'using var r=new R(1);');assert(r.success);const inspect=new AssemblyInspector(r.assembly),type=inspect.types.find(t=>t.name==='R');assert.equal(inspect.metadata.typeName(type.interfaces[0]),'System.IDisposable');const dispose=type.methods.find(m=>m.name==='Dispose');assert.equal(dispose.flags&0x1e6,0x1e6);assert.deepEqual(loadAssembly(r.assembly).types.find(t=>t.name==='R').interfaces,['System.IDisposable']);});
+test('0.6 real IDisposable metadata survives canonical reload',()=>{const r=compileToIL('using var r=new R(1);'+resource);assert(r.success);const inspect=new AssemblyInspector(r.assembly),type=inspect.types.find(t=>t.name==='R');assert.equal(inspect.metadata.typeName(type.interfaces[0]),'System.IDisposable');const dispose=type.methods.find(m=>m.name==='Dispose');assert.equal(dispose.flags&0x1e6,0x1e6);assert.deepEqual(loadAssembly(r.assembly).types.find(t=>t.name==='R').interfaces,['System.IDisposable']);});
 test('0.6 constant evaluator has an explicit budget',()=>{const ast=parseExpression('1+2*3').expression;assert.deepEqual(evaluateConstant(ast),{type:'int',value:7});assert.equal(evaluateConstant(ast,{maxNodes:1}),null);});
 
 // Execute the actual delivered examples, including real generated source, after IL export/reassembly.

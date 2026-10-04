@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-8317d19ed247bbb4a84e",
+  "kind": "spec",
+  "sourceText": "struct S\n{\n    int x;\n    public S() // warning: 'S.x' is implicitly initialized to 'default'.\n    {\n    }\n}",
+  "sourceSHA256": "55f672b47540a824bf965042b25ac00a16f4fd5891cb71f4d6cdb267ceea60e4",
+  "target": "library",
+  "featureId": "csharp-11-0-auto-default-structs",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/auto-default-structs.md",
+    "sha256": "ef94c71a977016911c9fb1ac490aaf2c63d30ee809982111f21ef945f4dda24a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/auto-default-structs.md",
+    "license": "NOASSERTION",
+    "offset": 5290
+  }
+}

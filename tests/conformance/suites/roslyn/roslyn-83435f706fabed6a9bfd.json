@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-83435f706fabed6a9bfd",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n[AttributeUsage(AttributeTargets.Struct)]\nclass A : Attribute\n{\n}\n[AttributeUsage(AttributeTargets.Method)]\nclass B : Attribute\n{\n}\n\npartial class Gen<[A] T>\n{\n}\npartial class Gen<[B] T>\n{\n}",
+  "sourceSHA256": "d566a616ebab02bec27a55e7dbb507201e08e5c66b5cd70f2e470b964f241a2b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "ErrorsInMultiplePartialDeclarations_TypeParam",
+    "offset": 257352
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0592",
+        "severity": "error"
+      },
+      {
+        "code": "CS0592",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,20): error CS0592: Attribute 'A' is not valid on this declaration type. It is only valid on 'struct' declarations.\n                // partial class Gen<[A] T>\n                Diagnostic(ErrorCode.ERR_AttributeOnBadSymbolType, \"A\").WithArguments(\"A\", \"struct\").WithLocation(11, 20),\n                // (14,20): error CS0592: Attribute 'B' is not valid on this declaration type. It is only valid on 'method' declarations.\n                // partial class Gen<[B] T>\n                Diagnostic(ErrorCode.ERR_AttributeOnBadSymbolType, \"B\").WithArguments(\"B\", \"method\").WithLocation(14, 20)",
+  "unsupported": []
+}

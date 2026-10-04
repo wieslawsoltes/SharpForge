@@ -1,11 +1,12 @@
 import {contextFrames,threads,parallelStacks,freezeThread,prepareStepOut,stepOutTarget} from './concurrency.js';
 import {setNextStatement,gotoTargets,hotReload,evaluateFunction,loadPortableSymbols,releaseEvaluationHandles} from './advanced.js';
-import { CilVirtualMachine, isReference, ManagedFault } from '@sharpforge/runtime';
+import { CilVirtualMachine, isReference, ManagedFault, deoptWasmFrames } from '@sharpforge/runtime';
 import { selectMethod, ilLabel, tokenHex } from '@sharpforge/cil';
 import {SourceBreakpointIndex} from './source-locations.js';
 import {sameBreakpointRule,validateBreakpointRule,evaluateBreakpointRule,formatLogpoint,ruleState,restoreRuleState,publicBreakpoint} from './breakpoint-rules.js';
 import {readDebugDirectory} from '@sharpforge/symbols';
 import { parseExpression } from '@sharpforge/syntax';
+import {pumpCilSession, pauseCilSession} from './cil-execution-control.js';
 
 const address = (token, offset) => `il:${token.toString(16).padStart(8, '0')}:${offset.toString(16).padStart(8, '0')}`;
 const primitive = new Set(['int','uint','long','ulong','short','ushort','byte','sbyte','bool','char','float','double','nint','nuint']);
@@ -46,6 +47,7 @@ export class CilDebugSession {
     this.vm.onException = fault => {
       const rule=this.exceptionRules.find(r=>r.name.replace(/^System\./,'')===fault.name.replace(/^System\./,'')),mode=rule?.mode??this.exceptionBreak;
       if (mode === 'all' || mode === 'uncaught' && !this.willCatch(fault)) {
+        deoptWasmFrames(this.vm);
         this.temporary=null;this.stoppedBeforeInstruction=false;this.reason = {reason:'exception',phase:'after',breakMode:mode, description:`${fault.name}: ${fault.message}`};
         return true;
       }
@@ -175,12 +177,10 @@ export class CilDebugSession {
     this.sourceStepping=options.granularity!=='instruction'&&(this.symbols||this.vm.scheduler.current?.kind==='async')&&this.sourceIndex.byId.size>0;this.startFrameId=this.vm.top?.id;this.startPointId=this.vm.top?this.stackTrace().find(f=>f.id===this.vm.top.id)?.point?.id:null;prepareStepOut(this);this.startContextId=this.vm.scheduler.currentId;this.mode=mode;this.startDepth=this.vm.frames.length;this.startInstructions=this.vm.instructions;this.reason=null;this.stoppedBeforeInstruction=false;this.vm.state=this.vm.scheduler.parked?'waiting':'running';
   }
   start(stopOnEntry=true){this.resume(stopOnEntry?'entry':'continue');return this;}
-  pump(options={}){const result=this.vm.runSlice({...options,onInstruction:(i,f)=>{
-    const stop=this.instruction(i,f);if(stop){this.stoppedBeforeInstruction=true;const latest=this.history.at(-1);if(latest){latest.stop={...this.reason};latest.stoppedRules=[...this.breakpoints,...this.functionBreakpoints,...this.dataBreakpoints].map(ruleState);}}return stop;
-  }});this.rememberStop();return result;}
+  pump(options={}){return pumpCilSession(this,options);}
   rememberStop(){if(this.vm.state!=='paused'||!this.reason||this.reason.phase==='before')return;this.remember();const last=this.history.at(-1);if(last?.snapshot.instructions===this.vm.instructions&&last.snapshot.writeRevision===this.vm.writeRevision){last.stop={...this.reason};last.stoppedRules=[...this.breakpoints,...this.functionBreakpoints,...this.dataBreakpoints].map(ruleState);}}
   runUntilStop(){while(this.vm.state==='running'||this.vm.state==='ready')this.pump({instructionBudget:50000,timeBudgetMs:50});return this.state();}
-  pause(){if(['running','waiting'].includes(this.vm.state)){this.vm.state='paused';this.stoppedBeforeInstruction=false;this.temporary=null;this.reason={reason:'pause',phase:'suspended',description:'Execution interrupted between IL instructions'};}}
+  pause(){pauseCilSession(this);}
   stop(){this.vm.stop();this.temporary=null;this.reason={reason:'terminated'};}
   /** Opt-in full-state instruction history. Budgets account conservatively for JS containers. */
   syncHostHistory(){const host=this.vm.platform.hostOperations;if(this.hostHistoryRevision!==host.revision){this.historyDropped+=this.history.length;this.history=[];this.historyBytes=0;this.hostHistoryRevision=host.revision;}return host.active.size===0;}
@@ -205,7 +205,7 @@ export class CilDebugSession {
     return null;
   }
   restoreHistory(item,stopped=false){
-    this.vm.restore(item.snapshot);this.vm.state='paused';this.mode='continue';this.skipOnce=null;this.temporary=null;
+    this.vm.restore(item.snapshot);this.vm.state='paused';deoptWasmFrames(this.vm);this.mode='continue';this.skipOnce=null;this.temporary=null;
     this.stoppedBeforeInstruction=item.beforeInstruction!==false;
     for(const bp of [...this.breakpoints,...this.functionBreakpoints,...this.dataBreakpoints])restoreRuleState(bp,(stopped?item.stoppedRules??item.rules:item.rules)?.find(r=>r.id===bp.id));
     this.reason={reason:'step',description:'Restored the previous retained IL state'};
@@ -273,7 +273,7 @@ export class CilDebugSession {
     if(hits.length){this.temporary=null;this.reason={reason:'data breakpoint',phase:'after',breakpointId:hits[0].bp.id,hitBreakpointIds:hits.map(h=>h.bp.id),
       description:hits[0].error?'Data breakpoint condition failed: '+hits[0].error:'Watched storage was written; the highlighted instruction has executed',
       write:{...write,oldDisplay:write.oldValue===undefined?'<unassigned>':this.vm.display(write.oldValue),newDisplay:this.vm.display(write.value)}};
-      this.vm.state='paused';this.stoppedBeforeInstruction=false;}
+      this.vm.state='paused';deoptWasmFrames(this.vm);this.stoppedBeforeInstruction=false;}
   }
   runToInstruction(reference){const p=this.location(reference);if(!this.vm.report.methods.includes(p.token))throw new Error('Target is outside the verified call graph');this.temporary={methodToken:p.token,ilOffset:p.offset,...(this.vm.top?.method.token===p.token?{frameId:this.vm.top.id}:{})};this.resume();}
   stackTrace(threadId){return [...contextFrames(this,threadId)].reverse().map(frame=>{
@@ -362,7 +362,7 @@ export class CilDebugSession {
       if(slot.type==='bool'&&result.type!=='bool'||slot.type==='string'&&!['string','null'].includes(result.type))throw new Error('Variable type mismatch');
       next=this.vm.marshal(this.vm.value(result.value),slot.type);
     }else {if(result.value!==null&&(!isReference(result.value)||slot.type!=='object'&&!this.vm.matches(result.value,slot.type)))throw new Error('Variable type mismatch');next=result.value;}
-    this.vm.dereference(Object.freeze({byref:true,kind:slot.kind,index:slot.index,frameId:frame.id}),true,next);this.rememberStop();return this.variable(slot.name,slot.type,next);
+    this.vm.dereference(Object.freeze({...this.vm.address(slot.kind,slot.index),frameId:frame.id}),true,next);this.rememberStop();return this.variable(slot.name,slot.type,next);
   }
   disassemble(reference,{instructionOffset=0,instructionCount=100,offset=0}={}){
     if(!Number.isInteger(instructionOffset)||!Number.isInteger(instructionCount)||instructionCount<0||instructionCount>1000)throw new RangeError('Invalid disassembly page');

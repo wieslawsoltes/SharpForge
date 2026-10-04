@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-6a85ac26cb366a181aed",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass A\n{\n    int x;\n\n    public virtual void PrintFields() => Console.WriteLine($\"x = {x}\");\n}\n\nclass B : A\n{\n    int y;\n\n    public override void PrintFields()\n    {\n        base.PrintFields();\n        Console.WriteLine($\"y = {y}\");\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [
+      "CS0649"
+    ]
+  },
+  "sourceSHA256": "e69473b3ea243636db9c979039af93645f4cb844f6ac7b1d4c83b0cd4f505544",
+  "originalSource": "class A\n{\n    int x;\n\n    public virtual void PrintFields() => Console.WriteLine($\"x = {x}\");\n}\n\nclass B : A\n{\n    int y;\n\n    public override void PrintFields()\n    {\n        base.PrintFields();\n        Console.WriteLine($\"y = {y}\");\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "OverrideMethods2",
+    "ignoredWarnings": [
+      "CS0649"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "OverrideMethods2",
+    "offsetInUnquotedMarkdown": 139944
+  }
+}

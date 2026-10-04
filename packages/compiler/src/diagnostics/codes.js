@@ -31,6 +31,8 @@ export const profileCodes=Object.freeze({
   SF2143:profile('The supported with(...) form supplies one capacity argument to List<T> or HashSet<T>'),
   SF2200:profile('The program is valid C# but is not executable on this runtime profile: it uses {0}'),
   SF2201:profile('Semantic analysis failed internally ({0}); only the profile diagnostics are reported'),
+  SF2202:profile("The preview feature '{0}' is parsed and gated but not bound yet (provisional: {1})"),
+  SF2203:profile('Preview rule: {0} (provisional: {1})'),
   SF3001:profile('CIL emission failed: {0}')
 });
 /** Number of distinct `{n}` placeholders a message format consumes. */
@@ -46,6 +48,20 @@ export function diagnosticDescriptor(code){
 export const hasDiagnosticCode=code=>diagnosticDescriptor(code)!==null;
 /** All catalog ids: the Roslyn codes followed by the SharpForge profile codes. */
 export const diagnosticCodes=()=>[...Object.keys(roslynCodes),...Object.keys(profileCodes)];
+/**
+ * Identifier constants for compiler callers, derived from the existing descriptor catalogs.
+ * The extra SF1xxx ids belong to the parser and are only inspected by the compiler;
+ * their messages stay with the parser and are not compiler message descriptors.
+ * A null prototype prevents unknown ids from resolving to inherited object members.
+ */
+export const DiagnosticId = Object.freeze(Object.assign(
+  Object.create(null),
+  Object.fromEntries([
+    ...diagnosticCodes(),
+    'SF1003', 'SF1004', 'SF1005', 'SF1010', 'SF1011', 'SF1012',
+    'SF1013', 'SF1014', 'SF1015', 'SF1017', 'SF1018', 'SF1019'
+  ].map(id => [id, id]))
+));
 /** Formats a catalog message. Unknown ids are a compiler bug and throw; a missing argument renders as an empty string. */
 export function formatMessage(code,args=[]){
   const d=diagnosticDescriptor(code);if(!d)throw new RangeError(`Diagnostic '${code}' is not in the compiler catalog`);

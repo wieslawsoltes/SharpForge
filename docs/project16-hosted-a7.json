@@ -1,0 +1,1394 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-hosted-attempt-evidence",
+  "attempt": "a7",
+  "workId": "SF-A20-T12",
+  "status": "failed",
+  "overallPassed": false,
+  "disposition": "Original completed performance-only failure retained. The strict lazy aggregate remains failed; only the explicitly recorded five observed editor tradeoffs received integration-owner sign-off. No failed configured gate is waived and no project completion is claimed.",
+  "source": {
+    "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+    "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+    "trigger": "create",
+    "triggerRef": "refs/heads/codex/project16/qualify-ubuntu-chromium-performance-compare-a5-20261004-a7",
+    "triggerNonce": "compare-a5-20261004-a7",
+    "captureOnly": false,
+    "baselineProfile": "a5",
+    "workflowRunId": "37186353254",
+    "stage": "performance",
+    "engine": "chromium",
+    "runner": "Linux",
+    "runnerLabel": "ubuntu-latest",
+    "editorBaseline": "docs/evidence/project16-hosted/a5/editor-browser.json",
+    "workbenchBaseline": "docs/evidence/project16-hosted/a5/workbench-large-trace.json"
+  },
+  "workflow": {
+    "runId": 37186353254,
+    "jobId": 111388977941,
+    "runAttempt": 1,
+    "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37186353254",
+    "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37186353254/job/111388977941",
+    "headBranch": "codex/project16/qualify-ubuntu-chromium-performance-compare-a5-20261004-a7",
+    "status": "completed",
+    "conclusion": "failure",
+    "createdAt": "2026-10-04T07:37:30Z",
+    "updatedAt": "2026-10-04T07:48:04Z",
+    "metadataEvidence": {
+      "run": "docs/evidence/project16-hosted/a7/github-run.json",
+      "jobs": "docs/evidence/project16-hosted/a7/github-jobs.json",
+      "artifacts": "docs/evidence/project16-hosted/a7/github-artifacts.json"
+    }
+  },
+  "scopeSelection": {
+    "stage": "performance",
+    "nodeAreaPhaseSelected": false,
+    "nineBrowserScopePhaseSelected": false,
+    "interpretation": "Browser-backed performance captures ran, but this attempt did not select the A19/A20 Node areas or the nine browser acceptance scopes."
+  },
+  "summary": {
+    "evidence": "docs/evidence/project16-hosted/a7/qualification-summary.json",
+    "startedAt": "2026-10-04T07:38:52.098Z",
+    "finishedAt": "2026-10-04T07:47:57.627Z",
+    "status": "failed",
+    "exitCode": 1,
+    "counts": {
+      "selected": 5,
+      "passed": 4,
+      "failed": 1
+    },
+    "scopes": [
+      {
+        "id": "performance",
+        "phase": "performance",
+        "status": "passed",
+        "startedAt": "2026-10-04T07:38:52.099Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T07:44:18.993Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a7/editor-assessment.json",
+          "docs/evidence/project16-hosted/a7/editor-browser.json",
+          "docs/evidence/project16-hosted/a7/editor-model.json",
+          "docs/evidence/project16-hosted/a7/editor-memory.json",
+          "docs/evidence/project16-hosted/a7/workbench-large-trace.json",
+          "docs/evidence/project16-hosted/a7/suite-workbench-performance.json"
+        ]
+      },
+      {
+        "id": "performance:editor-budgets",
+        "phase": "performance",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "editor-budgets",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T07:44:18.993Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T07:44:39.264Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a7/editor-ui-budgets.json",
+          "docs/evidence/project16-hosted/a7/suite-editor-budgets.json"
+        ]
+      },
+      {
+        "id": "performance:studio-large-file",
+        "phase": "performance",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "studio-large-file",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T07:44:39.265Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T07:45:01.241Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a7/a20-studio-large-file-results.json",
+          "docs/evidence/project16-hosted/a7/suite-studio-large-file.json"
+        ]
+      },
+      {
+        "id": "performance:instrumentation",
+        "phase": "performance",
+        "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+        "args": [
+          "scripts/limited.js",
+          "node",
+          "scripts/bench-workbench-overhead.js",
+          "--browser",
+          "chromium",
+          "--output",
+          "/home/runner/work/SharpForge/SharpForge/artifacts/results/project16/instrumentation-overhead.json"
+        ],
+        "timeoutMs": 1200000,
+        "status": "passed",
+        "startedAt": "2026-10-04T07:45:01.241Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T07:46:42.566Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a7/instrumentation-overhead.json"
+        ]
+      },
+      {
+        "id": "performance:lazy-evaluation",
+        "phase": "performance",
+        "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+        "args": [
+          "scripts/limited.js",
+          "node",
+          "scripts/bench-workbench-lazy-evaluation.js",
+          "--browser",
+          "chromium",
+          "--output",
+          "/home/runner/work/SharpForge/SharpForge/artifacts/results/project16/lazy-evaluation.json"
+        ],
+        "timeoutMs": 1200000,
+        "status": "failed",
+        "startedAt": "2026-10-04T07:46:42.567Z",
+        "exitCode": 1,
+        "error": {
+          "name": "Error",
+          "message": "Qualification failed (1): /opt/hostedtoolcache/node/24.21.0/x64/bin/node scripts/limited.js node scripts/bench-workbench-lazy-evaluation.js --browser chromium --output /home/runner/work/SharpForge/SharpForge/artifacts/results/project16/lazy-evaluation.json",
+          "code": null
+        },
+        "finishedAt": "2026-10-04T07:47:57.626Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a7/lazy-evaluation.json"
+        ]
+      }
+    ]
+  },
+  "baseline": {
+    "profile": "a5",
+    "captureOnly": false,
+    "runnerLabel": "ubuntu-latest",
+    "engine": "chromium",
+    "profileSource": "scripts/project16-baseline-profiles.js",
+    "profileSourceRevision": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+    "sourceSha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+    "sourceTree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+    "workflowRunId": "37178840757",
+    "priorOverallOutcome": "failure",
+    "appliesTo": [
+      "editor",
+      "workbench"
+    ],
+    "pins": [
+      {
+        "path": "docs/evidence/project16-hosted/a5/source.json",
+        "bytes": 473,
+        "sha256": "96a4d8ab7806700ec9539048a6eb8b2b71483fb79bcb013b3c06086475378237"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a5/editor-browser.json",
+        "bytes": 38079,
+        "sha256": "d514882e71ede3ec24fabec5337a3a89381d0ca0ced192aac0bdac4aacee42b8"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a5/workbench-large-trace.json",
+        "bytes": 29341,
+        "sha256": "4f0c0583e184d63ff58ff1972ed833383d151d3e9aacdb4259900526fe523d83"
+      }
+    ],
+    "interpretation": "The completed a5 editor/workbench captures remain exact comparative inputs. UI budgets are absolute; instrumentation and lazy evaluation compare paired current-run configurations. No prior overall failure or threshold is changed."
+  },
+  "performance": {
+    "editorAndWorkbenchScope": {
+      "status": "passed",
+      "evidence": "docs/evidence/project16-hosted/a7/qualification-summary.json"
+    },
+    "editor": {
+      "assessmentEvidence": "docs/evidence/project16-hosted/a7/editor-assessment.json",
+      "rawEvidence": "docs/evidence/project16-hosted/a7/editor-browser.json",
+      "mode": "compare",
+      "absolutePassed": true,
+      "largeFile": {
+        "sizeBytes": 209715200,
+        "measuredP95Ms": 32.300000000046566,
+        "budgetMs": 50,
+        "measurement": "input/keydown/scroll event to two requestAnimationFrame callbacks"
+      },
+      "regressionVerdict": true,
+      "relativeThreshold": 0.2,
+      "environment": {
+        "node": "v24.21.0",
+        "v8": "13.6.233.17-node.53",
+        "platform": "linux",
+        "arch": "x64",
+        "cpu": "AMD EPYC 7763 64-Core Processor",
+        "logicalCpus": 4,
+        "commit": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+        "browser": "chromium",
+        "browserVersion": "153.0.8010.12"
+      },
+      "environmentChanges": [],
+      "configuration": {
+        "sizes": [
+          1024,
+          1048576,
+          10485760,
+          104857600,
+          209715200
+        ],
+        "samples": 20,
+        "warmups": 3
+      },
+      "rowCount": 25,
+      "retainedMeasuredSampleCount": 500,
+      "comparisonRows": [
+        {
+          "id": "browser-chromium/1024/browser.keystrokeToPaint",
+          "baselineP95Ms": 32.29999999998836,
+          "currentP95Ms": 32.5,
+          "relativeChange": 0.006191950464758955,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/1024/browser.pasteToPaint",
+          "baselineP95Ms": 49.5,
+          "currentP95Ms": 52.80000000001746,
+          "relativeChange": 0.06666666666701948,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/1024/browser.undoToPaint",
+          "baselineP95Ms": 34.5,
+          "currentP95Ms": 34.39999999999418,
+          "relativeChange": -0.0028985507248063813,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/1024/browser.findToPaint",
+          "baselineP95Ms": 28.900000000023283,
+          "currentP95Ms": 29.39999999999418,
+          "relativeChange": 0.01730103806126282,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/1024/browser.scrollToPaint",
+          "baselineP95Ms": 32.29999999998836,
+          "currentP95Ms": 32.40000000002328,
+          "relativeChange": 0.0030959752332804236,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/1048576/browser.keystrokeToPaint",
+          "baselineP95Ms": 38.20000000001164,
+          "currentP95Ms": 34.80000000001746,
+          "relativeChange": -0.08900523560191476,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/1048576/browser.pasteToPaint",
+          "baselineP95Ms": 56.29999999998836,
+          "currentP95Ms": 52.70000000001164,
+          "relativeChange": -0.06394316163370273,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/1048576/browser.undoToPaint",
+          "baselineP95Ms": 36.5,
+          "currentP95Ms": 34.60000000000582,
+          "relativeChange": -0.052054794520388525,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/1048576/browser.findToPaint",
+          "baselineP95Ms": 116.19999999995343,
+          "currentP95Ms": 91.19999999998254,
+          "relativeChange": -0.21514629948348463,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/1048576/browser.scrollToPaint",
+          "baselineP95Ms": 46.20000000001164,
+          "currentP95Ms": 44.29999999998836,
+          "relativeChange": -0.041125541126034726,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/10485760/browser.keystrokeToPaint",
+          "baselineP95Ms": 32.300000000046566,
+          "currentP95Ms": 34.39999999999418,
+          "relativeChange": 0.06501547987444534,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/10485760/browser.pasteToPaint",
+          "baselineP95Ms": 35.70000000001164,
+          "currentP95Ms": 35.70000000001164,
+          "relativeChange": 0,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/10485760/browser.undoToPaint",
+          "baselineP95Ms": 29.29999999998836,
+          "currentP95Ms": 33.80000000001746,
+          "relativeChange": 0.1535836177484946,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/10485760/browser.findToPaint",
+          "baselineP95Ms": 342.10000000009313,
+          "currentP95Ms": 326.80000000001746,
+          "relativeChange": -0.04472376498120878,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/10485760/browser.scrollToPaint",
+          "baselineP95Ms": 38.5,
+          "currentP95Ms": 33.89999999999418,
+          "relativeChange": -0.11948051948067062,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/104857600/browser.keystrokeToPaint",
+          "baselineP95Ms": 32.300000000046566,
+          "currentP95Ms": 32.5,
+          "relativeChange": 0.006191950462945739,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/104857600/browser.pasteToPaint",
+          "baselineP95Ms": 35.70000000006985,
+          "currentP95Ms": 33.39999999999418,
+          "relativeChange": -0.06442577031011676,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/104857600/browser.undoToPaint",
+          "baselineP95Ms": 41.79999999993015,
+          "currentP95Ms": 33.79999999998836,
+          "relativeChange": -0.19138755980753974,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/104857600/browser.findToPaint",
+          "baselineP95Ms": 2723.0999999999767,
+          "currentP95Ms": 2691.4000000000233,
+          "relativeChange": -0.011641144284071037,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/104857600/browser.scrollToPaint",
+          "baselineP95Ms": 40,
+          "currentP95Ms": 36.09999999997672,
+          "relativeChange": -0.09750000000058212,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/209715200/browser.keystrokeToPaint",
+          "baselineP95Ms": 32.40000000002328,
+          "currentP95Ms": 32.300000000046566,
+          "relativeChange": -0.0030864197523655656,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/209715200/browser.pasteToPaint",
+          "baselineP95Ms": 36.199999999953434,
+          "currentP95Ms": 32.800000000046566,
+          "relativeChange": -0.09392265193124971,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/209715200/browser.undoToPaint",
+          "baselineP95Ms": 60.59999999997672,
+          "currentP95Ms": 33.899999999965075,
+          "relativeChange": -0.44059405940630203,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/209715200/browser.findToPaint",
+          "baselineP95Ms": 5302.099999999977,
+          "currentP95Ms": 5258.799999999988,
+          "relativeChange": -0.008166575507815521,
+          "threshold": 0.2,
+          "passed": true
+        },
+        {
+          "id": "browser-chromium/209715200/browser.scrollToPaint",
+          "baselineP95Ms": 40.5,
+          "currentP95Ms": 35.399999999965075,
+          "relativeChange": -0.1259259259267883,
+          "threshold": 0.2,
+          "passed": true
+        }
+      ],
+      "failedRows": [],
+      "methodology": "Real headless browser; event-to-two-RAF upper bound, including frame scheduling; no OS input-to-display or native claim.",
+      "unsupported": [
+        "native-desktop",
+        "physical-display-present",
+        "system-clipboard-permission-latency"
+      ],
+      "history": "These are new observations at b8d68d417 against pinned a5, not a rewrite of the three failed a6 undo comparisons."
+    },
+    "workbench": {
+      "rawEvidence": "docs/evidence/project16-hosted/a7/workbench-large-trace.json",
+      "suiteEvidence": "docs/evidence/project16-hosted/a7/suite-workbench-performance.json",
+      "assessment": {
+        "mode": "compare",
+        "absolutePassed": true,
+        "regressionVerdict": true,
+        "failures": []
+      },
+      "sampleCount": 126,
+      "fixture": {
+        "id": "workbench-501-csharp-v2",
+        "sha256": "9296f1fca9909280fd92a7242eba2c794909f8727077e1e973769c28ced2874e",
+        "sourceFiles": 501,
+        "projectFiles": 1,
+        "rounds": 3,
+        "documentSwitches": 20,
+        "tools": [
+          "problems",
+          "output",
+          "object-browser",
+          "command-window",
+          "bookmarks"
+        ],
+        "toolPasses": 4
+      },
+      "environment": {
+        "deviceScaleFactor": 1,
+        "hardwareConcurrency": 4,
+        "deviceMemory": 16,
+        "platform": "Linux x86_64",
+        "appDocument": "/",
+        "engine": "chromium",
+        "browserVersion": "153.0.8010.12",
+        "operatingSystem": "Linux 6.17.0-1022-azure",
+        "architecture": "x86_64",
+        "processor": "x86_64",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "servingMode": "http-static",
+        "timingProtocol": "fresh-context-paint-v2",
+        "browserProcess": "shared; fresh isolated context per round"
+      },
+      "comparativeP95": [
+        {
+          "name": "cold-app-startup",
+          "count": 3,
+          "baselineP95Ms": 2633.4000000000233,
+          "currentP95Ms": 2597.0999999999767,
+          "relativeLimitP95Ms": 3160.0800000000277
+        },
+        {
+          "name": "workspace-startup",
+          "count": 3,
+          "baselineP95Ms": 2651.5999999999767,
+          "currentP95Ms": 2163.4000000000233,
+          "relativeLimitP95Ms": 3181.919999999972
+        },
+        {
+          "name": "document-switch",
+          "count": 60,
+          "baselineP95Ms": 147.30000000004657,
+          "currentP95Ms": 134.60000000003492,
+          "relativeLimitP95Ms": 176.76000000005587
+        },
+        {
+          "name": "tool-activation",
+          "count": 60,
+          "baselineP95Ms": 56.89999999990687,
+          "currentP95Ms": 50.5,
+          "relativeLimitP95Ms": 68.27999999988823
+        }
+      ]
+    },
+    "model": {
+      "evidence": "docs/evidence/project16-hosted/a7/editor-model.json",
+      "correctness": {
+        "passed": true
+      },
+      "rowCount": 20,
+      "methodology": "One cold sample, explicit warmups, then nearest-rank p50/p95/p99 over retained raw samples. Model timings exclude browser events and paint.",
+      "unsupported": [
+        "browser-paint-in-node",
+        "native-desktop"
+      ]
+    },
+    "memory": {
+      "evidence": "docs/evidence/project16-hosted/a7/editor-memory.json",
+      "correctness": {
+        "passed": true
+      },
+      "rowCount": 4,
+      "allRecordedBudgetsPassed": true,
+      "methodology": "Measured signed GC-retained heap/ArrayBuffer deltas. Sources are ASCII. Undo attribution clears history while preserving current text.",
+      "unsupported": [
+        "total-allocation-counts",
+        "native-allocator",
+        "browser-DOM-in-node"
+      ]
+    },
+    "independentScopes": {
+      "editor-budgets": {
+        "status": "passed",
+        "evidence": "docs/evidence/project16-hosted/a7/editor-ui-budgets.json",
+        "assessment": {
+          "absolutePassed": true,
+          "failures": [],
+          "regressionVerdict": null,
+          "physicalFrameRateCertified": false,
+          "safariCertified": false
+        },
+        "definition": {
+          "status": "captured",
+          "sampleCount": 54,
+          "boundaryObservationCount": 2,
+          "budgetMs": 300,
+          "maxAllSamplesMs": 167.60000000003492,
+          "measuredSummary": [
+            {
+              "case": "framework-metadata",
+              "phase": "measured",
+              "count": 15,
+              "max": 156.40000000002328,
+              "p50": 154.80000000004657,
+              "p95": 156.40000000002328,
+              "p99": 156.40000000002328
+            },
+            {
+              "case": "source-alpha",
+              "phase": "measured",
+              "count": 15,
+              "max": 167.60000000003492,
+              "p50": 153.70000000001164,
+              "p95": 167.60000000003492,
+              "p99": 167.60000000003492
+            },
+            {
+              "case": "source-beta",
+              "phase": "measured",
+              "count": 15,
+              "max": 156.29999999998836,
+              "p50": 155.10000000003492,
+              "p95": 156.29999999998836,
+              "p99": 156.29999999998836
+            }
+          ],
+          "boundaryObservations": [
+            {
+              "case": "none",
+              "durationMs": 153.90000000002328,
+              "correct": true,
+              "focusPreserved": true,
+              "sourceVersion": 1
+            },
+            {
+              "case": "source-beta",
+              "durationMs": 165.19999999995343,
+              "correct": true,
+              "focusPreserved": true,
+              "sourceVersion": 1
+            }
+          ],
+          "workspaceProof": "Original capture retains the exact four workspace records, three source documents/project ownership and observed definition boundary DOM state."
+        },
+        "overview": {
+          "status": "captured",
+          "sampleCount": 105,
+          "lineCount": 10000,
+          "budgetMs": 16,
+          "maxAllSamplesMs": 1.7999999999883585,
+          "measuredSummary": [
+            {
+              "case": "medium",
+              "phase": "measured",
+              "count": 31,
+              "max": 1.3000000000465661,
+              "p50": 1.099999999976717,
+              "p95": 1.2999999999883585,
+              "p99": 1.3000000000465661
+            },
+            {
+              "case": "narrow",
+              "phase": "measured",
+              "count": 31,
+              "max": 1.7999999999883585,
+              "p50": 1,
+              "p95": 1.7000000000116415,
+              "p99": 1.7999999999883585
+            },
+            {
+              "case": "wide",
+              "phase": "measured",
+              "count": 31,
+              "max": 1.1000000000349246,
+              "p50": 1.099999999976717,
+              "p95": 1.1000000000349246,
+              "p99": 1.1000000000349246
+            }
+          ],
+          "measurement": "Actual OverviewRuler render plus pixel readback; renderMs and followingRafMs remain separate raw fields."
+        },
+        "environment": {
+          "deviceScaleFactor": 1,
+          "hardwareConcurrency": 4,
+          "deviceMemory": 16,
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+          "visibility": "visible",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "crossOriginIsolated": false,
+          "documentPath": "/",
+          "engine": "chromium",
+          "browserVersion": "153.0.8010.12",
+          "headless": true,
+          "operatingSystem": "Linux 6.17.0-1022-azure",
+          "architecture": "x86_64",
+          "processor": "x86_64",
+          "servingMode": "production-studio-http",
+          "clock": "performance.now",
+          "physicalFrameRateCertified": false,
+          "safariCertified": false
+        },
+        "physicalFrameRateCertified": false,
+        "safariCertified": false
+      },
+      "studio-large-file": {
+        "status": "passed",
+        "evidence": "docs/evidence/project16-hosted/a7/a20-studio-large-file-results.json",
+        "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+        "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+        "input": "synthetic File/Blob assigned through DataTransfer to the real Studio file-input change handler",
+        "sizeBytes": 209715200,
+        "observedOpenMs": 6868.900000000023,
+        "limits": [
+          "No OS file chooser or native file permission claim",
+          "No physical disk throughput claim",
+          "No cross-application clipboard claim",
+          "Functional case; latency budgets belong to the existing editor benchmark"
+        ]
+      },
+      "instrumentation": {
+        "status": "passed",
+        "evidence": "docs/evidence/project16-hosted/a7/instrumentation-overhead.json",
+        "protocol": "studio-instrumentation-overhead-v1",
+        "environment": {
+          "node": "v24.21.0",
+          "v8": "13.6.233.17-node.53",
+          "platform": "linux",
+          "arch": "x64",
+          "cpu": "AMD EPYC 7763 64-Core Processor",
+          "logicalCpus": 4,
+          "driverCommit": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+          "engine": "chromium",
+          "servingMode": "http-production",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "deviceScaleFactor": 1,
+          "clock": "browser PerformanceNavigationTiming and performance.now",
+          "contexts": "fresh isolated context per capture; browser process shared; serial alternating order",
+          "browserVersion": "153.0.8010.12",
+          "url": "http://127.0.0.1:38265"
+        },
+        "workload": {
+          "id": "studio-instrumentation-overhead-v1",
+          "pairs": 12,
+          "sourceFiles": 17,
+          "documentSwitches": 32,
+          "commands": 64,
+          "inputs": 32,
+          "tools": [
+            "command-window",
+            "bookmarks",
+            "test-explorer"
+          ],
+          "command": "workbench.bookmark.toggle",
+          "key": "x",
+          "budgetPercent": 1
+        },
+        "pairCount": 12,
+        "captureCount": 24,
+        "rawSampleCount": 3168,
+        "assessment": {
+          "passed": true,
+          "budgetPercent": 1,
+          "overheadPercent": 0.30906745225383186,
+          "enabledMs": 24958.199999998964,
+          "disabledMs": 24881.300000001327,
+          "deltaMs": 76.89999999763677,
+          "gate": "ratio of paired sums of the identical measured workload; strictly less than 1%",
+          "interpretation": "One bounded shared-host observation; not statistical proof. All raw samples retained."
+        },
+        "pairs": [
+          {
+            "pair": 0,
+            "enabledMs": 2094.9000000000233,
+            "disabledMs": 2116.9000000000233,
+            "deltaMs": -22,
+            "overheadPercent": -1.0392555151400518
+          },
+          {
+            "pair": 1,
+            "enabledMs": 2086.2000000000116,
+            "disabledMs": 2067.5000000001164,
+            "deltaMs": 18.699999999895226,
+            "overheadPercent": 0.9044740024132611
+          },
+          {
+            "pair": 2,
+            "enabledMs": 2077.199999999837,
+            "disabledMs": 2061.9000000000233,
+            "deltaMs": 15.299999999813735,
+            "overheadPercent": 0.7420340462589633
+          },
+          {
+            "pair": 3,
+            "enabledMs": 2102.800000000105,
+            "disabledMs": 2090.79999999993,
+            "deltaMs": 12.000000000174623,
+            "overheadPercent": 0.5739429883381971
+          },
+          {
+            "pair": 4,
+            "enabledMs": 2068.300000000105,
+            "disabledMs": 2072.600000000326,
+            "deltaMs": -4.300000000221189,
+            "overheadPercent": -0.20746887967868924
+          },
+          {
+            "pair": 5,
+            "enabledMs": 2077.7999999996973,
+            "disabledMs": 2073.9000000000233,
+            "deltaMs": 3.899999999674037,
+            "overheadPercent": 0.18805149716350802
+          },
+          {
+            "pair": 6,
+            "enabledMs": 2073.1999999999534,
+            "disabledMs": 2070.5000000004657,
+            "deltaMs": 2.6999999994877726,
+            "overheadPercent": 0.13040328420609348
+          },
+          {
+            "pair": 7,
+            "enabledMs": 2071.099999999744,
+            "disabledMs": 2079.1999999997206,
+            "deltaMs": -8.099999999976717,
+            "overheadPercent": -0.38957291265764743
+          },
+          {
+            "pair": 8,
+            "enabledMs": 2072.6999999991385,
+            "disabledMs": 2056.3000000002794,
+            "deltaMs": 16.39999999885913,
+            "overheadPercent": 0.7975489957135098
+          },
+          {
+            "pair": 9,
+            "enabledMs": 2082.9999999996508,
+            "disabledMs": 2044.8000000005122,
+            "deltaMs": 38.19999999913853,
+            "overheadPercent": 1.86815336458964
+          },
+          {
+            "pair": 10,
+            "enabledMs": 2075.4000000003725,
+            "disabledMs": 2056.5,
+            "deltaMs": 18.90000000037253,
+            "overheadPercent": 0.9190371991428412
+          },
+          {
+            "pair": 11,
+            "enabledMs": 2075.600000000326,
+            "disabledMs": 2090.399999999907,
+            "deltaMs": -14.799999999580905,
+            "overheadPercent": -0.707998469172482
+          }
+        ],
+        "operationDiagnostics": [
+          {
+            "operation": "startup",
+            "enabledTotalMs": 16389.70000000007,
+            "disabledTotalMs": 16412.400000000023,
+            "overheadPercent": -0.13831005824835735
+          },
+          {
+            "operation": "document-switch",
+            "enabledTotalMs": 7130.299999999523,
+            "disabledTotalMs": 7039.10000000149,
+            "overheadPercent": 1.295620178687805
+          },
+          {
+            "operation": "tool-activation",
+            "enabledTotalMs": 418.10000000015134,
+            "disabledTotalMs": 414.49999999976717,
+            "overheadPercent": 0.8685162847735085
+          },
+          {
+            "operation": "command",
+            "enabledTotalMs": 46.70000000012806,
+            "disabledTotalMs": 39.20000000006985,
+            "overheadPercent": 19.132653061338885
+          },
+          {
+            "operation": "trusted-key-input",
+            "enabledTotalMs": 973.399999999092,
+            "disabledTotalMs": 976.0999999999767,
+            "overheadPercent": -0.27661100306165565
+          }
+        ]
+      },
+      "lazy-evaluation": {
+        "status": "failed",
+        "evidence": "docs/evidence/project16-hosted/a7/lazy-evaluation.json",
+        "captureStatus": "completed",
+        "protocol": "studio-lazy-evaluation-v1",
+        "environment": {
+          "node": "v24.21.0",
+          "v8": "13.6.233.17-node.53",
+          "platform": "linux",
+          "arch": "x64",
+          "cpu": "AMD EPYC 7763 64-Core Processor",
+          "logicalCpus": 4,
+          "driverCommit": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+          "engine": "chromium",
+          "timeDomain": "threadTicks",
+          "processes": "24 fresh browser processes/profiles, serial, 12 alternating pairs; no warm-ups or retries",
+          "url": "http://127.0.0.1:46339/",
+          "browserVersion": "153.0.8010.12"
+        },
+        "workload": {
+          "id": "studio-lazy-evaluation-v1",
+          "pairs": 12,
+          "timeDomain": "threadTicks",
+          "captureTimeoutMs": 60000,
+          "totalTimeoutMs": 900000,
+          "marker": "SharpForge.entry.evaluated"
+        },
+        "pairCount": 12,
+        "assessment": {
+          "passed": false,
+          "gate": "paired aggregate eager ScriptDuration is strictly greater than lazy ScriptDuration",
+          "eagerMs": 1560.7779999999998,
+          "lazyMs": 1569.77,
+          "savedMs": -8.99200000000019,
+          "reductionPercent": -0.5761229335626329,
+          "dispersion": {
+            "positivePairs": 5,
+            "zeroPairs": 0,
+            "negativePairs": 7,
+            "minMs": -9.182999999999993,
+            "maxMs": 4.585000000000008,
+            "meanMs": -0.7493333333333491,
+            "medianMs": -0.40850000000000364,
+            "populationStandardDeviationMs": 4.076213180010201
+          },
+          "uncertainty": "Untrimmed single shared-host observation; positive aggregate is not statistical proof. CDP/OS clock quantization is unknown; no zero/noise observations are discarded. No historical, worker CPU, paint, or wall-startup speedup claim."
+        },
+        "pairs": [
+          {
+            "pair": 0,
+            "lazyMs": 130.864,
+            "eagerMs": 134.219,
+            "savedMs": 3.3549999999999898,
+            "reductionPercent": 2.4996461007755904
+          },
+          {
+            "pair": 1,
+            "lazyMs": 126.328,
+            "eagerMs": 125.888,
+            "savedMs": -0.4399999999999977,
+            "reductionPercent": -0.3495170310116911
+          },
+          {
+            "pair": 2,
+            "lazyMs": 132.946,
+            "eagerMs": 128.497,
+            "savedMs": -4.448999999999984,
+            "reductionPercent": -3.4623376421239276
+          },
+          {
+            "pair": 3,
+            "lazyMs": 130.769,
+            "eagerMs": 129.462,
+            "savedMs": -1.3070000000000164,
+            "reductionPercent": -1.009562651588896
+          },
+          {
+            "pair": 4,
+            "lazyMs": 128.535,
+            "eagerMs": 130.573,
+            "savedMs": 2.038000000000011,
+            "reductionPercent": 1.560812725448608
+          },
+          {
+            "pair": 5,
+            "lazyMs": 136.896,
+            "eagerMs": 129.992,
+            "savedMs": -6.903999999999996,
+            "reductionPercent": -5.311096067450302
+          },
+          {
+            "pair": 6,
+            "lazyMs": 128.31,
+            "eagerMs": 127.93299999999999,
+            "savedMs": -0.37700000000000955,
+            "reductionPercent": -0.2946854994411212
+          },
+          {
+            "pair": 7,
+            "lazyMs": 130.836,
+            "eagerMs": 135.42100000000002,
+            "savedMs": 4.585000000000008,
+            "reductionPercent": 3.385737810236231
+          },
+          {
+            "pair": 8,
+            "lazyMs": 132.03,
+            "eagerMs": 135.774,
+            "savedMs": 3.7439999999999998,
+            "reductionPercent": 2.7575235317512927
+          },
+          {
+            "pair": 9,
+            "lazyMs": 127.097,
+            "eagerMs": 128.03,
+            "savedMs": 0.9330000000000069,
+            "reductionPercent": 0.7287354526282956
+          },
+          {
+            "pair": 10,
+            "lazyMs": 128.135,
+            "eagerMs": 127.14800000000001,
+            "savedMs": -0.9869999999999806,
+            "reductionPercent": -0.776260735520795
+          },
+          {
+            "pair": 11,
+            "lazyMs": 137.024,
+            "eagerMs": 127.84100000000001,
+            "savedMs": -9.182999999999993,
+            "reductionPercent": -7.183141558654886
+          }
+        ],
+        "cause": "Not established by the capture; no noise, harness defect, product defect or stable performance attribution is inferred.",
+        "exceptionAccepted": false,
+        "failureUnchanged": true,
+        "boundedSourceReview": {
+          "conclusion": "Independent source/artifact review found no concrete loader or harness defect requiring a correction.",
+          "harnessSha256": "57ed5a9f284e5f98e892c905207592ffc5b5600da23b5cb59dae52fbded772c6",
+          "harnessDigestUnchangedAcross": [
+            "a5",
+            "a6",
+            "a7"
+          ],
+          "readyCompletedErrorFreeCaptures": 24,
+          "lazyCaptureCount": 12,
+          "eagerCaptureCount": 12,
+          "entryRequestCounts": {
+            "lazy": 1072,
+            "eager": 1086
+          },
+          "lazyDeferredModuleRequests": 0,
+          "eagerIncludedModuleCount": 5,
+          "expectedControllerModules": [
+            "designer-tools.js",
+            "assembly-workbench.js",
+            "disassembly-tool.js",
+            "msbuild-tools.js",
+            "project-wizard.js"
+          ],
+          "sourcePaths": [
+            "scripts/workbench-lazy-evaluation/protocol.js",
+            "scripts/workbench-lazy-evaluation/capture.js",
+            "scripts/workbench-lazy-evaluation/assessment.js"
+          ],
+          "rawEvidence": "docs/evidence/project16-hosted/a7/lazy-evaluation.json",
+          "rawFields": [
+            "identity.harness",
+            "overlays",
+            "runs[].productReady",
+            "runs[].completed",
+            "runs[].errors",
+            "runs[].entryRequests",
+            "runs[].deferredRequests"
+          ],
+          "limit": "Shared Studio dependencies are loaded in both variants. This bounds the work difference but does not establish the cause of the signed result or a measured saving.",
+          "disposition": "Integration owner retains the failed strict criterion with no extra retry or gate change."
+        }
+      }
+    }
+  },
+  "browserSessions": {
+    "count": 4,
+    "reports": [
+      "docs/evidence/project16-hosted/a7/browser_a20_studio_large_file_test/session.json",
+      "docs/evidence/project16-hosted/a7/browser_editor_budgets_test_definition/session.json",
+      "docs/evidence/project16-hosted/a7/browser_editor_budgets_test_overview/session.json",
+      "docs/evidence/project16-hosted/a7/browser_workbench_perf_test/session.json"
+    ],
+    "allReportedPassed": true,
+    "reportedCspViolations": 0,
+    "reportedDiagnosticErrors": 0,
+    "interpretation": "Four session reports belong to workbench, separate definition/overview, and Studio large-file performance; they are not the nine browser acceptance scopes."
+  },
+  "audit": {
+    "kind": "Read-only artifact/source-identity inspection and independent raw-statistics audit",
+    "independentReview": "Independent text/model owner reviewed final performance prose/JSON and confirmed no concrete value or wording discrepancy after recomputing all five scope reports.",
+    "sourceShaAndTreeMatchGit": true,
+    "baselineBytesMatchPinnedProfile": true,
+    "executions": "No tests, build, browser capture, benchmark, scanner or qualification was executed while preparing this archive.",
+    "priorAttempts": "Existing a1-a6, w1/m1 evidence, master status and publication maps remain unchanged.",
+    "rawStatistics": {
+      "editor": "500 raw measured samples; all reported counts/min/max/p50/p95/p99 and relative deltas recompute.",
+      "workbench": "126 samples and all group counts/percentiles recompute; baseline fixture and environment match.",
+      "editorUi": "54 definition samples plus 2 boundary observations and 105 overview observations; all 18 group summaries recompute.",
+      "instrumentation": "24 runs / 12 pairs, 3,168 raw operations and 1,596 product trace samples; statistics, pair sums and aggregate recompute.",
+      "lazy": "24 raw CDP entry captures / 12 pairs; markers, readiness, order, graphs and all aggregate/dispersion values consistent."
+    },
+    "sourceIdentity": "Recorded source/driver identity is clean at b8d68d417/tree740214; before/after served inventories retain 4,810 assets / 95,190,323 bytes; harness file hashes and aggregate digests match the checked-out source."
+  },
+  "archive": {
+    "root": "docs/evidence/project16-hosted/a7",
+    "originalArtifactMemberCount": 22,
+    "originalArtifactExpandedBytes": 9626829,
+    "archivedRawFileCount": 27,
+    "archivedRawBytes": 11197658,
+    "bytePreservationPolicy": {
+      "path": "docs/evidence/project16-hosted/a7/.gitattributes",
+      "bytes": 85,
+      "sha256": "829e85efd9601781c6185f47b56ab30fa4e078c91dee85f4d32d579117d6db16"
+    },
+    "artifact": {
+      "id": 11297890150,
+      "name": "project16-ubuntu-latest-chromium-performance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37186353254/artifacts/11297890150",
+      "apiUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11297890150",
+      "archiveDownloadUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11297890150/zip",
+      "createdAt": "2026-10-04T07:48:00Z",
+      "expiresAtAtCapture": "2027-01-02T07:37:30Z",
+      "expiredAtCapture": false,
+      "path": "docs/evidence/project16-hosted/a7/p16-hosted-a7.zip",
+      "bytes": 1454102,
+      "sha256": "92a4ff4c16e00ac4ab7c02fb06a788ae1d5ded631d4c7554e22f47777ffb3ec0"
+    },
+    "jobLog": {
+      "path": "docs/evidence/project16-hosted/a7/job.log",
+      "bytes": 97927,
+      "sha256": "37e3cb5a6752b97a4c1bc18be6f19f632c7b4625c799e3dfd141756878eea598"
+    },
+    "files": [
+      {
+        "path": "docs/evidence/project16-hosted/a7/a20-studio-large-file-results.json",
+        "bytes": 2850,
+        "sha256": "e7e4b7a71e12b2f98a7b9537bf9fa1442af6acd46939196a461bd3fa792dea0c",
+        "kind": "original artifact member",
+        "zipMember": "a20-studio-large-file-results.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/browser_a20_studio_large_file_test/console.log",
+        "bytes": 50,
+        "sha256": "5ebe1a26004c8c625b8c31a131ed4c689cad7f70906d014e776b4364f12b5198",
+        "kind": "original artifact member",
+        "zipMember": "browser_a20_studio_large_file_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/browser_a20_studio_large_file_test/session.json",
+        "bytes": 256,
+        "sha256": "9eec341cac2f06174010ba228a4f0c1abc19f51fb6a4d379e583dffd0f061a3b",
+        "kind": "original artifact member",
+        "zipMember": "browser_a20_studio_large_file_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/browser_editor_budgets_test_definition/console.log",
+        "bytes": 50,
+        "sha256": "fa512d6a9493639fca609ea22f34711b87ec3dcf7eb1b1ca04568aae516b90ea",
+        "kind": "original artifact member",
+        "zipMember": "browser_editor_budgets_test_definition/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/browser_editor_budgets_test_definition/session.json",
+        "bytes": 266,
+        "sha256": "09b820f416394d11c4b006fd9274238735fd60f75f94da4a81fde1ce3f8ad4f1",
+        "kind": "original artifact member",
+        "zipMember": "browser_editor_budgets_test_definition/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/browser_editor_budgets_test_overview/console.log",
+        "bytes": 229,
+        "sha256": "e926405ef38c8ae48d19f25860db7d9639ffffb484e01658f565a50bb808d735",
+        "kind": "original artifact member",
+        "zipMember": "browser_editor_budgets_test_overview/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/browser_editor_budgets_test_overview/session.json",
+        "bytes": 264,
+        "sha256": "fb1968964aa12de73e4add545b32b80a052a6b8bfe6b2d59c5229712dbc9cd33",
+        "kind": "original artifact member",
+        "zipMember": "browser_editor_budgets_test_overview/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/browser_workbench_perf_test/console.log",
+        "bytes": 150,
+        "sha256": "e48cc81c6667795b5638e0827c2948b35faae2972f78af1ddd9da1ca6aa1b91e",
+        "kind": "original artifact member",
+        "zipMember": "browser_workbench_perf_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/browser_workbench_perf_test/session.json",
+        "bytes": 254,
+        "sha256": "5847daeecc3ab975f398ee8fa842d507a8ffcdbc84ad1faf6619527a705abfd0",
+        "kind": "original artifact member",
+        "zipMember": "browser_workbench_perf_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/editor-assessment.json",
+        "bytes": 7106,
+        "sha256": "5e5e79a45eb8dbe96ec47ae61ece093dc0a67d0828da7d9937b64da12f04263a",
+        "kind": "original artifact member",
+        "zipMember": "editor-assessment.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/editor-browser.json",
+        "bytes": 37775,
+        "sha256": "218b4b4b191d1fb1cb7a6b444cab96240ddad4df7da695de5a0a48debf4fdf33",
+        "kind": "original artifact member",
+        "zipMember": "editor-browser.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/editor-memory.json",
+        "bytes": 19209,
+        "sha256": "08ce6b90fafad63eb013da0abd4a4f1c9a916b5fe215caf69333d6cc7e599bc2",
+        "kind": "original artifact member",
+        "zipMember": "editor-memory.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/editor-model.json",
+        "bytes": 24123,
+        "sha256": "6bb2430cf103abc28bfcc776c2a3bd128b674a03a55096c299523d40d33c1eb1",
+        "kind": "original artifact member",
+        "zipMember": "editor-model.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/editor-ui-budgets.json",
+        "bytes": 331553,
+        "sha256": "7b71d204ecb1c544ee25c90d9293696b0b3d7ea7e9e0b4826dc3f46c76b9e43d",
+        "kind": "original artifact member",
+        "zipMember": "editor-ui-budgets.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/github-artifacts.json",
+        "bytes": 926,
+        "sha256": "b504d4bd7b713837515f48ba05b58ed09cd595fc08009d00ff8a7caf47b9deee",
+        "kind": "recorded GitHub API tool-response JSON",
+        "zipMember": null
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/github-jobs.json",
+        "bytes": 3359,
+        "sha256": "03fabd3230774da076439d552f1d7e621fc8536f384b83bb7631d3bff8241b17",
+        "kind": "recorded GitHub API tool-response JSON",
+        "zipMember": null
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/github-run.json",
+        "bytes": 14515,
+        "sha256": "cfa46927e41a12be085faf643c60f57df6608d918a283333de5e6cf7764adbce",
+        "kind": "recorded GitHub API tool-response JSON",
+        "zipMember": null
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/instrumentation-overhead.json",
+        "bytes": 3006920,
+        "sha256": "5d309c2edf1b7d34401ef4b4e3443bb2bc255c666463b7c913073ea9432c610d",
+        "kind": "original artifact member",
+        "zipMember": "instrumentation-overhead.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/job.log",
+        "bytes": 97927,
+        "sha256": "37e3cb5a6752b97a4c1bc18be6f19f632c7b4625c799e3dfd141756878eea598",
+        "kind": "exact downloaded job log",
+        "zipMember": null
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/lazy-evaluation.json",
+        "bytes": 6153559,
+        "sha256": "4255f3c7637699ede35afde2108df6ebaa78670f81e16f411316ee4f1c81a7bf",
+        "kind": "original artifact member",
+        "zipMember": "lazy-evaluation.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/p16-hosted-a7.zip",
+        "bytes": 1454102,
+        "sha256": "92a4ff4c16e00ac4ab7c02fb06a788ae1d5ded631d4c7554e22f47777ffb3ec0",
+        "kind": "exact downloaded artifact ZIP",
+        "zipMember": null
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/qualification-summary.json",
+        "bytes": 11564,
+        "sha256": "f7dc0b34b6c9b8d210126a321729eb75ccf42b1c8c8cfd351b5ca5bd5a8f49cc",
+        "kind": "original artifact member",
+        "zipMember": "qualification-summary.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/source.json",
+        "bytes": 648,
+        "sha256": "56637af0c526f3bdef46a1e218a076fec05857c9cd4fb0ef50cb94a9ce0e9569",
+        "kind": "original artifact member",
+        "zipMember": "source.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/suite-editor-budgets.json",
+        "bytes": 224,
+        "sha256": "1ba50c15a0a07eb8114e06a9f824057ce9d9884719f1a9afd6defbf24a823208",
+        "kind": "original artifact member",
+        "zipMember": "suite-editor-budgets.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/suite-studio-large-file.json",
+        "bytes": 233,
+        "sha256": "be94c09c5bd11ad447f22aa07d7fd27c674b0d39b50edeaa45301a995b6287aa",
+        "kind": "original artifact member",
+        "zipMember": "suite-studio-large-file.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/suite-workbench-performance.json",
+        "bytes": 230,
+        "sha256": "7afaff25284ec328679ab0e93f5a7502d17202e8a33ed2003b1e3bccb2fdab14",
+        "kind": "original artifact member",
+        "zipMember": "suite-workbench-performance.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a7/workbench-large-trace.json",
+        "bytes": 29316,
+        "sha256": "35ed1479831a66afadeed633877688bfa42c1079d1dbc5ebed9b6821dfb6c107",
+        "kind": "original artifact member",
+        "zipMember": "workbench-large-trace.json"
+      }
+    ],
+    "integrity": "Every copied ZIP member matches both its original member and supplied extraction byte-for-byte. The ZIP digest matches the upload/API metadata; all supplied API snapshot and job-log bytes are retained. API snapshots are decoded tool-response JSON, not claimed raw HTTP wire bytes.",
+    "stagedGitBlobByteVerification": "All 27 original raw staged Git blobs match their supplied byte counts, SHA-256 and worktree originals exactly; scoped attributes prevent text normalization."
+  },
+  "limits": [
+    "A7 overall qualification failed; the explicit five-metric editor review does not waive any failed configured gate or claim Project16 completion.",
+    "Only five performance scopes were selected. No new A19/A20 Node-area or nine-scope browser acceptance result is claimed for this source.",
+    "This execution covers recorded Linux/Ubuntu Chromium only; no other OS/engine pairing is inferred.",
+    "Headless event-to-two-RAF timing includes scheduling and is not physical input-to-display latency, refresh-rate certification or Safari qualification.",
+    "Actual IME, screen readers, native desktop/Visual Studio oracle, OS clipboard grants and physical file chooser/disk throughput are not certified by these captures.",
+    "Instrumentation passing aggregate does not imply each operation is below 1%; lazy aggregate failure remains failed with all pairs retained and no causal or noise explanation.",
+    "Model timings and GC-retained Node memory do not measure browser paint, total allocations or browser DOM memory."
+  ],
+  "integrationOwnerReview": {
+    "reviewDate": "2026-10-04",
+    "signedRole": "root integration owner",
+    "recordedBy": "/root",
+    "humanApprovalClaimed": false,
+    "status": "accepted disclosed observed editor tradeoffs",
+    "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+    "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+    "reviewThreshold": 0.05,
+    "metricCount": 5,
+    "operationSizeRowCount": 4,
+    "reviewedMetrics": [
+      {
+        "backend": "browser-chromium",
+        "sizeBytes": 1024,
+        "operation": "browser.pasteToPaint",
+        "metric": "p95Ms",
+        "baselineMs": 49.5,
+        "currentMs": 52.80000000001746,
+        "deltaMs": 3.3000000000174623,
+        "relativeChange": 0.06666666666701944,
+        "percentChange": 6.666666666701944
+      },
+      {
+        "backend": "browser-chromium",
+        "sizeBytes": 10485760,
+        "operation": "browser.keystrokeToPaint",
+        "metric": "p95Ms",
+        "baselineMs": 32.300000000046566,
+        "currentMs": 34.39999999999418,
+        "deltaMs": 2.099999999947613,
+        "relativeChange": 0.06501547987444538,
+        "percentChange": 6.501547987444538
+      },
+      {
+        "backend": "browser-chromium",
+        "sizeBytes": 10485760,
+        "operation": "browser.undoToPaint",
+        "metric": "p50Ms",
+        "baselineMs": 28.599999999976717,
+        "currentMs": 30.29999999998836,
+        "deltaMs": 1.7000000000116415,
+        "relativeChange": 0.059440559441014874,
+        "percentChange": 5.944055944101487
+      },
+      {
+        "backend": "browser-chromium",
+        "sizeBytes": 10485760,
+        "operation": "browser.undoToPaint",
+        "metric": "p95Ms",
+        "baselineMs": 29.29999999998836,
+        "currentMs": 33.80000000001746,
+        "deltaMs": 4.500000000029104,
+        "relativeChange": 0.1535836177484946,
+        "percentChange": 15.35836177484946
+      },
+      {
+        "backend": "browser-chromium",
+        "sizeBytes": 104857600,
+        "operation": "browser.undoToPaint",
+        "metric": "p50Ms",
+        "baselineMs": 28.79999999993015,
+        "currentMs": 31.10000000000582,
+        "deltaMs": 2.30000000007567,
+        "relativeChange": 0.07986111111393222,
+        "percentChange": 7.986111111393222
+      }
+    ],
+    "workbenchMedianOrP95AboveFivePercent": false,
+    "decision": "Retain the completed ChangeTracking correctness fix and accept the five disclosed observed editor costs of 1.7–4.5 ms, with full evidence retained.",
+    "rationale": "Removing the correction restores seven demonstrated deletion/CRLF/stale-marker failures and 2,622 retained overview candidates instead of one; all 69 complete affected-cohort cases pass with the correction. Public contracts remain correct.",
+    "correctnessEvidence": [
+      "docs/project16-final-followup-local.md",
+      "docs/evidence/project16-final-followup-local/manifest.json",
+      "docs/a20-change-tracking-deletions.md",
+      "tests/a20-change-tracking-deletions.test.js"
+    ],
+    "publicReview": "https://github.com/wieslawsoltes/SharpForge/pull/4453",
+    "causalLimit": "Other upstream source changed between captures; accepting these observations does not claim that the fix caused the timing differences or dismiss them as shared-host noise.",
+    "scopeLimit": "This is not an a5-to-a7 overall 5% benchmark pass, and does not waive the a7 lazy failure, a6 failures, m1 failure or native/manual qualification."
+  }
+}

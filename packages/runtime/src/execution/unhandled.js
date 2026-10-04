@@ -1,5 +1,9 @@
-import {beginExceptionEvent} from './exception-events.js';
-import {ManagedFault} from '../heap.js';
+import {
+  beginExceptionEvent
+} from './exception-events.js';
+import {
+  ManagedFault
+} from '../heap.js';
 // CLR managed exception process status; hosts may separately report POSIX signals.
 export const unhandledExceptionExitCode = 0xe0434352 | 0;
 export const fatalFaults = new Set([
@@ -26,6 +30,7 @@ export function markUnhandled(vm, fault) {
     fault.unhandled = true;
   }
   vm.fault = fault;
-  vm.exitCode = unhandledExceptionExitCode;
+  vm.exitCode = fault.runtimeOrigin && fault.fatal && Number.isInteger(fault.processExitCode)
+    ? fault.processExitCode | 0 : unhandledExceptionExitCode;
   vm.state = 'faulted';
 }

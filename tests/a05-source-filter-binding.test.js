@@ -1,10 +1,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {compile, Compilation} from '@sharpforge/compiler';
-import {parse} from '@sharpforge/syntax';
-import {SourceText} from '@sharpforge/text';
-import {Op} from '@sharpforge/bytecode';
-import {BoundTreeRewriter} from '../packages/compiler/src/bound/rewriter.js';
+import {
+  compile,
+  Compilation
+} from '@sharpforge/compiler';
+import {
+  parse
+} from '@sharpforge/syntax';
+import {
+  SourceText
+} from '@sharpforge/text';
+import {
+  Op
+} from '@sharpforge/bytecode';
+import {
+  BoundTreeRewriter
+} from '../packages/compiler/src/bound/rewriter.js';
 
 const source = `class P {
   static bool Accept(Exception error, int value) { return error.Message == "saved" && value == 2; }
@@ -18,7 +29,9 @@ const source = `class P {
 
 for (const pipeline of ['legacy', 'bound']) {
   test(`T04 ${pipeline}: filtered catch emits initialized typed local and explicit body boundaries`, () => {
-    const result = compile(source, {pipeline});
+    const result = compile(source, {
+      pipeline
+    });
     assert(result.success, JSON.stringify(result.diagnostics));
     const method = result.image.methods.find(item => item.name === 'Main');
     const [filtered, fallback] = method.handlers;
@@ -40,10 +53,13 @@ test('T04 filter-local assignment is part of bound definite-assignment flow', ()
 });
 
 test('T04 bound-tree visitors retain and rewrite the filter expression', () => {
-  const compilation = new Compilation([parse(new SourceText(source, 'Program.cs'))], {pipeline: 'bound'});
+  const compilation = new Compilation([parse(new SourceText(source, 'Program.cs'))], {
+    pipeline: 'bound'
+  });
   const result = compilation.build();
   assert(result.success, JSON.stringify(result.diagnostics));
   const roots = compilation.boundPipeline.units.map(unit => unit.body).filter(Boolean);
+
   function catchBlock(node) {
     if (node.kind === 'CatchBlock' && node.filter) return node;
     for (const child of node.children ?? []) {

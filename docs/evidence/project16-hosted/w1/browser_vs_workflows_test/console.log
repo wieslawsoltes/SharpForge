@@ -1,0 +1,3 @@
+server: SharpForge Studio: http://127.0.0.1:64168
+console.warning: [JavaScript Warning: "unreachable code after return statement" {file: "http://127.0.0.1:64168/packages/editor/src/keymaps/vim.js" line: 226}]
+console.warning: [JavaScript Warning: "WebGPU is disabled by blocklist." {file: "http://127.0.0.1:64168/packages/winui/src/surface.js" line: 45}]

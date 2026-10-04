@@ -1,59 +1,32 @@
-/** Exact scalar values and runtime profiles for the semantic lowering path. */
-import {Builtins, numericTypeNames, decimalFromBits} from '@sharpforge/bytecode';
-import {numeric, constantValue, numericDefault} from '../../numeric.js';
-import {scalarStringBuiltin} from '../../scalar-queries.js';
 import {findContracts} from '@sharpforge/framework';
+import {isScalarType, extendedScalar, scalarImageConstant, scalarDefault} from '../scalar-values.js';
+import {isTupleElement} from '../../lowering/tuples/locations.js';
 import {n} from './node-factory.js';
 
-const numericKinds = new Set(['ImplicitNumeric', 'ExplicitNumeric', 'ImplicitConstant', 'IntPtr',
-  'ImplicitEnumeration', 'ExplicitEnumeration']);
+const numericKinds = new Set(['ImplicitNumeric', 'ExplicitNumeric', 'ImplicitConstant', 'IntPtr']);
 const native = type => ['System_IntPtr', 'System_UIntPtr'].includes(type?.specialType);
-
 function dependsOnNative(node) {
   return !!node && (native(node.type) || ['operand', 'left', 'right', 'whenTrue', 'whenFalse']
     .some(key => node[key] && dependsOnNative(node[key])));
 }
 
-export function scalarConstantValue(value, type) {
-  let raw = value?.value ?? value;
-  if (type === 'decimal' && raw?.toBits) raw = decimalFromBits(raw.toBits());
-  return numeric(type) ? constantValue(raw, type) : raw;
+function formatted(value) {
+  const contract = findContracts('SharpForge.Runtime.Formatting', 'FormatValue', true)[0];
+  return n.frameworkCall({contract}, null, [value, n.literal('', 'string'), n.literal(0, 'int'),
+    n.literal(value.legacyType, 'string')], 'string');
 }
 
-function runtimeBuiltin(method) {
-  const definition = method?.originalDefinition ?? method;
-  return method?.builtin ?? definition?.builtin;
-}
-
-function profileCall(translator, node, method, creation = false) {
-  const builtin = runtimeBuiltin(method);
-  if (!(builtin?.numeric || builtin?.arrayRuntime || builtin?.synchronization)) return null;
-  const descriptor = builtin.numeric ?? builtin.arrayRuntime ?? builtin.synchronization;
-  const args = translator.arguments(node, method);
-  const receiver = !descriptor.isStatic && !creation && node.receiver ? translator.expression(node.receiver) : null;
-  const type = creation ? translator.imageType(node.type, node.syntax) : translator.imageType(method.returnType, node.syntax);
-  if (creation) return {kind: 'ObjectCreationExpression', legacyType: type, isExpression: true, type: {},
-    constructorMethod: {builtin}, args, initializers: [], collectionInitializers: []};
-  // Console/Convert object overloads preserve native signedness through the declared format profile.
-  const argumentType = args[0]?.legacyType;
-  const formatted = builtin.numeric && ['nint', 'nuint'].includes(argumentType) && args.length === 1 &&
-    ['System.Console', 'System.Convert'].includes(descriptor.owner) ? Builtins.find(entry => entry?.numeric?.owner === descriptor.owner &&
-      entry.numeric.name === descriptor.name && entry.numeric.formatType === argumentType) : null;
-  return n.frameworkCall({builtin: formatted ?? builtin}, receiver, args, type);
-}
-
-/** Outer mixin leaves source control and ref-argument handling in their respective translators. */
+/** Preserve the binder's numeric decisions in source IR, including captured and synthesized values. */
 export const ScalarTranslation = Base => class extends Base {
   constant(node) {
     const value = node.constantValue;
     if (!value || node.kind === 'Lambda' || dependsOnNative(node)) return null;
     const type = node.type ? this.imageType(node.type, node.syntax) : null;
-    if (type && numeric(type) && !value.isEnum) return n.literal(scalarConstantValue(value, type), type);
-    return super.constant(node);
+    return isScalarType(type) && !value.isEnum ? n.literal(scalarImageConstant(value, type), type) : super.constant(node);
   }
 
   defaultValue(type) {
-    return numeric(type) ? n.literal(numericDefault(type), type) : super.defaultValue(type);
+    return isScalarType(type) ? n.literal(scalarDefault(type), type) : super.defaultValue(type);
   }
 
   defaultArgument(parameter, node) {
@@ -61,76 +34,61 @@ export const ScalarTranslation = Base => class extends Base {
       return super.defaultArgument(parameter, node);
     }
     const type = this.imageType(parameter.type, node.syntax);
-    if (!numeric(type)) return super.defaultArgument(parameter, node);
+    if (!isScalarType(type)) return super.defaultArgument(parameter, node);
     const value = parameter.explicitDefaultValue ?? parameter.defaultValue;
-    return value === undefined || value === null ? this.defaultValue(type) : n.literal(scalarConstantValue(value, type), type);
-  }
-
-  exprCall(node) {
-    return profileCall(this, node, node.method) ?? super.exprCall(node);
-  }
-
-  frameworkCreation(node) {
-    if (this.imageType(node.type, node.syntax) === 'decimal' && !(node.args?.length)) return this.defaultValue('decimal');
-    return profileCall(this, node, node.constructor, true) ?? super.frameworkCreation(node);
-  }
-
-  frameworkInvocation(node, method) {
-    const profiled = profileCall(this, node, method);
-    if (profiled) return profiled;
-    if (method.name === 'ToString' && !method.parameters.length && node.receiver) {
-      const value = this.expression(node.receiver), builtin = scalarStringBuiltin(value.legacyType);
-      if (builtin) return n.frameworkCall({builtin}, null, [value], 'string');
-    }
-    return super.frameworkInvocation(node, method);
-  }
-
-  propertyReference(node) {
-    const getter = node.property.getMethod;
-    if (runtimeBuiltin(getter)?.numeric || runtimeBuiltin(getter)?.arrayRuntime) {
-      return profileCall(this, {...node, args: []}, getter);
-    }
-    return super.propertyReference(node);
+    return value == null ? this.defaultValue(type) : n.literal(scalarImageConstant(value, type), type);
   }
 
   exprUnary(node) {
-    if (!node.isLifted && numeric(this.imageType(node.type, node.syntax)) &&
-      numeric(this.imageType(node.operand.type, node.syntax))) {
-      return n.unary(node.operator, this.expression(node.operand), this.imageType(node.type), !!node.isChecked);
+    // A lifted operator has nullable operands: the general path lowers it, and mapping its types here would reject them.
+    if (node.isLifted) return super.exprUnary(node);
+    const type = this.imageType(node.type, node.syntax);
+    if (isScalarType(type) && isScalarType(this.imageType(node.operand.type, node.syntax))) {
+      return n.unary(node.operator, this.expression(node.operand), type, !!node.isChecked);
     }
     return super.exprUnary(node);
   }
 
   exprBinary(node) {
-    const leftType = this.imageType(node.left.type, node.syntax), rightType = this.imageType(node.right.type, node.syntax);
-    if (!node.isLifted && numeric(leftType) && numeric(rightType)) {
-      return n.binary(node.operator, this.expression(node.left), this.expression(node.right),
-        this.imageType(node.type), !!node.isChecked);
+    if (node.isLifted) return super.exprBinary(node);
+    const left = this.imageType(node.left.type, node.syntax), right = this.imageType(node.right.type, node.syntax);
+    if (isScalarType(left) && isScalarType(right)) {
+      return n.binary(node.operator, this.expression(node.left), this.expression(node.right), this.imageType(node.type), !!node.isChecked);
     }
-    if (node.operator === '+' && (leftType === 'string' || rightType === 'string')) {
+    // Only a concatenation with a wider scalar is formatted here: the general path knows how tuples, records and the
+    // other operands turn into text.
+    if (node.operator === '+' && (left === 'string' || right === 'string') && (extendedScalar(left) || extendedScalar(right))) {
       const text = operand => {
-        const value = this.expression(operand), builtin = scalarStringBuiltin(value.legacyType);
-        return builtin ? n.frameworkCall({builtin}, null, [value], 'string') : value;
+        const value = this.expression(operand);
+        return extendedScalar(value.legacyType) ? formatted(value) : value;
       };
       return n.binary('+', text(node.left), text(node.right), 'string');
     }
     return super.exprBinary(node);
   }
 
+  // int and double keep the general path: it lowers the targets that need temporaries (array elements, indexers,
+  // members of a?.b). The direct form is for the wider scalar types, which that path does not know.
   exprCompoundAssignment(node) {
-    return numeric(this.imageType(node.left.type, node.syntax)) ? this.assignStatic(node.left,
-      n.compoundAssign(node.operator, this.target(node.left), this.expression(node.right), !!node.isChecked)) :
-      super.exprCompoundAssignment(node);
+    const target = node.left;
+    if (isTupleElement(target) || this.needsExplicitStore(node, target)) {
+      return super.exprCompoundAssignment(node);
+    }
+    return extendedScalar(this.imageType(target.type, node.syntax)) ? this.assignStatic(target,
+      n.compoundAssign(node.operator, this.target(node.left), this.expression(node.right), !!node.isChecked)) : super.exprCompoundAssignment(node);
   }
 
   exprIncrement(node) {
-    return numeric(this.imageType(node.operand.type, node.syntax)) ? this.assignStatic(node.operand,
+    const target = node.operand;
+    if (isTupleElement(target) || this.needsExplicitStore(node, target)) {
+      return super.exprIncrement(node);
+    }
+    return extendedScalar(this.imageType(target.type, node.syntax)) ? this.assignStatic(target,
       n.increment(node.operator, this.target(node.operand), !!node.isPostfix, !!node.isChecked)) : super.exprIncrement(node);
   }
 
   exprConversion(node) {
-    const kind = node.conversion?.kind;
-    if (numericKinds.has(kind)) {
+    if (numericKinds.has(node.conversion?.kind)) {
       const type = this.imageType(node.type, node.syntax), value = this.expression(node.operand);
       return value.legacyType === type ? value : n.convert(value, type, !!node.isChecked);
     }
@@ -139,18 +97,25 @@ export const ScalarTranslation = Base => class extends Base {
 
   userDefinedConversion(node) {
     const type = this.imageType(node.type, node.syntax), from = this.imageType(node.operand.type, node.syntax);
-    if (numeric(type) && numeric(from)) return n.convert(this.expression(node.operand), type, !!node.isChecked);
-    return super.userDefinedConversion(node);
+    return isScalarType(type) && isScalarType(from) ? n.convert(this.expression(node.operand), type, !!node.isChecked)
+      : super.userDefinedConversion(node);
   }
 
-  contractArguments(contract, args) {
-    if (!contract) return args;
-    return args.map((value, index) => {
-      if (contract.parameters[index] !== 'object' || !numericTypeNames.includes(value.legacyType)) {
-        return super.contractArguments({parameters: [contract.parameters[index]]}, [value])[0];
-      }
-      const boxing = findContracts('SharpForge.Runtime.Formatting', 'BoxValue', true)[0];
-      return n.frameworkCall({contract: boxing}, null, [value, n.literal(value.legacyType, 'string')], 'object');
-    });
+  box(operand, node) {
+    const type = this.imageType(operand.type, node.syntax);
+    if (!extendedScalar(type)) return super.box(operand, node);
+    const contract = findContracts('SharpForge.Runtime.Formatting', 'BoxValue', true)[0];
+    return n.frameworkCall({contract}, null, [this.expression(operand), n.literal(type, 'string')], 'object');
+  }
+
+  frameworkInvocation(node, method) {
+    if (method.name === 'ToString' && !method.parameters.length && node.receiver) {
+      const value = this.expression(node.receiver);
+      if (isScalarType(value.legacyType)) return formatted(value);
+    }
+    const result = super.frameworkInvocation(node, method);
+    if (['Console.Write', 'Console.WriteLine'].includes(result.intrinsic?.name) && result.args.length === 1 &&
+        extendedScalar(result.args[0].legacyType)) result.args[0] = formatted(result.args[0]);
+    return result;
   }
 };

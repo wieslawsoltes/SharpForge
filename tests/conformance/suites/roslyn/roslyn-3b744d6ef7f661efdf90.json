@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3b744d6ef7f661efdf90",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace InvalidWithoutSuffix_But_ValidWithSuffix\n{\n    public class DescriptionAttribute : System.Attribute\n    {\n        public DescriptionAttribute(string name) { }\n    }\n    public class Description\n    {\n        public Description(string name) { }\n    }\n}\n\nnamespace InvalidWithSuffix_But_ValidWithoutSuffix\n{\n    public class DescriptionAttribute\n    {\n        public DescriptionAttribute(string name) { }\n    }\n    public class Description : System.Attribute\n    {\n        public Description(string name) { }\n    }\n}\n\nnamespace TestNamespace_09\n{\n    using InvalidWithoutSuffix_But_ValidWithSuffix;\n    using InvalidWithSuffix_But_ValidWithoutSuffix;\n\n    [Description(null)]\n    public class Test { public static void Main() {} }\n    \n    [DescriptionAttribute(null)]\n    public class Test2 { }\n}\n",
+  "sourceSHA256": "f8ac5e9567fdd20161e4a6a33857b334e20185bb9224011e08b6a6a830ad81f5",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AmbiguousAttributeErrors_09",
+    "offset": 283481
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0104",
+        "severity": "error"
+      },
+      {
+        "code": "CS0104",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (31,6): error CS0104: 'Description' is an ambiguous reference between 'InvalidWithSuffix_But_ValidWithoutSuffix.Description' and 'InvalidWithoutSuffix_But_ValidWithSuffix.Description'\n                //     [Description(null)]\n                Diagnostic(ErrorCode.ERR_AmbigContext, \"Description\").WithArguments(\"Description\", \"InvalidWithSuffix_But_ValidWithoutSuffix.Description\", \"InvalidWithoutSuffix_But_ValidWithSuffix.Description\"),\n                // (34,6): error CS0104: 'DescriptionAttribute' is an ambiguous reference between 'InvalidWithSuffix_But_ValidWithoutSuffix.DescriptionAttribute' and 'InvalidWithoutSuffix_But_ValidWithSuffix.DescriptionAttribute'\n                //     [DescriptionAttribute(null)]\n                Diagnostic(ErrorCode.ERR_AmbigContext, \"DescriptionAttribute\").WithArguments(\"DescriptionAttribute\", \"InvalidWithSuffix_But_ValidWithoutSuffix.DescriptionAttribute\", \"InvalidWithoutSuffix_But_ValidWithSuffix.DescriptionAttribute\")",
+  "unsupported": []
+}

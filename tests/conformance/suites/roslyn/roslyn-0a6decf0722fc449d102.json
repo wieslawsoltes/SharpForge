@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0a6decf0722fc449d102",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class AA : System.Attribute { }\npublic class BB : System.Attribute { }\npublic class CC : System.Attribute { }\npublic class DD : System.Attribute { }\npublic class EE : System.Attribute { }\n\npublic class Test\n{\n    public int this[[AA(0)]int x]\n    {\n        [return: BB(0)]\n        [CC(0)]\n        get { return x; }\n\n        [param: DD(0)]\n        [EE(0)]\n        set { }\n    }\n}\n",
+  "sourceSHA256": "92b7348fc3e0f5cb39ffcbcd2b8f421b1f63395b97170b8260976bd0fe3d9f0d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "TestAttributesOnIndexer_NoDuplicateDiagnostics",
+    "offset": 118887
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,22): error CS1729: 'AA' does not contain a constructor that takes 1 arguments\n                //     public int this[[AA(0)]int x]\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"AA(0)\").WithArguments(\"AA\", \"1\"),\n                // (13,10): error CS1729: 'CC' does not contain a constructor that takes 1 arguments\n                //         [CC(0)]\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"CC(0)\").WithArguments(\"CC\", \"1\"),\n                // (12,18): error CS1729: 'BB' does not contain a constructor that takes 1 arguments\n                //         [return: BB(0)]\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"BB(0)\").WithArguments(\"BB\", \"1\"),\n                // (16,17): error CS1729: 'DD' does not contain a constructor that takes 1 arguments\n                //         [param: DD(0)]\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"DD(0)\").WithArguments(\"DD\", \"1\"),\n                // (17,10): error CS1729: 'EE' does not contain a constructor that takes 1 arguments\n                //         [EE(0)]\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"EE(0)\").WithArguments(\"EE\", \"1\")",
+  "unsupported": []
+}

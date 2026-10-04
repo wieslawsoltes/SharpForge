@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b7d8d9a9831b9e445d39",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public static void M()\n    {\n        int x, y, z;\n        \n        void L1()\n        {\n            L2();\n            x++; // Unreachable\n        } \n        void L2()\n        {\n            L1();\n            y++; // Unreachable\n        }\n\n        L1();\n        // Unreachable code, so everything should be definitely assigned\n        x++;\n        y++;\n        z++;\n    }\n}",
+  "sourceSHA256": "6185d5a3af739257952eadde397f752c6d38e673e5b65e9b620c7e03ce9186cf",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "MutualRecursiveUnreachable",
+    "offset": 8227
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    public static void M()\n    {\n        int x, y, z;\n        \n        void L1()\n        {\n            L2();\n            x++; // Unreachable\n        } \n        void L2()\n        {\n            L1();\n            y++; // Unreachable\n        }\n\n        L1();\n        // Unreachable code, so everything should be definitely assigned\n        x++;\n        y++;\n        z++;\n    }\n}\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

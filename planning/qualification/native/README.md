@@ -89,8 +89,8 @@ cells, and checks the bundle/`env.json` hashes before recording any observation.
 
 The new `native.yml` workflow has twelve SDK cells and twelve independent Node
 cells. Node cells run the core check/test/build plus filesystem/process probes.
-It is available on relevant main pushes, schedule, dispatch and reusable calls;
-PR execution requires an explicit `full-ci` label. Ordinary PRs keep the existing
+It is available on manual dispatch and explicit reusable calls. SDK and Node
+cells execute serially; no PR/main/scheduled event starts this specialized workflow. Ordinary PRs keep the existing
 single core job. No edits to shared `ci.yml`, release or publish workflows were
 needed. Final steps retain environment evidence even if dependency/SDK setup
 fails, upload reports, and reject tracked output mutations without restoring

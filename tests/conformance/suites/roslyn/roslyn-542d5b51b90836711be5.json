@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-542d5b51b90836711be5",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        long x;\n        string y;\n        (x, y) = new C();\n    }\n\n    public int Deconstruct(out int a, out string b)\n    {\n        a = 1;\n        b = \"hello\";\n        return 42;\n    }\n}\n",
+  "sourceSHA256": "4431a1b129a204efaa8ac96b1bcd261cfc90e549405c9f6d65babf6c07096bee",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "DeconstructMustReturnVoid",
+    "offset": 11188
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8129",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,18): error CS8129: No Deconstruct instance or extension method was found for type 'C', with 2 out parameters and a void return type.\n                //         (x, y) = new C();\n                Diagnostic(ErrorCode.ERR_MissingDeconstruct, \"new C()\").WithArguments(\"C\", \"2\").WithLocation(8, 18)\n                ",
+  "unsupported": []
+}

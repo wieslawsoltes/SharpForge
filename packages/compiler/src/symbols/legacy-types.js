@@ -1,4 +1,3 @@
-import {memoryTypeSymbol} from './memory-types.js';
 import {ArrayTypeSymbol,ErrorTypeSymbol,TypeSymbol} from './types.js';
 /**
  * Adapter between the string type names of the string-typed profile and type symbols.
@@ -17,9 +16,8 @@ export class LegacyTypeAdapter {
   /** The symbol for a legacy type name. Equal names yield the identical symbol. */
   symbol(name){
     if(name instanceof TypeSymbol||name===null)return name;if(name===undefined||name==='null')return null;if(this.symbols.has(name))return this.symbols.get(name);
-    let type;const memory=memoryTypeSymbol(this,name);
+    let type;
     if(name==='error')type=ErrorTypeSymbol.unknown;
-    else if(memory)type=memory;
     else if(name.endsWith('[]')){const element=this.symbol(name.slice(0,-2));type=new ArrayTypeSymbol(element??ErrorTypeSymbol.unknown,1,{baseType:()=>this.bridge.typeProvider.getCoreTypeQuiet('System_Array')});}
     else type=this.sourceType(name)??this.bridge.typeFromName(name)??new ErrorTypeSymbol(name);
     this.symbols.set(name,type);if(!this.names.has(type))this.names.set(type,name);return type;

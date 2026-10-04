@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-41a6141dd55060277e7f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Linq.Expressions;\npublic class C {\n    public object o = null;\n    public void M() {\n        String x = null;\n        Expression<Func<string>> e0 = () => x ??= null;\n        Expression<Func<object>> e1 = () => o ??= null;\n    }\n}",
+  "sourceSHA256": "9ec9f102ce5255ad6f3e1654545c5c577b202f7083ac86016ea90a1d1dc660ff",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "ExpressionTreeNotAllowed",
+    "offset": 87562
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\nusing System.Linq.Expressions;\npublic class C {\n    public object o = null;\n    public void M() {\n        String x = null;\n        Expression<Func<string>> e0 = () => x ??= null;\n        Expression<Func<object>> e1 = () => o ??= null;\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8642",
+        "severity": "error"
+      },
+      {
+        "code": "CS8642",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (8,45): error CS8642: An expression tree may not contain a null coalescing assignment\n                    //         Expression<Func<string>> e0 = () => x ??= null;\n                    Diagnostic(ErrorCode.ERR_ExpressionTreeCantContainNullCoalescingAssignment, \"x ??= null\").WithLocation(8, 45),\n                    // (9,45): error CS8642: An expression tree may not contain a null coalescing assignment\n                    //         Expression<Func<object>> e1 = () => o ??= null;\n                    Diagnostic(ErrorCode.ERR_ExpressionTreeCantContainNullCoalescingAssignment, \"o ??= null\").WithLocation(9, 45)",
+  "unsupported": []
+}

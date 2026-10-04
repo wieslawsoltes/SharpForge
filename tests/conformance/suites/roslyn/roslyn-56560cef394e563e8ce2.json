@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-56560cef394e563e8ce2",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct Program\n{\n    public struct S1\n    {\n        public int x;\n    }\n\n    S1 x1 { get; set;}\n    S1 x2 { get;}\n    S1 x3;\n\n    public Program(int arg)\n    {\n        Goo(out x1);\n        Goo(ref x1);\n        Goo(out x2);\n        Goo(ref x2);\n        Goo(out x3);\n        Goo(ref x3);\n    }\n\n    public static void Goo(out S1 s)\n    {\n        s = default(S1);\n    }\n\n    public static void Goo1(ref S1 s)\n    {\n        s = default(S1);\n    }\n\n    static void Main(string[] args)\n    {\n\n    }\n}",
+  "sourceSHA256": "653320564c4e47ea051ed22e01e0a397f4e9ec7ee41241840a1f45a4b4a9dd70",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "AutoPropInitialization10",
+    "offset": 55559
+  },
+  "langVersion": "10",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0206",
+        "severity": "error"
+      },
+      {
+        "code": "CS0206",
+        "severity": "error"
+      },
+      {
+        "code": "CS0206",
+        "severity": "error"
+      },
+      {
+        "code": "CS0206",
+        "severity": "error"
+      },
+      {
+        "code": "CS1620",
+        "severity": "error"
+      },
+      {
+        "code": "CS9014",
+        "severity": "error"
+      },
+      {
+        "code": "CS0188",
+        "severity": "error"
+      },
+      {
+        "code": "CS9014",
+        "severity": "error"
+      },
+      {
+        "code": "CS0649",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (15,17): error CS0206: A property or indexer may not be passed as an out or ref parameter\n                //         Goo(out x1);\n                Diagnostic(ErrorCode.ERR_RefProperty, \"x1\").WithLocation(15, 17),\n                // (16,17): error CS0206: A property or indexer may not be passed as an out or ref parameter\n                //         Goo(ref x1);\n                Diagnostic(ErrorCode.ERR_RefProperty, \"x1\").WithLocation(16, 17),\n                // (17,17): error CS0206: A property or indexer may not be passed as an out or ref parameter\n                //         Goo(out x2);\n                Diagnostic(ErrorCode.ERR_RefProperty, \"x2\").WithLocation(17, 17),\n                // (18,17): error CS0206: A property or indexer may not be passed as an out or ref parameter\n                //         Goo(ref x2);\n                Diagnostic(ErrorCode.ERR_RefProperty, \"x2\").WithLocation(18, 17),\n                // (20,17): error CS1620: Argument 1 must be passed with the 'out' keyword\n                //         Goo(ref x3);\n                Diagnostic(ErrorCode.ERR_BadArgRef, \"x3\").WithArguments(\"1\", \"out\").WithLocation(20, 17),\n                // (15,17): error CS9014: Use of possibly unassigned auto-implemented property 'x1'. Consider updating to language version '11.0' to auto-default the property.\n                //         Goo(out x1);\n                Diagnostic(ErrorCode.ERR_UseDefViolationPropertyUnsupportedVersion, \"x1\").WithArguments(\"x1\", \"11.0\").WithLocation(15, 17),\n                // (16,9): error CS0188: The 'this' object cannot be used before all of its fields have been assigned. Consider updating to language version '11.0' to auto-default the unassigned fields.\n                //         Goo(ref x1);\n                Diagnostic(ErrorCode.ERR_UseDefViolationThisUnsupportedVersion, \"Goo\").WithArguments(\"11.0\").WithLocation(16, 9),\n                // (17,17): error CS9014: Use of possibly unassigned auto-implemented property 'x2'. Consider updating to language version '11.0' to auto-default the property.\n                //         Goo(out x2);\n                Diagnostic(ErrorCode.ERR_UseDefViolationPropertyUnsupportedVersion, \"x2\").WithArguments(\"x2\", \"11.0\").WithLocation(17, 17),\n                // (6,20): warning CS0649: Field 'Program.S1.x' is never assigned to, and will always have its default value 0\n                //         public int x;\n                Diagnostic(ErrorCode.WRN_UnassignedInternalField, \"x\").WithArguments(\"Program.S1.x\", \"0\").WithLocation(6, 20)\n                ",
+  "unsupported": []
+}

@@ -8,10 +8,11 @@
  *   d1 + d2, d1 - d2  ->  D.Combine / D.Remove
  */
 import { MethodKind } from '../../symbols/members.js';
+import { TypeKind } from '../../symbols/types.js';
 import { displayClassName, lambdaMethodName, localFunctionName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { n } from './node-factory.js';
 import { Frame } from './frame.js';
-import {isByReference} from '../../lowering/by-reference.js';
+import {delegateInfo} from './framework-delegates.js';
 
 /** Class mixin: lambdas, local functions, delegate creation and combination. */
 export const FunctionTranslation = Base =>
@@ -53,9 +54,9 @@ export const FunctionTranslation = Base =>
       return frame;
     }
     /** A lambda converted to the delegate type `type`. */
-    lambda(node, type) {
+    lambda(node, type, frameworkType = null) {
       if (!node.body) return this.unsupported('a lambda without a bound body', node.syntax);
-      const info = this.g.delegates.classOf(type, node.syntax),
+      const info = delegateInfo(this, type, node.syntax, frameworkType),
         root = this.frame.root,
         name = lambdaMethodName(root.name, root.ordinal, root.lambdas++),
         captures = this.capturesOf(node),
@@ -110,7 +111,7 @@ export const FunctionTranslation = Base =>
       const declared = this.g.parametersOf(symbol);
       const method = this.g.program.addMethod(this.frame.method.owner, localFunctionName(root.name, symbol.name, root.ordinal, root.locals++), {
         isStatic: true,
-        returnType: this.imageType(symbol.returnType, at) + (isByReference(symbol) ? '&' : ''),
+        returnType: this.imageType(symbol.returnType, at),
         parameters: [...declared, ...extra.map(e => ({ name: e.name, type: e.type }))],
         node: n.spanOf(symbol.syntax, this.frame.uri),
         hasSource: true,
@@ -147,12 +148,19 @@ export const FunctionTranslation = Base =>
       return n.call(entry.method, null, [...args, ...this.extraArguments(entry)]);
     }
     // ---- method groups ----
-    methodGroupDelegate(node) {
+    methodGroupDelegate(node, frameworkType = null) {
       const group = node.operand,
         method = node.conversion.method ?? node.method ?? group.selected ?? (group.methods?.length === 1 ? group.methods[0] : null),
-        info = this.g.delegates.classOf(node.type, node.syntax);
+        info = delegateInfo(this, node.type, node.syntax, frameworkType);
       if (!method) return this.unsupported('this method group conversion', node.syntax);
-      const definition = method.originalDefinition ?? method;
+      const definition = (method.reducedFrom ?? method).originalDefinition ?? method.reducedFrom ?? method;
+      // The receiver of an extension method is its first argument: the delegate binds it (codegen/semantic/delegates.js).
+      if (group.isExtensionDelegate) {
+        if (!this.g.isSource(definition)) return this.unsupported('delegates over framework methods', node.syntax);
+        // The conversion selected the method in its reduced form (without the receiver parameter).
+        const record = this.g.methodOf(method.reducedFrom ?? method, node.syntax);
+        return this.g.delegates.create(info, record, this.expression(group.receiver), { bindsFirstArgument: true });
+      }
       if (definition.methodKind === MethodKind.LocalFunction) return this.localFunctionDelegate(definition, info, node.syntax);
       if (!this.g.isSource(definition)) return this.unsupported('delegates over framework methods', node.syntax);
       const record = this.g.methodOf(method, node.syntax);
@@ -189,6 +197,16 @@ export const FunctionTranslation = Base =>
       return this.expression(operand);
     }
     // ---- combination ----
+    /** `a == b` and `a != b` on two delegates of one type compare invocation lists; null when the operands are not that. */
+    delegateEquality(node, left, right) {
+      // The operands may be converted to the operator's parameter type (System.Delegate or object): the value is the same.
+      const written = e => (e.kind === 'Conversion' && e.conversion?.kind === 'ImplicitReference' ? e.operand : e),
+        isEquality = node.operator === '==' || node.operator === '!=',
+        type = written(node.left).type;
+      if (!isEquality || type?.typeKind !== TypeKind.Delegate || !written(node.right).type?.equals?.(type)) return null;
+      const equal = this.g.delegates.equal(this.g.delegates.classOf(type, node.syntax), left, right);
+      return node.operator === '==' ? equal : n.not(equal);
+    }
     /** `a + b` and `a - b` on delegates. */
     delegateArithmetic(node, left, right) {
       const info = this.g.delegates.classOf(node.type, node.syntax);

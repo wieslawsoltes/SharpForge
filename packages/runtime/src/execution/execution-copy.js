@@ -1,10 +1,13 @@
 import {ManagedFault, isReference} from './managed-fault.js';
 import {ReadonlySnapshotArray, sharedSnapshotRecord} from './snapshot-buffers.js';
+import {isTypedFloatArray} from './typed-stack.js';
 
 /** These identities are owned by the VM or are immutable managed values. */
 export function immutableExecutionIdentity(value) {
-  return Object.isFrozen(value) && (
-    Object.keys(value).length === 0 || isReference(value) || value.registry && value.flags
+  return !isTypedFloatArray(value) && !(value instanceof ArrayBuffer) && !ArrayBuffer.isView(value) &&
+    !(value instanceof Map) && !(value instanceof Set) && Object.isFrozen(value) && (
+    Object.keys(value).length === 0 && [Object.prototype, null].includes(Object.getPrototypeOf(value)) ||
+    isReference(value) || value.registry && value.flags
     || value.byref || value.runtimeHandle || value.methodPointer || value.valueType
     || value.enumType || value.float || value.nativeInt || value.decimal
     || value.span || value.nullableType || value.typedReference || value.runtimeArgumentHandle || value.argIterator
@@ -50,7 +53,8 @@ export function copyExecution(value, memo = new Map()) {
     for (const key of Object.keys(value)) copy[key] = copyExecution(value[key], memo);
     return copy;
   }
-  const copy = Array.isArray(value) ? [] : {};
+  const copy = Array.isArray(value) ? new Array(value.length)
+    : Object.getPrototypeOf(value) === null ? Object.create(null) : {};
   memo.set(value, copy);
   for (const [key, item] of Object.entries(value)) {
     Object.defineProperty(copy, key, {

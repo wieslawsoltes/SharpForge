@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-e76a75cd62eb6c3961c8",
+  "kind": "spec",
+  "sourceText": "class A<T>             // instance type: A<T>\n{\n    class B {}         // instance type: A<T>.B\n    class C<U> {}      // instance type: A<T>.C<U>\n}\nclass D {}             // instance type: D",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "0c386a62cc72eb9d275827ee3e8b6078395b62eb9e6ae19c8f29ad25f2602355",
+  "originalSource": "class A<T>             // instance type: A<T>\n{\n    class B {}         // instance type: A<T>.B\n    class C<U> {}      // instance type: A<T>.C<U>\n}\nclass D {}             // instance type: D",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "InstanceType"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "InstanceType",
+    "offsetInUnquotedMarkdown": 50069
+  }
+}

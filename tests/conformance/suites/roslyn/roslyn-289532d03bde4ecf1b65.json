@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-289532d03bde4ecf1b65",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\npartial class D\n{\n    partial void Goo(string x = \"\");\n}\n\npartial class D\n{\n    partial void Goo([CallerLineNumber] string x)\n    {\n    }\n\n    public static void Main()\n    {\n    }\n}",
+  "sourceSHA256": "e0d0920a89b7484a0257ecb0737b8b0f03bf95f084f3826950e7a94dd0df0034",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "sha256": "afc3ea7577c9e597760812239c750126e0cb09ea32cb52bdc8e9850a45ebeac9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "license": "MIT",
+    "method": "TestCallerLineNumberUnconsumedBadType",
+    "offset": 124158
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new MetadataReference[] { SystemRef })",
+  "options": "(source, references: new MetadataReference[] { SystemRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS4024",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                Diagnostic(ErrorCode.WRN_CallerLineNumberParamForUnconsumedLocation, \"CallerLineNumber\").WithArguments(\"x\").WithLocation(11, 23)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

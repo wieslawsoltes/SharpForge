@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-4617cdef33280ce40784",
+  "kind": "spec",
+  "sourceText": "partial class C\n{\n    public partial int Prop0 { get; set; }\n    public partial int Prop0 { get => field; set => field = value; } // this is equivalent to the two \"semi-auto\" forms below.\n\n    public partial int Prop1 { get; set; }\n    public partial int Prop1 { get => field; set; } // is this a valid implementation part?\n\n    public partial int Prop2 { get; set; }\n    public partial int Prop2 { get; set => field = value; } // what about this? will there be disagreement about which is the \"best\" style?\n\n    public partial int Prop3 { get; }\n    public partial int Prop3 { get => field; } // it will only be valid to use at most 1 auto-accessor, when a second accessor is manually implemented.",
+  "sourceSHA256": "15cc74944816585170c32bf921c393bfe462cb04237d83a78c9c90c9451239b5",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 35693
+  }
+}

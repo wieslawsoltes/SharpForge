@@ -1,43 +1,58 @@
 import {arrayRuntimeDefinition} from './array-runtime-profile.js';
-import {canonicalType} from '@sharpforge/framework';
+import {arraySignatureShape, memorySignature, managedMemoryElement} from './memory-signatures.js';
 
-const aliases={Array:'System.Array','System.Int32':'int','System.UInt32':'uint','System.Int64':'long','System.UInt64':'ulong','System.Int16':'short','System.UInt16':'ushort','System.SByte':'sbyte','System.Byte':'byte','System.Char':'char','System.Boolean':'bool','System.Single':'float','System.Double':'double','System.Object':'object','System.String':'string','System.Void':'void'};
-function canonical(name) {
-  if(typeof name!=='string')return null;
-  if(name.endsWith('&'))return canonical(name.slice(0,-1))+'&';
-  if(name.endsWith('[]'))return canonical(name.slice(0,-2))+'[]';
-  const type=canonicalType(name);return aliases[type]??type;
-}
-const indices=(parameters,count,type='int')=>parameters.length===count&&parameters.every(item=>canonical(item)===type);
-/** Array pseudo-methods are CLR-provided methods on ARRAY TypeSpecs, not MethodDefs. */
-export function arrayMethodDefinition(descriptor) {
-  const runtime=arrayRuntimeDefinition(descriptor);if(runtime)return runtime;
-  if(descriptor?.kind!=='method'||!descriptor.signature||!Array.isArray(descriptor.signature.parameters))return null;
-  const {name,owner,signature}=descriptor,{parameters,isStatic}=signature,result=canonical(signature.returnType);
-  if(signature.genericArity||signature.callingConvention||descriptor.genericArguments)return null;
-  let operation=null,rank=0,elementType=null;
-  const array=/^(.*)\[([^\[\]]*)\]$/.exec(owner);
-  if(array&&array[2]!==''&&!isStatic) {
-    const dimensions=array[2].split(',');
-    if(!dimensions.every(part=>part===''||part==='*'&&dimensions.length===1||/^-?\d+\.\.\.-?\d*$/.test(part)))return null;
-    rank=dimensions.length;elementType=array[1];if(rank>32)return null;
-    if(name==='.ctor'&&result==='void'&&(indices(parameters,rank)||indices(parameters,rank*2)))operation='construct';
-    else if(name==='Get'&&indices(parameters,rank)&&canonical(elementType)===result)operation='get';
-    else if(name==='Set'&&result==='void'&&indices(parameters.slice(0,-1),rank)&&canonical(parameters.at(-1))===canonical(elementType))operation='set';
-    else if(name==='Address'&&indices(parameters,rank)&&result===canonical(elementType)+'&')operation='address';
-  } else if(owner==='System.Array') {
-    const p=parameters.map(canonical);
-    if(isStatic&&name==='CreateInstance'&&result==='System.Array'&&p[0]==='System.Type'&&
-      (indices(p.slice(1),1)||indices(p.slice(1),2)||indices(p.slice(1),3)||p.length===2&&['int[]','long[]'].includes(p[1])||p.length===3&&p[1]==='int[]'&&p[2]==='int[]'))operation='create';
-    if(!isStatic) {
-      if(['get_Rank','get_Length'].includes(name)&&p.length===0&&result==='int')operation=name.slice(4).toLowerCase();
-      if(name==='get_LongLength'&&p.length===0&&result==='long')operation='longLength';
-      if(['GetLength','GetLongLength','GetLowerBound','GetUpperBound'].includes(name)&&indices(p,1)&&result===(name==='GetLongLength'?'long':'int'))operation=name;
-      const indexParameters=name==='SetValue'?p.slice(1):p;
-      const validIndices=[1,2,3].some(count=>indices(indexParameters,count)||indices(indexParameters,count,'long'))||indexParameters.length===1&&['int[]','long[]'].includes(indexParameters[0]);
-      if(name==='GetValue'&&result==='object'&&validIndices)operation='getValue';
-      if(name==='SetValue'&&result==='void'&&p[0]==='object'&&validIndices)operation='setValue';
-    }
+function rectangularOperation(name, call, shape) {
+  const {parameters, result, isStatic} = call;
+  const {rank, element} = shape;
+  if (isStatic || shape.vector || !managedMemoryElement(element)) return null;
+  const indices = parameters.slice(0, rank).every(type => type === 'int');
+  if (name === '.ctor' && result === 'void' && parameters.every(type => type === 'int') &&
+      (parameters.length === rank || parameters.length === rank * 2)) return 'construct';
+  if (parameters.length === rank && indices) {
+    if (name === 'Get' && result === element) return 'get';
+    if (name === 'Address' && result === element + '&') return 'address';
   }
-  return operation?Object.freeze({implementation:'array',descriptor,operation,rank,elementType,contract:null}):null;
+  if (name === 'Set' && parameters.length === rank + 1 && indices && parameters[rank] === element && result === 'void') return 'set';
+  return null;
+}
+
+function reflectionIndices(parameters) {
+  return parameters.length === 1 && ['int[]', 'long[]'].includes(parameters[0]) ||
+    parameters.length >= 1 && parameters.length <= 3 && ['int', 'long'].some(type => parameters.every(value => value === type));
+}
+
+function arrayOperation(name, call) {
+  const {parameters, result, isStatic} = call;
+  if (isStatic) {
+    if (name !== 'CreateInstance' || result !== 'System.Array' || parameters[0] !== 'System.Type') return null;
+    const lengths = parameters.slice(1);
+    if (lengths.length >= 1 && lengths.length <= 3 && lengths.every(type => type === 'int') ||
+        lengths.length === 1 && ['int[]', 'long[]'].includes(lengths[0]) ||
+        lengths.length === 2 && lengths.every(type => type === 'int[]')) return 'create';
+    return null;
+  }
+  if (!parameters.length) {
+    if (name === 'get_Rank' && result === 'int') return 'rank';
+    if (name === 'get_Length' && result === 'int') return 'length';
+    if (name === 'get_LongLength' && result === 'long') return 'longLength';
+  }
+  if (parameters.length === 1 && parameters[0] === 'int' &&
+      (['GetLength', 'GetLowerBound', 'GetUpperBound'].includes(name) && result === 'int' ||
+       name === 'GetLongLength' && result === 'long')) return name;
+  if (name === 'GetValue' && result === 'object' && reflectionIndices(parameters)) return 'getValue';
+  if (name === 'SetValue' && result === 'void' && parameters[0] === 'object' && reflectionIndices(parameters.slice(1))) return 'setValue';
+  return null;
+}
+
+/** Array pseudo-methods must match their exact rank, element and byref return signature. */
+export function arrayMethodDefinition(descriptor) {
+  const runtime = arrayRuntimeDefinition(descriptor);
+  if (runtime) return runtime;
+  const call = memorySignature(descriptor);
+  if (!call || call.arity) return null;
+  const shape = arraySignatureShape(call.owner);
+  const operation = shape ? rectangularOperation(descriptor.name, call, shape)
+    : call.owner === 'System.Array' ? arrayOperation(descriptor.name, call) : null;
+  return operation ? Object.freeze({implementation: 'array', descriptor, operation,
+    rank: shape?.rank, elementType: shape?.element, contract: null}) : null;
 }

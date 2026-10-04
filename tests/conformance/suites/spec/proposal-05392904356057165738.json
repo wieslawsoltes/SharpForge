@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-05392904356057165738",
+  "kind": "spec",
+  "sourceText": "double[] x = new double[0];\nSpan<ulong> y = MemoryMarshal.Cast<double, ulong>(x); // previously worked, now a compilation error (returns ReadOnlySpan, not Span)\nSpan<ulong> z = MemoryMarshal.Cast<double, ulong>(x.AsSpan()); // workaround\n\nstatic class MemoryMarshal\n{\n    public static ReadOnlySpan<TTo> Cast<TFrom, TTo>(ReadOnlySpan<TFrom> span) => default;\n    public static Span<TTo> Cast<TFrom, TTo>(Span<TFrom> span) => default;\n}",
+  "sourceSHA256": "90a16c850600c3187acf5f8c1de624bdbff851adc55156a3d147bb8f99937c1c",
+  "target": "library",
+  "featureId": "csharp-14-0-first-class-span-types",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/first-class-span-types.md",
+    "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+    "license": "NOASSERTION",
+    "offset": 24637
+  }
+}

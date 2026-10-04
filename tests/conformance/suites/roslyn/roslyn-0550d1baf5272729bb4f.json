@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0550d1baf5272729bb4f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.InteropServices;\n\npublic class Wrapper\n{\n    public class WorksheetClass : IWorksheet\n    {\n    }\n\n    [ComImport, Guid(\"00020810-0000-0000-C000-000000000046\")]\n    [CoClass(typeof(WorksheetClass))]\n    private interface IWorksheet\n    {\n    }\n}\n\npublic class MainClass\n{\n    public static int Main ()\n    {\n        var a = new Wrapper.IWorksheet();\n        return 0;\n    }\n}",
+  "sourceSHA256": "44a374bd0b67ecbffa31edf2310bb80a819f95850c744755916eb8533b0d941c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestCoClassAttribute_NewOnInterface_FromSource_InaccessibleInterface",
+    "offset": 154559
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0122",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (22,29): error CS0122: 'Wrapper.IWorksheet' is inaccessible due to its protection level\n                //         var a = new Wrapper.IWorksheet();\n                Diagnostic(ErrorCode.ERR_BadAccess, \"IWorksheet\").WithArguments(\"Wrapper.IWorksheet\").WithLocation(22, 29)",
+  "unsupported": []
+}

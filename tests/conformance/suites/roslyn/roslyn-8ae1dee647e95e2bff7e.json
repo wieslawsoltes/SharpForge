@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8ae1dee647e95e2bff7e",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    unsafe static void M(in int arg1, in (int Alice, int Bob) arg2)\n    {\n        int* a = & arg1;\n        int* b = & arg2.Alice;\n\n        fixed(int* c = & arg1)\n        {\n        }\n\n        fixed(int* d = & arg2.Alice)\n        {\n        }\n    }\n}\n",
+  "sourceSHA256": "946bb2b5bb5040ce99ed3e61526b01303596c7b7ec7493ed6bdfb6d866cf3eff",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenInParametersTests.cs",
+    "sha256": "3dd7ab02ad53d49f5790678503b441f11393da95c6ca4e54ac9a4ee30296af53",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenInParametersTests.cs",
+    "license": "MIT",
+    "method": "InParamCannotTakePtr",
+    "offset": 30102
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, new[] { ValueTupleRef, SystemRuntimeFacadeRef }, options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0212",
+        "severity": "error"
+      },
+      {
+        "code": "CS0212",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,18): error CS0212: You can only take the address of an unfixed expression inside of a fixed statement initializer\n                //         int* a = & arg1;\n                Diagnostic(ErrorCode.ERR_FixedNeeded, \"& arg1\").WithLocation(6, 18),\n                // (7,18): error CS0212: You can only take the address of an unfixed expression inside of a fixed statement initializer\n                //         int* b = & arg2.Alice;\n                Diagnostic(ErrorCode.ERR_FixedNeeded, \"& arg2.Alice\").WithLocation(7, 18)\n            ",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

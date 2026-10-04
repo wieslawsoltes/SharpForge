@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c464de0fbb0cc6bd2aab",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static void Main()\n    {\n        // This is acceptable by the native compiler and treated as a non-constant null literal.\n        // That violates the specification; we now correctly treat this as an error.\n        object a = null ?? null;\n\n        // The null coalescing operator never produces a compile-time constant even when\n        // the arguments are constants.\n        const object b = null ?? \"ABC\";\n        const string c = \"DEF\" ?? null;\n        const int d = (int?)null ?? 123;\n\n        // It is legal, though pointless, to use null literals and constants in coalescing \n        // expressions, provided you don't try to make the result a constant. These should\n        // produce no errors:\n        object z = null ?? \"GHI\";\n        string y = \"JKL\" ?? null;\n        int x = (int?)null ?? 456;\n    }\n}\n",
+  "sourceSHA256": "71c02fb6b994dc6a379c746ee0c5366f24a71aaf1a45ff58a9e122cd3243f0bd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "CS0019_TestNullCoalesceWithNullOperandsErrors",
+    "offset": 9678
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0133",
+        "severity": "error"
+      },
+      {
+        "code": "CS0133",
+        "severity": "error"
+      },
+      {
+        "code": "CS0133",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"null ?? null\").WithArguments(\"??\", \"<null>\", \"<null>\"),\n                Diagnostic(ErrorCode.ERR_NotConstantExpression, @\"null ?? \"\"ABC\"\"\").WithArguments(\"b\"),\n                Diagnostic(ErrorCode.ERR_NotConstantExpression, @\"\"\"DEF\"\" ?? null\").WithArguments(\"c\"),\n                Diagnostic(ErrorCode.ERR_NotConstantExpression, \"(int?)null ?? 123\").WithArguments(\"d\")",
+  "unsupported": []
+}

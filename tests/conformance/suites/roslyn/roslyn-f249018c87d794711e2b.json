@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f249018c87d794711e2b",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    static void Main()\n    {\n        M(new byte[1]);\n        M(new sbyte[1]);\n        M(new Ebyte[1]);\n        M(new Esbyte[1]);\n\n        M(new short[1]);\n        M(new ushort[1]);\n        M(new Eshort[1]);\n        M(new Eushort[1]);\n\n        M(new int[1]);\n        M(new uint[1]);\n        M(new Eint[1]);\n        M(new Euint[1]);\n\n        M(new int[1][]);\n        M(new uint[1][]);\n        M(new Eint[1][]);\n        M(new Euint[1][]);\n\n        M(new long[1]);\n        M(new ulong[1]);\n        M(new Elong[1]);\n        M(new Eulong[1]);\n\n        M(new IntPtr[1]);\n        M(new UIntPtr[1]);\n\n        M(new IntPtr[1][]);\n        M(new UIntPtr[1][]);\n    }\n\n    static void M(object o)\n    {\n        switch (o)\n        {\n            case byte[] _ when o.GetType() == typeof(byte[]):\n                Console.WriteLine(\"byte[]\");\n                break;\n            case sbyte[] _ when o.GetType() == typeof(sbyte[]):\n                Console.WriteLine(\"sbyte[]\");\n                break;\n            case Ebyte[] _ when o.GetType() == typeof(Ebyte[]):\n                Console.WriteLine(\"Ebyte[]\");\n                break;\n            case Esbyte[] _ when o.GetType() == typeof(Esbyte[]):\n                Console.WriteLine(\"Esbyte[]\");\n                break;\n\n            case short[] _ when o.GetType() == typeof(short[]):\n                Console.WriteLine(\"short[]\");\n                break;\n            case ushort[] _ when o.GetType() == typeof(ushort[]):\n                Console.WriteLine(\"ushort[]\");\n                break;\n            case Eshort[] _ when o.GetType() == typeof(Eshort[]):\n                Console.WriteLine(\"Eshort[]\");\n                break;\n            case Eushort[] _ when o.GetType() == typeof(Eushort[]):\n                Console.WriteLine(\"Eushort[]\");\n                break;\n\n            case int[] _ when o.GetType() == typeof(int[]):\n                Console.WriteLine(\"int[]\");\n                break;\n            case uint[] _ when o.GetType() == typeof(uint[]):\n                Console.WriteLine(\"uint[]\");\n                break;\n            case Eint[] _ when o.GetType() == typeof(Eint[]):\n                Console.WriteLine(\"Eint[]\");\n                break;\n            case Euint[] _ when o.GetType() == typeof(Euint[]):\n                Console.WriteLine(\"Euint[]\");\n                break;\n\n            case int[][] _ when o.GetType() == typeof(int[][]):\n                Console.WriteLine(\"int[][]\");\n                break;\n            case uint[][] _ when o.GetType() == typeof(uint[][]):\n                Console.WriteLine(\"uint[][]\");\n                break;\n            case Eint[][] _ when o.GetType() == typeof(Eint[][]):\n                Console.WriteLine(\"Eint[][]\");\n                break;\n            case Euint[][] _ when o.GetType() == typeof(Euint[][]):\n                Console.WriteLine(\"Euint[][]\");\n                break;\n\n            case long[] _ when o.GetType() == typeof(long[]):\n                Console.WriteLine(\"long[]\");\n                break;\n            case ulong[] _ when o.GetType() == typeof(ulong[]):\n                Console.WriteLine(\"ulong[]\");\n                break;\n            case Elong[] _ when o.GetType() == typeof(Elong[]):\n                Console.WriteLine(\"Elong[]\");\n                break;\n            case Eulong[] _ when o.GetType() == typeof(Eulong[]):\n                Console.WriteLine(\"Eulong[]\");\n                break;\n\n            case IntPtr[] _ when o.GetType() == typeof(IntPtr[]):\n                Console.WriteLine(\"IntPtr[]\");\n                break;\n            case UIntPtr[] _ when o.GetType() == typeof(UIntPtr[]):\n                Console.WriteLine(\"UIntPtr[]\");\n                break;\n\n            case IntPtr[][] _ when o.GetType() == typeof(IntPtr[][]):\n                Console.WriteLine(\"IntPtr[][]\");\n                break;\n            case UIntPtr[][] _ when o.GetType() == typeof(UIntPtr[][]):\n                Console.WriteLine(\"UIntPtr[][]\");\n                break;\n\n            default:\n                Console.WriteLine(\"oops: \" + o.GetType());\n                break;\n        }\n    }\n}\nenum Ebyte : byte {}\nenum Esbyte : sbyte {}\nenum Eshort : short {}\nenum Eushort : ushort {}\nenum Eint : int {}\nenum Euint : uint {}\nenum Elong : long {}\nenum Eulong : ulong {}\n",
+  "sourceSHA256": "0224ff500170cc6319b5eb279fd94033dcef0a12c7dea897a852364bd43709a5",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "CompileTimeRuntimeInstanceofMismatch_01",
+    "offset": 118310
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

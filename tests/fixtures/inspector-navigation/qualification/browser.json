@@ -1,0 +1,80 @@
+{
+  "revision": "8ee7dfc696f5787a8b477d0a05ac0a9aa8b9b150",
+  "host": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "playwright": "1.63.0",
+  "moduleSha256": "99da57b93548acb06fa720b596c36017507e8793a444aab4cdcdb8a1e355223b",
+  "mode": "HTTP source modules/import map, CSP enabled",
+  "engines": [
+    {
+      "engine": "chromium",
+      "passed": true,
+      "version": "153.0.8010.12",
+      "checks": [
+        "20k methods: exact requested decode count and owned nested results",
+        "MethodPtr, definition-only, zero and end boundaries",
+        "page validation, aggregate alias-body accounting and cancellation",
+        "all row/user-string URI reloads, MVID spelling and malformed identities",
+        "retained Roslyn/CoreCLR PE hash and native method identity"
+      ],
+      "reference": {
+        "sdk": "10.0.201",
+        "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+        "runtime": "10.0.5",
+        "mode": "Release",
+        "optimized": true,
+        "sourceSha256": "59fcbdeab56827cfc8b9f36f1d3e431c62fa9197f869aab097b6bdf3a31b261c",
+        "assemblySha256": "6ca9c7f4b2e54ef06165da991e2d6c1ae1eda44ead31c15f6b05b1777b364a73",
+        "pdbSha256": "c109422b2fa946695e6cdfaeeb8b5c547e7b3da14b9864cfe0cf07fb706fc037"
+      }
+    },
+    {
+      "engine": "firefox",
+      "passed": true,
+      "version": "155.0",
+      "checks": [
+        "20k methods: exact requested decode count and owned nested results",
+        "MethodPtr, definition-only, zero and end boundaries",
+        "page validation, aggregate alias-body accounting and cancellation",
+        "all row/user-string URI reloads, MVID spelling and malformed identities",
+        "retained Roslyn/CoreCLR PE hash and native method identity"
+      ],
+      "reference": {
+        "sdk": "10.0.201",
+        "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+        "runtime": "10.0.5",
+        "mode": "Release",
+        "optimized": true,
+        "sourceSha256": "59fcbdeab56827cfc8b9f36f1d3e431c62fa9197f869aab097b6bdf3a31b261c",
+        "assemblySha256": "6ca9c7f4b2e54ef06165da991e2d6c1ae1eda44ead31c15f6b05b1777b364a73",
+        "pdbSha256": "c109422b2fa946695e6cdfaeeb8b5c547e7b3da14b9864cfe0cf07fb706fc037"
+      }
+    },
+    {
+      "engine": "webkit",
+      "passed": true,
+      "version": "26.6",
+      "checks": [
+        "20k methods: exact requested decode count and owned nested results",
+        "MethodPtr, definition-only, zero and end boundaries",
+        "page validation, aggregate alias-body accounting and cancellation",
+        "all row/user-string URI reloads, MVID spelling and malformed identities",
+        "retained Roslyn/CoreCLR PE hash and native method identity"
+      ],
+      "reference": {
+        "sdk": "10.0.201",
+        "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+        "runtime": "10.0.5",
+        "mode": "Release",
+        "optimized": true,
+        "sourceSha256": "59fcbdeab56827cfc8b9f36f1d3e431c62fa9197f869aab097b6bdf3a31b261c",
+        "assemblySha256": "6ca9c7f4b2e54ef06165da991e2d6c1ae1eda44ead31c15f6b05b1777b364a73",
+        "pdbSha256": "c109422b2fa946695e6cdfaeeb8b5c547e7b3da14b9864cfe0cf07fb706fc037"
+      }
+    }
+  ],
+  "passed": true
+}

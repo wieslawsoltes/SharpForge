@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1e7796bc71f8ce7cbddf",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\n[assembly: RuntimeCompatibilityAttribute(WrapNonExceptionThrows = false)]\n\nclass C\n{\n    public static void Main()\n    {\n        try { }\n        catch { }\n        catch (System.Exception) { }\n    }\n}\n",
+  "sourceSHA256": "0b18b9b81b814b92b687726bb9ee9584f27dfd6d0fd8e279de0d2a2dc88eb9b7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "sha256": "5af75c081b993313ae994c6bb25a5aa25038b265d6fc6300e8d89976fd96811a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "license": "MIT",
+    "method": "RuntimeCompatibilityAttribute_GeneralNotLast",
+    "offset": 102004
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1017",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,9): error CS1017: Catch clauses cannot follow the general catch clause of a try statement\n                Diagnostic(ErrorCode.ERR_TooManyCatches, \"catch\")",
+  "unsupported": []
+}

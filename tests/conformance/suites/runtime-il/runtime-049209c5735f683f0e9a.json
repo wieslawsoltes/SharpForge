@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-049209c5735f683f0e9a",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n//\n\nusing System;\n\n\npublic class Simple2_Array_Test\n{\n    \n    public static int Main()\n    {\n        Console.WriteLine(\"Starting...\");\n        int SIZE = 10;\n\n        Int32[,,,] foo = new Int32[SIZE, SIZE, SIZE, SIZE];\n        int i, j, k, l, m;\n        Int64 sum = 0;\n\n\n        for (i = 0; i < SIZE; i++)\n            for (j = 0; j < SIZE; j++)\n                for (k = 0; k < SIZE; k++)\n                    for (l = 0; l < SIZE; l++)\n                    {\n                        foo[i, j, k, l] = i * j * k * l;\n                    }\n\n        for (i = 0; i < SIZE; i++)\n            for (j = 0; j < i; j++)\n                for (k = 0; k < j; k++)\n                    for (l = 0; l < k; l++)\n                        for (m = 0; m < l; m++)\n                        {\n                            sum += foo[i, j, k, l];\n                        }\n\n        if (sum == 197163)\n        {\n            Console.WriteLine(\"Everything Worked!\");\n            return 100;\n        }\n        else\n        {\n            Console.WriteLine(\"Something is broken!\");\n            return 1;\n        }\n    }\n}\n",
+  "language": "csharp",
+  "unsupported": [],
+  "opcodeFamilies": [],
+  "sourceSHA256": "3cf51def9218d60ad9639e00817c6b71c0ddd29ea8f71243c5a4d0d458ff39c5",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n//\n\nusing System;\nusing Xunit;\n\npublic class Simple2_Array_Test\n{\n    [Fact]\n    public static int TestEntryPoint()\n    {\n        Console.WriteLine(\"Starting...\");\n        int SIZE = 10;\n\n        Int32[,,,] foo = new Int32[SIZE, SIZE, SIZE, SIZE];\n        int i, j, k, l, m;\n        Int64 sum = 0;\n\n\n        for (i = 0; i < SIZE; i++)\n            for (j = 0; j < SIZE; j++)\n                for (k = 0; k < SIZE; k++)\n                    for (l = 0; l < SIZE; l++)\n                    {\n                        foo[i, j, k, l] = i * j * k * l;\n                    }\n\n        for (i = 0; i < SIZE; i++)\n            for (j = 0; j < i; j++)\n                for (k = 0; k < j; k++)\n                    for (l = 0; l < k; l++)\n                        for (m = 0; m < l; m++)\n                        {\n                            sum += foo[i, j, k, l];\n                        }\n\n        if (sum == 197163)\n        {\n            Console.WriteLine(\"Everything Worked!\");\n            return 100;\n        }\n        else\n        {\n            Console.WriteLine(\"Something is broken!\");\n            return 1;\n        }\n    }\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/Directed/Arrays/simple2.cs",
+    "sha256": "f7fb73ab64ef321e005da02c7dac94fee242dc6a4b5bf6f335f27364c8b89715",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/Directed/Arrays/simple2.cs",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Remove Fact/OuterLoop discovery attributes and Xunit using; rename TestEntryPoint to Main. Test body unchanged."
+}

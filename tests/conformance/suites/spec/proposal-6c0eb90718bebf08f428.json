@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-6c0eb90718bebf08f428",
+  "kind": "spec",
+  "sourceText": "int bin = 0b1001_1010_0001_0100;\nint hex = 0x1b_a0_44_fe;\nint dec = 33_554_432;\nint weird = 1_2__3___4____5_____6______7_______8________9;\ndouble real = 1_000.111_1e-1_000;",
+  "sourceSHA256": "34277c5acf21e8732855428edc3b2f4928418bc42477eb96b13e46c065d08858",
+  "target": "library",
+  "featureId": "csharp-7-0-digit-separators",
+  "langVersion": "7.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.0/digit-separators.md",
+    "sha256": "e5b78d8a3d04664ef5f46be8378dc3b334328d86982a55af12bc75b9035bcdd0",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/digit-separators.md",
+    "license": "NOASSERTION",
+    "offset": 630
+  }
+}

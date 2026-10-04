@@ -10,6 +10,7 @@ export function encodeSnapshotGraph(vm, root, limits) {
   const nodes = [];
   let items = 0;
   let stringBytes = 0;
+  let bufferBytes = 0;
   const atom = value => {
     if (++items > limits.maxItems) snapshotFormatError('SNAPSHOT_LIMIT', 'Snapshot item limit exceeded');
     if (typeof value === 'string') stringBytes += value.length * 2;
@@ -25,6 +26,10 @@ export function encodeSnapshotGraph(vm, root, limits) {
   const rootAtom = atom(root);
   for (let index = 0; index < pending.length; index++) {
     const value = pending[index];
+    if (value instanceof ArrayBuffer) {
+      bufferBytes += value.byteLength;
+      if (bufferBytes > limits.maxBytes) snapshotFormatError('SNAPSHOT_LIMIT', 'Snapshot buffer limit exceeded');
+    }
     const owned = ownedWireValue(vm, value);
     nodes.push(owned ?? encodeNode(value, atom, limits));
   }
@@ -87,7 +92,7 @@ function allocateNode(vm, node, limits) {
   if (!plainRecord(node) || typeof node.kind !== 'string') snapshotFormatError('SNAPSHOT_NODE', 'Invalid snapshot node');
   if (node.frozen !== undefined && typeof node.frozen !== 'boolean') snapshotFormatError('SNAPSHOT_NODE', 'Invalid frozen flag');
   switch (node.kind) {
-    case 'owner': case 'handle': case 'type': case 'method': return restoreWireIdentity(vm, node);
+    case 'owner': case 'handle': case 'type': case 'method': case 'methodPointer': return restoreWireIdentity(vm, node);
     case 'array': case 'set': {
       if (!Array.isArray(node.values)) snapshotFormatError('SNAPSHOT_NODE', 'Invalid snapshot sequence');
       return node.kind === 'array' ? [] : new Set();

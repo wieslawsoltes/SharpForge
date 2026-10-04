@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8bde331838dfd3ebc076",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    static int P1 { set {} }\n\n    public static void Main()\n    {\n        var c = new C();\n        c ??= P1;\n    }\n}\n",
+  "sourceSHA256": "cb4add0ace1672b503273fa66d78f1239a44c8914c1e5f3bbeaad6476c368a2e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "InvalidRHS",
+    "offset": 19026
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\npublic class C\n{\n    static int P1 { set {} }\n\n    public static void Main()\n    {\n        var c = new C();\n        c ??= P1;\n    }\n}\n\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0154",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,15): error CS0154: The property or indexer 'C.P1' cannot be used in this context because it lacks the get accessor\n                //         c ??= P1;\n                Diagnostic(ErrorCode.ERR_PropertyLacksGet, \"P1\").WithArguments(\"C.P1\").WithLocation(9, 15)\n            ",
+  "unsupported": []
+}

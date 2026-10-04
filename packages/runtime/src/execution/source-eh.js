@@ -1,9 +1,11 @@
-import {notifyFirstChance, continueExceptionEvent, exceptionEventRoots, failedExceptionEvent} from './exception-events.js';
+import {deliverSourceReturn} from './source-return.js';
+import {continueControlReturn} from './return-control.js';
+import {notifyFirstChance, exceptionEventRoots, continueExceptionEvent, firstChanceCallbackFailure} from './exception-events.js';
 import {prepareException} from './exception-object.js';
-import {cancelArrayOperation} from './array-ops.js';
+
 import {ManagedFault} from '../heap.js';
-import {pushFrame, popFrame} from './frame-stack.js';
-import {frameById} from './frame-lifetimes.js';
+import {pushControlFrame as pushFrame, retireExceptionFrame as popFrame} from './control-frames.js';
+import {frameById, nextFrameId} from './frame-lifetimes.js';
 import {exceptionMatches} from './exception-types.js';
 import {isFatalFault, markUnhandled} from './unhandled.js';
 
@@ -55,21 +57,10 @@ export function finalizers(vm, frame, source, target = Infinity) {
 
 export function finishReturn(vm, frame, value) {
   vm.stack.length = frame.base;
-  popFrame(vm);
-  const event = continueExceptionEvent(vm, frame);
-  if (event) {
-    if (!event.continued) {
-      if (event.phase === 'unhandled') markUnhandled(vm, event.fault);
-      else handleFault(vm, event.fault);
-    }
-    return;
-  }
-  if (vm.frames.length) vm.stack.push(value);
-  else {
-    vm.returnValue = value;
-    vm.state = 'terminated';
-    vm.exitCode = typeof value === 'number' ? value | 0 : 0;
-  }
+  popFrame(vm, 'return');
+  const control = continueControlReturn(vm, frame, value);
+  if (control.handled) return;
+  deliverSourceReturn(vm, control.value);
 }
 
 export function transfer(vm, frame, kind, target, value) {
@@ -85,6 +76,7 @@ export function transfer(vm, frame, kind, target, value) {
 }
 
 function matches(vm, fault, type) {
+  if (type == null) return true;
   if (exceptionMatches(fault.name, type)) return true;
   const target = vm.heap.methodTables.get(type ?? 'Exception');
   for (let table = vm.heap.get(fault.reference).methodTable; table; table = table.base) {
@@ -108,7 +100,7 @@ function enterFilter(vm, owner, handler, search) {
   }
   owner.locals[handler.slot] = search.error.reference;
   pushFrame(vm, {
-    id: ++vm.frameId, methodId: owner.methodId, pc: handler.filter, base: vm.stack.length,
+    id: nextFrameId(vm), methodId: owner.methodId, pc: handler.filter, base: vm.stack.length,
     locals: owner.locals, point: owner.point, ...frameState(),
     ...(owner.varargs ? {varargs: owner.varargs} : {}),
     filterSearch: search, filterOwnerId: owner.id, filterHandler: handler
@@ -134,6 +126,7 @@ function searchStep(vm, search) {
   while (search.cursor < search.frames.length) {
     const location = search.frames[search.cursor];
     const frame = frameById(vm, location.id);
+    if (!frame) { search.cursor++; search.clause = 0; search.clauses = null; continue; }
     search.clauses ??= frame.filterSearch ? [] : vm.image.methods[frame.methodId].handlers
       .filter(handler => handler.kind !== 'finally' && location.offset >= handler.start && location.offset < handler.end)
       .sort((left, right) => (left.end - left.start) - (right.end - right.start));
@@ -148,6 +141,8 @@ function searchStep(vm, search) {
       return {phase: 'unwind', search};
     }
     if (frame.exceptionEventContinuation) {
+      const fatal = firstChanceCallbackFailure(frame, search.error);
+      if (fatal) { markUnhandled(vm, fatal); return null; }
       search.selection = {kind: 'event-failure', frameId: frame.id};
       return {phase: 'unwind', search};
     }
@@ -180,11 +175,12 @@ function finishPending(vm, frame) {
     return {phase: 'search', search: finishFilter(vm, 0)};
   }
   if (unwind.search.selection?.kind === 'event-failure' && unwind.search.selection.frameId === frame.id) {
-    const fault = failedExceptionEvent(frame, unwind.error);
     popFrame(vm);
     vm.stack.length = frame.base;
-    markUnhandled(vm, fault);
-    return null;
+    const event = continueExceptionEvent(vm, frame);
+    if (event.continued) return null;
+    if (event.phase === 'unhandled') { markUnhandled(vm, event.fault); return null; }
+    return {phase: 'raise', error: event.fault};
   }
   popFrame(vm);
   vm.stack.length = frame.base;
@@ -197,7 +193,6 @@ function unwindStep(vm, search) {
   const catcher = search.selection?.kind === 'catch' && search.selection.frameId === frame.id ? search.selection.handler : null;
   frame.unwinds = frame.unwinds.filter(unwind => unwind.active && catcher &&
     catcher.target >= unwind.active.target && catcher.target < unwind.active.handlerEnd);
-  cancelArrayOperation(frame);
   frame.unwinds.push({kind: 'exception', error: search.error, catch: catcher, search, active: null,
     handlers: finalizers(vm, frame, search.locations.get(frame.id) ?? frame.pc - 1, catcher?.target)});
   vm.stack.length = frame.base;
@@ -209,7 +204,10 @@ function unwindStep(vm, search) {
 function drive(vm, initial) {
   let action = initial;
   try {
-    while (action) action = action.phase === 'search' ? searchStep(vm, action.search) : unwindStep(vm, action.search);
+    while (action) {
+      if (action.phase === 'raise') action = raiseStep(vm, action.error);
+      else action = action.phase === 'search' ? searchStep(vm, action.search) : unwindStep(vm, action.search);
+    }
   } catch (error) {
     markUnhandled(vm, makeFault(error));
   }
@@ -229,19 +227,16 @@ export function rethrow(frame) {
     ?? new ManagedFault('InvalidOperationException', 'No active exception to rethrow');
 }
 
-export function handleFault(vm, error) {
-  const fault = makeFault(error);
+function raiseStep(vm, fault) {
   vm.fault = fault;
-  if (isFatalFault(fault)) { markUnhandled(vm, fault); return; }
-  try {
-    prepareException(vm, fault);
-    if (notifyFirstChance(vm, fault)) return;
-  } catch (failure) {
-    const terminal = ['OutOfMemoryException','System.OutOfMemoryException'].includes(fault.name) ? fault : makeFault(failure);
-    if (terminal === fault) terminal.fatal = true;
-    markUnhandled(vm, terminal); return;
-  }
+  if (isFatalFault(fault)) { markUnhandled(vm, fault); return null; }
+  if (notifyFirstChance(vm, fault)) return null;
+  prepareException(vm, fault);
   fault.phase = 'search';
   vm.fault = null;
-  drive(vm, {phase: 'search', search: createSearch(vm, fault)});
+  return {phase: 'search', search: createSearch(vm, fault)};
+}
+
+export function handleFault(vm, error) {
+  drive(vm, {phase: 'raise', error: makeFault(error)});
 }

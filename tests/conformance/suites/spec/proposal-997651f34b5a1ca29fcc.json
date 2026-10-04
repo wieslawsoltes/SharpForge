@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-997651f34b5a1ca29fcc",
+  "kind": "spec",
+  "sourceText": "[CollectionBuilder(typeof(ImmutableArray), \"Create\")]\npublic struct ImmutableArray<T> { ... }\n\npublic static class ImmutableArray\n{\n    public static ImmutableArray<T> Create<T>(ReadOnlySpan<T> items) { ... }\n}",
+  "sourceSHA256": "9689268e16e9bd268c83b76468bb27c00c4763a57f8a5ee27b4b4d6f5b15543f",
+  "target": "library",
+  "featureId": "csharp-12-0-collection-expressions",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/collection-expressions.md",
+    "sha256": "20d62bfc544dcdb95590930444205d98f916f935f7ce72834dddddddf33ad78b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/collection-expressions.md",
+    "license": "NOASSERTION",
+    "offset": 16852
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-d5c30168790e6bfa9a74",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Shape : ICloneable\n{\n    object ICloneable.Clone() {...}\n}\n\nclass Ellipse : Shape\n{\n    object ICloneable.Clone() {...} // invalid\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0540",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "ced27179bdbc20af98b35aefd4bfd5a870f566d55f12a2da2cc11756ad30baf5",
+  "originalSource": "class Shape : ICloneable\n{\n    object ICloneable.Clone() {...}\n}\n\nclass Ellipse : Shape\n{\n    object ICloneable.Clone() {...} // invalid\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "ExplicitInterfaceMemberImplementations4",
+    "replaceEllipsis": true,
+    "customEllipsisReplacements": [
+      "return default;",
+      "return default;"
+    ],
+    "expectedErrors": [
+      "CS0540"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-interfaces",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/interfaces.md",
+    "sha256": "bcdf69f454a7bd5894c0b08364553fc6587a0a6ee444a93bc91c58138ff95f53",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/interfaces.md",
+    "license": "MIT",
+    "example": "ExplicitInterfaceMemberImplementations4",
+    "offsetInUnquotedMarkdown": 46513
+  }
+}

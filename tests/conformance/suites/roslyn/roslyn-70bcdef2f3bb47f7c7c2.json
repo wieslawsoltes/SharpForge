@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-70bcdef2f3bb47f7c7c2",
+  "kind": "diagnostics",
+  "sourceText": "System.Console.WriteLine(await System.Threading.Tasks.Task.FromResult(1));",
+  "sourceSHA256": "b27603adaf48700b2fded0e1fcc80ad2e102caf762404f631071dec9bc820e0b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncTests.cs",
+    "sha256": "e775ebaa8455ffef5e68e336ab005933d69d5f2188f336f62d29b2cf0329a6aa",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncTests.cs",
+    "license": "MIT",
+    "method": "AwaitInScriptExpression",
+    "offset": 220740
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Script, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

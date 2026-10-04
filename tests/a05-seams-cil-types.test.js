@@ -2,18 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {compileToIL} from '@sharpforge/compiler';
 import {AssemblyInspector} from '@sharpforge/cil';
-import {ManagedHeap,CilVirtualMachine} from '@sharpforge/runtime';
-import {CilTypeSystem} from '../packages/runtime/src/execution/type-system.js';
-
-function fixture() {
-  const base={token:0x02000001,name:'Example.Base',baseToken:0x01000001,flags:0,fields:[{token:0x04000001,isStatic:false}],methods:[],interfaces:[]};
-  const derived={token:0x02000002,name:'Example.Derived',baseToken:base.token,flags:0,fields:[{token:0x04000002,isStatic:false}],methods:[],interfaces:[0x01000002]};
-  const names=new Map([[base.token,base.name],[derived.token,derived.name],[0x01000001,'System.Object'],[0x01000002,'Example.Interface']]);
-  const fields=new Map([base,derived].flatMap(type=>type.fields.map(field=>[field.token,{...field,owner:type.name,ownerToken:type.token}])));
-  fields.set(0x04000003,{token:0x04000003,owner:'Example.Unrelated',ownerToken:0x02000003,isStatic:false});
-  const vm={heap:new ManagedHeap(),inspector:{fields,types:[base,derived],metadata:{rows:{},typeName:token=>names.get(token)},signature:()=>({type:'int'}),resolveToken:token=>({...fields.get(token),kind:'field',token,signature:{type:'int'}})}};
-  return {vm,base,derived,system:new CilTypeSystem(vm)};
-}
+import {CilVirtualMachine} from '@sharpforge/runtime';
+import {cilTypeSystemFixture as fixture} from './support/cil-type-system-fixture.js';
 test('A05 CIL type membership is indexed before execution',()=>{
   const {vm,system,base,derived}=fixture(),ref=vm.heap.object(derived.name,[0,0]);
   vm.inspector.types.find=()=>{throw new Error('Linear type scan');};
@@ -31,7 +21,7 @@ test('A05 CIL layouts preserve inherited field offsets and reject foreign fields
   assert.throws(()=>system.layout(0x01000001),/External type allocation/);
 });
 test('A05 CIL metadata replacement rebuilds the derived indexes',()=>{
-  const compile=value=>{const result=compileToIL(`class C{public int X;public C(){X=${value};}}var c=new C();Console.WriteLine(c.X);`);assert(result.success,JSON.stringify(result.diagnostics));return result.assembly;};
+  const compile=value=>{const result=compileToIL(`var c=new C();Console.WriteLine(c.X);class C{public int X;public C(){X=${value};}}`);assert(result.success,JSON.stringify(result.diagnostics));return result.assembly;};
   const vm=new CilVirtualMachine(compile(1)),before=vm.typeSystem;
   vm.inspector=new AssemblyInspector(compile(2));
   assert.notEqual(vm.typeSystem,before);assert.equal(vm.layoutCache,vm.typeSystem.layouts);assert.equal(vm.typeSystem.inspector,vm.inspector);

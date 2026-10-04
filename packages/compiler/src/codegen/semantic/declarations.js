@@ -1,14 +1,38 @@
+import {
+  sourceInterfaceMethod
+} from './interface-shape.js';
+import {
+  sourceTypeShape
+} from './source-type-shape.js';
+import {
+  sourceObjectOverride
+} from './object-slots.js';
+import {isObjectStringOverride} from './object-string-override.js';
 /**
  * Declares the image shape of a program from its source symbols: one image class per source class, its fields and
  * statics, one image method per method, constructor and accessor, and the per-class instance initializer.
  * Bodies are produced later (generator.js); this pass only fixes names, slots and signatures so that bodies can
  * refer to members declared after them.
  */
-import { SymbolKind, TypeKind } from '../../symbols/types.js';
-import { MethodKind } from '../../symbols/members.js';
-import { backingFieldName } from '../../lowering/generated-names.js';
-import { isByReference } from '../../lowering/by-reference.js';
-import { spanOf } from './node-factory.js';
+import {
+  fileLocalClassName
+} from '../../binder/csharp11.js';
+import {
+  SymbolKind,
+  TypeKind
+} from '../../symbols/types.js';
+import {
+  MethodKind
+} from '../../symbols/members.js';
+import {
+  backingFieldName
+} from '../../lowering/generated-names.js';
+import {
+  isByReference
+} from '../../lowering/by-reference.js';
+import {
+  spanOf
+} from './node-factory.js';
 
 const definitionOf = symbol => symbol.originalDefinition ?? symbol;
 
@@ -19,34 +43,44 @@ export const Declarations = Base =>
     nodeOf(symbol) {
       const syntax = symbol.syntax ?? symbol.declarations?.[0]?.syntax;
       const uri = symbol.uri ?? symbol.locations?.[0]?.uri ?? this.files[0]?.source.uri;
-      return syntax ? spanOf(syntax, uri) : spanOf(symbol.locations?.[0] ?? { start: 0, end: 0 }, uri);
+      return syntax ? spanOf(syntax, uri) : spanOf(symbol.locations?.[0] ?? {
+        start: 0,
+        end: 0
+      }, uri);
     }
     declareTypes() {
       for (const type of this.analysis.assembly.types) {
-        if (type.typeKind !== TypeKind.Class) continue;
+        if (![TypeKind.Class, TypeKind.Struct, TypeKind.Interface].includes(type.typeKind)) continue;
         // A generic class exists only as its constructions, declared when code refers to them (lowering/generics).
         if (this.generics.isGenericClass(type)) continue;
         this.checkClassShape(type);
-        this.classes.set(type, this.program.addClass(this.classNameOf(type), this.nodeOf(type)));
+        this.classes.set(type, this.program.addClass(this.classNameOf(type), this.nodeOf(type), sourceTypeShape(type)));
       }
       for (const type of this.classes.keys()) this.declareMembers(type);
     }
     classNameOf(type) {
-      return type.toDisplayString();
+      if (!type.isFileLocal) return type.toDisplayString();
+      // Two files may declare a file-local type of the same name: the image class is named after the file too.
+      const uri = type.declarations?.[0]?.uri;
+      return fileLocalClassName(type, this.files.findIndex(file => file.source.uri === uri));
     }
     /** Classes the runtime can represent today: no base class but object and no interface that needs dispatch. */
     checkClassShape(type) {
       const at = type.locations?.[0];
       const base = type.baseType;
-      if (base && base.specialType !== 'System_Object') this.unsupported('class inheritance', at);
+      if (type.typeKind !== TypeKind.Struct && base && base.specialType !== 'System_Object') this.unsupported('class inheritance', at);
       // Three interfaces need no dispatch: `using` and `await using` call the method of the static type, and a
       // collection initializer only requires IEnumerable to be listed (its Add calls are bound statically).
       // Nor does an interface declared in source: the framework cannot call it, a value of the interface type is
       // refused where it is used ('interface dispatch'), and a call through a type parameter constrained to it is
       // bound to the implementing method of each construction (lowering/generics).
       const core = this.analysis.core,
-        dispatchFree = [core.iasyncDisposable, core.ienumerable],
-        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i) && !this.isSource(i);
+        // ... nor do the comparison interfaces: no registry contract calls them back (a collection over a class that
+        // implements one is not shared with the construction over `object`, and sorting such a collection is refused).
+        // ... nor the awaiter interfaces: `await` calls the members of the awaiter's static type.
+        awaiterInterfaces = [core.inotifyCompletion, core.icriticalNotifyCompletion],
+        dispatchFree = [core.iasyncDisposable, core.ienumerable, core.icomparable, core.icomparableT, core.iequatableT, ...awaiterInterfaces],
+        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i.originalDefinition ?? i) && !this.isSource(i);
       if (type.interfaces?.some(needsDispatch)) this.unsupported('interface implementation', at);
     }
     /** The image class of a source class symbol; for a generic class, of the construction `type` names. */
@@ -79,13 +113,16 @@ export const Declarations = Base =>
     declareField(owner, symbol) {
       if (symbol.isConst || this.fields.has(symbol)) return;
       const type = this.types.imageType(symbol.type, symbol.locations?.[0]);
-      const record = symbol.isStatic
-        ? this.program.addStatic(owner, symbol.name, type)
-        : this.program.addField(owner, symbol.name, type, { backing: !!symbol.associatedSymbol });
+      const record = symbol.isStatic ?
+        this.program.addStatic(owner, symbol.name, type) :
+        this.program.addField(owner, symbol.name, type, {
+          backing: !!symbol.associatedSymbol
+        });
       this.fields.set(symbol, record);
     }
     declareProperty(owner, symbol) {
-      for (const accessor of [symbol.getMethod, symbol.setMethod]) if (accessor) this.declareMethod(owner, accessor);
+      for (const accessor of [symbol.getMethod, symbol.setMethod])
+        if (accessor) this.declareMethod(owner, accessor);
       if (!symbol.isAutoProperty) return;
       // An auto-property: the backing field exists even when the symbol table did not materialise one.
       const backing = symbol.backingField;
@@ -95,14 +132,17 @@ export const Declarations = Base =>
       }
       const type = this.types.imageType(symbol.type, symbol.locations?.[0]);
       const name = backingFieldName(symbol.name);
-      const record = symbol.isStatic ? this.program.addStatic(owner, name, type) : this.program.addField(owner, name, type, { backing: true });
+      const record = symbol.isStatic ? this.program.addStatic(owner, name, type) : this.program.addField(owner, name, type, {
+        backing: true
+      });
       if (backing) this.fields.set(backing, record);
       this.autoProperties.set(symbol, record);
     }
     /** A field-like event is a field of the delegate class; an event with accessors has only its accessor methods. */
     declareEvent(owner, symbol) {
       if (symbol.addMethod?.hasBody || symbol.removeMethod?.hasBody) {
-        for (const accessor of [symbol.addMethod, symbol.removeMethod]) if (accessor?.hasBody) this.declareMethod(owner, accessor);
+        for (const accessor of [symbol.addMethod, symbol.removeMethod])
+          if (accessor?.hasBody) this.declareMethod(owner, accessor);
         return;
       }
       const type = this.types.imageType(symbol.type, symbol.locations?.[0]);
@@ -126,7 +166,9 @@ export const Declarations = Base =>
           break;
       }
       const isVirtual = symbol.isAbstract || symbol.isVirtual || symbol.isOverride;
-      if (isVirtual && !this.records.dispatchesStatically(symbol)) this.unsupported('virtual dispatch', at);
+      const objectSlot = sourceObjectOverride(symbol);
+      if (isVirtual && !owner.interface && !owner.valueType && !objectSlot &&
+          !isObjectStringOverride(symbol) && !this.records.dispatchesStatically(symbol)) this.unsupported('virtual dispatch', at);
       // An extern method has no body to lower. Declaring one is harmless; calling it is reported (see methodOf).
       if (symbol.isExtern) return undefined;
       const isConstructor = symbol.methodKind === MethodKind.Constructor;
@@ -136,8 +178,13 @@ export const Declarations = Base =>
         name = isConstructor ? '.ctor' : symbol.methodKind === MethodKind.StaticConstructor ? '<cctor>' : ordinary;
       const record = this.program.addMethod(owner, name, {
         isStatic: symbol.isStatic,
-        callingConvention: symbol.isVararg?5:0,
-        returnType: isConstructor || symbol.methodKind === MethodKind.StaticConstructor ? 'void' : this.types.imageType(symbol.returnType, at) + (isByReference(symbol) ? '&' : ''),
+        ...(isVirtual ? {isVirtual, isOverride: symbol.isOverride, isFinal: symbol.isSealed} : {}),
+        callingConvention: symbol.isVararg ? 5 : 0,
+        objectSlot,
+        ...sourceInterfaceMethod(symbol, owner),
+        ...(symbol.isSealed ? {isFinal: true} : {}),
+        returnType: isConstructor || symbol.methodKind === MethodKind.StaticConstructor ? 'void' : this.types.imageType(symbol.returnType, at) +
+          (isByReference(symbol) ? '&' : ''),
         parameters: this.parametersOf(symbol),
         node: this.nodeOf(symbol),
         hasSource: !symbol.isImplicitlyDeclared,
@@ -150,19 +197,26 @@ export const Declarations = Base =>
       return symbol.parameters.map(p => {
         if (p.isParams) this.paramsParameters.add(p);
         const type = this.types.imageType(p.type, p.locations?.[0] ?? symbol.locations?.[0]);
-        // A by-reference signature preserves the managed location through every engine.
-        return {name: p.name, type: isByReference(p) ? type + '&' : type, refKind: p.refKind};
+        return {
+          name: p.name,
+          type: isByReference(p) ? type + '&' : type
+        };
       });
     }
     accessorOf(symbol) {
       const property = symbol.associatedSymbol;
       if (symbol.methodKind !== MethodKind.PropertyGet && symbol.methodKind !== MethodKind.PropertySet) return null;
       if (!property || property.parameters?.length) return null;
-      return { property: property.name, kind: symbol.methodKind === MethodKind.PropertyGet ? 'get' : 'set', access: 'public' };
+      return {
+        property: property.name,
+        kind: symbol.methodKind === MethodKind.PropertyGet ? 'get' : 'set',
+        access: 'public'
+      };
     }
     /** The image method of a source method symbol. */
     methodOf(symbol, syntax = null) {
-      const record = this.methods.get(symbol) ?? this.records.methodOf(definitionOf(symbol), syntax);
+      // The key is resolved here so that a construction declared by this reference is reported at the reference.
+      const record = this.methods.get(this.generics.keyOf(symbol, syntax)) ?? this.records.methodOf(definitionOf(symbol), syntax);
       if (!record && definitionOf(symbol).isExtern)
         return this.unsupported(`a call to the extern method '${symbol.toDisplayString()}' (the runtime has no platform invoke)`, syntax);
       return record ?? this.unsupported(`method '${symbol.toDisplayString()}'`, syntax);

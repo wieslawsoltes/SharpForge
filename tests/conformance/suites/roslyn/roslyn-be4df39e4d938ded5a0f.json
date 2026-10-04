@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-be4df39e4d938ded5a0f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Diagnostics;\n\nclass C\n{\n    void M()\n    {\n#pragma warning disable 8321 // Unreferenced local function\n        [Conditional(\"hello world\")] // 1\n        static void local1() { }\n\n        [Conditional(\"DEBUG\")] // 2\n        static int local2()\n        {\n            return 42;\n        }\n\n        [Conditional(\"DEBUG\")] // 3\n        static void local3(out string s)\n        {\n            s = \"hello\";\n        }\n    }\n}\n",
+  "sourceSHA256": "804a01ef5e421105a401eefebe3c59282559d74ec9955db4560bff402de94b2d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenLocalFunctionTests.cs",
+    "sha256": "f82408ae8a01719408de7138990acc9c61883a313220662a688379932fdef2d2",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenLocalFunctionTests.cs",
+    "license": "MIT",
+    "method": "StaticLocalFunction_ConditionalAttribute_Errors",
+    "offset": 121237
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0633",
+        "severity": "error"
+      },
+      {
+        "code": "CS0578",
+        "severity": "error"
+      },
+      {
+        "code": "CS0685",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,22): error CS0633: The argument to the 'Conditional' attribute must be a valid identifier\n                //         [Conditional(\"hello world\")] // 1\n                Diagnostic(ErrorCode.ERR_BadArgumentToAttribute, @\"\"\"hello world\"\"\").WithArguments(\"Conditional\").WithLocation(9, 22),\n                // (12,10): error CS0578: The Conditional attribute is not valid on 'local2()' because its return type is not void\n                //         [Conditional(\"DEBUG\")] // 2\n                Diagnostic(ErrorCode.ERR_ConditionalMustReturnVoid, @\"Conditional(\"\"DEBUG\"\")\").WithArguments(\"local2()\").WithLocation(12, 10),\n                // (18,10): error CS0685: Conditional member 'local3(out string)' cannot have an out parameter\n                //         [Conditional(\"DEBUG\")] // 3\n                Diagnostic(ErrorCode.ERR_ConditionalWithOutParam, @\"Conditional(\"\"DEBUG\"\")\").WithArguments(\"local3(out string)\").WithLocation(18, 10)",
+  "unsupported": []
+}

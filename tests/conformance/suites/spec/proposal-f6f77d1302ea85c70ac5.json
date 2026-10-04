@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f6f77d1302ea85c70ac5",
+  "kind": "spec",
+  "sourceText": "ref struct S\n{\n    public Span<int> Span;\n\n    public void Set(Span<int> span)\n    {\n        Span = span;\n    }\n}\n\nvoid Broken(ref S s)\n{\n    Span<int> span = stackalloc int[1];\n\n    // The result of a stackalloc is now stored in s.Span and escaped to the caller\n    // of Broken\n    s.Set(span); \n}",
+  "sourceSHA256": "256fb72dfbedea1812c655a78e4a879ccd4f33e5857dbee1efc7f644673c26f0",
+  "target": "library",
+  "featureId": "csharp-7-2-span-and-ref-like-types",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/span-safety.md",
+    "sha256": "73bc8deb74ee9ac75ab2d74292a7014712fd627abe8dcc3f61ad9cfd6c1cdc30",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/span-safety.md",
+    "license": "NOASSERTION",
+    "offset": 18116
+  }
+}

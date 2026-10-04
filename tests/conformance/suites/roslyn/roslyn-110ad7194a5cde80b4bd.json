@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-110ad7194a5cde80b4bd",
+  "kind": "diagnostics",
+  "sourceText": "partial class C();\npartial class C() { }",
+  "sourceSHA256": "634ca30b840db209d62e223c53903a9d5731cda5dfd5aff0ff3c69fc7e49146a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "PrimaryConstructor_Twice",
+    "offset": 49060
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8863",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (2,16): error CS8863: Only a single partial type declaration may have a parameter list\n            // partial class C() { }\n            Diagnostic(ErrorCode.ERR_MultipleRecordParameterLists, \"()\").WithLocation(2, 16)",
+  "unsupported": []
+}

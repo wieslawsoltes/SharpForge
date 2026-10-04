@@ -12,6 +12,7 @@
  * Roslyn reports the placement errors at the `yield` keyword and checks them in this order: finally, try with a
  * catch clause, catch. A local function is its own iterator and is checked when its own body is bound.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { forEachChild, isBoundNode } from '../bound/semantic-walker.js';
@@ -37,14 +38,14 @@ export function reportYieldInLambda(binder, syntax) {
   const reported = (binder.rootBinder.yieldsInLambdas ??= new Set());
   if (reported.has(syntax)) return;
   reported.add(syntax);
-  binder.d.report(binder.c.uri, syntax.yieldKeyword ?? syntax, 'CS1621', []);
+  binder.d.report(binder.c.uri, syntax.yieldKeyword ?? syntax, DiagnosticId.CS1621, []);
 }
 
 function placementError(node, where) {
-  if (where.inFinally) return 'CS1625';
+  if (where.inFinally) return DiagnosticId.CS1625;
   if (node.kind !== 'YieldReturn') return null;
-  if (where.inTryWithCatch) return 'CS1626';
-  return where.inCatch ? 'CS1631' : null;
+  if (where.inTryWithCatch) return DiagnosticId.CS1626;
+  return where.inCatch ? DiagnosticId.CS1631 : null;
 }
 
 /** Walks a bound body; `found(node, where)` is called for every yield statement with the regions enclosing it. */
@@ -89,18 +90,19 @@ export function checkIteratorBody(method, body, report) {
     if (code) report(node.syntax.yieldKeyword ?? node.syntax, code, []);
   });
   if (!yields) return;
+  if (method.isVararg) report(method.locations?.[0] ?? method.syntax, 'CS1636', []);
   const returnType = method.returnType;
   const location = method.locations?.[0] ?? method.syntax;
   if (isIteratorInterface(returnType) && returnType.name.startsWith('IAsync') && !method.isAsync) {
-    report(location, 'CS8403', [displayOf(method), returnType.toDisplayString()]);
+    report(location, DiagnosticId.CS8403, [displayOf(method), returnType.toDisplayString()]);
   }
   if (returnType && !returnType.isErrorType?.() && !isIteratorInterface(returnType)) {
     const location = method.methodKind === MethodKind.PropertyGet && method.syntax?.keyword ? method.syntax.keyword : method.locations?.[0];
-    report(location ?? method.syntax, 'CS1624', [displayOf(method), returnType.toDisplayString()]);
+    report(location ?? method.syntax, DiagnosticId.CS1624, [displayOf(method), returnType.toDisplayString()]);
   }
   for (const parameter of method.parameters ?? []) {
     if (parameter.refKind && parameter.refKind !== RefKind.None) {
-      report(parameter.syntax?.identifier ?? parameter.locations?.[0] ?? parameter.syntax, 'CS1623', []);
+      report(parameter.syntax?.identifier ?? parameter.locations?.[0] ?? parameter.syntax, DiagnosticId.CS1623, []);
     }
   }
 }

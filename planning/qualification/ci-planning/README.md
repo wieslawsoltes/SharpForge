@@ -6,10 +6,10 @@ extend merged A00/A29 APIs from source `9ef76da4447eeb7ddd223bd0ec81ef0a3eee3f04
 
 | Leaf | Implementation and retained boundary |
 | --- | --- |
-| T13 | `planning-gates.yml` calls a runner using authoritative task/claim/lock identity, ownership/hot-file APIs, DAG, manifests and contract gate. Every subprocess outcome is retained in JSON and the job summary. |
-| T14 | Existing `ci.yml` merge-group execution is preserved. Planning gates and `merge-queue.yml` operate on GitHub's queued combined tree. Existing actual incompatible-branch fixture is reused. |
+| T13 | Explicit `planning-gates.yml` qualification requires a PR number and exact head/base SHAs, resolves API labels, and checks out that head. The runner requires this context for authoritative task/claim/lock identity and ownership/hot-file review, followed by DAG, manifests and contract gates. Every subprocess outcome is retained in JSON and the job summary. |
+| T14 | Existing `ci.yml` merge-group execution is preserved. Planning gates and `merge-queue.yml` remain explicit qualification tools; central queued CI is the automatic merge-group lane. Manual queue qualification resolves every actual constituent and checks its ownership/contracts plus the actual combined tree before the full serial area matrix. See [exact merge-group qualification](merge-groups.md). |
 | T15 | Hourly lease workflow reuses `Claims.reap`, `snapshotBacklog` and `syncReady`. Labels expiry/readiness, preserves ownership and suppresses optional comments; no automatic reassignment. |
-| T16 | Core computes changed-module consumers using the existing import graph, ownership and manifest matrix. Selected owner/consumer areas plus A00/A29 shared tests run in one Node invocation; unknown impact falls back to `npm test`. Queue/manual area workflow runs the full manifest-derived Node/browser matrix. |
+| T16 | Core computes a changed-module plan using the existing import graph, ownership and manifest matrix. Node execution is staged for explicit full qualification. The manually dispatched area workflow runs the full manifest-derived Node/browser matrix. |
 | T17 | Failure detector retains every attempt; failure then pass is `flaky`, never silent green. Quarantines require an issue, reason and expiry; expired entries fail core. An explicit manual workflow input can measure named files. |
 | T18 | PR template carries resolvable Task identity and evidence/ownership fields. Task/bug forms render the existing lint-required sections and preserve existing owner IDs. |
 | T19 | Pinned Rust workflow requires fmt/clippy/tests/Wasm/cargo-deny/Miri if `rust/` exists. Missing workspace is explicitly not applicable and not qualified. No Rust workspace or safety implementation is invented. |
@@ -17,21 +17,57 @@ extend merged A00/A29 APIs from source `9ef76da4447eeb7ddd223bd0ec81ef0a3eee3f04
 
 ## Current CI policy takes precedence
 
-Ordinary PRs have exactly one core job, retaining `npm run check`, build, test registration and shared contract/infrastructure
-fixtures. The test step chooses either impacted Node files or the full `npm test` fallback; it never runs both. Non-JS,
-configuration, missing/deleted/unresolved modules and non-PR events select the full suite. Full-ci PRs also select full.
-Selection uses the existing static ESM dependency model plus owning areas, not a claim of browser/native impact coverage.
+Ordinary PRs have exactly one core job, retaining static/manifest checks, contract/seam review, quarantine expiry, build and
+checkout integrity. Impact planning uses the existing static ESM dependency model plus owning areas. Node execution is
+staged until explicit full qualification; a passing ordinary core does not claim unit, browser or native qualification.
 
-Older T13/T16 requirements predate the user's core-only PR policy. Additional planning/Rust lanes require manual dispatch,
-`full-ci` or a merge group; existing browser/native/release qualifications remain separate. Queue area jobs prepare the built IDE and pinned Playwright dependencies whenever their manifests contain Python/browser scripts, then execute `--browser`; browser-only areas cannot become empty passing cells. Required workflow status configuration is an administrator action;
+Older T13/T16 requirements predate the user's core-only PR policy. Additional planning/Rust lanes now require manual dispatch or an explicit reusable caller; existing browser/native/release qualifications remain separate. Manual area jobs prepare the built IDE and pinned Playwright dependencies whenever their manifests contain Python/browser scripts, then execute `--browser`; browser-only areas cannot become empty passing cells. Required workflow status configuration is an administrator action;
 this batch does not claim to have changed branch protection or enabled a merge queue.
+
+Manual PR qualification and merge-group qualification share the read-only planning
+client. The trusted planning step requires repository `GH_TOKEN` and the separate
+`PLANNING_PROJECT_READ_TOKEN` secret, passed as `PROJECT_READ_TOKEN` for Project
+GraphQL reads. Neither credential reaches candidate commands. Missing credentials,
+Project access or ownership stop the manual lane before those commands and retain
+the exact PR context with the failure. This wiring does not configure the secret.
+Reusable callers must pass the declared `PLANNING_PROJECT_READ_TOKEN` secret by
+name (or explicitly inherit the caller's secrets); it is required by `workflow_call`.
+
+Both lanes resolve the authoritative claim issue into its live Project membership;
+neither assumes Project 4. Work-ID-only tracking boards are ignored, while the one
+managed projection must match the claim's Agent and Branch. Manual gate artifacts
+include the selected Project and issue alongside ownership results. Claims, Project
+fields and queue settings are not changed by qualification.
+
+The [serial validation schedule](../serial-validation.md) takes precedence over historical
+trigger descriptions: main keeps core only, central full-ci/merge-group qualification is serial,
+and specialized workflows no longer fan out from that same event.
+
+## Explicit PR qualification context
+
+Manual dispatch and reusable callers must provide `pr_number`, `head_sha` and `base_sha` to `planning-gates.yml`.
+Both SHAs must be exact 40-character commits matching the current open PR. The resolver uses the read-only PR API;
+labels, branch, task body and repository identity come from that response, never caller-supplied label text. A moved
+head/base, wrong repository, closed PR or missing label snapshot fails and requires a fresh dispatch.
+
+The workflow retains its harness in `planning-tools/`, saves the normalized snapshot outside both checkouts, and checks
+out the validated head into `qualified-pr/`. The runner verifies that checkout before any qualification command or claim
+lookup; missing context cannot silently skip ownership. Ownership and hot-file policy comes from the pinned base commit,
+so the PR cannot change its own policy to authorize its diff. The PR diff starts at the unique merge base. Context,
+including exact commits and labels, is retained with the qualification report and artifact.
+
+Repository/Project API tokens are removed from subprocess environments. The PR lane adds no broader Project credential;
+the trusted manual group gate uses the existing read-only Project secret as documented in the merge-group lane.
+Insufficient Project metadata access remains an explicit failure. The separate [merge-group lane](merge-groups.md) resolves and gates constituent PRs on the actual combined checkout;
+a context-free run does not qualify ownership or a combined queue tree.
 
 ## Credentials and trust
 
 PR/queue workflows have read-only repository tokens and never use `pull_request_target`. Event text passes through environment
 variables or JSON, never interpolated into shell code. PR planning gates require access to the user Project's metadata;
 if the ordinary read-only workflow token cannot read it, the gate fails rather than accepting self-declared PR locks.
-No broader Project secret is exposed to PR code by this workflow. Missing access is an explicit configuration limit.
+No Project secret is exposed to candidate commands. The manual group gate uses the existing read-only Project secret only
+for trusted GraphQL reads, with repository reads authenticated separately. Missing access is an explicit configuration limit.
 
 The lease workflow runs only on the default branch, hourly or by manual dispatch. Configure `PLANNING_PROJECT_READ_TOKEN`
 with read access to this Project and repository issue metadata. It is used only for read-only GraphQL requests.

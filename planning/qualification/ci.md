@@ -5,8 +5,9 @@ Ordinary pull requests run exactly one **core** job on Ubuntu: dependency restor
 **core** as the stable required PR check under the minimal-check policy introduced
 by PR #2099. This document does not change repository branch-protection settings.
 
-Full qualification runs on pushes to main, manual dispatch, merge queues, reusable
-release calls, or PRs carrying the **full-ci** label. Its **ci-ok** aggregate uses
+Main pushes retain the single core job. Full qualification runs on manual dispatch, merge queues, reusable
+release calls with `qualification: true`, or PRs carrying the **full-ci** label.
+All matrices and job families run serially; see [the scheduling policy](serial-validation.md). Its **ci-ok** aggregate uses
 `always()` and fails on any failed, cancelled, skipped or missing prerequisite.
 The aggregate is intentionally skipped for ordinary PRs, which must not require it.
 Core Linux coverage comes from `core`; the gated `core-platforms` matrix adds

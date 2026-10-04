@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-91c9f6148b5a5e64b15e",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Diagnostics;\n\nclass Test\n{\n    [Conditional(\"DEBUG\")]\n    public virtual void Conditional()\n    {\n    }\n}\n\nclass T1 : Test\n{\n    public override void Conditional()\n    {\n    }\n}\n\ndelegate void D1();\n\nclass T5\n{\n    static void Main()\n    {\n        T1 t1 = new T1();\n\n        D1 d1 = new D1(t1.Conditional);\n    }\n}\n",
+  "sourceSHA256": "68532175b56b67841734cff59aebcaff1cf33df2c084d54295896f4e96bb7665",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Conditional.cs",
+    "sha256": "d7f1dac60647477e2a514cf967444bc2f3edc083ce65a0f57eedbe89563e5212",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Conditional.cs",
+    "license": "MIT",
+    "method": "CondMethodInDelegateCreationExpr",
+    "offset": 22608
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System.Diagnostics;\n\nclass Test\n{\n    [Conditional(\"\"DEBUG\"\")]\n    public virtual void Conditional()\n    {\n    }\n}\n\nclass T1 : Test\n{\n    public override void Conditional()\n    {\n    }\n}\n\ndelegate void D1();\n\nclass T5\n{\n    static void Main()\n    {\n        T1 t1 = new T1();\n\n        D1 d1 = new D1(t1.Conditional);\n    }\n}\n\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1618",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                //  (27,24): error CS1618: Cannot create delegate with 'T1.Conditional()' because it has a Conditional attribute\n                //         t1.Conditional\n                Diagnostic(ErrorCode.ERR_DelegateOnConditional, \"t1.Conditional\").WithArguments(\"T1.Conditional()\")",
+  "unsupported": []
+}

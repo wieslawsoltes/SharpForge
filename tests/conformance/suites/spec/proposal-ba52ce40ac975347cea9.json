@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-ba52ce40ac975347cea9",
+  "kind": "spec",
+  "sourceText": "byte* ptr;\n// specially decorated \"pinned\" IL local slot, not visible to user code.\npinned ref byte _pinned;\n\ntry\n{\n    // NOTE: null check is omitted for value types \n    // NOTE: `thing` is evaluated only once (temporary is introduced if necessary) \n    if (thing != null)\n    {\n        // obtain and \"pin\" the reference\n        _pinned = ref thing.GetPinnableReference();\n\n        // unsafe cast in IL\n        ptr = (byte*)_pinned;\n    }\n    else\n    {\n        ptr = default(byte*);\n    }\n\n    // <BODY> \n}\nfinally   // finally can be omitted when not observable\n{\n    // \"unpin\" the object\n    _pinned = nullptr;\n}",
+  "sourceSHA256": "2f49a6a6566fcbcece130ec1a1fbf35e3e67330f8ab17c76d91c4c8aa9e41f7a",
+  "target": "library",
+  "featureId": "csharp-7-3-custom-fixed-statement",
+  "langVersion": "7.3",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.3/pattern-based-fixed.md",
+    "sha256": "d82206462b219c18f6ad7b035a925fb741570de59bd6e6c04726810dd14968b3",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/pattern-based-fixed.md",
+    "license": "NOASSERTION",
+    "offset": 3009
+  }
+}

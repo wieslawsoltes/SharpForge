@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f1eebfea09480a4e815c",
+  "kind": "diagnostics",
+  "sourceText": "\npublic sealed class ContentType\n{       \n\tpublic void M(System.Collections.Generic.Dictionary<object, object> p)\n\t{   \n\t\tforeach (object parameterKey in p.Keys)\n\t\t{\n\t\t}\n\t}\n}",
+  "sourceSHA256": "c8034056155131b57ff081e596add86a00f12dbfefa711c581e25504f0ef05ae",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "sha256": "a146aeb41311a33fd51733055804d5bdd45ba0e5302ca02348a06cb7e94dd243",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "license": "MIT",
+    "method": "Bug570975",
+    "offset": 167084
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseModule, assemblyName: \"ContentType\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

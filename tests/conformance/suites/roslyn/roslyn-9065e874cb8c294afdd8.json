@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9065e874cb8c294afdd8",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    partial event System.Action E;\n    partial event System.Action E { add { } remove { } }\n    partial event System.Action F { add { } remove { } }\n    partial C();\n    partial C() { }\n}",
+  "sourceSHA256": "aae96a77572f7466af08316a3d70dcf280e6381dc6d90734eb78d833b64ad632",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "NotInPartialType",
+    "offset": 49742
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0751",
+        "severity": "error"
+      },
+      {
+        "code": "CS9276",
+        "severity": "error"
+      },
+      {
+        "code": "CS0751",
+        "severity": "error"
+      },
+      {
+        "code": "CS0751",
+        "severity": "error"
+      },
+      {
+        "code": "CS0751",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,33): error CS0751: A partial member must be declared within a partial type\n            //     partial event System.Action E;\n            Diagnostic(ErrorCode.ERR_PartialMemberOnlyInPartialClass, \"E\").WithLocation(3, 33),\n            // (5,33): error CS9276: Partial event 'C.F' must have a definition part.\n            //     partial event System.Action F { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_PartialMemberMissingDefinition, \"F\").WithArguments(\"C.F\").WithLocation(5, 33),\n            // (5,33): error CS0751: A partial member must be declared within a partial type\n            //     partial event System.Action F { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_PartialMemberOnlyInPartialClass, \"F\").WithLocation(5, 33),\n            // (6,13): error CS0751: A partial member must be declared within a partial type\n            //     partial C();\n            Diagnostic(ErrorCode.ERR_PartialMemberOnlyInPartialClass, \"C\").WithLocation(6, 13),\n            // (7,13): error CS0751: A partial member must be declared within a partial type\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_PartialMemberOnlyInPartialClass, \"C\").WithLocation(7, 13)",
+  "unsupported": []
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-78228fd7dcf1aa0fe35b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\npublic class @idx\n{\n   public virtual int this[int iPropIndex]\n   {\n      get    {    return 0;    }\n      set    {    }\n   }\n}\n\npublic class MonthDays : idx\n{\n   [IndexerName(\"MonthInfoIndexer\")]\n   public override int this[int iPropIndex]\n   {\n      get    {    return 1;    }\n      set    {    }\n   }\n}\n",
+  "sourceSHA256": "6509da3e3f1e7e332df891758857737b721293f1a4093bb6f756ab3685698f26",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "CS0609ERR_NameAttributeOnOverride",
+    "offset": 6576
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

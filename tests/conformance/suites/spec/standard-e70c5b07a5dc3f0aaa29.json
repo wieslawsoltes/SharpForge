@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-e70c5b07a5dc3f0aaa29",
+  "kind": "spec",
+  "sourceText": "delegate R Func<T1,R>(T1 arg1);\ndelegate R Func<T1,T2,R>(T1 arg1, T2 arg2);\n\nclass C\n{\n    public C<T> Cast<T>() { ... }\n}\n\nclass C<T> : C\n{\n    public C<T> Where(Func<T,bool> predicate) { ... }\n    public C<U> Select<U>(Func<T,U> selector) { ... }\n    public C<V> SelectMany<U,V>(Func<T,C<U>> selector,\n        Func<T,U,V> resultSelector) { ... }\n    public C<V> Join<U,K,V>(C<U> inner, Func<T,K> outerKeySelector,\n        Func<U,K> innerKeySelector, Func<T,U,V> resultSelector) { ... }\n    public C<V> GroupJoin<U,K,V>(C<U> inner, Func<T,K> outerKeySelector,\n        Func<U,K> innerKeySelector, Func<T,C<U>,V> resultSelector) { ... }\n    public O<T> OrderBy<K>(Func<T,K> keySelector) { ... }\n    public O<T> OrderByDescending<K>(Func<T,K> keySelector) { ... }\n    public C<G<K,T>> GroupBy<K>(Func<T,K> keySelector) { ... }\n    public C<G<K,E>> GroupBy<K,E>(Func<T,K> keySelector,\n        Func<T,E> elementSelector) { ... }\n}\n\nclass O<T> : C<T>\n{\n    public O<T> ThenBy<K>(Func<T,K> keySelector) { ... }\n    public O<T> ThenByDescending<K>(Func<T,K> keySelector) { ... }\n}\n\nclass G<K,T> : C<T>\n{\n    public K Key { get; }\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "014ebb65f057a8b49747c0ae9183f4321e514079d67bf7d48ff3603beee02930",
+  "originalSource": "delegate R Func<T1,R>(T1 arg1);\ndelegate R Func<T1,T2,R>(T1 arg1, T2 arg2);\n\nclass C\n{\n    public C<T> Cast<T>() { ... }\n}\n\nclass C<T> : C\n{\n    public C<T> Where(Func<T,bool> predicate) { ... }\n    public C<U> Select<U>(Func<T,U> selector) { ... }\n    public C<V> SelectMany<U,V>(Func<T,C<U>> selector,\n        Func<T,U,V> resultSelector) { ... }\n    public C<V> Join<U,K,V>(C<U> inner, Func<T,K> outerKeySelector,\n        Func<U,K> innerKeySelector, Func<T,U,V> resultSelector) { ... }\n    public C<V> GroupJoin<U,K,V>(C<U> inner, Func<T,K> outerKeySelector,\n        Func<U,K> innerKeySelector, Func<T,C<U>,V> resultSelector) { ... }\n    public O<T> OrderBy<K>(Func<T,K> keySelector) { ... }\n    public O<T> OrderByDescending<K>(Func<T,K> keySelector) { ... }\n    public C<G<K,T>> GroupBy<K>(Func<T,K> keySelector) { ... }\n    public C<G<K,E>> GroupBy<K,E>(Func<T,K> keySelector,\n        Func<T,E> elementSelector) { ... }\n}\n\nclass O<T> : C<T>\n{\n    public O<T> ThenBy<K>(Func<T,K> keySelector) { ... }\n    public O<T> ThenByDescending<K>(Func<T,K> keySelector) { ... }\n}\n\nclass G<K,T> : C<T>\n{\n    public K Key { get; }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "Query-expressionPattern",
+    "replaceEllipsis": true,
+    "customEllipsisReplacements": [
+      "return default;",
+      "return default;",
+      "return default;",
+      "return default;",
+      "return default;",
+      "return default;",
+      "return default;",
+      "return default;",
+      "return default;",
+      "return default;",
+      "return default;",
+      "return default;"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "Query-expressionPattern",
+    "offsetInUnquotedMarkdown": 406121
+  }
+}

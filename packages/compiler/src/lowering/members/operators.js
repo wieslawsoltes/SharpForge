@@ -10,8 +10,9 @@
  *
  * Operators are static methods of the image, so every one of these is a call the IR already has.
  */
-import {scalarStep} from '../../codegen/semantic/scalar-step.js';
 import { TypeKind } from '../../symbols/types.js';
+import {scalarStep} from '../../codegen/semantic/scalar-step.js';
+import {isTupleElement} from '../tuples/locations.js';
 import { n } from '../../codegen/semantic/node-factory.js';
 
 /** `expression` with the node `original` replaced by `replacement`, through the conversions applied to it. */
@@ -26,7 +27,7 @@ export const OperatorLowering = Base =>
   class extends Base {
     /** True when the emitter's own read-modify-write of the target cannot be used. */
     needsExplicitStore(node, target) {
-      return !!node.method || (target.kind === 'IndexerAccess' && this.g.isSource(target.property));
+      return !isTupleElement(target) && (!!node.method || (target.kind === 'IndexerAccess' && this.g.isSource(target.property)));
     }
     /** `a[i] = v` on a user-defined indexer: the receiver and the index arguments are evaluated before the value. */
     exprAssignment(node) {

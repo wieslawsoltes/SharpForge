@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e3af0ced8359b6ecfc43",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public static void M()\n    {\n        label1:\n\n        L();\n        L2();\n        L3();\n\n        void L()\n        {\n            goto label1;\n        }\n\n        void L2()\n        {\n            break;\n        }\n\n        void L3()\n        {\n            continue;\n        }\n    }\n}",
+  "sourceSHA256": "1c46473cf51e8f1b15f687eb1904ac0a6b82d980b8fe89eb1d53676a5502d3ba",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "InvalidBranchOutOfLocalFunc",
+    "offset": 9636
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    public static void M()\n    {\n        label1:\n\n        L();\n        L2();\n        L3();\n\n        void L()\n        {\n            goto label1;\n        }\n\n        void L2()\n        {\n            break;\n        }\n\n        void L3()\n        {\n            continue;\n        }\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0139",
+        "severity": "error"
+      },
+      {
+        "code": "CS0139",
+        "severity": "error"
+      },
+      {
+        "code": "CS0159",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (19,13): error CS0139: No enclosing loop out of which to break or continue\n                    //             break;\n                    Diagnostic(ErrorCode.ERR_NoBreakOrCont, \"break;\").WithLocation(19, 13),\n                    // (24,13): error CS0139: No enclosing loop out of which to break or continue\n                    //             continue;\n                    Diagnostic(ErrorCode.ERR_NoBreakOrCont, \"continue;\").WithLocation(24, 13),\n                    // (14,13): error CS0159: No such label 'label1' within the scope of the goto statement\n                    //             goto label1;\n                    Diagnostic(ErrorCode.ERR_LabelNotFound, \"goto\").WithArguments(\"label1\").WithLocation(14, 13)",
+  "unsupported": []
+}

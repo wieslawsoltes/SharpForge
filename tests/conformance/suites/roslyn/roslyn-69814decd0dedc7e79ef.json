@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-69814decd0dedc7e79ef",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Security.Permissions;\n\n[assembly: SecurityPermission(SecurityAction.RequestOptional, RemotingConfiguration = true)]\n[assembly: SecurityPermission(SecurityAction.RequestMinimum, UnmanagedCode = true)]\n\nnamespace N\n{\n    [PrincipalPermission(SecurityAction.Demand, Role=@\"User1\")]\n    public class C\n\t{\n        [PrincipalPermission(SecurityAction.Demand, Role=@\"User1\")]\n\t    public static void Goo() {}\n    }\n}\n",
+  "sourceSHA256": "0629766768768fb07928752eeaae5ac74016a9da942c36e82d7deb2480aa28ad",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "sha256": "995f9a35982f60a6e97828d01cb24f09a40124463d1f9e4c6b48f42ec012d8ff",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "license": "MIT",
+    "method": "CheckMultipleSecurityAttributes_Assembly_Type_Method",
+    "offset": 73255
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,31): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestOptional' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [assembly: SecurityPermission(SecurityAction.RequestOptional, RemotingConfiguration = true)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestOptional\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestOptional\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (5,31): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [assembly: SecurityPermission(SecurityAction.RequestMinimum, UnmanagedCode = true)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestMinimum\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestMinimum\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9cd8711c7afc902c240c",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    static void M1(ref readonly int p)\n    {\n        M2(ref p);\n    }\n    static void M2(in int p) => System.Console.Write(p);\n    static void Main()\n    {\n        int x = 5;\n        M1(ref x);\n    }\n}",
+  "sourceSHA256": "2f89abd3851345d4f4478ecc236cba81c95bc14a01038cbd3083734c983875aa",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "PassingParameters_RefReadonly_In_RefArgument",
+    "offset": 122905
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8329",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (5,16): error CS8329: Cannot use variable 'p' as a ref or out value because it is a readonly variable\n            //         M2(ref p);\n            Diagnostic(ErrorCode.ERR_RefReadonlyNotField, \"p\").WithArguments(\"variable\", \"p\").WithLocation(5, 16)",
+  "unsupported": []
+}

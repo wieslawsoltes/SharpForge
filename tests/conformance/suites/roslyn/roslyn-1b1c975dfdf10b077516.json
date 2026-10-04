@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1b1c975dfdf10b077516",
+  "kind": "diagnostics",
+  "sourceText": "\nusing static System.Console;\npublic class C\n{\n    public static void Main()\n    {\n        Write($\"{(new A(1), new A(2)) == (new X(1), new Y(2))}\");\n    }\n}\npublic class Base\n{\n    public int I;\n    public Base(int i) { I = i; }\n}\npublic class A : Base\n{\n    public A(int i) : base(i)\n        => throw null;\n    public static NotBool operator ==(A a, Y y)\n        => throw null;\n    public static NotBool operator !=(A a, Y y)\n        => throw null;\n    public override bool Equals(object o)\n        => throw null;\n    public override int GetHashCode()\n        => throw null;\n}\npublic class X : Base\n{\n    public X(int i) : base(i)\n        => throw null;\n}\npublic class Y : Base\n{\n    public Y(int i) : base(i)\n        => throw null;\n    public static implicit operator Y(X x)\n        => throw null;\n}\npublic class NotBool\n{\n    public NotBool(bool value)\n        => throw null;\n    public static explicit operator bool(NotBool b)\n        => throw null;\n}\n",
+  "sourceSHA256": "89111cb3c6c1ac1be56611156168e0bdd444cadfbdd55bb6b172a6eea5fe649d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestNonBoolComparisonResult_WithExplicitBoolConversion",
+    "offset": 177106
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0029",
+        "severity": "error"
+      },
+      {
+        "code": "CS0029",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,18): error CS0029: Cannot implicitly convert type 'NotBool' to 'bool'\n                //         Write($\"{(new A(1), new A(2)) == (new X(1), new Y(2))}\");\n                Diagnostic(ErrorCode.ERR_NoImplicitConv, \"(new A(1), new A(2)) == (new X(1), new Y(2))\").WithArguments(\"NotBool\", \"bool\").WithLocation(7, 18),\n                // (7,18): error CS0029: Cannot implicitly convert type 'NotBool' to 'bool'\n                //         Write($\"{(new A(1), new A(2)) == (new X(1), new Y(2))}\");\n                Diagnostic(ErrorCode.ERR_NoImplicitConv, \"(new A(1), new A(2)) == (new X(1), new Y(2))\").WithArguments(\"NotBool\", \"bool\").WithLocation(7, 18)\n                ",
+  "unsupported": []
+}

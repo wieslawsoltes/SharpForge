@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-df8ef2f9e6a12206ea0a",
+  "kind": "diagnostics",
+  "sourceText": "\nextern alias A;\nextern alias B;\n\nusing A::N;\nusing B::M;\nusing X = A::N;\nusing Y = B::N;\n\npublic class C\n{\n\tpublic static void Main() \n    {\n        System.Console.WriteLine(new D()); \n        System.Console.WriteLine(new E()); \n        System.Console.WriteLine(new X.D()); \n        System.Console.WriteLine(new Y.D()); \n    }\n}",
+  "sourceSHA256": "d6a9cb5c40ac450482f040e4eea544ff263ee2d1cc6d3d5299cf9fc81538aab3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/PDB/PDBUsingTests.cs",
+    "sha256": "3d32b8748a2018c59c39c0b4c163de7666786e1a93099cc9dd77a552f8c8f8fc",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/PDB/PDBUsingTests.cs",
+    "license": "MIT",
+    "method": "ReferenceWithMultipleAliases",
+    "offset": 62481
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[]\n                {\n                    new CSharpCompilationReference(compilation1, ImmutableArray.Create(\"A\", \"B\"))\n                })",
+  "options": "(source2,\n                options: TestOptions.DebugDll,\n                references: new[]\n                {\n                    new CSharpCompilationReference(compilation1, ImmutableArray.Create(\"A\", \"B\"))\n                })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

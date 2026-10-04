@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9863b31fa6103b28ad3d",
+  "kind": "spec",
+  "sourceText": "XmlReader.Create(reader, new() { IgnoreWhitespace = true });",
+  "sourceSHA256": "18b480cfb3feca31ac13e761a79f87606475366d3d3e3e154b01f410dc24eb46",
+  "target": "library",
+  "featureId": "csharp-9-0-target-typed-new-expressions",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/target-typed-new.md",
+    "sha256": "57832c908e368a18ab43b20db3fe4bde28b595af56d0fe5b4ae3740b54318e4e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/target-typed-new.md",
+    "license": "NOASSERTION",
+    "offset": 520
+  }
+}

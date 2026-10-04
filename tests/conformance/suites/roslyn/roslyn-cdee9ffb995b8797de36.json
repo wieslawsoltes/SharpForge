@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-cdee9ffb995b8797de36",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct A\n{\n    public int x;\n    public int y { get; set; }\n}\n\nstruct B\n{\n    public A a;\n    public int z;\n}\n\nclass C\n{\n    void AssignInLocalFunc()\n    {\n        A a1;\n        Local1(); // unassigned\n        A a2 = a1;\n        void Local1()\n        {\n            a1.x = 0;\n            a1.y = 0; \n        }\n\n        B b1;\n        Local2();\n        B b2 = b1;\n        void Local2()\n        {\n            b1.a.x = 0;\n            b1.a.y = 0;\n            b1.z = 0;\n        }\n    }\n    void SkipNestedField()\n    {\n        B b1;\n        Local();\n        B b2 = b1; // unassigned\n        void Local()\n        {\n            b1.a.x = 0;\n            b1.z = 0;\n        }\n    }\n    void SkipNestedStruct()\n    {\n        B b1;\n        Local();\n        B b2 = b1; // unassigned\n        void Local()\n        {\n            b1.z = 0;\n        }\n    }\n    void SkipField()\n    {\n        B b1;\n        Local();\n        B b2 = b1; // unassigned\n        void Local()\n        {\n            b1.a.x = 0;\n            b1.a.y = 0;\n        }\n    }\n}",
+  "sourceSHA256": "021b2fff04c2c6f97f981ce9ed06cade496bd41b391b491a05eaefab51ea5f9c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "NestedStructProperty",
+    "offset": 23142
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nstruct A\n{\n    public int x;\n    public int y { get; set; }\n}\n\nstruct B\n{\n    public A a;\n    public int z;\n}\n\nclass C\n{\n    void AssignInLocalFunc()\n    {\n        A a1;\n        Local1(); // unassigned\n        A a2 = a1;\n        void Local1()\n        {\n            a1.x = 0;\n            a1.y = 0; \n        }\n\n        B b1;\n        Local2();\n        B b2 = b1;\n        void Local2()\n        {\n            b1.a.x = 0;\n            b1.a.y = 0;\n            b1.z = 0;\n        }\n    }\n    void SkipNestedField()\n    {\n        B b1;\n        Local();\n        B b2 = b1; // unassigned\n        void Local()\n        {\n            b1.a.x = 0;\n            b1.z = 0;\n        }\n    }\n    void SkipNestedStruct()\n    {\n        B b1;\n        Local();\n        B b2 = b1; // unassigned\n        void Local()\n        {\n            b1.z = 0;\n        }\n    }\n    void SkipField()\n    {\n        B b1;\n        Local();\n        B b2 = b1; // unassigned\n        void Local()\n        {\n            b1.a.x = 0;\n            b1.a.y = 0;\n        }\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8079",
+        "severity": "error"
+      },
+      {
+        "code": "CS8079",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS8079",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (19,9): error CS8079: Use of possibly unassigned auto-implemented property 'y'\n                //         Local1(); // unassigned\n                Diagnostic(ErrorCode.ERR_UseDefViolationProperty, \"Local1()\").WithArguments(\"y\").WithLocation(19, 9),\n                // (28,9): error CS8079: Use of possibly unassigned auto-implemented property 'y'\n                //         Local2();\n                Diagnostic(ErrorCode.ERR_UseDefViolationProperty, \"Local2()\").WithArguments(\"y\").WithLocation(28, 9),\n                // (41,16): error CS0165: Use of unassigned local variable 'b1'\n                //         B b2 = b1; // unassigned\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"b1\").WithArguments(\"b1\").WithLocation(41, 16),\n                // (52,16): error CS0165: Use of unassigned local variable 'b1'\n                //         B b2 = b1; // unassigned\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"b1\").WithArguments(\"b1\").WithLocation(52, 16),\n                // (61,9): error CS8079: Use of possibly unassigned auto-implemented property 'y'\n                //         Local();\n                Diagnostic(ErrorCode.ERR_UseDefViolationProperty, \"Local()\").WithArguments(\"y\").WithLocation(61, 9),\n                // (62,16): error CS0165: Use of unassigned local variable 'b1'\n                //         B b2 = b1; // unassigned\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"b1\").WithArguments(\"b1\").WithLocation(62, 16)",
+  "unsupported": []
+}

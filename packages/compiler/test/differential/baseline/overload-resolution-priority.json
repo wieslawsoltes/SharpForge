@@ -1,0 +1,5 @@
+{
+  "overload-resolution-priority/cs9202-below-csharp-13": ["diagnostics", "warnings"],
+  "overload-resolution-priority/cs9261-cs9262-cs0592-placement": ["diagnostics", "warnings"],
+  "overload-resolution-priority/priority-within-a-declaring-type": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
+}

@@ -1,0 +1,4 @@
+{
+  "null-conditional-element/arrays-and-indexers": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "null-conditional-element/cs0021-cs0029-invalid-element-access": ["diagnostics", "warnings"]
+}

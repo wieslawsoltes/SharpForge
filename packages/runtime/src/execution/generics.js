@@ -1,6 +1,9 @@
-import {genericTypeParts, instantiateSignature, substituteCallType} from '@sharpforge/cil';
+import {genericTypeParts, instantiateSignature, substituteCallType, isSizeOfOnlyMethod} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
+import {executionCodeState} from './code-version.js';
 import {validateGenericArguments} from './generic-constraints.js';
+import {valueLayout} from './value-layout.js';
+import {requireValueStorage} from './value-types.js';
 
 function invalid(message) {
   throw new ManagedFault('InvalidProgramException', message);
@@ -33,10 +36,15 @@ function instantiation(vm, token, genericIdentity, methodArguments) {
 }
 
 function makeMethod(vm, entry) {
-  const {original, token, ownerName, typeArguments, methodArguments} = entry;
+  const {original, token, owner, ownerName, typeArguments, methodArguments} = entry;
   const arity = original.signature.genericArity ?? 0;
   if (arity !== methodArguments.length) invalid('Generic method requires a complete instantiation');
-  const context = {typeArguments, methodArguments};
+  const layoutOnly = isSizeOfOnlyMethod(vm.inspector, token);
+  if (owner?.flags.valueType && !owner.flags.primitive && !owner.flags.enum) {
+    valueLayout(vm, owner);
+    if (!layoutOnly && !owner.flags.nullable) requireValueStorage(vm, owner);
+  }
+  const context = {typeArguments, methodArguments, layoutOnly};
   validateGenericArguments(vm, original.ownerToken, typeArguments, context);
   validateGenericArguments(vm, token, methodArguments, {...context, arity});
   const signature = instantiateSignature(original.signature, typeArguments, methodArguments);
@@ -50,7 +58,7 @@ function makeMethod(vm, entry) {
     genericIdentity: ownerName, methodArguments: Object.freeze(methodArguments)};
 }
 
-/** Explicit VM-owned cache. Nested Maps key by MethodDef and MethodTable handles. */
+/** Derived code-epoch cache. Nested Maps key by MethodDef and MethodTable handles. */
 export class GenericInstantiations {
   constructor(vm) {
     this.inspector = vm.inspector;
@@ -70,12 +78,9 @@ export class GenericInstantiations {
     return map;
   }
 
-  get(vm, entry, rejectDuplicate = false) {
+  get(vm, entry) {
     const existing = this.node(entry)?.get('method');
-    if (existing) {
-      if (rejectDuplicate) throw new TypeError('Duplicate generic instantiation tuple');
-      return existing;
-    }
+    if (existing) return existing;
     if (this.entries.size >= this.limit) invalid('Generic instantiation cache limit exceeded');
     const method = makeMethod(vm, entry);
     this.node(entry, true).set('method', method);
@@ -85,40 +90,16 @@ export class GenericInstantiations {
 }
 
 function cacheFor(vm) {
-  if (vm.genericInstantiations?.inspector !== vm.inspector) {
-    vm.genericInstantiations = new GenericInstantiations(vm);
-  }
-  return vm.genericInstantiations;
+  vm.typeSystem;
+  const state = executionCodeState(vm);
+  return state.generics ??= new GenericInstantiations(vm);
 }
 
 /** Resolve a closed method; reference instantiations share the canonical IL body. */
 export function instantiatedMethod(vm, token, genericIdentity = null, methodArguments = []) {
-  return cacheFor(vm).get(vm, instantiation(vm, token, genericIdentity, methodArguments));
-}
-
-/** Portable state is ordered [MethodDef token, closed owner name|null, argument names[]]. */
-export function captureGenericInstantiations(vm) {
-  return [...cacheFor(vm).entries.values()].map(([token, owner, arguments_]) => [token, owner, [...arguments_]]);
-}
-
-export function prepareGenericInstantiations(vm, tuples) {
-  if (!Array.isArray(tuples) || tuples.length > limitFor(vm)) throw new TypeError('Invalid generic instantiation list');
-  const cache = new GenericInstantiations(vm);
-  for (const tuple of tuples) {
-    if (!Array.isArray(tuple) || tuple.length !== 3) throw new TypeError('Invalid generic instantiation tuple');
-    const [token, owner, arguments_] = tuple;
-    cache.get(vm, instantiation(vm, token, owner, arguments_), true);
-  }
-  return cache;
-}
-
-/** Preflight metadata and constraints without changing the live instantiation cache. */
-export function validateGenericInstantiations(vm, tuples) {
-  prepareGenericInstantiations(vm, tuples);
-}
-
-/** Atomically rebuild captured entries before portable frame methods are rehydrated. */
-export function restoreGenericInstantiations(vm, tuples) {
-  const prepared = prepareGenericInstantiations(vm, tuples);
-  vm.genericInstantiations = prepared;
+  const original = vm.inspector.getMethod(token);
+  if (genericIdentity === null && !methodArguments.length && !original.signature.genericArity &&
+      !vm.typeSystem.table(original.ownerToken).genericArity) return original;
+  const cache = cacheFor(vm);
+  return cache.get(vm, instantiation(vm, token, genericIdentity, methodArguments));
 }

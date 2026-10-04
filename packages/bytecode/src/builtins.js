@@ -1,6 +1,6 @@
-import {appendExecutionBuiltins} from './execution-builtins.js';
-import {runtimeBuiltinDefinitions} from './runtime-builtins.js';
-import {contracts} from '@sharpforge/framework';
+import {createBuiltinTable} from './builtin-table.js';
+import {createBuiltinRegistry as createRegistry} from './builtin-registry.js';
+import {contracts,contributionManifest} from '@sharpforge/framework';
 export const definitions = Object.freeze( [
  ['Console.WriteLine',0,1,'void',['any']],['Console.Write',1,1,'void',['any']],
  ['Math.Abs',1,1,'numeric',['number']],['Math.Min',2,2,'numeric',['number','number']],['Math.Max',2,2,'numeric',['number','number']],
@@ -15,36 +15,12 @@ export const definitions = Object.freeze( [
  ['Debug.Assert',1,2,'void',['bool','string']],['Environment.TickCount',0,0,'int',[]],['$Math.Abs.Int32',1,1,'int',['int']]
 ].map(d=>Object.freeze([d[0],d[1],d[2],d[3],Object.freeze(d[4])])));
 export const CONTRACT_BUILTIN_OFFSET=definitions.length;
-const builtinEntries=definitions.map(([name,min,max,result,params],id)=>Object.freeze({id,name,min,max,result,params}));
-for(const contract of contracts){const id=CONTRACT_BUILTIN_OFFSET+contract.id,count=contract.parameters.length+(!contract.isStatic&&contract.kind!=='constructor'?1:0);builtinEntries[id]=Object.freeze({id,name:'$framework:'+contract.id,min:count,max:count,result:contract.result,params:Object.freeze([...(!contract.isStatic&&contract.kind!=='constructor'?[contract.owner]:[]),...contract.parameters]),contract});}
-for(const [name,min,max,result,params] of runtimeBuiltinDefinitions){
-  builtinEntries.push(Object.freeze({id:builtinEntries.length,name,min,max,result,params:Object.freeze(params)}));
-}
-appendExecutionBuiltins(builtinEntries);
 // The released runtime table remains a frozen array on the VM's hot dispatch path.
-export const Builtins=Object.freeze(builtinEntries);
+export const Builtins=createBuiltinTable(definitions,contracts,contributionManifest);
 export const frameworkBuiltin = contract=>contract?Builtins[CONTRACT_BUILTIN_OFFSET+contract.id]:null;
 export const BuiltinMap = new Map(Builtins.filter(Boolean).map(b=>[b.name,b]));
 
 /** Contributions append after the released table; its contract offset never moves. */
 export function createBuiltinRegistry(base=Builtins){
-  const entries=[...base],byName=new Map(entries.filter(Boolean).map(entry=>[entry.name,entry]));
-  return {
-    get entries(){return Object.freeze([...entries]);},
-    get(name){return byName.get(name)??null;},
-    register(contribution,{signal}={}){
-      signal?.throwIfAborted();
-      if(!contribution||typeof contribution.name!=='string'||!Array.isArray(contribution.definitions))throw new TypeError('Malformed builtin contribution');
-      const staged=[],names=new Set();
-      for(const row of contribution.definitions){
-        if(!Array.isArray(row)||row.length!==5)throw new TypeError(`[${contribution.name}] Malformed builtin`);
-        const [name,min,max,result,params]=row;
-        if(typeof name!=='string'||!name||name.startsWith('$framework:')||byName.has(name)||names.has(name))throw new Error(`[${contribution.name}] Duplicate or reserved builtin ${name}`);
-        if(!Number.isSafeInteger(min)||min<0||!Number.isSafeInteger(max)||max<min||typeof result!=='string'||!Array.isArray(params)||max!==params.length||params.some(p=>typeof p!=='string'))throw new TypeError(`[${contribution.name}] Invalid builtin signature`);
-        names.add(name);staged.push(Object.freeze({id:entries.length+staged.length,name,min,max,result,params:Object.freeze([...params])}));
-      }
-      signal?.throwIfAborted();entries.push(...staged);for(const entry of staged)byName.set(entry.name,entry);
-      return Object.freeze(staged);
-    }
-  };
+  return createRegistry(base,base===Builtins);
 }

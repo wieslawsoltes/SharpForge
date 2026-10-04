@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6dd6b60041630395716f",
+  "kind": "diagnostics",
+  "sourceText": "\n[X]\nclass X\n{\n}\n",
+  "sourceSHA256": "3cfb390e1e447b538bf922606617b0b0930a042bace82843f5812e5030b387ab",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AmbiguousClassNamespaceLookup",
+    "offset": 333659
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { comp1, comp2 })",
+  "options": "(source5, references: new[] { comp1, comp2 })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0616",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,2): error CS0616: 'X' is not an attribute class\n                // [X]\n                Diagnostic(ErrorCode.ERR_NotAnAttributeClass, \"X\").WithArguments(\"X\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

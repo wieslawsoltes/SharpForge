@@ -1,9 +1,12 @@
 /**
  * Fixture authoring helpers for the Roslyn differential harness (SF-A02-T40).
  *
- * A fixture is `{id,feature,kind,langVersion?,source}`: `kind` is 'output' (Roslyn compiles it without errors and its
- * stdout is pinned) or 'diagnostics' (Roslyn reports at least one error or warning that is pinned). The source text is
- * exactly what both compilers see, so diagnostic offsets are comparable.
+ * A fixture is `{id,feature,kind,langVersion?,allowUnsafe?,source}`: `kind` is 'output' (Roslyn compiles it without
+ * errors and its stdout is pinned) or 'diagnostics' (Roslyn reports at least one error or warning that is pinned). The
+ * source text is exactly what both compilers see, so diagnostic offsets are comparable. `allowUnsafe: true` compiles
+ * the fixture with /unsafe on both sides (it is part of the fixture's hash, like the language version).
+ * `referencesOnly: true` marks a program that needs the real base class library: it runs on the real-.NET axis
+ * (tools/dotnet-axis.mjs, bound against reference assemblies) and is unsupported on the registry-bound axes.
  */
 
 /** Tagged template for C# source: raw text (backslashes are literal), common indentation removed, '\n' line ends. */

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-3f2e0aba4b62db9a2dc4",
+  "kind": "spec",
+  "sourceText": "string foundValue = null;\nbool shouldBreak = false;\nfor (int x = 0; x < xMax; x++)\n{\n    for (int y = 0; y < yMax; y++)\n    {\n        foundValue = GetValue(x, y);\n        if (foundValue == target)\n        {\n            shouldBreak = true;\n            break;\n        }\n    }\n    if (shouldBreak)\n        break;\n}\nProcessValue(foundValue);",
+  "sourceSHA256": "5a341c979a1567e9513849050a642f3011fd525908d878562ce63602300ac338",
+  "target": "library",
+  "featureId": "csharp-15-0-labeled-break-and-continue",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/labeled-break-continue.md",
+    "sha256": "6f7a0240e013201a78340bec20e3835e55470cb1e9942eaa6fb84bffab6e632e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/labeled-break-continue.md",
+    "license": "NOASSERTION",
+    "offset": 2026
+  }
+}

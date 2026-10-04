@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-46b82fc99c94fb2a5e9f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nnamespace A.B\n{\n    [Obsolete]\n    public class C\n    {\n        [Obsolete]\n        public static int Field1 = 10;\n\n        [Obsolete]\n        public class D\n        {\n            [Obsolete]\n            public static int Field2 = 20;\n        }\n    }\n\n    [Obsolete]\n    public class C1\n    {\n        public class D\n        {\n        }\n    }\n\n    [Obsolete]\n    public class C2<T>\n    {\n        [Obsolete]\n        public static int Field1 = 10;\n\n        public class D { }\n\n        [Obsolete]\n        public class E<U> { }\n    }\n}\n\nclass B<T> { }\nclass D : B<A.B.C1.D> { }\nclass D1 : B<A.B.C2<int>.D> { }\n\nclass Program\n{\n    static void Main(string[] args)\n    {\n        var x = A.B.C.Field1;\n        var x1 = A.B.C.D.Field2;\n        var y = new A.B.C1.D();\n        var y1 = new A.B.C2<int>.D();\n        var y2 = A.B.C2<int>.Field1;\n        var y3 = new A.B.C2<int>.E<int>();\n    }\n}\n",
+  "sourceSHA256": "68a370a37e7582b31e3a936e2a1ab85a3af4974d5a0a11ff6559624405eb790f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeOnMembers2",
+    "offset": 276861
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (42,13): warning CS0612: 'A.B.C1' is obsolete\n                // class D : B<A.B.C1.D> { }\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C1\").WithArguments(\"A.B.C1\"),\n                // (43,14): warning CS0612: 'A.B.C2<int>' is obsolete\n                // class D1 : B<A.B.C2<int>.D> { }\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C2<int>\").WithArguments(\"A.B.C2<int>\"),\n                // (49,17): warning CS0612: 'A.B.C' is obsolete\n                //         var x = A.B.C.Field1;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C\").WithArguments(\"A.B.C\"),\n                // (49,17): warning CS0612: 'A.B.C.Field1' is obsolete\n                //         var x = A.B.C.Field1;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C.Field1\").WithArguments(\"A.B.C.Field1\"),\n                // (50,18): warning CS0612: 'A.B.C' is obsolete\n                //         var x1 = A.B.C.D.Field2;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C\").WithArguments(\"A.B.C\"),\n                // (50,18): warning CS0612: 'A.B.C.D' is obsolete\n                //         var x1 = A.B.C.D.Field2;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C.D\").WithArguments(\"A.B.C.D\"),\n                // (50,18): warning CS0612: 'A.B.C.D.Field2' is obsolete\n                //         var x1 = A.B.C.D.Field2;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C.D.Field2\").WithArguments(\"A.B.C.D.Field2\"),\n                // (51,21): warning CS0612: 'A.B.C1' is obsolete\n                //         var y = new A.B.C1.D();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C1\").WithArguments(\"A.B.C1\"),\n                // (52,22): warning CS0612: 'A.B.C2<int>' is obsolete\n                //         var y1 = new A.B.C2<int>.D();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C2<int>\").WithArguments(\"A.B.C2<int>\"),\n                // (53,18): warning CS0612: 'A.B.C2<int>' is obsolete\n                //         var y2 = A.B.C2<int>.Field1;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C2<int>\").WithArguments(\"A.B.C2<int>\"),\n                // (53,18): warning CS0612: 'A.B.C2<int>.Field1' is obsolete\n                //         var y2 = A.B.C2<int>.Field1;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C2<int>.Field1\").WithArguments(\"A.B.C2<int>.Field1\"),\n                // (54,22): warning CS0612: 'A.B.C2<int>' is obsolete\n                //         var y3 = new A.B.C2<int>.E<int>();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C2<int>\").WithArguments(\"A.B.C2<int>\"),\n                // (54,22): warning CS0612: 'A.B.C2<int>.E<int>' is obsolete\n                //         var y3 = new A.B.C2<int>.E<int>();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"A.B.C2<int>.E<int>\").WithArguments(\"A.B.C2<int>.E<int>\")",
+  "unsupported": []
+}

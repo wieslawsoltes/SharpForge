@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5b0b0bacffa7507b9c9a",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    int M(out int x)\n    {\n        _ = (M(out int y), y) == (1, 2); // ok\n        _ = (z, M(out int z)) == (1, 2); // error\n        x = 1;\n        return 2;\n    }\n}\n",
+  "sourceSHA256": "5e36a302c92e7a00fbbda7e0e57b6e5a90728fd1af72cbc7cb0e6172dfb258c4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestDefiniteAssignment2",
+    "offset": 111883
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0841",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (7,14): error CS0841: Cannot use local variable 'z' before it is declared\n                    //         _ = (z, M(out int z)) == (1, 2); // error\n                    Diagnostic(ErrorCode.ERR_VariableUsedBeforeDeclaration, \"z\").WithArguments(\"z\").WithLocation(7, 14)\n                ",
+  "unsupported": []
+}

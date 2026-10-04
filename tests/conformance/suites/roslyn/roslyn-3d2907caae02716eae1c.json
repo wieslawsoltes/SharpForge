@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3d2907caae02716eae1c",
+  "kind": "diagnostics",
+  "sourceText": "\nclass A\n{\n    public static void Main()\n    {\n        byte[,] arr = new byte[1, 1];\n        ulong i1 = 0;\n        int i2 = 1;\n        arr[i1, i2] = 127; // Dev10 CS0266\n    }\n}\n",
+  "sourceSHA256": "28746f1e847fa884e17844f835b9f45d0e50c694918e8d2fc18168bde9b6db08",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "MultiDimensionArrayWithDiffTypeIndexDevDiv31328",
+    "offset": 28126
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

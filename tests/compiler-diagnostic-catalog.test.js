@@ -10,7 +10,10 @@ import {roslynCodes,ROSLYN_VERSION} from '../packages/compiler/src/diagnostics/r
 const pkg=fileURLToPath(new URL('../packages/compiler/',import.meta.url)),root=join(pkg,'src');
 const pinned=JSON.parse(readFileSync(join(pkg,'test/roslyn/diagnostic-messages.json'),'utf8'));
 const sources=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?sources(join(dir,e.name)):e.name.endsWith('.js')?[join(dir,e.name)]:[]);
-const files=sources(root).filter(f=>!f.endsWith('roslyn-codes.js')).map(f=>[f,readFileSync(f,'utf8')]);
+// Keep the existing message/arity assertions effective while callers move from literal ids to catalog constants.
+const files=sources(root).filter(f=>!f.endsWith('roslyn-codes.js')).map(f=>[
+  f,readFileSync(f,'utf8').replace(/\bDiagnosticId\.((?:CS|SF)\d{4})\b/g,"'$1'")
+]);
 test('A02-T36 every catalog message format matches the pinned Roslyn resource dump',()=>{
   assert.equal(ROSLYN_VERSION,pinned.roslyn);assert(Object.keys(roslynCodes).length>300);
   for(const [code,row] of Object.entries(roslynCodes)){assert.deepEqual(row,pinned.codes[code],code);const d=diagnosticDescriptor(code);
@@ -72,6 +75,8 @@ test('A02-T36 compiler diagnostics carry Roslyn message text',()=>{
   assert.deepEqual(messages('int x="a";'),["CS0029: Cannot implicitly convert type 'string' to 'int'"]);
   assert.deepEqual(messages('Console.WriteLine(y);'),["CS0103: The name 'y' does not exist in the current context"]);
   assert.deepEqual(messages('Foo f=null;'),["CS0246: The type or namespace name 'Foo' could not be found (are you missing a using directive or an assembly reference?)"]);
-  assert.deepEqual(messages('class C{int X;int X;} Console.WriteLine(1);'),["CS0102: The type 'C' already contains a definition for 'X'"]);
+  // Roslyn 5.3.0 reports the duplicate once and each of the two unused fields (warning CS0169), in source order.
+  assert.deepEqual(messages('Console.WriteLine(1); class C{int X;int X;}'),["CS0169: The field 'C.X' is never used","CS0102: The type 'C' already contains a definition for 'X'","CS0169: The field 'C.X' is never used"]);
+  assert.deepEqual(compile('Console.WriteLine(1); class C{int X;int X;}').diagnostics.map(d=>[d.severity,d.start,d.length]),[['warning',34,1],['error',40,1],['warning',40,1]]);
   const w=compile('int x=1;Console.WriteLine(x switch{1=>2});').diagnostics.find(d=>d.code==='CS8509');assert.equal(w.severity,'warning');
 });

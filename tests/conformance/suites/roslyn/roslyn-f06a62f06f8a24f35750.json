@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f06a62f06f8a24f35750",
+  "kind": "diagnostics",
+  "sourceText": "#nullable enable\npublic class A\n{\n    public static object? F;\n    public static void M(object o) { }\n}",
+  "sourceSHA256": "69cc2c52d454543cf5f0d0950b8d92b68c0421036365177ad9f373dc61c5042d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NullablePublicOnly.cs",
+    "sha256": "0d314663b7fa6d3dfc6513dcb6596c36588c661918998a30c38bea158fe6fc95",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NullablePublicOnly.cs",
+    "license": "MIT",
+    "method": "NullableEnabled_MethodBodyOnly",
+    "offset": 9244
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source0)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

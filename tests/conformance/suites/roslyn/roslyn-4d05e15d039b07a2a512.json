@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4d05e15d039b07a2a512",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing System.Runtime.CompilerServices;\n[module: ScopedRef]\n[ScopedRef] class Program\n{\n    [ScopedRef] object F;\n    [ScopedRef] event EventHandler E;\n    [ScopedRef] object P { get; }\n    [ScopedRef] static object M1() => throw null;\n    [return: ScopedRef] static object M2() => throw null;\n    static void M3<[ScopedRef] T>() { }\n}\nnamespace System.Runtime.CompilerServices\n{\n    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]\n    public sealed class ScopedRefAttribute : Attribute\n    {\n    }\n}\n",
+  "sourceSHA256": "3fe629023f520df68e2eef63882572c72d44a0e6e3582074104b1680204cbe6b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_LifetimeAnnotation.cs",
+    "sha256": "641abffc8ec847931f579b507d1d615eb597ba488a23bcbe03d79d35f1e886cf",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_LifetimeAnnotation.cs",
+    "license": "MIT",
+    "method": "ExplicitAttribute_ReferencedInSource_02",
+    "offset": 5461
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0067",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,24): warning CS0169: The field 'Program.F' is never used\n                //     [ScopedRef] object F;\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"F\").WithArguments(\"Program.F\").WithLocation(6, 24),\n                // (7,36): warning CS0067: The event 'Program.E' is never used\n                //     [ScopedRef] event EventHandler E;\n                Diagnostic(ErrorCode.WRN_UnreferencedEvent, \"E\").WithArguments(\"Program.E\").WithLocation(7, 36)",
+  "unsupported": []
+}

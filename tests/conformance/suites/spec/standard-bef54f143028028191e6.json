@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-bef54f143028028191e6",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass C\n{\n    private static void F() => Console.WriteLine(\"C.F\");\n\n    public class Nested\n    {\n        public static void G() => F();\n    }\n}\n\nclass Test\n{\n    static void Main() => C.Nested.G();\n}",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [],
+    "stdout": "C.F\n",
+    "exitCode": 0
+  },
+  "sourceSHA256": "7a43210552d46633d3b181f5df5eee16ef5298a1b2a07c7ef37ef008a8c283d4",
+  "originalSource": "class C\n{\n    private static void F() => Console.WriteLine(\"C.F\");\n\n    public class Nested\n    {\n        public static void G() => F();\n    }\n}\n\nclass Test\n{\n    static void Main() => C.Nested.G();\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "AccessToPrivateAndProtectedMembers1",
+    "expectedOutput": [
+      "C.F"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "AccessToPrivateAndProtectedMembers1",
+    "offsetInUnquotedMarkdown": 67076
+  }
+}

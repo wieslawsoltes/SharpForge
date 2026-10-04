@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-50e0f3218587dfcf1092",
+  "kind": "diagnostics",
+  "sourceText": "\n\nusing System;\n[Obsolete]\npublic class SomeType\n{\n    public static SomeType Instance;\n    public const  string Message = \"goo\";\n}\n\npublic class Test\n{\n    [Obsolete]\n    SomeType someField = SomeType.Instance;\n\n    [Obsolete]\n    Func<SomeType> someFuncField = () => new SomeType();\n\n    [Obsolete]\n    event Action<SomeType> someEvent;\n\n    [Obsolete]\n    public static SomeType someProp { get => new SomeType(); set {} }\n\n    public static string someProp2 { [Obsolete] get => new SomeType().ToString(); }\n\n    public static SomeType someProp3 { [Obsolete] get => new SomeType(); }\n\n    [Obsolete]\n    SomeType this[int x] { get { SomeType y = new SomeType(); return y; } }\n\n    [Obsolete]\n    SomeType goo(SomeType x)\n    {\n        SomeType y = new SomeType();\n        return x;\n    }\n\n    [Obsolete]\n    Test(SomeType x)\n    {\n        SomeType y = new SomeType();\n    }\n}\n[Obsolete]\npublic class Base<T> {}\n[Obsolete]\npublic class Derived : Base<Base<int>> {}\n",
+  "sourceSHA256": "b247d55a0dd84b139e51c56c25278cf866104f5444e7e0cb6e5523e1ccd92b69",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeSuppress",
+    "offset": 263082
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0067",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (27,19): warning CS0612: 'SomeType' is obsolete\n                //     public static SomeType someProp3 { [Obsolete] get => new SomeType(); }\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"SomeType\").WithArguments(\"SomeType\").WithLocation(27, 19),\n                // (20,28): warning CS0067: The event 'Test.someEvent' is never used\n                //     event Action<SomeType> someEvent;\n                Diagnostic(ErrorCode.WRN_UnreferencedEvent, \"someEvent\").WithArguments(\"Test.someEvent\").WithLocation(20, 28)",
+  "unsupported": []
+}

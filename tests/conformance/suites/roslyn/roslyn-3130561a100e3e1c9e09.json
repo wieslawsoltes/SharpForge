@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3130561a100e3e1c9e09",
+  "kind": "diagnostics",
+  "sourceText": "\n#nullable disable\n\npublic class C0 : I1<string>\n{\n}",
+  "sourceSHA256": "9c661e67a29d174f9f87279057308a270b3906975bec74415268d863b770c7d0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "sha256": "32f83728594c49ce50d234006777d1af71d49e0e2cd7cc5c8982c5b2ac7fa714",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "license": "MIT",
+    "method": "SynthesizeNullableAttributeBasedOnInterfacesToEmit_NotOnAllInterfaces",
+    "offset": 4717
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { getReference(lib1_comp) })",
+  "options": "(lib2_source, references: new[] { getReference(lib1_comp) })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

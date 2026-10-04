@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5b40bd95fc40c16e707d",
+  "kind": "diagnostics",
+  "sourceText": "public class C{}",
+  "sourceSHA256": "022c46f1338f4fe22cebe32fdd61e66110e022280796c5289684ced30258d2cd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "sha256": "a146aeb41311a33fd51733055804d5bdd45ba0e5302ca02348a06cb7e94dd243",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "license": "MIT",
+    "method": "RefAssembly_PublicSigning",
+    "offset": 72323
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\"public class C{}\",\n                options: TestOptions.ReleaseDll.WithCryptoKeyFile(snk.Path).WithPublicSign(true))",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2fcc9053d89089fad7a7",
+  "kind": "diagnostics",
+  "sourceText": "\n#pragma warning disable 169\n\nusing System.Runtime.InteropServices;\n\nclass X\n{\n    [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]int LPArray_e0;\n    [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.ByValTStr, SizeConst = -1)]                                                                                             int LPArray_e1;\n    [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.ByValTStr, SizeConst = 0, SizeParamIndex = -1)]                                                                         int LPArray_e2;\n    [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.ByValTStr, SizeConst = int.MaxValue, SizeParamIndex = short.MaxValue)]                                                  int LPArray_e3;\n    [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U8, SizeConst = int.MaxValue/4 + 1, SizeParamIndex = short.MaxValue)]                                                   int LPArray_e4;\n    [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.CustomMarshaler)]                                                                                                       int LPArray_e5;\n    [MarshalAs(UnmanagedType.LPArray, SafeArraySubType=VarEnum.VT_I1)]                                                                                                                     int LPArray_e6;\n    [MarshalAs(UnmanagedType.LPArray, ArraySubType = (UnmanagedType)0x20000000)]                                                                                                           int LPArray_e7;\n    [MarshalAs(UnmanagedType.LPArray, ArraySubType = (UnmanagedType)(-1))]                                                                                                                 int LPArray_e8;\n}\n",
+  "sourceSHA256": "deff2f0c16f24e3b35be11d50d229c5c7c53e235a203205192a783f449fe7e44",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "sha256": "bb4e4ad059ab1c1eda93b5a74e4516301a4d849e95af99ceb05f3e76a1b628a0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "license": "MIT",
+    "method": "NativeTypeArray_Errors",
+    "offset": 28817
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,79): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]int LPArray_e0;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SafeArraySubType = VarEnum.VT_BSTR\"),\n                // (8,151): error CS0599: Invalid value for named attribute argument 'SizeConst'\n                //     [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]int LPArray_e0;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"SizeConst = -1\").WithArguments(\"SizeConst\"),\n                // (8,167): error CS0599: Invalid value for named attribute argument 'SizeParamIndex'\n                //     [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]int LPArray_e0;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"SizeParamIndex = -1\").WithArguments(\"SizeParamIndex\"),\n                // (9,79): error CS0599: Invalid value for named attribute argument 'SizeConst'\n                //     [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.ByValTStr, SizeConst = -1)]                                                                                             int LPArray_e1;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"SizeConst = -1\").WithArguments(\"SizeConst\"),\n                // (10,94): error CS0599: Invalid value for named attribute argument 'SizeParamIndex'\n                //     [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.ByValTStr, SizeConst = 0, SizeParamIndex = -1)]                                                                         int LPArray_e2;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"SizeParamIndex = -1\").WithArguments(\"SizeParamIndex\"),\n                // (11,79): error CS0599: Invalid value for named attribute argument 'SizeConst'\n                //     [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.ByValTStr, SizeConst = int.MaxValue, SizeParamIndex = short.MaxValue)]                                                  int LPArray_e3;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"SizeConst = int.MaxValue\").WithArguments(\"SizeConst\"),\n                // (12,72): error CS0599: Invalid value for named attribute argument 'SizeConst'\n                //     [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U8, SizeConst = int.MaxValue/4 + 1, SizeParamIndex = short.MaxValue)]                                                   int LPArray_e4;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"SizeConst = int.MaxValue/4 + 1\").WithArguments(\"SizeConst\"),\n                // (13,39): error CS0599: Invalid value for named attribute argument 'ArraySubType'\n                //     [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.CustomMarshaler)]                                                                                                       int LPArray_e5;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"ArraySubType = UnmanagedType.CustomMarshaler\").WithArguments(\"ArraySubType\"),\n                // (14,39): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.LPArray, SafeArraySubType=VarEnum.VT_I1)]                                                                                                                     int LPArray_e6;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SafeArraySubType=VarEnum.VT_I1\"),\n                // (15,39): error CS0599: Invalid value for named attribute argument 'ArraySubType'\n                //     [MarshalAs(UnmanagedType.LPArray, ArraySubType = (UnmanagedType)0x20000000)]                                                                                                           int LPArray_e7;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"ArraySubType = (UnmanagedType)0x20000000\").WithArguments(\"ArraySubType\"),\n                // (16,39): error CS0599: Invalid value for named attribute argument 'ArraySubType'\n                //     [MarshalAs(UnmanagedType.LPArray, ArraySubType = (UnmanagedType)(-1))]                                                                                                                 int LPArray_e8;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"ArraySubType = (UnmanagedType)(-1)\").WithArguments(\"ArraySubType\")",
+  "unsupported": []
+}

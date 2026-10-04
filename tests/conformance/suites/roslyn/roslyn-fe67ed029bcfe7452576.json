@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fe67ed029bcfe7452576",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\ninternal class Program\n{\n    static void Main(string[] args)\n    {\n        var object1 = new LegacyObject1();\n        var object2 = new LegacyObject2();\n    }\n}\n\n[Obsolete($\"Do not use {nameof(LegacyObject1)}\")]\npublic class LegacyObject1\n{\n}\n\n[Obsolete(\"Do not use\" + nameof(LegacyObject2))]\npublic class LegacyObject2\n{\n}",
+  "sourceSHA256": "30c33213eddcf32cb2b3ed8a5e0b96051550e7aca213db441f753a7bb73fa3eb",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ObsoleteWithInterpolation",
+    "offset": 500055
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,27): warning CS0618: 'LegacyObject1' is obsolete: 'Do not use LegacyObject1'\n                //         var object1 = new LegacyObject1();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"LegacyObject1\").WithArguments(\"LegacyObject1\", \"Do not use LegacyObject1\").WithLocation(7, 27),\n                // (8,27): warning CS0618: 'LegacyObject2' is obsolete: 'Do not useLegacyObject2'\n                //         var object2 = new LegacyObject2();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"LegacyObject2\").WithArguments(\"LegacyObject2\", \"Do not useLegacyObject2\").WithLocation(8, 27)\n                ",
+  "unsupported": []
+}

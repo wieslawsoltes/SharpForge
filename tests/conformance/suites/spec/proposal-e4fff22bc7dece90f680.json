@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e4fff22bc7dece90f680",
+  "kind": "spec",
+  "sourceText": "closed class C1\n{\n    public C() { }\n    public required string P { get; set; }\n}\n\n// Metadata:\nclass C1\n{\n    [Obsolete(\"Types with required members are not supported in this version of your compiler\")]\n    [CompilerFeatureRequired(\"RequiredMembers\")]\n    [CompilerFeatureRequired(\"ClosedClasses\")]\n    public C1() { }\n}",
+  "sourceSHA256": "8e99ada9a9a734a300f581715e2823fb0d00bd9ba2938538ec3858f946a70b1d",
+  "target": "library",
+  "featureId": "csharp-15-0-closed-hierarchies",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/closed-hierarchies.md",
+    "sha256": "42fefd4135df4a6d52f32ec44f95ddcf6f1a755a105a5fefe1cbf57d888feb96",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/closed-hierarchies.md",
+    "license": "NOASSERTION",
+    "offset": 11283
+  }
+}

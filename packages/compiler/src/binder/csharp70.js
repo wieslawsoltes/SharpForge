@@ -1,8 +1,10 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 /**
  * C# 7.0 rules of throw expressions and generalized async return types (SF-A02-T64).
  *
  * A throw expression has no type and is allowed only where control can leave an expression: as the second or
- * third operand of `?:`, as the right operand of `??`, and as the body of an expression-bodied member or lambda.
+ * third operand of `?:`, as the right operand of `??`, as the body of an expression-bodied member or lambda, and
+ * (C# 8) as the result of a switch expression arm.
  * Anywhere else it is CS8115 on the `throw` keyword, and what contains it is not checked further. As an expression
  * body it stands for a statement, so a void member or an `Action` lambda may be `=> throw e`.
  *
@@ -23,6 +25,9 @@ export function isThrowExpressionAllowed(syntax) {
       return parent.right === syntax;
     case 'ArrowExpressionClause':
       return true;
+    case 'SwitchExpressionArm':
+      // C# 8: an arm of a switch expression may throw instead of producing a value.
+      return parent.expression === syntax;
     default:
       return lambdaKinds.has(parent?.kind) && parent.expressionBody === syntax;
   }
@@ -67,13 +72,13 @@ export const CSharp70Binding = Base =>
       // The operand is still bound for its own diagnostics.
       this.value(syntax.expression);
       // Where the parser already rejected the `throw` (an operand of a binary operator is CS1525) nothing is added.
-      if (!this.hasSyntaxErrorAt(syntax.throwKeyword.span.start)) this.report(syntax.throwKeyword, 'CS8115');
+      if (!this.hasSyntaxErrorAt(syntax.throwKeyword.span.start)) this.report(syntax.throwKeyword, DiagnosticId.CS8115);
       return this.bad(syntax);
     }
     /** True when the parser reported an error that starts at `position` of this binder's file. */
     hasSyntaxErrorAt(position) {
       const file = this.d.files?.find(candidate => candidate.source.uri === this.c.uri);
-      return !!file?.diagnostics.some(diagnostic => diagnostic.start === position && diagnostic.code !== 'CS8115');
+      return !!file?.diagnostics.some(diagnostic => diagnostic.start === position && diagnostic.code !== DiagnosticId.CS8115);
     }
     /** An expression body `=> throw e` is a statement, also where no value is expected. */
     isStatementExpression(syntax) {

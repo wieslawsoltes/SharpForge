@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-45c69beedcf1d200747e",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Collections.Generic;\npublic class C\n{\n    public static void Main()\n    {\n        foreach (var i in new object())\n        {\n            Console.Write(i);\n        }\n    }\n}\npublic static class Extensions\n{\n    public static IEnumerator<T> GetEnumerator<T>(this object o, params T[] arr) => throw null;\n}",
+  "sourceSHA256": "15974629f3fcb059c00d3c453637bc97a546ace7b1d0dce15decc765d96ff269",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "sha256": "a8916f977bf7fcd541545be2f5e4bdc8faf297975fa81f0c7ad4833e9a24ce17",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "license": "MIT",
+    "method": "TestGetEnumeratorPatternViaExtension_WhereTypeParameternotInferred2",
+    "offset": 90878
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0411",
+        "severity": "error"
+      },
+      {
+        "code": "CS1579",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (8,27): error CS0411: The type arguments for method 'Extensions.GetEnumerator<T>(object, params T[])' cannot be inferred from the usage. Try specifying the type arguments explicitly.\n                    //         foreach (var i in new object())\n                    Diagnostic(ErrorCode.ERR_CantInferMethTypeArgs, \"new object()\").WithArguments(\"Extensions.GetEnumerator<T>(object, params T[])\").WithLocation(8, 27),\n                    // (8,27): error CS1579: foreach statement cannot operate on variables of type 'object' because 'object' does not contain a public instance or extension definition for 'GetEnumerator'\n                    //         foreach (var i in new object())\n                    Diagnostic(ErrorCode.ERR_ForEachMissingMember, \"new object()\").WithArguments(\"object\", \"GetEnumerator\").WithLocation(8, 27)\n                    ",
+  "unsupported": []
+}

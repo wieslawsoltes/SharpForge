@@ -5,6 +5,8 @@
   "exceptions/cs0157-return-in-finally": ["diagnostics", "warnings"],
   "exceptions/cs0160-catch-order": ["diagnostics", "warnings"],
   "exceptions/cs1524-try-without-catch": ["warnings"],
-  "exceptions/finally-on-return": ["diagnostics", "warnings", "bytecode", "cil"],
-  "exceptions/rethrow-and-nested": ["diagnostics", "warnings", "bytecode", "cil"]
+  "exceptions/exception-filter": ["diagnostics", "warnings", "bytecode", "cil"],
+  "exceptions/finally-on-return": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "exceptions/rethrow-and-nested": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "exceptions/runtime-exceptions": ["directCil"]
 }

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a5ac89a5622296795fa3",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    static void Main()\n    {\n        F<ushort>(sbyte.MaxValue); // 1\n        F<ushort>(short.MaxValue); // 2\n        F<ushort>(int.MaxValue); // 3\n        F<ushort>(long.MaxValue); // 4\n        F<uint>(sbyte.MaxValue); // 5\n        F<uint>(short.MaxValue); // 6\n        F<uint>(int.MaxValue); // 7\n        F<uint>(long.MaxValue); // 8\n        F<System.UIntPtr>(sbyte.MaxValue); // 9\n        F<System.UIntPtr>(short.MaxValue); // 10\n        F<System.UIntPtr>(int.MaxValue); // 11\n        F<System.UIntPtr>(long.MaxValue); // 12\n        F<nuint>(sbyte.MaxValue); // 13\n        F<nuint>(short.MaxValue); // 14\n        F<nuint>(int.MaxValue); // 15\n        F<nuint>(long.MaxValue); // 16\n        F<ulong>(sbyte.MaxValue); // 17\n        F<ulong>(short.MaxValue); // 18\n        F<ulong>(int.MaxValue); // 19\n        F<ulong>(long.MaxValue); // 20\n    }\n    static void F<T>(T n)\n    {\n    }\n}",
+  "sourceSHA256": "b6fec9d9a00831aff7c8aa3bdbb0eda9c05843ce04622fb2e75eaa61ae1646ff",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "Constants_ConvertToUnsigned",
+    "offset": 119535
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,19): error CS1503: Argument 1: cannot convert from 'sbyte' to 'ushort'\n                //         F<ushort>(sbyte.MaxValue); // 1\n                Diagnostic(ErrorCode.ERR_BadArgType, \"sbyte.MaxValue\").WithArguments(\"1\", \"sbyte\", \"ushort\").WithLocation(5, 19),\n                // (6,19): error CS1503: Argument 1: cannot convert from 'short' to 'ushort'\n                //         F<ushort>(short.MaxValue); // 2\n                Diagnostic(ErrorCode.ERR_BadArgType, \"short.MaxValue\").WithArguments(\"1\", \"short\", \"ushort\").WithLocation(6, 19),\n                // (7,19): error CS1503: Argument 1: cannot convert from 'int' to 'ushort'\n                //         F<ushort>(int.MaxValue); // 3\n                Diagnostic(ErrorCode.ERR_BadArgType, \"int.MaxValue\").WithArguments(\"1\", \"int\", \"ushort\").WithLocation(7, 19),\n                // (8,19): error CS1503: Argument 1: cannot convert from 'long' to 'ushort'\n                //         F<ushort>(long.MaxValue); // 4\n                Diagnostic(ErrorCode.ERR_BadArgType, \"long.MaxValue\").WithArguments(\"1\", \"long\", \"ushort\").WithLocation(8, 19),\n                // (9,17): error CS1503: Argument 1: cannot convert from 'sbyte' to 'uint'\n                //         F<uint>(sbyte.MaxValue); // 5\n                Diagnostic(ErrorCode.ERR_BadArgType, \"sbyte.MaxValue\").WithArguments(\"1\", \"sbyte\", \"uint\").WithLocation(9, 17),\n                // (10,17): error CS1503: Argument 1: cannot convert from 'short' to 'uint'\n                //         F<uint>(short.MaxValue); // 6\n                Diagnostic(ErrorCode.ERR_BadArgType, \"short.MaxValue\").WithArguments(\"1\", \"short\", \"uint\").WithLocation(10, 17),\n                // (12,17): error CS1503: Argument 1: cannot convert from 'long' to 'uint'\n                //         F<uint>(long.MaxValue); // 8\n                Diagnostic(ErrorCode.ERR_BadArgType, \"long.MaxValue\").WithArguments(\"1\", \"long\", \"uint\").WithLocation(12, 17),\n                // (13,27): error CS1503: Argument 1: cannot convert from 'sbyte' to 'nuint'\n                //         F<System.UIntPtr>(sbyte.MaxValue); // 9\n                Diagnostic(ErrorCode.ERR_BadArgType, \"sbyte.MaxValue\").WithArguments(\"1\", \"sbyte\", \"nuint\").WithLocation(13, 27),\n                // (14,27): error CS1503: Argument 1: cannot convert from 'short' to 'nuint'\n                //         F<System.UIntPtr>(short.MaxValue); // 10\n                Diagnostic(ErrorCode.ERR_BadArgType, \"short.MaxValue\").WithArguments(\"1\", \"short\", \"nuint\").WithLocation(14, 27),\n                // (16,27): error CS1503: Argument 1: cannot convert from 'long' to 'nuint'\n                //         F<System.UIntPtr>(long.MaxValue); // 12\n                Diagnostic(ErrorCode.ERR_BadArgType, \"long.MaxValue\").WithArguments(\"1\", \"long\", \"nuint\").WithLocation(16, 27),\n                // (17,18): error CS1503: Argument 1: cannot convert from 'sbyte' to 'nuint'\n                //         F<nuint>(sbyte.MaxValue); // 13\n                Diagnostic(ErrorCode.ERR_BadArgType, \"sbyte.MaxValue\").WithArguments(\"1\", \"sbyte\", \"nuint\").WithLocation(17, 18),\n                // (18,18): error CS1503: Argument 1: cannot convert from 'short' to 'nuint'\n                //         F<nuint>(short.MaxValue); // 14\n                Diagnostic(ErrorCode.ERR_BadArgType, \"short.MaxValue\").WithArguments(\"1\", \"short\", \"nuint\").WithLocation(18, 18),\n                // (20,18): error CS1503: Argument 1: cannot convert from 'long' to 'nuint'\n                //         F<nuint>(long.MaxValue); // 16\n                Diagnostic(ErrorCode.ERR_BadArgType, \"long.MaxValue\").WithArguments(\"1\", \"long\", \"nuint\").WithLocation(20, 18),\n                // (21,18): error CS1503: Argument 1: cannot convert from 'sbyte' to 'ulong'\n                //         F<ulong>(sbyte.MaxValue); // 17\n                Diagnostic(ErrorCode.ERR_BadArgType, \"sbyte.MaxValue\").WithArguments(\"1\", \"sbyte\", \"ulong\").WithLocation(21, 18),\n                // (22,18): error CS1503: Argument 1: cannot convert from 'short' to 'ulong'\n                //         F<ulong>(short.MaxValue); // 18\n                Diagnostic(ErrorCode.ERR_BadArgType, \"short.MaxValue\").WithArguments(\"1\", \"short\", \"ulong\").WithLocation(22, 18)\n                ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

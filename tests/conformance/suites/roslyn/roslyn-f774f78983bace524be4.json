@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f774f78983bace524be4",
+  "kind": "diagnostics",
+  "sourceText": "\nclass B\n{\n}\nstatic class @extension\n{\n    public static void Main(this B x, string[] args)\n    { }\n}\n",
+  "sourceSHA256": "abb966a70751536b572d229724b38b448a6a64c191a0dfdb5b2f96f610b78297",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "ExplicitMainType_Extension",
+    "offset": 52326
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe.WithMainTypeName(\"extension\"))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0028",
+        "severity": "warning"
+      },
+      {
+        "code": "CS1558",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,24): warning CS0028: 'extension.Main(B, string[])' has the wrong signature to be an entry point\n                //     public static void Main(this B x, string[] args)\n                Diagnostic(ErrorCode.WRN_InvalidMainSig, \"Main\").WithArguments(\"extension.Main(B, string[])\").WithLocation(7, 24),\n                // (5,14): error CS1558: 'extension' does not have a suitable static 'Main' method\n                // static class @extension\n                Diagnostic(ErrorCode.ERR_NoMainInClass, \"@extension\").WithArguments(\"extension\").WithLocation(5, 14)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6f7c75ecf3aec48a7da7",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        int x1;\n        foreach((x1, string y1) in new C[0]);\n        string y2;\n        foreach((int x2, y2) in new C[0]);\n    }\n\n    public void Deconstruct(out int a, out string b)\n    {\n        a = 1;\n        b = \"hello\";\n    }\n}\n",
+  "sourceSHA256": "2d7c817b787f25c6ada37921dddb7d86b551616366052aff0bd31791601a6f60",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "DontAllowMixedDeclarationAndAssignmentInForeachDeclarationVariable",
+    "offset": 328660
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0168",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8186",
+        "severity": "error"
+      },
+      {
+        "code": "CS0168",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8186",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (6,13): warning CS0168: The variable 'x1' is declared but never used\n                    //         int x1;\n                    Diagnostic(ErrorCode.WRN_UnreferencedVar, \"x1\").WithArguments(\"x1\").WithLocation(6, 13),\n                    // (7,17): error CS8186: A foreach loop must declare its iteration variables.\n                    //         foreach((x1, string y1) in new C[0]);\n                    Diagnostic(ErrorCode.ERR_MustDeclareForeachIteration, \"(x1, string y1)\").WithLocation(7, 17),\n                    // (8,16): warning CS0168: The variable 'y2' is declared but never used\n                    //         string y2;\n                    Diagnostic(ErrorCode.WRN_UnreferencedVar, \"y2\").WithArguments(\"y2\").WithLocation(8, 16),\n                    // (9,17): error CS8186: A foreach loop must declare its iteration variables.\n                    //         foreach((int x2, y2) in new C[0]);\n                    Diagnostic(ErrorCode.ERR_MustDeclareForeachIteration, \"(int x2, y2)\").WithLocation(9, 17)",
+  "unsupported": []
+}

@@ -1,0 +1,269 @@
+{
+  "runtime": ".NET 10.0.5",
+  "architecture": "Arm64",
+  "observations": [
+    {
+      "name": "anycpu-console.dll",
+      "machine": 332,
+      "magic": 267,
+      "characteristics": 34,
+      "flags": 1,
+      "subsystem": 3,
+      "entryPoint": 0,
+      "assemblyName": "anycpu-console",
+      "sections": [
+        {
+          "Name": ".text",
+          "VirtualAddress": 8192,
+          "PointerToRawData": 512,
+          "SizeOfRawData": 2048,
+          "VirtualSize": 1675
+        }
+      ],
+      "execution": "passed",
+      "reflectedKind": 1,
+      "reflectedMachine": 332
+    },
+    {
+      "name": "anycpu-library.dll",
+      "machine": 332,
+      "magic": 267,
+      "characteristics": 8226,
+      "flags": 1,
+      "subsystem": 3,
+      "entryPoint": 0,
+      "assemblyName": "anycpu-library",
+      "sections": [
+        {
+          "Name": ".text",
+          "VirtualAddress": 8192,
+          "PointerToRawData": 512,
+          "SizeOfRawData": 2048,
+          "VirtualSize": 1675
+        }
+      ],
+      "execution": "passed",
+      "reflectedKind": 1,
+      "reflectedMachine": 332
+    },
+    {
+      "name": "arm64-console.dll",
+      "machine": 43620,
+      "magic": 523,
+      "characteristics": 34,
+      "flags": 1,
+      "subsystem": 3,
+      "entryPoint": 0,
+      "assemblyName": "arm64-console",
+      "sections": [
+        {
+          "Name": ".text",
+          "VirtualAddress": 8192,
+          "PointerToRawData": 512,
+          "SizeOfRawData": 2048,
+          "VirtualSize": 1675
+        }
+      ],
+      "execution": "passed",
+      "reflectedKind": 5,
+      "reflectedMachine": 43620
+    },
+    {
+      "name": "arm64-library.dll",
+      "machine": 43620,
+      "magic": 523,
+      "characteristics": 8226,
+      "flags": 1,
+      "subsystem": 3,
+      "entryPoint": 0,
+      "assemblyName": "arm64-library",
+      "sections": [
+        {
+          "Name": ".text",
+          "VirtualAddress": 8192,
+          "PointerToRawData": 512,
+          "SizeOfRawData": 2048,
+          "VirtualSize": 1675
+        }
+      ],
+      "execution": "passed",
+      "reflectedKind": 5,
+      "reflectedMachine": 43620
+    },
+    {
+      "name": "x64-console.dll",
+      "machine": 34404,
+      "magic": 523,
+      "characteristics": 34,
+      "flags": 1,
+      "subsystem": 3,
+      "entryPoint": 0,
+      "assemblyName": "x64-console",
+      "sections": [
+        {
+          "Name": ".text",
+          "VirtualAddress": 8192,
+          "PointerToRawData": 512,
+          "SizeOfRawData": 2048,
+          "VirtualSize": 1671
+        }
+      ],
+      "execution": "unsupported-host",
+      "reflectedKind": null,
+      "reflectedMachine": null
+    },
+    {
+      "name": "x64-library.dll",
+      "machine": 34404,
+      "magic": 523,
+      "characteristics": 8226,
+      "flags": 1,
+      "subsystem": 3,
+      "entryPoint": 0,
+      "assemblyName": "x64-library",
+      "sections": [
+        {
+          "Name": ".text",
+          "VirtualAddress": 8192,
+          "PointerToRawData": 512,
+          "SizeOfRawData": 2048,
+          "VirtualSize": 1671
+        }
+      ],
+      "execution": "unsupported-host",
+      "reflectedKind": null,
+      "reflectedMachine": null
+    },
+    {
+      "name": "x86-console.dll",
+      "machine": 332,
+      "magic": 267,
+      "characteristics": 258,
+      "flags": 3,
+      "subsystem": 3,
+      "entryPoint": 0,
+      "assemblyName": "x86-console",
+      "sections": [
+        {
+          "Name": ".text",
+          "VirtualAddress": 8192,
+          "PointerToRawData": 512,
+          "SizeOfRawData": 2048,
+          "VirtualSize": 1671
+        }
+      ],
+      "execution": "unsupported-host",
+      "reflectedKind": null,
+      "reflectedMachine": null
+    },
+    {
+      "name": "x86-library.dll",
+      "machine": 332,
+      "magic": 267,
+      "characteristics": 8450,
+      "flags": 3,
+      "subsystem": 3,
+      "entryPoint": 0,
+      "assemblyName": "x86-library",
+      "sections": [
+        {
+          "Name": ".text",
+          "VirtualAddress": 8192,
+          "PointerToRawData": 512,
+          "SizeOfRawData": 2048,
+          "VirtualSize": 1671
+        }
+      ],
+      "execution": "unsupported-host",
+      "reflectedKind": null,
+      "reflectedMachine": null
+    },
+    {
+      "name": "desktop-anycpu.exe",
+      "machine": 332,
+      "magic": 267,
+      "characteristics": 34,
+      "flags": 1,
+      "subsystem": 3,
+      "entryPoint": 9676,
+      "assemblyName": "desktop-anycpu",
+      "sections": [
+        {
+          "Name": ".text",
+          "VirtualAddress": 8192,
+          "PointerToRawData": 512,
+          "SizeOfRawData": 1536,
+          "VirtualSize": 1490
+        },
+        {
+          "Name": ".reloc",
+          "VirtualAddress": 16384,
+          "PointerToRawData": 2048,
+          "SizeOfRawData": 1024,
+          "VirtualSize": 651
+        }
+      ],
+      "execution": "unsupported-host",
+      "reflectedKind": null,
+      "reflectedMachine": null
+    },
+    {
+      "name": "desktop-x64.exe",
+      "machine": 34404,
+      "magic": 523,
+      "characteristics": 34,
+      "flags": 1,
+      "subsystem": 3,
+      "entryPoint": 9716,
+      "assemblyName": "desktop-x64",
+      "sections": [
+        {
+          "Name": ".text",
+          "VirtualAddress": 8192,
+          "PointerToRawData": 512,
+          "SizeOfRawData": 1536,
+          "VirtualSize": 1530
+        },
+        {
+          "Name": ".reloc",
+          "VirtualAddress": 16384,
+          "PointerToRawData": 2048,
+          "SizeOfRawData": 1024,
+          "VirtualSize": 647
+        }
+      ],
+      "execution": "unsupported-host",
+      "reflectedKind": null,
+      "reflectedMachine": null
+    },
+    {
+      "name": "desktop-x86.exe",
+      "machine": 332,
+      "magic": 267,
+      "characteristics": 258,
+      "flags": 3,
+      "subsystem": 3,
+      "entryPoint": 9700,
+      "assemblyName": "desktop-x86",
+      "sections": [
+        {
+          "Name": ".text",
+          "VirtualAddress": 8192,
+          "PointerToRawData": 512,
+          "SizeOfRawData": 1536,
+          "VirtualSize": 1514
+        },
+        {
+          "Name": ".reloc",
+          "VirtualAddress": 16384,
+          "PointerToRawData": 2048,
+          "SizeOfRawData": 1024,
+          "VirtualSize": 647
+        }
+      ],
+      "execution": "unsupported-host",
+      "reflectedKind": null,
+      "reflectedMachine": null
+    }
+  ]
+}

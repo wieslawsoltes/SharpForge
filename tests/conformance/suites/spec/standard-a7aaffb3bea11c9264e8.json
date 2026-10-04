@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-a7aaffb3bea11c9264e8",
+  "kind": "spec",
+  "sourceText": "interface IPrintable\n{\n    void Print();\n}\n\ninterface IComparable<T>\n{\n    int CompareTo(T value);\n}\n\ninterface IKeyProvider<T>\n{\n    T GetKey();\n}\n\nclass Printer<T> where T : IPrintable {...}\nclass SortedList<T> where T : IComparable<T> {...}\n\nclass Dictionary<K,V>\n    where K : IComparable<K>\n    where V : IPrintable, IKeyProvider<K>, new()\n{\n    ...\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "377e1fbfda57f74a93fa985c001088a2f0877dce7865d39218c98a6bd7aa72f0",
+  "originalSource": "interface IPrintable\n{\n    void Print();\n}\n\ninterface IComparable<T>\n{\n    int CompareTo(T value);\n}\n\ninterface IKeyProvider<T>\n{\n    T GetKey();\n}\n\nclass Printer<T> where T : IPrintable {...}\nclass SortedList<T> where T : IComparable<T> {...}\n\nclass Dictionary<K,V>\n    where K : IComparable<K>\n    where V : IPrintable, IKeyProvider<K>, new()\n{\n    ...\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "TypeParameterConstraints1",
+    "replaceEllipsis": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "TypeParameterConstraints1",
+    "offsetInUnquotedMarkdown": 33406
+  }
+}

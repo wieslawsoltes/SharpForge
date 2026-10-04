@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3f36680c3bbabf23abe2",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\npublic class C\n{\n    public static void Main()\n    {\n        foreach (var i in new C())\n        {\n            Console.Write(i);\n        }\n    }\n    public sealed class Enumerator1\n    {\n    }\n    public sealed class Enumerator2\n    {\n        public int Current { get; private set; }\n        public bool MoveNext() => throw null;\n    }\n\n    public C.Enumerator1 GetEnumerator() => throw null;\n}\n\npublic static class Extensions\n{\n    public static C.Enumerator2 GetEnumerator(this C self) => throw null;\n}",
+  "sourceSHA256": "a59a61b8197646f875743010a3096ca1d15402e2597e3cad8310067ffbbdb3bf",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "sha256": "a8916f977bf7fcd541545be2f5e4bdc8faf297975fa81f0c7ad4833e9a24ce17",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "license": "MIT",
+    "method": "TestPreferEnumeratorPatternFromInstanceThanViaExtensionEvenWhenInvalid",
+    "offset": 96248
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0117",
+        "severity": "error"
+      },
+      {
+        "code": "CS0202",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (7,27): error CS0117: 'C.Enumerator1' does not contain a definition for 'Current'\n                    //         foreach (var i in new C())\n                    Diagnostic(ErrorCode.ERR_NoSuchMember, \"new C()\").WithArguments(\"C.Enumerator1\", \"Current\").WithLocation(7, 27),\n                    // (7,27): error CS0202: foreach requires that the return type 'C.Enumerator1' of 'C.GetEnumerator()' must have a suitable public 'MoveNext' method and public 'Current' property\n                    //         foreach (var i in new C())\n                    Diagnostic(ErrorCode.ERR_BadGetEnumerator, \"new C()\").WithArguments(\"C.Enumerator1\", \"C.GetEnumerator()\").WithLocation(7, 27)\n                    ",
+  "unsupported": []
+}

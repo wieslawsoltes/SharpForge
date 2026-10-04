@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-10e4e7bb047fb5f8f7d3",
+  "kind": "diagnostics",
+  "sourceText": "\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            var (a,b) =  Get(out int x, out int y);\n            Console.WriteLine($\"({a.first}, {a.second})\");\n        }\n\n        static (string first,string second) Get(out int a, out int b)\n        {\n            a = 0;\n            b = 1;\n            return (\"a\",\"b\");\n        }\n    }\n",
+  "sourceSHA256": "097720101eb71763cea9de6fb598a2e6f0b688a142f40a9338bdd3fb17819f8e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "DevDiv261049RegressionTest",
+    "offset": 992300
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      },
+      {
+        "code": "CS0103",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,37): error CS1061: 'string' does not contain a definition for 'first' and no extension method 'first' accepting a first argument of type 'string' could be found (are you missing a using directive or an assembly reference?)\n                //             Console.WriteLine($\"({a.first}, {a.second})\");\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"first\").WithArguments(\"string\", \"first\").WithLocation(7, 37),\n                // (7,48): error CS1061: 'string' does not contain a definition for 'second' and no extension method 'second' accepting a first argument of type 'string' could be found (are you missing a using directive or an assembly reference?)\n                //             Console.WriteLine($\"({a.first}, {a.second})\");\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"second\").WithArguments(\"string\", \"second\").WithLocation(7, 48),\n                // (7,13): error CS0103: The name 'Console' does not exist in the current context\n                //             Console.WriteLine($\"({a.first}, {a.second})\");\n                Diagnostic(ErrorCode.ERR_NameNotInContext, \"Console\").WithArguments(\"Console\").WithLocation(7, 13)\n                ",
+  "unsupported": []
+}

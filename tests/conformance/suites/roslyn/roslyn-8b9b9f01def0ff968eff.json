@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8b9b9f01def0ff968eff",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass Program\n{\n    public static void Main()\n    {\n        M1(false);\n        M1(true);\n    }\n    static void M1(bool b)\n    {\n        Span<int> s = stackalloc int[b switch { false => new A(), true => new B() }];\n        Console.WriteLine(s.Length);\n    }\n}\nclass A\n{\n    public A() { Console.Write(\"new A; \"); }\n    public static implicit operator int(A a) { Console.Write(\"A->int; \"); return 4; }\n}\nclass B\n{\n    public B() { Console.Write(\"new B; \"); }\n    public static implicit operator int(B b) { Console.Write(\"B->int; \"); return 2; }\n}\n",
+  "sourceSHA256": "f7a093e638952892c6f14137e59248d958e9186a05d2c920e8709134b308e4f0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "TargetTypedSwitch_StackallocSize",
+    "offset": 143501
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

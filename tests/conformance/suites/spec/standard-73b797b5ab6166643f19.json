@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-73b797b5ab6166643f19",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\ninterface ICounter\n{\n    void Increment();\n}\n\nstruct Counter : ICounter\n{\n    int value;\n\n    public override string ToString() => value.ToString();\n\n    void ICounter.Increment() => value++;\n}\n\nclass Program\n{\n    static void Test<T>() where T : ICounter, new()\n    {\n        T x = new T();\n        Console.WriteLine(x);\n        x.Increment();              // Modify x\n        Console.WriteLine(x);\n        ((ICounter)x).Increment();  // Modify boxed copy of x\n        Console.WriteLine(x);\n    }\n\n    static void Main() => Test<Counter>();\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "0cca92caa1f698de11ac348900cd8a4cfd96cc8be994c2b3e873a49e9fe3fb7f",
+  "originalSource": "interface ICounter\n{\n    void Increment();\n}\n\nstruct Counter : ICounter\n{\n    int value;\n\n    public override string ToString() => value.ToString();\n\n    void ICounter.Increment() => value++;\n}\n\nclass Program\n{\n    static void Test<T>() where T : ICounter, new()\n    {\n        T x = new T();\n        Console.WriteLine(x);\n        x.Increment();              // Modify x\n        Console.WriteLine(x);\n        ((ICounter)x).Increment();  // Modify boxed copy of x\n        Console.WriteLine(x);\n    }\n\n    static void Main() => Test<Counter>();\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "MeaningOfThis2",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-structs",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/structs.md",
+    "sha256": "53de26bf64c1dda02bf6edd00cbb816c260511bdd95d302f759970333c1ea663",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/structs.md",
+    "license": "MIT",
+    "example": "MeaningOfThis2",
+    "offsetInUnquotedMarkdown": 21661
+  }
+}

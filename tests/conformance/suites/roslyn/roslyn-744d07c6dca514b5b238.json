@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-744d07c6dca514b5b238",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Collections.Generic;\npublic class C\n{\n    IEnumerable<int> M() { yield return 1; }\n}",
+  "sourceSHA256": "d4f7b3a2a2c05bdb4dd9bcc1e4a6946325078b9ac19eef89eb5d401ffc195465",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/PDB/PDBIteratorTests.cs",
+    "sha256": "14dd3c9e1f3e244395367ebf143d6ca7ef51c22700478d5e365245b23ec9610c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/PDB/PDBIteratorTests.cs",
+    "license": "MIT",
+    "method": "PortableStateMachineDebugInfo",
+    "offset": 61794
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(src, parseOptions: TestOptions.Regular.WithNoRefSafetyRulesAttribute(), options: TestOptions.DebugDll, targetFramework: TargetFramework.NetCoreApp)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-57556073e141f0a8d08d",
+  "kind": "spec",
+  "sourceText": "class C<U, V> {}\ninterface I1<V> {}\nclass D : C<string, int>, I1<string> {}\nclass E<T> : C<int, T>, I1<T> {}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "34ae13db2403e501e2ff0704e2a99a4285609d72c110b6329827a9df6d8c7848",
+  "originalSource": "class C<U, V> {}\ninterface I1<V> {}\nclass D : C<string, int>, I1<string> {}\nclass E<T> : C<int, T>, I1<T> {}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "InterfaceImplementations3"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-interfaces",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/interfaces.md",
+    "sha256": "bcdf69f454a7bd5894c0b08364553fc6587a0a6ee444a93bc91c58138ff95f53",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/interfaces.md",
+    "license": "MIT",
+    "example": "InterfaceImplementations3",
+    "offsetInUnquotedMarkdown": 38718
+  }
+}

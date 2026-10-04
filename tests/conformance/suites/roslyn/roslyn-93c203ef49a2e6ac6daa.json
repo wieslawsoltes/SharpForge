@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-93c203ef49a2e6ac6daa",
+  "kind": "diagnostics",
+  "sourceText": "\n#nullable enable\n\nclass C\n{\n    void M1(object obj)\n    {\n        _ = (obj is string x and string y == true)\n            ? x.ToString()\n            : y.ToString(); // 1\n    }\n\n    void M2(object obj)\n    {\n        _ = (obj is string x and string y == false)\n            ? x.ToString() // 2\n            : y.ToString();\n    }\n\n    void M3(object obj)\n    {\n        _ = (obj is string x and string y != true)\n            ? x.ToString() // 3\n            : y.ToString();\n    }\n\n    void M4(object obj)\n    {\n        _ = (obj is string x and string y != false)\n            ? x.ToString()\n            : y.ToString(); // 4\n    }\n}\n",
+  "sourceSHA256": "82c0bf5f9689da89f0510348e0b771f41cbdee20d59610b8642284537a8f1fb6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "EqualsBoolConstant_04",
+    "offset": 165177
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,15): error CS0165: Use of unassigned local variable 'y'\n                //             : y.ToString(); // 1\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(10, 15),\n                // (16,15): error CS0165: Use of unassigned local variable 'x'\n                //             ? x.ToString() // 2\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(16, 15),\n                // (23,15): error CS0165: Use of unassigned local variable 'x'\n                //             ? x.ToString() // 3\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(23, 15),\n                // (31,15): error CS0165: Use of unassigned local variable 'y'\n                //             : y.ToString(); // 4\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(31, 15)\n                ",
+  "unsupported": []
+}

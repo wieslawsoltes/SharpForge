@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-dd213edf810dbdcec56c",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace InvalidWithSuffix\n{\n    public class DescriptionAttribute\n    {\n        public DescriptionAttribute(string name) { }\n    }\n}\n\nnamespace InvalidWithoutSuffix\n{\n    public class Description\n    {\n        public Description(string name) { }\n    }\n}\n\nnamespace TestNamespace_05\n{\n    using InvalidWithSuffix;\n    using InvalidWithoutSuffix;\n\n    [Description(null)]\n    public class Test { }\n    \n    [DescriptionAttribute(null)]\n    public class Test2 { }\n}\n",
+  "sourceSHA256": "23c70971906c4bf1fa7d8b076d37748afaff93941988a75a958d3eadb196523f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AmbiguousAttributeErrors_05",
+    "offset": 276608
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0616",
+        "severity": "error"
+      },
+      {
+        "code": "CS0616",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (23,6): error CS0616: 'InvalidWithoutSuffix.Description' is not an attribute class\n                //     [Description(null)]\n                Diagnostic(ErrorCode.ERR_NotAnAttributeClass, \"Description\").WithArguments(\"InvalidWithoutSuffix.Description\"),\n                // (26,6): error CS0616: 'InvalidWithSuffix.DescriptionAttribute' is not an attribute class\n                //     [DescriptionAttribute(null)]\n                Diagnostic(ErrorCode.ERR_NotAnAttributeClass, \"DescriptionAttribute\").WithArguments(\"InvalidWithSuffix.DescriptionAttribute\")",
+  "unsupported": []
+}

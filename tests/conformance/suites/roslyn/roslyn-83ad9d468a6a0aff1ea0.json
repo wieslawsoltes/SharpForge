@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-83ad9d468a6a0aff1ea0",
+  "kind": "diagnostics",
+  "sourceText": "[assembly: System.Reflection.AssemblyKeyName(\"bogus\")] public class C {}",
+  "sourceSHA256": "4ad6aee8d595b53f381ddb796ade3222968d2c5598b639986130cfe808e1e40f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "KeyContainerAttributeOptionConflict",
+    "offset": 20733
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(s, options: TestOptions.SigningReleaseDll.WithCryptoKeyContainer(\"RoslynTestContainer\"), parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1616",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "Diagnostic(ErrorCode.WRN_CmdOptionConflictsSource).WithArguments(\"CryptoKeyContainer\", \"System.Reflection.AssemblyKeyNameAttribute\")",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

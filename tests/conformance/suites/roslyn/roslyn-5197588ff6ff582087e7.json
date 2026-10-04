@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5197588ff6ff582087e7",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\nclass A1 : Attribute;\nclass A2 : Attribute;\nclass A3 : Attribute;\n\npartial class C\n{\n    [A1] [method: A2] partial C( // def\n        [A1] [param: A2] int x);\n    [A1] [method: A2] partial C( // impl\n        [A1] [param: A2] int x) { }\n\n    [A1] [method: A2] partial event Action E;\n    [A1] [method: A2] partial event Action E\n    {\n        [A1] [method: A1] [param: A2] add { }\n        [A1] [method: A1] [param: A2] remove { }\n    }\n\n    [A1] [method: A2] [param: A3] partial event Action F;\n    [A1] [method: A2] [param: A3] extern partial event Action F;\n}",
+  "sourceSHA256": "59374e2367fd1dad194103fcc68dd8fe18f141931c8a813f8180453d8d87ef70",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Attributes_Duplicates",
+    "offset": 176436
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0657",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0657",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0657",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0657",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (10,10): error CS0579: Duplicate 'A1' attribute\n            //         [A1] [param: A2] int x);\n            Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"A1\").WithArguments(\"A1\").WithLocation(10, 10),\n            // (10,22): error CS0579: Duplicate 'A2' attribute\n            //         [A1] [param: A2] int x);\n            Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"A2\").WithArguments(\"A2\").WithLocation(10, 22),\n            // (11,6): error CS0579: Duplicate 'A1' attribute\n            //     [A1] [method: A2] partial C( // impl\n            Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"A1\").WithArguments(\"A1\").WithLocation(11, 6),\n            // (11,19): error CS0579: Duplicate 'A2' attribute\n            //     [A1] [method: A2] partial C( // impl\n            Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"A2\").WithArguments(\"A2\").WithLocation(11, 19),\n            // (14,11): warning CS0657: 'method' is not a valid attribute location for this declaration. Valid attribute locations for this declaration are 'event'. All attributes in this block will be ignored.\n            //     [A1] [method: A2] partial event Action E;\n            Diagnostic(ErrorCode.WRN_AttributeLocationOnBadDeclaration, \"method\").WithArguments(\"method\", \"event\").WithLocation(14, 11),\n            // (15,6): error CS0579: Duplicate 'A1' attribute\n            //     [A1] [method: A2] partial event Action E\n            Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"A1\").WithArguments(\"A1\").WithLocation(15, 6),\n            // (15,11): warning CS0657: 'method' is not a valid attribute location for this declaration. Valid attribute locations for this declaration are 'event'. All attributes in this block will be ignored.\n            //     [A1] [method: A2] partial event Action E\n            Diagnostic(ErrorCode.WRN_AttributeLocationOnBadDeclaration, \"method\").WithArguments(\"method\", \"event\").WithLocation(15, 11),\n            // (17,23): error CS0579: Duplicate 'A1' attribute\n            //         [A1] [method: A1] [param: A2] add { }\n            Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"A1\").WithArguments(\"A1\").WithLocation(17, 23),\n            // (18,23): error CS0579: Duplicate 'A1' attribute\n            //         [A1] [method: A1] [param: A2] remove { }\n            Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"A1\").WithArguments(\"A1\").WithLocation(18, 23),\n            // (21,24): warning CS0657: 'param' is not a valid attribute location for this declaration. Valid attribute locations for this declaration are 'method, event'. All attributes in this block will be ignored.\n            //     [A1] [method: A2] [param: A3] partial event Action F;\n            Diagnostic(ErrorCode.WRN_AttributeLocationOnBadDeclaration, \"param\").WithArguments(\"param\", \"method, event\").WithLocation(21, 24),\n            // (21,31): error CS0579: Duplicate 'A3' attribute\n            //     [A1] [method: A2] [param: A3] partial event Action F;\n            Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"A3\").WithArguments(\"A3\").WithLocation(21, 31),\n            // (21,31): error CS0579: Duplicate 'A3' attribute\n            //     [A1] [method: A2] [param: A3] partial event Action F;\n            Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"A3\").WithArguments(\"A3\").WithLocation(21, 31),\n            // (22,6): error CS0579: Duplicate 'A1' attribute\n            //     [A1] [method: A2] [param: A3] extern partial event Action F;\n            Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"A1\").WithArguments(\"A1\").WithLocation(22, 6),\n            // (22,19): error CS0579: Duplicate 'A2' attribute\n            //     [A1] [method: A2] [param: A3] extern partial event Action F;\n            Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"A2\").WithArguments(\"A2\").WithLocation(22, 19),\n            // (22,24): warning CS0657: 'param' is not a valid attribute location for this declaration. Valid attribute locations for this declaration are 'method, event'. All attributes in this block will be ignored.\n            //     [A1] [method: A2] [param: A3] extern partial event Action F;\n            Diagnostic(ErrorCode.WRN_AttributeLocationOnBadDeclaration, \"param\").WithArguments(\"param\", \"method, event\").WithLocation(22, 24)",
+  "unsupported": []
+}

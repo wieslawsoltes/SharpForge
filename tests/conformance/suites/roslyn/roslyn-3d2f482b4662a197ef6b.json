@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3d2f482b4662a197ef6b",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing System.Linq.Expressions;\nclass Program\n{\n    public static void Main(string[] args)\n    {\n        Expression<Func<int, int[,]>> x = i => new[,] {{ i }};\n    }\n}",
+  "sourceSHA256": "889cb3e3a396cb0b09e660ec80a03916cb56671beaabaf260e628c9b7461fe55",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "sha256": "6ded88d14b8dc1163d157ec2de9f3f9566d5ff0a7e20170d6687ea20cf6d1f00",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "license": "MIT",
+    "method": "CS0838ERR_ExpressionTreeContainsMultiDimensionalArrayInitializer",
+    "offset": 20232
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0838",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (7,48): error CS0838: An expression tree may not contain a multidimensional array initializer\n                    //         Expression<Func<int, int[,]>> x = i => new[,] {{ i }};\n                    Diagnostic(ErrorCode.ERR_ExpressionTreeContainsMultiDimensionalArrayInitializer, \"new[,] {{ i }}\")\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-34e6562fca054dc8e54b",
+  "kind": "spec",
+  "sourceText": "a?.b ??= c; // equivalent to:\nif (a is not null)\n{\n    if (a.b is null)\n    {\n        a.b = c;\n    }\n}\n\nreturn a?.b ??= c; // equivalent to:\nreturn a is null\n    ? null\n    : a.b is null\n        ? a.b = c\n        : a.b;",
+  "sourceSHA256": "b84f63f135c056fc887a37f28a3a9d815b60c439d9c59bac71f32037471cb84a",
+  "target": "library",
+  "featureId": "csharp-14-0-null-conditional-assignment",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/null-conditional-assignment.md",
+    "sha256": "95de9584c9e9e98ae1f5d46ef4c79eb395665f25bc8d002b7af1a0c5a4ac6daa",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/null-conditional-assignment.md",
+    "license": "NOASSERTION",
+    "offset": 6142
+  }
+}

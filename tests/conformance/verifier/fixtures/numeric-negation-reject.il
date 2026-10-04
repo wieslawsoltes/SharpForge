@@ -1,0 +1,14 @@
+// SharpForge-authored ECMA-335 sixth edition III.3.50 fixture.
+.assembly extern System.Runtime {}
+.assembly numeric_negation_reject {}
+.module numeric_negation_reject.dll
+.class public auto ansi sealed Test extends [System.Runtime]System.Object {
+ .method public static void Run() cil managed {
+  .locals init (int32 local)
+  .maxstack 8
+  ldnull
+ neg
+ pop
+ ret
+ }
+}

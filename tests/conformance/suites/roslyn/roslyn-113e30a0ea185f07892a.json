@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-113e30a0ea185f07892a",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static void Main(string[] args)\n    {\n        foreach (M(out var x1) in new[] { 1, 2, 3 })\n        {\n            System.Console.WriteLine(x1);\n        }\n    }\n    static int _M;\n    static ref int M(out int x) { x = 2; return ref _M; }\n}",
+  "sourceSHA256": "53c39892a8b72a51568b3dd5f395b308e155d855e94b9a5991cec86c4dd742f4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "ForeachIntoExpression",
+    "offset": 254769
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0230",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,32): error CS0230: Type and identifier are both required in a foreach statement\n                //         foreach (M(out var x1) in new[] { 1, 2, 3 })\n                Diagnostic(ErrorCode.ERR_BadForeachDecl, \"in\").WithLocation(6, 32)\n                ",
+  "unsupported": []
+}

@@ -152,6 +152,9 @@ export const slotNames = Object.freeze({
   DefaultLiteralExpression: ['token'],
   ArgListExpression: ['token'],
   FieldExpression: ['token'],
+  MakeRefExpression: ['keyword', 'openParenToken', 'expression', 'closeParenToken'],
+  RefTypeExpression: ['keyword', 'openParenToken', 'expression', 'closeParenToken'],
+  RefValueExpression: ['keyword', 'openParenToken', 'expression', 'comma', 'type', 'closeParenToken'],
   TypeOfExpression: ['keyword', 'openParenToken', 'type', 'closeParenToken'],
   SizeOfExpression: ['keyword', 'openParenToken', 'type', 'closeParenToken'],
   DefaultExpression: ['keyword', 'openParenToken', 'type', 'closeParenToken'],
@@ -452,6 +455,9 @@ export const slotTypes = Object.freeze({
   DefaultLiteralExpression: '0',
   ArgListExpression: '0',
   FieldExpression: '0',
+  MakeRefExpression: '0000',
+  RefTypeExpression: '0000',
+  RefValueExpression: '000000',
   TypeOfExpression: '0000',
   SizeOfExpression: '0000',
   DefaultExpression: '0000',
@@ -1525,6 +1531,43 @@ export class FieldExpressionSyntax extends SyntaxNode {
   withToken(value) { return this.withSlot(0, value); }
 }
 registerNodeClass(['FieldExpression'], FieldExpressionSyntax);
+export class MakeRefExpressionSyntax extends SyntaxNode {
+  get keyword() { return this.slot(0); }
+  withKeyword(value) { return this.withSlot(0, value); }
+  get openParenToken() { return this.slot(1); }
+  withOpenParenToken(value) { return this.withSlot(1, value); }
+  get expression() { return this.slot(2); }
+  withExpression(value) { return this.withSlot(2, value); }
+  get closeParenToken() { return this.slot(3); }
+  withCloseParenToken(value) { return this.withSlot(3, value); }
+}
+registerNodeClass(['MakeRefExpression'], MakeRefExpressionSyntax);
+export class RefTypeExpressionSyntax extends SyntaxNode {
+  get keyword() { return this.slot(0); }
+  withKeyword(value) { return this.withSlot(0, value); }
+  get openParenToken() { return this.slot(1); }
+  withOpenParenToken(value) { return this.withSlot(1, value); }
+  get expression() { return this.slot(2); }
+  withExpression(value) { return this.withSlot(2, value); }
+  get closeParenToken() { return this.slot(3); }
+  withCloseParenToken(value) { return this.withSlot(3, value); }
+}
+registerNodeClass(['RefTypeExpression'], RefTypeExpressionSyntax);
+export class RefValueExpressionSyntax extends SyntaxNode {
+  get keyword() { return this.slot(0); }
+  withKeyword(value) { return this.withSlot(0, value); }
+  get openParenToken() { return this.slot(1); }
+  withOpenParenToken(value) { return this.withSlot(1, value); }
+  get expression() { return this.slot(2); }
+  withExpression(value) { return this.withSlot(2, value); }
+  get comma() { return this.slot(3); }
+  withComma(value) { return this.withSlot(3, value); }
+  get type() { return this.slot(4); }
+  withType(value) { return this.withSlot(4, value); }
+  get closeParenToken() { return this.slot(5); }
+  withCloseParenToken(value) { return this.withSlot(5, value); }
+}
+registerNodeClass(['RefValueExpression'], RefValueExpressionSyntax);
 export class TypeOfExpressionSyntax extends SyntaxNode {
   get keyword() { return this.slot(0); }
   withKeyword(value) { return this.withSlot(0, value); }
@@ -2997,6 +3040,9 @@ export const SyntaxFactory = Object.freeze({
   baseExpression(token) { return make('BaseExpression', [token]); },
   literalExpression(kind, token) { return make(kind, [token]); },
   fieldExpression(token) { return make('FieldExpression', [token]); },
+  makeRefExpression(keyword, openParenToken, expression, closeParenToken) { return make('MakeRefExpression', [keyword, openParenToken, expression, closeParenToken]); },
+  refTypeExpression(keyword, openParenToken, expression, closeParenToken) { return make('RefTypeExpression', [keyword, openParenToken, expression, closeParenToken]); },
+  refValueExpression(keyword, openParenToken, expression, comma, type, closeParenToken) { return make('RefValueExpression', [keyword, openParenToken, expression, comma, type, closeParenToken]); },
   typeOfExpression(keyword, openParenToken, type, closeParenToken) { return make('TypeOfExpression', [keyword, openParenToken, type, closeParenToken]); },
   sizeOfExpression(keyword, openParenToken, type, closeParenToken) { return make('SizeOfExpression', [keyword, openParenToken, type, closeParenToken]); },
   defaultExpression(keyword, openParenToken, type, closeParenToken) { return make('DefaultExpression', [keyword, openParenToken, type, closeParenToken]); },

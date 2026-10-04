@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 static class Program
@@ -46,6 +47,11 @@ static class Program
         await Task.Delay(1);
         return value;
     }
+    static IEnumerable<int> Values()
+    {
+        try { yield return 3; yield return 4; }
+        finally { Console.WriteLine("iterator-finally"); }
+    }
     static void Main()
     {
         Console.WriteLine(Work().GetAwaiter().GetResult());
@@ -56,5 +62,7 @@ static class Program
         Console.WriteLine(voidResult);
         YieldTwice().GetAwaiter().GetResult();
         Console.WriteLine(Echo(9).GetAwaiter().GetResult());
+        foreach (int value in Values()) Console.WriteLine(value);
+        foreach (int value in Values()) { Console.WriteLine(value); break; }
     }
 }

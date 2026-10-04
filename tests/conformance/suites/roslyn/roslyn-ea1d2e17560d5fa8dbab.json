@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ea1d2e17560d5fa8dbab",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing var = Legacy;\n\nvar a = new();\n\n[Obsolete(\"error\", true)]\npublic class Legacy\n{\n}",
+  "sourceSHA256": "e198c6a5b53cdab87eae5f6d525b4d8239b066c477e3a035db92421b93cdc52d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ObsoleteVarAlias",
+    "offset": 502855
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8981",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,7): warning CS8981: The type name 'var' only contains lower-cased ascii characters. Such names may become reserved for the language.\n                // using var = Legacy;\n                Diagnostic(ErrorCode.WRN_LowerCaseTypeName, \"var\").WithArguments(\"var\").WithLocation(2, 7),\n                // (4,1): error CS0619: 'Legacy' is obsolete: 'error'\n                // var a = new();\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"var\").WithArguments(\"Legacy\", \"error\").WithLocation(4, 1),\n                // (4,1): error CS0619: 'Legacy' is obsolete: 'error'\n                // var a = new();\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"var\").WithArguments(\"Legacy\", \"error\").WithLocation(4, 1)\n            ",
+  "unsupported": []
+}

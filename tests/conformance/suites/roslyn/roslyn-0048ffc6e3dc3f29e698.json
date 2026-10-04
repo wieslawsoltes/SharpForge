@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0048ffc6e3dc3f29e698",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static void Main(string[] args)\n    {\n        bool b;\n        int s = (b = false) ? 5 : 100; // Warning\n    }\n}\n",
+  "sourceSHA256": "51b9abd8bdf157b3e7a39489443d55bc2ba5a55e911b57411dd5e8349610c853",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "sha256": "a146aeb41311a33fd51733055804d5bdd45ba0e5302ca02348a06cb7e94dd243",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "license": "MIT",
+    "method": "CS0219WRN_UnreferencedVarAssg_ConditionalOperator",
+    "offset": 193325
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0665",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,18): warning CS0665: Assignment in conditional expression is always constant; did you mean to use == instead of = ?\n                //         int s = (b = false) ? 5 : 100; \t\t// Warning\n                Diagnostic(ErrorCode.WRN_IncorrectBooleanAssg, \"b = false\"),\n                // (6,14): warning CS0219: The variable 'b' is assigned but its value is never used\n                //         bool b;\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"b\").WithArguments(\"b\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,10 +1,3 @@
-/** Preserve function-pointer calling convention/instance information in CLI display types. */
-export function functionPointerType(signature) {
-  const convention = signature.callingConvention ? `unmanaged[${signature.callingConvention}] ` : '';
-  const instance = signature.isStatic ? '' : 'instance ';
-  return 'method ' + convention + instance + signature.returnType + ' *(' + signature.parameters.join(', ') + ')';
-}
-
 function splitTypes(text) {
   if (!text.trim()) return [];
   const result = [];
@@ -19,8 +12,9 @@ function splitTypes(text) {
   return result;
 }
 
+/** Read CLI function-pointer display types; null means the spelling is not a pointer signature. */
 export function parseFunctionPointerType(type) {
-  if (!type.startsWith('method ')) return null;
+  if (typeof type !== 'string' || !type.startsWith('method ')) return null;
   let text = type.slice(7);
   const convention = /^unmanaged\[(\d+)\] /.exec(text);
   if (convention) text = text.slice(convention[0].length);

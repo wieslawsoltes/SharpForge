@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-88a66fc6a1c383b47a77",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public void M<T>(T t)\n    {\n        _ = (t, t) == (t, t);\n    }\n}\n",
+  "sourceSHA256": "5da474dd6703bffc3a0604a8ac274ecb5577bb1bc101bac1a040acc1e5b84c72",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestGenericElement",
+    "offset": 196033
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,13): error CS0019: Operator '==' cannot be applied to operands of type 'T' and 'T'\n                //         _ = (t, t) == (t, t);\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(t, t) == (t, t)\").WithArguments(\"==\", \"T\", \"T\").WithLocation(6, 13),\n                // (6,13): error CS0019: Operator '==' cannot be applied to operands of type 'T' and 'T'\n                //         _ = (t, t) == (t, t);\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(t, t) == (t, t)\").WithArguments(\"==\", \"T\", \"T\").WithLocation(6, 13)\n                ",
+  "unsupported": []
+}

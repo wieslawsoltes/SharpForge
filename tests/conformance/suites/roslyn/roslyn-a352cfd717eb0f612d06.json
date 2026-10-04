@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a352cfd717eb0f612d06",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    struct S1\n    {\n        public int i;\n        public int ii { get; }\n    }\n\n    S1 x { get; set;}\n    S1 x2 { get;}\n\n\n    public Program()\n    {\n        System.Action a = () =>\n        {\n            this.x = new S1();\n        };\n\n        System.Action a2 = () =>\n        {\n            this.x2 = new S1();\n        };\n    }\n\n    public void Goo()\n    {\n    }\n\n    static void Main(string[] args)\n    {\n\n    }\n}",
+  "sourceSHA256": "c8c8b40ec24bfbbf0a1313422c6390fdf49f1d59bf46de403238538d3c7099f6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "AutoPropInitialization7c",
+    "offset": 53085
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0200",
+        "severity": "error"
+      },
+      {
+        "code": "CS0649",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n    // (23,13): error CS0200: Property or indexer 'Program.x2' cannot be assigned to -- it is read only\n    //             this.x2 = new S1();\n    Diagnostic(ErrorCode.ERR_AssgReadonlyProp, \"this.x2\").WithArguments(\"Program.x2\").WithLocation(23, 13),\n    // (6,20): warning CS0649: Field 'Program.S1.i' is never assigned to, and will always have its default value 0\n    //         public int i;\n    Diagnostic(ErrorCode.WRN_UnassignedInternalField, \"i\").WithArguments(\"Program.S1.i\", \"0\").WithLocation(6, 20)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-dcda7b19554d9501c3f1",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C\n{\n    public static void Main()\n    {\n        void Local(string s = nameof(Local))\n        {\n            Console.WriteLine(s);\n        }\n        Local();\n    }\n}",
+  "sourceSHA256": "a7ab7ed8e37871b7ce838e964b523d047b354284aa212fa39b83dfc47e5abb8a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenLocalFunctionTests.cs",
+    "sha256": "f82408ae8a01719408de7138990acc9c61883a313220662a688379932fdef2d2",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenLocalFunctionTests.cs",
+    "license": "MIT",
+    "method": "NameofRecursiveDefaultParameter",
+    "offset": 26680
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\nclass C\n{\n    public static void Main()\n    {\n        void Local(string s = nameof(Local))\n        {\n            Console.WriteLine(s);\n        }\n        Local();\n    }\n}\", options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

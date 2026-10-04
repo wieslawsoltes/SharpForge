@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9b8e29ac60ad2d82b624",
+  "kind": "diagnostics",
+  "sourceText": "static class Program\n{\n    static void Main()\n    {\n        int x = 1;\n        if (x is var y and x.P and > 2) { }\n    }\n\n    extension (ref int i)\n    {\n        public int P => i;\n    }\n}",
+  "sourceSHA256": "979e28f4e03b4aeeefa6b42f7238152ab0c150d2462aec5d48bc77d8e0af5eb3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/PatternsVsRegions.cs",
+    "sha256": "51b4c05d593366400090e7faa42bb90b533e351790eb3ce6018268465a18bde7",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/PatternsVsRegions.cs",
+    "license": "MIT",
+    "method": "RegionWithinSubpattern02",
+    "offset": 16267
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\"\"\"\n                static class Program\n                {\n                    static void Main()\n                    {\n                        int x = 1;\n                        if (x is var y and x.P and > 2) { }\n                    }\n\n                    extension (ref int i)\n                    {\n                        public int P => i;\n                    }\n                }\n                \"\"\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9135",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,28): error CS9135: A constant value of type 'int' is expected\n                //         if (x is var y and x.P and > 2) { }\n                Diagnostic(ErrorCode.ERR_ConstantValueOfTypeExpected, \"x.P\").WithArguments(\"int\").WithLocation(6, 28)",
+  "unsupported": []
+}

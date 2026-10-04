@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f658d32550bc0a46ef85",
+  "kind": "diagnostics",
+  "sourceText": "\npublic interface I0<T>\n{\n    T get();\n    void set(T x);\n}\npublic class C : I0<(int a, int b)>\n{\n    public (int notA, int notB) get() { return (1, 2); }\n    public void set((int notA, int notB) y) { }\n}\npublic class D : I0<(int a, int b)>\n{\n    public (int a, int b) get() { return (1, 2); }\n    public void set((int a, int b) y) { }\n}\n",
+  "sourceSHA256": "000c0bbfb556a3e7bfb8bfc30332d0f0f8370da358961e7e625e8080d985fe86",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ImplicitInterfaceImplementationWithDifferentTupleNames",
+    "offset": 924365
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8141",
+        "severity": "error"
+      },
+      {
+        "code": "CS8141",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,17): error CS8141: The tuple element names in the signature of method 'C.set((int notA, int notB))' must match the tuple element names of interface method 'I0<(int a, int b)>.set((int a, int b))'.\n                //     public void set((int notA, int notB) y) { }\n                Diagnostic(ErrorCode.ERR_ImplBadTupleNames, \"set\").WithArguments(\"C.set((int notA, int notB))\", \"I0<(int a, int b)>.set((int a, int b))\").WithLocation(10, 17),\n                // (9,33): error CS8141: The tuple element names in the signature of method 'C.get()' must match the tuple element names of interface method 'I0<(int a, int b)>.get()'.\n                //     public (int notA, int notB) get() { return (1, 2); }\n                Diagnostic(ErrorCode.ERR_ImplBadTupleNames, \"get\").WithArguments(\"C.get()\", \"I0<(int a, int b)>.get()\").WithLocation(9, 33)\n                ",
+  "unsupported": []
+}

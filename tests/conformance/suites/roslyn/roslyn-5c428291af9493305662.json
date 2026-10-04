@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5c428291af9493305662",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    int M((int, int) t)\n    {\n        return t.Item1;\n    }\n}\n",
+  "sourceSHA256": "873e4c456be3959a5e7154aa1a55182d0f9e629cdb37e49fd9781d692f096651",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "EmptyValueTuple",
+    "offset": 1210506
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { comp.EmitToImageReference() }, targetFramework: TargetFramework.Mscorlib40)",
+  "options": "(client, references: new[] { comp.EmitToImageReference() }, targetFramework: TargetFramework.Mscorlib40)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8128",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,18): error CS8128: Member 'Item1' was not found on type '(T1, T2)' from assembly 'emptyValueTuple, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.\n                //         return t.Item1;\n                Diagnostic(ErrorCode.ERR_PredefinedTypeMemberNotFoundInAssembly, \"Item1\").WithArguments(\"Item1\", \"(T1, T2)\", \"emptyValueTuple, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\").WithLocation(6, 18)\n                ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

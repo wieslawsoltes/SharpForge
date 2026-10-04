@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d4418c1a31c02088aac8",
+  "kind": "diagnostics",
+  "sourceText": "class B : A // CS0534\n{\n}\n",
+  "sourceSHA256": "2f97de22d0da73d23a34e226558c2352c8276bd750f98a844f5b9221aa39d2fe",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "UnimplementedInaccessible",
+    "offset": 36073
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "references: new[] { new CSharpCompilationReference(compilation1) })",
+  "options": "(source2, parseOptions: TestOptions.Regular7_2,\n                references: new[] { new CSharpCompilationReference(compilation1) })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0534",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (1,7): error CS0534: 'B' does not implement inherited abstract member 'A.F()'\n                // class B : A // CS0534\n                Diagnostic(ErrorCode.ERR_UnimplementedAbstractMethod, \"B\").WithArguments(\"B\", \"A.F()\").WithLocation(1, 7)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

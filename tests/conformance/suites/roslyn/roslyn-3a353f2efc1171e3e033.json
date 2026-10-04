@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3a353f2efc1171e3e033",
+  "kind": "diagnostics",
+  "sourceText": "\nextern alias A;\nextern alias B;\n\nclass C : A::I, B::I\n{\n    void A::I.M() { }\n    int A::I.P { get { return 0; } set { } }\n    event System.Action A::I.E { add { } remove { } }\n\n    void B::I.M() { }\n    int B::I.P { get { return 0; } set { } }\n    event System.Action B::I.E { add { } remove { } }\n}\n",
+  "sourceSHA256": "facc33a00af1aa1a684f757cfae68080b41dd19a57a3e59183804ce5b29a2b18",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExplicitImplementationTests.cs",
+    "sha256": "f3667bc33870c0d203a2f26fd6aba2159ff4ef2f8584f3713295352a09aa3a5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExplicitImplementationTests.cs",
+    "license": "MIT",
+    "method": "TestImplementMultipleExternAliasInterfaces",
+    "offset": 39868
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, new[] { new CSharpCompilationReference(libComp1, aliases: ImmutableArray.Create(\"A\")), new CSharpCompilationReference(libComp1, aliases: ImmutableArray.Create(\"B\")) })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0528",
+        "severity": "error"
+      },
+      {
+        "code": "CS8646",
+        "severity": "error"
+      },
+      {
+        "code": "CS8646",
+        "severity": "error"
+      },
+      {
+        "code": "CS8646",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,17): error CS0528: 'I' is already listed in interface list\n                // class C : A::I, B::I\n                Diagnostic(ErrorCode.ERR_DuplicateInterfaceInBaseList, \"B::I\").WithArguments(\"I\"),\n                // (5,7): error CS8646: 'I.E' is explicitly implemented more than once.\n                // class C : A::I, B::I\n                Diagnostic(ErrorCode.ERR_DuplicateExplicitImpl, \"C\").WithArguments(\"I.E\").WithLocation(5, 7),\n                // (5,7): error CS8646: 'I.P' is explicitly implemented more than once.\n                // class C : A::I, B::I\n                Diagnostic(ErrorCode.ERR_DuplicateExplicitImpl, \"C\").WithArguments(\"I.P\").WithLocation(5, 7),\n                // (5,7): error CS8646: 'I.M()' is explicitly implemented more than once.\n                // class C : A::I, B::I\n                Diagnostic(ErrorCode.ERR_DuplicateExplicitImpl, \"C\").WithArguments(\"I.M()\").WithLocation(5, 7)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

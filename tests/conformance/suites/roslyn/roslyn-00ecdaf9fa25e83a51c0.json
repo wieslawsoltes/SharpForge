@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-00ecdaf9fa25e83a51c0",
+  "kind": "diagnostics",
+  "sourceText": "static class C\n{\n    static void M1(this int x, ref readonly int y) { }\n    static void M2(this ref readonly int x, ref readonly int y) { }\n    static void M3()\n    {\n        var x = 1;\n        x.M1(in x);\n        x.M1(x);\n        M1(x, in x);\n        M1(x, x);\n        x.M2(in x);\n        x.M2(x);\n        M2(x, in x);\n        M2(x, x);\n        M2(in x, in x);\n        M2(in x, x);\n    }\n}",
+  "sourceSHA256": "3d3414ede95a934f237b0acca0b6985b5b80b995230218ba8f16915b573ecfcc",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "Invocation_ExtensionMethod_SecondParameter",
+    "offset": 239842
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9192",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9192",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9192",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9192",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9192",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9192",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9192",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (9,14): warning CS9192: Argument 1 should be passed with 'ref' or 'in' keyword\n            //         x.M1(x);\n            Diagnostic(ErrorCode.WRN_ArgExpectedRefOrIn, \"x\").WithArguments(\"1\").WithLocation(9, 14),\n            // (11,15): warning CS9192: Argument 2 should be passed with 'ref' or 'in' keyword\n            //         M1(x, x);\n            Diagnostic(ErrorCode.WRN_ArgExpectedRefOrIn, \"x\").WithArguments(\"2\").WithLocation(11, 15),\n            // (13,14): warning CS9192: Argument 1 should be passed with 'ref' or 'in' keyword\n            //         x.M2(x);\n            Diagnostic(ErrorCode.WRN_ArgExpectedRefOrIn, \"x\").WithArguments(\"1\").WithLocation(13, 14),\n            // (14,12): warning CS9192: Argument 1 should be passed with 'ref' or 'in' keyword\n            //         M2(x, in x);\n            Diagnostic(ErrorCode.WRN_ArgExpectedRefOrIn, \"x\").WithArguments(\"1\").WithLocation(14, 12),\n            // (15,12): warning CS9192: Argument 1 should be passed with 'ref' or 'in' keyword\n            //         M2(x, x);\n            Diagnostic(ErrorCode.WRN_ArgExpectedRefOrIn, \"x\").WithArguments(\"1\").WithLocation(15, 12),\n            // (15,15): warning CS9192: Argument 2 should be passed with 'ref' or 'in' keyword\n            //         M2(x, x);\n            Diagnostic(ErrorCode.WRN_ArgExpectedRefOrIn, \"x\").WithArguments(\"2\").WithLocation(15, 15),\n            // (17,18): warning CS9192: Argument 2 should be passed with 'ref' or 'in' keyword\n            //         M2(in x, x);\n            Diagnostic(ErrorCode.WRN_ArgExpectedRefOrIn, \"x\").WithArguments(\"2\").WithLocation(17, 18)",
+  "unsupported": []
+}

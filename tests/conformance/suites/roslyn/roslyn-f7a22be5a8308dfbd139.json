@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f7a22be5a8308dfbd139",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Linq.Expressions;\npublic class C\n{\n    public static void Main()\n    {\n        Expression<Func<int, bool>> expr = i => (i, i) == (i, i);\n        Expression<Func<(int, int), bool>> expr2 = t => t != t;\n    }\n}",
+  "sourceSHA256": "f1fd110bdfc56775818107e54aff9199fb826ef5e8a69eac43d4872b19ffdabb",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestInExpressionTree",
+    "offset": 186052
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8382",
+        "severity": "error"
+      },
+      {
+        "code": "CS8143",
+        "severity": "error"
+      },
+      {
+        "code": "CS8143",
+        "severity": "error"
+      },
+      {
+        "code": "CS8382",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,49): error CS8374: An expression tree may not contain a tuple == or != operator\n                //         Expression<Func<int, bool>> expr = i => (i, i) == (i, i);\n                Diagnostic(ErrorCode.ERR_ExpressionTreeContainsTupleBinOp, \"(i, i) == (i, i)\").WithLocation(8, 49),\n                // (8,49): error CS8143: An expression tree may not contain a tuple literal.\n                //         Expression<Func<int, bool>> expr = i => (i, i) == (i, i);\n                Diagnostic(ErrorCode.ERR_ExpressionTreeContainsTupleLiteral, \"(i, i)\").WithLocation(8, 49),\n                // (8,59): error CS8143: An expression tree may not contain a tuple literal.\n                //         Expression<Func<int, bool>> expr = i => (i, i) == (i, i);\n                Diagnostic(ErrorCode.ERR_ExpressionTreeContainsTupleLiteral, \"(i, i)\").WithLocation(8, 59),\n                // (9,57): error CS8374: An expression tree may not contain a tuple == or != operator\n                //         Expression<Func<(int, int), bool>> expr2 = t => t != t;\n                Diagnostic(ErrorCode.ERR_ExpressionTreeContainsTupleBinOp, \"t != t\").WithLocation(9, 57)\n                ",
+  "unsupported": []
+}

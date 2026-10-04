@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-cbe9d2b721ec0034f66b",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    public static void Main()\n    {\n        (var(x, y)) = 10;\n        System.Console.WriteLine(z);\n    }\n    static int x = 1, y = 2, z = 3;\n    static ref int var(int x, int y)\n    {\n        return ref z;\n    }\n}",
+  "sourceSHA256": "873449fe8ef2bd8dc28d0790124c77299f1b3f07d0dbd316f5936c7a01c4d72d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "InvokeVarForLvalueInParens",
+    "offset": 265352
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

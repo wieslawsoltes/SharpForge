@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a48cc88dfbac3ee9330f",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    public static void Main()\n    {\n        Struct r1;\n        var r2 = r1;\n    }\n}",
+  "sourceSHA256": "cbb1100e688682a789e587b3a4d3856e0b0c626902d8a5db08f112f2e8514c1d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "sha256": "0d6911ec2e8d7c03c9c20562c37c9d1959883735b8a2e5c0af7af46861c1379a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "license": "MIT",
+    "method": "IgnoreEffectivelyInternalStructFieldsOfReferenceTypeFromAddedModule_PlusNullable",
+    "offset": 26416
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new MetadataReference[] { moduleReference }, options: WithNullableEnable().WithWarningLevel(5))",
+  "options": "(source2, references: new MetadataReference[] { moduleReference }, options: WithNullableEnable().WithWarningLevel(5))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,18): error CS0165: Use of unassigned local variable 'r1'\n                //         var r2 = r1;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"r1\").WithArguments(\"r1\").WithLocation(6, 18)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-cc5be148831432e57f90",
+  "kind": "diagnostics",
+  "sourceText": "\npublic struct S\n{\n    static void M(string s)\n    {\n        S? ns = new S();\n        _ = ns == 1;\n        _ = (ns, ns) == (default, default);\n        _ = (ns, ns) == default;\n    }\n    public static bool operator==(S s, byte b) => throw null;\n    public static bool operator!=(S s, byte b) => throw null;\n    public override bool Equals(object other) => throw null;\n    public override int GetHashCode() => throw null;\n}",
+  "sourceSHA256": "5d72e2c6cfe8e87557f1ac605b3eab255a775316a9416336cea28fb55193c4df",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestNullableStructAndDefault_WithComparisonOperator",
+    "offset": 55921
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,13): error CS0019: Operator '==' cannot be applied to operands of type 'S?' and 'int'\n                //         _ = ns == 1;\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"ns == 1\").WithArguments(\"==\", \"S?\", \"int\").WithLocation(7, 13),\n                // (8,13): error CS0019: Operator '==' cannot be applied to operands of type 'S?' and 'default'\n                //         _ = (ns, ns) == (default, default);\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(ns, ns) == (default, default)\").WithArguments(\"==\", \"S?\", \"default\").WithLocation(8, 13),\n                // (8,13): error CS0019: Operator '==' cannot be applied to operands of type 'S?' and 'default'\n                //         _ = (ns, ns) == (default, default);\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(ns, ns) == (default, default)\").WithArguments(\"==\", \"S?\", \"default\").WithLocation(8, 13),\n                // (9,13): error CS0019: Operator '==' cannot be applied to operands of type 'S?' and 'S?'\n                //         _ = (ns, ns) == default;\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(ns, ns) == default\").WithArguments(\"==\", \"S?\", \"S?\").WithLocation(9, 13),\n                // (9,13): error CS0019: Operator '==' cannot be applied to operands of type 'S?' and 'S?'\n                //         _ = (ns, ns) == default;\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"(ns, ns) == default\").WithArguments(\"==\", \"S?\", \"S?\").WithLocation(9, 13)\n                ",
+  "unsupported": []
+}

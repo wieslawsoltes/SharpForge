@@ -1,8 +1,21 @@
-import {Op} from '@sharpforge/bytecode';
-import {ManagedFault} from '../heap.js';
-import {argumentHandle, typedReference, typedReferenceValue, varargsCall} from './varargs.js';
-import {runtimeTypeObject} from './tokens.js';
-import {sourceStore} from './source-storage.js';
+import {
+  Op
+} from '@sharpforge/bytecode';
+import {
+  ManagedFault
+} from '../heap.js';
+import {
+  argumentHandle,
+  typedReference,
+  typedReferenceValue,
+  varargsCall
+} from './varargs.js';
+import {
+  runtimeTypeObject
+} from './tokens.js';
+import {
+  sourceStore
+} from './source-storage.js';
 
 export function executeSourceVarargs(vm, frame, op, a) {
   if (op === Op.ARGLIST) vm.stack.push(argumentHandle(vm, frame));
@@ -17,7 +30,11 @@ export function executeSourceVarargs(vm, frame, op, a) {
 }
 
 export function sourceVarargsBuiltin(vm, profile, args) {
-  const descriptor = {kind: 'method', ...profile, signature: profile};
+  const descriptor = {
+    kind: 'method',
+    ...profile,
+    signature: profile
+  };
   return vm.heap.withRoots(args, () => varargsCall(vm, descriptor, args, profile.name === '.ctor' ? 'newobj' : 'call').value);
 }
 
@@ -29,13 +46,18 @@ export function appendSourceVarargs(vm, method, locals, args, types, fixed) {
   }
   if (args.length < fixed) throw new ManagedFault('InvalidProgramException', 'Missing fixed vararg arguments');
   return args.slice(fixed).map((value, index) => {
-    const type = vm.heap.methodTables.get(types[fixed + index]);
+    const name = types[fixed + index] === 'null' ? 'object' : types[fixed + index];
+    if (typeof name !== 'string') throw new ManagedFault('InvalidProgramException', 'Missing optional argument type');
+    const type = vm.heap.methodTables.get(name);
     if (type.containsGenericParameters || type.name === 'System.Void') {
       throw new ManagedFault('InvalidProgramException', 'Invalid optional argument type');
     }
-    const slot = locals.length;
-    locals.push(sourceStore(vm, value, type, types[fixed + index]));
+    const slot = method.locals.length + index;
+    locals[slot] = sourceStore(vm, value, type, name);
     vm.heap.pins.push(locals[slot]);
-    return {type, index: slot};
+    return {
+      type,
+      index: slot
+    };
   });
 }

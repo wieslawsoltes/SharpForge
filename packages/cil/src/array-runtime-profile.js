@@ -1,35 +1,38 @@
-import {callStorageType, substituteCallType} from './call-profile.js';
+import {memorySignature, managedMemoryElement} from './memory-signatures.js';
 
-const primitiveAlias = new Map([
-  ['Array', 'System.Array'], ['System.Int32', 'int'], ['System.Int64', 'long'],
-  ['System.Object', 'object'], ['System.Void', 'void']
-]);
-const typeName = type => primitiveAlias.get(callStorageType(type)) ?? callStorageType(type);
+const equal = (left, right) => left.length === right.length && left.every((type, index) => type === right[index]);
 
-/** System.Array and FieldRVA contracts, including closed generic MethodSpecs. */
-export function arrayRuntimeDefinition(descriptor) {
-  if (descriptor?.kind !== 'method' || !descriptor.signature || descriptor.signature.callingConvention) return null;
-  const {owner, name, signature} = descriptor;
-  const arguments_ = descriptor.methodArguments ?? descriptor.genericArguments ?? [];
-  const parameters = signature.parameters.map(type => typeName(substituteCallType(type, [], arguments_)));
-  const result = typeName(substituteCallType(signature.returnType, [], arguments_));
-  const array = parameters[0];
-  const vector = array === 'System.Array' || array?.endsWith('[]');
-  let operation = null;
-  if (owner === 'System.Runtime.CompilerServices.RuntimeHelpers' && name === 'InitializeArray' && signature.isStatic &&
-      parameters.join(',') === 'System.Array,System.RuntimeFieldHandle' && result === 'void') operation = 'initialize';
-  if (owner !== 'System.Array' && !operation) return null;
-  if (!signature.isStatic && name === 'Clone' && !parameters.length && result === 'object') operation = 'clone';
-  if (signature.isStatic && result === 'void') {
-    if (name === 'Copy' && (parameters.join(',') === 'System.Array,System.Array,int' ||
-        parameters.join(',') === 'System.Array,int,System.Array,int,int' ||
-        parameters.join(',') === 'System.Array,System.Array,long' ||
-        parameters.join(',') === 'System.Array,long,System.Array,long,long')) operation = 'copy';
-    if (name === 'Clear' && vector && (parameters.length === 1 || parameters.slice(1).join(',') === 'int,int')) operation = 'clear';
-    if (name === 'Resize' && arguments_.length === 1 && parameters.join(',') === arguments_[0] + '[]&,int') operation = 'resize';
+function runtimeOperation(name, call) {
+  const {owner, parameters, result, isStatic, arity, arguments: arguments_} = call;
+  if (owner === 'System.Runtime.CompilerServices.RuntimeHelpers') {
+    return !arity && isStatic && name === 'InitializeArray' && result === 'void' &&
+      equal(parameters, ['System.Array', 'System.RuntimeFieldHandle']) ? 'initialize' : null;
   }
-  if (signature.isStatic && name === 'IndexOf' && result === 'int' && vector && parameters.length >= 2 && parameters.length <= 4 &&
+  if (owner !== 'System.Array') return null;
+  if (!arity && !isStatic && name === 'Clone' && !parameters.length && result === 'object') return 'clone';
+  if (!isStatic) return null;
+  if (!arity && name === 'Copy' && result === 'void') {
+    for (const index of ['int', 'long']) {
+      if (equal(parameters, ['System.Array', 'System.Array', index]) ||
+          equal(parameters, ['System.Array', index, 'System.Array', index, index])) return 'copy';
+    }
+  }
+  if (!arity && name === 'Clear' && result === 'void' &&
+      (equal(parameters, ['System.Array']) || equal(parameters, ['System.Array', 'int', 'int']))) return 'clear';
+  const element = arity === 1 && managedMemoryElement(arguments_[0]) ? arguments_[0] : null;
+  if (element && name === 'Resize' && result === 'void' && equal(parameters, [element + '[]&', 'int'])) return 'resize';
+  if (name === 'IndexOf' && result === 'int' && parameters.length >= 2 && parameters.length <= 4 &&
       parameters.slice(2).every(type => type === 'int') &&
-      (parameters[1] === 'object' && array === 'System.Array' || parameters[1] + '[]' === array)) operation = 'indexOf';
-  return operation ? {implementation: 'arrayRuntime', descriptor, operation, element: arguments_[0] ?? null, contract: null} : null;
+      ((!arity && equal(parameters.slice(0, 2), ['System.Array', 'object'])) ||
+        element && equal(parameters.slice(0, 2), [element + '[]', element]))) return 'indexOf';
+  return null;
+}
+
+/** Exact framework array contracts, including concrete or verified symbolic MethodSpec arguments. */
+export function arrayRuntimeDefinition(descriptor) {
+  const call = memorySignature(descriptor);
+  if (!call) return null;
+  const operation = runtimeOperation(descriptor.name, call);
+  return operation ? Object.freeze({implementation: 'arrayRuntime', descriptor, operation,
+    element: call.arguments[0] ?? null, contract: null}) : null;
 }

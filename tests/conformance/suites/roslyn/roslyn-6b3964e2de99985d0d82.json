@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6b3964e2de99985d0d82",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nbool b = true;\n_ = new Func<string>((b ? M(out var i) : i.ToString()).ExtensionMethod);\n\nstring M(out int i)\n{\n    throw null;\n}\n\nstatic class Extension\n{\n    public static string ExtensionMethod(this string s) => throw null;\n}\n\t",
+  "sourceSHA256": "eab65dc0c08c2782779fbc5d852996bb548f8524af7c8513470c6942a1ed2420",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/RegionAnalysisTests.cs",
+    "sha256": "ede4ad7870eb13fc1b41cf8dfa93369f828c8146ac3ad88e361e120b9a79ad41",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/RegionAnalysisTests.cs",
+    "license": "MIT",
+    "method": "DefiniteAssignmentInReceiverOfExtensionMethodInDelegateCreation",
+    "offset": 351719
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\nbool b = true;\n_ = new Func<string>((b ? M(out var i) : i.ToString()).ExtensionMethod);\n\nstring M(out int i)\n{\n    throw null;\n}\n\nstatic class Extension\n{\n    public static string ExtensionMethod(this string s) => throw null;\n}\n\t\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,42): error CS0165: Use of unassigned local variable 'i'\n                // _ = new Func<string>((b ? M(out var i) : i.ToString()).ExtensionMethod);\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"i\").WithArguments(\"i\").WithLocation(4, 42)\n                ",
+  "unsupported": []
+}

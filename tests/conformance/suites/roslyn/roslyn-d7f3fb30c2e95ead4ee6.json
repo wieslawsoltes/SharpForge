@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d7f3fb30c2e95ead4ee6",
+  "kind": "diagnostics",
+  "sourceText": "class Outer\n{\n    private protected partial class Inner {}\n    private           partial class Inner {}\n}",
+  "sourceSHA256": "8434d457854fe9e9e761ad65c4beb4bdbdd73989488c3e33bba8e6986d948a80",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "VerifyPartialPartsMatch",
+    "offset": 32261
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0262",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,37): error CS0262: Partial declarations of 'Outer.Inner' have conflicting accessibility modifiers\n                //     private protected partial class Inner {}\n                Diagnostic(ErrorCode.ERR_PartialModifierConflict, \"Inner\").WithArguments(\"Outer.Inner\").WithLocation(3, 37)\n                ",
+  "unsupported": []
+}

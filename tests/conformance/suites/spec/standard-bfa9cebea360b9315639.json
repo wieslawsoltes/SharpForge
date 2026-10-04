@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-bfa9cebea360b9315639",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nenum Color\n{\n    Red,\n    Green,\n    Blue\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "cc1b4edf8896562201ff05f37a569e028edea38949e038afb2b6571f61f1dfe6",
+  "originalSource": "enum Color\n{\n    Red,\n    Green,\n    Blue\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "SimpleColorEnum"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-enums",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/enums.md",
+    "sha256": "be068daa3bac45e43824b0f4d57fa39a4eef82a0d572fad7ce0d0d835e8008c2",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/enums.md",
+    "license": "MIT",
+    "example": "SimpleColorEnum",
+    "offsetInUnquotedMarkdown": 172
+  }
+}

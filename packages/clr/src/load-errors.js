@@ -10,6 +10,9 @@ export const LoadErrorCode = Object.freeze({
   Disposed: 'SFCLR008',
   Cancelled: 'SFCLR009',
   UnsupportedFramework: 'SFCLR010',
+  RecursiveResolution: 'SFCLR011',
+  TypeLoad: 'SFCLR012',
+  UnsupportedFeature: 'SFCLR013',
 });
 
 const exceptionTypes = Object.freeze({
@@ -17,6 +20,8 @@ const exceptionTypes = Object.freeze({
   SFCLR005: 'System.BadImageFormatException',
   SFCLR008: 'System.ObjectDisposedException',
   SFCLR009: 'System.OperationCanceledException',
+  SFCLR012: 'System.TypeLoadException',
+  SFCLR013: 'System.NotSupportedException',
 });
 
 /** A managed exception descriptor carried by a JavaScript Error with deterministic diagnostics. */

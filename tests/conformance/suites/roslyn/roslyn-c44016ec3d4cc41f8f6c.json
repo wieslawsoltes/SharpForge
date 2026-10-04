@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c44016ec3d4cc41f8f6c",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class Test\n{\n    [Obsolete(\"F1 is obsolete\")]\n    [SomeAttr(F1)]\n    public const int F1 = 10;\n\n    [Obsolete(\"F2 is obsolete\", true)]\n    [SomeAttr(F3)]\n    public const int F2 = 10;\n    \n    [Obsolete(\"F3 is obsolete\")]\n    [SomeAttr(F2)]\n    public const int F3 = 10;\n\n    [Obsolete(F4, true)]\n    public const string F4 = \"blah\";\n\n    [Obsolete(F5)]\n    public string F5 = \"blah\";\n\n    [Obsolete(P1, true)]\n    public string P1 { get { return \"blah\"; } }\n\n    [Obsolete]\n    [SomeAttr(P2, true)]\n    public string P2 { get { return \"blah\"; } }\n\n    [Obsolete(Method1)]\n    public void Method1() {}\n\n    [Obsolete()]\n    [SomeAttr1(Method2)]\n    public void Method2() {}\n\n    [Obsolete(F6)]\n    [SomeAttr(F6)]\n    [SomeAttr(F7)]\n    public const string F6 = \"F6 is obsolete\";\n\n    [Obsolete(F7, true)]\n    [SomeAttr(F6)]\n    [SomeAttr(F7)]\n    public const string F7 = \"F7 is obsolete\";\n}\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\npublic class SomeAttr: Attribute\n{\n    public SomeAttr(int x) {}\n    public SomeAttr(string x) {}\n}\npublic class SomeAttr1: Attribute\n{\n    public SomeAttr1(Action x) {}\n}\n",
+  "sourceSHA256": "fe6e900a8dd94b6cad1a5e3a31313493547c3bedf905958ea6d5969a1ae83270",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeCycles",
+    "offset": 256402
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,15): warning CS0618: 'Test.F1' is obsolete: 'F1 is obsolete'\n                //     [SomeAttr(F1)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"F1\").WithArguments(\"Test.F1\", \"F1 is obsolete\").WithLocation(7, 15),\n                // (15,15): error CS0619: 'Test.F2' is obsolete: 'F2 is obsolete'\n                //     [SomeAttr(F2)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"F2\").WithArguments(\"Test.F2\", \"F2 is obsolete\").WithLocation(15, 15),\n                // (11,15): warning CS0618: 'Test.F3' is obsolete: 'F3 is obsolete'\n                //     [SomeAttr(F3)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"F3\").WithArguments(\"Test.F3\", \"F3 is obsolete\").WithLocation(11, 15),\n                // (18,15): error CS0619: 'Test.F4' is obsolete: 'blah'\n                //     [Obsolete(F4, true)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"F4\").WithArguments(\"Test.F4\", \"blah\").WithLocation(18, 15),\n                // (21,15): error CS0120: An object reference is required for the non-static field, method, or property 'Test.F5'\n                //     [Obsolete(F5)]\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"F5\").WithArguments(\"Test.F5\").WithLocation(21, 15),\n                // (24,15): error CS0120: An object reference is required for the non-static field, method, or property 'Test.P1'\n                //     [Obsolete(P1, true)]\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"P1\").WithArguments(\"Test.P1\").WithLocation(24, 15),\n                // (28,15): warning CS0612: 'Test.P2' is obsolete\n                //     [SomeAttr(P2, true)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"P2\").WithArguments(\"Test.P2\").WithLocation(28, 15),\n                // (28,15): error CS0120: An object reference is required for the non-static field, method, or property 'Test.P2'\n                //     [SomeAttr(P2, true)]\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"P2\").WithArguments(\"Test.P2\").WithLocation(28, 15),\n                // (28,6): error CS1729: 'SomeAttr' does not contain a constructor that takes 2 arguments\n                //     [SomeAttr(P2, true)]\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"SomeAttr(P2, true)\").WithArguments(\"SomeAttr\", \"2\").WithLocation(28, 6),\n                // (31,15): error CS1503: Argument 1: cannot convert from 'method group' to 'string'\n                //     [Obsolete(Method1)]\n                Diagnostic(ErrorCode.ERR_BadArgType, \"Method1\").WithArguments(\"1\", \"method group\", \"string\").WithLocation(31, 15),\n                // (35,16): error CS0120: An object reference is required for the non-static field, method, or property 'Test.Method2()'\n                //     [SomeAttr1(Method2)]\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"Method2\").WithArguments(\"Test.Method2()\").WithLocation(35, 16),\n                // (43,15): error CS0619: 'Test.F7' is obsolete: 'F7 is obsolete'\n                //     [Obsolete(F7, true)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"F7\").WithArguments(\"Test.F7\", \"F7 is obsolete\").WithLocation(43, 15),\n                // (44,15): warning CS0618: 'Test.F6' is obsolete: 'F6 is obsolete'\n                //     [SomeAttr(F6)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"F6\").WithArguments(\"Test.F6\", \"F6 is obsolete\").WithLocation(44, 15),\n                // (45,15): error CS0619: 'Test.F7' is obsolete: 'F7 is obsolete'\n                //     [SomeAttr(F7)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"F7\").WithArguments(\"Test.F7\", \"F7 is obsolete\").WithLocation(45, 15),\n                // (38,15): warning CS0618: 'Test.F6' is obsolete: 'F6 is obsolete'\n                //     [Obsolete(F6)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"F6\").WithArguments(\"Test.F6\", \"F6 is obsolete\").WithLocation(38, 15),\n                // (39,15): warning CS0618: 'Test.F6' is obsolete: 'F6 is obsolete'\n                //     [SomeAttr(F6)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"F6\").WithArguments(\"Test.F6\", \"F6 is obsolete\").WithLocation(39, 15),\n                // (40,15): error CS0619: 'Test.F7' is obsolete: 'F7 is obsolete'\n                //     [SomeAttr(F7)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"F7\").WithArguments(\"Test.F7\", \"F7 is obsolete\").WithLocation(40, 15)",
+  "unsupported": []
+}

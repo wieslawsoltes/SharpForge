@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c97a98b5a44e3df691d5",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\n[IsByRefLike]\npublic class Test\n{\n}\n",
+  "sourceSHA256": "88603cb6b2de4516168b60ef3cb8ffd725b66fc897e2d20f57429953828e5de8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsByRefLike.cs",
+    "sha256": "19c7ba077c968b3abe33b253a5150725342e5db1b86525023701c87adb7d0eae",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsByRefLike.cs",
+    "license": "MIT",
+    "method": "IsByRefLikeAttributeIsDisallowedEverywhereInSource_Types",
+    "offset": 7693
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { referenceA })",
+  "options": "(codeB, references: new[] { referenceA })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8335",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,2): error CS8335: Do not use 'System.Runtime.CompilerServices.IsByRefLikeAttribute'. This is reserved for compiler usage.\n                // [IsByRefLike]\n                Diagnostic(ErrorCode.ERR_ExplicitReservedAttr, \"IsByRefLike\").WithArguments(\"System.Runtime.CompilerServices.IsByRefLikeAttribute\").WithLocation(4, 2)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

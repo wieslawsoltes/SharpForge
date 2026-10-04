@@ -1,3 +1,4 @@
+import {DiagnosticId} from './codes.js';
 /**
  * `[SuppressMessage]` in programs of the execution profile (SF-A02-T37).
  *
@@ -18,7 +19,7 @@ const attributeNames = new Set([
   'global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute',
 ]);
 const namedProperties = new Set(['Scope', 'Target', 'Justification', 'MessageId']);
-const rejectionCode = 'SF1018';
+const rejectionCode = DiagnosticId.SF1018;
 const textOf = node => node.toString().replace(/\s+/g, '');
 const isString = expression => expression?.kind === 'StringLiteralExpression';
 
@@ -31,6 +32,14 @@ function isWellFormed(attribute) {
   if (positional.length !== 2 || positional.length + named.length !== args.length) return false;
   if (!positional.every(arg => isString(arg.expression))) return false;
   return named.every(arg => namedProperties.has(arg.nameEquals.name.identifier.valueText) && isString(arg.expression));
+}
+
+/**
+ * False when a file cannot contain a SuppressMessage attribute or a type of that name: the name is not in the text,
+ * and no identifier is spelled with a Unicode escape. Such a file is not walked at all.
+ */
+function mayMentionSuppressMessage(text) {
+  return text.includes('SuppressMessage') || text.includes('\\u') || text.includes('\\U');
 }
 
 /** Collects the spans of attribute lists that only hold SuppressMessage attributes; notes a user type of that name. */
@@ -67,7 +76,7 @@ export function parserDiagnosticsWithoutSuppressMessage(files) {
       for (const other of files) {
         if (!other.syntax) continue;
         const scanned = { lists: [], userType: false };
-        scan(other.syntax, scanned);
+        if (mayMentionSuppressMessage(other.source.text)) scan(other.syntax, scanned);
         found.lists.set(other.source.uri, scanned.lists);
         found.userType = found.userType || scanned.userType;
       }

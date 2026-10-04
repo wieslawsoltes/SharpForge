@@ -1,0 +1,23 @@
+{
+  "name": "sharpforge-conformance-recorder",
+  "displayName": "SharpForge Conformance Recorder",
+  "version": "0.0.1",
+  "publisher": "sharpforge-local",
+  "private": true,
+  "engines": { "vscode": "^1.82.0" },
+  "main": "extension.cjs",
+  "activationEvents": ["onCommand:sharpforge.conformance.startLsp", "onDebug:sharpforge-conformance"],
+  "contributes": {
+    "commands": [{ "command": "sharpforge.conformance.startLsp", "title": "SharpForge: Start Recorded LSP Session" }],
+    "configuration": {
+      "title": "SharpForge Conformance",
+      "properties": {
+        "sharpforgeConformance.root": {"type":"string","description":"Absolute checkout root"},
+        "sharpforgeConformance.node": {"type":"string","description":"Absolute Node 22+ executable"},
+        "sharpforgeConformance.output": {"type":"string","description":"Absolute local recording directory"}
+      }
+    },
+    "debuggers": [{"type":"sharpforge-conformance","label":"SharpForge recorded session","languages":["csharp"],"configurationAttributes":{"launch":{"required":["program"],"properties":{"program":{"type":"string","description":"Absolute managed assembly path"}}}}}]
+  },
+  "dependencies": { "vscode-languageclient": "9.0.1" }
+}

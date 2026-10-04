@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-50091c61f987024fb9ee",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Gen<T>\n{\n\tpublic static void TestUsing(T obj)\n\t{\n\t\tusing (obj)\n\t\t{\n\t\t}\n\t}\n}\n",
+  "sourceSHA256": "f93e08d27b2188b2f0b9143ee7934154e51eeaae9fda31c4524f500e02507afc",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "sha256": "d8229f7c312c9ee5a778889d6e4283a10543e441e97b4e3da14145b6744b1b4e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "license": "MIT",
+    "method": "TypeParameterAsUsingResource",
+    "offset": 32472
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1674",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "Diagnostic(ErrorCode.ERR_NoConvToIDisp, \"obj\").WithArguments(\"T\")",
+  "unsupported": []
+}

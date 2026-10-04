@@ -1,10 +1,19 @@
-import {createException} from './exception-object.js';
-import {exceptionConstructor, exceptionIntrinsic} from './exception-intrinsics.js';
+import {
+  createException
+} from './exception-object.js';
+import {
+  exceptionConstructor,
+  exceptionIntrinsic
+} from './exception-intrinsics.js';
 
 /** Adapt the source stack ABI to the same constructor/member implementations used by direct CIL. */
 export function sourceExceptionBuiltin(vm, profile, args) {
   return vm.heap.withRoots(args, () => {
-    const descriptor = {owner: profile.owner, name: profile.name, signature: profile};
+    const descriptor = {
+      owner: profile.owner,
+      name: profile.name,
+      signature: profile
+    };
     if (profile.name === '.ctor') {
       const reference = createException(vm, profile.owner);
       return vm.heap.withRoots([reference], () => {

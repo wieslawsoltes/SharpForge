@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5b388c4aef4d2ff68491",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Collections;\n\nclass Test\n{\n    static void Main()\n    {\n        Console.Write(Util.Count(Goo<S>()));\n    }\n\n    static Wrapper<T> Goo<T>() where T : struct, IEnumerable, IAdd\n    {\n        return new Wrapper<T> { Item = { 1, 2, 3} };\n    }\n}\n",
+  "sourceSHA256": "0c915c37cade0d74a310b5c411b89c084245185ef3ca92f7a60cecba1f3cd616",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "NestedCollectionInitializerOnGenericProperty",
+    "offset": 56854
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, new[] { libRef }, TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1918",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (15,33): error CS1918: Members of property 'Wrapper<T>.Item' of type 'T' cannot be assigned with an object initializer because it is of a value type\n                    //         return new Wrapper<T> { Item = { 1, 2, 3} };\n                    Diagnostic(ErrorCode.ERR_ValueTypePropertyInObjectInitializer, \"Item\").WithArguments(\"Wrapper<T>.Item\", \"T\")",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

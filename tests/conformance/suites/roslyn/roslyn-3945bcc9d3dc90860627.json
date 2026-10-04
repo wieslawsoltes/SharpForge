@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3945bcc9d3dc90860627",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        try\n        {\n        }\n        catch (System.Exception e) when (F())\n        {\n        }\n    }\n\n    static bool F() { return true; }\n}\n",
+  "sourceSHA256": "8b0fdaf82920fcd0d3765583f8303bd8b6b64de44754b8d7f9d63f74f4f7c50b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "UseDef_ExceptionFilters2",
+    "offset": 237173
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0168",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,33): warning CS0168: The variable 'e' is declared but never used\n                //         catch (System.Exception e) when (true)\n                Diagnostic(ErrorCode.WRN_UnreferencedVar, \"e\").WithArguments(\"e\").WithLocation(9, 33)",
+  "unsupported": []
+}

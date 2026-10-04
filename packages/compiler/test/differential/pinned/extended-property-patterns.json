@@ -1,0 +1,5 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "extended-property-patterns/member-paths-are-nested-patterns":{"hash":"fd021ac131a2cdb1","kind":"output","langVersion":"14.0","diagnostics":[],"output":"ok\nFalse\nTrue\nFalse\none\ns1\n"},
+  "extended-property-patterns/member-path-errors":{"hash":"d11d34b69edca19e","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0117",177,4,"error"],["CS0117",216,3,"error"],["CS0154",252,1,"error"],["CS0029",289,3,"error"],["CS0117",320,1,"error"],["CS0117",357,1,"error"]]},
+  "extended-property-patterns/extended-property-patterns-in-csharp-9":{"hash":"48d9695e30a92506","kind":"diagnostics","langVersion":"9.0","diagnostics":[["CS8773",138,1,"error"]]}
+}}

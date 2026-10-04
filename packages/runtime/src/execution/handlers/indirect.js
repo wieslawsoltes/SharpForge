@@ -1,59 +1,59 @@
-import {readMemory, writeMemory} from '../raw-memory.js';
 import {sizeOfType} from '../value-layout.js';
 import {storageDefault} from '../storage.js';
 import {finishMemoryAccess} from '../statics.js';
+import {readMemory, writeMemory} from '../raw-memory.js';
 
-function read(vm, pointer, type) {
-  return pointer?.memoryPointer ? readMemory(vm, pointer, type) : vm.storage(vm.dereference(pointer), type);
+function load(vm, address, type) {
+  return address?.memoryPointer ? readMemory(vm, address, type) : vm.storage(vm.dereference(address), type);
 }
-function write(vm, pointer, value, type) {
-  const stored = vm.storage(value, type);
-  return pointer?.memoryPointer ? writeMemory(vm, pointer, stored, type) : vm.dereference(pointer, true, stored);
+
+function store(vm, address, value, type) {
+  return address?.memoryPointer ? writeMemory(vm, address, vm.storage(value, type), type)
+    : vm.dereference(address, true, vm.storage(value, type));
 }
-const handlers = new Map();
-handlers.set('sizeof', (vm, frame, instruction) => vm.push(sizeOfType(vm, instruction.operand)));
-handlers.set('cpobj', (vm, frame, instruction) => {
-  const source = vm.pop();
-  const destination = vm.pop();
-  const type = vm.typeSystem.table(instruction.operand);
-  vm.heap.withRoots([source, destination], () => write(vm, destination, read(vm, source, type), type));
-});
-handlers.set('ldobj', (vm, frame, instruction) => {
-  const pointer = vm.pop();
-  vm.push(vm.heap.withRoots([pointer], () => read(vm, pointer, vm.typeSystem.table(instruction.operand))));
-});
-handlers.set('stobj', (vm, frame, instruction) => {
-  const value = vm.pop();
-  const pointer = vm.pop();
-  vm.heap.withRoots([value, pointer], () => write(vm, pointer, value, vm.typeSystem.table(instruction.operand)));
-});
-handlers.set('initobj', (vm, frame, instruction) => {
-  const pointer = vm.pop();
-  const type = vm.typeSystem.table(instruction.operand);
-  vm.heap.withRoots([pointer], () => write(vm, pointer, storageDefault(vm, type), type));
-});
-const suffixTypes = new Map([
+
+const handlers = new Map([
+  ['sizeof', (vm, frame, instruction) => vm.push(sizeOfType(vm, instruction.operand))],
+  ['cpobj', (vm, frame, instruction) => {
+    const source = vm.pop(), destination = vm.pop(), type = vm.typeSystem.table(instruction.operand);
+    store(vm, destination, load(vm, source, type), type);
+  }],
+  ['ldobj', (vm, frame, instruction) => vm.push(load(vm, vm.pop(), vm.typeSystem.table(instruction.operand)))],
+  ['stobj', (vm, frame, instruction) => {
+    const value = vm.pop();
+    store(vm, vm.pop(), value, vm.typeSystem.table(instruction.operand));
+  }],
+  ['initobj', (vm, frame, instruction) => {
+    const address = vm.pop(), table = vm.typeSystem.table(instruction.operand);
+    store(vm, address, storageDefault(vm, table), table);
+  }]
+]);
+
+const indirectTypes = new Map([
   ['i1', 'sbyte'], ['u1', 'byte'], ['i2', 'short'], ['u2', 'ushort'], ['i4', 'int'], ['u4', 'uint'],
   ['i8', 'long'], ['i', 'nint'], ['r4', 'float'], ['r8', 'double'], ['ref', 'object']
 ]);
-for (const [suffix, type] of suffixTypes) {
+for (const [suffix, type] of indirectTypes) {
   handlers.set('ldind.' + suffix, vm => {
-    const pointer = vm.pop();
-    vm.push(pointer?.memoryPointer ? readMemory(vm, pointer, type) : vm.indirect(vm.dereference(pointer), 'ldind.' + suffix));
+    const address = vm.pop();
+    const value = address?.memoryPointer ? readMemory(vm, address, type) : vm.dereference(address);
+    vm.push(suffix === 'i' && value?.memoryPointer ? vm.storage(value, 'nint') : vm.indirect(value, 'ldind.' + suffix));
   });
   if (['u1', 'u2', 'u4'].includes(suffix)) continue;
   handlers.set('stind.' + suffix, vm => {
-    const value = vm.pop();
-    const pointer = vm.pop();
-    if (pointer?.memoryPointer) writeMemory(vm, pointer, value, type);
-    else vm.dereference(pointer, true, vm.indirect(value, 'stind.' + suffix));
+    const input = vm.pop();
+    const value = suffix === 'i' && input?.memoryPointer ? vm.storage(input, 'nint') : vm.indirect(input, 'stind.' + suffix);
+    const address = vm.pop();
+    if (address?.memoryPointer) writeMemory(vm, address, value, type);
+    else vm.dereference(address, true, value);
   });
 }
+
 for (const [opcode, handler] of handlers) {
-  if (!['ldobj', 'stobj'].includes(opcode) && !opcode.startsWith('ldind.') && !opcode.startsWith('stind.')) continue;
+  if (opcode === 'sizeof') continue;
   handlers.set(opcode, (vm, frame, instruction) => {
     try { handler(vm, frame, instruction); }
-    finally { finishMemoryAccess(frame); delete frame.unalignedAccess; }
+    finally { finishMemoryAccess(frame); }
   });
 }
 export {handlers};

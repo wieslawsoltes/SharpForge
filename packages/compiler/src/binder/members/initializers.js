@@ -12,6 +12,7 @@
  * targets keep the node that produces it (`isInitializerTarget`), index targets and `Add` calls use an
  * `ImplicitReceiver` node. The value of a nested initializer is an `ObjectInitializer` node with the same two lists.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind } from '../../symbols/types.js';
 import { extensionScopes, resolveExtensionInvocation, receiverRefKind } from '../../overload/extension-methods.js';
 import { implementsInterface } from '../../symbols/substitution.js';
@@ -55,8 +56,8 @@ export const InitializerBinding = Base =>
     checkRequiredMembers(creation) {
       const { unset, nested } = requiredMembersLeftUnset(creation.type, creation.constructor, creation.initializers, this.core);
       const at = creation.syntax.type ?? creation.syntax.newKeyword ?? creation.syntax;
-      for (const member of unset) this.report(at, 'CS9035', [member.toDisplayString()]);
-      for (const { member, entry } of nested) this.report(entry.value.syntax, 'CS9036', [member.toDisplayString()]);
+      for (const member of unset) this.report(at, DiagnosticId.CS9035, [member.toDisplayString()]);
+      for (const { member, entry } of nested) this.report(entry.value.syntax, DiagnosticId.CS9036, [member.toDisplayString()]);
     }
     /**
      * `{initializers}` for an object initializer, `{collectionInitializers}` for a collection initializer. As in Roslyn,
@@ -87,7 +88,7 @@ export const InitializerBinding = Base =>
           continue;
         }
         const member = target.field ?? (isNamed ? target.property : null);
-        if (member && assigned.has(member)) this.report(item.left, 'CS1912', [member.name]);
+        if (member && assigned.has(member)) this.report(item.left, DiagnosticId.CS1912, [member.name]);
         if (member) assigned.add(member);
         const entry = isBraceInitializer(item.right) ? this.nestedInitializer(target, item) : this.assignedInitializer(target, item);
         if (entry) entries.push(entry);
@@ -96,11 +97,11 @@ export const InitializerBinding = Base =>
     }
     /** An element that is not `Name = value` or `[index] = value` in an object initializer. */
     invalidMemberDeclarator(type, item) {
-      this.report(item, 'CS0747');
+      this.report(item, DiagnosticId.CS0747);
       if (item.kind === 'IdentifierName') {
         const name = item.identifier.valueText,
           found = lookupMembers(type, name, this.core, { within: this.c.containingType, throughType: type }).members;
-        if (!found.length && (isSourceSymbol(type) || this.d.registryIsComplete(type, name))) this.report(item, 'CS0117', [this.display(type), name]);
+        if (!found.length && (isSourceSymbol(type) || this.d.registryIsComplete(type, name))) this.report(item, DiagnosticId.CS0117, [this.display(type), name]);
         return;
       }
       this.initializerItemSilently(item);
@@ -112,8 +113,8 @@ export const InitializerBinding = Base =>
           m => m.kind === SymbolKind.Field || m.kind === SymbolKind.Property,
         );
       if (!found.length) {
-        if (!isSourceSymbol(type) && !this.d.registryIsComplete(type, name)) this.lenient(item);
-        else this.report(item.left, 'CS0117', [this.display(type), name]);
+        if (!isSourceSymbol(type) && !type.isAnonymousType && !this.d.registryIsComplete(type, name)) this.lenient(item);
+        else this.report(item.left, DiagnosticId.CS0117, [this.display(type), name]);
         return null;
       }
       const member = found[0],
@@ -124,7 +125,7 @@ export const InitializerBinding = Base =>
         isInitializerTarget: true,
       });
       if (!member.isStatic) return target;
-      this.report(item.left, 'CS1914', [member.toDisplayString()]);
+      this.report(item.left, DiagnosticId.CS1914, [member.toDisplayString()]);
       this.markWrite(target, null);
       return null;
     }
@@ -142,7 +143,7 @@ export const InitializerBinding = Base =>
       const problem = checkWritable(target, 'assignment', this.variableContext);
       this.inObjectInitializer = false;
       if (problem) this.report(item.left, problem.code, problem.args);
-      else if (this.setterIsInaccessible(target)) this.report(item.left, 'CS0272', [target.property.toDisplayString()]);
+      else if (this.setterIsInaccessible(target)) this.report(item.left, DiagnosticId.CS0272, [target.property.toDisplayString()]);
       const value = this.value(item.right);
       this.markWrite(target, value);
       return { target, value: this.convert(value, target.type, item.right) };
@@ -159,8 +160,8 @@ export const InitializerBinding = Base =>
       const member = target.property ?? target.field,
         type = target.type;
       let problem = null;
-      if (target.property && !target.property.getMethod) problem = { code: 'CS0154', args: [member.toDisplayString()] };
-      else if (target.property && type?.isValueType === true) problem = { code: 'CS1918', args: [member.toDisplayString(), this.display(type)] };
+      if (target.property && !target.property.getMethod) problem = { code: DiagnosticId.CS0154, args: [member.toDisplayString()] };
+      else if (target.property && type?.isValueType === true) problem = { code: DiagnosticId.CS1918, args: [member.toDisplayString(), this.display(type)] };
       if (problem) this.report(item.left, problem.code, problem.args);
       target.readChecked = true;
       this.markRead(target);
@@ -183,7 +184,7 @@ export const InitializerBinding = Base =>
     // ---- collection initializers ----
     elementInitializers(type, initializer) {
       if (this.knownNotEnumerable(type)) {
-        this.report(initializer, 'CS1922', [this.display(type)]);
+        this.report(initializer, DiagnosticId.CS1922, [this.display(type)]);
         this.initializerSilently(initializer);
         return [];
       }
@@ -213,7 +214,7 @@ export const InitializerBinding = Base =>
         result = adds.length ? this.d.overloads.resolve(adds, values, { name: 'Add' }) : null;
       if (result?.succeeded) {
         if (result.method.isStatic) {
-          this.report(item, 'CS1921', [result.method.toDisplayString()]);
+          this.report(item, DiagnosticId.CS1921, [result.method.toDisplayString()]);
           return null;
         }
         return this.finishCall(result, receiver, values, item, {});
@@ -232,12 +233,12 @@ export const InitializerBinding = Base =>
       }
       if (!result) {
         // Roslyn reports the missing Add on each value of the element.
-        for (const value of values) this.report(value.syntax, 'CS1061', [this.display(type), 'Add']);
+        for (const value of values) this.report(value.syntax, DiagnosticId.CS1061, [this.display(type), 'Add']);
         return null;
       }
       const error = result.error;
-      if (error.code === 'CS1503' && error.argument !== undefined) {
-        this.report(item, 'CS1950', [(result.best?.definition ?? adds[0]).toDisplayString()]);
+      if (error.code === DiagnosticId.CS1503 && error.argument !== undefined) {
+        this.report(item, DiagnosticId.CS1950, [(result.best?.definition ?? adds[0]).toDisplayString()]);
         this.report(values[error.argument].syntax, error.code, error.args);
       } else this.report(item, error.code, error.args);
       return null;

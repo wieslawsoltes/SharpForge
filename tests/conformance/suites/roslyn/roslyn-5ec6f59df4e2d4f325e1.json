@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5ec6f59df4e2d4f325e1",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    async System.Threading.Tasks.Task M()\n    {\n        await foreach (var i in new C()) { }\n    }\n    public Enumerator GetAsyncEnumerator() => throw null;\n    public sealed class Enumerator\n    {\n        public System.Threading.Tasks.Task<object> MoveNextAsync() => throw null;\n        public int Current => throw null;\n    }\n}",
+  "sourceSHA256": "2f1410c49baa5f3479c25d02308fde5d78ad141bac514e8ee6463a76f2c1bb35",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestWithMoveNextAsync_ReturnsValueTaskOfObject",
+    "offset": 24056
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8412",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,33): error CS8412: Asynchronous foreach requires that the return type 'C.Enumerator' of 'C.GetAsyncEnumerator()' must have a suitable public 'MoveNextAsync' method and public 'Current' property\n                //         await foreach (var i in new C()) { }\n                Diagnostic(ErrorCode.ERR_BadGetAsyncEnumerator, \"new C()\").WithArguments(\"C.Enumerator\", \"C.GetAsyncEnumerator()\").WithLocation(6, 33)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

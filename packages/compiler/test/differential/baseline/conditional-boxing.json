@@ -1,0 +1,4 @@
+{
+  "conditional-boxing/boxed-primitive-or-null-either-branch": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "conditional-boxing/boxed-primitive-or-null-in-the-execution-profile": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
+}

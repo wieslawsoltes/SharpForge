@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a17f97630a7127798dbf",
+  "kind": "spec",
+  "sourceText": "namespace System.Runtime.CompilerServices\n{\n    [AttributeUsage(\n        AttributeTargets.Class |\n        AttributeTargets.Event |\n        AttributeTargets.Field |\n        AttributeTargets.GenericParameter |\n        AttributeTargets.Parameter |\n        AttributeTargets.Property |\n        AttributeTargets.ReturnValue,\n        AllowMultiple = false,\n        Inherited = false)]\n    public sealed class NativeIntegerAttribute : Attribute\n    {\n        public NativeIntegerAttribute()\n        {\n            TransformFlags = new[] { true };\n        }\n        public NativeIntegerAttribute(bool[] flags)\n        {\n            TransformFlags = flags;\n        }\n        public readonly bool[] TransformFlags;\n    }\n}",
+  "sourceSHA256": "b72272f14935d070316e7f0357adffe1b2c4f117b59ea76ca2508f22d74a4ac4",
+  "target": "library",
+  "featureId": "csharp-9-0-native-sized-integers",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/native-integers.md",
+    "sha256": "d0b0b6f2a77880d7ea7898939dd15177557aacb592d26800e709b4f7749c9496",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/native-integers.md",
+    "license": "NOASSERTION",
+    "offset": 18742
+  }
+}

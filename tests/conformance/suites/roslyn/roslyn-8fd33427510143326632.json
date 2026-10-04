@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8fd33427510143326632",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public void M(ref bool x, out bool y)\n    {\n        x = true;\n        y = true;\n        M(ref (1, 2) == (3, 4), out (1, 2) == (3, 4));\n    }\n}\n",
+  "sourceSHA256": "7a3a330097bfb665a62983ee574657acf317328e10eee292ce75f713280fac35",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestAsRefOrOutArgument",
+    "offset": 197509
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1510",
+        "severity": "error"
+      },
+      {
+        "code": "CS1510",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,15): error CS1510: A ref or out value must be an assignable variable\n                //         M(ref (1, 2) == (3, 4), out (1, 2) == (3, 4));\n                Diagnostic(ErrorCode.ERR_RefLvalueExpected, \"(1, 2) == (3, 4)\").WithLocation(8, 15),\n                // (8,37): error CS1510: A ref or out value must be an assignable variable\n                //         M(ref (1, 2) == (3, 4), out (1, 2) == (3, 4));\n                Diagnostic(ErrorCode.ERR_RefLvalueExpected, \"(1, 2) == (3, 4)\").WithLocation(8, 37)\n                ",
+  "unsupported": []
+}

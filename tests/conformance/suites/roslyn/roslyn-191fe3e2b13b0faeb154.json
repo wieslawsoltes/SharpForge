@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-191fe3e2b13b0faeb154",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    static void M(ref readonly int p)\n    {\n        Ref(p);\n        Ref(ref p);\n        Ref(in p);\n        Ref(out p);\n\n        Out(p);\n        Out(ref p);\n        Out(in p);\n        Out(out p);\n    }\n    static void Ref(ref int p) => throw null;\n    static void Out(out int p) => throw null;\n}",
+  "sourceSHA256": "f1bc9e35608fffe451fed88d95627cb87ae955592bc0f77efa053645daf6c61e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "PassingParameters_RefReadonly_RefOrOut",
+    "offset": 127567
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1620",
+        "severity": "error"
+      },
+      {
+        "code": "CS8329",
+        "severity": "error"
+      },
+      {
+        "code": "CS1620",
+        "severity": "error"
+      },
+      {
+        "code": "CS8329",
+        "severity": "error"
+      },
+      {
+        "code": "CS1620",
+        "severity": "error"
+      },
+      {
+        "code": "CS8329",
+        "severity": "error"
+      },
+      {
+        "code": "CS1620",
+        "severity": "error"
+      },
+      {
+        "code": "CS8329",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (5,13): error CS1620: Argument 1 must be passed with the 'ref' keyword\n            //         Ref(p);\n            Diagnostic(ErrorCode.ERR_BadArgRef, \"p\").WithArguments(\"1\", \"ref\").WithLocation(5, 13),\n            // (6,17): error CS8329: Cannot use variable 'p' as a ref or out value because it is a readonly variable\n            //         Ref(ref p);\n            Diagnostic(ErrorCode.ERR_RefReadonlyNotField, \"p\").WithArguments(\"variable\", \"p\").WithLocation(6, 17),\n            // (7,16): error CS1620: Argument 1 must be passed with the 'ref' keyword\n            //         Ref(in p);\n            Diagnostic(ErrorCode.ERR_BadArgRef, \"p\").WithArguments(\"1\", \"ref\").WithLocation(7, 16),\n            // (8,17): error CS8329: Cannot use variable 'p' as a ref or out value because it is a readonly variable\n            //         Ref(out p);\n            Diagnostic(ErrorCode.ERR_RefReadonlyNotField, \"p\").WithArguments(\"variable\", \"p\").WithLocation(8, 17),\n            // (10,13): error CS1620: Argument 1 must be passed with the 'out' keyword\n            //         Out(p);\n            Diagnostic(ErrorCode.ERR_BadArgRef, \"p\").WithArguments(\"1\", \"out\").WithLocation(10, 13),\n            // (11,17): error CS8329: Cannot use variable 'p' as a ref or out value because it is a readonly variable\n            //         Out(ref p);\n            Diagnostic(ErrorCode.ERR_RefReadonlyNotField, \"p\").WithArguments(\"variable\", \"p\").WithLocation(11, 17),\n            // (12,16): error CS1620: Argument 1 must be passed with the 'out' keyword\n            //         Out(in p);\n            Diagnostic(ErrorCode.ERR_BadArgRef, \"p\").WithArguments(\"1\", \"out\").WithLocation(12, 16),\n            // (13,17): error CS8329: Cannot use variable 'p' as a ref or out value because it is a readonly variable\n            //         Out(out p);\n            Diagnostic(ErrorCode.ERR_RefReadonlyNotField, \"p\").WithArguments(\"variable\", \"p\").WithLocation(13, 17)",
+  "unsupported": []
+}

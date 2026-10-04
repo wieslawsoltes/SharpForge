@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-625b81fff9d504526e45",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Security;\nusing System.Security.Permissions;\n\n[assembly: MySecurityAttribute((SecurityAction)1)]        // Native compiler allows this security action value for type/method security attributes, but not for assembly.\n[assembly: MySecurityAttribute(SecurityAction.Assert)]\n[assembly: MySecurityAttribute(SecurityAction.Demand)]\n[assembly: MySecurityAttribute(SecurityAction.Deny)]\n[assembly: MySecurityAttribute(SecurityAction.InheritanceDemand)]\n[assembly: MySecurityAttribute(SecurityAction.LinkDemand)]\n[assembly: MySecurityAttribute(SecurityAction.PermitOnly)]\n\n[assembly: MyCodeAccessSecurityAttribute((SecurityAction)1)]        // Native compiler allows this security action value for type/method security attributes, but not for assembly.\n[assembly: MyCodeAccessSecurityAttribute(SecurityAction.Assert)]\n[assembly: MyCodeAccessSecurityAttribute(SecurityAction.Demand)]\n[assembly: MyCodeAccessSecurityAttribute(SecurityAction.Deny)]\n[assembly: MyCodeAccessSecurityAttribute(SecurityAction.InheritanceDemand)]\n[assembly: MyCodeAccessSecurityAttribute(SecurityAction.LinkDemand)]\n[assembly: MyCodeAccessSecurityAttribute(SecurityAction.PermitOnly)]\n\n\nclass MySecurityAttribute : SecurityAttribute\n{\n    public MySecurityAttribute(SecurityAction a) : base(a) { }\n    public override IPermission CreatePermission() { return null; }\n}\n\nclass MyCodeAccessSecurityAttribute : CodeAccessSecurityAttribute\n{\n    public MyCodeAccessSecurityAttribute(SecurityAction a) : base(a) { }\n    public override IPermission CreatePermission() { return null; }\n    public static void Main() {}\n}",
+  "sourceSHA256": "d9c894ae7a503c3d35b6a30566f690965a4c615dbadd80aa3214c2fcab4d6724",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "sha256": "995f9a35982f60a6e97828d01cb24f09a40124463d1f9e4c6b48f42ec012d8ff",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "license": "MIT",
+    "method": "CS7050ERR_SecurityAttributeInvalidActionAssembly",
+    "offset": 18230
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      },
+      {
+        "code": "CS7050",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,32): warning CS0618: 'System.Security.Permissions.SecurityAction.Deny' is obsolete: 'Deny is obsolete and will be removed in a future release of the .NET Framework. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [assembly: MySecurityAttribute(SecurityAction.Deny)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.Deny\").WithArguments(\"System.Security.Permissions.SecurityAction.Deny\", \"Deny is obsolete and will be removed in a future release of the .NET Framework. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (16,42): warning CS0618: 'System.Security.Permissions.SecurityAction.Deny' is obsolete: 'Deny is obsolete and will be removed in a future release of the .NET Framework. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [assembly: MyCodeAccessSecurityAttribute(SecurityAction.Deny)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.Deny\").WithArguments(\"System.Security.Permissions.SecurityAction.Deny\", \"Deny is obsolete and will be removed in a future release of the .NET Framework. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (5,32): error CS7050: SecurityAction value '(SecurityAction)1' is invalid for security attributes applied to an assembly\n                // [assembly: MySecurityAttribute((SecurityAction)1)]        // Native compiler allows this security action value for type/method security attributes, but not for assembly.\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"(SecurityAction)1\").WithArguments(\"(SecurityAction)1\"),\n                // (6,32): error CS7050: SecurityAction value 'SecurityAction.Assert' is invalid for security attributes applied to an assembly\n                // [assembly: MySecurityAttribute(SecurityAction.Assert)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.Assert\").WithArguments(\"SecurityAction.Assert\"),\n                // (7,32): error CS7050: SecurityAction value 'SecurityAction.Demand' is invalid for security attributes applied to an assembly\n                // [assembly: MySecurityAttribute(SecurityAction.Demand)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.Demand\").WithArguments(\"SecurityAction.Demand\"),\n                // (8,32): error CS7050: SecurityAction value 'SecurityAction.Deny' is invalid for security attributes applied to an assembly\n                // [assembly: MySecurityAttribute(SecurityAction.Deny)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.Deny\").WithArguments(\"SecurityAction.Deny\"),\n                // (9,32): error CS7050: SecurityAction value 'SecurityAction.InheritanceDemand' is invalid for security attributes applied to an assembly\n                // [assembly: MySecurityAttribute(SecurityAction.InheritanceDemand)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.InheritanceDemand\").WithArguments(\"SecurityAction.InheritanceDemand\"),\n                // (10,32): error CS7050: SecurityAction value 'SecurityAction.LinkDemand' is invalid for security attributes applied to an assembly\n                // [assembly: MySecurityAttribute(SecurityAction.LinkDemand)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.LinkDemand\").WithArguments(\"SecurityAction.LinkDemand\"),\n                // (11,32): error CS7050: SecurityAction value 'SecurityAction.PermitOnly' is invalid for security attributes applied to an assembly\n                // [assembly: MySecurityAttribute(SecurityAction.PermitOnly)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.PermitOnly\").WithArguments(\"SecurityAction.PermitOnly\"),\n                // (13,42): error CS7050: SecurityAction value '(SecurityAction)1' is invalid for security attributes applied to an assembly\n                // [assembly: MyCodeAccessSecurityAttribute((SecurityAction)1)]        // Native compiler allows this security action value for type/method security attributes, but not for assembly.\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"(SecurityAction)1\").WithArguments(\"(SecurityAction)1\"),\n                // (14,42): error CS7050: SecurityAction value 'SecurityAction.Assert' is invalid for security attributes applied to an assembly\n                // [assembly: MyCodeAccessSecurityAttribute(SecurityAction.Assert)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.Assert\").WithArguments(\"SecurityAction.Assert\"),\n                // (15,42): error CS7050: SecurityAction value 'SecurityAction.Demand' is invalid for security attributes applied to an assembly\n                // [assembly: MyCodeAccessSecurityAttribute(SecurityAction.Demand)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.Demand\").WithArguments(\"SecurityAction.Demand\"),\n                // (16,42): error CS7050: SecurityAction value 'SecurityAction.Deny' is invalid for security attributes applied to an assembly\n                // [assembly: MyCodeAccessSecurityAttribute(SecurityAction.Deny)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.Deny\").WithArguments(\"SecurityAction.Deny\"),\n                // (17,42): error CS7050: SecurityAction value 'SecurityAction.InheritanceDemand' is invalid for security attributes applied to an assembly\n                // [assembly: MyCodeAccessSecurityAttribute(SecurityAction.InheritanceDemand)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.InheritanceDemand\").WithArguments(\"SecurityAction.InheritanceDemand\"),\n                // (18,42): error CS7050: SecurityAction value 'SecurityAction.LinkDemand' is invalid for security attributes applied to an assembly\n                // [assembly: MyCodeAccessSecurityAttribute(SecurityAction.LinkDemand)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.LinkDemand\").WithArguments(\"SecurityAction.LinkDemand\"),\n                // (19,42): error CS7050: SecurityAction value 'SecurityAction.PermitOnly' is invalid for security attributes applied to an assembly\n                // [assembly: MyCodeAccessSecurityAttribute(SecurityAction.PermitOnly)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionAssembly, \"SecurityAction.PermitOnly\").WithArguments(\"SecurityAction.PermitOnly\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

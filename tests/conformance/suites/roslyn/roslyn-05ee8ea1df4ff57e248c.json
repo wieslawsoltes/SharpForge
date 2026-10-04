@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-05ee8ea1df4ff57e248c",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass A : Attribute\n{\n    public A(int param) { }\n    public int Prop { get; set; }\n}\nclass Program\n{\n    const int N1 = 10;\n    const int N2 = 20;\n    const int N3 = 30;\n    const int N4 = 40;\n    const int N5 = 50;\n    const int N6 = 60;\n    public int Prop\n    {\n        [A(N1, Prop = N4)][param: A(N2, Prop = N5)][return: A(N3, Prop = N6)]\n        set\n        {\n            Console.WriteLine(value);\n        }\n    }\n}",
+  "sourceSHA256": "ebda9f34b5b387b1efb2b71ddae125062a3eda2447399ca1d0cf313a6a80035f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "Setter_AttributeArguments",
+    "offset": 256345
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

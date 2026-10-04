@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-22edbc97b9160c570a9e",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass P\n{\n    static void Main()\n    {\n        var x1 = (1, 1) as (int, int a)?;\n        var x2 = (1, 1) as (int, int)?;\n        var x3 = (1, new object()) as (int, dynamic)?;\n        Console.Write($\"{x1} {x2} {x3}\");\n    }\n}",
+  "sourceSHA256": "474783389230d2045ce786cd14476b81c240bc2be490051fc40f9dc9e5f31f69",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "NullableTupleInAsOperator",
+    "offset": 1095389
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "references: new[] { ValueTupleRef, SystemRuntimeFacadeRef }, options: TestOptions.DebugExe)",
+  "options": "(source, references: new[] { ValueTupleRef, SystemRuntimeFacadeRef }, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

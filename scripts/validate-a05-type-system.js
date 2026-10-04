@@ -10,33 +10,45 @@ import {tmpdir} from 'node:os';
 import {basename,dirname,extname,join,relative,resolve} from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import {CilVirtualMachine} from '../packages/runtime/src/cil-vm.js';
+import {qualifyAsyncAssembly} from './a05-async-qualification.js';
+import {verifyNativeOutcome} from './a05-native-outcome.js';
+import {nativeFixtureProject} from './a05-native-project.js';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const usage=`Usage: node scripts/validate-a05-type-system.js [options]
   --fixture directory|Program.cs  Add a same-DLL .NET/CIL case (repeatable).
   --expected expected.txt        Expected stdout for the preceding fixture.
-  --fault System.Exception       Expected unhandled managed type for the preceding fixture.
+  --fault Exception              Require that System exception to escape the preceding fixture.
+  --failfast                     Require CoreCLR first-chance failfast for the preceding fixture.
+  --scheduled                    Drain cooperative tasks for the preceding fixture.
+  --unsafe                       Enable unsafe C# blocks for the preceding fixture.
   --casts                        Include native Type.IsAssignableFrom/CastCache parity.
-  --unsafe                       Allow managed function-pointer C# fixtures.
-  --async                        Run scheduler-backed fixtures with virtual time.
-  --snapshot-await               Restore/GC/replay each observed state-machine await.
-  --task identifier              Evidence task identifier (default SF-A05-E04).
+  --async                        Replay the same Roslyn state machine at its first two awaits.
   --output directory             Evidence directory (default artifacts/a05-type-system).
   --framework net10.0            Target framework (default installed SDK major).
   --dotnet executable            .NET executable (default DOTNET_PATH or dotnet).
 With no --fixture/--casts, run all four E04 fixtures plus the casts oracle.
 Directories contribute their .cs files; expected.txt is required unless overridden.
 Line endings are normalized to LF; all other output bytes must match.`;
-const options={fixtures:[],casts:false,unsafe:false,async:false,snapshotAwait:false,task:'SF-A05-E04',output:resolve(root,'artifacts/a05-type-system'),dotnet:process.env.DOTNET_PATH??'dotnet',framework:process.env.DOTNET_TARGET_FRAMEWORK};
+const options={fixtures:[],casts:false,async:false,output:resolve(root,'artifacts/a05-type-system'),dotnet:process.env.DOTNET_PATH??'dotnet',framework:process.env.DOTNET_TARGET_FRAMEWORK};
 const arguments_=process.argv.slice(2);
 for(let i=0;i<arguments_.length;i++) {
   const argument=arguments_[i];
   if(argument==='--help'){console.log(usage);process.exit(0);}
-  if(argument==='--unsafe'){options.unsafe=true;continue;}
-  if(argument==='--async'){options.async=true;continue;}
-  if(argument==='--snapshot-await'){options.async=true;options.snapshotAwait=true;continue;}
   if(argument==='--casts'){options.casts=true;continue;}
-  if(!['--fixture','--expected','--fault','--output','--framework','--dotnet','--task'].includes(argument)||!arguments_[i+1]||arguments_[i+1].startsWith('--'))throw new Error(usage);
+  if(argument==='--async'){options.async=true;continue;}
+  if (['--scheduled', '--unsafe', '--failfast'].includes(argument)) {
+    assert(options.fixtures.length, `${argument} must follow --fixture`);
+    const fixture = options.fixtures.at(-1);
+    if (argument === '--failfast') {
+      assert(!fixture.expectedFault, '--failfast and --fault are separate outcomes');
+      fixture.expectedFault = 'ExecutionEngineException';
+    }
+    fixture[argument.slice(2)] = true;
+    continue;
+  }
+  if (!['--fixture', '--expected', '--fault', '--output', '--framework', '--dotnet'].includes(argument) ||
+      !arguments_[i + 1] || arguments_[i + 1].startsWith('--')) throw new Error(usage);
   const value=arguments_[++i];
   if(argument==='--fixture')options.fixtures.push({path:resolve(value)});
   else if(argument==='--expected') {
@@ -44,23 +56,31 @@ for(let i=0;i<arguments_.length;i++) {
     options.fixtures.at(-1).expected=resolve(value);
   } else if(argument==='--fault') {
     assert(options.fixtures.length,'--fault must follow --fixture');
-    assert(/^System\.(?:[A-Za-z][A-Za-z0-9.]*)?Exception$/.test(value),'Expected fault must be a qualified managed exception type');
-    options.fixtures.at(-1).fault=value;
+    assert(!options.fixtures.at(-1).failfast,'--failfast and --fault are separate outcomes');
+    assert(/^[A-Za-z][A-Za-z0-9]*Exception$|^Exception$/.test(value),'--fault requires a System exception type name');
+    options.fixtures.at(-1).expectedFault=value;
   } else options[argument.slice(2)]=argument==='--output'?resolve(value):value;
 }
 if(!options.fixtures.length&&!options.casts) {
-  options.fixtures=['tests/fixtures/a05-static-init','tests/fixtures/a05-statics','tests/fixtures/a05/enums-strings','tests/fixtures/a05/tokens'].map(path=>({path:join(root,path)}));
-  options.casts=true;
+  const defaults=options.async?['tests/fixtures/a05-async']:
+    ['tests/fixtures/a05-static-init','tests/fixtures/a05-statics','tests/fixtures/a05/enums-strings','tests/fixtures/a05/tokens'];
+  options.fixtures=defaults.map(path=>({path:join(root,path)}));
+  options.casts=!options.async;
 }
+assert(!options.async||options.fixtures.every(fixture=>!fixture.expectedFault&&!fixture.scheduled),
+  '--async replay must run separately from --fault and --scheduled fixtures');
 const environment={...process.env,DOTNET_NOLOGO:'1',DOTNET_CLI_TELEMETRY_OPTOUT:'1',DOTNET_SKIP_FIRST_TIME_EXPERIENCE:'1'};
 const normalize=text=>text.replaceAll('\r\n','\n');
 const sha256=bytes=>createHash('sha256').update(bytes).digest('hex');
 const commands=[];
-function execute(command,args,{cwd=root,allowFailure=false}={}) {
+function execute(command,args,{cwd=root,allowFailure=false,allowSignal=false}={}) {
   const result=spawnSync(command,args,{cwd,encoding:'utf8',timeout:120000,maxBuffer:8*1024*1024,env:environment});
-  commands.push({command,arguments:args,cwd,status:result.status});
-  if(result.error||!allowFailure&&(result.signal||result.status!==0))throw new Error(`${command} ${args.join(' ')} failed: ${result.error?.message||result.stderr||result.stdout||result.signal}`);
-  return {exitCode:result.status,...(result.signal?{signal:result.signal}:{}),output:normalize(result.stdout),stderr:normalize(result.stderr)};
+  commands.push({command,arguments:args,cwd,status:result.status,signal:result.signal});
+  if (result.error || result.signal && !allowSignal || !allowFailure && result.status !== 0) {
+    const detail = result.error?.message || result.stderr || result.stdout || result.signal;
+    throw new Error(`${command} ${args.join(' ')} failed: ${detail}`);
+  }
+  return {exitCode:result.status,signal:result.signal,output:normalize(result.stdout),stderr:normalize(result.stderr)};
 }
 const sdk=execute(options.dotnet,['--version']).output.trim(),runtimes=execute(options.dotnet,['--list-runtimes']).output.trim();
 const framework=options.framework??`net${sdk.split('.')[0]}.0`;
@@ -87,7 +107,7 @@ async function sourceFiles(path) {
 
 async function qualify(id,load) {
   const artifact=join(options.output,id),commandStart=commands.length;
-  const report={task:options.task,fixture:id,timestamp:new Date().toISOString(),...environmentEvidence,passed:false};
+  const report={task:'SF-A05-E04',fixture:id,timestamp:new Date().toISOString(),...environmentEvidence,passed:false};
   let directory;
   await mkdir(artifact,{recursive:true});
   try {
@@ -95,8 +115,13 @@ async function qualify(id,load) {
     report.qualification=fixture.compare?'native .NET reflection compared with CastCache':'same Roslyn DLL executed by native .NET and CilVirtualMachine';
     report.sources=fixture.sources.map(source=>({path:source.path?relative(root,source.path):source.name,sha256:sha256(source.bytes),...(source.generatedFrom?{generatedFrom:relative(root,source.generatedFrom)}:{})}));
     report.expectedOutput=fixture.expectedOutput;
+    if(fixture.expectedFault)report.expectedFault=fixture.expectedFault;
+    if(fixture.failfast)report.failfast=true;
+    if(fixture.scheduled)report.scheduled=true;
+    if(fixture.unsafe)report.unsafe=true;
     directory=await mkdtemp(join(tmpdir(),'sharpforge-e04-'));
-    await writeFile(join(directory,'Qualification.csproj'),`<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>${framework}</TargetFramework><ImplicitUsings>disable</ImplicitUsings><Nullable>disable</Nullable><Optimize>true</Optimize><AllowUnsafeBlocks>${options.unsafe}</AllowUnsafeBlocks><DebugType>none</DebugType><Deterministic>true</Deterministic><GenerateAssemblyInfo>false</GenerateAssemblyInfo><NuGetAudit>false</NuGetAudit></PropertyGroup></Project>\n`);
+    await writeFile(join(directory,'global.json'),JSON.stringify({sdk:{version:sdk,rollForward:'disable'}},null,2)+'\n');
+    await writeFile(join(directory,'Qualification.csproj'),nativeFixtureProject(framework,!!fixture.unsafe));
     await writeFile(join(directory,'NuGet.Config'),'<configuration><packageSources><clear /></packageSources></configuration>\n');
     for(const source of fixture.sources){const path=join(directory,source.name);await mkdir(dirname(path),{recursive:true});await writeFile(path,source.bytes);}
     execute(options.dotnet,['restore','Qualification.csproj','--configfile','NuGet.Config','--verbosity','quiet'],{cwd:directory});
@@ -107,46 +132,21 @@ async function qualify(id,load) {
     await copyFile(join(dirname(assemblyPath),'Qualification.runtimeconfig.json'),join(artifact,'Qualification.runtimeconfig.json'));
     for(const source of fixture.sources){const path=join(artifact,'source',source.name);await mkdir(dirname(path),{recursive:true});await writeFile(path,source.bytes);}
     await writeFile(join(artifact,'expected.txt'),fixture.expectedOutput);
-    report.native=execute(options.dotnet,[assemblyPath],{cwd:directory,allowFailure:true});
+    report.native=execute(options.dotnet,[assemblyPath],{cwd:directory,allowFailure:true,allowSignal:!!fixture.expectedFault});
     if(fixture.compare)report.castCache=await fixture.compare();
     else {
-      const vm=new CilVirtualMachine(assembly,{virtualTime:options.async}),snapshots=[],observed=new Set();
-      const onSlice=()=>{
-        if(!options.snapshotAwait||vm.state!=='waiting')return;
-        const awaited=[...vm.scheduler.tasks.values()].filter(task=>task.asyncState?.phase==='awaiting').map(task=>task.asyncState.awaitedTask).filter(Boolean);
-        const unseen=awaited.filter(task=>!observed.has(task.h+':'+task.g));if(!unseen.length)return;
-        assert(snapshots.length<64,'Native fixture produced more than 64 distinct await snapshots');
-        for(const task of unseen)observed.add(task.h+':'+task.g);
-        snapshots.push(vm.snapshot());
-      };
-      const result=options.async?await vm.runAsync({onSlice}):vm.run();
-      report.cil={state:result.state,exitCode:result.exitCode,output:normalize(result.output),instructions:result.stats.instructions,...(result.fault?{fault:{name:result.fault.name,message:result.fault.message}}:{})};
-      if(fixture.expectedFault) {
-        report.expectedFault=fixture.expectedFault;
-        report.native.fault=report.native.stderr.match(/Unhandled exception\. ([A-Za-z0-9_.]+)/)?.[1]??null;
-        assert.equal(report.native.fault,fixture.expectedFault,'Native unhandled exception type');
-        assert(report.native.signal||report.native.exitCode!==0,'Native process must report failure');
-        assert.equal(result.state,'faulted','CIL unhandled state');
-        assert.equal(result.fault?.name.replace(/^System\./,''),fixture.expectedFault.replace(/^System\./,''),'CIL/native fault type');
-        assert.notEqual(result.exitCode,0,'CIL unhandled exit code');
-      } else {
-        assert.equal(result.state,'terminated',result.fault?.stack);
-        assert.equal(result.exitCode,report.native.exitCode,'CIL/native exit code');
+      let execution;
+      if(options.async)execution=await qualifyAsyncAssembly(assembly);
+      else {
+        const vm=new CilVirtualMachine(assembly,fixture.scheduled?{virtualTime:true}:{});
+        try { execution={result:fixture.scheduled?await vm.runAsync():vm.run()}; }
+        finally { vm.stop(); }
       }
-      assert.equal(report.cil.output,report.native.output,'CIL/native stdout');
-      if(options.snapshotAwait) {
-        const stateMachines=vm.inspector.types.filter(type=>type.interfaces.some(token=>vm.inspector.metadata.typeName(token)==='System.Runtime.CompilerServices.IAsyncStateMachine'));
-        if(stateMachines.length)assert(snapshots.length>=2,'Async qualification must observe at least two suspended awaits');
-        report.snapshots={observed:snapshots.length,replayed:0,collectionBeforeReplay:true};
-        for(const snapshot of snapshots) {
-          vm.restore(snapshot);vm.heap.collect();const replay=await vm.runAsync();
-          assert.equal(replay.state,'terminated',replay.fault?.stack);assert.equal(replay.exitCode,report.native.exitCode,'Restored/native exit code');
-          assert.equal(normalize(replay.output),report.native.output,'Restored/native stdout');report.snapshots.replayed++;
-        }
-      }
+      const result=execution.result;if(execution.replays)report.asyncReplays=execution.replays;
+      report.cil={state:result.state,exitCode:result.exitCode,output:normalize(result.output),instructions:result.stats.instructions,
+        ...(result.fault?{fault:{name:result.fault.name,message:result.fault.message,fatal:result.fault.fatal===true}}:{})};
     }
-    if(!fixture.expectedFault)assert.equal(report.native.exitCode,0,'Native exit code');
-    assert.equal(report.native.output,fixture.expectedOutput,'Native/expected stdout');
+    verifyNativeOutcome(report);
     if(report.castCache)assert.equal(report.castCache.output,report.native.output,'CastCache/native matrix');
     report.passed=true;
   } catch(error) { report.error={name:error.name,message:error.message,stack:error.stack}; }
@@ -168,7 +168,8 @@ for(const fixture of options.fixtures) {
   const stem=id;while(names.has(id))id=stem+'-'+suffix++;names.add(id);
   reports.push(await qualify(id,async()=>{
     const sources=await sourceFiles(fixture.path),expected=fixture.expected??join(extname(fixture.path)==='.cs'?dirname(fixture.path):fixture.path,'expected.txt');
-    return {sources,expectedOutput:normalize(await readFile(expected,'utf8')),expectedFault:fixture.fault};
+    return {sources,expectedOutput:normalize(await readFile(expected,'utf8')),
+      expectedFault:fixture.expectedFault,failfast:fixture.failfast,scheduled:fixture.scheduled,unsafe:fixture.unsafe};
   }));
 }
 if(options.casts)reports.push(await qualify('assignability',async()=>{
@@ -181,6 +182,6 @@ if(options.casts)reports.push(await qualify('assignability',async()=>{
     compare:()=>{const cache=new CastCache(castingRegistry());return {pairs:typePairs.length,output:typePairs.map(([source,target])=>cache.isAssignableFrom(target,source)?'True':'False').join('\n')+'\n'};}
   };
 }));
-const summary={task:options.task,timestamp:new Date().toISOString(),...environmentEvidence,passed:reports.every(report=>report.passed),fixtures:reports.map(report=>({fixture:report.fixture,passed:report.passed,qualification:report.qualification,evidence:join(report.fixture,'qualification.json')}))};
+const summary={task:'SF-A05-E04',timestamp:new Date().toISOString(),...environmentEvidence,passed:reports.every(report=>report.passed),fixtures:reports.map(report=>({fixture:report.fixture,passed:report.passed,qualification:report.qualification,evidence:join(report.fixture,'qualification.json')}))};
 await writeFile(join(options.output,'qualification.json'),JSON.stringify(summary,null,2)+'\n');
 if(!summary.passed)process.exitCode=1;

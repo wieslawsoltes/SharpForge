@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a175789035766f45e598",
+  "kind": "diagnostics",
+  "sourceText": "\nusing CustomAttribute;\n[Base(1)]\n[@BaseAttribute(\"SOS\")]\nstatic class AttributeMod\n{\n    [Derived('Q')]\n    [Derived('C')]\n    public class Goo\n    {\n    }\n    [BaseAttribute(1)]\n    [Base(\"\")]\n    public class Bar\n    {\n    }\n}",
+  "sourceSHA256": "7adabe7b372e1588b9567c22451c36ed775fa3fddded88814eb4bffd222849ce",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeNoMultipleAndInvalidTarget",
+    "offset": 239507
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, references, options: opt)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0592",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,2): error CS0579: Duplicate 'BaseAttribute' attribute\n                // [@BaseAttribute(\"SOS\")]\n                Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"@BaseAttribute\").WithArguments(\"BaseAttribute\").WithLocation(4, 2),\n                // (7,6): error CS0592: Attribute 'Derived' is not valid on this declaration type. It is only valid on 'struct, method, parameter' declarations.\n                //     [Derived('Q')]\n                Diagnostic(ErrorCode.ERR_AttributeOnBadSymbolType, \"Derived\").WithArguments(\"Derived\", \"struct, method, parameter\").WithLocation(7, 6),\n                // (8,6): error CS0579: Duplicate 'Derived' attribute\n                //     [Derived('C')]\n                Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"Derived\").WithArguments(\"Derived\").WithLocation(8, 6),\n                // (13,6): error CS0579: Duplicate 'Base' attribute\n                //     [Base(\"\")]\n                Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"Base\").WithArguments(\"Base\").WithLocation(13, 6)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

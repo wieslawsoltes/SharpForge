@@ -3,6 +3,7 @@
  * initializers, followed by the flow passes over each bound body. Top-level statements are bound in
  * ../binder/top-level.js.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, RefKind, ErrorTypeSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { checkImplicitBaseCall, checkConstructorCycles, constructorInitializerKind } from '../binder/constructors.js';
@@ -30,6 +31,19 @@ export const BodyBinding = Base =>
         ...extra,
       };
     }
+    /**
+     * Binds the default values of a method's optional parameters where they are declared, once. Bodies bind their
+     * own; this is for a method whose defaults are needed earlier (the natural type of a method group, a lambda
+     * compared with its target delegate) and for one without a body (the `Invoke` method of a delegate).
+     */
+    ensureParameterDefaults(method) {
+      const unbound = (method?.parameters ?? []).filter(parameter => parameter.defaultSyntax && !parameter.defaultBound);
+      if (!unbound.length) return;
+      const type = method.containingType,
+        uri = method.uri ?? method.locations?.[0]?.uri ?? this.at(type).uri,
+        binder = new BodyBinder(this, this.context(method, type, { uri, parameters: method.parameters }));
+      for (const parameter of unbound) this.bindParameterDefault(parameter, binder);
+    }
     /** Binds the body of a method-like symbol and runs the flow passes over it. */
     bindMethodBody(method, context) {
       const syntax = method.syntax,
@@ -45,7 +59,7 @@ export const BodyBinding = Base =>
           !['IAsyncEnumerable', 'IAsyncEnumerator'].includes(declared.name) &&
           isClosedType(declared)
         ) {
-          this.report(context.uri, method.locations[0], 'CS1983');
+          this.report(context.uri, method.locations[0], DiagnosticId.CS1983);
           // What the body returns is not checked against a type that cannot be the result of an async method.
           returnType = ErrorTypeSymbol.unknown;
         }
@@ -76,7 +90,7 @@ export const BodyBinding = Base =>
           method.methodKind === MethodKind.Destructor
         ) {
           const v = e.kind === 'TypeExpression' || e.kind === 'NamespaceExpression' ? binder.asValue(e) : e;
-          if (!v.hasErrors && !binder.isStatementExpression(expression)) binder.report(expression, 'CS0201');
+          if (!v.hasErrors && !binder.isStatementExpression(expression)) binder.report(expression, DiagnosticId.CS0201);
           body = { kind: 'ExpressionBody', syntax: expression, completes: true, expression: v };
         } else {
           const v = binder.asValue(e),
@@ -99,7 +113,7 @@ export const BodyBinding = Base =>
           this.report(
             context.uri,
             method.methodKind === MethodKind.PropertyGet && method.syntax.keyword ? method.syntax.keyword : (method.locations[0] ?? syntax),
-            'CS0161',
+            DiagnosticId.CS0161,
             [
               method.methodKind === MethodKind.PropertyGet && method.associatedSymbol
                 ? method.associatedSymbol.toDisplayString() + '.get'
@@ -132,11 +146,10 @@ export const BodyBinding = Base =>
         if (!type) continue;
         if (member.kind === SymbolKind.Method) {
           if (member.isPrimaryConstructor) {
-            this.bindConstructorInitializer(
-              member,
-              type,
-              new BodyBinder(this, this.context(member, type, { parameters: member.parameters })),
-            );
+            const binder = new BodyBinder(this, this.context(member, type, { parameters: member.parameters }));
+            // A primary constructor has no body, so its optional parameters are bound here (`record R(int X = 1)`).
+            for (const p of member.parameters) if (p.defaultSyntax) this.bindParameterDefault(p, binder);
+            if (member.baseArgumentsSyntax) this.bindConstructorInitializer(member, type, binder);
             continue;
           }
           const context = this.context(member, type);
@@ -170,7 +183,7 @@ export const BodyBinding = Base =>
                   elements: binder.arrayInitializer(init, member.type.elementType, member.type.rank),
                 }
               : binder.bad(init);
-            if (member.type && !member.type.isErrorType() && !member.type.elementType) binder.report(init, 'CS0622');
+            if (member.type && !member.type.isErrorType() && !member.type.elementType) binder.report(init, DiagnosticId.CS0622);
           } else {
             const raw = binder.value(init);
             value = member.type ? binder.convert(raw, member.type, init) : raw;
@@ -180,7 +193,8 @@ export const BodyBinding = Base =>
             member.writes = (member.writes ?? 0) + 1;
             if (!(value.constantValue || value.literal || value.kind === 'Default')) member.nonConstantWrite = true;
           }
-          if (member.kind === SymbolKind.Property && !member.isAutoProperty) this.reportAt(member, 'CS8050');
+          // An interface property with an initializer has a diagnostic of its own (CS8053, binder/member-bodies.js).
+          if (member.kind === SymbolKind.Property && !member.isAutoProperty && type.typeKind !== TypeKind.Interface) this.reportAt(member, DiagnosticId.CS8050);
           this.bound.set(member, { kind: 'Initializer', syntax: init, expression: value, binder });
         }
       }
@@ -205,10 +219,11 @@ export const BodyBinding = Base =>
         {
           // A constructor that calls itself is reported at `this`, a longer cycle at the whole initializer.
           const initializer = d.ctor.initializerSyntax,
-            at = (d.code === 'CS0768' ? initializer : initializer?.thisOrBaseKeyword) ?? this.at(d.ctor);
+            at = (d.code === DiagnosticId.CS0768 ? initializer : initializer?.thisOrBaseKeyword) ?? this.at(d.ctor);
           this.report(this.at(d.ctor).uri, at, d.code, d.args);
         }
       }
+      for (const type of this.assembly.types) if (type.typeKind === TypeKind.Delegate) this.ensureParameterDefaults(type.delegateInvokeMethod);
       this.bindTopLevel();
     }
     bindConstructorInitializer(ctor, type, binder) {
@@ -223,7 +238,7 @@ export const BodyBinding = Base =>
       const target = isThis ? type : type.baseType;
       if (!target || target.isErrorType?.()) return;
       if (type.typeKind === TypeKind.Struct && !isThis && init) {
-        binder.report(init.thisOrBaseKeyword, 'CS0522', [ctor.toDisplayString()]);
+        binder.report(init.thisOrBaseKeyword, DiagnosticId.CS0522, [ctor.toDisplayString()]);
         return;
       }
       const all = target.getMembers('.ctor').filter(c => c.methodKind === MethodKind.Constructor && !c.isCopyConstructor),
@@ -243,7 +258,9 @@ export const BodyBinding = Base =>
           return;
         }
         const e = r.error;
-        binder.report(binder.errorNode(e, args, at), e.code, e.code === 'CS1729' ? [target.toDisplayString(), args.length] : e.args);
+        // Several constructors fit a dynamic argument: the choice would be made at run time, which an initializer cannot do.
+        if (e.code === DiagnosticId.CS0121 && args.some(a => a.type?.typeKind === TypeKind.Dynamic)) binder.report(at, DiagnosticId.CS1975);
+        else binder.report(binder.errorNode(e, args, at), e.code, e.code === DiagnosticId.CS1729 ? [target.toDisplayString(), args.length] : e.args);
         return;
       }
       const call = binder.finishCall(r, null, args, init ?? argList, {});

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-895250cbe46e98cda1e6",
+  "kind": "spec",
+  "sourceText": "// Union of existing types\npublic union Pet(Cat, Dog, Bird);\n\n// Union with function member\npublic union OneOrMore<T>(T, IEnumerable<T>)\n{\n    public IEnumerable<T> AsEnumerable() => Value switch\n    {\n        IEnumerable<T> list => list,\n        T value => [value],\n    }\n}\n\n// \"Discriminated\" union with freshly declared case types\npublic record class None();\npublic record class Some<T>(T value);\npublic union Option<T>(None, Some<T>);",
+  "sourceSHA256": "a6738d645c7aa23d51651cb8e7c6bf029682eaa581784666c3f6d67bde19bdba",
+  "target": "library",
+  "featureId": "csharp-15-0-unions",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/unions.md",
+    "sha256": "eb6de7e24e702567a909286e0b4b6d5b409ae3e7016fadd87ab4fc8c16c9fa4a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/unions.md",
+    "license": "NOASSERTION",
+    "offset": 32746
+  }
+}

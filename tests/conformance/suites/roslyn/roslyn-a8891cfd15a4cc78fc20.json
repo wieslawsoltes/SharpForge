@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a8891cfd15a4cc78fc20",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Test\n{\n    public static void goo1(TestClass1 c) {}\n    public static void goo2(TestClass2 c) {}\n    public static void goo3(TestClass3 c) {}\n    public static void goo4(TestClass4 c) {}\n\n    public static void Main()\n    {\n        TestClass c = new TestClass();\n        c.TestMethod();\n        var i = c.Prop1;\n        c = c.field1;\n        c.event1();\n        c.event1 += () => {};\n        c.Prop2 = 42;\n        i = c.Prop2;\n        c.Prop3 = 42;\n        i = c.Prop3;\n    }\n}\n",
+  "sourceSHA256": "09c207a92a4ace8060df117ad9c598a227147bc6dff50d27d1fb1ecdf989693d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeInMetadata",
+    "offset": 243786
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, new[] { peReference })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,29): warning CS0618: 'TestClass2' is obsolete: 'TestClass2 is obsolete'\n                //     public static void goo2(TestClass2 c) {}\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"TestClass2\").WithArguments(\"TestClass2\", \"TestClass2 is obsolete\").WithLocation(5, 29),\n                // (6,29): error CS0619: 'TestClass3' is obsolete: 'Do not use TestClass3'\n                //     public static void goo3(TestClass3 c) {}\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"TestClass3\").WithArguments(\"TestClass3\", \"Do not use TestClass3\").WithLocation(6, 29),\n                // (7,29): warning CS0618: 'TestClass4' is obsolete: 'TestClass4 is obsolete'\n                //     public static void goo4(TestClass4 c) {}\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"TestClass4\").WithArguments(\"TestClass4\", \"TestClass4 is obsolete\").WithLocation(7, 29),\n                // (4,29): warning CS0612: 'TestClass1' is obsolete\n                //     public static void goo1(TestClass1 c) {}\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"TestClass1\").WithArguments(\"TestClass1\").WithLocation(4, 29),\n                // (12,9): warning CS0618: 'TestClass.TestMethod()' is obsolete: 'Do not use TestMethod'\n                //         c.TestMethod();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"c.TestMethod()\").WithArguments(\"TestClass.TestMethod()\", \"Do not use TestMethod\").WithLocation(12, 9),\n                // (13,17): warning CS0618: 'TestClass.Prop1' is obsolete: 'Do not use Prop1'\n                //         var i = c.Prop1;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"c.Prop1\").WithArguments(\"TestClass.Prop1\", \"Do not use Prop1\").WithLocation(13, 17),\n                // (14,13): error CS0619: 'TestClass.field1' is obsolete: 'Do not use field1'\n                //         c = c.field1;\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"c.field1\").WithArguments(\"TestClass.field1\", \"Do not use field1\").WithLocation(14, 13),\n                // (15,9): error CS0619: 'TestClass.event1' is obsolete: 'Do not use event'\n                //         c.event1();\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"c.event1\").WithArguments(\"TestClass.event1\", \"Do not use event\").WithLocation(15, 9),\n                // (16,9): error CS0619: 'TestClass.event1' is obsolete: 'Do not use event'\n                //         c.event1 += () => {};\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"c.event1\").WithArguments(\"TestClass.event1\", \"Do not use event\").WithLocation(16, 9),\n                // (18,13): warning CS0618: 'TestClass.Prop2.get' is obsolete: 'Do not use Prop2.Get'\n                //         i = c.Prop2;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"c.Prop2\").WithArguments(\"TestClass.Prop2.get\", \"Do not use Prop2.Get\").WithLocation(18, 13),\n                // (19,9): error CS0619: 'TestClass.Prop3.set' is obsolete: 'Do not use Prop3.Get'\n                //         c.Prop3 = 42;\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"c.Prop3\").WithArguments(\"TestClass.Prop3.set\", \"Do not use Prop3.Get\").WithLocation(19, 9)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c498a2c4dc5f47ec987e",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\npublic class C\n{\n    // Invalid typeof for the regular constructor, non-static method\n    [UnmanagedCallersOnly(CallConvs: new[] { typeof(string) })]\n    public void M() {}\n}\n\n#nullable enable\nnamespace System.Runtime.InteropServices\n{\n    [AttributeUsage(AttributeTargets.Method, Inherited = false)]\n    public sealed class UnmanagedCallersOnlyAttribute : Attribute\n    {\n        public UnmanagedCallersOnlyAttribute(Type[]? CallConvs)\n        {\n        }\n\n        public string? EntryPoint;\n    }\n}\n",
+  "sourceSHA256": "df35b108ed8d93d737d41da3c144b1e06d96944e6be2eb045874d6ffacd7c442",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenFunctionPointersTests.cs",
+    "sha256": "6ae3195a3dd105e6e2f998eb4dd574db2a2568f521c73ec47e2d10473bed0787",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenFunctionPointersTests.cs",
+    "license": "MIT",
+    "method": "UnmanagedCallersOnlyUnrecognizedConstructor",
+    "offset": 393094
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System.Runtime.InteropServices;\npublic class C\n{\n    // Invalid typeof for the regular constructor, non-static method\n    [UnmanagedCallersOnly(CallConvs: new[] { typeof(string) })]\n    public void M() {}\n}\n\n#nullable enable\nnamespace System.Runtime.InteropServices\n{\n    [AttributeUsage(AttributeTargets.Method, Inherited = false)]\n    public sealed class UnmanagedCallersOnlyAttribute : Attribute\n    {\n        public UnmanagedCallersOnlyAttribute(Type[]? CallConvs)\n        {\n        }\n\n        public string? EntryPoint;\n    }\n}\n\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

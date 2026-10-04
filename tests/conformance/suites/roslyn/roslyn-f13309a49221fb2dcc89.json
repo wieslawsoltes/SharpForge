@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f13309a49221fb2dcc89",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C\n{\n        public event System.Action E\n    {\n        [Obsolete]\n        add\n        {\n        }\n        remove\n        {\n        }\n    }\n}\n",
+  "sourceSHA256": "4aa2a2dcd43b69b2f0d8a4a585f28a19d9c241c591221776d65c2f1a1f4e82ed",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteOnEventAccessorCSharp7",
+    "offset": 489155
+  },
+  "langVersion": "7.3",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code, parseOptions: new CSharpParseOptions(LanguageVersion.CSharp7_3))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8423",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,10): error CS8423: Attribute 'System.ObsoleteAttribute' is not valid on event accessors. It is only valid on 'class, struct, enum, constructor, method, property, indexer, field, event, interface, delegate' declarations.\n                //         [Obsolete]\n                Diagnostic(ErrorCode.ERR_AttributeNotOnEventAccessor, \"Obsolete\").WithArguments(\"System.ObsoleteAttribute\", \"class, struct, enum, constructor, method, property, indexer, field, event, interface, delegate\").WithLocation(7, 10)",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation"
+  ]
+}

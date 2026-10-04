@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-53995c5c55a448877082",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\nnamespace System.Runtime.InteropServices\n{\n    [AttributeUsage(AttributeTargets.Parameter, Inherited = false)]\n    public sealed class OptionalAttribute : Attribute\n    {\n        public OptionalAttribute()\n        {\n        }\n    }\n\n    [AttributeUsage(AttributeTargets.Parameter)]\n    public sealed class DefaultParameterValueAttribute : Attribute\n    {\n        public DefaultParameterValueAttribute(object value)\n        {\n            Value = value;\n        }\n        public object Value { get; }\n    }\n}\n\nclass Program\n{\n    const string s1 = nameof(s1);\n    delegate void D(string s1, [CallerArgumentExpression(s1)] ref string s2 = \"default\");\n\n    static void M(string s1, ref string s2)\n    {\n    }\n\n    public static void Main()\n    {\n        D d = M;\n        string s = string.Empty;\n        d.EndInvoke(result: null);\n    }\n}\n",
+  "sourceSHA256": "a32d859b5c09868948bda13b00b2cf9846c91c65da1810b284c5ac184cb9f8c0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "sha256": "afc3ea7577c9e597760812239c750126e0cb09ea32cb52bdc8e9850a45ebeac9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "license": "MIT",
+    "method": "TestEndInvoke3",
+    "offset": 7905
+  },
+  "langVersion": "10",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.NetCoreApp, options: TestOptions.ReleaseExe, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8964",
+        "severity": "error"
+      },
+      {
+        "code": "CS1741",
+        "severity": "error"
+      },
+      {
+        "code": "CS7036",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (28,33): error CS8964: The CallerArgumentExpressionAttribute may only be applied to parameters with default values\n                //     delegate void D(string s1, [CallerArgumentExpression(s1)] ref string s2 = \"default\");\n                Diagnostic(ErrorCode.ERR_BadCallerArgumentExpressionParamWithoutDefaultValue, \"CallerArgumentExpression\").WithLocation(28, 33),\n                // (28,63): error CS1741: A ref or out parameter cannot have a default value\n                //     delegate void D(string s1, [CallerArgumentExpression(s1)] ref string s2 = \"default\");\n                Diagnostic(ErrorCode.ERR_RefOutDefaultValue, \"ref\").WithLocation(28, 63),\n                // (38,11): error CS7036: There is no argument given that corresponds to the required parameter 's2' of 'Program.D.EndInvoke(ref string, IAsyncResult)'\n                //         d.EndInvoke(result: null);\n                Diagnostic(ErrorCode.ERR_NoCorrespondingArgument, \"EndInvoke\").WithArguments(\"s2\", \"Program.D.EndInvoke(ref string, System.IAsyncResult)\").WithLocation(38, 11)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

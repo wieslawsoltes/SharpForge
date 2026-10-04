@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-de6af1c99ac6aef0b482",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public static void M(A a)\n    {\n        _ = (a, a) == (a, a);\n        if (a == a) { }\n    }\n}\npublic class A\n{\n    public A(int i)\n        => throw null;\n    public static bool? operator ==(A a1, A a2)\n        => throw null;\n    public static bool? operator !=(A a1, A a2)\n        => throw null;\n    public override bool Equals(object o)\n        => throw null;\n    public override int GetHashCode()\n        => throw null;\n}\n",
+  "sourceSHA256": "b9c5f7fb01aacd928c1841ff47725d5f14748f604645598e1f388aff3550fcd4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestNullableBoolComparisonResult_WithTrueFalseOperators",
+    "offset": 178473
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0029",
+        "severity": "error"
+      },
+      {
+        "code": "CS0029",
+        "severity": "error"
+      },
+      {
+        "code": "CS0266",
+        "severity": "error"
+      },
+      {
+        "code": "CS1718",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,13): error CS0029: Cannot implicitly convert type 'bool?' to 'bool'\n                //         _ = (a, a) == (a, a);\n                Diagnostic(ErrorCode.ERR_NoImplicitConv, \"(a, a) == (a, a)\").WithArguments(\"bool?\", \"bool\").WithLocation(6, 13),\n                // (6,13): error CS0029: Cannot implicitly convert type 'bool?' to 'bool'\n                //         _ = (a, a) == (a, a);\n                Diagnostic(ErrorCode.ERR_NoImplicitConv, \"(a, a) == (a, a)\").WithArguments(\"bool?\", \"bool\").WithLocation(6, 13),\n                // (7,13): error CS0266: Cannot implicitly convert type 'bool?' to 'bool'. An explicit conversion exists (are you missing a cast?)\n                //         if (a == a) { }\n                Diagnostic(ErrorCode.ERR_NoImplicitConvCast, \"a == a\").WithArguments(\"bool?\", \"bool\").WithLocation(7, 13),\n                // (7,13): warning CS1718: Comparison made to same variable; did you mean to compare something else?\n                //         if (a == a) { }\n                Diagnostic(ErrorCode.WRN_ComparisonToSelf, \"a == a\").WithLocation(7, 13)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-071542a6b9ba09fdb82e",
+  "kind": "diagnostics",
+  "sourceText": "class P\n{\n    static void Main()\n    {\n        var c = new C();\n        Report(c.F());\n        Report(c[0]);\n        D d = C.D;\n        Report(d());\n    }\n    static void Report(object o)\n    {\n        System.Console.WriteLine(o);   \n    }\n}",
+  "sourceSHA256": "838ce2cf5d717e635eba2374a701f5782e68a7a6010caa5168853ba6f41fbd0f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/OptionalArgumentsTests.cs",
+    "sha256": "933f05d101ca784a87ab174caeae4001bd61d9080a2e77fbe0c932b8ed9319e9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/OptionalArgumentsTests.cs",
+    "license": "MIT",
+    "method": "TestDuplicateConstantAttributesSameValues",
+    "offset": 8327
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "references: new[] { new CSharpCompilationReference(comp1) },\n                options: TestOptions.DebugExe)",
+  "options": "(\n                source2,\n                references: new[] { new CSharpCompilationReference(comp1) },\n                options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

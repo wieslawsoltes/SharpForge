@@ -5,6 +5,8 @@ import { Precedence } from '../../lexer/operators.js';
  * for its `=>`, which also separates `(a) => a` from a cast or a parenthesised expression.
  */
 const untypedParameterFollowers = new Set([',', ')', '=']);
+const scannedParameterModifiers = new Set(['ref', 'out', 'in', 'params', 'this', 'readonly']);
+const openBrackets = new Set(['(', '[', '{']);
 export const lambdaMethods = {
   /** Parses a lambda or anonymous method when one starts at the cursor, otherwise returns null without consuming. */
   anonymousFunction(min) {
@@ -49,7 +51,53 @@ export const lambdaMethods = {
     const open = this.scanType(j);
     if (open <= j || this.kindAt(open) !== '(') return null;
     const close = this.matchingBracket(open);
-    return close > 0 && this.kindAt(close + 1) === '=>' ? 'typed' : null;
+    if (close < 0 || this.kindAt(close + 1) !== '=>') return null;
+    // `s.All(char.IsUpper) => ...` in a switch arm is an invocation followed by the arrow of the arm, not a lambda.
+    if (!this.isLambdaParameterList(open, close)) return null;
+    return this.isConditionalBeforeLambda(j, open, close) ? null : 'typed';
+  },
+  /**
+   * True when the tokens between the parentheses at `open` and `close` can be the parameter list of a lambda:
+   * nothing, or parameters that are each a name or `[attributes] modifiers type name`, with an optional default
+   * value. This is what separates a lambda with a return type (`T (int x) => x`) from an invocation that stands
+   * before a `=>` (`map.TryGetValue(key, out var value) => value` after `when`).
+   */
+  isLambdaParameterList(open, close) {
+    let i = open + 1;
+    if (i === close) return true;
+    for (;;) {
+      i = this.afterAttributeLists(i);
+      if (i < 0) return false;
+      while (scannedParameterModifiers.has(this.kindAt(i)) || this.isWord(this.tokens[i], 'scoped')) i++;
+      const named = this.isId(this.tokens[i]) && untypedParameterFollowers.has(this.kindAt(i + 1));
+      if (!named) {
+        const name = this.scanType(i);
+        if (name <= i || !this.isId(this.tokens[name])) return false;
+        i = name;
+      }
+      i++;
+      if (this.kindAt(i) === '=') i = this.afterDefaultValue(i + 1, close);
+      if (i === close) return true;
+      if (this.kindAt(i) !== ',') return false;
+      i++;
+    }
+  },
+  /** The index of the `,` or of `close` that ends a default value starting at `i`; brackets are skipped as a whole. */
+  afterDefaultValue(i, close) {
+    while (i < close && this.kindAt(i) !== ',') {
+      const end = openBrackets.has(this.kindAt(i)) ? this.matchingBracket(i) : i;
+      i = (end < 0 ? i : end) + 1;
+    }
+    return Math.min(i, close);
+  },
+  /**
+   * `b ? () => 1 : null` could start a lambda that returns `b?`. Roslyn reads the `?` as the conditional operator when
+   * a `:` follows the lambda, and as a nullable return type otherwise (`b? () => null`). A predefined type cannot be a
+   * condition, so `int? () => null` is always a lambda. `j` starts the type, `open` and `close` are its parentheses.
+   */
+  isConditionalBeforeLambda(j, open, close) {
+    if (this.kindAt(open - 1) !== '?' || this.isPredefined(this.tokens[j])) return false;
+    return this.colonsAfter(close + 2) > 0;
   },
   simpleLambda(attributeLists, modifiers) {
     const parameter = this.n('Parameter', null, null, null, this.id(), null),
@@ -82,18 +130,17 @@ export const lambdaMethods = {
   /** Consumes the modifiers up to token index `end`, recording `static` (C# 9) and `async` (C# 5). */
   lambdaModifiers(end) {
     const list = [];
-    let isAsync = false;
     while (this.i < end) {
       const token = this.current;
       if (token.kind === 'async') {
-        isAsync = true;
+        // Roslyn reports an async lambda or anonymous method at its `async` modifier.
+        this.feature('Async', token);
         list.push(this.takeWord('async'));
         continue;
       }
       if (token.kind === 'static') this.feature('StaticAnonymousFunction', token);
       list.push(this.take());
     }
-    if (isAsync) this.feature('Async', this.tokens[end]);
     return list;
   },
   lambdaParameterList() {

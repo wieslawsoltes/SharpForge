@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-cabffcbe5c624e171a2c",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    void M(int x)\n    {\n        // Warnings\n\n        int[] array = new int[] { 42 };\n        unsafe\n        {\n            fixed (int* p = &array[0])\n            {\n                (int*, int*) t1 = (p, p); // converted tuple literal with a pointer type\n                (string, int*) t2 = (null, p); // implicit tuple literal conversion on a converted tuple literal with a pointer type\n                (string, (int*, int*)) t3 = (null, (p, p));\n            }\n        }\n\n        (int, int) t4 = default((int, int));\n        (int, int) t5 = (1, 2);\n\n        (string, string) t6 = (null, null);\n        (string, string) t7 = (\"hello\", \"world\");\n        (S, (S, S)) t8 = (new S(), (new S(), new S()));\n\n        (int, int) t9 = ((C, int))(new C(), 2); // implicit tuple conversion with a user conversion on an element\n        (int, int) t10 = (new C(), 2); // implicit tuple literal conversion with a user conversion on an element\n        (int, int) t11 = ((int, int))(((C, int))(new C(), 2)); // explicit tuple conversion with a user conversion on an element\n\n        (C, C) t12 = (new C(), new C());\n        (C, (C, C)) t13 = (new C(), (new C(), new C()));\n        (S, (S, S)) t14 = (new S(), (new S() { /* object initializer */ }, new S()));\n\n        // No warnings\n\n        (C, int) tuple = (new C(), 2);\n        (int, int) t20 = ((C, int))tuple;\n        (int, int) t21 = tuple;\n        (int, int) t22 = ((int, int))tuple;\n\n        C c1 = (1, 2);\n        (int, int) intTuple = (1, 2);\n        C c2 = intTuple;\n\n        int i1 = 1;\n        int i2 = i1;\n    }\n\n    public static implicit operator int(C c)\n    {\n        return 0;\n    }\n    public static implicit operator C((int, int) t)\n    {\n        return new C();\n    }\n}\npublic struct S { }\n",
+  "sourceSHA256": "bd6419c013c8e6b852826b57ee863707d65a90422af67b9925ab28e8c74ac543",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "UnusedTuple",
+    "offset": 1039981
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: s_valueTupleRefs, options: TestOptions.UnsafeDebugDll)",
+  "options": "(source, references: s_valueTupleRefs, options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (13,18): error CS0306: The type 'int*' may not be used as a type argument\n                //                 (int*, int*) t1 = (p, p); // converted tuple literal with a pointer type\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(13, 18),\n                // (13,24): error CS0306: The type 'int*' may not be used as a type argument\n                //                 (int*, int*) t1 = (p, p); // converted tuple literal with a pointer type\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(13, 24),\n                // (13,36): error CS0306: The type 'int*' may not be used as a type argument\n                //                 (int*, int*) t1 = (p, p); // converted tuple literal with a pointer type\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p\").WithArguments(\"int*\").WithLocation(13, 36),\n                // (13,39): error CS0306: The type 'int*' may not be used as a type argument\n                //                 (int*, int*) t1 = (p, p); // converted tuple literal with a pointer type\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p\").WithArguments(\"int*\").WithLocation(13, 39),\n                // (14,26): error CS0306: The type 'int*' may not be used as a type argument\n                //                 (string, int*) t2 = (null, p); // implicit tuple literal conversion on a converted tuple literal with a pointer type\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(14, 26),\n                // (15,27): error CS0306: The type 'int*' may not be used as a type argument\n                //                 (string, (int*, int*)) t3 = (null, (p, p));\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(15, 27),\n                // (15,33): error CS0306: The type 'int*' may not be used as a type argument\n                //                 (string, (int*, int*)) t3 = (null, (p, p));\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(15, 33),\n                // (15,53): error CS0306: The type 'int*' may not be used as a type argument\n                //                 (string, (int*, int*)) t3 = (null, (p, p));\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p\").WithArguments(\"int*\").WithLocation(15, 53),\n                // (15,56): error CS0306: The type 'int*' may not be used as a type argument\n                //                 (string, (int*, int*)) t3 = (null, (p, p));\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p\").WithArguments(\"int*\").WithLocation(15, 56),\n                // (13,30): warning CS0219: The variable 't1' is assigned but its value is never used\n                //                 (int*, int*) t1 = (p, p); // converted tuple literal with a pointer type\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t1\").WithArguments(\"t1\").WithLocation(13, 30),\n                // (14,32): warning CS0219: The variable 't2' is assigned but its value is never used\n                //                 (string, int*) t2 = (null, p); // implicit tuple literal conversion on a converted tuple literal with a pointer type\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t2\").WithArguments(\"t2\").WithLocation(14, 32),\n                // (15,40): warning CS0219: The variable 't3' is assigned but its value is never used\n                //                 (string, (int*, int*)) t3 = (null, (p, p));\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t3\").WithArguments(\"t3\").WithLocation(15, 40),\n                // (19,20): warning CS0219: The variable 't4' is assigned but its value is never used\n                //         (int, int) t4 = default((int, int));\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t4\").WithArguments(\"t4\").WithLocation(19, 20),\n                // (20,20): warning CS0219: The variable 't5' is assigned but its value is never used\n                //         (int, int) t5 = (1, 2);\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t5\").WithArguments(\"t5\").WithLocation(20, 20),\n                // (22,26): warning CS0219: The variable 't6' is assigned but its value is never used\n                //         (string, string) t6 = (null, null);\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t6\").WithArguments(\"t6\").WithLocation(22, 26),\n                // (23,26): warning CS0219: The variable 't7' is assigned but its value is never used\n                //         (string, string) t7 = (\"hello\", \"world\");\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t7\").WithArguments(\"t7\").WithLocation(23, 26),\n                // (24,21): warning CS0219: The variable 't8' is assigned but its value is never used\n                //         (S, (S, S)) t8 = (new S(), (new S(), new S()));\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t8\").WithArguments(\"t8\").WithLocation(24, 21),\n                // (26,20): warning CS0219: The variable 't9' is assigned but its value is never used\n                //         (int, int) t9 = ((C, int))(new C(), 2); // implicit tuple conversion with a user conversion on an element\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t9\").WithArguments(\"t9\").WithLocation(26, 20),\n                // (27,20): warning CS0219: The variable 't10' is assigned but its value is never used\n                //         (int, int) t10 = (new C(), 2); // implicit tuple literal conversion with a user conversion on an element\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t10\").WithArguments(\"t10\").WithLocation(27, 20),\n                // (28,20): warning CS0219: The variable 't11' is assigned but its value is never used\n                //         (int, int) t11 = ((int, int))(((C, int))(new C(), 2)); // explicit tuple conversion with a user conversion on an element\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t11\").WithArguments(\"t11\").WithLocation(28, 20),\n                // (30,16): warning CS0219: The variable 't12' is assigned but its value is never used\n                //         (C, C) t12 = (new C(), new C());\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t12\").WithArguments(\"t12\").WithLocation(30, 16),\n                // (31,21): warning CS0219: The variable 't13' is assigned but its value is never used\n                //         (C, (C, C)) t13 = (new C(), (new C(), new C()));\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t13\").WithArguments(\"t13\").WithLocation(31, 21),\n                // (32,21): warning CS0219: The variable 't14' is assigned but its value is never used\n                //         (S, (S, S)) t14 = (new S(), (new S() { /* object initializer */ }, new S()));\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t14\").WithArguments(\"t14\").WithLocation(32, 21)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

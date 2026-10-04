@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a7752fc4396830902d90",
+  "kind": "spec",
+  "sourceText": "char escape_char = '\\e';\n\nAssert.IsTrue(escape_char == (char)0x1b, \"...\");\nAssert.IsTrue(escape_char == '\\u001b', \"...\");\nAssert.IsTrue(escape_char == '\\U0000001b', \"...\");\nAssert.IsTrue(escape_char == '\\x1b', \"...\");",
+  "sourceSHA256": "2141dc3e274f2f6db4e3b5743174eba1792fb43920ec53436de023d4b0c45897",
+  "target": "library",
+  "featureId": "csharp-13-0-esc-escape-sequence",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/esc-escape-sequence.md",
+    "sha256": "814c609898f84efe47232c6234ad977073b5acfff50bf8fcae4e5f56257dac34",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/esc-escape-sequence.md",
+    "license": "NOASSERTION",
+    "offset": 626
+  }
+}

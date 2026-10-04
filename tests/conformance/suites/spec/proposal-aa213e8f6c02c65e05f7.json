@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-aa213e8f6c02c65e05f7",
+  "kind": "spec",
+  "sourceText": "using System.Collections.Generic;\nusing System.Threading.Tasks;\n\nclass A : System.Attribute { }\nunsafe partial class C1\n{ // unsafe context\n    [/* unsafe context */ A]\n    IEnumerable<int> M1(\n        /* unsafe context */ int*[] x)\n    { // safe context (this is the iterator block implementing the iterator)\n        yield return 1;\n    }\n    IEnumerable<int> M2()\n    { // safe context (this is the iterator block implementing the iterator)\n        unsafe\n        { // unsafe context\n            { // unsafe context (this is *not* the block implementing the iterator)\n                yield return 1; // error: `yield return` in unsafe context\n            }\n        }\n    }\n    [/* unsafe context */ A]\n    unsafe IEnumerable<int> M3(\n        /* unsafe context */ int*[] x)\n    { // safe context\n        yield return 1;\n    }\n    [/* unsafe context */ A]\n    IEnumerable<int> this[\n        /* unsafe context */ int*[] x]\n    { // unsafe context\n        get\n        { // safe context\n            yield return 1;\n        }\n        set { /* unsafe context */ }\n    }\n    [/* unsafe context */ A]\n    unsafe IEnumerable<int> this[\n        /* unsafe context */ long*[] x]\n    { // unsafe context (the iterator declaration is unsafe)\n        get\n        { // safe context\n            yield return 1;\n        }\n        set { /* unsafe context */ }\n    }\n    IEnumerable<int> M4()\n    {\n        yield return 1;\n        var lam1 = async () =>\n        { // safe context\n          // spec violation: in Roslyn, this is an unsafe context in LangVersion 12 and lower\n            await Task.Yield(); // error in C# 12, allowed in C# 13\n            int* p = null; // error in both C# 12 and C# 13 (unsafe in iterator)\n        };\n        unsafe\n        {\n            var lam2 = () =>\n            { // unsafe context, lambda cannot be an iterator\n                yield return 1; // error: yield cannot be used in lambda\n            };\n        }\n        async void local()\n        { // safe context\n          // spec violation: in Roslyn, this is an unsafe context in LangVersion 12 and lower\n            await Task.Yield(); // error in C# 12, allowed in C# 13\n            int* p = null; // allowed in C# 12, error in C# 13 (breaking change in Roslyn)\n        }\n        local();\n    }\n    public partial IEnumerable<int> M5() // unsafe context (inherits from parent)\n    { // safe context\n        yield return 1;\n    }\n}\npartial class C1\n{\n    public partial IEnumerable<int> M5(); // safe context (inherits from parent)\n}\nclass C2\n{ // safe context\n    [/* unsafe context */ A]\n    unsafe IEnumerable<int> M(\n        /* unsafe context */ int*[] x)\n    { // safe context\n        yield return 1;\n    }\n    unsafe IEnumerable<int> this[\n        /* unsafe context */ int*[] x]\n    { // unsafe context\n        get\n        { // safe context\n            yield return 1;\n        }\n        set { /* unsafe context */ }\n    }\n}",
+  "sourceSHA256": "5706cd704f6aaf07ec3c39b9866194564eaee732f741af309b86eb702ec90933",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-unsafe-in-iterators-async",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-unsafe-in-iterators-async.md",
+    "sha256": "ed4db38af450526d24d556f7c1424168e3fb20df13a77900399cb9ca82b502fd",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-unsafe-in-iterators-async.md",
+    "license": "NOASSERTION",
+    "offset": 4115
+  }
+}

@@ -1,6 +1,16 @@
-import {ManagedFault} from '../heap.js';
-import {pushFrame, popFrame} from './frame-stack.js';
-import {createExceptionState} from './exception-state.js';
+import {
+  ManagedFault
+} from '../heap.js';
+import {
+  pushControlFrame as pushFrame,
+  retireExceptionFrame as popFrame
+} from './control-frames.js';
+import {
+  nextFrameId
+} from './frame-lifetimes.js';
+import {
+  createExceptionState
+} from './exception-state.js';
 
 /** Execute a filter with shared declaring-frame locals while younger frames remain live. */
 export function enterFilter(vm, owner, handler, search) {
@@ -11,10 +21,12 @@ export function enterFilter(vm, owner, handler, search) {
     throw fault;
   }
   return pushFrame(vm, {
-    id: ++vm.frameId,
+    id: nextFrameId(vm),
     method: owner.method,
     args: owner.args,
-    ...(owner.varargs?{varargs:owner.varargs}:{}),
+    ...(owner.varargs ? {
+      varargs: owner.varargs
+    } : {}),
     locals: owner.locals,
     stack: [search.error.reference],
     pc: owner.offsets.get(handler.catchType),
@@ -39,6 +51,10 @@ export function finishFilter(vm, decision) {
     throw new ManagedFault('InvalidProgramException', 'endfilter requires an Int32 decision');
   }
   popFrame(vm);
-  if (decision !== 0) search.selection = {kind: 'catch', frameId: frame.filterOwnerId, handler: frame.filterHandler};
+  if (decision !== 0) search.selection = {
+    kind: 'catch',
+    frameId: frame.filterOwnerId,
+    handler: frame.filterHandler
+  };
   return search;
 }

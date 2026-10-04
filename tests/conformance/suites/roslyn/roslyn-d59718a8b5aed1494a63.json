@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d59718a8b5aed1494a63",
+  "kind": "diagnostics",
+  "sourceText": "namespace System.Runtime.CompilerServices\n{\n    public sealed class CallerArgumentExpressionAttribute : Attribute\n    {\n        public CallerArgumentExpressionAttribute([CallerArgumentExpression(nameof(parameterName))] string parameterName)\n        {\n            ParameterName = parameterName;\n        }\n        public string ParameterName { get; }\n    }\n}",
+  "sourceSHA256": "37d6a256c4be2beee3db1e344ae6ceb42d32e173b88bb127d1dafb81531f2b7a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "sha256": "afc3ea7577c9e597760812239c750126e0cb09ea32cb52bdc8e9850a45ebeac9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "license": "MIT",
+    "method": "CallerArgumentExpression_Cycle",
+    "offset": 194283
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8964",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,51): error CS8964: The CallerArgumentExpressionAttribute may only be applied to parameters with default values\n                //         public CallerArgumentExpressionAttribute([CallerArgumentExpression(nameof(parameterName))] string parameterName)\n                Diagnostic(ErrorCode.ERR_BadCallerArgumentExpressionParamWithoutDefaultValue, \"CallerArgumentExpression\").WithLocation(5, 51)",
+  "unsupported": []
+}

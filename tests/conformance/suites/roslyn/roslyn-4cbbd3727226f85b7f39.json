@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4cbbd3727226f85b7f39",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public void M()\n    {\n        int x, y;\n        void Local()\n        {\n            Local();\n            x = 0;\n        }\n        Local();\n        x++;\n        y++;\n    }\n}",
+  "sourceSHA256": "a087a880e161ac426941bb969a5fcad75203596ac6f7242ee89a7254cc2ae615",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "UnreachableRecursion",
+    "offset": 7241
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    public void M()\n    {\n        int x, y;\n        void Local()\n        {\n            Local();\n            x = 0;\n        }\n        Local();\n        x++;\n        y++;\n    }\n}\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

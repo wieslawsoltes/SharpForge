@@ -48,7 +48,7 @@ export function detect({ files, quarantine, root = process.cwd(), retries = 2, t
       const started = Date.now();
       let child;
       try {
-        child = execute(process.execPath, ['--test', '--test-reporter=tap', file], {
+        child = execute(process.execPath, ['--test', '--test-concurrency=1', '--test-reporter=tap', file], {
           cwd: root, env: childEnvironment, encoding: 'utf8', timeout, signal, maxBuffer: 16 * 1024 * 1024,
         });
       } catch (error) { child = { status: null, error }; }

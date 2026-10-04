@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-2a2b48390d222d385579",
+  "kind": "spec",
+  "sourceText": "class MySetBuilder\n{\n    public static MySet<T> Create<T>(ReadOnlySpan<T> items, IEqualityComparer<T> comparer = null) { ... }\n}",
+  "sourceSHA256": "531cb33f92720910d5cbe7dccbc44174a19503ecaddefa1e0baf9c71eac5d3f8",
+  "target": "library",
+  "featureId": "csharp-15-0-collection-expression-arguments",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/collection-expression-arguments.md",
+    "sha256": "491b1497fe1e4ebb212a7e14e84d7d4705d9e9c0c9644e27fa50f5a0432c2824",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/collection-expression-arguments.md",
+    "license": "NOASSERTION",
+    "offset": 27765
+  }
+}

@@ -1,10 +1,28 @@
-import {ManagedFault} from '../heap.js';
 import {
-  initializeException, exceptionField, setExceptionHResult, exceptionStackTrace, baseException, exceptionText
+  ManagedFault
+} from '../heap.js';
+import {
+  initializeException,
+  exceptionField,
+  setExceptionHResult,
+  exceptionStackTrace,
+  baseException,
+  exceptionText
 } from './exception-object.js';
-import {captureExceptionDispatch, dispatchSource, throwExceptionDispatch} from './exception-dispatch.js';
-import {initializeAggregate, aggregateInnerList, flattenAggregate, exceptionListCall} from './aggregate-exception.js';
-import {exceptionDataCall} from './exception-data.js';
+import {
+  captureExceptionDispatch,
+  dispatchSource,
+  throwExceptionDispatch
+} from './exception-dispatch.js';
+import {
+  initializeAggregate,
+  aggregateInnerList,
+  flattenAggregate,
+  exceptionListCall
+} from './aggregate-exception.js';
+import {
+  exceptionDataCall
+} from './exception-data.js';
 
 export function exceptionConstructor(vm, descriptor, self, parameters) {
   if (descriptor.owner === 'System.AggregateException') initializeAggregate(vm, self, parameters, descriptor.signature);
@@ -25,7 +43,7 @@ export function exceptionIntrinsic(vm, descriptor, self, parameters) {
     return throwExceptionDispatch(vm, self);
   }
   if (descriptor.owner.startsWith('System.Collections.ObjectModel.ReadOnlyCollection`1') ||
-      descriptor.owner.startsWith('System.Collections.Generic.IReadOnlyList`1')) {
+    descriptor.owner.startsWith('System.Collections.Generic.IReadOnlyList`1')) {
     return exceptionListCall(vm, self, name, parameters);
   }
   if (['System.Collections.IDictionary', 'System.Collections.Hashtable'].includes(descriptor.owner)) {
@@ -37,7 +55,10 @@ export function exceptionIntrinsic(vm, descriptor, self, parameters) {
     const trace = exceptionStackTrace(vm, self);
     return trace === null ? null : vm.heap.string(trace);
   }
-  if (name === 'set_HResult') { setExceptionHResult(vm, self, parameters[0]); return null; }
+  if (name === 'set_HResult') {
+    setExceptionHResult(vm, self, parameters[0]);
+    return null;
+  }
   if (name === 'GetBaseException') return baseException(vm, self);
   if (name === 'ToString') return vm.heap.string(exceptionText(vm, self));
   if (name.startsWith('get_')) return exceptionField(vm, self, name.slice(4));

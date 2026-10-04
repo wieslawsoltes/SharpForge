@@ -75,6 +75,16 @@ class SupplyToolingTests(unittest.TestCase):
         self.assertEqual(lock.render_lock(metadata['packages']), (ROOT / 'tests/requirements.txt').read_text())
         self.assertIn('playwright', [package['name'] for package in metadata['packages']])
         self.assertGreaterEqual(len(metadata['packages']), 10)
+        self.assertTrue(set(metadata['roots']).issubset(
+            {package['name'] + '==' + package['version'] for package in metadata['packages']}))
+
+    def test_lock_roots_follow_requested_resolution_versions(self):
+        resolution = {'install': [
+            {'requested': True, 'metadata': {'name': 'playwright', 'version': '1.63.0'}},
+            {'requested': False, 'metadata': {'name': 'pyee', 'version': '13.0.1'}},
+            {'requested': True, 'metadata': {'name': 'PyYAML', 'version': '6.0.3'}},
+        ]}
+        self.assertEqual(lock.resolved_roots(resolution), ['playwright==1.63.0', 'PyYAML==6.0.3'])
 
     def test_release_asset_and_permission_ordering(self):
         release = workflows.parse_workflow((ROOT / '.github/workflows/release.yml').read_text())
@@ -125,12 +135,13 @@ class SupplyToolingTests(unittest.TestCase):
 
     def test_security_jobs_preserve_core_only_ordinary_prs(self):
         security = workflows.parse_workflow((ROOT / '.github/workflows/security.yml').read_text())
-        self.assertEqual(security['on']['push']['branches'], ['main'])
+        self.assertEqual(set(security['on']), {'workflow_dispatch'})
         self.assertNotIn('pull_request_target', security['on'])
         self.assertEqual(security['defaults']['run']['shell'], 'bash')
         for job in security['jobs'].values():
-            self.assertEqual(job['if'], "github.event_name != 'pull_request' || "
-                             "contains(github.event.pull_request.labels.*.name, 'full-ci')")
+            self.assertNotIn('if', job)
+            self.assertEqual(job['strategy']['max-parallel'], 1)
+        self.assertEqual(security['jobs']['codeql']['needs'], 'supply')
         languages = security['jobs']['codeql']['strategy']['matrix']['language']
         self.assertEqual(set(languages), {'javascript-typescript', 'python'})
 
@@ -139,6 +150,7 @@ class SupplyToolingTests(unittest.TestCase):
         release = workflows.parse_workflow((ROOT / '.github/workflows/release.yml').read_text())
         self.assertEqual(release['jobs']['qualification']['uses'], './.github/workflows/ci.yml')
         self.assertEqual(release['jobs']['qualification']['needs'], 'policy')
+        self.assertTrue(release['jobs']['qualification']['with']['qualification'])
         self.assertEqual(release['jobs']['build']['needs'], 'qualification')
         policy_scripts = '\n'.join(step.get('run', '') for step in release['jobs']['policy']['steps'])
         for script in ['release/version-check.js', 'release-policy/check-policy.js', 'release-policy/environment.js']:

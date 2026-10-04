@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-288e656889884ad26578",
+  "kind": "spec",
+  "sourceText": "public struct S\n{\n    public S()\n    {\n        // CS9020 The 'this' object is read before all of its fields have been assigned, causing preceding implicit\n        // assignments of 'default' to non-explicitly assigned fields.\n        P2 = 5;\n    }\n\n    public int P2 { get => field; set => field = value; }\n}",
+  "sourceSHA256": "23d41fdd3d986891c22a9bbe87274366e4d52488ba529df4372469cc3f275421",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 9558
+  }
+}

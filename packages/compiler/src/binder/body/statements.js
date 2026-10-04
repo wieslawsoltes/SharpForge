@@ -2,6 +2,7 @@
  * Statement dispatch: blocks and scopes, control flow, labels and reachability (`completes`), which drives
  * CS0162 (unreachable code), CS0161 (not all paths return), CS0163 and CS8070 (switch fall-through).
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { reportYieldInLambda } from '../iterators.js';
 import { reportAwaitOutsideAsync } from '../async.js';
 import { ErrorTypeSymbol } from '../../symbols/types.js';
@@ -19,6 +20,13 @@ const statementExpressionKinds = new Set([
   'ConditionalAccessExpression',
 ]);
 const stmt = (kind, syntax, completes, props) => ({ kind, syntax, completes, ...props });
+/** True when a statement is, or contains, a labeled statement (lambdas and local functions have labels of their own). */
+function containsLabel(syntax) {
+  if (syntax.kind === 'LabeledStatement') return true;
+  if (/LambdaExpression$|^AnonymousMethodExpression$|^LocalFunctionStatement$/.test(syntax.kind)) return false;
+  for (const child of syntax.childNodes?.() ?? []) if (containsLabel(child)) return true;
+  return false;
+}
 
 /** Class mixin: Statement dispatch: blocks and scopes, control flow, labels and reachability (`completes`), which drives */
 export const StatementBinding = Base =>
@@ -46,18 +54,17 @@ export const StatementBinding = Base =>
         let reachable = true,
           warned = false;
         for (const s of statements) {
-          if (
-            !reachable &&
-            !warned &&
-            s.kind !== 'LocalFunctionStatement' &&
-            s.kind !== 'LabeledStatement' &&
-            !this.usesGoto &&
-            !this.hasLabels
-          ) {
-            this.report(s.firstToken() ?? s, 'CS0162');
-            warned = true;
+          if (!reachable && s.kind !== 'LocalFunctionStatement') {
+            // A label may be the target of a goto: what follows it (or a statement that holds one) is taken as
+            // reachable, and the next unreachable run gets a warning of its own.
+            if (containsLabel(s)) {
+              reachable = true;
+              warned = false;
+            } else if (!warned) {
+              this.report(s.firstToken() ?? s, DiagnosticId.CS0162);
+              warned = true;
+            }
           }
-          if (s.kind === 'LabeledStatement') reachable = true;
           const b = this.statement(s);
           bound.push(b);
           if (s.kind !== 'LocalFunctionStatement' && reachable) reachable = b.completes !== false;
@@ -71,7 +78,7 @@ export const StatementBinding = Base =>
     /** A statement in an embedded position (the body of if/while/...): declarations are not allowed there (CS1023). */
     embedded(syntax) {
       if (syntax.kind === 'LocalDeclarationStatement' || syntax.kind === 'LocalFunctionStatement' || syntax.kind === 'LabeledStatement') {
-        this.report(syntax, 'CS1023');
+        this.report(syntax, DiagnosticId.CS1023);
         this.pushScope();
         try {
           return this.statement(syntax);
@@ -85,7 +92,7 @@ export const StatementBinding = Base =>
           syntax.parent?.kind,
         )
       )
-        this.report(syntax, 'CS0642');
+        this.report(syntax, DiagnosticId.CS0642);
       if (syntax.kind === 'Block') return this.block(syntax);
       this.pushScope();
       try {
@@ -106,9 +113,9 @@ export const StatementBinding = Base =>
           if (e.kind === 'TypeExpression' || e.kind === 'NamespaceExpression') {
             value = this.asValue(e);
           } else if (e.kind === 'MethodGroup' && !e.hasErrors) {
-            this.report(syntax.expression, 'CS0201');
+            this.report(syntax.expression, DiagnosticId.CS0201);
             value = this.bad(syntax.expression);
-          } else if (!e.hasErrors && !this.isStatementExpression(syntax.expression)) this.report(syntax.expression, 'CS0201');
+          } else if (!e.hasErrors && !this.isStatementExpression(syntax.expression)) this.report(syntax.expression, DiagnosticId.CS0201);
           if (
             e.kind === 'Call' &&
             !this.c.suppressUnawaited &&
@@ -116,7 +123,7 @@ export const StatementBinding = Base =>
             e.type &&
             (e.type.equals(this.core.task) || e.type.originalDefinition === this.core.taskT)
           )
-            this.report(syntax.expression, 'CS4014');
+            this.report(syntax.expression, DiagnosticId.CS4014);
           return stmt('ExpressionStatement', syntax, !(e.form === 'throw'), { expression: value });
         }
         case 'LocalDeclarationStatement':
@@ -190,8 +197,8 @@ export const StatementBinding = Base =>
           return this.returnStatement(syntax);
         case 'ThrowStatement': {
           if (!syntax.expression) {
-            if (!this.catchDepth) this.report(syntax.throwKeyword, 'CS0156');
-            else if (this.finallyInCatch) this.report(syntax.throwKeyword, 'CS0724');
+            if (!this.catchDepth) this.report(syntax.throwKeyword, DiagnosticId.CS0156);
+            else if (this.finallyInCatch) this.report(syntax.throwKeyword, DiagnosticId.CS0724);
             return stmt('Throw', syntax, false, {});
           }
           const e = this.value(syntax.expression);
@@ -201,22 +208,22 @@ export const StatementBinding = Base =>
         case 'BreakStatement': {
           // A jump without a target is an error statement: what follows it stays reachable.
           if (!this.loops?.length) {
-            this.report(syntax, 'CS0139');
+            this.report(syntax, DiagnosticId.CS0139);
             return stmt('Break', syntax, true, {});
           }
           const target = this.loops.at(-1);
           target.hasBreak = true;
-          if (this.finallyDepth > target.finallyDepth) this.report(syntax.breakKeyword, 'CS0157');
+          if (this.finallyDepth > target.finallyDepth) this.report(syntax.breakKeyword, DiagnosticId.CS0157);
           return stmt('Break', syntax, false, {});
         }
         case 'ContinueStatement': {
           const target = [...(this.loops ?? [])].reverse().find(l => l.isLoop);
           if (!target) {
-            this.report(syntax, 'CS0139');
+            this.report(syntax, DiagnosticId.CS0139);
             return stmt('Continue', syntax, true, {});
           }
           target.hasContinue = true;
-          if (this.finallyDepth > target.finallyDepth) this.report(syntax.continueKeyword, 'CS0157');
+          if (this.finallyDepth > target.finallyDepth) this.report(syntax.continueKeyword, DiagnosticId.CS0157);
           return stmt('Continue', syntax, false, {});
         }
         case 'GotoStatement':
@@ -247,7 +254,7 @@ export const StatementBinding = Base =>
         case 'LockStatement': {
           const e = this.value(syntax.expression);
           // A type parameter that is not known to be a value type is accepted, as in Roslyn.
-          if (!e.hasErrors && e.type && e.type.isValueType === true) this.report(syntax.expression, 'CS0185', [this.display(e.type)]);
+          if (!e.hasErrors && e.type && e.type.isValueType === true) this.report(syntax.expression, DiagnosticId.CS0185, [this.display(e.type)]);
           const body = this.embedded(syntax.statement);
           return stmt('Lock', syntax, body.completes, { expression: e, body });
         }
@@ -303,7 +310,7 @@ export const StatementBinding = Base =>
     }
     unreachable(statement) {
       const first = statement.kind === 'Block' ? statement.statements[0] : statement;
-      if (first) this.report(first.firstToken() ?? first, 'CS0162');
+      if (first) this.report(first.firstToken() ?? first, DiagnosticId.CS0162);
     }
     enterLoop(isLoop = true) {
       this.loops ??= [];
@@ -322,7 +329,7 @@ export const StatementBinding = Base =>
     statementExpression(syntax) {
       const e = this.expression(syntax);
       if (e.kind === 'TypeExpression') return this.asValue(e);
-      if (!e.hasErrors && !this.isStatementExpression(syntax)) this.report(syntax, 'CS0201');
+      if (!e.hasErrors && !this.isStatementExpression(syntax)) this.report(syntax, DiagnosticId.CS0201);
       return e;
     }
   };

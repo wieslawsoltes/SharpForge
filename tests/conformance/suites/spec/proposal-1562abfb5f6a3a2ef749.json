@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-1562abfb5f6a3a2ef749",
+  "kind": "spec",
+  "sourceText": "interface ICustomEnumerator\n{\n    int Current {get;}\n    bool MoveNext();\n}\n\ninterface IMyDisposable\n{\n    void Dispose();\n}\n\ninterface IGetEnumerator<TEnumerator> where TEnumerator : allows ref struct \n{\n    TEnumerator GetEnumerator();\n}\n\nclass C\n{\n    static void Test<TEnumerable, TEnumerator>(TEnumerable t)\n        where TEnumerable : IGetEnumerator<TEnumerator>\n        where TEnumerator : ICustomEnumerator, IMyDisposable, allows ref struct \n    {\n        // error CS9507: foreach statement cannot operate on enumerators of type 'TEnumerator'\n        //               because it is a type parameter that allows ref struct and\n        //               it is not known at compile time to implement IDisposable.\n        foreach (var i in t)\n        {\n        }\n    }\n}",
+  "sourceSHA256": "29cdaaddc6d95d7eae2458fecf3f5a3f950bad1383538a506190bebff82e8643",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 18072
+  }
+}

@@ -1,150 +1,227 @@
-import {inheritInterfaceCandidates, addInterfaceCandidate, completeInterfaceSlots, interfaceReachableTargets} from './interface-dispatch-profile.js';
-import {indexDispatchTable, declarationSlot} from './vtable-profile.js';
 import {CilError} from './binary.js';
-import {decodeCoded,token} from './metadata.js';
+import {decodeCoded, token} from './metadata.js';
 import {genericTypeParts} from './field-profile.js';
-import {resolveExecutionMethod,instantiateSignature,callSignatureKey,substituteCallType,normalizeCallType} from './call-profile.js';
+import {instantiateSignature, resolveExecutionMethod, substituteCallType, callSignatureKey, methodGenericParameters} from './call-profile.js';
+import {indexDispatchTable} from './vtable-profile.js';
+import {frameworkInterfaceDefinition, externalInterfaceTable, declarationMatches, externalInterfaceTarget, externalInterfaceTargets}
+  from './framework-interface-profile.js';
+import {inheritInterfaceCandidates, addInterfaceCandidate, completeInterfaceSlots, interfaceReachableTargets}
+  from './interface-dispatch-profile.js';
 
-const virtual=0x40,newslot=0x100,final=0x20;
-const signatureKey=signature=>callSignatureKey(signature)+'/'+(signature.genericArity??0);
-/** Declaration slots include their closed declaring type, so I<int> and I<string>
- * remain distinct even when they share the same MethodDef. */
+const virtual = 0x40, newslot = 0x100, final = 0x20;
+const declarationKey = (owner, method) => owner.includes('<') ? owner + '::' + method : method;
+
+/** Declaration identities include the closed owner; nongeneric token keys remain stable. */
 export class CilDispatchTable {
   constructor(inspector) {
-    this.inspector=inspector;this.types=new Map(inspector.types.map(type=>[type.token,type]));this.names=new Map(inspector.types.map(type=>[type.name,type]));this.resolutions=new Map();this.externalResolutions=new Map();
-    this.externalInterfaces=new Set(inspector.types.flatMap(type=>type.interfaces.map(token=>genericTypeParts(inspector.metadata.typeName(token)).definition)));
-    this.externalMethods=(inspector.metadata.rows[10]??[]).map((_,index)=>inspector.resolveToken(token(10,index+1))).filter(member=>member.kind==='method'&&!member.resolvedToken&&this.externalInterfaces.has(genericTypeParts(member.owner).definition));
-    this.tables=new Map();this.building=new Set();this.implementations=new Map();this.targetCache=new Map();
-    for(const row of inspector.metadata.rows?.[25]??[]) {
-      const owner=token(2,row[0]);if(!this.implementations.has(owner))this.implementations.set(owner,[]);
-      this.implementations.get(owner).push({body:decodeCoded('MethodDefOrRef',row[1]),declaration:decodeCoded('MethodDefOrRef',row[2])});
+    this.inspector = inspector;
+    this.types = new Map(inspector.types.map(type => [type.token, type]));
+    this.names = new Map(inspector.types.map(type => [type.name, type]));
+    this.definitions = new Map(inspector.methods);
+    this.tables = new Map();
+    this.typeContexts = new Map();
+    this.building = new Set();
+    this.implementations = new Map();
+    this.targetCache = new Map();
+    for (const row of inspector.metadata.rows?.[25] ?? []) {
+      const owner = token(2, row[0]);
+      if (!this.implementations.has(owner)) this.implementations.set(owner, []);
+      this.implementations.get(owner).push({
+        body: decodeCoded('MethodDefOrRef', row[1]), declaration: decodeCoded('MethodDefOrRef', row[2])
+      });
     }
   }
-  definition(methodToken,context={}) {
-    const descriptor=resolveExecutionMethod(this.inspector,methodToken,context),method=this.inspector.methods.get(descriptor.resolvedToken);
-    if(!method){if(this.externalInterfaces.has(genericTypeParts(descriptor.owner).definition))return {...descriptor,flags:virtual,external:true,ownerInstance:descriptor.ownerInstance??descriptor.owner};throw new CilError('External virtual declarations are not executable');}
-    return {...method,signature:descriptor.signature,ownerInstance:descriptor.ownerInstance};
+
+  definition(methodToken, context = null) {
+    if (!context && this.definitions.has(methodToken)) return this.definitions.get(methodToken);
+    const descriptor = resolveExecutionMethod(this.inspector, methodToken, context ?? {});
+    const method = this.inspector.methods.get(descriptor.resolvedToken);
+    if (!method) {
+      const external = frameworkInterfaceDefinition(descriptor);
+      if (external) return external;
+      throw new CilError('External virtual declarations are not executable');
+    }
+    if (context) return {...method, signature: descriptor.signature, ownerInstance: descriptor.ownerInstance};
+    this.definitions.set(methodToken, method);
+    return method;
   }
+
   typeContext(input) {
-    if(!input)return {name:'',type:null,arguments:[]};
-    const rawName=typeof input==='number'?this.inspector.metadata.typeName(input):input,name=rawName.includes('<')?normalizeCallType(rawName):rawName,parts=genericTypeParts(name),type=this.names.get(parts.definition);
-    const arity=Number(parts.definition.match(/`(\d+)$/)?.[1]??0),args=parts.arguments.length?parts.arguments:Array.from({length:arity},(_,index)=>'!'+index);
-    return {name:args.length?parts.definition+'<'+args.join(',')+'>':name,type,arguments:args};
+    if (this.typeContexts.has(input)) return this.typeContexts.get(input);
+    if (!input) return {name: '', type: null, arguments: []};
+    const raw = typeof input === 'number' ? this.inspector.metadata.typeName(input) : input;
+    const parts = genericTypeParts(substituteCallType(raw));
+    const type = this.names.get(parts.definition);
+    const arity = type ? methodGenericParameters(this.inspector, type.token).length : 0;
+    const args = parts.arguments.length ? parts.arguments : Array.from({length: arity}, (_, index) => '!' + index);
+    const context = {name: args.length ? parts.definition + '<' + args.join(',') + '>' : parts.definition, type, arguments: args};
+    this.typeContexts.set(input, context);
+    return context;
   }
+
   table(input) {
-    const context=this.typeContext(input),{type,name}=context;
-    if(this.tables.has(name))return this.tables.get(name);
-    if(!type) {
-      const table={interfaceCandidates:new Map(),slots:new Map(),aliases:new Map(),declarations:new Map(),visible:new Map(),ancestors:new Set(),instances:new Set(name?[name]:[])};
-      if(this.externalInterfaces.has(genericTypeParts(name).definition))for(const method of this.externalMethods) {
-        const owner=genericTypeParts(method.owner);if(owner.definition!==genericTypeParts(name).definition)continue;
-        if(owner.arguments.length&&!owner.arguments.some(argument=>/!\d+/.test(argument))&&normalizeCallType(owner.arguments.join(','))!==normalizeCallType(context.arguments.join(',')))continue;
-        const signature=instantiateSignature(method.signature,context.arguments),slot='external:'+name+'::'+method.name+'::'+signatureKey(signature);
-        table.declarations.set(slot,{token:method.token,name:method.name,owner:name,slot,signature,external:true});
-      }
-      indexDispatchTable(table, (owner, slot) => this.resolveSlot(owner, slot));this.tables.set(name,table);return table;
-    }
-    if(this.building.has(name)||this.building.size>64)throw new CilError('Invalid virtual type hierarchy');
+    const context = this.typeContext(input), {name, type} = context;
+    if (this.tables.has(name)) return this.tables.get(name);
+    if (this.building.has(name) || this.building.size > 64) throw new CilError('Invalid virtual type hierarchy');
+    if (!type) return externalInterfaceTable(this, context);
     this.building.add(name);
     try {
-      const inheritedName=token=>substituteCallType(this.inspector.metadata.typeName(token),context.arguments);
-      const base=this.table(type.baseToken?inheritedName(type.baseToken):null),slots=new Map(base.slots),aliases=new Map(base.aliases),declarations=new Map(base.declarations),visible=new Map(base.visible),ancestors=new Set(base.ancestors),instances=new Set(base.instances);
-      ancestors.add(type.token);instances.add(name);const interfaces=[];
-      for(const interfaceToken of type.interfaces) {
-        const inherited=this.table(inheritedName(interfaceToken));interfaces.push(inherited);
-        for(const ancestor of inherited.ancestors)ancestors.add(ancestor);
-        for(const instance of inherited.instances)instances.add(instance);
-        for(const [key,declaration] of inherited.declarations)declarations.set(key,declaration);
-        if(type.flags&0x20) {
-          for(const [slot,body] of inherited.slots)slots.set(slot,body);
-          for(const [slot,body] of inherited.aliases)aliases.set(slot,body);
-          for(const [key,slot] of inherited.visible)visible.set(key,slot);
+      const inherit = typeToken => this.table(substituteCallType(this.inspector.metadata.typeName(typeToken), context.arguments));
+      const base = type.baseToken ? inherit(type.baseToken) : this.table(null);
+      const table = {
+        slots: new Map(base.slots), aliases: new Map(base.aliases), declarations: new Map(base.declarations),
+        declarationDetails: new Map(base.declarationDetails), visible: new Map(base.visible),
+        ancestors: new Set(base.ancestors), instances: new Set(base.instances),
+        publicMethods: new Map(base.publicMethods ?? []), interfaceSelections: new Map()
+      };
+      table.ancestors.add(type.token);
+      table.instances.add(name);
+      const interfaces = type.interfaces.map(inherit);
+      for (const inherited of interfaces) {
+        for (const ancestor of inherited.ancestors) table.ancestors.add(ancestor);
+        for (const instance of inherited.instances) table.instances.add(instance);
+        for (const [key, slot] of inherited.declarations) table.declarations.set(key, slot);
+        for (const [key, value] of inherited.declarationDetails) table.declarationDetails.set(key, value);
+        if (type.flags & 0x20) {
+          for (const field of ['slots', 'aliases', 'visible']) {
+            for (const [key, value] of inherited[field]) table[field].set(key, value);
+          }
         }
       }
-      const interfaceCandidates = inheritInterfaceCandidates([base, ...interfaces]);
-      for(const method of type.methods) {
-        if(!(method.flags&virtual)||method.flags&0x10)continue;
-        const signature=instantiateSignature(this.inspector.signature(method.token),context.arguments),key=method.name+'::'+signatureKey(signature),declarationKey=name+'::'+method.token;
-        const privateBody=(method.flags&7)===1;
-        const inherited=method.flags&newslot||privateBody?undefined:visible.get(key),slot=inherited??declarationKey;
-        if(inherited!==undefined&&this.inspector.methods.get(this.resolveSlot({slots,aliases},slot))?.flags&final)throw new CilError('A final virtual method cannot be overridden');
-        aliases.delete(slot);slots.set(slot,method.token);declarations.set(declarationKey,{token:method.token,owner:name,slot,signature});if(!privateBody)visible.set(key,slot);
-        if (type.flags & 0x20) addInterfaceCandidate(interfaceCandidates, slot, name, method.token);
-      }
-      for(const iface of interfaces)for(const declaration of iface.declarations.values()) {
-        const method=this.inspector.methods.get(declaration.token),key=(method?.name??declaration.name)+'::'+signatureKey(declaration.signature),implementation=visible.get(key);
-        if(implementation!==undefined){slots.set(declaration.slot,slots.get(implementation));if(declaration.slot!==implementation)aliases.set(declaration.slot,implementation);}
-      }
-      const explicit=new Set();
-      for(const implementation of this.implementations.get(type.token)??[]) {
-        const callContext={ownerToken:type.token,genericIdentity:name,typeArguments:context.arguments};
-        const declaration=this.definition(implementation.declaration,callContext),body=this.definition(implementation.body,callContext);
-        if(!(declaration.flags&virtual)||declaration.flags&0x10||body.flags&0x10||!(declaration.external?instances.has(this.typeContext(declaration.ownerInstance).name):ancestors.has(declaration.ownerToken))||!ancestors.has(body.ownerToken))throw new CilError('Invalid MethodImpl owner or virtual declaration');
-        if(signatureKey(declaration.signature)!==signatureKey(body.signature))throw new CilError('MethodImpl signatures do not match');
-        const candidates=[...declarations.values()].filter(item=>(declaration.external?item.external&&item.name===declaration.name&&signatureKey(item.signature)===signatureKey(declaration.signature):item.token===declaration.token)&&(!declaration.ownerInstance||item.owner===this.typeContext(declaration.ownerInstance).name));
-        if(candidates.length!==1||explicit.has(candidates[0].slot))throw new CilError('Invalid or duplicate MethodImpl declaration');
-        const slot=candidates[0].slot,previous=this.resolveSlot(base,slot);
-        if(!declaration.external&&!(this.types.get(declaration.ownerToken)?.flags&0x20)&&previous!==undefined&&this.inspector.methods.get(previous)?.flags&final)throw new CilError('A final virtual method cannot be overridden');
-        const bodySlot=[...declarations.values()].find(item=>item.token===body.token&&item.owner===name)?.slot;
-        if (type.flags & 0x20) addInterfaceCandidate(interfaceCandidates, slot, name, body.token);
-        explicit.add(slot);slots.set(slot,body.token);if(bodySlot!==undefined&&bodySlot!==slot)aliases.set(slot,bodySlot);else aliases.delete(slot);
-      }
-      const table = {slots, aliases, declarations, visible, ancestors, instances, interfaceCandidates};
-      // Make this node visible to most-specific comparisons without recursively rebuilding it.
+      table.interfaceCandidates = inheritInterfaceCandidates([base, ...interfaces]);
+      this.addMethods(table, context);
+      this.addImplicitImplementations(table, type, interfaces);
+      this.addExplicitImplementations(table, context, base);
       this.tables.set(name, table);
-      completeInterfaceSlots(this, table);
-      indexDispatchTable(table, (owner, slot) => this.resolveSlot(owner, slot));
-      return table;
-    } finally {this.building.delete(name);}
+      try {
+        completeInterfaceSlots(this, table);
+        indexDispatchTable(table, (owner, slot) => this.resolveSlot(owner, slot));
+        return table;
+      } catch (error) {
+        this.tables.delete(name);
+        throw error;
+      }
+    } finally {
+      this.building.delete(name);
+    }
   }
-  resolveSlot(table,slot) {
-    const seen=new Set();while(table.aliases.has(slot)){if(seen.has(slot))throw new CilError('Cyclic MethodImpl slot mapping');seen.add(slot);slot=table.aliases.get(slot);}return table.slots.get(slot);
+
+  addMethods(table, context) {
+    const {type, name} = context;
+    for (const method of type.methods) {
+      if (!(method.flags & virtual) || method.flags & 0x10) continue;
+      const signature = instantiateSignature(this.inspector.signature(method.token), context.arguments);
+      const key = method.name + '::' + callSignatureKey(signature);
+      const privateBody = (method.flags & 7) === 1;
+      const inherited = method.flags & newslot || privateBody ? undefined : table.visible.get(key);
+      const declaration = declarationKey(name, method.token), slot = inherited ?? declaration;
+      if (inherited !== undefined && this.inspector.methods.get(this.resolveSlot(table, slot))?.flags & final) {
+        throw new CilError('A final virtual method cannot be overridden');
+      }
+      table.aliases.delete(slot);
+      table.slots.set(slot, method.token);
+      table.declarations.set(declaration, slot);
+      table.declarationDetails.set(declaration, {token: method.token, owner: name, signature, slot});
+      if (!privateBody) table.visible.set(key, slot);
+      if ((method.flags & 7) === 6) table.publicMethods.set(key, slot);
+      if (type.flags & 0x20) addInterfaceCandidate(table.interfaceCandidates, slot, name, method.token);
+    }
   }
+
+  addImplicitImplementations(table, type, interfaces) {
+    if (type.flags & 0x20) return;
+    for (const iface of interfaces) for (const declaration of iface.declarationDetails.values()) {
+      const method = this.inspector.methods.get(declaration.token);
+      if (((method?.flags ?? 6) & 7) !== 6) continue;
+      const key = (method?.name ?? declaration.name) + '::' + callSignatureKey(declaration.signature);
+      const implementation = table.publicMethods.get(key);
+      if (implementation === undefined) continue;
+      table.slots.set(declaration.slot, table.slots.get(implementation));
+      if (declaration.slot !== implementation) table.aliases.set(declaration.slot, implementation);
+    }
+  }
+
+  addExplicitImplementations(table, context, base) {
+    const {type, name} = context, explicit = new Set();
+    const callContext = {ownerToken: type.token, genericIdentity: name, typeArguments: context.arguments};
+    for (const implementation of this.implementations.get(type.token) ?? []) {
+      const declaration = this.definition(implementation.declaration, callContext);
+      const body = this.definition(implementation.body, callContext);
+      if (!(declaration.flags & virtual) || declaration.flags & 0x10 || body.flags & 0x10 ||
+          !(declaration.external ? table.instances.has(declaration.ownerInstance) : table.ancestors.has(declaration.ownerToken)) ||
+          !table.ancestors.has(body.ownerToken)) {
+        throw new CilError('Invalid MethodImpl owner or virtual declaration');
+      }
+      if (callSignatureKey(declaration.signature) !== callSignatureKey(body.signature)) {
+        throw new CilError('MethodImpl signatures do not match');
+      }
+      const owner = declaration.ownerInstance ? this.typeContext(declaration.ownerInstance).name : null;
+      const candidates = [...new Map([...table.declarationDetails.values()].filter(item =>
+        declarationMatches(item, declaration) && (owner === null || item.owner === owner)).map(item => [item.slot, item])).values()];
+      if (candidates.length !== 1 || explicit.has(candidates[0].slot)) {
+        throw new CilError('Invalid or duplicate MethodImpl declaration');
+      }
+      const slot = candidates[0].slot, previous = this.resolveSlot(base, slot);
+      if (!declaration.external && !(this.types.get(declaration.ownerToken)?.flags & 0x20) && this.inspector.methods.get(previous)?.flags & final) {
+        throw new CilError('A final virtual method cannot be overridden');
+      }
+      const bodySlot = table.declarations.get(declarationKey(name, body.token));
+      if (type.flags & 0x20) addInterfaceCandidate(table.interfaceCandidates, slot, name, body.token);
+      explicit.add(slot);
+      table.slots.set(slot, body.token);
+      if (bodySlot !== undefined && bodySlot !== slot) table.aliases.set(slot, bodySlot);
+      else table.aliases.delete(slot);
+    }
+  }
+
+  resolveSlot(table, slot) {
+    if (table.targets) return table.targets[table.slotIndexes.get(slot)];
+    const seen = new Set();
+    while (table.aliases.has(slot)) {
+      if (seen.has(slot)) throw new CilError('Cyclic MethodImpl slot mapping');
+      seen.add(slot);
+      slot = table.aliases.get(slot);
+    }
+    return table.slots.get(slot);
+  }
+
   resolve(type, methodToken, ownerInstance = null) {
     const declaration = this.definition(methodToken);
     if (!(declaration.flags & virtual)) return declaration.token;
-    const table = this.table(type);
+    const table = this.table(type), owners = table.declarationsByToken.get(declaration.token);
     const owner = ownerInstance ? this.typeContext(ownerInstance).name : null;
-    return table.targets[declarationSlot(table, declaration.token, owner)];
-  }
-  externalTarget(type,descriptor) {
-    const key=JSON.stringify([type,descriptor.ownerInstance??descriptor.owner,descriptor.name,signatureKey(descriptor.signature)]);if(this.externalResolutions.has(key))return this.externalResolutions.get(key);
-    const table=this.table(type),owner=this.typeContext(descriptor.ownerInstance??descriptor.owner).name;
-    const declaration=[...table.declarations.values()].find(item=>item.external&&item.owner===owner&&item.name===descriptor.name&&signatureKey(instantiateSignature(item.signature,[],descriptor.methodArguments))===signatureKey(descriptor.signature));
-    const target=declaration?this.resolveSlot(table,declaration.slot)??null:null;this.externalResolutions.set(key,target);return target;
-  }
-  externalTargets(descriptor) {
-    const targets=new Set(),owner=genericTypeParts(descriptor.owner).definition;
-    if (['System.Object', 'System.ValueType', 'System.Enum'].includes(owner)) {
-      for (const method of this.inspector.methods.values()) {
-        if (method.flags & virtual && method.hasBody && method.name === descriptor.name &&
-            signatureKey(this.inspector.signature(method.token)) === signatureKey(descriptor.signature)) targets.add(method.token);
-      }
-      return targets;
+    if (!owners || (owner === null ? owners.size !== 1 : !owners.has(owner))) {
+      throw new CilError('Virtual receiver is incompatible or ambiguous for the method declaration');
     }
-    for(const type of this.types.values()) {
-      if(type.flags&0xa0)continue;
-      const table=this.table(type.token);
-      for(const declaration of table.declarations.values())if(declaration.external&&genericTypeParts(declaration.owner).definition===owner&&declaration.name===descriptor.name) {
-        const target=this.resolveSlot(table,declaration.slot);if(this.inspector.methods.get(target)?.hasBody)targets.add(target);
-        if(target?.ambiguousImplementation)for(const candidate of interfaceReachableTargets(table,declaration.slot,this.inspector))targets.add(candidate);
-      }
-    }
-    return targets;
+    const index = owner === null ? owners.values().next().value : owners.get(owner);
+    const target = table.targets[index];
+    if (target === undefined) throw new CilError('Virtual method has no implementation');
+    return target;
   }
-  isAssignable(typeToken,ownerToken) {return this.table(typeToken).ancestors.has(ownerToken);}
+
+  isAssignable(typeToken, ownerToken) {
+    return this.table(typeToken).ancestors.has(ownerToken);
+  }
+
+  externalTarget(type, descriptor) { return externalInterfaceTarget(this, type, descriptor); }
+  externalTargets(descriptor) { return externalInterfaceTargets(this, descriptor); }
+
   targets(methodToken) {
-    if(this.targetCache.has(methodToken))return this.targetCache.get(methodToken);
-    const declaration=this.definition(methodToken),targets=new Set();
-    for(const type of this.types.values()) {
-      if(type.flags&0xa0)continue;
-      const table=this.table(type.token);if(!table.ancestors.has(declaration.ownerToken))continue;
-      for(const candidate of table.declarations.values())if(candidate.token===declaration.token) {
-        const target=this.resolveSlot(table,candidate.slot),method=this.inspector.methods.get(target);
-        if(method?.hasBody&&!(method.flags&0x400))targets.add(target);
-        if(target?.ambiguousImplementation)for(const method of interfaceReachableTargets(table,candidate.slot,this.inspector))targets.add(method);
+    if (this.targetCache.has(methodToken)) return this.targetCache.get(methodToken);
+    const declaration = this.definition(methodToken), targets = new Set();
+    for (const type of this.types.values()) {
+      if (type.flags & 0xa0) continue;
+      const table = this.table(type.token);
+      for (const candidate of table.declarationDetails.values()) {
+        if (candidate.token !== declaration.token) continue;
+        const target = this.resolveSlot(table, candidate.slot), method = this.inspector.methods.get(target);
+        if (method?.hasBody && !(method.flags & 0x400)) targets.add(target);
+        if (target?.ambiguousImplementation) {
+          for (const body of interfaceReachableTargets(table, candidate.slot, this.inspector)) targets.add(body);
+        }
       }
     }
-    this.targetCache.set(methodToken,targets);return targets;
+    this.targetCache.set(methodToken, targets);
+    return targets;
   }
 }

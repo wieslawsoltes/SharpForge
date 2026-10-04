@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-86c3313a14351f1684eb",
+  "kind": "spec",
+  "sourceText": "interface IMyEnumerable<T>\n{\n    IEnumerator<T> GetEnumerator();\n}\n\nclass C\n{\n    static void Test<T>(T t) where T : IMyEnumerable<int>, allows ref struct\n    {\n        foreach (var i in t) // IMyEnumerable<int>.GetEnumerator\n        {\n        }\n    }\n}",
+  "sourceSHA256": "7bf5f25a8e8d911c029932a28fc3804f061f42f2adf8eebbcb24329fc9e28d33",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 13914
+  }
+}

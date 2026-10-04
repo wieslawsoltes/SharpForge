@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-00eec4c3fa272ca3b36a",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    static void Main()\n    {\n        Module1.M1[1] = 0;\n    }\n}",
+  "sourceSHA256": "1b6c50a013665de841dd18e96612728c8a099ff04602c67734133707c3fdba2d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/OverloadResolutionPriorityTests.cs",
+    "sha256": "b7cd10d8113409d1540951461d416c8c03a4ed3ec777d51b4cb13d685c96d7a8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/OverloadResolutionPriorityTests.cs",
+    "license": "MIT",
+    "method": "ParameterlessProperty_01",
+    "offset": 108292
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: [vbRef])",
+  "options": "(source2, references: [vbRef])",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0154",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (5,9): error CS0154: The property or indexer 'Module1.M1' cannot be used in this context because it lacks the get accessor\n            //         Module1.M1[1] = 0;\n            Diagnostic(ErrorCode.ERR_PropertyLacksGet, \"Module1.M1\").WithArguments(\"Module1.M1\").WithLocation(5, 9)\n            ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

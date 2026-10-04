@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c38dd6a629844de33d3f",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Test\n{\n    private static int x = 0;\n\n    void TestMethod()\n    {\n        ref readonly int local() => ref x;\n        var d = local;\n    }\n}",
+  "sourceSHA256": "fcfc45e93258fa5f5170a218c2ef548fd8ba859bcf4982f76b3a318b691b7147",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "sha256": "fed7c6d5beeb0e3296094c4c3973b927e627482323c4609b726e7af2365eb925",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "license": "MIT",
+    "method": "InAttributeIsWrittenOnRefReadOnly_LocalFuction_01",
+    "offset": 66960
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code, options: TestOptions.DebugDll.WithMetadataImportOptions(MetadataImportOptions.All))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0518",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,9): error CS0518: Predefined type 'System.Runtime.InteropServices.InAttribute' is not defined or imported\n                //         ref readonly int local() => ref x;\n                Diagnostic(ErrorCode.ERR_PredefinedTypeNotFound, \"ref readonly int\").WithArguments(\"System.Runtime.InteropServices.InAttribute\").WithLocation(8, 9)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

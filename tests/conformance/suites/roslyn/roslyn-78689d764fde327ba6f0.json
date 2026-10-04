@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-78689d764fde327ba6f0",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\nusing System;\n\nclass Test\n{\n    public static void Log1([CallerLineNumber, CallerFilePath, CallerMemberName] int x = 1) { Console.WriteLine(\"line: \" + x); }\n    public static void Log2([CallerLineNumber, CallerMemberName, CallerFilePath] int x = 1) { Console.WriteLine(\"line: \" + x); }\n    public static void Log3([CallerMemberName, CallerLineNumber, CallerFilePath] int x = 1) { Console.WriteLine(\"line: \" + x); }\n    public static void Log4([CallerMemberName, CallerFilePath, CallerLineNumber] int x = 1) { Console.WriteLine(\"line: \" + x); }\n    public static void Log5([CallerFilePath, CallerMemberName, CallerLineNumber] int x = 1) { Console.WriteLine(\"line: \" + x); }\n    public static void Log6([CallerFilePath, CallerLineNumber, CallerMemberName] int x = 1) { Console.WriteLine(\"line: \" + x); }\n\n    public static void Log7([CallerLineNumber, CallerFilePath, CallerMemberName] string x = \"\") { }\n    public static void Log8([CallerLineNumber, CallerMemberName, CallerFilePath] string x = \"\") { }\n    public static void Log9([CallerMemberName, CallerLineNumber, CallerFilePath] string x = \"\") { }\n    public static void Log10([CallerMemberName, CallerFilePath, CallerLineNumber] string x = \"\") { }\n    public static void Log11([CallerFilePath, CallerMemberName, CallerLineNumber] string x = \"\") { }\n    public static void Log12([CallerFilePath, CallerLineNumber, CallerMemberName] string x = \"\") { }\n\n    public static void Log13([CallerFilePath, CallerMemberName] string x = \"\") { }\n    public static void Log14([CallerMemberName, CallerFilePath] string x = \"\") { }\n\n    public static void Log15([CallerLineNumber, CallerFilePath] string x = \"\") { }\n    public static void Log16([CallerFilePath, CallerLineNumber] string x = \"\") { }\n\n    public static void Log17([CallerMemberName, CallerLineNumber] string x = \"\") { }\n    public static void Log18([CallerLineNumber, CallerMemberName] string x = \"\") { }\n\n    public static void Log19([CallerFilePath, CallerMemberName] int x = 1) { }\n    public static void Log20([CallerMemberName, CallerFilePath] int x = 1) { }\n\n    public static void Log21([CallerLineNumber, CallerFilePath] int x = 1) { Console.WriteLine(\"line: \" + x); }\n    public static void Log22([CallerFilePath, CallerLineNumber] int x = 1) { Console.WriteLine(\"line: \" + x); }\n\n    public static void Log23([CallerMemberName, CallerLineNumber] int x = 1) { Console.WriteLine(\"line: \" + x); }\n    public static void Log24([CallerLineNumber, CallerMemberName] int x = 1) { Console.WriteLine(\"line: \" + x); }\n}",
+  "sourceSHA256": "4d6e2a28f4d0f3d8482e8d5c33cbc93e7a76525465ec04d0748c4c0b196bc637",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "sha256": "afc3ea7577c9e597760812239c750126e0cb09ea32cb52bdc8e9850a45ebeac9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "license": "MIT",
+    "method": "TestBadConversionCallerInfoMultipleAttributes",
+    "offset": 117516
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll.WithWarningLevel(0))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(7, 48).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(7, 64).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(8, 48).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(8, 66).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(9, 30).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(9, 66).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(10, 30).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(10, 48).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(11, 30).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(11, 46).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(12, 30).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(12, 64).WithArguments(\"string\", \"int\"),\n\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(14, 30).WithArguments(\"int\", \"string\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(15, 30).WithArguments(\"int\", \"string\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(16, 48).WithArguments(\"int\", \"string\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(17, 65).WithArguments(\"int\", \"string\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(18, 65).WithArguments(\"int\", \"string\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(19, 47).WithArguments(\"int\", \"string\"),\n\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(24, 31).WithArguments(\"int\", \"string\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(25, 47).WithArguments(\"int\", \"string\"),\n\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(27, 49).WithArguments(\"int\", \"string\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(28, 31).WithArguments(\"int\", \"string\"),\n\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(30, 31).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(30, 47).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(31, 31).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(31, 49).WithArguments(\"string\", \"int\"),\n\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(33, 49).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(34, 31).WithArguments(\"string\", \"int\"),\n\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(36, 31).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(37, 49).WithArguments(\"string\", \"int\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

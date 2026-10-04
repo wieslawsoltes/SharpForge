@@ -1,19 +1,16 @@
 name: Browser platform qualification
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
   group: browser-matrix-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: false
 env:
   SHARPFORGE_RESULTS_DIR: artifacts/results
   SHARPFORGE_STANDALONE_PATH: artifacts/SharpForge-standalone.html
 jobs:
   build:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -36,6 +33,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -78,6 +76,9 @@ jobs:
       - name: Measure correctness-gated cold and warm browser latency
         if: matrix.suite == 'smoke'
         run: python scripts/conformance/browser/latency.py --engine ${{ matrix.engine }}
+      - name: Verify Studio text rendering under the enforced CSP
+        if: matrix.suite == 'harness' && matrix.engine == 'chromium'
+        run: python tests/conformance/browser/run_suite.py security --timeout 600
       - name: Run all modes and retain individual failures
         if: always()
         run: python tests/conformance/browser/run_matrix.py --engine ${{ matrix.engine }} --suite ${{ matrix.suite }} --timeout 180
@@ -88,7 +89,7 @@ jobs:
           path: artifacts/results/
           if-no-files-found: error
   report:
-    if: always() && (github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'full-ci'))
+    if: always()
     needs: browsers
     runs-on: ubuntu-latest
     timeout-minutes: 5

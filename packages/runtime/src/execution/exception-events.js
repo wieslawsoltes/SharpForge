@@ -1,20 +1,31 @@
-import {ManagedFault} from '../heap.js';
-import {delegateEntries} from './delegates.js';
-import {prepareException} from './exception-object.js';
+import {
+  ManagedFault
+} from '../heap.js';
+import {
+  delegateEntries
+} from './delegate-invocations.js';
+import {
+  prepareException
+} from './exception-object.js';
 
 const domainType = 'System.AppDomain';
 const domainKey = 'AppDomain.CurrentDomain';
 const firstArgs = 'System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs';
 const unhandledArgs = 'System.UnhandledExceptionEventArgs';
-const phases = Object.freeze({firstChance: 'FirstChanceException', unhandled: 'UnhandledException'});
+const phases = Object.freeze({
+  firstChance: 'FirstChanceException',
+  unhandled: 'UnhandledException'
+});
 
 function subscribers(vm, domain, event) {
   const reference = vm.platform.get(domain, '$event:' + event);
   return reference === null ? [] : vm.heap.get(reference).data;
 }
+
 function currentDomain(vm) {
   return vm.platform.singleton(domainKey, () => vm.platform.make(domainType));
 }
+
 function editSubscribers(vm, domain, event, handler, remove) {
   if (handler === null) return null;
   const list = [...subscribers(vm, domain, event)];
@@ -39,7 +50,9 @@ function editSubscribers(vm, domain, event, handler, remove) {
 /** Finite framework contract dispatch; handlers remain ordinary managed delegates. */
 export function invokeExceptionEvent(vm, descriptor, args) {
   const owner = descriptor.owner;
-  if (![domainType, firstArgs, unhandledArgs].includes(owner)) return {handled: false};
+  if (![domainType, firstArgs, unhandledArgs].includes(owner)) return {
+    handled: false
+  };
   const self = descriptor.isStatic ? null : args[0];
   const values = descriptor.kind === 'constructor' || descriptor.isStatic ? args : args.slice(1);
   let value;
@@ -56,10 +69,18 @@ export function invokeExceptionEvent(vm, descriptor, args) {
     }
   } else if (descriptor.kind === 'constructor') {
     if (owner === firstArgs && values[0] === null) throw new ManagedFault('ArgumentNullException', 'exception');
-    value = owner === firstArgs ? vm.platform.make(owner, {Exception: values[0]})
-      : vm.platform.make(owner, {ExceptionObject: values[0], IsTerminating: values[1]});
+    value = owner === firstArgs ? vm.platform.make(owner, {
+        Exception: values[0]
+      }) :
+      vm.platform.make(owner, {
+        ExceptionObject: values[0],
+        IsTerminating: values[1]
+      });
   } else value = vm.platform.get(self, descriptor.property);
-  return {handled: true, value};
+  return {
+    handled: true,
+    value
+  };
 }
 
 function startHandler(vm, continuation) {
@@ -86,17 +107,28 @@ export function beginExceptionEvent(vm, fault, phase) {
   }
   const domain = vm.platform.singletons.get(domainKey);
   const context = vm.scheduler.current;
-  const deferred = context?.task && context.kind !== 'thread'
-    || ['awaiter-continuation', 'async-state-machine'].includes(context?.kind);
+  const deferred = context?.task && context.kind !== 'thread' ||
+    ['awaiter-continuation', 'async-state-machine'].includes(context?.kind);
   if (!domain || phase === 'unhandled' && deferred) return false;
   const handlers = [...subscribers(vm, domain, phases[phase])];
   if (!handlers.length) return false;
   prepareException(vm, fault);
   return vm.heap.withRoots([domain, fault.reference, ...handlers], () => {
-    const args = phase === 'firstChance'
-      ? vm.platform.make(firstArgs, {Exception: fault.reference})
-      : vm.platform.make(unhandledArgs, {ExceptionObject: fault.reference, IsTerminating: vm.inspector ? 1 : true});
-    return startHandler(vm, {phase, fault, handlers, args: [phase === 'unhandled' ? null : domain, args], index: 0});
+    const args = phase === 'firstChance' ?
+      vm.platform.make(firstArgs, {
+        Exception: fault.reference
+      }) :
+      vm.platform.make(unhandledArgs, {
+        ExceptionObject: fault.reference,
+        IsTerminating: vm.inspector ? 1 : true
+      });
+    return startHandler(vm, {
+      phase,
+      fault,
+      handlers,
+      args: [phase === 'unhandled' ? null : domain, args],
+      index: 0
+    });
   });
 }
 
@@ -119,10 +151,16 @@ export function continueExceptionEvent(vm, frame) {
   const continuation = frame.exceptionEventContinuation;
   if (!continuation) return null;
   if (continuation.index < continuation.handlers.length && startHandler(vm, continuation)) {
-    return {continued: true};
+    return {
+      continued: true
+    };
   }
   continuation.fault.exceptionEventResume = continuation.phase;
-  return {continued: false, phase: continuation.phase, fault: continuation.fault};
+  return {
+    continued: false,
+    phase: continuation.phase,
+    fault: continuation.fault
+  };
 }
 
 export function* exceptionEventRoots(frame) {
@@ -133,12 +171,15 @@ export function* exceptionEventRoots(frame) {
   yield* continuation.args;
 }
 
-/** Event callbacks form a boundary: an unhandled-event failure cannot replace the terminating fault. */
-export function failedExceptionEvent(frame, failure) {
-  const continuation = frame.exceptionEventContinuation;
-  if (continuation.phase !== 'unhandled') return failure;
-  continuation.fault.exceptionEventResume = 'unhandled';
-  return continuation.fault;
+/** Pinned CoreCLR 8/10 fails in the first-pass notification filter, before callback cleanup. */
+export function firstChanceCallbackFailure(frame, failure) {
+  if (frame.exceptionEventContinuation?.phase !== 'firstChance') return null;
+  const fatal = new ManagedFault('ExecutionEngineException', 'FirstChanceException handler escaped: ' + failure.message);
+  fatal.fatal = true;
+  fatal.runtimeOrigin = true;
+  fatal.processExitCode = 0x80131506 | 0;
+  fatal.eventFailureName = failure.name;
+  return fatal;
 }
 
 export function clearExceptionEvents(platform) {

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-4e3e9d4758e4d77a1b9e",
+  "kind": "spec",
+  "sourceText": "public class Color\n{\n    public static readonly Color Black = new Color(0, 0, 0);\n    public static readonly Color White = new Color(255, 255, 255);\n    public static readonly Color Red = new Color(255, 0, 0);\n    public static readonly Color Green = new Color(0, 255, 0);\n    public static readonly Color Blue = new Color(0, 0, 255);\n\n    private byte red, green, blue;\n\n    public Color(byte r, byte g, byte b)\n    {\n        red = r;\n        green = g;\n        blue = b;\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "6a86464d56246ca13a4c2322e76d187f342ddcf9782471602dc998639a006315",
+  "originalSource": "public class Color\n{\n    public static readonly Color Black = new Color(0, 0, 0);\n    public static readonly Color White = new Color(255, 255, 255);\n    public static readonly Color Red = new Color(255, 0, 0);\n    public static readonly Color Green = new Color(0, 255, 0);\n    public static readonly Color Blue = new Color(0, 0, 255);\n\n    private byte red, green, blue;\n\n    public Color(byte r, byte g, byte b)\n    {\n        red = r;\n        green = g;\n        blue = b;\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "StaticReadonlyFieldsAsConstants"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "StaticReadonlyFieldsAsConstants",
+    "offsetInUnquotedMarkdown": 87539
+  }
+}

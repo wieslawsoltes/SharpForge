@@ -1,4 +1,9 @@
-import {argumentHandle, typedReference, typedReferenceValue, typedReferenceType} from '../varargs.js';
+import {
+  argumentHandle,
+  typedReference,
+  typedReferenceValue,
+  typedReferenceType
+} from '../varargs.js';
 
 export const handlers = new Map([
   ['arglist', (vm, frame) => vm.push(argumentHandle(vm, frame))],

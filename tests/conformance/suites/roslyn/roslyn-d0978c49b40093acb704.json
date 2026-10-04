@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d0978c49b40093acb704",
+  "kind": "diagnostics",
+  "sourceText": "public class A {}",
+  "sourceSHA256": "280ee2f49640e343eb55da162ccc1f890d7b5f69d318581638189ac115d2a303",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "sha256": "1362359003a56088beb732c1b01d57e4b0e4b8b408037adca585b20ae29b4f98",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "license": "MIT",
+    "method": "MissingAssemblyReference02",
+    "offset": 171298
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"public class A {}\", assemblyName: \"A\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

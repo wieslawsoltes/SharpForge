@@ -37,7 +37,7 @@ export function isInternedString(vm,reference) { return pool(vm).isInterned(refe
 export function* stringRoots(vm) { yield* pool(vm).roots(); }
 export function clearStrings(vm) { vm.strings.clear();vm.constantValues?.clear(); }
 export function referenceEquals(left,right) {
-  return left===null&&right===null||isReference(left)&&isReference(right)&&left.h===right.h&&left.g===right.g&&(!left.heapOwner||!right.heapOwner||left.heapOwner===right.heapOwner);
+  return left===null&&right===null||isReference(left)&&isReference(right)&&left.h===right.h&&left.g===right.g;
 }
 /** C# char indexes UTF-16 code units, including individual halves of surrogate pairs. */
 export function stringChar(vm,reference,index) {

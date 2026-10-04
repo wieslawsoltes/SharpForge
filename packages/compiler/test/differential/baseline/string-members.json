@@ -1,0 +1,4 @@
+{
+  "string-members/format-concat-join-parameter-arrays": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "string-members/registry-members-direct-and-null-conditional": ["diagnostics", "warnings", "bytecode", "cil"]
+}

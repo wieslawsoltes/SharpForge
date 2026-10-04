@@ -1,34 +1,15 @@
 name: Pinned reference oracles
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
-    paths:
-      - '.github/workflows/oracles.yml'
-      - 'scripts/conformance/oracle/**'
-      - 'tests/conformance/oracle/**'
-      - 'tests/conformance/expected/**'
-      - 'planning/qualification/oracle*'
-      - 'planning/qualification/expected.schema.json'
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/oracles.yml'
-      - 'scripts/conformance/oracle/**'
-      - 'tests/conformance/oracle/**'
-      - 'tests/conformance/expected/**'
-      - 'planning/qualification/oracle*'
-      - 'planning/qualification/expected.schema.json'
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
   group: reference-oracles-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: false
 env:
   SHARPFORGE_RESULTS_DIR: artifacts/results
 jobs:
   linux:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     container:
@@ -43,7 +24,7 @@ jobs:
         with:
           node-version: '22.23.3'
       - name: Native runner regression tests
-        run: node --test tests/conformance/oracle/*.test.js tests/conformance/oracle/*.native.js
+        run: node --test --test-concurrency=1 tests/conformance/oracle/*.test.js tests/conformance/oracle/*.native.js
       - name: Compile twice, execute twice and verify expected outputs
         if: always()
         run: node scripts/conformance/oracle/qualify.js --verify
@@ -57,11 +38,12 @@ jobs:
           path: artifacts/results/oracles/
           if-no-files-found: error
   desktop:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: linux
     name: native oracle (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [windows-2025, macos-26]
@@ -74,7 +56,7 @@ jobs:
         with:
           dotnet-version: '10.0.201'
       - name: Native runner regression tests
-        run: node --test tests/conformance/oracle/*.test.js tests/conformance/oracle/*.native.js
+        run: node --test --test-concurrency=1 tests/conformance/oracle/*.test.js tests/conformance/oracle/*.native.js
       - name: Compile twice, execute twice and verify expected outputs
         if: always()
         run: node scripts/conformance/oracle/qualify.js --verify

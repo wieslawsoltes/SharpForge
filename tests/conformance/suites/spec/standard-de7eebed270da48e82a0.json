@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-de7eebed270da48e82a0",
+  "kind": "spec",
+  "sourceText": "public delegate void EventHandler(object sender, EventArgs e);\n\npublic class Button : Control\n{\n    public event EventHandler Click;\n}\n\npublic class LoginDialog : Form\n{\n    Button okButton;\n    Button cancelButton;\n\n    public LoginDialog()\n    {\n        okButton = new Button(...);\n        okButton.Click += new EventHandler(OkButtonClick);\n        cancelButton = new Button(...);\n        cancelButton.Click += new EventHandler(CancelButtonClick);\n    }\n\n    void OkButtonClick(object sender, EventArgs e)\n    {\n        // Handle okButton.Click event\n    }\n\n    void CancelButtonClick(object sender, EventArgs e)\n    {\n        // Handle cancelButton.Click event\n    }\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0067",
+        "severity": "warning"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "5dd20f3619b90919f45af89aa4aca71c4763f2ad634fa5b09bb500114c9965d4",
+  "originalSource": "public delegate void EventHandler(object sender, EventArgs e);\n\npublic class Button : Control\n{\n    public event EventHandler Click;\n}\n\npublic class LoginDialog : Form\n{\n    Button okButton;\n    Button cancelButton;\n\n    public LoginDialog()\n    {\n        okButton = new Button(...);\n        okButton.Click += new EventHandler(OkButtonClick);\n        cancelButton = new Button(...);\n        cancelButton.Click += new EventHandler(CancelButtonClick);\n    }\n\n    void OkButtonClick(object sender, EventArgs e)\n    {\n        // Handle okButton.Click event\n    }\n\n    void CancelButtonClick(object sender, EventArgs e)\n    {\n        // Handle cancelButton.Click event\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "Events",
+    "replaceEllipsis": true,
+    "expectedWarnings": [
+      "CS0067"
+    ],
+    "additionalFiles": [
+      "Control.cs",
+      "Graphics.cs",
+      "Rectangle.cs",
+      "Point.cs",
+      "Form.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "Events",
+    "offsetInUnquotedMarkdown": 204833
+  }
+}

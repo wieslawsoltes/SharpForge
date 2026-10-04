@@ -1,9 +1,13 @@
 {
   "partial-methods/cs0756-cs0757-cs0759-parts-that-do-not-pair": ["diagnostics", "warnings"],
+  "partial-methods/cs0761-cs8142-cs0759-parts-that-differ": ["diagnostics", "warnings"],
   "partial-methods/cs0762-cs0029-uses-of-an-unimplemented-method": ["diagnostics", "warnings"],
+  "partial-methods/cs0762-cs0765-uses-of-an-unimplemented-part": ["diagnostics", "warnings"],
   "partial-methods/cs0763-cs0758-cs8799-cs8800-cs8817-cs8818-parts-that-disagree": ["diagnostics", "warnings"],
+  "partial-methods/cs0764-unsafe-on-one-part-only": ["diagnostics", "warnings"],
   "partial-methods/cs8400-extended-partial-methods-in-csharp-8": ["diagnostics", "warnings"],
+  "partial-methods/cs8663-readonly-on-one-part-only": ["diagnostics", "warnings"],
   "partial-methods/cs8795-cs8796-cs8797-cs8798-what-needs-accessibility": ["diagnostics", "warnings"],
-  "partial-methods/definition-names-defaults-and-extended-forms": ["diagnostics", "warnings", "bytecode", "cil"],
-  "partial-methods/unimplemented-calls-are-removed": ["diagnostics", "warnings", "bytecode", "cil"]
+  "partial-methods/definition-names-defaults-and-extended-forms": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "partial-methods/unimplemented-calls-are-removed": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

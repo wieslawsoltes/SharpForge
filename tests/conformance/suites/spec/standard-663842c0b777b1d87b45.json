@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-663842c0b777b1d87b45",
+  "kind": "spec",
+  "sourceText": "struct A { B b; }\nstruct B { C c; }\nstruct C { A a; }",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0523",
+        "severity": "error"
+      },
+      {
+        "code": "CS0523",
+        "severity": "error"
+      },
+      {
+        "code": "CS0523",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": [
+      "CS0169"
+    ]
+  },
+  "sourceSHA256": "11503af7a4fb57111c3724f7eb9ec0704f9b0d154db15a8c8aa8fbc37bb5598b",
+  "originalSource": "struct A { B b; }\nstruct B { C c; }\nstruct C { A a; }",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "ValueSemantics2",
+    "expectedErrors": [
+      "CS0523",
+      "CS0523",
+      "CS0523"
+    ],
+    "ignoredWarnings": [
+      "CS0169"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-structs",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/structs.md",
+    "sha256": "53de26bf64c1dda02bf6edd00cbb816c260511bdd95d302f759970333c1ea663",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/structs.md",
+    "license": "MIT",
+    "example": "ValueSemantics2",
+    "offsetInUnquotedMarkdown": 13046
+  }
+}

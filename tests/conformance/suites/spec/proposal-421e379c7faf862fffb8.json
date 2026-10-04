@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-421e379c7faf862fffb8",
+  "kind": "spec",
+  "sourceText": "partial class AVAudioCompressedBuffer : AVAudioBuffer\n{\n    [BindingImpl(BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]\n    public partial AVAudioCompressedBuffer(AVAudioFormat format, uint packetCapacity) : base(NSObjectFlag.Empty)\n    {\n        // Call Objective-C runtime:\n        InitializeHandle(\n            global::ObjCRuntime.NativeHandle_objc_msgSendSuper_NativeHandle_UInt32(\n                this.SuperHandle,\n                Selector.GetHandle(\"initWithFormat:packetCapacity:\"),\n                format.GetNonNullHandle(nameof(format)),\n                packetCapacity),\n            \"initWithFormat:packetCapacity:\");\n    }\n\n    public partial event EventHandler Created\n    {\n        add { /* ... */ }\n        remove { /* ... */ }\n    }\n}",
+  "sourceSHA256": "f04df74072dc62a78b9cbfcec47edb513bd9faeeca7573f717840c13a9c5f3bc",
+  "target": "library",
+  "featureId": "csharp-14-0-partial-events-and-constructors",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/partial-events-and-constructors.md",
+    "sha256": "104e69ae2f93be87d2915774c1afbffb4f14f5e05a045df83370bbc01fd486b4",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/partial-events-and-constructors.md",
+    "license": "NOASSERTION",
+    "offset": 1948
+  }
+}

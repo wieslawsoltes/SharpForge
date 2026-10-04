@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-51ab4c093411f6c6444a",
+  "kind": "spec",
+  "sourceText": "namespace System\n{\n    public sealed class String\n    {\n        public static string Format(IFormatProvider? provider, [InterpolatedStringHandlerArgument(\"provider\")] ref DefaultInterpolatedStringHandler handler);\n        …\n    }\n}\n\nnamespace System.Runtime.CompilerServices\n{\n    public ref struct DefaultInterpolatedStringHandler\n    {\n        public DefaultInterpolatedStringHandler(int baseLength, int holeCount, IFormatProvider? provider); // additional factory\n        …\n    }\n}\n\nvar formatted = string.Format(CultureInfo.InvariantCulture, $\"{X} = {Y}\");\n\n// Is lowered to\n\nvar tmp1 = CultureInfo.InvariantCulture;\nvar handler = new DefaultInterpolatedStringHandler(3, 2, tmp1);\nhandler.AppendFormatted(X);\nhandler.AppendLiteral(\" = \");\nhandler.AppendFormatted(Y);\nvar formatted = string.Format(tmp1, handler);",
+  "sourceSHA256": "46b37e198b901d873b75e58d671e4153161dd4019218d0c521d78626a5e87121",
+  "target": "library",
+  "featureId": "csharp-10-0-interpolated-string-handlers",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/improved-interpolated-strings.md",
+    "sha256": "a9232653b4497eae44487404a0c446af954667024beea4be2ad9a642b257b02c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-interpolated-strings.md",
+    "license": "NOASSERTION",
+    "offset": 35696
+  }
+}

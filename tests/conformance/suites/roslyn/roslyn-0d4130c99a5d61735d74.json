@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0d4130c99a5d61735d74",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class A<T>\n{\n    [Obsolete]\n    public virtual void M() { }\n}\n\npublic class B : A<int>\n{\n    public override void M() { }\n}\n\npublic class C<T> : A<T>\n{\n    public override void M() { }\n}\n\nclass Test\n{\n    void M(A<int> a, B b, C<char> c)\n    {\n        a.M();\n        b.M();\n        c.M();\n    }\n}\n",
+  "sourceSHA256": "287a6b07577ef5a34605d22f3ee6745acc79aae34cb5f85d1cf7739905b5c0da",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ObsoleteOnVirtual_GenericType",
+    "offset": 297675
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0672",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0672",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (17,26): warning CS0672: Member 'C<T>.M()' overrides obsolete member 'A<T>.M()'. Add the Obsolete attribute to 'C<T>.M()'.\n                //     public override void M() { }\n                Diagnostic(ErrorCode.WRN_NonObsoleteOverridingObsolete, \"M\").WithArguments(\"C<T>.M()\", \"A<T>.M()\"),\n                // (12,26): warning CS0672: Member 'B.M()' overrides obsolete member 'A<int>.M()'. Add the Obsolete attribute to 'B.M()'.\n                //     public override void M() { }\n                Diagnostic(ErrorCode.WRN_NonObsoleteOverridingObsolete, \"M\").WithArguments(\"B.M()\", \"A<int>.M()\"),\n                // (24,9): warning CS0612: 'A<int>.M()' is obsolete\n                //         a.M();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"a.M()\").WithArguments(\"A<int>.M()\"),\n                // (25,9): warning CS0612: 'A<int>.M()' is obsolete\n                //         b.M();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"b.M()\").WithArguments(\"A<int>.M()\"),\n                // (26,9): warning CS0612: 'A<char>.M()' is obsolete\n                //         c.M();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c.M()\").WithArguments(\"A<char>.M()\")",
+  "unsupported": []
+}

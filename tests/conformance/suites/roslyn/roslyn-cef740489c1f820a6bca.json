@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-cef740489c1f820a6bca",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Person {\n    public string Name { get; set; }\n}\n\npublic class Student : Person { }\n\npublic class C {\n    public string M(Person p) {\n        return p switch  {\n            { Name: \"Bill\" } => \"Hey Bill!\",\n            Student { Name: var name } => \"Hello student { name}!\",\n            _ => null,\n        };\n    }\n}",
+  "sourceSHA256": "38ef34ceb46b9130345438fbf0837f804d9960dccf9081c2eb627bd340036ee8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "NoRedundantPropertyRead08",
+    "offset": 49568
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

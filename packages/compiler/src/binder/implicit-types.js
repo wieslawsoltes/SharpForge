@@ -1,3 +1,5 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
+import { TypeCompareKind } from '../symbols/types.js';
 /**
  * Implicit typing (SF-A02-T52): the best common type of a set of expressions (implicitly typed arrays, the inferred
  * return type of a lambda) and the rules for the initializer of a `var` local.
@@ -7,8 +9,20 @@
  */
 
 /** The better of two candidate types: the one the other converts to implicitly, or null when neither or both do. */
+/** Two tuple types that differ only in element names merge into one that keeps the names both have (Roslyn's MergeTupleNames). */
+function mergeTupleNames(first, second) {
+  if (!first.isTupleType || !second.isTupleType || !first.withTupleElementNames) return null;
+  if (!first.equals(second, TypeCompareKind.IgnoreTupleNames)) return null;
+  const left = first.tupleElementNames ?? [],
+    right = second.tupleElementNames ?? [],
+    names = left.map((name, index) => (name && name === right[index] ? name : null));
+  return first.withTupleElementNames(names.some(Boolean) ? names : null);
+}
+
 function betterType(first, second, converts) {
   if (first.equals(second)) return first;
+  const merged = mergeTupleNames(first, second);
+  if (merged) return merged;
   const firstToSecond = converts(first, second),
     secondToFirst = converts(second, first);
   if (firstToSecond === secondToFirst) return null;
@@ -62,8 +76,8 @@ function untypedInitializerName(value) {
  * @param value the bound initializer  @returns {null|{code:string,args:string[],at:'initializer'|'declarator'}}
  */
 export function untypedInitializerProblem(value) {
-  if (value.form === 'collection') return { code: 'CS9176', args: [], at: 'initializer' };
-  if (value.form === 'implicitNew') return { code: 'CS8754', args: ['new()'], at: 'initializer' };
-  if (value.literal === 'default') return { code: 'CS8716', args: [], at: 'initializer' };
-  return { code: 'CS0815', args: [untypedInitializerName(value)], at: 'declarator' };
+  if (value.form === 'collection') return { code: DiagnosticId.CS9176, args: [], at: 'initializer' };
+  if (value.form === 'implicitNew') return { code: DiagnosticId.CS8754, args: ['new()'], at: 'initializer' };
+  if (value.literal === 'default') return { code: DiagnosticId.CS8716, args: [], at: 'initializer' };
+  return { code: DiagnosticId.CS0815, args: [untypedInitializerName(value)], at: 'declarator' };
 }

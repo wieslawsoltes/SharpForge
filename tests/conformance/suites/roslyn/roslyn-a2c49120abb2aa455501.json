@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a2c49120abb2aa455501",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C {\n    static int i = 3;\n    static S? GetNullableTuple() => new S(i++, i++);\n\n    static void Main() {\n        if (GetNullableTuple() is (int x1, int y1) tupl1)\n        {\n            System.Console.WriteLine($\"x = {x1}, y = {y1}\");\n        }\n        if (GetNullableTuple() is (int x2, int y2) _)\n        {\n            System.Console.WriteLine($\"x = {x2}, y = {y2}\");\n        }\n        switch (GetNullableTuple())\n        {\n            case (int x3, int y3) s:\n                System.Console.WriteLine($\"x = {x3}, y = {y3}\");\n                break;\n        }\n    }\n}\nstruct S\n{\n    int x, y;\n    public S(int X, int Y) => (this.x, this.y) = (X, Y);\n    public void Deconstruct(out int X, out int Y) => (X, Y) = (x, y);\n}\n",
+  "sourceSHA256": "a29fbfcdcc936f81f1b4965a2e5482b8f711d79e0502cf8a117865ecb58c3538",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "DeconstructNullable_01",
+    "offset": 89977
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

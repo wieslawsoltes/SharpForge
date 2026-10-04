@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-1f9a0d105139d9e1ae8d",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Program {\n#nullable enable\npublic static void ThrowWhenNull([NotNull] object? value,\n  string valueExpression = \"\") =>\n    _ = value ?? throw new ArgumentNullException(valueExpression);\n\npublic static void LogMessage(string? message)\n{\n    ThrowWhenNull(message, nameof(message));\n    Console.WriteLine(message.Length);\n}\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "dddcae3770c58ef1ec7aedd31bce27450add6b5efc9256237b1e5310e7a3cbcb",
+  "originalSource": "#nullable enable\npublic static void ThrowWhenNull([NotNull] object? value,\n  string valueExpression = \"\") =>\n    _ = value ?? throw new ArgumentNullException(valueExpression);\n\npublic static void LogMessage(string? message)\n{\n    ThrowWhenNull(message, nameof(message));\n    Console.WriteLine(message.Length);\n}",
+  "metadata": {
+    "template": "code-in-class-lib",
+    "name": "NotNullAttribute"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-attributes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/attributes.md",
+    "sha256": "9ab07c36a912273dd0eb341141ca62153c76e5f32f422e70950477a6b89c5242",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/attributes.md",
+    "license": "MIT",
+    "example": "NotNullAttribute",
+    "offsetInUnquotedMarkdown": 52507
+  }
+}

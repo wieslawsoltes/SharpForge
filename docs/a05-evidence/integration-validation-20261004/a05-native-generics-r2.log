@@ -1,0 +1,58 @@
+✔ generic boxed BCL callback source: Insert mutates each original closed box and retains its payload (158.412257ms)
+✔ generic boxed BCL callback source: escaping override faults preserve writes and the managed catch (27.866132ms)
+✔ generic boxed BCL callback source: stop cancels insertion without restoring the interrupted caller (17.582856ms)
+✔ generic boxed BCL callback reloaded: Insert mutates each original closed box and retains its payload (47.15783ms)
+✔ generic boxed BCL callback reloaded: escaping override faults preserve writes and the managed catch (31.318496ms)
+✔ generic boxed BCL callback reloaded: stop cancels insertion without restoring the interrupted caller (16.215105ms)
+✔ generic boxed BCL callback cil: Insert mutates each original closed box and retains its payload (46.887382ms)
+✔ generic boxed BCL callback cil: escaping override faults preserve writes and the managed catch (21.935113ms)
+✔ generic boxed BCL callback cil: stop cancels insertion without restoring the interrupted caller (15.612179ms)
+✔ independent CIL generic box callback: closed owner, roots and control survive throwing=false (7.756652ms)
+✔ independent CIL generic box callback: closed owner, roots and control survive throwing=true (3.518572ms)
+✔ native fault qualification retains platform-specific exits while requiring identical ordered traces (1.069572ms)
+✔ native fault qualification accepts canonical System names without erasing foreign namespaces (1.42811ms)
+✔ successful exits, unrelated signals, wrong exceptions and changed event order cannot qualify (0.677716ms)
+✔ ordinary success fixtures keep exact zero-exit semantics (0.261444ms)
+✔ first-chance failfast requires the pinned native HRESULT and the VM fatal boundary (0.433417ms)
+✔ native fixture projects opt into unsafe compilation only for explicitly selected fixtures (0.19734ms)
+✔ native provenance retains exact tree and generated SDK file while permitting untracked evidence (40.010879ms)
+✔ native provenance rejects unstaged and staged tracked edits before native work (34.646889ms)
+✔ native provenance records public workflow and PR identities without copying the event payload (30.738429ms)
+✔ A05 native plan keeps SDK policy, unsafe compilation and replay evidence explicit (1.198792ms)
+FAILED failed: /tmp/sharpforge-a05-plan-Z5hj7N/failed/result.json
+BLOCKED dependent: /tmp/sharpforge-a05-plan-Z5hj7N/dependent/result.json
+UNSUPPORTED sdk-policy: /tmp/sharpforge-a05-plan-Z5hj7N/sdk-policy/result.json
+PASSED last: /tmp/sharpforge-a05-plan-Z5hj7N/last/result.json
+✔ A05 native aggregation continues independent failures and never counts unavailable evidence as a pass (13.567494ms)
+BLOCKED fixture: /tmp/sharpforge-a05-missing-sdk-Fnj9gC/fixture/result.json
+✔ A05 native missing SDK blocks every case and retains a complete failed report (2.778394ms)
+✔ logical generic names preserve boxing, distinct type identities and formatting in all source routes (220.883492ms)
+✔ source identity descriptors roundtrip as owned immutable data, including debug-stripped CIL (33.880081ms)
+✔ malformed, cyclic, overdeep and colliding logical descriptors fail source admission (18.519532ms)
+✔ independent real CLI generic metadata retains its actual definition and type arguments (2.813295ms)
+✔ bound-tree native CIL emission retains true generic metadata without source identity projection (18.150379ms)
+✔ tokens source: GetType identity, names, and primitive static types (121.79185ms)
+✔ tokens source: cached Type roots, snapshot replay, and stop (15.684795ms)
+✔ tokens source: null GetType faults (10.256807ms)
+✔ tokens reload: GetType identity, names, and primitive static types (60.544846ms)
+✔ tokens reload: cached Type roots, snapshot replay, and stop (12.929206ms)
+✔ tokens reload: null GetType faults (11.187695ms)
+✔ tokens cil: GetType identity, names, and primitive static types (39.072704ms)
+✔ tokens cil: cached Type roots, snapshot replay, and stop (16.510018ms)
+✔ tokens cil: null GetType faults (15.346649ms)
+✔ tokens: aliases, closed/open generics, and array identity share stable tables (2.332208ms)
+✔ tokens: inherited object headers report actual type and boxed enum remains distinct (0.633291ms)
+✔ tokens: default handle, null comparisons, wrong kind, foreign and forged handles (3.181066ms)
+✔ tokens: snapshots taken before the lazy Type cache discard subsequent entries (7.398395ms)
+✔ tokens: ldtoken supports TypeDef/Ref/Spec and method/field definitions and references (6.018337ms)
+✔ tokens CIL: typeof primitive, open generic and closed generic handles execute (11.325549ms)
+✔ strings: String(char[]) copies UTF-16 units, remains non-interned, and rejects invalid arrays (1.246122ms)
+✔ strings CIL: String(char[]) constructor produces a fresh managed string (3.507275ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4496.827086

@@ -1,9 +1,16 @@
-import {Builtins} from '@sharpforge/bytecode';
-import {exceptionTypeName} from './exception-identity.js';
+import {
+  Builtins
+} from '@sharpforge/bytecode';
+import {
+  exceptionTypeName
+} from './exception-identity.js';
 
 const primitiveNames = new Map([
-  ['System.String', 'string'], ['System.Int32', 'int'], ['System.Boolean', 'bool'],
-  ['System.Object', 'object'], ['System.Void', 'void']
+  ['System.String', 'string'],
+  ['System.Int32', 'int'],
+  ['System.Boolean', 'bool'],
+  ['System.Object', 'object'],
+  ['System.Void', 'void']
 ]);
 const typeName = type => primitiveNames.get(type.toDisplayString()) ?? exceptionTypeName(type);
 const signature = (owner, name, parameters) => owner + '::' + name + '(' + parameters.join(',') + ')';

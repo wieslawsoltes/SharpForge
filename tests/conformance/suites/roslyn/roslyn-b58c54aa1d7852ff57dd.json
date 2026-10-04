@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b58c54aa1d7852ff57dd",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n[AttributeUsage(AllowMultiple = true, AllowMultiple = false)]\nclass MyAtt : Attribute\n{ }\n \n[MyAtt]\npublic class Test\n{\n    public static void Main()\n    {\n    }\n}\n",
+  "sourceSHA256": "fde5c325475557dbf751fa44de920db992666cb079397bbf3fc4f178d0dc5c93",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "CS0643ERR_DuplicateNamedAttributeArgument02",
+    "offset": 248736
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0643",
+        "severity": "error"
+      },
+      {
+        "code": "CS7036",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,39): error CS0643: 'AllowMultiple' duplicate named attribute argument\n                // [AttributeUsage(AllowMultiple = true, AllowMultiple = false)]\n                Diagnostic(ErrorCode.ERR_DuplicateNamedAttributeArgument, \"AllowMultiple = false\").WithArguments(\"AllowMultiple\").WithLocation(3, 39),\n                // (3,2): error CS7036: There is no argument given that corresponds to the required parameter 'validOn' of 'AttributeUsageAttribute.AttributeUsageAttribute(AttributeTargets)'\n                // [AttributeUsage(AllowMultiple = true, AllowMultiple = false)]\n                Diagnostic(ErrorCode.ERR_NoCorrespondingArgument, \"AttributeUsage(AllowMultiple = true, AllowMultiple = false)\").WithArguments(\"validOn\", \"System.AttributeUsageAttribute.AttributeUsageAttribute(System.AttributeTargets)\").WithLocation(3, 2)\n                ",
+  "unsupported": []
+}

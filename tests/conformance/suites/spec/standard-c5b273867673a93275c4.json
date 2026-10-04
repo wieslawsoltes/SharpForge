@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-c5b273867673a93275c4",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\ndelegate void Action<T>(T arg);\n\nclass Test\n{\n    static void Print(object value) => Console.WriteLine(value);\n\n    static void Main()\n    {\n        Action<string> log = Print;\n        log(\"text\");\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "6508410d766d1f5ba3eea2a9cbc359b0351362c3b6801cb98201ca23ef6e3d22",
+  "originalSource": "delegate void Action<T>(T arg);\n\nclass Test\n{\n    static void Print(object value) => Console.WriteLine(value);\n\n    static void Main()\n    {\n        Action<string> log = Print;\n        log(\"text\");\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "DelegateCompatibility3"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-delegates",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/delegates.md",
+    "sha256": "9455f48c0c2b89946fa49f010b25134e63d575781fea98dcd54cdba081865907",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/delegates.md",
+    "license": "MIT",
+    "example": "DelegateCompatibility3",
+    "offsetInUnquotedMarkdown": 9905
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-afae381320e9b9cc232c",
+  "kind": "diagnostics",
+  "sourceText": "using System;\npublic class C\n{\n    public static void Main()\n    {\n        if (TryGet() is int index)\n        {\n            Console.WriteLine(index);\n        }\n    }\n\n    public static int? TryGet()\n    {\n        Console.WriteLine(\"eval\");\n        return null;\n    }\n}",
+  "sourceSHA256": "4a7a07a99f4010bfa996d03a8fdeb8edca9b52d186ccf25603b2c30a80948480",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "DoubleEvaluation01",
+    "offset": 9367
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

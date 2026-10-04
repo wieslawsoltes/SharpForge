@@ -22,10 +22,10 @@ export const smokeSteps = [
   }},
   {id: 'compiler:finally-checked-dispose', order: 690, async run(context) {
     const {compileToIL, VirtualMachine, CilVirtualMachine, formatILDocument, assembleILDocument} = context;
-    const props=compileToIL('class P { public int X{get;set;}=7; } int F(){try{return new P().X;}finally{Console.WriteLine(1);}} Console.WriteLine(F());');
+    const props=compileToIL('int F(){try{return new P().X;}finally{Console.WriteLine(1);}} Console.WriteLine(F()); class P { public int X{get;set;}=7; }');
     assert(props.success);
     assert.equal(new CilVirtualMachine(props.assembly).run().output,'1\n7\n');
-    const checkedSource='class Lease:IDisposable{public void Dispose(){Console.WriteLine("disposed");}} using var lease=new Lease();int x=2147483647;try{Console.WriteLine(checked(x+1));}catch(Exception e){Console.WriteLine(42);}';
+    const checkedSource='using var lease=new Lease();int x=2147483647;try{Console.WriteLine(checked(x+1));}catch(Exception e){Console.WriteLine(42);} class Lease:IDisposable{public void Dispose(){Console.WriteLine("disposed");}}';
     const checkedIL=compileToIL(checkedSource);
     assert(checkedIL.success,JSON.stringify(checkedIL.diagnostics));
     for(const bytes of [checkedIL.assembly,assembleILDocument(formatILDocument(checkedIL.assembly)).bytes])assert.equal(new CilVirtualMachine(bytes).run().output,'42\ndisposed\n');

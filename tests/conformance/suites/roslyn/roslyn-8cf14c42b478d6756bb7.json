@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8cf14c42b478d6756bb7",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\nvar c = new C();\nc = new C(2);\nc.E += null;\nc.E -= null;\nc.F += null;\nc.F -= null;\nc.G += null;\nc.G -= null;\nc.H += null;\nc.H -= null;\n\npartial class C\n{\n    [Obsolete] public partial C();\n    public partial C() { M(); }\n\n    public partial C(int x = X);\n    [Obsolete] public partial C(int x) { M(); }\n\n    [Obsolete] public partial event Action E;\n    public partial event Action E { add { M(); } remove { M(); } }\n\n    public partial event Action F;\n    public partial event Action F\n    {\n        [Obsolete] add { M(); }\n        remove { M(); }\n    }\n\n    [Obsolete] public partial event Action G;\n    public extern partial event Action G;\n\n    [method: Obsolete] public partial event Action H;\n    public extern partial event Action H;\n\n    [Obsolete] void M() { }\n    [Obsolete] const int X = 1;\n}",
+  "sourceSHA256": "1f4a2ea352d6ec62932fada66ccedd1c427158f330fed9501782f2a6ad20f2c6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Attributes_Obsolete",
+    "offset": 191499
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8423",
+        "severity": "error"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8423",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,9): warning CS0612: 'C.C()' is obsolete\n            // var c = new C();\n            Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"new C()\").WithArguments(\"C.C()\").WithLocation(3, 9),\n            // (4,5): warning CS0612: 'C.C(int)' is obsolete\n            // c = new C(2);\n            Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"new C(2)\").WithArguments(\"C.C(int)\").WithLocation(4, 5),\n            // (5,1): warning CS0612: 'C.E' is obsolete\n            // c.E += null;\n            Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c.E\").WithArguments(\"C.E\").WithLocation(5, 1),\n            // (6,1): warning CS0612: 'C.E' is obsolete\n            // c.E -= null;\n            Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c.E\").WithArguments(\"C.E\").WithLocation(6, 1),\n            // (9,1): warning CS0612: 'C.G' is obsolete\n            // c.G += null;\n            Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c.G\").WithArguments(\"C.G\").WithLocation(9, 1),\n            // (10,1): warning CS0612: 'C.G' is obsolete\n            // c.G -= null;\n            Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c.G\").WithArguments(\"C.G\").WithLocation(10, 1),\n            // (28,10): error CS8423: Attribute 'System.ObsoleteAttribute' is not valid on event accessors. It is only valid on 'class, struct, enum, constructor, method, property, indexer, field, event, interface, delegate' declarations.\n            //         [Obsolete] add { M(); }\n            Diagnostic(ErrorCode.ERR_AttributeNotOnEventAccessor, \"Obsolete\").WithArguments(\"System.ObsoleteAttribute\", \"class, struct, enum, constructor, method, property, indexer, field, event, interface, delegate\").WithLocation(28, 10),\n            // (29,18): warning CS0612: 'C.M()' is obsolete\n            //         remove { M(); }\n            Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"M()\").WithArguments(\"C.M()\").WithLocation(29, 18),\n            // (35,14): error CS8423: Attribute 'System.ObsoleteAttribute' is not valid on event accessors. It is only valid on 'class, struct, enum, constructor, method, property, indexer, field, event, interface, delegate' declarations.\n            //     [method: Obsolete] public partial event Action H;\n            Diagnostic(ErrorCode.ERR_AttributeNotOnEventAccessor, \"Obsolete\").WithArguments(\"System.ObsoleteAttribute\", \"class, struct, enum, constructor, method, property, indexer, field, event, interface, delegate\").WithLocation(35, 14)",
+  "unsupported": []
+}

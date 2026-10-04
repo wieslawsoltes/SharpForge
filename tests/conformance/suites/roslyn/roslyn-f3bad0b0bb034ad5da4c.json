@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f3bad0b0bb034ad5da4c",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class C\n{\n    public static void Main()\n    {\n        X x = new X();\n        Y y = new Y();\n        Console.WriteLine((1, ((int, int))x) == (y, (1, 1)));\n     }\n}\n\nclass X\n{\n    public static implicit operator (short, short)(X x)\n    {\n        Console.WriteLine(\"X-> (short, short)\");\n        return (1, 1);\n    }\n}\n\nclass Y\n{\n    public static implicit operator int(Y x)\n    {\n        Console.WriteLine(\"Y -> int\");\n        return 1;\n    }\n}\n",
+  "sourceSHA256": "331a2514696b223751926bbbb128ab54915277651e09d6001b5a67de04294323",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestOrder01",
+    "offset": 205227
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

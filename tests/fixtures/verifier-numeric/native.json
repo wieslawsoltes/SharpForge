@@ -1,0 +1,1484 @@
+{
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "inputSHA256": "fa46dfdede333758ddb2bed413388e49e90d64c458ec5252ea883e4b944e386a",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "observations": [
+    {
+      "name": "Add_0_0",
+      "assemblySHA256": "e85f021ef5244c97b7359a97b35e9242a76ddda1407fa27158da9c29e437bf50",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Add_0_0.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 73.95691599999998
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Add_0_1",
+      "assemblySHA256": "c6724f5239e86302d66812aff4a1e868d4453d014dd7b59ea4aa708683746c07",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/Add_0_1.dll : Fixture.Program::Add_0_1(int32, int64)][offset 0x00000002][found Int32][expected Long] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/Add_0_1.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 74.97137499999997
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "Add_0_2",
+      "assemblySHA256": "6c5e55f2f9c3be5b937cee744616d0ad8299cd360d15162e3456e35fb54b65ed",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Add_0_2.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 73.48745899999994
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Add_0_3",
+      "assemblySHA256": "81ee3be5d2178f4261ad5aec9546aa158cbd257e82b5ba064f99f35155b12c96",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/Add_0_3.dll : Fixture.Program::Add_0_3(int32, float64)][offset 0x00000002][found Int32][expected Double] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/Add_0_3.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 82.47345799999994
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "Add_0_4",
+      "assemblySHA256": "490bc28a1eeb3cdefbcf977f6c0aa37f6b9fe233b3f60f17904e72701f5768d6",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/Add_0_4.dll : Fixture.Program::Add_0_4(int32, object)][offset 0x00000002][found ref 'object'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/Add_0_4.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 74.14795800000002
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "Add_1_0",
+      "assemblySHA256": "cffc93fc392bf4d92a04d5b09f4e953e10e2982e8d4937cdd26de2b6501cced4",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/Add_1_0.dll : Fixture.Program::Add_1_0(int64, int32)][offset 0x00000002][found Long][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/Add_1_0.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 78.27308299999993
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "Add_1_1",
+      "assemblySHA256": "974ca6740f509cf0dcc1285fa3270fbb5fca81445ec3e9db8d08396103dc159c",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Add_1_1.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 75.73533399999997
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Add_1_2",
+      "assemblySHA256": "4fd0c1c18265180c8a7bcda387548f2348c5229f78c20025fdf810f646122463",
+      "normativeAccepted": false,
+      "expectedNative": true,
+      "difference": "ILVerify 10.0.5 accepts mixed int64/native-int arithmetic; ECMA III.1.5 table III.2 forbids it.",
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Add_1_2.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 73.57100000000003
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Add_1_3",
+      "assemblySHA256": "ccbc89ebd48a1fdc6cccef849e91cc71259651da2dfd982edcd4d69cb92fdfa3",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/Add_1_3.dll : Fixture.Program::Add_1_3(int64, float64)][offset 0x00000002][found Long][expected Double] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/Add_1_3.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 73.99099999999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "Add_1_4",
+      "assemblySHA256": "da1d87b2dc1d49a445b46afef8274d87a3b94f09300090466c85a88747c825b6",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/Add_1_4.dll : Fixture.Program::Add_1_4(int64, object)][offset 0x00000002][found ref 'object'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/Add_1_4.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 79.86054100000001
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "Add_2_0",
+      "assemblySHA256": "e5134ed2372421c36138a769c55804c07d05e6a6e713942749e517c3c0677403",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Add_2_0.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 78.65424999999982
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Add_2_1",
+      "assemblySHA256": "2df903f749ba5951ae85e9405ef0e261c86ca432ae4c9cdd1ba722bb08970f21",
+      "normativeAccepted": false,
+      "expectedNative": true,
+      "difference": "ILVerify 10.0.5 accepts mixed int64/native-int arithmetic; ECMA III.1.5 table III.2 forbids it.",
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Add_2_1.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.08554099999992
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Add_2_2",
+      "assemblySHA256": "de26c774a91b599de93bedef9f5a7f925e955144e83901d5794af138e91ea2e8",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Add_2_2.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 76.97437500000001
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Add_2_3",
+      "assemblySHA256": "d694fefbbced869a0997c78c81cd4656f5a3523afd1e95ed000eead8e00ebbff",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/Add_2_3.dll : Fixture.Program::Add_2_3(native int, float64)][offset 0x00000002][found Native Int][expected Double] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/Add_2_3.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 87.01895800000011
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "Add_2_4",
+      "assemblySHA256": "b9124b260a007106277f54030e8b6273d9933f152bb35becde75878774123e0d",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/Add_2_4.dll : Fixture.Program::Add_2_4(native int, object)][offset 0x00000002][found ref 'object'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/Add_2_4.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 74.35487499999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "Add_3_0",
+      "assemblySHA256": "e3ef5c7f3e16ae88504f11f946bbf08ed7bfb1df8b05e317f1eee8b4cedd17c5",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/Add_3_0.dll : Fixture.Program::Add_3_0(float64, int32)][offset 0x00000002][found Double][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/Add_3_0.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 78.16216600000007
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "Add_3_1",
+      "assemblySHA256": "11fcc239e38cd53e3e7930bcdf1cf1b3f3b7cf63f01651ed922d579fb7b156ab",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/Add_3_1.dll : Fixture.Program::Add_3_1(float64, int64)][offset 0x00000002][found Double][expected Long] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/Add_3_1.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 79.14274999999998
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "Add_3_2",
+      "assemblySHA256": "2f97e68dfd2d2577f60aca96800517bc8e0ac805fdec380396c05e91c9483fc7",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/Add_3_2.dll : Fixture.Program::Add_3_2(float64, native int)][offset 0x00000002][found Double][expected Native Int] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/Add_3_2.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 78.12904200000003
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "Add_3_3",
+      "assemblySHA256": "cee6e9e3c1b4dc259d2e409bbbad408f2bc63add720491657b6ff8b2358f464e",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Add_3_3.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 82.90029200000004
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Add_3_4",
+      "assemblySHA256": "ad6eef8b9cb76e620d8d08f6abfaeb59d175915e65ab065696bb4dfde61028ee",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/Add_3_4.dll : Fixture.Program::Add_3_4(float64, object)][offset 0x00000002][found ref 'object'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/Add_3_4.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 87.39254200000005
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "Add_4_0",
+      "assemblySHA256": "1133ca2112f4e3da2f8500cd785edff3b479c3586bb2148b613ce5f9057a69f1",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/Add_4_0.dll : Fixture.Program::Add_4_0(object, int32)][offset 0x00000002][found ref 'object'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/Add_4_0.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.08679199999983
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "Add_4_1",
+      "assemblySHA256": "b8b652c1972ad1aecfee4c779096d9c9f487664082659e3ba22b3e075b8322cc",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/Add_4_1.dll : Fixture.Program::Add_4_1(object, int64)][offset 0x00000002][found ref 'object'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/Add_4_1.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 77.48633299999983
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "Add_4_2",
+      "assemblySHA256": "651a2d224e66a6f36d5d0655b038260a380b50a14ae0fd17d95251fb62db3adc",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/Add_4_2.dll : Fixture.Program::Add_4_2(object, native int)][offset 0x00000002][found ref 'object'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/Add_4_2.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 75.01137500000004
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "Add_4_3",
+      "assemblySHA256": "be63f48e5e9aa8080a9283d54a0d0b913b2c9ee52b97f8f8782153787de80da1",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/Add_4_3.dll : Fixture.Program::Add_4_3(object, float64)][offset 0x00000002][found ref 'object'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/Add_4_3.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 78.90329199999996
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "Add_4_4",
+      "assemblySHA256": "d10bea4dbbc3781b582a8f2aed880cfd5b685b8462cbfa6418f2f0f1fde174e2",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/Add_4_4.dll : Fixture.Program::Add_4_4(object, object)][offset 0x00000002][found ref 'object'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/Add_4_4.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 79.09687499999973
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "SubtractLong",
+      "assemblySHA256": "25172453986436e34db901ada11cb60b67540e673ba282bafee3355f7c87f9f6",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/SubtractLong.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 75.45008299999972
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "MultiplyFloat",
+      "assemblySHA256": "285593f1f1ba712865f968694afef56e28c50c4cc7d3cdf63031f3e51addfe0d",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/MultiplyFloat.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 77.51299999999992
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "DivideNative",
+      "assemblySHA256": "fdee7ff05f47d45731052f7813eb566f5619dada1bc5bcbe5d372ba5c84750c0",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/DivideNative.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 75.54670800000031
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "RemainderFloat",
+      "assemblySHA256": "d10440589f27586593a3516e229859bc3debd17f6f2849153b2da6bda18fd04b",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/RemainderFloat.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.57683300000008
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "UnsignedDivideFloat",
+      "assemblySHA256": "7c23c5ba74c2647b7f916ae864d71e8ab8ca8037c2fe63fe056dc2e025097930",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedIntegerType]: [<temporary>/UnsignedDivideFloat.dll : Fixture.Program::UnsignedDivideFloat(float64, float64)][offset 0x00000002][found Double] Expected I, I4, or I8 on the stack.\n1 Error(s) Verifying <temporary>/UnsignedDivideFloat.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.1650410000002
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedIntegerType"
+        ]
+      }
+    },
+    {
+      "name": "CheckedMultiplyFloat",
+      "assemblySHA256": "0cf79c9d317ec3217ca280290c21b704022bf3d556935f59b8366633bf5eb2f7",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedIntegerType]: [<temporary>/CheckedMultiplyFloat.dll : Fixture.Program::CheckedMultiplyFloat(float64, float64)][offset 0x00000002][found Double] Expected I, I4, or I8 on the stack.\n1 Error(s) Verifying <temporary>/CheckedMultiplyFloat.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 79.12629199999992
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedIntegerType"
+        ]
+      }
+    },
+    {
+      "name": "CheckedAddIntegerNative",
+      "assemblySHA256": "f1ca2b6960c30d45e3d700b2edcdc08979e557de958d26f568d12ac477e6382e",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CheckedAddIntegerNative.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 76.1222499999999
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "BitwiseFloat",
+      "assemblySHA256": "13a05f8ab4e0a4b7ed643f04be7ae3f23d75f044f263b59ca676e98b0ec718d6",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedIntegerType]: [<temporary>/BitwiseFloat.dll : Fixture.Program::BitwiseFloat(float64, float64)][offset 0x00000002][found Double] Expected I, I4, or I8 on the stack.\n1 Error(s) Verifying <temporary>/BitwiseFloat.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 80.16316700000016
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedIntegerType"
+        ]
+      }
+    },
+    {
+      "name": "BitwiseNative",
+      "assemblySHA256": "02ac0c09a22355d665dc2dfc1a304c5e8136afac84c35bd3b12c876ec35eb431",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/BitwiseNative.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.45908299999974
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CheckedSubtractLong",
+      "assemblySHA256": "480c7b105479759f5de09903d53449f01f10f970229bd653acac79896e10e32b",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CheckedSubtractLong.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 76.09841700000015
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NegateInteger",
+      "assemblySHA256": "fac97927120ddbcd65f1cde773f04519d3dc8b9aeb8cf600a257050b9c703eaa",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NegateInteger.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 74.16512499999999
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NegateFloat",
+      "assemblySHA256": "5661ccb9f2b3e1dcaa52af1d33c575cb7a4ce3640e2305cb71487cdb0f9489f3",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NegateFloat.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 75.06616699999995
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NegateObject",
+      "assemblySHA256": "a60765fa82b3c7443ef3dd78194411fcf0644c741513c0396d178fe40e608252",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/NegateObject.dll : Fixture.Program::NegateObject(object)][offset 0x00000001][found ref 'object'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/NegateObject.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.21091699999988
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "NotNative",
+      "assemblySHA256": "cd12a9c492ba50d24f573e4e2b9b7c1dd382f6e5f3b31d7f7b9a85b756a3f573",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NotNative.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 75.71237500000007
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NotFloat",
+      "assemblySHA256": "290e8b1aec27a3f73f3866dd5c98832ce7070a173902fcbfdb06a0b1c37cacfa",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedIntegerType]: [<temporary>/NotFloat.dll : Fixture.Program::NotFloat(float64)][offset 0x00000001][found Double] Expected I, I4, or I8 on the stack.\n1 Error(s) Verifying <temporary>/NotFloat.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 77.20562500000005
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedIntegerType"
+        ]
+      }
+    },
+    {
+      "name": "CheckFiniteFloat",
+      "assemblySHA256": "0dd71dc3d2f4a645091744cf41666486009c24ad89289854ec89dad8061ad94b",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CheckFiniteFloat.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 72.38274999999976
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CheckFiniteInteger",
+      "assemblySHA256": "61b4409496cff50159abadc4dbdd7fbf717239fef67485e1b3d297db295dfc55",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedFloatType]: [<temporary>/CheckFiniteInteger.dll : Fixture.Program::CheckFiniteInteger(int32)][offset 0x00000001] Expected R, R4, or R8 on the stack.\n1 Error(s) Verifying <temporary>/CheckFiniteInteger.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.35216700000001
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedFloatType"
+        ]
+      }
+    },
+    {
+      "name": "ConvertIntegerLong",
+      "assemblySHA256": "e0a7fd7d622bee3154b2f3c33d5067c73b64264959b7314b29b497207887e264",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ConvertIntegerLong.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 72.40841600000022
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ConvertLongInteger",
+      "assemblySHA256": "838c6b2906686325c9e366dae942b7f926fdb07bae3e76f469c629c146976cd2",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ConvertLongInteger.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 71.43945800000029
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ConvertNativeFloat",
+      "assemblySHA256": "fe6674289eca47b4d1bd9abee1de6cceff761cba70f589f5d4eb7e018d031df1",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ConvertNativeFloat.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 82.36320799999976
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ConvertFloatNative",
+      "assemblySHA256": "e493e656b404006de86fafda4088675f0c073e2ae43b0b5cad9508e5030eed67",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ConvertFloatNative.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 82.61787499999991
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ConvertCheckedFloat",
+      "assemblySHA256": "4a9c8870fce9d7588be0186909c17924cb72a8eecf3edbfff55a7fa2056cc437",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ConvertCheckedFloat.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 84.0134579999999
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ConvertCheckedUnsigned",
+      "assemblySHA256": "50b520a9ed8e34aeb5415eef1e087e7c05f02957707f8dff979fa629d6ef06db",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ConvertCheckedUnsigned.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 84.8020419999998
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ConvertObject",
+      "assemblySHA256": "1364c04b6cb135380a7b68f602d41693b976abbfd5d0ca8b1bdd5e29cdaef2ee",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/ConvertObject.dll : Fixture.Program::ConvertObject(object)][offset 0x00000001][found ref 'object'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/ConvertObject.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 83.31029200000012
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "ConvertSmall",
+      "assemblySHA256": "c3964e736c4249902ac7ea483bc0ede66b601b2d21f99fca4a3a15f9826776a2",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ConvertSmall.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.75554199999988
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ShiftLongInteger",
+      "assemblySHA256": "f968eab1ce19b7f3539044108c13bf1dcf50bfce83e032fbdbe6d673cbd2c2d5",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ShiftLongInteger.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.925209
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ShiftNativeNative",
+      "assemblySHA256": "16e234c38dfdbbbefbf736d1401a81ac6de08b893c06ee40cfa779077aa96f3e",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ShiftNativeNative.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 83.09187500000007
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ShiftIntegerLong",
+      "assemblySHA256": "6dd2f2053d392c560dbc7a83b44e899f23af01586849073625cc6f32a6920c4d",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/ShiftIntegerLong.dll : Fixture.Program::ShiftIntegerLong(int32, int64)][offset 0x00000002][found Long] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/ShiftIntegerLong.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 81.63858400000026
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "ShiftFloatInteger",
+      "assemblySHA256": "e935ffa818d15d5be3487dfb2b1c110b243e1bb16562b5d8f4b4ddb23b2bd599",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedIntegerType]: [<temporary>/ShiftFloatInteger.dll : Fixture.Program::ShiftFloatInteger(float64, int32)][offset 0x00000002][found Double] Expected I, I4, or I8 on the stack.\n1 Error(s) Verifying <temporary>/ShiftFloatInteger.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 83.32533300000068
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedIntegerType"
+        ]
+      }
+    },
+    {
+      "name": "ShiftIntegerFloat",
+      "assemblySHA256": "8256aa58f3dcf3a423835c12699d55f518c2b66a1fd98203c9bafb23dad48df8",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/ShiftIntegerFloat.dll : Fixture.Program::ShiftIntegerFloat(int32, float64)][offset 0x00000002][found Double] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/ShiftIntegerFloat.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 82.13216699999975
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "CompareIntegerNative",
+      "assemblySHA256": "d8dabe498f7b6b96d604123317a8b1bf997f7e631e915f2fcfa5a1e7efc0811b",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CompareIntegerNative.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 84.11375000000044
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CompareIntegerLong",
+      "assemblySHA256": "e25167a1fc9d7d41a0f10d5ac9dd29d0b667075d080a615fa0ce3b679df750c0",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/CompareIntegerLong.dll : Fixture.Program::CompareIntegerLong(int32, int64)][offset 0x00000002][found Long][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/CompareIntegerLong.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 87.45633400000042
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "CompareLongInteger",
+      "assemblySHA256": "2d3cee18507ad9725c9cee4a3880865321ed748394e0dd6eaa2149693ae49b5b",
+      "normativeAccepted": false,
+      "expectedNative": true,
+      "difference": "ILVerify 10.0.5 accepts this comparison outside ECMA III.1.5 table III.4.",
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CompareLongInteger.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.1702920000007
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CompareFloat",
+      "assemblySHA256": "2369a25e126916f872b4696829737ecd02a811bf8b2e5d68aa421af0687585d7",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CompareFloat.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 83.7270410000001
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CompareObjectEquality",
+      "assemblySHA256": "25a00873ac9ee6dcf7bf7193f010082ed441f06cfc21568382094639fd4ba90e",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CompareObjectEquality.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 83.07604199999969
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CompareObjectOrdering",
+      "assemblySHA256": "79c642f0d318738f25abc0ba10cbb979ba7896436b56c07554c44181ce163805",
+      "normativeAccepted": false,
+      "expectedNative": true,
+      "difference": "ILVerify 10.0.5 accepts this comparison outside ECMA III.1.5 table III.4.",
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CompareObjectOrdering.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 83.72629099999995
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ArgumentRoundtrip",
+      "assemblySHA256": "cb00816740ee00bf7e0a310fee6a0a0f6cb77ec9213968b97593653188b9166c",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ArgumentRoundtrip.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 82.60508300000038
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ArgumentStoreNative",
+      "assemblySHA256": "e5f2ed9c96269af801c7e8abf4973fb9c5a26b7a556dfb5cc62fc252cb697cc8",
+      "normativeAccepted": true,
+      "expectedNative": false,
+      "difference": "ILVerify 10.0.5 rejects int32/native-int assignment permitted by ECMA I.8.7.3 rule 4.",
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/ArgumentStoreNative.dll : Fixture.Program::ArgumentStoreNative(native int)][offset 0x00000001][found Int32][expected Native Int] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/ArgumentStoreNative.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 89.17925000000014
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "LocalRoundtrip",
+      "assemblySHA256": "965859511d5d98730d7ceef2487caf1ebae06b8ebb6392fddafa19ba1c6642a9",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/LocalRoundtrip.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 86.38608399999976
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LocalNativeStoreInteger",
+      "assemblySHA256": "f44a631249563bfc3a31f52da6fb0d7ee2211408886b413e9ca399805a4de0e3",
+      "normativeAccepted": true,
+      "expectedNative": false,
+      "difference": "ILVerify 10.0.5 rejects int32/native-int assignment permitted by ECMA I.8.7.3 rule 4.",
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/LocalNativeStoreInteger.dll : Fixture.Program::LocalNativeStoreInteger(native int)][offset 0x00000001][found Native Int][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/LocalNativeStoreInteger.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 83.47137500000008
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "LocalWrongStore",
+      "assemblySHA256": "f152b42fcefaba6b5089d567e3c2cc754208120e6345fd49dbf21d99171990b8",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/LocalWrongStore.dll : Fixture.Program::LocalWrongStore()][offset 0x00000009][found Double][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/LocalWrongStore.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 84.23466699999972
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "LocalUninitialized",
+      "assemblySHA256": "3bc443d6b0ee72b147f2d7b21d8f93ca6877ddc3ff6775ccae9c8a194d7ba765",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/LocalUninitialized.dll : Fixture.Program::LocalUninitialized()][offset 0x00000000] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/LocalUninitialized.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 81.9824579999995
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "ArgumentAddress",
+      "assemblySHA256": "3d6663203ad301fc0383e58f3e83cbacab7598ff9a7c7f13f5185949e606a0b9",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ArgumentAddress.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.48654199999964
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LocalAddress",
+      "assemblySHA256": "5fa099260da2f39ddc66f667e195320573dff57486e45a9d0b256fa68fe6e20c",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/LocalAddress.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.96300000000065
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "WrongReturn",
+      "assemblySHA256": "efa5236b70acb1ad938831f39a14925ef531d4b52c0ca3ec942f2c58f71c487b",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/WrongReturn.dll : Fixture.Program::WrongReturn()][offset 0x00000001][found Int32][expected Long] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/WrongReturn.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 84.04229200000009
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "NativeReturn",
+      "assemblySHA256": "8f0f773f238bfb9e42d95712687f06707755ff9c47aabed16ba453bea1789d12",
+      "normativeAccepted": true,
+      "expectedNative": false,
+      "difference": "ILVerify 10.0.5 rejects int32/native-int assignment permitted by ECMA I.8.7.3 rule 4.",
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/NativeReturn.dll : Fixture.Program::NativeReturn()][offset 0x00000001][found Int32][expected Native Int] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/NativeReturn.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 81.1919170000001
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "Constants",
+      "assemblySHA256": "aef1726312ab220d9662eba266652002421a0f110d6ff40faaa9760c0a3f7751",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Constants.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 78.33658399999968
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Diamond",
+      "assemblySHA256": "96dbe2c0bde4611706d7c4bf655cb4a7c07de20476bed31acd0290057aea0622",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Diamond.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 82.13554199999999
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "MixedJoin",
+      "assemblySHA256": "0c64d4b64dd90153e51d73d95cfa9671736cdca9198881d5e920aedab8015451",
+      "normativeAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [PathStackUnexpected]: [<temporary>/MixedJoin.dll : Fixture.Program::MixedJoin()][offset 0x00000006][found Int32][expected Double] Non-compatible types on stack depending on path.\n1 Error(s) Verifying <temporary>/MixedJoin.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 82.3760000000002
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "PathStackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "NativeJoin",
+      "assemblySHA256": "aaaf02c717b608e2014b1a27d3cd8f38d6eae5b5edff42931cb7911a0cfd3784",
+      "normativeAccepted": true,
+      "expectedNative": false,
+      "difference": "ILVerify 10.0.5 requires identical incoming kinds before its join; ECMA verifier assignment admits int32/native-int.",
+      "verify": {
+        "stdout": "[IL]: Error [PathStackUnexpected]: [<temporary>/NativeJoin.dll : Fixture.Program::NativeJoin()][offset 0x00000007][found Int32][expected Native Int] Non-compatible types on stack depending on path.\n1 Error(s) Verifying <temporary>/NativeJoin.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 83.00558300000012
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "PathStackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "Loop",
+      "assemblySHA256": "ea4f1f2352ccc0b5599686a3a841c2f6dfcdfe3cc347b206c61f3256e745fcbd",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Loop.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 83.1025410000002
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Switch",
+      "assemblySHA256": "cca589f89e9391f8206de760d2377539fe3001a055fe2b43f28733177dd40331",
+      "normativeAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Switch.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 82.8125
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    }
+  ]
+}

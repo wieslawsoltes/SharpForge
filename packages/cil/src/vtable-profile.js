@@ -1,39 +1,34 @@
 import {CilError} from './binary.js';
-import {callSignatureKey} from './call-profile.js';
 
-/** Materialize aliases once. Dispatch thereafter indexes an immutable target vector. */
+/** Resolve aliases in O(slots + aliases), retaining the existing declaration identities. */
 export function indexDispatchTable(table, resolveSlot) {
   const slotIndexes = new Map();
   const targets = [];
+  const resolved = new Map();
+  const active = new Set();
+  for (const initial of new Set([...table.slots.keys(), ...table.aliases.keys()])) {
+    const path = [];
+    let slot = initial;
+    while (table.aliases.has(slot) && !resolved.has(slot)) {
+      if (active.has(slot)) throw new CilError('Cyclic MethodImpl slot mapping');
+      active.add(slot);
+      path.push(slot);
+      slot = table.aliases.get(slot);
+    }
+    const target = resolved.has(slot) ? resolved.get(slot) : resolveSlot(table, slot);
+    resolved.set(slot, target);
+    for (const alias of path) {
+      resolved.set(alias, target);
+      active.delete(alias);
+    }
+    slotIndexes.set(initial, targets.length);
+    targets.push(target);
+  }
   const declarationsByToken = new Map();
-  const externalSlots = new Map();
-  for (const declaration of table.declarations.values()) {
-    let index = slotIndexes.get(declaration.slot);
-    if (index === undefined) {
-      index = targets.length;
-      slotIndexes.set(declaration.slot, index);
-      targets.push(resolveSlot(table, declaration.slot));
-    }
-    if (declaration.external) {
-      let methods = externalSlots.get(declaration.owner);
-      if (!methods) externalSlots.set(declaration.owner, methods = new Map());
-      let signatures = methods.get(declaration.name);
-      if (!signatures) methods.set(declaration.name, signatures = new Map());
-      signatures.set(callSignatureKey(declaration.signature), index);
-    } else {
-      let owners = declarationsByToken.get(declaration.token);
-      if (!owners) declarationsByToken.set(declaration.token, owners = new Map());
-      owners.set(declaration.owner, index);
-    }
+  for (const declaration of table.declarationDetails.values()) {
+    let owners = declarationsByToken.get(declaration.token);
+    if (!owners) declarationsByToken.set(declaration.token, owners = new Map());
+    owners.set(declaration.owner, slotIndexes.get(declaration.slot));
   }
-  return Object.assign(table, {slotIndexes, targets: Object.freeze(targets), declarationsByToken, externalSlots});
-}
-
-/** A null owner is unambiguous only when one closed declaration exists on the receiver. */
-export function declarationSlot(table, token, owner = null) {
-  const owners = table.declarationsByToken.get(token);
-  if (!owners || (owner === null && owners.size !== 1) || (owner !== null && !owners.has(owner))) {
-    throw new CilError('Virtual receiver is incompatible or ambiguous for the method declaration');
-  }
-  return owner === null ? owners.values().next().value : owners.get(owner);
+  return Object.assign(table, {slotIndexes, targets: Object.freeze(targets), declarationsByToken});
 }

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f19a4e328e8c5855da9e",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct S<T>\n{\n    T x;\n\n    static void Goo()\n    {\n        x.x = 1;\n    }\n}",
+  "sourceSHA256": "c6feb301afabffa608b260f3374cac26c6a430880a32d40eeda5c9057645aa72",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "Bug9870",
+    "offset": 22656
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0120",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,9): error CS0120: An object reference is required for the non-static field, method, or property 'S<T>.x'\n                //         x.x = 1;\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"x\").WithArguments(\"S<T>.x\")\n                ",
+  "unsupported": []
+}

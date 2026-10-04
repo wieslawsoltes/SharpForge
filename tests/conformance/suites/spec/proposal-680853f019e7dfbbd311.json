@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-680853f019e7dfbbd311",
+  "kind": "spec",
+  "sourceText": "Expr Simplify(Expr e)\n{\n  switch (e) {\n    case Mult(Const(0), *): return Const(0);\n    case Mult(*, Const(0)): return Const(0);\n    case Mult(Const(1), var x): return Simplify(x);\n    case Mult(var x, Const(1)): return Simplify(x);\n    case Mult(Const(var l), Const(var r)): return Const(l*r);\n    case Add(Const(0), var x): return Simplify(x);\n    case Add(var x, Const(0)): return Simplify(x);\n    case Add(Const(var l), Const(var r)): return Const(l+r);\n    case Neg(Const(var k)): return Const(-k);\n    default: return e;\n  }\n}",
+  "sourceSHA256": "5525b636c6d554122a54666024495e9d9bcc1ed1b25b7e72b3ba1d4c4452045c",
+  "target": "library",
+  "featureId": "csharp-7-0-pattern-matching",
+  "langVersion": "7.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.0/pattern-matching.md",
+    "sha256": "35006167fb2be5d0587fbc69a197155609a68160b199a4fbb9d87f72e1b46b53",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/pattern-matching.md",
+    "license": "NOASSERTION",
+    "offset": 19828
+  }
+}

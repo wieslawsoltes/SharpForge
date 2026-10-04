@@ -115,11 +115,9 @@ the sealed baseline and shared structure while retaining their own observations;
 they do not relabel another platform's results. Native diagnostics retain their
 complete text and are sorted because Roslyn can reorder independent warnings.
 
-Ordinary PRs and main pushes do not launch native or browser inventory jobs.
-Manual dispatch and matching PRs carrying `full-ci` retain the full six-job
-native/Chromium qualification. Adding the label is an explicit trigger;
-PR-number concurrency cancels superseded runs. No successful core-only PR check
-claims native or browser inventory qualification.
+Only manual dispatch launches the native/browser inventory workflow. Its six cells
+run serially across job families and matrices. Core-only PR/main or central full-ci
+checks do not claim this specialized qualification. See [the schedule](../serial-validation.md).
 
 The inherited planning snapshot contains duplicate work IDs `SF-A01-T28` and
 `SF-A02-T18`. The shared rollup correctly refuses that snapshot; this inventory does

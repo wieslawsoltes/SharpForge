@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d5a0a718275d2f04ab0a",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    unsafe static void Test()\n    {\n        int* a = & M();\n        int* b = & M1().Alice;\n\n        int* a1 = & P;\n        int* b2 = & P1.Alice;\n\n        fixed(int* c = & M())\n        {\n        }\n\n        fixed(int* d = & M1().Alice)\n        {\n        }\n\n        fixed(int* c = & P)\n        {\n        }\n\n        fixed(int* d = & P1.Alice)\n        {\n        }\n    }\n\n    static ref readonly int M() => throw null;\n    static ref readonly (int Alice, int Bob) M1() => throw null;\n    static ref readonly int P => throw null;\n    static ref readonly (int Alice, int Bob) P1 => throw null;\n\n}\n",
+  "sourceSHA256": "e32cb677766a9f990cb60393ed385c555aa5b559dba9621c12c812d2ae32ae5b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "sha256": "87f31f30239082ac067728f573ca1d7b0ba9ae37f73b80e7f9236b308df7d195",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "license": "MIT",
+    "method": "ReadonlyReturnCannotTakePtr",
+    "offset": 19767
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, new[] { ValueTupleRef, SystemRuntimeFacadeRef }, options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0212",
+        "severity": "error"
+      },
+      {
+        "code": "CS0212",
+        "severity": "error"
+      },
+      {
+        "code": "CS0212",
+        "severity": "error"
+      },
+      {
+        "code": "CS0212",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,18): error CS0212: You can only take the address of an unfixed expression inside of a fixed statement initializer\n                //         int* a = & M();\n                Diagnostic(ErrorCode.ERR_FixedNeeded, \"& M()\").WithLocation(6, 18),\n                // (7,18): error CS0212: You can only take the address of an unfixed expression inside of a fixed statement initializer\n                //         int* b = & M1().Alice;\n                Diagnostic(ErrorCode.ERR_FixedNeeded, \"& M1().Alice\").WithLocation(7, 18),\n                // (9,19): error CS0212: You can only take the address of an unfixed expression inside of a fixed statement initializer\n                //         int* a1 = & P;\n                Diagnostic(ErrorCode.ERR_FixedNeeded, \"& P\").WithLocation(9, 19),\n                // (10,19): error CS0212: You can only take the address of an unfixed expression inside of a fixed statement initializer\n                //         int* b2 = & P1.Alice;\n                Diagnostic(ErrorCode.ERR_FixedNeeded, \"& P1.Alice\").WithLocation(10, 19)\n            ",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

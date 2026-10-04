@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-3df85a986633f8b2458c",
+  "kind": "spec",
+  "sourceText": "static readonly ref Vector3 M1() => . . .\n\nstatic readonly ref Vector3 M1_Trace()\n{\n    // OK\n    ref readonly var r1 = ref M1();\n\n    // Not valid. Need an LValue\n    ref readonly Vector3 r2 = ref default(Vector3);\n\n    // Not valid. r1 is readonly.\n    Mutate(ref r1);\n\n    // OK.\n    Print(in r1);\n\n    // OK.\n    return ref r1;\n}",
+  "sourceSHA256": "c4aca3dfc1b1db540362572f4c70bca5015720e03c92b194bfa4c5cb47054806",
+  "target": "library",
+  "featureId": "csharp-7-2-in-parameters-and-readonly-references",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/readonly-ref.md",
+    "sha256": "d859c5f6e0e030570288248c429a08d0e4b8d5c0eecd6bf9042317e99198122b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+    "license": "NOASSERTION",
+    "offset": 28452
+  }
+}

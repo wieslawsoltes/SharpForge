@@ -1,0 +1,5 @@
+{
+  "checked-operators/a-checked-context-selects-the-checked-operator": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "checked-operators/checked-operators-in-csharp-10": ["diagnostics", "warnings"],
+  "checked-operators/declaration-rules": ["diagnostics", "warnings"]
+}

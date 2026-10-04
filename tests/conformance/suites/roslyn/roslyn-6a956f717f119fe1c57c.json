@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6a956f717f119fe1c57c",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace ValidWithoutSuffix\n{\n    public class Description : System.Attribute\n    {\n        public Description(string name) { }\n    }\n}\n\nnamespace InvalidWithoutSuffix\n{\n    public class Description\n    {\n        public Description(string name) { }\n    }\n}\n\nnamespace TestNamespace_10\n{\n    using ValidWithoutSuffix;\n    using InvalidWithoutSuffix;\n\n    [Description(null)]\n    public class Test { public static void Main() {} }\n}\n",
+  "sourceSHA256": "38d935a7cb1b85f1d9e2cc76f301648e199d1e8eeb302d1c3e708809a35d3a24",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AmbiguousAttributeErrors_10",
+    "offset": 285123
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0104",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (23,6): error CS0104: 'Description' is an ambiguous reference between 'InvalidWithoutSuffix.Description' and 'ValidWithoutSuffix.Description'\n                //     [Description(null)]\n                Diagnostic(ErrorCode.ERR_AmbigContext, \"Description\").WithArguments(\"Description\", \"InvalidWithoutSuffix.Description\", \"ValidWithoutSuffix.Description\")",
+  "unsupported": []
+}

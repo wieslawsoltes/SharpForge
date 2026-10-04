@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5a5fdf16df6ec9303a08",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class C \n{            \n    public void F()\n    {\n        ref int[] a = ref {1,2,3};\n        Console.WriteLine(a[0]);\n\n        ref var b = ref {4, 5, 6};\n        Console.WriteLine(b[0]);\n\n        ref object c = ref {7,8,9};\n        Console.WriteLine(c);\n    }        \n}\n",
+  "sourceSHA256": "a3af3eaa59096202f1b4ff5137fd8681c07d3cb1c85fd759aad23bacd8697a1c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefLocalTests.cs",
+    "sha256": "71f20094d8395168a5d8f8cd8a1597366ab80ab701c4cbbb76991cef9d1c0517",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefLocalTests.cs",
+    "license": "MIT",
+    "method": "Regression17395",
+    "offset": 95161
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1510",
+        "severity": "error"
+      },
+      {
+        "code": "CS0820",
+        "severity": "error"
+      },
+      {
+        "code": "CS0622",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,27): error CS1510: A ref or out value must be an assignable variable\n                //         ref int[] a = ref {1,2,3};\n                Diagnostic(ErrorCode.ERR_RefLvalueExpected, \"{1,2,3}\"),\n                // (11,17): error CS0820: Cannot initialize an implicitly-typed variable with an array initializer\n                //         ref var b = ref {4, 5, 6};\n                Diagnostic(ErrorCode.ERR_ImplicitlyTypedVariableAssignedArrayInitializer, \"b = ref {4, 5, 6}\").WithLocation(11, 17),\n                // (14,28): error CS0622: Can only use array initializer expressions to assign to array types. Try using a new expression instead.\n                //         ref object c = ref {7,8,9};\n                Diagnostic(ErrorCode.ERR_ArrayInitToNonArrayType, \"{7,8,9}\").WithLocation(14, 28)\n            ",
+  "unsupported": []
+}

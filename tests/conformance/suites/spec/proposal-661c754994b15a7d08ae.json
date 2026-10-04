@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-661c754994b15a7d08ae",
+  "kind": "spec",
+  "sourceText": "partial class C\n{\n    partial C(int x, string y);\n    partial event Action<int, string> MyEvent;\n}\n\npartial class C\n{\n    partial C(int x, string y) { }\n    partial event Action<int, string> MyEvent\n    {\n        add { }\n        remove { }\n    }\n}",
+  "sourceSHA256": "e67a104af0c32d56f48118f5fd4d6f5e79ce51a91655bde62fc3272cc21e820b",
+  "target": "library",
+  "featureId": "csharp-14-0-partial-events-and-constructors",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/partial-events-and-constructors.md",
+    "sha256": "104e69ae2f93be87d2915774c1afbffb4f14f5e05a045df83370bbc01fd486b4",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/partial-events-and-constructors.md",
+    "license": "NOASSERTION",
+    "offset": 379
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-3664e327d2fcd2829d36",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass A\n{\n    public int P\n    {\n        get => 123;\n    }\n}\n\nclass B : A\n{\n    public new int get_P() => 456;\n\n    public new void set_P(int value)\n    {\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        B b = new B();\n        A a = b;\n        Console.WriteLine(a.P);\n        Console.WriteLine(b.P);\n        Console.WriteLine(b.get_P());\n    }\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0109",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0109",
+        "severity": "warning"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "d4dafb29e7badebcb56eb30921b777c3685d373587e7e2ab028ab76fd4eb5444",
+  "originalSource": "class A\n{\n    public int P\n    {\n        get => 123;\n    }\n}\n\nclass B : A\n{\n    public new int get_P() => 456;\n\n    public new void set_P(int value)\n    {\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        B b = new B();\n        A a = b;\n        Console.WriteLine(a.P);\n        Console.WriteLine(b.P);\n        Console.WriteLine(b.get_P());\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "PropertyReservedSignatures",
+    "expectedWarnings": [
+      "CS0109",
+      "CS0109"
+    ],
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "PropertyReservedSignatures",
+    "offsetInUnquotedMarkdown": 72781
+  }
+}

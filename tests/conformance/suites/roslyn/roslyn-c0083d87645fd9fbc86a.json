@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c0083d87645fd9fbc86a",
+  "kind": "diagnostics",
+  "sourceText": "\nclass B\n{\n}\nstatic class Extension\n{\n    public static void Main(this B x, string[] args)\n    { }\n}\n",
+  "sourceSHA256": "2fd9d4fc5874f7ff17c2917e54a3d4aeb25d0f1f67d689c50fed8e5bdeb96c31",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "MainAsExtensionMethod",
+    "offset": 40044
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0028",
+        "severity": "warning"
+      },
+      {
+        "code": "CS5001",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "// (8,24): warning CS0028: 'Extension.Main(B, string[])' has the wrong signature to be an entry point\n                                                                                                                    //     public static void Main(this B x, string[] args)\n                Diagnostic(ErrorCode.WRN_InvalidMainSig, \"Main\").WithArguments(\"Extension.Main(B, string[])\"),\n                // error CS5001: Program does not contain a static 'Main' method suitable for an entry point\n                Diagnostic(ErrorCode.ERR_NoEntryPoint)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

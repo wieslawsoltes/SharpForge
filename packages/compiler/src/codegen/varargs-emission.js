@@ -1,4 +1,6 @@
-import {Op} from '@sharpforge/bytecode';
+import {
+  Op
+} from '@sharpforge/bytecode';
 
 export function emitVarargsExpression(emitter, node) {
   if (node.kind !== 'VarargsOperation') return false;

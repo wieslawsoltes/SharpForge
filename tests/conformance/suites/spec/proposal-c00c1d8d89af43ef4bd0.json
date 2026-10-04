@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-c00c1d8d89af43ef4bd0",
+  "kind": "spec",
+  "sourceText": "void M(int x, int y) { }\nvoid M<T>(T y, int x) { }\n\nvoid M2()\n{\n    M(3, 4);\n    M(y: 3, x: 4); // Invokes M(int, int)\n    M(y: 3, 4); // Invokes M<T>(T, int)\n}",
+  "sourceSHA256": "52a3ab56f6bc59127ecae56d732ef11a3ea11c267cbb3914ebe015df1cdacc87",
+  "target": "library",
+  "featureId": "csharp-7-2-non-trailing-named-arguments",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/non-trailing-named-arguments.md",
+    "sha256": "3ae5349c9be454d4548de620ac41e3e042bb9e5202bca3cd383b3add71883ab0",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/non-trailing-named-arguments.md",
+    "license": "NOASSERTION",
+    "offset": 2915
+  }
+}

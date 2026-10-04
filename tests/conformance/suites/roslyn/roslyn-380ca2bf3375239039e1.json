@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-380ca2bf3375239039e1",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class A\n{\n    public virtual event Action E { add { } remove { } }\n    public virtual int P { get; set; }\n    public virtual void M() { }\n}\n\npublic class B : A\n{\n    [Obsolete]\n    public override event Action E { add { } remove { } }\n    [Obsolete]\n    public override int P { get; set; }\n    [Obsolete]\n    public override void M() { }\n}\n\npublic class C : B\n{\n    public override event Action E { add { } remove { } }\n    public override int P { get; set; }\n    public override void M() { }\n}\n\nclass Test\n{\n    void M(A a, B b, C c)\n    {\n        a.E += null;\n        a.P++;\n        a.M();\n\n        b.E += null;\n        b.P++;\n        b.M();\n\n        c.E += null;\n        c.P++;\n        c.M();\n    }\n}\n",
+  "sourceSHA256": "a18ad846e831610d478452eba69ef6b2cf48b2965972aead2ec2c58596756cf2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ObsoleteOnVirtual_OnDerived",
+    "offset": 296206
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0809",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0809",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0809",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (16,25): warning CS0809: Obsolete member 'B.P' overrides non-obsolete member 'A.P'\n                //     public override int P { get; set; }\n                Diagnostic(ErrorCode.WRN_ObsoleteOverridingNonObsolete, \"P\").WithArguments(\"B.P\", \"A.P\"),\n                // (18,26): warning CS0809: Obsolete member 'B.M()' overrides non-obsolete member 'A.M()'\n                //     public override void M() { }\n                Diagnostic(ErrorCode.WRN_ObsoleteOverridingNonObsolete, \"M\").WithArguments(\"B.M()\", \"A.M()\"),\n                // (14,34): warning CS0809: Obsolete member 'B.E' overrides non-obsolete member 'A.E'\n                //     public override event Action E { add { } remove { } }\n                Diagnostic(ErrorCode.WRN_ObsoleteOverridingNonObsolete, \"E\").WithArguments(\"B.E\", \"A.E\")",
+  "unsupported": []
+}

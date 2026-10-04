@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-25d9e80e1c95e287b762",
+  "kind": "diagnostics",
+  "sourceText": "namespace N\n{\n  partial class C<T1>\n  {\n    partial void M(int x1);\n    internal int P { get; private set; }\n    int F = 12;\n    void N<T2>(int y = 12) { F = F + 1; }\n  }\n  partial class C<T1>\n  {\n    partial void M(int x2) {}\n  }\n}",
+  "sourceSHA256": "20eed082fa7cfa87033d1664c811ad09822059da13994f1c420c5648be6813a8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/CompilationEventTests.cs",
+    "sha256": "c4af72bf58a46a7afa494bbe6a33792e5ccc6d5303fb1370c123612e7d351ec3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/CompilationEventTests.cs",
+    "license": "MIT",
+    "method": "TestQueuedSymbolsAndGetUsedAssemblyReferences",
+    "offset": 5689
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8826",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,18): warning CS8826: Partial method declarations 'void C<T1>.M(int x1)' and 'void C<T1>.M(int x2)' have signature differences.\n                //     partial void M(int x2) {}\n                Diagnostic(ErrorCode.WRN_PartialMethodTypeDifference, \"M\").WithArguments(\"void C<T1>.M(int x1)\", \"void C<T1>.M(int x2)\").WithLocation(12, 18)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

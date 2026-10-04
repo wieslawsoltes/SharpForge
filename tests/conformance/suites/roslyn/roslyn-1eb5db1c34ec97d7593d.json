@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1eb5db1c34ec97d7593d",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    static bool P1(double d) => d is double.NaN;\n    static bool P2(float f) => f is float.NaN;\n    static bool P3(double d) => d is 3.14d;\n    static bool P4(float f) => f is 3.14f;\n    static bool P5(object o)\n    {\n        switch (o)\n        {\n            case double.NaN: return true;\n            case float.NaN: return true;\n            case 3.14d: return true;\n            case 3.14f: return true;\n            default: return false;\n        }\n    }\n    public static void Main(string[] args)\n    {\n        Console.Write(P1(double.NaN));\n        Console.Write(P1(1.0));\n        Console.Write(P2(float.NaN));\n        Console.Write(P2(1.0f));\n        Console.Write(P3(3.14));\n        Console.Write(P3(double.NaN));\n        Console.Write(P4(3.14f));\n        Console.Write(P4(float.NaN));\n        Console.Write(P5(double.NaN));\n        Console.Write(P5(0.0d));\n        Console.Write(P5(float.NaN));\n        Console.Write(P5(0.0f));\n        Console.Write(P5(3.14d));\n        Console.Write(P5(125));\n        Console.Write(P5(3.14f));\n        Console.Write(P5(1.0f));\n    }\n}",
+  "sourceSHA256": "5ede6b2670cfb628ff2fc0c6af756d40fbd8c5910649529e3604540617d9743b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "DoublePattern01",
+    "offset": 16687
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

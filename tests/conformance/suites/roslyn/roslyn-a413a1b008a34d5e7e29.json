@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a413a1b008a34d5e7e29",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public static void Main()\n    {\n        System.Console.Write(Compare((1, 2), (1, 2)));\n        System.Console.Write(Compare((1, 2), (10, 20)));\n    }\n    public static bool Compare((decimal, decimal) t1, (decimal, decimal) t2)\n    {\n        return t1 == t2;\n    }\n}\n",
+  "sourceSHA256": "f9cb029ce58fbc85b3f7cb236c96f7fdbba0e10dcefef18366bd268f16cf2894",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestOnTupleOfDecimals",
+    "offset": 162370
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

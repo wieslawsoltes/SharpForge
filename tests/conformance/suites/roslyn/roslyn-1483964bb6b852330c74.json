@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1483964bb6b852330c74",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    static void F(A<nint, nuint> a)\n    {\n        B.F(a);\n        B.F0(a);\n        B.F1(a);\n        B.F2(a);\n        B.F3(a);\n    }\n}",
+  "sourceSHA256": "5257b7b004d949a295bae958bf25c4d7c9c383c987b29be5f74a431c164050d6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NativeInteger.cs",
+    "sha256": "ba6cbd3462b4f24e7b1edcedb260b4b6046e0b9b58ff785f93c1b090d324064a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NativeInteger.cs",
+    "license": "MIT",
+    "method": "Metadata_TooFewAndTooManyTransformFlags",
+    "offset": 27255
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source1, new[] { ref0 }, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0570",
+        "severity": "error"
+      },
+      {
+        "code": "CS0570",
+        "severity": "error"
+      },
+      {
+        "code": "CS0570",
+        "severity": "error"
+      },
+      {
+        "code": "CS0570",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,11): error CS0570: 'B.F(?)' is not supported by the language\n                //         B.F(a);\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"F\").WithArguments(\"B.F(?)\").WithLocation(5, 11),\n                // (6,11): error CS0570: 'B.F0(?)' is not supported by the language\n                //         B.F0(a);\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"F0\").WithArguments(\"B.F0(?)\").WithLocation(6, 11),\n                // (7,11): error CS0570: 'B.F1(?)' is not supported by the language\n                //         B.F1(a);\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"F1\").WithArguments(\"B.F1(?)\").WithLocation(7, 11),\n                // (9,11): error CS0570: 'B.F3(?)' is not supported by the language\n                //         B.F3(a);\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"F3\").WithArguments(\"B.F3(?)\").WithLocation(9, 11)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

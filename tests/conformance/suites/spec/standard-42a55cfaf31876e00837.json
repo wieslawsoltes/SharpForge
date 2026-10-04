@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-42a55cfaf31876e00837",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nstruct KeyValuePair\n{\n    string key;\n    string value;\n\n    public KeyValuePair(string key, string value)\n    {\n        if (key == null || value == null)\n        {\n            throw new ArgumentException();\n        }\n\n        this.key = key;\n        this.value = value;\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [
+      "CS0649"
+    ]
+  },
+  "sourceSHA256": "debd7f56e9e9c4d9e28cd771dd73373b2071e82f89ca5549e6bf3152ae8cb599",
+  "originalSource": "struct KeyValuePair\n{\n    string key;\n    string value;\n\n    public KeyValuePair(string key, string value)\n    {\n        if (key == null || value == null)\n        {\n            throw new ArgumentException();\n        }\n\n        this.key = key;\n        this.value = value;\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "DefaultValues2",
+    "ignoredWarnings": [
+      "CS0649"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-structs",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/structs.md",
+    "sha256": "53de26bf64c1dda02bf6edd00cbb816c260511bdd95d302f759970333c1ea663",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/structs.md",
+    "license": "MIT",
+    "example": "DefaultValues2",
+    "offsetInUnquotedMarkdown": 17894
+  }
+}

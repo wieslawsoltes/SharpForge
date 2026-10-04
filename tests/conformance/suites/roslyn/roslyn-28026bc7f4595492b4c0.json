@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-28026bc7f4595492b4c0",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\npublic class C\n{\n    public static void Main()\n    {\n        foreach (var i in default)\n        {\n            Console.Write(i);\n        }\n    }\n    public sealed class Enumerator\n    {\n        public int Current { get; private set; }\n        public bool MoveNext() => Current++ != 3;\n    }\n}\npublic static class Extensions\n{\n    public static C.Enumerator GetEnumerator(this object self) => new C.Enumerator();\n}",
+  "sourceSHA256": "941ca6dca43b1ae34760cc76286951da3d428c6eea31e97fd5494330dde1ed96",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "sha256": "a8916f977bf7fcd541545be2f5e4bdc8faf297975fa81f0c7ad4833e9a24ce17",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "license": "MIT",
+    "method": "TestForeachDefaultLiteral",
+    "offset": 67049
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8716",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (7,27): error CS8716: There is no target type for the default literal.\n                    //         foreach (var i in default)\n                    Diagnostic(ErrorCode.ERR_DefaultLiteralNoTargetType, \"default\").WithLocation(7, 27)\n                    ",
+  "unsupported": []
+}

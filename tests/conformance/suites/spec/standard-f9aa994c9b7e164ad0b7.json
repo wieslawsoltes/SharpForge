@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-f9aa994c9b7e164ad0b7",
+  "kind": "spec",
+  "sourceText": "class Outer<T>\n{\n    class Inner<U>\n    {\n        public static void F(T t, U u) {...}\n    }\n\n    static void F(T t)\n    {\n        Outer<T>.Inner<string>.F(t, \"abc\");    // These two statements have\n        Inner<string>.F(t, \"abc\");             // the same effect\n        Outer<int>.Inner<string>.F(3, \"abc\");  // This type is different\n        Outer.Inner<string>.F(t, \"abc\");       // Error, Outer needs type arg\n    }\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0305",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "931c60b3eab69dfa02bb03386b1841cafe6f0c48014a625689234723e2abd3e7",
+  "originalSource": "class Outer<T>\n{\n    class Inner<U>\n    {\n        public static void F(T t, U u) {...}\n    }\n\n    static void F(T t)\n    {\n        Outer<T>.Inner<string>.F(t, \"abc\");    // These two statements have\n        Inner<string>.F(t, \"abc\");             // the same effect\n        Outer<int>.Inner<string>.F(3, \"abc\");  // This type is different\n        Outer.Inner<string>.F(t, \"abc\");       // Error, Outer needs type arg\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "NestedTypesInGenericClasses1",
+    "replaceEllipsis": true,
+    "expectedErrors": [
+      "CS0305"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "NestedTypesInGenericClasses1",
+    "offsetInUnquotedMarkdown": 69273
+  }
+}

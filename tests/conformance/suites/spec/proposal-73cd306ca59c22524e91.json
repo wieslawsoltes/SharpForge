@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-73cd306ca59c22524e91",
+  "kind": "spec",
+  "sourceText": "nint x = 3;\n_ = nint.Equals(x, 3);",
+  "sourceSHA256": "ed0ca6ba93f4c55f72d33c6710587ffe47f06d03b08e38bee5f59b39ca251dbf",
+  "target": "library",
+  "featureId": "csharp-9-0-native-sized-integers",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/native-integers.md",
+    "sha256": "d0b0b6f2a77880d7ea7898939dd15177557aacb592d26800e709b4f7749c9496",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/native-integers.md",
+    "license": "NOASSERTION",
+    "offset": 590
+  }
+}

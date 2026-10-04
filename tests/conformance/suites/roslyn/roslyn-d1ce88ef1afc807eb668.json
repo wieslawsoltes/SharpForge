@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d1ce88ef1afc807eb668",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    // warning CS0169: The field 'C.f' is never used\n    private readonly int f;\n}",
+  "sourceSHA256": "e89ca2f94267ef168f759c565ae4dc309a9c932f1159f6e628d695d83441926d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticSuppressorTests.cs",
+    "sha256": "2d1674a241e37ca2731874ceafe86e8d6649456d14d548f1232b85883a39a3d8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticSuppressorTests.cs",
+    "license": "MIT",
+    "method": "TestSuppression_CompilerSemanticWarning",
+    "offset": 7054
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,26): warning CS0169: The field 'C.f' is never used\n                //     private readonly int f;\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"f\", isSuppressed: false).WithArguments(\"C.f\").WithLocation(5, 26)",
+  "unsupported": []
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-328bf577363c91fde072",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace System.Collections.Generic\n{\n    public interface IAsyncEnumerable<out T>\n    {\n        IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken token = default);\n    }\n\n    public interface IAsyncEnumerator<out T>\n    {\n        System.Threading.Tasks.Task<bool> MoveNextAsync();\n    }\n}\nclass C\n{\n    async System.Threading.Tasks.Task M(System.Collections.Generic.IAsyncEnumerable<int> collection)\n    {\n        await foreach (var i in collection)\n        {\n        }\n    }\n}",
+  "sourceSHA256": "df14b28efe980fa4b5bacd449f1c9dfec5828c33fd74b52c856f7314563f5c27",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestWithIncompleteInterface2",
+    "offset": 93591
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0117",
+        "severity": "error"
+      },
+      {
+        "code": "CS8412",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (18,33): error CS0117: 'IAsyncEnumerator<int>' does not contain a definition for 'Current'\n                //         await foreach (var i in collection)\n                Diagnostic(ErrorCode.ERR_NoSuchMember, \"collection\").WithArguments(\"System.Collections.Generic.IAsyncEnumerator<int>\", \"Current\").WithLocation(18, 33),\n                // (18,33): error CS8412: Async foreach requires that the return type 'IAsyncEnumerator<int>' of 'IAsyncEnumerable<int>.GetAsyncEnumerator(System.Threading.CancellationToken)' must have a suitable public MoveNextAsync method and public Current property\n                //         await foreach (var i in collection)\n                Diagnostic(ErrorCode.ERR_BadGetAsyncEnumerator, \"collection\").WithArguments(\"System.Collections.Generic.IAsyncEnumerator<int>\", \"System.Collections.Generic.IAsyncEnumerable<int>.GetAsyncEnumerator(System.Threading.CancellationToken)\").WithLocation(18, 33)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

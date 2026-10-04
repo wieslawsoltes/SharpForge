@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-056dd835499af931d3e0",
+  "kind": "spec",
+  "sourceText": "public struct S\n{\n    public int X { get => field; set => field = value; }\n    public S() // error: struct fields aren't fully assigned. But caller can only assign 'this.field' by assigning 'this'.\n    {\n    }\n}",
+  "sourceSHA256": "a70a23d9138117bb8e3cd72af6e011f6e762a9455b3f65e05d7859b4a5b86daa",
+  "target": "library",
+  "featureId": "csharp-11-0-auto-default-structs",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/auto-default-structs.md",
+    "sha256": "ef94c71a977016911c9fb1ac490aaf2c63d30ee809982111f21ef945f4dda24a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/auto-default-structs.md",
+    "license": "NOASSERTION",
+    "offset": 1160
+  }
+}

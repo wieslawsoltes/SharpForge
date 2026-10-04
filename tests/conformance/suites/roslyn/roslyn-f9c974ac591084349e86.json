@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f9c974ac591084349e86",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\n#nullable enable\n\npublic class Person {\n    public string? Name { get; }\n}\n\npublic class Student : Person {\n}\n\npublic class C {\n    public void M(Person p) {\n        switch (p) {\n            case { Name: string name }:\n                Console.WriteLine($\"Hey {name}\");\n            break;\n            case Student { Name: var name }:\n                Console.WriteLine($\"Student has name of length { name.Length }!\");\n            break;\n        }\n    }\n}",
+  "sourceSHA256": "23e4fd77e921095544e12710d93c13bfcc0fd6bcc7dffb9af98cfd7408f70173",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "CombiningRedundantPropertyReadsDoesNotChangeNullabilityAnalysis03",
+    "offset": 59206
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8602",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (19,66): warning CS8602: Dereference of a possibly null reference.\n                //                 Console.WriteLine($\"Student has name of length { name.Length }!\");\n                Diagnostic(ErrorCode.WRN_NullReferenceReceiver, \"name\").WithLocation(19, 66)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

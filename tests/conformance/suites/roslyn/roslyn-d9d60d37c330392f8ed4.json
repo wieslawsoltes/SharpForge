@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d9d60d37c330392f8ed4",
+  "kind": "diagnostics",
+  "sourceText": "using System;\npublic class MyEnumerator : IDisposable\n{\n    [Obsolete(\"1\", false)]\n    public bool MoveNext()\n    {\n        return false;\n    }\n\n    [Obsolete(\"2\", false)]\n    public int Current\n    {\n        get { return 0; }\n    }\n\n    [Obsolete(\"3\", false)]\n    public void Dispose()\n    {\n    }\n}\n\nclass Foreachable\n{\n    [Obsolete(\"4\", false)]\n    public MyEnumerator GetEnumerator()\n    {\n        return new MyEnumerator();\n    }\n}\n\nclass Program\n{\n    public static void Main(string[] args)\n    {\n        foreach (var x in new Foreachable())\n        {\n        }\n    }\n}",
+  "sourceSHA256": "646b3ac6d3fdd1c04c580c6938845cabdc86487df7acd6fe9438617e5a5baa05",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteForeachMembers",
+    "offset": 282866
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (35,9): warning CS0618: 'Foreachable.GetEnumerator()' is obsolete: '4'\n                //         foreach (var x in new Foreachable())\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"foreach\").WithArguments(\"Foreachable.GetEnumerator()\", \"4\"),\n                // (35,9): warning CS0618: 'MyEnumerator.MoveNext()' is obsolete: '1'\n                //         foreach (var x in new Foreachable())\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"foreach\").WithArguments(\"MyEnumerator.MoveNext()\", \"1\"),\n                // (35,9): warning CS0618: 'MyEnumerator.Current' is obsolete: '2'\n                //         foreach (var x in new Foreachable())\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"foreach\").WithArguments(\"MyEnumerator.Current\", \"2\")\n            ",
+  "unsupported": []
+}

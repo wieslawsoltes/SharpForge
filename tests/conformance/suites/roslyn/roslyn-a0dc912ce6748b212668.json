@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a0dc912ce6748b212668",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\npublic class C\n{\n    public static void Main()\n    {\n        foreach (var i in (object)null)\n        {\n            Console.Write(i);\n        }\n    }\n}",
+  "sourceSHA256": "fd53a51c9f89ac01e79b34b73e2857f4e538a65571ca6f1d6f21df162ffe1802",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "sha256": "a8916f977bf7fcd541545be2f5e4bdc8faf297975fa81f0c7ad4833e9a24ce17",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "license": "MIT",
+    "method": "TestInvalidForeachOnConstantNullObject",
+    "offset": 60693
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1579",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (7,27): error CS1579: foreach statement cannot operate on variables of type 'object' because 'object' does not contain a public instance or extension definition for 'GetEnumerator'\n                    //         foreach (var i in (object)null)\n                    Diagnostic(ErrorCode.ERR_ForEachMissingMember, \"(object)null\").WithArguments(\"object\", \"GetEnumerator\").WithLocation(7, 27)\n                    ",
+  "unsupported": []
+}

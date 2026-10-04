@@ -1,6 +1,6 @@
-export const snapshotSchemaVersion = 4;
+export const snapshotSchemaVersion = 2;
 
-/** A version mismatch is rejected before execution state can be replaced. */
+/** Reject incompatible execution layouts before replacing any live execution state. */
 export class SnapshotVersionError extends TypeError {
   constructor(engine) {
     super(`Unsupported ${engine} VM snapshot schema version`);

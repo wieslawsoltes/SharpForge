@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-63c8fcc98c4113e11355",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\n[AttributeUsage(AttributeTargets.Class)]\npublic class HelpStringAttribute : Attribute\n{\n    public HelpStringAttribute(string value)\n    {\n        Value = value;\n    }\n\n    public string Value { get; }\n}\n[HelpString(\"Description of Class1\")]\n[HelpString(\"Another description of Class1\")]   // multiple uses not allowed\npublic class Class1 {}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0579",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "2bb6d2980ef86d6881c2a70e68300a4586af1dc214283f59a4d177936b562ff6",
+  "originalSource": "[AttributeUsage(AttributeTargets.Class)]\npublic class HelpStringAttribute : Attribute\n{\n    public HelpStringAttribute(string value)\n    {\n        Value = value;\n    }\n\n    public string Value { get; }\n}\n[HelpString(\"Description of Class1\")]\n[HelpString(\"Another description of Class1\")]   // multiple uses not allowed\npublic class Class1 {}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "AttributeSpecification4",
+    "expectedErrors": [
+      "CS0579"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-attributes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/attributes.md",
+    "sha256": "9ab07c36a912273dd0eb341141ca62153c76e5f32f422e70950477a6b89c5242",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/attributes.md",
+    "license": "MIT",
+    "example": "AttributeSpecification4",
+    "offsetInUnquotedMarkdown": 20008
+  }
+}

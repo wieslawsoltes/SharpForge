@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-43321abed59ed55189a8",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Collections.Generic;\n\nclass C\n{\n    public static void M2()\n    {\n        int a=0, w, x, y, z;\n\n        L1();\n\n        a++;\n        w++;\n        x++;\n        y++;\n        z++;\n\n        IEnumerable<bool> L1()\n        {\n            w = 0;\n            yield return false;\n            x = 0;\n            yield break;\n            y = 0;\n        }\n    }\n}",
+  "sourceSHA256": "33e9976f0c16cadaab7342bf267137e869109bef7a3841b269b7b2eb4f2a93e0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "AssignsInIterator",
+    "offset": 12078
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System.Collections.Generic;\n\nclass C\n{\n    public static void M2()\n    {\n        int a=0, w, x, y, z;\n\n        L1();\n\n        a++;\n        w++;\n        x++;\n        y++;\n        z++;\n\n        IEnumerable<bool> L1()\n        {\n            w = 0;\n            yield return false;\n            x = 0;\n            yield break;\n            y = 0;\n        }\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0162",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (24,13): warning CS0162: Unreachable code detected\n                //             y = 0;\n                Diagnostic(ErrorCode.WRN_UnreachableCode, \"y\").WithLocation(24, 13),\n                // (13,9): error CS0165: Use of unassigned local variable 'w'\n                //         w++;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"w\").WithArguments(\"w\").WithLocation(13, 9),\n                // (14,9): error CS0165: Use of unassigned local variable 'x'\n                //         x++;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(14, 9),\n                // (15,9): error CS0165: Use of unassigned local variable 'y'\n                //         y++;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(15, 9),\n                // (16,9): error CS0165: Use of unassigned local variable 'z'\n                //         z++;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"z\").WithArguments(\"z\").WithLocation(16, 9)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

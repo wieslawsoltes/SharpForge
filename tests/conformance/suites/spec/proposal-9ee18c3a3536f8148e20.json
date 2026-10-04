@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9ee18c3a3536f8148e20",
+  "kind": "spec",
+  "sourceText": "namespace System.Runtime.CompilerServices\n{\n    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]\n    public sealed class RequiresLocationAttribute : Attribute\n    {\n    }\n}",
+  "sourceSHA256": "5869c9bffbd620250fade9c334e9407b471adb73a17fedd7d9df6e2e94284106",
+  "target": "library",
+  "featureId": "csharp-12-0-ref-readonly-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/ref-readonly-parameters.md",
+    "sha256": "a742250323e36f0b81de0743acf0124a6fa60e08c8c2a660eac4da17a8bba683",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/ref-readonly-parameters.md",
+    "license": "NOASSERTION",
+    "offset": 10336
+  }
+}

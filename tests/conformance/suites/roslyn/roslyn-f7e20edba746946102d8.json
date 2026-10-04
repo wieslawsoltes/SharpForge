@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f7e20edba746946102d8",
+  "kind": "diagnostics",
+  "sourceText": "\npublic interface I0<T> { }\npublic interface I1 : I0<(int a, int b)> { }\npublic interface I2 : I0<(int notA, int notB)> { }\npublic interface I3 : I0<(int a, int b)> { }\n\npublic class C : I1, I2 { }\npublic class D : I1, I3 { }\n",
+  "sourceSHA256": "2979ea3bedeec851074bc807389121d3a26d0eb9ad3b7dc763357caa2384cda0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "IndirectInterfaceBasesWithDifferentTupleNames",
+    "offset": 935103
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8140",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,14): error CS8140: 'I0<(int notA, int notB)>' is already listed in the interface list on type 'C' with different tuple element names, as 'I0<(int a, int b)>'.\n                // public class C : I1, I2 { }\n                Diagnostic(ErrorCode.ERR_DuplicateInterfaceWithTupleNamesInBaseList, \"C\").WithArguments(\"I0<(int notA, int notB)>\", \"I0<(int a, int b)>\", \"C\").WithLocation(7, 14)\n                ",
+  "unsupported": []
+}

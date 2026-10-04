@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fe7e95cea28f32a30653",
+  "kind": "diagnostics",
+  "sourceText": "assert(\"UT\");\nassert(\"Z\");\nassert(\"GMT\");\nassert(\"A\");\nassert(\"B\");\nassert(\"C\");\nassert(\"D\");\nassert(\"EDT\");\nassert(\"E\");\nassert(\"EST\");\nassert(\"CDT\");\nassert(\"F\");\nassert(\"CST\");\nassert(\"MDT\");\nassert(\"G\");\nassert(\"MST\");\nassert(\"PDT\");\nassert(\"H\");\nassert(\"PST\");\nassert(\"I\");\nassert(\"K\");\nassert(\"L\");\nassert(\"M\");\nassert(\"N\");\nassert(\"O\");\nassert(\"P\");\nassert(\"Q\");\nassert(\"R\");\nassert(\"S\");\nassert(\"T\");\nassert(\"U\");\nassert(\"V\");\nassert(\"W\");\nassert(\"X\");\nassert(\"Y\");\n\nassert(null, \"default\");\nassert(\"\", \"default\");\nassert(\"other\", \"default\");\nassert(\"3\", \"default\");\nassert(\"AMT\", \"default\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, string expected = null)\n{\n    if (C.M(input) != (expected ?? input))\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static string M(string value)\n    {\n        return value switch\n        {\n            \"UT\" => \"UT\",\n            \"Z\" => \"Z\",\n            \"GMT\" => \"GMT\",\n            \"A\" => \"A\",\n            \"B\" => \"B\",\n            \"C\" => \"C\",\n            \"D\" => \"D\",\n            \"EDT\" => \"EDT\",\n            \"E\" => \"E\",\n            \"EST\" => \"EST\",\n            \"CDT\" => \"CDT\",\n            \"F\" => \"F\",\n            \"CST\" => \"CST\",\n            \"MDT\" => \"MDT\",\n            \"G\" => \"G\",\n            \"MST\" => \"MST\",\n            \"PDT\" => \"PDT\",\n            \"H\" => \"H\",\n            \"PST\" => \"PST\",\n            \"I\" => \"I\",\n            \"K\" => \"K\",\n            \"L\" => \"L\",\n            \"M\" => \"M\",\n            \"N\" => \"N\",\n            \"O\" => \"O\",\n            \"P\" => \"P\",\n            \"Q\" => \"Q\",\n            \"R\" => \"R\",\n            \"S\" => \"S\",\n            \"T\" => \"T\",\n            \"U\" => \"U\",\n            \"V\" => \"V\",\n            \"W\" => \"W\",\n            \"X\" => \"X\",\n            \"Y\" => \"Y\",\n            _ => \"default\"\n        };\n    }\n}",
+  "sourceSHA256": "5bdf8ac2162aa36373155b9e1adb36ead04656c3596b5e42e3728e6ccb616fa5",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "NormalizeTimeZone",
+    "offset": 346821
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

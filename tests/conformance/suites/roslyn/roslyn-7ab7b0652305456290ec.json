@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7ab7b0652305456290ec",
+  "kind": "diagnostics",
+  "sourceText": "\n#nullable enable\n\nstatic class C\n{\n    static void M1()\n    {\n        object x;\n        _ = \"\" ?? $\"{x.ToString()}\"; // unreachable\n        _ = \"\".ToString() ?? $\"{x.ToString()}\"; // 1\n    }\n}\n",
+  "sourceSHA256": "dc6b14e529cbeb0746cd65783ad5326878f5bc5860c5c7de6ffc46de7d326376",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "NullCoalescing_NonNullConstantLeft",
+    "offset": 145706
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,33): error CS0165: Use of unassigned local variable 'x'\n                //         _ = \"\".ToString() ?? $\"{x.ToString()}\"; // 1\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(10, 33)\n                ",
+  "unsupported": []
+}

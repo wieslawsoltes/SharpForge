@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5b91345068a9ff52c9e0",
+  "kind": "diagnostics",
+  "sourceText": "bool b = false;\nL: ;\nif (b)\n{\n    goto L;\n}\nelse\n{\n    b = !b;\n    if (b) goto L;\nL: ;\n}",
+  "sourceSHA256": "eb52f1d27dbbcb0b08e5ad5d1b1e8273b7d46fd118ae12797fac5afe2241cfe1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/GotoTest.cs",
+    "sha256": "182c0d7d83157c6a708cb42175539e3cf571db358532ff37f3ec99521dce2e92",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/GotoTest.cs",
+    "license": "MIT",
+    "method": "DuplicateLabelInScript",
+    "offset": 27929
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "references: new[] { SystemCoreRef }, parseOptions: TestOptions.Script, options: TestOptions.DebugExe)",
+  "options": "(source, references: new[] { SystemCoreRef }, parseOptions: TestOptions.Script, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0158",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,1): error CS0158: The label 'L' shadows another label by the same name in a contained scope\n                // L: ;\n                Diagnostic(ErrorCode.ERR_LabelShadow, \"L\").WithArguments(\"L\").WithLocation(11, 1)",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

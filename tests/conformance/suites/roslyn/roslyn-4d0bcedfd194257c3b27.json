@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4d0bcedfd194257c3b27",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing static TestError;\nusing static TestWarning;\n\n[Obsolete (\"Broken Error Class\", true)]\nstatic class TestError\n{\n    public static void TestErrorFunc()\n    {\n\n    }\n}\n\n[Obsolete (\"Broken Warning Class\", false)]\nstatic class TestWarning\n{\n    public static void TestWarningFunc()\n    {\n\n    }\n}\n\nclass Test\n{\n    public static void Main()\n    {\n        TestErrorFunc();\n        TestWarningFunc();\n    }\n}",
+  "sourceSHA256": "0ef5624c815e926fda18475ed1e5309e0fbed29495b36e21820460a41eb680b8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "UsingStaticDirectiveDoesNotIgnoreObsoleteAttribute_DifferentSeverity",
+    "offset": 477219
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,14): error CS0619: 'TestError' is obsolete: 'Broken Error Class'\n                // using static TestError;\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"TestError\").WithArguments(\"TestError\", \"Broken Error Class\").WithLocation(3, 14),\n                // (4,14): warning CS0618: 'TestWarning' is obsolete: 'Broken Warning Class'\n                // using static TestWarning;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"TestWarning\").WithArguments(\"TestWarning\", \"Broken Warning Class\").WithLocation(4, 14)",
+  "unsupported": []
+}

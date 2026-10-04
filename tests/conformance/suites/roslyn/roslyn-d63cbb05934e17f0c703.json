@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d63cbb05934e17f0c703",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C\n{\n    static void Main()\n    {\n        Exception f;\n\n        try\n        {\n        }\n        catch (Exception e) when ((f = e) != null)\n        {\n        }\n        catch (Exception e) when (f == e)\n        {\n        }\n    }\n}\n",
+  "sourceSHA256": "b1df0b392a9ead2362d9ef8a9184de2e552343ad74b25dca935374a52a7eaef8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "UseDef_ExceptionFilters5",
+    "offset": 238907
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (15,33): error CS0165: Use of unassigned local variable 'f'\n                //         catch (Exception e) when (f == e)\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"f\").WithArguments(\"f\")",
+  "unsupported": []
+}

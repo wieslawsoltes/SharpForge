@@ -1,5 +1,11 @@
-import {ManagedFault} from '../heap.js';
-import {createException, initializeException, exceptionField} from './exception-object.js';
+import {
+  ManagedFault
+} from '../heap.js';
+import {
+  createException,
+  initializeException,
+  exceptionField
+} from './exception-object.js';
 
 const innerListSlot = 5;
 const collectionType = 'System.Collections.ObjectModel.ReadOnlyCollection`1<System.Exception>';
@@ -55,7 +61,10 @@ export function flattenAggregate(vm, reference) {
     if (path.has(item.h)) throw new ManagedFault('InvalidProgramException', 'Cyclic AggregateException graph');
     const nextPath = new Set(path).add(item.h);
     for (const inner of inputItems(vm, aggregateInnerList(vm, item))) {
-      if (vm.heap.get(inner).methodTable.name === 'System.AggregateException') pending.push({reference: inner, path: nextPath});
+      if (vm.heap.get(inner).methodTable.name === 'System.AggregateException') pending.push({
+        reference: inner,
+        path: nextPath
+      });
       else result.push(inner);
     }
     if (pending.length > (vm.options.maxAggregateExceptions ?? 100000)) {
@@ -67,7 +76,9 @@ export function flattenAggregate(vm, reference) {
     const array = vm.heap.allocate('array', 'System.Exception[]', result);
     vm.heap.pins.push(array);
     const flattened = createException(vm, 'System.AggregateException', message);
-    return initializeAggregate(vm, flattened, [message, array], {parameters: ['string', 'System.Exception[]']});
+    return initializeAggregate(vm, flattened, [message, array], {
+      parameters: ['string', 'System.Exception[]']
+    });
   });
 }
 

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-905ace5885f59018b424",
+  "kind": "spec",
+  "sourceText": "static Vector3 v = Vector3.UnitY;\n\nstatic void Main()\n{\n    Test(v);\n}\n\nstatic void Test(in Vector3 v1)\n{\n    Debug.Assert(v1 == Vector3.UnitY);\n    // changes v1 deterministically (no races required)\n    ChangeV();\n    Debug.Assert(v1 == Vector3.UnitX);\n}\n\nstatic void ChangeV()\n{\n    v = Vector3.UnitX;\n}",
+  "sourceSHA256": "d2d42cb6cf1108ceea95531d9362f0749c31257b056b52db09b6702a91ce1c77",
+  "target": "library",
+  "featureId": "csharp-7-2-in-parameters-and-readonly-references",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/readonly-ref.md",
+    "sha256": "d859c5f6e0e030570288248c429a08d0e4b8d5c0eecd6bf9042317e99198122b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+    "license": "NOASSERTION",
+    "offset": 10523
+  }
+}

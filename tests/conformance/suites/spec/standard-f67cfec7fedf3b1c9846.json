@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-f67cfec7fedf3b1c9846",
+  "kind": "spec",
+  "sourceText": "class A\n{\n    public static int X = 1;\n    public static int Y;\n    public static int Z = 100;\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [
+      "CS0649"
+    ]
+  },
+  "sourceSHA256": "69dd319e55dcd38ee6dd85b33f458fb46ae238270bcf5309f4573a8b649a92c7",
+  "originalSource": "class A\n{\n    public static int X = 1;\n    public static int Y;\n    public static int Z = 100;\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "Fields2",
+    "ignoredWarnings": [
+      "CS0649"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "Fields2",
+    "offsetInUnquotedMarkdown": 84907
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-208277de5f3e1a864a08",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Test\n{\n    unsafe static int printAddress(out int* pI)\n    {\n        pI = null;\n        System.Console.WriteLine((ulong)pI);\n        return 1;\n    }\n\n    unsafe static int printAddress1(ref int* pI)\n    {\n        pI = null;\n        System.Console.WriteLine((ulong)pI);\n        return 1;\n    }\n\n    static int Main()\n    {\n        int retval = 0;\n        S s = new S();\n        unsafe\n        {\n            retval = Test.printAddress(out s.i);\n            retval = Test.printAddress1(ref s.i);\n        }\n\n        if (retval == 0)\n            System.Console.WriteLine(\"Failed.\");\n\n        return retval;\n    }\n}\nunsafe struct S\n{\n    public fixed int i[1];\n}\n\n",
+  "sourceSHA256": "61fef4f685c2c48b51711c14894030d145593911902e80d248308c0d99b72878",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "sha256": "424f034ea20a9add3b40a8a1c0094fffc5ef30885511f2c90ae10bd80b976073",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "license": "MIT",
+    "method": "FixedPassByRef",
+    "offset": 298354
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1510",
+        "severity": "error"
+      },
+      {
+        "code": "CS1510",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (24,44): error CS1510: A ref or out argument must be an assignable variable\n                //             retval = Test.printAddress(out s.i);\n                Diagnostic(ErrorCode.ERR_RefLvalueExpected, \"s.i\"),\n                // (25,45): error CS1510: A ref or out argument must be an assignable variable\n                //             retval = Test.printAddress1(ref s.i);\n                Diagnostic(ErrorCode.ERR_RefLvalueExpected, \"s.i\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -90,3 +90,41 @@ test('A02-T54 text + delegate is string concatenation, not delegate combination'
   const source = 'using System; class P { static void Main() { Action a = Main; string s = "x"; string t = s + a; Console.WriteLine(t.Length > 1); } }';
   assert.deepEqual(codesOf(source), []);
 });
+
+test('SF-A02-T54 differences between the parts: CS0761, CS8142, CS0764, CS8663; ref and in are different methods', () => {
+  const inType = (members, kind = 'class') => `partial ${kind} C { ${members} } class Program { static void Main() { } }`;
+  assert.deepEqual(codesOf(inType('partial void A<T>(T x) where T : class; partial void A<T>(T x) where T : struct { }')), ['CS0761:A']);
+  // The order of the constraints and the names of the type parameters do not matter.
+  const reordered = 'partial void B<T>(T x) where T : System.IDisposable, new(); partial void B<U>(U x) where U : System.IDisposable, new() { }';
+  assert.deepEqual(codesOf(inType(reordered)), []);
+  assert.deepEqual(codesOf(inType('partial void E((int a, int b) t); partial void E((int x, int y) t) { }')), ['CS8142:E']);
+  assert.deepEqual(codesOf(inType('partial void K(ref int x); partial void K(in int x) { }')), ['CS0759:K']);
+  assert.deepEqual(codesOf(inType('readonly partial void R(); partial void R() { }', 'struct')), ['CS8663:R']);
+  const unsafeParts = inType('unsafe partial void H(); partial void H() { }');
+  assert.deepEqual(codesOf(unsafeParts, { allowUnsafe: true }), ['CS0764:H']);
+  assert.deepEqual(codesOf(unsafeParts), ['CS0227:H']);
+});
+
+test('SF-A02-T54 CS8826 is a level 6 warning: names and nullable annotations that differ between the parts', () => {
+  const source = (members, prefix = '') => `${prefix}partial class C { ${members} } class Program { static void Main() { } }`;
+  const names = source('partial void D(int first); partial void D(int one) { } partial void J<T>(T x); partial void J<U>(U x) { }');
+  assert.deepEqual(codesOf(names), [], 'not reported at the default warning level');
+  assert.deepEqual(codesOf(names, { warningLevel: 9999 }), ['CS8826:D', 'CS8826:J']);
+  const parts = 'partial void A(string s); partial void A(string? s) { } partial void N(string[] xs); partial void N(string?[] xs) { }';
+  assert.deepEqual(codesOf(source(parts, '#nullable enable\n'), { warningLevel: 9999 }), ['CS8826:A', 'CS8826:N']);
+  const identical = source('partial void Same(int x, string s); partial void Same(int x, string s) { }');
+  assert.deepEqual(codesOf(identical, { warningLevel: 9999 }), []);
+});
+
+test('SF-A02-T54 a call to an unimplemented partial method cannot be in an expression tree (CS0765)', () => {
+  const source =
+    'using System; using System.Linq.Expressions; partial class C { partial void None(); ' +
+    'void Use() { Expression<Action> e = () => None(); } } class Program { static void Main() { } }';
+  assert.deepEqual(codesOf(source), ['CS0765:None()']);
+});
+
+test('SF-A02-T54 the parts may differ in dynamic against object: one method, CS8826 at warning level 6', () => {
+  const source = 'partial class C { partial void F(object o); partial void F(dynamic o) { } } class Program { static void Main() { } }';
+  assert.deepEqual(codesOf(source), []);
+  assert.deepEqual(codesOf(source, { warningLevel: 9999 }), ['CS8826:F']);
+});

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-6e22b8b3ca4619c0a798",
+  "kind": "spec",
+  "sourceText": "class Base\n{\n    internal virtual Span<int> M1(scoped Span<int> s1, params Span<int> s2) => throw null!;\n}\n\nclass Derived : Base\n{\n    internal override Span<int> M1(Span<int> s1, // Error, missing `scoped` on override\n                                   Span<int> s2  // Proposal: Error: parameter must include either `params` or `scoped`\n                                  ) => throw null!;\n}",
+  "sourceSHA256": "d92a550908534805fe35fd1a746efe946e8c38840b0f3c37ad5a99af48ee5117",
+  "target": "library",
+  "featureId": "csharp-13-0-params-collections",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/params-collections.md",
+    "sha256": "a92891ae4d2c1757b25061047db228f8e7d77f103c67991c9791dab9add7190e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/params-collections.md",
+    "license": "NOASSERTION",
+    "offset": 27859
+  }
+}

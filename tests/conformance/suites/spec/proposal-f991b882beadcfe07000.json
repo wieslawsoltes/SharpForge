@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f991b882beadcfe07000",
+  "kind": "spec",
+  "sourceText": "using System;\n\nM1<object[]>([\"0\"]); // prints\nM1<string[]>([\"1\"]); // prints\n\nvoid M1<T>(T t)\n{\n    if (t is object[] r) Console.WriteLine(r[0]); // ok\n}\n\nvoid M2<T>(T t) where T : allows ref struct\n{\n    if (t is ReadOnlySpan<object> r) Console.WriteLine(r[0]); // error\n}",
+  "sourceSHA256": "2ccf5102537901585c0348886bd32cc94f4c2bbf5634afa106ce6bdf5bfa4900",
+  "target": "library",
+  "featureId": "csharp-14-0-first-class-span-types",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/first-class-span-types.md",
+    "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+    "license": "NOASSERTION",
+    "offset": 10216
+  }
+}

@@ -1,6 +1,6 @@
 {
   "throw-expressions/an-async-method-returns-a-task-like-type": ["diagnostics", "warnings"],
-  "throw-expressions/conditional-coalesce-and-expression-bodies": ["diagnostics", "warnings", "bytecode", "cil"],
+  "throw-expressions/conditional-coalesce-and-expression-bodies": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "throw-expressions/contexts-and-operand-types": ["diagnostics", "warnings"],
   "throw-expressions/throw-expressions-in-6": ["diagnostics", "warnings"]
 }

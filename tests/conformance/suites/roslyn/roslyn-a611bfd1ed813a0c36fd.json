@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a611bfd1ed813a0c36fd",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace System\n{\n    public struct ValueTuple<T1, T2>\n    {\n        public T1 Item1;\n        public T2 Item2;\n\n        public ValueTuple(T1 item1, T2 item2)\n        {\n            this.Item1 = item1;\n            this.Item2 = item2;\n        }\n\n        public override string ToString()\n        {\n            return '{' + Item1?.ToString() + \", \" + Item2?.ToString() + '}';\n        }\n    }\n}",
+  "sourceSHA256": "7b06cd41697ddf3b70c0d29747bb8519ccbe628c9e8d09f88d05d252ff6d13f0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "sha256": "32f83728594c49ce50d234006777d1af71d49e0e2cd7cc5c8982c5b2ac7fa714",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "license": "MIT",
+    "method": "SynthesizeTupleElementNamesAttributeBasedOnInterfacesToEmit_IndirectInterfaces",
+    "offset": 8995
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(valueTuple_source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6fad5f303312494ef24c",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C<S, T>\n{\n    static void Main() { }\n}\n\nclass C<T> \n{\n    static void Main() { }\n}\n",
+  "sourceSHA256": "b11ceaf971050ad0e8aec2e745ad0348509846eb0b97701fc8d01501a2e4902a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "ExplicitMainTypeName_GenericMultipleArities",
+    "offset": 21072
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe.WithMainTypeName(\"C\"))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1556",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,7): error CS1556: 'C<T>' specified for Main method must be a non-generic class, record, struct, or interface\n                Diagnostic(ErrorCode.ERR_MainClassNotClass, \"C\").WithArguments(\"C<T>\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

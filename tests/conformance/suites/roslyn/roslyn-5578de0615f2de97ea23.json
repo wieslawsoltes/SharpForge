@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5578de0615f2de97ea23",
+  "kind": "diagnostics",
+  "sourceText": "#pragma warning disable CS0169 // The field is never used\nstruct A<T>\n{\n    A<A<T>> x;\n}\n\nstruct B<T>\n{\n    A<B<T>> x;\n}\n\nstruct C<T>\n{\n    D<T> x;\n}\nstruct D<T>\n{\n    C<D<T>> x;\n}\n",
+  "sourceSHA256": "0407b9ecc0d5468ac1d5db3d65b4393aca629dfde9e4d45fea54a6189e226671",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "sha256": "0d6911ec2e8d7c03c9c20562c37c9d1959883735b8a2e5c0af7af46861c1379a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "license": "MIT",
+    "method": "InstanceMemberExplosion_01",
+    "offset": 6689
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0523",
+        "severity": "error"
+      },
+      {
+        "code": "CS0523",
+        "severity": "error"
+      },
+      {
+        "code": "CS0523",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,13): error CS0523: Struct member 'A<T>.x' of type 'A<A<T>>' causes a cycle in the struct layout\n                //     A<A<T>> x;\n                Diagnostic(ErrorCode.ERR_StructLayoutCycle, \"x\").WithArguments(\"A<T>.x\", \"A<A<T>>\").WithLocation(4, 13),\n                // (14,10): error CS0523: Struct member 'C<T>.x' of type 'D<T>' causes a cycle in the struct layout\n                //     D<T> x;\n                Diagnostic(ErrorCode.ERR_StructLayoutCycle, \"x\").WithArguments(\"C<T>.x\", \"D<T>\").WithLocation(14, 10),\n                // (18,13): error CS0523: Struct member 'D<T>.x' of type 'C<D<T>>' causes a cycle in the struct layout\n                //     C<D<T>> x;\n                Diagnostic(ErrorCode.ERR_StructLayoutCycle, \"x\").WithArguments(\"D<T>.x\", \"C<D<T>>\").WithLocation(18, 13)\n                ",
+  "unsupported": []
+}

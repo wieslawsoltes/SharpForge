@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-12659c267b4bdf165c8a",
+  "kind": "spec",
+  "sourceText": "\nvar x1 = new C1 { C2 = { [GetString()] = { A = 2, B = 4 } } };\n\n/* Lowering:\n__c1 = new C1();\nstring argTemp = GetString();\n__c1.C2[argTemp][1] = 2;\n__c1.C2[argTemp][3] = 4;\n\nPrints:\nGetString\nget_C2\nget_C2\n*/\n\nstring GetString()\n{\n    Console.WriteLine(\"GetString\");\n    return \"\";\n}\n\nclass C1\n{\n    private C2 c2 = new C2();\n    public C2 C2 { get { Console.WriteLine(\"get_C2\"); return c2; } set { } }\n}\n\nclass C2\n{\n    public C3 this[string s]\n    {\n        get => new C3();\n        set { }\n    }\n}\n\nclass C3\n{\n    public int A\n    {\n        get => 0;\n        set { }\n    }\n    public int B\n    {\n        get => 0;\n        set { }\n    }\n}",
+  "sourceSHA256": "42cc5a4109b111a774c4c7aa0a6bc348280c0a0adde1e32e0496a09fe7b8b073",
+  "target": "library",
+  "featureId": "csharp-10-0-interpolated-string-handlers",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/improved-interpolated-strings.md",
+    "sha256": "a9232653b4497eae44487404a0c446af954667024beea4be2ad9a642b257b02c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-interpolated-strings.md",
+    "license": "NOASSERTION",
+    "offset": 20302
+  }
+}

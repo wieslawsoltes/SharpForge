@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5c0e93d6a64d2ae1b221",
+  "kind": "diagnostics",
+  "sourceText": "var c = new C();\nc[\"test\"] = new();\n_ = c[\"test\"];",
+  "sourceSHA256": "c045114bfed17010fe4f71807abf8c7079f075fc94e696877f66ae78dbb8d1d8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/OverloadResolutionPriorityTests.cs",
+    "sha256": "b7cd10d8113409d1540951461d416c8c03a4ed3ec777d51b4cb13d685c96d7a8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/OverloadResolutionPriorityTests.cs",
+    "license": "MIT",
+    "method": "ThroughRetargeting_Indexers",
+    "offset": 26887
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: [comp2.ToMetadataReference(), comp1_2.ToMetadataReference()], targetFramework: TargetFramework.Standard)",
+  "options": "(source3, references: [comp2.ToMetadataReference(), comp1_2.ToMetadataReference()], targetFramework: TargetFramework.Standard)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

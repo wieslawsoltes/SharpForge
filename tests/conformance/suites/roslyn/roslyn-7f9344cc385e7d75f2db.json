@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7f9344cc385e7d75f2db",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\npublic class A : Attribute { }\n\n[class: A]\n[struct: A]\n[interface: A]\n[delegate: A]\n[enum: A]\n[add: A]\n[remove: A]\n[get: A]\n[set: A]\nclass C\n{\n}",
+  "sourceSHA256": "1798a4a8b927a688d66ebdbbb5b6e6dbd7ef9d1f61e3f3192305dfb978b99aa6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Locations.cs",
+    "sha256": "3dbd3d9ee7d2dee3cdc924e1c4cf0ede1fb1f8fe46564b3dc0cc69c717a92256",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Locations.cs",
+    "license": "MIT",
+    "method": "UnrecognizedLocations",
+    "offset": 85419
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0658",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0658",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0658",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0658",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0658",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0658",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0658",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0658",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0658",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,2): warning CS0658: 'class' is not a recognized attribute location. Valid attribute locations for this declaration are 'type'. All attributes in this block will be ignored.\n                Diagnostic(ErrorCode.WRN_InvalidAttributeLocation, \"class\").WithArguments(\"class\", \"type\"),\n                // (8,2): warning CS0658: 'struct' is not a recognized attribute location. Valid attribute locations for this declaration are 'type'. All attributes in this block will be ignored.\n                Diagnostic(ErrorCode.WRN_InvalidAttributeLocation, \"struct\").WithArguments(\"struct\", \"type\"),\n                // (9,2): warning CS0658: 'interface' is not a recognized attribute location. Valid attribute locations for this declaration are 'type'. All attributes in this block will be ignored.\n                Diagnostic(ErrorCode.WRN_InvalidAttributeLocation, \"interface\").WithArguments(\"interface\", \"type\"),\n                // (10,2): warning CS0658: 'delegate' is not a recognized attribute location. Valid attribute locations for this declaration are 'type'. All attributes in this block will be ignored.\n                Diagnostic(ErrorCode.WRN_InvalidAttributeLocation, \"delegate\").WithArguments(\"delegate\", \"type\"),\n                // (11,2): warning CS0658: 'enum' is not a recognized attribute location. Valid attribute locations for this declaration are 'type'. All attributes in this block will be ignored.\n                Diagnostic(ErrorCode.WRN_InvalidAttributeLocation, \"enum\").WithArguments(\"enum\", \"type\"),\n                // (12,2): warning CS0658: 'add' is not a recognized attribute location. Valid attribute locations for this declaration are 'type'. All attributes in this block will be ignored.\n                Diagnostic(ErrorCode.WRN_InvalidAttributeLocation, \"add\").WithArguments(\"add\", \"type\"),\n                // (13,2): warning CS0658: 'remove' is not a recognized attribute location. Valid attribute locations for this declaration are 'type'. All attributes in this block will be ignored.\n                Diagnostic(ErrorCode.WRN_InvalidAttributeLocation, \"remove\").WithArguments(\"remove\", \"type\"),\n                // (14,2): warning CS0658: 'get' is not a recognized attribute location. Valid attribute locations for this declaration are 'type'. All attributes in this block will be ignored.\n                Diagnostic(ErrorCode.WRN_InvalidAttributeLocation, \"get\").WithArguments(\"get\", \"type\"),\n                // (15,2): warning CS0658: 'set' is not a recognized attribute location. Valid attribute locations for this declaration are 'type'. All attributes in this block will be ignored.\n                Diagnostic(ErrorCode.WRN_InvalidAttributeLocation, \"set\").WithArguments(\"set\", \"type\")",
+  "unsupported": []
+}

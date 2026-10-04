@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-96d1d9d021ee9518791f",
+  "kind": "spec",
+  "sourceText": "ref struct RS\n{\n    public RS(ref int x) { } // assumed to be able to capture 'x'\n\n    static void M0(RS input, out RS output) => output = input;\n\n    static void M1()\n    {\n        var i = 0;\n        var rs1 = new RS(ref i); // safe-context of 'rs1' is function-member\n        M0(rs1, out var rs2); // safe-context of 'rs2' is function-member\n    }\n\n    static void M2(RS rs1)\n    {\n        M0(rs1, out var rs2); // safe-context of 'rs2' is function-member\n    }\n\n    static void M3(RS rs1)\n    {\n        M0(rs1, out scoped var rs2); // 'scoped' modifier forces safe-context of 'rs2' to the current local context (function-member or narrower).\n    }\n}\n",
+  "sourceSHA256": "f5c5c3b02e102532eeb908c7d9afdd4e5f8dfc19e4a8aa47037feda27d3ed98f",
+  "target": "library",
+  "featureId": "csharp-11-0-ref-fields",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/low-level-struct-improvements.md",
+    "sha256": "48173c4aaa1ffb3cbd8f7602f52fbf0b38a57f1e4fc50a725ba5305f30a5ff54",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/low-level-struct-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 113685
+  }
+}

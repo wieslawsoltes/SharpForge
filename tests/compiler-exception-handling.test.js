@@ -1,7 +1,7 @@
 /**
  * SF-A02-T44: catch clauses of any exception type. The Roslyn-pinned cases are in
  * packages/compiler/test/differential/fixtures/exception-handling.js; these tests cover the exception class
- * hierarchy the binder knows, executable typed handlers and explicit constructor profile boundaries.
+ * hierarchy the binder knows and what code generation says about the handlers the runtime cannot run yet.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -103,25 +103,25 @@ test('SF-A02-T44 catch (Exception), general catch, rethrow and finally execute o
   assert.deepEqual(lines, ['caught first', 'finally', 'general']);
 });
 
-test('SF-A02-T44 typed handlers preserve their CLI type and execute through the source/CIL back ends', () => {
+test('SF-A02-T44 a typed handler is valid C# the runtime cannot run: one SF2200 on the caught type', () => {
   const source = program(`
     static void Main() {
       try { Console.WriteLine(1); }
       catch (FormatException) { Console.WriteLine(2); }
     }`);
-  const result = compile(source);
-  assert.equal(result.success, true, JSON.stringify(result.diagnostics));
-  const handlers = result.image.methods.flatMap(method => method.handlers ?? []);
-  assert(handlers.some(handler => handler.type === 'System.FormatException'));
-  assert.deepEqual(linesOf(source), ['1']);
+  assert.deepEqual(codes(source), []);
+  const reported = notExecutable(source);
+  assert.match(reported.message, /a catch clause for 'System\.FormatException' \(the runtime catches System\.Exception only\)/);
+  assert.equal(source.slice(reported.start, reported.start + reported.length), 'FormatException');
 });
 
-test('SF-A02-T44 derived exception construction preserves its type and message', () => {
+test('SF-A02-T44 creating another exception class is reported, not turned into System.Exception', () => {
   const source = program(`
     static void Main() {
       try { throw new InvalidOperationException("state"); }
       catch (Exception e) { Console.WriteLine(e.Message); }
     }`);
   assert.deepEqual(codes(source), []);
-  assert.deepEqual(linesOf(source), ['state']);
+  const reported = notExecutable(source);
+  assert.match(reported.message, /exception class 'System\.InvalidOperationException' \(the runtime creates System\.Exception only\)/);
 });

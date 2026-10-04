@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-12882a8909d03f9a3b4d",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Base<T> { }\npublic class Derived : Base<(int a, int b)>\n{\n    public static explicit operator Base<(int, int)>(Derived x)\n    {\n        return null;\n    }\n    public static explicit operator Derived(Base<(int, int)> x)\n    {\n        return null;\n    }\n}\n",
+  "sourceSHA256": "f9157df9ae17203f2718bbd3412839cb721be0c7338256c705a41fbebce317f8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ConversionToBase",
+    "offset": 938140
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0553",
+        "severity": "error"
+      },
+      {
+        "code": "CS0553",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,37): error CS0553: 'Derived.explicit operator Derived(Base<(int, int)>)': user-defined conversions to or from a base type are not allowed\n                //     public static explicit operator Derived(Base<(int, int)> x)\n                Diagnostic(ErrorCode.ERR_ConversionWithBase, \"Derived\").WithArguments(\"Derived.explicit operator Derived(Base<(int, int)>)\").WithLocation(9, 37),\n                // (5,37): error CS0553: 'Derived.explicit operator Base<(int, int)>(Derived)': user-defined conversions to or from a base type are not allowed\n                //     public static explicit operator Base<(int, int)>(Derived x)\n                Diagnostic(ErrorCode.ERR_ConversionWithBase, \"Base<(int, int)>\").WithArguments(\"Derived.explicit operator Base<(int, int)>(Derived)\").WithLocation(5, 37)\n                ",
+  "unsupported": []
+}

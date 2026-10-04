@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-30c9ba258c1e2ec59b4a",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n.assembly 'blt'{}\n\n.namespace blt_\n{\n.class public auto ansi _blt {\n.method public\tstatic int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.locals\t\t(class [mscorlib]System.String)\n.entrypoint\n\n\tldc.i4\t\t0x44444444\n\tldc.i4\t\t0x55555555\n\tblt\t\t\tnext0\n\tbr\t\t\tfail\nnext0:\n\tldc.i4\t\t0x66666666\n\tldc.i4\t\t0x66666666\n\tblt\t\t\tfail\n\tbr\t\t\tnext1\nnext1:\n        ldc.i4          0x55555555\n        ldc.i4          0x44444444\n        blt                     fail\n        br                      next2\nnext2:\n\tldc.r4\t\tfloat32(0xBF800000)\n\tldc.r4\t\tfloat32(0x3F800000)\n\tblt\t\t\tnext3\n\tbr\t\t\tfail\nnext3:\n\tldc.r4\t\tfloat32(0x3F800000)\n\tldc.r4\t\tfloat32(0x3F800000)\n\tblt\t\t\tfail\n\tbr\t\t\tnext4\nnext4:\n\tldc.r4\t\tfloat32(0x3F800000)\n\tldc.r4\t\tfloat32(0xBF800000)\n\tblt\t\t\tfail\n\tbr\t\t\tnext5\nnext5:\n\tldc.r4\t\tfloat32(0xBF800000)\n\tldc.r4\t\tfloat32(0x3F800000)\n\tblt.un\t\tnext6\n\tbr\t\t\tfail\nnext6:\n\tldc.r4\t\tfloat32(0x3F800000)\n\tldc.r4\t\tfloat32(0x3F800000)\n\tblt.un\t\tfail\n\tbr\t\t\tnext7\nnext7:\n\tldc.r4\t\tfloat32(0x3F800000)\n\tldc.r4\t\tfloat32(0xBF800000)\n\tblt.un\t\tfail\n\tbr\t\t\tnext8\nnext8:\n\tldc.r4\t\tfloat32(0x7FC00000)\n\tldc.r4\t\tfloat32(0x7FC00000)\n\tblt.un\t\tnext9\n\tbr\t\t\tfail\nnext9:\n\tldc.r4\t\tfloat32(0x7FC00000)\n\tldc.r4\t\tfloat32(0x3F800000)\n\tblt.un\t\tnext10\n\tbr\t\t\tfail\nnext10:\n        ldc.r4          float32(0xBF800000)\n        ldc.r4          float32(0x7FC00000)\n        blt.un          pass\n        br                      fail\n\npass:\n\tldc.i4 100\n\tbr\t\t\tend\nfail:\n\tldc.i4\t\t0x0\n\tbr\t\t\tend\nend:\n\tret\n}\n}\n\n}\n",
+  "unsupported": [
+    "Upstream IL preprocessor/legacy assembly rewrite required"
+  ],
+  "language": "il",
+  "opcodeFamilies": [
+    "arithmetic",
+    "branches",
+    "calls"
+  ],
+  "sourceSHA256": "753900859b1f31ea7e6654e74b744841266a4b4571939b62891c3893c382fef9",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n.assembly 'blt'{}\n\n.namespace blt_\n{\n.class public auto ansi _blt {\n.method public\tstatic int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.locals\t\t(class [mscorlib]System.String)\n.entrypoint\n\n\tldc.i4\t\t0x44444444\n\tldc.i4\t\t0x55555555\n\tblt\t\t\tnext0\n\tbr\t\t\tfail\nnext0:\n\tldc.i4\t\t0x66666666\n\tldc.i4\t\t0x66666666\n\tblt\t\t\tfail\n\tbr\t\t\tnext1\nnext1:\n        ldc.i4          0x55555555\n        ldc.i4          0x44444444\n        blt                     fail\n        br                      next2\nnext2:\n\tldc.r4\t\tfloat32(0xBF800000)\n\tldc.r4\t\tfloat32(0x3F800000)\n\tblt\t\t\tnext3\n\tbr\t\t\tfail\nnext3:\n\tldc.r4\t\tfloat32(0x3F800000)\n\tldc.r4\t\tfloat32(0x3F800000)\n\tblt\t\t\tfail\n\tbr\t\t\tnext4\nnext4:\n\tldc.r4\t\tfloat32(0x3F800000)\n\tldc.r4\t\tfloat32(0xBF800000)\n\tblt\t\t\tfail\n\tbr\t\t\tnext5\nnext5:\n\tldc.r4\t\tfloat32(0xBF800000)\n\tldc.r4\t\tfloat32(0x3F800000)\n\tblt.un\t\tnext6\n\tbr\t\t\tfail\nnext6:\n\tldc.r4\t\tfloat32(0x3F800000)\n\tldc.r4\t\tfloat32(0x3F800000)\n\tblt.un\t\tfail\n\tbr\t\t\tnext7\nnext7:\n\tldc.r4\t\tfloat32(0x3F800000)\n\tldc.r4\t\tfloat32(0xBF800000)\n\tblt.un\t\tfail\n\tbr\t\t\tnext8\nnext8:\n\tldc.r4\t\tfloat32(0x7FC00000)\n\tldc.r4\t\tfloat32(0x7FC00000)\n\tblt.un\t\tnext9\n\tbr\t\t\tfail\nnext9:\n\tldc.r4\t\tfloat32(0x7FC00000)\n\tldc.r4\t\tfloat32(0x3F800000)\n\tblt.un\t\tnext10\n\tbr\t\t\tfail\nnext10:\n        ldc.r4          float32(0xBF800000)\n        ldc.r4          float32(0x7FC00000)\n        blt.un          pass\n        br                      fail\n\npass:\n\tldc.i4 100\n\tbr\t\t\tend\nfail:\n\tldc.i4\t\t0x0\n\tbr\t\t\tend\nend:\n\tret\n}\n}\n\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/IL_Conformance/Old/Base/blt.il",
+    "sha256": "753900859b1f31ea7e6654e74b744841266a4b4571939b62891c3893c382fef9",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/IL_Conformance/Old/Base/blt.il",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Unmodified upstream IL. Native ILAsm required; no IL simulation."
+}

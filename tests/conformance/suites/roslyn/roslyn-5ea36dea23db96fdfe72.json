@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5ea36dea23db96fdfe72",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic static class C \n{\n    static void Main<T>() { Console.WriteLine(1); }\n\n    public static class CC<T>\n    {\n        static void Main() { Console.WriteLine(2); }\n    }\n}\n\npublic static class D<T>\n{\n    static void Main() { Console.WriteLine(3); }\n\n    public static class DD\n    {\n        static void Main() { Console.WriteLine(4); }\n    }\n}\n\npublic static class E\n{\n    static void Main() { Console.WriteLine(5); }\n}\n",
+  "sourceSHA256": "faa499f70dd6fd9d7b522455b7963dca56fd17bfd43eaa17211798d89aba8b93",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "GenericMainMethods",
+    "offset": 16422
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(cs, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0402",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0402",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0402",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0402",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,16): warning CS0402: 'C.Main<T>()': an entry point cannot be generic or in a generic type\n                Diagnostic(ErrorCode.WRN_MainCantBeGeneric, \"Main\").WithArguments(\"C.Main<T>()\"),\n                // (8,20): warning CS0402: 'C.CC<T>.Main()': an entry point cannot be generic or in a generic type\n                Diagnostic(ErrorCode.WRN_MainCantBeGeneric, \"Main\").WithArguments(\"C.CC<T>.Main()\"),\n                // (14,16): warning CS0402: 'D<T>.Main()': an entry point cannot be generic or in a generic type\n                Diagnostic(ErrorCode.WRN_MainCantBeGeneric, \"Main\").WithArguments(\"D<T>.Main()\"),\n                // (18,20): warning CS0402: 'D<T>.DD.Main()': an entry point cannot be generic or in a generic type\n                Diagnostic(ErrorCode.WRN_MainCantBeGeneric, \"Main\").WithArguments(\"D<T>.DD.Main()\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

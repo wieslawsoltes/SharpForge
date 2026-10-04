@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-bb5b364d69f833bd6b3b",
+  "kind": "spec",
+  "sourceText": "// Possible alternative. This was not implemented.\nabstract class Cloneable\n{\n    public abstract Cloneable Clone();\n}\n\nclass Digit : Cloneable\n{\n    public override Cloneable Clone()\n    {\n        return this.Clone();\n    }\n\n    public new Digit Clone() // Error: 'Digit' already defines a member called 'Clone' with the same parameter types\n    {\n        return this;\n    }\n}",
+  "sourceSHA256": "feea870dd904b7f614a7d4dc081a479979cd4be37a40adeda75f18eea97dd13c",
+  "target": "library",
+  "featureId": "csharp-9-0-covariant-return-types",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/covariant-returns.md",
+    "sha256": "d4cd5b8a1abcb4485c77a7e933a062927432e2087f2e961945a0c53e654d5cfa",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/covariant-returns.md",
+    "license": "NOASSERTION",
+    "offset": 14646
+  }
+}

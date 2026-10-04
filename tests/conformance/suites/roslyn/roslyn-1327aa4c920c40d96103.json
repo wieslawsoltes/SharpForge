@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1327aa4c920c40d96103",
+  "kind": "diagnostics",
+  "sourceText": "using System.Runtime.CompilerServices;\nusing System.Runtime.InteropServices;\ninterface I\n{\n    void M1([DefaultParameterValue(typeof(C)), DecimalConstantAttribute(0, 0, 0, 0, 0)] decimal o);\n    void M2([DefaultParameterValue(0), DecimalConstantAttribute(0, 0, 0, 0, typeof(C))] decimal o);\n    void M3([DefaultParameterValue(0), DecimalConstantAttribute(0, 0, 0, 0, 0)] decimal o);\n}",
+  "sourceSHA256": "2dfc5f1185e968bc7b4a8dae575a845f70acde71a45b2899c5f5e41d93b29692",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/OptionalArgumentsTests.cs",
+    "sha256": "933f05d101ca784a87ab174caeae4001bd61d9080a2e77fbe0c932b8ed9319e9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/OptionalArgumentsTests.cs",
+    "license": "MIT",
+    "method": "TestDuplicateConstantAttributesDifferentValues_BadValue",
+    "offset": 19224
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8017",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS8017",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,40): error CS8017: The parameter has multiple distinct default values.\n                //     void M3([DefaultParameterValue(0), DecimalConstantAttribute(0, 0, 0, 0, 0)] decimal o);\n                Diagnostic(ErrorCode.ERR_ParamDefaultValueDiffersFromAttribute, \"DecimalConstantAttribute(0, 0, 0, 0, 0)\").WithLocation(7, 40),\n                // (6,84): error CS0246: The type or namespace name 'C' could not be found (are you missing a using directive or an assembly reference?)\n                //     void M2([DefaultParameterValue(0), DecimalConstantAttribute(0, 0, 0, 0, typeof(C))] decimal o);\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"C\").WithArguments(\"C\").WithLocation(6, 84),\n                // (5,43): error CS0246: The type or namespace name 'C' could not be found (are you missing a using directive or an assembly reference?)\n                //     void M1([DefaultParameterValue(typeof(C)), DecimalConstantAttribute(0, 0, 0, 0, 0)] decimal o);\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"C\").WithArguments(\"C\").WithLocation(5, 43),\n                // (5,48): error CS8017: The parameter has multiple distinct default values.\n                //     void M1([DefaultParameterValue(typeof(C)), DecimalConstantAttribute(0, 0, 0, 0, 0)] decimal o);\n                Diagnostic(ErrorCode.ERR_ParamDefaultValueDiffersFromAttribute, \"DecimalConstantAttribute(0, 0, 0, 0, 0)\").WithLocation(5, 48)\n                ",
+  "unsupported": []
+}

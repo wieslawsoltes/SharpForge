@@ -3,12 +3,17 @@
  * methods, `var (a, b)`, and list patterns `[p1, .., pn]` with a slice.
  *
  * Bound shapes (added to the pattern node by binder/body/patterns.js):
- *   positional  `{kind: 'tuple'|'method', type, method, isExtension, parts: [{type, pattern, syntax}]}`
- *   ListPattern `{inputType, elementType, patterns, sliceIndex, local}`; a `SlicePattern {pattern}` sits at `sliceIndex`
+ *   positional  `{kind: 'tuple'|'method'|'ituple', type, method, isExtension, parts: [{type, pattern, syntax}]}`
+ *   ListPattern `{inputType, elementType, patterns, sliceIndex, shape, local}`; a `SlicePattern {pattern}` sits at
+ *               `sliceIndex`, and `shape` says how the value is counted, indexed and sliced (list-pattern-shape.js)
  */
-import { ArrayTypeSymbol, ErrorTypeSymbol } from '../../symbols/types.js';
+import {DiagnosticId} from '../../diagnostics/codes.js';
+import { ErrorTypeSymbol } from '../../symbols/types.js';
+import { stripNullable } from '../../conversions/nullable.js';
+import { listPatternShapeOf } from '../list-pattern-shape.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { deconstructionOf } from '../deconstruction.js';
+import { typeTestOutcome } from '../../conversions/reference.js';
 import { checkSwitchArms } from '../../flow/pattern-exhaustiveness.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -24,15 +29,19 @@ export const StructuralPatternBinding = Base =>
     positionalClause(clause, type) {
       const subpatterns = clause.subpatterns,
         bindAll = types => subpatterns.map((sub, index) => ({ type: types[index], pattern: this.pattern(sub.pattern, types[index], null), syntax: sub }));
-      // `object` is matched through ITuple at run time: that cannot be decided statically.
-      if (!isUsable(type) || type.specialType === 'System_Object') {
-        if (isUsable(type)) this.incomplete = this.d.incomplete = true;
+      if (!isUsable(type)) {
         bindAll(subpatterns.map(() => unknown));
         return null;
       }
+      // `object` is matched through ITuple at run time: a tuple of that many elements, each tested as an object. The
+      // image back ends have no ITuple, so for them the pattern stays outside the profile.
+      if (type.specialType === 'System_Object') {
+        this.incomplete = this.d.incomplete = true;
+        return { kind: 'ituple', type, method: null, isExtension: false, parts: bindAll(subpatterns.map(() => this.core.object)) };
+      }
       const split = deconstructionOf(this, type, subpatterns.length, this.node('DeconstructionValue', clause, type, {}));
       if (split.error) {
-        if (split.isArity) this.report(clause, 'CS8502', [this.display(type), type.typeArguments.length, subpatterns.length]);
+        if (split.isArity) this.report(clause, DiagnosticId.CS8502, [this.display(type), type.typeArguments.length, subpatterns.length]);
         else for (const problem of split.error) this.report(clause, problem.code, problem.args);
         bindAll(subpatterns.map(() => unknown));
         return null;
@@ -46,26 +55,32 @@ export const StructuralPatternBinding = Base =>
       const positional = this.positionalClause(clause, type);
       return { kind: 'RecursivePattern', syntax, inputType: type, properties: [], positional, hasPositional: true, hasErrors: !positional };
     }
-    /** `[p1, p2, .., pn]` over an array (any other countable, indexable type is left to the framework epics). */
+    /** `[p1, p2, .., pn]` over an array, a string or a type with a count and an `int` indexer (list-pattern-shape.js). */
     listPattern(syntax, inputType) {
-      const isArray = inputType instanceof ArrayTypeSymbol && inputType.rank === 1,
-        elementType = isArray ? inputType.elementType : unknown;
-      if (isUsable(inputType) && !isArray) {
+      // Like a property pattern, a list pattern matches the value of a nullable input.
+      const listType = isUsable(inputType) ? stripNullable(inputType) : inputType,
+        shape = isUsable(listType) ? listPatternShapeOf(listType, this.core, this.c.containingType) : null,
+        elementType = shape?.elementType ?? unknown;
+      if (isUsable(listType) && !shape) {
         // A simple type is known to have neither a length nor an indexer; other types may get them from the framework.
-        if (numericKind(inputType) || inputType.specialType === 'System_Boolean') {
-          this.report(syntax, 'CS8985', [this.display(inputType)]);
-          this.report(syntax, 'CS0021', [this.display(inputType)]);
+        if (numericKind(listType) || listType.specialType === 'System_Boolean') {
+          this.report(syntax, DiagnosticId.CS8985, [this.display(listType)]);
+          this.report(syntax, DiagnosticId.CS0021, [this.display(listType)]);
         } else this.incomplete = this.d.incomplete = true;
       }
+      // The image back ends read list patterns from arrays only: any other shape stays outside their profile.
+      if (shape && shape.kind !== 'array') this.incomplete = this.d.incomplete = true;
       let sliceIndex = -1;
       const patterns = syntax.patterns.map((item, index) => {
         if (item.kind !== 'SlicePattern') return this.pattern(item, elementType, null);
-        if (sliceIndex >= 0) this.report(item, 'CS8980');
+        if (sliceIndex >= 0) this.report(item, DiagnosticId.CS8980);
         else sliceIndex = index;
-        return { kind: 'SlicePattern', syntax: item, pattern: item.pattern ? this.pattern(item.pattern, isArray ? inputType : unknown, null) : null };
+        // A slice with a pattern needs a way to take the slice; `..` alone only skips elements.
+        if (item.pattern && shape && !shape.sliceType) this.incomplete = this.d.incomplete = true;
+        return { kind: 'SlicePattern', syntax: item, pattern: item.pattern ? this.pattern(item.pattern, shape?.sliceType ?? unknown, null) : null };
       });
-      const bound = { kind: 'ListPattern', syntax, inputType, elementType, patterns, sliceIndex };
-      if (syntax.designation) this.designation(syntax.designation, inputType ?? unknown, bound);
+      const bound = { kind: 'ListPattern', syntax, inputType: listType, elementType, patterns, sliceIndex, shape };
+      if (syntax.designation) this.designation(syntax.designation, listType ?? unknown, bound);
       return bound;
     }
     /**
@@ -82,11 +97,12 @@ export const StructuralPatternBinding = Base =>
         constants.add(key);
         return true;
       });
-      for (const problem of checkSwitchArms(type, checked, site)) this.report(problem.node, problem.code, problem.args);
+      const isSubtype = (derived, base) => typeTestOutcome(derived, base, this.core) === 'always';
+      for (const problem of checkSwitchArms(type, checked, { ...site, isSubtype })) this.report(problem.node, problem.code, problem.args);
     }
     /** A slice outside a list pattern. */
     straySlicePattern(syntax) {
-      this.report(syntax, 'CS8980');
+      this.report(syntax, DiagnosticId.CS8980);
       if (syntax.pattern) this.pattern(syntax.pattern, unknown, null);
       return { kind: 'SlicePattern', syntax, pattern: null, hasErrors: true };
     }

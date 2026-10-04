@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e2746d6d80c20a9fa65b",
+  "kind": "diagnostics",
+  "sourceText": "\nclass D\n{\n    public static void Main()\n    {\n        var t = C.M();\n        System.Console.WriteLine(t.Item1 + \" \" + t.Item2 + \" \" + t.b + \" \" + t.Item3);\n    }\n}\n",
+  "sourceSHA256": "1086b20dac6257b12152012cfe335445e49443560db997126487ab3363529546",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "TupleTypeWithOnlySomeNamesInMetadata",
+    "offset": 59176
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "references: new[] { ValueTupleRef, SystemRuntimeFacadeRef, compLibCompilationRef },\n                                                     options: TestOptions.ReleaseExe)",
+  "options": "(source2, references: new[] { ValueTupleRef, SystemRuntimeFacadeRef, compLibCompilationRef },\n                                                     options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

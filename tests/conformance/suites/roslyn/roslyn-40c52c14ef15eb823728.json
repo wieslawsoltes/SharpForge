@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-40c52c14ef15eb823728",
+  "kind": "diagnostics",
+  "sourceText": "\n[DiagnosticAnalyzer(LanguageNames.CSharp)]\ninternal sealed class CSharpCompilerDiagnosticAnalyzer\n{}\n",
+  "sourceSHA256": "796458c42d4bb56f0488cfe1e19bffa14d02309523707d754b25be8d99c6cfcb",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "EmitMetadataOnlyInPresenceOfErrors",
+    "offset": 395418
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source2, new[] { new CSharpCompilationReference(compilation1) }, options: TestOptions.DebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,35): error CS0246: The type or namespace name 'xyz' could not be found (are you missing a using directive or an assembly reference?)\n                // [DiagnosticAnalyzer(LanguageNames.CSharp)]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"CSharp\").WithArguments(\"xyz\").WithLocation(2, 35)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a523eff79c71b1189211",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass EClass\n{\n    public enum EEK { a, b, c, d };\n}\n[AttributeUsage(AttributeTargets.Class)]\ninternal class HelpAttribute : Attribute\n{\n    public HelpAttribute(EClass.EEK[] b1)\n    {\n    }\n}\n[HelpAttribute(new EClass.EEK[2] { EClass.EEK.b, EClass.EEK.c })]\npublic class MainClass\n{\n    public static void Main()\n    {\n    }\n}\n",
+  "sourceSHA256": "6c67dc329ec37f419465ef6637eb08002faeafe2bb47e83a8583419532dbcd29",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeEnumsAsAttributeParameters",
+    "offset": 245575
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

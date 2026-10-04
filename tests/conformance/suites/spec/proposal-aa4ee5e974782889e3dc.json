@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-aa4ee5e974782889e3dc",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\n\nvar a = new int[] { 1, 2, 3 };\na.M();\n\nstatic class E\n{\n    public static void M(this IEnumerable<int> x) { }\n    public static void M(this ReadOnlySpan<int> x) { }\n}",
+  "sourceSHA256": "d8be55bb77332e80aef09056e0dbca243454e6e3c1ea2bd317804f739e9a5933",
+  "target": "library",
+  "featureId": "csharp-14-0-first-class-span-types",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/first-class-span-types.md",
+    "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+    "license": "NOASSERTION",
+    "offset": 15270
+  }
+}

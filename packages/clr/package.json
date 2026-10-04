@@ -5,8 +5,8 @@
   "type": "module",
   "main": "./src/index.js",
   "exports": { ".": "./src/index.js" },
-  "files": ["src", "README.md", "LICENSE"],
+  "files": ["src", "README.md", "CONTEXTS.md", "LICENSE"],
   "license": "MIT",
   "engines": { "node": ">=22" },
-  "dependencies": { "@sharpforge/archive": "0.14.0" }
+  "dependencies": { "@sharpforge/archive": "0.14.0", "@sharpforge/cil": "0.14.0" }
 }

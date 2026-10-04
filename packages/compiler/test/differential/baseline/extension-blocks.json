@@ -1,0 +1,14 @@
+{
+  "extension-blocks/cs1061-cs0117-not-in-scope": ["diagnostics", "warnings"],
+  "extension-blocks/cs9282-cs9302-cs9304-cs9326-cs9347-members": ["diagnostics", "warnings"],
+  "extension-blocks/cs9283-container": ["diagnostics", "warnings"],
+  "extension-blocks/cs9284-cs9285-receiver-default-value": ["diagnostics", "warnings"],
+  "extension-blocks/cs9303-cs9285-cs9295-cs9287-cs9300-receiver": ["diagnostics", "warnings"],
+  "extension-blocks/cs9319-cs9317-cs0558-cs9342-operators": ["diagnostics", "warnings"],
+  "extension-blocks/cs9339-cs0176-cs0120-cs9316-cs0200-uses": ["diagnostics", "warnings"],
+  "extension-blocks/generic-blocks": ["diagnostics", "warnings", "bytecode", "cil"],
+  "extension-blocks/operators": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "extension-blocks/properties-methods-and-static-members": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "extension-blocks/property-assignment-forms": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "extension-blocks/scopes-and-precedence": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
+}

@@ -17,7 +17,7 @@ node scripts/conformance/diff/benchmark.js
 
 Generic test registration discovers unit tests only. The dedicated differential
 workflow separately runs `engines.native.js` with the pinned SDK on Linux x64,
-Windows x64 and macOS arm64, schedules nightly execution, and retains artifacts
+Windows x64 and macOS arm64 on explicit dispatch, and retains artifacts
 regardless of failure. It has read-only permissions and never creates issues.
 Hosted image drift fails via the oracle pin checks; local OS runs are recorded
 as local/unpinned. Missing SDK is a host failure, not a skipped native pass.
@@ -62,8 +62,8 @@ remain unsupported. Malformed C# that cannot be parsed is retained as a repro wi
 explicit unsupported reduction rather than a false minimality claim.
 
 The workflow uses reviewed immutable action pins from the A29 supply policy.
-Qualification runs on the nightly schedule, manual dispatch or a PR explicitly
-labelled `full-ci`; an ordinary PR or main push does not start the native corpus.
+Qualification runs on explicit manual dispatch, serially across platforms.
+Ordinary PR/main pushes, labels and schedules do not start the native corpus.
 The retained evidence describes the commits in `qualification.json`, including
 the corpus at `76eb0bfafae911c24eeebab2341b79ea9c9aa963`. Workflow readiness
 changes have not run new local tests, builds or native captures. Validation of the

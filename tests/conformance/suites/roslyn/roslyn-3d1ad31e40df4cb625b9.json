@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3d1ad31e40df4cb625b9",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C\n{\n    void M()\n    {\n        void L1()\n        {\n            void L2()\n            {\n                Action a = () =>\n                {\n                    int x;\n                    x++;\n                };\n            }\n            L2();\n        }\n    }\n}",
+  "sourceSHA256": "b6a183b2a7801972a095c9c85ad853e74ccb385ecdab5f821a1e036c226ea1e2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "LambdaInNestedUncalledLocalFunctions",
+    "offset": 1605
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\nclass C\n{\n    void M()\n    {\n        void L1()\n        {\n            void L2()\n            {\n                Action a = () =>\n                {\n                    int x;\n                    x++;\n                };\n            }\n            L2();\n        }\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS8321",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (14,21): error CS0165: Use of unassigned local variable 'x'\n                //                     x++;\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(14, 21),\n                // (7,14): warning CS8321: The local function 'L1' is declared but never used\n                //         void L1()\n                Diagnostic(ErrorCode.WRN_UnreferencedLocalFunction, \"L1\").WithArguments(\"L1\").WithLocation(7, 14)",
+  "unsupported": []
+}

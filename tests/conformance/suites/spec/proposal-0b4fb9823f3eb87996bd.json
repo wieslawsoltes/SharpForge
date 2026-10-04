@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-0b4fb9823f3eb87996bd",
+  "kind": "spec",
+  "sourceText": "M(1.0);\n\nstatic void M<T>(T t) where T : INumberBase<T>\n{\n    Console.WriteLine(t is 1); // Error. Cannot use a numeric constant\n    Console.WriteLine((t is int i) && (i is 1)); \n}",
+  "sourceSHA256": "b5c8f73666461b15a8bc71121fdab985551d190ca9b54c05e3503b28ab79c65a",
+  "target": "library",
+  "featureId": "csharp-11-0-static-abstract-members-in-interfaces",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/static-abstracts-in-interfaces.md",
+    "sha256": "43691eee0c3c76ced605db5959df8d36d1334dd5cd4d01d4048a50c9c26f96f4",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/static-abstracts-in-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 17179
+  }
+}

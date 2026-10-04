@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-091fd372f127b01fb39b",
+  "kind": "diagnostics",
+  "sourceText": "delegate void Script();",
+  "sourceSHA256": "986ba4b0966f21cc5f0ccc1eb095ffa7c123b4ba3849c4799a4692efc008eb36",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "RootMemberNamedScript",
+    "offset": 50180
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS5001",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // error CS5001: Program does not contain a static 'Main' method suitable for an entry point\n                Diagnostic(ErrorCode.ERR_NoEntryPoint)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

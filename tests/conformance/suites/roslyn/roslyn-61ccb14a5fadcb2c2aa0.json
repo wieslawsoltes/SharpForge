@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-61ccb14a5fadcb2c2aa0",
+  "kind": "diagnostics",
+  "sourceText": "public class B\n{\n    static void Main()\n    {\n#nullable enable\n        A.M(A.F);\n    }\n}",
+  "sourceSHA256": "7fa0e0f8914332fc31a158c50486610bc1e19d6382c6769d2b43e4d64e0e02da",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NullablePublicOnly.cs",
+    "sha256": "0d314663b7fa6d3dfc6513dcb6596c36588c661918998a30c38bea158fe6fc95",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NullablePublicOnly.cs",
+    "license": "MIT",
+    "method": "NullableEnabled_MethodBodyOnly",
+    "offset": 9501
+  },
+  "langVersion": "8",
+  "target": "library",
+  "references": "references: new[] { ref0 },\n                options: TestOptions.ReleaseDll.WithMetadataImportOptions(MetadataImportOptions.All),\n                parseOptions: TestOptions.Regular8.WithNullablePublicOnly())",
+  "options": "(\n                source1,\n                references: new[] { ref0 },\n                options: TestOptions.ReleaseDll.WithMetadataImportOptions(MetadataImportOptions.All),\n                parseOptions: TestOptions.Regular8.WithNullablePublicOnly())",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8604",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,13): warning CS8604: Possible null reference argument for parameter 'o' in 'void A.M(object o)'.\n                //         A.M(A.F);\n                Diagnostic(ErrorCode.WRN_NullReferenceArgument, \"A.F\").WithArguments(\"o\", \"void A.M(object o)\").WithLocation(6, 13)",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

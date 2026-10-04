@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b64825d98065225e3531",
+  "kind": "diagnostics",
+  "sourceText": "\nref struct S1\n{\n}\n\nstatic class C2 \n{\n    internal static void Dispose(this S1 s1, int a = 1) { }\n}\n\nclass C3\n{\n    static void Main()\n    {\n       using (S1 s = new S1())\n       {\n       }\n    }\n}",
+  "sourceSHA256": "83f04181238bfd05dd9fed0b1ac014f00944a490561a35788a3d54319b01b304",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "sha256": "d8229f7c312c9ee5a778889d6e4283a10543e441e97b4e3da14145b6744b1b4e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "license": "MIT",
+    "method": "UsingPatternExtensionMethodWithDefaultArguments",
+    "offset": 28839
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1674",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (15,15): error CS1674: 'S1': type used in a using statement must implement 'System.IDisposable'.\n                //        using (S1 s = new S1())\n                Diagnostic(ErrorCode.ERR_NoConvToIDisp, \"S1 s = new S1()\").WithArguments(\"S1\").WithLocation(15, 15)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-362e0264c505c239d92b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass C\n{\n    void M()\n    {\n        (int x, int y) t;\n        t.x = 0;\n        Console.Write(t.x);\n        Console.Write(t.Item1);\n    }\n    void M2()\n    {\n        (int x, int y) t;\n        Console.Write(t.y);\n        // No error, error is reported once per field\n        // and t.Item2 is alias for the same field\n        Console.Write(t.Item2);\n    }\n    void M3()\n    {\n        (int x, int y) t;\n        Console.Write(t.Item2);\n        // No error, error is reported once per field\n        // and t.y is alias for the same field\n        Console.Write(t.y);\n    }\n}",
+  "sourceSHA256": "a7921a918c5f1eb55d4259492bf823af6d1e66a565b6627992a2256bf731794e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "sha256": "0d6911ec2e8d7c03c9c20562c37c9d1959883735b8a2e5c0af7af46861c1379a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "license": "MIT",
+    "method": "TupleFieldNameAliasing",
+    "offset": 671
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { SystemRuntimeFacadeRef, ValueTupleRef })",
+  "options": "(@\"\nusing System;\n\nclass C\n{\n    void M()\n    {\n        (int x, int y) t;\n        t.x = 0;\n        Console.Write(t.x);\n        Console.Write(t.Item1);\n    }\n    void M2()\n    {\n        (int x, int y) t;\n        Console.Write(t.y);\n        // No error, error is reported once per field\n        // and t.Item2 is alias for the same field\n        Console.Write(t.Item2);\n    }\n    void M3()\n    {\n        (int x, int y) t;\n        Console.Write(t.Item2);\n        // No error, error is reported once per field\n        // and t.y is alias for the same field\n        Console.Write(t.y);\n    }\n}\", references: new[] { SystemRuntimeFacadeRef, ValueTupleRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0170",
+        "severity": "error"
+      },
+      {
+        "code": "CS0170",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (16,23): error CS0170: Use of possibly unassigned field 'y'\n                //         Console.Write(t.y);\n                Diagnostic(ErrorCode.ERR_UseDefViolationField, \"t.y\").WithArguments(\"y\").WithLocation(16, 23),\n                // (24,23): error CS0170: Use of possibly unassigned field 'Item2'\n                //         Console.Write(t.Item2);\n                Diagnostic(ErrorCode.ERR_UseDefViolationField, \"t.Item2\").WithArguments(\"Item2\").WithLocation(24, 23)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-dd51245d739b6beebebf",
+  "kind": "diagnostics",
+  "sourceText": "\nint x1;\nvar (x1, x2) = (1, 2);\nSystem.Console.Write(x1);\n",
+  "sourceSHA256": "77305162d1c405bb453cb2bc88338fd38216c5d6b6547082af86425f6189ee4f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "NameConflictInDeconstructionInScript",
+    "offset": 178030
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "references: s_valueTupleRefs)",
+  "options": "(source, parseOptions: TestOptions.Script, options: TestOptions.DebugExe, references: s_valueTupleRefs)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0102",
+        "severity": "error"
+      },
+      {
+        "code": "CS0229",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,6): error CS0102: The type 'Script' already contains a definition for 'x1'\n                // var (x1, x2) = (1, 2);\n                Diagnostic(ErrorCode.ERR_DuplicateNameInClass, \"x1\").WithArguments(\"Script\", \"x1\").WithLocation(3, 6),\n                // (4,22): error CS0229: Ambiguity between 'x1' and 'x1'\n                // System.Console.Write(x1);\n                Diagnostic(ErrorCode.ERR_AmbigMember, \"x1\").WithArguments(\"x1\", \"x1\").WithLocation(4, 22)\n                ",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

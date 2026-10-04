@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a38766026f33bd9fe760",
+  "kind": "spec",
+  "sourceText": "Action y = () => M();\nvar t = (x: x, y);\nt.y(); // this might have previously picked up an extension method called “y”, but would now call the lambda.",
+  "sourceSHA256": "641943f741e0e83802f2e740f73d552d531f7b8097f95c6df3848f7c1ff585f5",
+  "target": "library",
+  "featureId": "csharp-7-1-inferred-tuple-element-names",
+  "langVersion": "7.1",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.1/infer-tuple-names.md",
+    "sha256": "788d02fde920dc3f09c43f6a43666618adc914d1043fb463fe4875d3c3df8642",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.1/infer-tuple-names.md",
+    "license": "NOASSERTION",
+    "offset": 2656
+  }
+}

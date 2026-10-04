@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-113dbdde81d653d30d33",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public void M()\n    {\n        (int a, int) x1 = (1, b: 2);\n        (int a, string) x2 = (1, b: null);\n    }\n}\n",
+  "sourceSHA256": "898e94b6fb7a70af96592e78a2d045fda3394a518b62b11f2efb337f5a1eb8e8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "WarnForDroppingNamesInConversion",
+    "offset": 847165
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,31): warning CS8123: The tuple element name 'b' is ignored because a different name or no name is specified by the target type '(int a, int)'.\n                //         (int a, int) x1 = (1, b: 2);\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"b: 2\").WithArguments(\"b\", \"(int a, int)\").WithLocation(6, 31),\n                // (7,34): warning CS8123: The tuple element name 'b' is ignored because a different name or no name is specified by the target type '(int a, string)'.\n                //         (int a, string) x2 = (1, b: null);\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"b: null\").WithArguments(\"b\", \"(int a, string)\").WithLocation(7, 34),\n                // (6,22): warning CS0219: The variable 'x1' is assigned but its value is never used\n                //         (int a, int) x1 = (1, b: 2);\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"x1\").WithArguments(\"x1\").WithLocation(6, 22),\n                // (7,25): warning CS0219: The variable 'x2' is assigned but its value is never used\n                //         (int a, string) x2 = (1, b: null);\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"x2\").WithArguments(\"x2\").WithLocation(7, 25)\n                ",
+  "unsupported": []
+}

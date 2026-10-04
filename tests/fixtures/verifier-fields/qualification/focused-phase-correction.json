@@ -1,0 +1,12 @@
+{
+  "oldHead": "7d65292a310fc0b397a04b3c0828d7a0f8b29dd6",
+  "newHead": "b79c8b9aec47f549d513f1b1afe88bdc36c63669",
+  "oldTestSHA256": "955cb8d8b568d15441170e30cecbfa780381e3e5d9e0a7af17a6d8a7eaf84a66",
+  "newTestSHA256": "f51a4271aa3be69c37adac7f7b2b8f4220fbb955e0bab15a0d918c3c08dd0181",
+  "reason": "Existing inspector operand display decodes malformed byref field signature before canonical member adapter; correct rejection phase is CILT0001/InvalidMetadata with exact Byref signature reason.",
+  "initialTests": 127,
+  "initialPass": 126,
+  "nativeObservations": 40,
+  "baselineSamples": 48,
+  "productChanged": false
+}

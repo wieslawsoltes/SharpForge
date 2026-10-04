@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-165a1a5ba4904f43a044",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    public static void Main(string[] args)\n    {\n        M(1, 1, 6); // 1\n        M(1, 2, 6); // 2\n        M(1, 1, 3); // 3\n        M(1, 2, 3); // 3\n        M(1, 5, 3); // 3\n        M(2, 5, 3); // 3\n        M(1, 3, 4); // 4\n        M(2, 1, 4); // 5\n        M(2, 2, 2); // 6\n    }\n    public static void M(int a, int b, int c) => Console.Write(M2(a, b, c));\n    public static int M2(int a, int b, int c) => (a, b, c) switch\n    {\n        (1,  1,  6) => 1,\n        (1,  2,  6) => 2,\n        (_,  _,  3) => 3,\n        (1,  _,  _) => 4,\n        (_,  1,  _) => 5,\n        (_,  _,  _) => 6,\n    };\n}\n",
+  "sourceSHA256": "241ec689836db267ecaf25aa8f3e388d3b87deba839562d782a671e8190cd5b2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/SwitchTests.cs",
+    "sha256": "8a2559010768d72741326ab4614a72fc6d01c52c1dbef1652639b4fae3d66229",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/SwitchTests.cs",
+    "license": "MIT",
+    "method": "PatternSwitchDagReduction_01",
+    "offset": 326266
+  },
+  "langVersion": "9",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

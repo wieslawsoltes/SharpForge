@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f4b65b1cd41d3805ef65",
+  "kind": "diagnostics",
+  "sourceText": "\n#nullable enable\n\nclass C\n{\n    public static bool operator ==(C? left, C? right) => false;\n    public static bool operator !=(C? left, C? right) => false;\n    public override bool Equals(object obj) => false;\n    public override int GetHashCode() => 0;\n\n    public C? M0(out int x, out int y) { x = 42; y = 42; return this; }\n\n    public void M1(C? c)\n    {\n        int x, y;\n        _ = c?.M0(out x, out y) != null\n            ? x.ToString() // 1\n            : y.ToString(); // 2\n    }\n\n    public void M2(C? c)\n    {\n        int x, y;\n        _ = c?.M0(out x, out y) == null\n            ? x.ToString() // 3\n            : y.ToString(); // 4\n    }\n}\n",
+  "sourceSHA256": "4e3116e5d60ab1d98a15dee71102ee88ec9ab8eb9b8285fa140ee5ff68eab11e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "EqualsCondAccess_05",
+    "offset": 178927
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (17,15): error CS0165: Use of unassigned local variable 'x'\n                //             ? x.ToString() // 1\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(17, 15),\n                // (18,15): error CS0165: Use of unassigned local variable 'y'\n                //             : y.ToString(); // 2\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(18, 15),\n                // (25,15): error CS0165: Use of unassigned local variable 'x'\n                //             ? x.ToString() // 3\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(25, 15),\n                // (26,15): error CS0165: Use of unassigned local variable 'y'\n                //             : y.ToString(); // 4\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(26, 15)\n                ",
+  "unsupported": []
+}

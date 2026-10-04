@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7af8ce8da3408517d4aa",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class A\n{\n    readonly int _value;\n\n    public A (int value)\n    {\n        _value = value;\n    }\n\n    public static A operator +(A x, A y)\n    {\n        return new A(x._value + y._value);\n    }\n\n    public static A operator -(A x, A y)\n    {\n        return new A(x._value - y._value);\n    }\n}\n\nclass C\n{\n    static void Main()\n    {\n        A x = new A(0);\n        A y = new A(100);\n\n        x = x + 10;\n        x = x + y;\n        x = -x;\n   }\n}\n",
+  "sourceSHA256": "7161b5c1b491bd155a469aa7ed7e6c17d90163900820cd22d800836b0faed617",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "InvalidOperatorsCSharp",
+    "offset": 57540
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      },
+      {
+        "code": "CS0023",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "Diagnostic(ErrorCode.ERR_BadBinaryOps, \"x + 10\", new object[] { \"+\", \"A\", \"int\" }).WithLocation(29, 13),\n                                Diagnostic(ErrorCode.ERR_BadUnaryOp, \"-x\", new object[] { \"-\", \"A\" }).WithLocation(31, 13)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

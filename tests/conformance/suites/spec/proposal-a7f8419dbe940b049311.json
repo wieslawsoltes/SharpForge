@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a7f8419dbe940b049311",
+  "kind": "spec",
+  "sourceText": "/// <summary>\n/// My type\n/// </summary>\npartial class C\n{\n    public partial int this[int x] { get; set; }\n\n    /// <summary>\n    /// <paramref name=\"x\"/> // warning CS1734: XML comment on 'C.this[int]' has a paramref tag for 'x', but there is no parameter by that name\n    /// <paramref name=\"y\"/> // ok. 'Go To Definition' will go to 'int y'.\n    /// </summary>\n    public partial int this[int y] { get => 1; set { } } // warning CS9256: Partial property declarations 'int C.this[int x]' and 'int C.this[int y]' have signature differences.\n}",
+  "sourceSHA256": "dec3fc55003f9982814bafd5c8f6291acb95c0192912496e463e1d93a66cc41e",
+  "target": "library",
+  "featureId": "csharp-13-0-partial-properties",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/partial-properties.md",
+    "sha256": "743e4ee38f66cc2149a2117435ea0179d508e3e253074e4f91240212206590ae",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/partial-properties.md",
+    "license": "NOASSERTION",
+    "offset": 10941
+  }
+}

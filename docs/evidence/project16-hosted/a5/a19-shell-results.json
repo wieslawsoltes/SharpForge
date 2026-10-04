@@ -1,0 +1,133 @@
+{
+  "target": "browser",
+  "checks": [
+    {
+      "scenario": "menu-mnemonics-arrows-focus-restore",
+      "passed": true
+    },
+    {
+      "scenario": "searchable-options-cancel",
+      "passed": true
+    },
+    {
+      "scenario": "theme-text-contrast",
+      "theme": "dark",
+      "ratios": [
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-panel",
+          "ratio": 13.128242551287334
+        },
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-raised",
+          "ratio": 11.05341484495638
+        },
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-selected",
+          "ratio": 7.625848352516812
+        },
+        {
+          "foreground": "--wb-muted",
+          "background": "--wb-panel",
+          "ratio": 7.60217856912121
+        }
+      ],
+      "passed": true
+    },
+    {
+      "scenario": "theme-text-contrast",
+      "theme": "light",
+      "ratios": [
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-panel",
+          "ratio": 17.64189221851225
+        },
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-raised",
+          "ratio": 15.129008503189796
+        },
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-selected",
+          "ratio": 14.367676325434495
+        },
+        {
+          "foreground": "--wb-muted",
+          "background": "--wb-panel",
+          "ratio": 7.847154678273723
+        }
+      ],
+      "passed": true
+    },
+    {
+      "scenario": "theme-text-contrast",
+      "theme": "blue",
+      "ratios": [
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-panel",
+          "ratio": 11.892856924816419
+        },
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-raised",
+          "ratio": 8.875891841560621
+        },
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-selected",
+          "ratio": 6.225007303392024
+        },
+        {
+          "foreground": "--wb-muted",
+          "background": "--wb-panel",
+          "ratio": 8.39700165630076
+        }
+      ],
+      "passed": true
+    },
+    {
+      "scenario": "theme-text-contrast",
+      "theme": "high-contrast",
+      "ratios": [
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-panel",
+          "ratio": 21
+        },
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-raised",
+          "ratio": 21
+        },
+        {
+          "foreground": "--wb-fg",
+          "background": "--wb-selected",
+          "ratio": 12.853635274157462
+        },
+        {
+          "foreground": "--wb-muted",
+          "background": "--wb-panel",
+          "ratio": 21
+        }
+      ],
+      "passed": true
+    },
+    {
+      "scenario": "tool-window-mounts",
+      "passed": true
+    },
+    {
+      "scenario": "narrow-dialog-focus-forced-colors",
+      "passed": true
+    },
+    {
+      "scenario": "named-controls-and-bounded-grid",
+      "passed": true
+    }
+  ]
+}

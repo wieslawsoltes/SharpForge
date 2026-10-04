@@ -1,4 +1,6 @@
-import {taskResult} from '@sharpforge/framework';
+import {
+  taskResult
+} from '@sharpforge/framework';
 
 /** A hidden task roots async-void execution; its escaped fault is posted when the context finishes. */
 export function startAsyncContext(scheduler, descriptor, delegate) {

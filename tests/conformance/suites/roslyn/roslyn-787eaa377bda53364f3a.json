@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-787eaa377bda53364f3a",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    static void Main()\n    {\n        var d1 = Main;\n        Report(d1);\n        var d2 = () => { };\n        Report(d2);\n        var d3 = delegate () { };\n        Report(d3);\n    }\n    static void Report(Delegate d) => Console.WriteLine($\"{d.GetType().Namespace}.{d.GetType().Name}\");\n}",
+  "sourceSHA256": "b1fb1ae2f4e7bf19f5bd3db87ff6d2571395e9e5f452aed5c0614c46ee49c4cb",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenMethodGroupConversionCachingTests.cs",
+    "sha256": "e67cf87b86e1958dac7c4f67d34e123ae83b5a02f1e6fa32d73b399c63e918de",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenMethodGroupConversionCachingTests.cs",
+    "license": "MIT",
+    "method": "ImplicitlyTypedVariables_01",
+    "offset": 163959
+  },
+  "langVersion": "11",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular11, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ee21bf4fdc9777f3f570",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.InteropServices;\n\n[assembly: ImportedFromTypeLib(\"GeneralPIA.dll\")]\n[assembly: Guid(\"f9c2d51d-4f44-45f0-9eda-c9d599b58257\")]\n\n[ComImport()]\n[Guid(\"f9c2d51d-4f44-45f0-9eda-c9d599b58279\")]\npublic interface ITest30\n{\n    [System.Runtime.InteropServices.DispIdAttribute(\"124\")]\n    void M1();\n}\n",
+  "sourceSHA256": "e83cf45610d8fc00362dcbbed48ea459a65f18de44532a029cff09e22ae54540",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/NoPiaEmbedTypes.cs",
+    "sha256": "d4fb71a05d5bdb188c493265406890202ab55d0c8d1103cf6c84ab62fb5a3644",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/NoPiaEmbedTypes.cs",
+    "license": "MIT",
+    "method": "DispIdAttribute_03",
+    "offset": 116236
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { empty }, options: TestOptions.ReleaseDll, assemblyName: \"Pia\")",
+  "options": "(pia, references: new[] { empty }, options: TestOptions.ReleaseDll, assemblyName: \"Pia\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1503",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,53): error CS1503: Argument 1: cannot convert from 'string' to 'int'\n                //     [System.Runtime.InteropServices.DispIdAttribute(\"124\")]\n                Diagnostic(ErrorCode.ERR_BadArgType, @\"\"\"124\"\"\").WithArguments(\"1\", \"string\", \"int\").WithLocation(12, 53)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-18dd76d8bd633d7d1dba",
+  "kind": "diagnostics",
+  "sourceText": "\npublic interface I1<T>\n{\n    void M();\n}\n\npublic class C3 : I1<(int a, int b)>\n{\n    void I1<(int c, int d)>.M(){}\n}\n\npublic class C4 : I1<(int c, int d)>\n{\n    void I1<(int c, int d)>.M(){}\n}\n",
+  "sourceSHA256": "8e4306a71ea4df06753b13f8254a20f6949fabde272b9999156e69107db9403b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "DuplicateInterfaceDetectionWithDifferentTupleNames_06",
+    "offset": 920595
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0540",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,10): error CS0540: 'C3.I1<(int c, int d)>.M()': containing type does not implement interface 'I1<(int c, int d)>'\n                //     void I1<(int c, int d)>.M(){}\n                Diagnostic(ErrorCode.ERR_ClassDoesntImplementInterface, \"I1<(int c, int d)>\").WithArguments(\"C3.I1<(int c, int d)>.M()\", \"I1<(int c, int d)>\").WithLocation(9, 10)\n                ",
+  "unsupported": []
+}

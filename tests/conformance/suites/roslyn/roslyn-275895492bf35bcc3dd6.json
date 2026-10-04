@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-275895492bf35bcc3dd6",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        foreach (var x in new Enumerable1())\n        {\n            System.Console.WriteLine(x);\n        }\n    }\n}\n\nclass Enumerable1\n{\n    public DisposableEnumerator GetEnumerator() { return new DisposableEnumerator(); }\n}\n\nref struct DisposableEnumerator\n{\n    int x;\n    public int Current { get { return x; } }\n    public bool MoveNext() { return ++x < 4; }\n    public void Dispose() { System.Console.WriteLine(\"Done with DisposableEnumerator\"); }\n}",
+  "sourceSHA256": "bb0e6a153b3f4e3d18b50248f29b9e26acb8ece837a58857675984cc817c898b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "sha256": "a8916f977bf7fcd541545be2f5e4bdc8faf297975fa81f0c7ad4833e9a24ce17",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "license": "MIT",
+    "method": "TestForEachPatternDisposableReportedForCSharp7_3",
+    "offset": 44033
+  },
+  "langVersion": "7.3",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_3)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8370",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,27): error CS8370: Feature 'pattern-based disposal' is not available in C# 7.3. Please use language version 8.0 or greater.\n                //         foreach (var x in new Enumerable1())\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion7_3, \"new Enumerable1()\").WithArguments(\"pattern-based disposal\", \"8.0\").WithLocation(6, 27)\n                ",
+  "unsupported": []
+}

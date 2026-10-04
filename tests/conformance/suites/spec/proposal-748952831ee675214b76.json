@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-748952831ee675214b76",
+  "kind": "spec",
+  "sourceText": "void Case1(MyStruct a)\n    => a?.b = c; // a?.b is not allowed when 'a' is of non-nullable value type\n\nvoid Case2(MyStruct? a)\n    => a?.b = c; // `a.Value` is not a variable, so there's no reasonable meaning to define for the assignment",
+  "sourceSHA256": "6a9899f1fc6770dc35acb2aa21af59ccc81d4b328f77a0e3654e02ba2014f123",
+  "target": "library",
+  "featureId": "csharp-14-0-null-conditional-assignment",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/null-conditional-assignment.md",
+    "sha256": "95de9584c9e9e98ae1f5d46ef4c79eb395665f25bc8d002b7af1a0c5a4ac6daa",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/null-conditional-assignment.md",
+    "license": "NOASSERTION",
+    "offset": 2946
+  }
+}

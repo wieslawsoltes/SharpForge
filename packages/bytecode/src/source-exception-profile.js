@@ -1,10 +1,12 @@
-import {exceptionIntrinsicDefinitions} from './exception-intrinsic-profile.js';
+import {
+  exceptionIntrinsicDefinitions
+} from './exception-intrinsic-profile.js';
 
 /** Source adapters only expose signatures whose constructor semantics the shared runtime implements. */
 function sourceSignature(descriptor) {
   if (descriptor.owner === 'System.Exception' &&
-      (descriptor.name === 'get_Message' || descriptor.name === '.ctor' &&
-       descriptor.parameters.length === 1 && descriptor.parameters[0] === 'string')) return false;
+    (descriptor.name === 'get_Message' || descriptor.name === '.ctor' &&
+      descriptor.parameters.length === 1 && descriptor.parameters[0] === 'string')) return false;
   if (descriptor.name !== '.ctor') return true;
   // The one-string forms on these classes name a parameter/object, rather than supplying a message.
   if (['System.ArgumentNullException', 'System.ArgumentOutOfRangeException', 'System.ObjectDisposedException']

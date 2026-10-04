@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c6746781609bdfb5498b",
+  "kind": "diagnostics",
+  "sourceText": "interface I<T> { }\nclass C1<T, U> where U : I<nint>, I<nint> { }\nclass C2<T, U> where U : I<nint>, I<System.IntPtr> { }\nclass C3<T, U> where U : I<System.UIntPtr>, I<System.IntPtr>, I<nuint> { }\n",
+  "sourceSHA256": "05a482e5ca2b275eaac98447984159a8e57f44ecfb531332c44b1c34805e13db",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "DuplicateConstraint",
+    "offset": 541018
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0405",
+        "severity": "error"
+      },
+      {
+        "code": "CS0405",
+        "severity": "error"
+      },
+      {
+        "code": "CS0405",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,35): error CS0405: Duplicate constraint 'I<nint>' for type parameter 'U'\n                // class C1<T, U> where U : I<nint>, I<nint> { }\n                Diagnostic(ErrorCode.ERR_DuplicateBound, \"I<nint>\").WithArguments(\"I<nint>\", \"U\").WithLocation(2, 35),\n                // (3,35): error CS0405: Duplicate constraint 'I<nint>' for type parameter 'U'\n                // class C2<T, U> where U : I<nint>, I<System.IntPtr> { }\n                Diagnostic(ErrorCode.ERR_DuplicateBound, \"I<System.IntPtr>\").WithArguments(\"I<nint>\", \"U\").WithLocation(3, 35),\n                // (4,63): error CS0405: Duplicate constraint 'I<nuint>' for type parameter 'U'\n                // class C3<T, U> where U : I<System.UIntPtr>, I<System.IntPtr>, I<nuint> { }\n                Diagnostic(ErrorCode.ERR_DuplicateBound, \"I<nuint>\").WithArguments(\"I<nuint>\", \"U\").WithLocation(4, 63)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

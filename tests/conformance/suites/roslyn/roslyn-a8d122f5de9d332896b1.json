@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a8d122f5de9d332896b1",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\n[Obsolete]\npublic class SomeType\n{\n    public static SomeType Instance;\n    public const  string Message = \"goo\";\n}\n\npublic class SomeAttr : Attribute\n{\n    public SomeAttr(string message) {}\n}\n\n[Obsolete(SomeType.Message)]\npublic class Derived : Base\n{\n}\n\npublic class Base\n{\n    [Obsolete(SomeType.Message)]\n    public SomeType SomeProp { get; set; }\n}\n",
+  "sourceSHA256": "3da836f504bfd7d6a03670d78a09197a96ba3ebb762340d341a402fd62a35d34",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeCycles_02",
+    "offset": 261664
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, null, TestOptions.ReleaseDll.WithConcurrentBuild(false))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (23,15): warning CS0612: 'SomeType' is obsolete\n                //     [Obsolete(SomeType.Message)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"SomeType\").WithArguments(\"SomeType\")",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2ec037279a9195c044d5",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    static void F()\n    {\n        B.F0(default, default);\n        B.F1(new A<int, nuint>());\n        B.F2(new A<nint, uint>());\n    }\n}",
+  "sourceSHA256": "d638c2fe01e8aeb58745dc89db0f48b0d957f66c45aa5dfe78e3b6aaabb1559d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NativeInteger.cs",
+    "sha256": "ba6cbd3462b4f24e7b1edcedb260b4b6046e0b9b58ff785f93c1b090d324064a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NativeInteger.cs",
+    "license": "MIT",
+    "method": "Metadata_OneElementTrue",
+    "offset": 19231
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source1, new[] { ref0 }, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

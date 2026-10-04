@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8dc015676b1f622a882f",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public void M()\n    {\n        (int a, int b)? nab = (1, 2);\n        (int a, int c)? nac = (1, 3);\n\n        var x1 = nab ?? nac; // (a, b)?\n        var x2 = nab ?? nac.Value; // (a, b)\n        var x3 = new C() ?? nac; // C\n        var x4 = new D() ?? nac; // (a, c)?\n\n        var x5 = nab != null ? nab : nac; // (a, )?\n\n        var x6 = nab ?? (a: 1, c: 3); // (a, b)\n        var x7 = nab ?? (a: 1, c: 3); // (a, b)\n        var x8 = new C() ?? (a: 1, c: 3); // C\n        var x9 = new D() ?? (a: 1, c: 3); // (a, c)\n\n        var x6double = nab ?? (d: 1.1, c: 3); // (a, c)\n    }\n    public static implicit operator C((int, int) x) { throw null; }\n}\npublic class D\n{\n    public static implicit operator (int d1, int d2) (D x) { throw null; }\n}\n",
+  "sourceSHA256": "ca790a32b8a903f5832027a08b42cecc8c5cb935295132381cb1afce2a774646",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "NullCoalescingOperatorWithTupleNames",
+    "offset": 832086
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (16,32): warning CS8123: The tuple element name 'c' is ignored because a different name is specified by the target type '(int a, int b)'.\n                //         var x6 = nab ?? (a: 1, c: 3); // (a, b)?\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"c: 3\").WithArguments(\"c\", \"(int a, int b)\").WithLocation(16, 32),\n                // (17,32): warning CS8123: The tuple element name 'c' is ignored because a different name is specified by the target type '(int a, int b)'.\n                //         var x7 = nab ?? (a: 1, c: 3); // (a, b)\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"c: 3\").WithArguments(\"c\", \"(int a, int b)\").WithLocation(17, 32),\n                // (18,30): warning CS8123: The tuple element name 'a' is ignored because a different name is specified by the target type '(int, int)'.\n                //         var x8 = new C() ?? (a: 1, c: 3); // C\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"a: 1\").WithArguments(\"a\", \"(int, int)\").WithLocation(18, 30),\n                // (18,36): warning CS8123: The tuple element name 'c' is ignored because a different name is specified by the target type '(int, int)'.\n                //         var x8 = new C() ?? (a: 1, c: 3); // C\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"c: 3\").WithArguments(\"c\", \"(int, int)\").WithLocation(18, 36)\n                ",
+  "unsupported": []
+}

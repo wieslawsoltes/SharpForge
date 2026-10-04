@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0d33b48356af1f21286b",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing System.Linq.Expressions;\n\nExpression<D> e1 = (ref readonly int p) => C.M(in p);\nExpression<D> e2 = (ref readonly int p) => C.M(ref p);\nExpression<D> e3 = (ref readonly int p) => C.M(p);\nExpression<D> e4 = (int p) => C.M(in p);\nExpression<Action<int>> e5 = (int p) => C.M(out p);\n\ndelegate void D(ref readonly int p);\n\nstatic class C\n{\n    public static void M(ref readonly int x) { }\n}",
+  "sourceSHA256": "6a0e1bf0d166a83bcff5760aeebe439e160e57d94120f2776af57009bd72f8df",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "ExpressionTrees_Invalid",
+    "offset": 38181
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1951",
+        "severity": "error"
+      },
+      {
+        "code": "CS8329",
+        "severity": "error"
+      },
+      {
+        "code": "CS1951",
+        "severity": "error"
+      },
+      {
+        "code": "CS9195",
+        "severity": "warning"
+      },
+      {
+        "code": "CS1676",
+        "severity": "error"
+      },
+      {
+        "code": "CS1615",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (4,38): error CS1951: An expression tree lambda may not contain a ref, in or out parameter\n            // Expression<D> e1 = (ref readonly int p) => C.M(in p);\n            Diagnostic(ErrorCode.ERR_ByRefParameterInExpressionTree, \"p\").WithLocation(4, 38),\n            // (5,52): error CS8329: Cannot use variable 'p' as a ref or out value because it is a readonly variable\n            // Expression<D> e2 = (ref readonly int p) => C.M(ref p);\n            Diagnostic(ErrorCode.ERR_RefReadonlyNotField, \"p\").WithArguments(\"variable\", \"p\").WithLocation(5, 52),\n            // (6,38): error CS1951: An expression tree lambda may not contain a ref, in or out parameter\n            // Expression<D> e3 = (ref readonly int p) => C.M(p);\n            Diagnostic(ErrorCode.ERR_ByRefParameterInExpressionTree, \"p\").WithLocation(6, 38),\n            // (6,48): warning CS9195: Argument 1 should be passed with the 'in' keyword\n            // Expression<D> e3 = (ref readonly int p) => C.M(p);\n            Diagnostic(ErrorCode.WRN_ArgExpectedIn, \"p\").WithArguments(\"1\").WithLocation(6, 48),\n            // (7,25): error CS1676: Parameter 1 must be declared with the 'ref readonly' keyword\n            // Expression<D> e4 = (int p) => C.M(in p);\n            Diagnostic(ErrorCode.ERR_BadParamRef, \"p\").WithArguments(\"1\", \"ref readonly\").WithLocation(7, 25),\n            // (8,49): error CS1615: Argument 1 may not be passed with the 'out' keyword\n            // Expression<Action<int>> e5 = (int p) => C.M(out p);\n            Diagnostic(ErrorCode.ERR_BadArgExtraRef, \"p\").WithArguments(\"1\", \"out\").WithLocation(8, 49)",
+  "unsupported": []
+}

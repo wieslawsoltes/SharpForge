@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8bd2fbf9416fd82c3744",
+  "kind": "diagnostics",
+  "sourceText": "\nusing var = C;\nclass C\n{\n    static void M()\n    {\n        C i = null;\n        ref var x = ref i;\n    }\n}\n",
+  "sourceSHA256": "0034cb64521fe3457ca391654f285ae6c955ff946e83b342528669c491ca7b23",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefLocalTests.cs",
+    "sha256": "71f20094d8395168a5d8f8cd8a1597366ab80ab701c4cbbb76991cef9d1c0517",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefLocalTests.cs",
+    "license": "MIT",
+    "method": "RefAliasVarSemanticModel",
+    "offset": 92299
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8981",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,7): warning CS8981: The type name 'var' only contains lower-cased ascii characters. Such names may become reserved for the language.\n                // using var = C;\n                Diagnostic(ErrorCode.WRN_LowerCaseTypeName, \"var\").WithArguments(\"var\").WithLocation(2, 7)\n                ",
+  "unsupported": []
+}

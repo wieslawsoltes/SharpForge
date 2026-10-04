@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-47d4f0648b71736de496",
+  "kind": "spec",
+  "sourceText": "partial class Map<K,V>\n    where K : IComparable<K>\n    where V : IKeyProvider<K>, new()\n{\n    ...\n}\n\npartial class Map<K,V>\n    where V : IKeyProvider<K>, new()\n    where K : IComparable<K>\n{\n    ...\n}\n\npartial class Map<K,V>\n{\n    ...\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "4263fd0e121bb52f15a14934018ebdfb92e5721454296958bc6ea668ea9df409",
+  "originalSource": "partial class Map<K,V>\n    where K : IComparable<K>\n    where V : IKeyProvider<K>, new()\n{\n    ...\n}\n\npartial class Map<K,V>\n    where V : IKeyProvider<K>, new()\n    where K : IComparable<K>\n{\n    ...\n}\n\npartial class Map<K,V>\n{\n    ...\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "TypeParameterConstraints5",
+    "replaceEllipsis": true,
+    "additionalFiles": [
+      "IComparableT.cs",
+      "IKeyProviderT.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "TypeParameterConstraints5",
+    "offsetInUnquotedMarkdown": 38871
+  }
+}

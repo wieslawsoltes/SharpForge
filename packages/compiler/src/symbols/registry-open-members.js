@@ -14,8 +14,10 @@
  * an instantiation again (`contractOfInstance`). Code generation never calls an open member: it closes the receiver
  * type and calls the contract of the registry instantiation, or reports the contract the registry lacks.
  */
+import {registryMethodModifiers} from './registry-contracts.js';
 import { ArrayTypeSymbol, ConstructedNamedTypeSymbol, TypeWithAnnotations, TypeKind, Accessibility } from './types.js';
 import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
+import {appendRegistryIndexers} from './registry-indexers.js';
 
 const accessorKinds = Object.freeze({ get: MethodKind.PropertyGet, set: MethodKind.PropertySet });
 
@@ -116,29 +118,10 @@ function methodSymbol(owner, contract, signature, key, methodKind) {
     containingSymbol: owner,
     returnType: signature.result,
     parameters: signature.parameters.map((type, ordinal) => new ParameterSymbol({ name: 'arg' + ordinal, type, ordinal })),
-    modifiers: contract.isStatic ? DeclarationModifiers.Static : 0,
+    modifiers: registryMethodModifiers(contract, owner),
   });
   method.openContract = key;
   return method;
-}
-
-function indexerOf(owner, getter, setters) {
-  const setter =
-    setters.find(
-      candidate =>
-        candidate.parameters.length === getter.parameters.length + 1 &&
-        getter.parameters.every((parameter, i) => parameter.type.equals(candidate.parameters[i].type)),
-    ) ?? null;
-  const indexer = new PropertySymbol({
-    name: 'this[]',
-    type: getter.returnType,
-    declaredAccessibility: Accessibility.Public,
-    containingSymbol: owner,
-    parameters: getter.parameters.map((parameter, ordinal) => new ParameterSymbol({ name: parameter.name, type: parameter.type, ordinal })),
-  });
-  indexer.getMethod = getter;
-  indexer.setMethod = setter;
-  return indexer;
 }
 
 /**
@@ -180,10 +163,7 @@ export function openMembersOf(bridge, definition) {
       ...[property.get, property.set].filter(Boolean),
     );
   }
-  const setters = members.filter(member => member.kind === 'Method' && member.name === 'set_Item' && !member.isStatic);
-  for (const getter of members.filter(member => member.kind === 'Method' && member.name === 'get_Item' && !member.isStatic)) {
-    members.push(indexerOf(definition, getter, setters));
-  }
+  appendRegistryIndexers(members, definition, bridge.types.get(first.name), bridge.types);
   return members;
 }
 

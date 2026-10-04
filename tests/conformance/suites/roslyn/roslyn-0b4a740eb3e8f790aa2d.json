@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0b4a740eb3e8f790aa2d",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M(int x, () y, (int a) z) { }\n}\n",
+  "sourceSHA256": "1a58eee510f8de63964d40b5246df6571a4aa14d74184dc83ea5b3016fa3ce54",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "TupleTypeWithTooFewElements",
+    "offset": 1080422
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8124",
+        "severity": "error"
+      },
+      {
+        "code": "CS8124",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,20): error CS8124: Tuple must contain at least two elements.\n                //     void M(int x, () y, (int a) z) { }\n                Diagnostic(ErrorCode.ERR_TupleTooFewElements, \")\").WithLocation(4, 20),\n                // (4,31): error CS8124: Tuple must contain at least two elements.\n                //     void M(int x, () y, (int a) z) { }\n                Diagnostic(ErrorCode.ERR_TupleTooFewElements, \")\").WithLocation(4, 31)\n                ",
+  "unsupported": []
+}

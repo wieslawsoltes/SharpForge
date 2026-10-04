@@ -32,15 +32,16 @@ test('A02-T29 every example program compiles identically as a library and with o
   for(const {name,text} of examples){verify([{uri:name,text}],{outputKind:'library'});verify([{uri:name,text}],{checkOverflow:true});}
 });
 test('A02-T29 the differential and binder fixture corpora compile to byte-identical images',()=>{
-  const fixtures=loadFixtures();assert(fixtures.length>400);
+  // Both image pipelines bind against the framework registry; `referencesOnly` fixtures are not image programs.
+  const fixtures=loadFixtures().filter(fixture=>!fixture.referencesOnly);assert(fixtures.length>400);
   // A few fixtures crash the current parser (packages/syntax, outside this epic); only pipeline disagreements fail here.
   let parserCrashes=0;for(const f of fixtures){try{verify([{uri:'Program.cs',text:f.source}],f.langVersion?{langVersion:f.langVersion}:{});}catch(error){if(/Pipeline mismatch/.test(error.message))throw error;parserCrashes++;}}
   assert(parserCrashes<10,'parser crashes: '+parserCrashes);
   for(const [id,source,options] of boundFixtures)verify([{uri:'Program.cs',text:source}],options??{});
 });
 test('A02-T29 multi-file and language-version programs keep their images',()=>{
-  verify([{uri:'A.cs',text:'partial class C{public int X=1;public int Sum(){return X+Y;}}'},{uri:'B.cs',text:'partial class C{public int Y=2;} var c=new C();Console.WriteLine(c.Sum());'}]);
-  for(const langVersion of ['7','9','12','14','preview'])verify('using System.Collections.Generic;class B{public int V;}B b=new();List<int> l=[1,2];int[] a=[..l,3];b?.V=a.Length;Console.WriteLine(b.V);',{langVersion});
+  verify([{uri:'A.cs',text:'partial class C{public int X=1;public int Sum(){return X+Y;}}'},{uri:'B.cs',text:'var c=new C(); Console.WriteLine(c.Sum()); partial class C{public int Y=2;}'}]);
+  for(const langVersion of ['7','9','12','14','preview'])verify('using System.Collections.Generic;B b=new();List<int> l=[1,2];int[] a=[..l,3];b?.V=a.Length;Console.WriteLine(b.V);class B{public int V;}',{langVersion});
   verify('using System.Threading.Tasks;class P{static int total;static async Task<int> Add(int a){await Task.Delay(1);total+=a;return total;}static async Task Main(){Console.WriteLine(await Add(2)+await Add(3));}}');
 });
 test('integrated type intrinsics and enum conversions preserve both pipelines and execution engines',()=>{
@@ -65,7 +66,7 @@ test('integrated type intrinsics and enum conversions preserve both pipelines an
   }
 });
 test('A02-T29 images from the bound pipeline run on the bytecode VM and, through CIL, on the CIL VM',()=>{
-  const source='using System.Collections.Generic;class Acc:IDisposable{public int Total;public void Add(int v){Total+=v;}public void Dispose(){Console.WriteLine($"disposed {Total}");}}var list=new List<int>{3,4};using(var acc=new Acc()){foreach(var v in list)acc.Add(v);int[] extra=[..list,5];foreach(int v in extra){if(v==4)continue;acc.Add(v);}Console.WriteLine(acc.Total switch{15=>"fifteen",_=>"other"});}';
+  const source='using System.Collections.Generic;var list=new List<int>{3,4};using(var acc=new Acc()){foreach(var v in list)acc.Add(v);int[] extra=[..list,5];foreach(int v in extra){if(v==4)continue;acc.Add(v);}Console.WriteLine(acc.Total switch{15=>"fifteen",_=>"other"});}class Acc:IDisposable{public int Total;public void Add(int v){Total+=v;}public void Dispose(){Console.WriteLine($"disposed {Total}");}}';
   const image=compile(source);assert.equal(image.success,true,JSON.stringify(image.diagnostics));const run=new VirtualMachine(image.image).run();assert.equal(run.state,'terminated',run.fault?.stack);assert.equal(run.output,'fifteen\ndisposed 15\n');
   const il=compileToIL(source);assert.equal(il.success,true);const cil=new CilVirtualMachine(il.assembly).run();assert.equal(cil.output,run.output);
 });
@@ -76,12 +77,15 @@ test('A02-T29 the emitter makes no semantic decisions and refuses unlowered tree
   assert.throws(()=>new IrEmitter(compilation,method).expr(new BoundInterpolatedString(null,{parts:[]})),/without being lowered/);
 });
 test('A02-T29 a compilation with errors binds and analyses every method but emits nothing',()=>{
-  const compilation=new Compilation([parse(new SourceText('class C{public int Ok(){return 1;}public int Bad(){return "x";}} Console.WriteLine(new C().Ok());','Program.cs'))],{}),result=compilation.build();
+  const compilation=new Compilation([parse(new SourceText('Console.WriteLine(new C().Ok()); class C{public int Ok(){return 1;}public int Bad(){return "x";}}','Program.cs'))],{}),result=compilation.build();
   assert.equal(result.success,false);assert.equal(result.image,null);assert.deepEqual(result.diagnostics.map(d=>d.code),['CS0029']);assert.equal(compilation.methods.every(m=>m.code===undefined),true);assert.equal(compilation.constants.length,0);assert.equal(compilation.sequencePoints.length,0);
   assert.equal(compilation.boundPipeline.units.filter(u=>u.body).length,3,'all bodies are bound for the semantic model');assert(result.symbols.some(s=>s.name==='Ok'));
 });
 test('A02-T29 verification rejects a pipeline that changes the image',()=>{
   const previous=globalThis.SHARPFORGE_PIPELINE_MISMATCH;let seen=null;globalThis.SHARPFORGE_PIPELINE_MISMATCH=m=>{seen=m;};
-  try{compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'verify'});assert(seen&&seen.tolerated,'a flow-only difference is tolerated and reported to the hook');assert.deepEqual(seen.onlyLegacy.map(k=>k.slice(0,6)),['CS0165']);assert.deepEqual(seen.success,[false,true]);}
+  // `implicitUsings:false` keeps `Console` out of the semantic analysis, so each pipeline's own flow diagnostics stand
+  // and differ; with `System` in scope the analysis gives both pipelines Roslyn's answer and there is nothing to report.
+  try{compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'verify'});assert.equal(seen,null,'both pipelines agree with Roslyn');
+    compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'verify',implicitUsings:false});assert(seen&&seen.tolerated,'a flow-only difference is tolerated and reported to the hook');assert.deepEqual(seen.onlyLegacy.map(k=>k.slice(0,6)),['CS0165']);assert.deepEqual(seen.success,[false,true]);}
   finally{globalThis.SHARPFORGE_PIPELINE_MISMATCH=previous;}
 });

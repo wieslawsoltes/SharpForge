@@ -1,0 +1,5 @@
+{
+  "comparison-constraints/comparable-and-equatable-constraints-over-simple-types": ["diagnostics", "warnings", "bytecode", "cil"],
+  "comparison-constraints/cs0311-cs0315-comparison-constraints-not-satisfied": ["diagnostics", "warnings"],
+  "comparison-constraints/cs0535-cs0738-comparison-interfaces-not-implemented": ["diagnostics", "warnings"]
+}

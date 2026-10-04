@@ -1,0 +1,1088 @@
+{
+  "schemaVersion": 1,
+  "sourceSHA256": "1e1c1c5cad8a59b2a0267f1b1dc97312c184d2e8b9f4f12fcf8ebebc791817b7",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16"
+    },
+    "referenceAssemblies": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    }
+  },
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "compileRuns": 2,
+  "executionRuns": 2,
+  "commands": {
+    "compile": [
+      "dotnet",
+      "/Users/wieslawsoltes/.dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll",
+      "/nologo",
+      "/noconfig",
+      "/nostdlib+",
+      "/utf8output",
+      "/deterministic+",
+      "/debug-",
+      "/optimize+",
+      "/checked-",
+      "/nullable:disable",
+      "/target:exe",
+      "/langversion:12.0",
+      "/pathmap:<temporary>=/_/oracle",
+      "/out:<temporary>/Oracle.dll",
+      "/errorlog:<temporary>/diagnostics.sarif,version=2.1",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.CSharp.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.VisualBasic.Core.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.VisualBasic.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.Win32.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.Win32.Registry.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.AppContext.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Buffers.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Concurrent.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Immutable.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.NonGeneric.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Specialized.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.Annotations.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.DataAnnotations.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.EventBasedAsync.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.TypeConverter.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Configuration.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Console.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Core.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.Common.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.DataSetExtensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Contracts.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Debug.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.DiagnosticSource.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.FileVersionInfo.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Process.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.StackTrace.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.TextWriterTraceListener.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Tools.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.TraceSource.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Tracing.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Drawing.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Drawing.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Dynamic.Runtime.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Formats.Asn1.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Formats.Tar.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.Calendars.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.Extensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.Brotli.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.FileSystem.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.ZipFile.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.AccessControl.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.DriveInfo.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.Watcher.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.IsolatedStorage.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.MemoryMappedFiles.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipelines.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipes.AccessControl.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipes.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.UnmanagedMemoryStream.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.AsyncEnumerable.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Expressions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Parallel.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Queryable.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Memory.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Http.Json.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Http.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.HttpListener.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Mail.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.NameResolution.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.NetworkInformation.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Ping.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Quic.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Requests.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Security.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.ServerSentEvents.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.ServicePoint.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Sockets.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebClient.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebHeaderCollection.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebProxy.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebSockets.Client.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebSockets.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Numerics.Vectors.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Numerics.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ObjectModel.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.DispatchProxy.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.ILGeneration.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.Lightweight.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Extensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Metadata.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.TypeExtensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.Reader.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.ResourceManager.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.Writer.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.CompilerServices.Unsafe.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.CompilerServices.VisualC.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Extensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Handles.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.JavaScript.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.RuntimeInformation.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Intrinsics.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Loader.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Numerics.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Formatters.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Json.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Xml.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.AccessControl.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Claims.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Algorithms.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Cng.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Csp.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Encoding.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.OpenSsl.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.X509Certificates.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Principal.Windows.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Principal.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.SecureString.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ServiceModel.Web.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ServiceProcess.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.CodePages.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.Extensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encodings.Web.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Json.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.RegularExpressions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.AccessControl.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Channels.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Overlapped.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Dataflow.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Extensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Parallel.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Thread.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.ThreadPool.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Timer.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Transactions.Local.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Transactions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ValueTuple.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Web.HttpUtility.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Web.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Windows.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.Linq.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.ReaderWriter.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.Serialization.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XDocument.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XPath.XDocument.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XPath.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XmlDocument.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XmlSerializer.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/WindowsBase.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/mscorlib.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/netstandard.dll",
+      "<temporary>/Program.cs"
+    ],
+    "execute": [
+      "dotnet",
+      "<temporary>/Oracle.dll"
+    ]
+  },
+  "compiled": {
+    "exitCode": 0,
+    "diagnostics": [],
+    "assemblySHA256": "593de8d31163b0aa237869768465dbeac99464fea061c174d6c7a6f3c623fd5c"
+  },
+  "executed": {
+    "stdout": "{\"id\":\"format-0\",\"format\":\"plain\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"plain\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|plain\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-1\",\"format\":\"{{\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"{\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|{\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-2\",\"format\":\"}}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"}\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|}\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-3\",\"format\":\"{{{0}}}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"{x}\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|{x}\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-4\",\"format\":\"{0}}}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x}\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x}\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-5\",\"format\":\"{{{0}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"{x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|{x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-6\",\"format\":\"{0 ,5}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"    x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|    x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-7\",\"format\":\"{ 0}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-8\",\"format\":\"{0 }\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-9\",\"format\":\"{0, 5}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"    x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|    x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-10\",\"format\":\"{0, -5}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x    \",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x    \",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-11\",\"format\":\"{0,- 5}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-12\",\"format\":\"{0,\\u002B5}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-13\",\"format\":\"{0,5 }\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"    x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|    x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-14\",\"format\":\"{0, 0005 }\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"    x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|    x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-15\",\"format\":\"{0\\t}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-16\",\"format\":\"{0,\\t5}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-17\",\"format\":\"{00}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-18\",\"format\":\"{0000000}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-19\",\"format\":\"{1000000}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-20\",\"format\":\"{0,1000000}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":{\"length\":1000000,\"sha256\":\"cc11319bfe5c80336f32d08285f53a7e843d9cbf2f95a4693315e41d10ffb96c\",\"prefix\":\"                \",\"suffix\":\"               x\"},\"error\":null,\"builder\":null,\"builderSummary\":{\"length\":1000007,\"sha256\":\"8974dfbadbcb438b123c632e58df135e0de15aa0cdc6b23c789c4a2319088814\",\"prefix\":\"prefix|         \",\"suffix\":\"               x\"},\"builderError\":null}\n{\"id\":\"format-21\",\"format\":\"{0,-1000000}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":{\"length\":1000000,\"sha256\":\"ae161e3919d066bae98ea81d97a5c98f9cf835753d8246ad4d5167ab087188a2\",\"prefix\":\"x               \",\"suffix\":\"                \"},\"error\":null,\"builder\":null,\"builderSummary\":{\"length\":1000007,\"sha256\":\"ad94588e9ff558e37575ff058d30d3c3c94a8e092c363c4910be9f6f4668bb6d\",\"prefix\":\"prefix|x        \",\"suffix\":\"                \"},\"builderError\":null}\n{\"id\":\"format-22\",\"format\":\"{0:}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-23\",\"format\":\"{0 :}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-24\",\"format\":\"{0,5:}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"    x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|    x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-25\",\"format\":\"{0:yyyy}}}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x}\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x}\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-26\",\"format\":\"{0:}}}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x}\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x}\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-27\",\"format\":\"{0:}}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|x\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-28\",\"format\":\"{0:{{}}}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-29\",\"format\":\"{0:{}}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-30\",\"format\":\"{0: a b }\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-31\",\"format\":\"{0:\\t}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-32\",\"format\":\"{\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-33\",\"format\":\"}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-34\",\"format\":\"{0\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-35\",\"format\":\"{0,}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-36\",\"format\":\"{0,-}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-37\",\"format\":\"{0:\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-38\",\"format\":\"before{9}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|before\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-39\",\"format\":\"before{0}after{\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"FormatException\",\"builder\":\"prefix|beforexafter\",\"builderSummary\":null,\"builderError\":\"FormatException\"}\n{\"id\":\"format-40\",\"format\":\"{0}|{1}|{2}|{3}|{4}\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"x|y||four|five\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|x|y||four|five\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"format-41\",\"format\":\"a{{b}}c{0}d\",\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":\"a{b}cxd\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|a{b}cxd\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"integer-escaped\",\"format\":\"{{{0:D3}}}\",\"arguments\":[42],\"result\":\"{042}\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|{042}\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"integer-space\",\"format\":\"{0 ,5:D3}\",\"arguments\":[42],\"result\":\"  042\",\"resultSummary\":null,\"error\":null,\"builder\":\"prefix|  042\",\"builderSummary\":null,\"builderError\":null}\n{\"id\":\"null-format\",\"format\":null,\"arguments\":[\"x\",\"y\",null,\"four\",\"five\"],\"result\":null,\"resultSummary\":null,\"error\":\"ArgumentNullException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"ArgumentNullException\"}\n{\"id\":\"null-arguments\",\"format\":\"plain\",\"arguments\":null,\"result\":null,\"resultSummary\":null,\"error\":\"ArgumentNullException\",\"builder\":\"prefix|\",\"builderSummary\":null,\"builderError\":\"ArgumentNullException\"}\n{\"id\":\"default\",\"result\":\"\",\"error\":null,\"capacity\":16,\"maximum\":2147483647}\n{\"id\":\"capacity\",\"result\":\"\",\"error\":null,\"capacity\":1,\"maximum\":2147483647}\n{\"id\":\"zero-capacity\",\"result\":\"\",\"error\":null,\"capacity\":16,\"maximum\":2147483647}\n{\"id\":\"text-capacity\",\"result\":\"abc\",\"error\":null,\"capacity\":4,\"maximum\":2147483647}\n{\"id\":\"negative-capacity\",\"result\":null,\"error\":\"ArgumentOutOfRangeException\",\"capacity\":-1,\"maximum\":-1}\n{\"id\":\"expanded-four\",\"result\":\"1/2/3/4\",\"error\":null,\"capacity\":16,\"maximum\":2147483647}\n{\"id\":\"expanded-eight\",\"result\":\"01234567\",\"error\":null,\"capacity\":16,\"maximum\":2147483647}\n{\"id\":\"explicit-array\",\"result\":\"1/2/3/4\",\"error\":null,\"capacity\":16,\"maximum\":2147483647}\n{\"id\":\"empty-expanded\",\"result\":\"literal\",\"error\":null,\"capacity\":16,\"maximum\":2147483647}\n",
+    "stderr": "",
+    "exitCode": 0,
+    "signal": null,
+    "unhandledException": null
+  },
+  "cases": [
+    {
+      "id": "format-0",
+      "format": "plain",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "plain",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|plain",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-1",
+      "format": "{{",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "{",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|{",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-2",
+      "format": "}}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "}",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|}",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-3",
+      "format": "{{{0}}}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "{x}",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|{x}",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-4",
+      "format": "{0}}}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x}",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x}",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-5",
+      "format": "{{{0}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "{x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|{x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-6",
+      "format": "{0 ,5}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "    x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|    x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-7",
+      "format": "{ 0}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-8",
+      "format": "{0 }",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-9",
+      "format": "{0, 5}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "    x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|    x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-10",
+      "format": "{0, -5}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x    ",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x    ",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-11",
+      "format": "{0,- 5}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-12",
+      "format": "{0,+5}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-13",
+      "format": "{0,5 }",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "    x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|    x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-14",
+      "format": "{0, 0005 }",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "    x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|    x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-15",
+      "format": "{0\t}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-16",
+      "format": "{0,\t5}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-17",
+      "format": "{00}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-18",
+      "format": "{0000000}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-19",
+      "format": "{1000000}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-20",
+      "format": "{0,1000000}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": {
+        "length": 1000000,
+        "sha256": "cc11319bfe5c80336f32d08285f53a7e843d9cbf2f95a4693315e41d10ffb96c",
+        "prefix": "                ",
+        "suffix": "               x"
+      },
+      "error": null,
+      "builder": null,
+      "builderSummary": {
+        "length": 1000007,
+        "sha256": "8974dfbadbcb438b123c632e58df135e0de15aa0cdc6b23c789c4a2319088814",
+        "prefix": "prefix|         ",
+        "suffix": "               x"
+      },
+      "builderError": null
+    },
+    {
+      "id": "format-21",
+      "format": "{0,-1000000}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": {
+        "length": 1000000,
+        "sha256": "ae161e3919d066bae98ea81d97a5c98f9cf835753d8246ad4d5167ab087188a2",
+        "prefix": "x               ",
+        "suffix": "                "
+      },
+      "error": null,
+      "builder": null,
+      "builderSummary": {
+        "length": 1000007,
+        "sha256": "ad94588e9ff558e37575ff058d30d3c3c94a8e092c363c4910be9f6f4668bb6d",
+        "prefix": "prefix|x        ",
+        "suffix": "                "
+      },
+      "builderError": null
+    },
+    {
+      "id": "format-22",
+      "format": "{0:}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-23",
+      "format": "{0 :}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-24",
+      "format": "{0,5:}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "    x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|    x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-25",
+      "format": "{0:yyyy}}}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x}",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x}",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-26",
+      "format": "{0:}}}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x}",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x}",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-27",
+      "format": "{0:}}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|x",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-28",
+      "format": "{0:{{}}}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-29",
+      "format": "{0:{}}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-30",
+      "format": "{0: a b }",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-31",
+      "format": "{0:\t}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-32",
+      "format": "{",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-33",
+      "format": "}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-34",
+      "format": "{0",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-35",
+      "format": "{0,}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-36",
+      "format": "{0,-}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-37",
+      "format": "{0:",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-38",
+      "format": "before{9}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|before",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-39",
+      "format": "before{0}after{",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "FormatException",
+      "builder": "prefix|beforexafter",
+      "builderSummary": null,
+      "builderError": "FormatException"
+    },
+    {
+      "id": "format-40",
+      "format": "{0}|{1}|{2}|{3}|{4}",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "x|y||four|five",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|x|y||four|five",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "format-41",
+      "format": "a{{b}}c{0}d",
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": "a{b}cxd",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|a{b}cxd",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "integer-escaped",
+      "format": "{{{0:D3}}}",
+      "arguments": [
+        42
+      ],
+      "result": "{042}",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|{042}",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "integer-space",
+      "format": "{0 ,5:D3}",
+      "arguments": [
+        42
+      ],
+      "result": "  042",
+      "resultSummary": null,
+      "error": null,
+      "builder": "prefix|  042",
+      "builderSummary": null,
+      "builderError": null
+    },
+    {
+      "id": "null-format",
+      "format": null,
+      "arguments": [
+        "x",
+        "y",
+        null,
+        "four",
+        "five"
+      ],
+      "result": null,
+      "resultSummary": null,
+      "error": "ArgumentNullException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "ArgumentNullException"
+    },
+    {
+      "id": "null-arguments",
+      "format": "plain",
+      "arguments": null,
+      "result": null,
+      "resultSummary": null,
+      "error": "ArgumentNullException",
+      "builder": "prefix|",
+      "builderSummary": null,
+      "builderError": "ArgumentNullException"
+    },
+    {
+      "id": "default",
+      "result": "",
+      "error": null,
+      "capacity": 16,
+      "maximum": 2147483647
+    },
+    {
+      "id": "capacity",
+      "result": "",
+      "error": null,
+      "capacity": 1,
+      "maximum": 2147483647
+    },
+    {
+      "id": "zero-capacity",
+      "result": "",
+      "error": null,
+      "capacity": 16,
+      "maximum": 2147483647
+    },
+    {
+      "id": "text-capacity",
+      "result": "abc",
+      "error": null,
+      "capacity": 4,
+      "maximum": 2147483647
+    },
+    {
+      "id": "negative-capacity",
+      "result": null,
+      "error": "ArgumentOutOfRangeException",
+      "capacity": -1,
+      "maximum": -1
+    },
+    {
+      "id": "expanded-four",
+      "result": "1/2/3/4",
+      "error": null,
+      "capacity": 16,
+      "maximum": 2147483647
+    },
+    {
+      "id": "expanded-eight",
+      "result": "01234567",
+      "error": null,
+      "capacity": 16,
+      "maximum": 2147483647
+    },
+    {
+      "id": "explicit-array",
+      "result": "1/2/3/4",
+      "error": null,
+      "capacity": 16,
+      "maximum": 2147483647
+    },
+    {
+      "id": "empty-expanded",
+      "result": "literal",
+      "error": null,
+      "capacity": 16,
+      "maximum": 2147483647
+    }
+  ]
+}

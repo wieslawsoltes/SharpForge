@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8fc31a1003e8c04d40f6",
+  "kind": "diagnostics",
+  "sourceText": "assert(\"String\");\nassert(\"Nullable`1\");\nassert(\"Type\");\nassert(\"Array\");\nassert(\"Attribute\");\nassert(\"Object\");\nassert(\"NotSupportedException\");\nassert(\"Void\");\n\nassert(\"other\", \"default\");\nassert(null, \"default\");\nassert(\"\", \"default\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, string expected = null)\n{\n    if (C.M(input) != (expected ?? input))\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static string M(string value)\n    {\n        return value switch\n        {\n            \"String\" => \"String\",\n            \"Nullable`1\" => \"Nullable`1\",\n            \"Type\" => \"Type\",\n            \"Array\" => \"Array\",\n            \"Attribute\" => \"Attribute\",\n            \"Object\" => \"Object\",\n            \"NotSupportedException\" => \"NotSupportedException\",\n            \"Void\" => \"Void\",\n            _ => \"default\"\n        };\n    }\n}",
+  "sourceSHA256": "079766d9acb837f48ae0dc1287448511d58ac4beb8dcf2a82be200521c732210",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "GetWellKnownType",
+    "offset": 412216
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

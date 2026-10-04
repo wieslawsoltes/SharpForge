@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3bd9a250caa2ede06f12",
+  "kind": "diagnostics",
+  "sourceText": "var c = new C();\nc.E += () => { };\nC.E += () => { }; // 1\nc.F += () => { }; // 2\nC.F += () => { };\n\npartial class C\n{\n    public partial event System.Action E;\n    public static partial event System.Action F;\n}\npartial class C\n{\n    public partial event System.Action E\n    {\n        add\n        {\n            this.E += null;\n            E += null;\n            C.E += null; // 3\n        }\n        remove\n        {\n            this.F += null; // 4\n            F += null;\n            C.F += null;\n        }\n    }\n    public static partial event System.Action F\n    {\n        add\n        {\n            this.E += null; // 5\n            E += null; // 6\n            C.E += null; // 7\n        }\n        remove\n        {\n            this.F += null; // 8\n            F += null;\n            C.F += null;\n        }\n    }\n}",
+  "sourceSHA256": "496e1248c5f33eb9aba1182227bd700f8167cb24aa3af90655cdf3d38f7e574a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Use_Static",
+    "offset": 121189
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0176",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0176",
+        "severity": "error"
+      },
+      {
+        "code": "CS0026",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0026",
+        "severity": "error"
+      },
+      {
+        "code": "CS0176",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,1): error CS0120: An object reference is required for the non-static field, method, or property 'C.E'\n            // C.E += () => { }; // 1\n            Diagnostic(ErrorCode.ERR_ObjectRequired, \"C.E\").WithArguments(\"C.E\").WithLocation(3, 1),\n            // (4,1): error CS0176: Member 'C.F' cannot be accessed with an instance reference; qualify it with a type name instead\n            // c.F += () => { }; // 2\n            Diagnostic(ErrorCode.ERR_ObjectProhibited, \"c.F\").WithArguments(\"C.F\").WithLocation(4, 1),\n            // (20,13): error CS0120: An object reference is required for the non-static field, method, or property 'C.E'\n            //             C.E += null; // 3\n            Diagnostic(ErrorCode.ERR_ObjectRequired, \"C.E\").WithArguments(\"C.E\").WithLocation(20, 13),\n            // (24,13): error CS0176: Member 'C.F' cannot be accessed with an instance reference; qualify it with a type name instead\n            //             this.F += null; // 4\n            Diagnostic(ErrorCode.ERR_ObjectProhibited, \"this.F\").WithArguments(\"C.F\").WithLocation(24, 13),\n            // (33,13): error CS0026: Keyword 'this' is not valid in a static property, static method, or static field initializer\n            //             this.E += null; // 5\n            Diagnostic(ErrorCode.ERR_ThisInStaticMeth, \"this\").WithLocation(33, 13),\n            // (34,13): error CS0120: An object reference is required for the non-static field, method, or property 'C.E'\n            //             E += null; // 6\n            Diagnostic(ErrorCode.ERR_ObjectRequired, \"E\").WithArguments(\"C.E\").WithLocation(34, 13),\n            // (35,13): error CS0120: An object reference is required for the non-static field, method, or property 'C.E'\n            //             C.E += null; // 7\n            Diagnostic(ErrorCode.ERR_ObjectRequired, \"C.E\").WithArguments(\"C.E\").WithLocation(35, 13),\n            // (39,13): error CS0026: Keyword 'this' is not valid in a static property, static method, or static field initializer\n            //             this.F += null; // 8\n            Diagnostic(ErrorCode.ERR_ThisInStaticMeth, \"this\").WithLocation(39, 13),\n            // (39,13): error CS0176: Member 'C.F' cannot be accessed with an instance reference; qualify it with a type name instead\n            //             this.F += null; // 8\n            Diagnostic(ErrorCode.ERR_ObjectProhibited, \"this.F\").WithArguments(\"C.F\").WithLocation(39, 13)",
+  "unsupported": []
+}

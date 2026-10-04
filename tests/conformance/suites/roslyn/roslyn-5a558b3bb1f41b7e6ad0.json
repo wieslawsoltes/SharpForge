@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5a558b3bb1f41b7e6ad0",
+  "kind": "diagnostics",
+  "sourceText": "[assembly: System.Reflection.AssemblyCultureAttribute(\"\\0\")]",
+  "sourceSHA256": "78c858050bc614afc58566f4e9bb2784701a0602d6f00aea6d9157ea6e9fe708",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "sha256": "5af75c081b993313ae994c6bb25a5aa25038b265d6fc6300e8d89976fd96811a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "license": "MIT",
+    "method": "NulCharInAssemblyCultureAttribute",
+    "offset": 18271
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(s, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7100",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (1,55): error CS7100: Assembly culture strings may not contain embedded NUL characters.\n                // [assembly: System.Reflection.AssemblyCultureAttribute(\"\\0\")]\n                Diagnostic(ErrorCode.ERR_InvalidAssemblyCulture, @\"\"\"\\0\"\"\").WithLocation(1, 55)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,4 +1,9 @@
+import {NullableTranslation} from './nullable-translation.js';
+import {UnsafeMemoryTranslation} from '../../lowering/unsafe-memory.js';
 import {VarargsTranslation} from '../../lowering/varargs.js';
+import {SpanTranslation} from '../../lowering/spans.js';
+import {StructTranslation} from './struct-translation.js';
+import {ScalarTranslation} from './scalar-translation.js';
 /**
  * Lowers one semantic bound body (binder/body-binder.js) to the nodes the IR emitter consumes. The translator owns
  * the per-body state: where each variable lives (a slot, a parameter or a closure cell), the locals of the block
@@ -7,10 +12,6 @@ import {VarargsTranslation} from '../../lowering/varargs.js';
  * The expression and statement families are class mixins (translate-*.js) composed at the bottom of this file.
  */
 import { hoistedLocalFieldName, hoistedSynthesizedLocalFieldName } from '../../lowering/generated-names.js';
-import {ScalarTranslation} from './scalar-translation.js';
-import {MemoryTranslation} from './memory-translation.js';
-import {RuntimeArrayTranslation} from './runtime-array-translation.js';
-import {SynchronizationTranslation} from './synchronization-translation.js';
 import { n } from './node-factory.js';
 import { ExpressionTranslation } from './translate-expressions.js';
 import { CallTranslation } from './translate-calls.js';
@@ -19,6 +20,7 @@ import { PatternTranslation } from './translate-patterns.js';
 import { StatementTranslation } from './translate-statements.js';
 import { JumpTranslation } from './translate-jumps.js';
 import { RuntimeGapTranslation } from './runtime-gaps.js';
+import { ArrayTranslation } from '../../lowering/arrays.js';
 import { AwaitTranslation } from '../../lowering/async/async-methods.js';
 import { AsyncStreamTranslation } from '../../lowering/async/async-streams.js';
 import { ByReferenceTranslation } from '../../lowering/by-reference.js';
@@ -216,10 +218,7 @@ const families = [
   StatementTranslation,
   JumpTranslation,
   RuntimeGapTranslation,
-  ScalarTranslation,
-  MemoryTranslation,
-  RuntimeArrayTranslation,
-  SynchronizationTranslation,
+  ArrayTranslation,
   AwaitTranslation,
   AsyncStreamTranslation,
   ByReferenceTranslation,
@@ -234,6 +233,11 @@ const families = [
   StructuralPatternTranslation,
   ...languageLowerings,
   // Last: what depends on a type argument is decided before any other family sees the node.
+  SpanTranslation,
+  UnsafeMemoryTranslation,
+  ScalarTranslation,
+  StructTranslation,
+  NullableTranslation,
   GenericTranslation,
 ];
 

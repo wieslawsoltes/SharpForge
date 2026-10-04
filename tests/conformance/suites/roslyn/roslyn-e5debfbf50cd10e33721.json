@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e5debfbf50cd10e33721",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    private C(string s, ref int i) => System.Console.WriteLine(\"string\" + i);\n    private C(object o, in int i) => System.Console.WriteLine(\"object\" + i);\n    static void Main()\n    {\n        int i = 5;\n        new C(default(object), ref i);\n    }\n}",
+  "sourceSHA256": "aeb7c694243489317450bc2f12e440ee0af9b3a41855a27fe2920912ec7248b4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "RefReadonlyParameter_RefArgument_OverloadResolution_02_Ctor",
+    "offset": 155059
+  },
+  "langVersion": "11",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular11)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1503",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (8,15): error CS1503: Argument 1: cannot convert from 'object' to 'string'\n            //         new C(default(object), ref i);\n            Diagnostic(ErrorCode.ERR_BadArgType, \"default(object)\").WithArguments(\"1\", \"object\", \"string\").WithLocation(8, 15)",
+  "unsupported": []
+}

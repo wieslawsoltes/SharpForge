@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-13bd98fc67c1c3d2518f",
+  "kind": "diagnostics",
+  "sourceText": "using System.Runtime.CompilerServices;\nusing System.Runtime.InteropServices;\nclass C\n{\n    static void M1([DecimalConstant(1, 0, 0u, 0u, 11u)] ref readonly decimal d) => throw null;\n    static void M2([Optional, DecimalConstant(1, 0, 0u, 0u, 11u)] ref readonly decimal d = 1.1m) => throw null;\n    static void Main()\n    {\n        M1();\n        M2();\n    }\n}",
+  "sourceSHA256": "3840c842ab8251f8e30a54d5d2b1995438d714124a4e00d2c1a7fbc79c00c0fe",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "DefaultParameterValue_DecimalConstant_Invalid",
+    "offset": 219626
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1745",
+        "severity": "error"
+      },
+      {
+        "code": "CS9200",
+        "severity": "warning"
+      },
+      {
+        "code": "CS7036",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (6,21): error CS1745: Cannot specify default parameter value in conjunction with DefaultParameterAttribute or OptionalAttribute\n            //     static void M2([Optional, DecimalConstant(1, 0, 0u, 0u, 11u)] ref readonly decimal d = 1.1m) => throw null;\n            Diagnostic(ErrorCode.ERR_DefaultValueUsedWithAttributes, \"Optional\").WithLocation(6, 21),\n            // (6,92): warning CS9200: A default value is specified for 'ref readonly' parameter 'd', but 'ref readonly' should be used only for references. Consider declaring the parameter as 'in'.\n            //     static void M2([Optional, DecimalConstant(1, 0, 0u, 0u, 11u)] ref readonly decimal d = 1.1m) => throw null;\n            Diagnostic(ErrorCode.WRN_RefReadonlyParameterDefaultValue, \"1.1m\").WithArguments(\"d\").WithLocation(6, 92),\n            // (9,9): error CS7036: There is no argument given that corresponds to the required parameter 'd' of 'C.M1(ref readonly decimal)'\n            //         M1();\n            Diagnostic(ErrorCode.ERR_NoCorrespondingArgument, \"M1\").WithArguments(\"d\", \"C.M1(ref readonly decimal)\").WithLocation(9, 9)",
+  "unsupported": []
+}

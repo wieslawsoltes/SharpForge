@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7be36415f7ed43cd2e66",
+  "kind": "diagnostics",
+  "sourceText": "partial class C1\n{\n    protected virtual partial event System.Action E, F;\n    protected partial event System.Action E { add { } remove { } }\n    protected virtual partial event System.Action F { add { } remove { } }\n}\npartial class C2 : C1\n{\n    protected override partial event System.Action E;\n    protected sealed partial event System.Action E { add { } remove { } }\n    protected new partial event System.Action F;\n    protected partial event System.Action F { add { } remove { } }\n}\npartial class C3 : C1\n{\n    protected sealed partial event System.Action E;\n    protected partial event System.Action E { add { } remove { } }\n    protected override partial event System.Action F;\n    protected override sealed partial event System.Action F { add { } remove { } }\n}",
+  "sourceSHA256": "fe77474cd1200529cdb9fc6260b0bdb671553bd08557f3e708aebf83637dc617",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Difference_ExtendedModifiers",
+    "offset": 144375
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8800",
+        "severity": "error"
+      },
+      {
+        "code": "CS8800",
+        "severity": "error"
+      },
+      {
+        "code": "CS8800",
+        "severity": "error"
+      },
+      {
+        "code": "CS0114",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0238",
+        "severity": "error"
+      },
+      {
+        "code": "CS8800",
+        "severity": "error"
+      },
+      {
+        "code": "CS8800",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (4,43): error CS8800: Both partial member declarations must have identical combinations of 'virtual', 'override', 'sealed', and 'new' modifiers.\n            //     protected partial event System.Action E { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_PartialMemberExtendedModDifference, \"E\").WithLocation(4, 43),\n            // (10,50): error CS8800: Both partial member declarations must have identical combinations of 'virtual', 'override', 'sealed', and 'new' modifiers.\n            //     protected sealed partial event System.Action E { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_PartialMemberExtendedModDifference, \"E\").WithLocation(10, 50),\n            // (12,43): error CS8800: Both partial member declarations must have identical combinations of 'virtual', 'override', 'sealed', and 'new' modifiers.\n            //     protected partial event System.Action F { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_PartialMemberExtendedModDifference, \"F\").WithLocation(12, 43),\n            // (16,50): warning CS0114: 'C3.E' hides inherited member 'C1.E'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.\n            //     protected sealed partial event System.Action E;\n            Diagnostic(ErrorCode.WRN_NewOrOverrideExpected, \"E\").WithArguments(\"C3.E\", \"C1.E\").WithLocation(16, 50),\n            // (16,50): error CS0238: 'C3.E' cannot be sealed because it is not an override\n            //     protected sealed partial event System.Action E;\n            Diagnostic(ErrorCode.ERR_SealedNonOverride, \"E\").WithArguments(\"C3.E\").WithLocation(16, 50),\n            // (17,43): error CS8800: Both partial member declarations must have identical combinations of 'virtual', 'override', 'sealed', and 'new' modifiers.\n            //     protected partial event System.Action E { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_PartialMemberExtendedModDifference, \"E\").WithLocation(17, 43),\n            // (19,59): error CS8800: Both partial member declarations must have identical combinations of 'virtual', 'override', 'sealed', and 'new' modifiers.\n            //     protected override sealed partial event System.Action F { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_PartialMemberExtendedModDifference, \"F\").WithLocation(19, 59)",
+  "unsupported": []
+}

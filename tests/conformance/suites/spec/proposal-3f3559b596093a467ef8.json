@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-3f3559b596093a467ef8",
+  "kind": "spec",
+  "sourceText": "C c = new C();\nint[] i = [0, .. c]; // Uses Length, if available, to allocate the right size",
+  "sourceSHA256": "5e53197a2d6b0e233b331c448d8cb6406584eebb2fbff330e2d9ce417001c506",
+  "target": "library",
+  "featureId": "csharp-15-0-extension-indexers",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/extension-indexers.md",
+    "sha256": "6fdfef3bd21d446da98e03ac7e0318fb3cdc6aa1029182357f71887752a4dd88",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/extension-indexers.md",
+    "license": "NOASSERTION",
+    "offset": 16922
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-76eb13974db04975355a",
+  "kind": "diagnostics",
+  "sourceText": "public delegate T D<T>();\npublic class A<T>\n{\n#pragma warning disable 0649\n    private T _t;\n    public ref T F()\n    {\n        return ref _t;\n    }\n}\npublic class B\n{\n    public static void F<T>(D<T> d, T t)\n    {\n        d();\n    }\n}\n\nclass Program\n{\n    static void Main()\n    {\n        var o = new A<int>();\n        B.F(() => ref o.F(), 2);\n        System.Console.WriteLine(o.F());\n    }\n}",
+  "sourceSHA256": "f03941edc7030df28a177fbb762e8d1e467f80f55d0c040a4c9f0f246c0b3e77",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReturnTests.cs",
+    "sha256": "06c585a83ea9a3bdd973b143522b47b5c4199d08d69f6b72739028ca8be96dc6",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReturnTests.cs",
+    "license": "MIT",
+    "method": "Lambda_03",
+    "offset": 66914
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8149",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (24,23): error CS8149: By-reference returns may only be used in methods that return by reference\n                //         B.F(() => ref o.F(), 2);\n                Diagnostic(ErrorCode.ERR_MustNotHaveRefReturn, \"o.F()\").WithLocation(24, 23)\n                ",
+  "unsupported": []
+}

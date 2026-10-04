@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-6d5129aacd85de9aa9d9",
+  "kind": "spec",
+  "sourceText": "class C\n{\n    public C()\n    {\n        P1 = 1; // Assigns P1's backing field directly\n        P2 = 2; // Assigns P2's backing field directly\n        P3 = 3; // Calls P3's setter\n        P4 = 4; // Calls P4's setter\n    }\n\n    public int P1 => field;\n    public int P2 { get => field; }\n    public int P4 { get => field; set => field = value; }\n    public int P3 { get => field; set; }\n}",
+  "sourceSHA256": "55a8f95d1bd20bebdee27c63f102a7df248c3ff6b0485a1716facb36a0410946",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 8261
+  }
+}

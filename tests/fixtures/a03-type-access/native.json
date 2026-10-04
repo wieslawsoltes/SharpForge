@@ -1,0 +1,469 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "version": "10.0.5",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "ilasmSHA256": "b7b5215b41d27bfad0fd9bd7d6bb2e64486f98cfd53cbe639127d6ad15817042",
+  "verifierSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "observations": [
+    {
+      "target": "TopInternal",
+      "accessor": "Other",
+      "accepted": true,
+      "query": true,
+      "name": "TypeAccess0",
+      "sourceSHA256": "4fa15607961388dd4b8c831cda9ecf83db3cd3d12ae7337006821253b3be6a96",
+      "assemblySHA256": "fb4b52e5be9bb8d6cec865a6773e8d702ffb9d2a13d52b93dfdce2ef594710c6",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess0.il'  to DLL --> '<temporary>/TypeAccess0.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\tMethods: 1;\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 34.91162499999996
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/TypeAccess0.dll Verified.\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 97.55545900000004
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "target": "Outer",
+      "accessor": "Other",
+      "accepted": true,
+      "query": true,
+      "name": "TypeAccess1",
+      "sourceSHA256": "b7f82414e735338ed481c673c2bd9d87c7d75f6f62d45d3013875f8e4cffbaca",
+      "assemblySHA256": "8a7ae07e5b4739bbec6928d5facfcdd1b73ce1e59683f0553e526da330cb61be",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess1.il'  to DLL --> '<temporary>/TypeAccess1.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\tMethods: 1;\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 6.406500000000051
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/TypeAccess1.dll Verified.\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 97.08345799999995
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "target": "PrivateChild",
+      "accessor": "Outer",
+      "accepted": true,
+      "query": true,
+      "name": "TypeAccess2",
+      "sourceSHA256": "f5ce8d1c023be85ce1c100f56fd795b3260b033b1a21b3a810841b10f856a816",
+      "assemblySHA256": "920ee6bbabff0bf6ab1c27f07d1d3c9ebc9a12f9a68a19a0fe78fb66c3e739b0",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess2.il'  to DLL --> '<temporary>/TypeAccess2.dll'\nSource file is UTF-8\n\nAssembled method Outer::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 6.395417000000066
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/TypeAccess2.dll Verified.\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 89.50029100000006
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "target": "PrivateChild",
+      "accessor": "Other",
+      "accepted": false,
+      "query": false,
+      "name": "TypeAccess3",
+      "sourceSHA256": "97ca7e3bf45b38f23b3d945868ec5c5a0a7be3cd007b760a1203070deea86a36",
+      "assemblySHA256": "e989e62451aca3a91b5443ce16c15e6c5d2f3a9d217d92741d0f1251df2867f1",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess3.il'  to DLL --> '<temporary>/TypeAccess3.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\tMethods: 1;\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.279457999999977
+      },
+      "verify": {
+        "stdout": "[IL]: Error [TypeAccess]: [<temporary>/TypeAccess3.dll : Other::Test()][offset 0x00000001] Type is not visible.\n1 Error(s) Verifying <temporary>/TypeAccess3.dll\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 93.494417
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TypeAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "target": "PrivateChild",
+      "accessor": "Sibling",
+      "accepted": true,
+      "query": true,
+      "name": "TypeAccess4",
+      "sourceSHA256": "a824fec40c729efd78fdad2548ad97570cd9dd6ce219c48e5323b73b4e6c3418",
+      "assemblySHA256": "600e653b570c30ae1bbcb77f23cf1e30cd3b9320a9b615d4b9b56da537ad62bb",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess4.il'  to DLL --> '<temporary>/TypeAccess4.dll'\nSource file is UTF-8\n\nAssembled method Outer�Sibling::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\tMethods: 1;\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.724415999999906
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/TypeAccess4.dll Verified.\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 87.92283299999997
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "target": "PublicChild",
+      "accessor": "Other",
+      "accepted": true,
+      "query": true,
+      "name": "TypeAccess5",
+      "sourceSHA256": "42933564ffdda3dece8348ad78499af2cdb1b0ee97a97d3dff6d4caff0663572",
+      "assemblySHA256": "87557d4576461575b345f11457bfd18269de07999b1e1718c28cd8d99c2ce2d6",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess5.il'  to DLL --> '<temporary>/TypeAccess5.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\tMethods: 1;\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.932749999999942
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/TypeAccess5.dll Verified.\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 89.6930420000001
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "target": "PublicInPrivate",
+      "accessor": "Other",
+      "accepted": false,
+      "query": false,
+      "name": "TypeAccess6",
+      "sourceSHA256": "c8583d997eaccad4986f767c258b5ed59c00cc239f9ab1751296e13cc0a98e2b",
+      "assemblySHA256": "9522aa6d2d307878b3adaa9d84a02ef91ce369e637e3011c1af8ce57e1c980a1",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess6.il'  to DLL --> '<temporary>/TypeAccess6.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\tMethods: 1;\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.587082999999893
+      },
+      "verify": {
+        "stdout": "[IL]: Error [TypeAccess]: [<temporary>/TypeAccess6.dll : Other::Test()][offset 0x00000001] Type is not visible.\n1 Error(s) Verifying <temporary>/TypeAccess6.dll\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 89.85912500000018
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TypeAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "target": "FamilyChild",
+      "accessor": "Derived",
+      "accepted": true,
+      "query": true,
+      "name": "TypeAccess7",
+      "sourceSHA256": "8d9f9ea827cc69ee8e7b62d40ce16ab1a8ae81a84c37e9e1a3527bb0e5cd307d",
+      "assemblySHA256": "aa1b7f51d4872714165eb6369b66956e5a8a059e30e6e68a0e516f28fb1facda",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess7.il'  to DLL --> '<temporary>/TypeAccess7.dll'\nSource file is UTF-8\n\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\tMethods: 1;\t\nClass 12\t\nClass 13\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.597500000000082
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/TypeAccess7.dll Verified.\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 88.99341600000002
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "target": "FamilyChild",
+      "accessor": "NestedDerived",
+      "accepted": true,
+      "query": true,
+      "name": "TypeAccess8",
+      "sourceSHA256": "4aec1a1c54665615347e2a0c9163e85a6508c6945cf48ff1b67ff58da4747482",
+      "assemblySHA256": "124397bf29e46103a3b27f0f831c1d2bba7a851dc9225771548b354e81fe2795",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess8.il'  to DLL --> '<temporary>/TypeAccess8.dll'\nSource file is UTF-8\n\nAssembled method Derived�NestedDerived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\tMethods: 1;\t\nClass 13\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 6.17841599999997
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/TypeAccess8.dll Verified.\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 94.010041
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "target": "FamilyChild",
+      "accessor": "Other",
+      "accepted": false,
+      "query": "unknown",
+      "name": "TypeAccess9",
+      "sourceSHA256": "9e008d8697fdab559fdd926743f343476e29ad62633d26b917ed03bc9d97d4d4",
+      "assemblySHA256": "925907b02e3512758281734df7a661d0fb62b19253795429e4220a7da736efa2",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess9.il'  to DLL --> '<temporary>/TypeAccess9.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\tMethods: 1;\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.520416999999952
+      },
+      "verify": {
+        "stdout": "[IL]: Error [TypeAccess]: [<temporary>/TypeAccess9.dll : Other::Test()][offset 0x00000001] Type is not visible.\n1 Error(s) Verifying <temporary>/TypeAccess9.dll\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 91.09729200000015
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TypeAccess"
+        ]
+      },
+      "result": {
+        "status": "unknown",
+        "reason": "unresolved-type-reference",
+        "token": 16777217
+      }
+    },
+    {
+      "target": "AssemblyChild",
+      "accessor": "Other",
+      "accepted": true,
+      "query": true,
+      "name": "TypeAccess10",
+      "sourceSHA256": "0537ec2bbfbcff295b49ce57164fc0cdf1deb2f38cfcf6802d8187a677fc7b17",
+      "assemblySHA256": "31add37bcf76add50c099ea375b3c102599dd4e0df3b21eb7dce53ac14c5773e",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess10.il'  to DLL --> '<temporary>/TypeAccess10.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\tMethods: 1;\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.996582999999873
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/TypeAccess10.dll Verified.\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 88.27025000000003
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "target": "FamOrChild",
+      "accessor": "Other",
+      "accepted": true,
+      "query": true,
+      "name": "TypeAccess11",
+      "sourceSHA256": "e8950cc290d113634eb25a62f2908900e29ebbe7bb8120b0e745974e11bcbe89",
+      "assemblySHA256": "8b1db042730562b4e27adbda30464c798933a5cdce3455a87b7f103d7cd77ec9",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess11.il'  to DLL --> '<temporary>/TypeAccess11.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\tMethods: 1;\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.940584000000172
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/TypeAccess11.dll Verified.\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 92.99137500000006
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "target": "FamAndChild",
+      "accessor": "Derived",
+      "accepted": true,
+      "query": true,
+      "name": "TypeAccess12",
+      "sourceSHA256": "bd9977041cbf2992c61cf40e954ae3344521ac5dbf0ba8bab5c26dc458eb8f4b",
+      "assemblySHA256": "24c95178d151ea7c4b25dfdc35bc82db8ed4ac6b4aaebb01cf12133827edf063",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess12.il'  to DLL --> '<temporary>/TypeAccess12.dll'\nSource file is UTF-8\n\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\tMethods: 1;\t\nClass 12\t\nClass 13\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.617707999999993
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/TypeAccess12.dll Verified.\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 92.77875000000017
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "target": "FamAndChild",
+      "accessor": "Other",
+      "accepted": false,
+      "query": "unknown",
+      "name": "TypeAccess13",
+      "sourceSHA256": "ad2346f414fd3498ebe20c9cf0865cd0e99ce57092beda3946295675e4da0c85",
+      "assemblySHA256": "ef9c359f0c10b8d4ae459efa0729459141b0c096291702639a37e4a9a28b5baa",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/TypeAccess13.il'  to DLL --> '<temporary>/TypeAccess13.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tTopInternal\nClass 2:\tOuter\nClass 3:\tOuter�PrivateChild\nClass 4:\tOuter�PrivateChild�PublicInPrivate\nClass 5:\tOuter�PublicChild\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�FamilyChild\nClass 8:\tOuter�AssemblyChild\nClass 9:\tOuter�FamOrChild\nClass 10:\tOuter�FamAndChild\nClass 11:\tDerived\nClass 12:\tDerived�NestedDerived\nClass 13:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\tMethods: 1;\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nClass 12\t\nClass 13\t\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.530500000000075
+      },
+      "verify": {
+        "stdout": "[IL]: Error [TypeAccess]: [<temporary>/TypeAccess13.dll : Other::Test()][offset 0x00000001] Type is not visible.\n1 Error(s) Verifying <temporary>/TypeAccess13.dll\nTypes found: 0\nTypes verified: 14\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 91.36691699999983
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TypeAccess"
+        ]
+      },
+      "result": {
+        "status": "unknown",
+        "reason": "unresolved-type-reference",
+        "token": 16777217
+      }
+    }
+  ]
+}

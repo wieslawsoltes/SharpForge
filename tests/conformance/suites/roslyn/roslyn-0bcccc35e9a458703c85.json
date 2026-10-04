@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0bcccc35e9a458703c85",
+  "kind": "diagnostics",
+  "sourceText": "var d = new Derived();\nd.M(\"test\");",
+  "sourceSHA256": "5e680258ee51acdb53ca379d9f862910e29bb74a278451d8bdbccbef807e6b0b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/OverloadResolutionPriorityTests.cs",
+    "sha256": "b7cd10d8113409d1540951461d416c8c03a4ed3ec777d51b4cb13d685c96d7a8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/OverloadResolutionPriorityTests.cs",
+    "license": "MIT",
+    "method": "Overrides_ChangePriorityInSource_Methods",
+    "offset": 15490
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: [comp2.ToMetadataReference()])",
+  "options": "(executable, references: [comp2.ToMetadataReference()])",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

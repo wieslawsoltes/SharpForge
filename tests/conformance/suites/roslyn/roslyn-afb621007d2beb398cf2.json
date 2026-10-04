@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-afb621007d2beb398cf2",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass A : Attribute\n{\n    public A(int param) { }\n    public int Prop { get; set; }\n}\nclass Program\n{\n    static void Main()\n    {\n        const int N1 = 10;\n        const int N2 = 20;\n        const int N3 = 30;\n        const int N4 = 40;\n        const int N5 = 50;\n        const int N6 = 60;\n        [A(N1, Prop = N2)][return: A(N3, Prop = N4)] int F() => N5;\n        F();\n    }\n}",
+  "sourceSHA256": "6700774ce9b82592e3138b4753974943fd20e85c3f2692f336394cabdcefb9e6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "LocalMethod_AttributeArguments",
+    "offset": 250305
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (16,19): warning CS0219: The variable 'N6' is assigned but its value is never used\n                //         const int N6 = 60;\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"N6\").WithArguments(\"N6\").WithLocation(16, 19)",
+  "unsupported": []
+}

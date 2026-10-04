@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d1ceb8c1fe545a0bafbe",
+  "kind": "spec",
+  "sourceText": "[Serializable]\npublic class Foo \n{\n    [NonSerialized]\n    private string _mySecretBackingField;\n    \n    public string MySecret\n    {\n        get { return _mySecretBackingField; }\n        set { _mySecretBackingField = value; }\n    }\n}",
+  "sourceSHA256": "31d73e4a48729254e79fe80c55368874f74cc13660dac945d5e8aeb691be2d82",
+  "target": "library",
+  "featureId": "csharp-7-3-attributes-on-backing-fields",
+  "langVersion": "7.3",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.3/auto-prop-field-attrs.md",
+    "sha256": "d008d5c54299f1fe025c2f0b298f039b941e798a1ab71b83fa459183e1d57e81",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/auto-prop-field-attrs.md",
+    "license": "NOASSERTION",
+    "offset": 1100
+  }
+}

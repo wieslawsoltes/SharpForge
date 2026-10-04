@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d021d334c1fd3909d196",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Threading.Tasks;\n\nnamespace a\n{\n    class Class1\n    {\n\t\t[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]\n\t\tclass CommandAttribute : Attribute\n\t\t{\n\t\t\tpublic delegate Task FxCommand();\n\n\t\t\tpublic CommandAttribute(FxCommand Fx)\n\t\t\t{\n\t\t\t\tthis.Fx = Fx;\n\t\t\t}\n\n\t\t\tpublic FxCommand Fx { get; set; }\n\t\t}\n\t\t\n\t\t[Command(UserInfo)]\n\t\tpublic static async Task UserInfo()\n\t\t{\n\t\t\tawait Task.CompletedTask;\n\t\t}\n\t}\n}\n",
+  "sourceSHA256": "e32350bcedab1e49ebcde69513d2374a5e262af65893a965ca9d96b75d58026d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeWithTaskDelegateParameter",
+    "offset": 397231
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0181",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (22,4): error CS0181: Attribute constructor parameter 'Fx' has type 'Class1.CommandAttribute.FxCommand', which is not a valid attribute parameter type\n                // \t\t[Command(UserInfo)]\n                Diagnostic(ErrorCode.ERR_BadAttributeParamType, \"Command\").WithArguments(\"Fx\", \"a.Class1.CommandAttribute.FxCommand\").WithLocation(22, 4)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

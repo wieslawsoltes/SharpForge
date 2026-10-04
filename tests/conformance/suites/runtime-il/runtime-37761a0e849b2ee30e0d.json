@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-37761a0e849b2ee30e0d",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n\n.class public auto ansi beq_s {\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.locals         (class [mscorlib]System.String)\n.entrypoint\n\n        ldc.i4          0xFFAAFFAA\n        ldc.i4          0xFFAAFFAA\n        beq.s                   next0\n        br                      fail\nnext0:\n        ldc.i4          0xDDDD0000\n        ldc.i4          0x0000DDDD\n        beq.s                   fail\n        br                      next1\nnext1:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0x3F800000)\n        beq.s                   next2\n        br                      fail\nnext2:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0x7F800000)\n        beq.s                   fail\n        br                      next3\n\nnext3:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0x3F800000)\n        beq.s                   next4\n        br                      fail\nnext4:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0xBF800000)\n        beq.s                   fail\n        br                      next5\nnext5:\n        ldc.r4          float32(0xBF800000)\n        ldc.r4          float32(0x3F800000)\n        beq.s                   fail\n        br                      pass\n\npass:\n        ldc.i4 100\n        br                      end\nfail:\n        ldc.i4          0x0\n        br                      end\nend:\n        ret\n}\n}\n\n\n.assembly beq_s {}\n\n",
+  "unsupported": [
+    "Upstream IL preprocessor/legacy assembly rewrite required"
+  ],
+  "language": "il",
+  "opcodeFamilies": [
+    "arithmetic",
+    "branches",
+    "calls"
+  ],
+  "sourceSHA256": "1fe230bf31e75ed1a1114d06ce4cff4e38edaeb37b8be49a443fa6985424a0c8",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n\n.class public auto ansi beq_s {\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.locals         (class [mscorlib]System.String)\n.entrypoint\n\n        ldc.i4          0xFFAAFFAA\n        ldc.i4          0xFFAAFFAA\n        beq.s                   next0\n        br                      fail\nnext0:\n        ldc.i4          0xDDDD0000\n        ldc.i4          0x0000DDDD\n        beq.s                   fail\n        br                      next1\nnext1:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0x3F800000)\n        beq.s                   next2\n        br                      fail\nnext2:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0x7F800000)\n        beq.s                   fail\n        br                      next3\n\nnext3:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0x3F800000)\n        beq.s                   next4\n        br                      fail\nnext4:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0xBF800000)\n        beq.s                   fail\n        br                      next5\nnext5:\n        ldc.r4          float32(0xBF800000)\n        ldc.r4          float32(0x3F800000)\n        beq.s                   fail\n        br                      pass\n\npass:\n        ldc.i4 100\n        br                      end\nfail:\n        ldc.i4          0x0\n        br                      end\nend:\n        ret\n}\n}\n\n\n.assembly beq_s {}\n\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/IL_Conformance/Old/Base/beq_s.il",
+    "sha256": "1fe230bf31e75ed1a1114d06ce4cff4e38edaeb37b8be49a443fa6985424a0c8",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/IL_Conformance/Old/Base/beq_s.il",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Unmodified upstream IL. Native ILAsm required; no IL simulation."
+}

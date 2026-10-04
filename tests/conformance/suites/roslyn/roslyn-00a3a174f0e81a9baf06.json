@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-00a3a174f0e81a9baf06",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C { }\n",
+  "sourceSHA256": "ea839e70db0519278646cb51ebd945c584548b763212066abd89c3c5243b1be7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "sha256": "5af75c081b993313ae994c6bb25a5aa25038b265d6fc6300e8d89976fd96811a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "license": "MIT",
+    "method": "RuntimeCompatibility_Duplicates_Error1",
+    "offset": 103807
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(assemblySrc, new[] { module1.EmitToImageReference(), module2.EmitToImageReference() }, assemblyName: \"C\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7061",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // error CS7061: Duplicate 'RuntimeCompatibilityAttribute' attribute in 'M1.netmodule'\n                Diagnostic(ErrorCode.ERR_DuplicateAttributeInNetModule).WithArguments(\"RuntimeCompatibilityAttribute\", \"M1.netmodule\")",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

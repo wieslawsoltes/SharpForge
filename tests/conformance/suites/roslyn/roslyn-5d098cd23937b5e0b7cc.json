@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5d098cd23937b5e0b7cc",
+  "kind": "diagnostics",
+  "sourceText": "class C<T> { }\nunsafe delegate int* D1(int* ptr);\nunsafe delegate int*[] D2(int*[] a);\nunsafe delegate delegate*<void> D3(delegate*<void> ptr);\nunsafe delegate C<delegate*<void>[]> D4(C<delegate*<void>[]> a);\n\nclass D\n{\n    public static D1 M1()\n    {\n        return (ptr) => ptr; // 1\n    }\n    public static D2 M2()\n    {\n        return (a) => a; // 2\n    }\n    public static D3 M3()\n    {\n        return (ptr) => ptr; // 3\n    }\n    public static D4 M4()\n    {\n        return (a) => a; // 4\n    }\n}",
+  "sourceSHA256": "ac8f61471fe7701a27630deb2ea189871146a827bc74c9ae7fd44dd91980e047",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "sha256": "424f034ea20a9add3b40a8a1c0094fffc5ef30885511f2c90ae10bd80b976073",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "license": "MIT",
+    "method": "DelegateConversionContainsPointer",
+    "offset": 288387
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         return (ptr) => ptr; // 1\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"ptr\").WithLocation(11, 17),\n                // (11,25): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         return (ptr) => ptr; // 1\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"ptr\").WithLocation(11, 25),\n                // (15,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         return (a) => a; // 2\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"a\").WithLocation(15, 17),\n                // (15,23): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         return (a) => a; // 2\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"a\").WithLocation(15, 23),\n                // (19,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         return (ptr) => ptr; // 3\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"ptr\").WithLocation(19, 17),\n                // (19,25): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         return (ptr) => ptr; // 3\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"ptr\").WithLocation(19, 25),\n                // (23,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         return (a) => a; // 4\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"a\").WithLocation(23, 17),\n                // (23,23): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         return (a) => a; // 4\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"a\").WithLocation(23, 23)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

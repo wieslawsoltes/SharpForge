@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a86b625aeae45a91946a",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    static void M()\n    {\n        System.Action a = null;\n        a = a ?? M;\n        a = M ?? a;\n    }\n}",
+  "sourceSHA256": "03d5e5b180d98abe55bf352c1df67ce7aabb14b9ad5c47c0d66a153aceb13a7f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOperators.cs",
+    "sha256": "c60a5aa4e7fd7845ee7f036dfa55b03e5f3a9cd9572f96a1f7db994aa786e54e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOperators.cs",
+    "license": "MIT",
+    "method": "TestNullCoalesce_MethodGroups",
+    "offset": 40898
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,13): error CS0019: Operator '??' cannot be applied to operands of type 'method group' and 'System.Action'\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"M ?? a\").WithArguments(\"??\", \"method group\", \"System.Action\").WithLocation(7, 13)",
+  "unsupported": []
+}

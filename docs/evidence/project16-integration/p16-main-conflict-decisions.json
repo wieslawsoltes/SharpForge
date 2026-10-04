@@ -1,0 +1,244 @@
+{
+  "before": "6842c270c99da3ae361430ee11a648bd0fd9550f",
+  "capturedMain": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+  "reviewBase": "eec216696f4c1f73a5be541bfa2fac3a1f8ea42f",
+  "resolved": [
+    {
+      "path": "apps/studio/commands/registry.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/msbuild-tools.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/runtime.worker.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/build-decorations.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/build-queue.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/build-reveal.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/build.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/document-size.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/documents.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/file-watch.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/first-run.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/launch-orchestrator.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/launch-profiles.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/lazy-features/designer-configuration.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/lazy-features/native-configuration.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/menus.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/options-dialog.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/recent-workspaces.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/search-service.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/sessions.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/settings-profile.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/settings-store.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/shell-commands.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/shell-events.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/shell-models.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/shell-tools.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/shell.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/studio-keyboard.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/tabs/index.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/task-center.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/tools/call-hierarchy.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/tools/class-view.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/tools/code-definition.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/tools/diagnostic-timeline.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/tools/error-list.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/tools/object-browser.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/tools/outline.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/tools/references.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/tools/tree-host.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "apps/studio/workbench/worker-request.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "docs/a19-session-evidence.md",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "docs/a19-session-integration.md",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "docs/a19-session-services.md",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "docs/bcl-api.md",
+      "decision": "integration unchanged since review04; accept landed main changes"
+    },
+    {
+      "path": "docs/project16-shell-coverage.json",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "docs/vs-workbench-inventory.json",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "docs/vs-workflow-matrix.md",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "packages/bcl-core/src/modules.js",
+      "decision": "integration unchanged since review04; accept landed main changes"
+    },
+    {
+      "path": "packages/compiler/src/compilation.js",
+      "decision": "combine both changes using reviewed source base"
+    },
+    {
+      "path": "packages/project-system/README.md",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "packages/runtime/src/cil-vm.js",
+      "decision": "integration unchanged since review04; accept landed main changes"
+    },
+    {
+      "path": "packages/runtime/src/execution/initialize-source.js",
+      "decision": "integration unchanged since review04; accept landed main changes"
+    },
+    {
+      "path": "packages/runtime/src/vm.js",
+      "decision": "integration unchanged since review04; accept landed main changes"
+    },
+    {
+      "path": "scripts/conformance/static/allowlist.json",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "tests/a07-13-registry.test.js",
+      "decision": "integration unchanged since review04; accept landed main changes"
+    },
+    {
+      "path": "tests/a19-builtin-extensions.test.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "tests/a19-shell-inventory.test.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "tests/a19-studio-keyboard.test.js",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    },
+    {
+      "path": "tests/manifests/A19.json",
+      "decision": "main unchanged since review04; retain integrated owner changes"
+    }
+  ],
+  "unresolved": []
+}

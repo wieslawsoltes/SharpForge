@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-08da6f4c8e2a38099c22",
+  "kind": "spec",
+  "sourceText": "class C\n{\n    string Prop\n    {\n        get => field;\n\n        // getter is not null-resilient, so `field` is not-annotated.\n        // We should warn here that `field` may be null when exiting.\n        set { }\n    }\n\n    public C()\n    {\n        Prop = \"a\"; // ok\n    }\n\n    public static void Main()\n    {\n        new C().Prop.ToString(); // no warning, NRE at runtime\n    }\n}",
+  "sourceSHA256": "71caf508a7c66018e20dc5302680f0eef9f877494a8b918bb4370a9123b711a9",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 16307
+  }
+}

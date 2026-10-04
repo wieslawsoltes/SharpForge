@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4bacc2adf59d83f9d9ea",
+  "kind": "diagnostics",
+  "sourceText": "abstract partial class C\n{\n    protected abstract partial event System.Action E;\n    protected abstract partial event System.Action E { add { } remove { } }\n    protected abstract partial C();\n    protected abstract partial C() { }\n}",
+  "sourceSHA256": "652464d3135726c8fe6898c64369b3a491a535ed993835239407c261e8890b1f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Abstract",
+    "offset": 65246
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0750",
+        "severity": "error"
+      },
+      {
+        "code": "CS8712",
+        "severity": "error"
+      },
+      {
+        "code": "CS0106",
+        "severity": "error"
+      },
+      {
+        "code": "CS0106",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,52): error CS0750: A partial member cannot have the 'abstract' modifier\n            //     protected abstract partial event System.Action E;\n            Diagnostic(ErrorCode.ERR_PartialMemberCannotBeAbstract, \"E\").WithLocation(3, 52),\n            // (4,54): error CS8712: 'C.E': abstract event cannot use event accessor syntax\n            //     protected abstract partial event System.Action E { add { } remove { } }\n            Diagnostic(ErrorCode.ERR_AbstractEventHasAccessors, \"{\").WithArguments(\"C.E\").WithLocation(4, 54),\n            // (5,32): error CS0106: The modifier 'abstract' is not valid for this item\n            //     protected abstract partial C();\n            Diagnostic(ErrorCode.ERR_BadMemberFlag, \"C\").WithArguments(\"abstract\").WithLocation(5, 32),\n            // (6,32): error CS0106: The modifier 'abstract' is not valid for this item\n            //     protected abstract partial C() { }\n            Diagnostic(ErrorCode.ERR_BadMemberFlag, \"C\").WithArguments(\"abstract\").WithLocation(6, 32)",
+  "unsupported": []
+}

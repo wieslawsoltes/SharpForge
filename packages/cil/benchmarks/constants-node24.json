@@ -1,0 +1,40 @@
+{
+  "baselineCommit": "9faab708774c5e51847c4c727f10102421d90f67",
+  "command": "node scripts/limited.js node packages/cil/tools/benchmark-constants.mjs [baseline pe-metadata.js path]",
+  "environment": "Shared Apple M3 Pro host; this team serialized benchmark runs, but the machine was not dedicated.",
+  "before": {
+    "node": "v24.21.0",
+    "os": "darwin 25.6.0 arm64",
+    "cpu": "Apple M3 Pro",
+    "iterations": 2000,
+    "samples": 31,
+    "allocationMetric": "V8 sampled allocations, including collected objects; estimate, not exact bytes",
+    "results": {
+      "decode": {
+        "coldMicroseconds": 136.29099999999994,
+        "medianMicroseconds": 0.17735450000000696,
+        "p95Microseconds": 0.4018960000000078,
+        "p99Microseconds": 0.4638955000000067,
+        "sampledAllocationBytesPerOperation": 384.712
+      }
+    }
+  },
+  "after": {
+    "node": "v24.21.0",
+    "os": "darwin 25.6.0 arm64",
+    "cpu": "Apple M3 Pro",
+    "iterations": 2000,
+    "samples": 31,
+    "allocationMetric": "V8 sampled allocations, including collected objects; estimate, not exact bytes",
+    "results": {
+      "decode": {
+        "coldMicroseconds": 131.29200000000196,
+        "medianMicroseconds": 0.16443749999999824,
+        "p95Microseconds": 0.4291459999999958,
+        "p99Microseconds": 0.5952710000000038,
+        "sampledAllocationBytesPerOperation": 480.032
+      }
+    }
+  },
+  "review": "Strict type/width/null/budget checks and shared primitive decoding replace the permissive importer. The bounded-reader allocation cost is accepted by integration review; these samples are not a general speedup claim."
+}

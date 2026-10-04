@@ -73,7 +73,11 @@ export function castReference(heap,reference,target,throwOnFailure=true) {
 /** Covariant array casts never weaken the actual array element's store check. */
 export function checkArrayStore(heap,record,value) {
   if(record.kind!=='array'||!record.methodTable.flags.array)throw new ManagedFault('InvalidProgramException','An array record is required');
-  const element=record.methodTable.elementType;
+  return checkElementStore(heap, record.methodTable.elementType, value);
+}
+
+/** Check an already resolved array element type without rebuilding an array record. */
+export function checkElementStore(heap, element, value) {
   if(value===null&&!element.flags.valueType)return value;
   if(element.flags.valueType)return value; // Numeric opcodes perform value-width checks.
   if(!isReference(value)||!castCacheFor(heap.methodTables).isAssignableFrom(element,heap.get(value).methodTable))throw new ManagedFault('ArrayTypeMismatchException','Value is incompatible with the array element type');

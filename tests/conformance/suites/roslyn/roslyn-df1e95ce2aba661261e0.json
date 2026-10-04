@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-df1e95ce2aba661261e0",
+  "kind": "diagnostics",
+  "sourceText": "\npublic struct S \n{\n    public override string ToString() { return \"S::ToString\"; }\n}\n\npublic class A\n{\n    public static S Goo(S p = 42) { return p; }\n}\n",
+  "sourceSHA256": "3578b0016390fa1b64e01593b51a307f3b2d106b59aee6ad67bdbc366c248bda",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EmitErrorTests.cs",
+    "sha256": "24095989fbaaf5bc705fa73d87e87f17ca923d4afd035b0e709dde293ff5aa8b",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EmitErrorTests.cs",
+    "license": "MIT",
+    "method": "BadDefaultArgumentInOtherAssembly_UserDefinedType",
+    "offset": 5233
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source1)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1750",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,27): error CS1750: A value of type 'int' cannot be used as a default parameter because there are no standard conversions to type 'S'\n                //     public static S Goo(S p = 42) { return p; }\n                Diagnostic(ErrorCode.ERR_NoConversionForDefaultParam, \"p\").WithArguments(\"int\", \"S\").WithLocation(9, 27)",
+  "unsupported": []
+}

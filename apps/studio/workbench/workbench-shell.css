@@ -1,0 +1,163 @@
+html[data-theme] {
+  --bg: var(--wb-bg);
+  --panel: var(--wb-panel);
+  --surface: var(--wb-panel);
+  --surface2: var(--wb-raised);
+  --editor: var(--wb-bg);
+  --raised: var(--wb-raised);
+  --hover: var(--wb-raised);
+  --text: var(--wb-fg);
+  --muted: var(--wb-muted);
+  --border: var(--wb-border);
+  --line: var(--wb-border);
+  --line-soft: var(--wb-border);
+  --accent: var(--wb-accent);
+  --accent-bg: var(--wb-selected);
+  --selection: var(--wb-selected);
+  --green: var(--wb-success);
+  --red: var(--wb-error);
+  --yellow: var(--wb-warning);
+  --font: var(--wb-font-family);
+}
+body { font-family: var(--wb-font-family); font-size: var(--wb-font-size); }
+.wb-tool, .wb-dialog, .wb-menu-popup, .wb-statusbar, .wb-toolbar {
+  color: var(--wb-fg);
+  background: var(--wb-panel);
+  font-family: var(--wb-font-family);
+  font-size: var(--wb-font-size);
+}
+.wb-tool { display: flex; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; height: 100%; }
+.wb-tool[hidden] { display: none; }
+.wb-tool button, .wb-dialog button, .wb-toolbar button, .wb-statusbar button, .wb-menubar > button {
+  min-height: var(--wb-row-height);
+  padding: 3px 8px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  text-align: left;
+}
+.wb-tool button:hover, .wb-dialog button:hover, .wb-toolbar button:hover, .wb-statusbar button:hover {
+  background: var(--wb-raised);
+  border-color: var(--wb-border);
+}
+.wb-tool :focus-visible, .wb-dialog :focus-visible, .wb-menubar :focus-visible,
+.wb-toolbars :focus-visible, .wb-statusbar :focus-visible { outline: 2px solid var(--wb-accent); outline-offset: -2px; }
+.wb-tool input, .wb-tool select, .wb-dialog input, .wb-dialog select, .wb-dialog textarea {
+  min-height: var(--wb-row-height);
+  color: var(--wb-fg);
+  background: var(--wb-bg);
+  border: 1px solid var(--wb-border);
+  border-radius: 2px;
+  padding: 3px 6px;
+  max-width: 100%;
+}
+.wb-tool button:disabled, .wb-dialog button:disabled, .wb-toolbar button:disabled, .wb-menu-popup button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.wb-tool-controls, .wb-actions, .wb-dialog-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 6px;
+  flex: none;
+  border-bottom: 1px solid var(--wb-border);
+}
+.wb-tool-controls > input { flex: 1 1 120px; min-width: 90px; }
+.wb-checkbox { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.wb-checkbox input { min-height: auto; }
+.wb-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; margin: 4px 0; }
+.wb-field > span { color: var(--wb-muted); }
+.wb-tool-status { flex: none; margin: 0; padding: 6px 8px; border-top: 1px solid var(--wb-border); color: var(--wb-muted); }
+.wb-grid-host, .wb-tree-host, .wb-search-results { flex: 1; min-height: 100px; min-width: 0; position: relative; overflow: hidden; }
+.wb-search-results { height: min(45vh, 420px); flex: auto; }
+.wb-grid { height: 100%; min-height: 120px; display: flex; flex-direction: column; overflow: auto; }
+.wb-grid-header, .wb-grid-row { display: grid; min-width: max-content; flex: none; }
+.wb-grid-header { min-height: var(--wb-row-height); background: var(--wb-raised); border-bottom: 1px solid var(--wb-border); }
+.wb-grid-header > div { font-weight: 600; }
+.wb-grid-header > div, .wb-grid-row > div { padding: 5px 7px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wb-grid-viewport { flex: 1; overflow: auto; position: relative; min-height: 100px; }
+.wb-grid-spacer { width: 1px; pointer-events: none; }
+.wb-grid-body { position: absolute; inset: 0 0 auto; min-width: 100%; }
+.wb-grid-row { border-bottom: 1px solid color-mix(in srgb, var(--wb-border) 35%, transparent); }
+.wb-grid-row[aria-selected="true"] { background: var(--wb-selected); color: var(--wb-selected-fg); }
+.wb-grid-row:hover { outline: 1px solid var(--wb-border); outline-offset: -1px; }
+.wb-wrap .wb-grid-row > div { white-space: pre-wrap; overflow: auto; overflow-wrap: anywhere; }
+.wb-tree-host { min-height: 120px; overflow: auto; }
+.wb-preview { max-height: 170px; min-height: 40px; overflow: auto; white-space: pre-wrap; padding: 8px; margin: 0; border-top: 1px solid var(--wb-border); }
+.wb-source { white-space: pre-wrap; overflow: auto; font-family: var(--mono); padding: 8px; max-height: 60vh; }
+.wb-error { color: var(--wb-error); }
+.wb-warning { color: var(--wb-warning); }
+.wb-success { color: var(--wb-success); }
+.wb-dialog-overlay { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center;
+  padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)); background: var(--wb-shadow); }
+.wb-dialog { display: flex; flex-direction: column; width: min(900px, 100%); max-height: calc(100dvh - 16px);
+  min-width: 0; border: 1px solid var(--wb-border); border-radius: 5px; box-shadow: 0 12px 45px var(--wb-shadow); overflow: hidden; }
+.wb-dialog > h2 { font-size: 16px; margin: 0; padding: 13px 16px; border-bottom: 1px solid var(--wb-border); flex: none; }
+.wb-dialog-body { overflow: auto; min-height: 0; padding: 12px; overscroll-behavior: contain; }
+.wb-dialog-footer { justify-content: flex-end; border-top: 1px solid var(--wb-border); border-bottom: 0; }
+.wb-dialog > .wb-error { padding: 4px 12px; }
+.wb-options-layout { display: grid; grid-template-columns: minmax(150px, 0.8fr) minmax(0, 2fr); min-height: 320px; gap: 12px; }
+.wb-options-tree { display: flex; flex-direction: column; overflow: auto; border-right: 1px solid var(--wb-border); }
+.wb-options-tree button[aria-selected="true"] { background: var(--wb-selected); color: var(--wb-selected-fg); }
+.wb-options-category { font-weight: 600; padding: 8px 4px 4px; }
+.wb-options-page { overflow: auto; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.wb-options-page > h3 { margin: 0; font-size: 14px; }
+.wb-options-page select[size] { width: 100%; min-height: 120px; }
+.wb-menubar { display: flex; flex-wrap: wrap; gap: 1px; position: relative; flex: none; border-bottom: 1px solid var(--wb-border); }
+.wb-menubar > button[aria-expanded="true"] { background: var(--wb-selected); color: var(--wb-selected-fg); }
+.wb-menu-popup { position: absolute; z-index: 9000; top: 100%; min-width: 260px; max-width: min(95vw, 560px);
+  max-height: 70vh; overflow: auto; border: 1px solid var(--wb-border); box-shadow: 0 6px 20px var(--wb-shadow); padding: 4px; }
+.wb-menu-popup > button { display: flex; align-items: center; gap: 20px; width: 100%; min-height: var(--wb-row-height); padding: 4px 8px; text-align: left; }
+.wb-menu-popup > button > kbd { margin-left: auto; }
+.wb-menu-popup [aria-checked="true"] > span::before { content: "✓ "; }
+.wb-toolbars { display: flex; flex-wrap: wrap; min-width: 0; }
+.wb-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 2px; padding: 3px; border: 1px solid var(--wb-border); min-width: 0; }
+.wb-toolbar button { max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wb-statusbar { display: flex; align-items: center; flex-wrap: nowrap; overflow-x: auto; border-top: 1px solid var(--wb-border); min-width: 0; }
+.wb-statusbar > button { white-space: nowrap; flex: none; font-size: 11px; }
+.wb-statusbar > button:first-child { margin-right: auto; }
+.wb-property-list { overflow: auto; flex: 1; padding: 8px; }
+.wb-property { display: grid; grid-template-columns: minmax(100px, 1fr) minmax(0, 1.5fr); align-items: center; gap: 8px; }
+.wb-property-list h3, .wb-property-list h4 { margin: 6px 0; }
+.wb-property input { min-width: 0; }
+.wb-toolbox-items { display: flex; flex-direction: column; overflow: auto; padding: 4px; }
+.wb-toolbox-items > button { min-height: var(--wb-row-height); }
+.wb-command-transcript { flex: 1; min-height: 120px; overflow: auto; white-space: pre-wrap; padding: 8px; margin: 0; }
+.wb-command-completions { max-height: 150px; overflow: auto; display: flex; flex-wrap: wrap; }
+.wb-definition-editor { flex: 1; min-height: 100px; resize: none; border: 0; background: var(--wb-bg); font-family: var(--mono);
+  line-height: 20px; padding: 8px; white-space: pre; }
+.wb-notification, .wb-task { padding: 8px; border-bottom: 1px solid var(--wb-border); }
+.wb-notification p { margin: 0 0 6px; }
+.wb-task { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.wb-start-layout, .wb-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.wb-start-actions { display: flex; flex-direction: column; gap: 8px; }
+.wb-start-actions > button { min-height: 48px; border: 1px solid var(--wb-border); }
+.wb-recent-row { display: flex; align-items: center; gap: 4px; }
+.wb-recent-row > button:first-child { flex: 1; overflow-wrap: anywhere; }
+.wb-configuration-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 7px; }
+.wb-configuration-row > strong { flex: 1; }
+.wb-configuration-controls { display: flex; gap: 4px; padding: 4px; }
+.wb-timeline { flex: 1; overflow: auto; padding: 8px; }
+.wb-timeline canvas { display: block; height: 130px; width: 100%; border-bottom: 1px solid var(--wb-border); }
+.wb-timeline h4 { margin: 8px 0; }
+.wb-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+[data-density="comfortable"] .sf-dock-tab, [data-density="comfortable"] .sf-dock-tabs { min-height: 34px; }
+@media (max-width: 600px) {
+  .wb-options-layout, .wb-start-layout, .wb-compare { grid-template-columns: minmax(0, 1fr); }
+  .wb-options-tree { max-height: 145px; border-right: 0; border-bottom: 1px solid var(--wb-border); }
+  .wb-dialog { max-height: calc(100dvh - 16px); }
+  .wb-tool-controls { max-height: 190px; overflow: auto; }
+  .wb-options-page { min-height: 180px; }
+  .wb-menu-popup { min-width: min(260px, 90vw); }
+  .wb-toolbar button { max-width: 120px; }
+}
+@media (pointer: coarse) {
+  :root { --wb-row-height: 40px; }
+  .wb-tool button, .wb-tool select, .wb-dialog button, .wb-dialog select, .wb-menu-popup > button,
+  .wb-menubar > button, .wb-toolbar button, .wb-statusbar button { min-height: 40px; }
+  .wb-checkbox { min-height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wb-tool *, .wb-dialog * { scroll-behavior: auto; transition: none; animation: none; }
+}

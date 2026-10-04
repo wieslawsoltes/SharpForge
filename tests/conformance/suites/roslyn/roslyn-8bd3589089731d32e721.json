@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8bd3589089731d32e721",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\npublic struct C\n{\n    private object field;\n    public C(Action a)\n    {\n        // implicit `this` receiver should be ignored in definite assignment\n        a = new(M);\n        field = 1;\n    }\n\n    public C(Action a, int ignored)\n    {\n        // implicit `this` receiver should be ignored in definite assignment\n        a = new Action(M);\n        field = 1;\n    }\n\n    public void Method1(Action a)\n    {\n        // explicit `this` disallowed\n        a = new Action(this.M);\n    }\n\n    public void Method2(Action a, C c)\n    {\n        // instance receiver disallowed\n        a = new Action(c.M);\n    }\n\n    private static void M()\n    {\n    }\n}\n",
+  "sourceSHA256": "82523ca853a04a0ed1a817d398d224930a6a77acc765dac6150aa466d49cea9a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/RegionAnalysisTests.cs",
+    "sha256": "ede4ad7870eb13fc1b41cf8dfa93369f828c8146ac3ad88e361e120b9a79ad41",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/RegionAnalysisTests.cs",
+    "license": "MIT",
+    "method": "DefiniteAssignmentShouldSkipImplicitThisInStaticMethodConversion",
+    "offset": 352526
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\npublic struct C\n{\n    private object field;\n    public C(Action a)\n    {\n        // implicit `this` receiver should be ignored in definite assignment\n        a = new(M);\n        field = 1;\n    }\n\n    public C(Action a, int ignored)\n    {\n        // implicit `this` receiver should be ignored in definite assignment\n        a = new Action(M);\n        field = 1;\n    }\n\n    public void Method1(Action a)\n    {\n        // explicit `this` disallowed\n        a = new Action(this.M);\n    }\n\n    public void Method2(Action a, C c)\n    {\n        // instance receiver disallowed\n        a = new Action(c.M);\n    }\n\n    private static void M()\n    {\n    }\n}\n\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0176",
+        "severity": "error"
+      },
+      {
+        "code": "CS0176",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (23,24): error CS0176: Member 'C.M()' cannot be accessed with an instance reference; qualify it with a type name instead\n                //         a = new Action(this.M);\n                Diagnostic(ErrorCode.ERR_ObjectProhibited, \"this.M\").WithArguments(\"C.M()\").WithLocation(23, 24),\n                // (29,24): error CS0176: Member 'C.M()' cannot be accessed with an instance reference; qualify it with a type name instead\n                //         a = new Action(c.M);\n                Diagnostic(ErrorCode.ERR_ObjectProhibited, \"c.M\").WithArguments(\"C.M()\").WithLocation(29, 24)\n                ",
+  "unsupported": []
+}

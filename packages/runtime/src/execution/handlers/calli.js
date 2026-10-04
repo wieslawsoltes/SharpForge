@@ -1,31 +1,34 @@
-import {instantiateSignature, callSignatureKey} from '@sharpforge/cil';
+import {tailRequested} from '../tailcall.js';
+import {callSignatureKey} from '@sharpforge/cil';
 import {ManagedFault} from '../../heap.js';
-import {SUSPENDED} from '../suspension.js';
+import {cachedMetadataToken} from '../token-cache.js';
+import {methodPointerSignature} from '../method-pointers.js';
+import {framePool} from '../frame-pool.js';
+import {requireInstanceCalliReceiver} from '../instance-calli.js';
 
-/** Execute verified managed pointers; runtime branding also protects host-injected values. */
+/** Resolve and validate before consuming operands; canonical calls own frame, GC and initializer behavior. */
 export function indirectCall(vm, frame, instruction) {
-  const signature = instantiateSignature(vm.inspector.signature(instruction.operand), frame.method.typeArguments, frame.methodArguments);
-  if (signature.callingConvention) {
-    const fault = new ManagedFault('NotSupportedException', `Unmanaged calli in ${frame.method.owner}::${frame.method.name}`);
+  const signature = cachedMetadataToken(vm, instruction.operand).signature;
+  if (signature.callingConvention || signature.genericArity) {
+    const fault = new ManagedFault('NotSupportedException', 'Only default managed nongeneric calli is executable');
     fault.member = frame.method.owner + '::' + frame.method.name;
-    fault.callingConvention = signature.callingConvention;
+    fault.callingConvention = signature.callingConvention ?? 0;
     throw fault;
   }
-  const pointer = frame.stack.at(-1);
-  const count = signature.parameters.length + (signature.isStatic ? 0 : 1);
-  if (!pointer?.methodPointer || pointer.vmOwner !== vm.snapshotOwner ||
-      callSignatureKey(signature) !== callSignatureKey(pointer.signature)) {
+  const pointer = frame.stack.at(-1), target = methodPointerSignature(vm, pointer);
+  if (callSignatureKey(signature) !== callSignatureKey(target)) {
     throw new ManagedFault('InvalidProgramException', 'Managed calli signature mismatch');
   }
-  if (frame.stack.length < count + 1) throw new ManagedFault('InvalidProgramException', 'calli argument stack underflow');
+  const count = signature.parameters.length + (signature.isStatic ? 0 : 1);
+  if (frame.stack.length < count + 1) {
+    throw new ManagedFault('InvalidProgramException', 'calli argument stack underflow');
+  }
+  if (!signature.isStatic) requireInstanceCalliReceiver(vm, pointer.token, frame.stack[frame.stack.length - count - 1]);
+  // PrepareCall on the selected frame gates its precise initializer before pc 0.
   frame.stack.pop();
-  const args = frame.stack.splice(frame.stack.length - count, count);
-  const tail = !!frame.tailCall;
-  frame.tailCall = false;
-  return vm.heap.withRoots(args, () => {
-    const result = vm.invokeFunctionPointer(pointer, args, {tail});
-    if (result !== SUSPENDED && signature.returnType !== 'void') frame.stack.push(result);
-  });
+  const pool = framePool(vm), args = pool.arguments(frame.stack, count);
+  try { vm.heap.withRoots(args, () => vm.call(pointer.token, args, {tail:tailRequested(frame,instruction)})); }
+  finally { pool.releaseArguments(args); }
 }
 
 export const handlers = new Map([['calli', indirectCall]]);

@@ -1,0 +1,1586 @@
+{
+  "schemaVersion": 1,
+  "sourceSHA256": "3f07b8fa33302cb8ee82503ae8ffa40c73a911b3e32f30e5cad6b846c52ee1f8",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16"
+    },
+    "referenceAssemblies": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    }
+  },
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "compileRuns": 1,
+  "executionRuns": 1,
+  "commands": {
+    "compile": [
+      "dotnet",
+      "/Users/wieslawsoltes/.dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll",
+      "/nologo",
+      "/noconfig",
+      "/nostdlib+",
+      "/utf8output",
+      "/deterministic+",
+      "/debug-",
+      "/optimize+",
+      "/checked-",
+      "/nullable:disable",
+      "/target:exe",
+      "/langversion:12.0",
+      "/pathmap:<temporary>=/_/oracle",
+      "/out:<temporary>/Oracle.dll",
+      "/errorlog:<temporary>/diagnostics.sarif,version=2.1",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.CSharp.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.VisualBasic.Core.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.VisualBasic.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.Win32.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.Win32.Registry.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.AppContext.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Buffers.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Concurrent.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Immutable.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.NonGeneric.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Specialized.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.Annotations.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.DataAnnotations.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.EventBasedAsync.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.TypeConverter.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Configuration.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Console.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Core.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.Common.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.DataSetExtensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Contracts.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Debug.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.DiagnosticSource.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.FileVersionInfo.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Process.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.StackTrace.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.TextWriterTraceListener.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Tools.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.TraceSource.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Tracing.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Drawing.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Drawing.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Dynamic.Runtime.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Formats.Asn1.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Formats.Tar.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.Calendars.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.Extensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.Brotli.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.FileSystem.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.ZipFile.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.AccessControl.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.DriveInfo.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.Watcher.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.IsolatedStorage.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.MemoryMappedFiles.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipelines.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipes.AccessControl.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipes.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.UnmanagedMemoryStream.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.AsyncEnumerable.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Expressions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Parallel.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Queryable.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Memory.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Http.Json.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Http.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.HttpListener.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Mail.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.NameResolution.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.NetworkInformation.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Ping.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Quic.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Requests.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Security.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.ServerSentEvents.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.ServicePoint.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Sockets.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebClient.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebHeaderCollection.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebProxy.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebSockets.Client.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebSockets.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Numerics.Vectors.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Numerics.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ObjectModel.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.DispatchProxy.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.ILGeneration.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.Lightweight.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Extensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Metadata.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.TypeExtensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.Reader.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.ResourceManager.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.Writer.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.CompilerServices.Unsafe.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.CompilerServices.VisualC.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Extensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Handles.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.JavaScript.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.RuntimeInformation.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Intrinsics.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Loader.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Numerics.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Formatters.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Json.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Xml.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.AccessControl.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Claims.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Algorithms.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Cng.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Csp.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Encoding.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.OpenSsl.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Primitives.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.X509Certificates.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Principal.Windows.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Principal.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.SecureString.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ServiceModel.Web.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ServiceProcess.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.CodePages.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.Extensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encodings.Web.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Json.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.RegularExpressions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.AccessControl.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Channels.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Overlapped.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Dataflow.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Extensions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Parallel.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Thread.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.ThreadPool.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Timer.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Transactions.Local.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Transactions.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ValueTuple.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Web.HttpUtility.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Web.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Windows.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.Linq.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.ReaderWriter.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.Serialization.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XDocument.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XPath.XDocument.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XPath.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XmlDocument.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XmlSerializer.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/WindowsBase.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/mscorlib.dll",
+      "/reference:/Users/wieslawsoltes/.dotnet/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/netstandard.dll",
+      "<temporary>/Program.cs"
+    ],
+    "execute": [
+      "dotnet",
+      "<temporary>/Oracle.dll"
+    ]
+  },
+  "compiled": {
+    "exitCode": 0,
+    "diagnostics": [],
+    "assemblySHA256": "dfee385412c19f71b4c209db0883e528ec54703ff01fddee012db0a9de1f64b6"
+  },
+  "executed": {
+    "stderr": "",
+    "exitCode": 0,
+    "signal": null,
+    "unhandledException": null
+  },
+  "cases": [
+    {
+      "id": "ascii-0",
+      "units": [
+        0
+      ],
+      "scalar": "\"\\u0000\"",
+      "array": "[\"\\u0000\",\"tail\",null]",
+      "dictionary": "{\"key\\u0000\":\"\\u0000\"}"
+    },
+    {
+      "id": "ascii-1",
+      "units": [
+        1
+      ],
+      "scalar": "\"\\u0001\"",
+      "array": "[\"\\u0001\",\"tail\",null]",
+      "dictionary": "{\"key\\u0001\":\"\\u0001\"}"
+    },
+    {
+      "id": "ascii-2",
+      "units": [
+        2
+      ],
+      "scalar": "\"\\u0002\"",
+      "array": "[\"\\u0002\",\"tail\",null]",
+      "dictionary": "{\"key\\u0002\":\"\\u0002\"}"
+    },
+    {
+      "id": "ascii-3",
+      "units": [
+        3
+      ],
+      "scalar": "\"\\u0003\"",
+      "array": "[\"\\u0003\",\"tail\",null]",
+      "dictionary": "{\"key\\u0003\":\"\\u0003\"}"
+    },
+    {
+      "id": "ascii-4",
+      "units": [
+        4
+      ],
+      "scalar": "\"\\u0004\"",
+      "array": "[\"\\u0004\",\"tail\",null]",
+      "dictionary": "{\"key\\u0004\":\"\\u0004\"}"
+    },
+    {
+      "id": "ascii-5",
+      "units": [
+        5
+      ],
+      "scalar": "\"\\u0005\"",
+      "array": "[\"\\u0005\",\"tail\",null]",
+      "dictionary": "{\"key\\u0005\":\"\\u0005\"}"
+    },
+    {
+      "id": "ascii-6",
+      "units": [
+        6
+      ],
+      "scalar": "\"\\u0006\"",
+      "array": "[\"\\u0006\",\"tail\",null]",
+      "dictionary": "{\"key\\u0006\":\"\\u0006\"}"
+    },
+    {
+      "id": "ascii-7",
+      "units": [
+        7
+      ],
+      "scalar": "\"\\u0007\"",
+      "array": "[\"\\u0007\",\"tail\",null]",
+      "dictionary": "{\"key\\u0007\":\"\\u0007\"}"
+    },
+    {
+      "id": "ascii-8",
+      "units": [
+        8
+      ],
+      "scalar": "\"\\b\"",
+      "array": "[\"\\b\",\"tail\",null]",
+      "dictionary": "{\"key\\b\":\"\\b\"}"
+    },
+    {
+      "id": "ascii-9",
+      "units": [
+        9
+      ],
+      "scalar": "\"\\t\"",
+      "array": "[\"\\t\",\"tail\",null]",
+      "dictionary": "{\"key\\t\":\"\\t\"}"
+    },
+    {
+      "id": "ascii-10",
+      "units": [
+        10
+      ],
+      "scalar": "\"\\n\"",
+      "array": "[\"\\n\",\"tail\",null]",
+      "dictionary": "{\"key\\n\":\"\\n\"}"
+    },
+    {
+      "id": "ascii-11",
+      "units": [
+        11
+      ],
+      "scalar": "\"\\u000B\"",
+      "array": "[\"\\u000B\",\"tail\",null]",
+      "dictionary": "{\"key\\u000B\":\"\\u000B\"}"
+    },
+    {
+      "id": "ascii-12",
+      "units": [
+        12
+      ],
+      "scalar": "\"\\f\"",
+      "array": "[\"\\f\",\"tail\",null]",
+      "dictionary": "{\"key\\f\":\"\\f\"}"
+    },
+    {
+      "id": "ascii-13",
+      "units": [
+        13
+      ],
+      "scalar": "\"\\r\"",
+      "array": "[\"\\r\",\"tail\",null]",
+      "dictionary": "{\"key\\r\":\"\\r\"}"
+    },
+    {
+      "id": "ascii-14",
+      "units": [
+        14
+      ],
+      "scalar": "\"\\u000E\"",
+      "array": "[\"\\u000E\",\"tail\",null]",
+      "dictionary": "{\"key\\u000E\":\"\\u000E\"}"
+    },
+    {
+      "id": "ascii-15",
+      "units": [
+        15
+      ],
+      "scalar": "\"\\u000F\"",
+      "array": "[\"\\u000F\",\"tail\",null]",
+      "dictionary": "{\"key\\u000F\":\"\\u000F\"}"
+    },
+    {
+      "id": "ascii-16",
+      "units": [
+        16
+      ],
+      "scalar": "\"\\u0010\"",
+      "array": "[\"\\u0010\",\"tail\",null]",
+      "dictionary": "{\"key\\u0010\":\"\\u0010\"}"
+    },
+    {
+      "id": "ascii-17",
+      "units": [
+        17
+      ],
+      "scalar": "\"\\u0011\"",
+      "array": "[\"\\u0011\",\"tail\",null]",
+      "dictionary": "{\"key\\u0011\":\"\\u0011\"}"
+    },
+    {
+      "id": "ascii-18",
+      "units": [
+        18
+      ],
+      "scalar": "\"\\u0012\"",
+      "array": "[\"\\u0012\",\"tail\",null]",
+      "dictionary": "{\"key\\u0012\":\"\\u0012\"}"
+    },
+    {
+      "id": "ascii-19",
+      "units": [
+        19
+      ],
+      "scalar": "\"\\u0013\"",
+      "array": "[\"\\u0013\",\"tail\",null]",
+      "dictionary": "{\"key\\u0013\":\"\\u0013\"}"
+    },
+    {
+      "id": "ascii-20",
+      "units": [
+        20
+      ],
+      "scalar": "\"\\u0014\"",
+      "array": "[\"\\u0014\",\"tail\",null]",
+      "dictionary": "{\"key\\u0014\":\"\\u0014\"}"
+    },
+    {
+      "id": "ascii-21",
+      "units": [
+        21
+      ],
+      "scalar": "\"\\u0015\"",
+      "array": "[\"\\u0015\",\"tail\",null]",
+      "dictionary": "{\"key\\u0015\":\"\\u0015\"}"
+    },
+    {
+      "id": "ascii-22",
+      "units": [
+        22
+      ],
+      "scalar": "\"\\u0016\"",
+      "array": "[\"\\u0016\",\"tail\",null]",
+      "dictionary": "{\"key\\u0016\":\"\\u0016\"}"
+    },
+    {
+      "id": "ascii-23",
+      "units": [
+        23
+      ],
+      "scalar": "\"\\u0017\"",
+      "array": "[\"\\u0017\",\"tail\",null]",
+      "dictionary": "{\"key\\u0017\":\"\\u0017\"}"
+    },
+    {
+      "id": "ascii-24",
+      "units": [
+        24
+      ],
+      "scalar": "\"\\u0018\"",
+      "array": "[\"\\u0018\",\"tail\",null]",
+      "dictionary": "{\"key\\u0018\":\"\\u0018\"}"
+    },
+    {
+      "id": "ascii-25",
+      "units": [
+        25
+      ],
+      "scalar": "\"\\u0019\"",
+      "array": "[\"\\u0019\",\"tail\",null]",
+      "dictionary": "{\"key\\u0019\":\"\\u0019\"}"
+    },
+    {
+      "id": "ascii-26",
+      "units": [
+        26
+      ],
+      "scalar": "\"\\u001A\"",
+      "array": "[\"\\u001A\",\"tail\",null]",
+      "dictionary": "{\"key\\u001A\":\"\\u001A\"}"
+    },
+    {
+      "id": "ascii-27",
+      "units": [
+        27
+      ],
+      "scalar": "\"\\u001B\"",
+      "array": "[\"\\u001B\",\"tail\",null]",
+      "dictionary": "{\"key\\u001B\":\"\\u001B\"}"
+    },
+    {
+      "id": "ascii-28",
+      "units": [
+        28
+      ],
+      "scalar": "\"\\u001C\"",
+      "array": "[\"\\u001C\",\"tail\",null]",
+      "dictionary": "{\"key\\u001C\":\"\\u001C\"}"
+    },
+    {
+      "id": "ascii-29",
+      "units": [
+        29
+      ],
+      "scalar": "\"\\u001D\"",
+      "array": "[\"\\u001D\",\"tail\",null]",
+      "dictionary": "{\"key\\u001D\":\"\\u001D\"}"
+    },
+    {
+      "id": "ascii-30",
+      "units": [
+        30
+      ],
+      "scalar": "\"\\u001E\"",
+      "array": "[\"\\u001E\",\"tail\",null]",
+      "dictionary": "{\"key\\u001E\":\"\\u001E\"}"
+    },
+    {
+      "id": "ascii-31",
+      "units": [
+        31
+      ],
+      "scalar": "\"\\u001F\"",
+      "array": "[\"\\u001F\",\"tail\",null]",
+      "dictionary": "{\"key\\u001F\":\"\\u001F\"}"
+    },
+    {
+      "id": "ascii-32",
+      "units": [
+        32
+      ],
+      "scalar": "\" \"",
+      "array": "[\" \",\"tail\",null]",
+      "dictionary": "{\"key \":\" \"}"
+    },
+    {
+      "id": "ascii-33",
+      "units": [
+        33
+      ],
+      "scalar": "\"!\"",
+      "array": "[\"!\",\"tail\",null]",
+      "dictionary": "{\"key!\":\"!\"}"
+    },
+    {
+      "id": "ascii-34",
+      "units": [
+        34
+      ],
+      "scalar": "\"\\u0022\"",
+      "array": "[\"\\u0022\",\"tail\",null]",
+      "dictionary": "{\"key\\u0022\":\"\\u0022\"}"
+    },
+    {
+      "id": "ascii-35",
+      "units": [
+        35
+      ],
+      "scalar": "\"#\"",
+      "array": "[\"#\",\"tail\",null]",
+      "dictionary": "{\"key#\":\"#\"}"
+    },
+    {
+      "id": "ascii-36",
+      "units": [
+        36
+      ],
+      "scalar": "\"$\"",
+      "array": "[\"$\",\"tail\",null]",
+      "dictionary": "{\"key$\":\"$\"}"
+    },
+    {
+      "id": "ascii-37",
+      "units": [
+        37
+      ],
+      "scalar": "\"%\"",
+      "array": "[\"%\",\"tail\",null]",
+      "dictionary": "{\"key%\":\"%\"}"
+    },
+    {
+      "id": "ascii-38",
+      "units": [
+        38
+      ],
+      "scalar": "\"\\u0026\"",
+      "array": "[\"\\u0026\",\"tail\",null]",
+      "dictionary": "{\"key\\u0026\":\"\\u0026\"}"
+    },
+    {
+      "id": "ascii-39",
+      "units": [
+        39
+      ],
+      "scalar": "\"\\u0027\"",
+      "array": "[\"\\u0027\",\"tail\",null]",
+      "dictionary": "{\"key\\u0027\":\"\\u0027\"}"
+    },
+    {
+      "id": "ascii-40",
+      "units": [
+        40
+      ],
+      "scalar": "\"(\"",
+      "array": "[\"(\",\"tail\",null]",
+      "dictionary": "{\"key(\":\"(\"}"
+    },
+    {
+      "id": "ascii-41",
+      "units": [
+        41
+      ],
+      "scalar": "\")\"",
+      "array": "[\")\",\"tail\",null]",
+      "dictionary": "{\"key)\":\")\"}"
+    },
+    {
+      "id": "ascii-42",
+      "units": [
+        42
+      ],
+      "scalar": "\"*\"",
+      "array": "[\"*\",\"tail\",null]",
+      "dictionary": "{\"key*\":\"*\"}"
+    },
+    {
+      "id": "ascii-43",
+      "units": [
+        43
+      ],
+      "scalar": "\"\\u002B\"",
+      "array": "[\"\\u002B\",\"tail\",null]",
+      "dictionary": "{\"key\\u002B\":\"\\u002B\"}"
+    },
+    {
+      "id": "ascii-44",
+      "units": [
+        44
+      ],
+      "scalar": "\",\"",
+      "array": "[\",\",\"tail\",null]",
+      "dictionary": "{\"key,\":\",\"}"
+    },
+    {
+      "id": "ascii-45",
+      "units": [
+        45
+      ],
+      "scalar": "\"-\"",
+      "array": "[\"-\",\"tail\",null]",
+      "dictionary": "{\"key-\":\"-\"}"
+    },
+    {
+      "id": "ascii-46",
+      "units": [
+        46
+      ],
+      "scalar": "\".\"",
+      "array": "[\".\",\"tail\",null]",
+      "dictionary": "{\"key.\":\".\"}"
+    },
+    {
+      "id": "ascii-47",
+      "units": [
+        47
+      ],
+      "scalar": "\"/\"",
+      "array": "[\"/\",\"tail\",null]",
+      "dictionary": "{\"key/\":\"/\"}"
+    },
+    {
+      "id": "ascii-48",
+      "units": [
+        48
+      ],
+      "scalar": "\"0\"",
+      "array": "[\"0\",\"tail\",null]",
+      "dictionary": "{\"key0\":\"0\"}"
+    },
+    {
+      "id": "ascii-49",
+      "units": [
+        49
+      ],
+      "scalar": "\"1\"",
+      "array": "[\"1\",\"tail\",null]",
+      "dictionary": "{\"key1\":\"1\"}"
+    },
+    {
+      "id": "ascii-50",
+      "units": [
+        50
+      ],
+      "scalar": "\"2\"",
+      "array": "[\"2\",\"tail\",null]",
+      "dictionary": "{\"key2\":\"2\"}"
+    },
+    {
+      "id": "ascii-51",
+      "units": [
+        51
+      ],
+      "scalar": "\"3\"",
+      "array": "[\"3\",\"tail\",null]",
+      "dictionary": "{\"key3\":\"3\"}"
+    },
+    {
+      "id": "ascii-52",
+      "units": [
+        52
+      ],
+      "scalar": "\"4\"",
+      "array": "[\"4\",\"tail\",null]",
+      "dictionary": "{\"key4\":\"4\"}"
+    },
+    {
+      "id": "ascii-53",
+      "units": [
+        53
+      ],
+      "scalar": "\"5\"",
+      "array": "[\"5\",\"tail\",null]",
+      "dictionary": "{\"key5\":\"5\"}"
+    },
+    {
+      "id": "ascii-54",
+      "units": [
+        54
+      ],
+      "scalar": "\"6\"",
+      "array": "[\"6\",\"tail\",null]",
+      "dictionary": "{\"key6\":\"6\"}"
+    },
+    {
+      "id": "ascii-55",
+      "units": [
+        55
+      ],
+      "scalar": "\"7\"",
+      "array": "[\"7\",\"tail\",null]",
+      "dictionary": "{\"key7\":\"7\"}"
+    },
+    {
+      "id": "ascii-56",
+      "units": [
+        56
+      ],
+      "scalar": "\"8\"",
+      "array": "[\"8\",\"tail\",null]",
+      "dictionary": "{\"key8\":\"8\"}"
+    },
+    {
+      "id": "ascii-57",
+      "units": [
+        57
+      ],
+      "scalar": "\"9\"",
+      "array": "[\"9\",\"tail\",null]",
+      "dictionary": "{\"key9\":\"9\"}"
+    },
+    {
+      "id": "ascii-58",
+      "units": [
+        58
+      ],
+      "scalar": "\":\"",
+      "array": "[\":\",\"tail\",null]",
+      "dictionary": "{\"key:\":\":\"}"
+    },
+    {
+      "id": "ascii-59",
+      "units": [
+        59
+      ],
+      "scalar": "\";\"",
+      "array": "[\";\",\"tail\",null]",
+      "dictionary": "{\"key;\":\";\"}"
+    },
+    {
+      "id": "ascii-60",
+      "units": [
+        60
+      ],
+      "scalar": "\"\\u003C\"",
+      "array": "[\"\\u003C\",\"tail\",null]",
+      "dictionary": "{\"key\\u003C\":\"\\u003C\"}"
+    },
+    {
+      "id": "ascii-61",
+      "units": [
+        61
+      ],
+      "scalar": "\"=\"",
+      "array": "[\"=\",\"tail\",null]",
+      "dictionary": "{\"key=\":\"=\"}"
+    },
+    {
+      "id": "ascii-62",
+      "units": [
+        62
+      ],
+      "scalar": "\"\\u003E\"",
+      "array": "[\"\\u003E\",\"tail\",null]",
+      "dictionary": "{\"key\\u003E\":\"\\u003E\"}"
+    },
+    {
+      "id": "ascii-63",
+      "units": [
+        63
+      ],
+      "scalar": "\"?\"",
+      "array": "[\"?\",\"tail\",null]",
+      "dictionary": "{\"key?\":\"?\"}"
+    },
+    {
+      "id": "ascii-64",
+      "units": [
+        64
+      ],
+      "scalar": "\"@\"",
+      "array": "[\"@\",\"tail\",null]",
+      "dictionary": "{\"key@\":\"@\"}"
+    },
+    {
+      "id": "ascii-65",
+      "units": [
+        65
+      ],
+      "scalar": "\"A\"",
+      "array": "[\"A\",\"tail\",null]",
+      "dictionary": "{\"keyA\":\"A\"}"
+    },
+    {
+      "id": "ascii-66",
+      "units": [
+        66
+      ],
+      "scalar": "\"B\"",
+      "array": "[\"B\",\"tail\",null]",
+      "dictionary": "{\"keyB\":\"B\"}"
+    },
+    {
+      "id": "ascii-67",
+      "units": [
+        67
+      ],
+      "scalar": "\"C\"",
+      "array": "[\"C\",\"tail\",null]",
+      "dictionary": "{\"keyC\":\"C\"}"
+    },
+    {
+      "id": "ascii-68",
+      "units": [
+        68
+      ],
+      "scalar": "\"D\"",
+      "array": "[\"D\",\"tail\",null]",
+      "dictionary": "{\"keyD\":\"D\"}"
+    },
+    {
+      "id": "ascii-69",
+      "units": [
+        69
+      ],
+      "scalar": "\"E\"",
+      "array": "[\"E\",\"tail\",null]",
+      "dictionary": "{\"keyE\":\"E\"}"
+    },
+    {
+      "id": "ascii-70",
+      "units": [
+        70
+      ],
+      "scalar": "\"F\"",
+      "array": "[\"F\",\"tail\",null]",
+      "dictionary": "{\"keyF\":\"F\"}"
+    },
+    {
+      "id": "ascii-71",
+      "units": [
+        71
+      ],
+      "scalar": "\"G\"",
+      "array": "[\"G\",\"tail\",null]",
+      "dictionary": "{\"keyG\":\"G\"}"
+    },
+    {
+      "id": "ascii-72",
+      "units": [
+        72
+      ],
+      "scalar": "\"H\"",
+      "array": "[\"H\",\"tail\",null]",
+      "dictionary": "{\"keyH\":\"H\"}"
+    },
+    {
+      "id": "ascii-73",
+      "units": [
+        73
+      ],
+      "scalar": "\"I\"",
+      "array": "[\"I\",\"tail\",null]",
+      "dictionary": "{\"keyI\":\"I\"}"
+    },
+    {
+      "id": "ascii-74",
+      "units": [
+        74
+      ],
+      "scalar": "\"J\"",
+      "array": "[\"J\",\"tail\",null]",
+      "dictionary": "{\"keyJ\":\"J\"}"
+    },
+    {
+      "id": "ascii-75",
+      "units": [
+        75
+      ],
+      "scalar": "\"K\"",
+      "array": "[\"K\",\"tail\",null]",
+      "dictionary": "{\"keyK\":\"K\"}"
+    },
+    {
+      "id": "ascii-76",
+      "units": [
+        76
+      ],
+      "scalar": "\"L\"",
+      "array": "[\"L\",\"tail\",null]",
+      "dictionary": "{\"keyL\":\"L\"}"
+    },
+    {
+      "id": "ascii-77",
+      "units": [
+        77
+      ],
+      "scalar": "\"M\"",
+      "array": "[\"M\",\"tail\",null]",
+      "dictionary": "{\"keyM\":\"M\"}"
+    },
+    {
+      "id": "ascii-78",
+      "units": [
+        78
+      ],
+      "scalar": "\"N\"",
+      "array": "[\"N\",\"tail\",null]",
+      "dictionary": "{\"keyN\":\"N\"}"
+    },
+    {
+      "id": "ascii-79",
+      "units": [
+        79
+      ],
+      "scalar": "\"O\"",
+      "array": "[\"O\",\"tail\",null]",
+      "dictionary": "{\"keyO\":\"O\"}"
+    },
+    {
+      "id": "ascii-80",
+      "units": [
+        80
+      ],
+      "scalar": "\"P\"",
+      "array": "[\"P\",\"tail\",null]",
+      "dictionary": "{\"keyP\":\"P\"}"
+    },
+    {
+      "id": "ascii-81",
+      "units": [
+        81
+      ],
+      "scalar": "\"Q\"",
+      "array": "[\"Q\",\"tail\",null]",
+      "dictionary": "{\"keyQ\":\"Q\"}"
+    },
+    {
+      "id": "ascii-82",
+      "units": [
+        82
+      ],
+      "scalar": "\"R\"",
+      "array": "[\"R\",\"tail\",null]",
+      "dictionary": "{\"keyR\":\"R\"}"
+    },
+    {
+      "id": "ascii-83",
+      "units": [
+        83
+      ],
+      "scalar": "\"S\"",
+      "array": "[\"S\",\"tail\",null]",
+      "dictionary": "{\"keyS\":\"S\"}"
+    },
+    {
+      "id": "ascii-84",
+      "units": [
+        84
+      ],
+      "scalar": "\"T\"",
+      "array": "[\"T\",\"tail\",null]",
+      "dictionary": "{\"keyT\":\"T\"}"
+    },
+    {
+      "id": "ascii-85",
+      "units": [
+        85
+      ],
+      "scalar": "\"U\"",
+      "array": "[\"U\",\"tail\",null]",
+      "dictionary": "{\"keyU\":\"U\"}"
+    },
+    {
+      "id": "ascii-86",
+      "units": [
+        86
+      ],
+      "scalar": "\"V\"",
+      "array": "[\"V\",\"tail\",null]",
+      "dictionary": "{\"keyV\":\"V\"}"
+    },
+    {
+      "id": "ascii-87",
+      "units": [
+        87
+      ],
+      "scalar": "\"W\"",
+      "array": "[\"W\",\"tail\",null]",
+      "dictionary": "{\"keyW\":\"W\"}"
+    },
+    {
+      "id": "ascii-88",
+      "units": [
+        88
+      ],
+      "scalar": "\"X\"",
+      "array": "[\"X\",\"tail\",null]",
+      "dictionary": "{\"keyX\":\"X\"}"
+    },
+    {
+      "id": "ascii-89",
+      "units": [
+        89
+      ],
+      "scalar": "\"Y\"",
+      "array": "[\"Y\",\"tail\",null]",
+      "dictionary": "{\"keyY\":\"Y\"}"
+    },
+    {
+      "id": "ascii-90",
+      "units": [
+        90
+      ],
+      "scalar": "\"Z\"",
+      "array": "[\"Z\",\"tail\",null]",
+      "dictionary": "{\"keyZ\":\"Z\"}"
+    },
+    {
+      "id": "ascii-91",
+      "units": [
+        91
+      ],
+      "scalar": "\"[\"",
+      "array": "[\"[\",\"tail\",null]",
+      "dictionary": "{\"key[\":\"[\"}"
+    },
+    {
+      "id": "ascii-92",
+      "units": [
+        92
+      ],
+      "scalar": "\"\\\\\"",
+      "array": "[\"\\\\\",\"tail\",null]",
+      "dictionary": "{\"key\\\\\":\"\\\\\"}"
+    },
+    {
+      "id": "ascii-93",
+      "units": [
+        93
+      ],
+      "scalar": "\"]\"",
+      "array": "[\"]\",\"tail\",null]",
+      "dictionary": "{\"key]\":\"]\"}"
+    },
+    {
+      "id": "ascii-94",
+      "units": [
+        94
+      ],
+      "scalar": "\"^\"",
+      "array": "[\"^\",\"tail\",null]",
+      "dictionary": "{\"key^\":\"^\"}"
+    },
+    {
+      "id": "ascii-95",
+      "units": [
+        95
+      ],
+      "scalar": "\"_\"",
+      "array": "[\"_\",\"tail\",null]",
+      "dictionary": "{\"key_\":\"_\"}"
+    },
+    {
+      "id": "ascii-96",
+      "units": [
+        96
+      ],
+      "scalar": "\"\\u0060\"",
+      "array": "[\"\\u0060\",\"tail\",null]",
+      "dictionary": "{\"key\\u0060\":\"\\u0060\"}"
+    },
+    {
+      "id": "ascii-97",
+      "units": [
+        97
+      ],
+      "scalar": "\"a\"",
+      "array": "[\"a\",\"tail\",null]",
+      "dictionary": "{\"keya\":\"a\"}"
+    },
+    {
+      "id": "ascii-98",
+      "units": [
+        98
+      ],
+      "scalar": "\"b\"",
+      "array": "[\"b\",\"tail\",null]",
+      "dictionary": "{\"keyb\":\"b\"}"
+    },
+    {
+      "id": "ascii-99",
+      "units": [
+        99
+      ],
+      "scalar": "\"c\"",
+      "array": "[\"c\",\"tail\",null]",
+      "dictionary": "{\"keyc\":\"c\"}"
+    },
+    {
+      "id": "ascii-100",
+      "units": [
+        100
+      ],
+      "scalar": "\"d\"",
+      "array": "[\"d\",\"tail\",null]",
+      "dictionary": "{\"keyd\":\"d\"}"
+    },
+    {
+      "id": "ascii-101",
+      "units": [
+        101
+      ],
+      "scalar": "\"e\"",
+      "array": "[\"e\",\"tail\",null]",
+      "dictionary": "{\"keye\":\"e\"}"
+    },
+    {
+      "id": "ascii-102",
+      "units": [
+        102
+      ],
+      "scalar": "\"f\"",
+      "array": "[\"f\",\"tail\",null]",
+      "dictionary": "{\"keyf\":\"f\"}"
+    },
+    {
+      "id": "ascii-103",
+      "units": [
+        103
+      ],
+      "scalar": "\"g\"",
+      "array": "[\"g\",\"tail\",null]",
+      "dictionary": "{\"keyg\":\"g\"}"
+    },
+    {
+      "id": "ascii-104",
+      "units": [
+        104
+      ],
+      "scalar": "\"h\"",
+      "array": "[\"h\",\"tail\",null]",
+      "dictionary": "{\"keyh\":\"h\"}"
+    },
+    {
+      "id": "ascii-105",
+      "units": [
+        105
+      ],
+      "scalar": "\"i\"",
+      "array": "[\"i\",\"tail\",null]",
+      "dictionary": "{\"keyi\":\"i\"}"
+    },
+    {
+      "id": "ascii-106",
+      "units": [
+        106
+      ],
+      "scalar": "\"j\"",
+      "array": "[\"j\",\"tail\",null]",
+      "dictionary": "{\"keyj\":\"j\"}"
+    },
+    {
+      "id": "ascii-107",
+      "units": [
+        107
+      ],
+      "scalar": "\"k\"",
+      "array": "[\"k\",\"tail\",null]",
+      "dictionary": "{\"keyk\":\"k\"}"
+    },
+    {
+      "id": "ascii-108",
+      "units": [
+        108
+      ],
+      "scalar": "\"l\"",
+      "array": "[\"l\",\"tail\",null]",
+      "dictionary": "{\"keyl\":\"l\"}"
+    },
+    {
+      "id": "ascii-109",
+      "units": [
+        109
+      ],
+      "scalar": "\"m\"",
+      "array": "[\"m\",\"tail\",null]",
+      "dictionary": "{\"keym\":\"m\"}"
+    },
+    {
+      "id": "ascii-110",
+      "units": [
+        110
+      ],
+      "scalar": "\"n\"",
+      "array": "[\"n\",\"tail\",null]",
+      "dictionary": "{\"keyn\":\"n\"}"
+    },
+    {
+      "id": "ascii-111",
+      "units": [
+        111
+      ],
+      "scalar": "\"o\"",
+      "array": "[\"o\",\"tail\",null]",
+      "dictionary": "{\"keyo\":\"o\"}"
+    },
+    {
+      "id": "ascii-112",
+      "units": [
+        112
+      ],
+      "scalar": "\"p\"",
+      "array": "[\"p\",\"tail\",null]",
+      "dictionary": "{\"keyp\":\"p\"}"
+    },
+    {
+      "id": "ascii-113",
+      "units": [
+        113
+      ],
+      "scalar": "\"q\"",
+      "array": "[\"q\",\"tail\",null]",
+      "dictionary": "{\"keyq\":\"q\"}"
+    },
+    {
+      "id": "ascii-114",
+      "units": [
+        114
+      ],
+      "scalar": "\"r\"",
+      "array": "[\"r\",\"tail\",null]",
+      "dictionary": "{\"keyr\":\"r\"}"
+    },
+    {
+      "id": "ascii-115",
+      "units": [
+        115
+      ],
+      "scalar": "\"s\"",
+      "array": "[\"s\",\"tail\",null]",
+      "dictionary": "{\"keys\":\"s\"}"
+    },
+    {
+      "id": "ascii-116",
+      "units": [
+        116
+      ],
+      "scalar": "\"t\"",
+      "array": "[\"t\",\"tail\",null]",
+      "dictionary": "{\"keyt\":\"t\"}"
+    },
+    {
+      "id": "ascii-117",
+      "units": [
+        117
+      ],
+      "scalar": "\"u\"",
+      "array": "[\"u\",\"tail\",null]",
+      "dictionary": "{\"keyu\":\"u\"}"
+    },
+    {
+      "id": "ascii-118",
+      "units": [
+        118
+      ],
+      "scalar": "\"v\"",
+      "array": "[\"v\",\"tail\",null]",
+      "dictionary": "{\"keyv\":\"v\"}"
+    },
+    {
+      "id": "ascii-119",
+      "units": [
+        119
+      ],
+      "scalar": "\"w\"",
+      "array": "[\"w\",\"tail\",null]",
+      "dictionary": "{\"keyw\":\"w\"}"
+    },
+    {
+      "id": "ascii-120",
+      "units": [
+        120
+      ],
+      "scalar": "\"x\"",
+      "array": "[\"x\",\"tail\",null]",
+      "dictionary": "{\"keyx\":\"x\"}"
+    },
+    {
+      "id": "ascii-121",
+      "units": [
+        121
+      ],
+      "scalar": "\"y\"",
+      "array": "[\"y\",\"tail\",null]",
+      "dictionary": "{\"keyy\":\"y\"}"
+    },
+    {
+      "id": "ascii-122",
+      "units": [
+        122
+      ],
+      "scalar": "\"z\"",
+      "array": "[\"z\",\"tail\",null]",
+      "dictionary": "{\"keyz\":\"z\"}"
+    },
+    {
+      "id": "ascii-123",
+      "units": [
+        123
+      ],
+      "scalar": "\"{\"",
+      "array": "[\"{\",\"tail\",null]",
+      "dictionary": "{\"key{\":\"{\"}"
+    },
+    {
+      "id": "ascii-124",
+      "units": [
+        124
+      ],
+      "scalar": "\"|\"",
+      "array": "[\"|\",\"tail\",null]",
+      "dictionary": "{\"key|\":\"|\"}"
+    },
+    {
+      "id": "ascii-125",
+      "units": [
+        125
+      ],
+      "scalar": "\"}\"",
+      "array": "[\"}\",\"tail\",null]",
+      "dictionary": "{\"key}\":\"}\"}"
+    },
+    {
+      "id": "ascii-126",
+      "units": [
+        126
+      ],
+      "scalar": "\"~\"",
+      "array": "[\"~\",\"tail\",null]",
+      "dictionary": "{\"key~\":\"~\"}"
+    },
+    {
+      "id": "ascii-127",
+      "units": [
+        127
+      ],
+      "scalar": "\"\\u007F\"",
+      "array": "[\"\\u007F\",\"tail\",null]",
+      "dictionary": "{\"key\\u007F\":\"\\u007F\"}"
+    },
+    {
+      "id": "empty",
+      "units": [],
+      "scalar": "\"\"",
+      "array": "[\"\",\"tail\",null]",
+      "dictionary": "{\"key\":\"\"}"
+    },
+    {
+      "id": "null",
+      "units": null,
+      "scalar": "null",
+      "array": "[null,\"tail\",null]",
+      "dictionary": "{\"key\":null}"
+    },
+    {
+      "id": "html",
+      "units": [
+        60,
+        233,
+        62,
+        38,
+        39,
+        34,
+        43,
+        96,
+        47,
+        92,
+        61
+      ],
+      "scalar": "\"\\u003C\\u00E9\\u003E\\u0026\\u0027\\u0022\\u002B\\u0060/\\\\=\"",
+      "array": "[\"\\u003C\\u00E9\\u003E\\u0026\\u0027\\u0022\\u002B\\u0060/\\\\=\",\"tail\",null]",
+      "dictionary": "{\"key\\u003C\\u00E9\\u003E\\u0026\\u0027\\u0022\\u002B\\u0060/\\\\=\":\"\\u003C\\u00E9\\u003E\\u0026\\u0027\\u0022\\u002B\\u0060/\\\\=\"}"
+    },
+    {
+      "id": "latin",
+      "units": [
+        233,
+        224,
+        246,
+        223,
+        127,
+        128,
+        160
+      ],
+      "scalar": "\"\\u00E9\\u00E0\\u00F6\\u00DF\\u007F\\u0080\\u00A0\"",
+      "array": "[\"\\u00E9\\u00E0\\u00F6\\u00DF\\u007F\\u0080\\u00A0\",\"tail\",null]",
+      "dictionary": "{\"key\\u00E9\\u00E0\\u00F6\\u00DF\\u007F\\u0080\\u00A0\":\"\\u00E9\\u00E0\\u00F6\\u00DF\\u007F\\u0080\\u00A0\"}"
+    },
+    {
+      "id": "combining",
+      "units": [
+        101,
+        769
+      ],
+      "scalar": "\"e\\u0301\"",
+      "array": "[\"e\\u0301\",\"tail\",null]",
+      "dictionary": "{\"keye\\u0301\":\"e\\u0301\"}"
+    },
+    {
+      "id": "scripts",
+      "units": [
+        955,
+        28450,
+        23383,
+        54620,
+        44544,
+        1575,
+        1604,
+        1593,
+        1585,
+        1576,
+        1610,
+        1577
+      ],
+      "scalar": "\"\\u03BB\\u6F22\\u5B57\\uD55C\\uAE00\\u0627\\u0644\\u0639\\u0631\\u0628\\u064A\\u0629\"",
+      "array": "[\"\\u03BB\\u6F22\\u5B57\\uD55C\\uAE00\\u0627\\u0644\\u0639\\u0631\\u0628\\u064A\\u0629\",\"tail\",null]",
+      "dictionary": "{\"key\\u03BB\\u6F22\\u5B57\\uD55C\\uAE00\\u0627\\u0644\\u0639\\u0631\\u0628\\u064A\\u0629\":\"\\u03BB\\u6F22\\u5B57\\uD55C\\uAE00\\u0627\\u0644\\u0639\\u0631\\u0628\\u064A\\u0629\"}"
+    },
+    {
+      "id": "separators",
+      "units": [
+        8232,
+        8233,
+        8239,
+        12288
+      ],
+      "scalar": "\"\\u2028\\u2029\\u202F\\u3000\"",
+      "array": "[\"\\u2028\\u2029\\u202F\\u3000\",\"tail\",null]",
+      "dictionary": "{\"key\\u2028\\u2029\\u202F\\u3000\":\"\\u2028\\u2029\\u202F\\u3000\"}"
+    },
+    {
+      "id": "noncharacters",
+      "units": [
+        65534,
+        65535
+      ],
+      "scalar": "\"\\uFFFE\\uFFFF\"",
+      "array": "[\"\\uFFFE\\uFFFF\",\"tail\",null]",
+      "dictionary": "{\"key\\uFFFE\\uFFFF\":\"\\uFFFE\\uFFFF\"}"
+    },
+    {
+      "id": "astral",
+      "units": [
+        55357,
+        56832,
+        55296,
+        56320,
+        56319,
+        57343
+      ],
+      "scalar": "\"\\uD83D\\uDE00\\uD800\\uDC00\\uDBFF\\uDFFF\"",
+      "array": "[\"\\uD83D\\uDE00\\uD800\\uDC00\\uDBFF\\uDFFF\",\"tail\",null]",
+      "dictionary": "{\"key\\uD83D\\uDE00\\uD800\\uDC00\\uDBFF\\uDFFF\":\"\\uD83D\\uDE00\\uD800\\uDC00\\uDBFF\\uDFFF\"}"
+    },
+    {
+      "id": "high-surrogate",
+      "units": [
+        55296
+      ],
+      "scalar": "\"\\uFFFD\"",
+      "array": "[\"\\uFFFD\",\"tail\",null]",
+      "dictionary": "{\"key\\uFFFD\":\"\\uFFFD\"}"
+    },
+    {
+      "id": "low-surrogate",
+      "units": [
+        56320
+      ],
+      "scalar": "\"\\uFFFD\"",
+      "array": "[\"\\uFFFD\",\"tail\",null]",
+      "dictionary": "{\"key\\uFFFD\":\"\\uFFFD\"}"
+    },
+    {
+      "id": "broken-surrogates",
+      "units": [
+        55296,
+        97,
+        56320,
+        55296,
+        55296,
+        56320
+      ],
+      "scalar": "\"\\uFFFDa\\uFFFD\\uFFFD\\uD800\\uDC00\"",
+      "array": "[\"\\uFFFDa\\uFFFD\\uFFFD\\uD800\\uDC00\",\"tail\",null]",
+      "dictionary": "{\"key\\uFFFDa\\uFFFD\\uFFFD\\uD800\\uDC00\":\"\\uFFFDa\\uFFFD\\uFFFD\\uD800\\uDC00\"}"
+    },
+    {
+      "id": "escaped-looking",
+      "units": [
+        92,
+        117,
+        48,
+        48,
+        51,
+        67,
+        92,
+        34,
+        92,
+        110
+      ],
+      "scalar": "\"\\\\u003C\\\\\\u0022\\\\n\"",
+      "array": "[\"\\\\u003C\\\\\\u0022\\\\n\",\"tail\",null]",
+      "dictionary": "{\"key\\\\u003C\\\\\\u0022\\\\n\":\"\\\\u003C\\\\\\u0022\\\\n\"}"
+    },
+    {
+      "id": "literal-controls",
+      "units": [
+        0,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        31
+      ],
+      "scalar": "\"\\u0000\\b\\t\\n\\u000B\\f\\r\\u001F\"",
+      "array": "[\"\\u0000\\b\\t\\n\\u000B\\f\\r\\u001F\",\"tail\",null]",
+      "dictionary": "{\"key\\u0000\\b\\t\\n\\u000B\\f\\r\\u001F\":\"\\u0000\\b\\t\\n\\u000B\\f\\r\\u001F\"}"
+    },
+    {
+      "id": "within-host-budget",
+      "repeat": 60,
+      "count": 166666,
+      "length": 999998,
+      "sha256": "b5644be5b23e6c17e50c4b0af0b6226e12a9077658e4e13c66b35ac5a154af44",
+      "prefix": "\"\\u003C\\u003C\\u0",
+      "suffix": "03C\\u003C\\u003C\""
+    },
+    {
+      "id": "above-host-budget",
+      "repeat": 60,
+      "count": 166667,
+      "length": 1000004,
+      "sha256": "5e863e15ec78c9b431233da0a23c5555b1923d46bc6f9fdd4dfa7d0c8ba3c1fd",
+      "prefix": "\"\\u003C\\u003C\\u0",
+      "suffix": "03C\\u003C\\u003C\""
+    }
+  ]
+}

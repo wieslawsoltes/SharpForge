@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-8eb6fd285b7543ba3950",
+  "kind": "spec",
+  "sourceText": "static void F()\n{\n    for (int i = 0; i < 3; i++)\n    {\n        int x = i * 2 + 1;\n        ...\n    }\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8321",
+        "severity": "warning"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "a8885b20b260466b8840fa29999dc10a8c85f6d2688efd067a4094deda3466d9",
+  "originalSource": "static void F()\n{\n    for (int i = 0; i < 3; i++)\n    {\n        int x = i * 2 + 1;\n        ...\n    }\n}",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "InstantiationOfLocalVariables1",
+    "replaceEllipsis": true,
+    "expectedWarnings": [
+      "CS8321"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "InstantiationOfLocalVariables1",
+    "offsetInUnquotedMarkdown": 375736
+  }
+}

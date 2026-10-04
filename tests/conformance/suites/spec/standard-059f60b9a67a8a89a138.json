@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-059f60b9a67a8a89a138",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass C<V>\n{\n    public V f1;\n    public C<V> f2;\n\n    public C(V x)\n    {\n        this.f1 = x;\n        this.f2 = this;\n    }\n}\n\nclass Application\n{\n    static void Main()\n    {\n        C<int> x1 = new C<int>(1);\n        Console.WriteLine(x1.f1);              // Prints 1\n\n        C<double> x2 = new C<double>(3.1415);\n        Console.WriteLine(x2.f1);              // Prints 3.1415\n    }\n}",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [],
+    "stdout": "1\n3.1415\n",
+    "exitCode": 0
+  },
+  "sourceSHA256": "be672fbac0d906b77a81d000af3a793424bd94144b3789e8a5b061bce3e14c6f",
+  "originalSource": "class C<V>\n{\n    public V f1;\n    public C<V> f2;\n\n    public C(V x)\n    {\n        this.f1 = x;\n        this.f2 = this;\n    }\n}\n\nclass Application\n{\n    static void Main()\n    {\n        C<int> x1 = new C<int>(1);\n        Console.WriteLine(x1.f1);              // Prints 1\n\n        C<double> x2 = new C<double>(3.1415);\n        Console.WriteLine(x2.f1);              // Prints 3.1415\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "TypeParameterSubstitution",
+    "expectedOutput": [
+      "1",
+      "3.1415"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "TypeParameterSubstitution",
+    "offsetInUnquotedMarkdown": 52198
+  }
+}

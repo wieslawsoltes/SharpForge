@@ -97,7 +97,8 @@ export const nodeKindNames = Object.freeze([
   'XmlEmptyElement', 'XmlName', 'XmlPrefix', 'XmlTextAttribute', 'XmlCrefAttribute', 'XmlNameAttribute', 'XmlText', 'XmlCDataSection', 'XmlComment',
   'XmlProcessingInstruction', 'TypeCref', 'QualifiedCref', 'NameMemberCref', 'IndexerMemberCref', 'OperatorMemberCref',
   'ConversionOperatorMemberCref', 'CrefParameterList', 'CrefBracketedParameterList', 'CrefParameter', 'ExtensionBlockDeclaration', 'UnionDeclaration',
-  'UnionCaseTypeList', 'UnsafeExpression'
+  'UnionCaseTypeList', 'UnsafeExpression',
+  'MakeRefExpression', 'RefTypeExpression', 'RefValueExpression'
 ]);
 const bases = [
     [tokenKindNames, 8193],

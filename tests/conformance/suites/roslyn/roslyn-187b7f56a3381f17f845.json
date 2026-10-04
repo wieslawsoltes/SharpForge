@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-187b7f56a3381f17f845",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    async System.Threading.Tasks.Task M()\n    {\n        await foreach (var i in new C()) { }\n    }\n    public Enumerator GetAsyncEnumerator()\n        => throw null;\n    public sealed class Enumerator\n    {\n        public System.Threading.Tasks.Task<bool> MoveNextAsync()\n            => throw null;\n        public static int Current\n        {\n            get => throw null;\n        }\n    }\n}",
+  "sourceSHA256": "b22fb9f9bb918977d48f99735a78f997c93572e3d5f5cef61e6656aa73d6e063",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestWithCurrent_Static",
+    "offset": 29667
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8412",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,33): error CS8412: Asynchronous foreach requires that the return type 'C.Enumerator' of 'C.GetAsyncEnumerator()' must have a suitable public 'MoveNextAsync' method and public 'Current' property\n                //         await foreach (var i in new C()) { }\n                Diagnostic(ErrorCode.ERR_BadGetAsyncEnumerator, \"new C()\").WithArguments(\"C.Enumerator\", \"C.GetAsyncEnumerator()\").WithLocation(6, 33)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

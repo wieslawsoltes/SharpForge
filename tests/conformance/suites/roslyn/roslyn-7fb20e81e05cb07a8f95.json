@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7fb20e81e05cb07a8f95",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\npublic class Att : Attribute\n{\n    [Obsolete(\"Constructor\", true)]\n    public Att() { }\n    [Obsolete(\"Property\", true)]\n    public int Prop\n    {\n        get { return 1; }\n        set { }\n    }\n    [Obsolete(\"Property\", true)]\n    public int Prop2\n    {\n        get; set;\n    }\n    public int Prop3\n    {\n        get; [Obsolete(\"setter\", true)]set;\n    }\n    [Obsolete(\"Property\", true)]\n    public int Prop4\n    {\n        get; [Obsolete(\"setter\", true)]set;\n    }\n    public int Prop5\n    {\n        [Obsolete(\"setter\", true)]get; set;\n    }\n    [Obsolete(\"Field\", true)]\n    public int Field;\n}\n\n[Att]\n[Att(Field = 1)]\n[Att(Prop = 1)]\n[Att(Prop2 = 1)]\n[Att(Prop3 = 1)]\n[Att(Prop4 = 1)]\n[Att(Prop5 = 1)]\npublic class Test\n{\n    [Att()]\n    public static void Main() { }\n}\n",
+  "sourceSHA256": "f70d9f4c0bba04cddc9924d8f9fcd118b4c93645d01ff339dcc827759b0b48e7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeOnAttributes",
+    "offset": 268365
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (37,2): error CS0619: 'Att.Att()' is obsolete: 'Constructor'\n                // [Att]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Att\").WithArguments(\"Att.Att()\", \"Constructor\").WithLocation(37, 2),\n                // (38,6): error CS0619: 'Att.Field' is obsolete: 'Field'\n                // [Att(Field = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Field = 1\").WithArguments(\"Att.Field\", \"Field\").WithLocation(38, 6),\n                // (38,2): error CS0619: 'Att.Att()' is obsolete: 'Constructor'\n                // [Att(Field = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Att(Field = 1)\").WithArguments(\"Att.Att()\", \"Constructor\").WithLocation(38, 2),\n                // (39,6): error CS0619: 'Att.Prop' is obsolete: 'Property'\n                // [Att(Prop = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Prop = 1\").WithArguments(\"Att.Prop\", \"Property\").WithLocation(39, 6),\n                // (39,2): error CS0619: 'Att.Att()' is obsolete: 'Constructor'\n                // [Att(Prop = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Att(Prop = 1)\").WithArguments(\"Att.Att()\", \"Constructor\").WithLocation(39, 2),\n                // (40,6): error CS0619: 'Att.Prop2' is obsolete: 'Property'\n                // [Att(Prop2 = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Prop2 = 1\").WithArguments(\"Att.Prop2\", \"Property\").WithLocation(40, 6),\n                // (40,2): error CS0619: 'Att.Att()' is obsolete: 'Constructor'\n                // [Att(Prop2 = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Att(Prop2 = 1)\").WithArguments(\"Att.Att()\", \"Constructor\").WithLocation(40, 2),\n                // (41,6): error CS0619: 'Att.Prop3.set' is obsolete: 'setter'\n                // [Att(Prop3 = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Prop3 = 1\").WithArguments(\"Att.Prop3.set\", \"setter\").WithLocation(41, 6),\n                // (41,2): error CS0619: 'Att.Att()' is obsolete: 'Constructor'\n                // [Att(Prop3 = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Att(Prop3 = 1)\").WithArguments(\"Att.Att()\", \"Constructor\").WithLocation(41, 2),\n                // (42,6): error CS0619: 'Att.Prop4' is obsolete: 'Property'\n                // [Att(Prop4 = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Prop4 = 1\").WithArguments(\"Att.Prop4\", \"Property\").WithLocation(42, 6),\n                // (42,6): error CS0619: 'Att.Prop4.set' is obsolete: 'setter'\n                // [Att(Prop4 = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Prop4 = 1\").WithArguments(\"Att.Prop4.set\", \"setter\").WithLocation(42, 6),\n                // (42,2): error CS0619: 'Att.Att()' is obsolete: 'Constructor'\n                // [Att(Prop4 = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Att(Prop4 = 1)\").WithArguments(\"Att.Att()\", \"Constructor\").WithLocation(42, 2),\n                // (43,2): error CS0619: 'Att.Att()' is obsolete: 'Constructor'\n                // [Att(Prop5 = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Att(Prop5 = 1)\").WithArguments(\"Att.Att()\", \"Constructor\").WithLocation(43, 2),\n                // (46,6): error CS0619: 'Att.Att()' is obsolete: 'Constructor'\n                //     [Att()]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Att()\").WithArguments(\"Att.Att()\", \"Constructor\").WithLocation(46, 6)",
+  "unsupported": []
+}

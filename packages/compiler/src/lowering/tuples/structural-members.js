@@ -9,13 +9,13 @@
  *
  * Operands are thunks that return a fresh lowered read of the value; an operation may read its operand several times.
  */
-import {numericTypeNames} from '@sharpforge/bytecode';
+import { numericTypeNames } from '@sharpforge/bytecode';
 import { findContracts } from '@sharpforge/framework';
 import { TypeKind } from '../../symbols/types.js';
 import { n } from '../../codegen/semantic/node-factory.js';
 
 const formatValue = () => findContracts('SharpForge.Runtime.Formatting', 'FormatValue', true)[0];
-const directlyCompared = new Set([...numericTypeNames.filter(type => !['float', 'double'].includes(type)), 'bool', 'string']);
+const directlyCompared = new Set([...numericTypeNames.filter(type => type !== 'float' && type !== 'double'), 'bool', 'string']);
 const formatted = new Set([...numericTypeNames, 'bool', 'string']);
 
 export class StructuralMembers {

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1c3ab8f94084986e0767",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public void M()\n    {\n        double? d = 1.0;\n        M3(d ??= 3.0);\n        object o = null;\n        M3(o ??= null);\n        (o ??= null) = null;\n    }\n\n    public void M3(C c) {}\n}\n",
+  "sourceSHA256": "0729cb47c54ffda883dc8fce3229e8d5475fa911c77240bb88b7eccc17ea1f69",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "AsInvalidSubexpression",
+    "offset": 44043
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    public void M()\n    {\n        double? d = 1.0;\n        M3(d ??= 3.0);\n        object o = null;\n        M3(o ??= null);\n        (o ??= null) = null;\n    }\n\n    public void M3(C c) {}\n}\n\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS0131",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,12): error CS1503: Argument 1: cannot convert from 'double' to 'C'\n                //         M3(d ??= 3.0);\n                Diagnostic(ErrorCode.ERR_BadArgType, \"d ??= 3.0\").WithArguments(\"1\", \"double\", \"C\").WithLocation(7, 12),\n                // (9,12): error CS1503: Argument 1: cannot convert from 'object' to 'C'\n                //         M3(o ??= null);\n                Diagnostic(ErrorCode.ERR_BadArgType, \"o ??= null\").WithArguments(\"1\", \"object\", \"C\").WithLocation(9, 12),\n                // (10,10): error CS0131: The left-hand side of an assignment must be a variable, property or indexer\n                //         (o ??= null) = null;\n                Diagnostic(ErrorCode.ERR_AssgLvalueExpected, \"o ??= null\").WithLocation(10, 10)\n            ",
+  "unsupported": []
+}

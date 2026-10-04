@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1fef55e25751e6df8900",
+  "kind": "diagnostics",
+  "sourceText": "\nclass A\n{\n    void B()\n\t{\n\t\tusing\n\t}\n}\n",
+  "sourceSHA256": "70ee58cca9c5d4fe82903072465cafa3704735866790f0283faf5e4467b8c2fd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "sha256": "d8229f7c312c9ee5a778889d6e4283a10543e441e97b4e3da14145b6744b1b4e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "license": "MIT",
+    "method": "DanglingUsing",
+    "offset": 63322
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1031",
+        "severity": "error"
+      },
+      {
+        "code": "CS1001",
+        "severity": "error"
+      },
+      {
+        "code": "CS1002",
+        "severity": "error"
+      },
+      {
+        "code": "CS0210",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,8): error CS1031: Type expected\n                // \t\tusing\n                Diagnostic(ErrorCode.ERR_TypeExpected, \"\").WithLocation(6, 8),\n                // (6,8): error CS1001: Identifier expected\n                // \t\tusing\n                Diagnostic(ErrorCode.ERR_IdentifierExpected, \"\").WithLocation(6, 8),\n                // (6,8): error CS1002: ; expected\n                // \t\tusing\n                Diagnostic(ErrorCode.ERR_SemicolonExpected, \"\").WithLocation(6, 8),\n                // (7,1): error CS0210: You must provide an initializer in a fixed or using statement declaration\n                // \t}\n                Diagnostic(ErrorCode.ERR_FixedMustInit, \"\").WithLocation(7, 1)",
+  "unsupported": []
+}

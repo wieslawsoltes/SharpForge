@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-39a6fb1960cb15f58a13",
+  "kind": "diagnostics",
+  "sourceText": "using N;\nusing B = N.A<int>.B;\n#pragma warning disable 219\nclass C\n{\n    static void F()\n    {\n        object o = new B();\n        o = default(S);\n        var e = default(E);\n        e = E.A;\n    }\n}",
+  "sourceSHA256": "062a2c21aef9ddf89fd3e62e99fc5ea90e249e5d1281c16e803865b6370a6ef1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Experimental.cs",
+    "sha256": "d9291f31947e4fb7a17ce442dc86c68df63657514e414b99b517c9228b30f94e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Experimental.cs",
+    "license": "MIT",
+    "method": "TestExperimentalAttribute",
+    "offset": 3025
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source2, new[] { comp1.EmitToImageReference() })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8305",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8305",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8305",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8305",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,24): warning CS8305: 'N.A<int>.B' is for evaluation purposes only and is subject to change or removal in future updates.\n                //         object o = new B();\n                Diagnostic(ErrorCode.WRN_WindowsExperimental, \"B\").WithArguments(\"N.A<int>.B\").WithLocation(8, 24),\n                // (9,21): warning CS8305: 'N.S' is for evaluation purposes only and is subject to change or removal in future updates.\n                //         o = default(S);\n                Diagnostic(ErrorCode.WRN_WindowsExperimental, \"S\").WithArguments(\"N.S\").WithLocation(9, 21),\n                // (10,25): warning CS8305: 'N.E' is for evaluation purposes only and is subject to change or removal in future updates.\n                //         var e = default(E);\n                Diagnostic(ErrorCode.WRN_WindowsExperimental, \"E\").WithArguments(\"N.E\").WithLocation(10, 25),\n                // (11,13): warning CS8305: 'N.E' is for evaluation purposes only and is subject to change or removal in future updates.\n                //         e = E.A;\n                Diagnostic(ErrorCode.WRN_WindowsExperimental, \"E\").WithArguments(\"N.E\").WithLocation(11, 13)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

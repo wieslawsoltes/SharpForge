@@ -19,7 +19,7 @@ test('A02-T13 no compiler module patches a prototype',()=>{
 });
 test('A02-T13 method compiler is composed from explicit class layers',()=>{
   const chain=[];for(let p=MethodCompiler;p&&p!==Function.prototype;p=Object.getPrototypeOf(p))chain.push(p.name);
-  assert.deepEqual(chain,['MethodCompiler','ModernCompiler','FrameworkCompiler','CoreMethodCompiler']);
+  assert.deepEqual(chain,['MethodCompiler','CallScopedInference','ModernCompiler','FrameworkCompiler','CoreMethodCompiler']);
   for(const name of ['expr','stmt','infer','typedExpr','frameworkCall','collectionExpression','findMethod'])assert.equal(typeof MethodCompiler.prototype[name],'function',name);
   assert.equal(api.Compilation,Compilation);
 });

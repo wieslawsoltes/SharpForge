@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-fcca0c8dabff4d9daa54",
+  "kind": "spec",
+  "sourceText": "DoSomething(isEmployed:true, name, age); // currently disallowed, even though all arguments are in position\n// CS1738 \"Named argument specifications must appear after all fixed arguments have been specified\"",
+  "sourceSHA256": "8e6e4ff319bdf40624dd6acfa9cde63dbf9184725b5c7b4d2b2376ace20d8fad",
+  "target": "library",
+  "featureId": "csharp-7-2-non-trailing-named-arguments",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/non-trailing-named-arguments.md",
+    "sha256": "3ae5349c9be454d4548de620ac41e3e042bb9e5202bca3cd383b3add71883ab0",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/non-trailing-named-arguments.md",
+    "license": "NOASSERTION",
+    "offset": 657
+  }
+}

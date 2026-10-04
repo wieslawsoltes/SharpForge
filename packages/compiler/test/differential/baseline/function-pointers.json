@@ -1,0 +1,5 @@
+{
+  "function-pointers/conversion-and-invocation-errors": ["diagnostics", "warnings"],
+  "function-pointers/unmanaged-callers-only-rules": ["diagnostics", "warnings"],
+  "function-pointers/valid-uses-warn-on-comparison": ["diagnostics", "warnings"]
+}

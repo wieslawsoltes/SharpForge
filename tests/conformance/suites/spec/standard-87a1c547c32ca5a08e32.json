@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-87a1c547c32ca5a08e32",
+  "kind": "spec",
+  "sourceText": "class B<U>\n{\n    public U F(long index) {...}\n}\n\nclass D<T> : B<T[]>\n{\n    public T G(string s) {...}\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "c43f1c1072c9a8937f41a4187b400fe8fb88be2eb8edae1ec9ecce83094aa805",
+  "originalSource": "class B<U>\n{\n    public U F(long index) {...}\n}\n\nclass D<T> : B<T[]>\n{\n    public T G(string s) {...}\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "Inheritance",
+    "replaceEllipsis": true,
+    "customEllipsisReplacements": [
+      "return default;",
+      "return default;"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "Inheritance",
+    "offsetInUnquotedMarkdown": 55272
+  }
+}

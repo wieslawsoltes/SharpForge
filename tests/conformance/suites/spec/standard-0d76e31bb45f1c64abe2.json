@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-0d76e31bb45f1c64abe2",
+  "kind": "spec",
+  "sourceText": "class B<U,V> {...}\nclass G<T> : B<string,T[]> {...}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "a35a0f187765e3204199df0d00e89e6bfb4f56bc6f9fc62c84fda015ca8ed1da",
+  "originalSource": "class B<U,V> {...}\nclass G<T> : B<string,T[]> {...}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "GenericBaseClass",
+    "replaceEllipsis": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "GenericBaseClass",
+    "offsetInUnquotedMarkdown": 13317
+  }
+}

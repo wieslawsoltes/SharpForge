@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ee8db58d8b82611290a7",
+  "kind": "diagnostics",
+  "sourceText": "\ninterface I<T>\n{\n    T M();\n}\nclass Base\n{\n    public (int a, int b) M() { return (1, 2); }\n}\nclass Derived : Base, I<(int notA, int notB)>\n{\n    // error\n}\n",
+  "sourceSHA256": "b091cc2426fc7354a1b846c6caa95e55a0742bbfd0d4dc451450c3bf8ab45d30",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ImplicitBaseImplementationNotConsideredImplementationForInterfaceWithDifferentTupleNames2",
+    "offset": 1076944
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8141",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,23): error CS8141: The tuple element names in the signature of method 'Base.M()' must match the tuple element names of interface method 'I<(int notA, int notB)>.M()' (including on the return type).\n                // class Derived : Base, I<(int notA, int notB)>\n                Diagnostic(ErrorCode.ERR_ImplBadTupleNames, \"I<(int notA, int notB)>\").WithArguments(\"Base.M()\", \"I<(int notA, int notB)>.M()\").WithLocation(10, 23)\n                ",
+  "unsupported": []
+}

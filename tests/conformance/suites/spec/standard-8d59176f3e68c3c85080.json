@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-8d59176f3e68c3c85080",
+  "kind": "spec",
+  "sourceText": "class Base<T> {}\n\n// Valid, non-constructed class with constructed base class\nclass Extend1 : Base<int> {}\n\n// Error, type parameter used as base class\nclass Extend2<V> : V {}\n\n// Valid, type parameter used as type argument for base class\nclass Extend3<V> : Base<V> {}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0689",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "98c3d2a39eab709dee739b4797b895612d66c5e3467269cdd0043b19a61a975d",
+  "originalSource": "class Base<T> {}\n\n// Valid, non-constructed class with constructed base class\nclass Extend1 : Base<int> {}\n\n// Error, type parameter used as base class\nclass Extend2<V> : V {}\n\n// Valid, type parameter used as type argument for base class\nclass Extend3<V> : Base<V> {}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "TypeParameterUsedAsBaseClass",
+    "expectedErrors": [
+      "CS0689"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "TypeParameterUsedAsBaseClass",
+    "offsetInUnquotedMarkdown": 13868
+  }
+}

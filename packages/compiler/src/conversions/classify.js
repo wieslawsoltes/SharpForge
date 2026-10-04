@@ -6,7 +6,8 @@
  * literals, constant narrowing, the 0-to-enum conversion, method groups, anonymous functions, interpolated strings,
  * tuple literals, throw). The result is an immutable `Conversion` whose `kind` follows Roslyn's ConversionKind.
  */
-import { TypeKind, NamedTypeSymbol, TypeParameterSymbol, TypeCompareKind } from '../symbols/types.js';
+import { SymbolKind, TypeKind, NamedTypeSymbol, TypeParameterSymbol, TypeCompareKind } from '../symbols/types.js';
+import { tupleElements } from '../symbols/tuple-elements.js';
 import { numericKind, implicitNumericConversion, explicitNumericConversion } from './numeric.js';
 import { implicitConstantConversion } from './constant-narrowing.js';
 import { nativeIntegerKind, isNativeIdentity, isIntPtrFamily } from './native-int.js';
@@ -14,6 +15,9 @@ import { isNullableType, stripNullable, acceptsNullLiteral } from './nullable.js
 import { hasImplicitReferenceConversion, hasBoxingConversion, hasExplicitReferenceConversion, hasUnboxingConversion } from './reference.js';
 import { resolveUserDefinedConversion } from './user-defined.js';
 import { hasImplicitSpanConversion, hasExplicitSpanConversion } from './span.js';
+import { hasInlineArrayConversion } from './inline-array.js';
+import { pointerConversionKind, hasImplicitFunctionPointerConversion } from './pointer.js';
+import { isInterpolatedStringHandlerType } from './interpolated-string-handler.js';
 
 export const ConversionKind = Object.freeze(
   Object.fromEntries(
@@ -32,13 +36,20 @@ export const ConversionKind = Object.freeze(
       'ImplicitTuple',
       'ImplicitTupleLiteral',
       'InterpolatedString',
+      'InterpolatedStringHandler',
       'MethodGroup',
       'AnonymousFunction',
       'ImplicitThrow',
       'ImplicitSpan',
+      'InlineArray',
       'ImplicitDynamic',
       'ObjectCreation',
       'CollectionExpression',
+      'ImplicitPointerToVoid',
+      'ImplicitFunctionPointer',
+      'ExplicitPointerToPointer',
+      'ExplicitPointerToInteger',
+      'ExplicitIntegerToPointer',
       'ExplicitNumeric',
       'ExplicitEnumeration',
       'ExplicitNullable',
@@ -54,6 +65,8 @@ export const ConversionKind = Object.freeze(
   ),
 );
 const implicitKinds = new Set([
+  'ImplicitPointerToVoid',
+  'ImplicitFunctionPointer',
   'Identity',
   'ImplicitNumeric',
   'ImplicitEnumeration',
@@ -67,10 +80,12 @@ const implicitKinds = new Set([
   'ImplicitTuple',
   'ImplicitTupleLiteral',
   'InterpolatedString',
+  'InterpolatedStringHandler',
   'MethodGroup',
   'AnonymousFunction',
   'ImplicitThrow',
   'ImplicitSpan',
+  'InlineArray',
   'ImplicitDynamic',
   'ObjectCreation',
   'CollectionExpression',
@@ -86,6 +101,8 @@ export class Conversion {
     this.candidates = extra.candidates ?? null;
     this.error = extra.error ?? null;
     this.steps = extra.steps ?? null;
+    // The bound handler pattern of an interpolated string handler conversion (binder/interpolated-string-handlers.js).
+    this.handler = extra.handler ?? null;
     Object.freeze(this);
   }
   get exists() {
@@ -183,10 +200,12 @@ export class Conversions {
         return new Conversion(K.ImplicitNullable, { underlying: inner, steps: isNullableType(from) ? ['lift'] : ['wrap'] });
     }
     if (from.typeKind === TypeKind.Dynamic) return simple.ImplicitDynamic;
+    if (pointerConversionKind(from, to, t => this.kindOf(t)) === K.ImplicitPointerToVoid) return simple.ImplicitPointerToVoid;
+    if (hasImplicitFunctionPointerConversion(from, to, this)) return simple.ImplicitFunctionPointer;
     if (hasImplicitReferenceConversion(from, to, this.core)) return simple.ImplicitReference;
     if (hasBoxingConversion(from, to, this.core)) return simple.Boxing;
-    if (isTuple(from) && isTuple(to) && from.typeArguments.length === to.typeArguments.length) {
-      const parts = from.typeArguments.map((x, i) => this.classifyImplicit(x.type, to.typeArguments[i].type));
+    if (isTuple(from) && isTuple(to) && tupleElements(from).length === tupleElements(to).length) {
+      const parts = tupleElements(from).map((x, i) => this.classifyImplicit(x.type, tupleElements(to)[i].type));
       if (parts.every(p => p.exists && p.isImplicit)) return new Conversion(K.ImplicitTuple, { underlying: parts });
     }
     if (this.firstClassSpans && hasImplicitSpanConversion(from, to, this.core)) return simple.ImplicitSpan;
@@ -200,6 +219,8 @@ export class Conversions {
     const a = this.kindOf(from),
       b = this.kindOf(to);
     if (a && b && explicitNumericConversion(a, b)) return simple.ExplicitNumeric;
+    const pointer = pointerConversionKind(from, to, t => this.kindOf(t));
+    if (pointer) return simple[pointer];
     // Enumerations convert explicitly to and from every numeric type and each other.
     if ((isEnum(from) && (b || isEnum(to))) || (isEnum(to) && a)) return simple.ExplicitEnumeration;
     if (isNullableType(from) || isNullableType(to)) {
@@ -216,8 +237,8 @@ export class Conversions {
     if (to.typeKind === TypeKind.Dynamic) return simple.ExplicitDynamic;
     if (hasExplicitReferenceConversion(from, to, this.core)) return simple.ExplicitReference;
     if (hasUnboxingConversion(from, to, this.core)) return simple.Unboxing;
-    if (isTuple(from) && isTuple(to) && from.typeArguments.length === to.typeArguments.length) {
-      const parts = from.typeArguments.map((x, i) => this.classifyExplicit(x.type, to.typeArguments[i].type));
+    if (isTuple(from) && isTuple(to) && tupleElements(from).length === tupleElements(to).length) {
+      const parts = tupleElements(from).map((x, i) => this.classifyExplicit(x.type, tupleElements(to)[i].type));
       if (parts.every(p => p.exists)) return new Conversion(K.ExplicitTuple, { underlying: parts });
     }
     if (this.firstClassSpans && hasExplicitSpanConversion(from, to, this.core)) return simple.ExplicitSpan;
@@ -241,11 +262,17 @@ export class Conversions {
     if (standard.exists) return standard;
     return this.userDefined(from, to, true);
   }
-  userDefined(from, to, explicit) {
+  /**
+   * @param {object|null} [constant] the value of the converted expression when it is an integral constant: the standard
+   *   conversion to the parameter type of an operator is then that of the expression (`Natural n = 1` through
+   *   `implicit operator Natural(ulong)`: the constant 1 converts to `ulong`, the type `int` does not).
+   */
+  userDefined(from, to, explicit, constant = null) {
     if (from.typeKind === TypeKind.Interface && to.typeKind === TypeKind.Interface) return NONE;
     // Where a span conversion exists (here: only explicitly), the operators of the span types are not considered.
     if (this.firstClassSpans && hasExplicitSpanConversion(from, to, this.core)) return NONE;
-    const found = resolveUserDefinedConversion(from, to, { explicit }, this.standard, this.core);
+    const standard = constant ? this.standardFromConstant(from, constant) : this.standard,
+      found = resolveUserDefinedConversion(from, to, { explicit }, standard, this.core);
     if (!found) return NONE;
     if (found.ambiguous)
       return explicit
@@ -256,6 +283,33 @@ export class Conversions {
       method: found.method,
       isLifted: found.isLifted,
     });
+  }
+  /**
+   * An expression whose conversion depends on its form (`null`, a tuple literal) converted through an implicit
+   * operator of the target type: `Tri t = null` with `implicit operator Tri(bool? b)`, `Vec2 v = (1, 2)` with
+   * `implicit operator Vec2((double X, double Y) t)`. The operators of the target type are the candidates, and the
+   * expression must convert to the parameter type by a standard conversion (C# spec 10.5.4).
+   */
+  userDefinedFromExpression(expression, to) {
+    const target = stripNullable(to);
+    if ((target.typeKind !== TypeKind.Struct && target.typeKind !== TypeKind.Class) || !target.getMembers) return NONE;
+    const isConversion = method => method.kind === SymbolKind.Method && method.parameters.length === 1 && !!method.returnType?.equals(target),
+      takes = type => {
+        if (expression.literal === 'null') return isNullableType(type) || acceptsNullLiteral(type);
+        const standard = type.isTupleType ? this.classifyFromExpression(expression, type) : NONE;
+        return standard.exists && standard.isImplicit && !standard.isUserDefined;
+      },
+      operators = target.getMembers('op_Implicit').filter(method => isConversion(method) && takes(method.parameters[0].type));
+    return operators.length === 1 ? new Conversion(K.ImplicitUserDefined, { method: operators[0], isLifted: false }) : NONE;
+  }
+  /** The standard conversion tests with the implicit constant expression conversions of one constant of type `from`. */
+  standardFromConstant(from, constant) {
+    const sourceKind = this.kindOf(from),
+      fits = to => {
+        const targetKind = this.kindOf(to);
+        return !!sourceKind && !!targetKind && implicitConstantConversion(sourceKind, constant.bigint, targetKind);
+      };
+    return { ...this.standard, implicit: (a, b) => this.standard.implicit(a, b) || (a === from && fits(b)) };
   }
   /**
    * Implicit conversion of an expression to a type.
@@ -269,7 +323,8 @@ export class Conversions {
       case 'null':
         // As in Roslyn, null to a reference type is an implicit reference conversion; only T? takes the null literal conversion.
         if (isNullableType(to)) return simple.NullLiteral;
-        return acceptsNullLiteral(to) || (to instanceof TypeParameterSymbol && to.isReferenceType === true) ? simple.ImplicitReference : NONE;
+        if (acceptsNullLiteral(to) || (to instanceof TypeParameterSymbol && to.isReferenceType === true)) return simple.ImplicitReference;
+        return to.typeKind === TypeKind.Struct ? this.userDefinedFromExpression(expression, to) : NONE;
       case 'default':
         return simple.DefaultLiteral;
     }
@@ -277,6 +332,7 @@ export class Conversions {
       case 'throw':
         return simple.ImplicitThrow;
       case 'methodGroup':
+      case 'methodAddress':
       case 'lambda':
       case 'implicitNew':
       case 'collection': {
@@ -288,16 +344,22 @@ export class Conversions {
         if (expression.type && this.isIdentity(expression.type, to)) return IDENTITY;
         const literal = this.tupleLiteralConversion(expression, stripNullable(to), false);
         if (literal) return isNullableType(to) ? new Conversion(K.ImplicitNullable, { underlying: literal, steps: ['wrap'] }) : literal;
+        if (!stripNullable(to).isTupleType) {
+          const viaOperator = this.userDefinedFromExpression(expression, to);
+          if (viaOperator.exists) return viaOperator;
+        }
         if (!expression.type) return NONE;
         break;
       }
       case 'interpolatedString':
         if (['FormattableString', 'IFormattable'].includes(to.name) && to.containingNamespace?.name === 'System')
           return simple.InterpolatedString;
+        if (isInterpolatedStringHandlerType(to)) return simple.InterpolatedStringHandler;
         break;
     }
     const from = expression.type;
     if (!from) return NONE;
+    if (hasInlineArrayConversion(from, to, this)) return simple.InlineArray;
     const constant = expression.constantValue;
     // Roslyn classifies an int constant converted to nint as a constant conversion, not as the numeric one.
     if (constant?.isIntegral && !constant.isEnum && this.kindOf(from) === 'int' && this.kindOf(to) === 'nint' && !this.isIdentity(from, to))
@@ -321,7 +383,8 @@ export class Conversions {
       )
         return wrap(simple.ImplicitConstant);
     }
-    return this.userDefined(from, to, false);
+    const integral = constant && !constant.isNull && constant.isIntegral && !constant.isEnum && constant.type !== 'char' ? constant : null;
+    return this.userDefined(from, to, false, integral);
   }
   /** Explicit conversion of an expression (a cast): the expression-based implicit conversions, then `classifyExplicit`. */
   classifyCastFromExpression(expression, to) {
@@ -338,9 +401,9 @@ export class Conversions {
    * converts implicitly, ExplicitTupleLiteral (casts only) when every element converts at all, otherwise null.
    */
   tupleLiteralConversion(expression, target, forCast) {
-    if (!isTuple(target) || target.typeArguments.length !== expression.elements.length) return null;
+    if (!isTuple(target) || tupleElements(target).length !== expression.elements.length) return null;
     const classify = (element, type) => (forCast ? this.classifyCastFromExpression(element, type) : this.classifyFromExpression(element, type));
-    const parts = expression.elements.map((element, index) => classify(element, target.typeArguments[index].type));
+    const parts = expression.elements.map((element, index) => classify(element, tupleElements(target)[index].type));
     if (!parts.every(part => part.exists)) return null;
     const isImplicit = parts.every(part => part.isImplicit);
     if (!isImplicit && !forCast) return null;

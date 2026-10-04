@@ -1,10 +1,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {compile, compileToIL} from '@sharpforge/compiler';
-import {loadAssembly} from '@sharpforge/cil';
-import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
-import {BuiltinMap} from '@sharpforge/bytecode';
-import {RegistryBridge} from '../packages/compiler/src/symbols/registry-bridge.js';
+import {
+  compile,
+  compileToIL
+} from '@sharpforge/compiler';
+import {
+  loadAssembly
+} from '@sharpforge/cil';
+import {
+  VirtualMachine,
+  CilVirtualMachine
+} from '@sharpforge/runtime';
+import {
+  BuiltinMap
+} from '@sharpforge/bytecode';
+import {
+  RegistryBridge
+} from '../packages/compiler/src/symbols/registry-bridge.js';
 
 test('T04 managed StackTrace string members expose one overload per CLR signature', () => {
   const bridge = new RegistryBridge();
@@ -16,8 +28,7 @@ test('T04 managed StackTrace string members expose one overload per CLR signatur
   assert.equal(bridge.symbolForBuiltin(BuiltinMap.get('string.Contains')), contains[0]);
 });
 
-const cases = [
-  {
+const cases = [{
     name: 'a constructed derived exception selects the matching typed catch',
     body: 'try{throw new InvalidOperationException();}' +
       'catch(ArgumentException){Console.WriteLine("wrong");}' +

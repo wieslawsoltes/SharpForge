@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6492a00fea7b8313b97d",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n[assembly: InternalsVisibleTo(\"WantsIVTAccess, Culture=neutral\")]\npublic class C\n{\n  static void Goo() {}\n}\n",
+  "sourceSHA256": "996c2cd561fd5d26fb5e94925bd44a7fe003139c6f3c64672244441e61588457",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "IVTHasCulture",
+    "offset": 69791
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\n            @\"\nusing System.Runtime.CompilerServices;\n[assembly: InternalsVisibleTo(\"\"WantsIVTAccess, Culture=neutral\"\")]\npublic class C\n{\n  static void Goo() {}\n}\n\", options: TestOptions.SigningReleaseDll, parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1725",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "Diagnostic(ErrorCode.ERR_FriendAssemblyBadArgs, @\"InternalsVisibleTo(\"\"WantsIVTAccess, Culture=neutral\"\")\").WithArguments(\"WantsIVTAccess, Culture=neutral\")",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-27826d4ded2f0346faa8",
+  "kind": "diagnostics",
+  "sourceText": "using System.Collections;\nusing System.Collections.Generic;\n\nclass Program\n{\n    static void Main() { }\n\n    internal static bool TryGetCount1<T>(IEnumerable<T> source, out int count)\n    {\n        ICollection nonGeneric = source as ICollection;\n        if (nonGeneric != null)\n        {\n            count = nonGeneric.Count;\n            return true;\n        }\n\n        ICollection<T> generic = source as ICollection<T>;\n        if (generic != null)\n        {\n            count = generic.Count;\n            return true;\n        }\n\n        count = -1;\n        return false;\n    }\n\n    internal static bool TryGetCount2<T>(IEnumerable<T> source, out int count)\n    {\n        switch (source)\n        {\n            case ICollection nonGeneric:\n                count = nonGeneric.Count;\n                return true;\n\n            case ICollection<T> generic:\n                count = generic.Count;\n                return true;\n\n            default:\n                count = -1;\n                return false;\n        }\n    }\n}",
+  "sourceSHA256": "e22ebcd63f9b06e723404429e3f4f93022a6d8f01cf7cc341fe45e4d893238c5",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "PatternsVsAs01",
+    "offset": 64784
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

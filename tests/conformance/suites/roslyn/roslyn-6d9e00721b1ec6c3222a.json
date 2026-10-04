@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6d9e00721b1ec6c3222a",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass Program\n{\n    static void Main()\n    {\n    }\n\n    static void TakesRef(ref S1 arg){}\n    static void TakesRef(ref int arg){}\n\n    readonly struct S1\n    {\n        readonly int x;\n\n        public S1(int i)\n        {            \n            void F() { x = i;} // Error           \n            Action a = () => { x = i;}; // Error \n            F();\n        }\n\n        public S1(S1 arg)\n        {\n            void F() { this = arg;} // Error\n            Action a = () => { this = arg;}; // Error \n            F();\n        }\n\n        public void Test1()\n        {            \n            void F() { this = default;} // Error\n            Action a = () => { this = default;}; // Error \n            F();\n        }\n\n        public void Test2()\n        {           \n            void F() { TakesRef(ref this);} // Error\n            Action a = () => { TakesRef(ref this);}; // Error \n            F();\n        }\n\n        public void Test3()\n        {            \n            void F() { TakesRef(ref this.x);} // Error\n            Action a = () => { TakesRef(ref this.x);}; // Error \n            F();\n        }\n    }\n}\n",
+  "sourceSHA256": "ea1c5cb048bae6c1593667af73bcd2106a189675a96da6f37ee4723e2e2ce9ad",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenReadonlyStructTests.cs",
+    "sha256": "7bf77b449f87c2dc32e3f64ca03cbbf58cf4105ea9b9df2a131ac7fff7ffa306",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenReadonlyStructTests.cs",
+    "license": "MIT",
+    "method": "AssignThisNestedMethods",
+    "offset": 19344
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1673",
+        "severity": "error"
+      },
+      {
+        "code": "CS1673",
+        "severity": "error"
+      },
+      {
+        "code": "CS1673",
+        "severity": "error"
+      },
+      {
+        "code": "CS1673",
+        "severity": "error"
+      },
+      {
+        "code": "CS1673",
+        "severity": "error"
+      },
+      {
+        "code": "CS1673",
+        "severity": "error"
+      },
+      {
+        "code": "CS1673",
+        "severity": "error"
+      },
+      {
+        "code": "CS1673",
+        "severity": "error"
+      },
+      {
+        "code": "CS1673",
+        "severity": "error"
+      },
+      {
+        "code": "CS1673",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (19,24): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             void F() { x = i;} // Error           \n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"x\").WithLocation(19, 24),\n                // (20,32): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             Action a = () => { x = i;}; // Error \n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"x\").WithLocation(20, 32),\n                // (26,24): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             void F() { this = arg;} // Error\n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"this\").WithLocation(26, 24),\n                // (27,32): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             Action a = () => { this = arg;}; // Error \n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"this\").WithLocation(27, 32),\n                // (33,24): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             void F() { this = default;} // Error\n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"this\").WithLocation(33, 24),\n                // (34,32): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             Action a = () => { this = default;}; // Error \n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"this\").WithLocation(34, 32),\n                // (40,37): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             void F() { TakesRef(ref this);} // Error\n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"this\").WithLocation(40, 37),\n                // (41,45): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             Action a = () => { TakesRef(ref this);}; // Error \n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"this\").WithLocation(41, 45),\n                // (47,37): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             void F() { TakesRef(ref this.x);} // Error\n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"this\").WithLocation(47, 37),\n                // (48,45): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             Action a = () => { TakesRef(ref this.x);}; // Error \n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"this\").WithLocation(48, 45)\n                ",
+  "unsupported": []
+}

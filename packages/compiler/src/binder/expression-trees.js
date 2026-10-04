@@ -8,46 +8,70 @@
  *   CS8514  a switch expression              CS8188  a throw expression
  *   CS8074  an index initializer             CS8143  a tuple literal
  *   CS8110  a call of a local function       CS9307  named arguments out of position
+ *   below C# 14 only: CS0854 an invocation that omits optional arguments, CS0853 one that names arguments
  *
  * The checks run when the lambda is bound against its final target, so a lambda converted to a delegate is not
  * touched. Nested lambdas are part of the tree and are checked with it.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { walk } from '../bound/semantic-walker.js';
 import { MethodKind } from '../symbols/members.js';
+import { dynamicOperation } from '../bound/dynamic-operations.js';
 import { expressionTreeDelegate } from '../symbols/expression-tree-types.js';
 
 const assignmentKinds = new Set(['Assignment', 'CompoundAssignment', 'Increment', 'CoalesceAssignment', 'RefAssignment', 'EventAssignment']);
 const codeByKind = Object.freeze({
-  ConditionalAccess: 'CS8072',
-  IsPattern: 'CS8122',
-  SwitchExpression: 'CS8514',
-  Throw: 'CS8188',
-  Tuple: 'CS8143',
-  Base: 'CS0831',
+  ConditionalAccess: DiagnosticId.CS8072,
+  IsPattern: DiagnosticId.CS8122,
+  SwitchExpression: DiagnosticId.CS8514,
+  Throw: DiagnosticId.CS8188,
+  Tuple: DiagnosticId.CS8143,
+  Base: DiagnosticId.CS0831,
+  InlineArrayAccess: DiagnosticId.CS9170,
+  InlineArraySlice: DiagnosticId.CS9170,
+  InlineArrayConversion: DiagnosticId.CS9170,
 });
 const isAscending = positions => positions.every((position, index) => index === 0 || position >= positions[index - 1]);
 
-function nodeProblem(node) {
-  if (assignmentKinds.has(node.kind)) return 'CS0832';
+const invocationKinds = new Set(['Call', 'ObjectCreation', 'IndexerAccess']);
+const hasNamedArgument = node => (node.syntax?.argumentList?.arguments ?? []).some(argument => argument.nameColon);
+
+/**
+ * Before C# 14 an expression tree may not contain an invocation that omits optional arguments (CS0854) or names
+ * arguments (CS0853); C# 14 allows both ("expression trees with optional and named arguments") and keeps CS9307.
+ */
+function argumentProblem(node, languageVersion) {
+  if (languageVersion >= 14 || !invocationKinds.has(node.kind)) return null;
+  if (node.mapping?.defaults?.length) return DiagnosticId.CS0854;
+  return hasNamedArgument(node) ? DiagnosticId.CS0853 : null;
+}
+
+function nodeProblem(node, languageVersion) {
+  if (dynamicOperation(node)) return DiagnosticId.CS1963;
+  if (assignmentKinds.has(node.kind)) return DiagnosticId.CS0832;
   if (codeByKind[node.kind]) return codeByKind[node.kind];
   if (node.kind === 'Call') {
-    if (node.method?.methodKind === MethodKind.LocalFunction) return 'CS8110';
-    if (node.mapping?.parameterOf && !isAscending(node.mapping.parameterOf)) return 'CS9307';
+    if (node.method?.methodKind === MethodKind.LocalFunction) return DiagnosticId.CS8110;
+    // A call that is removed: a partial method without an implementing part, or an omitted [Conditional] method.
+    if ((node.method?.originalDefinition ?? node.method)?.isUnimplementedPartial || node.isOmitted) return DiagnosticId.CS0765;
+    const before14 = argumentProblem(node, languageVersion);
+    if (before14) return before14;
+    if (node.mapping?.parameterOf && !isAscending(node.mapping.parameterOf)) return DiagnosticId.CS9307;
   }
-  return null;
+  return argumentProblem(node, languageVersion);
 }
 
 /** The lambda's own problems: its body form and modifiers. */
 function lambdaProblem(lambda) {
-  if (lambda.isAsync || lambda.syntax?.asyncKeyword) return 'CS1989';
-  return lambda.syntax?.block ? 'CS0834' : null;
+  if (lambda.isAsync || lambda.syntax?.asyncKeyword) return DiagnosticId.CS1989;
+  return lambda.syntax?.block ? DiagnosticId.CS0834 : null;
 }
 
 /**
  * The restrictions a bound lambda violates as an expression tree.
  * @returns {{code: string, syntax: object}[]} in tree order
  */
-export function expressionTreeProblems(lambda) {
+export function expressionTreeProblems(lambda, { languageVersion = 14 } = {}) {
   const rows = [];
   const check = current => {
     const own = lambdaProblem(current);
@@ -61,11 +85,11 @@ export function expressionTreeProblems(lambda) {
         check(node);
         return false;
       }
-      const code = nodeProblem(node);
+      const code = nodeProblem(node, languageVersion);
       if (code) rows.push({ code, syntax: node.syntax });
       for (const entry of node.initializers ?? [])
         if (entry.target?.isInitializerTarget && entry.target.kind !== 'FieldAccess' && entry.target.kind !== 'PropertyAccess')
-          rows.push({ code: 'CS8074', syntax: entry.target.syntax });
+          rows.push({ code: DiagnosticId.CS8074, syntax: entry.target.syntax });
       return !code;
     });
   };
@@ -81,6 +105,6 @@ export const ExpressionTreeBinding = Base =>
       super.finishLambda(lambda, delegateType);
       if (!first || !lambda.body || !expressionTreeDelegate(delegateType, this.core)) return;
       lambda.isExpressionTree = true;
-      for (const problem of expressionTreeProblems(lambda)) this.report(problem.syntax, problem.code, []);
+      for (const problem of expressionTreeProblems(lambda, { languageVersion: this.version.number })) this.report(problem.syntax, problem.code, []);
     }
   };

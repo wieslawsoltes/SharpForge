@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-5e6ea00d3de9f8add89f",
+  "kind": "spec",
+  "sourceText": "Expr Deriv(Expr e)\n{\n  switch (e) {\n    case X(): return Const(1);\n    case Const(*): return Const(0);\n    case Add(var Left, var Right):\n      return Add(Deriv(Left), Deriv(Right));\n    case Mult(var Left, var Right):\n      return Add(Mult(Deriv(Left), Right), Mult(Left, Deriv(Right)));\n    case Neg(var Value):\n      return Neg(Deriv(Value));\n  }\n}",
+  "sourceSHA256": "991da44ce095961746012167aaaaed85abe5fdae54d9777a5f805aad87ef5a62",
+  "target": "library",
+  "featureId": "csharp-7-0-pattern-matching",
+  "langVersion": "7.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.0/pattern-matching.md",
+    "sha256": "35006167fb2be5d0587fbc69a197155609a68160b199a4fbb9d87f72e1b46b53",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/pattern-matching.md",
+    "license": "NOASSERTION",
+    "offset": 19401
+  }
+}

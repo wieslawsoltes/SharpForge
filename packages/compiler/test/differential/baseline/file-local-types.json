@@ -1,0 +1,5 @@
+{
+  "file-local-types/file-local-types-in-csharp-10": ["diagnostics", "warnings"],
+  "file-local-types/signature-nesting-and-accessibility-rules": ["diagnostics", "warnings"],
+  "file-local-types/visible-in-their-file": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
+}

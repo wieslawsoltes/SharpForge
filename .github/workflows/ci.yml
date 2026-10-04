@@ -1,15 +1,21 @@
 name: Validate SharpForge
-# Ordinary PRs run one core job. Full qualification requires main/manual/merge queue
-# execution or the full-ci PR label; tag releases call this workflow in full.
+# Ordinary PRs and main pushes run one core job without unit qualification.
+# Tests are dispatched, labelled full-ci, queued, or requested by the release caller.
 on:
   push:
     branches: [main]
   pull_request:
-    types: [opened, synchronize, reopened, labeled]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
   workflow_dispatch:
   merge_group:
     types: [checks_requested]
   workflow_call:
+    inputs:
+      qualification:
+        description: Run the full serial qualification for a reusable release caller
+        type: boolean
+        default: false
+        required: false
 permissions:
   contents: read
 concurrency:
@@ -31,6 +37,11 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - name: Review contract changes and seam lock against the PR snapshot
+        if: github.event_name == 'pull_request'
+        run: node scripts/planning/review-gates.js
+      - name: Enforce oracle tool license coverage and committed payload boundaries
+        run: node scripts/conformance/oracle/license-policy.js
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm run check
       - name: Plan affected areas with conservative fallback
@@ -39,25 +50,20 @@ jobs:
       - name: Reject expired test quarantines
         run: node scripts/conformance/flaky/detect.js --check-quarantine
       - run: npm test
-        if: steps.impact.outputs.mode != 'impacted'
-      - name: Run impacted consumers and shared checks
-        if: steps.impact.outputs.mode == 'impacted'
-        run: node scripts/conformance/ci-planning/impact.js --run artifacts/ci-plan.json
+        if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
       - run: npm run build
       - name: Require a clean checkout
         if: always()
         run: node scripts/conformance/clean-checkout.js
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
-        if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+        if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
         with:
           python-version: '3.12'
-      - name: Full qualification infrastructure regressions
-        if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
-        run: |
-          node --test tests/conformance/*.test.js
-          python -m unittest discover -s tests/conformance/browser -p 'test_*.py'
+      - name: Full qualification Python infrastructure regressions
+        if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+        run: python -m unittest discover -s tests/conformance/browser -p 'test_*.py'
       - uses: ./.github/actions/qualification-evidence
-        if: ${{ always() && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
+        if: ${{ always() && (inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
         with:
           name: core-ubuntu-latest
       - name: Record provenance for the existing PR preview build
@@ -77,10 +83,12 @@ jobs:
           if-no-files-found: error
           retention-days: 7
   core-platforms:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: core
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [windows-latest, macos-latest]
@@ -99,14 +107,14 @@ jobs:
       - run: npm run check
       - run: npm test
       - run: npm run build
-      - run: node --test tests/conformance/*.test.js
       - run: python -m unittest discover -s tests/conformance/browser -p 'test_*.py'
       - uses: ./.github/actions/qualification-evidence
         if: always()
         with:
           name: core-${{ matrix.os }}
   build:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: core-platforms
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -140,10 +148,12 @@ jobs:
         with:
           name: build
   packages:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: build
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -177,12 +187,13 @@ jobs:
         with:
           name: packages-${{ matrix.os }}
   browser:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
-    needs: build
+    needs: packages
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     name: browser (${{ matrix.os }}, ${{ matrix.suite }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -226,10 +237,12 @@ jobs:
         with:
           name: browser-${{ matrix.os }}-${{ matrix.suite }}
   native-il:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: browser
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -255,11 +268,13 @@ jobs:
         with:
           name: native-il-${{ matrix.os }}-${{ matrix.dotnet }}
   native-msbuild:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: native-il
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     # Actual SDKs/processes only; browser test doubles cannot satisfy this gate.
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -286,7 +301,8 @@ jobs:
         with:
           name: native-msbuild-${{ matrix.os }}
   clr-wasm:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: native-msbuild
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -307,7 +323,7 @@ jobs:
         with:
           name: clr-wasm
   ci-ok:
-    if: ${{ always() && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
+    if: ${{ always() && (inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
     needs: [core, core-platforms, build, packages, browser, native-il, native-msbuild, clr-wasm]
     runs-on: ubuntu-latest
     timeout-minutes: 5

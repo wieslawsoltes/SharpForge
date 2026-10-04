@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1f6d4d4636934e082cb4",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace решения\n{\npublic class X\n{\n    public static void Main()\n    {\n  \n    }\n}\n}",
+  "sourceSHA256": "f1f27a23ad7db82434d4766deba11e76b590b653a474a5efb085557e8f5943ac",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "sha256": "a146aeb41311a33fd51733055804d5bdd45ba0e5302ca02348a06cb7e94dd243",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "license": "MIT",
+    "method": "CompilationEmitWithQuotedMainType",
+    "offset": 3459
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe.WithMainTypeName(\"\\\"решения.X\\\"\"))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1555",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "Diagnostic(ErrorCode.ERR_MainClassNotFound).WithArguments(\"\\\"решения.X\\\"\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,26 @@
+name: Protocol conformance and recorded replay
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  protocol:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Replay reviewed VS Code recordings (empty registry remains not-run)
+        run: node scripts/conformance/protocol/replay.js --registry planning/qualification/protocol/recordings.json
+      - name: Validate actual unsupported-request responses (known DAP schema gap fails)
+        if: always()
+        run: node scripts/conformance/protocol/probe.js
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: protocol-conformance
+          path: artifacts/protocol/
+          if-no-files-found: error

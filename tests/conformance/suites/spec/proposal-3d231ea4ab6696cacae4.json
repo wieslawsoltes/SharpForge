@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-3d231ea4ab6696cacae4",
+  "kind": "spec",
+  "sourceText": "using System.Threading.Tasks;\n\nref struct R\n{\n    public ref int Current { get { ... }};\n    public bool MoveNext() => false;\n    public void Dispose() { }\n}\nclass C\n{\n    public R GetEnumerator() => new R();\n    async void M()\n    {\n        await Task.Yield();\n        using (new R()) { } // allowed under this proposal\n        foreach (var x in new C()) { } // allowed under this proposal\n        foreach (ref int x in new C()) { } // allowed under this proposal\n        lock (new System.Threading.Lock()) { } // allowed under this proposal\n        await Task.Yield();\n    }\n}",
+  "sourceSHA256": "a59edbbb25d7c5c38e0ef4d36e59df142b180a204c1676c4665200a775a9195a",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-unsafe-in-iterators-async",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-unsafe-in-iterators-async.md",
+    "sha256": "ed4db38af450526d24d556f7c1424168e3fb20df13a77900399cb9ca82b502fd",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-unsafe-in-iterators-async.md",
+    "license": "NOASSERTION",
+    "offset": 9952
+  }
+}

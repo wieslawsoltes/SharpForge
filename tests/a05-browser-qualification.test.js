@@ -1,0 +1,43 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {wasmExecution, debuggerDeopt} from './fixtures/a05-browser/runtime.mjs';
+import {profileExports} from './fixtures/a05-browser/profiles.mjs';
+
+// Node verifies fixture assertions only. This suite cannot establish a browser,
+// CSP, or Speedscope UI result; those require the separate Python browser runner.
+test('browser Wasm fixture requires native arithmetic and preserves exact instruction/profile totals', async () => {
+  const result = await wasmExecution();
+  assert.equal(result.passed, true);
+  assert.equal(result.hostArithmeticCalls, 0);
+  assert(result.instructions > 0);
+  assert.equal(result.instructions, result.referenceInstructions);
+});
+
+test('browser debugger fixture proves OSR, actual breakpoint, canonical step, and interpreted resume', async () => {
+  const result = await debuggerDeopt();
+  assert.equal(result.passed, true);
+  assert.deepEqual(result.stopped, {pc: 3, locals: [3], stack: [3]});
+  assert.equal(result.statistics.osrTransitions, 1);
+  assert(result.hostArithmeticCalls > 0);
+});
+
+test('browser profile fixtures export actual source/reload/CIL counts and named guest methods', () => {
+  const result = profileExports();
+  assert.equal(result.passed, true);
+  assert.deepEqual(result.exports.map(item => item.engine), ['source', 'reload', 'cil']);
+  for (const item of result.exports) {
+    assert.equal(item.file.profiles[0].endValue, item.instructions);
+    assert.equal(item.methods.reduce((sum, method) => sum + method.self, 0), item.instructions);
+    assert(item.methods.some(method => method.name.includes('A05BrowserTwice')));
+    assert(item.methods.some(method => method.name.includes('Main')));
+    assert(item.instructions < 1000, 'UI raw instruction counts stay unambiguous');
+  }
+});
+
+test('browser native arithmetic fixture fails when a required WebAssembly dependency is unavailable', async () => {
+  const original = globalThis.WebAssembly;
+  try {
+    globalThis.WebAssembly = undefined;
+    await assert.rejects(wasmExecution(), /actual browser WebAssembly is required/);
+  } finally { globalThis.WebAssembly = original; }
+});

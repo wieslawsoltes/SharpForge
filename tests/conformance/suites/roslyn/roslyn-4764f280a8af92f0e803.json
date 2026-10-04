@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4764f280a8af92f0e803",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Linq.Expressions;\n\nnamespace BadImageFormatExceptionRepro\n{\n    class Program\n    {\n        static void Main()\n        {\n            GenericMethod<C>();\n        }\n\n        private static void GenericMethod<T>() where T : I<T>\n        {\n            Func<Expression<Func<T, T, T>>> func = () => (x, y) => x && y;\n\n            func().Compile()(default, default);\n        }\n    }\n\n    public interface I<T> where T : I<T>\n    {\n        public static abstract bool operator true(T t);\n        public static abstract bool operator false(T t);\n        public static abstract T operator &(T t1, T t2);\n    }\n\n    class C : I<C>\n    {\n        public static bool operator false(C c)\n        {\n            Console.Write(\"1\");\n            return false;\n        }\n        public static bool operator true(C c) => false;\n        public static C operator &(C c1, C c2)\n        {\n            Console.Write(\"2\");\n            return c1;\n        }\n    }\n}\n",
+  "sourceSHA256": "a34cee898efd211c9708dad699acab349f7e5f508c86f792d19654e40c0745a1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOperators.cs",
+    "sha256": "c60a5aa4e7fd7845ee7f036dfa55b03e5f3a9cd9572f96a1f7db994aa786e54e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOperators.cs",
+    "license": "MIT",
+    "method": "UserDefinedOperatorInGenericExpressionTree_09",
+    "offset": 188219
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code, parseOptions: TestOptions.RegularPreview, targetFramework: TargetFramework.Net60)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8927",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (16,68): error CS8927: An expression tree may not contain an access of static virtual or abstract interface member\n                //             Func<Expression<Func<T, T, T>>> func = () => (x, y) => x && y;\n                Diagnostic(ErrorCode.ERR_ExpressionTreeContainsAbstractStaticMemberAccess, \"x && y\").WithLocation(16, 68)\n            ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

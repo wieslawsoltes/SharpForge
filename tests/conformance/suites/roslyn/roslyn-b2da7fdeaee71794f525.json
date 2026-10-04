@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b2da7fdeaee71794f525",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass XAttribute : Attribute\n{\n    public void F1(int i)\n    {\n    }\n\n    private int PrivateField;\n    public static int SharedProperty { get; set; }\n    public int? ReadOnlyProperty\n    {\n        get { return null; }\n    }\n    public decimal BadDecimalType { get; set; }\n    public System.DateTime BadDateType { get; set; }\n    public Attribute[] BadArrayType { get; set; }\n}\n\n[X(NotFound = null)]\n[X(F1 = null)]\n[X(PrivateField = null)]\n[X(SharedProperty = null)]\n[X(ReadOnlyProperty = null)]\n[X(BadDecimalType = null)]\n[X(BadDateType = null)]\n[X(BadArrayType = null)]\nclass A\n{\n}\n",
+  "sourceSHA256": "042db042b3f04e383d5b13fdc60358848325ccbc620a0fb3fc90f89864a0e3eb",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeNamedArgumentErrors1",
+    "offset": 235443
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass XAttribute : Attribute\n{\n    public void F1(int i)\n    {\n    }\n\n    private int PrivateField;\n    public static int SharedProperty { get; set; }\n    public int? ReadOnlyProperty\n    {\n        get { return null; }\n    }\n    public decimal BadDecimalType { get; set; }\n    public System.DateTime BadDateType { get; set; }\n    public Attribute[] BadArrayType { get; set; }\n}\n\n[X(NotFound = null)]\n[X(F1 = null)]\n[X(PrivateField = null)]\n[X(SharedProperty = null)]\n[X(ReadOnlyProperty = null)]\n[X(BadDecimalType = null)]\n[X(BadDateType = null)]\n[X(BadArrayType = null)]\nclass A\n{\n}\n\", options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0617",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0617",
+        "severity": "error"
+      },
+      {
+        "code": "CS0617",
+        "severity": "error"
+      },
+      {
+        "code": "CS0655",
+        "severity": "error"
+      },
+      {
+        "code": "CS0655",
+        "severity": "error"
+      },
+      {
+        "code": "CS0655",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "    // (21,4): error CS0246: The type or namespace name 'NotFound' could not be found (are you missing a using directive or an assembly reference?)\n                                              // [X(NotFound = null)]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"NotFound\").WithArguments(\"NotFound\"),\n                // (22,4): error CS0617: 'F1' is not a valid named attribute argument. Named attribute arguments must be fields which are not readonly, static, or const, or read-write properties which are public and not static.\n                // [X(F1 = null)]\n                Diagnostic(ErrorCode.ERR_BadNamedAttributeArgument, \"F1\").WithArguments(\"F1\"),\n                // (23,4): error CS0122: 'XAttribute.PrivateField' is inaccessible due to its protection level\n                // [X(PrivateField = null)]\n                Diagnostic(ErrorCode.ERR_BadAccess, \"PrivateField\").WithArguments(\"XAttribute.PrivateField\"),\n                // (24,4): error CS0617: 'SharedProperty' is not a valid named attribute argument. Named attribute arguments must be fields which are not readonly, static, or const, or read-write properties which are public and not static.\n                // [X(SharedProperty = null)]\n                Diagnostic(ErrorCode.ERR_BadNamedAttributeArgument, \"SharedProperty\").WithArguments(\"SharedProperty\"),\n                // (25,4): error CS0617: 'ReadOnlyProperty' is not a valid named attribute argument. Named attribute arguments must be fields which are not readonly, static, or const, or read-write properties which are public and not static.\n                // [X(ReadOnlyProperty = null)]\n                Diagnostic(ErrorCode.ERR_BadNamedAttributeArgument, \"ReadOnlyProperty\").WithArguments(\"ReadOnlyProperty\"),\n                // (26,4): error CS0655: 'BadDecimalType' is not a valid named attribute argument because it is not a valid attribute parameter type\n                // [X(BadDecimalType = null)]\n                Diagnostic(ErrorCode.ERR_BadNamedAttributeArgumentType, \"BadDecimalType\").WithArguments(\"BadDecimalType\"),\n                // (27,4): error CS0655: 'BadDateType' is not a valid named attribute argument because it is not a valid attribute parameter type\n                // [X(BadDateType = null)]\n                Diagnostic(ErrorCode.ERR_BadNamedAttributeArgumentType, \"BadDateType\").WithArguments(\"BadDateType\"),\n                // (28,4): error CS0655: 'BadArrayType' is not a valid named attribute argument because it is not a valid attribute parameter type\n                // [X(BadArrayType = null)]\n                Diagnostic(ErrorCode.ERR_BadNamedAttributeArgumentType, \"BadArrayType\").WithArguments(\"BadArrayType\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

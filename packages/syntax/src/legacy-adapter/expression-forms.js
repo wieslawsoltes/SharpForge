@@ -39,14 +39,18 @@ function interpolatedString(red) {
     const alignment = content.alignmentClause,
       format = content.formatClause,
       stop = alignment ? alignment.commaToken : format ? format.colonToken : content.closeBraceToken,
-      align = alignment ? Number(alignment.value.toFullString().trim()) : 0;
-    parts.push({
+      alignmentText = alignment ? alignment.value.toFullString().trim() : '0',
+      align = /^[+-]?\d+$/.test(alignmentText) ? Number(alignmentText) : NaN;
+    const part = {
       expression: this.expression(content.expression),
       start: content.openBraceToken.span.end,
       end: stop.spanStart,
       alignment: Number.isInteger(align) ? align : 0,
       format: format ? format.formatStringToken.text : ''
-    });
+    };
+    // An alignment that is not an integer literal travels as an expression for the binder to check; `alignment` is 0 then.
+    if (alignment && !Number.isInteger(align)) part.alignmentExpression = this.expression(alignment.value);
+    parts.push(part);
   }
   return this.node('InterpolatedString', red, { parts });
 }
@@ -136,9 +140,8 @@ export const expressionForms = Object.freeze({
   },
   SimpleMemberAccessExpression(red) {
     const target = this.expression(red.expression);
-    if (!['IdentifierName', 'GenericName'].includes(red.name.kind)) return null;
-    return this.from('Member', target, red, {target, name: red.name.identifier.valueText, nameSpan: this.nameSpan(red.name.identifier),
-      ...(red.name.kind === 'GenericName' ? {typeArguments: red.name.typeArgumentList.arguments.map(type => this.type(type))} : {})});
+    if (red.name.kind !== 'IdentifierName') return null;
+    return this.from('Member', target, red, { target, name: red.name.identifier.valueText, nameSpan: this.nameSpan(red.name.identifier) });
   },
   InvocationExpression(red) {
     const target = this.expression(red.expression);

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ad0e5ea788bbb0930f74",
+  "kind": "diagnostics",
+  "sourceText": "\nstatic class Program\n{\n    public static int M1(int? x)\n    {\n        return x is int y ? y : 1;\n    }\n    public static int M2(int? x)\n    {\n        return x is { } y ? y : 2;\n    }\n    public static void Main()\n    {\n        System.Console.WriteLine(M1(null));\n        System.Console.WriteLine(M2(null));\n        System.Console.WriteLine(M1(3));\n        System.Console.WriteLine(M2(4));\n    }\n}\n",
+  "sourceSHA256": "ded29be7a53d791b1c4e95b7a9bd3bae66a1cdd9bf8764725b9778c500b2b6ad",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "UnboxNullableInRecursivePattern01",
+    "offset": 90866
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
