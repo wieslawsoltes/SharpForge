@@ -2,6 +2,7 @@
  * Unsafe code at declaration level (SF-A02-T47, C# spec 23.2, 23.3 and 23.8).
  *
  *   CS0227  an `unsafe` modifier on a type or member without the /unsafe option
+ *   CS0764  `unsafe` on one part of a partial member only
  *   CS0214  a pointer type in the signature of a member that is not in an unsafe context
  *   CS8500  (warning) a pointer to a managed type
  *   fixed-size buffers  `fixed int Data[4];` is only a struct member (CS1642), its element type is one of the
@@ -44,10 +45,14 @@ export function isUnsafeSymbol(member, type) {
   return false;
 }
 
-/** The outermost PointerType node inside a type syntax, or null. */
+/** Where CS0214 is reported for a pointer type: the type, or the `delegate*` of a function pointer type (as in Roslyn). */
+export const unsafeMarker = pointer =>
+  pointer.kind === 'FunctionPointerType' ? { start: pointer.delegateKeyword.span.start, end: pointer.asteriskToken.span.end } : pointer;
+
+/** The outermost PointerType or FunctionPointerType node inside a type syntax, or null. */
 export function findPointerSyntax(syntax) {
   if (!syntax) return null;
-  if (syntax.kind === 'PointerType') return syntax;
+  if (syntax.kind === 'PointerType' || syntax.kind === 'FunctionPointerType') return syntax;
   for (const child of syntax.childNodes?.() ?? []) {
     const found = findPointerSyntax(child);
     if (found) return found;
@@ -129,11 +134,16 @@ export function checkUnsafeDeclarations(type, { allowUnsafe, core, evaluate }) {
     if (member.isImplicitlyDeclared || member.kind === SymbolKind.NamedType || (member.kind === SymbolKind.Method && member.isAccessor)) continue;
     const uri = member.uri ?? member.locations?.[0]?.uri,
       add = (code, args, node) => results.push({ code, args, uri, node });
-    if (!allowUnsafe && hasUnsafeModifier(member) && member.locations?.[0]) add('CS0227', [], member.locations[0]);
+    // Both parts of a partial member are declarations of their own; with /unsafe they must agree on the modifier.
+    const definition = member.partialDefinitionPart ?? null;
+    for (const part of [definition, member])
+      if (!allowUnsafe && part && hasUnsafeModifier(part) && part.locations?.[0]) add('CS0227', [], part.locations[0]);
+    if (allowUnsafe && definition && hasUnsafeModifier(definition) !== hasUnsafeModifier(member) && member.locations?.[0])
+      add('CS0764', [], member.locations[0]);
     const isUnsafe = isUnsafeSymbol(member, type);
     for (const syntax of signatureTypeSyntaxes(member)) {
       const pointer = findPointerSyntax(syntax);
-      if (pointer && !isUnsafe) add('CS0214', [], pointer);
+      if (pointer && !isUnsafe) add('CS0214', [], unsafeMarker(pointer));
     }
     for (const { type: signatureType, node } of signatureTypes(member))
       if (node && pointsAtConstructedType(signatureType)) results.push({ feature: 'UnmanagedConstructedTypes', uri, node });

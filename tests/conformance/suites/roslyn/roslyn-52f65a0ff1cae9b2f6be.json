@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-52f65a0ff1cae9b2f6be",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public static void Main()\n    {\n        var tuple = (1, 2);\n\n        tuple.Item1 = 3;\n    }\n}\nnamespace System\n{\n    public readonly struct ValueTuple<T1, T2>\n    {\n        public readonly T1 Item1;\n        public readonly T2 Item2;\n\n        public ValueTuple(T1 item1, T2 item2)\n        {\n            this.Item1 = item1;\n            this.Item2 = item2;\n        }\n    }\n}\n",
+  "sourceSHA256": "7c1bf68f5d011b8a5e8255991e0777eb54e041c681270b4cd73cfd6a37b251ed",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "SettingMembersOfReadOnlyTuple",
+    "offset": 1129562
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0191",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,9): error CS0191: A readonly field cannot be assigned to (except in the constructor of the class in which the field is defined or a variable initializer))\n                //         tuple.Item1 = 3;\n                Diagnostic(ErrorCode.ERR_AssgReadonly, \"tuple.Item1\").WithLocation(8, 9)",
+  "unsupported": []
+}

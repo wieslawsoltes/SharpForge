@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-518c8f0fe249d64fe8ec",
+  "kind": "spec",
+  "sourceText": "partial class D\n{\n    // Okay\n    internal partial bool TryParse(string s, out int i); \n}\n\npartial class D\n{\n    internal partial bool TryParse(string s, out int i) { ... }\n}",
+  "sourceSHA256": "3b24e6a039e8938be9964fa0a0ae39a485e118e8785467e89d09619d8b3b0b07",
+  "target": "library",
+  "featureId": "csharp-9-0-partial-methods-with-returned-values",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/extending-partial-methods.md",
+    "sha256": "6152b1fd3ccc1c2b91306b6395d48bfb438428c54472c37fcb4de1545723d7df",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/extending-partial-methods.md",
+    "license": "NOASSERTION",
+    "offset": 5216
+  }
+}

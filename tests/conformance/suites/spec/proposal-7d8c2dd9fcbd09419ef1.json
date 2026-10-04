@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-7d8c2dd9fcbd09419ef1",
+  "kind": "spec",
+  "sourceText": "static class E\n{\n    extension<T>(T t)\n    {\n        public void M<U>(U u) where T : C<U>  { } // error: 'E.extension<T>(T).M<U>(U)' does not define type parameter 'T'\n    }\n}\n\npublic class C<T> { }",
+  "sourceSHA256": "af0d6436b45da3049f5f46ccf771b589a136c961bcfcc28e962f7dfc38507744",
+  "target": "library",
+  "featureId": "csharp-14-0-extension-methods-and-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/extensions.md",
+    "sha256": "3fdd337fb3fb0c08967571801abae3b932a4928fba8d916303d296ef90bdf7d5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/extensions.md",
+    "license": "NOASSERTION",
+    "offset": 45303
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-70244faad20721745aa3",
+  "kind": "spec",
+  "sourceText": "Func<object> f1 = string () => null; // error\nFunc<object?> f2 = object () => x;   // warning",
+  "sourceSHA256": "8e8273c169a6b5a552eb2fc47227f596c97b4532bb86f051bc3434995b92b25b",
+  "target": "library",
+  "featureId": "csharp-10-0-lambda-improvements",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/lambda-improvements.md",
+    "sha256": "43e4ead0e264a6e6580875a4178ad3f09374d22c739ffc682b6b5f5cfbfc752f",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/lambda-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 5350
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1b2e32e33b25d355f24d",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Security;\nusing System.Security.Permissions;\n \nclass Program\n{\n    [MyPermission(SecurityAction.Demand)]\n    public int x = 0;\n}\n \n[AttributeUsage(AttributeTargets.All)]\nclass MyPermissionAttribute : CodeAccessSecurityAttribute\n{\n    public MyPermissionAttribute(SecurityAction action) : base(action)\n    {\n    }\n \n    public override IPermission CreatePermission()\n    {\n        return null;\n    }\n}",
+  "sourceSHA256": "eb2c6ad2699f221c352e178953f98ce4f875a5c930d05d1bf52f7b5297a98d90",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "sha256": "995f9a35982f60a6e97828d01cb24f09a40124463d1f9e4c6b48f42ec012d8ff",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "license": "MIT",
+    "method": "CS7070ERR_SecurityAttributeInvalidTarget",
+    "offset": 43430
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7070",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,6): error CS7070: Security attribute 'MyPermission' is not valid on this declaration type. Security attributes are only valid on assembly, type and method declarations.\n                //     [MyPermission(SecurityAction.Demand)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidTarget, \"MyPermission\").WithArguments(\"MyPermission\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

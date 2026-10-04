@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5e0b15f2c8813f47bd34",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Linq.Expressions;\n\nnamespace BadImageFormatExceptionRepro\n{\n    class Program\n    {\n        static void Main()\n        {\n            GenericMethod<C>();\n        }\n\n        private static void GenericMethod<T>() where T : I<T>\n        {\n            Func<Expression<Func<T, T>>> func = () => (x) => +x;\n\n            func();\n            Console.WriteLine(\"Run\");\n        }\n    }\n\n    interface I<T> where T : I<T>\n    {\n        public static abstract T operator+(T t);\n    }\n\n    class C : I<C>\n    {\n        public static C operator +(C c) => c;\n    }\n}",
+  "sourceSHA256": "676270cfd36237f661f66fc13b1f417e06d4326a81ce29e674ee7030d74ea934",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOperators.cs",
+    "sha256": "c60a5aa4e7fd7845ee7f036dfa55b03e5f3a9cd9572f96a1f7db994aa786e54e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOperators.cs",
+    "license": "MIT",
+    "method": "UserDefinedOperatorInGenericExpressionTree_04",
+    "offset": 174388
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code, parseOptions: TestOptions.RegularPreview, targetFramework: TargetFramework.Net60)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8927",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (16,62): error CS8927: An expression tree may not contain an access of static virtual or abstract interface member\n                //             Func<Expression<Func<T, T>>> func = () => (x) => +x;\n                Diagnostic(ErrorCode.ERR_ExpressionTreeContainsAbstractStaticMemberAccess, \"+x\").WithLocation(16, 62)\n            ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4a8ed8b122dd516b5ed5",
+  "kind": "diagnostics",
+  "sourceText": "\npublic sealed class DiagnosticAnalyzerAttribute : System.Attribute\n{\n    public DiagnosticAnalyzerAttribute(string firstLanguage, params string[] additionalLanguages)\n    {}\n}\n\npublic static class LanguageNames\n{\n    public const xyz CSharp = \"C#\";\n}\n",
+  "sourceSHA256": "df9d0cb2b72a2ad8957b32d3a02b7f3b7b1875050c5d0a9cb410395237af7e12",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "EmitMetadataOnlyInPresenceOfErrors",
+    "offset": 393948
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source1, options: TestOptions.DebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,18): error CS0246: The type or namespace name 'xyz' could not be found (are you missing a using directive or an assembly reference?)\n                //     public const xyz CSharp = \"C#\";\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"xyz\").WithArguments(\"xyz\").WithLocation(10, 18)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

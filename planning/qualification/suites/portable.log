@@ -1,0 +1,16 @@
+✔ imported cases are pinned, unique, byte-hashed and explicitly unmeasured (537.77575ms)
+✔ literal extraction preserves escapes, raw indentation and rejects interpolation (0.963208ms)
+✔ Roslyn cases bind sources and exact expected diagnostic multiset to an invocation (1.273458ms)
+✔ Roslyn dynamic expectations and unresolved helper source are not fabricated cases (0.11175ms)
+✔ runtime adaptation retains test body and unsupported dependencies explicitly (1.275333ms)
+✔ xunit adaptation accepts scalar facts but preserves theory/helper/assertion limitations (0.878083ms)
+✔ annotated specification examples preserve negative contracts and block ellipsis substitution (0.459958ms)
+✔ reports never count unknown, unexecuted or unsupported observations as passing (0.167292ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 644.235583

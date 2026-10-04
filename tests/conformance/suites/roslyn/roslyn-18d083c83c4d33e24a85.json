@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-18d083c83c4d33e24a85",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        (int _, var x) = (new C(1), 1);\n        (var _, var y) = (new C(2), 2);\n        var (_, z) = (new C(3), 3);\n        System.Console.Write($\"Output {x} {y} {z}.\");\n    }\n    int _i;\n    public C(int i) { _i = i; }\n    public static implicit operator int(C c) { System.Console.Write($\"Converted {c._i}. \"); return 0; }\n}\n",
+  "sourceSHA256": "372ec3875ae06da95ddc74a033336c1c8e694a6242dc48129529ef4b126f3df7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "SimpleDiscardWithConversion",
+    "offset": 199032
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

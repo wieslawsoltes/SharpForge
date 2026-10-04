@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-88243ce386204951120a",
+  "kind": "spec",
+  "sourceText": "partial class C\n{\n    public partial int Prop { get; set; } = 1;\n    public partial int Prop { get => field; set => field = value; } = 2;\n}",
+  "sourceSHA256": "64709e40ddf9ddca86a93ad7114a10ee8b42a27433125ac088cbb58c972af4c8",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 33894
+  }
+}

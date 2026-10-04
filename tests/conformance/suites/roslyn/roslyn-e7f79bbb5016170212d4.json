@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e7f79bbb5016170212d4",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct S\n{\n    public int X;\n    public int Y { get; set; }\n    \n    public S(int x, int y)\n    {\n        this.X = x;\n        this.Y = y;\n\n        Local(this);\n        void Local(S s)\n        {\n            s.X++;\n            s.Y++;\n        }\n    }\n}",
+  "sourceSHA256": "999c34a1535244c0b4c91d7d613d7b94e24616f47f4ec4adc37987f659dc4648",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "PiecewiseStructAssign2",
+    "offset": 36621
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nstruct S\n{\n    public int X;\n    public int Y { get; set; }\n    \n    public S(int x, int y)\n    {\n        this.X = x;\n        this.Y = y;\n\n        Local(this);\n        void Local(S s)\n        {\n            s.X++;\n            s.Y++;\n        }\n    }\n}\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

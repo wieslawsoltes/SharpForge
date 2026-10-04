@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-bbc9543e25887d26750f",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\n#nullable enable\npublic class X\n{\n    private void ThrowIfNull([DoesNotReturnIf(true)] bool isNull, string argumentName)\n    {\n        if (isNull)\n        {\n            throw new ArgumentException(argumentName,\n              $\"argument {argumentName} cannot be null\");\n        }\n    }\n\n    public void SetFieldState(object containedField)\n    {\n        ThrowIfNull(containedField == null, nameof(containedField));\n        // unreachable code when \"isInitialized\" is false:\n        _field = containedField;\n    }\n\n    private bool isInitialized = false;\n    private object _field = default!;\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0414",
+        "severity": "warning"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "1af7d11924197e45ea627470cb041c1ca5054a166e056e58289653c633c06e3f",
+  "originalSource": "#nullable enable\npublic class X\n{\n    private void ThrowIfNull([DoesNotReturnIf(true)] bool isNull, string argumentName)\n    {\n        if (isNull)\n        {\n            throw new ArgumentException(argumentName,\n              $\"argument {argumentName} cannot be null\");\n        }\n    }\n\n    public void SetFieldState(object containedField)\n    {\n        ThrowIfNull(containedField == null, nameof(containedField));\n        // unreachable code when \"isInitialized\" is false:\n        _field = containedField;\n    }\n\n    private bool isInitialized = false;\n    private object _field = default!;\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "DoesNotReturnIfAttribute",
+    "expectedWarnings": [
+      "CS0414"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-attributes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/attributes.md",
+    "sha256": "9ab07c36a912273dd0eb341141ca62153c76e5f32f422e70950477a6b89c5242",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/attributes.md",
+    "license": "MIT",
+    "example": "DoesNotReturnIfAttribute",
+    "offsetInUnquotedMarkdown": 50217
+  }
+}

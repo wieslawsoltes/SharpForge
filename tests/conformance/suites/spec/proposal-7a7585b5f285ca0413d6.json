@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-7a7585b5f285ca0413d6",
+  "kind": "spec",
+  "sourceText": "int[] arr = [1, 2, 3];\nConsole.WriteLine(\n    arr.StartsWith(1) // CS8773 in C# 13, permitted with this proposal\n    );\n\npublic static class MemoryExtensions\n{\n    public static bool StartsWith<T>(this ReadOnlySpan<T> span, T value) where T : IEquatable<T> => span.Length != 0 && EqualityComparer<T>.Default.Equals(span[0], value);\n}",
+  "sourceSHA256": "9e021fbf0b7a204057ca1da782e2afdc7bbcf20b5d8c4c4aeb04cb8e3d62b2c3",
+  "target": "library",
+  "featureId": "csharp-14-0-first-class-span-types",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/first-class-span-types.md",
+    "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+    "license": "NOASSERTION",
+    "offset": 2011
+  }
+}

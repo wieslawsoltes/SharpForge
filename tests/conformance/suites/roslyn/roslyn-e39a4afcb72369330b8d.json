@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e39a4afcb72369330b8d",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class C\n{\n    public int this[Range r]\n    {\n        [Obsolete(\"error\", error: true)]\n        get => 0;\n    }\n\n    public int this[Index i]\n    {\n        [Obsolete(\"error\", error: true)]\n        get => 0;\n    }\n\n    public int Count\n    {\n        [Obsolete(\"unused\", error: true)]\n        get => 0;\n    }\n\n    public void M()\n    {\n        _ = this[^1];\n        _ = this[..];\n    }\n}\n",
+  "sourceSHA256": "704512b694be0e08f1f732ab853a1b10fae8211c6814e07854741d5d2125d304",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteIndexerSlice_ObsoleteIndexAndRangeAccessors",
+    "offset": 494970
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code, targetFramework: TargetFramework.NetCoreApp)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (26,13): error CS0619: 'C.this[Index].get' is obsolete: 'error'\n                //         _ = this[^1];\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"this[^1]\").WithArguments(\"C.this[System.Index].get\", \"error\").WithLocation(26, 13),\n                // (27,13): error CS0619: 'C.this[Range].get' is obsolete: 'error'\n                //         _ = this[..];\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"this[..]\").WithArguments(\"C.this[System.Range].get\", \"error\").WithLocation(27, 13)\n                ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

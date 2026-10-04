@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f18b086c1db77397664a",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    static void F(object o) { }\n    static void Main()\n    {\n        F(default(SA));\n        F(default(SB));\n        F(default(SC));\n        F(default(SD));\n        F(default(SE));\n        F(default(SF));\n        F(default(IG));\n        F(default(IH));\n        F(default(II));\n        F(default(IJ));\n        F(default(IK));\n        F(default(EM));\n        F(default(EN));\n        F(default(EO));\n        F(default(EP));\n    }\n}",
+  "sourceSHA256": "3cb1492f24dadc623f9b403b0b03acc39a54a4f8fc4c72133b4011d82fe4991c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Experimental.cs",
+    "sha256": "d9291f31947e4fb7a17ce442dc86c68df63657514e414b99b517c9228b30f94e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Experimental.cs",
+    "license": "MIT",
+    "method": "TestDeprecatedAndExperimentalAndObsoleteAttributes",
+    "offset": 23812
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { comp1.EmitToImageReference() })",
+  "options": "(source2, references: new[] { comp1.EmitToImageReference() })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,19): warning CS0618: 'SA' is obsolete: 'DA'\n                //         F(default(SA));\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SA\").WithArguments(\"SA\", \"DA\").WithLocation(6, 19),\n                // (7,19): error CS0619: 'SB' is obsolete: 'DB'\n                //         F(default(SB));\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"SB\").WithArguments(\"SB\", \"DB\").WithLocation(7, 19),\n                // (8,19): warning CS0618: 'SC' is obsolete: 'OC'\n                //         F(default(SC));\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SC\").WithArguments(\"SC\", \"OC\").WithLocation(8, 19),\n                // (9,19): warning CS0618: 'SD' is obsolete: 'DC'\n                //         F(default(SD));\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SD\").WithArguments(\"SD\", \"DC\").WithLocation(9, 19),\n                // (10,19): error CS0619: 'SE' is obsolete: 'DD'\n                //         F(default(SE));\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"SE\").WithArguments(\"SE\", \"DD\").WithLocation(10, 19),\n                // (11,19): error CS0619: 'SF' is obsolete: 'OF'\n                //         F(default(SF));\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"SF\").WithArguments(\"SF\", \"OF\").WithLocation(11, 19),\n                // (12,19): warning CS0618: 'IG' is obsolete: 'DG'\n                //         F(default(IG));\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"IG\").WithArguments(\"IG\", \"DG\").WithLocation(12, 19),\n                // (13,19): warning CS0618: 'IH' is obsolete: 'DH'\n                //         F(default(IH));\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"IH\").WithArguments(\"IH\", \"DH\").WithLocation(13, 19),\n                // (14,19): warning CS0618: 'II' is obsolete: 'DI'\n                //         F(default(II));\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"II\").WithArguments(\"II\", \"DI\").WithLocation(14, 19),\n                // (15,19): error CS0619: 'IJ' is obsolete: 'DJ'\n                //         F(default(IJ));\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"IJ\").WithArguments(\"IJ\", \"DJ\").WithLocation(15, 19),\n                // (16,19): error CS0619: 'IK' is obsolete: 'DK'\n                //         F(default(IK));\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"IK\").WithArguments(\"IK\", \"DK\").WithLocation(16, 19),\n                // (17,19): warning CS0618: 'EM' is obsolete: 'OM'\n                //         F(default(EM));\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"EM\").WithArguments(\"EM\", \"OM\").WithLocation(17, 19),\n                // (18,19): error CS0619: 'EN' is obsolete: 'ON'\n                //         F(default(EN));\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"EN\").WithArguments(\"EN\", \"ON\").WithLocation(18, 19),\n                // (19,19): warning CS0618: 'EO' is obsolete: 'DO'\n                //         F(default(EO));\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"EO\").WithArguments(\"EO\", \"DO\").WithLocation(19, 19),\n                // (20,19): error CS0619: 'EP' is obsolete: 'DP'\n                //         F(default(EP));\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"EP\").WithArguments(\"EP\", \"DP\").WithLocation(20, 19)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
