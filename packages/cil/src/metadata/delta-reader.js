@@ -41,13 +41,13 @@ export class MetadataGenerations {
 
   /** Append one immediately following minimal metadata root; rejection leaves the complete prior history intact. */
   append(bytes, options = {}) {
-    generationOptions(options);
     const state = this.#current();
     if (this.#appending) generationError('MD_GEN_INPUT', 'Metadata generation append is already in progress');
-    const generation = generationInteger(options.generation, 'append generation', 1023, 1);
-    if (generation !== state.entries.length) generationError('MD_GEN_IDENTITY', 'Metadata append generation is not the immediate successor');
     this.#appending = true;
     try {
+      generationOptions(options);
+      const generation = generationInteger(options.generation, 'append generation', 1023, 1);
+      if (generation !== state.entries.length) generationError('MD_GEN_IDENTITY', 'Metadata append generation is not the immediate successor');
       const entry = prepareMetadataGeneration(bytes, state, { format: 'metadata', signal: options.signal });
       if (this.#state !== state) generationError('MD_GEN_DISPOSED', 'Metadata history was disposed during append');
       commitMetadataGeneration(state, this.#revisions, entry);

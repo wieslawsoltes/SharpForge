@@ -8,20 +8,40 @@ import { generationHeapState, generationHeapEntry, validateGenerationHeapReferen
 import { generationError, generationToken, GenerationQuery } from './delta-contracts.js';
 
 const heapColumns = Object.freeze({ str: '#Strings', guid: '#GUID', blob: '#Blob' });
+const typedArrayPrototype = Object.getPrototypeOf(Uint8Array.prototype);
+const inputBuffer = Object.getOwnPropertyDescriptor(typedArrayPrototype, 'buffer').get;
+const inputOffset = Object.getOwnPropertyDescriptor(typedArrayPrototype, 'byteOffset').get;
+const inputLength = Object.getOwnPropertyDescriptor(typedArrayPrototype, 'byteLength').get;
+const bufferLength = Object.getOwnPropertyDescriptor(ArrayBuffer.prototype, 'byteLength').get;
+const bufferResizable = Object.getOwnPropertyDescriptor(ArrayBuffer.prototype, 'resizable')?.get;
+
+function inputExtent(input) {
+  if (!(input instanceof Uint8Array)) generationError('MD_GEN_INPUT', 'Metadata generation input must be a Uint8Array');
+  try {
+    const buffer = inputBuffer.call(input), offset = inputOffset.call(input), length = inputLength.call(input);
+    bufferLength.call(buffer); // Intrinsic ArrayBuffer admission excludes shared backing buffers, including other realms.
+    if (bufferResizable?.call(buffer)) throw new TypeError('Resizable metadata generation input');
+    new Uint8Array(buffer, offset, length); // Also rejects an already detached buffer when its reported extent is zero.
+    return { buffer, offset, length };
+  } catch (error) {
+    generationError('MD_GEN_INPUT', 'Metadata generation input needs an attached, unshared, nonresizable ArrayBuffer', error);
+  }
+}
 
 function ownInput(input, state, operation) {
   operation.check();
-  if (!(input instanceof Uint8Array) || (typeof SharedArrayBuffer !== 'undefined' && input.buffer instanceof SharedArrayBuffer)) {
-    generationError('MD_GEN_INPUT', 'Metadata generation input must be an unshared Uint8Array');
-  }
-  if (input.byteLength > state.limits.maxInputBytes || input.byteLength + state.byteCount > state.limits.maxRetainedBytes) {
+  const extent = inputExtent(input);
+  if (extent.length > state.limits.maxInputBytes || extent.length + state.byteCount > state.limits.maxRetainedBytes) {
     generationError('MD_GEN_BUDGET', 'Metadata generation input or retained byte budget exceeded');
   }
   if (state.entries.length >= state.limits.maxGenerations) generationError('MD_GEN_BUDGET', 'Metadata generation count exceeded');
-  const bytes = new Uint8Array(input.byteLength);
-  for (let offset = 0; offset < input.byteLength; offset += 65536) {
+  const bytes = new Uint8Array(extent.length);
+  for (let offset = 0; offset < extent.length; offset += 65536) {
     operation.check();
-    bytes.set(Uint8Array.prototype.subarray.call(input, offset, Math.min(input.byteLength, offset + 65536)), offset);
+    let chunk;
+    try { chunk = new Uint8Array(extent.buffer, extent.offset + offset, Math.min(65536, extent.length - offset)); }
+    catch (error) { generationError('MD_GEN_INPUT', 'Metadata generation input was detached during copying', error); }
+    bytes.set(chunk, offset);
   }
   return bytes;
 }

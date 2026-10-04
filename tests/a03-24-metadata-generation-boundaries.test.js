@@ -143,6 +143,68 @@ test('signal callbacks cannot publish a reentrant append or revive a disposed hi
   assert.throws(() => reader.generation, { code: 'MD_GEN_DISPOSED' });
 });
 
+test('a generation getter cannot publish a nested append before the outer commit', () => {
+  const fixture = cliGenerationFixture(), reader = new MetadataGenerations(fixture.baseline);
+  const row = reader.row(0x06000001), bytes = reader.retainedBytes, records = reader.retainedRecords;
+  let reads = 0;
+  const options = { get generation() {
+    reads++;
+    assert.equal(reader.generation, 0);
+    assert.throws(() => reader.append(fixture.deltas[0].bytes, { generation: 1 }), { code: 'MD_GEN_INPUT' });
+    assert.equal(reader.generation, 0);
+    assert.equal(reader.retainedBytes, bytes);
+    assert.equal(reader.retainedRecords, records);
+    assert.deepEqual(reader.row(0x06000001), row);
+    return 1;
+  } };
+  assert.equal(reader.append(fixture.deltas[0].bytes, options), 1);
+  assert.equal(reads, 1);
+  assert.equal(reader.generation, 1);
+});
+
+test('input extents and copying ignore Uint8Array subclass getters and species', () => {
+  const fixture = cliGenerationFixture();
+  class GuardedBytes extends Uint8Array {
+    get byteLength() { throw new Error('caller byteLength'); }
+    get byteOffset() { throw new Error('caller byteOffset'); }
+    get length() { throw new Error('caller length'); }
+    get buffer() { throw new Error('caller buffer'); }
+    static get [Symbol.species]() { throw new Error('caller species'); }
+  }
+  const input = new GuardedBytes(fixture.baseline);
+  Object.defineProperty(input, 'constructor', { get() { throw new Error('caller constructor'); } });
+  assert.throws(() => new MetadataGenerations(input, { maxInputBytes: 1 }), { code: 'MD_GEN_BUDGET' });
+  const reader = new MetadataGenerations(input);
+  assert.equal(reader.retainedBytes, fixture.baseline.length);
+  reader.append(new GuardedBytes(fixture.deltas[0].bytes), { generation: 1 });
+  assert.equal(reader.generation, 1);
+  if (Object.getOwnPropertyDescriptor(ArrayBuffer.prototype, 'resizable')?.get) {
+    const buffer = new ArrayBuffer(fixture.baseline.length, { maxByteLength: fixture.baseline.length + 1 });
+    new Uint8Array(buffer).set(fixture.baseline);
+    assert.throws(() => new MetadataGenerations(new Uint8Array(buffer)), { code: 'MD_GEN_INPUT' });
+  }
+});
+
+test('detached input rejection is transactional before and during copying', () => {
+  const fixture = cliGenerationFixture(), reader = new MetadataGenerations(fixture.baseline);
+  const detached = fixture.baseline.slice();
+  structuredClone(detached.buffer, { transfer: [detached.buffer] });
+  assert.throws(() => new MetadataGenerations(detached), { code: 'MD_GEN_INPUT' });
+  const input = new Uint8Array(131072);
+  input.set(fixture.deltas[0].bytes);
+  let checks = 0;
+  const signal = { get aborted() {
+    if (++checks === 5) structuredClone(input.buffer, { transfer: [input.buffer] });
+    return false;
+  } };
+  assert.throws(() => reader.append(input, { generation: 1, signal }), { code: 'MD_GEN_INPUT' });
+  assert.equal(checks, 5);
+  assert.equal(reader.generation, 0);
+  assert.equal(reader.retainedBytes, fixture.baseline.length);
+  reader.append(fixture.deltas[0].bytes, { generation: 1 });
+  assert.equal(reader.generation, 1);
+});
+
 test('logical strings ignore added alignment bytes and skip a generation with no string payload', () => {
   const fixture = cliGenerationFixture();
   const padded = editCliDelta(fixture.deltas[0].bytes, (rows, heaps) => {

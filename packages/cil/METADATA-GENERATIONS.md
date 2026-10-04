@@ -24,7 +24,10 @@ metadata.dispose();
 
 ## Inputs and admission
 
-The constructor accepts an unshared `Uint8Array` with an explicit `format`:
+The constructor accepts a `Uint8Array` backed by an attached, unshared,
+nonresizable `ArrayBuffer`, with an explicit `format`. Intrinsic typed-array
+accessors snapshot the byte extent before the budget check and owned copy;
+subclass property getters and species do not control allocation or copying:
 `'metadata'` (default) is a metadata root; `'pe'` uses the existing PE inspection
 reader. PE inspection admits CLI metadata in IL-only, ReadyToRun and mixed images
 without disassembling or executing native portions. The existing PE parser is
