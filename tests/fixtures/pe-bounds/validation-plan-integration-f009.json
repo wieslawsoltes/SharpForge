@@ -179,13 +179,19 @@
     "historicalVerifierSha256": "7d6dee2bb163f009a085ebb8078026daccf99488f0304c2a911b9147b25b2b52",
     "historicalCaptureSha256": "aaef0eb12f1a23a4a03658e1049ec2bb860297b9dce6579b43115f6992f35f08",
     "recorder": "tests/fixtures/pe-bounds/run-integration-f009.py",
-    "recorderSha256": "d7f098445f954f55e92893721f4c42dc5772a5b64df365f875b6ef64a4d8486d",
+    "recorderSha256": "c37ff300592461d91768dd8d1088bdbdf63ed24932a5c3cfa19d67c861873def",
     "recorderBase": "tests/fixtures/pe-bounds/run-step-v3.py",
-    "recorderDelta": "Plan filename, exact reviewed HEAD argument/check, explicit tree receipt and complete seven-file gate source roster; v3 final-write cancellation and primary-failure behavior preserved.",
+    "recorderDelta": "Plan filename, exact reviewed HEAD argument/check, tree receipt, complete seven-file gate roster, empty tracked staged/unstaged diff admission and phase-scoped untracked evidence admission; v3 final-write cancellation and primary-failure behavior preserved.",
     "requiredArgument": "Every phase requires the exact reviewed HEAD, supplied explicitly after the step. Native/gate source is the final clean preparation commit; performance may use a later evidence-only descendant.",
     "historicalReplay": "Nine captured fixture authorities are checked; historical source path/hash inventory and native raw assertions remain. The exact 58 ID roster and current authored byte/product comparisons are required.",
     "strictBoundary": "verify.mjs remains byte-exact with strictSource=true by default. New capture is strictly checked both externally and after thirteen-file retention; benchmark uses that same strict capture.",
     "completionBoundary": "Restore prior handlers, then recheck all interruptions handled through the final receipt write. Later signals follow restored Python/OS behavior; caller must inspect actual exit.",
-    "execution": "No integration phase or new test has run. Existing historical evidence is unchanged."
+    "execution": "No integration phase or new test has run. Existing historical evidence is unchanged.",
+    "admissionCorrection": {
+      "unexecutedPreparation": "322afb6c41f0066284661dfb879f5e8ffeaa61f0",
+      "previousPlanSha256": "d30837f01164755b05ac5feb7c413237e2179b43bd28adede7a477af55b5017b",
+      "previousRecorderSha256": "d7f098445f954f55e92893721f4c42dc5772a5b64df365f875b6ef64a4d8486d",
+      "reason": "Exact HEAD plus product diff alone did not prove tracked test/harness files matched that HEAD. Collect actual -z tracked diff and untracked paths before/after, require empty tracked diff, and permit only planned evidence directory prefixes from retention onward. Preserve partial facts and primary failure. An independent cached diff also rejects index changes that unstaged edits happen to cancel in the working tree."
+    }
   }
 }

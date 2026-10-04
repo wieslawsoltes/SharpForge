@@ -75,7 +75,15 @@ allocation counts. This new cohort cannot revise the first cohort's disposition.
 `validation-plan-integration-f009.json` contains exact command arrays and fresh
 destinations. `run-integration-f009.py` derives from the unexecuted v3 recorder;
 its changes are the plan filename, an explicit exact-HEAD argument, a tree hash
-in snapshots, and source coverage for all seven existing gate test files. The
+in snapshots, and source coverage for all seven existing gate test files. Before
+and after every phase it records the NUL-delimited tracked diff against HEAD,
+including staged and unstaged changes, and the actual untracked file roster.
+Admission requires an empty tracked diff. Before retention there may be no
+untracked files; from the retention phase onward, only files under the two
+prepared retained-native and retained-execution directories are allowed.
+An unchanged HEAD and stable hashes alone do not admit edited tests or tools.
+The original `322afb6c` preparation was never executed; this source-review
+correction changes no historical qualification result. The
 v3 primary-failure retention, best-effort final inspection, child forwarding and
 reaping, and final-write interruption check are unchanged. Restore prior signal
 handlers, then check all interruptions handled through the final receipt write;

@@ -36,6 +36,12 @@ def git(*args):
     return subprocess.check_output(['git', *args], cwd=ROOT, text=True, stderr=subprocess.PIPE).strip()
 
 
+def git_paths(*args):
+    data = subprocess.check_output(['git', *args], cwd=ROOT, stderr=subprocess.PIPE)
+    assert not data or data.endswith(b'\0'), 'Expected NUL-terminated Git path roster'
+    return [os.fsdecode(path) for path in data[:-1].split(b'\0')] if data else []
+
+
 def snapshot():
     """Collect actual facts before deciding whether they satisfy the frozen source contract."""
     facts = {'files': {}, 'aliases': {}, 'inspectionErrors': []}
@@ -50,6 +56,9 @@ def snapshot():
     facts['head'] = inspect('HEAD', lambda: git('rev-parse', 'HEAD'))
     facts['tree'] = inspect('tree', lambda: git('rev-parse', 'HEAD^{tree}'))
     facts['status'] = inspect('status', lambda: git('status', '--porcelain=v1', '--untracked-files=all'))
+    facts['trackedChangedPaths'] = inspect('tracked diff against HEAD', lambda: git_paths('diff', '--name-only', '-z', 'HEAD'))
+    facts['stagedChangedPaths'] = inspect('staged diff against HEAD', lambda: git_paths('diff', '--cached', '--name-only', '-z', 'HEAD'))
+    facts['untrackedPaths'] = inspect('untracked roster', lambda: git_paths('ls-files', '--others', '--exclude-standard', '-z'))
     facts['productChangedPaths'] = inspect('product diff', lambda: git('diff', '--name-only', PLAN['productCommit'], '--',
         ':(glob)packages/*/src/**', ':(glob)packages/*/package.json', 'package.json').splitlines())
     paths = inspect('source roster', lambda: git('ls-files', '--', 'packages/cil', 'packages/bytecode/src',
@@ -73,13 +82,20 @@ def snapshot():
 def snapshot_admitted(facts):
     assert not facts['inspectionErrors'], 'Source inspection failed; retain actual partial facts'
     assert facts['head'] == EXPECTED_HEAD, 'Exact operator-reviewed source HEAD required'
+    assert facts['trackedChangedPaths'] == [], 'Tracked staged or unstaged files differ from the reviewed HEAD'
+    assert facts['stagedChangedPaths'] == [], 'The index differs from HEAD even if unstaged edits restore working bytes'
+    prefixes = [PLAN['retainedNative'] + '/', PLAN['retainedExecution'] + '/']
+    may_retain = STEPS.index(STEP) >= STEPS.index('retain-native')
+    assert all(may_retain and any(path.startswith(prefix) for prefix in prefixes)
+               for path in facts['untrackedPaths']), 'Unexpected untracked source outside prepared retained evidence'
     assert facts['productChangedPaths'] == [], 'Frozen product source changed'
     assert all(row['owned'] for row in facts['aliases'].values()), 'Foreign or missing package alias'
 
 
 def source_identity(facts):
     # Retaining new reference files deliberately changes Git status; preserve status separately.
-    return {key: facts[key] for key in ['head', 'tree', 'files', 'aliases', 'productChangedPaths']}
+    return {key: facts[key] for key in
+            ['head', 'tree', 'files', 'aliases', 'productChangedPaths', 'trackedChangedPaths', 'stagedChangedPaths']}
 
 
 record = {'step': STEP, 'startedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),

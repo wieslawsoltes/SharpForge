@@ -540,13 +540,13 @@
     },
     {
       "path": "tests/fixtures/pe-bounds/run-integration-f009.py",
-      "bytes": 11284,
-      "sha256": "d7f098445f954f55e92893721f4c42dc5772a5b64df365f875b6ef64a4d8486d"
+      "bytes": 12593,
+      "sha256": "c37ff300592461d91768dd8d1088bdbdf63ed24932a5c3cfa19d67c861873def"
     },
     {
       "path": "tests/fixtures/pe-bounds/validation-plan-integration-f009.json",
-      "bytes": 8976,
-      "sha256": "d30837f01164755b05ac5feb7c413237e2179b43bd28adede7a477af55b5017b"
+      "bytes": 9793,
+      "sha256": "1a25e65ee38bef4d6eb98d0002dea0da4855b0a279348b68063f996afae26a6f"
     }
   ],
   "benchmarkSeam": {
