@@ -1,5 +1,5 @@
 import {frameworkType} from '@sharpforge/framework';
-import {verifyCilAssembly} from '@sharpforge/cil';
+import {verifyCilAssembly, mergeVerifiedStackReports} from '@sharpforge/cil';
 import {ManagedFault, isReference} from '../heap.js';
 import {loweredDelegateInfo} from './delegate-identity.js';
 import {boundDelegateCall} from '../execution/delegate-targets.js';
@@ -29,7 +29,7 @@ export function managedDelegateTarget(vm, delegate, args) {
   if (vm.inspector && !vm.report.methods.includes(method)) {
     const report = verifyCilAssembly(vm.inspector, {methodToken: method});
     if (!report.success) throw new ManagedFault('InvalidProgramException', report.issues.map(issue => issue.message).join('; '));
-    vm.report.methods = [...new Set([...vm.report.methods, ...report.methods])];
+    vm.report = mergeVerifiedStackReports(vm.inspector, vm.report, report);
   }
   const definition = vm.inspector ? vm.inspector.getMethod(method) : vm.image.methods[method];
   return {method, values, name: definition.asyncOrigin ?? definition.name};

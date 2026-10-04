@@ -8,7 +8,7 @@ export function boxNullable(vm, value, type) {
   const nullable = requireNullable(vm, value, type);
   if (!nullable.hasValue) return null;
   const stored = materializeNullableRecord(vm, nullable.value);
-  return vm.heap.withRoots([stored], () => vm.heap.allocate('box', nullable.nullable, [stored]));
+  return vm.heap.withRoots([stored], () => vm.heap.allocate('box', nullableElementType(type), [stored]));
 }
 
 /** unbox.any Nullable<T> accepts only null or an exact T box and copies the underlying immutable data. */

@@ -4,15 +4,14 @@ import {ManagedFault, isReference} from '../heap.js';
 
 /** Framework value adapters use managed property carriers at their public ABI boundary. */
 export function isFrameworkValueType(type, registry = null) {
-  if (typeof type !== 'string') return false;
-  const name = nullableElementType(type) ?? type;
+  if (typeof type !== 'string' || nullableElementType(type)) return false;
+  const name = type;
   const definition = frameworkType(name);
   return definition?.name === name && definition.kind === 'value' && !registry?.descriptors.has(name);
 }
 
 function copy(vm, value, type, budget, active) {
   if (value === null || value === undefined || !isFrameworkValueType(type, vm.heap.methodTables)) return value;
-  type = nullableElementType(type) ?? type;
   if (!isReference(value)) throw new ManagedFault('InvalidCastException', 'A registered framework value is required');
   const record = vm.heap.get(value), table = vm.heap.methodTables.get(type);
   if (record.methodTable !== table || record.kind !== 'host' || record.data.length % 2) {

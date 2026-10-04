@@ -57,6 +57,15 @@ export class LaunchProfiles {
     this.events.emit({ type: 'selected', projectId, profileId: id });
   }
 
+  removeProject(projectId, { notify = true } = {}) {
+    const profiles = this.projects.delete(projectId);
+    const selected = this.selected.delete(projectId);
+    if (notify && (profiles || selected)) this.notifyRemoved([projectId]);
+    return profiles || selected;
+  }
+
+  notifyRemoved(projectIds) { this.events.emit({ type: 'profiles-removed', projectIds: [...projectIds] }); }
+
   launchOptions(projectId, id) {
     const profile = this.get(projectId, id);
     return {

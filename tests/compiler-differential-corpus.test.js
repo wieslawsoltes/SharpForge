@@ -87,13 +87,14 @@ test('A02-T40 baseline: one file per feature, one fixture per line, and a lossle
     warnings: ['alpha/one', 'beta/one'],
     bytecode: ['alpha/one'],
     cil: ['alpha/one', 'beta/two'],
+    directCil: ['beta/two'],
   };
   saveBaseline(baseline, directory);
   assert.deepEqual(readdirSync(directory).sort(), ['alpha.json', 'beta.json']);
   assert.equal(readFileSync(join(directory, 'alpha.json'), 'utf8'), '{\n  "alpha/one": ["diagnostics", "warnings", "bytecode", "cil"]\n}\n');
   assert.equal(
     readFileSync(join(directory, 'beta.json'), 'utf8'),
-    '{\n  "beta/one": ["diagnostics", "warnings"],\n  "beta/two": ["diagnostics", "cil"]\n}\n',
+    '{\n  "beta/one": ["diagnostics", "warnings"],\n  "beta/two": ["diagnostics", "cil", "directCil"]\n}\n',
   );
   const reloaded = loadBaseline(directory);
   for (const axis of BASELINE_AXES) assert.deepEqual(reloaded[axis], [...baseline[axis]].sort(), axis);
@@ -113,7 +114,7 @@ test('A02-T40 baseline: saving removes features that no longer pass and leaves u
 
 test('A02-T40 baseline: a missing directory is an empty baseline; misplaced ids and unknown axes are rejected', t => {
   const directory = join(scratch(t), 'baseline');
-  assert.deepEqual(loadBaseline(directory), { diagnostics: [], warnings: [], bytecode: [], cil: [] });
+  assert.deepEqual(loadBaseline(directory), { diagnostics: [], warnings: [], bytecode: [], cil: [], directCil: [] });
   mkdirSync(directory);
   writeFileSync(join(directory, 'alpha.json'), '{"beta/one": ["diagnostics"]}\n');
   assert.throws(() => loadBaseline(directory), /baseline\/alpha\.json: beta\/one belongs to feature 'beta'/);

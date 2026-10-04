@@ -1,5 +1,5 @@
 {
-  "coalesce-assignment/assigns-only-when-the-target-is-null": ["diagnostics", "warnings", "bytecode", "cil"],
+  "coalesce-assignment/assigns-only-when-the-target-is-null": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "coalesce-assignment/coalesce-assignment-in-7-3": ["diagnostics", "warnings"],
   "coalesce-assignment/operand-types": ["diagnostics", "warnings"]
 }

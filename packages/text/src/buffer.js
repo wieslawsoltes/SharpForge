@@ -1,51 +1,9 @@
 import { PieceTable } from './piece-table.js';
 import { analyzeEol, eolEdits, normalizeEol } from './eol.js';
-
-/** An edit prepared against a stale version is never silently relocated. */
-export class TextVersionError extends Error {
-  constructor(expected, actual) {
-    super(`Text version changed: expected ${expected}, received ${actual}`);
-    this.name = 'TextVersionError';
-    this.code = 'TEXT_VERSION_MISMATCH';
-    this.expected = expected;
-    this.actual = actual;
-  }
-}
-
-function normalizeEdits(source, edits, limit) {
-  if (!Array.isArray(edits) || edits.length > limit) throw new RangeError(`Expected at most ${limit} text edits`);
-  const sorted = edits.map(edit => {
-    const start = edit.start;
-    const end = edit.end ?? start + (edit.deleteCount ?? 0);
-    const text = edit.text ?? edit.insertText;
-    if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 0 || end < start || end > source.length) {
-      throw new RangeError('Edit contains an invalid UTF-16 range');
-    }
-    if (typeof text !== 'string') throw new TypeError('Edit text must be a string');
-    return { start, end, text };
-  }).sort((first, second) => first.start - second.start || first.end - second.end);
-  for (let index = 1; index < sorted.length; index++) {
-    const previous = sorted[index - 1];
-    const current = sorted[index];
-    if (current.start < previous.end || current.start === previous.start) throw new RangeError('Text edits overlap');
-  }
-  return sorted.filter(edit => edit.start !== edit.end || edit.text.length !== 0);
-}
-
-function createChanges(before, after, edits) {
-  let delta = 0;
-  const inverseEdits = [];
-  const changes = edits.map(edit => {
-    const start = edit.start + delta;
-    const end = start + edit.text.length;
-    inverseEdits.push(Object.freeze({ start, end, text: before.getText(edit.start, edit.end) }));
-    const range = Object.freeze({ start: before.positionAt(edit.start), end: before.positionAt(edit.end) });
-    const newRange = Object.freeze({ start: after.positionAt(start), end: after.positionAt(end) });
-    delta += edit.text.length - (edit.end - edit.start);
-    return Object.freeze({ ...edit, range, newRange, newStart: start, newEnd: end });
-  });
-  return { changes: Object.freeze(changes), inverseEdits: Object.freeze(inverseEdits) };
-}
+import {normalizeEdits, createChanges} from './buffer-edits.js';
+import {prepareOrderedEdits} from './prepare-edits.js';
+import {TextVersionError} from './version-error.js';
+export {TextVersionError} from './version-error.js';
 
 /** Versioned UTF-16 buffer. Edits use original-document offsets and are committed atomically in one version. */
 export class TextBuffer {
@@ -104,8 +62,20 @@ export class TextBuffer {
       ...createChanges(before, after, normalized)
     });
   }
+  /** Prepare ordered original-coordinate edits cooperatively; cancellation, disposal and any source revision abort without mutation. */
+  prepareEditsAsync(edits, options = {}) {
+    const before = this.snapshot();
+    const expectedVersion = options.expectedVersion ?? before.version;
+    const check = () => {
+      if (this.#disposed) throw new Error('TextBuffer is disposed');
+      if (expectedVersion !== this.version || before !== this.snapshot()) throw new TextVersionError(expectedVersion, this.version);
+      options.check?.();
+    };
+    return prepareOrderedEdits(this, before, edits, options, check);
+  }
   /** Commit a prepared tree; suppress notifications only while an owning workspace commits all participants. */
   commitPrepared(prepared, { notify = true } = {}) {
+    if (this.#disposed) throw new Error('TextBuffer is disposed');
     if (prepared.owner !== this || prepared.before !== this.snapshot()) throw new TextVersionError(prepared.oldVersion, this.version);
     this.#table.restore(prepared.after);
     if (notify) this.emitChange(prepared);

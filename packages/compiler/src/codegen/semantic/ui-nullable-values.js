@@ -51,9 +51,15 @@ function defaultValue(translator, type) {
 
 export function uiNullableCall(translator, node) {
   const type = uiNullableType(translator.g, node.receiver?.type);
-  if (!type || node.method.name !== 'GetValueOrDefault') return null;
-  const value = translator.once(translator.expression(node.receiver), 'nullable');
   const args = node.args ?? [];
+  if (!type || node.method.name !== 'GetValueOrDefault' && !(node.method.name === 'ToString' && args.length === 0)) return null;
+  const value = translator.once(translator.expression(node.receiver), 'nullable');
+  if (node.method.name === 'ToString' && args.length === 0) {
+    const contract = findContracts('System.Convert', 'ToString', true)
+      .find(member => member.parameters.length === 1 && member.parameters[0] === 'object');
+    return n.sequence(value.locals, value.effects, n.conditional(present(value.read()),
+      n.frameworkCall({contract}, null, [value.read()], 'string'), n.literal('', 'string'), 'string'));
+  }
   // Even when a value is present, an explicit default argument has C#'s normal eager argument evaluation.
   const fallback = translator.once(args.length ? translator.expression(args[0].expression) : defaultValue(translator, type), 'default');
   return n.sequence([...value.locals, ...fallback.locals], [...value.effects, ...fallback.effects],

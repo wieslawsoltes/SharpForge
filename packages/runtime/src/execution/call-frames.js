@@ -5,10 +5,11 @@ import {framePool} from './frame-pool.js';
 import {methodOffsets} from './method-offsets.js';
 import {storageDefault} from './storage.js';
 import {copyFrameworkValue} from './framework-values.js';
+import {initializeFloatFrame} from './typed-float-frame.js';
 
 /** Copy normalized arguments into owned storage; call scratch buffers never escape. */
 export function cilCallFrame(vm, method, args, extra) {
-  admitCilStack(vm, method);
+  const capacity = admitCilStack(vm, method);
   const ticket = reserveStackFrame(vm, method, args.length);
   let pool, frame;
   try {
@@ -31,6 +32,7 @@ export function cilCallFrame(vm, method, args, extra) {
         vm.heap.pins.push(frame.locals[index]);
       }
       Object.assign(frame, extra);
+      initializeFloatFrame(vm, frame, capacity);
       commitStackFrame(ticket, frame);
       return frame;
     });
@@ -47,19 +49,27 @@ export function callSourceFrame(vm, methodId, args) {
   if (vm.frames.length >= vm.options.maxFrames) throw new ManagedFault('StackOverflowException', 'Maximum managed call depth exceeded');
   const method = vm.image.methods[methodId];
   if (!method.isStatic && args[0] === null) throw new ManagedFault('NullReferenceException', 'Cannot call an instance method on null');
-  const frame = framePool(vm).acquire(method, args.length);
-  frame.id = ++vm.frameId;
-  frame.methodId = methodId;
-  frame.base = vm.stack.length;
+  const ticket = reserveStackFrame(vm, method, args.length);
+  let pool, frame;
   try {
+    pool = framePool(vm);
+    frame = pool.acquire(method, args.length);
+    frame.id = ++vm.frameId;
+    frame.methodId = methodId;
+    frame.base = vm.stack.length;
     vm.heap.withRoots(args, () => {
       for (let index = 0; index < args.length; index++) {
         frame.locals[index] = copyFrameworkValue(vm, args[index], method.locals[index]?.type);
         vm.heap.pins.push(frame.locals[index]);
       }
       vm.frames.push(frame);
+      commitStackFrame(ticket, frame);
     });
-  } catch (error) { framePool(vm).retire(frame); throw error; }
+  } catch (error) {
+    cancelStackFrame(ticket);
+    if (frame) pool.retire(frame);
+    throw error;
+  }
   vm.profiler?.enter(frame);
 }
 

@@ -37,6 +37,33 @@ export function verifiedStackBound(inspector, report, method) {
   return entry.bound;
 }
 
+/** Join only private proofs for the same live inspector. Copied reports and edited bodies are not evidence. */
+export function mergeVerifiedStackReports(inspector, current, additional, {maxMethods = 10000} = {}) {
+  if (!Number.isSafeInteger(maxMethods) || maxMethods < 1 || maxMethods > 1000000) {
+    throw new RangeError('Invalid verified method union limit');
+  }
+  const methods = new Map();
+  for (const report of [current, additional]) {
+    const proof = proofs.get(report);
+    if (!report?.success || proof?.inspector !== inspector || !Array.isArray(report.methods)) {
+      throw new TypeError('A privately verified report for this inspector is required');
+    }
+    if (report.methods.length > maxMethods) throw new RangeError('Verified method union limit exceeded');
+    for (const token of report.methods) {
+      const entry = proof.methods.get(token);
+      const method = entry && inspector.getMethod(token);
+      if (!entry || !unchangedBody(method, entry) || method.instructions !== entry.instructions) {
+        throw new TypeError('Verified method body changed before report union');
+      }
+      methods.set(token, entry);
+      if (methods.size > maxMethods) throw new RangeError('Verified method union limit exceeded');
+    }
+  }
+  const report = {...current, methods: [...methods.keys()],
+    stackHeights: {...current.stackHeights, ...additional.stackHeights}};
+  return recordVerifiedStacks(inspector, report, methods);
+}
+
 export function verifiedStackEntry(method, peak) {
   return Object.freeze({instructions: method.instructions, handlers: method.handlers, maxStack: method.maxStack,
     code: method.instructions.map(instruction => [...instructionFields.map(key => instruction[key]),

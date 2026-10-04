@@ -4,6 +4,7 @@ import {visitRetiredFrames} from './frame-pool.js';
 import {initializationRoots} from './static-init.js';
 import {runtimeTypeRoots} from './tokens.js';
 import {stringRoots} from './strings.js';
+import {floatSlots, floatSlotRoot} from './typed-stack.js';
 
 const terminal = new Set(['completed', 'faulted', 'canceled']);
 const borrowItems = Symbol('root iterable groups');
@@ -25,6 +26,9 @@ function offer(value, visit) {
 function values(items, visit) {
   if (!items) return;
   if (visit[borrowItems]) visit[borrowItems](items);
+  else if (floatSlots(items)) {
+    for (let index = 0; index < items.length; index++) offer(floatSlotRoot(items, index), visit);
+  }
   else for (const value of items) offer(value, visit);
 }
 
@@ -37,7 +41,7 @@ function slots(vm, frame, argument, visit, precise) {
   }
   const method = frame.method ?? vm.image?.methods[frame.methodId];
   for (let index = 0; index < items.length; index++) {
-    const value = items[index];
+    const value = precise ? floatSlotRoot(items, index) : items[index];
     if (precise) {
       let type;
       if (!argument) type = frame.method ? method.locals?.[index] : method?.locals?.[index]?.type;

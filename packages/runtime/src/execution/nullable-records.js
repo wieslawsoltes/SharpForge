@@ -10,6 +10,20 @@ const initial = Object.freeze({
   'System.TimeSpan': Object.freeze({TotalMilliseconds: 0, TotalSeconds: 0})
 });
 
+/** The two approved UI temporal values use scalar records at the managed ABI boundary. */
+export function isNullableRecordType(type) { return Object.hasOwn(fields, type); }
+
+/** Logical stack bytes include HasValue and the admitted scalar record, aligned to eight bytes. */
+export function nullableRecordStorageBytes(type) {
+  if (!isNullableRecordType(type)) return null;
+  let bytes = 8;
+  for (const fieldType of Object.values(fields[type])) {
+    const width = fieldType === 'int' ? 4 : 8;
+    bytes = Math.ceil(bytes / width) * width + width;
+  }
+  return Math.ceil(bytes / 8) * 8;
+}
+
 /** Nullable value records contain scalar data only, so the tracing heap has no hidden reference edges to discover. */
 export function nullableRecord(vm, type, value, present) {
   if (!fields[type]) return null;
