@@ -19,7 +19,7 @@ export async function loadInput(sourceRoot = directory) {
     return bytes;
   };
   const catalog = JSON.parse(await read(path.join(fixturesRoot, 'index.json'), canonicalFixtures));
-  if (catalog.schemaVersion !== 1 || !Array.isArray(catalog.fixtures) || catalog.fixtures.length < 1 || catalog.fixtures.length > 20) throw new Error('WinUI catalog requires 1 through 20 fixtures');
+  if (catalog.schemaVersion !== 1 || !Array.isArray(catalog.fixtures) || catalog.fixtures.length !== 20) throw new Error('WinUI catalog requires exactly 20 fixtures');
   const fixtures = [], ids = new Set(), materials = [];
   for (const fixture of catalog.fixtures) {
     if (!fixture || !/^[a-z][a-z0-9-]{0,79}$/.test(fixture.id ?? '') || ids.has(fixture.id) || fixture.file !== fixture.id + '.xaml' ||

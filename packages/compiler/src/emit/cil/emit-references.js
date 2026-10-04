@@ -6,6 +6,7 @@
  */
 import { RefKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
+import { isReference } from './type-facts.js';
 
 const returnsByReference = method => !!method?.refKind && method.refKind !== RefKind.None;
 
@@ -74,7 +75,22 @@ export const ReferenceEmission = Base =>
     }
     location(node) {
       if (this.isReferenceCall(node)) return new IndirectLocation(this, () => this.referenceCall(node), node.type);
+      // `this = value` in a struct stores the whole value through the managed pointer the method received.
+      if (node.kind === 'This' && !this.frame.isStatic && !isReference(this.frame.containingType) && !this.frame.function?.closure) {
+        return new IndirectLocation(this, () => this.il.emit('ldarg', 0), this.frame.containingType);
+      }
       return super.location(node);
+    }
+    /** `r = ref x` makes the ref local (or ref parameter) denote another variable; its value is the variable's value. */
+    exprRefAssignment(node, isUsed) {
+      const target = node.left,
+        il = this.il;
+      this.address(node.right);
+      if (target.kind === 'Local') il.emit('stloc', this.slotOf(target.local));
+      else if (target.kind === 'Parameter') il.emit('starg', this.argumentIndexOf(target.parameter, node.syntax));
+      else return this.unsupported('ref assignment to this target', node.syntax);
+      if (isUsed) this.expression(target);
+      return isUsed ? undefined : false;
     }
     /** `return ref x;` returns the address of the variable. */
     stmtReturn(node) {

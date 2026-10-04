@@ -80,7 +80,7 @@ test('instruction budgets, byte budgets and write notifications keep their exist
   }
 });
 
-test('unproven in-place edits require invalidation and wider integer bodies keep ordinary handlers', () => {
+test('unproven in-place edits fall back while Int64 bodies use their own width', () => {
   const vm = new CilVirtualMachine(addition(), {specializeNumericHandlers: true});
   const original = getDecodePlan(vm, vm.top.method);
   vm.top.method.instructions.find(instruction => instruction.name === 'add').name = 'sub';
@@ -92,7 +92,7 @@ test('unproven in-place edits require invalidation and wider integer bodies keep
   const bytes = managedFixture({methods: [{name: 'Main', result: 'long', maxStack: 2,
     body: writer => writer.op('ldc.i8', 9007199254740993n).op('ldc.i8', 2n).op('add').op('ret')} ]});
   const wide = new CilVirtualMachine(bytes, {specializeNumericHandlers: true});
-  assert(getDecodePlan(wide, wide.top.method).numericHandlerIds.every(id => id === null));
+  assert(getDecodePlan(wide, wide.top.method).numericHandlerIds.includes('add_i8'));
   assert.equal(wide.run().returnValue, 9007199254740995n);
 });
 
