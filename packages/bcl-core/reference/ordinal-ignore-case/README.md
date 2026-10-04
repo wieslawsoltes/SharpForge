@@ -8,7 +8,8 @@ The existing complete simple-uppercase capture is reused, not regenerated.
 
 A nullable string matrix adds ASCII/non-ASCII boundaries, dotless/dotted I,
 long s, Kelvin sign, sharp s versus SS, Greek mappings, supplementary case pairs,
-embedded NUL and malformed surrogate sequences. Separate native rows capture
+Garay invariant/ordinal mapping differences, embedded NUL and malformed
+surrogate sequences. Separate native rows capture
 List.Sort, non-generic Array.BinarySearch, object comparison/fault wrapping and
 singleton identity. Strings use UTF-16 integer arrays to retain isolated surrogates.
 

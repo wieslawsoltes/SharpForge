@@ -34,7 +34,9 @@ string?[] values = [
     "\uD800", "\uD801", "\uDFFF", "\uDC00", "\uE000", "\U00010000", "\U0010FFFF",
     "a\uD800b", "A\uD800B", "\uD801\uDC28x", "\uD801\uDC00X", "\uD801x", "\uD801X",
     "\uD801\uDC28\uDC00", "\uD801\uDC00\uDC00", "\uD801\uDC28", "\uD801",
-    "\uD801\uD800", "\uD801\uDFFF", "\uD801\uDC00\0", "\uD801\uDC28\0"
+    "\uD801\uD800", "\uD801\uDFFF", "\uD801\uDC00\0", "\uD801\uDC28\0",
+    "\U00016EA0", "\U00016EBB", "\U00016EB8", "\U00016ED3", "\U00016EB9", "\U00016EBA",
+    "\U00016ED4", "a\U00016EBB", "A\U00016EA0", "\U00016EBBa", "\U00016EA0A"
 ];
 var signs = values.Select(left => values.Select(right => Math.Sign(comparer.Compare(left, right))).ToArray()).ToArray();
 string?[] inputValues = ["z", "b", "A", "é", "\u017F", "\u0131", "ß", "\U00010428", "\uD800", "\uDFFF", null];
