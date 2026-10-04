@@ -1,10 +1,12 @@
+import {isDecimal} from './decimal.js';
 import {decodeCoded,token} from '@sharpforge/cil';
 import {ManagedFault,isReference} from '../heap.js';
+import {cachedMetadataToken} from './token-cache.js';
 
 function tableFor(vm,type) {
   const registry=vm.heap.methodTables;
   if(!registry)throw new ManagedFault('InvalidProgramException','Runtime method tables are not initialized');
-  return registry.get(type);
+  return vm.inspector?vm.typeSystem.table(type):registry.get(type);
 }
 function validHandle(vm,handle,kind) {
   if(!handle||!Object.isFrozen(handle)||handle.runtimeHandle!==kind||handle.owner!==vm.snapshotOwner)
@@ -19,7 +21,7 @@ export function loadToken(vm,metadataToken) {
   if(!Number.isInteger(metadataToken)||metadataToken<=0||metadataToken>0xffffffff)
     throw new ManagedFault('InvalidProgramException','Invalid ldtoken operand');
   let descriptor;
-  try {descriptor=vm.inspector.resolveToken(metadataToken);}
+  try {descriptor=cachedMetadataToken(vm,metadataToken);}
   catch {throw new ManagedFault('InvalidProgramException','Invalid ldtoken metadata token');}
   if(!['type','method','field'].includes(descriptor.kind))
     throw new ManagedFault('InvalidProgramException','ldtoken requires a type, method, or field token');
@@ -49,6 +51,7 @@ export function objectType(vm,value,typeHint=null) {
   if(value?.byref)value=vm.dereference(value);
   let type;
   if(isReference(value)){const record=vm.heap.get(value);type=record.methodTable??record.type;}
+  else if(isDecimal(value))type='System.Decimal';
   else if(value?.enumType)type=value.enumType;
   else if(value?.float)type=value.float==='r4'?'float':'double';
   else if(typeHint)type=typeHint;

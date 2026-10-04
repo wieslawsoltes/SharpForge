@@ -45,6 +45,25 @@ export const fixtures = feature('language-version', [
   gated('gate-with-on-anonymous-types-at-9', 'WithOnAnonymousTypes', '9'),
   gated('gate-span-char-constant-pattern-at-10', 'SpanCharConstantPattern', '10'),
   gated('gate-inline-arrays-at-11', 'InlineArrays', '11'),
+  // The rows decided from syntax by the compiler's walker (binder/syntax-features.js): with the three walker rows above
+  // (auto-properties, readonly auto-properties, ref for) these make all 19, so that the gate matrix compares code and
+  // span with Roslyn for each of them.
+  gated('gate-discards-at-6', 'Discards', '6'),
+  gated('gate-ref-extension-methods-at-7-1', 'RefExtensionMethods', '7.1'),
+  gated('gate-ref-conditional-at-7-1', 'RefConditional', '7.1'),
+  gated('gate-ref-foreach-at-7-2', 'RefForEach', '7.2'),
+  gated('gate-enum-constraint-at-7-2', 'EnumGenericTypeConstraint', '7.2'),
+  gated('gate-delegate-constraint-at-7-2', 'DelegateGenericTypeConstraint', '7.2'),
+  gated('gate-unmanaged-constraint-at-7-2', 'UnmanagedGenericTypeConstraint', '7.2'),
+  gated('gate-notnull-constraint-at-7-3', 'NotNullGenericTypeConstraint', '7.3'),
+  gated('gate-nested-stackalloc-at-7-3', 'NestedStackalloc', '7.3'),
+  gated('gate-sealed-tostring-in-record-at-9', 'SealedToStringInRecord', '9'),
+  gated('gate-positional-fields-in-records-at-9', 'PositionalFieldsInRecords', '9'),
+  gated('gate-constant-interpolated-strings-at-9', 'ConstantInterpolatedStrings', '9'),
+  gated('gate-relaxed-shift-operator-at-10', 'RelaxedShiftOperator', '10'),
+  gated('gate-ref-fields-at-10', 'RefFields', '10'),
+  gated('gate-implicit-indexer-initializer-at-12', 'ImplicitIndexerInitializer', '12'),
+  gated('gate-ref-unsafe-in-iterator-async-at-12', 'RefUnsafeInIteratorAsync', '12'),
   // Rows Roslyn reports with a diagnostic of their own.
   dedicated('cs8314-generic-pattern-matching-at-7', 'GenericPatternMatching', '7'),
   dedicated('cs8904-static-member-variance-at-8', 'VarianceSafetyForStaticInterfaceMembers', '8'),

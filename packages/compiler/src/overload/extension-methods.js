@@ -9,6 +9,7 @@
  * The receiver must convert to the `this` parameter by an identity, implicit reference or boxing conversion
  * (C# 14 adds span conversions): numeric and user-defined conversions do not make an extension applicable.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, RefKind } from '../symbols/types.js';
 import { ConversionKind } from '../conversions/classify.js';
 
@@ -31,11 +32,15 @@ const receiverKinds = new Set([
   ConversionKind.Boxing,
   ConversionKind.ImplicitSpan,
 ]);
-/** True when `receiverType` can be the receiver of an extension method whose `this` parameter has type `thisType`. */
-export function isValidReceiverConversion(conversions, receiver, thisType) {
+/**
+ * True when `receiverType` can be the receiver of an extension method whose `this` parameter has type `thisType`.
+ * `forMethodGroup`: a span conversion (C# 14) is not considered for the receiver of a method group conversion.
+ */
+export function isValidReceiverConversion(conversions, receiver, thisType, { forMethodGroup = false } = {}) {
   if (receiver.literal === 'null') return thisType.isReferenceType === true || thisType.isNullableValueType;
   if (!receiver.type) return false;
   const c = conversions.classifyStandardImplicit(receiver.type, thisType);
+  if (forMethodGroup && c.kind === ConversionKind.ImplicitSpan) return false;
   return c.exists && receiverKinds.has(c.kind);
 }
 /**
@@ -68,7 +73,7 @@ export function resolveExtensionInvocation(name, receiver, args, scopes, resolve
           succeeded: false,
           found: true,
           error: {
-            code: 'CS1929',
+            code: DiagnosticId.CS1929,
             args: [
               receiver.type?.toDisplayString() ?? '<null>',
               name,
@@ -82,7 +87,7 @@ export function resolveExtensionInvocation(name, receiver, args, scopes, resolve
       return { ...result, scope: i };
     }
     // An ambiguity between applicable candidates of one scope is final; other failures let outer scopes try.
-    if (result.error.code === 'CS0121') {
+    if (result.error.code === DiagnosticId.CS0121) {
       const usable = result.ambiguous.filter(m => isValidReceiverConversion(resolver.conversions, receiver, m.parameters[0].type));
       if (usable.length > 1) return { ...result, found: true };
       if (usable.length === 1) {
