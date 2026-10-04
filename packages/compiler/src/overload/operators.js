@@ -88,6 +88,12 @@ function isSameOperator(first, second) {
   return definition !== first && definition === (second.originalDefinition ?? second) && !!first.containingType?.equals(second.containingType);
 }
 
+/**
+ * The special types whose operators are user-defined operator methods (`decimal.op_Addition`, `DateTime.op_Subtraction`);
+ * the operators of the other special types are the predefined ones of the language.
+ */
+const specialTypesWithOperators = new Set(['System_Decimal', 'System_DateTime']);
+
 export class OperatorResolver {
   /** @param conversions Conversions  @param core CoreTypes  @param overloads OverloadResolver */
   constructor(conversions, core, overloads) {
@@ -107,7 +113,7 @@ export class OperatorResolver {
     if (!t || (t.typeKind === TypeKind.TypeParameter && !t.constraintTypes.length)) return [];
     const out = [];
     for (const b of t.typeKind === TypeKind.Interface ? [t] : baseTypeChain(t, this.core)) {
-      if (b.specialType && b.specialType !== 'System_Decimal' && b.typeKind !== TypeKind.Interface) continue;
+      if (b.specialType && !specialTypesWithOperators.has(b.specialType) && b.typeKind !== TypeKind.Interface) continue;
       for (const m of b.getMembers(name)) if (m.kind === SymbolKind.Method && m.isStatic) out.push(m);
       if (out.length) break;
     }

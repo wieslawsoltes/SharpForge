@@ -7,7 +7,8 @@ import { SymbolKind, TypeKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../sy
 import { isKnownMissingMember } from '../../symbols/predefined-member-names.js';
 import { spanElementType } from '../../conversions/span.js';
 import { ConstantValue } from '../../constants/constant-value.js';
-import { extensionScopes, isValidReceiverConversion } from '../../overload/extension-methods.js';
+import { extensionScopes, isValidReceiverConversion, couldTakeReceiver } from '../../overload/extension-methods.js';
+import { findConstruction } from '../../symbols/substitution.js';
 import { lookupMembers } from '../inheritance.js';
 import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
@@ -410,7 +411,12 @@ export const NameBinding = Base =>
         takesReceiver = method => method.name === name && isValidReceiverConversion(this.conversions, left, method.parameters[0].type);
       // For a span receiver any extension method of that name is a candidate: its type arguments are inferred later.
       if (isOpen && !isSpan && !scopes.some(scope => scope.methods.some(takesReceiver))) return this.lenient(syntax);
-      const group = this.extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments, scopes });
+      // The name is a method group only when an extension method could take the receiver; otherwise it is unknown.
+      const construction = (from, definition) => findConstruction(from, definition, this.core),
+        isInvoked = !!options.invoked,
+        fits = method => method.name === name && couldTakeReceiver(this.conversions, left, method.parameters[0].type, construction, { isInvoked }),
+        isCandidate = isOpen || isSpan || scopes.some(scope => scope.methods.some(fits)),
+        group = isCandidate ? this.extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments, scopes }) : null;
       if (group) return group;
       if (!isKnownGap && !isSource(type) && type.typeKind !== TypeKind.TypeParameter)
         return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, DiagnosticId.CS1061);
