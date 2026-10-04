@@ -38,6 +38,7 @@ export class EditorPresentation {
     const {editor} = this;
     if (editor.disposed) return;
     editor.highlightIndex.update(editor.model.snapshot());
+    editor.bracketColors.update();
     editor.view.layout.reset();
     editor.view.scroll.reset();
     editor.decorationRevision++;
@@ -47,8 +48,10 @@ export class EditorPresentation {
   setDiagnostics(diagnostics) {
     const {editor} = this;
     editor.diagnostics = diagnostics.map(diagnostic => {
-      const start = Math.max(0, Math.min(editor.model.length, diagnostic.start ?? editor.model.offsetAt(diagnostic.range.start)));
-      const end = diagnostic.range ? editor.model.offsetAt(diagnostic.range.end) : start + (diagnostic.length ?? 0);
+      const position = diagnostic.range?.start;
+      const offset = diagnostic.start ?? (position ? editor.model.offsetAt({character: 0, ...position}) : 0);
+      const start = Math.max(0, Math.min(editor.model.length, offset));
+      const end = diagnostic.range?.end ? editor.model.offsetAt(diagnostic.range.end) : start + (diagnostic.length ?? 0);
       const severity = typeof diagnostic.severity === 'number' ? ['error', 'warning', 'information', 'hint'][diagnostic.severity - 1]
         : diagnostic.severity ?? 'error';
       return {...diagnostic, start, length: Math.max(0, end - start), severity};
