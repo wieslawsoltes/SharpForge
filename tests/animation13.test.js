@@ -30,4 +30,12 @@ test('AnimationClock latest storyboard takes precedence; stopping reveals earlie
 test('AnimationClock Begin validation leaves previous state untouched',()=>{const {c,values}=clock();c.begin('s',{id:'s',target:'o',property:'x',from:0,to:10});const snapshot=c.snapshot();assert.throws(()=>c.begin('s',{id:'s',target:'o',property:'missing'}));assert.deepEqual(c.snapshot(),snapshot);assert.equal(values.get('x'),0);});
 test('AnimationClock rejects cycles, huge trees, and invalid speed',()=>{const read=()=>0,validate=()=>{};for(const def of [{id:'a',speed:0},{id:'a',children:[{id:'a'}]},{id:'a',duration:-1},{id:'a',target:'o',property:'x',to:Infinity}])assert.throws(()=>prepareTimeline(def,read,validate));});
 test('AnimationClock repeat-duration and fractional repeats keep correct final value',()=>{const {c,values}=clock();c.begin('s',{id:'s',target:'o',property:'x',duration:1000,repeat:1.25,from:0,to:100});c.skipToFill('s');assert.equal(values.get('x'),25);c.begin('s',{id:'s',target:'o',property:'x',duration:1000,repeatDuration:1250,from:0,to:100});c.skipToFill('s');assert.equal(values.get('x'),25);});
-test('Easing symmetry and endpoints across all supported families',()=>{for(const kind of ['QuadraticEase','CubicEase','QuarticEase','QuinticEase','SineEase','CircleEase','PowerEase','BackEase'])for(const mode of [0,1,2]){assert.equal(easing(0,{kind,mode}),0);assert.equal(easing(1,{kind,mode}),1);assert(Math.abs(easing(.5,{kind,mode:2})-.5)<1e-12);}});
+test('Easing symmetry and endpoints across all supported families', () => {
+  const families = ['QuadraticEase', 'CubicEase', 'QuarticEase', 'QuinticEase', 'SineEase', 'CircleEase',
+    'PowerEase', 'BackEase', 'BounceEase', 'ElasticEase', 'ExponentialEase'];
+  for (const kind of families) for (const mode of [0, 1, 2]) {
+    assert.equal(easing(0, {kind, mode}), 0);
+    assert.equal(easing(1, {kind, mode}), 1);
+    assert(Math.abs(easing(.5, {kind, mode: 2}) - .5) < 1e-12);
+  }
+});
