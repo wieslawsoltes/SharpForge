@@ -177,6 +177,27 @@
       "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
     },
     {
+      "path": "packages/msbuild/src/testing/portable/managed-runtime.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "54ce8b963ed44a3f204c03409e4a27e75f35387980bd1559045f5a87b38edf65",
+      "reason": "Portable test execution lazily imports only the fixed compiler and runtime entry points. Managed test source executes in its bounded VM session, never as JavaScript."
+    },
+    {
+      "path": "packages/msbuild/src/testing/portable/runtime-data.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "23d815e243df7943c1952cd1d638ea8d90ae194307a50c697729b6aa3694ffff",
+      "reason": "Computed test data lazily imports only the fixed compiler and runtime entry points, then runs generated managed harness code in a bounded isolated session."
+    },
+    {
+      "path": "packages/msbuild/src/testing/portable/source-symbols.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "b59b8dbaca8c2a9d6a1c921c4b00e1a1e8bcdf4bdd28312ec07659241581e0fa",
+      "reason": "Source test discovery lazily imports the fixed syntax package to inspect source trees without executing user source."
+    },
+    {
       "path": "packages/network/smoke.mjs",
       "operation": "dynamic-import",
       "count": 2,
