@@ -3,7 +3,7 @@ import { AssemblyInspector, decodeCoded } from '@sharpforge/cil';
 import { MetadataView } from '../../../packages/compiler/src/metadata-import/pe-metadata.js';
 import { decodeWellKnownAttributes } from '../../../packages/compiler/src/metadata-import/attributes.js';
 
-export function nullableAttributeRows(bytes) {
+function attributeRows(bytes, select) {
   const inspector = new AssemblyInspector(bytes), md = inspector.metadata, view = new MetadataView(bytes);
   const labels = new Map();
   for (const type of inspector.types) {
@@ -30,7 +30,17 @@ export function nullableAttributeRows(bytes) {
   const rows = [];
   for (const [token, label] of labels) {
     const data = decodeWellKnownAttributes(view.customAttributes(token));
-    if (data.nullable !== null || data.nullableContext !== null) rows.push({ target: label, nullable: data.nullable, context: data.nullableContext });
+    const selected = select(data);
+    if (selected) rows.push({ target: label, ...selected });
   }
   return rows.sort((left, right) => left.target.localeCompare(right.target));
+}
+
+export function nullableAttributeRows(bytes) {
+  return attributeRows(bytes, data => data.nullable !== null || data.nullableContext !== null
+    ? { nullable: data.nullable, context: data.nullableContext } : null);
+}
+
+export function tupleAttributeRows(bytes) {
+  return attributeRows(bytes, data => data.tupleElementNames ? { names: data.tupleElementNames } : null);
 }
