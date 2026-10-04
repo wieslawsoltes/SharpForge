@@ -11,7 +11,7 @@ export class StudioExecution {
 
   async analyze() {
     const state = this.state();
-    if (state.nativeMode) return null;
+    if (state.recoveryReadOnly || state.nativeMode && !state.nativeProjectContext) return null;
     const service = this.projects.serviceFor(state.active);
     try {
       const result = await service.analyze();
@@ -25,6 +25,7 @@ export class StudioExecution {
 
   async build(silent = false, { revealIntent } = {}) {
     const state = this.state();
+    if (state.recoveryReadOnly) throw new Error('Grant folder access before building recovered files');
     if (silent && [...this.services.documents.models.values()].some(model => model.buffer.length > 8 * 1024 * 1024)) {
       this.ui.status('Large file mode — automatic build disabled');
       return null;
@@ -67,6 +68,7 @@ export class StudioExecution {
 
   async launch(debug = true, options = {}) {
     const state = this.state();
+    if (state.recoveryReadOnly) throw new Error('Grant folder access before running recovered files');
     const active = this.services.sessions.active;
     if (state.hotEdit) throw new Error('Apply or cancel Hot Reload edits before continuing');
     if (this.launchController || active?.launchBusy) return null;
@@ -77,6 +79,7 @@ export class StudioExecution {
     if (active?.live && !options.newInstance) return null;
     if (state.nativeMode) {
       this.services.reveal.request('msbuild', this.reveals.begin());
+      if (!debug) return this.ui.nativeBuild().runProject();
       throw new Error('Build with MSBuild, then Inspect IL to debug the supported managed assembly. Native process attachment is unavailable.');
     }
     this.projects.sync();
