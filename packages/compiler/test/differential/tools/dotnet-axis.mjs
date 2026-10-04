@@ -63,8 +63,38 @@ function runOnDotnet(dotnet, path) {
   }
 }
 
-/** One fixture on one column: `{ok, detail}`. */
-function runFixture(fixture, pin, context) {
+/** The `dotnet` host that runs the assemblies: the explicit path, `DOTNET`, `~/.dotnet/dotnet`, else `dotnet` on the PATH. */
+export function dotnetHost(explicit = null) {
+  const home = join(homedir(), '.dotnet', 'dotnet');
+  return explicit ?? process.env.DOTNET ?? (existsSync(home) ? home : 'dotnet');
+}
+
+/** The SDK version a host reports, or null when there is no such host to start (a machine without .NET). */
+export function sdkVersion(dotnet) {
+  try {
+    return execFileSync(dotnet, ['--version'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+  } catch (error) {
+    if (error.code === 'ENOENT' || error.status) return null;
+    throw error;
+  }
+}
+
+/**
+ * A scratch directory to run fixtures in: `context(column)` is what `runFixtureOnDotnet` takes for the `registry` or
+ * the `references` column, `close()` removes the directory.
+ */
+export function openDotnetScratch({ dotnet, sdk, pack }) {
+  const scratch = join(tmpdir(), 'sharpforge-dotnet-axis-' + process.pid);
+  mkdirSync(scratch, { recursive: true });
+  writeFileSync(join(scratch, 'Fixture.runtimeconfig.json'), runtimeConfig(sdk.split('.').slice(0, 2).join('.')));
+  return {
+    context: column => ({ dotnet, assemblyPath: join(scratch, 'Fixture.dll'), options: column === 'references' ? { references: pack.references } : {} }),
+    close: () => rmSync(scratch, { recursive: true, force: true }),
+  };
+}
+
+/** One fixture on one column: `{ok, detail}`; `context` comes from `openDotnetScratch`. */
+export function runFixtureOnDotnet(fixture, pin, context) {
   let result;
   try {
     result = compileToAssembly(fixture.source, { ...fixtureOptions(fixture), ...context.options });
@@ -87,30 +117,30 @@ function runFixture(fixture, pin, context) {
 function main() {
   const args = process.argv.slice(2),
     option = name => (args.includes(name) ? args[args.indexOf(name) + 1] : null),
-    home = join(homedir(), '.dotnet', 'dotnet'),
-    dotnet = option('--dotnet') ?? process.env.DOTNET ?? (existsSync(home) ? home : 'dotnet'),
+    dotnet = dotnetHost(option('--dotnet')),
     filter = option('--filter') ?? '',
     columns = option('--column') ? [option('--column')] : COLUMNS,
     update = args.includes('--update'),
     verbose = args.includes('--verbose'),
     pack = loadReferencePack();
   if (!pack) throw new Error('No .NET reference pack (packs/Microsoft.NETCore.App.Ref) was found; set DOTNET_ROOT');
-  const sdk = execFileSync(dotnet, ['--version'], { encoding: 'utf8' }).trim(),
-    scratch = join(tmpdir(), 'sharpforge-dotnet-axis-' + process.pid),
+  const sdk = sdkVersion(dotnet);
+  if (!sdk) throw new Error(`No .NET host: '${dotnet}' could not be started; pass --dotnet <path>`);
+  const scratch = openDotnetScratch({ dotnet, sdk, pack }),
     pinned = loadPinned(),
     fixtures = loadFixtures().filter(fixture => fixture.kind === 'output' && fixture.id.includes(filter)),
     baseline = loadDotnetBaseline(),
     next = { sdk, referencePack: pack.pack.version };
-  mkdirSync(scratch, { recursive: true });
-  writeFileSync(join(scratch, 'Fixture.runtimeconfig.json'), runtimeConfig(sdk.split('.').slice(0, 2).join('.')));
   let regressions = 0;
   try {
     for (const column of columns) {
-      const context = { dotnet, assemblyPath: join(scratch, 'Fixture.dll'), options: column === 'references' ? { references: pack.references } : {} },
+      const context = scratch.context(column),
         recorded = new Set(baseline[column] ?? []),
         passing = [];
-      for (const fixture of fixtures) {
-        const row = runFixture(fixture, pinned.results.get(fixture.id), context);
+      // A `referencesOnly` fixture is written for the real class library: the registry column does not have it.
+      const selected = column === 'registry' ? fixtures.filter(fixture => !fixture.referencesOnly) : fixtures;
+      for (const fixture of selected) {
+        const row = runFixtureOnDotnet(fixture, pinned.results.get(fixture.id), context);
         if (row.ok) passing.push(fixture.id);
         if (!row.ok && recorded.has(fixture.id)) {
           regressions++;
@@ -121,10 +151,10 @@ function main() {
       // A filtered run keeps the recorded entries it did not look at.
       const untouched = filter ? (baseline[column] ?? []).filter(id => !id.includes(filter)) : [];
       next[column] = [...untouched, ...passing].sort();
-      console.log(`${column}: ${passing.length}/${fixtures.length} emitted assemblies print the pinned Roslyn output on .NET ${sdk}`);
+      console.log(`${column}: ${passing.length}/${selected.length} emitted assemblies print the pinned Roslyn output on .NET ${sdk}`);
     }
   } finally {
-    rmSync(scratch, { recursive: true, force: true });
+    scratch.close();
   }
   if (update) {
     for (const column of COLUMNS) next[column] ??= baseline[column] ?? [];
