@@ -435,6 +435,20 @@ The unchanged native oracle runs through source-platform and independent CIL
 calls; compiled typed arrays cover both pipelines and both VMs. Other builder
 overloads remain separate work under #2637.
 
+`StringBuilder.Append(StringBuilder)` appends at ID 524323. Null and empty sources
+return the same destination without writes or managed allocations. Nonempty
+sources are validated as builders, then the combined length is checked against
+the host budget before materializing source text. The existing text reader walks
+only live source chunks; the destination's prior contents are never flattened.
+The captured source is appended once through the existing chunk helper, so self
+append duplicates exactly the original text. This costs O(source chunks + source
+text length) time and host temporaries, plus one managed text chunk and existing
+amortized destination chunk-storage growth. The pinned .NET 10.0.5 reference
+covers 21 cases, including source preservation, self append, UTF-16 units, nulls
+and fluent identity. Host observer tests additionally pin the captured source
+policy when callbacks edit a distinct source and force GC; existing destination
+partial-write behavior is unchanged and no native concurrency guarantee is made.
+
 StringBuilder reports the .NET default `MaxCapacity` of `Int32.MaxValue`
 (`2147483647`) in both metadata and execution. The host separately limits text
 and requested capacity to 1,000,000 UTF-16 code units. Exceeding that allocation
