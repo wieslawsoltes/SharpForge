@@ -48,6 +48,30 @@ two-argument control separately from new range cost, using one warmup and five
 samples per real VM platform, median/p95 and managed allocation counters. Setup
 is excluded; the absent range overload is explicitly skipped on the baseline.
 
+`String.Equals(string, string, StringComparison)` and instance
+`String.Equals(string, StringComparison)` occupy A07 slots `524299` and `524300`.
+They support only `Ordinal` and `OrdinalIgnoreCase`, reusing the existing streaming
+ordinal fold. The registered `System.StringComparison` enum exposes all six native
+constants so other values bind correctly, but culture modes 0–3 explicitly raise
+`NotSupportedException`, including identity and null-argument shortcuts. This is a
+deliberate partial profile, not an implementation of native culture equality.
+Values outside 0–5 raise `ArgumentException` naming `comparisonType` before equality
+or null-argument shortcuts. A null instance receiver raises `NullReferenceException`
+before mode validation. The released two-string Equals contract remains unchanged.
+
+The unchanged 220-row .NET 10.0.5/SDK 10.0.201 reference includes both overloads,
+fault precedence, separately allocated equal strings, Unicode casing, embedded NUL,
+malformed UTF-16 and native culture controls. Tests distinguish native ordinal
+parity from explicit culture rejection, using both compiler pipelines/VMs and
+independently assembled CIL. Named enum constants in bound source depend on the
+separate registered-enum compiler lowering prerequisite. Comparison takes O(n)
+time, constant auxiliary space and no managed text allocations. The bounded
+`scripts/benchmarks/a07-string-equals-comparison.mjs` runner measures the unchanged
+two-string control before/after `82ec8ed4` and reports new overload costs separately.
+Setup is excluded; one warmup and five samples report median/p95 and managed
+allocations on both real VM platforms. #2621 remains open for culture modes, other
+comparison overloads, comparer equality/hash and factories.
+
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch
 routes. Its streaming fold reuses the pinned simple-uppercase table without
