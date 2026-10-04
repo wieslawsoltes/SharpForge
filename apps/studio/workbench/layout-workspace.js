@@ -1,6 +1,6 @@
 import { storage, storageKeys } from '../settings/storage.js';
 import { toolDefinitions } from '../tools/definitions.js';
-import { DockLayout, DockHost, migrateLayout } from '../../../packages/docking/src/index.js';
+import { DockLayout, DockHost, migrateLayout } from '@sharpforge/docking';
 import { defaultDockLayout, presetDockLayout } from './layout-defaults.js';
 import { DocumentTabs, confirmDirtyDocuments } from './tabs/index.js';
 import { documentTabMenu } from './tabs/menu.js';
@@ -154,11 +154,11 @@ export class StudioDocking {
     return true;
   }
 
-  registerPanel({ id, title, kind = 'tool', element, onClose, ...metadata }) {
+  registerPanel({ id, title, kind = 'tool', element, onClose, activate = true, ...metadata }) {
     if (!element) throw new TypeError('A dynamic panel needs an element');
     this.layout.register({ id, title, kind, onClose, ...metadata });
     this.content.set(id, element);
-    this.layout.open(id);
+    this.layout.open(id, null, { activate });
     return () => this.unregisterPanel(id);
   }
 

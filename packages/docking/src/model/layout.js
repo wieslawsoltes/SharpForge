@@ -194,8 +194,20 @@ export class DockLayout {
     }, { history: false });
   }
 
-  open(id, target = null) {
+  open(id, target = null, { activate = true } = {}) {
     this.require(id);
+    if (!activate) {
+      const activePanel = this.state.activePanel;
+      const activeGroups = new Map(this.groups().map(group => [group.id, group.active]));
+      return this.transaction('openBackground', () => {
+        this.open(id, target);
+        for (const group of this.groups()) {
+          const previous = activeGroups.get(group.id);
+          if (previous && group.panels.includes(previous)) group.active = previous;
+        }
+        this.state.activePanel = activePanel;
+      });
+    }
     const where = this.locate(id);
     if (where.kind === 'group') return this.activate(id);
     if (!target && this.state.returnLocations[id]) return this.pin(id);
