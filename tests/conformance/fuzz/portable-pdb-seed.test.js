@@ -1,10 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
 import { readPortablePdb } from '@sharpforge/symbols';
-import { inputDigest, writeFinding } from '../../../scripts/conformance/fuzz/corpus.js';
+import { inputDigest } from '../../../scripts/conformance/fuzz/corpus.js';
 import { runCase } from '../../../scripts/conformance/fuzz/harness.js';
 import { target } from '../../../scripts/conformance/fuzz/targets/portable-pdb.js';
 import {
@@ -67,21 +64,11 @@ test('Portable PDB row-index and compression-size failures are controlled under 
   }
 });
 
-test('Portable PDB reserved DEFLATE errors remain recorded findings rather than controlled rejections', async () => {
-  // #1146: this verifies harness classification of the existing symbol-reader contract gap, not PDB conformance.
+test('Portable PDB reserved DEFLATE errors are controlled rejections after the symbol contract fix', async () => {
+  // #1146: the prior assertion captured the plain-Error defect; the corrected public contract requires rejection.
   const seed = createPortablePdbBoundarySeeds().find(value => value.name === 'invalid-compression-block');
   const result = await runCase({ targetId: 'portable-pdb', input: seed.input, seed: 1146 });
-  assert.equal(result.status, 'finding');
-  assert.equal(result.finding.kind, 'unexpected-error');
-  assert.match(result.finding.detail, /Reserved DEFLATE block/);
-  const directory = await mkdtemp(join(tmpdir(), 'sharpforge-pdb-finding-'));
-  try {
-    const path = await writeFinding(directory, result, seed.input);
-    const record = JSON.parse(await readFile(path, 'utf8'));
-    assert.equal(record.inputSHA256, result.inputSHA256);
-    assert.equal(record.originalFinding.kind, 'unexpected-error');
-    assert.deepEqual(record.expectedStatuses, ['accepted', 'rejected']);
-  } finally {
-    await rm(directory, { recursive: true, force: true });
-  }
+  assert.equal(result.status, 'rejected');
+  assert.equal(result.code, 'PORTABLE_PDB_VALIDATION');
+  assert.match(result.detail, /Reserved DEFLATE block/);
 });
