@@ -89,3 +89,6 @@ The behavior follows the single-string process lookup contract documented by
 [Microsoft](https://learn.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable?view=net-10.0).
 The focused source, emitted CIL, independent CIL and production-worker tests are
 `tests/a19-runtime-*.test.js`; they do not claim native CLR execution parity.
+
+[Assembly-aware type identity](TYPE-IDENTITY.md) documents opaque project type
+registration, pre-execution admission, closed field context and performance review.
