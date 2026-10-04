@@ -22,7 +22,13 @@
     "tests/a23-project-reference-emission.test.js",
     "tests/a23-project-reference-binding.test.js",
     "tests/a23-project-runtime-types.test.js",
-    "tests/a23-project-runtime.test.js"
+    "tests/a23-project-runtime.test.js",
+    "tests/a23-project-assembly-loader.test.js",
+    "tests/a23-project-assembly-native.test.js",
+    "tests/a23-project-static-initialization.test.js",
+    "tests/a23-project-access-loader.test.js",
+    "tests/a23-project-property-access.test.js",
+    "tests/a23-source-member-definitions.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
