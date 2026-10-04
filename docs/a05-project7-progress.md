@@ -1,7 +1,7 @@
 # Project 7 integration progress — 2026-10-04
 
 The retained A05 execution and performance branches are integrated with main
-`349c3d0d0375f2f15ffed4e102a7bfb8683c46e8`. The original 83-issue, 210-criterion
+`19755847de71941a96ff4888d3b16402c966c401`. The original 83-issue, 210-criterion
 [acceptance ledger](a05-project7-acceptance-audit.json) preserves the captured scope
 and historical checkpoints. This progress note supersedes the audit's
 `54e3bba84` repair-status checkpoint; it does not close issues.
@@ -34,8 +34,21 @@ security boundaries passed 10/10 at `cc75e3a98`. Initial and callback CIL admiss
 now share structural-limit normalization; that focused cohort passed 24/24 at
 `63f331913`. The repaired Nullable, metadata identity, callback fixture and
 profiler-reference cases also passed within the earlier selected repair run.
-These selected cohorts overlap; their counts must not be added. A complete A05
-rerun, the independent byref GC stress corpus and repository gates remain pending.
+The broad A05/preemption/security rerun at `5379d076a` then passed all 3,236
+tests with zero failures or skips. Independent byref stress at that revision
+passed all six cases, exercising 1,000 distinct CIL programs and 131,341
+collections, with source/reloaded counterparts and negative root-removal controls.
+The separate stored native numeric replay exposed seven compiler-admission
+failures; its 100,000-pair helper table and floating/small-storage groups passed,
+but the complete cross-engine replay remains open.
+
+Main subsequently advanced to `19755847`; its reconciliation preserves all A05
+and new CIL exports. There are no new runtime or bytecode changes in that main
+delta. Its affected admission, delegate, async, native-plan, nullable and
+reference-assembly selection passed 65/65 at `abc0b1f0ff`; separate allocation
+assessment, browser-contract and native-provenance cases passed 18/18 there.
+These selected cohorts overlap; their counts must not be added. Remaining
+repository and affected platform gates are tracked independently.
 
 ## Measured optimization status
 
@@ -83,3 +96,9 @@ Unsupported SDK policies and missing tools are explicit, separate outcomes.
 The current PR remains a draft while the remaining targets and platform evidence
 are completed. Historical retained branches remain available. No main merge or
 blanket Project7 completion is represented by this checkpoint.
+
+The two focused workflows also run on pushes to the exact owned continuation
+branch. This enables actual head qualification while a moving main prevents a PR
+merge checkout. Duplicate jobs for that same-repository PR are suppressed; other
+SF-A05/full-ci PR gates and manual dispatch remain available. Push reports identify
+the actual pushed commit and do not invent PR merge metadata.

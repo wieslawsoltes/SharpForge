@@ -5,6 +5,7 @@ import {fileURLToPath} from 'node:url';
 import {createReport, completeReport, hash, isMain, recordError, root} from './evidence.js';
 import {parseFloatAllocationTrace, assessFloatAllocation} from './float-allocation-trace.js';
 import {floatAllocationCounterSupported} from './float-allocation-instrumentation.js';
+import {assessFloatIterationCriterion} from './float-allocation-criterion.js';
 
 /** One bounded isolated child, with full GC trace retained by the caller. */
 export function measureFloatAllocation(mode, iterations, warmup = 100000, warmupSlices = 1) {
@@ -75,9 +76,11 @@ function main() {
     writeFileSync(tracePath, negative.trace, {flag: 'wx'});
     report.positiveAllocationControl = {...negative.row, tracePath};
     if (negative.row.floatCarriers <= 0) throw new Error('Generic float control did not detect any carrier allocations');
+    report.perIterationAllocationCriterion = assessFloatIterationCriterion(report.rows, report.positiveAllocationControl);
     report.status = 'measured';
     report.acceptance = 'partial';
-    report.limit = 'Exact zero float carriers can be established; total JS object count remains unqualified by this trace protocol.';
+    report.limit = 'The per-iteration allocation clause is assessed separately for the prescribed warmed loops. ' +
+      'Float differential evidence is separate; an exact all-host-object count for the entire run remains unqualified.';
   } catch (error) {
     report.status = 'failed';
     report.errors.push(recordError(error));

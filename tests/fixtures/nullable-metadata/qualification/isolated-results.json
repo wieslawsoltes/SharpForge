@@ -1,0 +1,16 @@
+{
+  "testedCommit": "a8153fe3f7a97b675548671b9b5f36fdbaa68b41",
+  "tests": 27,
+  "passed": 27,
+  "failed": 0,
+  "skipped": 0,
+  "logSha256": "5e0314a2217d5f6547d027963bc1d84e2f66c2b3c88e861de63a3d980e536db5",
+  "log": "isolated-focused.log",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "referencePack": "10.0.5",
+    "roslyn": "5.3.0.0"
+  },
+  "platform": "Linux x64",
+  "mode": "isolated nullable publication replay"
+}

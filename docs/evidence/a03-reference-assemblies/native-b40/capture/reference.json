@@ -1,0 +1,1984 @@
+{
+  "schemaVersion": 1,
+  "sdk": "10.0.201",
+  "compiler": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+  "runtime": "10.0.5",
+  "referencePack": "10.0.5",
+  "platform": "linux",
+  "architecture": "x64",
+  "metadataControlLoads": true,
+  "sourceSha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+  "oracleSha256": "2499feb153dc9612e4bd185bafb7c232b3fabcdd91e0f108117cbc3f4506eda9",
+  "signatureNamesSha256": "cd25e6e177724e570b04776628e0a980cb0fd6fc253b0e38acc42686e2223a20",
+  "attributeTypesSha256": "1f4e8371add1c770cc521da24fb58f31c47c35145a9b25e79661b3c6617a359e",
+  "observerEnumsSha256": "51508e5a7462f297a160228152f8fb418460fc3629790a6bcf69dc6622008f1e",
+  "cases": [
+    {
+      "id": "public",
+      "sourceSha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+      "referenceFile": "public-roslyn.dll",
+      "referenceSha256": "b5cacbfe214c0a4d8cb0124dc160ea8fdb4f5ca9f4901255f4bf18b84cbe90a8",
+      "emittedSha256": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "consumerCompiled": true,
+      "friendConsumerCompiled": false,
+      "consumers": [
+        {
+          "id": "positive",
+          "status": 0,
+          "diagnostics": []
+        },
+        {
+          "id": "fixed-buffers",
+          "status": 1,
+          "diagnostics": [
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 16,
+                    "startColumn": 61,
+                    "endLine": 16,
+                    "endColumn": 72
+                  }
+                }
+              ]
+            },
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 17,
+                    "startColumn": 80,
+                    "endLine": 17,
+                    "endColumn": 91
+                  }
+                }
+              ]
+            },
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 18,
+                    "startColumn": 89,
+                    "endLine": 18,
+                    "endColumn": 100
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "friend-access",
+          "status": 1,
+          "diagnostics": [
+            {
+              "code": "CS1061",
+              "level": "error",
+              "message": "'Contract' does not contain a definition for 'Internal' and no accessible extension method 'Internal' accepting a first argument of type 'Contract' could be found (are you missing a using directive or an assembly reference?)",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///tmp/sharpforge-refout-5a4TpY/Friend.cs"
+                  },
+                  "region": {
+                    "startLine": 1,
+                    "startColumn": 70,
+                    "endLine": 1,
+                    "endColumn": 78
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "runtime": "10.0.5",
+      "surface": [
+        {
+          "name": "<Module>",
+          "flags": 0,
+          "baseType": "",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Callback",
+          "flags": 257,
+          "baseType": "System.MulticastDelegate",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 3,
+              "signature": "32:0:2:Void(Object,IntPtr)",
+              "attributes": []
+            },
+            {
+              "name": "BeginInvoke",
+              "flags": 454,
+              "implFlags": 3,
+              "signature": "32:0:3:class System.IAsyncResult(Int32,class System.AsyncCallback,Object)",
+              "attributes": []
+            },
+            {
+              "name": "EndInvoke",
+              "flags": 454,
+              "implFlags": 3,
+              "signature": "32:0:1:Int32(class System.IAsyncResult)",
+              "attributes": []
+            },
+            {
+              "name": "Invoke",
+              "flags": 454,
+              "implFlags": 3,
+              "signature": "32:0:1:Int32(Int32)",
+              "attributes": []
+            }
+          ],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Captured",
+          "flags": 1048841,
+          "baseType": "System.ValueType",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "<value>P",
+              "flags": 1,
+              "signature": "Object",
+              "constant": null,
+              "attributes": [
+                {
+                  "name": "System.Diagnostics.DebuggerBrowsableAttribute",
+                  "constructor": "System.Diagnostics.DebuggerBrowsableAttribute::.ctor 32:0:1:Void(valuetype System.Diagnostics.DebuggerBrowsableState)",
+                  "arguments": [
+                    {
+                      "type": "class System.Diagnostics.DebuggerBrowsableState",
+                      "value": 0
+                    }
+                  ],
+                  "named": []
+                },
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(Object)",
+              "attributes": []
+            },
+            {
+              "name": "Read",
+              "flags": 134,
+              "implFlags": 0,
+              "signature": "32:0:0:Object()",
+              "attributes": []
+            }
+          ],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Choice",
+          "flags": 257,
+          "baseType": "System.Enum",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "First",
+              "flags": 32854,
+              "signature": "valuetype RefSurface.Choice",
+              "constant": {
+                "type": "Byte",
+                "bytes": "01"
+              },
+              "attributes": []
+            },
+            {
+              "name": "Second",
+              "flags": 32854,
+              "signature": "valuetype RefSurface.Choice",
+              "constant": {
+                "type": "Byte",
+                "bytes": "02"
+              },
+              "attributes": []
+            },
+            {
+              "name": "value__",
+              "flags": 1542,
+              "signature": "Byte",
+              "constant": null,
+              "attributes": []
+            }
+          ],
+          "methods": [],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Contract",
+          "flags": 1,
+          "baseType": "System.Object",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [
+            {
+              "name": "RefSurface.LocalAttribute",
+              "constructor": "RefSurface.LocalAttribute::.ctor 32:0:1:Void(Int32)",
+              "arguments": [
+                {
+                  "type": "Int32",
+                  "value": 7
+                }
+              ],
+              "named": []
+            }
+          ],
+          "interfaces": [
+            "RefSurface.IContract"
+          ],
+          "implementations": [
+            {
+              "body": "RefSurface.Contract::RefSurface.IContract.Read 32:0:0:Int32()",
+              "declaration": "RefSurface.IContract::Read 32:0:0:Int32()"
+            }
+          ],
+          "fields": [
+            {
+              "name": "Answer",
+              "flags": 32854,
+              "signature": "Int32",
+              "constant": {
+                "type": "Int32",
+                "bytes": "2A000000"
+              },
+              "attributes": []
+            },
+            {
+              "name": "protectedField",
+              "flags": 4,
+              "signature": "Int32",
+              "constant": null,
+              "attributes": []
+            }
+          ],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 0,
+              "signature": "32:0:0:Void()",
+              "attributes": []
+            },
+            {
+              "name": "Protected",
+              "flags": 132,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "Read",
+              "flags": 134,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "RefSurface.IContract.Read",
+              "flags": 481,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "Virtual",
+              "flags": 963,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "add_Changed",
+              "flags": 2534,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "get_Value",
+              "flags": 2534,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "remove_Changed",
+              "flags": 2534,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "properties": [
+            {
+              "name": "Value",
+              "signature": "40:0:0:Int32()",
+              "getter": "RefSurface.Contract::get_Value 32:0:0:Int32()",
+              "setter": "",
+              "attributes": []
+            }
+          ],
+          "events": [
+            {
+              "name": "Changed",
+              "type": "System.Action",
+              "adder": "RefSurface.Contract::add_Changed 32:0:1:Void(class System.Action)",
+              "remover": "RefSurface.Contract::remove_Changed 32:0:1:Void(class System.Action)",
+              "attributes": []
+            }
+          ]
+        },
+        {
+          "name": "RefSurface.Contract+Nested",
+          "flags": 1048835,
+          "baseType": "System.Object",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 0,
+              "signature": "32:0:0:Void()",
+              "attributes": []
+            },
+            {
+              "name": "Visible",
+              "flags": 134,
+              "implFlags": 0,
+              "signature": "32:0:0:Void()",
+              "attributes": []
+            }
+          ],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Envelope`1",
+          "flags": 1048577,
+          "baseType": "System.Object",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 0,
+              "signature": "32:0:0:Void()",
+              "attributes": []
+            }
+          ],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Envelope`1+Packet`1",
+          "flags": 1048842,
+          "baseType": "System.ValueType",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "Data",
+              "flags": 6,
+              "signature": "valuetype RefSurface.Envelope`1+Packet`1+<Data>e__FixedBuffer<!0,!1>",
+              "constant": null,
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.FixedBufferAttribute",
+                  "constructor": "System.Runtime.CompilerServices.FixedBufferAttribute::.ctor 32:0:2:Void(class System.Type,Int32)",
+                  "arguments": [
+                    {
+                      "type": "class System.Type",
+                      "value": {
+                        "name": "System.Byte",
+                        "assemblyQualified": true,
+                        "identityMatchesReference": true,
+                        "resolvedIdentity": "System.Byte, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"
+                      }
+                    },
+                    {
+                      "type": "Int32",
+                      "value": 4
+                    }
+                  ],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "First",
+              "flags": 6,
+              "signature": "!0",
+              "constant": null,
+              "attributes": []
+            },
+            {
+              "name": "Second",
+              "flags": 6,
+              "signature": "!1",
+              "constant": null,
+              "attributes": []
+            }
+          ],
+          "methods": [],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Factory",
+          "flags": 1048577,
+          "baseType": "System.Object",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [
+            "RefSurface.IFactory"
+          ],
+          "implementations": [
+            {
+              "body": "RefSurface.Factory::RefSurface.IFactory.Create 0:0:0:Int32()",
+              "declaration": "RefSurface.IFactory::Create 0:0:0:Int32()"
+            },
+            {
+              "body": "RefSurface.Factory::RefSurface.IFactory.add_Changed 0:0:1:Void(class System.Action)",
+              "declaration": "RefSurface.IFactory::add_Changed 0:0:1:Void(class System.Action)"
+            },
+            {
+              "body": "RefSurface.Factory::RefSurface.IFactory.get_Value 0:0:0:Int32()",
+              "declaration": "RefSurface.IFactory::get_Value 0:0:0:Int32()"
+            },
+            {
+              "body": "RefSurface.Factory::RefSurface.IFactory.remove_Changed 0:0:1:Void(class System.Action)",
+              "declaration": "RefSurface.IFactory::remove_Changed 0:0:1:Void(class System.Action)"
+            }
+          ],
+          "fields": [],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 0,
+              "signature": "32:0:0:Void()",
+              "attributes": []
+            },
+            {
+              "name": "RefSurface.IFactory.Create",
+              "flags": 145,
+              "implFlags": 0,
+              "signature": "0:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "RefSurface.IFactory.add_Changed",
+              "flags": 2193,
+              "implFlags": 0,
+              "signature": "0:0:1:Void(class System.Action)",
+              "attributes": []
+            },
+            {
+              "name": "RefSurface.IFactory.get_Value",
+              "flags": 2193,
+              "implFlags": 0,
+              "signature": "0:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "RefSurface.IFactory.remove_Changed",
+              "flags": 2193,
+              "implFlags": 0,
+              "signature": "0:0:1:Void(class System.Action)",
+              "attributes": []
+            }
+          ],
+          "properties": [
+            {
+              "name": "RefSurface.IFactory.Value",
+              "signature": "8:0:0:Int32()",
+              "getter": "RefSurface.Factory::RefSurface.IFactory.get_Value 0:0:0:Int32()",
+              "setter": "",
+              "attributes": []
+            }
+          ],
+          "events": [
+            {
+              "name": "RefSurface.IFactory.Changed",
+              "type": "System.Action",
+              "adder": "RefSurface.Factory::RefSurface.IFactory.add_Changed 0:0:1:Void(class System.Action)",
+              "remover": "RefSurface.Factory::RefSurface.IFactory.remove_Changed 0:0:1:Void(class System.Action)",
+              "attributes": []
+            }
+          ]
+        },
+        {
+          "name": "RefSurface.GenericPacket`1",
+          "flags": 1048841,
+          "baseType": "System.ValueType",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "Data",
+              "flags": 6,
+              "signature": "valuetype RefSurface.GenericPacket`1+<Data>e__FixedBuffer<!0>",
+              "constant": null,
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.FixedBufferAttribute",
+                  "constructor": "System.Runtime.CompilerServices.FixedBufferAttribute::.ctor 32:0:2:Void(class System.Type,Int32)",
+                  "arguments": [
+                    {
+                      "type": "class System.Type",
+                      "value": {
+                        "name": "System.Int32",
+                        "assemblyQualified": true,
+                        "identityMatchesReference": true,
+                        "resolvedIdentity": "System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"
+                      }
+                    },
+                    {
+                      "type": "Int32",
+                      "value": 3
+                    }
+                  ],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "Tag",
+              "flags": 6,
+              "signature": "!0",
+              "constant": null,
+              "attributes": []
+            }
+          ],
+          "methods": [],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.IContract",
+          "flags": 1048737,
+          "baseType": "",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": "Read",
+              "flags": 1478,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "add_Changed",
+              "flags": 3526,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "get_Value",
+              "flags": 3526,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "remove_Changed",
+              "flags": 3526,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "properties": [
+            {
+              "name": "Value",
+              "signature": "40:0:0:Int32()",
+              "getter": "RefSurface.IContract::get_Value 32:0:0:Int32()",
+              "setter": "",
+              "attributes": []
+            }
+          ],
+          "events": [
+            {
+              "name": "Changed",
+              "type": "System.Action",
+              "adder": "RefSurface.IContract::add_Changed 32:0:1:Void(class System.Action)",
+              "remover": "RefSurface.IContract::remove_Changed 32:0:1:Void(class System.Action)",
+              "attributes": []
+            }
+          ]
+        },
+        {
+          "name": "RefSurface.IFactory",
+          "flags": 1048737,
+          "baseType": "",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": "Create",
+              "flags": 1238,
+              "implFlags": 0,
+              "signature": "0:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "add_Changed",
+              "flags": 3286,
+              "implFlags": 0,
+              "signature": "0:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "get_Value",
+              "flags": 3286,
+              "implFlags": 0,
+              "signature": "0:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "remove_Changed",
+              "flags": 3286,
+              "implFlags": 0,
+              "signature": "0:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "properties": [
+            {
+              "name": "Value",
+              "signature": "8:0:0:Int32()",
+              "getter": "RefSurface.IFactory::get_Value 0:0:0:Int32()",
+              "setter": "",
+              "attributes": []
+            }
+          ],
+          "events": [
+            {
+              "name": "Changed",
+              "type": "System.Action",
+              "adder": "RefSurface.IFactory::add_Changed 0:0:1:Void(class System.Action)",
+              "remover": "RefSurface.IFactory::remove_Changed 0:0:1:Void(class System.Action)",
+              "attributes": []
+            }
+          ]
+        },
+        {
+          "name": "RefSurface.LocalAttribute",
+          "flags": 1048832,
+          "baseType": "System.Attribute",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6275,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(Int32)",
+              "attributes": []
+            }
+          ],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Packet",
+          "flags": 1048841,
+          "baseType": "System.ValueType",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "Data",
+              "flags": 6,
+              "signature": "valuetype RefSurface.Packet+<Data>e__FixedBuffer",
+              "constant": null,
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.FixedBufferAttribute",
+                  "constructor": "System.Runtime.CompilerServices.FixedBufferAttribute::.ctor 32:0:2:Void(class System.Type,Int32)",
+                  "arguments": [
+                    {
+                      "type": "class System.Type",
+                      "value": {
+                        "name": "System.Int32",
+                        "assemblyQualified": true,
+                        "identityMatchesReference": true,
+                        "resolvedIdentity": "System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"
+                      }
+                    },
+                    {
+                      "type": "Int32",
+                      "value": 4
+                    }
+                  ],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "methods": [],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Payload",
+          "flags": 1048841,
+          "baseType": "System.ValueType",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "<Value>k__BackingField",
+              "flags": 1,
+              "signature": "Int32",
+              "constant": null,
+              "attributes": [
+                {
+                  "name": "System.Diagnostics.DebuggerBrowsableAttribute",
+                  "constructor": "System.Diagnostics.DebuggerBrowsableAttribute::.ctor 32:0:1:Void(valuetype System.Diagnostics.DebuggerBrowsableState)",
+                  "arguments": [
+                    {
+                      "type": "class System.Diagnostics.DebuggerBrowsableState",
+                      "value": 0
+                    }
+                  ],
+                  "named": []
+                },
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "cached",
+              "flags": 17,
+              "signature": "Int32",
+              "constant": null,
+              "attributes": []
+            },
+            {
+              "name": "number",
+              "flags": 3,
+              "signature": "Int32",
+              "constant": null,
+              "attributes": []
+            },
+            {
+              "name": "reference",
+              "flags": 1,
+              "signature": "Object",
+              "constant": null,
+              "attributes": []
+            }
+          ],
+          "methods": [
+            {
+              "name": "get_Value",
+              "flags": 2182,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                },
+                {
+                  "name": "System.Runtime.CompilerServices.IsReadOnlyAttribute",
+                  "constructor": "System.Runtime.CompilerServices.IsReadOnlyAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "properties": [
+            {
+              "name": "Value",
+              "signature": "40:0:0:Int32()",
+              "getter": "RefSurface.Payload::get_Value 32:0:0:Int32()",
+              "setter": "",
+              "attributes": []
+            }
+          ],
+          "events": []
+        }
+      ],
+      "markerCount": 1,
+      "bodyCount": 20,
+      "allBodiesThrowNull": true,
+      "loadRejection": "BadImageFormatException",
+      "loadHResult": -2146234280
+    },
+    {
+      "id": "friend",
+      "sourceSha256": "8b862890765ad17317881406aace738ed71ab7d5beb5032e17e3e059335d7498",
+      "referenceFile": "friend-roslyn.dll",
+      "referenceSha256": "c8edaefecbd87dc584e5159a6ee62b99c5f11b0cfbff9d20654de7179f33527e",
+      "emittedSha256": "e3a2877c08724fb74a016ce71ba2114693f32b27703e2e24f5604505b085b405",
+      "consumerCompiled": true,
+      "friendConsumerCompiled": true,
+      "consumers": [
+        {
+          "id": "positive",
+          "status": 0,
+          "diagnostics": []
+        },
+        {
+          "id": "fixed-buffers",
+          "status": 1,
+          "diagnostics": [
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 16,
+                    "startColumn": 61,
+                    "endLine": 16,
+                    "endColumn": 72
+                  }
+                }
+              ]
+            },
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 17,
+                    "startColumn": 80,
+                    "endLine": 17,
+                    "endColumn": 91
+                  }
+                }
+              ]
+            },
+            {
+              "code": "CS0648",
+              "level": "error",
+              "message": "'' is a type not supported by the language",
+              "locations": [
+                {
+                  "artifactLocation": {
+                    "uri": "file:///workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs"
+                  },
+                  "region": {
+                    "startLine": 18,
+                    "startColumn": 89,
+                    "endLine": 18,
+                    "endColumn": 100
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "friend-access",
+          "status": 0,
+          "diagnostics": []
+        }
+      ],
+      "runtime": "10.0.5",
+      "surface": [
+        {
+          "name": "<Module>",
+          "flags": 0,
+          "baseType": "",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Callback",
+          "flags": 257,
+          "baseType": "System.MulticastDelegate",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 3,
+              "signature": "32:0:2:Void(Object,IntPtr)",
+              "attributes": []
+            },
+            {
+              "name": "BeginInvoke",
+              "flags": 454,
+              "implFlags": 3,
+              "signature": "32:0:3:class System.IAsyncResult(Int32,class System.AsyncCallback,Object)",
+              "attributes": []
+            },
+            {
+              "name": "EndInvoke",
+              "flags": 454,
+              "implFlags": 3,
+              "signature": "32:0:1:Int32(class System.IAsyncResult)",
+              "attributes": []
+            },
+            {
+              "name": "Invoke",
+              "flags": 454,
+              "implFlags": 3,
+              "signature": "32:0:1:Int32(Int32)",
+              "attributes": []
+            }
+          ],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Captured",
+          "flags": 1048841,
+          "baseType": "System.ValueType",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "<value>P",
+              "flags": 1,
+              "signature": "Object",
+              "constant": null,
+              "attributes": [
+                {
+                  "name": "System.Diagnostics.DebuggerBrowsableAttribute",
+                  "constructor": "System.Diagnostics.DebuggerBrowsableAttribute::.ctor 32:0:1:Void(valuetype System.Diagnostics.DebuggerBrowsableState)",
+                  "arguments": [
+                    {
+                      "type": "class System.Diagnostics.DebuggerBrowsableState",
+                      "value": 0
+                    }
+                  ],
+                  "named": []
+                },
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(Object)",
+              "attributes": []
+            },
+            {
+              "name": "Read",
+              "flags": 134,
+              "implFlags": 0,
+              "signature": "32:0:0:Object()",
+              "attributes": []
+            }
+          ],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Choice",
+          "flags": 257,
+          "baseType": "System.Enum",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "First",
+              "flags": 32854,
+              "signature": "valuetype RefSurface.Choice",
+              "constant": {
+                "type": "Byte",
+                "bytes": "01"
+              },
+              "attributes": []
+            },
+            {
+              "name": "Second",
+              "flags": 32854,
+              "signature": "valuetype RefSurface.Choice",
+              "constant": {
+                "type": "Byte",
+                "bytes": "02"
+              },
+              "attributes": []
+            },
+            {
+              "name": "value__",
+              "flags": 1542,
+              "signature": "Byte",
+              "constant": null,
+              "attributes": []
+            }
+          ],
+          "methods": [],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Contract",
+          "flags": 1,
+          "baseType": "System.Object",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [
+            {
+              "name": "RefSurface.LocalAttribute",
+              "constructor": "RefSurface.LocalAttribute::.ctor 32:0:1:Void(Int32)",
+              "arguments": [
+                {
+                  "type": "Int32",
+                  "value": 7
+                }
+              ],
+              "named": []
+            }
+          ],
+          "interfaces": [
+            "RefSurface.IContract"
+          ],
+          "implementations": [
+            {
+              "body": "RefSurface.Contract::RefSurface.IContract.Read 32:0:0:Int32()",
+              "declaration": "RefSurface.IContract::Read 32:0:0:Int32()"
+            }
+          ],
+          "fields": [
+            {
+              "name": "Answer",
+              "flags": 32854,
+              "signature": "Int32",
+              "constant": {
+                "type": "Int32",
+                "bytes": "2A000000"
+              },
+              "attributes": []
+            },
+            {
+              "name": "internalField",
+              "flags": 3,
+              "signature": "Int32",
+              "constant": null,
+              "attributes": []
+            },
+            {
+              "name": "protectedField",
+              "flags": 4,
+              "signature": "Int32",
+              "constant": null,
+              "attributes": []
+            }
+          ],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 0,
+              "signature": "32:0:0:Void()",
+              "attributes": []
+            },
+            {
+              "name": "Internal",
+              "flags": 131,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "Protected",
+              "flags": 132,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "Read",
+              "flags": 134,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "RefSurface.IContract.Read",
+              "flags": 481,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "Virtual",
+              "flags": 963,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "add_Changed",
+              "flags": 2534,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "add_InternalEvent",
+              "flags": 2179,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "get_InternalProperty",
+              "flags": 2179,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "get_Value",
+              "flags": 2534,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "remove_Changed",
+              "flags": 2534,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "remove_InternalEvent",
+              "flags": 2179,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "set_InternalProperty",
+              "flags": 2179,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(Int32)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "properties": [
+            {
+              "name": "InternalProperty",
+              "signature": "40:0:0:Int32()",
+              "getter": "RefSurface.Contract::get_InternalProperty 32:0:0:Int32()",
+              "setter": "RefSurface.Contract::set_InternalProperty 32:0:1:Void(Int32)",
+              "attributes": []
+            },
+            {
+              "name": "Value",
+              "signature": "40:0:0:Int32()",
+              "getter": "RefSurface.Contract::get_Value 32:0:0:Int32()",
+              "setter": "",
+              "attributes": []
+            }
+          ],
+          "events": [
+            {
+              "name": "Changed",
+              "type": "System.Action",
+              "adder": "RefSurface.Contract::add_Changed 32:0:1:Void(class System.Action)",
+              "remover": "RefSurface.Contract::remove_Changed 32:0:1:Void(class System.Action)",
+              "attributes": []
+            },
+            {
+              "name": "InternalEvent",
+              "type": "System.Action",
+              "adder": "RefSurface.Contract::add_InternalEvent 32:0:1:Void(class System.Action)",
+              "remover": "RefSurface.Contract::remove_InternalEvent 32:0:1:Void(class System.Action)",
+              "attributes": []
+            }
+          ]
+        },
+        {
+          "name": "RefSurface.Contract+Nested",
+          "flags": 1048835,
+          "baseType": "System.Object",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 0,
+              "signature": "32:0:0:Void()",
+              "attributes": []
+            },
+            {
+              "name": "Visible",
+              "flags": 134,
+              "implFlags": 0,
+              "signature": "32:0:0:Void()",
+              "attributes": []
+            }
+          ],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Envelope`1",
+          "flags": 1048577,
+          "baseType": "System.Object",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 0,
+              "signature": "32:0:0:Void()",
+              "attributes": []
+            }
+          ],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Envelope`1+Packet`1",
+          "flags": 1048842,
+          "baseType": "System.ValueType",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "Data",
+              "flags": 6,
+              "signature": "valuetype RefSurface.Envelope`1+Packet`1+<Data>e__FixedBuffer<!0,!1>",
+              "constant": null,
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.FixedBufferAttribute",
+                  "constructor": "System.Runtime.CompilerServices.FixedBufferAttribute::.ctor 32:0:2:Void(class System.Type,Int32)",
+                  "arguments": [
+                    {
+                      "type": "class System.Type",
+                      "value": {
+                        "name": "System.Byte",
+                        "assemblyQualified": true,
+                        "identityMatchesReference": true,
+                        "resolvedIdentity": "System.Byte, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"
+                      }
+                    },
+                    {
+                      "type": "Int32",
+                      "value": 4
+                    }
+                  ],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "First",
+              "flags": 6,
+              "signature": "!0",
+              "constant": null,
+              "attributes": []
+            },
+            {
+              "name": "Second",
+              "flags": 6,
+              "signature": "!1",
+              "constant": null,
+              "attributes": []
+            }
+          ],
+          "methods": [],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Factory",
+          "flags": 1048577,
+          "baseType": "System.Object",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [
+            "RefSurface.IFactory"
+          ],
+          "implementations": [
+            {
+              "body": "RefSurface.Factory::RefSurface.IFactory.Create 0:0:0:Int32()",
+              "declaration": "RefSurface.IFactory::Create 0:0:0:Int32()"
+            },
+            {
+              "body": "RefSurface.Factory::RefSurface.IFactory.add_Changed 0:0:1:Void(class System.Action)",
+              "declaration": "RefSurface.IFactory::add_Changed 0:0:1:Void(class System.Action)"
+            },
+            {
+              "body": "RefSurface.Factory::RefSurface.IFactory.get_Value 0:0:0:Int32()",
+              "declaration": "RefSurface.IFactory::get_Value 0:0:0:Int32()"
+            },
+            {
+              "body": "RefSurface.Factory::RefSurface.IFactory.remove_Changed 0:0:1:Void(class System.Action)",
+              "declaration": "RefSurface.IFactory::remove_Changed 0:0:1:Void(class System.Action)"
+            }
+          ],
+          "fields": [],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6278,
+              "implFlags": 0,
+              "signature": "32:0:0:Void()",
+              "attributes": []
+            },
+            {
+              "name": "RefSurface.IFactory.Create",
+              "flags": 145,
+              "implFlags": 0,
+              "signature": "0:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "RefSurface.IFactory.add_Changed",
+              "flags": 2193,
+              "implFlags": 0,
+              "signature": "0:0:1:Void(class System.Action)",
+              "attributes": []
+            },
+            {
+              "name": "RefSurface.IFactory.get_Value",
+              "flags": 2193,
+              "implFlags": 0,
+              "signature": "0:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "RefSurface.IFactory.remove_Changed",
+              "flags": 2193,
+              "implFlags": 0,
+              "signature": "0:0:1:Void(class System.Action)",
+              "attributes": []
+            }
+          ],
+          "properties": [
+            {
+              "name": "RefSurface.IFactory.Value",
+              "signature": "8:0:0:Int32()",
+              "getter": "RefSurface.Factory::RefSurface.IFactory.get_Value 0:0:0:Int32()",
+              "setter": "",
+              "attributes": []
+            }
+          ],
+          "events": [
+            {
+              "name": "RefSurface.IFactory.Changed",
+              "type": "System.Action",
+              "adder": "RefSurface.Factory::RefSurface.IFactory.add_Changed 0:0:1:Void(class System.Action)",
+              "remover": "RefSurface.Factory::RefSurface.IFactory.remove_Changed 0:0:1:Void(class System.Action)",
+              "attributes": []
+            }
+          ]
+        },
+        {
+          "name": "RefSurface.GenericPacket`1",
+          "flags": 1048841,
+          "baseType": "System.ValueType",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "Data",
+              "flags": 6,
+              "signature": "valuetype RefSurface.GenericPacket`1+<Data>e__FixedBuffer<!0>",
+              "constant": null,
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.FixedBufferAttribute",
+                  "constructor": "System.Runtime.CompilerServices.FixedBufferAttribute::.ctor 32:0:2:Void(class System.Type,Int32)",
+                  "arguments": [
+                    {
+                      "type": "class System.Type",
+                      "value": {
+                        "name": "System.Int32",
+                        "assemblyQualified": true,
+                        "identityMatchesReference": true,
+                        "resolvedIdentity": "System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"
+                      }
+                    },
+                    {
+                      "type": "Int32",
+                      "value": 3
+                    }
+                  ],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "Tag",
+              "flags": 6,
+              "signature": "!0",
+              "constant": null,
+              "attributes": []
+            }
+          ],
+          "methods": [],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.IContract",
+          "flags": 1048737,
+          "baseType": "",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": "Read",
+              "flags": 1478,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "add_Changed",
+              "flags": 3526,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "get_Value",
+              "flags": 3526,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "remove_Changed",
+              "flags": 3526,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "properties": [
+            {
+              "name": "Value",
+              "signature": "40:0:0:Int32()",
+              "getter": "RefSurface.IContract::get_Value 32:0:0:Int32()",
+              "setter": "",
+              "attributes": []
+            }
+          ],
+          "events": [
+            {
+              "name": "Changed",
+              "type": "System.Action",
+              "adder": "RefSurface.IContract::add_Changed 32:0:1:Void(class System.Action)",
+              "remover": "RefSurface.IContract::remove_Changed 32:0:1:Void(class System.Action)",
+              "attributes": []
+            }
+          ]
+        },
+        {
+          "name": "RefSurface.IFactory",
+          "flags": 1048737,
+          "baseType": "",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": "Create",
+              "flags": 1238,
+              "implFlags": 0,
+              "signature": "0:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "add_Changed",
+              "flags": 3286,
+              "implFlags": 0,
+              "signature": "0:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "get_Value",
+              "flags": 3286,
+              "implFlags": 0,
+              "signature": "0:0:0:Int32()",
+              "attributes": []
+            },
+            {
+              "name": "remove_Changed",
+              "flags": 3286,
+              "implFlags": 0,
+              "signature": "0:0:1:Void(class System.Action)",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "properties": [
+            {
+              "name": "Value",
+              "signature": "8:0:0:Int32()",
+              "getter": "RefSurface.IFactory::get_Value 0:0:0:Int32()",
+              "setter": "",
+              "attributes": []
+            }
+          ],
+          "events": [
+            {
+              "name": "Changed",
+              "type": "System.Action",
+              "adder": "RefSurface.IFactory::add_Changed 0:0:1:Void(class System.Action)",
+              "remover": "RefSurface.IFactory::remove_Changed 0:0:1:Void(class System.Action)",
+              "attributes": []
+            }
+          ]
+        },
+        {
+          "name": "RefSurface.LocalAttribute",
+          "flags": 1048832,
+          "baseType": "System.Attribute",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [],
+          "methods": [
+            {
+              "name": ".ctor",
+              "flags": 6275,
+              "implFlags": 0,
+              "signature": "32:0:1:Void(Int32)",
+              "attributes": []
+            }
+          ],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Packet",
+          "flags": 1048841,
+          "baseType": "System.ValueType",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "Data",
+              "flags": 6,
+              "signature": "valuetype RefSurface.Packet+<Data>e__FixedBuffer",
+              "constant": null,
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.FixedBufferAttribute",
+                  "constructor": "System.Runtime.CompilerServices.FixedBufferAttribute::.ctor 32:0:2:Void(class System.Type,Int32)",
+                  "arguments": [
+                    {
+                      "type": "class System.Type",
+                      "value": {
+                        "name": "System.Int32",
+                        "assemblyQualified": true,
+                        "identityMatchesReference": true,
+                        "resolvedIdentity": "System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"
+                      }
+                    },
+                    {
+                      "type": "Int32",
+                      "value": 4
+                    }
+                  ],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "methods": [],
+          "properties": [],
+          "events": []
+        },
+        {
+          "name": "RefSurface.Payload",
+          "flags": 1048841,
+          "baseType": "System.ValueType",
+          "classSize": 0,
+          "packingSize": 0,
+          "attributes": [],
+          "interfaces": [],
+          "implementations": [],
+          "fields": [
+            {
+              "name": "<Value>k__BackingField",
+              "flags": 1,
+              "signature": "Int32",
+              "constant": null,
+              "attributes": [
+                {
+                  "name": "System.Diagnostics.DebuggerBrowsableAttribute",
+                  "constructor": "System.Diagnostics.DebuggerBrowsableAttribute::.ctor 32:0:1:Void(valuetype System.Diagnostics.DebuggerBrowsableState)",
+                  "arguments": [
+                    {
+                      "type": "class System.Diagnostics.DebuggerBrowsableState",
+                      "value": 0
+                    }
+                  ],
+                  "named": []
+                },
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            },
+            {
+              "name": "cached",
+              "flags": 17,
+              "signature": "Int32",
+              "constant": null,
+              "attributes": []
+            },
+            {
+              "name": "number",
+              "flags": 3,
+              "signature": "Int32",
+              "constant": null,
+              "attributes": []
+            },
+            {
+              "name": "reference",
+              "flags": 1,
+              "signature": "Object",
+              "constant": null,
+              "attributes": []
+            }
+          ],
+          "methods": [
+            {
+              "name": "get_Value",
+              "flags": 2182,
+              "implFlags": 0,
+              "signature": "32:0:0:Int32()",
+              "attributes": [
+                {
+                  "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+                  "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                },
+                {
+                  "name": "System.Runtime.CompilerServices.IsReadOnlyAttribute",
+                  "constructor": "System.Runtime.CompilerServices.IsReadOnlyAttribute::.ctor 32:0:0:Void()",
+                  "arguments": [],
+                  "named": []
+                }
+              ]
+            }
+          ],
+          "properties": [
+            {
+              "name": "Value",
+              "signature": "40:0:0:Int32()",
+              "getter": "RefSurface.Payload::get_Value 32:0:0:Int32()",
+              "setter": "",
+              "attributes": []
+            }
+          ],
+          "events": []
+        }
+      ],
+      "markerCount": 1,
+      "bodyCount": 25,
+      "allBodiesThrowNull": true,
+      "loadRejection": "BadImageFormatException",
+      "loadHResult": -2146234280
+    }
+  ]
+}

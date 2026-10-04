@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "588f2b271521f170f278a0d0f183f069bd71f41d",
+  "comparisonRevision": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+  "driverSha256": "dccb1da876096c73d3f2424e707402415303fa38921890be62982cd8d9230996",
+  "sourceSha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+  "cases": [
+    {
+      "scope": "narrow-allocation-follow-up-metadata",
+      "beforeRevision": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+      "beforeMode": "metadata",
+      "afterRevision": "588f2b271521f170f278a0d0f183f069bd71f41d",
+      "afterMode": "metadata",
+      "before": {
+        "medianMs": 19.001902499999687,
+        "p95Ms": 21.198717000000215,
+        "p99Ms": 21.869242000000213,
+        "firstCompileMs": 133.24449300000003,
+        "compilerImportMs": 404.946498,
+        "medianHeapUsedDelta": 4014220,
+        "assemblyBytes": 4096
+      },
+      "after": {
+        "medianMs": 16.218079500000044,
+        "p95Ms": 23.102026000000023,
+        "p99Ms": 27.814425999999912,
+        "firstCompileMs": 99.538362,
+        "compilerImportMs": 463.052459,
+        "medianHeapUsedDelta": 4003668,
+        "assemblyBytes": 4096
+      },
+      "percentChanges": {
+        "medianMs": -14.650233049031215,
+        "p95Ms": 8.978416005080824,
+        "p99Ms": 27.18513975015522,
+        "firstCompileMs": -25.296453340101653,
+        "compilerImportMs": 14.349046426375068,
+        "medianHeapUsedDelta": -0.2628655131009294,
+        "assemblyBytes": 0.0
+      },
+      "latencyIncreasesOverFivePercent": [
+        "p95Ms",
+        "p99Ms",
+        "compilerImportMs"
+      ],
+      "peSizeIncreaseOverTenPercent": false,
+      "assemblySha256Before": "203d976ebd713b519ee70fca5a3a7ad571413136d304870be3b083ec70be4d5d",
+      "assemblySha256After": "203d976ebd713b519ee70fca5a3a7ad571413136d304870be3b083ec70be4d5d",
+      "sameModeAssemblyBytesUnchanged": true
+    },
+    {
+      "scope": "narrow-allocation-follow-up-refout",
+      "beforeRevision": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+      "beforeMode": "refout",
+      "afterRevision": "588f2b271521f170f278a0d0f183f069bd71f41d",
+      "afterMode": "refout",
+      "before": {
+        "medianMs": 13.762755499999912,
+        "p95Ms": 18.920035000000098,
+        "p99Ms": 20.10275300000012,
+        "firstCompileMs": 108.19893100000002,
+        "compilerImportMs": 328.55652100000003,
+        "medianHeapUsedDelta": 3937796,
+        "assemblyBytes": 4096
+      },
+      "after": {
+        "medianMs": 13.851561000000174,
+        "p95Ms": 19.782001000000037,
+        "p99Ms": 20.979139999999916,
+        "firstCompileMs": 145.72481300000004,
+        "compilerImportMs": 553.077104,
+        "medianHeapUsedDelta": 3929908,
+        "assemblyBytes": 4096
+      },
+      "percentChanges": {
+        "medianMs": 0.6452595920944937,
+        "p95Ms": 4.5558372381443,
+        "p99Ms": 4.359537223582222,
+        "firstCompileMs": 34.682303839027774,
+        "compilerImportMs": 68.33545178669576,
+        "medianHeapUsedDelta": -0.20031510012199494,
+        "assemblyBytes": 0.0
+      },
+      "latencyIncreasesOverFivePercent": [
+        "firstCompileMs",
+        "compilerImportMs"
+      ],
+      "peSizeIncreaseOverTenPercent": false,
+      "assemblySha256Before": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "assemblySha256After": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "sameModeAssemblyBytesUnchanged": true
+    },
+    {
+      "scope": "whole-main-merge-plus-follow-up-metadata",
+      "beforeRevision": "7c73c877c841fa5d4d124edfab980f5896a7e485",
+      "beforeMode": "metadata",
+      "afterRevision": "588f2b271521f170f278a0d0f183f069bd71f41d",
+      "afterMode": "metadata",
+      "before": {
+        "medianMs": 15.544988000000103,
+        "p95Ms": 20.191165999999612,
+        "p99Ms": 22.964188999999806,
+        "firstCompileMs": 113.95897400000013,
+        "compilerImportMs": 530.6117549999999,
+        "medianHeapUsedDelta": 3982488,
+        "assemblyBytes": 4096
+      },
+      "after": {
+        "medianMs": 16.218079500000044,
+        "p95Ms": 23.102026000000023,
+        "p99Ms": 27.814425999999912,
+        "firstCompileMs": 99.538362,
+        "compilerImportMs": 463.052459,
+        "medianHeapUsedDelta": 4003668,
+        "assemblyBytes": 4096
+      },
+      "percentChanges": {
+        "medianMs": 4.329958311964832,
+        "p95Ms": 14.416502741844962,
+        "p99Ms": 21.120872154466895,
+        "firstCompileMs": -12.654213611996978,
+        "compilerImportMs": -12.73234061691677,
+        "medianHeapUsedDelta": 0.5318283444921912,
+        "assemblyBytes": 0.0
+      },
+      "latencyIncreasesOverFivePercent": [
+        "p95Ms",
+        "p99Ms"
+      ],
+      "peSizeIncreaseOverTenPercent": false,
+      "assemblySha256Before": "203d976ebd713b519ee70fca5a3a7ad571413136d304870be3b083ec70be4d5d",
+      "assemblySha256After": "203d976ebd713b519ee70fca5a3a7ad571413136d304870be3b083ec70be4d5d",
+      "sameModeAssemblyBytesUnchanged": true
+    },
+    {
+      "scope": "whole-main-merge-plus-follow-up-refout",
+      "beforeRevision": "7c73c877c841fa5d4d124edfab980f5896a7e485",
+      "beforeMode": "refout",
+      "afterRevision": "588f2b271521f170f278a0d0f183f069bd71f41d",
+      "afterMode": "refout",
+      "before": {
+        "medianMs": 15.16668199999981,
+        "p95Ms": 19.360905999999886,
+        "p99Ms": 23.763266999999814,
+        "firstCompileMs": 127.93481800000006,
+        "compilerImportMs": 566.799936,
+        "medianHeapUsedDelta": 3913608,
+        "assemblyBytes": 4096
+      },
+      "after": {
+        "medianMs": 13.851561000000174,
+        "p95Ms": 19.782001000000037,
+        "p99Ms": 20.979139999999916,
+        "firstCompileMs": 145.72481300000004,
+        "compilerImportMs": 553.077104,
+        "medianHeapUsedDelta": 3929908,
+        "assemblyBytes": 4096
+      },
+      "percentChanges": {
+        "medianMs": -8.67111870611945,
+        "p95Ms": 2.1749756958695743,
+        "p99Ms": -11.71609526585684,
+        "firstCompileMs": 13.905514759867765,
+        "compilerImportMs": -2.4211068365399435,
+        "medianHeapUsedDelta": 0.41649546914253044,
+        "assemblyBytes": 0.0
+      },
+      "latencyIncreasesOverFivePercent": [
+        "firstCompileMs"
+      ],
+      "peSizeIncreaseOverTenPercent": false,
+      "assemblySha256Before": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "assemblySha256After": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "sameModeAssemblyBytesUnchanged": true
+    },
+    {
+      "scope": "whole-checkout-metadata",
+      "beforeRevision": "c1693a9e322295a43d90c3335885b5b5b3cf8daa",
+      "beforeMode": "metadata",
+      "afterRevision": "588f2b271521f170f278a0d0f183f069bd71f41d",
+      "afterMode": "metadata",
+      "before": {
+        "medianMs": 15.54025700000011,
+        "p95Ms": 23.672052000000804,
+        "p99Ms": 31.66812200000004,
+        "firstCompileMs": 102.27075300000001,
+        "compilerImportMs": 643.469601,
+        "medianHeapUsedDelta": 3983120,
+        "assemblyBytes": 4096
+      },
+      "after": {
+        "medianMs": 16.218079500000044,
+        "p95Ms": 23.102026000000023,
+        "p99Ms": 27.814425999999912,
+        "firstCompileMs": 99.538362,
+        "compilerImportMs": 463.052459,
+        "medianHeapUsedDelta": 4003668,
+        "assemblyBytes": 4096
+      },
+      "percentChanges": {
+        "medianMs": 4.361720015312032,
+        "p95Ms": -2.4080126218071873,
+        "p99Ms": -12.169007053844627,
+        "firstCompileMs": -2.671722774936458,
+        "compilerImportMs": -28.03817642972073,
+        "medianHeapUsedDelta": 0.5158770009439761,
+        "assemblyBytes": 0.0
+      },
+      "latencyIncreasesOverFivePercent": [],
+      "peSizeIncreaseOverTenPercent": false,
+      "assemblySha256Before": "5de374c77409caaff45316a4432e245cd48f76bff3e0d7f078e0e74a1ea50d2c",
+      "assemblySha256After": "203d976ebd713b519ee70fca5a3a7ad571413136d304870be3b083ec70be4d5d",
+      "sameModeAssemblyBytesUnchanged": false
+    },
+    {
+      "scope": "candidate-output-mode",
+      "beforeRevision": "588f2b271521f170f278a0d0f183f069bd71f41d",
+      "beforeMode": "metadata",
+      "afterRevision": "588f2b271521f170f278a0d0f183f069bd71f41d",
+      "afterMode": "refout",
+      "before": {
+        "medianMs": 16.218079500000044,
+        "p95Ms": 23.102026000000023,
+        "p99Ms": 27.814425999999912,
+        "firstCompileMs": 99.538362,
+        "compilerImportMs": 463.052459,
+        "medianHeapUsedDelta": 4003668,
+        "assemblyBytes": 4096
+      },
+      "after": {
+        "medianMs": 13.851561000000174,
+        "p95Ms": 19.782001000000037,
+        "p99Ms": 20.979139999999916,
+        "firstCompileMs": 145.72481300000004,
+        "compilerImportMs": 553.077104,
+        "medianHeapUsedDelta": 3929908,
+        "assemblyBytes": 4096
+      },
+      "percentChanges": {
+        "medianMs": -14.59185410948235,
+        "p95Ms": -14.371142167357887,
+        "p99Ms": -24.57460743572425,
+        "firstCompileMs": 46.40065405134961,
+        "compilerImportMs": 19.441565043065665,
+        "medianHeapUsedDelta": -1.8423106011787205,
+        "assemblyBytes": 0.0
+      },
+      "latencyIncreasesOverFivePercent": [
+        "firstCompileMs",
+        "compilerImportMs"
+      ],
+      "peSizeIncreaseOverTenPercent": false,
+      "assemblySha256Before": "203d976ebd713b519ee70fca5a3a7ad571413136d304870be3b083ec70be4d5d",
+      "assemblySha256After": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "sameModeAssemblyBytesUnchanged": false
+    }
+  ],
+  "captureProtocol": {
+    "runsPerMode": 1,
+    "historicalRunsRepeated": false,
+    "retries": 0,
+    "rawChronologicalSamplesPerRun": 120,
+    "settlingSamplesExcluded": 20,
+    "measuredSamplesPerRun": 100,
+    "firstCompileExcludesImport": true,
+    "gcExposed": true,
+    "nodeOptions": "--max-old-space-size=2048"
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "operatingSystemRelease": "6.18.44",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "totalMemoryBytes": 10451464192
+  },
+  "nativeByteComparison": {
+    "public-sharpforge.dll": {
+      "beforeSha256": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "afterSha256": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "byteEqual": true
+    },
+    "friend-sharpforge.dll": {
+      "beforeSha256": "e3a2877c08724fb74a016ce71ba2114693f32b27703e2e24f5604505b085b405",
+      "afterSha256": "e3a2877c08724fb74a016ce71ba2114693f32b27703e2e24f5604505b085b405",
+      "byteEqual": true
+    },
+    "metadata-control.dll": {
+      "beforeSha256": "708cdfb10ce94e42ae471a12333f26bad2e587ca4a4622e9fb1268b14db1b5dc",
+      "afterSha256": "708cdfb10ce94e42ae471a12333f26bad2e587ca4a4622e9fb1268b14db1b5dc",
+      "byteEqual": true
+    },
+    "public-observed.json": {
+      "beforeSha256": "6f3895fcdd1f6f48ce6fbf7a1e641bc1ab10bc5b777476c4540bbfd378cbc644",
+      "afterSha256": "6f3895fcdd1f6f48ce6fbf7a1e641bc1ab10bc5b777476c4540bbfd378cbc644",
+      "byteEqual": true
+    },
+    "friend-observed.json": {
+      "beforeSha256": "3936916515749961e84212e44cd3feafa01965f95f6832d30059d55d7cecae9f",
+      "afterSha256": "3936916515749961e84212e44cd3feafa01965f95f6832d30059d55d7cecae9f",
+      "byteEqual": true
+    }
+  },
+  "limitations": [
+    "51db to588f changes exactly three shared compiler metadata modules. This is a once-only same-cohort observation, not a controlled causal estimate or general speedup claim.",
+    "Comparisons to7c73 include the whole main merge; comparison toc169 includes other whole-checkout changes. Historical runs were not repeated.",
+    "The driver and fixture are unchanged; mode contracts differ, and equal4096-byte PE lengths include padding, not metadata payload or browser bundle size.",
+    "Import and first-compile values are single observations. The driver preloads candidate CIL before compiler-import timing, so imports do not establish equivalent clean process startup.",
+    "Heap-used deltas include temporaries and are not total allocation or retained-heap measurements.",
+    "The team held the exclusive heavy slot on a shared hosted machine; unrelated external workloads were not measured.",
+    "Metadata median fell14.6502% versus51db, but p95 rose8.9784% and p99 rose27.1851%; improved median does not waive regression review."
+  ],
+  "review": {
+    "status": "pending coordinator review",
+    "performanceBudgetPassClaimed": false,
+    "allRawSamplesRetained": true,
+    "summaryStatisticsRecomputedFromRawSamples": true
+  },
+  "evidenceVerification": {
+    "newProductExecution": false,
+    "rawCopiedFilesVerified": 77,
+    "sourceGitObjectHashesVerified": 72,
+    "outputHashesAndSizesVerified": 48,
+    "logHashesVerified": 6,
+    "executionIntervalsNonoverlapping": true,
+    "sourceSnapshotsMatchFrozenRevision": true
+  }
+}

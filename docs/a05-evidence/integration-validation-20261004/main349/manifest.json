@@ -4,7 +4,7 @@
   "execution": "The run coordinator reports one machine-wide job at a time through scripts/limited.js, Node test concurrency 1 and a 512 MiB old-space cap.",
   "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
   "revisionProvenance": "Tested revisions reported by the run coordinator; these original logs do not embed Git HEAD or clean-worktree captures.",
-  "toolVersionProvenance": "The original eight root logs do not retain exact Node/V8 version strings. The later control-agent record retains its supplied Node version and tracked-tree claim in the separately hashed sidecar.",
+  "toolVersionProvenance": "Root test logs do not retain exact Node/V8 version strings. The control-agent record retains its supplied Node version and tracked-tree claim in the separately hashed sidecar.",
   "resourceEnvironment": {
     "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
     "SHARPFORGE_TEST_CONCURRENCY": "1",
@@ -172,6 +172,44 @@
       "provenanceFile": "a05-control-varargs-e67391b4b.json",
       "provenanceSha256": "a5d455ac17c8acfcaa6bdcbee223d82df7b01fa470b94603198764e0c0ac31ca",
       "provenanceBytes": 947
+    },
+    {
+      "file": "a05-callback-admission-limits-r1.log",
+      "revision": "63f3319138ca315f9bd40f1ca93ec36151e89e18",
+      "sha256": "e86a2eaa82d08adaea28a7fcdc4bbfb82dac71184afe3ed2bba0f5d698d9b0c7",
+      "bytes": 2658,
+      "tests": 24,
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 4610.565857,
+      "exitCode": 0,
+      "result": "passed",
+      "scope": "Callback verification admission limits, assembly/heap budget separation and synchronous callback lifecycle",
+      "command": "env SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --test --test-concurrency=1 tests/a05-cil-callback-admission-limits.test.js tests/a05-cil-assembly-heap-limits.test.js tests/a05-cil-admission-budget.test.js tests/a05-synchronous-callbacks.test.js",
+      "commandProvenance": "exact shell invocation reported by the run coordinator",
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration"
+    },
+    {
+      "file": "a05-main349-full-r2.log",
+      "revision": "5379d076a4b3152966a6680435ea694fbf907de3",
+      "sha256": "4fbe29daf773864e100887f8229e7c09b9151b620a273fb1c7057a349449b227",
+      "bytes": 302000,
+      "tests": 3236,
+      "passed": 3236,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 357503.838018,
+      "exitCode": 0,
+      "result": "passed",
+      "scope": "Passing broad A05 files plus preemption and security limit selection after repairs",
+      "command": "env SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --expose-gc --test --test-concurrency=1 tests/a05-*.test.js tests/preemption.test.js tests/conformance/security/limits.test.js",
+      "commandProvenance": "exact shell invocation reported by the run coordinator",
+      "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration"
     }
   ]
 }

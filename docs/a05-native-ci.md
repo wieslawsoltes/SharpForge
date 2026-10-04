@@ -1,8 +1,15 @@
 # A05 native qualification
 
 The focused workflow `.github/workflows/a05-runtime.yml` is additional qualification for Project 7. It runs on explicit dispatch,
-or on a pull request whose title contains `SF-A05` and which has the existing `full-ci` label. It has no dependency on unrelated
-browser, application build, or full unit-test jobs. Existing required CI policy is unchanged.
+pushes to the owned continuation branch `codex/a05-e01-started-handoff-20261004`, or other pull requests whose title contains
+`SF-A05` and which have the existing `full-ci` label. Same-repository PR jobs for that continuation branch are suppressed;
+fork PRs retain the existing title/label gates. The scoped push trigger qualifies its actual head even while a moving `main`
+prevents GitHub from creating a PR merge revision. Existing required CI policy is unchanged.
+
+Concurrency is keyed by workflow event, source repository and branch. New pushes cancel outdated push qualification;
+PR updates retain cancellation, and manual dispatch retains its non-canceling policy. Event separation prevents a skipped
+duplicate PR event from canceling the branch's push run. Native qualification has no dependency on unrelated browser,
+application build, or full unit-test jobs.
 
 The six serial cells use the existing `ubuntu-latest`, `windows-latest`, and `macos-latest` runner channels, Node 22,
 and SDK 8.0.x or 10.0.201. Actions use the repository's pinned commits. The .NET setup action's `dotnet-version` output
@@ -14,8 +21,9 @@ a 4 GiB V8 heap cap for the large numeric corpus; it does not change local resou
 The exact `NODE_OPTIONS` setting is recorded in provenance alongside the concurrency of one.
 
 The report records the tested `HEAD` and tree hash, tracked-only Git status, and public workflow/run/attempt identifiers.
-Pull-request reports also retain head/base revisions and repositories; the default workflow checkout tests the merge revision,
-not the pull request's head alone. Any tracked edit blocks all native cases, and CI additionally requires `HEAD` to equal
+Pull-request reports also retain head/base revisions and repositories; their default workflow checkout tests the merge revision,
+not the pull request's head alone. Push reports test the pushed branch head, record its event SHA/ref, and leave PR metadata null.
+Any tracked edit blocks all native cases, and CI additionally requires `HEAD` to equal
 `GITHUB_SHA`. The workflow's intentional untracked `global.json` is permitted and recorded separately with its exact contents
 and SHA-256; untracked artifact files do not make the tracked tree dirty. An absent SDK selection file is recorded explicitly.
 The SDK 8 channel resolves to an exact version per run, rather than claiming an immutable patch across runs. `dotnetRuntimes`

@@ -1,11 +1,21 @@
 # A05 browser qualification
 
 The focused [workflow](../.github/workflows/a05-browser.yml) runs Chromium, Firefox,
-and WebKit serially on `ubuntu-latest`. It is authorized by an `SF-A05` PR title
-plus the `full-ci` label, or by manual dispatch. It has read-only repository
+and WebKit serially on `ubuntu-latest`. It runs on manual dispatch, pushes to
+`codex/a05-e01-started-handoff-20261004`, or other PRs with an `SF-A05` title and
+the `full-ci` label. Same-repository PR jobs for that continuation branch are
+suppressed; fork PRs retain the title/label gates. The scoped push trigger tests
+the actual branch head even when changes on `main` block a PR merge revision.
+It has read-only repository
 permissions, a 25-minute bound per engine, and always uploads results, including
 dependency/setup failures. It does not infer browser results on Windows/macOS or
 replace the separate Studio browser matrix and native CLR qualification.
+
+Workflow concurrency uses the event, source repository and branch. New pushes
+cancel outdated push runs, PR updates retain cancellation, and manual dispatch
+retains its non-canceling policy. Skipped PR events cannot cancel push runs.
+Push artifacts retain the actual checkout revision/tree and event SHA/ref;
+they do not claim a PR merge revision or fabricate PR metadata.
 
 No browser result is established merely by adding this workflow. Acceptance
 requires completed `report.json` case rows from the exact tested revision. The

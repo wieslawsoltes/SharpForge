@@ -1,0 +1,1681 @@
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: public: native SRM and CLR observations must match Roslyn
++ actual - expected
+... Skipped lines
+
+  {
+    allBodiesThrowNull: true,
+    bodyCount: 20,
+    loadHResult: -2146234280,
+    loadRejection: 'BadImageFormatException',
+...
+              {
+-               arguments: [
+-                 {
+-                   type: 'class System.Diagnostics.DebuggerBrowsableState',
+-                   value: 0
+-                 }
+-               ],
+-               constructor: 'System.Diagnostics.DebuggerBrowsableAttribute::.ctor 32:0:1:Void(valuetype System.Diagnostics.DebuggerBrowsableState)',
+-               name: 'System.Diagnostics.DebuggerBrowsableAttribute',
+-               named: []
+-             },
+-             {
+                arguments: [],
+                constructor: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()',
+                name: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute',
+                named: []
+              }
+...
+            attributes: [],
++           flags: 451,
+-           flags: 963,
+            implFlags: 0,
+            name: 'Virtual',
+            signature: '32:0:0:Int32()'
+          },
+          {
+...
+      {
++       attributes: [
++         {
++           arguments: [],
++           constructor: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()',
++           name: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute',
++           named: []
++         },
++         {
++           arguments: [],
++           constructor: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute::.ctor 32:0:0:Void()',
++           name: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute',
++           named: []
++         }
++       ],
++       baseType: 'System.ValueType',
++       classSize: 4,
++       events: [],
++       fields: [
++         {
++           attributes: [],
++           constant: null,
++           flags: 6,
++           name: 'FixedElementField',
++           signature: 'Byte'
++         }
++       ],
++       flags: 1048842,
++       implementations: [],
++       interfaces: [],
++       methods: [],
++       name: 'RefSurface.Envelope`1+Packet`1+<Data>e__FixedBuffer',
++       packingSize: 0,
++       properties: []
++     },
++     {
+        attributes: [],
+        baseType: 'System.Object',
+        classSize: 0,
+        events: [
+          {
+...
+      {
++       attributes: [
++         {
++           arguments: [],
++           constructor: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()',
++           name: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute',
++           named: []
++         },
++         {
++           arguments: [],
++           constructor: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute::.ctor 32:0:0:Void()',
++           name: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute',
++           named: []
++         }
++       ],
++       baseType: 'System.ValueType',
++       classSize: 12,
++       events: [],
++       fields: [
++         {
++           attributes: [],
++           constant: null,
++           flags: 6,
++           name: 'FixedElementField',
++           signature: 'Int32'
++         }
++       ],
++       flags: 1048842,
++       implementations: [],
++       interfaces: [],
++       methods: [],
++       name: 'RefSurface.GenericPacket`1+<Data>e__FixedBuffer',
++       packingSize: 0,
++       properties: []
++     },
++     {
+        attributes: [],
+        baseType: '',
+        classSize: 0,
+        events: [
+          {
+...
+            ],
++           flags: 3542,
+-           flags: 3286,
+            implFlags: 0,
+            name: 'add_Changed',
+            signature: '0:0:1:Void(class System.Action)'
+          },
+          {
+...
+            ],
++           flags: 3542,
+-           flags: 3286,
+            implFlags: 0,
+            name: 'remove_Changed',
+            signature: '0:0:1:Void(class System.Action)'
+          }
+        ],
+...
+      {
++       attributes: [
++         {
++           arguments: [],
++           constructor: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()',
++           name: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute',
++           named: []
++         },
++         {
++           arguments: [],
++           constructor: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute::.ctor 32:0:0:Void()',
++           name: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute',
++           named: []
++         }
++       ],
++       baseType: 'System.ValueType',
++       classSize: 16,
++       events: [],
++       fields: [
++         {
++           attributes: [],
++           constant: null,
++           flags: 6,
++           name: 'FixedElementField',
++           signature: 'Int32'
++         }
++       ],
++       flags: 1048842,
++       implementations: [],
++       interfaces: [],
++       methods: [],
++       name: 'RefSurface.Packet+<Data>e__FixedBuffer',
++       packingSize: 0,
++       properties: []
++     },
++     {
+        attributes: [],
+        baseType: 'System.ValueType',
+        classSize: 0,
+        events: [],
+        fields: [
+...
+              {
+-               arguments: [
+-                 {
+-                   type: 'class System.Diagnostics.DebuggerBrowsableState',
+-                   value: 0
+-                 }
+-               ],
+-               constructor: 'System.Diagnostics.DebuggerBrowsableAttribute::.ctor 32:0:1:Void(valuetype System.Diagnostics.DebuggerBrowsableState)',
+-               name: 'System.Diagnostics.DebuggerBrowsableAttribute',
+-               named: []
+-             },
+-             {
+                arguments: [],
+                constructor: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()',
+                name: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute',
+                named: []
+              }
+...
+              },
+-             {
+-               arguments: [],
+-               constructor: 'System.Runtime.CompilerServices.IsReadOnlyAttribute::.ctor 32:0:0:Void()',
+-               name: 'System.Runtime.CompilerServices.IsReadOnlyAttribute',
+-               named: []
+-             }
+            ],
+            flags: 2182,
+            implFlags: 0,
+            name: 'get_Value',
+            signature: '32:0:0:Int32()'
+
+    at file:///workspace/scratch/7e3d2a445c44/sf6-emission/packages/cil/tools/capture-reference-assemblies.mjs:91:12
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    runtime: '10.0.5',
+    surface: [
+      {
+        name: '<Module>',
+        flags: 0,
+        baseType: '',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Callback',
+        flags: 257,
+        baseType: 'System.MulticastDelegate',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 3,
+            signature: '32:0:2:Void(Object,IntPtr)',
+            attributes: []
+          },
+          {
+            name: 'BeginInvoke',
+            flags: 454,
+            implFlags: 3,
+            signature: '32:0:3:class System.IAsyncResult(Int32,class System.AsyncCallback,Object)',
+            attributes: []
+          },
+          {
+            name: 'EndInvoke',
+            flags: 454,
+            implFlags: 3,
+            signature: '32:0:1:Int32(class System.IAsyncResult)',
+            attributes: []
+          },
+          {
+            name: 'Invoke',
+            flags: 454,
+            implFlags: 3,
+            signature: '32:0:1:Int32(Int32)',
+            attributes: []
+          }
+        ],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Captured',
+        flags: 1048841,
+        baseType: 'System.ValueType',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: '<value>P',
+            flags: 1,
+            signature: 'Object',
+            constant: null,
+            attributes: [Array]
+          }
+        ],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 0,
+            signature: '32:0:1:Void(Object)',
+            attributes: []
+          },
+          {
+            name: 'Read',
+            flags: 134,
+            implFlags: 0,
+            signature: '32:0:0:Object()',
+            attributes: []
+          }
+        ],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Choice',
+        flags: 257,
+        baseType: 'System.Enum',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: 'First',
+            flags: 32854,
+            signature: 'valuetype RefSurface.Choice',
+            constant: [Object],
+            attributes: []
+          },
+          {
+            name: 'Second',
+            flags: 32854,
+            signature: 'valuetype RefSurface.Choice',
+            constant: [Object],
+            attributes: []
+          },
+          {
+            name: 'value__',
+            flags: 1542,
+            signature: 'Byte',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Contract',
+        flags: 1,
+        baseType: 'System.Object',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [
+          {
+            name: 'RefSurface.LocalAttribute',
+            constructor: 'RefSurface.LocalAttribute::.ctor 32:0:1:Void(Int32)',
+            arguments: [Array],
+            named: []
+          }
+        ],
+        interfaces: [ 'RefSurface.IContract' ],
+        implementations: [
+          {
+            body: 'RefSurface.Contract::RefSurface.IContract.Read 32:0:0:Int32()',
+            declaration: 'RefSurface.IContract::Read 32:0:0:Int32()'
+          }
+        ],
+        fields: [
+          {
+            name: 'Answer',
+            flags: 32854,
+            signature: 'Int32',
+            constant: [Object],
+            attributes: []
+          },
+          {
+            name: 'protectedField',
+            flags: 4,
+            signature: 'Int32',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 0,
+            signature: '32:0:0:Void()',
+            attributes: []
+          },
+          {
+            name: 'Protected',
+            flags: 132,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'Read',
+            flags: 134,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'RefSurface.IContract.Read',
+            flags: 481,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'Virtual',
+            flags: 451,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'add_Changed',
+            flags: 2534,
+            implFlags: 0,
+            signature: '32:0:1:Void(class System.Action)',
+            attributes: [Array]
+          },
+          {
+            name: 'get_Value',
+            flags: 2534,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: [Array]
+          },
+          {
+            name: 'remove_Changed',
+            flags: 2534,
+            implFlags: 0,
+            signature: '32:0:1:Void(class System.Action)',
+            attributes: [Array]
+          }
+        ],
+        properties: [
+          {
+            name: 'Value',
+            signature: '40:0:0:Int32()',
+            getter: 'RefSurface.Contract::get_Value 32:0:0:Int32()',
+            setter: '',
+            attributes: []
+          }
+        ],
+        events: [
+          {
+            name: 'Changed',
+            type: 'System.Action',
+            adder: 'RefSurface.Contract::add_Changed 32:0:1:Void(class System.Action)',
+            remover: 'RefSurface.Contract::remove_Changed 32:0:1:Void(class System.Action)',
+            attributes: []
+          }
+        ]
+      },
+      {
+        name: 'RefSurface.Contract+Nested',
+        flags: 1048835,
+        baseType: 'System.Object',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 0,
+            signature: '32:0:0:Void()',
+            attributes: []
+          },
+          {
+            name: 'Visible',
+            flags: 134,
+            implFlags: 0,
+            signature: '32:0:0:Void()',
+            attributes: []
+          }
+        ],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Envelope`1',
+        flags: 1048577,
+        baseType: 'System.Object',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 0,
+            signature: '32:0:0:Void()',
+            attributes: []
+          }
+        ],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Envelope`1+Packet`1',
+        flags: 1048842,
+        baseType: 'System.ValueType',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: 'Data',
+            flags: 6,
+            signature: 'valuetype RefSurface.Envelope`1+Packet`1+<Data>e__FixedBuffer<!0,!1>',
+            constant: null,
+            attributes: [Array]
+          },
+          {
+            name: 'First',
+            flags: 6,
+            signature: '!0',
+            constant: null,
+            attributes: []
+          },
+          {
+            name: 'Second',
+            flags: 6,
+            signature: '!1',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Envelope`1+Packet`1+<Data>e__FixedBuffer',
+        flags: 1048842,
+        baseType: 'System.ValueType',
+        classSize: 4,
+        packingSize: 0,
+        attributes: [
+          {
+            name: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute',
+            constructor: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()',
+            arguments: [],
+            named: []
+          },
+          {
+            name: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute',
+            constructor: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute::.ctor 32:0:0:Void()',
+            arguments: [],
+            named: []
+          }
+        ],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: 'FixedElementField',
+            flags: 6,
+            signature: 'Byte',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Factory',
+        flags: 1048577,
+        baseType: 'System.Object',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [ 'RefSurface.IFactory' ],
+        implementations: [
+          {
+            body: 'RefSurface.Factory::RefSurface.IFactory.Create 0:0:0:Int32()',
+            declaration: 'RefSurface.IFactory::Create 0:0:0:Int32()'
+          },
+          {
+            body: 'RefSurface.Factory::RefSurface.IFactory.add_Changed 0:0:1:Void(class System.Action)',
+            declaration: 'RefSurface.IFactory::add_Changed 0:0:1:Void(class System.Action)'
+          },
+          {
+            body: 'RefSurface.Factory::RefSurface.IFactory.get_Value 0:0:0:Int32()',
+            declaration: 'RefSurface.IFactory::get_Value 0:0:0:Int32()'
+          },
+          {
+            body: 'RefSurface.Factory::RefSurface.IFactory.remove_Changed 0:0:1:Void(class System.Action)',
+            declaration: 'RefSurface.IFactory::remove_Changed 0:0:1:Void(class System.Action)'
+          }
+        ],
+        fields: [],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 0,
+            signature: '32:0:0:Void()',
+            attributes: []
+          },
+          {
+            name: 'RefSurface.IFactory.Create',
+            flags: 145,
+            implFlags: 0,
+            signature: '0:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'RefSurface.IFactory.add_Changed',
+            flags: 2193,
+            implFlags: 0,
+            signature: '0:0:1:Void(class System.Action)',
+            attributes: []
+          },
+          {
+            name: 'RefSurface.IFactory.get_Value',
+            flags: 2193,
+            implFlags: 0,
+            signature: '0:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'RefSurface.IFactory.remove_Changed',
+            flags: 2193,
+            implFlags: 0,
+            signature: '0:0:1:Void(class System.Action)',
+            attributes: []
+          }
+        ],
+        properties: [
+          {
+            name: 'RefSurface.IFactory.Value',
+            signature: '8:0:0:Int32()',
+            getter: 'RefSurface.Factory::RefSurface.IFactory.get_Value 0:0:0:Int32()',
+            setter: '',
+            attributes: []
+          }
+        ],
+        events: [
+          {
+            name: 'RefSurface.IFactory.Changed',
+            type: 'System.Action',
+            adder: 'RefSurface.Factory::RefSurface.IFactory.add_Changed 0:0:1:Void(class System.Action)',
+            remover: 'RefSurface.Factory::RefSurface.IFactory.remove_Changed 0:0:1:Void(class System.Action)',
+            attributes: []
+          }
+        ]
+      },
+      {
+        name: 'RefSurface.GenericPacket`1',
+        flags: 1048841,
+        baseType: 'System.ValueType',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: 'Data',
+            flags: 6,
+            signature: 'valuetype RefSurface.GenericPacket`1+<Data>e__FixedBuffer<!0>',
+            constant: null,
+            attributes: [Array]
+          },
+          {
+            name: 'Tag',
+            flags: 6,
+            signature: '!0',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.GenericPacket`1+<Data>e__FixedBuffer',
+        flags: 1048842,
+        baseType: 'System.ValueType',
+        classSize: 12,
+        packingSize: 0,
+        attributes: [
+          {
+            name: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute',
+            constructor: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()',
+            arguments: [],
+            named: []
+          },
+          {
+            name: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute',
+            constructor: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute::.ctor 32:0:0:Void()',
+            arguments: [],
+            named: []
+          }
+        ],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: 'FixedElementField',
+            flags: 6,
+            signature: 'Int32',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.IContract',
+        flags: 1048737,
+        baseType: '',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: 'Read',
+            flags: 1478,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'add_Changed',
+            flags: 3526,
+            implFlags: 0,
+            signature: '32:0:1:Void(class System.Action)',
+            attributes: [Array]
+          },
+          {
+            name: 'get_Value',
+            flags: 3526,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'remove_Changed',
+            flags: 3526,
+            implFlags: 0,
+            signature: '32:0:1:Void(class System.Action)',
+            attributes: [Array]
+          }
+        ],
+        properties: [
+          {
+            name: 'Value',
+            signature: '40:0:0:Int32()',
+            getter: 'RefSurface.IContract::get_Value 32:0:0:Int32()',
+            setter: '',
+            attributes: []
+          }
+        ],
+        events: [
+          {
+            name: 'Changed',
+            type: 'System.Action',
+            adder: 'RefSurface.IContract::add_Changed 32:0:1:Void(class System.Action)',
+            remover: 'RefSurface.IContract::remove_Changed 32:0:1:Void(class System.Action)',
+            attributes: []
+          }
+        ]
+      },
+      {
+        name: 'RefSurface.IFactory',
+        flags: 1048737,
+        baseType: '',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: 'Create',
+            flags: 1238,
+            implFlags: 0,
+            signature: '0:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'add_Changed',
+            flags: 3542,
+            implFlags: 0,
+            signature: '0:0:1:Void(class System.Action)',
+            attributes: [Array]
+          },
+          {
+            name: 'get_Value',
+            flags: 3286,
+            implFlags: 0,
+            signature: '0:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'remove_Changed',
+            flags: 3542,
+            implFlags: 0,
+            signature: '0:0:1:Void(class System.Action)',
+            attributes: [Array]
+          }
+        ],
+        properties: [
+          {
+            name: 'Value',
+            signature: '8:0:0:Int32()',
+            getter: 'RefSurface.IFactory::get_Value 0:0:0:Int32()',
+            setter: '',
+            attributes: []
+          }
+        ],
+        events: [
+          {
+            name: 'Changed',
+            type: 'System.Action',
+            adder: 'RefSurface.IFactory::add_Changed 0:0:1:Void(class System.Action)',
+            remover: 'RefSurface.IFactory::remove_Changed 0:0:1:Void(class System.Action)',
+            attributes: []
+          }
+        ]
+      },
+      {
+        name: 'RefSurface.LocalAttribute',
+        flags: 1048832,
+        baseType: 'System.Attribute',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6275,
+            implFlags: 0,
+            signature: '32:0:1:Void(Int32)',
+            attributes: []
+          }
+        ],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Packet',
+        flags: 1048841,
+        baseType: 'System.ValueType',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: 'Data',
+            flags: 6,
+            signature: 'valuetype RefSurface.Packet+<Data>e__FixedBuffer',
+            constant: null,
+            attributes: [Array]
+          }
+        ],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Packet+<Data>e__FixedBuffer',
+        flags: 1048842,
+        baseType: 'System.ValueType',
+        classSize: 16,
+        packingSize: 0,
+        attributes: [
+          {
+            name: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute',
+            constructor: 'System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()',
+            arguments: [],
+            named: []
+          },
+          {
+            name: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute',
+            constructor: 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute::.ctor 32:0:0:Void()',
+            arguments: [],
+            named: []
+          }
+        ],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: 'FixedElementField',
+            flags: 6,
+            signature: 'Int32',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Payload',
+        flags: 1048841,
+        baseType: 'System.ValueType',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: '<Value>k__BackingField',
+            flags: 1,
+            signature: 'Int32',
+            constant: null,
+            attributes: [Array]
+          },
+          {
+            name: 'cached',
+            flags: 17,
+            signature: 'Int32',
+            constant: null,
+            attributes: []
+          },
+          {
+            name: 'number',
+            flags: 3,
+            signature: 'Int32',
+            constant: null,
+            attributes: []
+          },
+          {
+            name: 'reference',
+            flags: 1,
+            signature: 'Object',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [
+          {
+            name: 'get_Value',
+            flags: 2182,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: [Array]
+          }
+        ],
+        properties: [
+          {
+            name: 'Value',
+            signature: '40:0:0:Int32()',
+            getter: 'RefSurface.Payload::get_Value 32:0:0:Int32()',
+            setter: '',
+            attributes: []
+          }
+        ],
+        events: []
+      }
+    ],
+    markerCount: 1,
+    bodyCount: 20,
+    allBodiesThrowNull: true,
+    loadRejection: 'BadImageFormatException',
+    loadHResult: -2146234280
+  },
+  expected: {
+    runtime: '10.0.5',
+    surface: [
+      {
+        name: '<Module>',
+        flags: 0,
+        baseType: '',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Callback',
+        flags: 257,
+        baseType: 'System.MulticastDelegate',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 3,
+            signature: '32:0:2:Void(Object,IntPtr)',
+            attributes: []
+          },
+          {
+            name: 'BeginInvoke',
+            flags: 454,
+            implFlags: 3,
+            signature: '32:0:3:class System.IAsyncResult(Int32,class System.AsyncCallback,Object)',
+            attributes: []
+          },
+          {
+            name: 'EndInvoke',
+            flags: 454,
+            implFlags: 3,
+            signature: '32:0:1:Int32(class System.IAsyncResult)',
+            attributes: []
+          },
+          {
+            name: 'Invoke',
+            flags: 454,
+            implFlags: 3,
+            signature: '32:0:1:Int32(Int32)',
+            attributes: []
+          }
+        ],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Captured',
+        flags: 1048841,
+        baseType: 'System.ValueType',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: '<value>P',
+            flags: 1,
+            signature: 'Object',
+            constant: null,
+            attributes: [Array]
+          }
+        ],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 0,
+            signature: '32:0:1:Void(Object)',
+            attributes: []
+          },
+          {
+            name: 'Read',
+            flags: 134,
+            implFlags: 0,
+            signature: '32:0:0:Object()',
+            attributes: []
+          }
+        ],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Choice',
+        flags: 257,
+        baseType: 'System.Enum',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: 'First',
+            flags: 32854,
+            signature: 'valuetype RefSurface.Choice',
+            constant: [Object],
+            attributes: []
+          },
+          {
+            name: 'Second',
+            flags: 32854,
+            signature: 'valuetype RefSurface.Choice',
+            constant: [Object],
+            attributes: []
+          },
+          {
+            name: 'value__',
+            flags: 1542,
+            signature: 'Byte',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Contract',
+        flags: 1,
+        baseType: 'System.Object',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [
+          {
+            name: 'RefSurface.LocalAttribute',
+            constructor: 'RefSurface.LocalAttribute::.ctor 32:0:1:Void(Int32)',
+            arguments: [Array],
+            named: []
+          }
+        ],
+        interfaces: [ 'RefSurface.IContract' ],
+        implementations: [
+          {
+            body: 'RefSurface.Contract::RefSurface.IContract.Read 32:0:0:Int32()',
+            declaration: 'RefSurface.IContract::Read 32:0:0:Int32()'
+          }
+        ],
+        fields: [
+          {
+            name: 'Answer',
+            flags: 32854,
+            signature: 'Int32',
+            constant: [Object],
+            attributes: []
+          },
+          {
+            name: 'protectedField',
+            flags: 4,
+            signature: 'Int32',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 0,
+            signature: '32:0:0:Void()',
+            attributes: []
+          },
+          {
+            name: 'Protected',
+            flags: 132,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'Read',
+            flags: 134,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'RefSurface.IContract.Read',
+            flags: 481,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'Virtual',
+            flags: 963,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'add_Changed',
+            flags: 2534,
+            implFlags: 0,
+            signature: '32:0:1:Void(class System.Action)',
+            attributes: [Array]
+          },
+          {
+            name: 'get_Value',
+            flags: 2534,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: [Array]
+          },
+          {
+            name: 'remove_Changed',
+            flags: 2534,
+            implFlags: 0,
+            signature: '32:0:1:Void(class System.Action)',
+            attributes: [Array]
+          }
+        ],
+        properties: [
+          {
+            name: 'Value',
+            signature: '40:0:0:Int32()',
+            getter: 'RefSurface.Contract::get_Value 32:0:0:Int32()',
+            setter: '',
+            attributes: []
+          }
+        ],
+        events: [
+          {
+            name: 'Changed',
+            type: 'System.Action',
+            adder: 'RefSurface.Contract::add_Changed 32:0:1:Void(class System.Action)',
+            remover: 'RefSurface.Contract::remove_Changed 32:0:1:Void(class System.Action)',
+            attributes: []
+          }
+        ]
+      },
+      {
+        name: 'RefSurface.Contract+Nested',
+        flags: 1048835,
+        baseType: 'System.Object',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 0,
+            signature: '32:0:0:Void()',
+            attributes: []
+          },
+          {
+            name: 'Visible',
+            flags: 134,
+            implFlags: 0,
+            signature: '32:0:0:Void()',
+            attributes: []
+          }
+        ],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Envelope`1',
+        flags: 1048577,
+        baseType: 'System.Object',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 0,
+            signature: '32:0:0:Void()',
+            attributes: []
+          }
+        ],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Envelope`1+Packet`1',
+        flags: 1048842,
+        baseType: 'System.ValueType',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: 'Data',
+            flags: 6,
+            signature: 'valuetype RefSurface.Envelope`1+Packet`1+<Data>e__FixedBuffer<!0,!1>',
+            constant: null,
+            attributes: [Array]
+          },
+          {
+            name: 'First',
+            flags: 6,
+            signature: '!0',
+            constant: null,
+            attributes: []
+          },
+          {
+            name: 'Second',
+            flags: 6,
+            signature: '!1',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Factory',
+        flags: 1048577,
+        baseType: 'System.Object',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [ 'RefSurface.IFactory' ],
+        implementations: [
+          {
+            body: 'RefSurface.Factory::RefSurface.IFactory.Create 0:0:0:Int32()',
+            declaration: 'RefSurface.IFactory::Create 0:0:0:Int32()'
+          },
+          {
+            body: 'RefSurface.Factory::RefSurface.IFactory.add_Changed 0:0:1:Void(class System.Action)',
+            declaration: 'RefSurface.IFactory::add_Changed 0:0:1:Void(class System.Action)'
+          },
+          {
+            body: 'RefSurface.Factory::RefSurface.IFactory.get_Value 0:0:0:Int32()',
+            declaration: 'RefSurface.IFactory::get_Value 0:0:0:Int32()'
+          },
+          {
+            body: 'RefSurface.Factory::RefSurface.IFactory.remove_Changed 0:0:1:Void(class System.Action)',
+            declaration: 'RefSurface.IFactory::remove_Changed 0:0:1:Void(class System.Action)'
+          }
+        ],
+        fields: [],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6278,
+            implFlags: 0,
+            signature: '32:0:0:Void()',
+            attributes: []
+          },
+          {
+            name: 'RefSurface.IFactory.Create',
+            flags: 145,
+            implFlags: 0,
+            signature: '0:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'RefSurface.IFactory.add_Changed',
+            flags: 2193,
+            implFlags: 0,
+            signature: '0:0:1:Void(class System.Action)',
+            attributes: []
+          },
+          {
+            name: 'RefSurface.IFactory.get_Value',
+            flags: 2193,
+            implFlags: 0,
+            signature: '0:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'RefSurface.IFactory.remove_Changed',
+            flags: 2193,
+            implFlags: 0,
+            signature: '0:0:1:Void(class System.Action)',
+            attributes: []
+          }
+        ],
+        properties: [
+          {
+            name: 'RefSurface.IFactory.Value',
+            signature: '8:0:0:Int32()',
+            getter: 'RefSurface.Factory::RefSurface.IFactory.get_Value 0:0:0:Int32()',
+            setter: '',
+            attributes: []
+          }
+        ],
+        events: [
+          {
+            name: 'RefSurface.IFactory.Changed',
+            type: 'System.Action',
+            adder: 'RefSurface.Factory::RefSurface.IFactory.add_Changed 0:0:1:Void(class System.Action)',
+            remover: 'RefSurface.Factory::RefSurface.IFactory.remove_Changed 0:0:1:Void(class System.Action)',
+            attributes: []
+          }
+        ]
+      },
+      {
+        name: 'RefSurface.GenericPacket`1',
+        flags: 1048841,
+        baseType: 'System.ValueType',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: 'Data',
+            flags: 6,
+            signature: 'valuetype RefSurface.GenericPacket`1+<Data>e__FixedBuffer<!0>',
+            constant: null,
+            attributes: [Array]
+          },
+          {
+            name: 'Tag',
+            flags: 6,
+            signature: '!0',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.IContract',
+        flags: 1048737,
+        baseType: '',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: 'Read',
+            flags: 1478,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'add_Changed',
+            flags: 3526,
+            implFlags: 0,
+            signature: '32:0:1:Void(class System.Action)',
+            attributes: [Array]
+          },
+          {
+            name: 'get_Value',
+            flags: 3526,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'remove_Changed',
+            flags: 3526,
+            implFlags: 0,
+            signature: '32:0:1:Void(class System.Action)',
+            attributes: [Array]
+          }
+        ],
+        properties: [
+          {
+            name: 'Value',
+            signature: '40:0:0:Int32()',
+            getter: 'RefSurface.IContract::get_Value 32:0:0:Int32()',
+            setter: '',
+            attributes: []
+          }
+        ],
+        events: [
+          {
+            name: 'Changed',
+            type: 'System.Action',
+            adder: 'RefSurface.IContract::add_Changed 32:0:1:Void(class System.Action)',
+            remover: 'RefSurface.IContract::remove_Changed 32:0:1:Void(class System.Action)',
+            attributes: []
+          }
+        ]
+      },
+      {
+        name: 'RefSurface.IFactory',
+        flags: 1048737,
+        baseType: '',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: 'Create',
+            flags: 1238,
+            implFlags: 0,
+            signature: '0:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'add_Changed',
+            flags: 3286,
+            implFlags: 0,
+            signature: '0:0:1:Void(class System.Action)',
+            attributes: [Array]
+          },
+          {
+            name: 'get_Value',
+            flags: 3286,
+            implFlags: 0,
+            signature: '0:0:0:Int32()',
+            attributes: []
+          },
+          {
+            name: 'remove_Changed',
+            flags: 3286,
+            implFlags: 0,
+            signature: '0:0:1:Void(class System.Action)',
+            attributes: [Array]
+          }
+        ],
+        properties: [
+          {
+            name: 'Value',
+            signature: '8:0:0:Int32()',
+            getter: 'RefSurface.IFactory::get_Value 0:0:0:Int32()',
+            setter: '',
+            attributes: []
+          }
+        ],
+        events: [
+          {
+            name: 'Changed',
+            type: 'System.Action',
+            adder: 'RefSurface.IFactory::add_Changed 0:0:1:Void(class System.Action)',
+            remover: 'RefSurface.IFactory::remove_Changed 0:0:1:Void(class System.Action)',
+            attributes: []
+          }
+        ]
+      },
+      {
+        name: 'RefSurface.LocalAttribute',
+        flags: 1048832,
+        baseType: 'System.Attribute',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [],
+        methods: [
+          {
+            name: '.ctor',
+            flags: 6275,
+            implFlags: 0,
+            signature: '32:0:1:Void(Int32)',
+            attributes: []
+          }
+        ],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Packet',
+        flags: 1048841,
+        baseType: 'System.ValueType',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: 'Data',
+            flags: 6,
+            signature: 'valuetype RefSurface.Packet+<Data>e__FixedBuffer',
+            constant: null,
+            attributes: [Array]
+          }
+        ],
+        methods: [],
+        properties: [],
+        events: []
+      },
+      {
+        name: 'RefSurface.Payload',
+        flags: 1048841,
+        baseType: 'System.ValueType',
+        classSize: 0,
+        packingSize: 0,
+        attributes: [],
+        interfaces: [],
+        implementations: [],
+        fields: [
+          {
+            name: '<Value>k__BackingField',
+            flags: 1,
+            signature: 'Int32',
+            constant: null,
+            attributes: [Array]
+          },
+          {
+            name: 'cached',
+            flags: 17,
+            signature: 'Int32',
+            constant: null,
+            attributes: []
+          },
+          {
+            name: 'number',
+            flags: 3,
+            signature: 'Int32',
+            constant: null,
+            attributes: []
+          },
+          {
+            name: 'reference',
+            flags: 1,
+            signature: 'Object',
+            constant: null,
+            attributes: []
+          }
+        ],
+        methods: [
+          {
+            name: 'get_Value',
+            flags: 2182,
+            implFlags: 0,
+            signature: '32:0:0:Int32()',
+            attributes: [Array]
+          }
+        ],
+        properties: [
+          {
+            name: 'Value',
+            signature: '40:0:0:Int32()',
+            getter: 'RefSurface.Payload::get_Value 32:0:0:Int32()',
+            setter: '',
+            attributes: []
+          }
+        ],
+        events: []
+      }
+    ],
+    markerCount: 1,
+    bodyCount: 20,
+    allBodiesThrowNull: true,
+    loadRejection: 'BadImageFormatException',
+    loadHResult: -2146234280
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

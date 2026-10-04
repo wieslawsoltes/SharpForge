@@ -12,6 +12,7 @@
 import { Accessibility, SymbolKind, TypeKind } from '../types.js';
 import { MethodSymbol, ParameterSymbol, PropertySymbol, MethodKind, DeclarationModifiers } from '../members.js';
 import { baseRecordOf } from './records.js';
+import { recordContractType } from './record-nullability.js';
 
 /** The kinds code generation builds the bodies from (codegen/metadata/record-plan.js names them `RecordBody`). */
 export const RecordContractBody = Object.freeze({ PrintMembers: 'PrintMembers', EqualityContract: 'get_EqualityContract' });
@@ -46,7 +47,7 @@ function synthesize(type, core) {
     : method(RecordContractBody.PrintMembers, {
         name: PRINT_MEMBERS,
         returnType: core.bool,
-        parameters: [new ParameterSymbol({ name: 'builder', type: core.bridge.coreType('System_Text_StringBuilder') })],
+        parameters: [new ParameterSymbol({ name: 'builder', type: recordContractType(type, core.bridge.coreType('System_Text_StringBuilder')) })],
         declaredAccessibility: accessibility,
         modifiers: slot,
       });
@@ -54,14 +55,14 @@ function synthesize(type, core) {
   const getter = method(RecordContractBody.EqualityContract, {
     name: 'get_EqualityContract',
     methodKind: MethodKind.PropertyGet,
-    returnType: core.type,
+    returnType: recordContractType(type, core.type),
     parameters: [],
     declaredAccessibility: accessibility,
     modifiers: slot,
   });
   const equalityContract = new PropertySymbol({
     name: EQUALITY_CONTRACT,
-    type: core.type,
+    type: recordContractType(type, core.type),
     getMethod: getter,
     containingSymbol: type,
     declaredAccessibility: accessibility,

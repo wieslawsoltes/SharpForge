@@ -86,6 +86,13 @@
       "reason": "Developer-run Constant benchmark loads the metadata importer from an explicitly selected trusted local baseline or its fixed workspace path; the tool is not shipped in the product."
     },
     {
+      "path": "packages/cil/tools/benchmark-reference-assemblies.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "dccb1da876096c73d3f2424e707402415303fa38921890be62982cd8d9230996",
+      "reason": "Developer-only reference-output benchmark imports an explicitly selected trusted local compiler checkout; own-checkout package aliases are validated before import, and managed or remote input is never evaluated as host JavaScript."
+    },
+    {
       "path": "packages/compiler/bench/attribute-metadata.bench.js",
       "operation": "dynamic-import",
       "count": 1,
@@ -98,6 +105,13 @@
       "count": 2,
       "sha256": "991308fe80164c4fd7efd012a4dded700a8d73c47044d7678936a3b6249bfe53",
       "reason": "Reviewed developer-only CFG benchmark imports fixed CIL package entry points from operator-selected trusted local baseline/current checkouts. Before import it verifies exact baseline commit, candidate source identity and local workspace aliases; paths never come from CIL, metadata or product input. No generated JavaScript or product dynamic-code surface is added."
+    },
+    {
+      "path": "packages/cil/tools/benchmark-pe-inspection.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "c204eda904ff5768de61dbf319d357c00b997912fd4833f36ce07562f72aa4c1",
+      "reason": "Reviewed developer-only PE benchmark imports the exact pre-PE baseline public CIL entry from a trusted local checkout and the fixed adjacent benchmark module. Before import it verifies the exact baseline commit, frozen candidate source, own public package aliases and the retained native/source fixture hashes. Image bytes are data and never select executable modules. This source-hash/count entry adds no product dynamic-code surface."
     },
     {
       "path": "packages/cil/tools/benchmark-decompiler-inventory.mjs",
@@ -483,6 +497,20 @@
       "count": 1,
       "sha256": "870f793b642673fb43ba8abe2acc047050c7da7f1cd5b15f5f9346baef4320a9",
       "reason": "Developer-run union benchmark loads only the fixed direct-CIL compiler module from two explicitly selected trusted local checkouts. Exact commits and clean tracked files are checked before and after each sequential worker; checkout paths are executable host input and the benchmark is not shipped in the product."
+    },
+    {
+      "path": "packages/compiler/bench/nullable-metadata.bench.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "9d5ce736872b1bd1a0f1525f386be5079b904b7cf3e13dbb49c7c3a4e373c884",
+      "reason": "Trusted operator-selected checkout supplies the fixed @sharpforge/compiler public package entry for the paired nullable benchmark; the resolved entry must stay inside that checkout, and managed source or metadata never selects a JavaScript module."
+    },
+    {
+      "path": "packages/compiler/bench/expression-trees.bench.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "8ed551f7f2714711b0a7a5155edf2d9cbb0d5877dbfd838b917f9318dc5a0da1",
+      "reason": "Developer-run paired benchmark loads the fixed compiler public entry from two explicitly selected trusted local checkouts. Exact clean commit identities and checkout-local workspace aliases are verified before importing; managed source never selects JavaScript modules. The benchmark is not shipped in the product."
     }
   ]
 }

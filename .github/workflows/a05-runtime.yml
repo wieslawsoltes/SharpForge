@@ -1,14 +1,20 @@
 name: A05 native runtime qualification
 # Additional focused evidence for the authorized A05 PR; ordinary CI policy is unchanged.
 on:
+  push:
+    branches: [codex/a05-e01-started-handoff-20261004]
   pull_request:
     types: [opened, synchronize, reopened, edited, labeled, unlabeled]
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: a05-native-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  # Separate skipped PR events from push qualification of the same branch.
+  group: >-
+    ${{ format('a05-native-{0}-{1}-{2}', github.event_name,
+        github.event.pull_request.head.repo.full_name || github.repository,
+        github.head_ref || github.ref_name) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
 defaults:
   run:
     shell: bash
@@ -16,7 +22,11 @@ jobs:
   native:
     if: >-
       ${{ github.event_name == 'workflow_dispatch' ||
-          (contains(github.event.pull_request.labels.*.name, 'full-ci') &&
+          (github.event_name == 'push' && github.ref == 'refs/heads/codex/a05-e01-started-handoff-20261004') ||
+          (github.event_name == 'pull_request' &&
+           (github.event.pull_request.head.repo.full_name != github.repository ||
+            github.head_ref != 'codex/a05-e01-started-handoff-20261004') &&
+           contains(github.event.pull_request.labels.*.name, 'full-ci') &&
            contains(github.event.pull_request.title, 'SF-A05')) }}
     name: A05 / ${{ matrix.os }} / SDK ${{ matrix.sdk.version }}
     runs-on: ${{ matrix.os }}

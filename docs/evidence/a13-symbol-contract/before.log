@@ -1,0 +1,95 @@
+✖ symbols entry point preserves the published exports after extraction (2.032627ms)
+✔ independent symbol builders keep heaps and failures isolated (3.049302ms)
+✔ extracted source helpers retain UTF-16 offsets and empty-source boundaries (0.353329ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 390.049156
+
+✖ failing tests:
+
+test at tests/a13-01-module-contract.test.js:14:1
+✖ symbols entry point preserves the published exports after extraction (2.032627ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      'PdbGuids',
+      'PortablePdbBuilder',
+  +   'PortablePdbGenerations',
+  +   'PortablePdbRevisionMap',
+      'SourceStatus',
+      'SymbolError',
+      'attachPortablePdb',
+      'bindSources',
+      'createSourceFetcher',
+  ...
+      'emitPortablePdb',
+  +   'emitPortablePdbDelta',
+      'guidBytes',
+      'guidString',
+      'hex',
+      'inflateRaw',
+      'loadSymbols',
+  ...
+      'readPortablePdb',
+  +   'readPortablePdbDelta',
+      'readSequencePoints',
+      'resolveSources',
+      'sha1',
+      'sha256',
+      'sourceLinkUrl',
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/7e3d2a445c44/sf6-symbol-contract/tests/a13-01-module-contract.test.js:15:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [
+      'PdbGuids',               'PortablePdbBuilder',
+      'PortablePdbGenerations', 'PortablePdbRevisionMap',
+      'SourceStatus',           'SymbolError',
+      'attachPortablePdb',      'bindSources',
+      'createSourceFetcher',    'createSymbolServer',
+      'decodeSource',           'deflateStored',
+      'emitPortablePdb',        'emitPortablePdbDelta',
+      'guidBytes',              'guidString',
+      'hex',                    'inflateRaw',
+      'loadSymbols',            'peSymbolKey',
+      'portablePdbKey',         'readCustomDebugInformation',
+      'readDebugDirectory',     'readPortablePdb',
+      'readPortablePdbDelta',   'readSequencePoints',
+      'resolveSources',         'sha1',
+      'sha256',                 'sourceLinkUrl',
+      'sourceSpan',             'verifySource',
+      'verifySourceAsync',      'writeCustomDebugInformation',
+      'writeSequencePoints'
+    ],
+    expected: [
+      'PdbGuids',                   'PortablePdbBuilder',
+      'SourceStatus',               'SymbolError',
+      'attachPortablePdb',          'bindSources',
+      'createSourceFetcher',        'createSymbolServer',
+      'decodeSource',               'deflateStored',
+      'emitPortablePdb',            'guidBytes',
+      'guidString',                 'hex',
+      'inflateRaw',                 'loadSymbols',
+      'peSymbolKey',                'portablePdbKey',
+      'readCustomDebugInformation', 'readDebugDirectory',
+      'readPortablePdb',            'readSequencePoints',
+      'resolveSources',             'sha1',
+      'sha256',                     'sourceLinkUrl',
+      'sourceSpan',                 'verifySource',
+      'verifySourceAsync',          'writeCustomDebugInformation',
+      'writeSequencePoints'
+    ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
