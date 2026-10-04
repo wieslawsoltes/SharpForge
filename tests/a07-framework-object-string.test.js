@@ -5,6 +5,7 @@ import {createHash} from 'node:crypto';
 import {compileToIL} from '@sharpforge/compiler';
 import {contracts, findContracts, createRegistry} from '@sharpforge/framework';
 import {BuiltinMap} from '@sharpforge/bytecode';
+import {AssemblyInspector, intrinsicDefinitions, loadAssembly} from '@sharpforge/cil';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {invokeIntrinsic} from '../packages/runtime/src/execution/intrinsics.js';
 import {objectStringInputs, objectStringAssembly, hiddenStringAssembly, primitiveStringAssembly} from './fixtures/object-string.js';
@@ -12,10 +13,10 @@ import {objectStringInputs, objectStringAssembly, hiddenStringAssembly, primitiv
 const directory = new URL('../packages/bcl-core/reference/', import.meta.url);
 const reference = JSON.parse(readFileSync(new URL('object-string-net10.json', directory), 'utf8'));
 const engines = {source: program => new VirtualMachine(program.image), cil: program => new CilVirtualMachine(program.assembly)};
-const objectString = {owner: 'System.Object', name: 'ToString', signature: {isStatic: false, parameters: [], returnType: 'string'}};
+const objectString = intrinsicDefinitions.find(entry => entry.implementation === 'objectToString').descriptor;
 
-function compile(source) {
-  const program = compileToIL('using System;using System.Text;' + source);
+function compile(source, options = {}) {
+  const program = compileToIL('using System;using System.Text;' + source, options);
   assert.equal(program.success, true, JSON.stringify(program.diagnostics));
   return program;
 }
@@ -46,6 +47,41 @@ test('framework Object.ToString: pinned source hash and exact override opt-ins',
     assert.equal(descriptor.isStatic, false);
   }
 });
+
+for (const pipeline of ['bound', 'legacy']) {
+  test(`framework Object.ToString ${pipeline}: emitted calls and profile round trip keep Convert distinct`, () => {
+    const program = compile('object value = new StringBuilder("value");Console.WriteLine(value.ToString());' +
+      'Console.WriteLine(Convert.ToString(value));object empty = null;Console.WriteLine(Convert.ToString(empty));', {pipeline});
+    const inspector = new AssemblyInspector(program.assembly);
+    const calls = inspector.callGraph().filter(call => call.callee).map(call => ({...call, member: inspector.resolveToken(call.callee)}));
+    const objectCalls = calls.filter(call => call.member.owner === 'System.Object' && call.member.name === 'ToString');
+    const convertCalls = calls.filter(call => call.member.owner === 'System.Convert' && call.member.name === 'ToString');
+    assert.equal(objectCalls.length, 1);
+    assert.equal(objectCalls[0].kind, 'callvirt');
+    assert.equal(objectCalls[0].member.signature.isStatic, false);
+    assert.equal(objectCalls[0].member.signature.parameters.length, 0);
+    assert.equal(convertCalls.length, 2);
+    assert(convertCalls.every(call => call.kind === 'call' && call.member.signature.isStatic));
+    const machines = [new VirtualMachine(loadAssembly(program.assembly)), new CilVirtualMachine(program.assembly)];
+    for (const vm of machines) {
+      try {
+        const result = vm.run();
+        assert.equal(result.state, 'terminated', result.fault?.stack);
+        assert.equal(result.output, 'value\nSystem.Text.StringBuilder\n\n');
+      } finally { vm.stop(); }
+    }
+  });
+
+  test(`framework Object.ToString ${pipeline}: null faults after the emitted profile round trip`, () => {
+    const program = compile('object value = null;Console.WriteLine(value.ToString());', {pipeline});
+    const vm = new VirtualMachine(loadAssembly(program.assembly));
+    try {
+      const result = vm.run();
+      assert.equal(result.state, 'faulted');
+      assert.equal(result.fault.name, 'NullReferenceException');
+    } finally { vm.stop(); }
+  });
+}
 
 for (const [engine, create] of Object.entries(engines)) {
   test(`framework Object.ToString ${engine}: object references invoke only opted-in framework overrides`, () => {
