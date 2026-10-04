@@ -109,3 +109,19 @@ test('Namespace cycles and unsupported or unresolved imports fail before a bundl
     await assert.rejects(bundleWorker(join(directory, name)), diagnostic);
   }
 });
+
+test('Pinned HarfBuzz factories bundle as static named exports without an eager Wasm instance', async t => {
+  const directory = await fixture(t, {});
+  const vendor = fileURLToPath(new URL('../packages/rendering/vendor/harfbuzz/', import.meta.url));
+  const specifier = name => {
+    const path = relative(directory, join(vendor, name)).split(sep).join('/');
+    return path.startsWith('.') ? path : './' + path;
+  };
+  await writeFile(join(directory, 'entry.js'), `import * as native from ${JSON.stringify(specifier('hb.js'))};
+import {hbjs} from ${JSON.stringify(specifier('hbjs.js'))};
+process.stdout.write(JSON.stringify({factory: typeof native.createHarfBuzz, adapter: typeof hbjs}));`);
+  const source = await bundleWorker(join(directory, 'entry.js'));
+  assert.doesNotMatch(source, /^[\t ]*(?:import|export)\s/m);
+  assert.doesNotMatch(source, /\bimport\s*\(/);
+  assert.deepEqual(await runBundle(directory, source), {factory: 'function', adapter: 'function'});
+});

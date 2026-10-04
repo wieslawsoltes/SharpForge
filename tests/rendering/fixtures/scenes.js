@@ -1,4 +1,5 @@
-import {DrawingContext, BrowserTextProvider, TextLayoutService} from '@sharpforge/rendering';
+import {DrawingContext, BrowserTextProvider, TextLayoutService, createControlRenderers} from '@sharpforge/rendering';
+import {createControlGallery} from './control-gallery.js';
 import {compositionScene, effectGraph} from './composition-scenes.js';
 import {createNumericTextFixture} from './numeric-text.js';
 import {createPathReferenceFixture} from './path-reference.js';
@@ -8,6 +9,7 @@ const gradient = {kind: 'linear', start: [0, 0], end: [1, 0], stops: [{offset: 0
 
 /** Fixed DIP fixtures deliberately include alpha, retained layers and resource handles. */
 export function createFixture(definition, options) {
+  if (definition.scene === 'control-gallery') return createControlGallery(definition, options);
   if (definition.scene === 'numeric-text') return createNumericTextFixture(definition, options);
   if (definition.scene === 'path-reference') return createPathReferenceFixture(definition, options);
   const {document, resources} = options;
@@ -62,6 +64,13 @@ export function createFixture(definition, options) {
       context.DrawGlyphRun(resources.register('glyphRun', run), [4, 2], '#202020');
       cleanup.push(() => text.dispose());
       return {textService: text};
+    },
+    'control-chrome'() {
+      const node = {id: definition.id, type: 'Microsoft.UI.Xaml.Controls.' + definition.control, properties: {Background: '#f8f8f8', BorderBrush: '#808080',
+        BorderThickness: {Left: 1, Top: 1, Right: 1, Bottom: 1}, CornerRadius: 4, IsEnabled: true}};
+      const list = createControlRenderers().encode(node, {bounds: [0, 0, width, height], width, height}, resources);
+      if (!list) throw new TypeError('Control fixture has no registered renderer: ' + definition.control);
+      context.DrawLayer({displayList: list});
     },
     'instances-10k'() {
       for (let index = 0; index < 10000; index++) {
