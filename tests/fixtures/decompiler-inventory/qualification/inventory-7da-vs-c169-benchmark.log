@@ -1,0 +1,237 @@
+{
+  "output": "/workspace/scratch/7e3d2a445c44/inventory-7da-vs-c169-benchmark.json",
+  "results": [
+    {
+      "case": "ArithmeticAssembly",
+      "workload": "decompileAssembly.bytes",
+      "variant": "baseline",
+      "measuredSamples": 100,
+      "batchMeanNanosecondsPerCall": {
+        "median": 72283.90000018408,
+        "p95": 152632.50000134576,
+        "p99": 303862.9000016954
+      },
+      "batchHeapDeltaBytes": {
+        "median": 2088356,
+        "p95": 2110240,
+        "p99": 2113544
+      },
+      "batchArrayBufferDeltaBytes": {
+        "median": 0,
+        "p95": 0,
+        "p99": 0
+      }
+    },
+    {
+      "case": "ArithmeticAssembly",
+      "workload": "decompileAssembly.bytes",
+      "variant": "candidate",
+      "measuredSamples": 100,
+      "batchMeanNanosecondsPerCall": {
+        "median": 154396.50000043912,
+        "p95": 379386.0000005225,
+        "p99": 730412.6500006532
+      },
+      "batchHeapDeltaBytes": {
+        "median": 4223192,
+        "p95": 4308184,
+        "p99": 4322016
+      },
+      "batchArrayBufferDeltaBytes": {
+        "median": 0,
+        "p95": 0,
+        "p99": 0
+      }
+    },
+    {
+      "case": "ArithmeticAssembly",
+      "workload": "decompileAssembly.cachedInspector",
+      "variant": "baseline",
+      "measuredSamples": 100,
+      "batchMeanNanosecondsPerCall": {
+        "median": 21719.450000091456,
+        "p95": 37924.80000120122,
+        "p99": 77101.90000070725
+      },
+      "batchHeapDeltaBytes": {
+        "median": 780312,
+        "p95": 802256,
+        "p99": 802616
+      },
+      "batchArrayBufferDeltaBytes": {
+        "median": 0,
+        "p95": 0,
+        "p99": 0
+      }
+    },
+    {
+      "case": "ArithmeticAssembly",
+      "workload": "decompileAssembly.cachedInspector",
+      "variant": "candidate",
+      "measuredSamples": 100,
+      "batchMeanNanosecondsPerCall": {
+        "median": 93541.95000050822,
+        "p95": 207597.54999889992,
+        "p99": 217010.4500008165
+      },
+      "batchHeapDeltaBytes": {
+        "median": 2872332,
+        "p95": 2926712,
+        "p99": 2934552
+      },
+      "batchArrayBufferDeltaBytes": {
+        "median": 0,
+        "p95": 0,
+        "p99": 0
+      }
+    },
+    {
+      "case": "ArithmeticAssembly",
+      "workload": "inventoryOnly.cachedInspector",
+      "variant": "candidate",
+      "measuredSamples": 100,
+      "batchMeanNanosecondsPerCall": {
+        "median": 60259.4499992847,
+        "p95": 108693.30000132322,
+        "p99": 243599.24999880604
+      },
+      "batchHeapDeltaBytes": {
+        "median": 2190400,
+        "p95": 2221112,
+        "p99": 2261776
+      },
+      "batchArrayBufferDeltaBytes": {
+        "median": 0,
+        "p95": 0,
+        "p99": 0
+      }
+    },
+    {
+      "case": "NativeCfgAssembly",
+      "workload": "decompileAssembly.bytes",
+      "variant": "baseline",
+      "measuredSamples": 100,
+      "batchMeanNanosecondsPerCall": {
+        "median": 47506043.19999984,
+        "p95": 57829114.54999994,
+        "p99": 62784909.000000335
+      },
+      "batchHeapDeltaBytes": {
+        "median": 4359464,
+        "p95": 67428248,
+        "p99": 68071152
+      },
+      "batchArrayBufferDeltaBytes": {
+        "median": 1603,
+        "p95": 2987,
+        "p99": 3063
+      }
+    },
+    {
+      "case": "NativeCfgAssembly",
+      "workload": "decompileAssembly.bytes",
+      "variant": "candidate",
+      "measuredSamples": 100,
+      "batchMeanNanosecondsPerCall": {
+        "median": 47874247.4249997,
+        "p95": 63093715.30000062,
+        "p99": 66887640.79999819
+      },
+      "batchHeapDeltaBytes": {
+        "median": 16103716,
+        "p95": 79988864,
+        "p99": 80682088
+      },
+      "batchArrayBufferDeltaBytes": {
+        "median": 1032,
+        "p95": 2796,
+        "p99": 3203
+      }
+    },
+    {
+      "case": "NativeCfgAssembly",
+      "workload": "decompileAssembly.cachedInspector",
+      "variant": "baseline",
+      "measuredSamples": 100,
+      "batchMeanNanosecondsPerCall": {
+        "median": 44725464.24999891,
+        "p95": 57957661.15000006,
+        "p99": 64637759.44999943
+      },
+      "batchHeapDeltaBytes": {
+        "median": 19943628,
+        "p95": 84361728,
+        "p99": 84491352
+      },
+      "batchArrayBufferDeltaBytes": {
+        "median": -435,
+        "p95": 2516,
+        "p99": 2543
+      }
+    },
+    {
+      "case": "NativeCfgAssembly",
+      "workload": "decompileAssembly.cachedInspector",
+      "variant": "candidate",
+      "measuredSamples": 100,
+      "batchMeanNanosecondsPerCall": {
+        "median": 46256903.92500037,
+        "p95": 57384879.89999994,
+        "p99": 64418553.999997675
+      },
+      "batchHeapDeltaBytes": {
+        "median": 32715748,
+        "p95": 96766632,
+        "p99": 97247360
+      },
+      "batchArrayBufferDeltaBytes": {
+        "median": 300,
+        "p95": 3003,
+        "p99": 3147
+      }
+    },
+    {
+      "case": "NativeCfgAssembly",
+      "workload": "inventoryOnly.cachedInspector",
+      "variant": "candidate",
+      "measuredSamples": 100,
+      "batchMeanNanosecondsPerCall": {
+        "median": 428098.02500050864,
+        "p95": 685741.5000005858,
+        "p99": 821404.0000006207
+      },
+      "batchHeapDeltaBytes": {
+        "median": 11919052,
+        "p95": 11949696,
+        "p99": 11972800
+      },
+      "batchArrayBufferDeltaBytes": {
+        "median": 0,
+        "p95": 0,
+        "p99": 0
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "case": "ArithmeticAssembly",
+      "workload": "decompileAssembly.bytes",
+      "medianWholeApiChangePercent": 113.59735708787979
+    },
+    {
+      "case": "ArithmeticAssembly",
+      "workload": "decompileAssembly.cachedInspector",
+      "medianWholeApiChangePercent": 330.68286720020234
+    },
+    {
+      "case": "NativeCfgAssembly",
+      "workload": "decompileAssembly.bytes",
+      "medianWholeApiChangePercent": 0.7750681812200622
+    },
+    {
+      "case": "NativeCfgAssembly",
+      "workload": "decompileAssembly.cachedInspector",
+      "medianWholeApiChangePercent": 3.4240889405669828
+    }
+  ]
+}

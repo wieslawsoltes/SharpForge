@@ -1,0 +1,15 @@
+{
+  "sdk": "10.0.201",
+  "compiler": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+  "referencePack": "10.0.5",
+  "platform": "linux",
+  "architecture": "x64",
+  "files": {
+    "Program.cs": "6aa094afd8be650f2e4fe89ed45d56bc847e9d27e66718b70dbd9ad7fcbad683",
+    "SignatureNames.cs": "cd25e6e177724e570b04776628e0a980cb0fd6fc253b0e38acc42686e2223a20",
+    "AttributeTypes.cs": "115835173cef48291f73b9eea083c77f6473d8787c2fc33e3812fea19c94cea9",
+    "surface.cs": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+    "consumer.cs": "b946bed9db205d6dd65b7fdcf261c5ddaf3ba92ea9aa5d9130143a4d5e8c2716",
+    "observer-enums.cs": "51508e5a7462f297a160228152f8fb418460fc3629790a6bcf69dc6622008f1e"
+  }
+}

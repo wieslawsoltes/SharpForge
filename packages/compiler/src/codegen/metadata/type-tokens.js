@@ -76,13 +76,18 @@ export class TypeTokens {
     view.substitution = substitution;
     return view;
   }
-  /** TypeDef or TypeRef token of a type definition. */
+  /** TypeDef/TypeRef of a type definition, or a framework signature modifier by its full metadata name. */
   definitionToken(type) {
+    if (typeof type === 'string') return this.builder.typeRef(type);
     // An anonymous type is declared by its generic class (symbols/synthesized/anonymous-types.js).
     if (type.isAnonymousType) return this.definitionToken(type.metadataForm());
     const definition = type.originalDefinition ?? type,
       defined = this.definitions.get(definition);
     if (defined) return defined;
+    return this.referenceToken(definition);
+  }
+  /** A TypeRef chain, including a local enclosing type when a synthesized nested definition is omitted by refout. */
+  referenceToken(definition) {
     let reference = this.references.get(definition);
     if (reference) return reference;
     const outer = definition.containingType;
@@ -90,7 +95,11 @@ export class TypeTokens {
       // `dynamic` is `System.Object` wherever a type is named by a token (`newarr`, `castclass`, a generic argument).
       reference = this.builder.typeRef(OBJECT, this.assemblyOf(definition, OBJECT) ?? contractAssemblyOf('System', 'Object'));
     } else if (outer) {
-      reference = this.builder.addRow('TypeRef', { ResolutionScope: this.definitionToken(outer), Name: definition.metadataName, Namespace: '' });
+      reference = this.builder.addRow('TypeRef', { ResolutionScope: this.referenceToken(outer.originalDefinition ?? outer),
+        Name: definition.metadataName, Namespace: '' });
+    } else if (this.definitions.has(definition)) {
+      // A nil ResolutionScope names the current module; TypeDef is not a valid ResolutionScope tag.
+      reference = this.builder.addRow('TypeRef', { ResolutionScope: 0, Name: definitionNameOf(definition), Namespace: namespaceOf(definition) });
     } else {
       const namespace = namespaceOf(definition),
         name = definition.metadataName;
@@ -107,7 +116,7 @@ export class TypeTokens {
     try {
       return encodeTypeSignature(this.substitution ? substituteType(type, this.substitution) : type, this.tokenOf);
     } catch (error) {
-      // The encoder names the type it has no signature for (a function pointer, `dynamic`); anything else is a defect.
+      // The encoder names a type it has no signature for; anything else is a defect.
       if (/^Cannot encode /.test(error?.message ?? '')) throw new MetadataEmitError(error.message);
       throw error;
     }

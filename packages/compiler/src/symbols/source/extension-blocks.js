@@ -133,7 +133,7 @@ export const ExtensionBlockBuilder = Base =>
       method.parameters = Object.freeze(parameters);
       const clauses = [...(block.constraintClauses ?? []), ...(shape.constraintClauses ?? [])];
       if (clauses.length)
-        bindConstraintClauses(typeParameters, clauses, t => this.bindType(t, methodScope).type, report, {
+        bindConstraintClauses(typeParameters, clauses, t => this.bindType(t, methodScope), report, {
           ownerDisplay: shape.name,
           useFeature: (node, feature) => this.host.useFeature?.(uri, node, feature),
         });

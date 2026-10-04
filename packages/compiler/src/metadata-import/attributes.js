@@ -1,6 +1,10 @@
 import {DiagnosticId} from '../diagnostics/codes.js';
+import { applyNullableMetadataFlags as applyNullableTransform } from '../nullable/metadata-flags.js';
+import { flatTypeArguments as flatArguments, withTypeArguments as rebuild, withArrayElement as arrayWith,
+  withFunctionPointerTypes as functionPointerWith } from '../symbols/annotated-type-shape.js';
+export { applyNullableTransform };
 import {decodeCustomAttribute} from '@sharpforge/cil';
-import {TypeWithAnnotations,NullableAnnotation,NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,PointerTypeSymbol,FunctionPointerTypeSymbol,TypeParameterSymbol,ErrorTypeSymbol,DynamicTypeSymbol,RefKind,SymbolDisplayFormat} from '../symbols/types.js';
+import {TypeWithAnnotations,NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,PointerTypeSymbol,FunctionPointerTypeSymbol,ErrorTypeSymbol,DynamicTypeSymbol,RefKind,SymbolDisplayFormat} from '../symbols/types.js';
 /**
  * Custom-attribute decoding for imported metadata (ECMA-335 II.23.3) and the well-known attributes the
  * compiler gives meaning to: ParamArray, Extension, Obsolete, Conditional, DefaultMember, Nullable /
@@ -97,46 +101,7 @@ export function grantsInternalsAccess(declarations,identity){
   return declarations.some(text=>{const [name,...rest]=text.split(',').map(p=>p.trim());if(name.toLowerCase()!==identity.name.toLowerCase())return false;const key=rest.map(p=>/^PublicKey\s*=\s*([0-9a-f]+)$/i.exec(p)).find(Boolean)?.[1];return !key||key.toLowerCase()===identity.publicKey;});
 }
 
-const annotationOf=flag=>flag===1?NullableAnnotation.NotAnnotated:flag===2?NullableAnnotation.Annotated:NullableAnnotation.Oblivious;
 const Mismatch=Symbol('mismatch');
-/** Type arguments of a named type including those of its containing types, outermost first. */
-function flatArguments(type){const outer=type.containingType;return [...(outer?.isGenericType?flatArguments(outer):[]),...(type.isDefinition&&!(outer?.isGenericType&&!outer.isDefinition)?[]:type.typeArguments)];}
-/** Rebuilds a constructed named type (and its containers) with replacement type arguments. */
-function rebuild(type,args){
-  const outer=type.containingType,outerCount=outer?.isGenericType?flatArguments(outer).length:0,own=args.slice(outerCount),newOuter=outerCount?rebuild(outer,args.slice(0,outerCount)):outer;
-  if(newOuter===outer&&own.every((a,i)=>a===type.typeArguments[i]))return type;
-  const copy=new ConstructedNamedTypeSymbol(type.originalDefinition,own,newOuter);copy.tupleElementNames=type.tupleElementNames;return copy;
-}
-const arrayWith=(type,element)=>element===type.elementTypeWithAnnotations?type:new ArrayTypeSymbol(element,type.rank,{isSZArray:type.isSZArray,baseType:type._base,interfaces:type._interfaces});
-const functionPointerWith=(type,visit)=>{const s=type.signature,returnType=visit(s.returnType,s.returnRefKind),parameters=s.parameters.map(p=>({type:visit(p.type,p.refKind),refKind:p.refKind}));return returnType===s.returnType&&parameters.every((p,i)=>p.type===s.parameters[i].type)?type:new FunctionPointerTypeSymbol({...s,returnType,parameters});};
-/**
- * Applies NullableAttribute data to a type (docs/features/nullable-metadata.md): one byte per reference type,
- * array, type parameter and generic value type in pre-order; non-generic value types and Nullable<T> take none.
- * @param {TypeWithAnnotations|TypeSymbol} type
- * @param {number[]|number|null} flags the attribute value: an array, the single-byte form, or null when absent
- * @param {number} [defaultFlag] the enclosing NullableContext value, used when `flags` is null
- * @returns {TypeWithAnnotations} the type unchanged when the data does not fit it
- */
-export function applyNullableTransform(type,flags,defaultFlag=0){
-  const input=TypeWithAnnotations.create(type);if(flags==null&&!defaultFlag)return input;
-  const uniform=Array.isArray(flags)?null:flags??defaultFlag;let position=0;
-  const next=()=>{if(uniform!==null)return uniform;if(position>=flags.length)throw Mismatch;return flags[position++];};
-  const visit=t=>{
-    const s=t.type;
-    if(s instanceof TypeParameterSymbol||s instanceof DynamicTypeSymbol)return t.withAnnotation(annotationOf(next()));
-    if(s instanceof ArrayTypeSymbol){const flag=next();return t.withType(arrayWith(s,visit(s.elementTypeWithAnnotations))).withAnnotation(annotationOf(flag));}
-    if(s instanceof PointerTypeSymbol){next();const pointee=visit(s.pointedAtTypeWithAnnotations);return pointee===s.pointedAtTypeWithAnnotations?t:t.withType(new PointerTypeSymbol(pointee));}
-    if(s instanceof FunctionPointerTypeSymbol){next();return t.withType(functionPointerWith(s,visit));}
-    if(s instanceof ErrorTypeSymbol){const flag=next();s.typeArguments.forEach(visit);return t.withAnnotation(annotationOf(flag));}
-    if(s instanceof NamedTypeSymbol){
-      const args=flatArguments(s);
-      if(s.isValueType){if(!args.length)return t;if(!s.isNullableValueType)next();return t.withType(rebuild(s,args.map(visit)));}
-      const flag=next();return t.withType(rebuild(s,args.map(visit))).withAnnotation(annotationOf(flag));
-    }
-    return t;
-  };
-  try{const result=visit(input);return uniform===null&&position!==flags.length?input:result;}catch(e){if(e===Mismatch)return input;throw e;}
-}
 /**
  * Applies DynamicAttribute transform flags: one flag per type node in pre-order, preceded by one (false) flag for a
  * by-reference parameter or return and one per custom modifier; `true` turns System.Object into dynamic.

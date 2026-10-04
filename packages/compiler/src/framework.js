@@ -5,21 +5,12 @@ import {typeText} from './type-utils.js';
 import {emitValueArgument} from './codegen/value-arguments.js';
 import {memberPath as pathOf} from './binder/member-path.js';
 import {registeredIndexerContract,prepareRegisteredIndexer} from './framework-indexers.js';
+import {frameworkReceiver,frameworkProperty} from './framework-receivers.js';
+import {legacyRegisteredField,prepareReadonlyField} from './codegen/registered-fields.js';
 /** Closed framework binder layer (class mixin, composed in method-compiler.js); ordinary user members retain precedence. */
 export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
-    frameworkReceiver(node) {
-      if(node?.kind!=='Member')return null;
-      const path=pathOf(node.target),staticType=path&&!this.c.findType(path,this.m)&&frameworkType(path==='string'?'System.String':path);
-      if(staticType)return {type:staticType.name,isStatic:true,node:null};
-      const inferred=this.infer(node.target),type=inferred==='string'?'System.String':canonicalType(inferred);
-      return frameworkType(type)?{type:frameworkType(type).name,isStatic:false,node:node.target}:null;
-    }
-    frameworkProperty(node) {
-      const receiver=this.frameworkReceiver(node);if(!receiver)return null;
-      const get=findContracts(receiver.type,'get_'+node.name,receiver.isStatic)[0];
-      const set=findContracts(receiver.type,'set_'+node.name,receiver.isStatic)[0];
-      return get||set?{receiver,get,set,type:get?.result??set.parameters[0]}:null;
-    }
+    frameworkReceiver(node) { return frameworkReceiver(this,node); }
+    frameworkProperty(node) { return frameworkProperty(this,node); }
     delegateMethod(node,type,report=false) {
       const contract=frameworkType(type);if(contract?.kind!=='delegate')return null;
       const target=node.kind==='New'&&node.args.length===1?node.args[0]:node;
@@ -65,7 +56,7 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     }
     frameworkInfer(node) {
       if(node.kind==='Index')return registeredIndexerContract(this.infer(node.target),'get')?.result;
-      if(node.kind==='Member')return enumValue(pathOf(node))?.type??this.frameworkProperty(node)?.type;
+      if(node.kind==='Member')return legacyRegisteredField(this,node)?.type??enumValue(pathOf(node))?.type??this.frameworkProperty(node)?.type;
       if(node.kind==='New')return this.c.findType(node.type,this.m)?undefined:frameworkType(node.type)?.name;
       if(node.kind==='Call')return this.frameworkCall(node)?.contract.result;
       return undefined;
@@ -73,6 +64,11 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     frameworkExpression(node) {
       if(node.kind==='Index'){const get=registeredIndexerContract(this.infer(node.target),'get');if(get){this.expr(node.target);this.checkAssign(get.parameters[0],this.expr(node.index),node.index);return this.emitContract(get);}}
       if(node.kind==='Member') {
+        const field = legacyRegisteredField(this,node);
+        if (field) {
+          this.emitConstant(field.value);
+          return field.type;
+        }
         const constant=enumValue(pathOf(node));if(constant){this.emit(Op.ENUM,enumTypes.indexOf(constant.type),constant.value);return constant.type;}
         const p=this.frameworkProperty(node);if(p){if(!p.get){this.c.report(node,DiagnosticId.CS0154,[node.name]);this.emitConstant(null);return p.type;}if(!p.receiver.isStatic)this.expr(p.receiver.node);return this.emitContract(p.get);}
       }
@@ -104,6 +100,8 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     }
     prepareFramework(node) {
       if(node.kind==='Index')return prepareRegisteredIndexer(this,node);
+      const field = legacyRegisteredField(this,node);
+      if (field) return prepareReadonlyField(this,node,field);
       const p=this.frameworkProperty(node);if(!p)return null;
       if(!p.set)this.c.report(node,DiagnosticId.CS0200,[node.name]);
       let receiver=null;if(!p.receiver.isStatic){this.expr(p.receiver.node);receiver=this.temp(p.receiver.type);this.emit(Op.STLOC,receiver);this.emit(Op.POP);}

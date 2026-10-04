@@ -1,0 +1,32 @@
+{
+  "testedCommit": "cb976795faf73dce5f88b72d696c39071e874f47",
+  "testedTree": "f9654cde17a4afb6e8783e5a7c6dd1426bcd1e99",
+  "mainParent": "eadd85149b0740f337f7b8f3e92d259353892fdb",
+  "tests": 49,
+  "passed": 49,
+  "failed": 0,
+  "skipped": 0,
+  "durationMs": 7147.891841,
+  "logSha256": "ada444085a851cc214961c9dd5e381aa2d07b9483a15f588b4d39c192fc2c22e",
+  "sdk": "10.0.201",
+  "referencePack": "10.0.5",
+  "roslyn": "5.3.0.0",
+  "platform": "Linux x64",
+  "cleanBeforeAndAfter": true,
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/compiler-expression-tree-native.test.js",
+    "tests/compiler-expression-tree-restrictions.test.js",
+    "tests/compiler-expression-trees.test.js",
+    "tests/compiler-cil-emission-expression-trees.test.js"
+  ],
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "resolution": "Preserve extracted creation factories, which already include main\u2019s synthesized-struct constructor parameter check; retain all main manifest entries and the exact expression benchmark entry."
+}

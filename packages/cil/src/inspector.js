@@ -3,9 +3,9 @@ import { assemblySummary } from './browser/summary.js';
 import { inspectorCallGraph } from './browser/analyzers-call-graph.js';
 import { metadataTokenUri, resolveMetadataUri } from './browser/navigation.js';
 import { readSignature, token, decodeCoded } from './metadata.js';
-import { decodeInstructions } from './opcodes.js';
+import { describedInspectorMethod, inspectorMethodDefinition } from './inspector-method.js';
 import { CilError, Reader, text } from './binary.js';
-export const ilLabel = value=>'IL_'+value.toString(16).padStart(4,'0');
+export { ilLabel } from './inspector-method.js';
 export const tokenHex = value=>'0x'+value.toString(16).padStart(8,'0');
 /** Lazy, read-only managed PE inspection. Reading an assembly never runs its code. */
 export class AssemblyInspector {
@@ -21,7 +21,7 @@ export class AssemblyInspector {
         this.owners.set(ft,type);this.fields.set(ft,field);type.fields.push(field);
       }
       for(const mt of md.list(t,'MethodList')){
-        const mr=md.row(mt),method={token:mt,owner:type.name,ownerToken:t,name:md.string(mr[3]),flags:mr[2],implFlags:mr[1],rva:mr[0],hasBody:mr[0]!==0,isEntryPoint:mt===this.pe.entryPoint};
+        const method=inspectorMethodDefinition(md,mt,type,this.pe);
         this.owners.set(mt,type);this.methods.set(mt,method);type.methods.push(method);
       }
     }
@@ -57,20 +57,7 @@ export class AssemblyInspector {
     if(d.kind==='method')return `${d.signature.isStatic?'':'instance '}${d.signature.returnType} ${d.owner}::${d.name}${d.genericArguments?'<'+d.genericArguments.join(', ')+'>':''}(${d.signature.parameters.join(', ')})`;
     return tokenHex(t);
   }
-  getMethod(t){
-    if(this.cache.has(t))return this.cache.get(t);
-    const definition=this.methods.get(t);if(!definition)throw new CilError('MethodDef not found');
-    const md=this.metadata,signature=this.signature(t),parameters=[];
-    for(const parameterToken of md.list(t,'ParamList')){const r=md.row(parameterToken);parameters.push({sequence:r[1],name:md.string(r[2]),flags:r[0]});}
-    const info=this.debug?.methods?.find(m=>m.token===t),points=new Map((this.debug?.sequencePoints??[]).filter(p=>p.methodToken===t).map(p=>[p.ilOffset,p]));
-    let method={...definition,signature,parameters,id:info?.id??null,locals:[],instructions:[],handlers:[],codeSize:0,maxStack:0};
-    if(definition.hasBody){
-      const body=this.pe.methodBody(t),locals=body.localSignature?this.signature(body.localSignature).types:[];
-      const instructions=decodeInstructions(body.code,this.options).map(i=>({...i,label:ilLabel(i.offset),operandText:i.operandKind==='token'?this.describeToken(i.operand):i.operandKind==='switch'?'('+i.operand.map(ilLabel).join(', ')+')':i.operandKind.startsWith('br')?ilLabel(i.operand):i.operand===undefined?'':String(i.operand),point:points.get(i.offset)??null}));
-      method={...method,locals,instructions,handlers:body.handlers,maxStack:body.maxStack,codeSize:body.code.length,localSignature:body.localSignature,initLocals:body.initLocals};
-    }
-    this.cache.set(t,method);return method;
-  }
+  getMethod(t) { return describedInspectorMethod(this,t); }
   /** Stable module/token URI without decoding the referenced member. */
   tokenUri(token) {
     return metadataTokenUri(this.metadata, token);

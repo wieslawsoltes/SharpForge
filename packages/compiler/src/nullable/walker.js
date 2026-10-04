@@ -23,6 +23,7 @@ import { NullableTypeArgumentChecks } from './walker-type-arguments.js';
 import { NullableLambdas } from './walker-lambdas.js';
 import { NullableLoops } from './walker-loops.js';
 import { NullableRules } from './walker-rules.js';
+import { NullableUnionFlow } from './union-flow.js';
 import { NOT_NULL, MAYBE_NULL, joinStates, FlowState, joinFlow } from './flow-state.js';
 import { NullableAnnotation, RefKind, SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
@@ -419,4 +420,5 @@ class NullableWalkerCore {
 
 /** The nullable flow walker: statements and expressions (above) composed with the condition and loop rules. */
 const NullableConditionRules = Base => NullableConditionalAccess(NullableAttributeRules(NullableConditions(NullableTypeArgumentChecks(Base))));
-export class NullableWalker extends NullableRules(NullableLoops(NullableConditionRules(NullableMemberSlots(NullableLambdas(NullableWalkerCore))))) {}
+const NullableBase = NullableRules(NullableLoops(NullableConditionRules(NullableMemberSlots(NullableLambdas(NullableWalkerCore)))));
+export class NullableWalker extends NullableUnionFlow(NullableBase) {}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "workId": "SF-A13-T16",
+  "policyReferences": [
+    "planning/qualification/oracle-licenses.md",
+    "planning/qualification/oracle-licenses.json"
+  ],
+  "observer": {
+    "source": "Program.cs",
+    "targetFramework": "net10.0",
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "mode": "PEReader and SRM inspection",
+    "executesInput": false
+  },
+  "retention": {
+    "upstreamInputs": "external-cache-only",
+    "upstreamBinaryCopiesInRepository": false,
+    "upstreamPayloadsInRetainedJson": "SHA256 only",
+    "allowedEvidence": [
+      "source identities",
+      "scalar metadata facts",
+      "method names and tokens",
+      "sizes",
+      "SHA256 hashes"
+    ],
+    "qualification": "Results are recorded separately; this manifest is not a completed capture."
+  },
+  "images": [
+    {
+      "id": "r2r",
+      "fileName": "System.ComponentModel.Primitives.dll",
+      "bytes": 71432,
+      "sha256": "d34230d85e2dcdd7965812fa9f103e1ea3ebad47a6ec44f60efc5ced0b397c68",
+      "expectedImageKind": "ReadyToRun",
+      "cacheOnly": true,
+      "source": {
+        "kind": "dotnet-sdk-archive",
+        "sdk": "10.0.201",
+        "runtime": "10.0.5",
+        "rid": "linux-x64",
+        "relativePath": "shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll",
+        "archiveUrl": "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.201/dotnet-sdk-10.0.201-linux-x64.tar.gz",
+        "archiveSha512": "a33354e3291aa21ea5e1983733f001d45264c31ee3c0dc4a85509d4cb6d4896cfec57fd2143a7b54c93bc42b328e059b16802b4085257a367ef2652f1c8fa424",
+        "releaseMetadataUrl": "https://builds.dotnet.microsoft.com/dotnet/release-metadata/10.0/releases.json"
+      },
+      "licenseReferences": [
+        {
+          "archivePath": "LICENSE.txt",
+          "sourceUrl": "https://github.com/dotnet/sdk/blob/v10.0.201/LICENSE.TXT"
+        },
+        {
+          "archivePath": "ThirdPartyNotices.txt",
+          "sourceUrl": "https://github.com/dotnet/sdk/blob/v10.0.201/THIRD-PARTY-NOTICES.TXT"
+        },
+        {
+          "sourceUrl": "https://github.com/dotnet/runtime/blob/v10.0.5/THIRD-PARTY-NOTICES.TXT"
+        }
+      ],
+      "provenanceNote": "The downloaded SDK's bundled license and notices are authoritative; source links provide corresponding project context.",
+      "coverageGoal": "Recognize the actual ReadyToRun signature and inspect available managed CIL even when ILOnly is unset.",
+      "executionScope": "Inspection only; the image is not loaded or executed."
+    },
+    {
+      "id": "mixed",
+      "fileName": "MixedNativeCLI.exe",
+      "bytes": 34816,
+      "sha256": "1bcc83a9da94aeebf0a57f02f254a15e8aebc9157b3e299cb53d1ebc3ce53667",
+      "expectedImageKind": "MixedMode",
+      "cacheOnly": true,
+      "source": {
+        "kind": "github-blob",
+        "repository": "jbevain/cecil",
+        "commit": "882ca5eedda1e62eb41bd5869aeb15d8f1538e51",
+        "path": "symbols/pdb/Test/Resources/assemblies/MixedNativeCLI.exe",
+        "blob": "b2fbecbf106a87b4a7fc934816b836a69ebb881d",
+        "url":
+          "https://raw.githubusercontent.com/jbevain/cecil/882ca5eedda1e62eb41bd5869aeb15d8f1538e51/symbols/pdb/Test/Resources/assemblies/MixedNativeCLI.exe"
+      },
+      "licenseReferences": [
+        {
+          "sourceUrl": "https://github.com/jbevain/cecil/blob/882ca5eedda1e62eb41bd5869aeb15d8f1538e51/LICENSE.txt"
+        }
+      ],
+      "provenance": {
+        "testUrl": "https://github.com/jbevain/cecil/blob/882ca5eedda1e62eb41bd5869aeb15d8f1538e51/symbols/pdb/Test/Mono.Cecil.Tests/PdbTests.cs",
+        "testName": "ReadPdbMixedNativeCLIModule",
+        "commentSummary": "The upstream test attributes the fixture to Microsoft's managed/unmanaged preprocessor example.",
+        "exampleUrl": "https://learn.microsoft.com/en-us/cpp/preprocessor/managed-unmanaged?view=msvc-170#example"
+      },
+      "coverageGoal": "Classify an actual mixed-mode PE and distinguish managed CIL from non-CIL method implementations.",
+      "executionScope": "Inspection only; no claim that this Windows mixed-mode image can execute on Linux."
+    }
+  ]
+}

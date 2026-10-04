@@ -49,6 +49,7 @@ export class IlBuilder {
     this.instructions = [];
     this.locals = [];
     this.regions = [];
+    this.debug = null;
     this.labelCount = 0;
     /** Current stack depth, or null after an instruction that does not fall through: what follows cannot run. */
     this.depth = 0;
@@ -89,7 +90,15 @@ export class IlBuilder {
   }
   /** True when a label was placed here: a branch to it lands on the next instruction. */
   get isJustPastLabel() {
-    return this.instructions.at(-1)?.label !== undefined;
+    for (let index = this.instructions.length - 1; index >= 0; index--) {
+      const instruction = this.instructions[index];
+      if (!instruction.debugMarker) return instruction.label !== undefined;
+    }
+    return false;
+  }
+  /** Records a source/scope boundary without changing reachability, stack state or emitted code. */
+  markDebug(marker) {
+    this.instructions.push({ debugMarker: marker });
   }
   /** True when the next instruction can be reached by falling through. */
   get isReachable() {
@@ -144,9 +153,14 @@ export class IlBuilder {
    */
   assemble() {
     const writer = new CilWriter(undefined, { compact: true }),
+      debugOffsets = this.debug ? new Map() : null,
       nameOf = label => 'L' + label.id;
     for (const instruction of this.instructions) {
-      if (instruction.label) writer.mark(nameOf(instruction.label));
+      if (instruction.debugMarker) debugOffsets?.set(instruction.debugMarker, writer.length);
+      else if (instruction.label) {
+        writer.mark(nameOf(instruction.label));
+        debugOffsets?.set(instruction.label, writer.length);
+      }
       else encode(writer, instruction, nameOf);
     }
     const original = new Map(writer.labels),
@@ -166,7 +180,8 @@ export class IlBuilder {
       ...(region.kind === 'catch' ? { catchType: region.catchType } : {}),
       ...(region.kind === 'filter' ? { filterOffset: offsetOf(region.filterStart) } : {}),
     }));
-    return { code, maxStack: this.maxDepth, handlers };
+    if (debugOffsets) for (const [marker, offset] of debugOffsets) debugOffsets.set(marker, offsetMap.get(offset));
+    return { code, maxStack: this.maxDepth, handlers, debugOffsets };
   }
 }
 
