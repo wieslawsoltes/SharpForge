@@ -39,3 +39,8 @@ All 95 focused byte-budget, verified-stack, pooled-frame, root-visitor and
 call-buffer tests passed serially with Node 24.21.0 at `3a9f50ba`, with a 512 MB
 heap limit and concurrency 1. Core static/build validation is recorded on the PR.
 Broader platform and performance qualification remains staged.
+
+The aggregate-layout accounting fix passed all 77 focused aggregate, CIL/source
+budget, Nullable and struct-storage tests serially at `132768e3` on Node 24.
+Its exact-boundary cases cover both native ABIs, nested Decimal fields, small
+fields, argument admission before allocation, and atomic snapshot rejection.
