@@ -123,6 +123,23 @@ The Windows mixed-mode fixture is inspected as data. Its presence is no evidence
 of Linux execution support, native-code disassembly, successful input execution,
 or browser compatibility. Record actual qualification results separately.
 
+## Retained capture
+
+The [2026-10-04 capture](native.json) completed at integrated revision
+`bf0d9470e4dc50cfdcafb0a6532cea0892b753d6` with both pinned input hashes and the
+SDK/compiler/reference pins verified. All eight native/product fact groups
+matched for both inputs. The runtime image retained 205 readable CIL bodies out
+of 224 MethodDefs with ILOnly unset; the mixed-mode image retained 77 readable
+CIL bodies and reported 11 Native implementations out of 90 MethodDefs. Neither
+image had an eligible CIL body-read failure. These are observations of the actual
+images, separate from the authored flag/header boundary fixtures.
+
+The [qualification summary](qualification/summary.json) retains exact commands,
+environment, source and artifact hashes, and the 130/130 focused Node result,
+including strict source-provenance checks. Input execution, native disassembly,
+browser replay, and performance remain outside that captured result. No upstream
+binary or encoded payload was added to the repository.
+
 [release-metadata]: https://builds.dotnet.microsoft.com/dotnet/release-metadata/10.0/releases.json
 [sdk-license]: https://github.com/dotnet/sdk/blob/v10.0.201/LICENSE.TXT
 [sdk-notices]: https://github.com/dotnet/sdk/blob/v10.0.201/THIRD-PARTY-NOTICES.TXT

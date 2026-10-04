@@ -43,6 +43,7 @@ classification. `readPEDebugDirectory(parsedPE, options)` returns owned raw debu
 entries; the symbols package reuses it for existing semantic PDB decoding.
 See [PE-INSPECTION.md](PE-INSPECTION.md) for exact fields, limits, ownership,
 cancellation, and reference-evidence boundaries.
+
 ## Registered external readonly fields
 
 `resolveExecutionField` admits a closed field profile from

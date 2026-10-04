@@ -113,8 +113,55 @@ do not execute these inspection fixtures.
 
 ## Validation status
 
-Implementation and fixture protocol are prepared for root-owned serial
-qualification. No native capture, Node test run, browser replay, build, or
-performance measurement is claimed by these authored files. Replace this status
-with actual recorded results when qualification completes; retain failures and
-unsupported targets explicitly.
+Native and focused Node qualification completed on **2026-10-04** at integrated
+revision `bf0d9470e4dc50cfdcafb0a6532cea0892b753d6`. The integration preserved the
+reviewed PE/method/symbols source seams and the incoming literal cache correction.
+No product source changes were needed during qualification.
+
+The first explicit capture passed under SDK **10.0.201**, CoreCLR **10.0.5**,
+Node **v24.19.0**, Linux x64. The compiler hash and all 167 reference assemblies
+matched the repository's pinned toolchain. Both supplied images matched their
+manifest byte counts and SHA-256 before observation. All eight comparison groups
+passed for each image: image kind, headers, sections, directories, CLI fields,
+debug directory, strong-name facts, and every MethodDef's comparable body facts.
+SRM's additional `totalSize` observation remains in the native record; it has no
+matching product field and is excluded from the parity comparison.
+
+| Actual image | MethodDefs | Available CIL bodies | CIL body-read failures | Non-CIL methods |
+| --- | ---: | ---: | ---: | ---: |
+| Runtime ReadyToRun image | 224 | 205 | 0 | 0 |
+| Cecil mixed-mode image | 90 | 77 | 0 | 11 Native |
+
+The ReadyToRun image's machine is `0xfd1d`, CorFlags are `0x0c` (ILOnly unset),
+and the managed-native header has the actual `0x00525452` signature. Its readable
+CIL was retained without inferring native counterparts for individual methods.
+The mixed-mode image has machine `0x8664`, CorFlags `0`, and no managed-native
+header; all 11 Native methods remained undisassembled. The remaining 19 and 2
+MethodDefs, respectively, have no eligible CIL body.
+
+The exact ten-file Node gate above passed **130/130 tests**, with **0 failures,
+0 cancellations, and 0 skips**, in 12.196 seconds. It includes the strict native
+provenance tests, which verify reference identities, source freshness, complete
+comparison coverage, and the actual non-ILOnly/Native-method observations.
+This was one capture and one focused test run; no fixes or reruns were required.
+
+Retained evidence:
+
+- [native.json](native.json): independent observations and current public-API comparisons;
+  SHA-256 `bdb094d3714b593bf70a1bac84bb456def0052c0019dc0ecedf1d4b8b2e298e4`.
+- [qualification/summary.json](qualification/summary.json): source revision, toolchain,
+  source/artifact hashes, results, and explicit remaining qualification.
+- [Native command/environment/status](qualification/native-command.json) and
+  [capture log](qualification/native-capture.log).
+- [Focused command/environment/status](qualification/focused-command.json) and
+  [complete Node output](qualification/focused-node.tap).
+
+The supplied binaries remain external cache inputs. Retained native observations
+contain scalar metadata facts, names, sizes, and hashes; they contain no image,
+IL, raw debug, or signing payload copies. Neither input assembly was executed.
+Windows C++/CLI execution on Linux, native instruction disassembly, ReadyToRun
+method maps, and cryptographic signature verification are not qualified by this
+inspection evidence.
+
+**Browser replay, benchmarks, and a build have not been run for this batch.**
+The browser harness remains prepared; no browser or performance pass is claimed.

@@ -177,3 +177,12 @@ It distinguishes authored boundary images from the actual pinned .NET ReadyToRun
 and Cecil mixed-mode images. Reference binaries remain external cache inputs;
 retained observations contain scalar facts and hashes. Validation status and
 supported host/browser runs belong to the captured evidence, not this API contract.
+
+The retained 2026-10-04 Linux x64 capture matches all eight PEReader/SRM comparison
+groups for both pinned images: the ReadyToRun image preserves 205 CIL bodies with
+ILOnly unset, and the mixed-mode image preserves 77 CIL bodies while reporting
+11 Native methods without disassembly. The focused Node gate, including strict
+source-provenance checks, passed 130/130 tests with no skips. See the
+[qualification summary](../../tests/fixtures/pe-inspection/qualification/summary.json)
+for the exact source/toolchain, commands, hashes, and remaining browser/performance
+qualification. The input assemblies were not executed.
