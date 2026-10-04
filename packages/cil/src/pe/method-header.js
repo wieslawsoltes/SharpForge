@@ -2,6 +2,11 @@ import { Reader, CilError } from '../binary.js';
 
 /** Read owned scalar tiny/fat CIL header facts without decoding IL or exception sections; absent RVA returns null. */
 export function readMethodHeader(pe, methodToken) {
+  return readMethodHeaderCore(pe, methodToken);
+}
+
+/** Internal body-reader seam; the retained Reader never crosses the public header API. */
+export function readMethodHeaderCore(pe, methodToken, retainReader = false) {
   if (
     !Number.isInteger(methodToken) ||
     methodToken < 0x06000001 ||
@@ -39,7 +44,7 @@ export function readMethodHeader(pe, methodToken) {
     reader.need(headerSize - 12);
   } else throw new CilError('Unsupported method header');
   pe.offsetOf(rva, headerSize + codeSize);
-  return {
+  const result = {
     fileOffset,
     headerSize,
     codeOffset: fileOffset + headerSize,
@@ -50,4 +55,6 @@ export function readMethodHeader(pe, methodToken) {
     moreSections,
     initLocals,
   };
+  if (retainReader) result.reader = reader;
+  return result;
 }

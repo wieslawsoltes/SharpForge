@@ -1,5 +1,5 @@
-import { Reader, CilError, align } from '../binary.js';
-import { readMethodHeader } from './method-header.js';
+import { CilError, align } from '../binary.js';
+import { readMethodHeaderCore } from './method-header.js';
 
 function exceptionSection(reader, codeSize, inspection) {
   const kind = reader.u8();
@@ -30,10 +30,11 @@ function exceptionSection(reader, codeSize, inspection) {
 
 /** Read one bounded tiny/fat CIL method body and its exception sections. */
 export function readMethodBody(pe, methodToken, inspection) {
-  const header = readMethodHeader(pe, methodToken);
+  const header = readMethodHeaderCore(pe, methodToken, true);
   if (!header) throw new CilError('Method has no body');
   const { codeSize, maxStack, localSignature, fileOffset: at, headerSize, initLocals } = header;
-  const reader = new Reader(pe.bytes, header.codeOffset, header.sectionEnd - header.codeOffset);
+  const reader = header.reader;
+  reader.position = header.codeOffset;
   let more = header.moreSections;
   const code = reader.take(codeSize), handlers = [];
   let sectionsRead = 0;
