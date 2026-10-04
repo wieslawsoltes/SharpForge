@@ -38,6 +38,10 @@ Retained brush descriptors preserve owned color stops, interpolation space, mask
 
 `DrawingModel` and `DrawingCollection` retain explicit native state and snapshots. Resource descriptors materialize according to the declared CLR type; Point, Size, Rect and Matrix cross value boundaries as flat typed fields, while scene geometry and brushes retain their property descriptors. Browser system backdrops report their approximation policy.
 
+## Shared brush rasterization
+
+Canvas, SVG and reported GPU fallbacks share bounded pixel-center brush sampling and premultiplied effect conversion. Complex masks, nine-grid brushes and authorized backdrops use the same ownership and color-space policy. Missing backdrop access reports the selected fallback explicitly.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
