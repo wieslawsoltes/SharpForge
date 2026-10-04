@@ -8,6 +8,7 @@
  */
 import { compressUnsigned, methodSpecBlob, needsMethodSpec, needsTypeSpec } from '../../codegen/generics.js';
 import { SymbolKind, NamedTypeSymbol, substituteType } from '../../symbols/types.js';
+import { declaringInterfaceOf } from './framework-declarations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature } from '../../codegen/metadata/member-signatures.js';
 
 const LOCAL_SIGNATURE = 0x07;
@@ -86,8 +87,9 @@ export class MemberTokens {
     return token;
   }
   memberReference(owner, definition) {
-    const declaration = openDeclarationOf(owner, definition);
-    return this.builder.member(this.type(owner), declaration.metadataName, methodSymbolSignature(this.types, declaration));
+    const declaringType = declaringInterfaceOf(this.writer.core, owner, definition.name),
+      declaration = openDeclarationOf(declaringType, definition);
+    return this.builder.member(this.type(declaringType), declaration.metadataName, methodSymbolSignature(this.types, declaration));
   }
   /** Field or MemberRef token of a field. */
   field(field) {
