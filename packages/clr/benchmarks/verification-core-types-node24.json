@@ -1,0 +1,142 @@
+{
+  "qualifiedProduct": "27298df2aa50e03c2d9ec5bd3292445d7f8e6728",
+  "dependencyMain": "594085da988a5b9439625f0577b958a166121666",
+  "host": {
+    "machine": "Mac15,6",
+    "os": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "macOS": "26.6"
+  },
+  "methodology": "New API only; loaded CLR graph and CIL context prepared outside timing; shared host; no prior baseline.",
+  "limits": {
+    "testConcurrency": 1,
+    "parallelRuns": 1,
+    "heapMiB": 1024
+  },
+  "sourceFiles": {
+    "packages/clr/src/verification/core-types.js": "92c65ee105eb753a52df1dfea5c47a3f94fcc5ef",
+    "packages/clr/src/index.js": "370bae0742f21d8126b0b2dcfa2de45fa1bd1098",
+    "tests/clr-types-verification-core.test.js": "6cb1104123a1427c5fb1135eb444c2691a49fc81",
+    "tests/helpers/clr-verification-core-types.js": "a001497164d4268911ba7943e79db349a066642c",
+    "packages/clr/tools/benchmark-verification-core-types.mjs": "f7a5f4ce20398f6910be87d5f09b19646a37d3c9"
+  },
+  "priorQueuedCancellation": {
+    "session": 14593,
+    "limiterPid": 22828,
+    "exitCode": 143,
+    "phase": "waiting for machine limiter; no START phase or install log",
+    "reason": "source-review iterator bound correction and fixture assemblyVersion option correction",
+    "otherHolder": "untouched",
+    "note": "queued-head-proof.json describes the planned input, not executed qualification"
+  },
+  "pipeline": {
+    "session": 16923,
+    "exitCode": 0,
+    "steps": [
+      "install",
+      "focused",
+      "benchmark",
+      "check",
+      "structure"
+    ],
+    "terminal": true
+  },
+  "validation": {
+    "tests": 8,
+    "passed": 8,
+    "skipped": 0,
+    "syntaxModules": 3656,
+    "importModules": 3652,
+    "errors": 0,
+    "nodeManifestFiles": 995,
+    "browserManifestScripts": 37,
+    "existingStructureFindings": 272,
+    "changedStructureFindings": []
+  },
+  "logs": {
+    "install": "\nadded 28 packages in 326ms\n",
+    "focused": "\u2714 CLR binding supplies canonical CIL core handles without changing local verifier identities (9.224958ms)\n\u2714 core-module TypeDefs can establish fundamental roots through the same authority contract (1.398542ms)\n\u2714 unprepared, non-core and open definitions remain unknown without assembly-name or token aliasing (1.48675ms)\n\u2714 the prepared lookup owns the token selection and bounded result records (1.404291ms)\n\u2714 host intrinsic descriptors cannot impersonate the declared metadata core module (0.798292ms)\n\u2714 invalid or oversized preparation rejects before resolving any input reference (1.022084ms)\n\u2714 missing assemblies and malformed type metadata propagate loader diagnostics (1.125208ms)\n\u2714 cancellation before and during asynchronous binding never publishes a partial authority (1.682584ms)\n\u2139 tests 8\n\u2139 suites 0\n\u2139 pass 8\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 207.960375\n",
+    "check": "\n> sharpforge@0.14.0 check\n> node scripts/run.js check\n\n{\n  \"areas\": 30,\n  \"nodeFiles\": 995,\n  \"browserScripts\": 37,\n  \"unassigned\": 0,\n  \"duplicate\": 0\n}\nChecked 3656 JavaScript modules; 0 syntax errors.\n{\n  \"passed\": true,\n  \"inspected\": 3652,\n  \"modules\": 3652,\n  \"errors\": []\n}\n"
+  },
+  "benchmark": {
+    "node": "v24.21.0",
+    "platform": "darwin-arm64",
+    "warmups": 3,
+    "selectedTokens": 3,
+    "preparedIterationsPerSample": 100,
+    "lookupIterationsPerSample": 100000,
+    "methodology": "New API only; loaded CLR graph and CIL context prepared outside timing; shared host; no prior baseline.",
+    "unmeasured": [
+      "allocation volume",
+      "peak memory",
+      "build output size",
+      "native/browser/VM execution"
+    ],
+    "samples": {
+      "prepareMicroseconds": [
+        18.770419999999888,
+        10.650830000000155,
+        8.86082999999985,
+        9.003330000000176,
+        10.219999999999914,
+        10.678340000000048,
+        11.499170000000163,
+        8.086660000000165,
+        7.897079999999903,
+        8.464999999999918,
+        10.139580000000024,
+        7.613340000000051,
+        10.96082999999993,
+        5.808329999999842,
+        5.8970799999997325,
+        6.220000000000141,
+        7.207910000000197,
+        7.529580000000067,
+        10.36958999999996,
+        7.292500000000075,
+        5.3691599999999085,
+        5.356669999999895,
+        5.8020799999999895
+      ],
+      "lookupNanoseconds": [
+        8.935000000000173,
+        3.862079999999821,
+        8.010419999999954,
+        4.782089999999926,
+        5.478339999999946,
+        4.896669999999972,
+        5.160419999999988,
+        3.3754200000001333,
+        3.2562500000000227,
+        4.119169999999883,
+        3.372500000000116,
+        3.329999999999984,
+        3.4354199999998514,
+        3.408750000000111,
+        3.4070800000000645,
+        3.744999999999834,
+        3.385419999999897,
+        3.481670000000179,
+        3.5991699999999582,
+        3.368330000000128,
+        3.3599999999998427,
+        3.354579999999885,
+        3.327499999999759
+      ]
+    },
+    "summary": {
+      "prepareMicroseconds": {
+        "median": 7.613340000000051,
+        "p95": 10.96082999999993
+      },
+      "lookupNanoseconds": {
+        "median": 3.4070800000000645,
+        "p95": 5.160419999999988
+      }
+    }
+  },
+  "limitsOfEvidence": [
+    "Host JavaScript bridge only; source/direct-CIL/native/Wasm/browser qualification staged.",
+    "No new native capture or direct CoreCLR API counterpart.",
+    "No existing-path, universal latency, speedup, causal, allocation volume or peak-memory claim."
+  ]
+}

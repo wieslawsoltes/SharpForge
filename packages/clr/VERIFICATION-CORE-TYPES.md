@@ -53,5 +53,24 @@ object/field instruction transfers, cross-module nominal verification,
 generic instantiation, forwarding, or execution. It adds no work to existing
 loader queries. Authored tests exercise actual CLR module binding and CIL
 category construction, canonical module isolation, owned selection, unknowns,
-limits and cancellation. Qualification is pending its scheduled serial slot;
-this host-specific bridge has no direct CoreCLR reflection counterpart.
+limits and cancellation. This host-specific bridge has no direct CoreCLR
+reflection counterpart.
+
+At product `27298df2aa50e03c2d9ec5bd3292445d7f8e6728`, all eight focused tests
+passed with no skips. Static/manifests passed (3,656 syntax / 3,652 import
+modules; 995 Node files / 37 browser scripts), and structure reported 272
+existing findings with none in the changed paths. One outer limiter ran all
+commands sequentially with Node 24.21.0, test concurrency 1 and a 1 GiB heap.
+
+On shared darwin-arm64, three-token preparation measured median/p95
+7.613 / 10.961 microseconds; lookup measured 3.407 / 5.160 nanoseconds.
+These are new-API batch timings, with the loaded CLR graph and CIL context
+prepared outside timing. Each of 23 samples performs 100 preparations or
+100,000 lookups; nearest-rank summaries exclude three warmups. There is no
+prior baseline, universal latency or native-throughput claim. Allocation
+volume, peak memory, build size and other engines remain unmeasured.
+[All 46 raw samples and qualification provenance](benchmarks/verification-core-types-node24.json)
+retain the earlier cancelled limiter wait and the source-review corrections
+made before the first executed qualification. Reproduce the focused file and
+`packages/clr/tools/benchmark-verification-core-types.mjs` through
+`scripts/limited.js` in a scheduled serial slot.
