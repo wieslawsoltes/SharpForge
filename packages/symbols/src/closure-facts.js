@@ -4,7 +4,7 @@ import { metadataMemberOwners, metadataName } from './metadata-facts.js';
 const key = (owner, ordinal) => `${owner}:${ordinal}`;
 const displayClassName = /^<>c__DisplayClass([0-9]+)_([0-9]+)$/u;
 const lambdaName = /^<([^<>]+)>b__([0-9]+)$/u;
-const delegateCacheName = /^<>9__[0-9]+$/u;
+const delegateCacheName = /^<>9__(?:[0-9]+_)?[0-9]+$/u;
 export const unavailableClosure = (methodToken, reason) => ({
   available: false,
   reason,
