@@ -197,29 +197,29 @@ types or verify MVID content identity.
 
 `get(id)` returns an owned record or null for an unknown/noncanonical ID. `page({
 offset, limit, signal })` returns `{ entries, total, nextOffset }`, with default
-limit100 and maximum1000. Order is input module, TypeDef, then each type's fields,
+limit 100 and maximum 1000. Order is input module, TypeDef, then each type's fields,
 methods, properties and events in inspector ownership order (including MethodPtr).
 `size`, `modules()` and `storage` expose owned scalar counts/module facts. Zero-length
 pages are allowed; `nextOffset` remains the supplied offset unless already at the end.
 Duplicate module MVIDs and duplicate/incomplete definition ownership reject with
 `CilError`; constructing a new index after reload produces the same IDs.
 
-Options are lowerable integer budgets: `assemblies`256, `entries`100000,
-`nameBytes`16MiB and `bytes`32MiB. Names have a hard4096 UTF-16-code-unit limit.
+Options are lowerable integer budgets: `assemblies` 256, `entries` 100000,
+`nameBytes` 16 MiB and `bytes` 32 MiB. Names have a hard 4096 UTF-16-code-unit limit.
 Counts are checked before traversal; total name/payload sizes are checked before
 allocating symbol records. `storage.nameBytes` charges each name occurrence at two
-bytes per UTF-16 code unit. `storage.bytes` charges each record's name, kind,61-character
-ID and optional61-character owner ID at two bytes per code unit plus a four-byte token,
-and each module's36-character MVID plus four-byte entry count. Repeated names/owner IDs
+bytes per UTF-16 code unit. `storage.bytes` charges each record's name, kind, 61-character
+ID and optional 61-character owner ID at two bytes per code unit plus a four-byte token,
+and each module's 36-character MVID plus four-byte entry count. Repeated names/owner IDs
 are conservatively charged each time. These logical payload and count bounds exclude
 JavaScript Map/object/array overhead, pre-existing inspectors and output pages; they
 are not a measured heap or process-memory ceiling. Storage is O(definitions+name
 payload), construction is linear in those inputs, lookup is a Map lookup and pages
 visit only requested entries. Cancellation is checked at module/type boundaries and
-at most256 member/page records apart. The index is a fixed owned snapshot; recreate it
+at most 256 member/page records apart. The index is a fixed owned snapshot; recreate it
 when the loaded module set changes. Search, reference binding and usage analysis are
 separate capabilities.
 
-The prepared20-assembly/reload, ownership, count/storage boundary and retained native
+The prepared 20-assembly/reload, ownership, count/storage boundary and retained native
 PE tests are described in `tests/fixtures/assembly-index/README.md`; qualification
 is pending the scheduled serial slot.
