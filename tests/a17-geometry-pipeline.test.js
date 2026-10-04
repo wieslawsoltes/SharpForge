@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import {parsePath, pathToSvg} from '../packages/rendering/src/geometry/path-markup.js';
 import {RectangleGeometry, EllipseGeometry, GeometryGroup, normalizeGeometry} from '../packages/rendering/src/geometry/path-geometry.js';
 import {geometryBounds, flattenGeometry, fillContains} from '../packages/rendering/src/geometry/geometry-math.js';
+import {tessellateFill, trianglesContain} from '../packages/rendering/src/geometry/tessellation.js';
+import {tessellateStroke, strokeContains} from '../packages/rendering/src/geometry/stroke.js';
 import {multiply, translation, scaling, rotation, transformPoint, inverse, transformValue} from '../packages/rendering/src/media/transforms.js';
 
 const near = (actual, expected, epsilon = 1e-6) => assert.ok(Math.abs(actual - expected) <= epsilon, `${actual} != ${expected}`);
@@ -35,6 +37,48 @@ test('tight Bezier and transformed ellipse bounds use curve extrema, not control
   const child = new RectangleGeometry([0, 0, 2, 3]); child.transform = translation(10, 5);
   const group = new GeometryGroup([child]); group.transform = scaling(2, 3);
   boundsNear(geometryBounds(group), [20, 15, 4, 9]);
+});
+
+test('scanbeam fill tessellation preserves hole winding and bow-tie intersections', () => {
+  const same = parsePath('M0 0H10V10H0Z M2 2H8V8H2Z'), contours = flattenGeometry(same);
+  const even = tessellateFill(contours, 'evenodd'), nonzero = tessellateFill(contours, 'nonzero');
+  near(triangleArea(even), 64); near(triangleArea(nonzero), 100);
+  assert.equal(trianglesContain(even, [5, 5]), false);
+  assert.equal(trianglesContain(nonzero, [5, 5]), true);
+  const reverse = parsePath('F1 M0 0H10V10H0Z M2 2V8H8V2Z');
+  near(triangleArea(tessellateFill(flattenGeometry(reverse), 'nonzero')), 64);
+  const bow = tessellateFill(flattenGeometry(parsePath('M0 0L10 10L0 10L10 0Z')));
+  near(triangleArea(bow), 50);
+  assert.equal(trianglesContain(bow, [5, 2]), true);
+  assert.equal(trianglesContain(bow, [1, 5]), false);
+  assert.equal(trianglesContain(new Float32Array([0, 0, 0, 0, 5, 5]), [100, 100]), false);
+});
+
+test('one hundred deterministic holed paths agree with independent analytic area and membership', () => {
+  for (let index = 0; index < 100; index++) {
+    const x = index % 10 * 13, y = Math.floor(index / 10) * 17, width = 8 + index % 5, height = 9 + index % 7;
+    const path = parsePath(`M${x} ${y}h${width}v${height}h${-width}Z M${x + 2} ${y + 2}h${width - 4}v${height - 4}h${4 - width}Z`);
+    const mesh = tessellateFill(flattenGeometry(path), 'evenodd');
+    near(triangleArea(mesh), width * height - (width - 4) * (height - 4));
+    for (const [point, expected] of [[[x + 1, y + 1], true], [[x + width / 2, y + height / 2], false], [[x - 1, y - 1], false]]) {
+      assert.equal(fillContains(path, point), expected);
+      assert.equal(trianglesContain(mesh, point), expected);
+    }
+  }
+});
+
+test('target-space flattening refines curved strokes and honors all cap/join and work limits', () => {
+  const path = parsePath('M0 0Q10 20 20 0'), ordinary = flattenGeometry(path, {tolerance: 0.1});
+  const enlarged = flattenGeometry(path, {tolerance: 0.1, transform: scaling(10)});
+  assert.ok(enlarged[0].points.length > ordinary[0].points.length);
+  const line = parsePath('M0 0L10 0');
+  assert.equal(strokeContains(line, [-0.9, 0], {width: 2, startCap: 'round'}), true);
+  assert.equal(strokeContains(line, [-0.9, 0], {width: 2, startCap: 'butt'}), false);
+  const corner = flattenGeometry(parsePath('M0 10L0 0L10 0'));
+  for (const join of ['miter', 'bevel', 'round']) assert.ok(tessellateStroke(corner, {width: 2, join}).length > 0);
+  assert.throws(() => flattenGeometry(path, {maxPoints: 2}), error => error.code === 'SFRENDER038');
+  assert.throws(() => tessellateFill(flattenGeometry(new RectangleGeometry([0, 0, 10, 10])), 'evenodd', {maxTriangles: 1}),
+    error => error.code === 'SFRENDER042');
 });
 
 test('geometry and transforms reject malformed native data, cycles and singular inverses', () => {

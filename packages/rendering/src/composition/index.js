@@ -20,4 +20,5 @@ export {ImplicitAnimationCollection, CompositionAnimationGroup, CompositionScope
 export {trimGeometry} from './trim-geometry.js';
 export {encodeCompositionContent, encodeCompositionLayers} from './content.js';
 export {registerCompositionAdapters} from './adapters.js';
+export {serializeCompositionGraph, applyCompositionGraph} from './transport-codec.js';
 export {DropShadow} from './shadows.js';
