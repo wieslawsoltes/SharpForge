@@ -10,6 +10,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
+using Microsoft.UI.Xaml.XamlTypeInfo;
 using Windows.Foundation;
 using Windows.Graphics;
 
@@ -36,8 +37,16 @@ internal static class Program
             WinRT.ComWrappersSupport.InitializeComWrappers();
             Application.Start(initialization =>
             {
-                SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
-                _ = new MeasurementApplication();
+                try
+                {
+                    SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
+                    _ = new MeasurementApplication();
+                }
+                catch (Exception error)
+                {
+                    Console.Error.WriteLine("WinUI initialization failed: " + error);
+                    Environment.Exit(1);
+                }
             });
             return File.Exists(Output) ? 0 : 3;
         }
@@ -45,15 +54,20 @@ internal static class Program
     }
 }
 
-internal sealed class MeasurementApplication : Application
+internal sealed class MeasurementApplication : Application, IXamlMetadataProvider
 {
+    private readonly IXamlMetadataProvider metadata;
     private Window window = null!;
     internal MeasurementApplication()
     {
+        UnhandledException += (_, args) => { Console.Error.WriteLine(args.Exception); Environment.Exit(1); };
+        metadata = new XamlControlsXamlMetaDataProvider();
         RequestedTheme = ApplicationTheme.Light;
         Resources.MergedDictionaries.Add(new XamlControlsResources());
-        UnhandledException += (_, args) => { Console.Error.WriteLine(args.Exception); Environment.Exit(1); };
     }
+    IXamlType IXamlMetadataProvider.GetXamlType(Type type) => metadata.GetXamlType(type);
+    IXamlType IXamlMetadataProvider.GetXamlType(string fullName) => metadata.GetXamlType(fullName);
+    XmlnsDefinition[] IXamlMetadataProvider.GetXmlnsDefinitions() => metadata.GetXmlnsDefinitions();
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
         try
