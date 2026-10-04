@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "styles": [],
+  "workers": [],
+  "assets": [
+    {
+      "source": "packages/rendering/src",
+      "target": "packages/rendering/src",
+      "order": 1700
+    }
+  ]
+}
