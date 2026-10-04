@@ -1,5 +1,6 @@
 import {userValueCallType, prepareValueReceiver, constructUserValue} from './value-calls.js';
 import {boxedInterfaceReceiver} from './value-dispatch.js';
+import {invokeConstrainedInterface} from './constrained-call.js';
 import {instantiatedMethod} from './generics.js';
 import {callDescriptor, selectedCallOwner} from './generic-calls.js';
 import {constructIntrinsicValue} from './value-intrinsics.js';
@@ -41,6 +42,7 @@ export function prepareCall(vm,frame=vm.top) {
 }
 export function invoke(vm,instruction) {
   const caller=vm.top,descriptor=callDescriptor(vm,instruction.operand,caller),target=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
+  if(invokeConstrainedInterface(vm,caller,instruction,descriptor))return;
   const count=descriptor.signature.parameters.length+(instruction.name!=='newobj'&&!descriptor.signature.isStatic?1:0);
   const instance=descriptor.genericIdentity??descriptor.ownerInstance??(caller.method.ownerToken===descriptor.ownerToken?caller.genericIdentity:null)??null;
   const genericIdentity=instance===null?null:vm.typeSystem.table(instance).name;
