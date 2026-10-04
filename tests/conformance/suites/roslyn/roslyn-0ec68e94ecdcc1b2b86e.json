@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0ec68e94ecdcc1b2b86e",
+  "kind": "diagnostics",
+  "sourceText": "using System;\npublic class List<T> { }\nnamespace N\n{\n    using X = A;\n    using Y = List<A>;\n    using Z = List<A[]>;\n    [Obsolete(\"Do not use\", true)]\n    public class A { }\n    public class B : X { }\n    public class C : Y { }\n    public class E : Z { }\n    public class D : List<Y>\n    {\n        public X x;\n        public Y y1;\n        public List<Y> y2;\n        public Z z;\n    }\n}",
+  "sourceSHA256": "af84f02bbe78d8f62b6c3351a91c4120edf9c726d5a49f96332656eb14d122db",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteTypeParameterInAlias",
+    "offset": 288613
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,22): error CS0619: 'A' is obsolete: 'Do not use'\n                //     public class E : Z { }\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Z\").WithArguments(\"N.A\", \"Do not use\").WithLocation(12, 22),\n                // (13,27): error CS0619: 'A' is obsolete: 'Do not use'\n                //     public class D : List<Y>\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Y\").WithArguments(\"N.A\", \"Do not use\").WithLocation(13, 27),\n                // (10,22): error CS0619: 'A' is obsolete: 'Do not use'\n                //     public class B : X { }\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"X\").WithArguments(\"N.A\", \"Do not use\").WithLocation(10, 22),\n                // (11,22): error CS0619: 'A' is obsolete: 'Do not use'\n                //     public class C : Y { }\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Y\").WithArguments(\"N.A\", \"Do not use\").WithLocation(11, 22),\n                // (16,16): error CS0619: 'A' is obsolete: 'Do not use'\n                //         public Y y1;\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Y\").WithArguments(\"N.A\", \"Do not use\").WithLocation(16, 16),\n                // (17,21): error CS0619: 'A' is obsolete: 'Do not use'\n                //         public List<Y> y2;\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Y\").WithArguments(\"N.A\", \"Do not use\").WithLocation(17, 21),\n                // (18,16): error CS0619: 'A' is obsolete: 'Do not use'\n                //         public Z z;\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Z\").WithArguments(\"N.A\", \"Do not use\").WithLocation(18, 16),\n                // (15,16): error CS0619: 'A' is obsolete: 'Do not use'\n                //         public X x;\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"X\").WithArguments(\"N.A\", \"Do not use\").WithLocation(15, 16)",
+  "unsupported": []
+}

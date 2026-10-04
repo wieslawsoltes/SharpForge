@@ -1,3 +1,5 @@
+import {booleanStorage, booleanStorageType} from './boolean-storage.js';
+
 const arrayTypes = Object.freeze({
   getInt8: Int8Array, getUint8: Uint8Array, getInt16: Int16Array, getUint16: Uint16Array,
   getInt32: Int32Array, getUint32: Uint32Array, getFloat32: Float32Array, getFloat64: Float64Array
@@ -13,10 +15,6 @@ function validateInteger64(value) {
   if (typeof value !== 'bigint' && !Number.isSafeInteger(value)) {
     throw new TypeError('64-bit array element requires a bigint or safe integer');
   }
-}
-
-function validateBoolean(value) {
-  if (typeof value !== 'boolean' && value !== 0 && value !== 1) throw new TypeError('Boolean array element requires a boolean');
 }
 
 const numeric = (size, getter, setter) => Object.freeze({
@@ -60,16 +58,7 @@ const nativePointers64 = new Map([
 ]);
 
 const codecs = new Map([
-  ['System.Boolean', Object.freeze({
-    size: 1,
-    arrayType: null,
-    validate: validateBoolean,
-    read(view, offset) { return view.getUint8(offset) !== 0; },
-    write(view, offset, value) {
-      validateBoolean(value);
-      view.setUint8(offset, value ? 1 : 0);
-    }
-  })],
+  [booleanStorageType, booleanStorage],
   ['System.SByte', numeric(1, 'getInt8', 'setInt8')],
   ['System.Byte', numeric(1, 'getUint8', 'setUint8')],
   ['System.Char', numeric(2, 'getUint16', 'setUint16')],

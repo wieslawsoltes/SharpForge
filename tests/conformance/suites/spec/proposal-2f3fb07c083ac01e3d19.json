@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-2f3fb07c083ac01e3d19",
+  "kind": "spec",
+  "sourceText": "   int operator >>>(int x, int count);\n   uint operator >>>(uint x, int count);\n   long operator >>>(long x, int count);\n   ulong operator >>>(ulong x, int count);\n   nint operator >>>(nint x, int count);\n   nuint operator >>>(nuint x, int count);\n   ```\n\n   The `>>>` operator shifts `x` right by a number of bits computed as described below.\n\n   The low-order bits of `x` are discarded, the remaining bits are shifted right, and the high-order empty bit positions are set to zero.\n\nFor the predefined operators, the number of bits to shift is computed as follows:\n\n*  When the type of `x` is `int` or `uint`, the shift count is given by the low-order five bits of `count`. In other words, the shift count is computed from `count & 0x1F`.\n*  When the type of `x` is `long` or `ulong`, the shift count is given by the low-order six bits of `count`. In other words, the shift count is computed from `count & 0x3F`.\n\nIf the resulting shift count is zero, the shift operators simply return the value of `x`.\n\nShift operations never cause overflows and produce the same results in `checked` and `unchecked` contexts.\n\n### Assignment operators\n\nSection [§12.21](https://github.com/dotnet/csharpstandard/blob/draft-v8/standard/expressions.md#1221-assignment-operators) will be adjusted to include\n*unsigned_right_shift_assignment* as follows:\n",
+  "sourceSHA256": "de51b17f12ce526fc3344ac2af056a9973078cbe8deb0ab68ec65da64fad9eb9",
+  "target": "library",
+  "featureId": "csharp-11-0-unsigned-right-shift-operator",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/unsigned-right-shift-operator.md",
+    "sha256": "4c6b52163795a408f7c3ed6980a4a5b512c413b4e148228ba8a318c33b5761ea",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/unsigned-right-shift-operator.md",
+    "license": "NOASSERTION",
+    "offset": 2846
+  }
+}

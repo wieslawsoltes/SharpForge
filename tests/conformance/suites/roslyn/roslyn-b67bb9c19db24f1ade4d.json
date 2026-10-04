@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b67bb9c19db24f1ade4d",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M()\n    {\n        int a = 1;\n        var t = (a, 2);\n        System.Console.Write(t.a);\n        System.Console.Write(GetTuple().a);\n    }\n    (int, int) GetTuple()\n    {\n        return (1, 2);\n    }\n}\n",
+  "sourceSHA256": "7fbf646e2664a5d75302ff1cad1abdd33473f95337373d9bd09209f9cb0bb078",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "MissingMemberAccessWithCSharp7",
+    "offset": 128192
+  },
+  "langVersion": "7",
+  "target": "library",
+  "references": "references: new[] { ValueTupleRef, SystemRuntimeFacadeRef }, parseOptions: TestOptions.Regular7)",
+  "options": "(source, references: new[] { ValueTupleRef, SystemRuntimeFacadeRef }, parseOptions: TestOptions.Regular7)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8306",
+        "severity": "error"
+      },
+      {
+        "code": "CS1061",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,32): error CS8305: Tuple element name 'a' is inferred. Please use language version 7.1 or greater to access an element by its inferred name.\n                //         System.Console.Write(t.a);\n                Diagnostic(ErrorCode.ERR_TupleInferredNamesNotAvailable, \"a\").WithArguments(\"a\", \"7.1\").WithLocation(8, 32),\n                // (9,41): error CS1061: '(int, int)' does not contain a definition for 'a' and no extension method 'a' accepting a first argument of type '(int, int)' could be found (are you missing a using directive or an assembly reference?)\n                //         System.Console.Write(GetTuple().a);\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"a\").WithArguments(\"(int, int)\", \"a\").WithLocation(9, 41)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

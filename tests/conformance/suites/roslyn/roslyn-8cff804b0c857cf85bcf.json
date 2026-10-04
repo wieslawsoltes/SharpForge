@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8cff804b0c857cf85bcf",
+  "kind": "diagnostics",
+  "sourceText": "class Outer\n{\n    private protected class Inner\n    {\n    }\n}\nclass Derived : Outer\n{\n    public void M()\n    {\n        Outer.Inner x = null;\n    }\n}\nclass NotDerived\n{\n    public void M()\n    {\n        Outer.Inner x = null; // error: Outer.Inner not accessible\n    }\n}\nstruct Struct\n{\n    private protected class Inner // error: protected not allowed in struct\n    {\n    }\n}\n",
+  "sourceSHA256": "27a311922da126fa5dca64960e20bec96b44e32c451a60cfb7109749327e67c1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "NestedTypes",
+    "offset": 17910
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0666",
+        "severity": "error"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (23,29): error CS0666: 'Struct.Inner': new protected member declared in struct\n                //     private protected class Inner // error: protected not allowed in struct\n                Diagnostic(ErrorCode.ERR_ProtectedInStruct, \"Inner\").WithArguments(\"Struct.Inner\").WithLocation(23, 29),\n                // (11,21): warning CS0219: The variable 'x' is assigned but its value is never used\n                //         Outer.Inner x = null;\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"x\").WithArguments(\"x\").WithLocation(11, 21),\n                // (18,15): error CS0122: 'Outer.Inner' is inaccessible due to its protection level\n                //         Outer.Inner x = null; // error: Outer.Inner not accessible\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Inner\").WithArguments(\"Outer.Inner\").WithLocation(18, 15)\n                ",
+  "unsupported": []
+}

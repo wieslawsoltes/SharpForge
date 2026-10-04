@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-619326db328e8ab74b03",
+  "kind": "spec",
+  "sourceText": "int System.Index.GetOffset(int length);",
+  "sourceSHA256": "b5d8b24f027a94b1fffdf85447d4e410936a5e0251f1f2ddbb1d36e73b1f53df",
+  "target": "library",
+  "featureId": "csharp-8-0-ranges-and-indexes",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/ranges.md",
+    "sha256": "9419e0ac1a7ac5309d11cf3ee4ea64a38c2abbf82e8197f5211e7d93ec077363",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/ranges.md",
+    "license": "NOASSERTION",
+    "offset": 830
+  }
+}

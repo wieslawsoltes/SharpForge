@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-1bd1eef0c3db162b88cb",
+  "kind": "spec",
+  "sourceText": "interface I1<T>\n{\n}",
+  "sourceSHA256": "eba4697d9954e50bd2b927c292c29cd44d5776ca2371acd259d93d0fc06558f4",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 30173
+  }
+}

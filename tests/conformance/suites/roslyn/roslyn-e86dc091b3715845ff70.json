@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e86dc091b3715845ff70",
+  "kind": "diagnostics",
+  "sourceText": "public class C<T>\n{\n}\nnamespace System\n{\n    public class ValueTuple<T1, T2> : A\n    {\n        public ValueTuple(T1 _1, T2 _2) { }\n    }\n    public class ValueTuple<T1, T2, T3> : C<B>\n    {\n        public ValueTuple(T1 _1, T2 _2, T3 _3) { }\n    }\n}",
+  "sourceSHA256": "91ce8e6ea878c355ff60f1ccbc45967c188e6d093bcb71600dc9703f7c3b88d2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ValueTupleBaseError_MissingReference",
+    "offset": 1011864
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { ref0 })",
+  "options": "(source1, references: new[] { ref0 })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

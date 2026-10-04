@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-919e484289b58b234625",
+  "kind": "spec",
+  "sourceText": "extern alias A;\nnamespace Name\n{\n    using B;\n    class C\n    {\n    }\n}",
+  "sourceSHA256": "d66852dca46fb7d540318422afaaa93c77e9bada57dd08fa539652acd3edd0ba",
+  "target": "library",
+  "featureId": "csharp-10-0-file-scoped-namespaces",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/file-scoped-namespaces.md",
+    "sha256": "295f3dfb8c3ed3cb311976c80bc824b94fc1154243c3dcea523fd351f41ed1bd",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/file-scoped-namespaces.md",
+    "license": "NOASSERTION",
+    "offset": 4069
+  }
+}

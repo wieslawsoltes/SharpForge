@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a1ff35e9c248a616b4d9",
+  "kind": "spec",
+  "sourceText": "interface IA\n{\n    public sealed void M() { }\n}",
+  "sourceSHA256": "c792f51218b35aa835e64ce16eb95062788612c0c09cb4375e8839ba8cc986e3",
+  "target": "library",
+  "featureId": "csharp-8-0-default-interface-members",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/default-interface-methods.md",
+    "sha256": "feebc11b0983ad0c24c2017ac76706a9f3ff81b9cf1cc2703ec12d4829f24c42",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/default-interface-methods.md",
+    "license": "NOASSERTION",
+    "offset": 32378
+  }
+}

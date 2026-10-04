@@ -214,7 +214,7 @@
     {
       "path": "planning/contracts/tests/governance.test.js",
       "operation": "dynamic-import",
-      "sha256": "058761c95196b3a676a1aff0dbe519953136eb66944650a6377d759a274cd08b",
+      "sha256": "a74692d8f66368aa5e07f60d374b93d60b65987b8cc9bfcf6b361637bbbc9c41",
       "count": 8,
       "reason": "Planning contract tests import fixed Node, workspace and checked-in planning modules in isolated test phases."
     },
@@ -273,6 +273,13 @@
       "count": 1,
       "sha256": "299d73898635ba80e64b84252f29d22477c424de01c2e4b59778a56352546749",
       "reason": "Benchmark loads explicit package entry points from the selected trusted source checkout."
+    },
+    {
+      "path": "scripts/planning/compiler-dispatch-corpus.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "d36ed8f7e5c694dc38777d5db733587aa179a2d7a2fb945b9788a6cbb447be1f",
+      "reason": "Corpus comparator loads only fixed compiler and bytecode entry points from explicitly selected trusted before/after checkouts in isolated capture processes."
     },
     {
       "path": "scripts/planning/golden-output.js",

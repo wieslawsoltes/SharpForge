@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-deb5fa33678a325673fc",
+  "kind": "spec",
+  "sourceText": "ref struct S\n{\n    ref int Field;\n\n    S(ref int f)\n    {\n        Field = ref f;\n    }\n}\n\nS M2(ref int i, S span1, scoped S span2) => ...\n\n// Maps to \n\nref struct S<out $this>\n{\n    // Implicitly \n    ref<$this> int Field;\n\n    S<$ro> new<$ro>(ref<$ro> int f)\n    {\n        Field = ref f;\n    }\n}\n\nS<$ro> M2<$ro>(\n    ref<$ro> int i,\n    S<$ro> span1)\n    S<$local> span2)\n{\n    // okay: types match exactly\n    return span1;\n\n    // error: has lifetime $local which has no conversion to $ro\n    return span2;\n\n    // okay: type S<$heap> has a conversion to S<$ro> because $heap has a\n    // conversion to $ro and the first lifetime parameter of S<> is covariant\n    return default(S<$heap>)\n\n    // okay: the ref lifetime of ref $i is $ro so this is just an \n    // identity conversion\n    S<$ro> local = new S<$ro>(ref $i);\n    return local;\n\n    int[] array = new int[42];\n    // okay: S<$heap> is convertible to S<$ro>\n    return new S<$heap>(ref<$heap> array[0]);\n\n    // okay: the parameter of the ctor is $ro ref int and the argument is $heap ref int. These \n    // are convertible.\n    return new S<$ro>(ref<$heap> array[0]);\n\n    // error: has ref lifetime $local which has no conversion to $a hence \n    // it's illegal\n    int local = 42;\n    return ref local;\n}",
+  "sourceSHA256": "541f2e275f6093ff9409d024832dbf82c27672db4ddceb9d2667e274cd8fc193",
+  "target": "library",
+  "featureId": "csharp-11-0-ref-fields",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/low-level-struct-improvements.md",
+    "sha256": "48173c4aaa1ffb3cbd8f7602f52fbf0b38a57f1e4fc50a725ba5305f30a5ff54",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/low-level-struct-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 65724
+  }
+}

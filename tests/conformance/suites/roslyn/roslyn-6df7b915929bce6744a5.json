@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6df7b915929bce6744a5",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Linq;\n\nnamespace Test\n{\n    public class B {}\n    \n    public class C\n    {\n        public static B b = new B();\n        \n        public static implicit operator B(C c)\n        {\n            return b;\n        }\n    }\n    \n    public class Program\n    {\n        public static void Main()\n        {\n            B b = new B();\n            C c = new C();\n            \n            var a = new [] {b, c};\n        \n            System.Console.Write(a.SequenceEqual(new B[]{b, c}));\n        }\n    }\n}\n",
+  "sourceSHA256": "4492bc6f85093a3665e23a828c61d2d23e2c4e5c2747cfda474464e4dcd4cf60",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenImplicitlyTypeArraysTests.cs",
+    "sha256": "0fc3699a5865debbf22c8a495b096c5d5f16c83af48caf9d65ef34fc0f9d8521",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenImplicitlyTypeArraysTests.cs",
+    "license": "MIT",
+    "method": "Test_012_UserDefinedImplicitConversion",
+    "offset": 14266
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(testSrc)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

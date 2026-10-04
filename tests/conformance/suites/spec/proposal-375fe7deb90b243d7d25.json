@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-375fe7deb90b243d7d25",
+  "kind": "spec",
+  "sourceText": "var x = e is A<B> && f;            // &&\nvar x = e is A<B> || f;            // ||\nvar x = e is A<B> & f;             // &\nvar x = e is A<B>[];               // [",
+  "sourceSHA256": "8bc3eda054aba7b6c0dcbc5d418c832715e992940364442840c3dd2fe4d948d3",
+  "target": "library",
+  "featureId": "csharp-7-0-pattern-matching",
+  "langVersion": "7.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.0/pattern-matching.md",
+    "sha256": "35006167fb2be5d0587fbc69a197155609a68160b199a4fbb9d87f72e1b46b53",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/pattern-matching.md",
+    "license": "NOASSERTION",
+    "offset": 15353
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e09a7f2a96e3f51cb8a7",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static void M(in int arg1, in (int Alice, int Bob) arg2)\n    {\n        arg1 = 1;\n        arg2.Alice = 2;\n\n        arg1 ++;\n        arg2.Alice --;\n\n        arg1 += 1;\n        arg2.Alice -= 2;\n    }\n}\n",
+  "sourceSHA256": "743494738760e2ccb0d08c436374830c21954183a33f29057f686559a29bcfc1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenInParametersTests.cs",
+    "sha256": "3dd7ab02ad53d49f5790678503b441f11393da95c6ca4e54ac9a4ee30296af53",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenInParametersTests.cs",
+    "license": "MIT",
+    "method": "InParamCannotAssign",
+    "offset": 25016
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8331",
+        "severity": "error"
+      },
+      {
+        "code": "CS8332",
+        "severity": "error"
+      },
+      {
+        "code": "CS8331",
+        "severity": "error"
+      },
+      {
+        "code": "CS8332",
+        "severity": "error"
+      },
+      {
+        "code": "CS8331",
+        "severity": "error"
+      },
+      {
+        "code": "CS8332",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,9): error CS8331: Cannot assign to variable 'arg1' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         arg1 = 1;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField, \"arg1\").WithArguments(\"variable\", \"arg1\").WithLocation(6, 9),\n                // (7,9): error CS8332: Cannot assign to a member of variable 'arg2' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         arg2.Alice = 2;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField2, \"arg2.Alice\").WithArguments(\"variable\", \"arg2\").WithLocation(7, 9),\n                // (9,9): error CS8331: Cannot assign to variable 'arg1' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         arg1 ++;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField, \"arg1\").WithArguments(\"variable\", \"arg1\").WithLocation(9, 9),\n                // (10,9): error CS8332: Cannot assign to a member of variable 'arg2' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         arg2.Alice --;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField2, \"arg2.Alice\").WithArguments(\"variable\", \"arg2\").WithLocation(10, 9),\n                // (12,9): error CS8331: Cannot assign to variable 'arg1' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         arg1 += 1;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField, \"arg1\").WithArguments(\"variable\", \"arg1\").WithLocation(12, 9),\n                // (13,9): error CS8332: Cannot assign to a member of variable 'arg2' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         arg2.Alice -= 2;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField2, \"arg2.Alice\").WithArguments(\"variable\", \"arg2\").WithLocation(13, 9)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

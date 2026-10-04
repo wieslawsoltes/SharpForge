@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e8ff174c7823af743f42",
+  "kind": "diagnostics",
+  "sourceText": "\nSystem.Console.Write(x);\nvar (x, y) = (1, 2);\n",
+  "sourceSHA256": "eda4b12d9f9a2eeac88a7e5d6649af5e5eeba3a094db8412a7f1e458a7474562",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "UnassignedUsedInDeconstructionInScript",
+    "offset": 182821
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "references: s_valueTupleRefs)",
+  "options": "(source, parseOptions: TestOptions.Script, options: TestOptions.DebugExe, references: s_valueTupleRefs)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

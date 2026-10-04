@@ -69,6 +69,52 @@ const refLocals = cs`
   }
 `;
 
+const refStructLocals = cs`
+  using System.Collections.Generic;
+  using System.Threading.Tasks;
+  ref struct R { public int V; public int Get() { return V; } }
+  class Program
+  {
+      static int Use(R r) { return r.V; }
+      static async Task<int> WholeRead() { R r = new R(); await Task.Delay(1); return Use(r); }
+      static async Task<int> Copy() { R r = new R(); await Task.Delay(1); R c = r; return c.V; }
+      static async Task<int> Branch(bool b) { R r = new R(); await Task.Delay(1); if (b) r.V = 1; return r.V; }
+      static async Task<int> Call() { R r = new R(); await Task.Delay(1); return r.Get(); }
+      static async Task<int> InArgument() { R r = new R(); return Use(r) + await Task.FromResult(1); }
+      static IEnumerable<int> YieldRead() { R r = new R(); yield return 1; yield return r.V; }
+      static async Task<int> AfterAwait() { R r = new R(); await Task.Delay(1); r.V = 1; return r.V; }
+      static async Task<int> BeforeAwait() { R r = new R(); r.V = 1; int v = r.V; await Task.Delay(1); return v; }
+      static async Task<int> DeclaredAfter() { await Task.Delay(1); R r = new R(); r.V = 1; return r.V; }
+      static async Task<int> InLoop() { R r = new R(); for (int i = 0; i < 2; i++) { r.V++; await Task.Delay(1); } return 0; }
+      static async Task<int> Reassigned() { R r = new R(); await Task.Delay(1); r = new R(); return r.V; }
+      static IEnumerable<int> AfterYield() { R r = new R(); yield return 1; r.V = 2; }
+      static IEnumerable<int> BeforeYield() { R r = new R(); r.V = 2; yield return r.V; }
+      static IEnumerable<int> Scoped() { { R r = new R(); r.V = 2; } yield return 1; { R r = new R(); r.V = 3; } }
+      static void Main() { }
+  }
+`;
+const refStructIteratorLocals = cs`
+  using System.Collections.Generic;
+  ref struct R { public int V; }
+  class Program
+  {
+      static IEnumerable<int> YieldRead() { R r = new R(); yield return 1; yield return r.V; }
+      static IEnumerable<int> BeforeYield() { R r = new R(); r.V = 2; yield return r.V; }
+      static void Main() { }
+  }
+`;
+const yieldInUnsafe = cs`
+  using System.Collections.Generic;
+  class Program
+  {
+      static IEnumerable<int> InBlock() { unsafe { yield return 1; } }
+      static IEnumerable<int> BreakOnly() { unsafe { yield break; } }
+      static unsafe IEnumerable<int> UnsafeMethod() { yield return 1; }
+      static IEnumerable<int> Outside() { unsafe { int x = 1; int* p = &x; } yield return 1; }
+      static void Main() { }
+  }
+`;
+
 export const fixtures = [
   ...feature('ref-struct-interfaces', [
     diag('cs9244-cs0029-cs0315', refStructs),
@@ -77,5 +123,10 @@ export const fixtures = [
   ...feature('ref-locals-in-iterators-async', [
     diag('cs9217-across-yield-and-await', refLocals),
     diag('cs9202-below-csharp-13', refLocals, { langVersion: '12' }),
+    diag('cs4007-ref-struct-local-across-await-or-yield', refStructLocals),
+    diag('cs4012-cs4013-ref-struct-locals-below-csharp-13', refStructLocals, { langVersion: '12' }),
+    diag('cs4007-ref-struct-iterator-local-csharp-12', refStructIteratorLocals, { langVersion: '12' }),
+    diag('cs9238-yield-return-in-unsafe-block', yieldInUnsafe, { allowUnsafe: true }),
+    diag('cs1629-unsafe-in-iterator-below-csharp-13', yieldInUnsafe, { allowUnsafe: true, langVersion: '12' }),
   ]),
 ];

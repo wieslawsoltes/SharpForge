@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9e8fa0e265ec4c3128ae",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    void M(ref readonly out int[] p) => throw null;\n}",
+  "sourceSHA256": "f2c5165bf3cf627da88f04be4e2a3644e295501815bbfa491715ad42a1717c81",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "RefReadonlyWithOut",
+    "offset": 96946
+  },
+  "langVersion": "11",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular11)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9058",
+        "severity": "error"
+      },
+      {
+        "code": "CS8328",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,16): error CS9058: Feature 'ref readonly parameters' is not available in C# 11.0. Please use language version 12.0 or greater.\n            //     void M(ref readonly out int[] p) => throw null;\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion11, \"readonly\").WithArguments(\"ref readonly parameters\", \"12.0\").WithLocation(3, 16),\n            // (3,25): error CS8328:  The parameter modifier 'out' cannot be used with 'ref'\n            //     void M(ref readonly out int[] p) => throw null;\n            Diagnostic(ErrorCode.ERR_BadParameterModifiers, \"out\").WithArguments(\"out\", \"ref\").WithLocation(3, 25)",
+  "unsupported": []
+}

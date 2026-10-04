@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9876d3c6dc968a5ef298",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n#pragma warning disable 436\n\npublic enum E1 { A, B }\n\nnamespace System\n{\n    public class ObsoleteAttribute : Attribute\n    {\n        public int[] Int { get; set; }\n        public E1[] Enum { get; set; }\n        public string DiagnosticId { get; set; }\n    }\n}\n\npublic class C1\n{\n    [Obsolete(\n        Int = new[] { 0, 1, 2 },\n        Enum = new[] { E1.A, E1.B },\n        DiagnosticId = \"TEST1\")]\n    public void M1() { }\n}\n",
+  "sourceSHA256": "1f70ec387951b3a74d207f3a59f2cfd19e75cf1c3c81862588e0b9a2235e16c1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "Obsolete_CustomDiagnosticId_BadMetadata_04",
+    "offset": 347672
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source1)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}
