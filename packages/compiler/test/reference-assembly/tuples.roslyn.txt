@@ -1,0 +1,31 @@
+assembly Tuples
+  [assembly: [System.Runtime.CompilerServices.CompilationRelaxationsAttribute((Int32)8)]]
+  [assembly: [System.Runtime.CompilerServices.RuntimeCompatibilityAttribute(WrapNonExceptionThrows = True)]]
+  [assembly: [System.Diagnostics.DebuggableAttribute((System.Diagnostics.DebuggableAttribute+DebuggingModes)2)]]
+  [assembly: [System.Runtime.Versioning.TargetFrameworkAttribute(".NETCoreApp,Version=v10.0", FrameworkDisplayName = ".NET 10.0")]]
+type Sample.Tuples : System.Object attrs=Public, BeforeFieldInit
+  field System.ValueTuple`2[System.String,System.ValueTuple`2[System.Int32,System.Int32]][] <Names>k__BackingField attrs=Private
+    [[System.Runtime.CompilerServices.TupleElementNamesAttribute(new String[4] { "First", "Where", "X", "Y" })]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.Collections.Generic.List`1[System.ValueTuple`2[System.Int32,System.String]] Listed attrs=Public
+    [[System.Runtime.CompilerServices.TupleElementNamesAttribute(new String[2] { "Key", null })]]
+  field System.ValueTuple`2[System.Int32,System.String] Pair attrs=Public
+    [[System.Runtime.CompilerServices.TupleElementNamesAttribute(new String[2] { "Count", "Label" })]]
+  field System.ValueTuple`2[System.Int32,System.Int32] Plain attrs=Public
+  field System.ValueTuple`8[System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.ValueTuple`2[System.Int32,System.Int32]] Wide attrs=Public
+    [[System.Runtime.CompilerServices.TupleElementNamesAttribute(new String[11] { "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8", "a9", null, null })]]
+  method System.ValueTuple`2[System.Int32,System.Int32] Compute(System.ValueTuple`2[System.Int64,System.Int64] input, System.ValueTuple`2[System.Int32,System.Int32] plain) attrs=Public, Static, HideBySig impl=IL
+    return [[System.Runtime.CompilerServices.TupleElementNamesAttribute(new String[2] { "Sum", null })]]
+    param input [[System.Runtime.CompilerServices.TupleElementNamesAttribute(new String[2] { "left", "right" })]]
+  method System.ValueTuple`2[System.Int32,System.Int32] Unnamed() attrs=Public, HideBySig impl=IL
+  method System.ValueTuple`2[System.Int32,System.ValueTuple`2[System.String,System.Int32]] Nested() attrs=Public, HideBySig impl=IL
+    return [[System.Runtime.CompilerServices.TupleElementNamesAttribute(new String[4] { null, null, "Inner", null })]]
+  method System.ValueTuple`2[System.String,System.ValueTuple`2[System.Int32,System.Int32]][] get_Names() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return [[System.Runtime.CompilerServices.TupleElementNamesAttribute(new String[4] { "First", "Where", "X", "Y" })]]
+  method .ctor() attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+  method System.Void set_Names(System.ValueTuple`2[System.String,System.ValueTuple`2[System.Int32,System.Int32]][] value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param value [[System.Runtime.CompilerServices.TupleElementNamesAttribute(new String[4] { "First", "Where", "X", "Y" })]]
+  property System.ValueTuple`2[System.String,System.ValueTuple`2[System.Int32,System.Int32]][] Names[] get=get_Names set=set_Names
+    [[System.Runtime.CompilerServices.TupleElementNamesAttribute(new String[4] { "First", "Where", "X", "Y" })]]

@@ -18,6 +18,7 @@ import { SymbolKind, TypeKind } from '../../symbols/types.js';
 import { TypeTokens, namespaceOf } from './type-tokens.js';
 import { planMembers, explicitInterfaceOf } from './member-plan.js';
 import { typeFlags, genericParameterFlags } from './attribute-flags.js';
+import { tupleElementNamesOf } from './tuple-element-names.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
@@ -73,6 +74,7 @@ export class SymbolMetadataWriter {
     this.propertyTokens = new Map();
     this.eventTokens = new Map();
     this.parameterTokens = new Map();
+    this.returnParameterTokens = new Map();
   }
   typeToken(type) {
     return this.tokens.definitionToken(type);
@@ -154,6 +156,11 @@ export class SymbolMetadataWriter {
           Signature: signature,
           ParamList: nextParameter,
         });
+        if (method.symbol && tupleElementNamesOf(method.symbol.returnType)) {
+          // The return value has a Param row (sequence 0) only when an attribute is written on it.
+          this.returnParameterTokens.set(method.symbol, this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' }));
+          nextParameter++;
+        }
         method.parameters.forEach((parameter, index) => {
           const row = this.builder.addRow('Param', { Flags: parameter.flags, Sequence: index + 1, Name: parameter.name ?? '' });
           if (method.symbol) this.parameterTokens.set(method.symbol.parameters[index], row);

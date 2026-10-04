@@ -9,6 +9,7 @@
  *   DefaultMemberAttribute("Item")   on a type that declares an indexer
  *   ParamArrayAttribute              on a `params` parameter
  *   CompilerGeneratedAttribute       on the backing fields and accessors of auto-properties and field-like events
+ *   TupleElementNamesAttribute       on a field, parameter, return value or property whose type names tuple elements
  *
  * Pseudo-custom attributes are not rows: the runtime reads them from flags and other tables. `[Serializable]` sets
  * the TypeDef flag; the others (StructLayout, DllImport, MethodImpl, ...) are skipped and listed as a limit.
@@ -17,6 +18,7 @@ import { encodeCustomAttribute, TypeAttributes, token } from '@sharpforge/cil';
 import { SymbolKind, TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { MetadataEmitError, namespaceOf } from './type-tokens.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
+import { tupleElementNamesOf } from './tuple-element-names.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const TYPE_DEF_TABLE = 2;
@@ -128,11 +130,15 @@ export class CustomAttributeWriter {
       this.applied(typeToken, type);
       for (const field of plan.fields) {
         if (field.symbol) this.applied(field.token, field.symbol);
+        this.tupleElementNames(field.token, field.type);
         const isBackingField = field.symbol?.associatedSymbol?.kind === SymbolKind.Property;
         if (isBackingField || field.isCompilerGenerated) this.compilerGenerated(field.token);
       }
       for (const method of plan.methods) this.method(method);
-      for (const { symbol } of plan.properties) this.applied(this.writer.propertyTokens.get(symbol), symbol);
+      for (const { symbol } of plan.properties) {
+        this.applied(this.writer.propertyTokens.get(symbol), symbol);
+        this.tupleElementNames(this.writer.propertyTokens.get(symbol), symbol.type);
+      }
       for (const { symbol } of plan.events) this.applied(this.writer.eventTokens.get(symbol), symbol);
     }
   }
@@ -146,10 +152,13 @@ export class CustomAttributeWriter {
     }
     this.applied(planned.token, symbol);
     if (owner?.kind === SymbolKind.Property && owner.isAutoProperty) this.compilerGenerated(planned.token);
+    const returnToken = this.writer.returnParameterTokens.get(symbol);
+    if (returnToken) this.tupleElementNames(returnToken, symbol.returnType);
     for (const [index, parameter] of symbol.parameters.entries()) {
       const parameterToken = this.writer.parameterTokens.get(parameter);
       if (!parameterToken) continue;
       if (parameter.isParams) this.wellKnown(parameterToken, 'System.ParamArrayAttribute');
+      this.tupleElementNames(parameterToken, parameter.type);
       this.applied(parameterToken, parameter);
       // The parameters of an indexer are declared once and repeated on each accessor.
       const declared = owner?.kind === SymbolKind.Property ? owner.parameters[index] : null;
@@ -196,6 +205,16 @@ export class CustomAttributeWriter {
     const shape = { isStatic: false, returnType: this.core.void, parameters: values.map(() => ({ type: this.core.string })) },
       constructor = this.builder.member(this.builder.typeRef(fullName), '.ctor', methodSignature(this.types, shape));
     this.add(parent, constructor, encodeCustomAttribute(values.map(() => 'string'), values));
+  }
+  /** `[TupleElementNames]` on a declaration whose type names tuple elements; nothing for any other type. */
+  tupleElementNames(parent, type) {
+    const names = tupleElementNamesOf(type);
+    if (!names) return;
+    const strings = new ArrayTypeSymbol(this.core.string),
+      shape = { isStatic: false, returnType: this.core.void, parameters: [{ type: strings }] },
+      owner = this.builder.typeRef('System.Runtime.CompilerServices.TupleElementNamesAttribute'),
+      constructor = this.builder.member(owner, '.ctor', methodSignature(this.types, shape));
+    this.add(parent, constructor, encodeCustomAttribute([{ kind: 'szarray', element: 'string' }], [names]));
   }
   compilerGenerated(parent) {
     this.wellKnown(parent, 'System.Runtime.CompilerServices.CompilerGeneratedAttribute');
