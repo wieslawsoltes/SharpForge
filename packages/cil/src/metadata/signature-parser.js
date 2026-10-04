@@ -1,6 +1,7 @@
 import { canonicalType, frameworkType } from '@sharpforge/framework';
 import { CilError } from '../binary.js';
 import { signaturePrimitives, signaturePrimitiveNodes, signatureAliases, signatureBudget } from './signature-types.js';
+import { registeredNestedType, nestedDefinitionName } from './nested-signatures.js';
 
 const collections = new Set(['List', 'Dictionary', 'HashSet', 'Queue', 'Stack', 'IEnumerable', 'IList', 'ICollection']);
 const genericValues = new Set([
@@ -68,6 +69,8 @@ function arrayShape(text, element) {
 }
 
 function genericName(name, arity) {
+  // A nested definition names its declared arity, not its enclosing generic parameters.
+  if (name.includes('+')) return name;
   const bare = name.replace(/`\d+$/, '');
   if (collections.has(bare)) name = 'System.Collections.Generic.' + name;
   else if (['Action', 'Func', 'Nullable', 'ValueTuple'].includes(bare)) name = 'System.' + name;
@@ -115,6 +118,12 @@ export function parseSignatureType(value, resolveToken, options = {}) {
       const split = text.indexOf(' ');
       kind = text.slice(0, split);
       text = text.slice(split + 1).trim();
+    }
+    const nested = registeredNestedType(text);
+    if (nested) {
+      const declaring = parse(nested.declaringType, depth + 1);
+      const type = named(nestedDefinitionName(nested), kind);
+      return declaring.kind === 'genericInstance' ? {kind: 'genericInstance', type, arguments: declaring.arguments} : type;
     }
     if (text.endsWith('>')) {
       const start = opening(text, '>', '<');

@@ -1,5 +1,6 @@
 import { CilError } from '../binary.js';
 import { signatureAliases, signatureBudget } from './signature-types.js';
+import { canonicalNestedSignature } from './nested-signatures.js';
 
 /** Format an AST using the historical inspection strings; use the AST for binary fidelity. */
 function formatter(metadata, options = {}) {
@@ -15,7 +16,8 @@ function formatter(metadata, options = {}) {
     if (type.kind === 'class' || type.kind === 'valuetype') return name(type.token, depth + 1);
     if (type.kind === 'genericParameter') return (type.scope === 'method' ? '!!' : '!') + type.index;
     if (type.kind === 'genericInstance') {
-      return format(type.type, depth + 1) + '<' + type.arguments.map(arg => format(arg, depth + 1)).join(', ') + '>';
+      const name = format(type.type, depth + 1) + '<' + type.arguments.map(arg => format(arg, depth + 1)).join(', ') + '>';
+      return canonicalNestedSignature(name);
     }
     if (type.kind === 'modreq' || type.kind === 'modopt') {
       return format(type.element, depth + 1) + ` ${type.kind}(${name(type.token, depth + 1)})`;

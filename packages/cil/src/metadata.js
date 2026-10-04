@@ -1,9 +1,8 @@
 import { writeAssemblyReference } from './metadata/assembly-references.js';
 import { initializeMetadataBuilder } from './metadata/builder-state.js';
 import { encodeTypeSignature } from './metadata/signature-writer.js';
-import { parseSignatureType } from './metadata/signature-parser.js';
+import { internTypeReference } from './metadata/type-references.js';
 import { readTypeSignature } from './metadata/signature-members.js';
-import {canonicalType} from '@sharpforge/framework';
 
 export { validateMetadata, metadataDiagnosticCatalog } from './metadata/validate.js';
 import { readMetadataTables, writeMetadataTables } from './metadata/table-stream.js';
@@ -26,7 +25,7 @@ export class MetadataBuilder {
   guid(bytes) { return this.heaps.guid(bytes); }
   userString(value) { return this.heaps.userString(value); }
   assemblyRef(name) { return writeAssemblyReference(this,name); }
-  typeRef(fullName,assembly) { const canonical=fullName.includes('<')?fullName:canonicalType(fullName);if(canonical!==fullName)fullName=canonical;const generic=fullName.endsWith('>')&&fullName.indexOf('<')>0;if(generic){const key='typespec:'+fullName;if(this.typeRefs.has(key))return this.typeRefs.get(key);const token=this.typeSpec(parseSignatureType(fullName,t=>this.typeRef(t)));this.typeRefs.set(key,token);return token;}assembly??=fullName.startsWith('Microsoft.UI.')||fullName.startsWith('Windows.UI.')?'SharpForge.WinUI':fullName.startsWith('SharpForge.Runtime.')?'SharpForge.Runtime':this.framework==='mscorlib4'?'mscorlib':fullName==='System.Console'?'System.Console':fullName==='System.Diagnostics.Debug'?'System.Diagnostics.Debug':'System.Runtime';const key=assembly+':'+fullName;if(this.typeRefs.has(key))return this.typeRefs.get(key);const split=fullName.lastIndexOf('.'),ns=split<0?'':fullName.slice(0,split),name=fullName.slice(split+1);const t=this.add(1,[codedIndex('ResolutionScope',this.assemblyRef(assembly)),this.string(name),this.string(ns)]);this.typeRefs.set(key,t);return t; }
+  typeRef(fullName,assembly) { return internTypeReference(this,fullName,assembly); }
   /** Intern a TypeSpec by encoded bytes, independent of spelling or object identity. */
   typeSpec(type) {
     const blob = this.blob(encodeTypeSignature(type));
