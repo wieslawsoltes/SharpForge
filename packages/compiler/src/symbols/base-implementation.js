@@ -48,13 +48,40 @@ export function isAbstractBaseAccess(member, baseType) {
   return !nearest || nearest === accessor || !!(nearest.associatedSymbol ?? nearest).isAbstract;
 }
 
+/** True when `candidate` overrides `definition`, directly or through the overrides in between. */
+function overridesDefinition(candidate, definition) {
+  for (let current = candidate.overriddenMethod; current; current = current.overriddenMethod) {
+    if ((current.originalDefinition ?? current) === definition) return true;
+  }
+  return false;
+}
+
+/**
+ * `base.M<T>(...)`: the nearest override of the generic method, constructed over the same type arguments. The type
+ * parameters of an override are its own, so it is found through the `overriddenMethod` links the binder recorded.
+ */
+function constructedBaseImplementation(method, baseType) {
+  const definition = method.constructedFrom ?? method.originalDefinition,
+    declaring = definition?.containingType;
+  if (!definition || !declaring || declaring.typeKind === TypeKind.Interface) return method;
+  if (!(definition.isVirtual || definition.isAbstract || definition.isOverride)) return method;
+  const declaringDefinition = declaring.originalDefinition ?? declaring;
+  for (let type = baseType; type; type = type.baseType) {
+    if ((type.originalDefinition ?? type) === declaringDefinition) break;
+    const found = type.getMembers(definition.name).find(candidate => candidate.kind === SymbolKind.Method && overridesDefinition(candidate, definition));
+    if (found) return found.construct(method.typeArguments.map(argument => argument.type ?? argument));
+  }
+  return method;
+}
+
 /**
  * The method a non-virtual call through `base` runs.
  * @param method the virtual method member lookup found  @param baseType the base class of the type the call is in
  * @returns the nearest override between `baseType` and the declaring class, or `method` itself when there is none
- *   (also for a member of an interface, a non-virtual method and a constructed generic method, which are left alone)
+ *   (also for a member of an interface and a non-virtual method, which are left alone)
  */
 export function baseImplementationOf(method, baseType) {
+  if (method.typeArguments?.length) return constructedBaseImplementation(method, baseType);
   const declaring = method.containingType,
     slot = method.associatedSymbol ?? method,
     isVirtual = [method, slot].some(symbol => symbol.isVirtual || symbol.isAbstract || symbol.isOverride);

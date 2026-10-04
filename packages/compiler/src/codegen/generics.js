@@ -90,17 +90,21 @@ export function typeParameterOrdinal(parameter) {
   return ordinal;
 }
 
-/** The type arguments of a constructed type including those of its enclosing constructed types, outermost first. */
-export function allTypeArguments(type) {
-  const container = type.containingType;
-  const outer = container && !container.isDefinition ? allTypeArguments(container) : [];
-  return [...outer, ...type.typeArguments.map(argument => argument.type)];
-}
-
 /** The type parameters a definition stands over in its own code: those of its enclosing types, then its own. */
 export function allTypeParameters(type) {
   const outer = type.containingType ? allTypeParameters(type.containingType.originalDefinition) : [];
   return [...outer, ...type.typeParameters];
+}
+
+/**
+ * The type arguments of a constructed type including those of its enclosing types, outermost first. An enclosing
+ * type that is not constructed stands for itself in its own code (`Cache<TValue>` named inside `Outer<TKey>` is
+ * `Outer<TKey>.Cache<TValue>`): its type parameters are the arguments.
+ */
+export function allTypeArguments(type) {
+  const container = type.containingType,
+    outer = !container ? [] : container.isDefinition ? allTypeParameters(container) : allTypeArguments(container);
+  return [...outer, ...type.typeArguments.map(argument => argument.type)];
 }
 
 /**

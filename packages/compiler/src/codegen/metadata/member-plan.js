@@ -14,6 +14,7 @@ import { SymbolKind, TypeKind, RefKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { isInheritedPositional } from '../../symbols/synthesized/records.js';
 import { fieldFlags, methodFlags, memberAccessFlags, parameterFlags } from './attribute-flags.js';
+import { covariantOverrideOf } from './covariant-overrides.js';
 
 const ENUM_VALUE_FIELD = 'value__';
 const ENUM_VALUE_FLAGS = FieldAttributes.Public | FieldAttributes.SpecialName | FieldAttributes.RTSpecialName;
@@ -53,14 +54,18 @@ function isStaticAutoAccessor(method) {
 export function plannedMethod(type, method) {
   const inInterface = type.typeKind === TypeKind.Interface,
     isAbstract = method.isAbstract || (inInterface && !method.hasBody && !isStaticAutoAccessor(method)),
-    explicit = !!explicitInterfaceOf(method);
+    explicit = !!explicitInterfaceOf(method),
+    overrides = covariantOverrideOf(type, method),
+    flags = methodFlags(method, { inInterface, implementsInterface: explicit || implementedBy(type, method) || implementedBy(type, method.associatedSymbol) });
   return {
     symbol: method,
     name: method.metadataName,
-    flags: methodFlags(method, { inInterface, implementsInterface: explicit || implementedBy(type, method) || implementedBy(type, method.associatedSymbol) }),
+    // An override with a covariant return type has a slot of its own and names what it overrides (covariant-overrides.js).
+    flags: overrides ? flags | MethodAttributes.NewSlot : flags,
     implFlags: MethodImplAttributes.IL,
     hasBody: !isAbstract && !method.isExtern,
     parameters: parametersOf(method),
+    ...(overrides ? { overrides } : {}),
   };
 }
 

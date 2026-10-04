@@ -39,6 +39,18 @@ export function nestedTypeOf(container, nested) {
   if (!(container instanceof ConstructedNamedTypeSymbol)) return nested;
   return new ConstructedNamedTypeSymbol(nested.originalDefinition, nested.originalDefinition.typeArguments, container);
 }
+/**
+ * The type nested in `container` (or in one of its base classes) that `name` with these type arguments names,
+ * seen through the container: `Outer<string>.Cache<int>`. @returns the type, or null when there is no such nested type
+ */
+export function memberTypeOf(container, name, typeArguments = []) {
+  for (let type = container; type; type = type.baseType) {
+    const nested = (type.originalDefinition ?? type).getTypeMembers?.(name, typeArguments.length)[0];
+    if (!nested) continue;
+    return typeArguments.length ? constructType(nested, typeArguments, type) : nestedTypeOf(type, nested);
+  }
+  return null;
+}
 /** The type parameters in scope of a type: its own and those of every enclosing type, outermost first. */
 export function allTypeParameters(type) {
   const chain = [];
@@ -47,17 +59,19 @@ export function allTypeParameters(type) {
 }
 /** The effective base class of a type parameter: its class constraint, ValueType for `struct`, else object. */
 export function effectiveBaseClass(parameter, core) {
-  if (parameter.hasValueTypeConstraint || parameter.hasUnmanagedTypeConstraint) return core.valueType;
+  const isValueConstrained = parameter.hasValueTypeConstraint || parameter.hasUnmanagedTypeConstraint;
   for (const c of parameter.constraintTypes) {
     const t = typeOf(c);
+    // `where T : struct, Enum` (C# 7.3): the class constraint is the base class also of a value-constrained parameter.
     if (t.typeKind === TypeKind.Class) return t;
+    if (isValueConstrained) continue;
     if (t.typeKind === TypeKind.TypeParameter) {
       const b = effectiveBaseClass(t, core);
       if (b !== core.object) return b;
     }
     if (t.typeKind === TypeKind.Struct || t.typeKind === TypeKind.Enum) return t;
   }
-  return core.object;
+  return isValueConstrained ? core.valueType : core.object;
 }
 /** The effective interface set of a type parameter: constraint interfaces and those of constraint types. */
 export function effectiveInterfaces(parameter, seen = new Set()) {

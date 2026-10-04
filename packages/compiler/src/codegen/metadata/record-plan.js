@@ -16,6 +16,9 @@ import { Accessibility, SymbolKind, TypeKind } from '../../symbols/types.js';
 import { MethodSymbol, ParameterSymbol, PropertySymbol, MethodKind, DeclarationModifiers } from '../../symbols/members.js';
 import { baseRecordOf, isInheritedPositional } from '../../symbols/synthesized/records.js';
 import { plannedMethod } from './member-plan.js';
+import { memberOn } from './covariant-overrides.js';
+
+export { memberOn };
 
 export { baseRecordOf, isInheritedPositional };
 
@@ -35,12 +38,6 @@ function isTypedEquals(method, type) {
   return (parameterType.originalDefinition ?? parameterType) === type;
 }
 const isInstance = member => !member.isStatic && !member.isConst;
-
-/** A member of a constructed type that stands for `symbol` of its definition: what a call on that type names. */
-export function memberOn(owner, symbol) {
-  if ((owner.originalDefinition ?? owner) === owner) return symbol;
-  return Object.create(symbol, { containingType: { value: owner }, originalDefinition: { value: symbol } });
-}
 
 /** The instance fields of a record in declaration order, backing fields of auto-properties included. */
 export function storedFields(type) {

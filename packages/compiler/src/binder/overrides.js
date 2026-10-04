@@ -38,6 +38,13 @@ export function findOverridden(member, type, core) {
     for (const c of b.getMembers(member.name)) if (sameKindAndSignature(member, c)) return c;
   return null;
 }
+/** True for `protected override bool PrintMembers(StringBuilder)` and `protected override Type EqualityContract` of a derived record. */
+function overridesSynthesizedRecordMember(member, type) {
+  const base = type.isRecord && type.typeKind === TypeKind.Class ? type.baseType : null;
+  if (!base || !(base.originalDefinition ?? base).isRecord) return false;
+  if (member.kind === SymbolKind.Method) return member.name === 'PrintMembers' && member.parameters.length === 1;
+  return member.kind === SymbolKind.Property && member.name === 'EqualityContract';
+}
 /** Binds the overrides of a source type. @returns [{code,args,member}] */
 export function bindOverrides(type, core, conversions) {
   const results = [];
@@ -45,6 +52,9 @@ export function bindOverrides(type, core, conversions) {
   for (const member of type.getMembers()) {
     if (!overridable(member) || !member.isOverride) continue;
     const base = findOverridden(member, type, core);
+    // `PrintMembers` and `EqualityContract` of a base record are synthesized where code is generated; overriding them
+    // in a derived record is what the language asks for.
+    if (!base && overridesSynthesizedRecordMember(member, type)) continue;
     if (!base) {
       // Roslyn distinguishes a same-named member of another kind or signature only by the message of CS0115.
       results.push({ code: DiagnosticId.CS0115, args: [member.toDisplayString()], member });

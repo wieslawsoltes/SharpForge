@@ -8,7 +8,7 @@ import { isKnownMissingMember } from '../../symbols/predefined-member-names.js';
 import { spanElementType } from '../../conversions/span.js';
 import { ConstantValue } from '../../constants/constant-value.js';
 import { extensionScopes, isValidReceiverConversion, couldTakeReceiver } from '../../overload/extension-methods.js';
-import { findConstruction } from '../../symbols/substitution.js';
+import { findConstruction, memberTypeOf } from '../../symbols/substitution.js';
 import { lookupMembers } from '../inheritance.js';
 import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
@@ -326,6 +326,9 @@ export const NameBinding = Base =>
             this.report(nameSyntax, DiagnosticId.CS0122, [found.inaccessible[0].toDisplayString()]);
             return this.bad(syntax);
           }
+          // A nested type of a constructed type (`Outer<string>.Cache<int>`) is not among the members of the construction.
+          const nested = memberTypeOf(type, name, typeArguments ?? []);
+          if (nested) return this.node('TypeExpression', syntax, null, { referencedType: nested });
           if (this.reportAccessorByName(type, name, nameSyntax)) return this.bad(syntax);
           const extension = this.staticExtensionMember(left, type, name, syntax, typeArguments, options);
           if (extension) return extension;

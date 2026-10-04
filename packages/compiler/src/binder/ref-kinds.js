@@ -73,9 +73,12 @@ export function classifyVariable(expression, context = {}) {
     case 'This': {
       const t = context.containingType;
       if (!t || t.typeKind !== TypeKind.Struct) return { isVariable: false, isWritable: false, reason: 'this' };
-      // `readonly` on a constructor is an error of its own (CS0106); the constructor still assigns the fields.
-      const inReadOnlyMember = !!context.method?.isReadOnly && !context.method.isConstructor;
-      if (t.isReadOnly || inReadOnlyMember) return { isVariable: true, isWritable: false, reason: 'this' };
+      // `readonly` on a constructor is an error of its own (CS0106); the constructor still assigns the fields, and
+      // so does the constructor (and an `init` accessor) of a `readonly struct`: there `this` is being built.
+      const method = context.method,
+        builds = !!method && (method.isConstructor || method.isInitOnly),
+        inReadOnlyMember = !!method?.isReadOnly && !method.isConstructor;
+      if ((t.isReadOnly && !builds) || inReadOnlyMember) return { isVariable: true, isWritable: false, reason: 'this' };
       return yes;
     }
     case 'FieldAccess': {
