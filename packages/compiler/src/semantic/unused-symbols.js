@@ -3,7 +3,7 @@
  * CS0169, CS0414 and CS0649 (fields).
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
-import { SymbolKind, TypeKind, Accessibility } from '../symbols/types.js';
+import { SymbolKind, TypeKind, Accessibility, RefKind } from '../symbols/types.js';
 import { effectiveAccessibility } from '../binder/inheritance.js';
 import { accessRank, defaultText } from './analysis-helpers.js';
 
@@ -51,10 +51,13 @@ export const UnusedSymbolWarnings = Base =>
             isPrivate = f.declaredAccessibility === Accessibility.Private,
             isInternal = !isPrivate && rank <= accessRank(Accessibility.Internal);
           if (!isPrivate && !isInternal) continue;
+          // A ref field has no default value to warn about: what it refers to is decided where the struct is created.
+          const isRefField = (!!f.refKind && f.refKind !== RefKind.None) || f.typeSyntax?.kind === 'RefType',
+            neverAssigned = !isRefField && !f.isRequired;
           if (!f.reads && !f.writes) {
             if (isPrivate) this.reportAt(f, DiagnosticId.CS0169, [f.toDisplayString()]);
-            else if (!f.isRequired) this.reportAt(f, DiagnosticId.CS0649, [f.toDisplayString(), defaultText(f.type)]);
-          } else if (!f.writes && !f.isRequired) this.reportAt(f, DiagnosticId.CS0649, [f.toDisplayString(), defaultText(f.type)]);
+            else if (neverAssigned) this.reportAt(f, DiagnosticId.CS0649, [f.toDisplayString(), defaultText(f.type)]);
+          } else if (!f.writes && neverAssigned) this.reportAt(f, DiagnosticId.CS0649, [f.toDisplayString(), defaultText(f.type)]);
           else if (!f.reads && isPrivate && !f.nonConstantWrite) this.reportAt(f, DiagnosticId.CS0414, [f.toDisplayString()]);
         }
       }

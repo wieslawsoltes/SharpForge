@@ -6,8 +6,8 @@ import { CooperativeScheduler } from '../scheduler.js';
 import { normalizeRuntimeLaunchOptions } from '../launch-options.js';
 import { createSourceMethodTables } from './method-table.js';
 import { sourceEntryArguments } from './entry-arguments.js';
-import { defaultValue } from './source-ops.js';
 import { initializeExecutionProfiler } from './profiler.js';
+import { initializeSourceNumbers, sourceInitialValue } from './source-numbers.js';
 
 /** Initialize each source runtime's heap, state and entry frame from independent host options. */
 export function initializeSourceVM(vm, image, options) {
@@ -20,11 +20,12 @@ export function initializeSourceVM(vm, image, options) {
   if (errors.length) throw new Error('Bytecode verification failed: ' + errors.join('; '));
   vm.image = image;
   vm.options = { maxInstructions: 20_000_000, maxFrames: 512, maxOutputCharacters: 1_000_000, ...options };
-  vm.heap = new ManagedHeap({ ...options, methodTables: createSourceMethodTables(image) });
+  initializeSourceNumbers(vm);
+  vm.heap = new ManagedHeap({ ...options, methodTables: createSourceMethodTables(image, vm.options) });
   vm.heap.rootProvider = () => vm.roots();
   vm.stack = [];
   vm.frames = [];
-  vm.statics = image.statics.map(slot => slot.value === null ? defaultValue(slot.type, vm) : slot.value);
+  vm.statics = image.statics.map(slot => sourceInitialValue(vm, slot));
   vm.constantValues = new Map();
   vm.strings = new Map();
   vm.output = [];
