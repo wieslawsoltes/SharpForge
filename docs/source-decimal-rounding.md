@@ -322,5 +322,7 @@ Console.WriteLine(words[3]); // -2147221504: negative, scale 4
 `tests/a05-source-decimal-getbits.test.js` authors three-engine cases for limb
 boundaries, full coefficient range, signed zero, scale 28, array identity,
 mutation isolation, named evaluation, GC retention and exact signature rejection.
-Span/destination overloads and TryGetBits are not admitted. Test execution and
-native/platform/performance qualification remain staged; #1350/#1351 remain open.
+Span/destination overloads and TryGetBits are not admitted. All 15 focused GetBits,
+floating-conversion, and Decimal-operation checks passed at `36be18bb`, using
+Node 24, one worker, and a 512 MB old-space limit. Native/platform/performance
+qualification remains staged; #1350/#1351 remain open.
