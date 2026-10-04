@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {FileWatch} from '../apps/studio/workbench/file-watch.js';
-import {boundedDocuments} from '../apps/studio/workbench/document-size.js';
+import {boundedDocuments, readDocumentRange} from '../apps/studio/workbench/document-size.js';
 import {Bookmarks, trackOffset} from '../apps/studio/workbench/tools/bookmarks.js';
 import {OutputModel} from '../apps/studio/workbench/tools/output.js';
 import {ScopeSelector} from '../apps/studio/workbench/tools/scope-selector.js';
@@ -11,6 +11,94 @@ import {searchDocuments} from '../apps/studio/workbench/search-engine.js';
 import {effectiveBindings, keyboardConflicts} from '../apps/studio/workbench/options/keyboard-page.js';
 import {TestProviders} from '../apps/studio/workbench/tools/test-explorer.js';
 import {filterFindResults} from '../apps/studio/workbench/tools/find-results.js';
+import {registerStatusRegions} from '../apps/studio/workbench/status-bar.js';
+import {SettingsStore} from '../apps/studio/workbench/settings-store.js';
+import {SolutionExplorerViews} from '../apps/studio/workbench/tools/solution-explorer-views.js';
+
+test('status updates read model positions and EOL metadata without flattening a 100 MB document', () => {
+  const file = {uri: 'huge.cs', version: 1, get text() { throw new Error('Status flattened the document'); }};
+  const model = {length: 100_000_000, metadata: {encoding: 'utf-16le', dominantEol: '\r\n', mixedEol: true},
+    positionAt: offset => ({line: 999, character: offset - 9000})};
+  const documents = {get: () => file, models: new Map([[file.uri, model]])};
+  const regions = new Map();
+  registerStatusRegions({register: region => regions.set(region.id, region)}, {
+    context: () => ({uri: file.uri, offset: 9002}), documents,
+    tasks: {running: [], subscribe() {}}, notifications: {unread: 0, subscribe() {}},
+    settings: {get() {}}, execute() {}
+  });
+  assert.equal(regions.get('cursor').value(), 'Ln 1000, Col 3, Ch 9003');
+  assert.equal(regions.get('encoding').value(), 'utf-16le');
+  assert.equal(regions.get('line-ending').value(), 'CRLF (mixed)');
+  model.metadata = {...model.metadata, dominantEol: '\r', mixedEol: false};
+  assert.equal(regions.get('line-ending').value(), 'CR');
+});
+
+test('reading one setting preserves workspace null overrides without cloning unrelated layouts', () => {
+  const settings = new SettingsStore({storage: null});
+  settings.apply({layouts: {current: {id: 'user-layout'}, named: {one: {id: 'one'}}}});
+  settings.apply({layouts: {current: null}, editor: {tabSize: 2}}, {scope: 'workspace'});
+  let reads = 0;
+  Object.defineProperty(settings.user.layouts.named, 'expensive', {enumerable: true, get() { reads++; return {id: 'large-layout'}; }});
+  assert.equal(settings.get('editor', 'tabSize'), 2);
+  assert.equal(settings.get('layouts', 'current'), null);
+  assert.equal(reads, 0);
+  const names = settings.get('layouts', 'named');
+  names.one.id = 'modified';
+  assert.equal(settings.get('layouts', 'named').one.id, 'one');
+  assert.equal(reads, 2);
+});
+
+test('Solution Explorer filtering never reads document content synchronously', () => {
+  const file = {uri: 'huge.cs', version: 1, get text() { throw new Error('Explorer flattened the document'); }};
+  const documents = {list: () => [file], get: () => file, models: new Map([[file.uri, {length: 100_000_000}]])};
+  const model = new SolutionExplorerViews({documents, context: () => ({}), getData: () => ({
+    name: 'Project', mode: 'folder', files: [{path: 'huge.cs'}]
+  })});
+  const view = model.create();
+  assert.equal(model.nodes(view)[0].children[0].children[0].path, 'huge.cs');
+  view.search = 'needle';
+  view.contentSearch = true;
+  assert.doesNotThrow(() => model.nodes(view));
+});
+
+test('definition range reads stay bounded at a caret near the end of a large indexed document', () => {
+  const file = {uri: 'huge.cs', get text() { throw new Error('Definition flattened the document'); }};
+  const reads = [];
+  const model = {length: 100_000_000, getText: (start, end) => { reads.push([start, end]); return 'x'.repeat(end - start); }};
+  const documents = {models: new Map([[file.uri, model]])};
+  const excerpt = readDocumentRange(documents, file, {start: model.length - 1024});
+  assert.deepEqual(reads, [[99_998_976, 100_000_000]]);
+  assert.equal(excerpt.text.length, 1024);
+  assert.equal(excerpt.truncated, true);
+  assert.throws(() => readDocumentRange(documents, file, {start: 0, end: model.length}), /limit/);
+  assert.deepEqual(reads, [[99_998_976, 100_000_000]]);
+});
+
+test('Explorer content searches retain actual worker URI matches and reject stale or cancelled results', async () => {
+  const file = {uri: 'a.cs', version: 1, text: 'class Needle {}'};
+  const documents = {list: () => [file], get: () => file};
+  let finish;
+  const search = {createWorker() {}, search: () => new Promise(resolve => { finish = resolve; })};
+  const model = new SolutionExplorerViews({documents, search, context: () => ({}), getData: () => ({files: [{path: file.uri}]})});
+  const view = model.create();
+  view.search = 'Needle';
+  view.contentSearch = true;
+  const first = model.findContents(view);
+  finish({matches: [{uri: file.uri}]});
+  await first;
+  assert.deepEqual([...view.contentMatches], ['a.cs']);
+  assert.equal(model.nodes(view)[0].children[0].children[0].path, file.uri);
+  view.search = 'Changed';
+  const stale = model.findContents(view);
+  file.version++;
+  finish({matches: [{uri: file.uri}]});
+  await assert.rejects(stale, {name: 'AbortError'});
+  assert.equal(view.contentMatches.size, 0);
+  const cancelled = model.findContents(view);
+  model.dispose();
+  finish({matches: [{uri: file.uri}]});
+  await assert.rejects(cancelled, {name: 'AbortError'});
+});
 
 test('automatic recovery and bookmark construction never materialize a 100 MB model-backed file', async () => {
   let reads = 0, diskReads = 0;

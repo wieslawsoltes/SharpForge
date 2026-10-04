@@ -63,7 +63,7 @@ export function createShellModels(shell) {
   shell.timeline = new DiagnosticTimeline();
   shell.commandWindow = new CommandWindow({registry: commands});
   shell.explorerViews = new SolutionExplorerViews({getData: options.projectData ?? (() => ({files: documents.list(), name: options.state().name})),
-    documents, context});
+    documents, context, search: shell.search});
   shell.properties = createDefaultProperties({state: options.state, designer: options.designer});
   shell.toolbox = new ToolboxProviders();
   shell.toolbox.register('code-snippets', {title: 'C# Snippets', matches: current => current.activeDocumentKind === 'code',

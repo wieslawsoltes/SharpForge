@@ -1,5 +1,6 @@
 import {element} from '../ui.js';
 import {cancellable} from '../events.js';
+import {documentSize, readDocumentRange} from '../document-size.js';
 
 export async function frameworkDefinition(name) {
   const {frameworkType, contracts, propertiesFor} = await import('@sharpforge/framework');
@@ -38,18 +39,25 @@ export function mountCodeDefinition(host, {request, documents, context, readDocu
         target = documents.get(definition.uri) ?? await readDocument?.(definition.uri, {signal: controller.signal});
       } else {
         const hover = await cancellable(request('hover', {uri: current.uri, offset: current.offset}), controller.signal);
-        let start = current.offset, end = current.offset;
-        while (start > 0 && /[\w.]/u.test(file.text[start - 1])) start--;
-        while (end < file.text.length && /[\w.]/u.test(file.text[end])) end++;
-        target = await frameworkDefinition(hover?.symbol?.type ?? file.text.slice(start, end));
+        const offset = current.offset ?? 0;
+        const around = readDocumentRange(documents, file, {start: Math.max(0, offset - 512),
+          end: Math.min(documentSize(documents, file), offset + 512), limit: 1024});
+        let start = offset - around.start, end = start;
+        while (start > 0 && /[\w.]/u.test(around.text[start - 1])) start--;
+        while (end < around.text.length && /[\w.]/u.test(around.text[end])) end++;
+        target = await frameworkDefinition(hover?.symbol?.type ?? around.text.slice(start, end));
       }
       if (serial !== generation || controller.signal.aborted || documents.get(file.uri)?.version !== version) return;
       if (!target) { title.textContent = 'No bound source or framework metadata definition at the caret'; source.value = ''; return; }
-      title.textContent = target.uri;
-      source.value = target.text;
+      const offset = Number.isSafeInteger(definition?.start) ? definition.start : 0;
+      const excerpt = readDocumentRange(documents, target, {start: Math.max(0, offset - 8192)});
+      title.textContent = target.uri + (excerpt.truncated ? ` · excerpt ${excerpt.start + 1}–${excerpt.end} of ${excerpt.length} characters` : '');
+      source.value = excerpt.text;
       if (definition) {
-        source.setSelectionRange(definition.start, definition.end);
-        source.scrollTop = Math.max(0, (target.text.slice(0, definition.start).split('\n').length - 3) * 20);
+        const selectionStart = Math.max(0, offset - excerpt.start);
+        const selectionEnd = Math.max(selectionStart, (definition.end ?? offset) - excerpt.start);
+        source.setSelectionRange(selectionStart, selectionEnd);
+        source.scrollTop = Math.max(0, (excerpt.text.slice(0, selectionStart).split('\n').length - 3) * 20);
       }
     } catch (error) { if (error.name !== 'AbortError') { title.textContent = error.message; onError(error); } }
   };
