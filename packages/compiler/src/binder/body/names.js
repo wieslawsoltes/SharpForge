@@ -369,7 +369,10 @@ export const NameBinding = Base =>
         within: this.c.containingType,
         throughType: left.kind === 'Base' ? this.c.containingType : type,
       });
-      if (type instanceof ArrayTypeSymbol && !found.members.length) {
+      // The length of a single-dimensional array is the array's own operation (`ldlen`), not a call of the
+      // `System.Array.Length` property a referenced core library declares.
+      const isVectorLength = type instanceof ArrayTypeSymbol && type.isSZArray && (name === 'Length' || name === 'LongLength');
+      if (type instanceof ArrayTypeSymbol && (!found.members.length || isVectorLength)) {
         if (name === 'Length' || name === 'Rank') return this.node('ArrayLength', syntax, this.core.int, { array: left, member: name });
         if (name === 'LongLength') return this.node('ArrayLength', syntax, this.core.long, { array: left, member: name });
       }
