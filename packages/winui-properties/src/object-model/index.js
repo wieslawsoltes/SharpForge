@@ -8,3 +8,4 @@ export {UIConstructionRoots, withUIConstruction} from './construction-roots.js';
 export {ResourceModelCollection, dictionaryModel, nameScopeModel, resourceScopeModel, styleModel, setterModel} from './resource-adapter-models.js';
 export {selectorModel} from './selector-model.js';
 export {registerObjectModelAdapters, getDispatcherQueue, routedEventRegistry} from './object-model-adapters.js';
+export {visualStateGroups, visualStateManagerModel} from './visual-state-resource-adapters.js';
