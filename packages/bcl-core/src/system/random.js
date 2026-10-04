@@ -45,7 +45,7 @@ function sample(p, reference, record) {
   let value = record.data[first] - record.data[second];
   if (value === maximum) value--;
   if (value < 0) value += maximum;
-  record.data[first] = value;
+  p.heap.writeElement(p.get(reference, '$data'), first, value);
   p.set(reference, '$i', first);
   p.set(reference, '$j', second);
   return value;

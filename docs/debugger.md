@@ -1,5 +1,10 @@
 > **0.10 update:** [Advanced debugger and WinUI guide](advanced-debugging-winui.md) and [validation](validation-0.10.0.md) define the new symbol, async, live-editing and web-framework support; older limitations below describe the baseline unless explicitly superseded.
 
+> **Project 8 collector update:** [Managed GC](gc-heap.md), [heap spaces](gc-spaces.md),
+> and [managed lifetimes](gc-lifetime.md) supersede the older nonmoving,
+> non-generational collector description below. Managed snapshots include generation,
+> card, pin, weak-table, and finalization state; external host effects remain outside replay.
+
 # SharpForge 0.9 debugger guide
 
 This guide describes the implemented browser-managed source and direct-CIL debuggers. It does not describe a native CLR debugger or complete Visual Studio compatibility. See [validation](validation-0.9.0.md) for tested scope.

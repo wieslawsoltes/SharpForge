@@ -37,3 +37,13 @@ Install its declared sibling packages together. npm publication is not part of t
 This package participates in Portable PDB symbols, cooperative async/logical-thread execution, managed Hot Reload, explicit evaluation, guarded instruction relocation and the code-first WinUI web profile. See the source distribution `docs/advanced-debugging-winui.md` for exact semantic limits; no native CLR/WinRT or full Visual Studio compatibility is implied.
 
 `DebugSession` and `CilDebugSession` expose `setNextStatement(target)`, `gotoTargets(target)`, `applyChanges(imageOrAssembly, options)`, `evaluateFunction(expression, options)`, `threads()`, `parallelStacks()` and `freezeThread(...)`. Effectful evaluation requires `allowSideEffects:true`; `commit:false` previews with managed rollback. Load matching Portable PDBs using the direct-CIL session. Only compatible body updates and validated instruction targets are accepted.
+
+## Pinned managed memory
+
+Both sessions expose `pinMemory`, `memoryReference`, `readMemory`, `writeMemory`,
+and `releaseMemory` while paused. Primitive/enum arrays support bounded byte reads
+and writes; strings and frozen payloads are read-only. Memory windows own counted
+pins, expire on resume or disposal, and use opaque session references. Compatible
+snapshot replay preserves an active lease while keeping revoked windows expired.
+`maxMemoryReferences` defaults to 128 and `maxMemoryTransferBytes` to 65,536 bytes.
+See [the API, storage permissions, DAP requests, and validation scope](../../docs/gc-debugger-memory.md).

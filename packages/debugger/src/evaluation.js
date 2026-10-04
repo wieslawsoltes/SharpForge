@@ -1,3 +1,5 @@
+import {retainDebuggerValue,releaseDebuggerValues} from './roots.js';
+import {evaluationLocal,evaluationProperty,evaluationField,evaluationArray} from './evaluation-storage.js';
 import {parseExpression} from '@sharpforge/syntax';
 import {BuiltinMap} from '@sharpforge/bytecode';
 import {isReference,ManagedFault} from '@sharpforge/runtime';
@@ -18,7 +20,7 @@ class EffectfulExpression {
     this.source=!!this.vm.image; this.checked=false; this.nodes=0;
   }
   pin(value,type) {
-    if(isReference(value)) this.vm.heap.pins.push(value);
+    if(isReference(value)) this.vm.heap.pinRoot(value);
     return {value,type:normalize(type ?? (value===null?'null':isReference(value)?this.vm.heap.get(value).type:typeof value==='boolean'?'bool':typeof value==='string'?'string':value?.float?'double':typeof value==='bigint'?'long':'int'))};
   }
   convert(v,to) {
@@ -47,17 +49,7 @@ class EffectfulExpression {
     return this.pin(value,type);
   }
   local(name) {
-    const f=this.frame;if(!f)return null;
-    if(this.source) {
-      const m=this.vm.image.methods[f.methodId],position=f.point?.start??Infinity;
-      const l=m.locals.filter(l=>l.name===name&&(l.declaredAt??0)<=position&&(l.scopeEnd??Infinity)>=position).at(-1);
-      if(!l)return null;
-      return {type:l.type,get:()=>f.locals[l.slot],readonly:l.isConst,set:v=>{f.locals[l.slot]=v;this.vm.notifyWrite({kind:'local',frameId:f.id,index:l.slot,value:v});}};
-    }
-    const l=this.session.slots(f).find(l=>l.name===name||l.aliases.includes(name));
-    if(!l)return null;
-    return {type:l.type,get:()=>l.kind==='arg'?f.args[l.index]:l.kind==='constant'?l.raw:f.locals[l.index],readonly:l.readOnly,
-      set:v=>{(l.kind==='arg'?f.args:f.locals)[l.index]=this.vm.storage(v,l.type);this.vm.writeRevision++;}};
+    return evaluationLocal(this,name);
   }
   isType(node) {
     const path=pathOf(node);if(!path||node.kind==='Name'&&this.local(node.name))return false;
@@ -65,22 +57,10 @@ class EffectfulExpression {
   }
   owner(receiver,explicit=null) {return explicit ?? (receiver?this.vm.heap.get(receiver).type:this.source?this.vm.image.methods[this.frame?.methodId]?.owner:this.frame?.method.owner);}
   property(owner,name) {
-    if(this.source)return this.vm.image.types.find(t=>t.name===owner)?.properties?.find(p=>p.name===name);
-    const t=this.vm.inspector.types.find(t=>t.name===owner),p=t?.properties.find(p=>p.name===name);if(!p)return null;
-    const semantics=(this.vm.inspector.metadata.rows[24]??[]).filter(r=>(r[2]>>>1)===(p.token&0xffffff)&&(r[2]&1)===1);
-    const get=semantics.find(r=>r[0]&2),set=semantics.find(r=>r[0]&1),sig=this.vm.inspector.signature(p.token);
-    return {name,type:sig.returnType,isStatic:sig.isStatic,get:get?0x06000000|get[1]:null,set:set?0x06000000|set[1]:null};
+    return evaluationProperty(this,owner,name);
   }
   field(owner,name,receiver) {
-    if(this.source) {
-      const t=this.vm.image.types.find(t=>t.name===owner);
-      if(receiver){const f=t?.fields.find(f=>f.name===name);if(f)return {type:f.type,get:()=>this.vm.heap.get(receiver).data[f.index],set:v=>{const r=this.vm.heap.get(receiver),oldValue=r.data[f.index];r.data[f.index]=v;this.vm.notifyWrite({kind:'field',handle:receiver.h,generation:receiver.g,index:f.index,value:v,oldValue});}};}
-      else {const i=this.vm.image.statics.findIndex(f=>f.name===owner+'.'+name);if(i>=0)return {type:this.vm.image.statics[i].type,get:()=>this.vm.statics[i],set:v=>{const oldValue=this.vm.statics[i];this.vm.statics[i]=v;this.vm.notifyWrite({kind:'static',index:i,value:v,oldValue});}};}
-    } else {
-      const f=[...this.vm.inspector.fields.values()].find(f=>f.owner===owner&&f.name===name&&f.isStatic===!receiver);
-      if(f){const type=this.vm.inspector.signature(f.token).type;return receiver?{type,get:()=>{const p=this.vm.field(f.token,receiver);return p.record.data[p.index];},set:v=>{const p=this.vm.field(f.token,receiver);this.vm.dereference(this.vm.address('field',p.index,receiver),true,this.vm.storage(v,type));}}:{type,get:()=>this.vm.statics.get(f.token),set:v=>{this.vm.statics.set(f.token,this.vm.storage(v,type));this.vm.writeRevision++;}};}
-    }
-    return null;
+    return evaluationField(this,owner,name,receiver);
   }
   location(n) {
     if(n.kind==='Name') {
@@ -96,7 +76,7 @@ class EffectfulExpression {
     }
     if(n.kind==='Index') {
       const obj=this.eval(n.target),index=this.eval(n.index);if(index.type!=='int')error('Array index must be int');
-      const r=this.vm.indexed(obj.value,index.value),type=r.type.slice(0,-2);return {type,get:()=>r.data[index.value],set:v=>{const oldValue=r.data[index.value];r.data[index.value]=v;if(this.source)this.vm.notifyWrite({kind:'array',handle:obj.value.h,generation:obj.value.g,index:index.value,value:v,oldValue});else{this.vm.writeRevision++;this.vm.heap.mutationRevision++;}}};
+      return evaluationArray(this,obj.value,index.value);
     }
     error('Expression is not a mutable storage location');
   }
@@ -144,7 +124,7 @@ class EffectfulExpression {
         else owner=this.owner(null);
         const args=n.args.map(a=>this.eval(a));return this.invoke(name,args,receiver,owner);
       }
-      case 'NewArray':{const values=n.values?.map(v=>this.eval(v)),element=n.type==='var[]'?values?.[0]?.type:n.type.slice(0,-2);if(!element)error('Cannot infer array element type');const length=n.length?this.eval(n.length):this.literal(values?.length??0,'int');if(length.type!=='int')error('Array length must be int');if(values&&values.length!==length.value)error('Initializer length mismatch');const ref=this.vm.heap.array(element,length.value);this.pin(ref,element+'[]');if(values)values.forEach((v,i)=>this.vm.heap.get(ref).data[i]=this.convert(v,element));return this.pin(ref,element+'[]');}
+      case 'NewArray':{const values=n.values?.map(v=>this.eval(v)),element=n.type==='var[]'?values?.[0]?.type:n.type.slice(0,-2);if(!element)error('Cannot infer array element type');const length=n.length?this.eval(n.length):this.literal(values?.length??0,'int');if(length.type!=='int')error('Array length must be int');if(values&&values.length!==length.value)error('Initializer length mismatch');const ref=this.vm.heap.array(element,length.value);this.pin(ref,element+'[]');if(values)values.forEach((v,i)=>this.vm.heap.writeElement(ref,i,this.convert(v,element)));return this.pin(ref,element+'[]');}
       case 'New':return this.construct(n);
       case 'SwitchExpression':{const v=this.eval(n.expression);for(const arm of n.arms){if(arm.pattern?.kind==='Name'&&arm.pattern.name==='_'||arm.pattern===null)return this.eval(arm.expression);const p=this.eval(arm.pattern);if(this.binary('==',v,p).value)return this.eval(arm.expression);}error('Switch expression has no matching arm');break;}
       default:error(`Expression '${n.kind}' is not supported by the C# execution profile`);
@@ -225,7 +205,7 @@ export function evaluateFunction(session,expression,{frameId,allowSideEffects=fa
     if(!commit){vm.restore(snapshot);vm.state=state;vm.platform?.rollbackTransaction?.(hostTransaction);session.history=history.items;session.historyBytes=history.bytes;session.historyDropped=history.dropped;if(oldReport)vm.report.methods=oldReport;}
     else {
       vm.state=state;vm.writeRevision++;session.remember?.(true);vm.platform?.commitTransaction?.(hostTransaction);
-      if(isReference(result.value)){session.evaluationHandles??=[];session.evaluationHandles.push(vm.heap.createHandle(result.value));while(session.evaluationHandles.length>32)vm.heap.releaseHandle(session.evaluationHandles.shift());}
+      retainDebuggerValue(session,result.value);
       if(output)callbacks.onOutput(output);
     }
     return {result:display,type:result.type,value:commit||!isReference(result.value)?result.value:null,reference:commit&&isReference(result.value)?result.value:null,output,committed:commit,instructions:used};
@@ -233,4 +213,4 @@ export function evaluateFunction(session,expression,{frameId,allowSideEffects=fa
     vm.restore(snapshot);vm.state=state;vm.platform?.rollbackTransaction?.(hostTransaction);session.history=history.items;session.historyBytes=history.bytes;session.historyDropped=history.dropped;if(oldReport)vm.report.methods=oldReport;throw e;
   } finally {if(vm.scheduler)vm.scheduler.suppressed=oldSuppressed;Object.assign(vm,callbacks);vm.options.maxInstructions=max;}
 }
-export function releaseEvaluationHandles(session){for(const h of session.evaluationHandles??[])session.vm.heap.releaseHandle(h);session.evaluationHandles=[];}
+export function releaseEvaluationHandles(session){releaseDebuggerValues(session);for(const h of session.evaluationHandles??[])session.vm.heap.releaseHandle(h);session.evaluationHandles=[];}

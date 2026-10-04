@@ -4,6 +4,15 @@ Status: reference interchange contract, not a replacement for either current VM 
 Pinned baseline: `7f0ca223d1b9a07725078260020019cfb276c241`; inventory records source hashes.
 Type widths follow [ECMA-335 sixth edition (June 2012)](https://ecma-international.org/publications-and-standards/standards/ecma-335/), I.12.1.2. Native-sized values use the negotiated **64-bit** profile, including on Wasm32; addresses are never exchanged.
 
+The separately generated `value-abi/current-js-inventory.json` describes the current JavaScript runtime and hashes the extracted modules that own its carriers. It does not redefine this portable contract. The A06 review retains `{h,g}` references with per-slot identity high-water marks, configurable managed array limits (default 1,000,000), readonly/interior byrefs, opaque GCHandle tokens, virtual pinned addresses and managed fixed-pointer wrappers. Current CIL numeric native integers use a 32-bit conversion profile; that is distinct from the portable 64-bit profile above. Opaque runtime tokens and addresses have no portable encoding. No tag IDs, portable widths, codec versions or interchange fixtures change in this review.
+
+The current inventory also hashes the extracted primitive-storage, Boolean-storage,
+and CIL-array-storage owners. CIL Boolean array storage preserves all UInt8 bits;
+ordinary managed views expose Boolean values, and CIL loads apply their opcode's
+integer interpretation. Hashing only their callers would miss changes to that
+representation. The delegate-target owner is included for the immutable
+VM-owned method-pointer carrier used by managed callbacks.
+
 V1. Integers i8/u8, i16/u16, i32/u32 have their stated bit width. i64/u64 and signed nint use decimal strings in JSON and exact integers in a reader; a JS Number beyond 2^53 is rejected, never rounded. `char` is one unsigned UTF-16 code unit (including a lone surrogate); bool accepts only true/false. Fixtures: scalar-boundaries.
 
 V2. A slot is a little-endian uint64: bits 0..7 are the tag, bits 8..63 payload. Tag IDs, in order 0..16: null, bool, i8, u8, i16, u16, i32, u32, char, f32, i64, u64, nint, f64, decimal, ref, struct. Small signed integers sign-extend through bit 63; other inline payloads zero-extend. The last seven kinds index the extension table, in slot order with no gaps or aliases. This indirection preserves all 64 data bits without pretending a full-width scalar plus tag fits in 64 bits. Fixture: scalar-boundaries.

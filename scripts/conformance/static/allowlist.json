@@ -89,7 +89,7 @@
       "path": "packages/debugger/src/evaluation.js",
       "operation": "eval",
       "count": 1,
-      "sha256": "2f1e1254c9c7c801343770513f1851255037c9b60c8e411cf6de18358e4be944",
+      "sha256": "58c5469a46e43a7bfb92f0d0fa31f65697cc14b44e21adc17decc548daa1e339",
       "reason": "The interpreter method is named eval(n); it walks managed watch expressions and is not the JavaScript global eval."
     },
     {

@@ -6,6 +6,7 @@ import {invokeBcl} from './bcl.js';
 import {invokeJson} from './json.js';
 import {invokeNetwork} from './network.js';
 import {invokeNumeric} from './numeric.js';
+import {invokeGCPlatform} from './gc/api.js';
 
 const modules = createBclRegistry([...bclModules, closedCollectionsModule]);
 
@@ -35,10 +36,11 @@ const handlers = Object.freeze({
   bcl14: invokeRuntime14,
   network: invokeNetwork,
   numeric: invokeNumeric,
-  json: invokeJson
+  json: invokeJson,
+  gc: invokeGCPlatform
 });
 
 /** Route legacy kinds without probing networking or numeric handlers for BCL calls. */
 export function invokeBclPlatform(platform, descriptor, args, type) {
-  return handlers[type?.kind]?.(platform, descriptor, args, type);
+  return handlers[type?.runtimeHandler ?? type?.kind]?.(platform, descriptor, args, type);
 }

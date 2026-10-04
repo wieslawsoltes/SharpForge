@@ -6,6 +6,8 @@ const primitiveSizes = {'System.Boolean':1,'System.Char':2,'System.SByte':1,'Sys
 const genericPrefix = 'System.Collections.Generic.';
 const genericNames = new Set(['IEnumerable','IEnumerator','ICollection','IList','IReadOnlyCollection','IReadOnlyList','IComparer','IEqualityComparer','List','Dictionary','HashSet','Queue','Stack']);
 const arrayInterfaces = ['System.Collections.IList','System.Collections.ICollection','System.Collections.IEnumerable','System.ICloneable','System.Collections.IStructuralComparable','System.Collections.IStructuralEquatable'];
+const lookupCacheLimit = 1024;
+const lookupSpellingLengthLimit = 4096;
 
 export function splitTypeArguments(text) {
   const result=[];let start=0,depth=0;
@@ -31,6 +33,8 @@ export function runtimeTypeName(input) {
   if(name.endsWith('&')||name.endsWith('*'))return runtimeTypeName(name.slice(0,-1))+name.at(-1);
   const start=name.indexOf('<');
   if(start>=0) {
+    const registered=frameworkType(name);
+    if(registered?.declaringType)return registered.name;
     if(!name.endsWith('>'))throw new TypeError('Unbalanced runtime type name');
     const arguments_=splitTypeArguments(name.slice(start+1,-1));
     let definition=name.slice(0,start).trim();
@@ -92,7 +96,14 @@ const substitute=(name,args)=>name.replace(/!!?\d+/g,match=>match.startsWith('!!
 
 export class MethodTableRegistry {
   constructor({tokenResolver=null}={}) {
-    this.tokenResolver=tokenResolver;this.descriptors=new Map();this.descriptorTokens=new Map();this.tables=new Map();this.tokens=new Map();this.nextToken=-1;this.building=new Set();
+    this.tokenResolver = tokenResolver;
+    this.descriptors = new Map();
+    this.descriptorTokens = new Map();
+    this.tables = new Map();
+    this.tokens = new Map();
+    this.nextToken = -1;
+    this.building = new Set();
+    this.lookupCache = new Map();
   }
   define(descriptor) {
     const name=descriptor.name;
@@ -102,9 +113,14 @@ export class MethodTableRegistry {
     const stored={...descriptor,name,token:descriptor.token??this.nextToken--};
     if(this.descriptorTokens.has(stored.token))throw new TypeError('Duplicate method table token');
     this.descriptors.set(name,stored);
-    this.descriptorTokens.set(stored.token,name);return this;
+    this.descriptorTokens.set(stored.token,name);
+    // An explicit name takes precedence over an earlier framework/primitive alias.
+    this.lookupCache.clear();
+    return this;
   }
   get(input) {
+    const existing = this.tables.get(input);
+    if (existing) return existing;
     if(input instanceof MethodTable) {
       if(input.registry!==this)throw new TypeError('Method table belongs to another runtime');
       return input;
@@ -115,8 +131,18 @@ export class MethodTableRegistry {
       if(!name)throw new TypeError('Unknown runtime type token: '+input);
       const table=this.get(name);this.tokens.set(input,table);return table;
     }
-    const name=this.descriptors.has(input)?input:runtimeTypeName(input);
-    if(this.tables.has(name))return this.tables.get(name);
+    const cached = this.lookupCache.get(input);
+    if (cached) return cached;
+    const name = this.descriptors.has(input) ? input : runtimeTypeName(input);
+    const table = this.tables.get(name) ?? this.materialize(name);
+    // Recursive field lookup may expose a table before its hierarchy is verified.
+    if (input !== table.name && input.length <= lookupSpellingLengthLimit && Object.isFrozen(table)) {
+      if (this.lookupCache.size >= lookupCacheLimit) this.lookupCache.clear();
+      this.lookupCache.set(input, table);
+    }
+    return table;
+  }
+  materialize(name) {
     if(this.building.size>=128)throw new TypeError('Runtime type nesting limit exceeded');
     let descriptor=this.descriptors.get(name),array=/^(.*)(\[(?:,*|\*)\])$/.exec(name);
     if(!descriptor&&array) {
@@ -126,6 +152,7 @@ export class MethodTableRegistry {
     if(!descriptor&&(name.endsWith('&')||name.endsWith('*')))descriptor={name,base:null,elementType:name.slice(0,-1),flags:{byRef:name.endsWith('&'),pointer:name.endsWith('*')}};
     if(!descriptor&&/^!\d+$/.test(name))descriptor={name,base:null,flags:{genericParameter:true}};
     const angle=name.indexOf('<');
+    if(!descriptor&&angle>=0&&frameworkType(name)?.declaringType)descriptor={name,...builtin(name)};
     if(!descriptor&&angle>=0) {
       const definition=this.get(name.slice(0,angle)),typeArguments=splitTypeArguments(name.slice(angle+1,-1));
       if(typeArguments.every(argument=>!argument))return definition;
@@ -175,7 +202,12 @@ export class MethodTableRegistry {
       table.instanceSize=descriptor.instanceSize??32+table.fields.length*8;
       table.valueSize=descriptor.valueSize??(table.enumUnderlyingType?.valueSize??table.fields.length*8);
       return Object.freeze(table);
-    } catch(error) {this.tables.delete(name);this.tokens.delete(token);throw error;}
+    } catch(error) {
+      this.tables.delete(name);
+      this.tokens.delete(token);
+      this.lookupCache.clear();
+      throw error;
+    }
     finally {this.building.delete(name);}
   }
 }

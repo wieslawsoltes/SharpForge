@@ -4,7 +4,7 @@ import {ManagedFault,isReference} from '../heap.js';
 export class StringInternPool {
   constructor(heap,entries=new Map(),{weak=false}={}) { this.heap=heap;this.entries=entries;this.weak=weak; }
   find(text) {
-    const reference=this.entries.get(text);
+    const reference=this.heap.spaces?.frozen.literals.get(text)??this.entries.get(text);
     if(!reference)return null;
     try { if(this.heap.get(reference).kind==='string')return reference; }
     catch(error) { if(error.name!=='InvalidReferenceException')throw error; }
@@ -12,12 +12,13 @@ export class StringInternPool {
   }
   literal(text) {
     const existing=this.find(text);if(existing)return existing;
-    const reference=this.heap.string(text);this.entries.set(text,reference);return reference;
+    if(!this.weak&&this.heap.spaces?.frozen)return this.heap.spaces.frozen.string(text);
+    const reference=this.heap.string(text);this.heap.writeRoot(this.entries,text,reference);return reference;
   }
   intern(reference) {
     const text=stringData(this.heap,reference),existing=this.find(text);
     if(existing)return existing;
-    this.entries.set(text,reference);return reference;
+    if(this.weak)this.entries.set(text,reference);else this.heap.writeRoot(this.entries,text,reference);return reference;
   }
   isInterned(reference) { return this.find(stringData(this.heap,reference)); }
   *roots() { if(!this.weak)yield* this.entries.values(); }

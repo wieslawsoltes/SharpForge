@@ -6,6 +6,7 @@ import {internString,isInternedString,referenceEquals,stringChar} from './string
 import {enumHasFlag} from './enums.js';
 import {SourceBuiltinResults} from './source-values.js';
 import {objectType,typeName,runtimeTypeText} from './tokens.js';
+import {hasLegacyGCBuiltin,invokeLegacyGCBuiltin} from '../gc/api.js';
 
 function legacyStringPlatform(vm) {
   // The builtin seam also supports heap/value/format services without a complete VM.
@@ -44,6 +45,7 @@ export function builtin(vm, id, args) {
   }
   const name = entry.name;
   return vm.heap.withRoots(args, () => {
+    if (hasLegacyGCBuiltin(name)) return invokeLegacyGCBuiltin(vm, name, args);
     if (hasLegacyBclBuiltin(name)) {
       return invokeLegacyBclBuiltin(legacyHost(vm), name, args);
     }
@@ -70,14 +72,6 @@ export function builtin(vm, id, args) {
         return Math.abs(a);
       case 'Console.WriteLine': vm.emitOutput((args.length ? vm.format(args[0]) : '') + '\n'); return null;
       case 'Console.Write': vm.emitOutput(vm.format(args[0])); return null;
-      case 'GC.Collect': vm.heap.collect(); return null;
-      case 'GC.GetTotalMemory':
-        if (a === true) vm.heap.collect();
-        return BigInt(vm.heap.stats.liveBytes);
-      case 'GC.CollectionCount':
-        if (!Number.isInteger(a) || a < 0 || a > 2) throw new ManagedFault('ArgumentOutOfRangeException', 'GC generation must be between 0 and 2');
-        // Every collection in this non-generational heap collects all three generations.
-        return vm.heap.stats.collections;
       case 'Array.Reverse': case 'Array.Sort': return mutateArray(vm,name.slice(6),args[0]);
       case 'Exception.new': return vm.heap.allocate('exception', 'Exception', [args[0]]);
       case 'Exception.Message': return vm.heap.get(args[0]).data[0];

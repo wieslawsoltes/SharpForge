@@ -52,6 +52,7 @@ const retain = value => value;
 const entries = (value, memo) => copyExecution([...value], memo);
 const common = [
   component('platform'), component('scheduler'), field('frames', copyFrames), component('heap'),
+  field('gcRuntime', null, {component: true, optional: true}),
   field('typeObjects', copyExecution, {optional: true}),
   field('statics'), field('fault'), field('pendingFault'), field('state', retain),
   field('instructions', retain), field('elapsedMs', retain), field('frameId', retain, {monotonic: true}),
@@ -88,7 +89,7 @@ export const snapshotSchemas = Object.freeze({
     field('sourcePause', retain, {optional: true})
   ], {
     inspector: 'Assembly metadata for the current code generation.',
-    report: 'Verification report for the current code generation.',
+    report: 'Verified graph for the current code generation; expands only after successful bounded callback verification.',
     returnType: 'Entry-point signature metadata.',
     loadMs: 'Assembly load measurement is not execution state.',
     layoutCache: 'Derived type layouts; invalidated when code changes.',
@@ -132,6 +133,7 @@ export function restoreVM(vm, snapshot, engine) {
   }
   if (!Array.isArray(snapshot.frames) || !Array.isArray(snapshot.output)) throw new TypeError('Invalid snapshot execution state');
   vm.platform.hostOperations.checkRestore(snapshot.hostRevision);
+  vm.gcRuntime?.assertRestorable(snapshot.gcRuntime);
   // Copy before changing the VM; the same memo preserves frame/fault aliases.
   const memo = new Map(), values = new Map();
   for (const item of selected.fields) {
@@ -142,10 +144,12 @@ export function restoreVM(vm, snapshot, engine) {
   vm.heap.restore(snapshot.heap);
   for (const item of selected.fields) {
     if (values.has(item.name)) vm[item.name] = values.get(item.name);
-    else if (item.optional) delete vm[item.name];
+    else if (item.optional && !item.component) delete vm[item.name];
   }
   if (engine === 'source') { vm.state = 'paused'; vm.currentPoint = vm.top?.point ?? null; }
   vm.scheduler.restore(snapshot.scheduler);
   vm.platform.restore(snapshot.platform);
+  vm.gcRuntime?.restore(snapshot.gcRuntime);
+  vm.gcRuntime?.afterRestore();
   if (engine === 'cil') invalidateExecutionCode(vm, 'snapshot-restore');
 }

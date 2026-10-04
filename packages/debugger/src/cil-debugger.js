@@ -1,3 +1,6 @@
+import {disposeDebuggerValues} from './roots.js';
+import {cilVariable,evaluationResult} from './variables.js';
+import {MemoryDebugSession} from './memory-session.js';
 import {contextFrames,threads,parallelStacks,freezeThread,prepareStepOut,stepOutTarget} from './concurrency.js';
 import {setNextStatement,gotoTargets,hotReload,evaluateFunction,loadPortableSymbols,releaseEvaluationHandles} from './advanced.js';
 import { CilVirtualMachine, isReference, ManagedFault } from '@sharpforge/runtime';
@@ -15,7 +18,7 @@ const hitPattern = /^(?:>=|==|%)?\s*[1-9]\d*$/;
  * Assemblies do not need #SF metadata. Portable PDBs are loaded explicitly or from embedded debug data; this is not native CLR attachment.
  * Inspection and watch evaluation never call getters or execute target methods.
  */
-export class CilDebugSession {
+export class CilDebugSession extends MemoryDebugSession {
   threads(){return threads(this);}
   parallelStacks(){return parallelStacks(this);}
   freezeThread(id,frozen=true){return freezeThread(this,id,frozen);}
@@ -25,6 +28,7 @@ export class CilDebugSession {
   evaluateFunction(expression,options){return evaluateFunction(this,expression,options);}
   loadSymbols(pdb,sources){return loadPortableSymbols(this,pdb,sources);}
   constructor(bytes, options = {}) {
+    super(options);
     this.vm = new CilVirtualMachine(bytes, options);
     this.options = options;this.breakpointsEnabled=options.breakpointsEnabled!==false;this.exceptionRules=[];
     this.sourceIndex=new SourceBreakpointIndex({...this.vm.inspector.debug,sequencePoints:(this.vm.inspector.debug?.sequencePoints??[]).filter(p=>this.vm.report.methods.includes(p.methodToken))});
@@ -181,7 +185,7 @@ export class CilDebugSession {
   rememberStop(){if(this.vm.state!=='paused'||!this.reason||this.reason.phase==='before')return;this.remember();const last=this.history.at(-1);if(last?.snapshot.instructions===this.vm.instructions&&last.snapshot.writeRevision===this.vm.writeRevision){last.stop={...this.reason};last.stoppedRules=[...this.breakpoints,...this.functionBreakpoints,...this.dataBreakpoints].map(ruleState);}}
   runUntilStop(){while(this.vm.state==='running'||this.vm.state==='ready')this.pump({instructionBudget:50000,timeBudgetMs:50});return this.state();}
   pause(){if(['running','waiting'].includes(this.vm.state)){this.vm.state='paused';this.stoppedBeforeInstruction=false;this.temporary=null;this.reason={reason:'pause',phase:'suspended',description:'Execution interrupted between IL instructions'};}}
-  stop(){this.vm.stop();this.temporary=null;this.reason={reason:'terminated'};}
+  stop(){disposeDebuggerValues(this);releaseEvaluationHandles(this);this.vm.stop();this.temporary=null;this.reason={reason:'terminated'};}
   /** Opt-in full-state instruction history. Budgets account conservatively for JS containers. */
   syncHostHistory(){const host=this.vm.platform.hostOperations;if(this.hostHistoryRevision!==host.revision){this.historyDropped+=this.history.length;this.history=[];this.historyBytes=0;this.hostHistoryRevision=host.revision;}return host.active.size===0;}
   remember(force=false){
@@ -196,7 +200,6 @@ export class CilDebugSession {
     while(this.history.length>=this.maxHistory||this.history.length&&this.historyBytes+bytes>this.maxHistoryBytes){this.historyBytes-=this.history.shift().bytes;this.historyDropped++;}
     this.history.push({snapshot:vm.snapshot(),bytes,beforeInstruction:vm.state==='running'||this.stoppedBeforeInstruction,rules:[...this.breakpoints,...this.functionBreakpoints,...this.dataBreakpoints].map(ruleState),hits:new Map([...this.breakpoints,...this.dataBreakpoints].map(b=>[b.id,b.hits??0]))});this.historyBytes+=bytes;
   }
-  collect(){if(this.vm.state==='running')throw new Error('Pause execution before collecting through the debugger');this.remember(true);return this.vm.heap.collect();}
   popHistory(){
     while(this.history.length){const item=this.history.pop();this.historyBytes-=item.bytes;
       if(item.snapshot.instructions===this.vm.instructions&&item.snapshot.writeRevision===this.vm.writeRevision&&item.snapshot.heapRevision===this.vm.heap.mutationRevision)continue;
@@ -287,8 +290,7 @@ export class CilDebugSession {
       source:point&&(!this.symbols||this.symbols.location(frame.method.token,offset))?point.uri:null,line:point?.line??0,column:point?.column??0,endLine:point?.endLine,endColumn:point?.endColumn};
   });}
   variable(name,type,value,extra={}) {
-    return {name,type,value:value===undefined?'<unassigned>':value?.byref?`&${value.kind}[${value.index}]`:this.vm.display(value),raw:value,
-      reference:isReference(value)?value:null,...extra};
+    return cilVariable(this,name,type,value,extra);
   }
   slots(frame){
     const m=frame.method,debug=this.vm.inspector.debug?.methods?.find(d=>d.token===m.token),names=debug?.locals??[];
@@ -352,7 +354,7 @@ export class CilDebugSession {
         default:throw new Error('Watch expressions cannot execute methods, assignments, allocation or property getters');
       }
     };
-    const result=walk(this.parse(expression));return {...result,result:result.type==='bool'?(result.value?'True':'False'):this.vm.display(result.value),reference:isReference(result.value)?result.value:null};
+    return evaluationResult(this,walk(this.parse(expression)),true);
   }
   setVariable(frameId,name,expression){
     if(this.vm.state!=='paused')throw new Error('Variables can only be edited while paused');const frame=this.frame(frameId),slot=this.slots(frame).find(s=>s.name===name||s.aliases.includes(name));

@@ -14,6 +14,8 @@ export function storageDefault(vm,type) {
   return info?enumUnderlying(0,info.underlyingType):defaults(type);
 }
 export function storageValue(vm,value,type,numericContext) {
+  // Physical Boolean codecs use host booleans; the CIL evaluation stack represents them as Int32.
+  if(typeof value==='boolean'&&(type==='bool'||type==='System.Boolean'))value=Number(value);
   const info=enumInfo(vm,type);
   return info?numericStorage(enumUnderlying(value,info.underlyingType),info.underlyingType,numericContext):numericStorage(value,type,numericContext);
 }

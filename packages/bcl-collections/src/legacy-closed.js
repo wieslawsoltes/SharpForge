@@ -19,7 +19,7 @@ function construct(p, descriptor, context) {
   const state = {'$count': 0, '$version': 0};
   if (family === 'Dictionary' || family === 'HashSet') Object.assign(state, {'$used': 0, '$free': -1, '$slots': null});
   const reference = p.make(descriptor.owner, state);
-  p.heap.pins.push(reference);
+  p.heap.pinRoot(reference);
   if (descriptor.parameters[0]?.endsWith('[]')) {
     const items = array(p, values[0]);
     if (family === 'HashSet') initializeHashSet(p, reference, items);

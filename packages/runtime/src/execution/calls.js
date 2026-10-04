@@ -17,6 +17,7 @@ export function call(vm,token,args,extra={}) {
   for (let index = 0; index < method.signature.parameters.length; index++) {
     args[index + argumentOffset] = vm.storage(args[index + argumentOffset], method.signature.parameters[index]);
   }
+  for(let index=0;index<args.length;index++)vm.heap.writeRoot(args,index,args[index]);
   vm.frames.push({id:++vm.frameId,method,args,locals:method.locals.map(type=>method.initLocals?storageDefault(vm,type):undefined),stack:[],pc:0,lastOffset:0,offsets:methodOffsets(method),...createExceptionState(),needsInitialization:method.name!=='.cctor',...extra});
   enterCilMethod(vm, vm.top);
 }
@@ -41,20 +42,22 @@ export function invoke(vm,instruction) {
   vm.heap.withRoots(args,()=>{
     if(supportedDelegateCall(vm.inspector,descriptor)) {
       const value=invokeBoundDelegate(vm,descriptor,args,instruction.name==='newobj');
-      if((instruction.name==='newobj'||descriptor.signature.returnType!=='void')&&value!==SUSPENDED)caller.stack.push(value);
+      if((instruction.name==='newobj'||descriptor.signature.returnType!=='void')&&value!==SUSPENDED) {
+        vm.heap.writeRoot(caller.stack,caller.stack.length,value);
+      }
       return;
     }
     const contract=intrinsicDefinition(descriptor)?.contract;
-    if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
-    if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
+    if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){vm.heap.writeRoot(caller.stack,caller.stack.length,stringFromChars(vm,args[0]));return;}
+    if(instruction.name==='newobj'&&contract){vm.heap.writeRoot(caller.stack,caller.stack.length,vm.platform.invoke(contract,args));return;}
     if(instruction.name==='newobj') {
       let ref;
       if(target){const layout=vm.layout(genericIdentity??descriptor.ownerToken);ref=vm.heap.object(layout.methodTable,layout.fields.map(field=>storageDefault(vm,field.type)));}
       else if(systemType(descriptor.owner)==='System.Object'&&args.length===0)ref=vm.heap.object(vm.typeSystem.table('System.Object'),[]);
       else if(systemType(descriptor.owner)==='System.Exception')ref=vm.heap.allocate('exception','System.Exception',[args[0]??null]);
       else throw new ManagedFault('NotSupportedException','External object construction is unavailable');
-      args.unshift(ref);vm.heap.pins.push(ref);
-      if(target)vm.call(target,args,{returnObject:ref,genericIdentity});else {vm.intrinsic(descriptor,args);caller.stack.push(ref);}
+      args.unshift(ref);vm.heap.pinRoot(ref);
+      if(target)vm.call(target,args,{returnObject:ref,genericIdentity});else {vm.intrinsic(descriptor,args);vm.heap.writeRoot(caller.stack,caller.stack.length,ref);}
       return;
     }
     if(instruction.name==='callvirt'&&args[0]===null)throw new ManagedFault('NullReferenceException','Null virtual receiver');
@@ -64,7 +67,7 @@ export function invoke(vm,instruction) {
       vm.call(dispatch,args,{genericIdentity});
     } else {
       const value=vm.intrinsic(descriptor,args);
-      if(descriptor.signature.returnType!=='void'&&value!==SUSPENDED)caller.stack.push(value);
+      if(descriptor.signature.returnType!=='void'&&value!==SUSPENDED)vm.heap.writeRoot(caller.stack,caller.stack.length,value);
     }
   });
 }

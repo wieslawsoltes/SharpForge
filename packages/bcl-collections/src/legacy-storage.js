@@ -51,7 +51,7 @@ export function write(p, reference, index, value) {
 export function writeArray(p, storage, index, value) {
   const record = p.heap.get(storage);
   const oldValue = record.data[index];
-  record.data[index] = value;
+  p.heap.writeElement(storage, index, value);
   p.vm.notifyWrite?.({kind: 'array', handle: storage.h, generation: storage.g, index, oldValue, value});
 }
 

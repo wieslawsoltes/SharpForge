@@ -3,14 +3,20 @@ import {fieldStorageSize, valueSize} from './sizing.js';
 function containsReferences(type) {
   if (type.flags.pointer || type.flags.byRef) return false;
   if (!type.flags.valueType) return true;
+  // Framework value types without an inline layout use managed boxed slots.
+  // Primitive/enum codecs still contain no references regardless of metadata flags.
+  if (type.flags.primitive || type.enumUnderlyingType) return false;
+  if (type.flags.dynamic) return true;
   return type.gcBitmap?.some(Boolean) ?? false;
 }
 
 /** Cached immutable layout descriptors separate GC reference maps from method dispatch. */
 export class TypeDescriptors {
-  constructor({pointerSize = 8} = {}) {
+  constructor({pointerSize = 8, storageFor = null} = {}) {
     if (pointerSize !== 4 && pointerSize !== 8) throw new RangeError('pointerSize must be 4 or 8 bytes');
+    if (storageFor !== null && typeof storageFor !== 'function') throw new TypeError('storageFor must be a function');
     this.pointerSize = pointerSize;
+    this.storageFor = storageFor;
     this.cache = new WeakMap();
   }
 
@@ -37,7 +43,7 @@ export class TypeDescriptors {
       }
     }
     const descriptor = {
-      kind, methodTable: table, pointerSize: this.pointerSize, scan,
+      kind, methodTable: table, pointerSize: this.pointerSize, scan, storageFor: this.storageFor,
       referenceSlots: Object.freeze(referenceSlots), dynamic,
       elementType: table.elementType ?? null,
       elementSize: kind === 'array' ? valueSize(table.elementType ?? table, this.pointerSize) : 0,
@@ -58,11 +64,17 @@ export function visitEdgeRange(record, start, limit, visitor, result = {}) {
     return result;
   }
   const bitmap = descriptor.scan === 'bitmap';
-  const length = bitmap ? descriptor.referenceSlots.length : record.data.length;
+  // Prepared slot storage can be read directly once per chunk. Allocation preflight
+  // and standalone descriptors retain their ordinary indexed-data representation.
+  const binding = record.storage ? descriptor.storageFor?.(record) : null;
+  const direct = binding && record.data === binding.view && binding.arena.values;
+  const values = direct || record.data;
+  const begin = direct ? binding.block.offset / 8 : 0;
+  const length = bitmap ? descriptor.referenceSlots.length : binding?.length ?? values.length;
   const end = Math.min(length, start + limit);
   for (let cursor = start; cursor < end; cursor++) {
     const index = bitmap ? descriptor.referenceSlots[cursor] : cursor;
-    visitor(record.data[index], index);
+    visitor(values[begin + index], index);
   }
   result.next = end;
   result.done = end >= length;

@@ -1,11 +1,38 @@
 {
   "schemaVersion": 1,
   "sources": {
-    "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
-    "packages/runtime/src/vm.js": "f12912ee9f65f9e3e1d71c732d43e4f85c13e021bf5ad19a1e044e9a40db8b7a",
-    "packages/runtime/src/cil-vm.js": "b1dee881f5aa7908052bded39f7e491017a582cee49d36febb9f600d2a109cc9",
+    "packages/runtime/src/heap.js": "63081c67b7d98702644fad9583c875fa3e8723e80f89adcaead09d5a17797796",
+    "packages/runtime/src/gc/heap.js": "f92114b3897ba58cfa3b4b6853b0d1d983cd7120f92b63bad5492d144791f81e",
+    "packages/runtime/src/gc/heap-state.js": "599663710287eda1ec6311a8776e16b1a542e271d2b20c58c14dfe75809d49f6",
+    "packages/runtime/src/gc/handle-table.js": "2c399046a2f052ee1f01361fae662f9368e6673867cc6ade5700b3fd35756d4c",
+    "packages/runtime/src/gc/reference.js": "ac6634629d09f1d1640a12ae2bb94226e99eb5e432eb254780f29b67c404a66e",
+    "packages/runtime/src/gc/allocation.js": "5c10e0b41649448b1f08f7f393d870d2b20882864b097c6d4cc2360acd21ba6c",
+    "packages/runtime/src/gc/api-array.js": "097962249bc5695ed1ca7fa51ded7b8d7328bd12dbe1a9842668037a7d7ba41d",
+    "packages/runtime/src/gc/boolean-storage.js": "049a91dc567278e1c9e39be330c7ac6625ab218a1d85c6393cafa750d98dfebd",
+    "packages/runtime/src/gc/primitive-storage.js": "71efe0bd9938cdd9c9133915351c4bf460b85597d90d76963fad52ce61216b88",
+    "packages/runtime/src/gc/fault.js": "c3fb24cf42b0276aae4f494ba70b82d81d5db1e1cc069ca7ad92c4f579d64802",
+    "packages/runtime/src/gc/host-handles.js": "187c3fc0bd0a82bef784c1878148ca405ea0d6433cc94031157c993b3bfd2a75",
+    "packages/runtime/src/gc/gc-handle.js": "51a20dfc68a0bcb47de07b87d128845bfe461753f4d319444731d1e3f8a90ab5",
+    "packages/runtime/src/gc/address-space.js": "f0272c6563035a8760df38d27c5e3277b46171b8a5ca50b3ae30206bfff2a9c9",
+    "packages/runtime/src/gc/interior.js": "e0e346579b227cfbe5ae553c633de4252fcd3f8abd4c5fcc1d1be46c9f4d2044",
+    "packages/runtime/src/gc/memory-span.js": "206707d19a58bdf2b1078f4c9dd9420883f7ec7d0537520c7bf02566341df4be",
+    "packages/runtime/src/gc/fixed-memory.js": "093c36b51b3f674c8ec49898a7ad2fb0af09dbbe922d336e5d260aee096d97d6",
+    "packages/runtime/src/gc/scalars.js": "f2827ea5a456dc83e708d5b9aac79139197ed379c5e518d741be8fb55078cf67",
+    "packages/runtime/src/execution/source-ops.js": "8f9fb4828b23b37af219af145bdbadfa08b5bbb212a870f7186231606aba8338",
+    "packages/runtime/src/execution/source-values.js": "9b6a5c441c0471cff0ef287c1900d3944103eccb2738b465a203ad2f4fe04a7f",
+    "packages/runtime/src/execution/numeric-ops.js": "4f803bae5a03d3cf6d14bb182f010d016526a16b7c8e2cb4ffe96149e70813fa",
+    "packages/runtime/src/execution/enums.js": "7235807aed0ec81512a186db091608087e4418b38dfbd1cb228cde697a46ff5c",
+    "packages/runtime/src/execution/managed-address.js": "f432972fb6aed512e2e1c10a02633052aea440a684d3fb022714c4fcd04be798",
+    "packages/runtime/src/execution/cil-array-storage.js": "7c5b067c1a9081d0b6d9aa225eae16d9fcc9cc248d9af73ee56f8397fba56c91",
+    "packages/runtime/src/execution/delegate-targets.js": "ac1f47bc2847c7c39e076798a35956ce13b791e0cd448ec16a213e579d4c6927",
+    "packages/runtime/src/execution/handlers/call.js": "23e8df3323f4d5ec8e6e9af7d371e925e52880e63e67e79b4a8c312f27befb4e",
+    "packages/runtime/src/vm.js": "79389a990c532b6daf917dc08559d67ab9523f212b767336a5fe8f0f96768324",
+    "packages/runtime/src/cil-vm.js": "d40ecb017a534708f0f26eb1473e698d633a15b26895e43baa499166196cafdd",
+    "packages/runtime/src/platform.js": "86cd9aec301be9599bdf80c70f6dca723a6a65b553a1aa603242401311c5ccfc",
     "packages/bytecode/src/index.js": "3446e25f24d3b2d097a81f8a362ba43dcaf9906e5f11d42cdd347514bd8ccacc",
-    "packages/bytecode/src/builtins.js": "5d58c7a4d87f01f65370c7b87a60a0cbfc8e67eb0568675a29f8f159049ec7bf"
+    "packages/bytecode/src/builtins.js": "5d58c7a4d87f01f65370c7b87a60a0cbfc8e67eb0568675a29f8f159049ec7bf",
+    "packages/bytecode/src/numeric/float.js": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
+    "packages/bytecode/src/numeric/int64.js": "d376afec70047c5b7beb99736c45e30ac08a54af5fc5a478bbd7dd95acbfb55b"
   },
   "resultKinds": {
     "int": {
@@ -22,15 +49,15 @@
     },
     "double": {
       "source": "number (IEEE 754 binary64)",
-      "cil": "frozen {float: r8, value: number}"
+      "cil": "{float: r8, value: number}; arithmetic and literal constructors freeze the carrier"
     },
     "numeric": {
-      "source": "number",
-      "cil": "number | bigint | frozen {float: r4|r8, value: number}"
+      "source": "number | bigint",
+      "cil": "number | bigint | {float: r4|r8, value: number}"
     },
     "bool": {
       "source": "boolean",
-      "cil": "number (0 or 1)"
+      "cil": "number (Int32 stack category; Boolean storage retains UInt8 bits; ordinary managed array views read boolean)"
     },
     "string": {
       "source": "frozen {h,g} to UTF-16 string record",
@@ -45,8 +72,8 @@
       "cil": "ManagedFault with optional reference, frames"
     },
     "any": {
-      "source": "number | bigint | boolean | null | undefined | {h,g} | enum carrier",
-      "cil": "number | bigint | null | undefined | {h,g} | float | byref | methodPointer"
+      "source": "number | bigint | boolean | null | undefined | {h,g} | enum carrier | opaque GC token",
+      "cil": "number | bigint | null | undefined | {h,g} | float | byref | methodPointer | opaque GC token"
     }
   },
   "additionalShapes": [
@@ -64,31 +91,54 @@
     },
     {
       "shape": "{h,g}",
-      "meaning": "zero-based heap index, positive safe-integer generation; neither scoped epoch nor portable uint32 checked by isReference"
+      "meaning": "zero-based heap slot and positive per-slot safe-integer identity; generation high-water marks survive restore"
     },
     {
-      "shape": "{byref:true,kind,index,owner,frameId}",
-      "meaning": "CIL managed interior/frame address; never portable raw pointer"
+      "shape": "{byref:true,kind,index,owner,frameId,readOnly?}",
+      "meaning": "CIL managed interior/frame address; readonly span addresses retain their array owner; never a raw pointer"
     },
     {
-      "shape": "{methodPointer:true,token}",
-      "meaning": "CIL ldftn pointer identity"
+      "shape": "{byref:true,kind:managed-interior,heapOwner,owner,path,readOnly}",
+      "meaning": "heap-owned interior slot path; owner rooting is independent of pinning and rejects foreign/stale identities"
+    },
+    {
+      "shape": "{methodPointer:true,vmOwner,token}",
+      "meaning": "immutable VM-owned CIL ldftn pointer identity"
     },
     {
       "shape": "host lease {id,owner}",
-      "meaning": "heap-local opaque strong or weak handle"
+      "meaning": "heap-local opaque handle; strength, pinning, dependent target and root category live in the owning side table"
+    },
+    {
+      "shape": "{kind:gc-handle-token,owner,value:bigint,valueOf}",
+      "meaning": "opaque GCHandle.ToIntPtr identity scoped to its heap; not a numeric host address or portable value"
+    },
+    {
+      "shape": "ManagedAddress {kind:managed-address,owner,value:bigint}",
+      "meaning": "session-scoped virtual byte address of pinned storage; no JavaScript/native pointer is exposed"
+    },
+    {
+      "shape": "fixed pointer {h,g} to SharpForge.Runtime.FixedPointer",
+      "meaning": "managed wrapper retaining a scoped pin lease, element type, byte offset and ManagedAddress"
+    },
+    {
+      "shape": "native integer number",
+      "meaning": "current numeric conv.i/conv.u profile is 32-bit; opaque GC tokens are separate from numeric nint arithmetic"
     }
   ],
   "evidence": [
-    "ManagedHeap.allocate returns Object.freeze({h,g})",
-    "ManagedHeap.array caps length at 1000000",
-    "CilVirtualMachine.storage/convert implement narrow and BigInt integer categories",
-    "VirtualMachine.binary uses number with Int32 modes"
+    "HandleTable.allocate returns Object.freeze({h,g}); reuse increments a per-slot identity",
+    "ManagedHeap.array defaults to 1000000 elements; configurable maxArrayLength remains within non-negative Int32",
+    "CIL numeric-ops storage/convert implements narrow, native-32 and BigInt integer categories",
+    "Source numeric modes retain Number/Int32 behavior; GC scalar lowering reuses exact CIL integer operations",
+    "Bytecode float constructors freeze tagged F values; ManagedPlatform.managed may return an unfrozen r8 tag",
+    "Host handles, GCHandle tokens, managed byrefs and virtual pinned addresses remain owner-scoped JS carriers"
   ],
   "unsupported": [
     "Rust engine qualification",
     "Wasm runtime qualification",
     "decimal execution parity",
-    "arbitrary value structs in source VM"
+    "arbitrary value structs in source VM",
+    "portable encoding of opaque runtime handles, byrefs or virtual addresses"
   ]
 }

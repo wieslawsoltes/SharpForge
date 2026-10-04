@@ -1,3 +1,6 @@
+import {disposeDebuggerValues} from './roots.js';
+import {evaluationResult,sourceLocals,sourceStatics,sourceChildren} from './variables.js';
+import {MemoryDebugSession} from './memory-session.js';
 import {contextFrames,threads,parallelStacks,freezeThread,prepareStepOut,stepOutTarget} from './concurrency.js';
 import {setNextStatement,gotoTargets,hotReload,evaluateFunction,loadPortableSymbols,releaseEvaluationHandles} from './advanced.js';
 import { VirtualMachine, isReference } from '@sharpforge/runtime';
@@ -43,7 +46,7 @@ export class ExpressionEvaluator {
     }
   }
 }
-export class DebugSession {
+export class DebugSession extends MemoryDebugSession {
   threads(){return threads(this);}
   parallelStacks(){return parallelStacks(this);}
   freezeThread(id,frozen=true){return freezeThread(this,id,frozen);}
@@ -53,6 +56,7 @@ export class DebugSession {
   evaluateFunction(expression,options){return evaluateFunction(this,expression,options);}
   loadSymbols(pdb,sources){return loadPortableSymbols(this,pdb,sources);}
   constructor(image, options={}) {
+    super(options);
     this.vm = new VirtualMachine(image, options);
     this.evaluator = new ExpressionEvaluator(this.vm);
     this.sourceIndex = new SourceBreakpointIndex(this.vm.image);
@@ -248,7 +252,7 @@ export class DebugSession {
       this.remember();
     }
   }
-  stop() {this.temporaryPoint=null;this.skipOnce=null;this.vm.stop();this.reason={reason:'terminated'};}
+  stop() {disposeDebuggerValues(this);releaseEvaluationHandles(this);this.temporaryPoint=null;this.skipOnce=null;this.vm.stop();this.reason={reason:'terminated'};}
   dataBreakpointInfo({frameId,name,reference,staticName}={}) {
     let location;
     if (reference) {
@@ -317,7 +321,6 @@ export class DebugSession {
     const snapshot=vm.snapshot();snapshot.heapRevision=vm.heap.mutationRevision;
     this.history.push({snapshot,bytes,beforeSequence,rules:this.allBreakpoints().map(ruleState)});this.historyBytes+=bytes;
   }
-  collect(){if(this.vm.state==='running')throw new Error('Pause before collecting through the debugger');this.remember(true);return this.vm.heap.collect();}
   popHistory() {
     while(this.history.length){const item=this.history.pop();this.historyBytes-=item.bytes;
       if(item.snapshot.instructions===this.vm.instructions&&item.snapshot.writeRevision===this.vm.writeRevision&&item.snapshot.heapRevision===this.vm.heap.mutationRevision)continue;
@@ -349,7 +352,9 @@ export class DebugSession {
     this.reason={reason:'step',phase:'before',description:'Reached the beginning of retained source history'};return this.state();
   }
   frame(frameId) {const f=frameId===undefined?this.vm.top:this.vm.allFrames().find(f=>f.id===frameId);if(!f)throw new Error('Stack frame no longer exists');return f;}
-  evaluate(expression,frameId) {const result=this.evaluator.evaluate(expression,this.frame(frameId));return {...result,result:this.vm.display(result.value),reference:isReference(result.value)?result.value:null};}
+  evaluate(expression,frameId) {
+    return evaluationResult(this,this.evaluator.evaluate(expression,this.frame(frameId)));
+  }
   setVariable(frameId,name,expression) {
     if(this.vm.state!=='paused')throw new Error('Variables can only be edited while paused');
     const frame=this.frame(frameId),method=this.vm.image.methods[frame.methodId],offset=frame.point?.start??0;
@@ -360,7 +365,7 @@ export class DebugSession {
     if(!(local.type===type||local.type==='double'&&type==='int'||local.type==='object'||value===null&&refType))throw new Error(`Cannot assign ${type} to ${local.type}`);
     if(local.type==='int'&&(!Number.isInteger(value)||value<-2147483648||value>2147483647))throw new Error('Value is outside the Int32 range');
     this.remember(true);if(type==='string'&&typeof value==='string')value=this.vm.heap.string(value);
-    frame.locals[local.slot]=value;this.vm.writeRevision++;return {name,value:this.vm.display(value),type:local.type};
+    this.vm.heap.writeRoot(frame.locals,local.slot,value);this.vm.writeRevision++;return {name,value:this.vm.display(value),type:local.type};
   }
   stackTrace(threadId) {
     return [...contextFrames(this,threadId)].reverse().filter(frame=>!this.vm.image.methods[frame.methodId].name.startsWith('<startup>')).map(frame=>{
@@ -374,20 +379,13 @@ export class DebugSession {
     });
   }
   locals(frameId) {
-    const f=this.frame(frameId),m=this.vm.image.methods[f.methodId],offset=f.point?.start??0;
-    return m.locals.filter(l=>(!l.hidden||l.name==='this')&&(l.declaredAt??0)<=offset&&(l.scopeEnd??Infinity)>=offset)
-      .map(l=>({name:l.name,type:l.type,value:this.vm.display(f.locals[l.slot]),raw:f.locals[l.slot],
-        reference:isReference(f.locals[l.slot])?f.locals[l.slot]:null,slot:l.slot,kind:'local',index:l.slot}));
+    return sourceLocals(this,frameId);
   }
-  statics(){return this.vm.image.statics.map((s,index)=>({name:s.name,type:s.type,value:this.vm.display(this.vm.statics[index]),
-    raw:this.vm.statics[index],reference:isReference(this.vm.statics[index])?this.vm.statics[index]:null,index}));}
+  statics() {
+    return sourceStatics(this);
+  }
   children(reference,start=0,count=100) {
-    if(!Number.isSafeInteger(start)||start<0||!Number.isSafeInteger(count)||count<0||count>10000)throw new RangeError('Invalid variable page');
-    const record=this.vm.heap.get(reference);
-    if(record.kind==='string')return [{name:'Length',type:'int',value:String(record.data.length),raw:record.data.length}];
-    const fields=this.vm.image.types.find(t=>t.name===record.type)?.fields;
-    return record.data.slice(start,start+count).map((value,i)=>({name:record.kind==='array'?`[${start+i}]`:fields?.[start+i]?.name??(record.kind==='exception'?'Message':String(start+i)),
-      type:fields?.[start+i]?.type??(record.kind==='array'?record.type.slice(0,-2):'string'),value:this.vm.display(value),raw:value,reference:isReference(value)?value:null}));
+    return sourceChildren(this,reference,start,count);
   }
   state() {this.syncHostHistory();
     const frames=this.stackTrace(),point=this.vm.top?.point?this.sourceIndex.byId.get(this.vm.top.point.id):null;

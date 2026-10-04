@@ -1,4 +1,7 @@
 import { DebugSession, CilDebugSession } from '@sharpforge/debugger';
+import {initializeDebugCapabilities} from './dap-capabilities.js';
+import {dispatchDebugExtension} from './dap-extensions.js';
+import {debugVariable, debugEvaluation} from './dap-values.js';
 function launchInput(arguments_) {
   const assembly = arguments_.assembly;
   if (assembly !== undefined) {
@@ -21,13 +24,13 @@ export class DebugAdapter {
   toInternalPosition(a){return {...a,...(a.line!==undefined?{line:a.line+1-this.lineBase}:{}),...(a.column!==undefined?{column:a.column+1-this.columnBase}:{}),...(a.endLine!==undefined?{endLine:a.endLine+1-this.lineBase}:{}),...(a.endColumn!==undefined?{endColumn:a.endColumn+1-this.columnBase}:{})};}
   toClientPosition(a){return {...a,...(a.line!==undefined&&a.line>0?{line:a.line-1+this.lineBase}:{}),...(a.column!==undefined&&a.column>0?{column:a.column-1+this.columnBase}:{}),...(a.endLine!==undefined?{endLine:a.endLine-1+this.lineBase}:{}),...(a.endColumn!==undefined?{endColumn:a.endColumn-1+this.columnBase}:{})};}
   reference(value){const id=this.nextRef++;this.refs.set(id,value);return id;}
-  variable(v){return {name:v.name,value:v.value,type:v.type,variablesReference:v.reference?this.reference({kind:'heap',ref:v.reference}):0};}
+  variable(v){return debugVariable(this,v);}
   async handle(request){const {command,arguments:a={}}=request;let body={};
     try{
       if(['continue','next','stepIn','stepOut','setVariable','dataBreakpointInfo'].includes(command)&&(!this.configured||this.session?.vm.state!=='paused'))throw new Error('A configured, paused debug session is required');
       if(['stackTrace','scopes','variables','evaluate'].includes(command)&&(!this.configured||!['paused','waiting'].includes(this.session?.vm.state)))throw new Error('A paused or suspended debug session is required');
       switch(command){
-        case 'initialize':this.lineBase=a.linesStartAt1===false?0:1;this.columnBase=a.columnsStartAt1===false?0:1;body={supportsGotoTargetsRequest:true,supportsBreakpointLocationsRequest:true,supportsLoadedSourcesRequest:true,supportsConfigurationDoneRequest:true,supportsConditionalBreakpoints:true,supportsHitConditionalBreakpoints:true,supportsLogPoints:true,supportsFunctionBreakpoints:true,supportsSetVariable:true,supportsRestartRequest:true,supportsDisassembleRequest:true,supportsInstructionBreakpoints:true,supportsStepBack:true,supportsDataBreakpoints:true,supportsEvaluateForHovers:true,exceptionBreakpointFilters:[{filter:'all',label:'All managed exceptions',default:false},{filter:'uncaught',label:'Uncaught managed exceptions',default:true}]};this.event('initialized');break;
+        case 'initialize':body=initializeDebugCapabilities(this,a);this.event('initialized');break;
         case 'launch':this.launch(a);break;
         case 'restart':if(!this.launchArguments)throw new Error('No previous launch');this.launch({...this.launchArguments,...a.arguments});this.configured=true;this.session.start(this.stopOnEntry);this.lastState=null;break;
         case 'setInstructionBreakpoints':this.instructionBreakpoints=a.breakpoints??[];body={breakpoints:this.session?.setInstructionBreakpoints?.(this.instructionBreakpoints)??this.instructionBreakpoints.map(b=>({...b,verified:false,message:this.session?'Use a managedIL session for instruction breakpoints':'Pending launch'}))};break;
@@ -49,13 +52,13 @@ export class DebugAdapter {
         case 'scopes':body={scopes:[{name:'Locals',presentationHint:'locals',variablesReference:this.reference({kind:'locals',frameId:a.frameId}),expensive:false},{name:'Statics',variablesReference:this.reference({kind:'statics'}),expensive:false}]};break;
         case 'variables':{const ref=this.refs.get(a.variablesReference);if(!ref)throw new Error('Variable reference has expired');let variables=[];
           if(ref.kind==='locals')variables=this.session.locals(ref.frameId);else if(ref.kind==='heap')variables=this.session.children(ref.ref,a.start??0,a.count??100);else variables=this.session.statics?this.session.statics():this.session.vm.image.statics.map((s,i)=>({name:s.name,type:s.type,value:this.session.vm.display(this.session.vm.statics[i]),reference:typeof this.session.vm.statics[i]==='object'?this.session.vm.statics[i]:null}));body={variables:variables.map(v=>this.variable(v))};break;}
-        case 'evaluate':{const value=a.context==='repl'&&(a.allowSideEffects===true||this.launchArguments?.allowFunctionEvaluation===true)?this.session.evaluateFunction(a.expression,{frameId:a.frameId,allowSideEffects:true,commit:a.commit!==false}):this.session.evaluate(a.expression,a.frameId);body={result:value.result,type:value.type,variablesReference:value.reference?this.reference({kind:'heap',ref:value.reference}):0};break;}
+        case 'evaluate':{const value=a.context==='repl'&&(a.allowSideEffects===true||this.launchArguments?.allowFunctionEvaluation===true)?this.session.evaluateFunction(a.expression,{frameId:a.frameId,allowSideEffects:true,commit:a.commit!==false}):this.session.evaluate(a.expression,a.frameId);body=debugEvaluation(this,value);break;}
         case 'gotoTargets':{if(!this.session)throw new Error('Launch first');this.gotoRefs.clear();body={targets:this.session.gotoTargets({...this.toInternalPosition(a),uri:a.source?.path??a.source?.name}).map(target=>{const id=this.nextGoto++;this.gotoRefs.set(id,{...target,expectedInstructions:this.session.vm.instructions,version:this.session.codeVersion??0});return this.toClientPosition({...target,id});})};break;}
         case 'goto':{const target=this.gotoRefs.get(a.targetId);if(!target||target.version!==(this.session?.codeVersion??0))throw new Error('Goto target expired');this.session.setNextStatement(target);this.gotoRefs.clear();this.refs.clear();this.lastState=null;this.emitState();break;}
         case 'sharpforge/parallelStacks':body=this.session.parallelStacks();break;
         case 'sharpforge/freezeThread':body={threads:this.session.freezeThread(a.threadId,a.frozen!==false)};break;
         case 'sharpforge/hotReload':{const input=this.session.vm.image?a.image:launchInput({assembly:a.assembly});body=this.session.applyChanges(input,{expectedVersion:a.expectedVersion});this.refs.clear();this.gotoRefs.clear();this.lastState=null;this.emitState();break;}
-        case 'sharpforge/evaluateFunction':{const v=this.session.evaluateFunction(a.expression,a);body={result:v.result,type:v.type,committed:v.committed,variablesReference:v.reference?this.reference({kind:'heap',ref:v.reference}):0};break;}
+        case 'sharpforge/evaluateFunction':body=debugEvaluation(this,this.session.evaluateFunction(a.expression,a));break;
         case 'sharpforge/loadSymbols':body=this.session.loadSymbols(a.pdb?launchInput({assembly:a.pdb}):null,a.sources??{});this.gotoRefs.clear();this.refs.clear();break;
         case 'sharpforge/uiScene':body=this.session.vm.platform.scene();break;
         case 'sharpforge/uiEvent':if(this.session.vm.state==='paused')throw new Error('Continue before interacting with the application');body={contexts:this.session.vm.platform.dispatchEvent(a.id,a.event,a.payload)};break;
@@ -63,14 +66,14 @@ export class DebugAdapter {
         case 'exceptionInfo':{const f=this.session.vm.pendingFault??this.session.vm.fault;if(!f)throw new Error('No active exception');body={exceptionId:f.name,description:f.message,breakMode:this.session.reason?.breakMode==='uncaught'?'unhandled':'always'};break;}
         case 'source':{const source=(this.session.vm.image?.sources??this.session.vm.inspector?.debug?.sources??[]).find(s=>s.uri===(a.source?.path??a.source?.name));if(!source||typeof source.text!=='string')throw new Error('Source text is not embedded for this document');body={content:source.text,mimeType:'text/x-csharp'};break;}
         case 'disconnect':case 'terminate':this.session?.stop();this.event('terminated');break;
-        default:throw new Error(`DAP request '${command}' is not implemented`);
+        default:body=dispatchDebugExtension(this,command,a);
       }
       return {seq:++this.seq,type:'response',request_seq:request.seq,command,success:true,body};
     }catch(error){return {seq:++this.seq,type:'response',request_seq:request.seq,command,success:false,message:error.message,body:{}};}
   }
   launch(a){
     const input=launchInput(a),Session=a.managedIL?CilDebugSession:DebugSession;
-    const candidate=new Session(input,{methodToken:a.methodToken,arguments:a.arguments,pdb:a.pdb?launchInput({assembly:a.pdb}):null,sources:a.sources??{},virtualTime:a.virtualTime===true,recordHistory:a.recordHistory!==false,stepOverProperties:a.stepOverProperties===true,breakpointsEnabled:a.breakpointsEnabled!==false,maxHistory:a.maxHistory,maxHistoryBytes:a.maxHistoryBytes,maxInstructions:a.maxInstructions??20_000_000,onOutput:text=>this.event('output',{category:'stdout',output:text}),onUICommand:command=>this.event('sharpforge/ui',command)});
+    const candidate=new Session(input,{methodToken:a.methodToken,arguments:a.arguments,pdb:a.pdb?launchInput({assembly:a.pdb}):null,sources:a.sources??{},virtualTime:a.virtualTime===true,recordHistory:a.recordHistory!==false,stepOverProperties:a.stepOverProperties===true,breakpointsEnabled:a.breakpointsEnabled!==false,maxHistory:a.maxHistory,maxHistoryBytes:a.maxHistoryBytes,maxMemoryReferences:a.maxMemoryReferences,maxMemoryTransferBytes:a.maxMemoryTransferBytes,maxInstructions:a.maxInstructions??20_000_000,onOutput:text=>this.event('output',{category:'stdout',output:text}),onUICommand:command=>this.event('sharpforge/ui',command)});
     const rebound=[];for(const [uri,bps]of this.breakpoints)rebound.push(...candidate.setBreakpoints(uri,bps));
     candidate.setFunctionBreakpoints(this.functionBreakpoints);candidate.setInstructionBreakpoints?.(this.instructionBreakpoints);
     candidate.exceptionBreak=this.exceptionFilters.includes('all')?'all':this.exceptionFilters.includes('uncaught')?'uncaught':'none';
