@@ -32,7 +32,7 @@ function contextFor(context) {
     const expected = execFileSync(dotnet, [path], {encoding: 'utf8', timeout}).replace(/\r\n/g, '\n');
     return {bytes: new Uint8Array(readFileSync(path)), expected};
   }
-  context.diagnostic(`Roslyn/CoreCLR SDK ${sdk}; reference pack ${pack.pack.version}; actual optimize- and optimize+`);
+  context.diagnostic(`Roslyn/CoreCLR SDK ${sdk}; reference pack ${pack.pack.version}; requested optimize- and optimize+`);
   return {pack, build, close: () => rmSync(scratch, {recursive: true, force: true})};
 }
 

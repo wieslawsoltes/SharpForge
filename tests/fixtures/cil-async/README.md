@@ -8,7 +8,15 @@ assembly on the direct CIL VM. It separately compares SharpForge output to that 
 reference. A snapshot/restore control forks a suspended execution, and an invalid-body
 control corrupts a MoveNext instruction reachable only through the builder ABI.
 
-Source-only checkpoint: no baseline capture or execution has been performed. Run only
+The frozen pre-fix head `d6051bff9a29c21b31d6911f3bf5216d2001ce95` ran six tests: zero passed,
+six failed, zero skipped. Five failed at missing builder/awaiter admission; the invalid-body
+control confirmed that MoveNext was not reached by verification. A separate genuine Roslyn
+capture executed all eight Debug/Release programs successfully, confirmed class versus
+struct state machines, and recorded CIL admission rejection for every image. See
+[qualification/pre-fix.json](qualification/pre-fix.json) for outputs, hashes, tool versions
+and actual diagnostics. No post-implementation runtime result has been claimed.
+
+Run only
 in the allocated serial validation slot:
 
 ```sh
