@@ -1,4 +1,4 @@
-import {CONTROLS, MEDIA, XAML} from '@sharpforge/framework';
+import {CONTROLS, XAML} from '@sharpforge/framework';
 import {propertySchema} from './model.js';
 import {csharpValue, designerSymbol, quoteDesignerString} from './resource-codegen-values.js';
 
@@ -17,18 +17,6 @@ export function designCodegenDiagnostics(design, {target = 'sharpforge'} = {}) {
     if (node.projectType) report('Project control construction', node.id);
   }
   if (Object.values(design.templates).some(template => template.states?.length)) report('Template visual states');
-  const visit = value => {
-    if (!value || typeof value !== 'object') return;
-    if (value.valueType === MEDIA + 'LinearGradientBrush') {
-      if (!diagnostics.some(item => item.feature === 'gradient')) {
-        report('LinearGradientBrush');
-        diagnostics.at(-1).feature = 'gradient';
-      }
-      return;
-    }
-    for (const [key, nested] of Object.entries(value)) if (key !== 'designTime') visit(nested);
-  };
-  visit(design);
   return diagnostics;
 }
 

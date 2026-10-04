@@ -1,4 +1,4 @@
-import {MEDIA, frameworkType, propertiesFor} from '@sharpforge/framework';
+import {frameworkType, propertiesFor} from '@sharpforge/framework';
 import {samePropertyValue} from './property-diagnostics.js';
 
 const documentFeatures = Object.freeze({
@@ -26,12 +26,6 @@ function featureValue(document, feature) {
   return feature === 'responsive' ? document.responsive?.states ?? [] : document[feature];
 }
 
-function unsupportedValue(value) {
-  if (!value || typeof value !== 'object') return false;
-  if (value.valueType === MEDIA + 'LinearGradientBrush') return true;
-  return Object.values(value).some(unsupportedValue);
-}
-
 function inspectTemplate(template, key, report, nodeId) {
   if (template.states?.length) report('template.states', 'Template visual states', {nodeId, resourceKey: key});
   const pending = [template.root];
@@ -43,9 +37,6 @@ function inspectTemplate(template, key, report, nodeId) {
     }
     if (!empty(part.collections)) report('template.collections', 'Template collection construction', details);
     if (part.projectType) report('template.projectType', 'Project control construction inside templates', details);
-    for (const [property, value] of Object.entries(part.properties ?? {})) {
-      if (unsupportedValue(value)) report('value.gradient', 'Linear gradient brushes', {...details, property});
-    }
     // TemplateBinding strings are supported by the existing template runtime, unlike data-binding records.
     if (Object.values(part.bindings ?? {}).some(binding => typeof binding !== 'string')) {
       report('template.bindings', 'Template data bindings', details);
@@ -70,12 +61,6 @@ function collectionChanges(previous, node, report) {
       report('collection.' + property, property + ' collection changes', {nodeId: node.id, property});
       continue;
     }
-    for (let index = 0; index < after.length; index++) {
-      const item = after[index];
-      if (item && typeof item === 'object' && unsupportedValue(item.properties)) {
-        report('value.gradient', 'Linear gradient brushes in collection items', {nodeId: node.id, property, itemIndex: index});
-      }
-    }
     commands.push({
       op: 'collection', id: node.id, property, items: structuredClone(after),
       previous: previous?.children.length && !Object.hasOwn(previous.collections ?? {}, property) ? null : structuredClone(before)
@@ -85,11 +70,10 @@ function collectionChanges(previous, node, report) {
 }
 
 /**
- * Inspect validated design deltas before producing any runtime command. The model supplies its
- * effective-property resolver so styles/defaults use the same semantics as ordinary live patches.
+ * Inspect validated design deltas before producing any runtime command.
  * Unchanged authoring metadata and designTime data do not block unrelated supported edits.
  */
-export function prepareLiveDesignChanges(before, after, {resolvedProperties}) {
+export function prepareLiveDesignChanges(before, after) {
   const diagnostics = [];
   const commands = [];
   const collectionOwners = new Set();
@@ -113,13 +97,6 @@ export function prepareLiveDesignChanges(before, after, {resolvedProperties}) {
     }
     if (node.projectType !== previous?.projectType) report('projectType', 'Project control construction or replacement', {nodeId: node.id});
     if (!equivalent(previous?.events, node.events)) report('events', 'Managed event handlers', {nodeId: node.id});
-    const current = resolvedProperties(after, node).properties;
-    const prior = previous ? resolvedProperties(before, previous).properties : {};
-    for (const [property, value] of Object.entries(current)) {
-      if (!samePropertyValue(prior[property], value) && unsupportedValue(value)) {
-        report('value.gradient', 'Linear gradient brushes', {nodeId: node.id, property});
-      }
-    }
     commands.push(...collectionChanges(previous, node, report));
     if (Object.hasOwn(node.collections ?? {}, 'Items')) collectionOwners.add(node.id);
     const template = after.templates[node.template];

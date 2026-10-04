@@ -34,7 +34,7 @@ export function csharpValue(value, type) {
     const stops = value.GradientStops.map(stop =>
       `new ${MEDIA}GradientStop() { Color = ${colorExpression(stop.Color)}, Offset = ${stop.Offset} }`);
     return `new ${MEDIA}LinearGradientBrush() { StartPoint = ${point(value.StartPoint)}, EndPoint = ${point(value.EndPoint)}, ` +
-      `Opacity = ${value.Opacity}, GradientStops = { ${stops.join(', ')} } }`;
+      `Opacity = ${value.Opacity}, GradientStops = new ${MEDIA}GradientStopCollection() { ${stops.join(', ')} } }`;
   }
   const fields = value.valueType === XAML + 'Thickness' ? ['Left', 'Top', 'Right', 'Bottom'] :
     value.valueType === XAML + 'CornerRadius' ? ['TopLeft', 'TopRight', 'BottomRight', 'BottomLeft'] : null;

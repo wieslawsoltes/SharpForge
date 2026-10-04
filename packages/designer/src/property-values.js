@@ -57,6 +57,10 @@ export function hsvToColor({h, s, v, a = 1}) {
 
 function point(value, fallback) {
   value ??= fallback;
+  if (Object.keys(value).some(key => !['X', 'Y', 'valueType'].includes(key))
+    || value.valueType !== undefined && value.valueType !== 'Windows.Foundation.Point') {
+    authoringError('SFD1811', 'Gradient points contain only X and Y coordinates.');
+  }
   return {X: finiteNumber(value.X, {label: 'Point X', minimum: -100000, maximum: 100000}),
     Y: finiteNumber(value.Y, {label: 'Point Y', minimum: -100000, maximum: 100000})};
 }
@@ -66,10 +70,19 @@ export function normalizeDesignerBrush(value) {
   if (typeof value === 'string') return {valueType: MEDIA + 'SolidColorBrush', Color: normalizeDesignerColor(value)};
   if (!value || typeof value !== 'object') authoringError('SFD1811', 'Choose a solid color, gradient or resource.');
   if (value.valueType === MEDIA + 'LinearGradientBrush') {
+    if (Object.keys(value).some(key => !['valueType', 'StartPoint', 'EndPoint', 'GradientStops', 'Opacity'].includes(key))) {
+      authoringError('SFD1811', 'Only relative linear gradients with pad spread and sRGB interpolation are supported.');
+    }
     const stops = boundedArray(value.GradientStops, 64, 'Gradient stops');
     if (stops.length < 2) authoringError('SFD1811', 'A gradient requires at least two stops.');
-    const normalized = stops.map(stop => ({Color: normalizeDesignerColor(stop.Color),
-      Offset: finiteNumber(stop.Offset, {label: 'Stop offset', minimum: 0, maximum: 1})}));
+    const normalized = stops.map(stop => {
+      if (!stop || typeof stop !== 'object' || Object.keys(stop).some(key => !['Color', 'Offset', 'valueType'].includes(key))
+        || stop.valueType !== undefined && stop.valueType !== MEDIA + 'GradientStop') {
+        authoringError('SFD1811', 'Gradient stops contain only Color and Offset values.');
+      }
+      return {Color: normalizeDesignerColor(stop.Color),
+        Offset: finiteNumber(stop.Offset, {label: 'Stop offset', minimum: 0, maximum: 1})};
+    });
     normalized.sort((left, right) => left.Offset - right.Offset);
     return {valueType: MEDIA + 'LinearGradientBrush', StartPoint: point(value.StartPoint, {X: 0, Y: 0}),
       EndPoint: point(value.EndPoint, {X: 1, Y: 1}), GradientStops: normalized,

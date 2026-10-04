@@ -53,7 +53,8 @@ test('A18 gradients normalize stable stops and generate exact WinUI constructors
   assert.deepEqual(brush.GradientStops.map(stop => stop.Offset), [0, 1]);
   const source = csharpValue(brush, MEDIA + 'Brush');
   assert.match(source, /new Microsoft\.UI\.Xaml\.Media\.LinearGradientBrush/);
-  assert.match(source, /GradientStops = \{ new Microsoft\.UI\.Xaml\.Media\.GradientStop/);
+  assert.ok(source.includes('GradientStops = new Microsoft.UI.Xaml.Media.GradientStopCollection() { '
+    + 'new Microsoft.UI.Xaml.Media.GradientStop'));
   assert.match(source, /EndPoint = new Windows\.Foundation\.Point\(1, 1\)/);
   assert.throws(() => normalizeDesignerBrush({...brush, GradientStops: brush.GradientStops.slice(0, 1)}), /at least two/);
   assert.throws(() => normalizeDesignerBrush({...brush, GradientStops: Array(65).fill(brush.GradientStops[0])}), /64/);
