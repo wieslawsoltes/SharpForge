@@ -60,6 +60,8 @@ export const workerMethods=Object.freeze({
     "stackTrace",
     "freezeThread",
     "uiEvent",
+    "uiEventRequest",
+    "uiEventCancel",
     "uiAnimationAdvance",
     "uiAnimationMode",
     "runtimeInfo",
