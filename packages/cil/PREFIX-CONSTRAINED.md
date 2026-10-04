@@ -43,10 +43,20 @@ propagation/store/escape safety, call arguments and array Address resolution rem
 open. A readonly ldelema followed by stind passes this lexical slice; success does
 not establish verifiability. No execution engine automatically enables this API.
 
-Six focused cases and a nine-method pinned ILVerify capture are prepared. The
-capture includes readonly stores and array Address calls specifically to retain
-the partial-scope differences. No native result or local test/check/performance
-result is claimed before the scheduled validation slot. Broader source VM,
-browser, Rust and platform qualification remains staged.
+The six focused tests and affected prefix/opcode/CIL compatibility tests pass
+(215/215). Pinned ILVerify 10.0.5 agrees on all seven lexical/type-token cases.
+Two deliberate differences remain: ILVerify rejects ReadonlyStore, which this
+lexical pass accepts, and accepts ArrayAddress, which this pass reports as
+unsupported. Raw native observations are retained in the fixture directory.
+No method bodies were executed. Broader source VM, browser, Rust and platform
+qualification remains staged.
+
+The new-API benchmark retains chronological timing/heap samples. On Apple M3 Pro,
+macOS arm64, Node 24.21.0, grouping versus validation median/p95 was
+0.663833/0.785000 versus 0.760583/0.851084 ms for 1,000 groups, and
+2.292834/2.764000 versus 2.371625/2.581792 ms for 5,000 groups. This is the added
+cost of the opt-in pass, not an existing-path before/after comparison. Existing
+grouping code is unchanged. It was the sole scheduled team validation job on a
+shared host; no significance, speedup or allocation claim is made.
 
 Reference: [ECMA-335 sixth edition, III.2.1 and III.2.3](https://www.ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf).
