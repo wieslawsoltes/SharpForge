@@ -20,6 +20,11 @@ export function registerStringBuilderIntegerExtensions({member}) {
   for (const type of ['sbyte', 'byte', 'short', 'ushort', 'uint']) member(owner, 'Append', [type], owner);
 }
 
+/** Register Single at the ordered A07 tail; reuse the existing typed default formatter. */
+export function registerStringBuilderSingleExtensions({member}) {
+  member(owner, 'Append', ['float'], owner);
+}
+
 /** Expand one bounded UTF-16 unit into one existing builder append, preserving zero-count no-op behavior. */
 export function appendBuilderCharacter(platform, reference, values, appendText) {
   const unit = integer(platform, values[0], 0, 65535);
