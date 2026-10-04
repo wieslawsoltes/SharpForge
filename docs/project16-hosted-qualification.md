@@ -1,9 +1,9 @@
 # Project 16 hosted qualification history
 
-The latest recorded attempt is [a4](#appended-hosted-attempt-a4--original-completed-outcome):
-the complete Ubuntu/Chromium scope finished with nine passing and six failing
-outcomes. The a1–a3 sections below retain their original evidence cutoff; the
-appended a4 section records the later execution and does not change those results.
+The latest recorded attempt is [a5](#appended-hosted-attempt-a5--original-completed-outcome):
+the complete Ubuntu/Chromium scope finished with **11 passing and five failing
+outcomes out of 16**. The a1–a4 sections retain their original evidence cutoffs
+and failed outcomes; the appended a5 section does not rewrite those results.
 
 ## Historical a1–a3 evidence cutoff
 
@@ -188,3 +188,98 @@ The six failed outcomes remain pending corrected execution. Cross-platform and
 cross-engine coverage, native permissions, physical input/clipboard, IME,
 assistive behavior and external oracles remain separate obligations. Archiving
 a4 executed no tests, builds, gates, benchmarks or browsers and closed no issues.
+
+
+## Appended hosted attempt a5 — original completed outcome
+
+[Run 37178840757](https://github.com/wieslawsoltes/SharpForge/actions/runs/37178840757)
+([job 111367060633](https://github.com/wieslawsoltes/SharpForge/actions/runs/37178840757/job/111367060633))
+ran the complete selection from **05:05:33.618 to 05:18:27.966 UTC on 2026-10-04**.
+Its source was `c13aa0fd9d27df28b3708bb83d914a04c20a5c7c`, tree
+`29023ed8b962b6d91671bdb0c0359d905ef2659e`, on Ubuntu/Chromium 153.0.8010.12.
+The [original summary](evidence/project16-hosted/a5/qualification-summary.json)
+records **16 outcomes: 11 passed and five failed**. A4 remains its original
+15-scope run; no totals are added across runs or overlapping scenario checks.
+
+| Selected outcome | Original result |
+|---|---|
+| Node A19 | Passed: **748/748**, zero failures, cancellations or skips. |
+| Node A20 | Passed: **712 tests, 703 passed, nine skipped**, zero failures or cancellations. |
+| Browser workbench docking | Passed. |
+| Browser workbench shell | Passed. |
+| Browser workbench sessions | Failed after solution import and per-project profile retention passed; two live UI sessions did not satisfy the completion predicate. Two event-listener page errors were recorded. |
+| Browser workbench lazy tools | Passed. |
+| Browser HTTP workflows | Project creation and shared-document edit/build passed; waiting for debug pause timed out with an event-listener page error. Suite failed. |
+| Browser standalone workflows | Actual offline file-mode startup, three recorded lazy-tool activations, project creation and edit/build passed; debug-pause wait failed with an event-listener page error. **Full offline workflow failed.** |
+| Browser editor insights | Passed all 12 recorded scenario checks, including the corrected native Find history combobox. |
+| Browser editor providers | Passed. |
+| Browser editor view | Passed. |
+| Performance capture | Absolute capture passed: generated-model 200 MiB typing event-to-paint p95 approximately **32.4 ms**, below the typing-only 50 ms gate. Relative regression verdict remains absent. |
+| Performance editor UI budgets | Failed validation with `Missing actual workspace or definition boundary checks`, despite both stages recording captures. |
+| Performance actual Studio large file | Failed: the real 209,715,200-byte File-input import reported `Document exceeds the source size limit`. |
+| Performance instrumentation | Passed its aggregate below-1% gate; signed overhead approximately **−0.238741%** across 12 pairs. |
+| Performance lazy evaluation | Passed its positive aggregate-decrease gate; **2.4215209684%** same-source counterfactual reduction across 12 pairs, including **nine positive and three negative** pairs. |
+
+The exact Node summaries are in the [job log](evidence/project16-hosted/a5/job.log)
+at lines 1373 and 2104. Their durations are 44,364.531153 ms and 37,837.181419 ms;
+these are Node run durations, not browser latency measurements. Every skip
+remains a skip. The [standalone report](evidence/project16-hosted/a5/vs-workflow-standalone-results.json)
+records successful Assembly, Disassembly and MSBuild activation/reopen and no
+HTTP attempts. It does not certify later designer/export steps, all offline
+first-use paths, or the failed debugging workflow.
+
+The [generated-model latency report](evidence/project16-hosted/a5/editor-assessment.json)
+is independent of the failed
+[actual Studio File-input report](evidence/project16-hosted/a5/a20-studio-large-file-results.json).
+Successful generated-model latency cannot substitute for actual opening,
+scrolling and editing through the File-input pipeline. Both baseline paths were
+empty, so there is no relative regression verdict.
+
+The [instrumentation report](evidence/project16-hosted/a5/instrumentation-overhead.json)
+retains signed measurements: enabled workload 24,277.9 ms, disabled 24,336.0 ms,
+difference −58.1 ms. A negative observation is not a claim that instrumentation
+inherently improves performance. The
+[lazy-evaluation report](evidence/project16-hosted/a5/lazy-evaluation.json)
+compares the shipped lazy graph with an explicitly labeled same-source eager-entry
+counterfactual using Chromium CDP `threadTicks`: eager 1,529.039 ms, lazy
+1,492.013 ms, signed saving 37.026 ms. All negative pairs remain in the evidence.
+This is one shared-host point observation with unknown clock quantization, not
+statistical proof or a historical, worker-CPU, paint or wall-startup speedup.
+The raw reports preserve samples, dispersion, harness/source identities and
+served-asset checks; the independent performance audit is not inferred here.
+
+### Publication and preserved artifact
+
+[PR #4297](https://github.com/wieslawsoltes/SharpForge/pull/4297) merged as the a5
+source above. Its local source was `cce2bdc93e1348c24e0116817e584906f669472c`,
+public head `c391430a44e99f08e1a698361e1161536e0425e5`, shared source tree
+`3992444851da294daf5ab3d098b78376444457dc`.
+[Own core 37178720477 / 111366725424](https://github.com/wieslawsoltes/SharpForge/actions/runs/37178720477/job/111366725424)
+and [main core 37178789347 / 111366905289](https://github.com/wieslawsoltes/SharpForge/actions/runs/37178789347/job/111366905289)
+succeeded. Earlier own run 37178705406 was automatically cancelled; it is not a
+passing execution. Successful core checks do not override a5's failed scope.
+
+The exact downloaded ZIP, retained as ordered binary parts below,
+([artifact 11294751991](https://github.com/wieslawsoltes/SharpForge/actions/runs/37178840757/artifacts/11294751991))
+is **13,381,803 bytes**, SHA-256
+`32adec6a970df1e08e44620bb4b7bb5b1067ce91b941dd004275bfdecdf2d9c9`.
+The [reconstruction manifest](evidence/project16-hosted/a5/p16-hosted-a5.zip.parts.json)
+records the part order, byte counts and hashes, plus the unchanged original ZIP identity and download URL.
+
+| Ordered archive part | Bytes | SHA-256 |
+|---|---:|---|
+| [part001](evidence/project16-hosted/a5/p16-hosted-a5.zip.part001) | 7,864,320 | `b1f9431cba4ecf3c18e74ce7ddd54e3a3a82be12d6771e288d6b017a96ef659b` |
+| [part002](evidence/project16-hosted/a5/p16-hosted-a5.zip.part002) | 5,517,483 | `6695745325f07ff92ec5b3253bc0a0fd276af1e84a2365f768d8e9e51777bb5c` |
+
+Concatenate part001 followed by part002 as raw binary bytes into `p16-hosted-a5.zip`, then verify the complete byte count
+and SHA-256 above before extracting. Concatenation was checked byte-for-byte against the original downloaded archive.
+Each part is below 8 MiB; splitting changes only storage so its base64 publication payload fits the connector request limit.
+The raw job log and readable JSON reports are archived unchanged with individual
+sizes and hashes in the ledger. Screenshots and trace ZIPs remain inside the
+original archive without duplicate extracted copies.
+
+The five failed outcomes remain pending corrected execution. Later source
+corrections are not retroactive passes. Additional OS/browser, native permission,
+physical input/clipboard, IME, assistive and external-oracle qualification remains
+separate. This archival change ran no tests, builds, benchmarks or browsers and
+closed no issues.

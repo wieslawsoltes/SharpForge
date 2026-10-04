@@ -1,0 +1,1381 @@
+{
+  "format": "sharpforge-workbench-trace",
+  "version": 2,
+  "units": "milliseconds",
+  "captureStatus": "completed",
+  "fixture": {
+    "id": "workbench-501-csharp-v2",
+    "sha256": "9296f1fca9909280fd92a7242eba2c794909f8727077e1e973769c28ced2874e",
+    "sourceFiles": 501,
+    "projectFiles": 1,
+    "rounds": 3,
+    "documentSwitches": 20,
+    "tools": [
+      "problems",
+      "output",
+      "object-browser",
+      "command-window",
+      "bookmarks"
+    ],
+    "toolPasses": 4
+  },
+  "samples": [
+    {
+      "name": "cold-app-startup",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 2633.4000000000233
+    },
+    {
+      "name": "workspace-startup",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 2651.5999999999767
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 109,
+      "metadata": {
+        "uri": "Types/Type0.cs",
+        "pass": 0
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 103.30000000004657,
+      "metadata": {
+        "uri": "Types/Type1.cs",
+        "pass": 1
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 103.59999999997672,
+      "metadata": {
+        "uri": "Types/Type2.cs",
+        "pass": 2
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 122.5,
+      "metadata": {
+        "uri": "Types/Type3.cs",
+        "pass": 3
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 123.30000000004657,
+      "metadata": {
+        "uri": "Types/Type4.cs",
+        "pass": 4
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 114.5,
+      "metadata": {
+        "uri": "Types/Type5.cs",
+        "pass": 5
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 119.09999999997672,
+      "metadata": {
+        "uri": "Types/Type6.cs",
+        "pass": 6
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 147.30000000004657,
+      "metadata": {
+        "uri": "Types/Type7.cs",
+        "pass": 7
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 136.29999999993015,
+      "metadata": {
+        "uri": "Types/Type8.cs",
+        "pass": 8
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 141.60000000009313,
+      "metadata": {
+        "uri": "Types/Type9.cs",
+        "pass": 9
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 171.09999999997672,
+      "metadata": {
+        "uri": "Types/Type10.cs",
+        "pass": 10
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 105.40000000002328,
+      "metadata": {
+        "uri": "Types/Type11.cs",
+        "pass": 11
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 120.90000000002328,
+      "metadata": {
+        "uri": "Types/Type12.cs",
+        "pass": 12
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 108.89999999990687,
+      "metadata": {
+        "uri": "Types/Type13.cs",
+        "pass": 13
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 108.60000000009313,
+      "metadata": {
+        "uri": "Types/Type14.cs",
+        "pass": 14
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 142.09999999997672,
+      "metadata": {
+        "uri": "Types/Type15.cs",
+        "pass": 15
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 117.79999999993015,
+      "metadata": {
+        "uri": "Types/Type16.cs",
+        "pass": 16
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 120.70000000006985,
+      "metadata": {
+        "uri": "Types/Type17.cs",
+        "pass": 17
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 139.69999999995343,
+      "metadata": {
+        "uri": "Types/Type18.cs",
+        "pass": 18
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 156.40000000002328,
+      "metadata": {
+        "uri": "Types/Type19.cs",
+        "pass": 19
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 35.40000000002328,
+      "metadata": {
+        "tool": "problems",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 33.199999999953434,
+      "metadata": {
+        "tool": "problems",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 33.300000000046566,
+      "metadata": {
+        "tool": "problems",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 34.40000000002328,
+      "metadata": {
+        "tool": "problems",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 43.59999999997672,
+      "metadata": {
+        "tool": "output",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 22.699999999953434,
+      "metadata": {
+        "tool": "output",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 32.70000000006985,
+      "metadata": {
+        "tool": "output",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 33.29999999993015,
+      "metadata": {
+        "tool": "output",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 66.80000000004657,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 33.699999999953434,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 33.300000000046566,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 33.40000000002328,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 32.79999999993015,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 33.70000000006985,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 32.79999999993015,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 33.10000000009313,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 39.89999999990687,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 26.800000000046566,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 33.300000000046566,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 0,
+      "duration": 33.39999999990687,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "cold-app-startup",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 2582.5999999999767
+    },
+    {
+      "name": "workspace-startup",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 2647.4000000000233
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 111.59999999997672,
+      "metadata": {
+        "uri": "Types/Type0.cs",
+        "pass": 0
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 96.10000000009313,
+      "metadata": {
+        "uri": "Types/Type1.cs",
+        "pass": 1
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 112.39999999990687,
+      "metadata": {
+        "uri": "Types/Type2.cs",
+        "pass": 2
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 126.89999999990687,
+      "metadata": {
+        "uri": "Types/Type3.cs",
+        "pass": 3
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 132.80000000004657,
+      "metadata": {
+        "uri": "Types/Type4.cs",
+        "pass": 4
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 141.5,
+      "metadata": {
+        "uri": "Types/Type5.cs",
+        "pass": 5
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 128,
+      "metadata": {
+        "uri": "Types/Type6.cs",
+        "pass": 6
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 103.80000000004657,
+      "metadata": {
+        "uri": "Types/Type7.cs",
+        "pass": 7
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 106.19999999995343,
+      "metadata": {
+        "uri": "Types/Type8.cs",
+        "pass": 8
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 125,
+      "metadata": {
+        "uri": "Types/Type9.cs",
+        "pass": 9
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 119.59999999997672,
+      "metadata": {
+        "uri": "Types/Type10.cs",
+        "pass": 10
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 139.80000000004657,
+      "metadata": {
+        "uri": "Types/Type11.cs",
+        "pass": 11
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 130.09999999997672,
+      "metadata": {
+        "uri": "Types/Type12.cs",
+        "pass": 12
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 112.40000000002328,
+      "metadata": {
+        "uri": "Types/Type13.cs",
+        "pass": 13
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 122.59999999997672,
+      "metadata": {
+        "uri": "Types/Type14.cs",
+        "pass": 14
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 128.30000000004657,
+      "metadata": {
+        "uri": "Types/Type15.cs",
+        "pass": 15
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 134.09999999997672,
+      "metadata": {
+        "uri": "Types/Type16.cs",
+        "pass": 16
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 114.19999999995343,
+      "metadata": {
+        "uri": "Types/Type17.cs",
+        "pass": 17
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 125.5,
+      "metadata": {
+        "uri": "Types/Type18.cs",
+        "pass": 18
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 135,
+      "metadata": {
+        "uri": "Types/Type19.cs",
+        "pass": 19
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 55,
+      "metadata": {
+        "tool": "problems",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 35.90000000002328,
+      "metadata": {
+        "tool": "problems",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 35.5,
+      "metadata": {
+        "tool": "problems",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 27.199999999953434,
+      "metadata": {
+        "tool": "problems",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 31.5,
+      "metadata": {
+        "tool": "output",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 33.20000000006985,
+      "metadata": {
+        "tool": "output",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 33.40000000002328,
+      "metadata": {
+        "tool": "output",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 33.39999999990687,
+      "metadata": {
+        "tool": "output",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 99.80000000004657,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 33.699999999953434,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 33.40000000002328,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 33.20000000006985,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 38.90000000002328,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 27.099999999976717,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 33.40000000002328,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 33.39999999990687,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 38.300000000046566,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 28.300000000046566,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 33.29999999993015,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 1,
+      "duration": 33.40000000002328,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "cold-app-startup",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 2590.5999999999767
+    },
+    {
+      "name": "workspace-startup",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 2643.399999999907
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 132.20000000006985,
+      "metadata": {
+        "uri": "Types/Type0.cs",
+        "pass": 0
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 97.29999999993015,
+      "metadata": {
+        "uri": "Types/Type1.cs",
+        "pass": 1
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 101.20000000006985,
+      "metadata": {
+        "uri": "Types/Type2.cs",
+        "pass": 2
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 123,
+      "metadata": {
+        "uri": "Types/Type3.cs",
+        "pass": 3
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 131.19999999995343,
+      "metadata": {
+        "uri": "Types/Type4.cs",
+        "pass": 4
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 163.59999999997672,
+      "metadata": {
+        "uri": "Types/Type5.cs",
+        "pass": 5
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 121.90000000002328,
+      "metadata": {
+        "uri": "Types/Type6.cs",
+        "pass": 6
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 112.20000000006985,
+      "metadata": {
+        "uri": "Types/Type7.cs",
+        "pass": 7
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 125.59999999997672,
+      "metadata": {
+        "uri": "Types/Type8.cs",
+        "pass": 8
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 111,
+      "metadata": {
+        "uri": "Types/Type9.cs",
+        "pass": 9
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 127,
+      "metadata": {
+        "uri": "Types/Type10.cs",
+        "pass": 10
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 108.09999999997672,
+      "metadata": {
+        "uri": "Types/Type11.cs",
+        "pass": 11
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 120.80000000004657,
+      "metadata": {
+        "uri": "Types/Type12.cs",
+        "pass": 12
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 134.29999999993015,
+      "metadata": {
+        "uri": "Types/Type13.cs",
+        "pass": 13
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 123.59999999997672,
+      "metadata": {
+        "uri": "Types/Type14.cs",
+        "pass": 14
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 117,
+      "metadata": {
+        "uri": "Types/Type15.cs",
+        "pass": 15
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 138,
+      "metadata": {
+        "uri": "Types/Type16.cs",
+        "pass": 16
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 118.70000000006985,
+      "metadata": {
+        "uri": "Types/Type17.cs",
+        "pass": 17
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 136.90000000002328,
+      "metadata": {
+        "uri": "Types/Type18.cs",
+        "pass": 18
+      }
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 111.90000000002328,
+      "metadata": {
+        "uri": "Types/Type19.cs",
+        "pass": 19
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 56.89999999990687,
+      "metadata": {
+        "tool": "problems",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 34.20000000006985,
+      "metadata": {
+        "tool": "problems",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 27.29999999993015,
+      "metadata": {
+        "tool": "problems",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 29.100000000093132,
+      "metadata": {
+        "tool": "problems",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 33.29999999993015,
+      "metadata": {
+        "tool": "output",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 33.800000000046566,
+      "metadata": {
+        "tool": "output",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 32.90000000002328,
+      "metadata": {
+        "tool": "output",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 33.29999999993015,
+      "metadata": {
+        "tool": "output",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 74.5,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 25.900000000023283,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 33.199999999953434,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 33.20000000006985,
+      "metadata": {
+        "tool": "object-browser",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 37.09999999997672,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 29,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 33.300000000046566,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 33.40000000002328,
+      "metadata": {
+        "tool": "command-window",
+        "pass": 3,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 37.699999999953434,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 0,
+        "cold": true
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 28.900000000023283,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 1,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 33.40000000002328,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 2,
+        "cold": false
+      }
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "round": 2,
+      "duration": 33.29999999993015,
+      "metadata": {
+        "tool": "bookmarks",
+        "pass": 3,
+        "cold": false
+      }
+    }
+  ],
+  "browserErrors": [],
+  "relativeBaseline": "",
+  "environment": {
+    "deviceScaleFactor": 1,
+    "hardwareConcurrency": 4,
+    "deviceMemory": 16,
+    "platform": "Linux x86_64",
+    "appDocument": "/",
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "operatingSystem": "Linux 6.17.0-1022-azure",
+    "architecture": "x86_64",
+    "processor": "x86_64",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "servingMode": "http-static",
+    "timingProtocol": "fresh-context-paint-v2",
+    "browserProcess": "shared; fresh isolated context per round"
+  },
+  "summary": [
+    {
+      "name": "cold-app-startup",
+      "sessionId": "workbench",
+      "count": 3,
+      "p50": 2590.5999999999767,
+      "p95": 2633.4000000000233,
+      "p99": 2633.4000000000233
+    },
+    {
+      "name": "workspace-startup",
+      "sessionId": "workbench",
+      "count": 3,
+      "p50": 2647.4000000000233,
+      "p95": 2651.5999999999767,
+      "p99": 2651.5999999999767
+    },
+    {
+      "name": "document-switch",
+      "sessionId": "workbench",
+      "count": 60,
+      "p50": 122.5,
+      "p95": 147.30000000004657,
+      "p99": 171.09999999997672
+    },
+    {
+      "name": "tool-activation",
+      "sessionId": "workbench",
+      "count": 60,
+      "p50": 33.300000000046566,
+      "p95": 56.89999999990687,
+      "p99": 99.80000000004657
+    }
+  ],
+  "assessment": {
+    "mode": "capture",
+    "absolutePassed": true,
+    "regressionVerdict": null,
+    "failures": []
+  }
+}
