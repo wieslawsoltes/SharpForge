@@ -16,7 +16,30 @@ Install its declared sibling packages together. npm publication is not part of t
 
 Include `@sharpforge/editor/editor.css` when embedding independently. Ctrl+F/H opens literal find/replace with case/whole-word options; Ctrl+G accepts line:column. F3/Shift+F3 navigate matches. Ctrl+Shift+\\ matches brackets; Shift+Alt+Up/Down duplicates lines. String/comment delimiters are ignored. Read-only state blocks writes/undo/replace; updates preserve per-document history. `SyntaxHighlightIndex` lexes supported input up to a configurable 2,000,000 UTF-16 characters and returns source-faithful viewport runs, with a plain viewport fallback beyond the limit or a per-window token budget. This remains a textarea/overlay editor, not a virtualized Monaco/Visual Studio text engine.
 
-0.6 exports `NavigationHistory` for bounded immutable cross-file locations. `CodeEditor.expandSelection()` / `shrinkSelection()` use the supplied selectionRanges service. Ctrl+Alt+Right/Left invoke them. Duplicate native input events with unchanged text do not publish redundant source versions. Highlight DOM/gutters are virtualized; native textarea storage and lexical scans are not.
+0.6 exports `NavigationHistory` for bounded immutable cross-file locations. `CodeEditor.expandSelection()` / `shrinkSelection()` use the supplied selectionRanges service. Ctrl+Alt+Right/Left invoke them. Duplicate native input events with unchanged text do not publish redundant source versions. Highlight DOM/gutters use a bounded viewport; native textarea storage remains whole-document.
+
+## Incremental source highlighting
+
+`SyntaxHighlightIndex.withSource(source, change?)` creates an index for the next immutable `SourceText` snapshot. A supplied
+change uses `{start, length, newLength}` in UTF-16 units and must exactly describe the revision; stale or invalid hints throw
+`RangeError`. Without a hint, the index derives one replacement from the common prefix and suffix. Edits in the same URI use
+the syntax package's existing `relexTokens` seam, including its comment, raw-string and preprocessor restart rules. A different
+URI starts a fresh scan. `CodeEditor.sourceSnapshot()` reuses `SourceText.withChange` and increments the source version only
+when the text changes within that URI.
+
+`window(options)` retains its source-faithful run and lexical-fallback contract. Normal editor paints create runs only for the
+visible lines. `tokenCount` reports the complete token count without copying shifted tokens. `contextAt(offset)` provides the
+existing lexical insertion context, and `brackets.get(offset)` / `has(offset)` answer matching-delimiter queries. These queries
+cache up to 2,048 offsets; after one token-stream traversal of cumulative queries, a full bracket map bounds pathological
+unmatched/nested input to linear token work per revision. Full `lexed.tokens`, `runs` and `pairs` snapshots remain available
+on demand to consumers and preserve their array/Map shapes. A full snapshot can require work proportional to the source.
+
+The native overlay retains identical markup when an analysis result leaves visible syntax and decorations unchanged. A
+diagnostic's latest message and object still replace the old data; changes to visible ranges or severity update the overlay.
+Caret, gutter, execution and selected-frame positions continue to update independently. Horizontal scrolling translates the
+existing overlay, and the existing `ResizeObserver` refreshes its cached viewport height. Disposing the editor disconnects
+that observer and ignores a notification already queued by the browser. No new scheduler, worker or text storage engine is
+introduced. Large lexical edits can still rescan to the end, and browser latency budgets require measured qualification.
 
 ## 0.8 keyboard profiles
 
