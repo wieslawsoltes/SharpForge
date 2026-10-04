@@ -12,10 +12,14 @@ export class DocumentLayout {
     this.leadingRows = 0;
     this.hiddenRanges = [];
     this.generation = 0;
+    this.wrapRanges = [];
   }
 
   reset() {
     this.generation++;
+    clearTimeout(this.wrapTimer);
+    this.wrapTimer = null;
+    this.wrapRanges = [];
     this.map.reset(this.editor.model.lineCount);
     this.zoneRows.clear();
     this.leadingRows = 0;
@@ -31,11 +35,14 @@ export class DocumentLayout {
       this.reset();
       return;
     }
+    const ranges = [];
     for (const edit of change.changes) {
       const start = edit.newRange?.start.line ?? change.after.positionAt(edit.start).line;
       const end = edit.newRange?.end.line ?? start;
-      for (let line = start; line <= end; line++) this.cache.delete(line);
+      ranges.push({start, end});
     }
+    for (const line of this.cache.keys()) if (ranges.some(range => range.start <= line && line <= range.end)) this.cache.delete(line);
+    this.measureWrap(ranges);
   }
 
   configure(width) {
@@ -45,18 +52,44 @@ export class DocumentLayout {
     this.reset();
   }
 
-  measureWrap() {
+  measureWrap(ranges = [{start: 0, end: this.map.lineCount - 1}]) {
     if (!this.editor.options.wordWrap || this.editor.largeFile.active) return;
+    const sorted = [...this.wrapRanges, ...ranges].sort((left, right) => left.start - right.start || left.end - right.end);
+    this.wrapRanges = [];
+    for (const range of sorted) {
+      const previous = this.wrapRanges.at(-1);
+      if (previous && range.start <= previous.end + 1) previous.end = Math.max(previous.end, range.end);
+      else this.wrapRanges.push({...range});
+    }
+    this.scheduleWrap();
+  }
+
+  scheduleWrap() {
+    if (this.wrapTimer || !this.wrapRanges.length) return;
     const generation = this.generation;
-    let line = 0;
-    const work = () => {
+    this.wrapTimer = setTimeout(() => {
+      this.wrapTimer = null;
       if (this.editor.disposed || generation !== this.generation) return;
-      const end = Math.min(this.map.lineCount, line + 128);
-      for (; line < end; line++) this.line(line);
-      this.editor.view?.schedule();
-      if (line < this.map.lineCount) this.wrapTimer = setTimeout(work, 0);
-    };
-    this.wrapTimer = setTimeout(work, 0);
+      this.flushWrap();
+    }, 0);
+  }
+
+  /** Reconcile at most 128 lines / 32 KiB of fragments; offscreen edits do not require scrolling to become measurable. */
+  flushWrap() {
+    clearTimeout(this.wrapTimer);
+    this.wrapTimer = null;
+    if (this.editor.disposed || !this.editor.options.wordWrap || this.editor.largeFile.active) return;
+    let lines = 0;
+    let characters = 0;
+    while (this.wrapRanges.length && lines < 128 && characters < 32768) {
+      const range = this.wrapRanges[0];
+      const record = this.line(range.start++);
+      characters += record.text.length;
+      lines++;
+      if (range.start > range.end) this.wrapRanges.shift();
+    }
+    this.editor.view?.schedule?.();
+    this.scheduleWrap();
   }
 
   applyFolding() {
@@ -136,7 +169,7 @@ export class DocumentLayout {
     return {line: position.line, continuation, row: this.map.rowAt(position.line) + continuation + this.leadingRows, x, record, segment};
   }
 
-  dispose() { this.generation++; clearTimeout(this.wrapTimer); this.cache.clear(); }
+  dispose() { this.generation++; clearTimeout(this.wrapTimer); this.wrapTimer = null; this.wrapRanges = []; this.cache.clear(); }
 }
 
 /** Read line extent without allocating a full line, including huge single-line documents. */

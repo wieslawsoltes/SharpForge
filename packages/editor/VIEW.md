@@ -35,6 +35,37 @@ and navigates the actual DOM editor. It is a functional example, not a native-pl
 
 ## Compatibility surface
 
+### Shared document permissions
+
+`EditorModel.readOnly` / `setReadOnly(boolean)` is shared document state. `onDidChangeReadOnly(listener)`
+returns an unsubscribe function. Every attached `CodeEditor`, including an internal split, updates its
+native input, ARIA state and keymap state immediately. Locking a document cancels active composition.
+Model edits and prepared commits reject with code `SFEDITOR_READ_ONLY`; undo/redo return `false` while
+locked. Toggling the lock leaves text, version and undo history intact. Workspace fault rollback through
+`restoreCheckpoint` remains available while locked and retains the current lock.
+
+### Workspace text configuration
+
+Studio can call `configureDocumentEditor(editor, {records, languageOptions})` from
+`apps/studio/workbench/editor-configuration.js`. `records` contains actual workspace files, including
+`.editorconfig`; `languageOptions` is the host-selected flat per-language overlay. Only ancestor configs
+are read, root-to-leaf, through the existing `applyEditorConfig` API. The helper accepts at most 20,000
+records, 64 ancestor files, 1,000,000 characters in one config and 2,000,000 total configuration characters.
+Shared models supply bounded config reads without flattening unrelated source records.
+
+Reconfiguration clears earlier document indentation/save settings before applying the new path's
+sections. An opened document's dominant EOL controls Enter by default, and ordinary saves retain every
+existing line ending, including mixed endings. An explicit `endOfLine` option or EditorConfig
+`end_of_line` setting normalizes endings as one undoable save transaction. Trimming and final-newline
+options remain independent of EOL conversion.
+
+Offscreen wrap invalidation queues affected logical ranges. Each measurement turn handles at most
+128 lines / 32 KiB of rendered fragments; changing a line never requires visiting it to repair row counts.
+Folding providers debounce every edit, since removing one character can change syntax, indentation or
+region ownership. The provider cancels superseded requests and its pending timer on disposal.
+
+### Editing and view API
+
 | API | Contract |
 | --- | --- |
 | `setModel(uri, textOrEditorModel)` | Switch documents, preserve view selection/scroll/folds and shared model history. |
