@@ -12,7 +12,7 @@ const dump = input => ({ schemaVersion: 1, inputHash: input.inputHash, runtime: 
     ? { id: fixture.id, status: 'load-error', exception: 'Fixture.XamlError', hresult: -1 }
     : { id: fixture.id, status: 'loaded', viewport: fixture.viewport, rasterizationScale: 1,
       layout: { path: '0', type: 'Fixture.Element', properties: { width: { value: 'NaN', hasLocalValue: false } }, children: [] }, automation: [] }) });
-function fakeNative({ changeThird = false, stderr = '' } = {}) {
+function fakeNative({ changeThird = false, stderr = '', exitCode = 0, signal = null } = {}) {
   let repetitions = 0;
   return async (command, args) => {
     if (args[0] === 'restore') return processResult;
@@ -21,6 +21,7 @@ function fakeNative({ changeThird = false, stderr = '' } = {}) {
       await writeFile(path.join(out, 'Oracle.WinUI.exe'), 'fake executable, never executed');
       return processResult;
     }
+    if (exitCode !== 0 || signal) return { ...processResult, exitCode, signal, stderr };
     const input = JSON.parse(await readFile(args[0], 'utf8')), observed = dump(input);
     if (++repetitions === 3 && changeThird) observed.observations[0].layout.properties.changed = true;
     await writeFile(args[1], JSON.stringify(observed));
@@ -31,6 +32,7 @@ const resolve = async () => ({ dotnet: 'fake-dotnet', actual: { fixture: true },
 
 test('WinUI input binds fixture bytes, viewport, native sources and pinned project files', async () => {
   const input = await loadInput();
+  assert.equal(input.fixtures.length, 20);
   assert(input.fixtures.some(row => row.id === 'button-default'));
   assert.equal(new Set(input.fixtures.map(row => row.id)).size, input.fixtures.length);
   assert(input.materials.some(row => row.name === 'native/packages.lock.json'));
@@ -55,7 +57,8 @@ test('WinUI catalog fails before building when IDs, paths or viewports are inval
     await cp(sourceRoot, temporary, { recursive: true });
     const catalogPath = path.join(temporary, 'fixtures/index.json'), original = JSON.parse(await readFile(catalogPath, 'utf8'));
     for (const change of [value => { value.fixtures[0].viewport.width = 2049; }, value => { value.fixtures[0].file = '../Program.cs'; },
-      value => value.fixtures.push(value.fixtures[0]), value => { value.fixtures[0].expected = 'invented'; }]) {
+      value => { value.fixtures[1] = value.fixtures[0]; }, value => { value.fixtures[0].expected = 'invented'; },
+      value => value.fixtures.pop()]) {
       const value = structuredClone(original); change(value); await writeFile(catalogPath, JSON.stringify(value));
       await assert.rejects(loadInput(temporary));
     }
@@ -78,4 +81,35 @@ test('WinUI capture uses three serial fake processes and fails third-run instabi
 test('non-Windows WinUI capture is explicitly unsupported without native resolution', async () => {
   const result = await captureWinUI({ target: 'darwin-arm64', resolve: async () => { throw new Error('Must not resolve native host'); } });
   assert.equal(result.status, 'unsupported'); assert.equal(result.attempts.length, 0); assert.equal(result.unsupported.length, 1);
+});
+
+test('native startup crashes retain the actual exit status without assuming a desktop failure', async () => {
+  const options = { target: 'win32-x64', windowsBuild: pin.images.windows.minimumBuild, resolve };
+  for (const exitCode of [3221226107, -1073741189, 1]) {
+    const report = await captureWinUI({ ...options, execute: fakeNative({ exitCode }) });
+    assert.equal(report.status, 'failed');
+    assert.equal(report.attempts.length, 1);
+    assert.equal(report.attempts[0].process.exitCode, exitCode);
+    assert.equal(report.attempts[0].output, null);
+    assert.match(report.failures[0], new RegExp('exitCode=' + exitCode));
+    assert.match(report.failures[0], exitCode === 1 ? /0x00000001/ : /0xC000027B/);
+    assert.doesNotMatch(report.failures[0], /desktop/);
+  }
+  const signalled = await captureWinUI({ ...options, execute: fakeNative({ exitCode: null, signal: 'SIGTERM' }) });
+  assert.equal(signalled.status, 'failed');
+  assert.match(signalled.failures[0], /exitCode=null, signal=SIGTERM/);
+  assert.equal(signalled.attempts[0].process.signal, 'SIGTERM');
+});
+
+test('intentional XAML failures retain native type and HRESULT and cannot become silent successes', async () => {
+  const input = await loadInput(), result = dump(input);
+  const negatives = input.fixtures.map((row, index) => row.expected === 'load-error' ? index : -1).filter(index => index >= 0);
+  assert.equal(negatives.length, 2);
+  for (const index of negatives) {
+    assert.equal(validateDump(result, input).observations[index].exception, 'Fixture.XamlError');
+    for (const patch of [{ exception: null }, { hresult: null }, { status: 'loaded' }]) {
+      const changed = structuredClone(result); Object.assign(changed.observations[index], patch);
+      assert.throws(() => validateDump(changed, input));
+    }
+  }
 });

@@ -9,14 +9,19 @@
  *   DefaultMemberAttribute("Item")   on a type that declares an indexer
  *   ParamArrayAttribute              on a `params` parameter
  *   CompilerGeneratedAttribute       on the backing fields and accessors of auto-properties and field-like events
+ *   TupleElementNamesAttribute       on a field, parameter, return value or property whose type names tuple elements
+ *   RequiredMemberAttribute          on a `required` member and its type; Obsolete + CompilerFeatureRequired on the
+ *                                    constructors of such a type that are not marked [SetsRequiredMembers]
  *
  * Pseudo-custom attributes are not rows: the runtime reads them from flags and other tables. `[Serializable]` sets
  * the TypeDef flag; the others (StructLayout, DllImport, MethodImpl, ...) are skipped and listed as a limit.
  */
 import { encodeCustomAttribute, TypeAttributes, token } from '@sharpforge/cil';
 import { SymbolKind, TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
+import { MethodKind } from '../../symbols/members.js';
 import { MetadataEmitError, namespaceOf } from './type-tokens.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
+import { tupleElementNamesOf } from './tuple-element-names.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const TYPE_DEF_TABLE = 2;
@@ -37,6 +42,9 @@ const pseudoAttributes = new Set([
   'System.Runtime.CompilerServices.MethodImplAttribute',
   'System.Runtime.CompilerServices.SpecialNameAttribute',
 ]);
+const REQUIRED_MEMBER = 'System.Runtime.CompilerServices.RequiredMemberAttribute';
+const SETS_REQUIRED_MEMBERS = 'System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute';
+const REQUIRED_MEMBERS_MESSAGE = 'Constructors of types with required members are not supported in this version of your compiler.';
 const DEFAULT_LOCATIONS = Object.freeze({
   [SymbolKind.NamedType]: 'type',
   [SymbolKind.Method]: 'method',
@@ -109,6 +117,19 @@ function fixedValues(args, parameterTypes, hasParamsArray) {
   return [...fixed, args.slice(last).map(argument => valueOf(argument, elementType))];
 }
 
+const isRequiredMember = member => (member.kind === SymbolKind.Field || member.kind === SymbolKind.Property) && !!member.isRequired;
+const declaresRequiredMember = type => type.getMembers().some(isRequiredMember);
+
+/** True for an instance constructor of a type that has required members (its own or inherited) and does not set them. */
+function isConstructorOfRequiredMembers(method) {
+  if (!method || method.methodKind !== MethodKind.Constructor || method.isStatic) return false;
+  if ((method.boundAttributes ?? []).some(attribute => fullNameOf(attribute.attributeClass) === SETS_REQUIRED_MEMBERS)) return false;
+  for (let type = method.containingType; type?.isSource; type = type.baseType?.originalDefinition ?? type.baseType) {
+    if (declaresRequiredMember(type)) return true;
+  }
+  return false;
+}
+
 export class CustomAttributeWriter {
   /** @param writer a SymbolMetadataWriter whose tables are written  @param analysis the SemanticAnalysis */
   constructor(writer, analysis) {
@@ -126,13 +147,24 @@ export class CustomAttributeWriter {
       // Roslyn writes the attributes it synthesizes for a type before the ones the program applies.
       if (plan.properties.some(property => property.symbol.parameters.length)) this.defaultMember(typeToken, plan);
       this.applied(typeToken, type);
+      const requiresMembers = declaresRequiredMember(type);
+      if (requiresMembers) this.wellKnown(typeToken, REQUIRED_MEMBER);
       for (const field of plan.fields) {
         if (field.symbol) this.applied(field.token, field.symbol);
+        if (field.symbol?.isRequired) this.wellKnown(field.token, REQUIRED_MEMBER);
+        this.tupleElementNames(field.token, field.type);
         const isBackingField = field.symbol?.associatedSymbol?.kind === SymbolKind.Property;
         if (isBackingField || field.isCompilerGenerated) this.compilerGenerated(field.token);
       }
-      for (const method of plan.methods) this.method(method);
-      for (const { symbol } of plan.properties) this.applied(this.writer.propertyTokens.get(symbol), symbol);
+      for (const method of plan.methods) {
+        this.method(method);
+        if (isConstructorOfRequiredMembers(method.symbol)) this.requiredMembersConstructor(method.token);
+      }
+      for (const { symbol } of plan.properties) {
+        this.applied(this.writer.propertyTokens.get(symbol), symbol);
+        if (symbol.isRequired) this.wellKnown(this.writer.propertyTokens.get(symbol), REQUIRED_MEMBER);
+        this.tupleElementNames(this.writer.propertyTokens.get(symbol), symbol.type);
+      }
       for (const { symbol } of plan.events) this.applied(this.writer.eventTokens.get(symbol), symbol);
     }
   }
@@ -145,11 +177,15 @@ export class CustomAttributeWriter {
       return;
     }
     this.applied(planned.token, symbol);
+    if (planned.overrides) this.wellKnown(planned.token, 'System.Runtime.CompilerServices.PreserveBaseOverridesAttribute');
     if (owner?.kind === SymbolKind.Property && owner.isAutoProperty) this.compilerGenerated(planned.token);
+    const returnToken = this.writer.returnParameterTokens.get(symbol);
+    if (returnToken) this.tupleElementNames(returnToken, symbol.returnType);
     for (const [index, parameter] of symbol.parameters.entries()) {
       const parameterToken = this.writer.parameterTokens.get(parameter);
       if (!parameterToken) continue;
       if (parameter.isParams) this.wellKnown(parameterToken, 'System.ParamArrayAttribute');
+      this.tupleElementNames(parameterToken, parameter.type);
       this.applied(parameterToken, parameter);
       // The parameters of an indexer are declared once and repeated on each accessor.
       const declared = owner?.kind === SymbolKind.Property ? owner.parameters[index] : null;
@@ -196,6 +232,26 @@ export class CustomAttributeWriter {
     const shape = { isStatic: false, returnType: this.core.void, parameters: values.map(() => ({ type: this.core.string })) },
       constructor = this.builder.member(this.builder.typeRef(fullName), '.ctor', methodSignature(this.types, shape));
     this.add(parent, constructor, encodeCustomAttribute(values.map(() => 'string'), values));
+  }
+  /**
+   * A constructor of a type with required members that does not set them all: a compiler that does not know the
+   * feature must not call it (`[Obsolete(.., error: true)]`, `[CompilerFeatureRequired("RequiredMembers")]`).
+   */
+  requiredMembersConstructor(parent) {
+    const shape = { isStatic: false, returnType: this.core.void, parameters: [{ type: this.core.string }, { type: this.core.bool }] },
+      obsolete = this.builder.member(this.builder.typeRef('System.ObsoleteAttribute'), '.ctor', methodSignature(this.types, shape));
+    this.add(parent, obsolete, encodeCustomAttribute(['string', 'bool'], [REQUIRED_MEMBERS_MESSAGE, true]));
+    this.wellKnown(parent, 'System.Runtime.CompilerServices.CompilerFeatureRequiredAttribute', ['RequiredMembers']);
+  }
+  /** `[TupleElementNames]` on a declaration whose type names tuple elements; nothing for any other type. */
+  tupleElementNames(parent, type) {
+    const names = tupleElementNamesOf(type);
+    if (!names) return;
+    const strings = new ArrayTypeSymbol(this.core.string),
+      shape = { isStatic: false, returnType: this.core.void, parameters: [{ type: strings }] },
+      owner = this.builder.typeRef('System.Runtime.CompilerServices.TupleElementNamesAttribute'),
+      constructor = this.builder.member(owner, '.ctor', methodSignature(this.types, shape));
+    this.add(parent, constructor, encodeCustomAttribute([{ kind: 'szarray', element: 'string' }], [names]));
   }
   compilerGenerated(parent) {
     this.wellKnown(parent, 'System.Runtime.CompilerServices.CompilerGeneratedAttribute');

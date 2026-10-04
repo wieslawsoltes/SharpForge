@@ -17,7 +17,11 @@ const suites = ['workbench-docking', 'workbench-shell', 'workbench-sessions', 'w
 
 async function run(command, args, timeout = 1_200_000) {
   const code = await runProcess(command, args, { cwd: root, timeout });
-  if (code) throw new Error(`Qualification failed (${code}): ${command} ${args.join(' ')}`);
+  if (code) {
+    const error = new Error(`Qualification failed (${code}): ${command} ${args.join(' ')}`);
+    error.exitCode = code;
+    throw error;
+  }
 }
 
 /** Serial capture orchestration; injectable I/O lets preflight regressions run without starting benchmarks. */
@@ -52,23 +56,57 @@ export async function performance({ runCapture = run, read = readFile, write = w
   return assessment;
 }
 
-async function main() {
-  const stage = process.argv[2] || 'all';
+/** Run independent scopes serially, checkpoint every outcome, and return the required aggregate process exit code. */
+export async function qualify({ stage = 'all', selectedEngine = engine, outputDirectory = directory, env = process.env,
+  runScope = run, runPerformance = performance, write = writeReport, now = () => new Date().toISOString() } = {}) {
   if (!stages.has(stage)) throw new Error('Choose node, browser, performance, or all');
-  if (!['chromium', 'firefox', 'webkit'].includes(engine)) throw new Error('Unsupported qualification browser');
-  process.env.SHARPFORGE_RESULTS_DIR = directory;
+  if (!['chromium', 'firefox', 'webkit'].includes(selectedEngine)) throw new Error('Unsupported qualification browser');
+  const scopes = [];
   if (stage === 'node' || stage === 'all') {
-    for (const area of ['A19', 'A20']) await run(process.execPath, ['scripts/planning/run-tests.js', '--area', area]);
+    for (const area of ['A19', 'A20']) scopes.push({ id: 'node:' + area, phase: 'node', command: process.execPath,
+      args: ['scripts/planning/run-tests.js', '--area', area], timeoutMs: 1_200_000 });
   }
   if (stage === 'browser' || stage === 'all') {
-    for (const suite of suites) {
-      await run(python, ['tests/conformance/browser/run_suite.py', suite, '--timeout', '1200'], browserSupervisorTimeout);
-    }
+    for (const suite of suites) scopes.push({ id: 'browser:' + suite, phase: 'browser', command: env.PYTHON || python,
+      args: ['tests/conformance/browser/run_suite.py', suite, '--timeout', '1200'], timeoutMs: browserSupervisorTimeout });
   }
-  if (stage === 'performance' || stage === 'all') await performance();
+  if (stage === 'performance' || stage === 'all') scopes.push({ id: 'performance', phase: 'performance' });
+  for (const scope of scopes) scope.status = 'pending';
+  const report = { schemaVersion: 1, kind: 'sharpforge-project16-qualification', stage, engine: selectedEngine,
+    sourceSha: env.QUALIFICATION_SOURCE_SHA ?? null, sourceTree: env.QUALIFICATION_SOURCE_TREE ?? null,
+    workflowRunId: env.GITHUB_RUN_ID ?? null, startedAt: now(), finishedAt: null, status: 'running', exitCode: null, scopes };
+  const reportPath = resolve(outputDirectory, 'qualification-summary.json');
+  env.SHARPFORGE_RESULTS_DIR = outputDirectory;
+  env.SHARPFORGE_BROWSER_ENGINE = selectedEngine;
+  await write(reportPath, report);
+  for (const scope of scopes) {
+    scope.status = 'running';
+    scope.startedAt = now();
+    await write(reportPath, report);
+    try {
+      if (scope.phase === 'performance') {
+        scope.assessment = await runPerformance({ env, selectedEngine, outputDirectory, runCapture: runScope });
+      } else await runScope(scope.command, scope.args, scope.timeoutMs);
+      scope.status = 'passed';
+      scope.exitCode = 0;
+    } catch (error) {
+      scope.status = 'failed';
+      scope.exitCode = Number.isInteger(error?.exitCode) && error.exitCode > 0 ? error.exitCode : 1;
+      scope.error = { name: error?.name ?? 'Error', message: String(error?.message ?? error), code: error?.code ?? null };
+    }
+    scope.finishedAt = now();
+    await write(reportPath, report);
+  }
+  const failed = scopes.filter(scope => scope.status === 'failed').length;
+  report.counts = { selected: scopes.length, passed: scopes.length - failed, failed };
+  report.status = failed ? 'failed' : 'passed';
+  report.exitCode = failed ? 1 : 0;
+  report.finishedAt = now();
+  await write(reportPath, report);
+  return report;
 }
 
 if (isMain(import.meta.url)) {
-  try { await main(); }
+  try { process.exitCode = (await qualify({ stage: process.argv[2] || 'all' })).exitCode; }
   catch (error) { process.stderr.write(`${error.message}\n`); process.exitCode = 1; }
 }

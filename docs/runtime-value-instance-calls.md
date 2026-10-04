@@ -27,8 +27,10 @@ not throughput improvements; neither cost nor performance has been measured.
 Boxing and immutable field normalization are reused without a new aggregate
 representation. Class, Decimal and Nullable constructor paths remain separate.
 
-Virtual, constrained, interface, generic and byref-return user-struct calls
-remain unsupported. Existing reference-containing, readonly/ref-like,
+Direct `callvirt` on an unboxed receiver, constrained, generic and byref-return
+user-struct calls remain unsupported. The separate
+[boxed interface-call leaf](runtime-boxed-interface-calls.md) adds nongeneric
+concrete interface implementations. Existing reference-containing, readonly/ref-like,
 auto/explicit-layout and scoped/modified-signature storage restrictions remain.
 This does not add source custom-struct lowering, portable snapshots, raw memory
 or reference-containing aggregate GC, and does not close #1365 or #1366.

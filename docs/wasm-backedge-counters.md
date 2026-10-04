@@ -51,11 +51,11 @@ overflow. Code epochs, stop, disposal and restore drop the tables along with
 other derived tier state. A restored frame may establish new edge counters
 without being counted as a method call or retroactively selected for execution.
 
-Compilation readiness still affects only a subsequent method call. The active
-loop remains interpreted, and host yielding is necessary for asynchronous
-preparation to settle. On-stack replacement remains a separate open part of
-[SF-A05-T11.3 / #1407](https://github.com/wieslawsoltes/SharpForge/issues/1407);
-this leaf does not claim a same-invocation tier transition or performance gain.
+Compilation readiness affects only a subsequent method call by default.
+With the separately opt-in [OSR policy](wasm-call-tiering.md#optional-on-stack-replacement),
+an individually hot edge can also select a ready method for its current frame.
+Host yielding is necessary for asynchronous preparation to settle. This counter
+leaf does not itself convert frames or claim a performance gain.
 Source VM and Rust backends are outside this direct-CIL policy.
 
 All 70 focused tests passed serially on Node 24 at `1a709ad9`: back-edge

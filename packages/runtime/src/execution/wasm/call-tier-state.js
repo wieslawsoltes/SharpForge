@@ -1,5 +1,6 @@
 import {executionCodeState} from '../code-version.js';
 import {executedBackedge, countWasmBackedge} from './backedge-counters.js';
+import {RuntimeEventName} from '../runtime-events.js';
 
 // Only this leaf is imported by the call/step envelopes. The compiling driver
 // depends on those envelopes through the manual bridge, never the reverse.
@@ -33,7 +34,7 @@ function generation(vm, owner) {
   const epoch = executionCodeState(vm);
   state = {owner, epoch, report: vm.report, heap: vm.heap, invalidated: false,
     records: new Map(), queue: [], queueHead: 0, frames: new WeakMap(), calls: 0, overflowCalls: 0,
-    selectedCalls: 0, selectedInstructions: 0, compiledBytes: 0};
+    selectedCalls: 0, selectedInstructions: 0, compiledBytes: 0, osrTransitions: 0, osrRejectedEntries: 0};
   state.invalidate = () => invalidate(state);
   epoch.wasmCalls = state;
   owner.state = state;
@@ -90,6 +91,8 @@ export function observeWasmCall(vm, frame) {
       selected.record = record;
     }
     state.selectedCalls = increment(state.selectedCalls);
+    vm.runtimeEvents?.emit(RuntimeEventName.TierUp,
+      {kind: 'call', method: record.token, frame: frame.id, epoch: state.epoch.epoch}, vm.instructions);
   } else if (record.calls >= owner.options.callThreshold) queue(state, record);
 }
 
@@ -99,7 +102,27 @@ export function observeWasmBackedge(vm, frame, instruction, index, frameId) {
   if (!owner?.enabled || !executedBackedge(vm, frame, instruction, index, frameId)) return;
   const state = generation(vm, owner);
   const record = methodRecord(state, frame.method);
-  if (record && countWasmBackedge(vm, record, index, frame.pc, owner.options)) queue(state, record);
+  if (!record || !countWasmBackedge(vm, record, index, frame.pc, owner.options)) return null;
+  queue(state, record);
+  return record;
+}
+
+/** Select only a ready, individually hot taken edge; all frame storage stays canonical. */
+export function selectWasmOsr(vm, frame, record, frameId) {
+  const owner = owners.get(vm), state = owner?.state;
+  if (!owner?.enabled || !owner.options.osr || !state || !current(vm, state) ||
+      vm.top !== frame || frame.id !== frameId || record.status !== 'ready') return;
+  const selected = state.frames.get(frame);
+  if (selected?.id === frame.id && selected.method === frame.method && selected.record === record) return;
+  if (!record.prepared?.canEnter(frame)) {
+    state.osrRejectedEntries = increment(state.osrRejectedEntries);
+    return;
+  }
+  state.frames.set(frame, {id: frame.id, method: frame.method, record});
+  state.osrTransitions = increment(state.osrTransitions);
+  vm.runtimeEvents?.emit(RuntimeEventName.TierUp, {kind: 'osr', method: record.token, frame: frame.id,
+    fromOffset: frame.lastOffset, toOffset: frame.method.instructions[frame.pc].offset,
+    epoch: state.epoch.epoch}, vm.instructions);
 }
 
 /** A selection belongs to this call's fresh frame id; readiness never changes a running frame. */

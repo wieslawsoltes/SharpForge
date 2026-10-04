@@ -55,7 +55,7 @@ export function declareAsync(plan, machine, builder) {
     contract = asyncStateMachineInterface(core),
     implement = (name, parameters, parameterNames, emitBody) => {
       const method = synthesizedMethod(name, IMPLEMENTATION_FLAGS, instance(core.void, parameters), parameterNames, emitBody);
-      method.overrides = [{ owner: contract, name, shape: instance(core.void, parameters) }];
+      method.interfaceSlots = [{ owner: contract, name, shape: instance(core.void, parameters) }];
       methods.push(method);
       return method;
     };

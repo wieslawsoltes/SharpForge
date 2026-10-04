@@ -1,6 +1,7 @@
 # Native WinUI measurement oracle
 
-This manual harness loads authored XAML through the pinned Windows App SDK. Each
+This manual harness requires exactly 20 authored XAML fixtures and loads them
+through the pinned Windows App SDK. Each
 fixture attaches to a visible native window in a fixed viewport under en-US and
 Light theme. Layout observations come from `LayoutInformation.GetLayoutSlot`,
 actual/desired sizes and selected native property getters. `hasLocalValue`
@@ -23,6 +24,18 @@ native errors and unexpected XAML success/failure stop capture. The report retai
 all attempts, raw native output, build logs, binary/source/input hashes, actual
 runtime/toolchain and source revision. Intentional XAML-negative fixtures record
 actual exception type and HRESULT. Non-Windows targets report unsupported.
+
+The corpus includes 18 loaded control/layout/boundary fixtures and two intentional
+XAML load errors. Each complete capture contains three observations per fixture;
+all three native dumps must agree, including the actual negative error types.
+
+The code-only application implements `IXamlMetadataProvider` and forwards type
+and XML namespace lookup to `XamlControlsXamlMetaDataProvider` before loading
+control resources or fixture XAML, following Microsoft's
+[managed host setup](https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/host-controls-existing-desktop-apps#set-up-the-host).
+Startup callback exceptions are written to stderr before failing the process.
+The runner retains native exit codes, signals and output; an unexplained crash
+is not classified as an unavailable desktop.
 
 Captures are separate from the existing expected store, never overwrite an existing
 report, and are marked not baseline-qualified. Native execution, Windows runner

@@ -18,6 +18,7 @@ import { SymbolKind, TypeKind } from '../../symbols/types.js';
 import { TypeTokens, namespaceOf } from './type-tokens.js';
 import { planMembers, explicitInterfaceOf } from './member-plan.js';
 import { typeFlags, genericParameterFlags } from './attribute-flags.js';
+import { tupleElementNamesOf } from './tuple-element-names.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
@@ -73,6 +74,7 @@ export class SymbolMetadataWriter {
     this.propertyTokens = new Map();
     this.eventTokens = new Map();
     this.parameterTokens = new Map();
+    this.returnParameterTokens = new Map();
   }
   typeToken(type) {
     return this.tokens.definitionToken(type);
@@ -154,6 +156,11 @@ export class SymbolMetadataWriter {
           Signature: signature,
           ParamList: nextParameter,
         });
+        if (method.symbol && tupleElementNamesOf(method.symbol.returnType)) {
+          // The return value has a Param row (sequence 0) only when an attribute is written on it.
+          this.returnParameterTokens.set(method.symbol, this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' }));
+          nextParameter++;
+        }
         method.parameters.forEach((parameter, index) => {
           const row = this.builder.addRow('Param', { Flags: parameter.flags, Sequence: index + 1, Name: parameter.name ?? '' });
           if (method.symbol) this.parameterTokens.set(method.symbol.parameters[index], row);
@@ -167,15 +174,22 @@ export class SymbolMetadataWriter {
     const builder = this.builder,
       self = this.tokens.definitionToken(type),
       plan = this.plans.get(type);
-    for (const implemented of type.interfaces ?? []) builder.addRow('InterfaceImpl', { Class: self, Interface: this.tokens.typeToken(implemented) });
+    // `plan.interfaces`: interfaces code generation adds to the ones the type lists (a record's `IEquatable<R>`).
+    for (const implemented of [...(type.interfaces ?? []), ...(plan.interfaces ?? [])]) {
+      builder.addRow('InterfaceImpl', { Class: self, Interface: this.tokens.typeToken(implemented) });
+    }
     if (type.containingType) builder.addRow('NestedClass', { NestedClass: self, EnclosingClass: this.tokens.definitionToken(type.containingType) });
     const hasInstanceField = plan.fields.some(field => !(field.flags & FieldAttributes.Static));
     if (type.typeKind === TypeKind.Struct && !hasInstanceField) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: 1, Parent: self });
     this.writeGenericParameters(self, this.allTypeParameters(type));
     for (const method of plan.methods) {
       if (method.symbol?.typeParameters?.length) this.writeGenericParameters(method.token, method.symbol.typeParameters);
+      // A covariant override (a record's clone) has a slot of its own and names the method it overrides.
+      if (method.overrides) {
+        builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: this.methodReference(method.overrides) });
+      }
       // A synthesized method names the interface slots it fills: `{owner, name, shape}`.
-      for (const slot of method.overrides ?? []) {
+      for (const slot of method.interfaceSlots ?? []) {
         const declaration = builder.member(this.tokens.typeToken(slot.owner), slot.name, methodSignature(this.tokens, slot.shape));
         builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: declaration });
       }
