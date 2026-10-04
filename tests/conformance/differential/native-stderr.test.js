@@ -95,3 +95,15 @@ test('multiline native exception messages remain observable when stack diagnosti
   assert.equal(normalise(record,fixture).stderr,'prefix\n');
   assert.equal(normalise(record,fixture).exception.message,'first\nsecond\nthird');
 });
+
+
+test('native inner-exception diagnostics do not become the outer exception message', () => {
+  for(const separator of ['\n ---> ',' ---> ']){
+    const stderr='application\nUnhandled exception. System.Exception: outer\r\nsecond'+separator+'System.Exception: inner\n   at Program.Inner()\n   --- End of inner exception stack trace ---\n   at Program.Main()\n';
+    const split=splitNativeException({...raw(),stderr},'linux');
+    assert.deepEqual(split.exception,{type:'System.Exception',message:'outer\r\nsecond'});
+    assert.equal(normalise(result('clr-roslyn',{stderr,...split,status:'runtime-error',exitCode:null}),fixture).stderr,'application\n');
+  }
+  const ordinary='Unhandled exception. System.Exception: outer\n ---> ordinary message text\n   at Program.Main()\n';
+  assert.equal(splitNativeException({...raw(),stderr:ordinary},'linux').exception.message,'outer\n ---> ordinary message text');
+});

@@ -23,6 +23,11 @@ export function splitNativeException(raw, platform = process.platform) {
   if (!lines.slice(firstFrame).every(line => line === '' || frame(line) || marker(line))) return absent;
   // Multiline messages precede the first stack frame and remain observable as exception text.
   const stackStart=diagnostic.search(/^[ \t]+at /m), beforeStack=diagnostic.slice(0,stackStart).replace(/\r?\n$/,'');
-  const message=(header[2]??'')+beforeStack.slice(header[0].replace(/\r$/,'').length);
+  let message=(header[2]??'')+beforeStack.slice(header[0].replace(/\r$/,'').length);
+  if(lines.slice(firstFrame).some(line=>/^[ \t]*--- End of inner exception stack trace ---$/.test(line))){
+    const separators=[...message.matchAll(/(?:\r?\n[ \t]*| )---> /g)];
+    if(separators.length!==1)return absent;
+    message=message.slice(0,separators[0].index);
+  }
   return { exception: { type: header[1], message }, exceptionDiagnostic: diagnostic };
 }
