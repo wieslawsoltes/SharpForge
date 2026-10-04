@@ -84,6 +84,8 @@ export function classifyVariable(expression, context = {}) {
     case 'FieldAccess': {
       const f = expression.field;
       if (f.isConst) return no('constant', { symbol: f });
+      // A `ref` field (C# 11) denotes the variable it refers to: `readonly ref int` fixes the reference, not that variable.
+      if (f.refKind === RefKind.Ref) return yes;
       if (f.isReadOnly && !inConstructorOf(context, f)) return { isVariable: true, isWritable: false, reason: 'readonlyField', symbol: f };
       if (f.isStatic || !expression.receiver || expression.receiver.type?.isValueType !== true) return yes;
       // An instance field of a struct is a variable exactly when the struct expression is.

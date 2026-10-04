@@ -116,17 +116,31 @@ function valueOf(expression, type) {
   throw new MetadataEmitError('an attribute argument that is not a constant, a typeof or an array of those cannot be written');
 }
 
+/** The value an optional constructor parameter contributes when its argument is left out. */
+function omittedValue(parameter) {
+  const constant = parameter?.explicitDefaultValue ?? parameter?.defaultValue;
+  if (constant && typeof constant === 'object' && !constant.isNull && constant.value !== undefined) return constant.value;
+  const type = parameter?.type;
+  if (!type || type.isReferenceType === true) return null;
+  return type.specialType === 'System_Boolean' ? false : 0;
+}
+
 /**
  * The fixed argument values in parameter order. A `params` parameter given its elements one by one (the expanded
- * form) takes them as one array.
+ * form, also with no element at all) takes them as one array; an optional parameter without an argument takes its
+ * default value.
  */
-function fixedValues(args, parameterTypes, hasParamsArray) {
+function fixedValues(args, parameterTypes, parameters) {
   const last = parameterTypes.length - 1,
-    isExpanded = hasParamsArray && (args.length !== parameterTypes.length || !(args[last].type instanceof ArrayTypeSymbol || args[last].constantValue?.isNull));
-  if (!isExpanded) return args.map((argument, index) => valueOf(argument, parameterTypes[index]));
-  const elementType = parameterTypes[last].elementType,
-    fixed = args.slice(0, last).map((argument, index) => valueOf(argument, parameterTypes[index]));
-  return [...fixed, args.slice(last).map(argument => valueOf(argument, elementType))];
+    hasParamsArray = !!parameters?.at(-1)?.isParams;
+  return parameterTypes.map((type, index) => {
+    if (hasParamsArray && index === last) {
+      const rest = args.slice(last),
+        isNormalForm = rest.length === 1 && (rest[0].type instanceof ArrayTypeSymbol || !!rest[0].constantValue?.isNull);
+      return isNormalForm ? valueOf(rest[0], type) : rest.map(argument => valueOf(argument, type.elementType));
+    }
+    return index < args.length ? valueOf(args[index], type) : omittedValue(parameters?.[index]);
+  });
 }
 
 const isRequiredMember = member => (member.kind === SymbolKind.Field || member.kind === SymbolKind.Property) && !!member.isRequired;
@@ -257,7 +271,7 @@ export class CustomAttributeWriter {
       const shape = { isStatic: false, returnType: this.core.void, parameters: parameterTypes.map(type => ({ type })) };
       constructorToken = this.builder.member(owner, '.ctor', methodSignature(this.types, shape));
     }
-    const values = fixedValues(attribute.arguments, parameterTypes, !!constructor?.parameters.at(-1)?.isParams),
+    const values = fixedValues(attribute.arguments, parameterTypes, constructor?.parameters ?? null),
       named = attribute.named.map(({ name, member, value }) => ({
         name,
         isField: member.kind === SymbolKind.Field,

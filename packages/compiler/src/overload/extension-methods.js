@@ -140,13 +140,16 @@ export function resolveExtensionInvocation(name, receiver, args, scopes, resolve
 }
 /**
  * The extension scopes of a call site, innermost first.
- * @param {{namespace:NamespaceSymbol|null,usings:{namespaces:NamespaceSymbol[],staticTypes:NamedTypeSymbol[]}}[]} chain
+ * @param {{namespace:NamespaceSymbol|null,usings:{namespaces:NamespaceSymbol[],staticTypes:NamedTypeSymbol[]},fileTypes?:NamedTypeSymbol[]}[]} chain
  *   the enclosing namespace declarations from innermost to the compilation unit, each with its own using directives
+ *   and the file-local types the calling file declares in that namespace
  */
 export function extensionScopes(chain, name) {
   const scopes = [];
   for (const level of chain) {
-    if (level.namespace) scopes.push({ methods: extensionMethodsInNamespace(level.namespace, name) });
+    // `file static class` types of the calling file belong to their namespace too (they are not members of it).
+    const fileLocal = (level.fileTypes ?? []).flatMap(type => extensionMethodsOf(type, name));
+    if (level.namespace) scopes.push({ methods: [...extensionMethodsInNamespace(level.namespace, name), ...fileLocal] });
     const imported = [
       ...(level.usings?.namespaces ?? []).flatMap(n => extensionMethodsInNamespace(n, name)),
       ...(level.usings?.staticTypes ?? []).flatMap(t => extensionMethodsOf(t, name)),
