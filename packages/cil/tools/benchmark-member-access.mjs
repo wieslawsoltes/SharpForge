@@ -11,6 +11,7 @@ const token = input.members.Instance6method;
 const member = context.resolveMember(token).value;
 const family = context.resolveMember(input.members.Instance4field).value;
 const derived = context.resolveType(input.types.Derived).value;
+const receiverOptions = { receiverType: derived };
 let sink;
 const cases = [
   ['construct-context', 64, () => { sink = create(inspector); }],
@@ -18,7 +19,7 @@ const cases = [
 ];
 if (context.isMemberAccessible) cases.push(
   ['public-access', 16384, () => { sink = context.isMemberAccessible(member, derived); }],
-  ['family-access', 1024, () => { sink = context.isMemberAccessible(family, derived, { receiverType: derived }); }],
+  ['family-access', 1024, () => { sink = context.isMemberAccessible(family, derived, receiverOptions); }],
 );
 const results = [];
 for (const [name, iterations, operation] of cases) {

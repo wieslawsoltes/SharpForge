@@ -18,7 +18,7 @@ export function accessIL(fixture) {
   const storage = fixture.isStatic ? 'static ' : '';
   const member = fixture.kind === 'field'
     ? `.field ${fixture.access} ${storage}int32 Target`
-    : `.method ${fixture.access} ${storage}void Target() cil managed { .maxstack 0 ret }`;
+    : `.method ${fixture.access} ${fixture.isStatic ? 'static' : 'instance'} void Target() cil managed { .maxstack 0 ret }`;
   const instruction = fixture.kind === 'field'
     ? `${fixture.isStatic ? 'ldsfld' : 'ldfld'} int32 Owner::Target pop`
     : `call ${fixture.isStatic ? '' : 'instance '}void Owner::Target()`;
