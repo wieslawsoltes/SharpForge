@@ -8,3 +8,4 @@ export {languageVersion} from './modern.js';
 export {SemanticModel} from './semantic-model.js';
 export {SourceSemanticModel} from './source-model.js';
 export {prepareTypeRename} from './type-rename.js';
+export {inspectMetadataReference} from './metadata-reference.js';
