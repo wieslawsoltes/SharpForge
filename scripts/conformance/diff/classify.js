@@ -14,8 +14,14 @@ export function normalise(record,fixture){
   if(!record||!engineOrder.includes(record.engine)||!statuses.includes(record.status)||typeof record.stdout!=='string'||typeof record.stderr!=='string'||!Array.isArray(record.diagnostics))throw new Error('Malformed engine result');
   const tags=fixture.normalisers,exception=record.exception?{type:record.exception.type,message:record.exception.message}:null;
   if(exception&&tags.includes('exception-text')){exception.type=exception.type.replace(/^System\./,'');exception.message=exception.message.replace(/\r\n?/g,'\n').trim().replace(/\.$/,'');}
+  let stderr=record.stderr;
+  if(record.exceptionDiagnostic!=null){
+    const diagnostic=record.exceptionDiagnostic;
+    if(!['clr-sharpforge','clr-roslyn'].includes(record.engine)||!exception||typeof diagnostic!=='string'||!diagnostic.length||!stderr.endsWith(diagnostic))throw new Error('Malformed native exception diagnostic');
+    stderr=stderr.slice(0,-diagnostic.length);
+  }
   const exitCode=record.exitCode===null?null:record.exitCodeKind==='process'?record.exitCode:nativeExitStatus(record.exitCode);
-  return {status:record.status,stdout:text(record.stdout,tags),stderr:exception?'':text(record.stderr,tags),exitCode,exception,diagnostics:record.diagnostics.filter(d=>d.severity==='error').map(d=>({code:d.code,severity:d.severity})).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b),'en'))};
+  return {status:record.status,stdout:text(record.stdout,tags),stderr:text(stderr,tags),exitCode,exception,diagnostics:record.diagnostics.filter(d=>d.severity==='error').map(d=>({code:d.code,severity:d.severity})).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b),'en'))};
 }
 export function differenceSignature(difference){return JSON.stringify({class:difference.class,engines:difference.engines,statuses:difference.statuses,phase:difference.phase});}
 export function classify(fixture,repetitions){
