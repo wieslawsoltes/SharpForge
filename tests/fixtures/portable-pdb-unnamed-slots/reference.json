@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "sdk": "10.0.201",
+    "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+    "runtime": "10.0.5",
+    "mode": "Release",
+    "optimized": true,
+    "sourceSha256": "59fcbdeab56827cfc8b9f36f1d3e431c62fa9197f869aab097b6bdf3a31b261c",
+    "assemblySha256": "6ca9c7f4b2e54ef06165da991e2d6c1ae1eda44ead31c15f6b05b1777b364a73",
+    "pdbSha256": "c109422b2fa946695e6cdfaeeb8b5c547e7b3da14b9864cfe0cf07fb706fc037"
+  },
+  "native": {
+    "runtime": "10.0.5",
+    "result": 10,
+    "methods": [
+      {
+        "token": 100663343,
+        "name": "Sum",
+        "slots": [
+          {
+            "index": 0,
+            "typeName": "int",
+            "name": "total",
+            "unnamed": false,
+            "declarations": [
+              {
+                "id": 1,
+                "scopeId": 1,
+                "start": 0,
+                "end": 28,
+                "name": "total",
+                "attributes": 0,
+                "compilerGenerated": false
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "typeName": "int[]",
+            "name": null,
+            "unnamed": true,
+            "declarations": []
+          },
+          {
+            "index": 2,
+            "typeName": "int",
+            "name": null,
+            "unnamed": true,
+            "declarations": []
+          },
+          {
+            "index": 3,
+            "typeName": "int",
+            "name": "item",
+            "unnamed": false,
+            "declarations": [
+              {
+                "id": 2,
+                "scopeId": 2,
+                "start": 8,
+                "end": 16,
+                "name": "item",
+                "attributes": 0,
+                "compilerGenerated": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "token": 100663344,
+        "name": "Gone",
+        "slots": []
+      }
+    ]
+  }
+}
