@@ -234,6 +234,38 @@ setup, optional host GC and assertions are excluded. Host allocation counts and
 other globalization profiles are not claimed. Performance measurements belong to
 the serial qualification record; no speedup is asserted before those runs.
 
+`String.LastIndexOf(string, StringComparison)` is appended at A07 slot `524307`
+after IndexOf `524306`. It returns the last matching UTF-16 unit offset, -1 for a
+miss, and `receiver.Length` for an empty value (including zero for an empty
+receiver). Ordinal uses the JavaScript UTF-16 last search. OrdinalIgnoreCase uses
+one continuing Two-Way scan: each accepted match updates the last offset and
+retains period memory, including overlaps and later raw-endpoint rejection.
+First-search callers still return immediately on their first accepted match.
+
+Receiver/value null checks and comparison-mode validation precede empty/identity
+shortcuts. Invalid enum values name `comparisonType`; modes 0–3 explicitly raise
+`NotSupportedException` after null-value checking. The released single-string
+LastIndexOf contract and all prior IDs are unchanged. Start/count overloads and
+culture support remain outside this batch; #2621 stays open.
+
+The [246-row pinned .NET reference](reference/string-lastindexof-comparison/README.md)
+retains exact last offsets alongside native first-offset/Contains results, faults,
+UTF-16 inputs and culture controls. Tests cover both source pipelines/VMs,
+independent CIL, supplementary and malformed UTF-16, empty-at-end behavior,
+periodic endpoint rejection before/after valid hits, GC and managed allocations.
+Exhaustive short inputs compare the last bounded match, while counted-access
+controls ensure that finding all periodic overlaps does not restart the search.
+The continuing helper remains O(n+m) time/O(1) auxiliary space; its two constant
+factorization records are host allocations, with no per-unit or managed text
+allocation.
+
+The bounded `scripts/benchmarks/a07-string-lastindexof-comparison.mjs` runner
+compares identical baseline/candidate workloads with released LastIndexOf,
+IndexOf and Contains controls. New last-search costs are separate. One warmup and
+five samples cover ordinary inputs plus 1024-unit repeated-prefix misses, late
+hits and all overlapping matches with 64-unit needles, reporting median/p95 and
+managed allocation counts outside setup and result checks.
+
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch
 routes. Its streaming fold reuses the pinned simple-uppercase table without

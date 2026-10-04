@@ -51,7 +51,7 @@ function maximalSuffix(needle, beginning, length, reverse) {
   return {cut: suffix, period};
 }
 
-function searchCore(source, needle, leading, trailing) {
+function searchCore(source, needle, leading, trailing, findLast) {
   const length = needle.length - leading - trailing;
   const forward = maximalSuffix(needle, leading, length, false);
   const backward = maximalSuffix(needle, leading, length, true);
@@ -69,6 +69,7 @@ function searchCore(source, needle, leading, trailing) {
   }
   let memory = 0;
   let start = leading;
+  let result = -1;
   const last = source.length - needle.length + leading;
   while (start <= last) {
     let index = Math.max(cut, memory);
@@ -82,31 +83,47 @@ function searchCore(source, needle, leading, trailing) {
     while (index > memory && foldedUnit(needle, leading + index - 1) === foldedUnit(source, start + index - 1)) index--;
     if (index <= memory &&
         (!leading || source.charCodeAt(start - 1) === needle.charCodeAt(0)) &&
-        (!trailing || source.charCodeAt(start + length) === needle.charCodeAt(needle.length - 1))) return start - leading;
-    // A rejected raw endpoint is still a full core match: retain its period overlap instead of rescanning it.
+        (!trailing || source.charCodeAt(start + length) === needle.charCodeAt(needle.length - 1))) {
+      if (!findLast) return start - leading;
+      result = start - leading;
+    }
+    // Both rejected endpoints and recorded last matches retain the core's period overlap.
     start += period;
     memory = remember;
   }
-  return -1;
+  return result;
 }
 
-function searchRawEndpoints(source, needle) {
+function searchRawEndpoints(source, needle, findLast) {
   const last = source.length - needle.length;
+  let result = -1;
   for (let start = 0; start <= last; start++) {
     if (source.charCodeAt(start) === needle.charCodeAt(0) &&
-        (needle.length === 1 || source.charCodeAt(start + 1) === needle.charCodeAt(1))) return start;
+        (needle.length === 1 || source.charCodeAt(start + 1) === needle.charCodeAt(1))) {
+      if (!findLast) return start;
+      result = start;
+    }
   }
-  return -1;
+  return result;
 }
 
-/** First UTF-16 match using Two-Way search: O(n+m) folded reads, O(1) auxiliary space, no transformed strings. */
-export function indexOfOrdinalIgnoreCase(source, needle) {
-  if (needle.length === 0) return 0;
+function searchOrdinalIgnoreCase(source, needle, findLast) {
+  if (needle.length === 0) return findLast ? source.length : 0;
   if (needle.length > source.length) return -1;
   const leading = isLow(needle.charCodeAt(0)) ? 1 : 0;
   const trailing = isHigh(needle.charCodeAt(needle.length - 1)) ? 1 : 0;
   // Only these two units can be paired outside a candidate. Match them raw and search the stable folded core.
   return needle.length === leading + trailing
-    ? searchRawEndpoints(source, needle)
-    : searchCore(source, needle, leading, trailing);
+    ? searchRawEndpoints(source, needle, findLast)
+    : searchCore(source, needle, leading, trailing, findLast);
+}
+
+/** First UTF-16 match using Two-Way search: O(n+m) folded reads, O(1) auxiliary space, no transformed strings. */
+export function indexOfOrdinalIgnoreCase(source, needle) {
+  return searchOrdinalIgnoreCase(source, needle, false);
+}
+
+/** Last UTF-16 match with one continuing Two-Way scan; overlapping matches retain period memory. */
+export function lastIndexOfOrdinalIgnoreCase(source, needle) {
+  return searchOrdinalIgnoreCase(source, needle, true);
 }

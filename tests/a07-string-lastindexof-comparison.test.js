@@ -6,6 +6,7 @@ import {compileToIL} from '@sharpforge/compiler';
 import {findContracts} from '@sharpforge/framework';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import * as stringSearch from '../packages/bcl-core/src/system/string-search.js';
+import {equalsOrdinalIgnoreCaseRange} from '../packages/bcl-core/src/system/string-compare.js';
 import {lastIndexOfParameters, lastIndexOfArguments, lastIndexOfExpression, lastIndexOfComparisonAssembly,
   lastIndexOfExpectedFault} from './fixtures/comparers/string-lastindexof-comparison.js';
 
@@ -198,6 +199,29 @@ function countedLastSearch(source, needle) {
   const result = stringSearch.lastIndexOfWithComparison(undefined, view(source), view(needle), 5);
   return {result, accesses};
 }
+
+test('String.LastIndexOf comparison: exhaustive small UTF-16 inputs retain the last bounded match', () => {
+  const alphabet = ['a', 'A', 'é', 'É', '\uD801', '\uDC28', '\uDC00'];
+  const inputs = [''];
+  let layer = [''];
+  for (let length = 1; length <= 3; length++) {
+    layer = layer.flatMap(prefix => alphabet.map(unit => prefix + unit));
+    inputs.push(...layer);
+  }
+  for (const source of inputs) {
+    for (const needle of inputs) {
+      let expected = -1;
+      for (let start = source.length - needle.length; start >= 0; start--) {
+        if (equalsOrdinalIgnoreCaseRange(source, start, needle)) {
+          expected = start;
+          break;
+        }
+      }
+      const actual = stringSearch.lastIndexOfWithComparison(undefined, source, needle, 5);
+      if (actual !== expected) assert.fail(JSON.stringify({source, needle, actual, expected}));
+    }
+  }
+});
 
 test('String.LastIndexOf comparison: continuing periodic matches keeps linear read growth', () => {
   let previous = 0;
