@@ -23,7 +23,7 @@ and `SHARPFORGE_ILVERIFY`. Native tools are qualification dependencies, not prod
 runtime dependencies. At the coordinating agent's serial validation slot:
 
 ```sh
-node scripts/limited.js node tests/fixtures/verifier-object-model/capture.mjs tests/fixtures/verifier-object-model/native.json
+node scripts/limited.js node tests/fixtures/verifier-object-model/capture.mjs /tmp/object-native.json
 node scripts/limited.js node --test tests/a03-object-model.test.js tests/a03-object-annotations.test.js tests/a03-object-budgets.test.js tests/a03-object-model-native.test.js
 ```
 
@@ -53,14 +53,19 @@ qualification, not a claim that these assemblies execute in a browser CLR.
 node scripts/limited.js node packages/cil/tools/benchmark-object-verifier.mjs /tmp/object-verifier-performance.json
 ```
 
-The object driver records 12 raw samples per fixture, with 3 warmups, 1,000
-invocations per sample, median, p95, heap deltas and fixture/CoreLib hashes.
-It measures added capability costs and does not compare success against a baseline
-that returned unknown. Run the unchanged numeric and field benchmark drivers at
-the base and candidate commits to assess regressions in existing paths. Record
-machine/engine, shared-machine caveats and actual before/after results in the
-qualification evidence; heap deltas are observations rather than retained-allocation
-measurements.
+The object driver now reuses the repository performance protocol and existing
+fixture helpers, with one first batch, 20 warmups, 100 measured batches and
+1,000 calls per batch by default. It retains every chronological sample, checks
+all results outside timing, and reports even-count median and nearest-rank p95/p99
+of batch durations. Raw heap deltas are not allocation counts. Its new object
+workloads measure added capability cost; existing controls run against the
+qualified literal baseline, so literal changes are not attributed to this batch.
+
+[QUALIFICATION.md](QUALIFICATION.md) gives the exact fresh-scratch native and
+focused commands, prepared aliases, controlled baseline rationale, sampling bounds
+and one-wrapper serial comparison command. Product source and native expectations
+remain unchanged by this preparation. Neither tooling nor authored harness tests
+have been executed for this preparation.
 
 All capture, focused/browser execution and performance measurements are pending
 the shared serial validation slot. The authored tests and harness are not evidence
