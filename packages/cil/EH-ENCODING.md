@@ -43,9 +43,44 @@ The initial capture's all-six-success expectation was incorrect and replaced by
 this retained negative evidence, not a native success claim. Run the
 capture serially with `DOTNET_PATH=/path/to/dotnet node scripts/limited.js node
 packages/cil/tools/validate-eh-encoding.mjs tests/fixtures/eh-encoding`, then the
-focused `tests/a03-06-eh-encoding.test.js` and CIL compatibility tests. Focused
-validation is pending; cross-platform/ILVerify qualification remains open.
+focused `tests/a03-06-eh-encoding.test.js` and CIL compatibility tests. The 196
+focused/compatibility tests pass, including six new tests. SDK 10.0.201 / CoreCLR
+10.0.5 on macOS ARM64 captured five positive cases and one unsupported case.
+Syntax/static checks pass (2,242 / 2,238 modules, zero errors); structure reports
+no new findings in these files. Cross-platform/ILVerify qualification remains open.
 
 The native reader limitation is also visible in
 [MethodBodyBlock.Create, .NET 10.0.5](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Reflection.Metadata/src/System/Reflection/Metadata/IL/MethodBodyBlock.cs),
 which parses one EH section. No claim is made about other runtimes or versions.
+
+## Writer measurements
+
+Paired Node 24.21.0 measurements on a shared Apple M3 Pro host, with one team
+validation job at a time: 21 samples after 500 warmups, GC before each sample,
+1,000 small bodies or 100 large bodies per sample. Times below are microseconds
+per body. No broad compiler speedup, allocation or peak-memory claim is made.
+
+| Body | Previous median / p95 | Final median / p95 |
+| --- | ---: | ---: |
+| 64 bytes, no EH | 0.736084 / 0.797166 | 0.820000 / 0.932708 |
+| 64 bytes, one catch | 1.196625 / 1.355917 | 1.314417 / 1.676458 |
+| 64 KiB, no EH | 5.562500 / 8.298330 | 6.455420 / 8.606250 |
+
+The revised writer is about 0.084, 0.118 and 0.893 microseconds slower at the
+measured medians. The CIL integration reviewer explicitly accepted the changes,
+including p95 increases above the 5% budget, for validation before allocation.
+Shared-host variation
+precludes significance claims. The final implementation removes fresh option and
+format arrays per body; the small no-EH sampled heap delta is 539.28 → 540.016
+bytes/op. Heap and ArrayBuffer deltas include temporary surviving allocations and
+GC effects; they are not allocation totals, retained-memory or peak measurements.
+
+Raw baseline, initial and final measurements remain in
+`benchmarks/eh-encoding-node24.json`; no samples were discarded. Baseline 17b38528
+has identical `pe.js` and `binary.js` to this branch's base 41ce4dcb; the final
+product source is 382a4c9c. Run `node scripts/limited.js node --expose-gc
+packages/cil/tools/benchmark-eh-encoding.mjs`. For the baseline, run that same
+script through `--input-type=module` stdin from the baseline checkout so its
+static public package import resolves there. `SF_EH_REVISION` identifies each
+capture. The initial capture used a variable import outside the timed loop;
+that benchmark-only import was replaced by the static import for policy checks.

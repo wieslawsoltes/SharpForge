@@ -1,10 +1,7 @@
 import { performance } from 'node:perf_hooks';
 import { cpus, platform, arch } from 'node:os';
-import { resolve } from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { writeMethodBody } from '@sharpforge/cil';
 
-const entry = process.env.SF_EH_ENTRY ? pathToFileURL(resolve(process.env.SF_EH_ENTRY)) : new URL('../src/index.js', import.meta.url);
-const { writeMethodBody } = await import(entry.href);
 const clause = { flags: 0, start: 0, end: 8, target: 8, handlerEnd: 16, catchType: 0x01000001 };
 const definitions = [
   { name: 'small-no-eh', bytes: 64, handlers: [], iterations: 1000 },
@@ -30,4 +27,4 @@ for (const definition of definitions) {
   results.push({ ...definition, handlers: definition.handlers.length, median: ordered[10], p95: ordered[19], samples });
 }
 console.log(JSON.stringify({ node: process.version, platform: platform(), arch: arch(), cpu: cpus()[0].model,
-  revision: process.env.SF_EH_REVISION ?? null, entry: entry.href, checksum, results }, null, 2));
+  revision: process.env.SF_EH_REVISION ?? null, checksum, results }, null, 2));
