@@ -7,7 +7,7 @@ CLI metadata, including intentionally baseless classes; it is not claimed to be
 Roslyn-generated or executable. It exercises actual AssemblyRef/TypeRef binding
 across two loaded images and nested scopes, rather than substituting a local graph.
 
-The nine prepared test groups cover base/derived/implementer sets; missing and
+The eleven prepared test groups cover base/derived/implementer sets; missing and
 ambiguous assemblies/types; declared version/culture/full-key/token identities;
 nested versus same-display-name lookalikes; explicit TypeSpec/ModuleRef/nil-scope
 results; local/cross-module inheritance and TypeRef cycles; wrong interface kinds;
@@ -20,8 +20,12 @@ The retained CoreCLR corpus `../clr-type-graphs/native-graphs.json` reports SDK
 `6f2ba4d03f35bb7b4be65463c2f6bc19fd9451da21a695ce3ccf8a66b504131a`.
 The authored test compares captured direct bases and the full local interface-
 implementer set, and expects a dead reference for the absent framework assembly.
-No new native build is needed; this native evidence does not manufacture a native
-oracle for the separately authored cross-image/declared-key negative fixtures.
+That retained corpus proves local parity only. The prepared `capture.mjs` compiles
+`Hierarchy.A.cs` and `Hierarchy.B.cs` as two ordinary Roslyn assemblies, then records
+CLR base/interface/nested type identities. The serial slot will capture this actual
+cross-image reference before Node/browser comparisons. Authored key/ambiguity
+policy cases remain separate from native runtime binding. A numeric-index snapshot
+regression rejects preflight undercharging through caller iterator/map overrides.
 
 Planned serial qualification: shared SHA-1 tests and affected PDB consumers, new
 hierarchy tests plus existing local/nested name-index callers, a single fixed
