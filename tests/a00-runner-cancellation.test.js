@@ -52,6 +52,7 @@ function runDriver(t, {signals = [], timeout, code, missing = false}) {
   assert.ifError(result.error);
   assert.equal(result.signal, null, result.stderr);
   const report = JSON.parse(result.stdout);
+  assert.equal(result.status, report.status ?? 1, result.stderr);
   assert.deepEqual(report.listeners, [0, 0]);
   return {status: result.status, ...report};
 }
