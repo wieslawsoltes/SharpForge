@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "suite": "SF-A05-T12",
+  "status": "unqualified",
+  "reason": "No T12 measurement has been run. Full E02 integration and the sole validation queue owner must authorize measurement first.",
+  "rows": [],
+  "refreshCommands": [
+    "node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner REPLACE_WITH_STABLE_RUNNER_ID --samples 100 --warmup 10 --out artifacts/a05-vm-first.json",
+    "node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner REPLACE_WITH_STABLE_RUNNER_ID --samples 100 --warmup 10 --out artifacts/a05-vm-repeat.json",
+    "node scripts/perf-gate.js --qualify artifacts/a05-vm-first.json --repeat artifacts/a05-vm-repeat.json --out docs/performance/a05-baseline.json"
+  ]
+}

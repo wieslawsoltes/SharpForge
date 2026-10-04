@@ -7,6 +7,7 @@ export {runtimeLaunchLimits, runtimeLaunchCapabilities, RuntimeLaunchError, vali
 export {applyDesignPatch} from './design-patch.js';
 export {executionCodeStatistics, invalidateExecutionCode} from './execution/code-version.js';
 export {RuntimeEventLog, RuntimeEventName} from './execution/runtime-events.js';
+<<<<<<< HEAD
 export {framePoolStatistics} from './execution/frame-pool.js';
 export {instructionProfile} from './execution/profiler.js';
 export {wasmEligibility, lowerWasmIR} from './execution/wasm/eligibility.js';
@@ -17,3 +18,8 @@ export {instantiateWasmIR} from './execution/wasm/compile.js';
 export {prepareWasmMethod, runWasmSlice, disposeWasmMethod} from './execution/wasm/manual-runtime.js';
 export {wasmTieringStatistics, disposeWasmTiering} from './execution/wasm/tiering.js';
 export {deoptWasmFrames} from './execution/wasm/deopt.js';
+=======
+export {exportSpeedscope, exportRuntimeTrace} from './execution/profile-export.js';
+export {invalidateExecutionCode, executionCodeStatistics} from './execution/code-version.js';
+export {prepareExecution} from './execution/prepare.js';
+>>>>>>> d3da8239b (feat(runtime): add serial VM performance evidence and statistical regression gate)
