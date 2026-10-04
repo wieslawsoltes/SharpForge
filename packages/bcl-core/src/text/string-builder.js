@@ -2,6 +2,7 @@ import {MAX, array, bclScalar, bounded, fail, integer, makeArray, string, text} 
 import {appendCompositeFormat} from '../formatting/composite-format.js';
 import {appendBuilderCharacter} from './string-builder-append.js';
 import {accessBuilderCharacter} from './string-builder-indexer.js';
+import {copyBuilderCharacters} from './string-builder-copy.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
@@ -180,6 +181,7 @@ function appendFormat(platform, descriptor, reference, values) {
 
 function invokeMember(platform, descriptor, reference, values, scalars) {
   switch (descriptor.name) {
+    case 'CopyTo': return copyBuilderCharacters(platform, reference, values, scalars);
     case 'get_Chars':
     case 'set_Chars': return accessBuilderCharacter(platform, reference, scalars);
     case 'get_Length': return platform.get(reference, '$length', 0);
