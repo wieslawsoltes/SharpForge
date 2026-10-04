@@ -5,4 +5,7 @@ export * from './drawing/delegates.js';
 export * from './drawing/legacy.js';
 export * from './media/transforms.js';
 export * from './media/colors.js';
+export * from './media/images.js';
+export * from './brushes/brushes.js';
+export * from './media/working-color.js';
 export * from './resources/resource-table.js';
