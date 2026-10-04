@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {setDebugSources, workspaceFileForDebugSource, debugSourceForWorkspace,
   workspaceDebugPoint, navigateDebugSource} from '../apps/studio/debug-sources.js';
+import {debugBreakpointRows} from '../apps/studio/debug-breakpoint-rows.js';
 
 function setup(files, sources) {
   const state = {files, debug: {state: 'paused', frames: [], profile: 'source'}, breakpoints: {}, functionBreakpoints: []};
@@ -62,6 +63,22 @@ test('same execution URI shared by identical generated sources requires the poin
   assert.equal(workspaceFileForDebugSource(state, 'Shared.cs'), null);
   assert.equal(workspaceFileForDebugSource(state, 'Shared.cs', {assemblyKey: 'Left'}), file);
   assert.equal(workspaceFileForDebugSource(state, 'Shared.cs', {assemblyKey: 'Right'}), null);
+});
+
+test('frame navigation, source breakpoint bindings and current-source choice use the selected context', () => {
+  const left = source('Left', 'left');
+  const right = source('Right', 'right');
+  const state = setup([{uri: 'Shared.cs', text: 'right'}], [left, right]);
+  state.frameId = 2;
+  state.debug.frames = [{id: 1, source: left.uri}, {id: 2, source: right.uri, line: 4, column: 1}];
+  state.breakpoints = {'Shared.cs': [{line: 4}]};
+  const binding = {uri: right.uri, requestedLine: 4, verified: true};
+  state.debug.breakpoints = [binding];
+  assert.equal(debugSourceForWorkspace(state, 'Shared.cs').uri, right.uri);
+  assert.equal(debugBreakpointRows(state)[0].binding, binding);
+  const calls = [];
+  navigateDebugSource({state, openFile: uri => calls.push(uri), getEditor: () => ({gotoLine: () => {}})}, state.debug.frames[1]);
+  assert.deepEqual(calls, ['Shared.cs']);
 });
 
 test('source record publication is atomic and legacy single-module symbol maps remain supported', () => {
