@@ -400,6 +400,23 @@ existing invariant host profile; configurable culture and the remaining builder
 overloads remain separate work under #2637. Each value needs at most 20 decimal
 units, with the existing amortized chunk-storage growth and host text budget.
 
+`StringBuilder.Append(sbyte)`, `Append(byte)`, `Append(short)`, `Append(ushort)`
+and `Append(uint)` append in that order at IDs 524324–524328. They register the
+remaining 8/16/32-bit integer signatures and reuse the existing typed scalar
+formatter without changing execution. UInt32 preserves unsigned I4 stack bits;
+the smaller integer types arrive sign- or zero-extended by the existing numeric
+pipeline. Formatting follows the invariant host profile and produces at most
+10 decimal units per value, with the existing bounded chunk append and backing
+growth policy.
+
+The pinned .NET 10.0.5 reference contains 53 cases plus a mixed fluent Int32/Char
+control. It covers each type's limits, zero, representative values, null
+receivers and same-builder identity. Independent CIL uses explicit narrow
+conversions and signed stack patterns for UInt32's upper half. Compiled typed
+locals assert selection of the exact new builtin IDs on both compiler pipelines
+and execute on both VMs. GC, snapshots and allocation-limit controls exercise
+the reused append path; no per-value formatter or new culture API is added.
+
 `StringBuilder.Append(string, int, int)` appends at ID 524319. Its 52-case pinned
 .NET 10.0.5 reference records negative `startIndex`, then negative `count`, then
 null validation. A null string is accepted only for `(0, 0)`. For non-null strings,
