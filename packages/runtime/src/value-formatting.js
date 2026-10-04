@@ -43,7 +43,7 @@ export function formatCilValue(vm, value, type) {
   if (value === null) return '';
   if (isReference(value) && vm.heap.get(value).kind === 'box') {
     const record = vm.heap.get(value);
-    return vm.format(record.data[0], boxedDisplayTypes[record.type]);
+    return vm.format(record.data[0], boxedDisplayTypes[record.type] ?? record.type);
   }
   const native = vm.value(value);
   if (type === 'bool') return native ? 'True' : 'False';
