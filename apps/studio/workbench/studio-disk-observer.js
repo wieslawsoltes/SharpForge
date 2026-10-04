@@ -18,6 +18,20 @@ function validateText(text) {
   if (text.length > MAXIMUM_CHARACTERS) throw new RangeError('Disk observation exceeds the 8,000,000-character watch limit');
 }
 
+function acceptNativeMetadata(record, observed) {
+  const next = {};
+  for (const [name, value] of [['nativeHash', observed.hash], ['nativeBaseline', observed.text]]) {
+    const descriptor = Object.getOwnPropertyDescriptor(record, name);
+    if (!descriptor && !Object.isExtensible(record) || descriptor && !descriptor.configurable
+      && (!('value' in descriptor) || !descriptor.writable && descriptor.value !== value)) {
+      throw new TypeError('Native reload baseline metadata is immutable: ' + name);
+    }
+    next[name] = descriptor && !descriptor.configurable ? {...descriptor, value}
+      : {value, writable: true, configurable: true, enumerable: true};
+  }
+  Object.defineProperties(record, next);
+}
+
 /** Observations are owned by exact document and save-target instances; temporary decoder models never transfer ownership. */
 export function createStudioDiskObserver(options) { return new StudioDiskObserver(options); }
 
@@ -157,10 +171,7 @@ class StudioDiskObserver {
       commitMetadata: () => {
         this.check(observed, signal, {version: false});
         accept?.();
-        if (observed.native) {
-          observed.record.nativeHash = observed.hash;
-          observed.record.nativeBaseline = observed.text;
-        }
+        if (observed.native) acceptNativeMetadata(observed.record, observed);
       }
     });
   }

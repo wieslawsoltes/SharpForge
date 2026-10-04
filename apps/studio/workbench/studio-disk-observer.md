@@ -76,9 +76,36 @@ redirection, all three encodings, no-BOM UTF-16, reload followed by Save,
 same-URI replacement, later edits, confirmation races, cancellation/disposal,
 byte/character limits, native hashes, and committed notification failures.
 
-Validation is pending until the complete observer and document reload scope is
-assembled. The authored native fixtures use actual temporary filesystem reads,
-hashes and writes on the test host. Browser file handles are explicit doubles
-around real Node File/Blob slicing. These fixtures do not qualify browser
-permission dialogs, an actual File System Access implementation, screen readers,
-cross-platform filesystem behavior, or a quiet-machine latency benchmark.
+At runtime source **`6d70fa30`**, one completed serial qualification invocation
+passed **79/79 tests, zero failures and zero skips**, in **2.803 seconds** on the
+shared Linux / Node **v24.19.0** host. It included 36 new cases: six baseline-acceptance, seven
+FileWatch, fifteen browser-handle observer, and eight native observer/client
+cases. The other 43 cases were the affected existing FileWatch, shell
+boundary, captured document/disk save, encoding round-trip, and cancellation
+regressions. Source included atomic document reload `03797840`; the later
+`9d36c177` dependency update changed its tests and documentation only.
+
+```sh
+node scripts/limited.js node --test --test-concurrency=1 \
+  tests/a19-disk-baseline-acceptance.test.js \
+  tests/a19-studio-disk-observer.test.js \
+  tests/a19-file-watch-observation.test.js \
+  tests/a19-native-disk-observer.test.js \
+  tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js \
+  tests/a20-save-encoding-roundtrip.test.js \
+  tests/a20-disk-save-cancellation.test.js tests/a19-document-disk-save.test.js
+```
+
+The native fixtures performed actual temporary filesystem reads, SHA-256
+comparisons and writes for UTF-8, UTF-16LE and UTF-16BE. Browser file handles were
+explicit doubles around real Node File/Blob slicing, including BOM and no-BOM
+round trips, zero-byte sources, exact 8,000,000-character acceptance, oversize
+rejection, and cancellation during decoding. No compatibility assertion was
+weakened, and this observer invocation required no failure retry.
+
+The fixtures do not qualify browser permission dialogs, an actual browser
+File System Access implementation, screen readers, cross-platform filesystem
+behavior, or a quiet-machine latency benchmark. They did not invoke MSBuild or
+require an installed SDK. Root's Studio callback wiring and host lifecycle tests
+are a separate assembled scope. The earlier 163-case save qualification remains
+recorded separately; the 79 cases here are not all additional distinct tests.

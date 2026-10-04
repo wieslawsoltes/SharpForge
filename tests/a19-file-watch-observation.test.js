@@ -98,3 +98,15 @@ test('A19 a legacy asynchronous reader cannot publish a notification for a repla
   assert.equal(notices.length, 0);
   assert.equal(watch.baselines.size, 0);
 });
+
+test('A19 cancellation after a legacy reader resolves cannot publish an external-change notification', async t => {
+  const context = await diskObservationContext(t);
+  const controller = new AbortController();
+  const notices = [];
+  const watch = new FileWatch({documents: context.documents, notify: item => notices.push(item),
+    async readDisk() { controller.abort(); return 'external'; }});
+  t.after(() => watch.dispose());
+  await assert.rejects(watch.poll({signal: controller.signal}), {name: 'AbortError'});
+  assert.equal(notices.length, 0);
+  assert.equal(watch.baselines.size, 0);
+});
