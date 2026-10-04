@@ -50,8 +50,16 @@ test('selected text, binary and encoding metadata reproduce the exact reviewed b
 test('unreviewed hashes, contents, budgets and cancelled requests never commit a peer buffer', async () => {
   const app = fixture();
   const resolution = await selected(app);
-  for (const update of [{hash: '0'.repeat(64)}, {expectedLocalHash: '0'.repeat(64)}, {content: 'unreviewed'}, {bytes: null}]) {
-    await assert.rejects(applyWorkspaceConflictResolution(app.host, app.session, {...resolution, ...update}), /hash|bytes|content/i);
+  const invalid = [[{hash: '0'.repeat(64)}, /Selected bytes do not match the reviewed hash/],
+    [{expectedLocalHash: '0'.repeat(64)}, /Local document hash changed/],
+    [{content: 'unreviewed'}, /Selected content does not match its reviewed bytes/],
+    [{bytes: null}, /lack exact bytes/]];
+  for (const [update, message] of invalid) {
+    await assert.rejects(applyWorkspaceConflictResolution(app.host, app.session, {...resolution, ...update}), error => {
+      assert.equal(error.code, 'SFW1424');
+      assert.match(error.message, message);
+      return true;
+    });
   }
   await assert.rejects(applyWorkspaceConflictResolution(app.host, app.session, resolution, {maxBytes: 1}), /budget/);
   await assert.rejects(applyWorkspaceConflictResolution(app.host, app.session, resolution, {signal: AbortSignal.abort()}), {name: 'AbortError'});
