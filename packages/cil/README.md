@@ -220,6 +220,7 @@ at most 256 member/page records apart. The index is a fixed owned snapshot; recr
 when the loaded module set changes. Search, reference binding and usage analysis are
 separate capabilities.
 
-The prepared 20-assembly/reload, ownership, count/storage boundary and retained native
-PE tests are described in `tests/fixtures/assembly-index/README.md`; qualification
-is pending the scheduled serial slot.
+The 20-assembly/reload, ownership, count/storage boundary and retained native PE
+tests pass with the focused Chromium/Firefox/WebKit checks on macOS. Exact scope,
+logical storage counters, timings and raw evidence are recorded in
+`tests/fixtures/assembly-index/README.md`; broader platform qualification is separate.
