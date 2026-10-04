@@ -74,6 +74,10 @@ Vector, analytic rectangle/ellipse and glyph pipelines share explicit premultipl
 
 Effects allocate explicit pooled targets and uniforms with submission retirement. Gaussian blur scales DIP radius by the actual surface density. Local raster cache entries exclude placement from their keys and pin plans while referenced; backdrop-dependent content bypasses static caching. Capability selection returns a concrete backend and reason for every operation.
 
+## Retained GPU rendering
+
+`WebGpuBackend` compiles ordered plans, reuses unchanged buffers and uploads only changed analytic instance ranges. Stencil clips and MSAA preserve painter order. Partial redraw replaces damaged pixels before replay; cached local layers survive placement changes. Readback and metrics expose the actual target, uploaded bytes, resource memory and explicit fallbacks.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
