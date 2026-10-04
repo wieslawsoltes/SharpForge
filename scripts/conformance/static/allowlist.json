@@ -12,7 +12,7 @@
       "path": "apps/studio/workbench/comment-tasks.js",
       "operation": "dynamic-import",
       "count": 1,
-      "sha256": "516ee05d987fe0e7871fcabfa1c601a080afe626d1ef531b0e9ce404f5416123",
+      "sha256": "fb08c520dd4f48e5469f5eccc42615df006e4fe864dbf3e0002b23f321ea00e5",
       "reason": "Task List lazily imports the literal @sharpforge/syntax public entry to lex comment trivia; document text and configured tokens never select a module or become JavaScript."
     },
     {
@@ -23,32 +23,25 @@
       "reason": "The closed Studio loader table imports five literal adjacent designer, assembly, disassembly, MSBuild and wizard modules on activation; tool IDs select trusted callbacks, never module paths supplied by workspace data."
     },
     {
+      "path": "apps/studio/workbench/metadata/framework-model.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "a8eed13bcf6ee9b4b604c97adcf894b48193f619274b3eb3a573594047f1de94",
+      "reason": "The shared metadata adapter lazily imports the literal @sharpforge/framework public entry to build registered framework type and member records; symbol names only query that registry and never select executable module paths."
+    },
+    {
       "path": "apps/studio/workbench/shell-models.js",
       "operation": "dynamic-import",
       "count": 2,
-      "sha256": "01c850fd334f94552e12ee8b64b1cd950591cdf6086ad4c5f745ef2aed3a2e2b",
+      "sha256": "652b9534c7693b858d0fd6ab12fb056be49ac1087e7e5a47812179a46cd87d20",
       "reason": "Toolbox providers lazily import the literal @sharpforge/editor and @sharpforge/designer public entries for bundled snippets and design-control metadata; user snippet text is editor data, never a module specifier."
     },
     {
       "path": "apps/studio/workbench/shell-tools.js",
       "operation": "dynamic-import",
       "count": 20,
-      "sha256": "d4457d7ed08a636d95931982aea290fa0781fdb5e3ffcd4dd109cef28dbe86fc",
+      "sha256": "c08f94f020a1ba94fb58f9d7b9254976378dd808380d73762005c16a6a6b49ff",
       "reason": "The reviewed tool-ID map contains twenty literal imports confined to the adjacent tools directory; instance IDs select fixed loaders and never form a module specifier. Built assets resolve from the same origin under the shipped CSP."
-    },
-    {
-      "path": "apps/studio/workbench/tools/code-definition.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "9613ca4b824ba6751f4045d67f2ca60dc97da7206fe601547424de3a43aa2d85",
-      "reason": "The read-only Code Definition fallback imports the literal @sharpforge/framework public entry and renders registered contract metadata; names from source are lookup keys, not executable module paths."
-    },
-    {
-      "path": "apps/studio/workbench/tools/object-browser.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "2940fd6c1555d475b19ec49c55c6b055e37f3b181e675072472a4e25e2fb956e",
-      "reason": "Object Browser imports the literal @sharpforge/framework public entry to display registered types and contracts; inspected assembly bytes remain metadata and never select or execute JavaScript modules."
     },
     {
       "path": "packages/bcl-core/scripts/benchmark.js",
