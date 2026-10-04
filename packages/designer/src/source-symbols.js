@@ -109,7 +109,9 @@ function selectSourceConstruction(context, options) {
   if (chosen.method.body?.kind !== 'Block') failSource('A block-bodied construction method is required', chosen.method);
   const ownerSymbol = model.getDeclaredSymbol(chosen.owner);
   const methodSymbol = model.getDeclaredSymbol(chosen.method);
-  const partials = ownerSymbol?.legacy?.declarations ?? (chosen.owner ? [chosen.owner] : []);
+  // The semantic-analysis symbols need not carry execution records. Preserve all parsed parts of the chosen owner.
+  const partials = chosen.owner ? parsedFiles.flatMap(parsed => parsed.root.members.filter(member =>
+    member.kind === 'Class' && ownerName(member) === ownerName(chosen.owner))) : [];
   const fields = new Map(partials.flatMap(partial => partial.members.filter(member => member.kind === 'Field')
     .map(field => [field.name, field])));
   return {...context, chosen, ownerSymbol, methodSymbol, partials, fields};
