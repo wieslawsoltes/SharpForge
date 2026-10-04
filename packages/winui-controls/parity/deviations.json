@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "types": {
+    "Microsoft.UI.Xaml.Controls.Separator": {
+      "kind": "profile-extension",
+      "reason": "The released decorative Separator belongs to this browser profile; native menu and app-bar separators are distinct types.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Controls.MenuFlyoutSeparator", "Microsoft.UI.Xaml.Controls.AppBarSeparator"]
+    },
+    "SharpForge.UI.DrawingSurface": {
+      "kind": "profile-extension",
+      "reason": "The immediate drawing surface is a SharpForge convenience API and is excluded from WinUI coverage counts.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Shapes", "Microsoft.UI.Composition.CompositionDrawingSurface"]
+    },
+    "SharpForge.UI.AnimationClock": {
+      "kind": "profile-extension",
+      "reason": "The explicitly advanced deterministic clock is a SharpForge test/runtime API and is excluded from WinUI coverage counts.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Media.Animation.Storyboard", "Microsoft.UI.Composition.Compositor"]
+    }
+  },
+  "members": {
+    "Microsoft.UI.Xaml.Controls.CalendarDatePicker::Date": {
+      "kind": "released-signature-deviation",
+      "reason": "The released string property remains binary compatible; DateValue and SetDate expose typed date operations.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Controls.CalendarDatePicker.Date: System.Nullable<System.DateTimeOffset>"]
+    },
+    "Microsoft.UI.Xaml.Controls.TimePicker::Time": {
+      "kind": "released-signature-deviation",
+      "reason": "The released HH:mm string remains binary compatible; TimeValue and nullable SelectedTime are typed companions.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Controls.TimePicker.Time: System.TimeSpan"]
+    },
+    "Microsoft.UI.Xaml.Controls.Image::Source": {
+      "kind": "released-signature-deviation",
+      "reason": "The released URI string remains binary compatible; ImageSource is the typed browser-profile companion.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Controls.Image.Source: Microsoft.UI.Xaml.Media.ImageSource"]
+    },
+    "Microsoft.UI.Xaml.Controls.Control::FontFamily": {
+      "kind": "released-signature-deviation",
+      "reason": "The released family-name string remains binary compatible; FontFamilyObject accepts a typed FontFamily.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Controls.Control.FontFamily: Microsoft.UI.Xaml.Media.FontFamily"]
+    },
+    "Microsoft.UI.Xaml.Controls.ContentDialog::Show": {
+      "kind": "profile-extension",
+      "reason": "Legacy synchronous host command; new code should await the dialog result.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Controls.ContentDialog.ShowAsync"]
+    },
+    "Microsoft.UI.Xaml.Controls.CommandBar::Children": {
+      "kind": "profile-extension",
+      "reason": "Legacy collection is retained for existing programs.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Controls.CommandBar.PrimaryCommands", "Microsoft.UI.Xaml.Controls.CommandBar.SecondaryCommands"]
+    },
+    "Microsoft.UI.Xaml.Style::TargetTypeName": {
+      "kind": "profile-extension",
+      "reason": "Legacy string target-type descriptor; new materializers use a managed Type.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Style.TargetType"]
+    },
+    "Microsoft.UI.Xaml.Controls.ControlTemplate::VisualTree": {
+      "kind": "profile-extension",
+      "reason": "Inspectable browser-profile template tree; native templates are supplied through XAML factories.",
+      "migrationTargets": ["XAML ControlTemplate visual tree"]
+    },
+    "Microsoft.UI.Xaml.Controls.ControlTemplate::Bind": {
+      "kind": "profile-extension",
+      "reason": "Legacy template-binding helper; new default templates use actual TemplateBinding nodes.",
+      "migrationTargets": ["XAML TemplateBinding"]
+    },
+    "Microsoft.UI.Xaml.Controls.TextBox::SelectionFlyout": {
+      "kind": "profile-signature-deviation",
+      "reason": "Object reference preserves the released profile flyout hierarchy while accepting an actual TextCommandBarFlyout.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Controls.TextBox.SelectionFlyout: Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase"]
+    },
+    "Microsoft.UI.Xaml.Controls.RichEditBox::SelectionFlyout": {
+      "kind": "profile-signature-deviation",
+      "reason": "Object reference preserves the released profile flyout hierarchy while accepting an actual TextCommandBarFlyout.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Controls.RichEditBox.SelectionFlyout: Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase"]
+    },
+    "Microsoft.UI.Xaml.Controls.MenuFlyout::ShowAt": {
+      "kind": "profile-signature-deviation",
+      "reason": "The existing FrameworkElement target is retained; an additive Point overload provides bounded target-relative placement.",
+      "migrationTargets": ["Microsoft.UI.Xaml.Controls.MenuFlyout.ShowAt: native UIElement/FlyoutShowOptions overloads"]
+    }
+  },
+  "behaviors": [
+    { "id": "A16-ORIENTATION-ABI", "type": "Microsoft.UI.Xaml.Controls.Orientation", "status": "deviation",
+      "reason": "Released serialized values are Vertical=0/Horizontal=1; native WinUI uses Horizontal=0/Vertical=1. Existing values are preserved." },
+    { "id": "A16-FONT-METRICS", "type": "Microsoft.UI.Xaml.Media.FontFamily", "status": "unverified",
+      "reason": "Segoe UI Variable/Segoe UI/system-ui is a platform fallback stack. Metric equivalence needs licensed font and Windows reference evidence." },
+    { "id": "A16-CALENDAR-SYSTEMS", "type": "Microsoft.UI.Xaml.Controls.CalendarView", "status": "unsupported",
+      "reason": "The profile implements Gregorian UTC date arithmetic; other CalendarIdentifier values raise SFUI1686." },
+    { "id": "A16-RICH-TEXT-PROFILE", "type": "Microsoft.UI.Text.RichEditTextDocument", "status": "deviation",
+      "reason": "Bounded text/RTF bold, italic, underline, size and RGB subset; embedded objects and unsupported control words fault explicitly." },
+    { "id": "A16-NATIVE-ORACLE", "status": "unverified",
+      "reason": "A pinned metadata inventory proves reference signatures only. Windows behavior/oracle qualification must be recorded separately." },
+    { "id": "A16-RELEASED-EVENT-DELEGATES", "status": "deviation",
+      "reason": "Released RoutedEventHandler signatures remain fixed. Runtime emits concrete args, but source handlers need explicit casts for added fields." },
+    { "id": "A16-PLATFORM-WEBVIEW", "type": "Microsoft.UI.Xaml.Controls.WebView2", "status": "unsupported",
+      "reason": "Sandboxed iframe navigation is implemented; native CoreWebView2/process APIs are unavailable and ExecuteScriptAsync faults SFUI16B5." },
+    { "id": "A16-PLATFORM-ADAPTERS", "status": "unsupported",
+      "reason": "Map, camera and animated visual operations require explicit host adapters/grants. Missing capabilities report SFUI1633; they never simulate success." },
+    { "id": "A16-MEDIA-CODECS", "type": "Microsoft.UI.Xaml.Controls.MediaPlayerElement", "status": "unverified",
+      "reason": "Actual HTMLMediaElement transport is implemented. Codec availability, DRM and real device playback need scoped platform evidence." },
+    { "id": "A16-NATIVE-IME", "type": "Microsoft.UI.Xaml.Controls.TextBox", "status": "unverified",
+      "reason": "UTF-16 composition transactions and cancellation are implemented; synthetic events do not qualify Windows CJK/RTL IME behavior." },
+    { "id": "A16-NATIVE-DRAG-CANCELLATION", "type": "Microsoft.UI.Xaml.Controls.TabView", "status": "unsupported",
+      "reason": "Browser dragstart cannot await a worker response. In-process cancellation is supported; worker tab-drag cancellation needs a custom drag gesture." }
+  ]
+}
