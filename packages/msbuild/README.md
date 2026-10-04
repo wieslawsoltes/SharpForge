@@ -1,5 +1,8 @@
 # @sharpforge/msbuild
 
+Native test discovery, TRX/Cobertura parsing and runner argument contracts are
+documented in [docs/test-native-formats.md](docs/test-native-formats.md).
+
 Browser-safe MSBuild contracts/client and a separately imported Node native backend. MIT, ES modules, Node 22+ for native APIs. The native engine invokes an installed SDK or MSBuild executable; .NET is not bundled.
 
 ```js

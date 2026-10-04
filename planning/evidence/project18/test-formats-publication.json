@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "scope": "A23 T11/T35 native test formats and selection arguments",
+  "sourceCommit": "4a49a23b773b62088057d83e3e6ac6e573390578",
+  "base": {
+    "pullRequest": 3676,
+    "branch": "codex/p18-test-model",
+    "sha": "f69a24c941ff85eb12f5e1525c59b6d74a65d9bb"
+  },
+  "sourceFiles": {
+    "packages/msbuild/src/testing/discovery.js": "b93c3cffe13a36903abb7e87a237a97d8d683a47",
+    "packages/msbuild/src/testing/run.js": "203336f1d57c8960beb51ad7f8d7daba00bd3252",
+    "packages/msbuild/src/testing/trx.js": "5638c39fc0f5d832a8ee22026ad29d5a3ff56d5f",
+    "packages/msbuild/src/testing/source-map.js": "139785d9d554b9fca2bf33ee8ffc998aa53b88ad",
+    "packages/msbuild/src/testing/coverage.js": "5d349fc2cc9a0f87a0fc2b79e6365b660f3134e2"
+  },
+  "testProjection": "Only cross-package test imports are changed to the public entry. All original assertions remain unchanged.",
+  "qualification": [
+    {
+      "path": "planning/evidence/project18/testing/node22.tap",
+      "sha256": "1da313e5473a0ce2adda04e1be83212e9c01229fd6b64f4fe9f3cf5f3e8d7c5b",
+      "selectedRecords": [
+        "ok 41 - A23 T11 TRX parses actual per-test outcomes, durations, output and attachment records",
+        "ok 42 - A23 T11 TRX rejects malformed documents, excessive results and unknown outcome success assumptions",
+        "ok 43 - A23 T11 filter arguments stay atomic and MTP has explicit TRX capability requirements",
+        "ok 44 - A23 T11 cancellation leaves remaining tests not-run, bounds progress and reports debugger PID",
+        "ok 45 - A23 T11 Cobertura retains covered/uncovered lines, branch counts and diagnostics for outside-workspace files",
+        "ok 63 - A23 T35 native and portable TestCase identities agree after source metadata enrichment",
+        "ok 64 - A23 T35 rejects duplicate identities, malformed records, invalid durations and incomplete adapters"
+      ],
+      "result": "7/7 pass in completed 135/135 scope; zero skips"
+    },
+    {
+      "path": "planning/evidence/project18/testing/node26.tap",
+      "sha256": "9807dc8ec4bd9eb839f9868aa6418cb6aeea43b248c13bb777b3e3b5c4e8c314",
+      "selectedRecords": [
+        "ok 41 - A23 T11 TRX parses actual per-test outcomes, durations, output and attachment records",
+        "ok 42 - A23 T11 TRX rejects malformed documents, excessive results and unknown outcome success assumptions",
+        "ok 43 - A23 T11 filter arguments stay atomic and MTP has explicit TRX capability requirements",
+        "ok 44 - A23 T11 cancellation leaves remaining tests not-run, bounds progress and reports debugger PID",
+        "ok 45 - A23 T11 Cobertura retains covered/uncovered lines, branch counts and diagnostics for outside-workspace files",
+        "ok 63 - A23 T35 native and portable TestCase identities agree after source metadata enrichment",
+        "ok 64 - A23 T35 rejects duplicate identities, malformed records, invalid durations and incomplete adapters"
+      ],
+      "result": "7/7 pass in completed 135/135 scope; zero skips"
+    }
+  ],
+  "projectionQualification": "No duplicate execution claimed. Required core pending.",
+  "remaining": [
+    "Native process/service registration belongs to the dependent adapter.",
+    "Actual pinned xUnit/NUnit/MSTest packages were unavailable after one bounded 50-second restore timeout; this does not qualify native frameworks.",
+    "MTP switches model explicit host capabilities; arbitrary host versions, Windows/macOS and localized textual discovery output are not qualified."
+  ]
+}
