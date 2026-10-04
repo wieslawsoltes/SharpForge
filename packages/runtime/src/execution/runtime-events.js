@@ -101,8 +101,9 @@ export class RuntimeEventLog {
     }
   }
 
-  export() {
+  /** One retained event window; sequence and dropped remain whole-log counters. */
+  export(options) {
     return {format: 'SharpForge.RuntimeEvents/1', clock: 'instructions', sequence: this.sequence,
-      dropped: this.dropped, events: this.read()};
+      dropped: this.dropped, events: this.read(options)};
   }
 }

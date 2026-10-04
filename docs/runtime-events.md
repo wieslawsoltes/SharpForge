@@ -37,13 +37,19 @@ flushes return without invoking callbacks again. Callback errors propagate to
 the host, and a later flush can continue. Guest execution must invoke flush only
 at a host boundary, outside managed exception dispatch.
 
-`export()` produces structured-cloneable `SharpForge.RuntimeEvents/1` JSON with
+`export({after, limit})` produces structured-cloneable `SharpForge.RuntimeEvents/1` JSON with
 instruction timestamps, ordered sequences and a drop count. The provider/name
 vocabulary follows the planned EventPipe-shaped runtime stream; this is not the
 binary EventPipe or `.nettrace` container and includes no measured wall-clock
 time. Emission is O(1) in ring capacity with a bounded payload; flush is bounded
 by retained events times current subscribers. None of these costs has been
 measured in this implementation slice.
+
+Export cursor options use the existing `read()` rules; omitting them preserves
+the full retained window. The named
+[`exportRuntimeTrace(log, options)` helper](runtime-trace-export.md) exposes the
+same bounded operation without flushing subscribers. Whole-log sequence/drop
+metadata is preserved even when only a smaller event window is returned.
 
 Serial validation passed 22 event-log and value-ABI tests at `f3edb587`, including
 a host adapter around real direct-CIL execution, ring overflow, immutable
