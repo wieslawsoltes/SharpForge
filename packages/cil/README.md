@@ -118,7 +118,7 @@ desktop CLR import stubs, aligned multi-section layouts and all PE/CLI data dire
 It accepts a `Uint8Array` of at most 128 MiB, preserves the input (including subarray boundaries), and returns
 an independent 32-byte digest. Invalid input types throw `TypeError`; oversized input throws `RangeError`.
 The browser/worker implementation uses no host crypto or asynchronous work. `@sharpforge/symbols` retains
-its existing `sha256` export as a reexport of this function; SHA-1 remains in the symbols package.
+its existing `sha256` export as a reexport of this function; shared `sha1` is documented below.
 Hashing reads complete 64-byte blocks directly from the input. Padding uses at most 128 bytes,
 with one reusable 256-byte schedule and 32-byte state, so scratch storage is independent of input size.
 
