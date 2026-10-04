@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parse } from '@sharpforge/syntax';
+import { parse, SyntaxTree } from '@sharpforge/syntax';
 import { SourceText } from '@sharpforge/text';
 import { analyze } from '../packages/compiler/src/semantic-analysis.js';
 import { loadReferencePack } from '@sharpforge/compiler/node';
@@ -93,9 +93,11 @@ test('A02-T07.5 restriction codes, severity and source spans match real Roslyn c
       await t.test(`${axis}: ${fixture.id}`, () => {
         const pin = pins.get(fixture.id);
         assert.ok(pin, `a real Roslyn diagnostic capture is required for ${fixture.id}`);
-        const file = parse(new SourceText(fixture.source, 'Program.cs')),
+        // SyntaxTree has only C# diagnostics; parse() also projects to the separate legacy execution profile.
+        const tree = SyntaxTree.parseText(new SourceText(fixture.source, 'Program.cs'), { languageVersion: '14' }),
+          file = { source: tree.source, syntax: tree.root, directives: tree.directives },
           analysis = analyze([file], options),
-          actual = [...file.diagnostics, ...analysis.diagnostics].map(row => [row.code, row.start, row.length, row.severity]);
+          actual = [...tree.diagnostics, ...analysis.diagnostics].map(row => [row.code, row.start, row.length, row.severity]);
         assert.deepEqual(normalize(actual), normalize(pin.diagnostics));
       });
     }

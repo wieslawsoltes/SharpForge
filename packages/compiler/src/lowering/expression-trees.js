@@ -9,9 +9,9 @@
  *   { factory: 'Constant', nodeType: 'Constant', type, value }               Expression.Constant(value, typeof(T))
  *   { factory: 'Lambda', nodeType: 'Lambda', type, body, parameters }        Expression.Lambda<TDelegate>(body, parameters)
  *
- * and so on for members, calls, creation and initializers (see the `visit*` functions below). The tree is what
- * code generation will turn into calls once the runtime has System.Linq.Expressions; today it is checked against
- * .NET through its text and node-type walk (lowering/expression-tree-text.js).
+ * and so on for members, calls, creation and initializers. The direct CIL emitter writes these factory calls for
+ * execution on .NET. The source-image translator retains its explicit boundary until that runtime provides
+ * System.Linq.Expressions. The textual helper in expression-tree-text.js also checks the older shape fixtures.
  *
  * A construct with no factory call makes the lowering return `{ unsupported: <what>, syntax }` instead of guessing.
  */
@@ -155,8 +155,7 @@ export function lowerExpressionTree(lambda, delegateType, core) {
 }
 
 /**
- * Translator mixin: a lambda converted to an expression tree cannot be generated yet. The tree is known (see
- * `lowerExpressionTree`); the factory methods it calls are not in the runtime.
+ * Source-image translator boundary: this runtime does not provide the expression-tree factory methods.
  */
 export const ExpressionTreeTranslation = Base =>
   class extends Base {
