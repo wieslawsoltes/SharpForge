@@ -30,6 +30,10 @@ export function unmanagedConventionMarkers(attribute) {
 
 /** The recognized convention marker's suffix, or null for an invalid `CallConvs` type. */
 export function functionPointerConventionName(type) {
+  const definition = type?.originalDefinition ?? type;
+  if (definition?.isSource) return null;
+  const assembly = definition?.containingAssembly?.identity?.name;
+  if (assembly && !['System.Runtime', 'System.Private.CoreLib', 'mscorlib'].includes(assembly)) return null;
   const prefix = 'System.Runtime.CompilerServices.CallConv';
   const name = fullNameOf(type);
   if (!name.startsWith(prefix)) return null;
