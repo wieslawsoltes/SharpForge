@@ -1,5 +1,6 @@
 export * from './registry.js';
 export * from './layout/index.js';
+export * from './text/index.js';
 export * from './overlay/index.js';
 export * from './commands/index.js';
 export * from './app/index.js';
