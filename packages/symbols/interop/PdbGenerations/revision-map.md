@@ -85,13 +85,41 @@ Portable PDB regression run passed **48 tests, with zero failures, cancellations
 or skips**. The unchanged original log is retained in
 `tests/fixtures/portable-pdb-delta-writer/qualification/pre-integration-node.tap`,
 with provenance recorded alongside it. The log does not encode its exact
-checkout commit or Node version. These are prior results; root's post-merge
-tests, core gates and benchmarks are pending.
+checkout commit or Node version. These prior results remain distinct from the
+integrated seven-file gate at `9cfd593809f85c197be89990bcceaa22bfd0f898`, which
+passed **56 tests with zero failures, cancellations or skips**. The complete
+output, artifact/source hashes and reconstructed replay commands are retained in
+[integrated qualification](../../../../tests/fixtures/portable-pdb-delta-writer/qualification/integrated/README.md).
+The native tests replay the retained captures; this gate did not regenerate them.
 
 The browser corpus is implemented but has **not been run**. Native active-frame
 binding, managed ApplyUpdate, Visual Studio integration and Rust/Wasm runtime
-behavior remain unqualified. No performance result is claimed before the
-coordinated benchmark run.
+behavior remain unqualified.
+
+Both integrated benchmark runs completed with all correctness guards and exit
+code zero. Ordinary emit/read/load medians were 0.4332615/0.147141/0.3940345 ms at
+baseline `8b101c0c` and 0.4215845/0.148178/0.3939695 ms at candidate `9cfd59380`.
+Their p95 values increased from 0.664897/0.263057/0.662884 ms to
+0.781949/0.320290/0.808999 ms: **+17.604531% / +21.756882% / +22.042318%**.
+These exceed the 5% budget. The retained automated review recommends an explicit
+PR exception for the shared minimal-delta format/validation design; it does not
+grant acceptance, claim a threshold pass, dismiss the tails as noise or assert
+human approval. These measurements cover the combined reader/writer/revision
+stack and do not attribute cost to an individual commit.
+
+| New operation | Median / p95, ms |
+| --- | ---: |
+| Read baseline and append both deltas | 0.385256 / 0.722502 |
+| First capture with a new map | 0.019734 / 0.046548 |
+| Capture with an existing cache lease | 0.0044565 / 0.009504 |
+| Historical location query | 0.001287 / 0.003014 |
+| Snapshot location query | 0.000490 / 0.001552 |
+
+These are new API costs without a baseline speedup comparison. Measurements used
+Node v24.19.0/V8 13.6.233.17-node.51 on a shared Linux x64 host with nine visible
+logical CPUs. Full environment, chronological samples and source/package/fixture
+identities are in the raw reports. Total allocations and delta-writer emission
+cost were not measured by these runs.
 
 ## Reproduce validation and measurements
 
@@ -141,9 +169,11 @@ node scripts/limited.js node --expose-gc scripts/bench-pdb.js \
 node scripts/limited.js node --expose-gc packages/symbols/benchmarks/pdb-generations.mjs
 ```
 
-Neither driver has been run for this integrated candidate. Preserve the raw JSON
-from the coordinated run before reporting results. The generation benchmark
-compares a retained native corpus; it does not launch CoreCLR or apply an update.
+Both drivers were run at `9cfd59380`. Their complete original JSON and empty
+stderr streams are preserved with the integrated qualification, together with
+the automated source review. The commands above are replay instructions, not a
+retained historical shell transcript. The generation benchmark compares a
+retained native corpus; it does not launch CoreCLR or apply an update.
 
 The source-module browser entry point is
 `tests/fixtures/portable-pdb-generations/browser.mjs`. Serve the repository with
