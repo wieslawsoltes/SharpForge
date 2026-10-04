@@ -5,9 +5,6 @@ import { loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
 const requireType = type => { if (!(type instanceof TypeDesc)) throw new TypeError('Expected TypeDesc'); };
-const requireResolvedParameter = type => {
-  if (type.kind === TypeKind.GenericParameter && !type.isLoaded) throw fail('Metadata generic parameter construction requires generic type services');
-};
 const method = (name, returnType, parameters) => Object.freeze({ name, returnType, parameters: Object.freeze(parameters), hasThis: true });
 
 /** Canonical constructed identities owned by one explicit context's type service. */
@@ -17,12 +14,16 @@ export class ConstructedTypes {
   #cache;
   #signatures;
   #signatureExtensions;
-  constructor(loader, context, maxTypes, signatureExtensions = null) {
+  #instantiate;
+  constructor(loader, context, maxTypes, { signatureExtensions = null, instantiate } = {}) {
     this.#loader = loader;
     this.#context = context;
     this.#cache = new ConstructedTypeCache(maxTypes);
     this.#signatureExtensions = signatureExtensions;
+    this.#instantiate = instantiate;
   }
+
+  get cache() { return this.#cache; }
 
   #identity(type) {
     return this.#cache.identity(type);
@@ -31,10 +32,10 @@ export class ConstructedTypes {
   #canonical(key, create) {
     const cached = this.#cache.get(key);
     if (cached) return cached;
-    this.#cache.ensureCapacity();
+    if (!this.#cache.hasIdentityKey(key)) this.#cache.ensureCapacity();
     const state = { module: null, ...create(), context: this.#context, token: 0, declaringType: null, loaded: true };
     if (state.fullName.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Constructed type name length exceeded');
-    this.#cache.ensureCapacity();
+    if (!this.#cache.hasIdentityKey(key)) this.#cache.ensureCapacity();
     const type = createTypeDesc(state);
     if (state.methods) state.methods = Object.freeze(state.methods.map(member => Object.freeze({ ...member, declaringType: type })));
     return this.#cache.add(key, type);
@@ -50,28 +51,19 @@ export class ConstructedTypes {
     const suffix = kind === TypeKind.SZArray ? '[]' : kind === TypeKind.Array ? `[${rank === 1 ? '*' : ','.repeat(rank - 1)}]`
       : kind === TypeKind.Pointer ? '*' : '&';
     return this.#canonical(`${kind}:${this.#identity(element)}:${rank}`, () => {
-      requireResolvedParameter(element);
       const baseType = array ? this.#loader.intrinsic('System.Array') : null;
       const interfaces = array ? [...baseType.interfaces] : [];
       if (kind === TypeKind.SZArray && ![TypeKind.Pointer, TypeKind.FunctionPointer].includes(elementKind)) {
         for (const name of ['IEnumerable', 'ICollection', 'IList', 'IReadOnlyCollection', 'IReadOnlyList']) {
           const definition = this.#loader.intrinsic(`System.Collections.Generic.${name}\`1`);
-          interfaces.push(this.#intrinsicInstance(definition, [element]));
+          interfaces.push(this.#instantiate(definition, [element]));
         }
       }
-      return { kind, name: `${element.name}${suffix}`, namespace: element.namespace, fullName: `${element.fullName}${suffix}`,
+      return { kind, name: `${element.name}${suffix}`, namespace: element.namespace, fullName: `${element.fullName ?? element.name}${suffix}`,
         module: element.module, elementType: element, rank, baseType, interfaces: Object.freeze([...new Set(interfaces)]),
+        containsGenericParameters: element.containsGenericParameters, isCollectible: element.isCollectible,
         methods: array ? this.#arrayMethods(element, rank, kind === TypeKind.SZArray) : Object.freeze([]) };
     });
-  }
-
-  #intrinsicInstance(definition, arguments_) {
-    if (definition.module || definition.genericParameters.length !== arguments_.length) throw fail('Invalid intrinsic generic definition');
-    return this.#canonical(`generic:${this.#identity(definition)}:${arguments_.map(type => this.#identity(type)).join(',')}`, () => ({
-      kind: TypeKind.Instantiation, name: definition.name, namespace: definition.namespace,
-      fullName: `${definition.fullName}[${arguments_.map(type => type.fullName).join(',')}]`, genericDefinition: definition,
-      genericArguments: Object.freeze([...arguments_]), baseType: definition.baseType, interfaces: definition.interfaces,
-    }));
   }
 
   #arrayMethods(element, rank, szarray) {
@@ -104,17 +96,17 @@ export class ConstructedTypes {
     const key = `fn:${callingConvention}:${Boolean(hasThis)}:${Boolean(explicitThis)}:${genericArity}:${sentinel}:` +
       `${this.#identity(returnType)}:${parameters.map(parameter => this.#identity(parameter)).join(',')}`;
     return this.#canonical(key, () => {
-      requireResolvedParameter(returnType);
-      for (const parameter of parameters) requireResolvedParameter(parameter);
       return { kind: TypeKind.FunctionPointer, name: 'method', namespace: '', fullName: 'method',
+        containsGenericParameters: returnType.containsGenericParameters || parameters.some(parameter => parameter.containsGenericParameters),
+        isCollectible: returnType.isCollectible || parameters.some(parameter => parameter.isCollectible),
         signature: Object.freeze({ returnType, parameters: Object.freeze([...parameters]), callingConvention,
           hasThis: Boolean(hasThis), explicitThis: Boolean(explicitThis), genericArity, sentinel }) };
     });
   }
 
-  signature(signature, resolveType, signal) {
+  signature(signature, resolveType, signal, operation = {}) {
     this.#signatures ??= new SignatureTypes(this.#loader, value => this.functionPointer(value), this.#signatureExtensions);
-    return this.#signatures.resolve(signature, { resolveType, signal });
+    return this.#signatures.resolve(signature, { ...operation, resolveType, signal });
   }
 }
 

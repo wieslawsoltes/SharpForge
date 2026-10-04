@@ -4,6 +4,10 @@ import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 async function definition(service, signature, operation) {
   const type = await operation.resolveType(signature.token);
+  if (operation.validateCategory) {
+    await operation.validateCategory(type, signature.kind);
+    return type;
+  }
   const value = [TypeKind.ValueType, TypeKind.Enum].includes(type.kind);
   if ((signature.kind === 'valuetype') !== value) {
     throw loadError(LoadErrorCode.TypeLoad, 'Signature class/value category does not match its definition');
@@ -54,6 +58,7 @@ export class SignatureTypes {
 
   async resolve(signature, operation) {
     checkCancellation(operation.signal);
+    operation.visit?.();
     const handler = this.#extensions && Object.hasOwn(this.#extensions, signature.kind)
       ? this.#extensions[signature.kind] : handlers[signature.kind];
     if (!handler) {

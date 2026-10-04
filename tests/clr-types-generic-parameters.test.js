@@ -50,8 +50,10 @@ test('CLR type generic parameter identities match independent CoreCLR reflection
   const context = arrayContext();
   const typedModule = (await context.loadFromStream(image)).manifestModule;
   const parameter = typedModule.genericParameter(native.definitions[0].parameters[0].token);
-  assert.throws(() => context.types.szArray(parameter), /requires generic type services/);
-  assert.throws(() => context.types.functionPointer({ returnType: parameter }), /requires generic type services/);
+  assert.equal(context.types.szArray(parameter).elementType, parameter);
+  assert.equal(context.types.szArray(parameter).containsGenericParameters, true);
+  assert.equal(context.types.functionPointer({ returnType: parameter }).signature.returnType, parameter);
+  assert.equal(parameter.isLoaded, false, 'Constructed argument identity does not complete parameter constraints');
 });
 
 test('CLR generic parameter metadata rejects invalid ownership, numbering, tokens and constraints', async () => {

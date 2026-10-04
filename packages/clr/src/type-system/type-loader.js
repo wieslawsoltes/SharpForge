@@ -1,9 +1,16 @@
-import { cliSystemName, decodeCoded, decodeSignature, decodeTypeSignature } from '@sharpforge/cil';
+import { cliSystemName, decodeCoded, decodeSignature } from '@sharpforge/cil';
 import { createTypeDesc, completeTypeDesc, TypeDesc, TypeKind } from './type-desc.js';
 import { ConstructedTypes, resolveArrayMethod } from './constructed-types.js';
 import { TypeAssignability } from './casting.js';
 import { MethodBaseDefinitions } from './method-base-definition.js';
 import { TypeForwarders } from '../resolve/forwarders.js';
+import { GenericTypeInstantiations, requireUnconstrainedParameter } from '../generics/instantiation.js';
+import { copyResolutionContext, copyTypeArguments, GenericResolutionContext } from '../generics/resolution-context.js';
+import { genericSignatureTypes } from '../generics/signature-types.js';
+import { InstantiationTypeSubstitution } from '../generics/type-substitution.js';
+import { GenericContextLifetime } from '../generics/context-lifetime.js';
+import { TypeSpecifications } from './type-specifications.js';
+import { awaitContextBinding } from '../binding-wait.js';
 import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
@@ -27,12 +34,17 @@ export class TypeLoader {
   #casting;
   #methodBases;
   #maxConstructedTypes;
-  #specMarkers = new WeakMap();
+  #specifications;
   #forwarders;
   #maxForwarderHops;
   #lookupDefinition;
+  #instantiations;
+  #definitionScopes;
+  #maxGenericWork;
+  #maxTypeSignatureBytes;
+  #genericLifetime;
   constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000,
-    maxConstructedTypes = 100000, maxForwarderHops = 128 } = {}) {
+    maxConstructedTypes = 100000, maxForwarderHops = 128, maxGenericWork = 100000, maxTypeSignatureBytes = 65536 } = {}) {
     if (resolveExternalType !== null && typeof resolveExternalType !== 'function') throw new TypeError('Invalid external type resolver');
     if (!Number.isInteger(maxDepth) || maxDepth < 1 || maxDepth > 512 ||
         !Number.isInteger(maxMetadataRows) || maxMetadataRows < 1 || maxMetadataRows > 1000000) throw new RangeError('Invalid type graph limits');
@@ -48,6 +60,12 @@ export class TypeLoader {
       throw new RangeError('Invalid constructed type limit');
     }
     this.#maxConstructedTypes = maxConstructedTypes;
+    if (!Number.isSafeInteger(maxGenericWork) || maxGenericWork < 1 || maxGenericWork > 1000000 ||
+        !Number.isSafeInteger(maxTypeSignatureBytes) || maxTypeSignatureBytes < 1 || maxTypeSignatureBytes > 1048576) {
+      throw loadError(LoadErrorCode.InvalidConfiguration, 'Invalid generic resolution limits');
+    }
+    this.#maxGenericWork = maxGenericWork;
+    this.#maxTypeSignatureBytes = maxTypeSignatureBytes;
   }
 
   /** Explicit host BCL registration. Names never implicitly satisfy an AssemblyRef. */
@@ -79,7 +97,51 @@ export class TypeLoader {
   }
 
   isIntrinsic(type, fullName) { return type === this.#intrinsics.get(fullName); }
-  get #constructions() { return this.#constructed ??= new ConstructedTypes(this, this.#context, this.#maxConstructedTypes); }
+  get #constructions() {
+    return this.#constructed ??= new ConstructedTypes(this, this.#context, this.#maxConstructedTypes, {
+      signatureExtensions: genericSignatureTypes,
+      instantiate: (definition, arguments_) => this.#intern(definition, arguments_),
+    });
+  }
+
+  #intern(definition, arguments_) {
+    if (!(definition instanceof TypeDesc)) throw fail('Generic instantiation requires a TypeDesc definition');
+    const owner = definition.loadContext.types;
+    if (owner !== this) return owner.#intern(definition, arguments_);
+    this.#instantiations ??= new GenericTypeInstantiations(this.#context, this.#constructions.cache, {
+      maxDepth: this.#maxDepth, maxWork: this.#maxGenericWork,
+    });
+    return this.#instantiations.get(definition, arguments_);
+  }
+
+  /** Canonical open/partial/closed identity plus inheritance graph; unsupported semantic constraints reject with SFCLR013. */
+  async instantiate(definition, typeArguments, options = {}) {
+    try {
+      checkCancellation(options.signal);
+      const originContext = definition instanceof TypeDesc ? definition.loadContext : null;
+      if (originContext && originContext !== this.#context) return await originContext.types.instantiate(definition, typeArguments, options);
+      const originWasUnloading = originContext?.isUnloading;
+      const arguments_ = copyTypeArguments(typeArguments);
+      checkCancellation(options.signal);
+      const type = this.#intern(definition, arguments_);
+      checkCancellation(options.signal);
+      if (!originWasUnloading && originContext.isUnloading) throw loadError(LoadErrorCode.Disposed, 'Generic type context began unloading');
+      if (type.isLoaded) return type;
+      const operation = this.#operation(options.signal);
+      operation.contextOwnedBindings = true;
+      operation.originContext = originContext;
+      operation.originWasUnloading = originWasUnloading;
+      return await this.#finish(operation, () => {
+        const work = this.#genericOperation(operation);
+        work.observeContext(originContext, originWasUnloading);
+        work.observe(type);
+        return this.#complete(type, operation);
+      });
+    } catch (error) {
+      if (error.code?.startsWith('SFCLR')) throw error;
+      throw loadError(LoadErrorCode.InvalidImage, `Invalid generic type metadata: ${error.message}`);
+    }
+  }
   constructElement(kind, element, rank = 0) {
     if (!(element instanceof TypeDesc)) throw new TypeError('Expected element TypeDesc');
     if (![TypeKind.SZArray, TypeKind.Array, TypeKind.Pointer, TypeKind.ByRef].includes(kind)) throw fail('Invalid element construction');
@@ -126,10 +188,13 @@ export class TypeLoader {
   async find(module, fullName, options = {}) {
     checkCancellation(options.signal);
     try {
+      const owner = module.assembly.loadContext;
+      if (owner !== this.#context) return await owner.types.find(module, fullName, options);
       if (typeof fullName !== 'string' || !fullName || fullName.length > 4096) throw fail('Invalid metadata type name');
       const token = this.#index(module).names.get(fullName);
       if (token) return await this.#start(module, token, options);
-      return await this.#find(module, fullName, this.#operation(options.signal));
+      const operation = this.#operation(options.signal);
+      return await this.#finish(operation, () => this.#find(module, fullName, operation));
     } catch (error) {
       if (error.code?.startsWith('SFCLR')) throw error;
       throw loadError(LoadErrorCode.InvalidImage, `Invalid type metadata: ${error.message}`);
@@ -142,7 +207,10 @@ export class TypeLoader {
     this.#forwarders ??= new TypeForwarders({ maxMetadataRows: this.#maxRows,
       maxForwarderHops: this.#maxForwarderHops, maxDepth: this.#maxDepth });
     this.#lookupDefinition ??= (target, name) => this.#index(target).names.get(name);
-    const target = await this.#forwarders.resolve(module, fullName, this.#lookupDefinition, operation);
+    const bindings = operation.root.contextOwnedBindings ? {
+      ...operation, resolveReference: (assembly, index) => this.#assemblyReference(assembly, index, operation),
+    } : operation;
+    const target = await this.#forwarders.resolve(module, fullName, this.#lookupDefinition, bindings);
     return this.#load(target.module, target.token, operation);
   }
 
@@ -155,8 +223,21 @@ export class TypeLoader {
     }
   }
 
-  #operation(signal) {
-    return { signal, path: new Set(), references: new Map() };
+  #operation(signal, scope = null) {
+    const operation = { signal, path: new Set(), references: new Map(), scope, rootResult: true,
+      originContext: this.#context, originWasUnloading: this.#context.isUnloading, contextOwnedBindings: scope !== null };
+    operation.root = operation;
+    return operation;
+  }
+
+  async #finish(operation, action) {
+    try {
+      const result = await action();
+      operation.generic?.complete();
+      return result;
+    } finally {
+      operation.generic?.dispose();
+    }
   }
 
   #start(module, token, options) {
@@ -164,11 +245,14 @@ export class TypeLoader {
     requireTypeToken(token);
     const owner = module.assembly.loadContext;
     if (owner !== this.#context) return owner.types.#start(module, token, options);
+    const scope = copyResolutionContext(options);
+    if (scope) checkCancellation(options.signal);
     if (token >>> 24 === 2) {
       const type = module.typeDefinition(token);
       if (type.isLoaded) return type;
     }
-    return this.#load(module, token, this.#operation(options.signal));
+    const operation = this.#operation(options.signal, scope);
+    return this.#finish(operation, () => this.#load(module, token, operation));
   }
 
   async #load(module, token, operation) {
@@ -177,28 +261,52 @@ export class TypeLoader {
     if (operation.path.size >= this.#maxDepth) throw loadError(LoadErrorCode.LimitExceeded, 'Type graph depth exceeded');
     if (module.assembly.loadContext !== this.#context) return module.assembly.loadContext.types.#load(module, token, operation);
     if (token >>> 24 === 1) return this.#reference(module, token, operation);
-    if (token >>> 24 === 27) {
-      const signature = decodeTypeSignature(module.blob(module.row(token)[0]));
-      if (!this.#specMarkers.has(module)) this.#specMarkers.set(module, new Map());
-      const markers = this.#specMarkers.get(module);
-      if (!markers.has(token) && markers.size >= this.#maxConstructedTypes) throw loadError(LoadErrorCode.LimitExceeded, 'TypeSpec limit exceeded');
-      if (!markers.has(token)) markers.set(token, Object.freeze({ token }));
-      const marker = markers.get(token);
-      if (operation.path.has(marker)) throw fail('Circular TypeSpec resolution');
-      const nested = { ...operation, path: new Set([...operation.path, marker]) };
-      return this.#constructions.signature(signature, reference => this.#load(module, reference, nested), operation.signal);
-    }
+    if (token >>> 24 === 27) return this.#typeSpecifications.load(module, token, operation);
     const type = module.typeDefinition(token);
+    if (operation.identityOnly && operation.root.contextOwnedBindings) this.#genericOperation(operation).observe(type);
+    return operation.identityOnly ? type : this.#complete(type, operation);
+  }
+
+  async #complete(type, operation) {
+    this.#checkOperation(operation);
+    if (operation.root.contextOwnedBindings) {
+      const work = this.#genericOperation(operation);
+      work.observeContext(operation.root.originContext, operation.root.originWasUnloading);
+      work.observe(type);
+    }
+    if (operation.path.size >= this.#maxDepth) throw loadError(LoadErrorCode.LimitExceeded, 'Type graph depth exceeded');
+    const owner = type.loadContext.types;
+    if (owner !== this) return owner.#complete(type, operation);
     if (operation.path.has(type)) throw fail(`Circular inheritance involving ${type.fullName}`);
     if (type.isLoaded) return type;
+    if (type.kind === TypeKind.Instantiation) return this.#instance(type, operation);
+    if (type.kind === TypeKind.GenericParameter) return this.#parameter(type, operation);
+    return this.#definition(type, operation);
+  }
+
+  #definitionScope(type) {
+    if (!type.module.rowCount(42)) return null;
+    this.#definitionScopes ??= new WeakMap();
+    const cached = this.#definitionScopes.get(type);
+    if (cached !== undefined) return cached;
+    const parameters = type.genericParameters;
+    const scope = parameters.length ? Object.freeze({ typeArguments: parameters, methodArguments: undefined }) : null;
+    this.#definitionScopes.set(type, scope);
+    return scope;
+  }
+
+  async #definition(type, operation) {
+    const module = type.module;
+    const token = type.metadataToken;
     const row = module.row(token);
-    const nested = { ...operation, path: new Set([...operation.path, type]) };
+    const nested = { ...operation, path: new Set([...operation.path, type]), scope: this.#definitionScope(type),
+      identityOnly: false, rootResult: false };
     const baseType = row[3] ? await this.#load(module, decodeCoded('TypeDefOrRef', row[3]), nested) : null;
     if (baseType?.isInterface || (type.isInterface && baseType)) throw fail('Invalid class/interface base relationship');
     if (baseType && [TypeKind.Array, TypeKind.SZArray, TypeKind.Pointer, TypeKind.ByRef, TypeKind.FunctionPointer].includes(baseType.kind)) {
       throw fail('Invalid constructed base type');
     }
-    if (baseType && ((baseType.flags & 0x100) || [TypeKind.ValueType, TypeKind.Enum].includes(baseType.kind))) {
+    if (baseType && ((baseType.flags & 0x100) || [TypeKind.ValueType, TypeKind.Enum].includes((baseType.genericDefinition ?? baseType).kind))) {
       throw fail('A type cannot derive from a sealed or value type');
     }
     const interfaces = new Set(baseType?.interfaces ?? []);
@@ -211,8 +319,78 @@ export class TypeLoader {
     const kind = type.isInterface ? TypeKind.Interface : baseType === this.#intrinsics.get('System.Enum') ? TypeKind.Enum
       : baseType === this.#intrinsics.get('System.ValueType') ? TypeKind.ValueType : TypeKind.Class;
     const underlyingType = kind === TypeKind.Enum ? this.#enumUnderlying(module, token) : null;
+    if (kind === TypeKind.Enum && nested.scope) throw fail('Enums cannot declare generic type parameters');
+    this.#publish(type, { kind, baseType, interfaces: Object.freeze([...interfaces]), underlyingType, loaded: true }, operation);
+    return type;
+  }
+
+  #genericOperation(operation) {
+    const root = operation.root;
+    if (!root.generic) {
+      root.generic = new GenericResolutionContext(this.#maxGenericWork, operation.signal,
+        (context, observer) => context.types.#watchGenericLifetime(observer));
+      if (root.scope) {
+        root.generic.observeContext(root.originContext, root.originWasUnloading);
+        for (const argument of root.scope.typeArguments ?? []) root.generic.observe(argument);
+        for (const argument of root.scope.methodArguments ?? []) root.generic.observe(argument);
+      }
+    }
+    return root.generic;
+  }
+
+  #watchGenericLifetime(operation) {
+    this.#genericLifetime ??= new GenericContextLifetime(this.#context, this.#maxGenericWork);
+    return this.#genericLifetime.add(operation);
+  }
+
+  #checkOperation(operation) {
     checkCancellation(operation.signal);
-    if (!type.isLoaded) completeTypeDesc(type, { kind, baseType, interfaces: Object.freeze([...interfaces]), underlyingType, loaded: true });
+    if (operation.root.contextOwnedBindings) this.#genericOperation(operation).visit();
+  }
+
+  #publish(type, state, operation) {
+    this.#checkOperation(operation);
+    if (operation.rootResult) operation.root.generic?.complete();
+    if (!type.isLoaded) completeTypeDesc(type, state);
+  }
+
+  get #typeSpecifications() {
+    return this.#specifications ??= new TypeSpecifications(this.#constructions, {
+      maxSpecifications: this.#maxConstructedTypes, maxSignatureBytes: this.#maxTypeSignatureBytes,
+    }, {
+      load: (module, token, operation) => this.#load(module, token, operation),
+      complete: (type, operation) => this.#complete(type, operation),
+      scope: type => type.loadContext.types.#definitionScope(type),
+      work: operation => this.#genericOperation(operation),
+      instantiate: (definition, arguments_) => this.#intern(definition, arguments_),
+    });
+  }
+
+  async #instance(type, operation) {
+    const nested = { ...operation, path: new Set([...operation.path, type]), identityOnly: false, rootResult: false };
+    const definition = await this.#complete(type.genericDefinition, nested);
+    const work = this.#genericOperation(operation);
+    const substitution = new InstantiationTypeSubstitution(definition, type.genericArguments, {
+      signal: operation.signal, visit: () => work.visit(),
+      instantiate: (owner, arguments_) => this.#intern(owner, arguments_),
+      element: (kind, element, rank) => this.constructElement(kind, element, rank),
+      functionPointer: signature => this.functionPointer(signature),
+    }, this.#maxDepth);
+    const baseType = substitution.apply(definition.baseType);
+    if (baseType) await this.#complete(baseType, nested);
+    const interfaces = new Set();
+    for (const template of definition.interfaces) {
+      const contract = substitution.apply(template);
+      await this.#complete(contract, nested);
+      interfaces.add(contract);
+    }
+    this.#publish(type, { baseType, interfaces: Object.freeze([...interfaces]), loaded: true }, operation);
+    return type;
+  }
+
+  #parameter(type, operation) {
+    requireUnconstrainedParameter(type);
+    this.#publish(type, { baseType: this.intrinsic('System.Object'), interfaces: Object.freeze([]), loaded: true }, operation);
     return type;
   }
 
@@ -236,17 +414,26 @@ export class TypeLoader {
       targetName = `${parent.fullName}+${name}`;
     } else if (tag === 2 && rid) {
       const assemblyName = await module.assembly.reference(rid, operation);
-      const external = await this.#resolveExternal?.({ module, assemblyName, namespace, name, signal: operation.signal,
-        resolveType: (targetModule, targetToken) => this.#load(targetModule, targetToken, nested) });
+      const resolution = this.#resolveExternal?.({ module, assemblyName, namespace, name, signal: operation.signal,
+        resolveType: (targetModule, targetToken) => this.#load(targetModule, targetToken, { ...nested, identityOnly: false, rootResult: false }) });
+      const external = await (operation.root.contextOwnedBindings
+        ? awaitContextBinding(Promise.resolve(resolution), operation.signal) : resolution);
       checkCancellation(operation.signal);
       if (external != null) {
         if (!(external instanceof TypeDesc) || !external.isLoaded) throw fail('External resolver must return a loaded TypeDesc');
         if (external.fullName !== fullName) throw fail(`External type resolver returned ${external.fullName} for ${fullName}`);
+        if (operation.root.contextOwnedBindings) this.#genericOperation(operation).observe(external);
         return external;
       }
-      target = (await module.assembly.resolveReference(rid, operation)).manifestModule;
+      target = (await this.#assemblyReference(module.assembly, rid, operation)).manifestModule;
     } else if (tag !== 0 || rid !== 1) throw fail('ModuleRef and null-scoped TypeRef resolution require a later loader batch');
     return this.#find(target, targetName, nested);
+  }
+
+  #assemblyReference(assembly, index, operation) {
+    this.#checkOperation(operation);
+    if (!operation.root.contextOwnedBindings) return assembly.resolveReference(index, operation);
+    return awaitContextBinding(assembly.resolveReference(index), operation.signal);
   }
 
   #enumUnderlying(module, token) {
@@ -270,17 +457,21 @@ export class TypeLoader {
 
   async #resolveArrayMember(module, token, options) {
     checkCancellation(options.signal);
-    if (!Number.isInteger(token) || token < 0 || token > 0xffffffff || token >>> 24 !== 10) throw fail('Expected MemberRef token');
-    const [parent, name, blob] = module.row(token);
-    if ((parent & 7) !== 4) throw fail('Array MemberRef must be scoped by TypeSpec');
-    const type = await this.load(module, 0x1b000000 + (parent >>> 3), options);
-    const signature = decodeSignature(module.blob(blob));
-    if (signature.kind !== 'method' || !signature.hasThis || signature.explicitThis || signature.callingConvention !== 0 ||
-        signature.genericArity || signature.sentinel !== -1) throw fail('Array member requires a default instance method signature');
-    const resolveType = reference => this.load(module, reference, options);
-    const returnType = await this.#constructions.signature(signature.returnType, resolveType, options.signal);
-    const parameters = [];
-    for (const parameter of signature.parameters) parameters.push(await this.#constructions.signature(parameter, resolveType, options.signal));
-    return resolveArrayMethod(type, module.string(name), returnType, parameters);
+    const owner = module.assembly.loadContext;
+    if (owner !== this.#context) return owner.types.#resolveArrayMember(module, token, options);
+    const operation = this.#operation(options.signal, copyResolutionContext(options));
+    return this.#finish(operation, async () => {
+      if (!Number.isInteger(token) || token < 0 || token > 0xffffffff || token >>> 24 !== 10) throw fail('Expected MemberRef token');
+      const [parent, name, blob] = module.row(token);
+      if ((parent & 7) !== 4) throw fail('Array MemberRef must be scoped by TypeSpec');
+      const type = await this.#load(module, 0x1b000000 + (parent >>> 3), operation);
+      const signature = decodeSignature(module.blob(blob));
+      if (signature.kind !== 'method' || !signature.hasThis || signature.explicitThis || signature.callingConvention !== 0 ||
+          signature.genericArity || signature.sentinel !== -1) throw fail('Array member requires a default instance method signature');
+      const returnType = await this.#typeSpecifications.signature(module, signature.returnType, operation);
+      const parameters = [];
+      for (const parameter of signature.parameters) parameters.push(await this.#typeSpecifications.signature(module, parameter, operation));
+      return resolveArrayMethod(type, module.string(name), returnType, parameters);
+    });
   }
 }
