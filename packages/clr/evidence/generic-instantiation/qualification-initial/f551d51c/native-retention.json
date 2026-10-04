@@ -1,0 +1,168 @@
+{
+  "completedUtc": "2026-10-04T17:50:54.682823+00:00",
+  "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-f551d51c/native-first",
+  "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-instantiation",
+  "sourceHead": "f551d51c26ccb4460c0300cea5069a77e8b34a8a",
+  "retentionScriptSha256": "688c9e1ac85ee2d2e4004c76ce3b2a937e520b2a5b0c4687e801dd7c43e9d0b5",
+  "nativeSha256": "6355984f532dedd348654c59c97388a4eedde65e63fcea4a120e5e96de7789e3",
+  "inputSha256": "08fbb494e4780c98e84484b3d3fbeb7e885653d67e10d6315c49f6c156cd18dd",
+  "allSixCommandsPassed": true,
+  "allEightSourcesMatch": true,
+  "all167ReferenceAssembliesMatch": true,
+  "rawComparison": "Every raw JSON field matches, except images: five raw SRM image facts match exactly after removing only added bytes/sha256; the sixth image is the independently compiled Fixture.dll. All six file bytes/hashes are checked.",
+  "cases": 101,
+  "lifetimeCases": 7,
+  "images": 6,
+  "files": [
+    {
+      "name": "sdk-version.stdout.txt",
+      "bytes": 9,
+      "sha256": "38c8354f0a1a3a4e913e03fe6396aa12c2ef1d427921d44b19123e42dcb74e92"
+    },
+    {
+      "name": "sdk-version.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "sdk-list.stdout.txt",
+      "bytes": 63,
+      "sha256": "4d0c9a4904503f1705fefa87cf647485beb84f2ab0e692c446b4abdd615db85f"
+    },
+    {
+      "name": "sdk-list.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "compiler-version.stdout.txt",
+      "bytes": 61,
+      "sha256": "335ee5c8674ef201012063d1afcf0c093316d04c0c357f69b6322dea86a5529d"
+    },
+    {
+      "name": "compiler-version.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "compile-fixture.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "compile-fixture.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "compile-observer.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "compile-observer.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "native-observer.stdout.txt",
+      "bytes": 126635,
+      "sha256": "82a38f3fa082960dabb7120ded29fea4ae364025a44f34a753d20f4c91322b60"
+    },
+    {
+      "name": "native-observer.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "native-instantiation.json",
+      "bytes": 254104,
+      "sha256": "6355984f532dedd348654c59c97388a4eedde65e63fcea4a120e5e96de7789e3"
+    },
+    {
+      "name": "capture-inputs.json",
+      "bytes": 1818,
+      "sha256": "08fbb494e4780c98e84484b3d3fbeb7e885653d67e10d6315c49f6c156cd18dd"
+    },
+    {
+      "name": "capture-status.json",
+      "bytes": 52040,
+      "sha256": "55764b1c99c8af985e5ae40715f0fe43f891112835a1f3980ad59ed615184cde"
+    },
+    {
+      "name": "Fixture.dll",
+      "bytes": 5120,
+      "sha256": "52dd64b819f49b6afe29967e728ca400d0080866303d04c6d257d12db4c4b3e1"
+    },
+    {
+      "name": "GenericConsumerA.dll",
+      "bytes": 2048,
+      "sha256": "d109aca548b8cf6d5eb40bfd50252689942ec1565a6144906e0a020ce7d2f0dd"
+    },
+    {
+      "name": "GenericConsumerB.dll",
+      "bytes": 2048,
+      "sha256": "524e5ce96f52e59a422274d9c94cdb8e5b0cf6408281c2e780c2c225286ea8ca"
+    },
+    {
+      "name": "MalformedGenerics.dll",
+      "bytes": 2048,
+      "sha256": "0349b77e35851fb955bcefc2c59c1f062e793c3ee46748847305852a3f8e2307"
+    },
+    {
+      "name": "NestedGenericMetadata.dll",
+      "bytes": 2048,
+      "sha256": "f02c4eed358306119d2aa951e22aee55a30c24d80561f093f3b268f2803832c4"
+    },
+    {
+      "name": "CircularGenericMetadata.dll",
+      "bytes": 2048,
+      "sha256": "2d58d39dd7c5a8c1ed131c8e302cf4d9d661c80dba306dabb8ab94576b72d999"
+    },
+    {
+      "name": "GenericInstantiationOracle.dll",
+      "bytes": 102912,
+      "sha256": "54109411843d12b0767c86742b456383a8c5412e398373329bb64ce977c6596b"
+    },
+    {
+      "name": "GenericInstantiationOracle.runtimeconfig.json",
+      "bytes": 250,
+      "sha256": "497e324897d601b3f000fc6e51107f3841fbce3eb1a01144d43ff2688d3adbac"
+    }
+  ],
+  "totalBytes": 553252,
+  "nativeRejections": [
+    "definition-node",
+    "node-integer",
+    "node-node-integer",
+    "node-base-argument",
+    "node-contract-argument",
+    "scope-no-environment",
+    "scope-no-method-environment",
+    "scope-no-type-environment",
+    "scope-undersized",
+    "null-arguments",
+    "null-argument-entry",
+    "non-generic-definition",
+    "constructed-definition",
+    "missing-argument",
+    "excess-arguments",
+    "nested-wrong-arity",
+    "invalid-void-argument",
+    "invalid-pointer-argument",
+    "invalid-byref-argument",
+    "invalid-function-argument",
+    "constraint-invalid-native",
+    "unmarked-wrong-arity",
+    "malformed-wrongArity",
+    "malformed-wrongClassKind",
+    "malformed-wrongValueKind",
+    "malformed-invalidElement",
+    "circular-inheritance"
+  ],
+  "identities": {
+    "observed": 12,
+    "unavailable": 2
+  },
+  "scope": "Native operation/identity observations only; no current-product or performance pass is asserted."
+}

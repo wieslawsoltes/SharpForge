@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "status": "read-only-source-audit",
+  "head": "f551d51c26ccb4460c0300cea5069a77e8b34a8a",
+  "worktree": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation",
+  "finding": "The generic service input image contains invalid expanding Node metadata, but no existing benchmark operation requests Node or a type whose inheritance template references it.",
+  "inputPresence": {
+    "file": "tests/clr-generics-instantiation-fixtures.js",
+    "definition": "Node<T> : Box<Node<T>>, IContract<Node<Node<T>>>",
+    "presenceRequiredForCurrentFixtureHash": true,
+    "selectedByAnyServiceCohort": false,
+    "moduleWideValidationWouldBeIncorrect": "Unrelated invalid definitions must not contaminate the finite instantiation closure of Box, Pair, Derived or Program."
+  },
+  "existingServiceCohorts": [
+    {
+      "name": "new warm closed generic identity",
+      "iterationsPerSample": 50000,
+      "target": "Box<Int32>",
+      "loadsNode": false
+    },
+    {
+      "name": "new warm closed TypeSpec",
+      "iterationsPerSample": 5000,
+      "target": "boxInteger -> Box<Int32>",
+      "loadsNode": false
+    },
+    {
+      "name": "new alternating VAR and MVAR environments",
+      "iterationsPerSample": 5000,
+      "target": "scopePair -> Pair<Int32,String> / Pair<String,Int32>",
+      "loadsNode": false
+    },
+    {
+      "name": "new warm partially open generic identity",
+      "iterationsPerSample": 10000,
+      "target": "Pair<String,Other<T>.T>",
+      "loadsNode": false
+    },
+    {
+      "name": "new warm collectible-argument identity",
+      "iterationsPerSample": 10000,
+      "target": "Box<Program> with a collectible argument context",
+      "loadsNode": false
+    },
+    {
+      "name": "new scoped TypeSpec with two collectible context monitors",
+      "iterationsPerSample": 5000,
+      "target": "Pair<ProgramA,ProgramB> with two collectible argument contexts",
+      "loadsNode": false
+    },
+    {
+      "name": "new cold context, image and substituted diamond graph",
+      "iterationsPerSample": 100,
+      "target": "Derived<Int32> -> Box<Int32>, ILeft<Int32>, IRight<Int32>, IContract<Int32>",
+      "loadsNode": false
+    },
+    {
+      "name": "new cold tuple and graph with prepared loaded definition",
+      "iterationsPerSample": 100,
+      "target": "Box<Int32> after Box<T> definition loading",
+      "loadsNode": false
+    }
+  ],
+  "existingControlCohorts": [
+    {
+      "name": "existing warm TypeDef graph lookup",
+      "iterationsPerSample": 50000,
+      "target": "Fixture.Child from native-graphs.json",
+      "loadsNode": false
+    },
+    {
+      "name": "existing warm direct name lookup",
+      "iterationsPerSample": 50000,
+      "target": "Fixture.Child from native-graphs.json",
+      "loadsNode": false
+    },
+    {
+      "name": "existing cold context, native image and non-generic graph",
+      "iterationsPerSample": 100,
+      "target": "Fixture.Child from native-graphs.json",
+      "loadsNode": false
+    },
+    {
+      "name": "existing warm vector lookup",
+      "iterationsPerSample": 50000,
+      "target": "intrinsic Int32[]",
+      "loadsNode": false
+    },
+    {
+      "name": "existing warm function-pointer lookup",
+      "iterationsPerSample": 50000,
+      "target": "intrinsic Int32 -> Int32 signature",
+      "loadsNode": false
+    },
+    {
+      "name": "existing cold vector with prepared framework context",
+      "iterationsPerSample": 200,
+      "target": "intrinsic Int32[]",
+      "loadsNode": false
+    },
+    {
+      "name": "existing cold function pointer with prepared framework context",
+      "iterationsPerSample": 200,
+      "target": "intrinsic return Int32 signature",
+      "loadsNode": false
+    }
+  ],
+  "relatedBenchmarks": [
+    {
+      "driver": "benchmark-generic-parameters.mjs",
+      "scope": "Metadata-only GenericParam retrieval for six pinned definitions, no inheritance completion; no Node in fixture."
+    },
+    {
+      "driver": "benchmark-method-generic-parameters.mjs",
+      "scope": "Metadata-only method GenericParam retrieval for four pinned methods; no Node in fixture."
+    },
+    {
+      "driver": "benchmark-substitution.mjs",
+      "scope": "Seventeen independent signature-AST substitution inputs, no TypeLoader graph completion or Node request."
+    },
+    {
+      "driver": "benchmark-method-base-definition.mjs with clr-method-base-generic",
+      "scope": "Thirteen Root/Middle/Leaf method ancestry records; Box/Pair/Value appear only in signatures and their definitions have no recursive inheritance."
+    },
+    {
+      "driver": "benchmark-constructed-types.mjs",
+      "scope": "Intrinsic Int32 vector construction and warm lookup."
+    },
+    {
+      "driver": "benchmark-type-graphs.mjs",
+      "scope": "Non-generic Fixture.Child from the independent native graph image."
+    },
+    {
+      "driver": "benchmark-assignability.mjs",
+      "scope": "The established loaded non-generic class/interface/value/array pair matrix."
+    }
+  ],
+  "protocolDelta": {
+    "required": false,
+    "reason": "No invalid Node workload is measured. Preserve all seven controls, eight service cohorts, fixture bytes and driver source. Finite-closure correctness cases belong to the dedicated native/test matrix.",
+    "removedCohorts": [],
+    "replacedCohorts": [],
+    "addedCohorts": []
+  },
+  "preservedProtocol": {
+    "warmups": 10,
+    "samples": 100,
+    "summary": [
+      "middle-two median",
+      "nearest-rank p95"
+    ],
+    "timedRegions": "Unchanged; existing preparation callbacks and post-batch correctness checks remain outside timing.",
+    "retention": "Keep every original raw result, source pin and protocol file; use separate fresh output paths for future authorized measurements.",
+    "baseline": "Existing df5 controls remain paired with the same driver/input bytes; new service measurements remain absolute unless root approves a separate same-semantics comparison."
+  },
+  "originalPlan": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-2042-validation-plan.json",
+    "sha256": "876d7cfd763c9a7d9057775450563f3978a97f051d23798335ad37fa4c73895a",
+    "modified": false
+  },
+  "sourcePins": [
+    {
+      "path": "packages/clr/tools/benchmark-generic-instantiation.mjs",
+      "sha256": "435545681efeacd533534203b8e0ae3c5d5493325dacaa32e40fac3f7b562da6"
+    },
+    {
+      "path": "packages/clr/tools/benchmark-generic-parameters.mjs",
+      "sha256": "564683179a78c475fd612a763e5018c87e37ba06557fd5588af6ed604c60e7ac"
+    },
+    {
+      "path": "packages/clr/tools/benchmark-method-generic-parameters.mjs",
+      "sha256": "0cccbaa934c638073ce3c111a621b6e9b820715eb56408153712dc4f5a84070e"
+    },
+    {
+      "path": "packages/clr/tools/benchmark-substitution.mjs",
+      "sha256": "58f5bd3f30d174f1b1ad9677d8d86370b54e8d2d942b8ba044c6440199b96c2b"
+    },
+    {
+      "path": "packages/clr/tools/benchmark-method-base-definition.mjs",
+      "sha256": "2ac631f0d27940e5362eeb42639cdc38e36f0b15d089d9c9c68991f11245bc1d"
+    },
+    {
+      "path": "packages/clr/tools/benchmark-constructed-types.mjs",
+      "sha256": "f0a614eff48045ce62e0dae9b5f6535b76f1921ffc76da9910108af8b7948c38"
+    },
+    {
+      "path": "packages/clr/tools/benchmark-type-graphs.mjs",
+      "sha256": "83366f379a2a24c416d4c4fae63c9296833f4ddea6b79f045706c0ab5f3cd133"
+    },
+    {
+      "path": "packages/clr/tools/benchmark-assignability.mjs",
+      "sha256": "a2c38d48f2db0de74cd0bed1f15e7949974ed59aa107206ce5912f3a324d932c"
+    },
+    {
+      "path": "tests/clr-generics-instantiation-fixtures.js",
+      "sha256": "94ba493fdee3b91877480db8adcf30af61d08f0b5d4ff0141b3b211e357e1faf"
+    },
+    {
+      "path": "tests/managed-fixtures.js",
+      "sha256": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd"
+    },
+    {
+      "path": "tests/clr-types-array-fixtures.js",
+      "sha256": "d9a96c81fdc8f16d15649cd913243b87a5b0d565f061eb7ca5f224a9b88a8480"
+    },
+    {
+      "path": "tests/clr-types-graph-fixtures.js",
+      "sha256": "ca722224ce31e00047c9e358a07af82147abc6b503a37f4b6e3a9870cefcbd41"
+    },
+    {
+      "path": "tests/fixtures/clr-generic-parameters/Program.cs",
+      "sha256": "75402534ff07efc54deeaf759cef97e2dbb25cdfb11cdde17cc876a8fb69a0ff"
+    },
+    {
+      "path": "tests/fixtures/clr-generic-parameters/native-parameters.json",
+      "sha256": "e449293a14f381d9db07865b0a69b523fc6b774510b5d9eaba9583f5fe627ab2"
+    },
+    {
+      "path": "tests/fixtures/clr-substitution/native-signatures.json",
+      "sha256": "c83afc26e4001870a7309efaff841d86e2e48c7f1bf665fe07e3c106baa29b97"
+    },
+    {
+      "path": "tests/fixtures/clr-method-base-generic/Program.cs",
+      "sha256": "b16828483f627a305aa1bbda1c28d1bb1987bc3dde170ca056e0c34706dfc816"
+    },
+    {
+      "path": "tests/fixtures/clr-method-base-generic/native-method-bases.json",
+      "sha256": "f14768bec13be58958d46a5a387c21b195cb11ea0612248b7fde33538bcaefef"
+    },
+    {
+      "path": "tests/fixtures/clr-type-graphs/native-graphs.json",
+      "sha256": "529a5c0cbfcd979f8e7756ac8dd8e77bf270d67924e967e87c8def769863f96b"
+    }
+  ],
+  "execution": {
+    "productImports": false,
+    "benchmarks": false,
+    "tests": false,
+    "native": false,
+    "inspection": [
+      "Read benchmark drivers and fixture sources",
+      "Read existing reference JSON metadata fields",
+      "Search all CLR benchmark/tools and fixture text for Node workload selectors",
+      "Byte-check audited files against current committed Git objects"
+    ]
+  }
+}

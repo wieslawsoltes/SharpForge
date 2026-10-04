@@ -1,0 +1,21 @@
+{
+  "format": "sharpforge.project6.generic-instantiation-preparation-supplement",
+  "schemaVersion": 1,
+  "plan": "/workspace/scratch/7e3d2a445c44/generic-2042-validation-plan.json",
+  "planSha256": "876d7cfd763c9a7d9057775450563f3978a97f051d23798335ad37fa4c73895a",
+  "sourceHead": "2042ca6bd4f6bb4db0c2a4927dfde15cb804efb2",
+  "status": "source-preparation-correction",
+  "baselineMaterialization": {
+    "cwd": "/workspace/scratch/7e3d2a445c44/sf6-generic-baseline-df5bbff9",
+    "argv": ["git", "read-tree", "-mu", "HEAD"],
+    "after": "Create the new --no-checkout worktree and set its sparse-checkout patterns.",
+    "before": "Verify clean source pins and create tree-local package aliases.",
+    "restriction": "Use only in the fresh baseline worktree with no existing edits or staged work.",
+    "reason": "In this Git environment, sparse-checkout set on a --no-checkout worktree leaves an empty index. Explicit read-tree materializes only the selected source paths."
+  },
+  "observedOn": "The separate new sf6-generic-constraints preparation worktree; the frozen2042 qualification checkout was untouched.",
+  "testsExecuted": false,
+  "nativeExecuted": false,
+  "benchmarksExecuted": false,
+  "priorPlanPreserved": true
+}

@@ -1,10 +1,13 @@
 # CLR generic instantiation: native reference preparation
 
-**Status: the first native attempt compiled the fixture and observer, then
-failed before producing reference JSON when an eager `typeof(Node<>)` loaded
-an expanding recursive generic definition. The revised observer is prepared
-for a separate authorized capture. No successful comparison is claimed.**
-The reference JSON and DLLs must come from the approved native capture;
+**Status: the revised f551d51c capture succeeded with 101 main cases and 7
+lifetime cases. The first product gate has 84 tests: 82 passed, 2 failed,
+0 skipped. Generic-instantiation qualification remains incomplete.**
+The first 2042ca6b native attempt failed before reference JSON when an eager
+`typeof(Node<>)` loaded an expanding recursive definition. Both attempts,
+the failed product gate, plans and execution receipts are retained in
+[initial qualification evidence](../../../packages/clr/evidence/generic-instantiation/qualification-initial/README.md).
+The committed reference JSON and DLLs are the actual revised capture;
 do not create substitute expected values.
 A reference comparison must fail when the required JSON, image or source hash
 is absent or stale. It must never skip because the fixture is missing.
@@ -162,9 +165,13 @@ IContract<Node<Node<T>>>`. Its nested self-reference is an expanding generic
 inheritance dependency; the first native attempt rejected it.
 [ECMA-335 II.9.2](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf)
 requires a finite instantiation closure, beyond finite descriptor printing.
-The revised observer records actual rejection or acceptance for all Node
-requests without predicting the outcome. Successful simpler self references
-must be qualified separately from this expanding shape.
+The revised observer recorded `System.TypeLoadException` (HRESULT
+`-2146233054`) for `definition-node`, `node-integer`, `node-node-integer`,
+`node-base-argument` and `node-contract-argument`. Two Node identity pairs
+are unavailable; the other twelve identity pairs were observed. The product
+accepted `definition-node`, producing the retained native replay failure.
+Successful simpler self references must be qualified separately from this
+expanding shape; finite descriptor printing does not prove finite closure.
 
 `lifetime.reference` contains deterministic identity/descriptor observations
 and counts synchronous Unloading events. It retains handles while observing

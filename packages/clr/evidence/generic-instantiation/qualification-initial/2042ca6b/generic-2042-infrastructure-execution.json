@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "python3",
+    "/workspace/scratch/7e3d2a445c44/prepare-generic-2042-infrastructure.py"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44",
+  "startedUtc": "2026-10-04T17:07:38.031109+00:00",
+  "driverSha256": "59b0689d4ed528c2ef6049d135539d0eb4b8055c09fa29edb09f54a1d97bacc0",
+  "scope": "Root-authorized light infrastructure only; no product imports or heavy validation",
+  "finishedUtc": "2026-10-04T17:07:39.232107+00:00",
+  "exitCode": 0,
+  "stdout": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-2042-infrastructure-execution.stdout.txt",
+    "bytes": 353,
+    "sha256": "5875ffbeebf87199f4e3a5808e648612c57f4aa54e4c04de2344079a3c5feb5c"
+  },
+  "stderr": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-2042-infrastructure-execution.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
