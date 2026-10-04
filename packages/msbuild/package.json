@@ -15,7 +15,8 @@
     "bin",
     "docs",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "DIFFERENTIAL.md"
   ],
   "dependencies": {
     "@sharpforge/project-system": "0.14.0",

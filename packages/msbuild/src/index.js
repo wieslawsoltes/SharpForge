@@ -5,3 +5,4 @@ export * from './argument-policy.js';
 export * from './csc-args.js';
 export * from './diagnostics.js';
 export * from './sarif.js';
+export * from './evaluation-differential.js';

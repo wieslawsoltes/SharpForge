@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "issues": [
+    3170,
+    3171
+  ],
+  "source": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "base": "f132dc3680e85efbdeb7826f524cce95ca5a46d9",
+  "changesOutsideWorkstream": "The evaluator owner transferred boundary.json; no evaluator implementation is copied. Native execution uses actual engine #3602 and portable build models #3685.",
+  "projectionChanges": "Public-entry imports replace two earlier deep imports; one corpus line is wrapped without changing its string. Boundary and portable evaluator fixture are byte-identical. The comparator now reports native execution only after a completed native callback; the original four-case test file adds assertions for an unused callback.",
+  "blobs": {
+    "packages/msbuild/src/evaluation-differential.js": {
+      "sourceSha256": "456c2e38d11bbff503158c9064905d61f0257caf5fef5e3445c666c9677b59dc",
+      "projectedSha256": "13ce3a25d1996c9b2caa7036c4b28236e0d753ce9145c4f8a17f4221b5b49926"
+    },
+    "packages/project-system/src/evaluation/boundary.json": {
+      "sourceSha256": "09084d4a352e527a4e152aad4a1859367747be9a912b72a9da6bc2a56f8a4243",
+      "projectedSha256": "09084d4a352e527a4e152aad4a1859367747be9a912b72a9da6bc2a56f8a4243"
+    },
+    "tests/a23-12-evaluation-differential.test.js": {
+      "sourceSha256": "6fa8ab8c97b2ccdfcfdb358ea3c6165f432a92e516a0261c976b0e681f63fa47",
+      "projectedSha256": "80c9b6820e574041c6f33f2c8e146164aa768ff92dac2c2acfc0c27f2f10372e"
+    },
+    "tests/msbuild-differential/corpus.js": {
+      "sourceSha256": "c7c6f158c7e5c133584211d4c1d5fc188c1329f0f3f29815364a7c3b50cf3eeb",
+      "projectedSha256": "1e0ee0ed969d3d889094330dc93eedfdb001eaa7122d1f7666dbe70b6cea0c8b"
+    },
+    "tests/msbuild-differential/portable.js": {
+      "sourceSha256": "74eb4a991b38853fb05074698447f45c28798f84cd87e8c5004bedcf03e45b9b",
+      "projectedSha256": "74eb4a991b38853fb05074698447f45c28798f84cd87e8c5004bedcf03e45b9b"
+    },
+    "tests/msbuild-differential/run.mjs": {
+      "sourceSha256": "1c8ae27e7fd18eccacca6699dda464c7d168a946bc053a6be4f029c19e6b241c",
+      "projectedSha256": "6f83d08eef4235aeb4104a8f24e0768468c862f60f1b73c7d7cdb460584d1905"
+    }
+  },
+  "qualification": {
+    "unitSource": "bbaedef515c6c7ec052f8469dd471e88cdcce7d2",
+    "node22": "135/135 complete owned scope; four differential contract cases passed",
+    "node26": "135/135 complete owned scope; four differential contract cases passed",
+    "nativeSource": "7dd9f8c9e5c956f3474da96973ccaf6140234f5d",
+    "capture": "planning/evidence/project18/testing/evaluation-native.json",
+    "captureSha256": "32c78dd349a1c8c4f6d511bd51d401fb179e4cae2815f9bb726cb05511abf815",
+    "reference": {
+      "tool": "native dotnet msbuild",
+      "version": "18.3.0.15422",
+      "sdk": "10.0.201",
+      "platform": "linux",
+      "node": "v22.23.3",
+      "nativeQualification": true
+    },
+    "cases": [
+      {
+        "id": "property-order",
+        "feature": "property-expansion",
+        "status": "match"
+      },
+      {
+        "id": "conditioned-properties",
+        "feature": "conditions",
+        "status": "match"
+      },
+      {
+        "id": "literal-include-update-remove",
+        "feature": "generic-items",
+        "status": "match"
+      },
+      {
+        "id": "import-order",
+        "feature": "local-imports",
+        "status": "match"
+      },
+      {
+        "id": "property-function",
+        "feature": "string-property-functions",
+        "status": "match"
+      },
+      {
+        "id": "native-exec",
+        "feature": "native-task-execution",
+        "status": "boundary-enforced"
+      },
+      {
+        "id": "native-csc",
+        "feature": "native-task-execution",
+        "status": "boundary-enforced"
+      },
+      {
+        "id": "custom-using-task",
+        "feature": "external-task-assembly",
+        "status": "boundary-enforced"
+      },
+      {
+        "id": "unknown-sdk",
+        "feature": "unregistered-sdk",
+        "status": "boundary-enforced"
+      },
+      {
+        "id": "binary-reference",
+        "feature": "binary-reference-linking",
+        "status": "boundary-enforced"
+      },
+      {
+        "id": "package-reference",
+        "feature": "nuget-restore-linking",
+        "status": "boundary-enforced"
+      },
+      {
+        "id": "analyzer",
+        "feature": "analyzer-execution",
+        "status": "boundary-enforced"
+      },
+      {
+        "id": "serialized-resx",
+        "feature": "serialized-resources",
+        "status": "boundary-enforced"
+      },
+      {
+        "id": "host-file-function",
+        "feature": "host-property-functions",
+        "status": "boundary-enforced"
+      },
+      {
+        "id": "foreign-language-build",
+        "feature": "foreign-language-compilation",
+        "status": "boundary-enforced"
+      }
+    ],
+    "success": true,
+    "divergenceCount": 0,
+    "publicationCorrection": "The original four cases passed in the retained Node22/26 scopes. The added unused-callback assertions and count-based qualification correction are pending the integration coordinator final scope; no local rerun is claimed."
+  },
+  "limits": [
+    "This fixture set does not qualify all MSBuild or SDK features.",
+    "No native C++, Windows/macOS, installed test framework or NuGet restore result is inferred.",
+    "No tests, build, native process or duplicate qualification was run during publication."
+  ],
+  "requiredCore": "Pending on this draft; existing original captures remain historical."
+}
