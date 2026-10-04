@@ -1,3 +1,4 @@
+import { registerNativePublishServices } from './services-publish.js';
 import { registerNativeProjectServices } from './services-project.js';
 import { registerNativeVfsServices } from './services-vfs.js';
 import { NativeServiceRegistry } from './service-registry.js';
@@ -11,6 +12,7 @@ export function createNativeServices(engine, options = {}) {
   const context = { engine, workspace: engine.workspace };
   registerNativeVfsServices(registry, context);
   registerNativeProjectServices(registry, context);
+  registerNativePublishServices(registry, context);
   const { discover } = registerNativeSdkServices(registry, context);
   for (const contribution of options.contributions ?? []) contribution(registry, context);
   return { registry, discover };
@@ -19,3 +21,5 @@ export function createNativeServices(engine, options = {}) {
 export { registerNativeVfsServices } from './services-vfs.js';
 
 export { registerNativeProjectServices } from './services-project.js';
+
+export { registerNativePublishServices } from './services-publish.js';
