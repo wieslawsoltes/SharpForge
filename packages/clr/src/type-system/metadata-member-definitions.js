@@ -1,6 +1,7 @@
 import { createMethodDesc } from './method-desc.js';
 import { createFieldDesc } from './field-desc.js';
 import { createPropertyDesc } from './property-desc.js';
+import { createEventDesc, initializeEventType } from './event-desc.js';
 import { loadError, LoadErrorCode } from '../load-errors.js';
 
 const empty = Object.freeze([]);
@@ -11,9 +12,11 @@ const kinds = Object.freeze({
     nameOptions: Object.freeze({ maxBytes: 4096 }) },
   property: { table: 23, pointer: 22, map: 21, list: 'PropertyList', name: 1, flags: 0, signature: 2, create: createPropertyDesc,
     nameOptions: Object.freeze({ maxBytes: 4096 }) },
+  event: { table: 20, pointer: 19, map: 18, list: 'EventList', name: 1, flags: 0, create: createEventDesc,
+    nameOptions: Object.freeze({ maxBytes: 4096 }), initialize: initializeEventType },
 });
 
-/** Module-owned definition caches with direct TypeDef lists or indirect PropertyMap lists. */
+/** Module-owned definition caches with direct TypeDef lists or indirect PropertyMap/EventMap lists. */
 export class MetadataMemberDefinitions {
   #module;
   #kind;
@@ -102,9 +105,11 @@ export class MetadataMemberDefinitions {
     this.#index();
     const name = this.#module.string(row[this.#kind.name], this.#kind.nameOptions);
     if (name.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Member name length exceeded');
-    const descriptor = this.#kind.create({ name, module: this.#module, token, flags: row[this.#kind.flags],
+    const state = { name, module: this.#module, token, flags: row[this.#kind.flags],
       implementationFlags: row[this.#kind.implementationFlags], signatureIndex: row[this.#kind.signature],
-      declaringType: this.#module.typeDefinition(this.#owners[token & 0xffffff]) });
+      declaringType: this.#module.typeDefinition(this.#owners[token & 0xffffff]) };
+    this.#kind.initialize?.(state, row);
+    const descriptor = this.#kind.create(state);
     this.#descriptors.set(token, descriptor);
     return descriptor;
   }
