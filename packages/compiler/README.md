@@ -52,3 +52,27 @@ revision and must be treated as read-only. The model never emits or changes
 program code. `Workspace.sourceModel()` in `@sharpforge/workspace` handles source
 and option invalidation for callers. See `docs/editor-language-providers.md` in
 the source distribution for the provider/transaction contracts and evidence.
+
+## Reference assemblies
+
+`compile`, `compileToAssembly` and `compileToReferenceAssembly` bind framework names against the closed framework
+registry by default. With the `references` option they bind against real reference assemblies instead: each entry is
+`{ bytes, display?, aliases? }` (an ECMA-335 image, the name diagnostics show, extern aliases). When one of the
+references defines `System.Object` it replaces the registry, and `compileToAssembly` writes its AssemblyRef, TypeRef,
+MemberRef, TypeSpec and MethodSpec rows against the referenced assemblies, so the emitted assembly runs on real .NET.
+
+Decoding the references is the expensive part (the .NET reference pack is 167 assemblies). `createReferenceSet(entries)`
+decodes them once and returns the list to pass as `references` to any number of compilations; the set is an explicit
+object owned by the caller, not a process-wide cache.
+
+`@sharpforge/compiler/node` (Node only) finds and reads the reference pack of an installed .NET SDK:
+`locateReferencePack({ dotnetRoot?, targetFramework? })`, `readReferenceFiles(paths)` and
+`loadReferencePack(options)`, which returns `{ references, pack }` or null when no pack is installed.
+
+```js
+import { compileToAssembly } from '@sharpforge/compiler';
+import { loadReferencePack } from '@sharpforge/compiler/node';
+
+const { references } = loadReferencePack();
+const result = compileToAssembly(source, { name: 'App', references });
+```

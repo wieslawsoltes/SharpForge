@@ -15,6 +15,10 @@
  *                         virtual" for C# 11 static abstract interface members): the reports, one per line, pinned
  *                         the same way.
  *
+ *   reference-fixtures/  programs that need the real .NET libraries (LINQ, `Dictionary.TryGetValue`, `Span<T>`, ...):
+ *                         they compile only with reference assemblies (`references` option), so they have no
+ *                         `.vm` / `.image` files and run on .NET alone (verify-dotnet.mjs --references).
+ *
  * `checkFixture` verifies an emitted assembly on the two levels that need no .NET SDK: the image is read back and
  * validated by `@sharpforge/cil`, and it runs on the direct-CIL runtime. verify-dotnet.mjs is the third level.
  */
@@ -26,26 +30,30 @@ import { CilVirtualMachine } from '@sharpforge/runtime';
 import { compileToAssembly } from '@sharpforge/compiler';
 
 export const fixtureDirectory = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
+/** Programs that bind only against real reference assemblies. */
+export const referenceFixtureDirectory = join(dirname(fileURLToPath(import.meta.url)), 'reference-fixtures');
 const INSTRUCTION_BUDGET = 20_000_000;
 const normalize = text => text.replace(/\r\n/g, '\n');
 const read = path => (existsSync(path) ? normalize(readFileSync(path, 'utf8')) : null);
 
 /**
- * Every fixture: `{name, source, expected, runtimeLimit, imageLimit}`; `runtimeLimit` is the content of the `.vm`
- * file and `imageLimit` that of the `.image` file, or null.
+ * Every fixture of a directory: `{name, directory, source, expected, runtimeLimit, imageLimit}`; `runtimeLimit` is
+ * the content of the `.vm` file and `imageLimit` that of the `.image` file, or null.
  */
-export function loadFixtures() {
-  return readdirSync(fixtureDirectory)
+export function loadFixtures(directory = fixtureDirectory) {
+  if (!existsSync(directory)) return [];
+  return readdirSync(directory)
     .filter(file => file.endsWith('.cs'))
     .sort()
     .map(file => {
       const name = file.slice(0, -3);
       return {
         name,
-        source: normalize(readFileSync(join(fixtureDirectory, file), 'utf8')),
-        expected: read(join(fixtureDirectory, name + '.out')),
-        runtimeLimit: read(join(fixtureDirectory, name + '.vm')),
-        imageLimit: read(join(fixtureDirectory, name + '.image')),
+        directory,
+        source: normalize(readFileSync(join(directory, file), 'utf8')),
+        expected: read(join(directory, name + '.out')),
+        runtimeLimit: read(join(directory, name + '.vm')),
+        imageLimit: read(join(directory, name + '.image')),
       };
     });
 }
