@@ -4,9 +4,10 @@ import { metadataName } from './metadata-facts.js';
 import { generalConstantPayload } from './constant-reader.js';
 
 function isDecimal(metadata, token) {
-  if (![1, 2].includes(token >>> 24)) return false;
+  const table = token >>> 24;
+  if (table !== 1 && table !== 2) return false;
   const row = metadata.row(token);
-  if (token >>> 24 === 1 ? (row[0] & 3) === 3 : (row[0] & 7) > 1) return false;
+  if (table === 1 ? (row[0] & 3) === 3 : (row[0] & 7) > 1) return false;
   return (
     metadataName(metadata, row[1], 'Constant type') === 'Decimal' &&
     metadataName(metadata, row[2], 'Constant namespace') === 'System'
