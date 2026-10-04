@@ -1,9 +1,10 @@
+import {SizeOfProfile} from './sizeof-profile.js';
 import {recordVerifiedStacks, verifiedStackEntry} from './verified-stack.js';
 import {resolveExecutionField} from './field-profile.js';
 import {supportedDelegateCall} from './delegate-profile.js';
 import {resolveExecutionMethod} from './call-profile.js';
 import {genericDefinitionContext, verifyGenericType, verifyGenericCall} from './generic-profile.js';
-import {frameworkType} from '@sharpforge/framework';
+import {verifyPrimitiveStorageOperand} from './memory-type-profile.js';
 import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
@@ -15,7 +16,7 @@ const numeric = /^ldc\.(i4(\.(m1|[0-8]|s))?|i8|r4|r8)$/;
 const branches = /^(br|brtrue|brfalse|leave)(\.s)?$|^(beq|bge|bgt|ble|blt|bne)(\.un)?(\.s)?$/;
 const conversions = /^conv\.(ovf\.)?(i1|u1|i2|u2|i4|u4|i8|u8|i|u|r4|r8|r)(\.un)?$/;
 export function isExecutableOpcode(name){return simple.has(name)||arithmetic.test(name)||indexed.test(name)||numeric.test(name)||branches.test(name)||conversions.test(name)||/^(ldelem|stelem|ldind|stind)\.(i1|u1|i2|u2|i4|u4|i8|i|r4|r8|ref)$/.test(name);}
-export const primitiveSizes=Object.freeze({'System.Boolean':1,'System.SByte':1,'System.Byte':1,'System.Char':2,'System.Int16':2,'System.UInt16':2,'System.Int32':4,'System.UInt32':4,'System.Int64':8,'System.UInt64':8,'System.Single':4,'System.Double':8,'System.Decimal':16});
+export {primitiveSizes} from './memory-type-profile.js';
 export {systemType} from './intrinsic-profile.js';
 import {intrinsicDefinition} from './intrinsic-profile.js';
 export function supportedIntrinsic(descriptor){return intrinsicDefinition(descriptor)!==null;}
@@ -45,7 +46,7 @@ export function stackEffect(inspector,m,i){
  * This is a constrained runtime verifier, NOT an implementation of the CLR verifier/type system. */
 export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethods=10000,...options}={}){
   const inspector=input instanceof AssemblyInspector?input:new AssemblyInspector(input,options),issues=[],visited=new Set(),pending=[],stackHeights={},entry=selectMethod(inspector,methodToken,args);
-  const dispatch=new CilDispatchTable(inspector),verifiedStacks=new Map();
+  const dispatch=new CilDispatchTable(inspector),verifiedStacks=new Map(),sizes=new SizeOfProfile(inspector);
   const issue=(m,i,code,message)=>{if(issues.length<200)issues.push({methodToken:m?.token,method:m?m.owner+'::'+m.name:undefined,offset:i?.offset,code,message});};
   if(!(inspector.pe.flags&1)||inspector.pe.flags&0x10)issue(null,null,'IL_IMAGE','Only IL-only managed images are executable');pending.push(entry);
   // Static initializers can be reached by allocation, field access or method invocation.
@@ -73,7 +74,8 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
     for(const h of m.handlers)if(h.flags===1)issue(m,null,'IL_FILTER','Exception filters are inspection-only');
     for(const i of m.instructions){
       if(!isExecutableOpcode(i.name)){issue(m,i,'IL_OPCODE',`Opcode '${i.name}' is inspection-only`);continue;}
-      if(['sizeof','cpobj','unbox'].includes(i.name)){try{const type=inspector.metadata.typeName(i.operand);const definition=inspector.types.find(definition=>definition.token===i.operand),isEnum=definition?.baseToken&&inspector.metadata.typeName(definition.baseToken)==='System.Enum'||frameworkType(type)?.kind==='enum';if(!primitiveSizes[type]&&type!=='System.IntPtr'&&type!=='System.UIntPtr'&&!(i.name==='unbox'&&isEnum))issue(m,i,'IL_TYPE',`${i.name} is implemented only for primitive types${i.name==='unbox'?' and enums':''}`);}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(i.name==='sizeof')sizes.verify(m,i,context,issue);
+      if(['cpobj','unbox'].includes(i.name))verifyPrimitiveStorageOperand(inspector,m,i,issue);
       if(i.name==='volatile.') {
         const next=m.instructions[m.instructions.indexOf(i)+1];
         if(!next||!['ldfld','stfld','ldsfld','stsfld','ldobj','stobj'].includes(next.name)&&!next.name.startsWith('ldind.')&&!next.name.startsWith('stind.'))issue(m,i,'IL_PREFIX','volatile. must precede a supported memory instruction');
