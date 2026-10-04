@@ -2,7 +2,8 @@
   "schemaVersion": 1,
   "area": "A17",
   "nodeGlobs": [
-    "tests/animation13.test.js"
+    "tests/animation13.test.js",
+    "tests/a17-*.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],
