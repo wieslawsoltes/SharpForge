@@ -176,6 +176,9 @@ export const UnsafeBinding = Base =>
       // C# 7.3: a fixed-size buffer of a moveable variable is indexed without pinning it first.
       if (target.kind === 'FieldAccess' && target.field.isFixedSizeBuffer && target.receiver && !isFixedVariable(target.receiver))
         this.d.gate(this.c.uri, target.syntax, 'IndexingMovableFixedBuffers');
+      // The elements of a fixed-size buffer are reached through a pointer into the variable that holds the struct:
+      // Roslyn counts that as a write of the variable (no CS0649 for a field that is only indexed).
+      if (target.kind === 'FieldAccess' && target.field.isFixedSizeBuffer && target.receiver) this.markWrite(target.receiver, null);
       let index = null;
       for (const type of [this.core.int, this.core.uint, this.core.long, this.core.ulong]) {
         const conversion = this.conversions.classifyFromExpression(args[0], type);
