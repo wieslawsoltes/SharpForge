@@ -18,35 +18,35 @@ normalization strings by counting exact lengths and scanning character codes.
 The non-ASCII normalization path is unchanged. A new semantic/budget test covers
 ASCII separators/acronyms/digit runs, the 0x7f/0x80 boundary, Unicode expansions,
 contextual sigma, astral letters, combining marks and uncased scripts. This changed
-product is unvalidated and queued for the same fixed schedule, then browsers/checks;
-there is no unchanged retry, deadline waiver or sample exclusion.
+product passed the same fixed schedule and subsequent browsers/checks at qualification
+head `b94ce128689c21a0cdcab4912705cf522650a944`. There was no unchanged retry,
+deadline waiver or sample exclusion.
 
-Eight prepared tests cover prefix/full/simple names, literal substring and documented
+Eight new tests cover prefix/full/simple names, literal substring and documented
 camel initials, Unicode/normalization boundaries, empty queries, stable IDs, paging,
 total result caps, cancellation, owned returns, no method decoding and a separate
 exact/minus-one cache budget. The scale fixture contains 50,000 authored type names
 plus the global type. Timing is deliberately not asserted in ordinary unit tests;
-the acceptance threshold of 50 ms will be recorded for cold and warm queries in the
+the acceptance threshold of 50 ms is recorded for cold and warm queries in the
 fixed scheduled qualification, including misses/late matches and every search mode.
 
 Retained Roslyn/CoreCLR UnnamedSlots PE hash and native method-name/token observations
 are reused for independent identity checks; the 50k stress fixture is authored metadata,
-not a claim that Roslyn generated it. A focused Chromium/Firefox/WebKit round will
-exercise this same scale fixture and matching/bounds/ownership contracts. Native
+not a claim that Roslyn generated it. The focused Chromium/Firefox/WebKit round exercised this same scale fixture and matching/bounds/ownership contracts. Native
 execution, Studio/full matrix and untested cross-platform behavior are separate.
 
 The lazy cache performs a full logical-byte preflight before retained arrays are
 allocated, with allocation-free ASCII length counting and bounded per-name Unicode scratch strings. It stores normalized names,
 initials and two-byte simple-name positions; it shares the index's private owned
 records and copies only selected output records. Counters exclude engine object/
-array/string overhead, pre-existing index and output pages. No process-heap improvement or passing timing claim is made. Source mode matching is deliberately
+array/string overhead, pre-existing index and output pages. No process-heap improvement is claimed. Source mode matching is deliberately
 explicit: Unicode lowercase, no canonical normalization, literal prefix/substring,
 and ordered initials-subsequence camel abbreviations.
 
 
 The first serial qualification driver was `/tmp/sharpforge-a13-search-driver.mjs`.
 Install and expected missing-search API proof succeeded. Changed-product validation
-will reuse those immutable baseline inputs, run eight new plus 15 existing
+reused those immutable baseline inputs, ran eight new plus 15 existing
 index/navigation tests, the same fixed comparison, shared focused browsers, check
 and structure under one outer limiter (concurrency 1/maxruns 1/heap 1024 MiB). Baseline and
 candidate resolve their own CIL sources; unchanged transitive trees/manifests must
@@ -70,3 +70,42 @@ native PE identity checks. It records all first-round costs without warming quer
 uses the same 50 ms threshold and closes every browser/server. Only an actually
 completed successful engine is counted as passing. These are shared-host observations,
 not a universal hardware, heap, significance or host-noise causal claim.
+
+## Qualified result
+
+All 23 focused tests passed. Static/manifests passed (3599 syntax modules, 3595
+static modules, 977 Node files/37 browser scripts/30 areas, zero errors or ownership
+collisions). Structure completed with 272 inherited findings and none on changed
+paths. The retained native reference is .NET SDK 10.0.201, Roslyn
+5.3.0-2.26153.122 and CoreCLR 10.0.5; assembly/PDB/compiler hashes are in the browser
+report. No new native build was needed.
+
+[Final Node capture](qualification/performance.json) retains all 160 values at
+Node 24.21.0 on macOS arm64/Apple M3 Pro. All 120 query cells passed 50 ms:
+
+| Query | Cold median / p95 ms | Warm median / p95 ms |
+|---|---:|---:|
+| Prefix late | 18.432249 / 20.490000 | 2.609437 / 2.896958 |
+| Prefix miss | 17.251959 / 17.750708 | 1.527895 / 1.600250 |
+| Substring late | 18.232000 / 20.131250 | 2.186104 / 2.531292 |
+| Substring miss | 17.464292 / 17.838583 | 1.961271 / 2.135000 |
+| Camel late | 18.361021 / 19.025084 | 2.433875 / 2.607292 |
+| Camel miss | 17.650187 / 18.065333 | 1.661647 / 1.752708 |
+
+The existing 20-assembly/20120-definition index constructor control's before/after
+median was 6.472361/6.463507 ms and p95 6.727806/6.624320 ms; neither regressed by
+more than 5%. These are fixed shared-host observations, not a significance,
+universal latency, causal host-noise or speedup claim. Both original and changed
+schedules remain visible; the failed initial product is not counted as qualified.
+
+[Browser evidence](qualification/browser.json) retains all 108 query cells plus
+four contract groups per engine on macOS 26.6 arm64, Playwright 1.63.0/Python 3.14.7.
+Chromium 153.0.8010.12, Firefox 155.0 and WebKit 26.6 passed every 50 ms cell;
+maximum cold/warm times were respectively 22.5/1.7, 28/3 and 20/2 ms. Browser timer
+precision is retained as reported by each engine. The fixed 50k fixture's cache
+contains 2,900,020 logical bytes, excluding engine overhead and the pre-existing
+index. Broader platforms, source-VM/direct-CIL execution backends, Studio/full matrix
+and actual process-heap bounds are not claimed by this browser metadata API batch.
+
+[Validation log](qualification/validation.txt) records the exact commands and checks.
+No product source changed after qualification; subsequent edits only publish evidence.

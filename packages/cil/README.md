@@ -292,7 +292,8 @@ is claimed.
 
 Cache construction and queries scan bounded names/records linearly; queries create
 no full candidate array. A query can stop after locating its page plus one following
-match, or the result cap plus one match. The 50,000-type cold/warm timing criterion,
-focused browser checks and reference evidence are pending the scheduled serial slot;
-see `tests/fixtures/symbol-search/README.md`. No timing or untested-platform claim is
-made by the implementation-ready draft.
+match, or the result cap plus one match. The fixed 50,000-type cold/warm timing
+criterion passed on Node and Chromium/Firefox/WebKit on macOS after the retained
+initial failure prompted an ASCII preflight optimization. Exact samples, host,
+reference checks and qualification limits are in `tests/fixtures/symbol-search/README.md`;
+these measurements do not imply an untested-platform or universal latency guarantee.
