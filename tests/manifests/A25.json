@@ -4,7 +4,9 @@
   "nodeGlobs": [
     "tests/a25-*.test.js"
   ],
-  "browserScripts": [],
+  "browserScripts": [
+    "tests/a25_collab_browser_test.py"
+  ],
   "requiredServices": [],
   "timeout": 1200000,
   "tags": []
