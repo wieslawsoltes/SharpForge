@@ -4,6 +4,13 @@
  */
 import { n } from '../../codegen/semantic/node-factory.js';
 
+/**
+ * The class that declares the helpers, named like the other synthesized helper classes (`<>Cell(int)`). It is not
+ * `<PrivateImplementationDetails>`: the CIL execution profile splits a declared name of the shape `<Name>` into a
+ * generic instantiation of an empty definition, and a call into it then faults on the generic arity check (issue #1).
+ */
+const SLICE_HELPER_CLASS = '<>ArraySlices';
+
 export class ArraySlices {
   /** @param host the generator: `{program, addSynthesizedBody(method, body)}` */
   constructor(host) {
@@ -20,7 +27,7 @@ export class ArraySlices {
     if (method) return method;
     const program = this.host.program,
       arrayType = elementType + '[]';
-    this.owner ??= program.addClass('<PrivateImplementationDetails>');
+    this.owner ??= program.addClass(SLICE_HELPER_CLASS);
     const parameters = [
       { name: 'source', type: arrayType },
       { name: 'start', type: 'int' },
