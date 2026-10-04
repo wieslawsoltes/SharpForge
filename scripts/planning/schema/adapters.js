@@ -61,6 +61,7 @@ export function validateBody(body,{requireExecutable=false}={}){
   for(const r of body.exceptionRegions)if(r.start>=r.end||r.end>n||r.handlerStart>=r.handlerEnd||r.handlerEnd>n||r.filterStart!==null&&r.filterStart>=n)invalid('Invalid exception region boundary');
   for(const s of body.safepoints)if(s.offset>=n)invalid('Invalid safepoint offset');
   if(body.typeState!=='resolved')return body;
+  if(body.instructions[0].stackIn.length)invalid('Method entry stack must be empty');
   if(body.localStorageTypes?.length!==body.locals.length||body.parameterStorageTypes?.length!==body.parameters.length)invalid('Storage signature lengths differ');
   if(body.locals.some((type,index)=>stackType(body.localStorageTypes[index])!==type)||body.parameters.some((type,index)=>stackType(body.parameterStorageTypes[index])!==type)||stackType(body.returnStorageType)!==body.returnType)invalid('Storage and stack signature types differ');
   if(!validType(body.returnType)||[...body.locals,...body.parameters].some(t=>!validType(t)||t==='void'))invalid('Malformed body signature');
@@ -84,6 +85,11 @@ export function validateBody(body,{requireExecutable=false}={}){
     if(JSON.stringify(i.successors)!==JSON.stringify(expectedSuccessors))invalid('Operation and control-flow successors differ');
     if(i.opcode==='load-local'&&i.resultType!==body.locals[i.operands[0]])invalid('Local load type differs from declared local');
     if(i.opcode==='load-argument'&&i.resultType!==body.parameters[i.operands[0]])invalid('Argument load type differs from signature');
+    if(i.opcode==='local-address'||i.opcode==='argument-address'){
+      const slots=i.opcode==='local-address'?body.locals:body.parameters,slot=i.operands?.[0];
+      if(!Array.isArray(i.operands)||i.operands.length!==1||!Number.isInteger(slot)||slot<0||slot>=slots.length)invalid('Address operand must name one declared slot');
+      if(i.inputTypes.length||i.outputTypes.length!==1||i.outputTypes[0]!=='byref:'+slots[slot])invalid('Address effect differs from its declared slot');
+    }
   }
   const max=body.instructions.reduce((value,i)=>Math.max(value,i.stackIn.length,i.stackOut.length),0);if(body.maxStack!==max)invalid('Maximum stack differs from typed stream');
   for(const region of body.exceptionRegions){const stack=body.instructions[region.handlerStart].stackIn,expected=body.encoding==='cil'&&region.kind==='catch'?[region.catchType]:[];if(JSON.stringify(stack)!==JSON.stringify(expected))invalid('Exception handler entry stack is invalid');}

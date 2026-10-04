@@ -16,6 +16,7 @@ import { checkConstructedMethod } from '../constraints.js';
 import { isVirtualCall } from '../overrides.js';
 import { isCallOmitted } from '../csharp2-misc.js';
 import { receiverPassing } from '../readonly.js';
+import { isAbstractBaseAccess } from '../../symbols/base-implementation.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSource = symbol => {
@@ -271,8 +272,10 @@ export const CallBinding = Base =>
           definition.uses = (definition.uses ?? 0) + 1;
         }
         for (const v of checkConstructedMethod(method, this.core)) this.report(nameNode, v.code, v.args, v.severity);
-        if (receiver?.kind === 'Base' && method.isAbstract) {
-          this.report(syntax, DiagnosticId.CS0205, [method.toDisplayString()]);
+        // `base.M()` reaches the nearest override in the base classes; only when that is abstract there is no body to run.
+        if (receiver?.kind === 'Base' && isAbstractBaseAccess(method, receiver.type)) {
+          // Roslyn reports it at the member access, not at the whole invocation.
+          this.report(syntax.kind === 'InvocationExpression' ? syntax.expression : syntax, DiagnosticId.CS0205, [method.toDisplayString()]);
         }
       }
       if (isExtension) for (const v of checkConstructedMethod(method, this.core)) this.report(nameNode, v.code, v.args);
@@ -386,9 +389,16 @@ export const CallBinding = Base =>
           return n;
         }
       }
-      let indexers = lookupMembers(type, 'this[]', this.core, { within: this.c.containingType })
-        .members.concat(isSource(type) ? [] : lookupMembers(type, 'Item', this.core, { within: this.c.containingType }).members)
-        .filter(m => m.kind === SymbolKind.Property && m.parameters.length);
+      const indexersOf = owner =>
+        lookupMembers(owner, 'this[]', this.core, { within: this.c.containingType })
+          .members.concat(isSource(owner) ? [] : lookupMembers(owner, 'Item', this.core, { within: this.c.containingType }).members)
+          .filter(m => m.kind === SymbolKind.Property && m.parameters.length);
+      let indexers = indexersOf(type);
+      // An override is not a candidate (C# spec 12.6.4.2): the indexer it overrides is, declared by a base class.
+      if (indexers.some(m => m.isOverride)) {
+        indexers = indexers.filter(m => !m.isOverride);
+        for (let base = type.baseType; base && !indexers.length; base = base.baseType) indexers = indexersOf(base).filter(m => !m.isOverride);
+      }
       // Indexers overload on their parameter lists: every indexer of the declaring type is a candidate (SF-A02-T10.2).
       if (indexers.length === 1 && isSource(type)) {
         const declared = (indexers[0].containingType ?? type).getMembers('this[]').filter(m => m.kind === SymbolKind.Property && m.parameters.length);

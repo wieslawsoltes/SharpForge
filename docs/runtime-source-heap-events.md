@@ -31,8 +31,8 @@ repeat; monotonically increasing event sequence numbers identify observations.
 The existing drop-oldest count, replay option and subscription cancellation apply.
 
 [Source method lifecycle](runtime-source-method-events.md) uses the same log and
-explicitly restarts spans on successful restore. Source exception and scheduler
-events remain separate #1403 increments.
+explicitly restarts spans on successful restore. [Exception origins](runtime-source-exception-events.md)
+and [cooperative context events](runtime-context-events.md) also use this log.
 This leaf does not claim native EventPipe transport or CLR sampling cadence.
 The source and reloaded-source tests in `tests/a05-source-heap-events.test.js`
 cover guest execution, initialization, weak collection, restore, disposal, host

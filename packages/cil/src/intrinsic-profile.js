@@ -64,6 +64,9 @@ for (const type of ['sbyte', 'short', 'int', 'long', 'float', 'double']) {
 }
 for (const name of ['Min', 'Max']) {
   for (const type of ['uint', 'ulong']) add('System.Math', name, [type, type], type, true, 'unsignedMathExtremum');
+  for (const type of ['sbyte', 'byte', 'short', 'ushort']) {
+    add('System.Math', name, [type, type], type, true, 'smallMathExtremum');
+  }
 }
 for(const name of ['Sqrt','Floor','Ceiling','Round','Sin','Cos','Tan','Log','Exp','Pow'])add('System.Math',name,Array(name==='Pow'?2:1).fill('double'),'double',true,'math');
 add('System.GC','Collect',[],'void',true,'gcCollect');
