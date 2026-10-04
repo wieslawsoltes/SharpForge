@@ -9,6 +9,7 @@ import {appendBuilderValue} from './string-builder-append-builder.js';
 import {appendBuilderValueRange} from './string-builder-append-builder-range.js';
 import {builderEquals} from './string-builder-equality.js';
 import {replaceBuilderCharacters} from './string-builder-edit.js';
+import {removeBuilderRange} from './string-builder-remove.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
@@ -145,13 +146,7 @@ function mutateBuffer(platform, reference, name, values, scalars) {
       setBuffer(platform, reference, previous.slice(0, start) + (scalars[1] ?? '') + previous.slice(start));
       return reference;
     }
-    case 'Remove': {
-      const previous = bufferText(platform, reference);
-      const start = integer(platform, scalars[0], 0, previous.length);
-      const length = integer(platform, scalars[1], 0, previous.length - start);
-      setBuffer(platform, reference, previous.slice(0, start) + previous.slice(start + length));
-      return reference;
-    }
+    case 'Remove': return removeBuilderRange(platform, reference, scalars, bufferText, setBuffer);
     case 'Replace': {
       const previous = string(platform, values[0]);
       if (!previous) fail(platform, 'ArgumentException', 'Old value cannot be empty');
