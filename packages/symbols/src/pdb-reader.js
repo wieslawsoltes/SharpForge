@@ -13,6 +13,7 @@ import { unavailableLocalSlots } from './unnamed-slots.js';
 import { metadataName } from './metadata-facts.js';
 import { preflightLocalAnnotation, attachLocalAnnotations, bindConstantAnnotations } from './local-annotations.js';
 import { validatePdbReferences, validateLocalSignatureRows } from './pdb-validate.js';
+import { SymbolParseBudget, defaultParseBudgets } from './budgets.js';
 
 /** Read standalone debug metadata; malformed CLI binary references surface as SymbolError. */
 export function readPortablePdb(input, options) {
@@ -33,8 +34,12 @@ function parsePortablePdb(
     maxConstantBytes,
     maxConstantEntries,
     maxConstantModifiers,
+    budgets,
+    signal,
   } = {},
 ) {
+  const budget = new SymbolParseBudget(budgets, signal);
+  if (!Number.isSafeInteger(maxBytes) || maxBytes < 0) fail('Invalid Portable PDB byte limit');
   const bytes = input instanceof ArrayBuffer ? new Uint8Array(input) : input;
   if (!(bytes instanceof Uint8Array) || bytes.length > maxBytes) fail('Invalid or oversized Portable PDB');
   rejectUnsupportedSymbolFormat(bytes);
@@ -42,12 +47,14 @@ function parsePortablePdb(
     pdb = md.streams.get('#Pdb');
   if (!pdb || pdb.length < 32) fail('Not a standalone Portable PDB');
   if (Object.keys(md.rows).some((t) => +t < 48 || +t > 55)) fail('Portable PDB contains non-debug tables');
+  budget.rows(md);
   const pr = new Reader(pdb),
     id = new Uint8Array(pr.take(20)),
     entryPoint = pr.u32(),
     guids = md.streams.get('#GUID') ?? new Uint8Array();
   if (guids.length % 16) fail('Invalid GUID heap');
   validatePdbReferences(md, entryPoint);
+  budget.custom(md, maxSourceBytes);
   const guid = (i) =>
     i === 0
       ? null
@@ -77,7 +84,8 @@ function parsePortablePdb(
   validateLocalSignatureRows(methods, md.externalCounts);
   if (methods.length && methods.length !== (md.externalCounts[6] ?? 0))
     fail('PDB method row count does not match MethodDef count');
-  if ((md.rows[50]?.length ?? 0) + (md.rows[51]?.length ?? 0) > 100000) fail('Scope tree entry limit exceeded');
+  if ((md.rows[50]?.length ?? 0) + (md.rows[51]?.length ?? 0) > defaultParseBudgets.scopes)
+    fail('Scope tree entry limit exceeded');
   let localNameCharacters = 0;
   const variables = (md.rows[51] ?? []).map((r, i) => {
     const name = metadataName(md, r[2], 'Scope local');
@@ -85,8 +93,7 @@ function parsePortablePdb(
     return { id: i + 1, attributes: r[0], index: r[1], name, hidden: !!(r[0] & 1) };
   });
   const constants = readLocalConstants(md, { maxConstantBytes, maxConstantEntries, maxConstantModifiers });
-  if ((md.rows[53]?.length ?? 0) > 100000) fail('Import scope count limit exceeded');
-  const importBudget = { entries: 0, bytes: 0 };
+  const importBudget = budget.imports();
   const imports = (md.rows[53] ?? []).map((r, i) => ({
     id: i + 1,
     parent: r[0],
