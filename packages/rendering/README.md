@@ -134,6 +134,38 @@ Portable shaping, atlas residency and GPU instances share exact font identities 
 
 `RenderSurface` selects an explicit or negotiated backend, subscribes to its app-owned resources and text service, and preserves device borrowing rules across switching and disposal. Viewport dimensions and pixel budgets are validated before allocation. A complete portable drawing example shows authorized font loading, text layout, geometry and readback.
 
+## Control drawing delegates
+
+Resolved control templates draw through ordinary shape, border and text delegates. Measurement and drawing share actual text results. Placement/clip changes retain item contents, native input remains a declared host capability, and capture validates cross-session resources and limits. High-contrast colors come from the host system-color resolver.
+
+## Visual and shape models
+
+Visual collections enforce ownership, parent identity and cycle/depth limits. Typed shapes, clips, dash collections and drop-shadow descriptors preserve snapshots and invalidate owned content. Transforms are in DIPs; the 2D rendering boundary reports unsupported 3D transforms explicitly.
+
+## Typed animation values
+
+`prepareValueAnimation` and `sampleValueAnimation` implement typed interpolation and discrete keyframes. Easing bounds and complete property-path validation fail before mutation. `buildTimelineDefinition` accepts explicit adapters, including endpoint-presence checks for omitted values.
+
+## Composition animation definitions
+
+Keyframe definitions capture values and validated easing plans. Expressions read only supplied parameters and documented typed members through a bounded interpreter. Definitions, groups, implicit collections and batches have explicit owner and snapshot contracts.
+
+## Shared clock
+
+The framework continues to export `AnimationClock` through its existing entry point. It imports typed samplers from this package and is injected into composition; rendering never imports the framework. The trace fixture states its sample tolerance and covers deterministic timeline behavior.
+
+## Compositor playback
+
+`Compositor` builds retained display lists and layer handles, avoiding geometry re-encoding for placement-only changes. Controllers and expressions run on the injected shared clock. Public stop policies remain distinct from internal transient-base restoration. Collection wrappers retain newly added managed children and release removed items through their existing mutation receiver.
+
+## Drawing contracts and native adapters
+
+Registration preserves released numeric identities and exposes typed geometry, brush, transform, bitmap and Canvas contracts. CLR structs materialize flat fields; DependencyObject defaults retain Default precedence and stable collection identity. Canvas sessions snapshot their executable command state. Custom brush connection callbacks occur only during live ownership changes, with silent GC/restore bookkeeping.
+
+## Retained scene integration
+
+`RetainedSceneRenderer` consumes host layout records and retains local display lists across placement changes. Per-element surfaces preserve stacking and semantic DOM ownership; native input overlays remain explicit. Composition child layers carry their own resource table. Image load generations release stale decode results and leave natural-size/accessibility metadata with the native host.
+
 ## Validation
 
-Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
+Focused cases are authored. The publication manifest records the exact previously tested selection, subsequent repairs and any unrun new fixtures. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
