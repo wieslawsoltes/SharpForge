@@ -65,6 +65,17 @@ test('the prepared lookup owns the token selection and bounded result records', 
   assert.equal(authority.resolveType(fixture.input.tokens.other).reason, 'unprepared-core-binding');
   assert.throws(() => { authority.object = null; }, TypeError);
   assert.throws(() => { authority.resolveType(fixture.input.tokens.object).value.flags = 0; }, TypeError);
+  fixture.context.unload();
+  assert.equal(authority.resolveType(fixture.input.tokens.object).value, fixture.bindingOptions.object);
+});
+
+test('host intrinsic descriptors cannot impersonate the declared metadata core module', async () => {
+  let intrinsic;
+  const fixture = await coreBindingFixture({ typeOptions: { resolveExternalType: () => intrinsic } });
+  intrinsic = fixture.context.types.defineIntrinsic('Authority.Root');
+  const authority = await prepareVerificationCoreTypes(fixture.module, { ...fixture.bindingOptions,
+    tokens: [fixture.input.tokens.object] });
+  assert.equal(authority.resolveType(fixture.input.tokens.object).reason, 'outside-core-module');
 });
 
 test('invalid or oversized preparation rejects before resolving any input reference', async () => {
