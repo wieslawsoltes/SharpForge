@@ -1,6 +1,7 @@
 import {decodeWorkspaceFile} from '@sharpforge/archive';
 import {hashWorkspaceBytes, workspaceRecordBytes, throwIfWorkspaceAborted} from './content-hash.js';
 import {cloneWorkspaceState, hashWorkspaceRecord, withinWorkspacePath, workspaceStateSize} from './transaction-state.js';
+import {cloneWorkspaceRecordSnapshot, workspaceRecordSource} from './transaction-records.js';
 
 const parentPath = path => path.includes('/') ? path.slice(0, path.lastIndexOf('/')) : '';
 
@@ -25,7 +26,7 @@ export class ProviderTransactionAdapter {
     const candidate = this.getWorkspace();
     this.workspace = candidate?.rootHandle || candidate?.handles?.size ? candidate : null;
     if (!this.workspace) return action();
-    this.physicalRecords = this.workspace.records.map(record => ({...record}));
+    this.physicalRecords = this.workspace.records.map(record => cloneWorkspaceRecordSnapshot(record));
     const locks = this.workspace.saveLocks;
     if (!locks) throw new Error('SFW1116: Directory transactions require physical workspace identity and Web Locks');
     return locks.run('*', async options => {
@@ -41,7 +42,7 @@ export class ProviderTransactionAdapter {
     let loadedBytes = workspaceStateSize(result);
     for (let index = 0; index < result.records.length; index++) {
       const record = result.records[index];
-      if (!record.lazy || typeof record.text === 'string' || record.bytes ||
+      if (!record.lazy || workspaceRecordSource(record) || typeof record.text === 'string' || record.bytes ||
           !operations.some(operation => withinWorkspacePath(record.path, operation.path))) continue;
       const metadata = await this.workspace.provider.stat(record.path, options);
       const expectedTime = record.lastModified ?? record.mtime;
@@ -66,7 +67,8 @@ export class ProviderTransactionAdapter {
     if (this.workspace.baselineHashes.has(record.path)) return this.workspace.baselineHashes.get(record.path);
     const baseline = this.workspace.record(record.path);
     const text = this.workspace.baseline.get(record.path);
-    return hashWorkspaceRecord(text === undefined ? record : {...baseline, text}, options);
+    return hashWorkspaceRecord(text === undefined ? record : {path: record.path, text,
+      encoding: baseline?.encoding, bom: baseline?.bom, originalText: baseline?.originalText, bytes: baseline?.bytes}, options);
   }
 
   async preflight(operations, {before, after, signal}) {
@@ -88,8 +90,7 @@ export class ProviderTransactionAdapter {
       const old = previous.get(path);
       if (old && await hashWorkspaceRecord(old, {signal}) === await hashWorkspaceRecord(record, {signal})) continue;
       const expectedHash = await this.expectedHash(old, {signal});
-      const bytes = workspaceRecordBytes(record).slice();
-      if (bytes.length > (provider.maxFileBytes ?? this.maxBytes)) throw new Error('SFW1102: File operation byte limit exceeded: ' + path);
+      const bytes = workspaceRecordBytes(record, {maxBytes: provider.maxFileBytes ?? this.maxBytes}).slice();
       if (provider.prepareWrite) await provider.prepareWrite(path, {...options, expectedHash});
       else await this.verifyFile(path, expectedHash, options);
       const version = Math.max(record.version ?? 0, this.workspace.record(path)?.version ?? 0) + 1;
