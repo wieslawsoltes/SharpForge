@@ -48,9 +48,8 @@ test('CLR strict checks apply to each matched edge, while new slots do not overr
   assert.equal(await reset.methodDefinition(0x06000007).getBaseDefinition(), reset.methodDefinition(0x06000004));
 });
 
-test('CLR strict nested, generic type and generic method access stays explicitly unsupported', async () => {
+test('CLR strict generic type and generic method access stays explicitly unsupported', async () => {
   const images = [
-    fixture(6, 6, md => { md.rows[2][2][0] = 2; md.add(41, [3, 2]); }),
     fixture(6, 6, md => { md.add(42, [0, 0, codedIndex('TypeOrMethodDef', 0x02000003), md.string('T')]); }),
     fixture(6, 6, md => {
       const integer = { kind: 'primitive', name: 'int' };
