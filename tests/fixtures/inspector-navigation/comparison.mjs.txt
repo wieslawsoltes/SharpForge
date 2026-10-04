@@ -1,0 +1,61 @@
+// Scheduled fixed comparison; invoke only inside the sole limiter-owned driver.
+import assert from 'node:assert/strict';
+import { cpus, platform, arch } from 'node:os';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
+const [configuration, output] = process.argv.slice(2);
+const config = JSON.parse(readFileSync(configuration, 'utf8'));
+const modules = {};
+for (const [label, variant] of Object.entries(config.variants))
+  modules[label] = await import(pathToFileURL(variant.directory + '/packages/cil/src/index.js'));
+const bytes = readFileSync(config.variants.after.directory + '/tests/fixtures/portable-pdb-local-constants/LocalConstants.dll');
+const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+const serialize = value => JSON.stringify(value, (_, entry) => typeof entry === 'bigint' ? { bigint: String(entry) } : entry);
+const inspectors = {}, observations = {};
+for (const [label, { AssemblyInspector }] of Object.entries(modules)) {
+  inspectors[label] = new AssemblyInspector(bytes);
+  const summary = inspectors[label].summary();
+  observations[label] = { methodCount: summary.methods.length, typeCount: summary.types.length,
+    summarySha256: hash(serialize(summary)), cachedMethods: inspectors[label].cache.size };
+}
+assert.deepEqual(inspectors.before.summary(), inspectors.after.summary(), 'Legacy summary control must remain identical');
+const chronologicalSamples = [], summaries = {};
+const startedAt = new Date().toISOString(), start = performance.now();
+const report = { config, node: process.version, host: `${platform()} ${arch()} ${cpus()[0].model}`, startedAt,
+  protocol: { pairsPerControl: 20, coldWarmups: 30, warmWarmups: 100, coldIterations: 100, warmIterations: 500,
+    order: 'AB/BA alternating', gcBeforeEachSample: true, median: 'mean of positions 10 and 11', p95: 'nearest-rank position 19',
+    qualification: 'One fixed shared-host schedule; all chronological samples retained, no retries/exclusion, no causal noise/significance/peak allocation claim.' },
+  fixture: { bytes: bytes.length, sha256: hash(bytes), harnessSha256: hash(readFileSync(new URL(import.meta.url))) },
+  observations, summaries, chronologicalSamples };
+try {
+  for (const [control, iterations, warmups] of [['coldSummary', 100, 30], ['cachedSummary', 500, 100]]) {
+    const actions = Object.fromEntries(Object.entries(modules).map(([label, { AssemblyInspector }]) => [label,
+      control === 'coldSummary' ? () => new AssemblyInspector(bytes).summary().methods.length
+        : () => inspectors[label].summary().methods.length]));
+    for (let warmup = 0; warmup < warmups; warmup++) { actions.before(); actions.after(); }
+    for (let pair = 0; pair < 20; pair++) for (const label of pair % 2 === 0 ? ['before', 'after'] : ['after', 'before']) {
+      globalThis.gc?.();
+      let observed;
+      const sampleStart = performance.now();
+      for (let iteration = 0; iteration < iterations; iteration++) observed = actions[label]();
+      const elapsedMs = performance.now() - sampleStart;
+      assert.equal(observed, observations[label].methodCount);
+      chronologicalSamples.push({ control, pair, label, startOffsetMs: sampleStart - start, elapsedMs, perOperationMs: elapsedMs / iterations });
+    }
+    summaries[control] = {};
+    for (const label of ['before', 'after']) {
+      const values = chronologicalSamples.filter(sample => sample.control === control && sample.label === label)
+        .map(sample => sample.perOperationMs).sort((a, b) => a - b);
+      summaries[control][label] = { medianMs: (values[9] + values[10]) / 2, p95Ms: values[18] };
+    }
+  }
+  report.passed = true;
+} catch (error) {
+  report.passed = false;
+  report.error = { name: error.name, message: error.message };
+  throw error;
+} finally {
+  writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
+}
+console.log(JSON.stringify({ output, summaries }, null, 2));

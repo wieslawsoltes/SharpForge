@@ -10,7 +10,14 @@ export class AnalysisDecorations {
     this.references = [];
     this.hintsVisible = context.options.inlayHints !== false;
     this.lensNodes = new Map();
+    this.lensZones = new Map();
+    this.lensLayout = '';
     this.lensMenu = new EditorPopup(context, 'code-lens-menu');
+    this.unsubscribe = context.services.subscribe?.(({method, uri}) => {
+      if (uri && uri !== context.editor.uri) return;
+      if (method === 'codeLens') context.safe(() => this.refresh(['codeLens']));
+      if (method === 'inlayHints') context.safe(() => this.refresh(['inlayHints']));
+    });
     context.lifetime.listen(context.editor.element, 'pointermove', event => this.pointer(event));
     context.lifetime.listen(context.editor.element, 'click', event => {
       if (!(event.ctrlKey || event.metaKey) || !Number.isInteger(this.linkOffset)) return;
@@ -24,8 +31,7 @@ export class AnalysisDecorations {
     });
   }
 
-  async refresh() {
-    const methods = ['diagnostics', 'semanticTokens', 'inlayHints', 'codeLens'];
+  async refresh(methods = ['diagnostics', 'semanticTokens', 'inlayHints', 'codeLens']) {
     await Promise.all(methods.filter(method => this.context.services.supports(method)).map(async method => {
       const result = await this.context.request(method, {});
       if (!result) return;
@@ -110,9 +116,12 @@ export class AnalysisDecorations {
       groups.get(line).push({lens, index, offset});
     }
     const zones = [];
+    const nextZones = new Map();
     this.lensNodes.clear();
     for (const [line, entries] of groups) {
-      const element = node(this.context.document, 'div', {className: 'sf-code-lenses'});
+      const element = this.lensZones.get(line) ?? node(this.context.document, 'div', {className: 'sf-code-lenses'});
+      element.replaceChildren();
+      nextZones.set(line, element);
       for (const {lens, index, offset} of entries) {
         const label = lens.command?.title ?? lens.title ?? (lens.count !== undefined ? `${lens.count} references` : '…');
         const control = button(this.context.document, label, () => this.context.safe(() => this.activateLens(lens, offset)));
@@ -122,7 +131,10 @@ export class AnalysisDecorations {
       }
       zones.push({afterLine: line - 1, height: 19, node: element});
     }
-    editor.setViewZones?.('code-lens', zones);
+    const layout = zones.map(zone => zone.afterLine).join(',');
+    if (layout !== this.lensLayout || !this.lensZones.size) editor.setViewZones?.('code-lens', zones);
+    this.lensLayout = layout;
+    this.lensZones = nextZones;
     this.resolveVisibleLenses();
   }
 
@@ -132,7 +144,7 @@ export class AnalysisDecorations {
     for (const [index, entry] of this.lensNodes) {
       const coordinates = this.context.editor.view?.coordsAt?.(entry.offset);
       if (coordinates && (coordinates.top < -40 || coordinates.top > height + 40)) continue;
-      if (entry.lens.command || entry.lens.resolving) continue;
+      if (entry.lens.command || entry.lens.count !== undefined || entry.lens.resolving) continue;
       entry.lens.resolving = true;
       this.context.safe(async () => {
         const result = await this.context.request('resolveCodeLens', {lens: entry.lens}, {key: `code-lens-${index}`});
@@ -146,7 +158,8 @@ export class AnalysisDecorations {
 
   activateLens(lens, offset) {
     if (lens.command) return this.context.command(lens.command);
-    return this.context.editor.request('references', {uri: this.context.editor.uri, offset});
+    if (lens.count === undefined) return false;
+    return this.context.hostRequest('references', {uri: this.context.editor.uri, offset});
   }
 
   showCodeLensMenu() {
@@ -190,7 +203,7 @@ export class AnalysisDecorations {
   }
 
   async definition(offset) {
-    if (!this.context.services.supports('definition')) return this.context.editor.request('definition', {uri: this.context.editor.uri, offset});
+    if (!this.context.services.supports('definition')) return this.context.hostRequest('definition', {uri: this.context.editor.uri, offset});
     const result = await this.context.request('definition', {offset});
     const location = Array.isArray(result?.value) ? result.value[0] : result?.value;
     if (location) this.context.navigate(location);
@@ -204,6 +217,7 @@ export class AnalysisDecorations {
     }
     if (event.altKey && /^[1-9]$/.test(event.key)) {
       const visible = [...this.lensNodes.values()].filter(entry => {
+        if (entry.control.disabled) return false;
         const top = this.context.editor.view?.coordsAt?.(entry.offset)?.top ?? 0;
         return top >= 0 && top < (this.context.editor.element.clientHeight || 600);
       });
@@ -221,10 +235,12 @@ export class AnalysisDecorations {
     this.lenses = [];
     this.context.editor.diagnostics = [];
     this.lensNodes.clear();
+    this.lensZones.clear();
+    this.lensLayout = '';
     for (const owner of ['references', 'semantic', 'diagnostics', 'definition-link']) this.context.editor.setDecorations?.(owner, []);
     this.context.editor.setInlineWidgets?.('inlay-hints', []);
     this.context.editor.setViewZones?.('code-lens', []);
   }
 
-  dispose() { this.changed(); this.lensMenu.dispose(); }
+  dispose() { this.unsubscribe?.(); this.changed(); this.lensMenu.dispose(); }
 }

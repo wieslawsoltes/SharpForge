@@ -1,4 +1,5 @@
 import {isDecimal, decimalFormat} from './execution/decimal.js';
+import {invokeFrameworkObjectToString} from './execution/framework-object-string.js';
 import {createBclRegistry, bclModules} from '@sharpforge/bcl-core';
 import {closedCollectionsModule} from '@sharpforge/bcl-collections';
 import {ioModules} from '@sharpforge/bcl-io';
@@ -13,6 +14,7 @@ const modules = createBclRegistry([...bclModules, closedCollectionsModule, ...io
 
 const services = Object.freeze({
   frameworkType,
+  invokeObjectToString: invokeFrameworkObjectToString,
   formatDecimal(value, format) {
     return isDecimal(value) ? decimalFormat(value, format, {fault: (name, message) => new ManagedFault(name, message)}) : null;
   },

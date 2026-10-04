@@ -4,6 +4,7 @@ import {MethodSymbol,FieldSymbol,PropertySymbol,EventSymbol,ParameterSymbol,Meth
 import {NamespaceSymbol,NamespaceExtent} from '../symbols/namespaces.js';
 import {AssemblyIdentity} from './assembly-identity.js';
 import {MetadataView,Table,tokenOf,tableOf,ridOf,parseMethodSignature,parseFieldSignature,parseTypeSignature} from './pe-metadata.js';
+import {attachSignatureModifiers} from './signature-modifiers.js';
 import {decodeWellKnownAttributes,decodeAttributeBlob,applyTypeTransforms,unsupportedCompilerFeature,grantsInternalsAccess,RequiredMembersObsoleteMarker} from './attributes.js';
 /**
  * Symbols imported from a referenced assembly (ECMA-335 metadata read through @sharpforge/cil).
@@ -218,6 +219,7 @@ export class PEAssemblySymbol extends SymbolBase {
     const isConstructor=methodKind===MethodKind.Constructor;
     const method=new MethodSymbol({name,methodKind,returnType:returnSlot.type,refKind:returnSlot.refKind,parameters,typeParameters,containingSymbol:type,declaredAccessibility:memberAccess[access],modifiers,isExtensionMethod,isVararg:signature.callingConvention===5,
       isInitOnly:this._hasRequiredModifier(signature.returnType,'IsExternalInit'),obsolete:isConstructor&&data.obsolete?.message===RequiredMembersObsoleteMarker?null:data.obsolete});
+    attachSignatureModifiers(method,signature,modifierToken=>this._typeFromToken(modifierToken,context));
     method.conditionalSymbols=Object.freeze([...data.conditionalSymbols]);method.setsRequiredMembers=data.setsRequiredMembers;
     return this._finish(method,token,data);
   }

@@ -1,10 +1,12 @@
 # Instruction profiler
 
 Construct a source or direct-CIL VM with `profile: true` to enable bounded
-instruction, call and managed-allocation counters. `vm.profiler` is `null` when
+instruction, call, managed-allocation and suspension counters. `vm.profiler` is `null` when
 disabled. `instructionProfile(vm)` (or `vm.profiler.read()`) returns an independent
 counter view with format `SharpForge.InstructionProfile/1` and clock
-`instructions`. No elapsed-time or sampling-frequency interpretation applies.
+`instructions`. Instruction weights do not represent elapsed time. Optional
+[elapsed durations](profiler-duration.md) add separate millisecond fields when
+`profile.duration` is `true`; the default counter view remains unchanged.
 
 ```js
 const vm = new CilVirtualMachine(assemblyBytes, {profile: {sampleBudget: 256}});
@@ -41,6 +43,32 @@ ID and source instruction index or CIL byte offset; `-1` identifies work before
 that method's first opcode. Host/startup allocations without a frame belong to
 method 0 (`[runtime]`).
 
+The top-level `suspensions` counter counts actual cooperative scheduler
+transitions away from a live context: a committed park for a wait or freeze, or
+a switch to another runnable context. Repeated host slices while already parked,
+ordinary instruction/time-budget yields, debugger pauses, a self-selected
+scheduling quantum and a queued context's first activation add nothing. Waking
+or resuming a context also adds nothing. A later new suspension of that context
+adds one more count.
+
+The counter uses the same weak context-identity deduplication as scheduler event
+observations, independently of whether `runtimeEvents` is enabled. Event-ring
+overflow, subscriber cancellation and subscriber failures do not remove observed
+suspensions. The counter retains no frames, task handles or context histories;
+profiling adds one scalar, and a committed transition performs constant work.
+When profiling and events are both disabled, the observation hook returns
+without allocating suspension state or event payloads. No measured overhead or
+throughput result is claimed for this counter.
+
+`suspensions` is additive data in `SharpForge.InstructionProfile/1`. It belongs
+to the host profiler, not the VM or scheduler snapshot. Restore retains its
+cumulative total and establishes a fresh suspension-observation baseline.
+Replaying execution before a wait can add another suspension; restoring an
+already parked snapshot does not recount the old suspension, and its first wake
+adds nothing. Rejected restore, cancellation and stop do not invent counts.
+The stopped profiler remains readable. This counter does not measure wait
+duration or native OS-thread context switches.
+
 | Option | Default | Meaning |
 | --- | ---: | --- |
 | `maxMethods` | 65536 | Method records, including reserved runtime/capacity rows; minimum 2 |
@@ -69,10 +97,14 @@ the allocation-accounting seam still execute; overhead has not been measured.
 | --- | --- |
 | Source IR, source reloaded from CIL, direct CIL counters | Implemented; focused Node 24.21.0 regressions passed |
 | Browser, native .NET, Rust/Wasm and cross-platform comparison | Not qualified |
-| Monotonic elapsed-duration clock and formatted profile export | Separate follow-ups |
+| Opt-in monotonic elapsed-duration clock | Implemented in a separate leaf; focused qualification pending |
+| Cumulative cooperative suspensions with events disabled | Implemented; new three-engine cases authored, validation pending |
+| Formatted profile export | Separate follow-up |
 | Off overhead below 1%, on overhead/latency/allocation evidence | Unmeasured; #1402 remains open |
 
 Runnable example: `node examples/runtime/instruction-profile.mjs`.
+`node examples/runtime/suspensions.mjs` demonstrates one guest wait/wake in each
+engine with runtime events disabled. The new example has not been executed.
 Serial focused validation passed all 41 profiler/event/frame-pool tests at
 `a4cd3545` with Node 24.21.0. The command was:
 
@@ -82,3 +114,8 @@ node scripts/limited.js node --test --test-concurrency=1 tests/a05-instruction-p
 
 Record the tested commit, Node/browser version and command when collecting
 evidence. Timing benchmarks must run alone on an otherwise quiet machine.
+
+`tests/a05-profiler-suspensions.test.js` adds source/reloaded-source/direct-CIL
+wait, switch, slice/pause, restore, freeze, cancellation and disabled-profiler
+cases, plus independent CIL event-loss/subscriber-failure cases. These cases
+have not run; the earlier validation evidence above predates this counter.

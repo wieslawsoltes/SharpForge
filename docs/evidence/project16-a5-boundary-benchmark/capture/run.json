@@ -1,0 +1,68 @@
+{
+  "kind": "one-matched-project16-boundary-pair",
+  "startedAt": "2026-10-04T05:59:03.214183+00:00",
+  "order": [
+    "baseline",
+    "candidate"
+  ],
+  "sharedHost": true,
+  "runs": [
+    {
+      "variant": "baseline",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "/workspace/scratch/6b99131ca908/p16-integration/scripts/benchmarks/a19-correction-paths.mjs",
+        "capture",
+        "--checkout",
+        "/workspace/scratch/6b99131ca908/p16-master-status",
+        "--output",
+        "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-a5-boundary-benchmark/baseline.json"
+      ],
+      "startedAt": "2026-10-04T05:59:03.214227+00:00",
+      "log": "baseline.log",
+      "finishedAt": "2026-10-04T05:59:06.217054+00:00",
+      "exitCode": 0
+    },
+    {
+      "variant": "candidate",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "/workspace/scratch/6b99131ca908/p16-integration/scripts/benchmarks/a19-correction-paths.mjs",
+        "capture",
+        "--checkout",
+        "/workspace/scratch/6b99131ca908/p16-integration",
+        "--output",
+        "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-a5-boundary-benchmark/candidate.json"
+      ],
+      "startedAt": "2026-10-04T05:59:06.217466+00:00",
+      "log": "candidate.log",
+      "finishedAt": "2026-10-04T05:59:09.607116+00:00",
+      "exitCode": 0
+    },
+    {
+      "variant": "comparison",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "/workspace/scratch/6b99131ca908/p16-integration/scripts/benchmarks/a19-correction-paths.mjs",
+        "compare",
+        "--baseline",
+        "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-a5-boundary-benchmark/baseline.json",
+        "--candidate",
+        "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-a5-boundary-benchmark/candidate.json",
+        "--output",
+        "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-a5-boundary-benchmark/comparison.json"
+      ],
+      "startedAt": "2026-10-04T05:59:09.607585+00:00",
+      "log": "comparison.log",
+      "finishedAt": "2026-10-04T05:59:09.756583+00:00",
+      "exitCode": 2
+    }
+  ],
+  "finishedAt": "2026-10-04T05:59:09.756606+00:00"
+}

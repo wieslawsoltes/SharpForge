@@ -1,0 +1,2 @@
+# Preserve the downloaded evidence bytes across checkouts on every platform.
+* -text

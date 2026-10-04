@@ -1,0 +1,19 @@
+✔ cross-assembly base, derived and interface-implementer trees match explicit fixture sets (7.942667ms)
+✔ a missing or ambiguous assembly produces stable owned dead-reference nodes (1.864625ms)
+✔ declared assembly name/version/culture/key identity binds exactly, without signature authentication (2.576583ms)
+✔ ambiguous type names and unsupported TypeSpec/ModuleRef/nil scopes remain explicit (0.413333ms)
+✔ resolved inheritance cycles, malformed ownership, coded overflows and wrong target kinds reject (2.72025ms)
+✔ all hierarchy construction budgets accept exact charges and reject one below before name decoding (0.769209ms)
+✔ malformed heap extents, oversized keys and cyclic reference scopes reject before binding (2.141667ms)
+✔ numeric assembly snapshot ignores custom iterator and map before preflight and binding (0.617625ms)
+✔ queries bound nodes/depth, mark repeated DAG nodes, cancel, and return independently owned records (0.725833ms)
+✔ retained CoreCLR hierarchy sets and missing framework reference nodes match the captured image (2.781375ms)
+✔ two Roslyn assemblies match CLR cross-image base, nested target and interface identities (1.501959ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 215.324583

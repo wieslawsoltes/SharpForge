@@ -5,7 +5,7 @@ export function designerConfiguration(context) {
   const { state, docking, runtime, toast, download, explorerContext, chooseExplorer, openFile, applyEdits,
     requestCompiler, renderTree, saveLocal, loadDiskRecords, launch } = context;
   return {
-    state, docking, request: (...args) => runtime.request(...args), toast, download,
+    state, docking, request: (...args) => runtime.request(...args), toast, download, diagnostics: context.designerDiagnostics,
     records: () => explorerContext().records, choose: chooseExplorer, sourceFiles: () => state.files, openSource: openFile,
     editSourceText(uri, text, version) {
       const file = state.files.find(item => item.uri === uri);

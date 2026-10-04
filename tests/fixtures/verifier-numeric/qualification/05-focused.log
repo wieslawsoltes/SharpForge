@@ -1,0 +1,60 @@
+✔ typed numeric corpus follows ECMA operand, storage and branch tables (20.373209ms)
+✔ type confusion is rejected independently of the existing height-only admission (1.909334ms)
+✔ slot, underflow, maxstack and return diagnostics are explicit (1.236416ms)
+✔ unsupported metadata, bodies and opcodes cannot produce a typed proof (0.979291ms)
+✔ a local signature token cannot name a method StandAloneSig (0.240875ms)
+✔ bounded typed propagation checks cancellation, state-copy work and all dataflow limits (2.001166ms)
+✔ bytecode after a reachable terminator remains unsupported when its policy is missing (0.268792ms)
+✖ unreachable branches still require an instruction-boundary target (0.622709ms)
+✔ primitive storage addresses retain declared element identity and reject double addresses (0.524167ms)
+✔ all native observations retain exact bytes and explicit predeclared ILVerify differences (6.717208ms)
+✔ all 144 verification category pairs follow the stack merge table in both directions (1.051292ms)
+✔ reference relation seam preserves class, interface, boxed and array covariance joins (2.590958ms)
+✔ controlled mutability is preserved and pointer relations never use reference covariance (0.169583ms)
+✔ nominal identity, constructor state and metadata-dependent unknowns are explicit (0.126375ms)
+✔ factories and metadata adapters reject malformed values without coercing nominal identities (0.525792ms)
+✔ stack merges enforce equal heights, own their results and bound work before allocation (4.713959ms)
+✔ pre-cancelled and interrupted merges produce the cancellation diagnostic (0.179709ms)
+✔ basic blocks split targets and fallthroughs while preserving decoded records and duplicate switch edges (5.237166ms)
+✔ EH boundaries are block entries and leave clears the outgoing state (0.607084ms)
+✔ typed joins reprocess previously visited successors and terminate stable backedges (0.278292ms)
+✔ queued joins are merged once per edge without duplicating pending block transfers (0.606084ms)
+✔ limits reject before propagation and exact empty-stack budgets succeed (1.0225ms)
+✔ cancellation is checked before graph allocation and after an interrupted transfer (0.380958ms)
+✔ empty bodies and reachable fallthroughs stay explicit invalid edges (0.09675ms)
+✔ height integration preserves successful runtime execution and emits precise stack diagnostic categories (11.066666ms)
+✔ exhausted dataflow budgets cannot issue runtime stack proofs (0.374416ms)
+✔ retained ILVerify observations cover height diagnostics, joins, loops and handler seeds (2.098541ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 26
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 605.809791
+
+✖ failing tests:
+
+test at tests/a03-numeric-transfers.test.js:96:1
+✖ unreachable branches still require an instruction-boundary target (0.622709ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'InvalidMetadata'
+  - 'BadJumpTarget'
+  
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-project6-a03-numeric-transfers/tests/a03-numeric-transfers.test.js:99:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'InvalidMetadata',
+    expected: 'BadJumpTarget',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

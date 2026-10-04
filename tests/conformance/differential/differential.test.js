@@ -22,7 +22,7 @@ test('corpus requires bounded seeds, safe paths and explicit nondeterminism norm
 test('normalisation preserves numeric meaning and text while canonicalising declared presentation',()=>{
  assert.notEqual(normalise(result('source-vm',{stdout:'9007199254740992'}),hello).stdout,normalise(result('source-vm',{stdout:'9007199254740993'}),hello).stdout);
  assert.equal(normalise(result('source-vm',{stdout:'1.000\r\n-0.0\r\ntext 1.0\r\n'}),hello).stdout,'1\n-0\ntext 1.0\n');
- const a=result('cil-vm',{status:'runtime-error',exitCode:null,exception:{type:'System.Exception',message:'Failure.'}}),b=result('clr-sharpforge',{status:'runtime-error',exitCode:null,exception:{type:'Exception',message:'Failure'},stderr:'stack trace'});assert.deepEqual(normalise(a,hello),normalise(b,hello));
+ const a=result('cil-vm',{status:'runtime-error',exitCode:null,exception:{type:'System.Exception',message:'Failure.'}}),b=result('clr-sharpforge',{status:'runtime-error',exitCode:null,exception:{type:'System.Exception',message:'Failure'},stderr:'Unhandled exception. System.Exception: Failure\n   at Program.Main()\n',exceptionDiagnostic:'Unhandled exception. System.Exception: Failure\n   at Program.Main()\n'});assert.deepEqual(normalise(a,hello),normalise(b,hello));
  assert.equal(normalise(result('source-vm',{exitCode:-3}),hello).exitCode,process.platform==='win32'?4294967293:253);
  const tagged={...hello,normalisers:['newlines','wall-clock','unordered-lines']};assert.equal(normalise(result('source-vm',{stdout:'z\nclock=123\na\n'}),tagged).stdout,'a\nclock=<normalised>\nz\n');
  assert.throws(()=>normalise({...a,status:'pass'},hello),/Malformed/);

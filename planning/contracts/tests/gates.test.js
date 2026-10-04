@@ -68,6 +68,75 @@ test('schema constraints cannot hide as additive keys or exclusive-union array a
   const registry='planning/contracts/spec-revisions.json',before={schemaVersion:1,revisions:[{id:'csharp-14',version:'14'}]};
   assert.match(checkContractChange({before:{[registry]:before},after:{[registry]:{...before,revisions:[{id:'csharp-14',version:'15'}]}},beforeVersions:versions,afterVersions:{...versions,metadata:2},labels:['contract-change']}).errors.join('\n'),/immutable/);
 });
+test('string-pattern unions preserve complete task predicates without a label or version bump', () => {
+  const legacy = {type: 'string', pattern: '^SF-A\\d{2}-[TB]\\d+(?:\\.\\d+)?$'};
+  const release = {type: 'string', pattern: '^SF-R\\d{3}-[TB]\\d{2}(?:\\.\\d+)?$'};
+  for (const [path, property] of [
+    ['planning/contracts/handoff.schema.json', 'task'],
+    ['planning/contracts/evidence-bundle.schema.json', 'task'],
+    ['planning/contracts/evidence.schema.json', 'leafId'],
+  ]) {
+    const before = {type: 'object', additionalProperties: false, required: [property], properties: {[property]: legacy}};
+    for (const union of [
+      {anyOf: [structuredClone(legacy), release]},
+      {anyOf: [release, structuredClone(legacy)], description: 'Area or release task'},
+      {anyOf: [structuredClone(legacy), structuredClone(legacy)]},
+    ]) {
+      const after = {...before, properties: {[property]: union}};
+      const result = checkContractChange({before: {[path]: before}, after: {[path]: after},
+        beforeVersions: versions, afterVersions: versions});
+      assert.deepEqual(result.errors, [], path);
+      assert.deepEqual(result.changes, [{path, component: 'metadata', breaking: false}]);
+    }
+  }
+  const annotated = {...legacy, title: 'Task', description: 'Existing area task', $comment: 'Retain verbatim', examples: ['SF-A00-T1']};
+  const path = 'planning/contracts/example.schema.json';
+  const result = checkContractChange({before: {[path]: annotated},
+    after: {[path]: {anyOf: [structuredClone(annotated), {...release, title: 'Release task'}], title: 'Task union'}},
+    beforeVersions: versions, afterVersions: versions});
+  assert.deepEqual(result.errors, []);
+  assert.equal(result.changes[0].breaking, false);
+});
+test('string-pattern union proofs reject altered branches, constraints, references and invalid patterns', () => {
+  const path = 'planning/contracts/example.schema.json';
+  const legacy = {type: 'string', pattern: '^SF-A\\d{2}-[TB]\\d+(?:\\.\\d+)?$'};
+  const release = {type: 'string', pattern: '^SF-R\\d{3}-[TB]\\d{2}(?:\\.\\d+)?$'};
+  const cases = [
+    ['missing old branch', legacy, {anyOf: [release]}],
+    ['changed old branch', legacy, {anyOf: [{...legacy, pattern: '^SF-A00-T01$'}, release]}],
+    ['changed old annotation', {...legacy, title: 'Original'}, {anyOf: [{...legacy, title: 'Changed'}, release]}],
+    ['empty union', legacy, {anyOf: []}],
+    ['malformed union', legacy, {anyOf: 'not an array'}],
+    ['exclusive union', legacy, {oneOf: [legacy, release]}],
+    ['outer conjunction', legacy, {anyOf: [legacy, release], allOf: [{maxLength: 0}]}],
+    ['outer constraint', legacy, {anyOf: [legacy, release], minLength: 99}],
+    ['extra outer type', legacy, {anyOf: [legacy, release], type: 'string'}],
+    ['boolean branch', legacy, {anyOf: [legacy, true]}],
+    ['non-string branch', legacy, {anyOf: [legacy, {...release, type: 'number'}]}],
+    ['missing pattern', legacy, {anyOf: [legacy, {type: 'string'}]}],
+    ['invalid new pattern', legacy, {anyOf: [legacy, {...release, pattern: '['}]}],
+    ['non-Unicode pattern', legacy, {anyOf: [legacy, {...release, pattern: '\\a'}]}],
+    ['invalid old pattern', {...legacy, pattern: '['}, {anyOf: [{...legacy, pattern: '['}, release]}],
+  ];
+  for (const [key, value] of Object.entries({
+    $ref: '#/$defs/task', $defs: {task: legacy}, $id: 'https://example.test/task',
+    $anchor: 'task', $dynamicRef: '#task', $dynamicAnchor: 'task',
+    not: {type: 'string'}, allOf: [{maxLength: 0}], maxLength: 0, unknownKeyword: true,
+  })) {
+    const constrained = {...legacy, [key]: value};
+    cases.push([`old ${key}`, constrained, {anyOf: [constrained, release]}]);
+    cases.push([`new ${key}`, legacy, {anyOf: [legacy, {...release, [key]: value}]}]);
+    cases.push([`outer ${key}`, legacy, {anyOf: [legacy, release], [key]: value}]);
+  }
+  for (const [name, before, after] of cases) {
+    const result = checkContractChange({before: {[path]: before}, after: {[path]: after},
+      beforeVersions: versions, afterVersions: versions});
+    assert.equal(result.changes[0].breaking, true, name);
+    assert.equal(result.errors.length, 2, name);
+    assert.match(result.errors[0], /contract-change label/, name);
+    assert.match(result.errors[1], /metadata version bump/, name);
+  }
+});
 test('gate emits every check including failure and stops on prior cancellation',()=>{
   const root=mkdtempSync(join(tmpdir(),'sf-gate-'));
   try { mkdirSync(join(root,'planning/contracts'),{recursive:true});

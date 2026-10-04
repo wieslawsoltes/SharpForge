@@ -1,0 +1,272 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "1ba93e1f0a0e72f514a09cc1ffa510d4db94424e8ae5d6a73d7e4dbdf322a9d1",
+  "rows": [
+    {
+      "type": "long",
+      "input": "-9223372036854775808",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-9223372036854775808",
+      "length": 25,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "-9007199254740993",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-9007199254740993",
+      "length": 22,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "-9007199254740992",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-9007199254740992",
+      "length": 22,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "-2147483649",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-2147483649",
+      "length": 16,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "-1",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|-1",
+      "length": 7,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "0",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|0",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "1",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|1",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "2147483648",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|2147483648",
+      "length": 15,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "9007199254740991",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|9007199254740991",
+      "length": 21,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "9007199254740992",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|9007199254740992",
+      "length": 21,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "9007199254740993",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|9007199254740993",
+      "length": 21,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "9223372036854775807",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|9223372036854775807",
+      "length": 24,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ulong",
+      "input": "0",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|0",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ulong",
+      "input": "1",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|1",
+      "length": 6,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ulong",
+      "input": "4294967295",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|4294967295",
+      "length": 15,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ulong",
+      "input": "4294967296",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|4294967296",
+      "length": 15,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ulong",
+      "input": "9007199254740991",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|9007199254740991",
+      "length": 21,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ulong",
+      "input": "9007199254740992",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|9007199254740992",
+      "length": 21,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ulong",
+      "input": "9007199254740993",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|9007199254740993",
+      "length": 21,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ulong",
+      "input": "9223372036854775807",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|9223372036854775807",
+      "length": 24,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ulong",
+      "input": "9223372036854775808",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|9223372036854775808",
+      "length": 24,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ulong",
+      "input": "18446744073709551615",
+      "nullReceiver": false,
+      "initial": "seed|",
+      "output": "seed|18446744073709551615",
+      "length": 25,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "long",
+      "input": "-9223372036854775808",
+      "nullReceiver": true,
+      "initial": "seed|",
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "type": "ulong",
+      "input": "18446744073709551615",
+      "nullReceiver": true,
+      "initial": "seed|",
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "type": "long",
+      "input": "-9223372036854775808",
+      "nullReceiver": false,
+      "initial": "",
+      "output": "-9223372036854775808",
+      "length": 20,
+      "same": true,
+      "fault": null
+    },
+    {
+      "type": "ulong",
+      "input": "18446744073709551615",
+      "nullReceiver": false,
+      "initial": "",
+      "output": "18446744073709551615",
+      "length": 20,
+      "same": true,
+      "fault": null
+    }
+  ],
+  "fluent": {
+    "output": "-9223372036854775808|18446744073709551615|42True",
+    "length": 48,
+    "same": true
+  }
+}

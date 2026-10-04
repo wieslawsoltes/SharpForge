@@ -1,0 +1,2 @@
+# Preserve original downloaded evidence bytes without text normalization.
+** -text

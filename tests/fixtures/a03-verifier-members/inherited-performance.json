@@ -1,0 +1,264 @@
+{
+  "baselineCommit": "97a4e87ff65b12bd2f390402b28b00020373c49a",
+  "candidateProductCommit": "512c6acd878cdba9867e7604262d397a0bddb651",
+  "schedule": [
+    "baseline",
+    "candidate"
+  ],
+  "harness": "packages/cil/tools/benchmark-verifier-members.mjs",
+  "sourceProof": {
+    "parent": "97a4e87ff65b12bd2f390402b28b00020373c49a",
+    "candidate": "512c6acd878cdba9867e7604262d397a0bddb651",
+    "copied": {
+      "tests/a03-07-members-inherited.test.js": "eb04386f1a709a7652c1e85e4b87f69ae904585b0b37ffb06f4864158a0e5125",
+      "tests/fixtures/a03-verifier-members/inherited-input.js": "837b23aa5c605b37fa6cf81024a9cf59be3c7c87f07a868201cb56e56474c119"
+    },
+    "controls": {
+      "packages/cil/tools/benchmark-verifier-members.mjs": "0a648e5d6097b0559799c5586c399630264956f4411e150ebb4101ce939b2e50",
+      "tests/fixtures/a03-verifier-members/input.js": "774dd26e2e4fc0e8b68258cb15413870e15ee8715ff781f62a6a626545e9bbf6"
+    },
+    "originalProof": "source-proof.json",
+    "correction": "Direct-only field references, based on independent native and pinned FindField source."
+  },
+  "runs": {
+    "baseline": {
+      "node": "v24.21.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "warmupSamples": 3,
+      "host": "shared; fixed exact-parent/candidate control comparison, no speedup claim",
+      "results": {
+        "construction": {
+          "iterations": 1000,
+          "medianMs": 9.069208000000003,
+          "p95Ms": 11.208041000000009,
+          "samples": [
+            {
+              "ms": 10.711915999999988,
+              "heapDelta": 13667312
+            },
+            {
+              "ms": 10.673833000000002,
+              "heapDelta": 12443792
+            },
+            {
+              "ms": 8.311166999999983,
+              "heapDelta": 11780400
+            },
+            {
+              "ms": 11.208041000000009,
+              "heapDelta": 11413456
+            },
+            {
+              "ms": 8.293499999999995,
+              "heapDelta": 9992368
+            },
+            {
+              "ms": 10.265333999999996,
+              "heapDelta": 10279120
+            },
+            {
+              "ms": 8.45750000000001,
+              "heapDelta": 9823152
+            },
+            {
+              "ms": 10.564625000000007,
+              "heapDelta": 10277656
+            },
+            {
+              "ms": 8.542750000000012,
+              "heapDelta": 9609088
+            },
+            {
+              "ms": 9.069208000000003,
+              "heapDelta": 10075376
+            },
+            {
+              "ms": 7.8529589999999985,
+              "heapDelta": 9618760
+            },
+            {
+              "ms": 9.555959000000001,
+              "heapDelta": 10270664
+            }
+          ]
+        },
+        "cachedReference": {
+          "iterations": 1000,
+          "medianMs": 0.023250000000018645,
+          "p95Ms": 0.06033299999995734,
+          "samples": [
+            {
+              "ms": 0.12199999999998568,
+              "heapDelta": 33880
+            },
+            {
+              "ms": 0.05412499999999909,
+              "heapDelta": 35984
+            },
+            {
+              "ms": 0.05275000000000318,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.06033299999995734,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.05279200000001083,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.022834000000045762,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.023000000000024556,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.023583000000030552,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.023250000000018645,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.02279199999998127,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.02283399999998892,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.03437500000001137,
+              "heapDelta": 32536
+            }
+          ]
+        }
+      }
+    },
+    "candidate": {
+      "node": "v24.21.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "warmupSamples": 3,
+      "host": "shared; fixed exact-parent/candidate control comparison, no speedup claim",
+      "results": {
+        "construction": {
+          "iterations": 1000,
+          "medianMs": 9.247083000000003,
+          "p95Ms": 11.705249999999978,
+          "samples": [
+            {
+              "ms": 11.33212499999999,
+              "heapDelta": 14324272
+            },
+            {
+              "ms": 11.123333000000002,
+              "heapDelta": 13149544
+            },
+            {
+              "ms": 8.664000000000016,
+              "heapDelta": 12500400
+            },
+            {
+              "ms": 11.705249999999978,
+              "heapDelta": 11259784
+            },
+            {
+              "ms": 7.5755419999999845,
+              "heapDelta": 10216024
+            },
+            {
+              "ms": 10.648583000000002,
+              "heapDelta": 10631632
+            },
+            {
+              "ms": 7.69441599999999,
+              "heapDelta": 10196608
+            },
+            {
+              "ms": 9.247083000000003,
+              "heapDelta": 10623928
+            },
+            {
+              "ms": 7.286833999999999,
+              "heapDelta": 9992752
+            },
+            {
+              "ms": 9.330124999999981,
+              "heapDelta": 10437904
+            },
+            {
+              "ms": 7.6216249999999945,
+              "heapDelta": 9995800
+            },
+            {
+              "ms": 9.331500000000005,
+              "heapDelta": 10464248
+            }
+          ]
+        },
+        "cachedReference": {
+          "iterations": 1000,
+          "medianMs": 0.02354200000002038,
+          "p95Ms": 0.06279099999994742,
+          "samples": [
+            {
+              "ms": 0.13774999999998272,
+              "heapDelta": 33792
+            },
+            {
+              "ms": 0.08283299999999372,
+              "heapDelta": 33680
+            },
+            {
+              "ms": 0.07612499999999045,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.06279099999994742,
+              "heapDelta": 36056
+            },
+            {
+              "ms": 0.02445799999998144,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.023541999999963537,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.023082999999985532,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.024249999999994998,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.022959000000014385,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.023500000000012733,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.02354200000002038,
+              "heapDelta": 32536
+            },
+            {
+              "ms": 0.038708000000042375,
+              "heapDelta": 32536
+            }
+          ]
+        }
+      }
+    }
+  },
+  "interpretation": "All 12 chronological samples retained; first three warmups excluded from median/p95. Shared host, no significance, causal attribution, noise, general speed or peak-memory claim. Heap deltas are not allocation counts. No measured existing median/p95 regression exceeds 5%."
+}

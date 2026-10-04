@@ -1,0 +1,3410 @@
+{
+  "schemaVersion": 1,
+  "kind": "project16-appended-publication-mapping-facts",
+  "provenance": {
+    "creatorStatePath": "/workspace/scratch/6b99131ca908/p16-publication-state.json",
+    "creatorStateBytes": 608316,
+    "creatorStateSha256": "0f2d68d4e3669f3886c7e301cf2ab38c557edb41352e653d1a4de3b822d45fee",
+    "observedAt": "2026-10-04T06:56:38.780292+00:00",
+    "snapshotBase": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+    "method": "Read selected creator-maintained publication state and existing Git commit objects; no remote API, tests, builds or qualification execution.",
+    "metadataCommands": [
+      "git show 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e:docs/project16-publication-map.json",
+      "git cat-file commit <exact-sha>"
+    ],
+    "additionalObservations": [
+      {
+        "creatorStatePath": "/workspace/scratch/6b99131ca908/p16-publication-state.json",
+        "creatorStateBytes": 627323,
+        "creatorStateSha256": "d16ed42276dfbb1b8641953bbffca93c12ebf54d90457605e95c1b21bc7b5b63",
+        "observedAt": "2026-10-04T07:41:13.898450+00:00",
+        "snapshotBase": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+        "method": "Read creator-maintained publication state and existing Git objects for all 110 appended mappings; no remote API or qualification execution."
+      },
+      {
+        "creatorStatePath": "/workspace/scratch/6b99131ca908/p16-publication-state.json",
+        "creatorStateBytes": 630160,
+        "creatorStateSha256": "540a615c4f51c320799996a8f3ce6e06b484bd9722a1a28ec23930b4b65258c8",
+        "observedAt": "2026-10-04T08:02:14.197422+00:00",
+        "scope": "Appended available status publication object; root merge object awaits supplied shared-Git fetch."
+      },
+      {
+        "creatorStatePath": "/workspace/scratch/6b99131ca908/p16-publication-state.json",
+        "creatorStateBytes": 632852,
+        "creatorStateSha256": "f6a5a1403ff26fd4521adcbddec6f590bff6438b698a1d7ec927125e39249cb9",
+        "observedAt": "2026-10-04T08:09:42.758321+00:00",
+        "scope": "Final creator snapshot; all 116 appended mappings read from available local/public Git objects. No qualification execution."
+      }
+    ]
+  },
+  "historicalEntries": {
+    "count": 441,
+    "sourceSha256": "8f949da9ffe8c106c001636b4d586d16fb3c77946dca65d14069949e6020c748",
+    "entriesAndIdentityNotePreserved": true
+  },
+  "appendedEntries": 116,
+  "totalEntries": 557,
+  "newMappings": [
+    {
+      "local": {
+        "sha": "025c8aabdafbcf5ec2e029a4052ec5fd37443008",
+        "tree": "83436c0427f997752c35868b53b3d4c2a2e21d12",
+        "orderedParents": [
+          "48472269ec106049debc0d448985882463365215"
+        ],
+        "authorTimestamp": "1791080539 +0300",
+        "committerTimestamp": "1791080539 +0300",
+        "subject": "SF-A20-T51: archive final Project 16 qualification and publication evidence",
+        "messageSha256": "0084a3c60d3de9070578cd3ccac3e5d69fc91c54af4a1d18413da121fe6653e4"
+      },
+      "published": {
+        "sha": "43704621cc73129ea95bc155bc610efff322df9d",
+        "tree": "83436c0427f997752c35868b53b3d4c2a2e21d12",
+        "orderedParents": [
+          "2a19543ba43ef16cf73dc2c81834265f74d4ac0c"
+        ],
+        "authorTimestamp": "1791080677 +0200",
+        "committerTimestamp": "1791080677 +0200",
+        "subject": "SF-A20-T51: archive final Project 16 qualification and publication evidence",
+        "messageSha256": "34b7223783f234d9b887f746f943ffd119011123a5e742ff2f38c80b95e5a4a6"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "f99fc52e12c3a794b352463286dc0c58ae790521",
+        "tree": "8f44869f8f65c8a8072f364e7d1b8fd33dd84e47",
+        "orderedParents": [
+          "f7e6e0884eec566b0c2feeeaa0c967c528ed870d",
+          "43704621cc73129ea95bc155bc610efff322df9d"
+        ],
+        "authorTimestamp": "1791080800 +0200",
+        "committerTimestamp": "1791080800 +0200",
+        "subject": "Merge pull request #3843 from wieslawsoltes/codex/project16/05-provider-host",
+        "messageSha256": "21b9bde7b53fa1e8031c180bc30aa57d3d1efcfe313d71232415fec86758c61e"
+      },
+      "published": {
+        "sha": "f99fc52e12c3a794b352463286dc0c58ae790521",
+        "tree": "8f44869f8f65c8a8072f364e7d1b8fd33dd84e47",
+        "orderedParents": [
+          "f7e6e0884eec566b0c2feeeaa0c967c528ed870d",
+          "43704621cc73129ea95bc155bc610efff322df9d"
+        ],
+        "authorTimestamp": "1791080800 +0200",
+        "committerTimestamp": "1791080800 +0200",
+        "subject": "Merge pull request #3843 from wieslawsoltes/codex/project16/05-provider-host",
+        "messageSha256": "21b9bde7b53fa1e8031c180bc30aa57d3d1efcfe313d71232415fec86758c61e"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": true,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "fdad2b1516e21f1ba4df7f529540bd1f31b20c61",
+        "tree": "bf2c0330902d364c2e1c1e35a913060ba79c4733",
+        "orderedParents": [
+          "f99fc52e12c3a794b352463286dc0c58ae790521"
+        ],
+        "authorTimestamp": "1791081336 +0300",
+        "committerTimestamp": "1791081336 +0300",
+        "subject": "SF-A20-T51: quote browser dependency command with a YAML block scalar",
+        "messageSha256": "c6237ee62b78e1cc2ac4bb8dde0529b37debe3efbcea474174350b065c9cd4bd"
+      },
+      "published": {
+        "sha": "ba9b8e3ef8b8d3d37cf471756fe926514cf7101d",
+        "tree": "bf2c0330902d364c2e1c1e35a913060ba79c4733",
+        "orderedParents": [
+          "f99fc52e12c3a794b352463286dc0c58ae790521"
+        ],
+        "authorTimestamp": "1791081407 +0200",
+        "committerTimestamp": "1791081407 +0200",
+        "subject": "SF-A20-T51: quote browser dependency command with a YAML block scalar",
+        "messageSha256": "dac29fefe16a16259734600a137d1a40f8393d8ca28ad423107424392f15b7d2"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "e990e9342678117090a48516ec736d92104be4b2",
+        "tree": "36c33c1974b2429edc1798637673d548c822124d",
+        "orderedParents": [
+          "23235d9823fcf925545835702321b356fb47faa9",
+          "ba9b8e3ef8b8d3d37cf471756fe926514cf7101d"
+        ],
+        "authorTimestamp": "1791081528 +0200",
+        "committerTimestamp": "1791081528 +0200",
+        "subject": "Merge pull request #3865 from wieslawsoltes/codex/project16/06-qualification-yaml",
+        "messageSha256": "c681af1212071eb17e2edbee1e4166608263db4e42bf1d3b31e5551b1cdf8235"
+      },
+      "published": {
+        "sha": "e990e9342678117090a48516ec736d92104be4b2",
+        "tree": "36c33c1974b2429edc1798637673d548c822124d",
+        "orderedParents": [
+          "23235d9823fcf925545835702321b356fb47faa9",
+          "ba9b8e3ef8b8d3d37cf471756fe926514cf7101d"
+        ],
+        "authorTimestamp": "1791081528 +0200",
+        "committerTimestamp": "1791081528 +0200",
+        "subject": "Merge pull request #3865 from wieslawsoltes/codex/project16/06-qualification-yaml",
+        "messageSha256": "c681af1212071eb17e2edbee1e4166608263db4e42bf1d3b31e5551b1cdf8235"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": true,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "d657d2b344576dd692e8dcd4fd6f66a72e027e85",
+        "tree": "c2b59e429ad3a506cb66e3b1ec92d54f7fb53379",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791082363 +0300",
+        "committerTimestamp": "1791082363 +0300",
+        "subject": "SF-A20-T51: align Project 16 browser callers with asynchronous harness contracts",
+        "messageSha256": "777f9265608fbab474205483b875f4871e4f1c5188de3f0603f1b8b051e4501d"
+      },
+      "published": {
+        "sha": "df046df75c9997a85d21bd015895b332d4aba587",
+        "tree": "c2b59e429ad3a506cb66e3b1ec92d54f7fb53379",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791082608 +0200",
+        "committerTimestamp": "1791082608 +0200",
+        "subject": "SF-A20-T51: align Project 16 browser callers with asynchronous harness contracts",
+        "messageSha256": "3793b549bd144a791ca19603b08ac0f1c5526217307599b943b27b62e0d66e4f"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "904c05dce4b7b458d85fca3af920846754e88500",
+        "tree": "c2b59e429ad3a506cb66e3b1ec92d54f7fb53379",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2",
+          "d657d2b344576dd692e8dcd4fd6f66a72e027e85"
+        ],
+        "authorTimestamp": "1791082423 +0300",
+        "committerTimestamp": "1791082423 +0300",
+        "subject": "SF-A20-T51: integrate completed browser caller corrections",
+        "messageSha256": "d3a9ac1b4b4c9a05544449b3a454a67238e01cb8bdbdc401820bd2cface7fd9a"
+      },
+      "published": {
+        "sha": "003be7f2d755f76dfefb890bbd711cfdca3b1bbf",
+        "tree": "c2b59e429ad3a506cb66e3b1ec92d54f7fb53379",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2",
+          "df046df75c9997a85d21bd015895b332d4aba587"
+        ],
+        "authorTimestamp": "1791082609 +0200",
+        "committerTimestamp": "1791082609 +0200",
+        "subject": "SF-A20-T51: integrate completed browser caller corrections",
+        "messageSha256": "3edbc1cd2bb3eef057fc13ed609618e51c12d04f7ebf7d8bf119d4b8fe0ac96b"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "269809b295f6991d1d2fbc22480f703c73296a9a",
+        "tree": "c7c10cc18251ae1fb119198adedb18091a21f1db",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791082357 +0300",
+        "committerTimestamp": "1791082357 +0300",
+        "subject": "SF-A19-T12.1: preserve every serial qualification outcome",
+        "messageSha256": "1966f026d5bceaf037ebb2db8a2905f8913fa00b68da3aaf208101d1c37dc2a9"
+      },
+      "published": {
+        "sha": "69554a4b3fc9158059ec40fe871eb6af32abad35",
+        "tree": "c7c10cc18251ae1fb119198adedb18091a21f1db",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791082611 +0200",
+        "committerTimestamp": "1791082611 +0200",
+        "subject": "SF-A19-T12.1: preserve every serial qualification outcome",
+        "messageSha256": "5567acf630329d67fe056344d30105f6c40560cb3cfbe81288b55792402e402e"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "9dd318e9faaf245ec0cb92d40ed8f411cb9e347b",
+        "tree": "ac52aeafc5f7b9186c4d16ad71d749378c5976fb",
+        "orderedParents": [
+          "904c05dce4b7b458d85fca3af920846754e88500",
+          "269809b295f6991d1d2fbc22480f703c73296a9a"
+        ],
+        "authorTimestamp": "1791082424 +0300",
+        "committerTimestamp": "1791082424 +0300",
+        "subject": "SF-A20-T51: integrate serial qualification outcome collection",
+        "messageSha256": "60fcb04679cb99601514db28ba203114ca627e813b0a2315d1ee33ea6d3717c1"
+      },
+      "published": {
+        "sha": "15acd33f3a2ab81797d3a0d341f53dfd13bcbbd5",
+        "tree": "ac52aeafc5f7b9186c4d16ad71d749378c5976fb",
+        "orderedParents": [
+          "003be7f2d755f76dfefb890bbd711cfdca3b1bbf",
+          "69554a4b3fc9158059ec40fe871eb6af32abad35"
+        ],
+        "authorTimestamp": "1791082611 +0200",
+        "committerTimestamp": "1791082611 +0200",
+        "subject": "SF-A20-T51: integrate serial qualification outcome collection",
+        "messageSha256": "b8e0d48c175c7ffac118a9b082d5f8a4d1d4d843d28c67969231e2300a3f355f"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "e4629f443b59bfc2d7494b731be19afc5974b7b1",
+        "tree": "1733c01dae0e44cea49dd82a574fda7b8286d6be",
+        "orderedParents": [
+          "7ae530c9ac319cfd0fa22ba49210ca65c31af120",
+          "15acd33f3a2ab81797d3a0d341f53dfd13bcbbd5"
+        ],
+        "authorTimestamp": "1791082720 +0200",
+        "committerTimestamp": "1791082720 +0200",
+        "subject": "Merge pull request #3904 from wieslawsoltes/codex/project16/07-browser-qualification",
+        "messageSha256": "59f1d149d97bfd874a245e9a5a07d9426b7d11c135f9ebcca3dba23d0b55b2bf"
+      },
+      "published": {
+        "sha": "e4629f443b59bfc2d7494b731be19afc5974b7b1",
+        "tree": "1733c01dae0e44cea49dd82a574fda7b8286d6be",
+        "orderedParents": [
+          "7ae530c9ac319cfd0fa22ba49210ca65c31af120",
+          "15acd33f3a2ab81797d3a0d341f53dfd13bcbbd5"
+        ],
+        "authorTimestamp": "1791082720 +0200",
+        "committerTimestamp": "1791082720 +0200",
+        "subject": "Merge pull request #3904 from wieslawsoltes/codex/project16/07-browser-qualification",
+        "messageSha256": "59f1d149d97bfd874a245e9a5a07d9426b7d11c135f9ebcca3dba23d0b55b2bf"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": true,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "66fe0cd3c9f00a8a40bf42532936b10fd1f4569e",
+        "tree": "f9fef191caeaac14fc5c994f47ab785f949cbf59",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791082902 +0300",
+        "committerTimestamp": "1791082902 +0300",
+        "subject": "SF-A20-T44: qualify actual Studio 200 MiB File ingress lifecycle",
+        "messageSha256": "cdef6b926889a3bf304661c80b81e5802c23672a28ab609e934e749f7c385c69"
+      },
+      "published": {
+        "sha": "3d8d5e511358ab2cd35ee021465e72f7286353c6",
+        "tree": "f9fef191caeaac14fc5c994f47ab785f949cbf59",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791084628 +0200",
+        "committerTimestamp": "1791084628 +0200",
+        "subject": "SF-A20-T44: qualify actual Studio 200 MiB File ingress lifecycle",
+        "messageSha256": "662462220883612a03ee0767c0653518a8656c0414a7e717b161223ae4b31034"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "dcbccdfcf27b73dd61a8cfa9940c3a25733175d4",
+        "tree": "94284f1c407b2861584aa438dbf13e0dc9aa126f",
+        "orderedParents": [
+          "e4629f443b59bfc2d7494b731be19afc5974b7b1",
+          "66fe0cd3c9f00a8a40bf42532936b10fd1f4569e"
+        ],
+        "authorTimestamp": "1791083050 +0300",
+        "committerTimestamp": "1791083050 +0300",
+        "subject": "SF-A20-T28: add actual Studio large file ingress qualification",
+        "messageSha256": "cddc65d7e0c7c6c2d105625a016e61dd5c3e8ab7e21e2158bcc85c0aaf718434"
+      },
+      "published": {
+        "sha": "2f40ac1f5f4e1c0f9caffded5c8103f48d2d85b2",
+        "tree": "94284f1c407b2861584aa438dbf13e0dc9aa126f",
+        "orderedParents": [
+          "e4629f443b59bfc2d7494b731be19afc5974b7b1",
+          "3d8d5e511358ab2cd35ee021465e72f7286353c6"
+        ],
+        "authorTimestamp": "1791084629 +0200",
+        "committerTimestamp": "1791084629 +0200",
+        "subject": "SF-A20-T28: add actual Studio large file ingress qualification",
+        "messageSha256": "328c27b92aed6920519349b2a5dc818418d7a3b81daa4ce46f20f3136803961b"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "ad880800fd147d01bd6f95e2b2b531c781644872",
+        "tree": "d5e5838b5605ba009a1d6a2b0d2bb57468a50d0b",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791083328 +0300",
+        "committerTimestamp": "1791083328 +0300",
+        "subject": "SF-A19-T12.2: qualify workflows through offline standalone file navigation",
+        "messageSha256": "2c82ca8aa517fbf72af29fd7805553a21af2cfbb97cd22348b190ec0d9665c7f"
+      },
+      "published": {
+        "sha": "5e467aa80c1a8ac23815e008c33706bd37b7df20",
+        "tree": "d5e5838b5605ba009a1d6a2b0d2bb57468a50d0b",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791084631 +0200",
+        "committerTimestamp": "1791084631 +0200",
+        "subject": "SF-A19-T12.2: qualify workflows through offline standalone file navigation",
+        "messageSha256": "44bcc651113c074d7828f06bf4f7a2ee05d635c35d1bf34a7c4fbc8231bfa694"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "172bc661874beae237f2ec36d192653891d06864",
+        "tree": "516dc84b862cbb1fc48246a6cd4d3b6747f9b6da",
+        "orderedParents": [
+          "dcbccdfcf27b73dd61a8cfa9940c3a25733175d4",
+          "ad880800fd147d01bd6f95e2b2b531c781644872"
+        ],
+        "authorTimestamp": "1791083370 +0300",
+        "committerTimestamp": "1791083370 +0300",
+        "subject": "SF-A19-T12.1: integrate real standalone workflow qualification",
+        "messageSha256": "a8e8d6fba40c2155702ef741d4c349669871410e67a336fff8a6f25d949a525b"
+      },
+      "published": {
+        "sha": "b7160ff9ad65a13daa968b5edda0f8b50f553848",
+        "tree": "516dc84b862cbb1fc48246a6cd4d3b6747f9b6da",
+        "orderedParents": [
+          "2f40ac1f5f4e1c0f9caffded5c8103f48d2d85b2",
+          "5e467aa80c1a8ac23815e008c33706bd37b7df20"
+        ],
+        "authorTimestamp": "1791084632 +0200",
+        "committerTimestamp": "1791084632 +0200",
+        "subject": "SF-A19-T12.1: integrate real standalone workflow qualification",
+        "messageSha256": "a2e7322043f9b384f3eb11915dbb28b2f9c82214e61e80565ed7b9f5851c079f"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "33a23dd52250a72da66153c52641f8ee23156b09",
+        "tree": "63f167e77c96e5aeb4f33ecf147485c8eaafdc06",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791083623 +0300",
+        "committerTimestamp": "1791083623 +0300",
+        "subject": "SF-A19-T23: capture actual Code Definition caret latency",
+        "messageSha256": "3bc8af122a1362728f20fcdad844bdef820f29533f643c163fe555d610a0ef3f"
+      },
+      "published": {
+        "sha": "1ebade337b11a2281ce59228d418bd5adfd2a915",
+        "tree": "63f167e77c96e5aeb4f33ecf147485c8eaafdc06",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791084633 +0200",
+        "committerTimestamp": "1791084633 +0200",
+        "subject": "SF-A19-T23: capture actual Code Definition caret latency",
+        "messageSha256": "0750c09f5d45fd4dfa2a1639c7c94a303a9d8859c021a0d90f0ec017bb21f44a"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "3fbb74f0f2ed9ce7e2f3aa169d5cf0896cb6868c",
+        "tree": "d2064891eb4d2f7d416ff5fc1490cb52b664ca9f",
+        "orderedParents": [
+          "33a23dd52250a72da66153c52641f8ee23156b09"
+        ],
+        "authorTimestamp": "1791083630 +0300",
+        "committerTimestamp": "1791083630 +0300",
+        "subject": "SF-A20-T28: capture overview canvas rendering and annotation pixels",
+        "messageSha256": "236a6bd0cb124f8d5b63acc086f9a512b5d199cc28a6a3735da82f7ebd54093b"
+      },
+      "published": {
+        "sha": "f421cef7191c4aa1261f30c812ae57e3e74c9339",
+        "tree": "d2064891eb4d2f7d416ff5fc1490cb52b664ca9f",
+        "orderedParents": [
+          "1ebade337b11a2281ce59228d418bd5adfd2a915"
+        ],
+        "authorTimestamp": "1791084634 +0200",
+        "committerTimestamp": "1791084634 +0200",
+        "subject": "SF-A20-T28: capture overview canvas rendering and annotation pixels",
+        "messageSha256": "add679eb7f498534420c278d40087f75f1662886cf984b57dfa735b03e7fd97e"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "4e629784bf8b798bd362dd344604d10fd33fb0c2",
+        "tree": "ee6fc29e0ca428b1d5799043c914a72b355b7b3e",
+        "orderedParents": [
+          "3fbb74f0f2ed9ce7e2f3aa169d5cf0896cb6868c"
+        ],
+        "authorTimestamp": "1791083645 +0300",
+        "committerTimestamp": "1791083645 +0300",
+        "subject": "SF-A19-T23: retain and validate complete editor browser budget captures",
+        "messageSha256": "fa14890eae67310b2ce56982d3aaf0d1f06600a70ac0c9671427cb1571e52306"
+      },
+      "published": {
+        "sha": "159ef5f47de61fe6242ed13e68a6b112389b0d03",
+        "tree": "ee6fc29e0ca428b1d5799043c914a72b355b7b3e",
+        "orderedParents": [
+          "f421cef7191c4aa1261f30c812ae57e3e74c9339"
+        ],
+        "authorTimestamp": "1791084636 +0200",
+        "committerTimestamp": "1791084636 +0200",
+        "subject": "SF-A19-T23: retain and validate complete editor browser budget captures",
+        "messageSha256": "cea11ccc7cd8b6939828f2c488e84cab096e4d59607b9b988cdbfa2ea6682245"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "fab21814c94a0fa2868833706987a8c1edce10ad",
+        "tree": "99f5a842dc911533f12a7d5fd823693f83041fa4",
+        "orderedParents": [
+          "172bc661874beae237f2ec36d192653891d06864",
+          "4e629784bf8b798bd362dd344604d10fd33fb0c2"
+        ],
+        "authorTimestamp": "1791083755 +0300",
+        "committerTimestamp": "1791083755 +0300",
+        "subject": "SF-A19-T23: integrate Code Definition and scrollbar map measurements",
+        "messageSha256": "330a2f2bb4a82272c087efd38cfd9eabf9f2b333506196cd00c27efd69a82b45"
+      },
+      "published": {
+        "sha": "8e7c2c4da84b9bcd14da718463d9246ccd3b533d",
+        "tree": "99f5a842dc911533f12a7d5fd823693f83041fa4",
+        "orderedParents": [
+          "b7160ff9ad65a13daa968b5edda0f8b50f553848",
+          "159ef5f47de61fe6242ed13e68a6b112389b0d03"
+        ],
+        "authorTimestamp": "1791084637 +0200",
+        "committerTimestamp": "1791084637 +0200",
+        "subject": "SF-A19-T23: integrate Code Definition and scrollbar map measurements",
+        "messageSha256": "bfc0f0e19b0a06a6bb07722c113dafbcadb8005e63e6bab5029d1c5cafde0130"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "7c2eecc34e1629ac05e8f5896845d2e8d2bed54a",
+        "tree": "f78ccf5737115b2e90dbca278f5d08d1d3697337",
+        "orderedParents": [
+          "e4629f443b59bfc2d7494b731be19afc5974b7b1"
+        ],
+        "authorTimestamp": "1791083717 +0300",
+        "committerTimestamp": "1791083717 +0300",
+        "subject": "SF-A20-T19: isolate rename previews and correct hosted editor fixtures",
+        "messageSha256": "946210e54ae7357cb4d94f9b88d98ad57ca33576405691b7aba6bcc4e3d39ad8"
+      },
+      "published": {
+        "sha": "a5c8d50acf18500f38fa7d0f65d83dbd8411d8fb",
+        "tree": "f78ccf5737115b2e90dbca278f5d08d1d3697337",
+        "orderedParents": [
+          "e4629f443b59bfc2d7494b731be19afc5974b7b1"
+        ],
+        "authorTimestamp": "1791084638 +0200",
+        "committerTimestamp": "1791084638 +0200",
+        "subject": "SF-A20-T19: isolate rename previews and correct hosted editor fixtures",
+        "messageSha256": "413f3d477c5706680af2d3923e47670815d6ddfcbcf99cf66d544e1e67660f62"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "f2a7ea6067a39e9cdb1195cf8f625331484e21a0",
+        "tree": "ce8e356be191c8eeb48608a2993a904d65cd513f",
+        "orderedParents": [
+          "fab21814c94a0fa2868833706987a8c1edce10ad",
+          "7c2eecc34e1629ac05e8f5896845d2e8d2bed54a"
+        ],
+        "authorTimestamp": "1791083756 +0300",
+        "committerTimestamp": "1791083756 +0300",
+        "subject": "SF-A20-T19: integrate isolated rename previews and browser fixture corrections",
+        "messageSha256": "0e4b14a0f47fc354361468df6f80ba0e4e8723f065390662150ba7cb79c82313"
+      },
+      "published": {
+        "sha": "f7551b983c5c1da9542cc8e1cf9ab21acd2041f8",
+        "tree": "ce8e356be191c8eeb48608a2993a904d65cd513f",
+        "orderedParents": [
+          "8e7c2c4da84b9bcd14da718463d9246ccd3b533d",
+          "a5c8d50acf18500f38fa7d0f65d83dbd8411d8fb"
+        ],
+        "authorTimestamp": "1791084639 +0200",
+        "committerTimestamp": "1791084639 +0200",
+        "subject": "SF-A20-T19: integrate isolated rename previews and browser fixture corrections",
+        "messageSha256": "c0041dafb828a9c7207a84b5037876e30cf6d933e66907d4d3122b76d3b42cfc"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "59cce957deb546c1c49d93be1c7bef456368ffc9",
+        "tree": "badc589739162cbf5f91350e6cf3ad7173076629",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791083894 +0300",
+        "committerTimestamp": "1791083894 +0300",
+        "subject": "SF-A19-T11.1: measure real Studio instrumentation overhead with paired captures",
+        "messageSha256": "d6cba2c9c4898b5126cb2193118ecd21b71cca4afe4ac5cc89a7e101d2aaceea"
+      },
+      "published": {
+        "sha": "0cc456887687f3670a8b61862048153ec1651e26",
+        "tree": "badc589739162cbf5f91350e6cf3ad7173076629",
+        "orderedParents": [
+          "e990e9342678117090a48516ec736d92104be4b2"
+        ],
+        "authorTimestamp": "1791084641 +0200",
+        "committerTimestamp": "1791084641 +0200",
+        "subject": "SF-A19-T11.1: measure real Studio instrumentation overhead with paired captures",
+        "messageSha256": "52a32469f810ef46d1e69a738b1a93ee283fd77ed6ca44e8f5fe5ecdbd24ea96"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "8ec10bad047d6658d9cacbc6fbb98693842b49fd",
+        "tree": "f71a3ef774cac4fa8590a84404c9a88338cc9a58",
+        "orderedParents": [
+          "f2a7ea6067a39e9cdb1195cf8f625331484e21a0",
+          "59cce957deb546c1c49d93be1c7bef456368ffc9"
+        ],
+        "authorTimestamp": "1791084240 +0300",
+        "committerTimestamp": "1791084240 +0300",
+        "subject": "SF-A19-T11.1: integrate explicit instrumentation controls and paired browser capture",
+        "messageSha256": "27e65ac4895c31b6ddabdad5c7b4c9cdf8c0d53773437f6c061b6a807b110632"
+      },
+      "published": {
+        "sha": "fce5e084253e891fabd470218b8aff428a77d067",
+        "tree": "f71a3ef774cac4fa8590a84404c9a88338cc9a58",
+        "orderedParents": [
+          "f7551b983c5c1da9542cc8e1cf9ab21acd2041f8",
+          "0cc456887687f3670a8b61862048153ec1651e26"
+        ],
+        "authorTimestamp": "1791084642 +0200",
+        "committerTimestamp": "1791084642 +0200",
+        "subject": "SF-A19-T11.1: integrate explicit instrumentation controls and paired browser capture",
+        "messageSha256": "b3807b16d34e09f700ec5781433572024cbca57c31074030705e9067e1f32b4a"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "efe9319b247c03cd1b6e99c04a88af6bff97942f",
+        "tree": "b33df834d93fd5b79f39ae4e678479dc85edc9f3",
+        "orderedParents": [
+          "4e629784bf8b798bd362dd344604d10fd33fb0c2"
+        ],
+        "authorTimestamp": "1791083967 +0300",
+        "committerTimestamp": "1791083967 +0300",
+        "subject": "SF-A20-T28: isolate each browser budget stage lifecycle",
+        "messageSha256": "cc70abb08cb11a072f160d5ec264d3aa2187927dd4c6a6eedc9433ca9dbaa8d0"
+      },
+      "published": {
+        "sha": "68ede33c2c28fdd3a71cdfe4c5d02233e5e3a2a0",
+        "tree": "b33df834d93fd5b79f39ae4e678479dc85edc9f3",
+        "orderedParents": [
+          "159ef5f47de61fe6242ed13e68a6b112389b0d03"
+        ],
+        "authorTimestamp": "1791084643 +0200",
+        "committerTimestamp": "1791084643 +0200",
+        "subject": "SF-A20-T28: isolate each browser budget stage lifecycle",
+        "messageSha256": "bfb4772ef26d887e7546cecca41afb2e1775a18ac8b17874e732b4ed733b1df4"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "6d4b8317d5e9d831943b2d7649729d570d0405ba",
+        "tree": "1914ab79864065f1237d85e302554404d99d4114",
+        "orderedParents": [
+          "8ec10bad047d6658d9cacbc6fbb98693842b49fd",
+          "efe9319b247c03cd1b6e99c04a88af6bff97942f"
+        ],
+        "authorTimestamp": "1791084240 +0300",
+        "committerTimestamp": "1791084240 +0300",
+        "subject": "SF-A19-T23: isolate browser budget measurement lifetimes",
+        "messageSha256": "6525d770dfbb01bae69c568594a6c66fd102693f93dcdffe2ab45c8b8ddb8cbf"
+      },
+      "published": {
+        "sha": "b44e8b5356c6990fca25a3d7add7816926458c3a",
+        "tree": "1914ab79864065f1237d85e302554404d99d4114",
+        "orderedParents": [
+          "fce5e084253e891fabd470218b8aff428a77d067",
+          "68ede33c2c28fdd3a71cdfe4c5d02233e5e3a2a0"
+        ],
+        "authorTimestamp": "1791084644 +0200",
+        "committerTimestamp": "1791084644 +0200",
+        "subject": "SF-A19-T23: isolate browser budget measurement lifetimes",
+        "messageSha256": "6adc1d815b23847aef100db1ad8fe1193b9aa9aeece3d8d8fdf8d8b3a8a8d562"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "278b46c544f15514c3a578f04a8ad6219ab41cfe",
+        "tree": "1725ae656bd4131bbd2ec198422bbbf2c1b31f71",
+        "orderedParents": [
+          "6d4b8317d5e9d831943b2d7649729d570d0405ba"
+        ],
+        "authorTimestamp": "1791084329 +0300",
+        "committerTimestamp": "1791084329 +0300",
+        "subject": "SF-A20-T51: register complete standalone and measurement qualification scopes",
+        "messageSha256": "9aad50ceb3d8ce867a38025f14871f504abc31976078a0113a135ca75ae8587c"
+      },
+      "published": {
+        "sha": "9256ab3fa739a109bba76eb33908afcd62016da5",
+        "tree": "1725ae656bd4131bbd2ec198422bbbf2c1b31f71",
+        "orderedParents": [
+          "b44e8b5356c6990fca25a3d7add7816926458c3a"
+        ],
+        "authorTimestamp": "1791084645 +0200",
+        "committerTimestamp": "1791084645 +0200",
+        "subject": "SF-A20-T51: register complete standalone and measurement qualification scopes",
+        "messageSha256": "220d5425d1a2887e358a7a079d5f7d78de46a3eb7eedd1d443dc35cec99c7431"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "24a5ea2ee89cc26cb20425c3137870a2ba264fff",
+        "tree": "fa4213c6ab0e5e2b7f0d4a9093e1df5c104a19e4",
+        "orderedParents": [
+          "e4629f443b59bfc2d7494b731be19afc5974b7b1"
+        ],
+        "authorTimestamp": "1791084292 +0300",
+        "committerTimestamp": "1791084292 +0300",
+        "subject": "SF-A19-T01.3: preserve model ownership during workspace replacement",
+        "messageSha256": "91f3210b0f9fc5131900217db2731c0c86174f21cef5462eb879a3aaa60f419d"
+      },
+      "published": {
+        "sha": "05f24e926f55543526d6b32490827a7b187aaeaf",
+        "tree": "fa4213c6ab0e5e2b7f0d4a9093e1df5c104a19e4",
+        "orderedParents": [
+          "e4629f443b59bfc2d7494b731be19afc5974b7b1"
+        ],
+        "authorTimestamp": "1791084646 +0200",
+        "committerTimestamp": "1791084646 +0200",
+        "subject": "SF-A19-T01.3: preserve model ownership during workspace replacement",
+        "messageSha256": "b31a514106fd2c849953768c593c1300297dc81ca6869c9339106a8817419d3c"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "c2c69a1ae200c239060e087cfa3f5167ac6eb21b",
+        "tree": "44fe8d2f5a58097c81d170706f4b20c389979077",
+        "orderedParents": [
+          "278b46c544f15514c3a578f04a8ad6219ab41cfe",
+          "24a5ea2ee89cc26cb20425c3137870a2ba264fff"
+        ],
+        "authorTimestamp": "1791084337 +0300",
+        "committerTimestamp": "1791084337 +0300",
+        "subject": "SF-A19-T12.1: integrate workspace and editor model ownership correction",
+        "messageSha256": "288bb4e5a0536bef0d76a65aad646a2a4b9c7d54ad52a6dd98f51de778f4494f"
+      },
+      "published": {
+        "sha": "5b2b871d794afa53db98c6629dbd1bc751292627",
+        "tree": "44fe8d2f5a58097c81d170706f4b20c389979077",
+        "orderedParents": [
+          "9256ab3fa739a109bba76eb33908afcd62016da5",
+          "05f24e926f55543526d6b32490827a7b187aaeaf"
+        ],
+        "authorTimestamp": "1791084648 +0200",
+        "committerTimestamp": "1791084648 +0200",
+        "subject": "SF-A19-T12.1: integrate workspace and editor model ownership correction",
+        "messageSha256": "a06c673212169baa8bb49edac44e18a12c78ffe4b90d6859194f13901f845ea8"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "a6b44f2c3091b01ffd5dc616b08c35d1216cd5c2",
+        "tree": "6f1f268a6e48539a4973a139d5cd0318fb1b1930",
+        "orderedParents": [
+          "66fe0cd3c9f00a8a40bf42532936b10fd1f4569e"
+        ],
+        "authorTimestamp": "1791084401 +0300",
+        "committerTimestamp": "1791084401 +0300",
+        "subject": "SF-A19-T12: archive initial hosted Project 16 qualification evidence",
+        "messageSha256": "851c9b69fc00a4ff959931119e89f3088d7ade0a60fc08dc830a34202bfb55a3"
+      },
+      "published": {
+        "sha": "cc9c59e780c6509231075a98d94a09257a2641fd",
+        "tree": "6f1f268a6e48539a4973a139d5cd0318fb1b1930",
+        "orderedParents": [
+          "3d8d5e511358ab2cd35ee021465e72f7286353c6"
+        ],
+        "authorTimestamp": "1791084688 +0200",
+        "committerTimestamp": "1791084688 +0200",
+        "subject": "SF-A19-T12: archive initial hosted Project 16 qualification evidence",
+        "messageSha256": "62163809eb3d9c81b9b266fbe2fd8e7eca23f0958b1a466a97195f39c50ceee5"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "581ce369b235c0de21acd593a99b3566bf64a52b",
+        "tree": "806b7370f793b9a9d9c7b71a1bfa4d34fcf72285",
+        "orderedParents": [
+          "c2c69a1ae200c239060e087cfa3f5167ac6eb21b",
+          "a6b44f2c3091b01ffd5dc616b08c35d1216cd5c2"
+        ],
+        "authorTimestamp": "1791084430 +0300",
+        "committerTimestamp": "1791084430 +0300",
+        "subject": "SF-A20-T51: preserve original hosted qualification outcomes and artifacts",
+        "messageSha256": "99b504e624f67887fba15bb30f3377f8ffdccd9a18f591e3f17ee5e8689d5074"
+      },
+      "published": {
+        "sha": "ecaf858e799ed5f71648c4ff61844fd900bf39e6",
+        "tree": "806b7370f793b9a9d9c7b71a1bfa4d34fcf72285",
+        "orderedParents": [
+          "5b2b871d794afa53db98c6629dbd1bc751292627",
+          "cc9c59e780c6509231075a98d94a09257a2641fd"
+        ],
+        "authorTimestamp": "1791084689 +0200",
+        "committerTimestamp": "1791084689 +0200",
+        "subject": "SF-A20-T51: preserve original hosted qualification outcomes and artifacts",
+        "messageSha256": "134ed5916ecb7ba2cf57d2d21a30e29d6fbc42882f118188e296017162ce29e3"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "0e0f0a2eea27b41eef911f7720c23fa3a36dd558",
+        "tree": "83143a31c44db2b2c0b8c2f7e230ac2d8069b41f",
+        "orderedParents": [
+          "59cce957deb546c1c49d93be1c7bef456368ffc9"
+        ],
+        "authorTimestamp": "1791085374 +0300",
+        "committerTimestamp": "1791085374 +0300",
+        "subject": "SF-A19-T11.1: bind trace epochs and verify exact served build bytes",
+        "messageSha256": "738edbd8000e4a49253b863c908c8f5a48d920346dba2bdb9535065deb314bd7"
+      },
+      "published": {
+        "sha": "e5966cb1ff6311a167793a2a00f2a112e780b7c3",
+        "tree": "83143a31c44db2b2c0b8c2f7e230ac2d8069b41f",
+        "orderedParents": [
+          "0cc456887687f3670a8b61862048153ec1651e26"
+        ],
+        "authorTimestamp": "1791085597 +0200",
+        "committerTimestamp": "1791085597 +0200",
+        "subject": "SF-A19-T11.1: bind trace epochs and verify exact served build bytes",
+        "messageSha256": "e4a8d637633e765ed0a9f143d2de042c8da4b0e34412881cf34bfa3702e00be5"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "d5df3806275715b8faea78bb93b697b2cf91897b",
+        "tree": "1e2db8ef4c6196f0257c61e94a1a030758a592b7",
+        "orderedParents": [
+          "581ce369b235c0de21acd593a99b3566bf64a52b",
+          "0e0f0a2eea27b41eef911f7720c23fa3a36dd558"
+        ],
+        "authorTimestamp": "1791085424 +0300",
+        "committerTimestamp": "1791085424 +0300",
+        "subject": "SF-A19-T11.1: integrate invalidated mark and exact served-build evidence corrections",
+        "messageSha256": "38ad0641dfc1047757405c98a34443277b86ee86d77a68e956f1a9e34bf8220d"
+      },
+      "published": {
+        "sha": "b2ab94d9f4ffab9102d318269855e6ab3d3a248e",
+        "tree": "1e2db8ef4c6196f0257c61e94a1a030758a592b7",
+        "orderedParents": [
+          "ecaf858e799ed5f71648c4ff61844fd900bf39e6",
+          "e5966cb1ff6311a167793a2a00f2a112e780b7c3"
+        ],
+        "authorTimestamp": "1791085598 +0200",
+        "committerTimestamp": "1791085598 +0200",
+        "subject": "SF-A19-T11.1: integrate invalidated mark and exact served-build evidence corrections",
+        "messageSha256": "043a07f31cb356a7d235cfb413e6bb190a69951ee5190c98336db51bc9c16947"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "0858f721e8e737e6bcca1365748409cb6b0b5f35",
+        "tree": "543ac1fd0f99e60bd7be5319ecad1590ba1eeccd",
+        "orderedParents": [
+          "d5df3806275715b8faea78bb93b697b2cf91897b"
+        ],
+        "authorTimestamp": "1791085512 +0300",
+        "committerTimestamp": "1791085512 +0300",
+        "subject": "SF-A19-T11.1: provide owned tracing in the first-run shell fixture",
+        "messageSha256": "eec8a6073ace4c3127e9858e9793c0a9d64a67e33729ea39990bc927cb1acee8"
+      },
+      "published": {
+        "sha": "cce1aa2ceb6bce8247c4ab62c76a7d56d9518370",
+        "tree": "543ac1fd0f99e60bd7be5319ecad1590ba1eeccd",
+        "orderedParents": [
+          "b2ab94d9f4ffab9102d318269855e6ab3d3a248e"
+        ],
+        "authorTimestamp": "1791085599 +0200",
+        "committerTimestamp": "1791085599 +0200",
+        "subject": "SF-A19-T11.1: provide owned tracing in the first-run shell fixture",
+        "messageSha256": "d0712bfc16de1aa8fefce3b9d995bfc9b29db28e86ee04fc26040ce7c0a2e37c"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+        "tree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+        "orderedParents": [
+          "7a4e4246dcd8adbe365e622cc6566604c84e145d",
+          "cce1aa2ceb6bce8247c4ab62c76a7d56d9518370"
+        ],
+        "authorTimestamp": "1791085882 +0200",
+        "committerTimestamp": "1791085882 +0200",
+        "subject": "Merge pull request #4105 from wieslawsoltes/codex/project16/08-browser-acceptance",
+        "messageSha256": "46fa038baffc7184a323f91db83979f2f6e0c3a18c91928c52e90635173bb024"
+      },
+      "published": {
+        "sha": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+        "tree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+        "orderedParents": [
+          "7a4e4246dcd8adbe365e622cc6566604c84e145d",
+          "cce1aa2ceb6bce8247c4ab62c76a7d56d9518370"
+        ],
+        "authorTimestamp": "1791085882 +0200",
+        "committerTimestamp": "1791085882 +0200",
+        "subject": "Merge pull request #4105 from wieslawsoltes/codex/project16/08-browser-acceptance",
+        "messageSha256": "46fa038baffc7184a323f91db83979f2f6e0c3a18c91928c52e90635173bb024"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": true,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "71ce5ce6a2d51dc088b06499c9c78382958cfa51",
+        "tree": "ee77098fe6ac7012e27beab71454c7320ea3286f",
+        "orderedParents": [
+          "a6b44f2c3091b01ffd5dc616b08c35d1216cd5c2"
+        ],
+        "authorTimestamp": "1791085931 +0300",
+        "committerTimestamp": "1791085931 +0300",
+        "subject": "SF-A19-T12: retain acceptance correction qualification evidence",
+        "messageSha256": "e4cbae4c8c4655d7c0e1ac710dff9a28a04d6275aea8b59fb00a84a6e78457ed"
+      },
+      "published": {
+        "sha": "a02bba85fbebb637b2195790d90b9f56fe0271d6",
+        "tree": "ee77098fe6ac7012e27beab71454c7320ea3286f",
+        "orderedParents": [
+          "cc9c59e780c6509231075a98d94a09257a2641fd"
+        ],
+        "authorTimestamp": "1791086130 +0200",
+        "committerTimestamp": "1791086130 +0200",
+        "subject": "SF-A19-T12: retain acceptance correction qualification evidence",
+        "messageSha256": "155ef5cd965ac67d2219f058444dfb36f2250d9991654721ffedb92bd8890e4e"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "a564a00f6a4aeaceaa4d7c112595c625cbcbeabf",
+        "tree": "beba851d55543ceacdd5281e9e27762705427f3d",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+          "71ce5ce6a2d51dc088b06499c9c78382958cfa51"
+        ],
+        "authorTimestamp": "1791086016 +0300",
+        "committerTimestamp": "1791086016 +0300",
+        "subject": "SF-A20-T51: retain completed local correction qualification evidence",
+        "messageSha256": "9bab04f184d43dde29e43c3cf485daff33e2e99e559e253c60d17210308f938c"
+      },
+      "published": {
+        "sha": "d194a08c7d22686a1d0e4718a3eaf4082aef1af0",
+        "tree": "beba851d55543ceacdd5281e9e27762705427f3d",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+          "a02bba85fbebb637b2195790d90b9f56fe0271d6"
+        ],
+        "authorTimestamp": "1791086131 +0200",
+        "committerTimestamp": "1791086131 +0200",
+        "subject": "SF-A20-T51: retain completed local correction qualification evidence",
+        "messageSha256": "cfa55caafda9e8a59c46c2c13b951093a2132219481ff52ed272114530ddb4dd"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "2f1d498c5c94a482a5a37f07691d1af4a1ec5cad",
+        "tree": "8756331a977efd82a860f7e39d960a01abe3c176",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791087112 +0300",
+        "committerTimestamp": "1791087112 +0300",
+        "subject": "SF-A19-T05: register persisted Watch windows with Studio storage",
+        "messageSha256": "dfc18bb27dffa0949e46ff77c9c42baf3cc868a7e7826cf787f5e1ad17f81371"
+      },
+      "published": {
+        "sha": "a713c5ccf5b22b2f9b78a146cecffe56bc07a3df",
+        "tree": "8756331a977efd82a860f7e39d960a01abe3c176",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791087257 +0200",
+        "committerTimestamp": "1791087257 +0200",
+        "subject": "SF-A19-T05: register persisted Watch windows with Studio storage",
+        "messageSha256": "5cf13994220ed89c24ef7322e9b4f9d2c00c5f8d70f8c7bc1a015e27e7b7846e"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "613c217df03df79ae71f631b8df9aefd8c320b8d",
+        "tree": "f0572bb7020f5048ac02e3f4eb9ad173d778eae2",
+        "orderedParents": [
+          "a564a00f6a4aeaceaa4d7c112595c625cbcbeabf",
+          "2f1d498c5c94a482a5a37f07691d1af4a1ec5cad"
+        ],
+        "authorTimestamp": "1791087160 +0300",
+        "committerTimestamp": "1791087160 +0300",
+        "subject": "SF-A19-T05: integrate production Watch storage registration",
+        "messageSha256": "6f399850be36899f3e430c86e55a1aea51170ab6ca852a163dea14b0b9ac3680"
+      },
+      "published": {
+        "sha": "e06b0faf8c42ae92964fb6ac423fa375a947744f",
+        "tree": "f0572bb7020f5048ac02e3f4eb9ad173d778eae2",
+        "orderedParents": [
+          "d194a08c7d22686a1d0e4718a3eaf4082aef1af0",
+          "a713c5ccf5b22b2f9b78a146cecffe56bc07a3df"
+        ],
+        "authorTimestamp": "1791087259 +0200",
+        "committerTimestamp": "1791087259 +0200",
+        "subject": "SF-A19-T05: integrate production Watch storage registration",
+        "messageSha256": "6d36b49bb12a08d90013e298709f23102b6d3083895b1342317d4e2227c482c3"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "8e1dd640fceae06d0644a0a8bacedadb7232cd66",
+        "tree": "40267ab241de27adff531f1b5664b7ad5a6e966d",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791087314 +0300",
+        "committerTimestamp": "1791087314 +0300",
+        "subject": "SF-A20-T37: exercise the native Find history combobox in browser acceptance",
+        "messageSha256": "9e66c05116b3fdcf97eae53941f264e27521fe2a03d1449f8e2a313ca3c3f9b8"
+      },
+      "published": {
+        "sha": "1cf0cfc0dca203da5f5c8e7d7320036d1ea75115",
+        "tree": "40267ab241de27adff531f1b5664b7ad5a6e966d",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791087811 +0200",
+        "committerTimestamp": "1791087811 +0200",
+        "subject": "SF-A20-T37: exercise the native Find history combobox in browser acceptance",
+        "messageSha256": "9d07f24ae3845aa21b3519f668e68d8f66244b0513bd210605924402dbe19723"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "622bcf7a4ecd9af4f4d04c52f094fcaaba8ddbbf",
+        "tree": "be00a063a54fc4174942112ec0653fc460dd0063",
+        "orderedParents": [
+          "613c217df03df79ae71f631b8df9aefd8c320b8d",
+          "8e1dd640fceae06d0644a0a8bacedadb7232cd66"
+        ],
+        "authorTimestamp": "1791087372 +0300",
+        "committerTimestamp": "1791087372 +0300",
+        "subject": "SF-A20-T37: integrate native Find history browser correction",
+        "messageSha256": "2e31663547b5d6989320f55b54929accb735443cc3d9e8beb2ce96d9c93066be"
+      },
+      "published": {
+        "sha": "f4ee42660d8462e7b3d8c9ba2d99a6171503c2f4",
+        "tree": "be00a063a54fc4174942112ec0653fc460dd0063",
+        "orderedParents": [
+          "e06b0faf8c42ae92964fb6ac423fa375a947744f",
+          "1cf0cfc0dca203da5f5c8e7d7320036d1ea75115"
+        ],
+        "authorTimestamp": "1791087812 +0200",
+        "committerTimestamp": "1791087812 +0200",
+        "subject": "SF-A20-T37: integrate native Find history browser correction",
+        "messageSha256": "e698fe287a93702045e90979187429dfca932224e921cbabdf521ebcf3413b5e"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "4632e4ea16f93a3677ba3f29fe2b7adcd249f351",
+        "tree": "82ab3316790278b75861aeaab6fe2301a50803a6",
+        "orderedParents": [
+          "2f1d498c5c94a482a5a37f07691d1af4a1ec5cad"
+        ],
+        "authorTimestamp": "1791087452 +0300",
+        "committerTimestamp": "1791087452 +0300",
+        "subject": "SF-A19-T12: preserve complete hosted a4 qualification outcomes",
+        "messageSha256": "3e30cca1c41a63b37d80a03d2d976c1572088fb0e90d5ce50206c3e69544086c"
+      },
+      "published": {
+        "sha": "ff2ec97b72f330ef42c80b0f69e2c57900545325",
+        "tree": "82ab3316790278b75861aeaab6fe2301a50803a6",
+        "orderedParents": [
+          "a713c5ccf5b22b2f9b78a146cecffe56bc07a3df"
+        ],
+        "authorTimestamp": "1791087814 +0200",
+        "committerTimestamp": "1791087814 +0200",
+        "subject": "SF-A19-T12: preserve complete hosted a4 qualification outcomes",
+        "messageSha256": "4a5bf89db22ed64118ab792330d5311e1bbf2a3765e3eab3afbd056673d63390"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "8449f12ebc64af7f86d8ee6e3cb932a5c6dff573",
+        "tree": "2a4c4a2e6d4a94434d54a4dfebdc17be006e15b4",
+        "orderedParents": [
+          "622bcf7a4ecd9af4f4d04c52f094fcaaba8ddbbf",
+          "4632e4ea16f93a3677ba3f29fe2b7adcd249f351"
+        ],
+        "authorTimestamp": "1791087493 +0300",
+        "committerTimestamp": "1791087493 +0300",
+        "subject": "SF-A19-A20: preserve exact a4 hosted qualification outcomes",
+        "messageSha256": "dce8ffc5f896c84b0f171be116ff47bdcc19a4f7a078a769698c050f0cc9d6df"
+      },
+      "published": {
+        "sha": "dd1e0b5aae74fd044b363ba8dfd6205057bfa136",
+        "tree": "2a4c4a2e6d4a94434d54a4dfebdc17be006e15b4",
+        "orderedParents": [
+          "f4ee42660d8462e7b3d8c9ba2d99a6171503c2f4",
+          "ff2ec97b72f330ef42c80b0f69e2c57900545325"
+        ],
+        "authorTimestamp": "1791087816 +0200",
+        "committerTimestamp": "1791087816 +0200",
+        "subject": "SF-A19-A20: preserve exact a4 hosted qualification outcomes",
+        "messageSha256": "4e63917f8db7f6b33e462bfbe93f50306f8c6f2f641009f5f96a57fffdc2d1c7"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "ab8d0b7c4cdf122831e343331020831f93adf5ef",
+        "tree": "70ab731b6a71504bcd1678ee003fd3865d9e335e",
+        "orderedParents": [
+          "8449f12ebc64af7f86d8ee6e3cb932a5c6dff573"
+        ],
+        "authorTimestamp": "1791087518 +0300",
+        "committerTimestamp": "1791087518 +0300",
+        "subject": "SF-A19-T12: identify the latest hosted evidence cutoff",
+        "messageSha256": "7c5a25d9f41f1c2001cf9fe71ace49ed521f3394eeeec9483d7180cdd78972a7"
+      },
+      "published": {
+        "sha": "ddd84165154245921ffc8c74ff098c8f52577ee5",
+        "tree": "70ab731b6a71504bcd1678ee003fd3865d9e335e",
+        "orderedParents": [
+          "dd1e0b5aae74fd044b363ba8dfd6205057bfa136"
+        ],
+        "authorTimestamp": "1791087817 +0200",
+        "committerTimestamp": "1791087817 +0200",
+        "subject": "SF-A19-T12: identify the latest hosted evidence cutoff",
+        "messageSha256": "4c6912a187b9d0240415e0571d42cafb8aed641af47b7cec54ed94375875d0fc"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "60f0bddd068034efb705be54e2f760070ff5ae4a",
+        "tree": "0bdcdd4d88fd9dbd9d52ac9b3616ff31bda1b49e",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791088374 +0300",
+        "committerTimestamp": "1791088374 +0300",
+        "subject": "SF-A19-T04.5: publish complete workspace document layouts",
+        "messageSha256": "cb955caf131f723f2011c9dbbdb3546438c0c91a58a8c9fad6e25922dc596880"
+      },
+      "published": {
+        "sha": "a2425247873320450e4e03af4757bea8f312c3b6",
+        "tree": "0bdcdd4d88fd9dbd9d52ac9b3616ff31bda1b49e",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791089199 +0200",
+        "committerTimestamp": "1791089199 +0200",
+        "subject": "SF-A19-T04.5: publish complete workspace document layouts",
+        "messageSha256": "2a968027abdc96024c11d606b90c5c81cb7b9d788b0199a667ef0ee7e32b6fe9"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "aaefeecd68f50ec05cdba39358c388709b9d27b4",
+        "tree": "b8794b3a6b17069f90cb77b7c039bc37d822d0a1",
+        "orderedParents": [
+          "ab8d0b7c4cdf122831e343331020831f93adf5ef",
+          "60f0bddd068034efb705be54e2f760070ff5ae4a"
+        ],
+        "authorTimestamp": "1791088834 +0300",
+        "committerTimestamp": "1791088834 +0300",
+        "subject": "Merge complete workspace layout reconciliation scope",
+        "messageSha256": "53037f7bc1fa8af825963cfa8ef9125ecd5e83329e7dcf7e586653cdf93dfa13"
+      },
+      "published": {
+        "sha": "cb5c8816c77d9ade96a44ac92847dd5c7999fae9",
+        "tree": "b8794b3a6b17069f90cb77b7c039bc37d822d0a1",
+        "orderedParents": [
+          "ddd84165154245921ffc8c74ff098c8f52577ee5",
+          "a2425247873320450e4e03af4757bea8f312c3b6"
+        ],
+        "authorTimestamp": "1791089200 +0200",
+        "committerTimestamp": "1791089200 +0200",
+        "subject": "Merge complete workspace layout reconciliation scope",
+        "messageSha256": "46a7fa1fcc5f942416f4e6124ab6b25d04b0ba22898d77c8991a33bcb94a458c"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "1a73bdf9e982bec66791d7bd44f79b7afcbfbc13",
+        "tree": "b47a52dbfb07c76bfb491f5a27ebb3a145950856",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791088511 +0300",
+        "committerTimestamp": "1791088511 +0300",
+        "subject": "SF-A19-T12.2: declare closed standalone worker format and retain startup diagnostics",
+        "messageSha256": "a05253ace1857a4199965440115498c1d8b26bbabe70f159bac47f0824eb5354"
+      },
+      "published": {
+        "sha": "c127ace6cb7a602843e284f52e076254281b9e3a",
+        "tree": "b47a52dbfb07c76bfb491f5a27ebb3a145950856",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791089202 +0200",
+        "committerTimestamp": "1791089202 +0200",
+        "subject": "SF-A19-T12.2: declare closed standalone worker format and retain startup diagnostics",
+        "messageSha256": "87f906dac3cff6bef7f3f2c9a054b504811bd82444e53e2423236269caa84b9a"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "3b3d2c7df2febabf886bf59da0ad88eebb5c1e11",
+        "tree": "d0a03ebf40f8c4e0ad46a9ff5fd90de8e35b42df",
+        "orderedParents": [
+          "aaefeecd68f50ec05cdba39358c388709b9d27b4",
+          "1a73bdf9e982bec66791d7bd44f79b7afcbfbc13"
+        ],
+        "authorTimestamp": "1791088882 +0300",
+        "committerTimestamp": "1791088882 +0300",
+        "subject": "Merge complete standalone worker startup correction",
+        "messageSha256": "3e411a9381f6b5a33beafe1b59b48b4430d803998adfab40e83c27aae330407f"
+      },
+      "published": {
+        "sha": "2bcc3b3506772c4c3da6aa02115459fc4a15ff95",
+        "tree": "d0a03ebf40f8c4e0ad46a9ff5fd90de8e35b42df",
+        "orderedParents": [
+          "cb5c8816c77d9ade96a44ac92847dd5c7999fae9",
+          "c127ace6cb7a602843e284f52e076254281b9e3a"
+        ],
+        "authorTimestamp": "1791089203 +0200",
+        "committerTimestamp": "1791089203 +0200",
+        "subject": "Merge complete standalone worker startup correction",
+        "messageSha256": "206229a6863eee2fd283b10bceee617ca62e1e0531a9e1ea9de577c9cf693b73"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "79c4bf221c59c8fb88d36ba6bfb17d324023101d",
+        "tree": "8f98ab6d925cc0772b090f2363c188b8ed959c01",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791088494 +0300",
+        "committerTimestamp": "1791088494 +0300",
+        "subject": "SF-A19-T11.3: measure same-source lazy entry evaluation",
+        "messageSha256": "64d6eedac710e8ea3ba9e28ef3148dacda7b99f1a52e9719ec494419a9ed52e4"
+      },
+      "published": {
+        "sha": "769b956fb645728ccc14177285563a88bcae6124",
+        "tree": "8f98ab6d925cc0772b090f2363c188b8ed959c01",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791089204 +0200",
+        "committerTimestamp": "1791089204 +0200",
+        "subject": "SF-A19-T11.3: measure same-source lazy entry evaluation",
+        "messageSha256": "ba0d6d120834814d4315d723182977a64f97f46702a1f86ad5e6f36ba63ecb5f"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "da82cb2e295453950d444367540674228cbcd3b1",
+        "tree": "0266e69282fd0db298e9015f36ca0af6c51dd96d",
+        "orderedParents": [
+          "79c4bf221c59c8fb88d36ba6bfb17d324023101d"
+        ],
+        "authorTimestamp": "1791088778 +0300",
+        "committerTimestamp": "1791088778 +0300",
+        "subject": "SF-A19-T11.3: preserve production CSP and cancellation ownership",
+        "messageSha256": "8bee540215dba210802e9bd59f6e02553f343efbd95d5508c58aa3693997d51d"
+      },
+      "published": {
+        "sha": "7f57798a15ad2c577e73c14273cbd7bc034adc4b",
+        "tree": "0266e69282fd0db298e9015f36ca0af6c51dd96d",
+        "orderedParents": [
+          "769b956fb645728ccc14177285563a88bcae6124"
+        ],
+        "authorTimestamp": "1791089205 +0200",
+        "committerTimestamp": "1791089205 +0200",
+        "subject": "SF-A19-T11.3: preserve production CSP and cancellation ownership",
+        "messageSha256": "a55c7520b3a22e087784ca26d759f93ec7420240d58dc12819e6651cb5ab2977"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "f28ce1d0357ea4feddad7580ca36d3d1e39187b5",
+        "tree": "11431447b9eca4d1bee60ee9f451c2b8869d9c73",
+        "orderedParents": [
+          "3b3d2c7df2febabf886bf59da0ad88eebb5c1e11",
+          "da82cb2e295453950d444367540674228cbcd3b1"
+        ],
+        "authorTimestamp": "1791088883 +0300",
+        "committerTimestamp": "1791088883 +0300",
+        "subject": "Merge complete lazy module evaluation measurement scope",
+        "messageSha256": "fad86897ffd1de464749e302ad448ec53e1dd7b4a1e728fc8b0baf66a9d6b86f"
+      },
+      "published": {
+        "sha": "3d566af65ac51306e5ae8d065dbd037194224117",
+        "tree": "11431447b9eca4d1bee60ee9f451c2b8869d9c73",
+        "orderedParents": [
+          "2bcc3b3506772c4c3da6aa02115459fc4a15ff95",
+          "7f57798a15ad2c577e73c14273cbd7bc034adc4b"
+        ],
+        "authorTimestamp": "1791089207 +0200",
+        "committerTimestamp": "1791089207 +0200",
+        "subject": "Merge complete lazy module evaluation measurement scope",
+        "messageSha256": "3b69469c8bffb15b9f42d14b4efe9baaf6af37f7eb3d1ed038d01323abc5af77"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "e511dbe039900bb5262c30b779970a6713c7d70e",
+        "tree": "9de2db3616169c687b405bbec5ce90cb6db11a7f",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791088897 +0300",
+        "committerTimestamp": "1791088897 +0300",
+        "subject": "fix(editor): isolate committed source during rename preview",
+        "messageSha256": "16b4f2777b34e7bc06badfad0e95b9e9007c794cd3022665df9526dbd96d0f65"
+      },
+      "published": {
+        "sha": "700511eee5d2c717954d704a5d59cf5e33a430d6",
+        "tree": "9de2db3616169c687b405bbec5ce90cb6db11a7f",
+        "orderedParents": [
+          "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557"
+        ],
+        "authorTimestamp": "1791089597 +0200",
+        "committerTimestamp": "1791089597 +0200",
+        "subject": "fix(editor): isolate committed source during rename preview",
+        "messageSha256": "ea2a3f44f9da0df1d43759ed210e63f2606e55b2876cbf3384e020c634cd4eba"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "24f98220a728194d42efc03fa23d2decf5561e90",
+        "tree": "b628b84d8018a2b4c9b9f2b9c3b683962205b517",
+        "orderedParents": [
+          "f28ce1d0357ea4feddad7580ca36d3d1e39187b5",
+          "e511dbe039900bb5262c30b779970a6713c7d70e"
+        ],
+        "authorTimestamp": "1791088959 +0300",
+        "committerTimestamp": "1791088959 +0300",
+        "subject": "Merge complete rename preview publication and transaction ownership scope",
+        "messageSha256": "48ba2cf4664888b8ecec4f31a864911c0d9dbc8f2855ee4c7e0067426c13de0c"
+      },
+      "published": {
+        "sha": "4ab8fe9d9779974f71b39be2b7dad4ff3dc736e6",
+        "tree": "b628b84d8018a2b4c9b9f2b9c3b683962205b517",
+        "orderedParents": [
+          "3d566af65ac51306e5ae8d065dbd037194224117",
+          "700511eee5d2c717954d704a5d59cf5e33a430d6"
+        ],
+        "authorTimestamp": "1791089598 +0200",
+        "committerTimestamp": "1791089598 +0200",
+        "subject": "Merge complete rename preview publication and transaction ownership scope",
+        "messageSha256": "3028bd475f217020d27b09c935dd52ed3b68776c6c8fccd2ffe7f31085c945e4"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "18bd3a55f2661b47fdfb1b6cb9ca309488854619",
+        "tree": "89a2f29d7eb0ac4db3de77d6b0cbb78f54cc2d73",
+        "orderedParents": [
+          "24f98220a728194d42efc03fa23d2decf5561e90"
+        ],
+        "authorTimestamp": "1791089088 +0300",
+        "committerTimestamp": "1791089088 +0300",
+        "subject": "SF-A19-T11.3: register independent lazy evaluation and preserve rename cancellation",
+        "messageSha256": "43b7b88e96957a3680a102d26ca23260baa91b9bdb72b61635112d6dc6b0e99f"
+      },
+      "published": {
+        "sha": "686bb2c5ba180c565755151c2b0613f65b28a62a",
+        "tree": "89a2f29d7eb0ac4db3de77d6b0cbb78f54cc2d73",
+        "orderedParents": [
+          "4ab8fe9d9779974f71b39be2b7dad4ff3dc736e6"
+        ],
+        "authorTimestamp": "1791089600 +0200",
+        "committerTimestamp": "1791089600 +0200",
+        "subject": "SF-A19-T11.3: register independent lazy evaluation and preserve rename cancellation",
+        "messageSha256": "2d7854e1fa55e131a34c6e6472b6f0a4cb9ade33fa00ef1d21db8aa5a1014288"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "4a3601f3352a00a4a53e1a8a26af0064329e6df4",
+        "tree": "cbff573aa276a7cb842d5385f2b75791be0a452d",
+        "orderedParents": [
+          "60f0bddd068034efb705be54e2f760070ff5ae4a"
+        ],
+        "authorTimestamp": "1791089047 +0300",
+        "committerTimestamp": "1791089047 +0300",
+        "subject": "SF-A20-T19: defer diagnostics across visual rename previews",
+        "messageSha256": "f865c03741a5e703515029c9d8209ed676b927ae16eb75d7515e04f7975fc9a8"
+      },
+      "published": {
+        "sha": "b63daba492f0e5ca681d44f685f41454b734fe6d",
+        "tree": "cbff573aa276a7cb842d5385f2b75791be0a452d",
+        "orderedParents": [
+          "a2425247873320450e4e03af4757bea8f312c3b6"
+        ],
+        "authorTimestamp": "1791089601 +0200",
+        "committerTimestamp": "1791089601 +0200",
+        "subject": "SF-A20-T19: defer diagnostics across visual rename previews",
+        "messageSha256": "b481b9a342bcf5a55353e96928499b6d6797d7fd1f9219684f62887b82510b89"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "6085a6ede46cc5f46ea9603d46c3e281b28ec65a",
+        "tree": "6d0162f9eaa11930d30b98b90c4253b11434def0",
+        "orderedParents": [
+          "18bd3a55f2661b47fdfb1b6cb9ca309488854619",
+          "4a3601f3352a00a4a53e1a8a26af0064329e6df4"
+        ],
+        "authorTimestamp": "1791089135 +0300",
+        "committerTimestamp": "1791089135 +0300",
+        "subject": "Merge complete preview diagnostic publication correction",
+        "messageSha256": "52b77115ec7cdd5d462c21459ef5d91f1ff6c08287a9ff845b3546526bedc5a2"
+      },
+      "published": {
+        "sha": "15d5d30e054e71b58226ea8564e86e2a983368e4",
+        "tree": "6d0162f9eaa11930d30b98b90c4253b11434def0",
+        "orderedParents": [
+          "686bb2c5ba180c565755151c2b0613f65b28a62a",
+          "b63daba492f0e5ca681d44f685f41454b734fe6d"
+        ],
+        "authorTimestamp": "1791089602 +0200",
+        "committerTimestamp": "1791089602 +0200",
+        "subject": "Merge complete preview diagnostic publication correction",
+        "messageSha256": "9ba0a92c5e24e6dcbd94d6fd91e3a9e5a03421805e23be7415bd7e3e287902fb"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "a00a37cc603352ddd01ca82041ab1e5144550dc2",
+        "tree": "8fabc076cb0f29b5669675b54973b69c9c0ab052",
+        "orderedParents": [
+          "1a73bdf9e982bec66791d7bd44f79b7afcbfbc13"
+        ],
+        "authorTimestamp": "1791089179 +0300",
+        "committerTimestamp": "1791089179 +0300",
+        "subject": "SF-A19-T12.2: register workflow diagnostics contract tests",
+        "messageSha256": "8e47c1a1ccde4342a9345fe1a93b38495cb1a48dbddba46a3074f339d7791127"
+      },
+      "published": {
+        "sha": "9cbd54cf59836f51cc19551e257b19c2c18437c3",
+        "tree": "8fabc076cb0f29b5669675b54973b69c9c0ab052",
+        "orderedParents": [
+          "c127ace6cb7a602843e284f52e076254281b9e3a"
+        ],
+        "authorTimestamp": "1791089603 +0200",
+        "committerTimestamp": "1791089603 +0200",
+        "subject": "SF-A19-T12.2: register workflow diagnostics contract tests",
+        "messageSha256": "b7fd703824790ba2c098293d86fd5e5667f4a2b02362aaf677e29b1feac85925"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "80dfe3f5a7d18731915bf9b6b770f816911b4f0f",
+        "tree": "b105d155bff6efd72967652fd340634f6444b8a9",
+        "orderedParents": [
+          "6085a6ede46cc5f46ea9603d46c3e281b28ec65a",
+          "a00a37cc603352ddd01ca82041ab1e5144550dc2"
+        ],
+        "authorTimestamp": "1791089237 +0300",
+        "committerTimestamp": "1791089237 +0300",
+        "subject": "Merge workflow diagnostics test ownership registration",
+        "messageSha256": "1d32d69081e02b2f02155d018705b3d821d64a1caf115d5a48567ad8768c933c"
+      },
+      "published": {
+        "sha": "cca662425c88fbc905957e5e5e34c81ff2186369",
+        "tree": "b105d155bff6efd72967652fd340634f6444b8a9",
+        "orderedParents": [
+          "15d5d30e054e71b58226ea8564e86e2a983368e4",
+          "9cbd54cf59836f51cc19551e257b19c2c18437c3"
+        ],
+        "authorTimestamp": "1791089604 +0200",
+        "committerTimestamp": "1791089604 +0200",
+        "subject": "Merge workflow diagnostics test ownership registration",
+        "messageSha256": "bcac0d1e9f835421bc14fae7c309ef565af2578e882b90fe551bab66b963ccf3"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "a179e686d81026ff19773147d060d9c879fae9cb",
+        "tree": "997904ab81b7ecffa6a0100957af9beb05581251",
+        "orderedParents": [
+          "e511dbe039900bb5262c30b779970a6713c7d70e"
+        ],
+        "authorTimestamp": "1791089402 +0300",
+        "committerTimestamp": "1791089402 +0300",
+        "subject": "test(editor): align preview fixtures with Studio protocol and save defaults",
+        "messageSha256": "416655a35d7905ed4001aa9da8f496857e16c7e643771c4e61260307485f29b2"
+      },
+      "published": {
+        "sha": "5140d32e4d87c12f5222016c440e4bc7e5f4667a",
+        "tree": "997904ab81b7ecffa6a0100957af9beb05581251",
+        "orderedParents": [
+          "700511eee5d2c717954d704a5d59cf5e33a430d6"
+        ],
+        "authorTimestamp": "1791089606 +0200",
+        "committerTimestamp": "1791089606 +0200",
+        "subject": "test(editor): align preview fixtures with Studio protocol and save defaults",
+        "messageSha256": "b16c5a1e6a5a69245b8647fd45ea327e2fa126491a7b9bf1d45275cecb884d97"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "56add0e83ad85e65392f19af57535a97cad5d4ed",
+        "tree": "c21b97fff6ed7ee2e76e84b2f83aecd90655862d",
+        "orderedParents": [
+          "80dfe3f5a7d18731915bf9b6b770f816911b4f0f",
+          "a179e686d81026ff19773147d060d9c879fae9cb"
+        ],
+        "authorTimestamp": "1791089496 +0300",
+        "committerTimestamp": "1791089496 +0300",
+        "subject": "Merge preview regression fixture corrections preserving original outcomes",
+        "messageSha256": "32986e9ee343b9020767b8b7face3f54d9a047d252d6ebdc5edaaad111b17d36"
+      },
+      "published": {
+        "sha": "b24c8b3ad5f2ce85f0fd7bd119a3148e3a995f17",
+        "tree": "c21b97fff6ed7ee2e76e84b2f83aecd90655862d",
+        "orderedParents": [
+          "cca662425c88fbc905957e5e5e34c81ff2186369",
+          "5140d32e4d87c12f5222016c440e4bc7e5f4667a"
+        ],
+        "authorTimestamp": "1791089607 +0200",
+        "committerTimestamp": "1791089607 +0200",
+        "subject": "Merge preview regression fixture corrections preserving original outcomes",
+        "messageSha256": "74de540479e0c65aad75d87970cd0afd23f81258555fb0fb588eb80a4d9ca7d8"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "b3a9de202c74c296fe3d71256dfe5f63f8665841",
+        "tree": "e827a6e4d9e8dd42dfa9c0b689c5f16f8fba6d38",
+        "orderedParents": [
+          "80dfe3f5a7d18731915bf9b6b770f816911b4f0f"
+        ],
+        "authorTimestamp": "1791089452 +0300",
+        "committerTimestamp": "1791089452 +0300",
+        "subject": "SF-A19-T12: reconcile master status with merged source and hosted evidence",
+        "messageSha256": "677d12c18b9e78eb84a1366eec2d754f7c1451b98102311250850db5e9ee108d"
+      },
+      "published": {
+        "sha": "6a01127085f3263249036a75c62576216f1cb1fd",
+        "tree": "e827a6e4d9e8dd42dfa9c0b689c5f16f8fba6d38",
+        "orderedParents": [
+          "cca662425c88fbc905957e5e5e34c81ff2186369"
+        ],
+        "authorTimestamp": "1791089609 +0200",
+        "committerTimestamp": "1791089609 +0200",
+        "subject": "SF-A19-T12: reconcile master status with merged source and hosted evidence",
+        "messageSha256": "48e552b56f801c0c5488383fd995e2a4c8dfc60889b55e8eda1d1ed5c19e1bdc"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "95ab95c1e86ef160dadf9b9a1f774adbcc3aa39f",
+        "tree": "31f03e500e3cc78662a53e96f3df484c789a9f2a",
+        "orderedParents": [
+          "56add0e83ad85e65392f19af57535a97cad5d4ed",
+          "b3a9de202c74c296fe3d71256dfe5f63f8665841"
+        ],
+        "authorTimestamp": "1791089532 +0300",
+        "committerTimestamp": "1791089532 +0300",
+        "subject": "Merge historical master-status reconciliation with current qualification pointers",
+        "messageSha256": "8d5bb61a4afb41bd8435111e300b3142978f69b36192e8cb40271e4b90498008"
+      },
+      "published": {
+        "sha": "94bf1580adcf1070bb4c7e60ccca8546a0fececf",
+        "tree": "31f03e500e3cc78662a53e96f3df484c789a9f2a",
+        "orderedParents": [
+          "b24c8b3ad5f2ce85f0fd7bd119a3148e3a995f17",
+          "6a01127085f3263249036a75c62576216f1cb1fd"
+        ],
+        "authorTimestamp": "1791089610 +0200",
+        "committerTimestamp": "1791089610 +0200",
+        "subject": "Merge historical master-status reconciliation with current qualification pointers",
+        "messageSha256": "1f58f6a23d15e4b079a8b46ac7a9fe78c4d4b243c1ddd99805822fa80c70168e"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "9113201ee3a52394899fafb87804ca2ad220dc2e",
+        "tree": "f88824a29f34673e8ae5d26f65cf95330c5772c0",
+        "orderedParents": [
+          "80dfe3f5a7d18731915bf9b6b770f816911b4f0f"
+        ],
+        "authorTimestamp": "1791089825 +0300",
+        "committerTimestamp": "1791089825 +0300",
+        "subject": "SF-A20-T12.1: retain preview ownership regression evidence",
+        "messageSha256": "8170a59d474efedcd8049ef1808a7aad8c6509e3ac782dddd470f12d0b4254ad"
+      },
+      "published": {
+        "sha": "ed250ba579921abb3a3ff70eb172f4aefc8e739e",
+        "tree": "f88824a29f34673e8ae5d26f65cf95330c5772c0",
+        "orderedParents": [
+          "cca662425c88fbc905957e5e5e34c81ff2186369"
+        ],
+        "authorTimestamp": "1791090106 +0200",
+        "committerTimestamp": "1791090106 +0200",
+        "subject": "SF-A20-T12.1: retain preview ownership regression evidence",
+        "messageSha256": "00d101e4dd1ae9e5a8c64b30622e328c7d4162bc36089c996a0343c1ddb642ad"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "fea8a95272ef645514dfad8848178f8aada95285",
+        "tree": "fe694b50f41374fe8c5075bb72ed3b46a3640e8e",
+        "orderedParents": [
+          "95ab95c1e86ef160dadf9b9a1f774adbcc3aa39f",
+          "9113201ee3a52394899fafb87804ca2ad220dc2e"
+        ],
+        "authorTimestamp": "1791089875 +0300",
+        "committerTimestamp": "1791089875 +0300",
+        "subject": "Merge exact model cost evidence and explicit correctness tradeoff review",
+        "messageSha256": "34dc4f8e3f7303eaf1fa9fe2b17679f3f167269a68a9b95028d4d288b9a191b5"
+      },
+      "published": {
+        "sha": "b791237e0e586f5249ba38e05d49d696c32621cc",
+        "tree": "fe694b50f41374fe8c5075bb72ed3b46a3640e8e",
+        "orderedParents": [
+          "94bf1580adcf1070bb4c7e60ccca8546a0fececf",
+          "ed250ba579921abb3a3ff70eb172f4aefc8e739e"
+        ],
+        "authorTimestamp": "1791090108 +0200",
+        "committerTimestamp": "1791090108 +0200",
+        "subject": "Merge exact model cost evidence and explicit correctness tradeoff review",
+        "messageSha256": "3e2ead063dd7a5be1190383155771d16f9c0aa60998e7f50a0aa4daef41f931a"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "ff611dad8c9df4d191ba5f55ad2e18c7382110ed",
+        "tree": "03fdab0c024b91f9a4d52b5eb34c3df6ccab8dc3",
+        "orderedParents": [
+          "56add0e83ad85e65392f19af57535a97cad5d4ed"
+        ],
+        "authorTimestamp": "1791090013 +0300",
+        "committerTimestamp": "1791090013 +0300",
+        "subject": "docs: retain local09 correction qualification evidence",
+        "messageSha256": "dfd94f1f55bf1d33d28c386647ddc66d345af8f5ccb57b41044e8a44e1657a6f"
+      },
+      "published": {
+        "sha": "6f0fad569cb3003e31e1accc09aa4e59f187fcbb",
+        "tree": "03fdab0c024b91f9a4d52b5eb34c3df6ccab8dc3",
+        "orderedParents": [
+          "b24c8b3ad5f2ce85f0fd7bd119a3148e3a995f17"
+        ],
+        "authorTimestamp": "1791090109 +0200",
+        "committerTimestamp": "1791090109 +0200",
+        "subject": "docs: retain local09 correction qualification evidence",
+        "messageSha256": "cb590a1eab1cc614ed7da8a9117392c5104300c67902ca2966d934f103f55c8c"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "cce2bdc93e1348c24e0116817e584906f669472c",
+        "tree": "3992444851da294daf5ab3d098b78376444457dc",
+        "orderedParents": [
+          "fea8a95272ef645514dfad8848178f8aada95285",
+          "ff611dad8c9df4d191ba5f55ad2e18c7382110ed"
+        ],
+        "authorTimestamp": "1791090058 +0300",
+        "committerTimestamp": "1791090058 +0300",
+        "subject": "Merge completed follow-up qualification archive without combining overlapping counts",
+        "messageSha256": "4d8fbe4e9a570c14c08613e9cf150e7808aa2db3620a728faf7c11d26a24a0a7"
+      },
+      "published": {
+        "sha": "c391430a44e99f08e1a698361e1161536e0425e5",
+        "tree": "3992444851da294daf5ab3d098b78376444457dc",
+        "orderedParents": [
+          "b791237e0e586f5249ba38e05d49d696c32621cc",
+          "6f0fad569cb3003e31e1accc09aa4e59f187fcbb"
+        ],
+        "authorTimestamp": "1791090110 +0200",
+        "committerTimestamp": "1791090110 +0200",
+        "subject": "Merge completed follow-up qualification archive without combining overlapping counts",
+        "messageSha256": "2a7be87e288ac0f1616deae7ad4ca0fe0e0e73af4b92e4261656cbea290d8cec"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+        "tree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+        "orderedParents": [
+          "8ae8188b0ff6f8fbd431cf49c447c102aebe2bbc",
+          "c391430a44e99f08e1a698361e1161536e0425e5"
+        ],
+        "authorTimestamp": "1791090215 +0200",
+        "committerTimestamp": "1791090215 +0200",
+        "subject": "Merge pull request #4297 from wieslawsoltes/codex/project16/09-hosted-followup",
+        "messageSha256": "7746b30781965404964641bf97e01ef18830942007ffb40f8467a493972eea81"
+      },
+      "published": {
+        "sha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+        "tree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+        "orderedParents": [
+          "8ae8188b0ff6f8fbd431cf49c447c102aebe2bbc",
+          "c391430a44e99f08e1a698361e1161536e0425e5"
+        ],
+        "authorTimestamp": "1791090215 +0200",
+        "committerTimestamp": "1791090215 +0200",
+        "subject": "Merge pull request #4297 from wieslawsoltes/codex/project16/09-hosted-followup",
+        "messageSha256": "7746b30781965404964641bf97e01ef18830942007ffb40f8467a493972eea81"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": true,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "badc781754cc518294ada51b4132c51d044cdddd",
+        "tree": "e30452341f64af30952f1e51d7f92eefa0d679fc",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791091992 +0300",
+        "committerTimestamp": "1791091992 +0300",
+        "subject": "SF-A19-T23: verify actual workspace and definition boundary proof",
+        "messageSha256": "ad7fe4c73addebc8faace96b229a71711d5daab5dd8ae34894ca5aa47cdd4422"
+      },
+      "published": {
+        "sha": "1e392e7ed916e23e9d713bda45d0658b6d7e2336",
+        "tree": "e30452341f64af30952f1e51d7f92eefa0d679fc",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791092330 +0200",
+        "committerTimestamp": "1791092330 +0200",
+        "subject": "SF-A19-T23: verify actual workspace and definition boundary proof",
+        "messageSha256": "1440fce01739d2de270d21e35a77d4bfa5d2cd5238e7d20f225c8794253b8a80"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "b8a464f35ae8890e4ec5d5623e8011de51899184",
+        "tree": "e30452341f64af30952f1e51d7f92eefa0d679fc",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+          "badc781754cc518294ada51b4132c51d044cdddd"
+        ],
+        "authorTimestamp": "1791092121 +0300",
+        "committerTimestamp": "1791092121 +0300",
+        "subject": "SF-A19: integrate exact Code Definition workspace and boundary proof",
+        "messageSha256": "5b419d7d7dea567b83baad9a8833b3d0e90441f58b0541d39115556202f437b7"
+      },
+      "published": {
+        "sha": "22104f545da4734e82c57f51714af8183d1ea349",
+        "tree": "e30452341f64af30952f1e51d7f92eefa0d679fc",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+          "1e392e7ed916e23e9d713bda45d0658b6d7e2336"
+        ],
+        "authorTimestamp": "1791092331 +0200",
+        "committerTimestamp": "1791092331 +0200",
+        "subject": "SF-A19: integrate exact Code Definition workspace and boundary proof",
+        "messageSha256": "c1044542452f72b4aa6963eff7b69e0ad46817d3220622eed65879e05a4e97de"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "9c1357081e069bba6ba5dfd9735388800cf43fb1",
+        "tree": "a0adf9ec74ac31a58fa233b348edef9271ab2fe3",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791092083 +0300",
+        "committerTimestamp": "1791092083 +0300",
+        "subject": "SF-A20-T07: preserve host timer receivers for editor chords",
+        "messageSha256": "14ec3167cf52223bea78c4e93f1939859fd4287073d9e2ea4bcc0412bd81740a"
+      },
+      "published": {
+        "sha": "cfe97a76e25025057fea076468ea9f5092ed0f2a",
+        "tree": "a0adf9ec74ac31a58fa233b348edef9271ab2fe3",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791092333 +0200",
+        "committerTimestamp": "1791092333 +0200",
+        "subject": "SF-A20-T07: preserve host timer receivers for editor chords",
+        "messageSha256": "4c3ea8eb34bccd7bccad421ae5e0eb9f1bc6b43cd346b82013321bd8af1ca80f"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "0f31eb52973b3c22e1d2ee3f7e540315cffc54ea",
+        "tree": "266d66e02fe7d7be8770a8d4215209fbd8affa0c",
+        "orderedParents": [
+          "b8a464f35ae8890e4ec5d5623e8011de51899184",
+          "9c1357081e069bba6ba5dfd9735388800cf43fb1"
+        ],
+        "authorTimestamp": "1791092158 +0300",
+        "committerTimestamp": "1791092158 +0300",
+        "subject": "SF-A20: integrate owned host timers for keyboard chords",
+        "messageSha256": "2746529a3859613e2449b7ad0d1702a392318a9dce7941338502d62a4c44df0c"
+      },
+      "published": {
+        "sha": "d504f17d635111af16773ecef5c8bf385379d553",
+        "tree": "266d66e02fe7d7be8770a8d4215209fbd8affa0c",
+        "orderedParents": [
+          "22104f545da4734e82c57f51714af8183d1ea349",
+          "cfe97a76e25025057fea076468ea9f5092ed0f2a"
+        ],
+        "authorTimestamp": "1791092335 +0200",
+        "committerTimestamp": "1791092335 +0200",
+        "subject": "SF-A20: integrate owned host timers for keyboard chords",
+        "messageSha256": "174183c51fe8189080dce230a406d91cd1ce1d61b8a7698f2f1f966bbacb632c"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "8cb5337771b960c402ef37d6925f0a29fb476e80",
+        "tree": "dcabf9947bfe616ded8b00bb2224ac065f8ab4d8",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791092154 +0300",
+        "committerTimestamp": "1791092154 +0300",
+        "subject": "SF-A19-T26: preserve browser timer ownership during launch",
+        "messageSha256": "32b3890bf7e4c25bc516ee473c662fd47e7bf0dbf0143a40c23efa89cb0b9ee6"
+      },
+      "published": {
+        "sha": "a822a5015dfa35a6f45f8dd89ad569bcfb96a6c7",
+        "tree": "dcabf9947bfe616ded8b00bb2224ac065f8ab4d8",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791092336 +0200",
+        "committerTimestamp": "1791092336 +0200",
+        "subject": "SF-A19-T26: preserve browser timer ownership during launch",
+        "messageSha256": "baa471e20b97905d892e51dd3e92f6c8246318fbb434c526ffdd25ca9ac55159"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "80ffb218adcf4b132beb7899c20548cc92bf4f5a",
+        "tree": "c63ca01f2d2a9af3fe436f30c4c32a93f7697772",
+        "orderedParents": [
+          "0f31eb52973b3c22e1d2ee3f7e540315cffc54ea",
+          "8cb5337771b960c402ef37d6925f0a29fb476e80"
+        ],
+        "authorTimestamp": "1791092184 +0300",
+        "committerTimestamp": "1791092184 +0300",
+        "subject": "SF-A19: integrate native timer ownership for runtime and capture",
+        "messageSha256": "32683bae6f9440ea4eaab79ade9c3ae416528f0accb5cac692b1f343cb4ff780"
+      },
+      "published": {
+        "sha": "1158db2126094223c7f95686e1c3b500f7b245d6",
+        "tree": "c63ca01f2d2a9af3fe436f30c4c32a93f7697772",
+        "orderedParents": [
+          "d504f17d635111af16773ecef5c8bf385379d553",
+          "a822a5015dfa35a6f45f8dd89ad569bcfb96a6c7"
+        ],
+        "authorTimestamp": "1791092338 +0200",
+        "committerTimestamp": "1791092338 +0200",
+        "subject": "SF-A19: integrate native timer ownership for runtime and capture",
+        "messageSha256": "ded1e228eab7cfd9f8c459f5ea52217370464c95d237e575817e87d369d5cbde"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "d022e7e8af056bfe88dadd66cd3616acc3a7816d",
+        "tree": "74cb24c3805dad6cd6e9736ea5e412f145473023",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791092436 +0300",
+        "committerTimestamp": "1791092436 +0300",
+        "subject": "SF-A19-T12: preserve hosted a5 evidence as reconstructable parts",
+        "messageSha256": "a1c3ecd9520729dd189c97c23a893e1fc3add532696452d783d71bfd932514c8"
+      },
+      "published": {
+        "sha": "b8901fd4c7aeba17ceb4a4fb27a2798c6f600b06",
+        "tree": "74cb24c3805dad6cd6e9736ea5e412f145473023",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791092563 +0200",
+        "committerTimestamp": "1791092563 +0200",
+        "subject": "SF-A19-T12: preserve hosted a5 evidence as reconstructable parts",
+        "messageSha256": "2da15981fecfbfd0b70523655c09a226d0e8b6fcf40316a7162a59706f5e2b35"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "7876bafaba2d0b72a4062a1f86e01703193c8e8f",
+        "tree": "160102db49b154d6a311b98bfa67c1a0d1032755",
+        "orderedParents": [
+          "80ffb218adcf4b132beb7899c20548cc92bf4f5a",
+          "d022e7e8af056bfe88dadd66cd3616acc3a7816d"
+        ],
+        "authorTimestamp": "1791092516 +0300",
+        "committerTimestamp": "1791092516 +0300",
+        "subject": "SF-A19/A20: preserve a5 evidence as exact reconstructible archive parts",
+        "messageSha256": "844571349879d719c49a27896c6383ccee707f6623463682ce6faf543ced246f"
+      },
+      "published": {
+        "sha": "ce1feb5136a20796476586661dfe4dc7af02d7fb",
+        "tree": "160102db49b154d6a311b98bfa67c1a0d1032755",
+        "orderedParents": [
+          "1158db2126094223c7f95686e1c3b500f7b245d6",
+          "b8901fd4c7aeba17ceb4a4fb27a2798c6f600b06"
+        ],
+        "authorTimestamp": "1791092855 +0200",
+        "committerTimestamp": "1791092855 +0200",
+        "subject": "SF-A19/A20: preserve a5 evidence as exact reconstructible archive parts",
+        "messageSha256": "1add8128554a4121b1b254fade8333cccfa7871541c3e44c2e43e7edfedaae41"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "d9557c1759a86a5b51c8b1873f09637377420fec",
+        "tree": "aff811f56492d11cf1035746cf5918665c95ba86",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791092606 +0300",
+        "committerTimestamp": "1791092606 +0300",
+        "subject": "SF-A20-T44: isolate large editable sources from bounded project compilation",
+        "messageSha256": "ca68e16f8a9df9384bc9db96b727bb4b55e2eb5e0d7d8a5c79c3768db5d66dd5"
+      },
+      "published": {
+        "sha": "dcf602a92499944e3136a6188b6898be0bccab58",
+        "tree": "aff811f56492d11cf1035746cf5918665c95ba86",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791092858 +0200",
+        "committerTimestamp": "1791092858 +0200",
+        "subject": "SF-A20-T44: isolate large editable sources from bounded project compilation",
+        "messageSha256": "bd505b3041decb53199f2d8019b834ef962e0beb98df571583c2a7f624bf8410"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "cae69484b1ece1991e99b39a61a77303d96fca39",
+        "tree": "bbad9762d256d60d74e5b4cadbc6344d2e969cad",
+        "orderedParents": [
+          "7876bafaba2d0b72a4062a1f86e01703193c8e8f",
+          "d9557c1759a86a5b51c8b1873f09637377420fec"
+        ],
+        "authorTimestamp": "1791092675 +0300",
+        "committerTimestamp": "1791092675 +0300",
+        "subject": "SF-A20: integrate project-aware compiler source eligibility",
+        "messageSha256": "8a773ae2f02a026aa6c9f1793119ac2528449225c2ebd2106436a14ff9b5f1ea"
+      },
+      "published": {
+        "sha": "c0308e3cb3a4715da63dfcaa61aaa509a9459cac",
+        "tree": "bbad9762d256d60d74e5b4cadbc6344d2e969cad",
+        "orderedParents": [
+          "ce1feb5136a20796476586661dfe4dc7af02d7fb",
+          "dcf602a92499944e3136a6188b6898be0bccab58"
+        ],
+        "authorTimestamp": "1791092860 +0200",
+        "committerTimestamp": "1791092860 +0200",
+        "subject": "SF-A20: integrate project-aware compiler source eligibility",
+        "messageSha256": "a214bdd6873decfd6f875e1138f90bdedc2e844a79d255b02f7af4dbc141c0f5"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "3389ec15557e4049735e615b300786700414adf0",
+        "tree": "d07b253766e138afb8f80404c256f1045ec3606e",
+        "orderedParents": [
+          "d9557c1759a86a5b51c8b1873f09637377420fec"
+        ],
+        "authorTimestamp": "1791092860 +0300",
+        "committerTimestamp": "1791092860 +0300",
+        "subject": "SF-A20-T44: align source-bound status regressions with project eligibility",
+        "messageSha256": "d1f3908e494a81ce33277ce7e5d61b6d296b2c331653d96b18b1363b68d69a65"
+      },
+      "published": {
+        "sha": "eefabc97d6d431e8d11de3d4c88a18a5ff4ec565",
+        "tree": "d07b253766e138afb8f80404c256f1045ec3606e",
+        "orderedParents": [
+          "dcf602a92499944e3136a6188b6898be0bccab58"
+        ],
+        "authorTimestamp": "1791094186 +0200",
+        "committerTimestamp": "1791094186 +0200",
+        "subject": "SF-A20-T44: align source-bound status regressions with project eligibility",
+        "messageSha256": "7614c3d3fe3e84aa4b04ff45845fd0e526876d9afe7ab70718f175c1a2eaa3da"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "3f3916249d53953f04830aacd4919213a6295825",
+        "tree": "e5a533fb2df105136f166dfe6cc027d524e670bc",
+        "orderedParents": [
+          "cae69484b1ece1991e99b39a61a77303d96fca39",
+          "3389ec15557e4049735e615b300786700414adf0"
+        ],
+        "authorTimestamp": "1791093013 +0300",
+        "committerTimestamp": "1791093013 +0300",
+        "subject": "SF-A20: align legacy large-source assertions with explicit compiler eligibility",
+        "messageSha256": "da391a340cf3c00f9701d5fe724ffd1f6a518e167634201fc588fe850bae773b"
+      },
+      "published": {
+        "sha": "f07350c204128d28f270af40e36abc78c7ed5793",
+        "tree": "e5a533fb2df105136f166dfe6cc027d524e670bc",
+        "orderedParents": [
+          "c0308e3cb3a4715da63dfcaa61aaa509a9459cac",
+          "eefabc97d6d431e8d11de3d4c88a18a5ff4ec565"
+        ],
+        "authorTimestamp": "1791094188 +0200",
+        "committerTimestamp": "1791094188 +0200",
+        "subject": "SF-A20: align legacy large-source assertions with explicit compiler eligibility",
+        "messageSha256": "ce646159cd36ef76a2a5dfca37568d87e913cc880fde13334479f25935521362"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "dab4d0e7127467708ad2b6203c8099b78f4e00ad",
+        "tree": "77c5945d2598afb12bdcbeb59793c8b6b68430ef",
+        "orderedParents": [
+          "cae69484b1ece1991e99b39a61a77303d96fca39"
+        ],
+        "authorTimestamp": "1791092927 +0300",
+        "committerTimestamp": "1791092927 +0300",
+        "subject": "SF-A19-T26: select the foreground session in timer isolation fixtures",
+        "messageSha256": "84da1eb91969c0fce4cf5d42e7334c460aa1a46ad37aa3ed7c1fb45e2148b6b6"
+      },
+      "published": {
+        "sha": "3b8a77de26da73d2c3e7f3621d6a6093d19deca1",
+        "tree": "77c5945d2598afb12bdcbeb59793c8b6b68430ef",
+        "orderedParents": [
+          "c0308e3cb3a4715da63dfcaa61aaa509a9459cac"
+        ],
+        "authorTimestamp": "1791094191 +0200",
+        "committerTimestamp": "1791094191 +0200",
+        "subject": "SF-A19-T26: select the foreground session in timer isolation fixtures",
+        "messageSha256": "b47c19e5f48676f0b8b6e03a478f0e9dd737da8b72db8c658d2f4e219c0dec36"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "da51eb7ddb96a5e6aa5c1a05b2158a71791340d5",
+        "tree": "1bfd356682fb507e0f4ac365b3a4e16794a1e140",
+        "orderedParents": [
+          "3f3916249d53953f04830aacd4919213a6295825",
+          "dab4d0e7127467708ad2b6203c8099b78f4e00ad"
+        ],
+        "authorTimestamp": "1791093013 +0300",
+        "committerTimestamp": "1791093013 +0300",
+        "subject": "SF-A19: establish selected-session fixture before background lifecycle assertions",
+        "messageSha256": "26f48080e51457fce3536964005dddd86f55404fd059f6b85283aa16b1fe3ab5"
+      },
+      "published": {
+        "sha": "0bc91eb13f29b01d2e89494a5d021b721a2603cd",
+        "tree": "1bfd356682fb507e0f4ac365b3a4e16794a1e140",
+        "orderedParents": [
+          "f07350c204128d28f270af40e36abc78c7ed5793",
+          "3b8a77de26da73d2c3e7f3621d6a6093d19deca1"
+        ],
+        "authorTimestamp": "1791094193 +0200",
+        "committerTimestamp": "1791094193 +0200",
+        "subject": "SF-A19: establish selected-session fixture before background lifecycle assertions",
+        "messageSha256": "d0d874c481b18a5c2961787ca5dea70d3cd4df8311ebeb63272340d44268cd43"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "38f6d532c8388fd19d7aee0341d4f970e1fdf303",
+        "tree": "ef3620d14f8217be13f4d3b11f164e151446daea",
+        "orderedParents": [
+          "da51eb7ddb96a5e6aa5c1a05b2158a71791340d5"
+        ],
+        "authorTimestamp": "1791093378 +0300",
+        "committerTimestamp": "1791093378 +0300",
+        "subject": "SF-A19-T26: archive a5 correction area results and affected retry",
+        "messageSha256": "73a6ae92c0c0306d461b1d7a4f03b794c6de675682bab62a55881bf74a2ed58d"
+      },
+      "published": {
+        "sha": "6d90bf329046c33ddb3bb2beb2a08f6a63d21a02",
+        "tree": "ef3620d14f8217be13f4d3b11f164e151446daea",
+        "orderedParents": [
+          "0bc91eb13f29b01d2e89494a5d021b721a2603cd"
+        ],
+        "authorTimestamp": "1791094196 +0200",
+        "committerTimestamp": "1791094196 +0200",
+        "subject": "SF-A19-T26: archive a5 correction area results and affected retry",
+        "messageSha256": "44f9e85b20d43ef59d9a63e2ca4dbebed7f6f610e8bd02129550444fa54388c8"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "f4ddc24f2a48a5725989fc1052fa154e4e574545",
+        "tree": "ef3620d14f8217be13f4d3b11f164e151446daea",
+        "orderedParents": [
+          "da51eb7ddb96a5e6aa5c1a05b2158a71791340d5",
+          "38f6d532c8388fd19d7aee0341d4f970e1fdf303"
+        ],
+        "authorTimestamp": "1791093504 +0300",
+        "committerTimestamp": "1791093504 +0300",
+        "subject": "SF-A19/A20: preserve complete local correction outcomes and affected retry",
+        "messageSha256": "24c50a9aeb4a4bb7be949a7aa15dd5b91012f56c068b1e230a3a1ed533ba4ebc"
+      },
+      "published": {
+        "sha": "d3a091410e82fb42b1e2ac58beeb7afacaa0fd3c",
+        "tree": "ef3620d14f8217be13f4d3b11f164e151446daea",
+        "orderedParents": [
+          "0bc91eb13f29b01d2e89494a5d021b721a2603cd",
+          "6d90bf329046c33ddb3bb2beb2a08f6a63d21a02"
+        ],
+        "authorTimestamp": "1791094198 +0200",
+        "committerTimestamp": "1791094198 +0200",
+        "subject": "SF-A19/A20: preserve complete local correction outcomes and affected retry",
+        "messageSha256": "cb0ce61630112b0dff3d11d76aecf47112f39e5080115ac33d97bd9047bb96ee"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "8af520db30be6084edc7c4fbdc4622fc38c0884e",
+        "tree": "1da326a0c6c35b3d399eadf8fb8a31b3402604b6",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791093426 +0300",
+        "committerTimestamp": "1791093426 +0300",
+        "subject": "SF-A19-T26: measure Studio correction boundaries with matched Node captures",
+        "messageSha256": "3ded7bf52227d9c53294cbe0851f7a29ec929cc760fd7e14fb100144c9238af3"
+      },
+      "published": {
+        "sha": "930501ec2fd9f80bd508b106a0a2357686b71538",
+        "tree": "1da326a0c6c35b3d399eadf8fb8a31b3402604b6",
+        "orderedParents": [
+          "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c"
+        ],
+        "authorTimestamp": "1791094201 +0200",
+        "committerTimestamp": "1791094201 +0200",
+        "subject": "SF-A19-T26: measure Studio correction boundaries with matched Node captures",
+        "messageSha256": "13b4e2451f9d72690e24f622ff05520c2ade07a634a4dad68add6addb4918df6"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "e89257052957f4c736512e9c2b46162bb6f23eae",
+        "tree": "9e33eca9a91361201b2e14fea3cded5cbd584d88",
+        "orderedParents": [
+          "f4ddc24f2a48a5725989fc1052fa154e4e574545",
+          "8af520db30be6084edc7c4fbdc4622fc38c0884e"
+        ],
+        "authorTimestamp": "1791093505 +0300",
+        "committerTimestamp": "1791093505 +0300",
+        "subject": "SF-A19: integrate matched boundary measurement harness",
+        "messageSha256": "f6a819c2369dad51d23799f41ce78aede3247e484d27ff545b1405c5afaf3682"
+      },
+      "published": {
+        "sha": "b06d8c8ba0bb608422371737cf153c51917cf722",
+        "tree": "9e33eca9a91361201b2e14fea3cded5cbd584d88",
+        "orderedParents": [
+          "d3a091410e82fb42b1e2ac58beeb7afacaa0fd3c",
+          "930501ec2fd9f80bd508b106a0a2357686b71538"
+        ],
+        "authorTimestamp": "1791094203 +0200",
+        "committerTimestamp": "1791094203 +0200",
+        "subject": "SF-A19: integrate matched boundary measurement harness",
+        "messageSha256": "fb500aa0cfa5acec1040ed395803e747211c716251bbf5eaec43dbe7124c2a22"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "33f2ad2de5c8e4da499a12d1151d74c139ca4d00",
+        "tree": "9d81028a8696330bcf0b1dab0674952ea35ce148",
+        "orderedParents": [
+          "e89257052957f4c736512e9c2b46162bb6f23eae"
+        ],
+        "authorTimestamp": "1791093958 +0300",
+        "committerTimestamp": "1791093958 +0300",
+        "subject": "SF-A19-T26: retain matched correction performance evidence and review",
+        "messageSha256": "3639fcb78203f564562306a237dd22deff9bb594b4408c916852ca6a8c31be11"
+      },
+      "published": {
+        "sha": "f7c0c6b52995669a7d50b5f61572c03a680f7400",
+        "tree": "9d81028a8696330bcf0b1dab0674952ea35ce148",
+        "orderedParents": [
+          "b06d8c8ba0bb608422371737cf153c51917cf722"
+        ],
+        "authorTimestamp": "1791094206 +0200",
+        "committerTimestamp": "1791094206 +0200",
+        "subject": "SF-A19-T26: retain matched correction performance evidence and review",
+        "messageSha256": "847f1972b5d655dbab6386f6dfa6c76b38b2d82ab814829b719e008897e22e94"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "30c5837456ed9cff8c71a8a0dad7360d4ff88f45",
+        "tree": "9d81028a8696330bcf0b1dab0674952ea35ce148",
+        "orderedParents": [
+          "e89257052957f4c736512e9c2b46162bb6f23eae",
+          "33f2ad2de5c8e4da499a12d1151d74c139ca4d00"
+        ],
+        "authorTimestamp": "1791094075 +0300",
+        "committerTimestamp": "1791094075 +0300",
+        "subject": "SF-A19-T26: preserve matched correction-boundary performance and review",
+        "messageSha256": "5177cb5f4bd739c6cd3eaadb5bc27418c6f2317b83ae0a6ded36358e20a38b06"
+      },
+      "published": {
+        "sha": "ae2158ad8f66cc0eef1b8acab5bc79934b0349ec",
+        "tree": "9d81028a8696330bcf0b1dab0674952ea35ce148",
+        "orderedParents": [
+          "b06d8c8ba0bb608422371737cf153c51917cf722",
+          "f7c0c6b52995669a7d50b5f61572c03a680f7400"
+        ],
+        "authorTimestamp": "1791094208 +0200",
+        "committerTimestamp": "1791094208 +0200",
+        "subject": "SF-A19-T26: preserve matched correction-boundary performance and review",
+        "messageSha256": "b1b3ff4beb67d51031b20de9652e91b1647a6229e1f9653e51f9f976a0c03bd6"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "a5977d0e0713997766e2d16101f44bc2a776a114",
+        "tree": "cf7a61b6964b794d1b0128cbaffafd180b643ef0",
+        "orderedParents": [
+          "30c5837456ed9cff8c71a8a0dad7360d4ff88f45"
+        ],
+        "authorTimestamp": "1791094519 +0300",
+        "committerTimestamp": "1791094519 +0300",
+        "subject": "SF-A20-T44: format compiler workspace seams and simplify literal registrations",
+        "messageSha256": "50b118eb5619000f34a1981d87a2848791b56a4f1b4264b7965b01e0a286ff23"
+      },
+      "published": {
+        "sha": "ec9397f0f0c57eef408f65f24f5e6f82a036fff5",
+        "tree": "cf7a61b6964b794d1b0128cbaffafd180b643ef0",
+        "orderedParents": [
+          "ae2158ad8f66cc0eef1b8acab5bc79934b0349ec"
+        ],
+        "authorTimestamp": "1791094608 +0200",
+        "committerTimestamp": "1791094608 +0200",
+        "subject": "SF-A20-T44: format compiler workspace seams and simplify literal registrations",
+        "messageSha256": "ba26de08333145d87b6e3c38a75fa47d2b0e6cd44691bd5ac5a1a6bf31b41285"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "ba279d9742a6c5c83f85d7e90ed3307a6eaf1cc8",
+        "tree": "cf7a61b6964b794d1b0128cbaffafd180b643ef0",
+        "orderedParents": [
+          "30c5837456ed9cff8c71a8a0dad7360d4ff88f45",
+          "a5977d0e0713997766e2d16101f44bc2a776a114"
+        ],
+        "authorTimestamp": "1791094584 +0300",
+        "committerTimestamp": "1791094584 +0300",
+        "subject": "SF-A20: keep compiler workspace seams readable within the legacy size bound",
+        "messageSha256": "1bf785367d6b88995ba554e092595d1dbd42485919b1d6310abfc473f9fe7f73"
+      },
+      "published": {
+        "sha": "c586a63517efb7c19a60ead0c54fb128dd566d03",
+        "tree": "cf7a61b6964b794d1b0128cbaffafd180b643ef0",
+        "orderedParents": [
+          "ae2158ad8f66cc0eef1b8acab5bc79934b0349ec",
+          "ec9397f0f0c57eef408f65f24f5e6f82a036fff5"
+        ],
+        "authorTimestamp": "1791094609 +0200",
+        "committerTimestamp": "1791094609 +0200",
+        "subject": "SF-A20: keep compiler workspace seams readable within the legacy size bound",
+        "messageSha256": "ad3c360b6890acd500c7667e8a40f47c1c976dc6bedb186feb4bd4ada6f1e071"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "bd68df672d67ae5db178df2cd4c4fb86721fa26e",
+        "tree": "0e37014a0573976d72d8ef2469531eeaa0a45b2f",
+        "orderedParents": [
+          "a5977d0e0713997766e2d16101f44bc2a776a114"
+        ],
+        "authorTimestamp": "1791094763 +0300",
+        "committerTimestamp": "1791094763 +0300",
+        "subject": "SF-A20-T44: retain bounded changed-source and Python parse evidence",
+        "messageSha256": "a86dcada4861109c50c8924269d72bbc4f1047d30fcd1b2123b068709157c807"
+      },
+      "published": {
+        "sha": "0578bd080db7914f31c31097dbb79510ed58088a",
+        "tree": "0e37014a0573976d72d8ef2469531eeaa0a45b2f",
+        "orderedParents": [
+          "ec9397f0f0c57eef408f65f24f5e6f82a036fff5"
+        ],
+        "authorTimestamp": "1791094864 +0200",
+        "committerTimestamp": "1791094864 +0200",
+        "subject": "SF-A20-T44: retain bounded changed-source and Python parse evidence",
+        "messageSha256": "b9249190ac9952d8015499c4e0774252c7d68b403e1a7e0c74a119fc3de7029b"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "ccaf924054b60b83e4ccd127eeddda13f30bd849",
+        "tree": "0e37014a0573976d72d8ef2469531eeaa0a45b2f",
+        "orderedParents": [
+          "ba279d9742a6c5c83f85d7e90ed3307a6eaf1cc8",
+          "bd68df672d67ae5db178df2cd4c4fb86721fa26e"
+        ],
+        "authorTimestamp": "1791094813 +0300",
+        "committerTimestamp": "1791094813 +0300",
+        "subject": "SF-A19/A20: retain exact changed-source inspection and resolved readability finding",
+        "messageSha256": "602c11438b8f3603f9faa72a776695a0dc95c3c605c7aef1dfa6a7880e8460bf"
+      },
+      "published": {
+        "sha": "31b55c988679cf3bc9bfe97928c866f404bb9698",
+        "tree": "0e37014a0573976d72d8ef2469531eeaa0a45b2f",
+        "orderedParents": [
+          "c586a63517efb7c19a60ead0c54fb128dd566d03",
+          "0578bd080db7914f31c31097dbb79510ed58088a"
+        ],
+        "authorTimestamp": "1791094866 +0200",
+        "committerTimestamp": "1791094866 +0200",
+        "subject": "SF-A19/A20: retain exact changed-source inspection and resolved readability finding",
+        "messageSha256": "706df47e3a846eae8912b056bf475eba392db70e14c76ded013efaf548a3f2b1"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "5f1f3eee6b7a9d3b6460ce86c687ce3a36fe73a5",
+        "tree": "837c849203fda6f2fe1ee225a548e7faf772c814",
+        "orderedParents": [
+          "ccaf924054b60b83e4ccd127eeddda13f30bd849"
+        ],
+        "authorTimestamp": "1791095222 +0300",
+        "committerTimestamp": "1791095222 +0300",
+        "subject": "SF-A19-T26: retain initial PR 4413 core failure evidence",
+        "messageSha256": "eb752a09b33a33071da320e5df035a8062367cdcae085621863c7374cc4c257c"
+      },
+      "published": {
+        "sha": "1e43d5715561882de314d01f81953c510e0cf90e",
+        "tree": "837c849203fda6f2fe1ee225a548e7faf772c814",
+        "orderedParents": [
+          "31b55c988679cf3bc9bfe97928c866f404bb9698"
+        ],
+        "authorTimestamp": "1791095406 +0200",
+        "committerTimestamp": "1791095406 +0200",
+        "subject": "SF-A19-T26: retain initial PR 4413 core failure evidence",
+        "messageSha256": "86d8dca79837bc82daacd6bbf1e05fc407ac0afdff5bb2690a050cae9205248f"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "bc4081cd7a745d5d56572e111fc82c9d3f0a9224",
+        "tree": "837c849203fda6f2fe1ee225a548e7faf772c814",
+        "orderedParents": [
+          "ccaf924054b60b83e4ccd127eeddda13f30bd849",
+          "5f1f3eee6b7a9d3b6460ce86c687ce3a36fe73a5"
+        ],
+        "authorTimestamp": "1791095279 +0300",
+        "committerTimestamp": "1791095279 +0300",
+        "subject": "SF-A19-T26: preserve initial PR core finding before reviewed inventory correction",
+        "messageSha256": "8f6b835c68716250e4bcd957262a00dda88ef16febbc686a892db94ffd776a35"
+      },
+      "published": {
+        "sha": "3e4ef635963304dc240970e9e122c0258e1a4974",
+        "tree": "837c849203fda6f2fe1ee225a548e7faf772c814",
+        "orderedParents": [
+          "31b55c988679cf3bc9bfe97928c866f404bb9698",
+          "1e43d5715561882de314d01f81953c510e0cf90e"
+        ],
+        "authorTimestamp": "1791095407 +0200",
+        "committerTimestamp": "1791095407 +0200",
+        "subject": "SF-A19-T26: preserve initial PR core finding before reviewed inventory correction",
+        "messageSha256": "43f93315bfbfd3f655f5b7559f728079041dbc606a6770f3a3e740dfa8c8ade5"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "ec6436aace6a3af5ce3bc2af03a0e0f4f8bc980b",
+        "tree": "2393deb421f2805c5da85c8cc6c4ed46f114eb22",
+        "orderedParents": [
+          "ccaf924054b60b83e4ccd127eeddda13f30bd849"
+        ],
+        "authorTimestamp": "1791095409 +0300",
+        "committerTimestamp": "1791095409 +0300",
+        "subject": "SF-A19-T12: review trusted correction benchmark import",
+        "messageSha256": "c1db63564697fcf04209db6d737ed8f538e8aec6b90356463f079c87105474ce"
+      },
+      "published": {
+        "sha": "076390626df42b08aba97a1363837dd798a48820",
+        "tree": "2393deb421f2805c5da85c8cc6c4ed46f114eb22",
+        "orderedParents": [
+          "31b55c988679cf3bc9bfe97928c866f404bb9698"
+        ],
+        "authorTimestamp": "1791095649 +0200",
+        "committerTimestamp": "1791095649 +0200",
+        "subject": "SF-A19-T12: review trusted correction benchmark import",
+        "messageSha256": "426ccf9e3ce0f2c400017a49f65bd832e55bc53efd83980e9b8ffcced45cfeef"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "4abe16d863d633b92c8782a12b13b6a1252077d4",
+        "tree": "315d58ca90153c22a839060c2e849bf427cb0de9",
+        "orderedParents": [
+          "bc4081cd7a745d5d56572e111fc82c9d3f0a9224",
+          "ec6436aace6a3af5ce3bc2af03a0e0f4f8bc980b"
+        ],
+        "authorTimestamp": "1791095466 +0300",
+        "committerTimestamp": "1791095466 +0300",
+        "subject": "SF-A19-T26: integrate reviewed trusted-checkout benchmark import inventory",
+        "messageSha256": "1f8e1ff7412c881b17438f62a13dd3ee57b7ba6b334598e92b7c4a9026d1be60"
+      },
+      "published": {
+        "sha": "c034f9923b8dd536379e439748a6f8304b653029",
+        "tree": "315d58ca90153c22a839060c2e849bf427cb0de9",
+        "orderedParents": [
+          "3e4ef635963304dc240970e9e122c0258e1a4974",
+          "076390626df42b08aba97a1363837dd798a48820"
+        ],
+        "authorTimestamp": "1791095651 +0200",
+        "committerTimestamp": "1791095651 +0200",
+        "subject": "SF-A19-T26: integrate reviewed trusted-checkout benchmark import inventory",
+        "messageSha256": "0c0dff3e8f57c42aa49e63cf218ebb0e80b8e9d3ff7b75163a5d9559e3576490"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "7261fc5a1355cbbd57947196b6a243856c21a946",
+        "tree": "2a6cf385a1f81114ed980f1463e19fd6c7ce7c72",
+        "orderedParents": [
+          "4abe16d863d633b92c8782a12b13b6a1252077d4"
+        ],
+        "authorTimestamp": "1791095525 +0300",
+        "committerTimestamp": "1791095525 +0300",
+        "subject": "SF-A19-T26: record exact scoped benchmark import audit",
+        "messageSha256": "26a08d5329ea5e8f2d86f06434a09dc0b93dfd8ac7cf9378ff05af5ed34c5d93"
+      },
+      "published": {
+        "sha": "4cb2d290c4453192c777786a39ebdb7fa45b9461",
+        "tree": "2a6cf385a1f81114ed980f1463e19fd6c7ce7c72",
+        "orderedParents": [
+          "c034f9923b8dd536379e439748a6f8304b653029"
+        ],
+        "authorTimestamp": "1791095653 +0200",
+        "committerTimestamp": "1791095653 +0200",
+        "subject": "SF-A19-T26: record exact scoped benchmark import audit",
+        "messageSha256": "42b377caec7e30a7281c8c624f47b0f0f39ddf428677dca6c6cdf14fd78c70b9"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "e905566c1933830deb6de7249062113c2b0eeee5",
+        "tree": "1f340cafbdc6c7843e3f1335ff59f2bb1f667f28",
+        "orderedParents": [
+          "8c91f29b2c6e8d7d3f0d90568baf01c37f09b0c4",
+          "4cb2d290c4453192c777786a39ebdb7fa45b9461"
+        ],
+        "authorTimestamp": "1791095783 +0200",
+        "committerTimestamp": "1791095783 +0200",
+        "subject": "Merge pull request #4413 from wieslawsoltes/codex/project16/10-runtime-source-qualification",
+        "messageSha256": "4742cb2b71cbe31479cc6599fdfa7035f62a7cf50993be4764a6389402c39ea4"
+      },
+      "published": {
+        "sha": "e905566c1933830deb6de7249062113c2b0eeee5",
+        "tree": "1f340cafbdc6c7843e3f1335ff59f2bb1f667f28",
+        "orderedParents": [
+          "8c91f29b2c6e8d7d3f0d90568baf01c37f09b0c4",
+          "4cb2d290c4453192c777786a39ebdb7fa45b9461"
+        ],
+        "authorTimestamp": "1791095783 +0200",
+        "committerTimestamp": "1791095783 +0200",
+        "subject": "Merge pull request #4413 from wieslawsoltes/codex/project16/10-runtime-source-qualification",
+        "messageSha256": "4742cb2b71cbe31479cc6599fdfa7035f62a7cf50993be4764a6389402c39ea4"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": true,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "876baeb099c9697f20fd09e7ffa39ebda284770e",
+        "tree": "bb8661834ea08234b6cbf499dbdd7b8c53322cb9",
+        "orderedParents": [
+          "30c5837456ed9cff8c71a8a0dad7360d4ff88f45"
+        ],
+        "authorTimestamp": "1791095148 +0300",
+        "committerTimestamp": "1791095148 +0300",
+        "subject": "SF-A19-T11.4: opt in to pinned a5 comparative qualification baselines",
+        "messageSha256": "b4d6a5897097207c74de9822cc2419329fc4c51364f3eac864e1a557cec89104"
+      },
+      "published": {
+        "sha": "148b1d867ffc6fe6749018a9bc1c8b12b30a6036",
+        "tree": "bb8661834ea08234b6cbf499dbdd7b8c53322cb9",
+        "orderedParents": [
+          "ae2158ad8f66cc0eef1b8acab5bc79934b0349ec"
+        ],
+        "authorTimestamp": "1791096013 +0200",
+        "committerTimestamp": "1791096013 +0200",
+        "subject": "SF-A19-T11.4: opt in to pinned a5 comparative qualification baselines",
+        "messageSha256": "b1d4b0439e9673ef0d387cb5918c8ca09c869b0bcb93028fd6442ea75026cc00"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "fd8678f57a107c8973ba0963a6a20153340fa932",
+        "tree": "e283889a6155a0698c9c267c384cac7774ad1fb4",
+        "orderedParents": [
+          "876baeb099c9697f20fd09e7ffa39ebda284770e"
+        ],
+        "authorTimestamp": "1791095499 +0300",
+        "committerTimestamp": "1791095499 +0300",
+        "subject": "SF-A19-T11.4: archive completed comparative-profile qualification",
+        "messageSha256": "dd95601c86e95da6e61f47e07508f049d089e564a9b3c0d3936733d23dc81d0b"
+      },
+      "published": {
+        "sha": "60a225227d094ffdc159b2ee4e477f9800e56128",
+        "tree": "e283889a6155a0698c9c267c384cac7774ad1fb4",
+        "orderedParents": [
+          "148b1d867ffc6fe6749018a9bc1c8b12b30a6036"
+        ],
+        "authorTimestamp": "1791096015 +0200",
+        "committerTimestamp": "1791096015 +0200",
+        "subject": "SF-A19-T11.4: archive completed comparative-profile qualification",
+        "messageSha256": "41c5766c8e4a42048c7bbee5b32581b06896d9f23602486d9ac7f9834958d8ed"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "ab3531fb9bac03be17f151bd4afc29aa5118f186",
+        "tree": "d02d64406bf466c0e1517c94b55e043da5c22cad",
+        "orderedParents": [
+          "7261fc5a1355cbbd57947196b6a243856c21a946",
+          "fd8678f57a107c8973ba0963a6a20153340fa932"
+        ],
+        "authorTimestamp": "1791095723 +0300",
+        "committerTimestamp": "1791095723 +0300",
+        "subject": "SF-A19/A20: integrate reviewed a5 comparative baseline selection and evidence",
+        "messageSha256": "1d8cc70fd7d25229464883c562becd6490806424eed92927318bac4805cad2de"
+      },
+      "published": {
+        "sha": "c6ff3974bdce835f037847c95ed295b641506495",
+        "tree": "d02d64406bf466c0e1517c94b55e043da5c22cad",
+        "orderedParents": [
+          "4cb2d290c4453192c777786a39ebdb7fa45b9461",
+          "60a225227d094ffdc159b2ee4e477f9800e56128"
+        ],
+        "authorTimestamp": "1791096017 +0200",
+        "committerTimestamp": "1791096017 +0200",
+        "subject": "SF-A19/A20: integrate reviewed a5 comparative baseline selection and evidence",
+        "messageSha256": "ae6bdc7cc5015ba3147e7410065925400043b91e507ce802cda81aca1f72faf2"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "3c509d987e1af094333454f81debe2e0681c8202",
+        "tree": "fd9dc104ddd4e46ca1dceca8630cfacbaa584686",
+        "orderedParents": [
+          "ab3531fb9bac03be17f151bd4afc29aa5118f186"
+        ],
+        "authorTimestamp": "1791095759 +0300",
+        "committerTimestamp": "1791095759 +0300",
+        "subject": "SF-A19-T11.4: clarify exact size units and UI comparison scope",
+        "messageSha256": "18b7ce6416a0faf5d7f72c1293f6d392499791bdb3cad89bcc990f7ead46329a"
+      },
+      "published": {
+        "sha": "aca4d358167c8840a1efce9e39182e1eb5b6f71b",
+        "tree": "fd9dc104ddd4e46ca1dceca8630cfacbaa584686",
+        "orderedParents": [
+          "c6ff3974bdce835f037847c95ed295b641506495"
+        ],
+        "authorTimestamp": "1791096019 +0200",
+        "committerTimestamp": "1791096019 +0200",
+        "subject": "SF-A19-T11.4: clarify exact size units and UI comparison scope",
+        "messageSha256": "8ac09e0785fff5c876b93f33653d53f92e3b684806d644b2bca19f112c9e1e11"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+        "tree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+        "orderedParents": [
+          "e905566c1933830deb6de7249062113c2b0eeee5",
+          "aca4d358167c8840a1efce9e39182e1eb5b6f71b"
+        ],
+        "authorTimestamp": "1791096158 +0200",
+        "committerTimestamp": "1791096158 +0200",
+        "subject": "Merge pull request #4426 from wieslawsoltes/codex/project16/11-reviewed-performance-baselines",
+        "messageSha256": "fdf92023e0f22e0075000a19de30d1e46952b056f8af142147f5cab43247e3d9"
+      },
+      "published": {
+        "sha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+        "tree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+        "orderedParents": [
+          "e905566c1933830deb6de7249062113c2b0eeee5",
+          "aca4d358167c8840a1efce9e39182e1eb5b6f71b"
+        ],
+        "authorTimestamp": "1791096158 +0200",
+        "committerTimestamp": "1791096158 +0200",
+        "subject": "Merge pull request #4426 from wieslawsoltes/codex/project16/11-reviewed-performance-baselines",
+        "messageSha256": "fdf92023e0f22e0075000a19de30d1e46952b056f8af142147f5cab43247e3d9"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": true,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "c387df369b93bbe73d5c175c6654b9259abda2a2",
+        "tree": "dd4d3a51f8d4de5ac12e80960b72aa21ecd63dd5",
+        "orderedParents": [
+          "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e"
+        ],
+        "authorTimestamp": "1791098181 +0300",
+        "committerTimestamp": "1791098181 +0300",
+        "subject": "SF-A20-T12: archive failed a6 comparative qualification",
+        "messageSha256": "75b31a00520559f8f0eb079350fe63280ea3870f9d374369b63cc8b6fbf843d6"
+      },
+      "published": {
+        "sha": "0ccdb503eb6033b4c08cdaeffbc38b63ef8ed508",
+        "tree": "dd4d3a51f8d4de5ac12e80960b72aa21ecd63dd5",
+        "orderedParents": [
+          "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e"
+        ],
+        "authorTimestamp": "1791098895 +0200",
+        "committerTimestamp": "1791098895 +0200",
+        "subject": "SF-A20-T12: archive failed a6 comparative qualification",
+        "messageSha256": "7787f0ff9c7dce6d5f0f4657816dd36560165440278ab2f0213efd04a797a62a"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "e8f27e7984503f90c1f4a0b78928d891889f0103",
+        "tree": "60c7d86a7e93c2a345dbd3d102e2a7166f259125",
+        "orderedParents": [
+          "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e"
+        ],
+        "authorTimestamp": "1791098243 +0300",
+        "committerTimestamp": "1791098243 +0300",
+        "subject": "SF-A20-T35: discard deleted change-tracking lines using snapshot geometry",
+        "messageSha256": "5d79a1d3514c7841b2e58e83411137c0f22e4a13ba11cef389e073131e75f547"
+      },
+      "published": {
+        "sha": "778bce993264b8171c85684efd87bdc528e3a807",
+        "tree": "60c7d86a7e93c2a345dbd3d102e2a7166f259125",
+        "orderedParents": [
+          "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e"
+        ],
+        "authorTimestamp": "1791099131 +0200",
+        "committerTimestamp": "1791099131 +0200",
+        "subject": "SF-A20-T35: discard deleted change-tracking lines using snapshot geometry",
+        "messageSha256": "3c7f5f363bd0130b10ab2cbb2d543e9adee7b2a567a08ef7653caf16c00d40b6"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "f90dcf4e83665f18d953a3268d1d5d611bdf745f",
+        "tree": "60c7d86a7e93c2a345dbd3d102e2a7166f259125",
+        "orderedParents": [
+          "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+          "e8f27e7984503f90c1f4a0b78928d891889f0103"
+        ],
+        "authorTimestamp": "1791098624 +0300",
+        "committerTimestamp": "1791098624 +0300",
+        "subject": "SF-A20-T35: integrate bounded change tracking after completed scope review",
+        "messageSha256": "3258c39da38bb54b15d819d0c266940587b71cf705cfb04d070623206f409b43"
+      },
+      "published": {
+        "sha": "84195a0f1de38d6fb2472b9e0e02ed261ba90376",
+        "tree": "60c7d86a7e93c2a345dbd3d102e2a7166f259125",
+        "orderedParents": [
+          "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+          "778bce993264b8171c85684efd87bdc528e3a807"
+        ],
+        "authorTimestamp": "1791099132 +0200",
+        "committerTimestamp": "1791099132 +0200",
+        "subject": "SF-A20-T35: integrate bounded change tracking after completed scope review",
+        "messageSha256": "224a33f16f9fb8cb07366e9b16351597cc95e1d91c798e14e7755181324711d9"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "19f027ec068434825f16d6edd253a23af4d27b4d",
+        "tree": "8f2cb1c9d923dd999707fe56a5bfb5e514b24eb1",
+        "orderedParents": [
+          "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e"
+        ],
+        "authorTimestamp": "1791098448 +0300",
+        "committerTimestamp": "1791098448 +0300",
+        "subject": "SF-A19-T12.1: target the existing standalone qualification scope",
+        "messageSha256": "d9b09deb95917f24dd577b5a44f3f2f157a34e0971868353ad2b6b5bb77e7118"
+      },
+      "published": {
+        "sha": "6701676e0a13793a4f051ec7c9e1a99687fc2ac6",
+        "tree": "8f2cb1c9d923dd999707fe56a5bfb5e514b24eb1",
+        "orderedParents": [
+          "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e"
+        ],
+        "authorTimestamp": "1791099134 +0200",
+        "committerTimestamp": "1791099134 +0200",
+        "subject": "SF-A19-T12.1: target the existing standalone qualification scope",
+        "messageSha256": "2894bc9676de1a4b900e4411594aa572788790a821d9bf2931e8df49f8091e7b"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "20474bfed2c3c442ae50ae46d2dbcff02f155bc5",
+        "tree": "5c5d290f9c190cd4e5c1b5d8e7124f9c0980ec4a",
+        "orderedParents": [
+          "f90dcf4e83665f18d953a3268d1d5d611bdf745f",
+          "19f027ec068434825f16d6edd253a23af4d27b4d"
+        ],
+        "authorTimestamp": "1791098624 +0300",
+        "committerTimestamp": "1791098624 +0300",
+        "subject": "SF-A19-T38: integrate isolated standalone qualification stage",
+        "messageSha256": "e5232086e6a9a0a17dc2bfe321555bfc7d170614b90d9fee0956a8b3ae9ac6fd"
+      },
+      "published": {
+        "sha": "dbbc90a8b0db41858e93be5aa099aa8db1a38dbb",
+        "tree": "5c5d290f9c190cd4e5c1b5d8e7124f9c0980ec4a",
+        "orderedParents": [
+          "84195a0f1de38d6fb2472b9e0e02ed261ba90376",
+          "6701676e0a13793a4f051ec7c9e1a99687fc2ac6"
+        ],
+        "authorTimestamp": "1791099136 +0200",
+        "committerTimestamp": "1791099136 +0200",
+        "subject": "SF-A19-T38: integrate isolated standalone qualification stage",
+        "messageSha256": "725279bfee454938d3c1c497fb129e91932dd285b84ba08b8dc7f830a3f193a1"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "fe9e6f007965b465680401e45875319a4e640a35",
+        "tree": "64819e873df629dc31c0c4377a331875da636bcc",
+        "orderedParents": [
+          "20474bfed2c3c442ae50ae46d2dbcff02f155bc5",
+          "c387df369b93bbe73d5c175c6654b9259abda2a2"
+        ],
+        "authorTimestamp": "1791098985 +0300",
+        "committerTimestamp": "1791098985 +0300",
+        "subject": "SF-A20-T12: preserve exact failed a6 comparative evidence",
+        "messageSha256": "394dc15d19d3e3d589584a1cd48bd2f41e3caeda896744e2be19f6de7dd588ac"
+      },
+      "published": {
+        "sha": "1f5bed4ac0d7329bb281155bf83bf3394e083e95",
+        "tree": "64819e873df629dc31c0c4377a331875da636bcc",
+        "orderedParents": [
+          "dbbc90a8b0db41858e93be5aa099aa8db1a38dbb",
+          "0ccdb503eb6033b4c08cdaeffbc38b63ef8ed508"
+        ],
+        "authorTimestamp": "1791099138 +0200",
+        "committerTimestamp": "1791099138 +0200",
+        "subject": "SF-A20-T12: preserve exact failed a6 comparative evidence",
+        "messageSha256": "5e70f3a0c88743cb7c8f80d274aac9bf569d7874bbbac36fc4112e3328f83e39"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "10f24e9b5f23c624723639d57748c66ed5dede21",
+        "tree": "42f4394c129402cf44f5b090e5196a115d37ff57",
+        "orderedParents": [
+          "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e"
+        ],
+        "authorTimestamp": "1791098805 +0300",
+        "committerTimestamp": "1791098805 +0300",
+        "subject": "SF-A19-T12.2: preserve Windows and macOS browser qualification",
+        "messageSha256": "876df7af695c70431f15826df08694c342b387699131c1ba2833165c998807a1"
+      },
+      "published": {
+        "sha": "1521c94d869cea06467d0848311f04b5d37ca719",
+        "tree": "42f4394c129402cf44f5b090e5196a115d37ff57",
+        "orderedParents": [
+          "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e"
+        ],
+        "authorTimestamp": "1791099141 +0200",
+        "committerTimestamp": "1791099141 +0200",
+        "subject": "SF-A19-T12.2: preserve Windows and macOS browser qualification",
+        "messageSha256": "ccf9fc16c1bf7b4ff33d9af7e1b0b061e27c60c25db9b15ac82ea89cc9726157"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "7eb3d2a2feb4fdc6a495f40b5edd37593d41c12a",
+        "tree": "8327023e9712ba9140341f865b4df77019269484",
+        "orderedParents": [
+          "fe9e6f007965b465680401e45875319a4e640a35",
+          "10f24e9b5f23c624723639d57748c66ed5dede21"
+        ],
+        "authorTimestamp": "1791098986 +0300",
+        "committerTimestamp": "1791098986 +0300",
+        "subject": "SF-A19-T38: preserve Windows and WebKit browser qualification outcomes",
+        "messageSha256": "75dda4f2de313ecf94ac0482b77339387e196a7c1c9206ce6742ebbd0fa8272e"
+      },
+      "published": {
+        "sha": "23e51d6e6a7b726ecbfcaf73d735a2bd8b15adfc",
+        "tree": "8327023e9712ba9140341f865b4df77019269484",
+        "orderedParents": [
+          "1f5bed4ac0d7329bb281155bf83bf3394e083e95",
+          "1521c94d869cea06467d0848311f04b5d37ca719"
+        ],
+        "authorTimestamp": "1791099144 +0200",
+        "committerTimestamp": "1791099144 +0200",
+        "subject": "SF-A19-T38: preserve Windows and WebKit browser qualification outcomes",
+        "messageSha256": "749a28a2c3411f39ea8c5b8d950f8654bd0fdf73d14c5316f0a313d9507c8b1c"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "ae09105a6bcef04ae3e807d4db0af184f106bb03",
+        "tree": "8b431698d056649512cb2c21ee38f587723f4343",
+        "orderedParents": [
+          "20474bfed2c3c442ae50ae46d2dbcff02f155bc5"
+        ],
+        "authorTimestamp": "1791098861 +0300",
+        "committerTimestamp": "1791098861 +0300",
+        "subject": "SF-A20-T35: preserve failing proof and completed follow-up evidence",
+        "messageSha256": "ff573301dbc3994ee5a315297d8ad30a35f81ecbf5b825b343cefca856873a7a"
+      },
+      "published": {
+        "sha": "be4d87b60d7ae25f9ee6af8e0724b3a17e7b0d61",
+        "tree": "8b431698d056649512cb2c21ee38f587723f4343",
+        "orderedParents": [
+          "dbbc90a8b0db41858e93be5aa099aa8db1a38dbb"
+        ],
+        "authorTimestamp": "1791099145 +0200",
+        "committerTimestamp": "1791099145 +0200",
+        "subject": "SF-A20-T35: preserve failing proof and completed follow-up evidence",
+        "messageSha256": "1ec2b3fb658577224833fce76148cc1a52e2ca70700202ed0aeb944543d10fa2"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "553054623b08fd8c9f070378ab758d03af4cf38d",
+        "tree": "eac6e1b6756367581023f7135361a78be932e880",
+        "orderedParents": [
+          "7eb3d2a2feb4fdc6a495f40b5edd37593d41c12a",
+          "ae09105a6bcef04ae3e807d4db0af184f106bb03"
+        ],
+        "authorTimestamp": "1791098986 +0300",
+        "committerTimestamp": "1791098986 +0300",
+        "subject": "SF-A20-T35: preserve failing proof and passing followup cohort",
+        "messageSha256": "7215539eaf65feaa3673eb7b83968fe9eff340a80a9606591778399f7ff333e8"
+      },
+      "published": {
+        "sha": "353daec76089751f17a49c0319da82ea1bd1a1a9",
+        "tree": "eac6e1b6756367581023f7135361a78be932e880",
+        "orderedParents": [
+          "23e51d6e6a7b726ecbfcaf73d735a2bd8b15adfc",
+          "be4d87b60d7ae25f9ee6af8e0724b3a17e7b0d61"
+        ],
+        "authorTimestamp": "1791099147 +0200",
+        "committerTimestamp": "1791099147 +0200",
+        "subject": "SF-A20-T35: preserve failing proof and passing followup cohort",
+        "messageSha256": "12c7c8e9c81552fa543ce4fd70d8b235d9071375d4b17dbccf778463aeb5890b"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+        "tree": "74021421e044947908f037bf34d00bcb258e25fc",
+        "orderedParents": [
+          "293b7697e4e32bea0f5b281c0e1476046f6afaaa",
+          "353daec76089751f17a49c0319da82ea1bd1a1a9"
+        ],
+        "authorTimestamp": "1791099363 +0200",
+        "committerTimestamp": "1791099363 +0200",
+        "subject": "Merge pull request #4453 from wieslawsoltes/codex/project16/12-final-qualification-followups",
+        "messageSha256": "c003261497ff8931f85f3e9a59e7a971bdf51b98c7f4675c6db49584ef65bd8e"
+      },
+      "published": {
+        "sha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+        "tree": "74021421e044947908f037bf34d00bcb258e25fc",
+        "orderedParents": [
+          "293b7697e4e32bea0f5b281c0e1476046f6afaaa",
+          "353daec76089751f17a49c0319da82ea1bd1a1a9"
+        ],
+        "authorTimestamp": "1791099363 +0200",
+        "committerTimestamp": "1791099363 +0200",
+        "subject": "Merge pull request #4453 from wieslawsoltes/codex/project16/12-final-qualification-followups",
+        "messageSha256": "c003261497ff8931f85f3e9a59e7a971bdf51b98c7f4675c6db49584ef65bd8e"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": true,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "86c2488cc925155862e1e8d92504c03cdddaf6b1",
+        "tree": "f4ce37b1633dc2302e7eedb05ce8cee6348985cb",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791100620 +0300",
+        "committerTimestamp": "1791100620 +0300",
+        "subject": "SF-A19-T12: reconcile final source and qualification outcomes",
+        "messageSha256": "a94ff2300ececc35bad949441149a7dc4ffd7a08d19814494f57e6045bfec50a"
+      },
+      "published": {
+        "sha": "c3cd82d577c65ad7109d15580b9539703e597579",
+        "tree": "f4ce37b1633dc2302e7eedb05ce8cee6348985cb",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791100752 +0200",
+        "committerTimestamp": "1791100752 +0200",
+        "subject": "SF-A19-T12: reconcile final source and qualification outcomes",
+        "messageSha256": "a7490281eda91b5ff7251ef773653c4d5f4efaef99b61ba05f96087b2fd1eede"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "f92b7c96ec4fc5f5891e373f1983220812ae267f",
+        "tree": "f4ce37b1633dc2302e7eedb05ce8cee6348985cb",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+          "86c2488cc925155862e1e8d92504c03cdddaf6b1"
+        ],
+        "authorTimestamp": "1791100773 +0300",
+        "committerTimestamp": "1791100773 +0300",
+        "subject": "SF-A19-T12: integrate final source and qualification reconciliation",
+        "messageSha256": "1284eec4141112ac85a0b0eab0ab492c5d47b08bff8b9496941600758f8e4a5f"
+      },
+      "published": {
+        "sha": "5693745cce675135086357f068d98ec5e05d251f",
+        "tree": "f4ce37b1633dc2302e7eedb05ce8cee6348985cb",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+          "c3cd82d577c65ad7109d15580b9539703e597579"
+        ],
+        "authorTimestamp": "1791100797 +0200",
+        "committerTimestamp": "1791100797 +0200",
+        "subject": "SF-A19-T12: integrate final source and qualification reconciliation",
+        "messageSha256": "42794b510cac4dc0f886257fc339408e8fd4828f64952a9e55047d6b26afa4b5"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "83842f994b02f48542143288154ef1a624686ff7",
+        "tree": "dc8e5b7f106ab9c39324d2d5d60c2b09e6ecb582",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791100780 +0300",
+        "committerTimestamp": "1791100780 +0300",
+        "subject": "SF-A19-T12.2: retain macOS Chromium standalone qualification",
+        "messageSha256": "3a66d79c73734e0c95d47c691af412f20f367e8bad64e9956d0bbc9576fbb9d8"
+      },
+      "published": {
+        "sha": "1680c995fc47f1a652790c81df7bd4338d959829",
+        "tree": "dc8e5b7f106ab9c39324d2d5d60c2b09e6ecb582",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791100905 +0200",
+        "committerTimestamp": "1791100905 +0200",
+        "subject": "SF-A19-T12.2: retain macOS Chromium standalone qualification",
+        "messageSha256": "e869f799cfa720389fc46d05931c6c38486104d88d7967f532252c8af0dd5e54"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "b1f099092d4ce175270e5437fde056ebfa5a423d",
+        "tree": "3a2bf4144be8044f0a7385b5b462fd41efab3ca0",
+        "orderedParents": [
+          "f92b7c96ec4fc5f5891e373f1983220812ae267f",
+          "83842f994b02f48542143288154ef1a624686ff7"
+        ],
+        "authorTimestamp": "1791100920 +0300",
+        "committerTimestamp": "1791100920 +0300",
+        "subject": "SF-A19-T12: integrate macOS standalone evidence",
+        "messageSha256": "2cb620d298e84a83cf768838d275fbfe59f38562615293c33702a20010490f6f"
+      },
+      "published": {
+        "sha": "c263550a7e015fa0a57e8174c48fdc0db18b4a00",
+        "tree": "3a2bf4144be8044f0a7385b5b462fd41efab3ca0",
+        "orderedParents": [
+          "5693745cce675135086357f068d98ec5e05d251f",
+          "1680c995fc47f1a652790c81df7bd4338d959829"
+        ],
+        "authorTimestamp": "1791100941 +0200",
+        "committerTimestamp": "1791100941 +0200",
+        "subject": "SF-A19-T12: integrate macOS standalone evidence",
+        "messageSha256": "1d609b5930244b235b550da4d36bd6e49257d015e9227025258d24b2f10d222a"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "3f4f671b46dee99e1ab61437be1942ac17030ea7",
+        "tree": "24d6a27075537f295ad94bec5256446a421d26e0",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791100921 +0300",
+        "committerTimestamp": "1791100921 +0300",
+        "subject": "SF-A20-T12: archive a7 performance outcomes and explicit review",
+        "messageSha256": "32deb24bf82dcbe81e2ea6fe9113aef721cc9ac28e73f1b646eac93c17abe162"
+      },
+      "published": {
+        "sha": "5717d1193ae36c17afb1e27f6e7735354b96839e",
+        "tree": "24d6a27075537f295ad94bec5256446a421d26e0",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791101220 +0200",
+        "committerTimestamp": "1791101220 +0200",
+        "subject": "SF-A20-T12: archive a7 performance outcomes and explicit review",
+        "messageSha256": "904674f74e6eba62ac6947165d476f58c7c36e55d3937953a19bf6d4f91e202b"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    },
+    {
+      "local": {
+        "sha": "a3ece1158f72abb5616daacb708b89b4315d2de8",
+        "tree": "b860c128b357cdee210169d3ed2d659469369d54",
+        "orderedParents": [
+          "b1f099092d4ce175270e5437fde056ebfa5a423d",
+          "3f4f671b46dee99e1ab61437be1942ac17030ea7"
+        ],
+        "authorTimestamp": "1791101059 +0300",
+        "committerTimestamp": "1791101059 +0300",
+        "subject": "SF-A20-T12: integrate final performance evidence and clarify candidate counts",
+        "messageSha256": "72c18b751d5080c2e5ccecd3506b9e392b0105302f062b76947be59e9d571fcf"
+      },
+      "published": {
+        "sha": "9e75738e739ae0f32814c354bc8ad548545456f5",
+        "tree": "b860c128b357cdee210169d3ed2d659469369d54",
+        "orderedParents": [
+          "c263550a7e015fa0a57e8174c48fdc0db18b4a00",
+          "5717d1193ae36c17afb1e27f6e7735354b96839e"
+        ],
+        "authorTimestamp": "1791101222 +0200",
+        "committerTimestamp": "1791101222 +0200",
+        "subject": "SF-A20-T12: integrate final performance evidence and clarify candidate counts",
+        "messageSha256": "6300a3c589b7516e12c244f0e33a7b5f85243a59b0988a92a7d9290c72668640"
+      },
+      "mappedParentOrderMatches": true,
+      "treeMatches": true,
+      "messageBytesMatch": false,
+      "messageTextMatchesIgnoringTerminalLF": true
+    }
+  ],
+  "interpretation": "Trees and ordered mapped parents match exactly for every appended entry. Message text is preserved; terminal LF bytes can differ. Commit SHA identity is not source-tree identity."
+}

@@ -1,0 +1,24 @@
+{
+  "suite": "browser_vs_workflows_standalone_test",
+  "mode": "file",
+  "engine": "webkit",
+  "passed": false,
+  "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+  "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+  "checks": [],
+  "navigation": {
+    "mode": "file",
+    "url": "file:///Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+    "offline": true,
+    "artifact": "/Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+    "artifactSha256": "da60ffe742f3b723d4b1286fc279c6510067570a7cc54b6550d68e2fcfb855a9",
+    "bytes": 16419776
+  },
+  "httpAttempts": [],
+  "pageErrors": [],
+  "browser": "26.6",
+  "failure": {
+    "type": "Error",
+    "message": "Page.goto: WebKit encountered an internal error\nCall log:\n  - navigating to \"file:///Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html\", waiting until \"domcontentloaded\"\n"
+  }
+}

@@ -1,4 +1,4 @@
-import { findTextMatches, wordRangeAt } from '@sharpforge/text';
+import { findTextMatches, findLiteralMatch, wordRangeAt } from '@sharpforge/text';
 
 /** Add a caret to a view's selection set; coincident/overlapping selections normalize in the model. */
 export function addCaret(model, offset, { primary = true } = {}) {
@@ -18,22 +18,20 @@ function selectedQuery(model) {
   return null;
 }
 
-function intersects(selection, match) {
-  return Math.min(selection.anchor, selection.active) < match.end && match.start < Math.max(selection.anchor, selection.active);
-}
-
 /** Select the word at an empty caret first, then add the next unselected occurrence with wraparound. */
 export function addNextOccurrence(model, options = {}) {
   const query = selectedQuery(model);
   if (!query) return model.selections;
-  const found = findTextMatches([{ uri: model.uri, text: model.getText(), version: model.version }], query, {
-    ...options, regex: false, matchCase: options.matchCase ?? true, maxMatches: 10000
-  });
   const primary = model.primarySelection ?? model.selections[model.primaryIndex ?? 0];
-  const end = Math.max(primary.anchor, primary.active);
-  const available = found.matches.filter(match => !model.selections.some(selection => intersects(selection, match)));
-  const match = available.find(candidate => candidate.start >= end) ?? available[0];
+  const {match} = findLiteralMatch(model.snapshot(), query, {
+    ...options, matchCase: options.matchCase ?? true, direction: 1,
+    origin: Math.max(primary.anchor, primary.active),
+    excludeRanges: model.selections.map(selection => ({
+      start: Math.min(selection.anchor, selection.active), end: Math.max(selection.anchor, selection.active)
+    }))
+  });
   if (!match) return model.selections;
+  if (model.selections.length >= 10000) throw new RangeError('Selection limit exceeded: at most 10000 occurrences');
   const order = Math.max(...model.selections.map(selection => selection.order ?? 0)) + 1;
   return model.setSelections([...model.selections, { anchor: match.start, active: match.end, order }], { primaryIndex: model.selections.length });
 }

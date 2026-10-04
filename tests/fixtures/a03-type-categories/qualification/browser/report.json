@@ -1,0 +1,29 @@
+{
+  "revision": "41982b9ef9c1841200dbf6490f5c57044848f72a",
+  "host": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "playwright": "1.63.0",
+  "moduleSha256": "7d553650542a55ae4ae8c7a405251671fac1ebdf0e2690ab22683fbeb4054b74",
+  "mode": "HTTP source modules/import map, CSP enabled",
+  "engines": [
+    {
+      "engine": "chromium",
+      "passed": true,
+      "version": "153.0.8010.12",
+      "checks": 20
+    },
+    {
+      "engine": "firefox",
+      "passed": true,
+      "version": "155.0",
+      "checks": 20
+    },
+    {
+      "engine": "webkit",
+      "passed": true,
+      "version": "26.6",
+      "checks": 20
+    }
+  ],
+  "passed": true
+}

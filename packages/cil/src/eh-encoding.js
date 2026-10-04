@@ -1,4 +1,5 @@
 import { Writer, CilError, align } from './binary.js';
+import { exceptionClausePayload, validateExceptionClause } from './exception-clauses.js';
 
 const defaultOptions = Object.freeze({});
 
@@ -22,27 +23,7 @@ function cancelled(signal) {
 
 function unsigned(value, max) { return Number.isInteger(value) && value >= 0 && value <= max; }
 
-function payload(clause) {
-  return clause.flags === 1 ? clause.filterOffset ?? clause.catchType : clause.catchType ?? 0;
-}
-
-function validateClause(clause, codeSize) {
-  const flags = clause?.flags ?? 0;
-  if (!clause || (flags !== 0 && flags !== 1 && flags !== 2 && flags !== 4)) fail('CILEH0001', 'Invalid EH flags');
-  if (!unsigned(clause.start, codeSize) || !unsigned(clause.end, codeSize) ||
-      !unsigned(clause.target, codeSize) || !unsigned(clause.handlerEnd, codeSize)) fail('CILEH0001', 'Invalid EH range');
-  if (clause.start >= clause.end || clause.target >= clause.handlerEnd) fail('CILEH0001', 'Empty or reversed EH range');
-  const value = payload(clause);
-  if (!unsigned(value, 0xffffffff)) fail('CILEH0001', 'Invalid EH payload');
-  if (clause.flags === 1) {
-    if (value >= clause.target || (clause.filterOffset !== undefined && clause.catchType !== undefined && clause.catchType !== value)) {
-      fail('CILEH0001', 'Filter offset must precede its handler and agree with the legacy payload');
-    }
-  } else if (!(clause.flags ?? 0)) {
-    const table = value >>> 24;
-    if ((table !== 1 && table !== 2 && table !== 27) || !(value & 0xffffff)) fail('CILEH0001', 'Catch requires a TypeDefOrRef token');
-  } else if (value !== 0) fail('CILEH0001', 'Finally and fault clauses require a zero payload');
-}
+function invalidClause(_code, message) { fail('CILEH0001', message); }
 
 function sectionPlan(handlers, codeSize, options) {
   const { exceptionFormat = 'fat', maxClauses = 100000, signal } = options;
@@ -55,7 +36,7 @@ function sectionPlan(handlers, codeSize, options) {
   let small = handlers.length <= 20;
   for (const clause of handlers) {
     cancelled(signal);
-    validateClause(clause, codeSize);
+    validateExceptionClause(clause, codeSize, invalidClause);
     small &&= clause.start <= 65535 && clause.target <= 65535 &&
       clause.end - clause.start <= 255 && clause.handlerEnd - clause.target <= 255;
   }
@@ -79,7 +60,7 @@ function writeSection(writer, section, handlers, signal) {
       writer.u32(clause.flags ?? 0).u32(clause.start).u32(clause.end - clause.start)
         .u32(clause.target).u32(clause.handlerEnd - clause.target);
     }
-    writer.u32(payload(clause));
+    writer.u32(exceptionClausePayload(clause));
   }
 }
 
