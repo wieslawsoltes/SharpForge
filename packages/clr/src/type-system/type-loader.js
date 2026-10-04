@@ -3,10 +3,17 @@ import { createTypeDesc, completeTypeDesc, TypeDesc, TypeKind } from './type-des
 import { ConstructedTypes, resolveArrayMethod } from './constructed-types.js';
 import { TypeAssignability } from './casting.js';
 import { MethodBaseDefinitions } from './method-base-definition.js';
+import { TypeForwarders } from '../resolve/forwarders.js';
 import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
 const enumPrimitives = new Set(['sbyte', 'byte', 'short', 'ushort', 'int', 'uint', 'long', 'ulong']);
+
+function requireTypeToken(token) {
+  if (!Number.isInteger(token) || token < 0 || token > 0xffffffff || !(token & 0xffffff)) {
+    throw loadError(LoadErrorCode.InvalidImage, 'Invalid type metadata token');
+  }
+}
 
 /** Bounded, lazy inheritance loading; framework type binding is an explicit host policy. */
 export class TypeLoader {
@@ -21,7 +28,11 @@ export class TypeLoader {
   #methodBases;
   #maxConstructedTypes;
   #specMarkers = new WeakMap();
-  constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000, maxConstructedTypes = 100000 } = {}) {
+  #forwarders;
+  #maxForwarderHops;
+  #lookupDefinition;
+  constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000,
+    maxConstructedTypes = 100000, maxForwarderHops = 128 } = {}) {
     if (resolveExternalType !== null && typeof resolveExternalType !== 'function') throw new TypeError('Invalid external type resolver');
     if (!Number.isInteger(maxDepth) || maxDepth < 1 || maxDepth > 512 ||
         !Number.isInteger(maxMetadataRows) || maxMetadataRows < 1 || maxMetadataRows > 1000000) throw new RangeError('Invalid type graph limits');
@@ -29,6 +40,10 @@ export class TypeLoader {
     this.#resolveExternal = resolveExternalType;
     this.#maxDepth = maxDepth;
     this.#maxRows = maxMetadataRows;
+    if (!Number.isSafeInteger(maxForwarderHops) || maxForwarderHops < 1 || maxForwarderHops > 1024) {
+      throw loadError(LoadErrorCode.InvalidConfiguration, 'Invalid type forwarder hop limit');
+    }
+    this.#maxForwarderHops = maxForwarderHops;
     if (!Number.isSafeInteger(maxConstructedTypes) || maxConstructedTypes < 1 || maxConstructedTypes > 1000000) {
       throw new RangeError('Invalid constructed type limit');
     }
@@ -111,29 +126,54 @@ export class TypeLoader {
   async find(module, fullName, options = {}) {
     checkCancellation(options.signal);
     try {
+      if (typeof fullName !== 'string' || !fullName || fullName.length > 4096) throw fail('Invalid metadata type name');
       const token = this.#index(module).names.get(fullName);
-      if (!token) throw fail(`Type ${fullName} was not found`);
-      return await this.load(module, token, options);
+      if (token) return await this.#start(module, token, options);
+      return await this.#find(module, fullName, this.#operation(options.signal));
     } catch (error) {
       if (error.code?.startsWith('SFCLR')) throw error;
       throw loadError(LoadErrorCode.InvalidImage, `Invalid type metadata: ${error.message}`);
     }
   }
 
+  async #find(module, fullName, operation) {
+    const token = this.#index(module).names.get(fullName);
+    if (token) return this.#load(module, token, operation);
+    this.#forwarders ??= new TypeForwarders({ maxMetadataRows: this.#maxRows,
+      maxForwarderHops: this.#maxForwarderHops, maxDepth: this.#maxDepth });
+    this.#lookupDefinition ??= (target, name) => this.#index(target).names.get(name);
+    const target = await this.#forwarders.resolve(module, fullName, this.#lookupDefinition, operation);
+    return this.#load(target.module, target.token, operation);
+  }
+
   /** Complete a canonical descriptor's base/interface graph without reading executable bodies. */
   async load(module, token, options = {}) {
-    try { return await this.#load(module, token, { signal: options.signal, path: new Set(), references: new Map() }); }
+    try { return await this.#start(module, token, options); }
     catch (error) {
       if (error.code?.startsWith('SFCLR')) throw error;
       throw loadError(LoadErrorCode.InvalidImage, `Invalid type metadata: ${error.message}`);
     }
   }
 
+  #operation(signal) {
+    return { signal, path: new Set(), references: new Map() };
+  }
+
+  #start(module, token, options) {
+    checkCancellation(options.signal);
+    requireTypeToken(token);
+    const owner = module.assembly.loadContext;
+    if (owner !== this.#context) return owner.types.#start(module, token, options);
+    if (token >>> 24 === 2) {
+      const type = module.typeDefinition(token);
+      if (type.isLoaded) return type;
+    }
+    return this.#load(module, token, this.#operation(options.signal));
+  }
+
   async #load(module, token, operation) {
     checkCancellation(operation.signal);
-    if (!Number.isInteger(token) || token < 0 || token > 0xffffffff || !(token & 0xffffff)) {
-      throw loadError(LoadErrorCode.InvalidImage, 'Invalid type metadata token');
-    }
+    requireTypeToken(token);
     if (operation.path.size >= this.#maxDepth) throw loadError(LoadErrorCode.LimitExceeded, 'Type graph depth exceeded');
     if (module.assembly.loadContext !== this.#context) return module.assembly.loadContext.types.#load(module, token, operation);
     if (token >>> 24 === 1) return this.#reference(module, token, operation);
@@ -205,10 +245,8 @@ export class TypeLoader {
         return external;
       }
       target = (await module.assembly.resolveReference(rid, operation)).manifestModule;
-    } else if (tag !== 0 || rid !== 1) throw fail('ModuleRef and exported-type resolution require a later loader batch');
-    const targetToken = this.#index(target).names.get(targetName);
-    if (!targetToken) throw fail(`Type ${targetName} was not found; exported-type forwarding is not implemented`);
-    return this.#load(target, targetToken, nested);
+    } else if (tag !== 0 || rid !== 1) throw fail('ModuleRef and null-scoped TypeRef resolution require a later loader batch');
+    return this.#find(target, targetName, nested);
   }
 
   #enumUnderlying(module, token) {

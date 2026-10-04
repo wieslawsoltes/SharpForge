@@ -99,6 +99,11 @@ The fixture never calls CLR ApplyUpdate or executes edited methods. Browser,
 native debugger and Rust/Wasm behavior require their own qualification. These
 results establish symbol parsing and historical lookup for the captured cases.
 
+The same native inspector also records runtime version, LocalConstant signatures
+and custom debug records for the independently captured SharpForge-emitted delta.
+See the [changed-method writer evidence](delta-writer.md#bounds-and-qualification)
+for the accepted output and the separate pre-integration regression results.
+
 Primary implementation sources (blob identities read 2026-10-04):
 
 - [Roslyn DeltaMetadataWriter](https://github.com/dotnet/roslyn/blob/main/src/Compilers/Core/Portable/Emit/EditAndContinue/DeltaMetadataWriter.cs), `5a69d285aa76aedefbd258af186b229693945cdd`.

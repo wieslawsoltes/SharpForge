@@ -1,0 +1,132 @@
+779d372a — stackalloc repro
+Exit code: 1
+✖ stackalloc stream replacement retains source points and exact local slots (94.805846ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 970.943398
+
+✖ failing tests:
+
+test at tests/compiler-cil-portable-pdb.test.js:134:1
+✖ stackalloc stream replacement retains source points and exact local slots (94.805846ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   2,
+  -   3
+  - ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-portable-pdb/tests/compiler-cil-portable-pdb.test.js:144:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ 2, 3 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+6a6b596c — first native reference: enhanced-line end
+Exit code: 1
+✖ direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack traces agree with Roslyn (8861.724691ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10507.268307
+
+✖ failing tests:
+
+test at tests/compiler-cil-portable-pdb-reference.test.js:110:1
+✖ direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack traces agree with Roslyn (8861.724691ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      [
+        200,
+        5,
+        201,
+  +     9
+  -     8
+      ]
+    ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-portable-pdb/tests/compiler-cil-portable-pdb-reference.test.js:125:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 200, 5, 201, 9 ] ],
+    expected: [ [ 200, 5, 201, 8 ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+5d0eb579 — second native reference: selected async Main
+Exit code: 1
+✔ mapped documents with unavailable content have no invented checksum or embedded source (4.745696ms)
+✔ mapped document checksums preserve the producer declaration without hashing absent content (1.35429ms)
+✔ mapped document checksum boundaries retain explicit empty and maximum-size declarations (2.137922ms)
+✔ ordinary content keeps exact checksum validation and source embedding (1.565752ms)
+✔ document-only mode rejects ambiguous content and malformed checksum records (1.377945ms)
+✔ document-only and content-backed documents preserve ordering and duplicate-name rejection (0.866153ms)
+✖ direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack traces agree with Roslyn (7642.76294ms)
+✔ direct CIL source markers survive insertion and compact branch relaxation without emitting bytes (2.635364ms)
+✔ direct CIL returns bound deterministic PDBs with exact source hashes and instruction boundaries (99.865457ms)
+✔ enabling symbols preserves every emitted instruction, branch and exception clause (11.61382ms)
+✔ zero-code and unreachable source constructs do not steal another statement sequence point (7.959779ms)
+✔ lexical locals and constants use actual slots and nested block/loop/handler extents (16.074787ms)
+✔ partial-type initializers retain their actual documents inside the same emitted method (13.750712ms)
+✔ constant scopes retain exact enum, decimal, wide integer and typed-null signatures (16.036982ms)
+✔ stackalloc stream replacement retains source points and exact local slots (12.034368ms)
+✔ constructor initializer points start before the receiver and cover complete stores and calls (20.879229ms)
+✔ line mappings, hidden regions, reset paths and declared checksums are preserved without fabricated source (11.28686ms)
+✔ enhanced line directives map generated prefixes to the declared whole-span end (8.19167ms)
+✔ portable and embedded symbols are opt-in and explicit false suppresses both modes (13.86517ms)
+✔ diagnostic failures return no PDB and library symbols keep an empty entry point (12.774928ms)
+✔ async and iterator links, await labels and hoisted-local ranges refer to emitted methods (22.319776ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 20
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10554.158655
+
+✖ failing tests:
+
+test at tests/compiler-cil-portable-pdb-reference.test.js:110:1
+✖ direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack traces agree with Roslyn (7642.76294ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-portable-pdb/tests/compiler-cil-portable-pdb-reference.test.js:129:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

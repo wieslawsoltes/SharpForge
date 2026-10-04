@@ -13,6 +13,7 @@ const modules = createBclRegistry([...bclModules, closedCollectionsModule]);
 
 const services = Object.freeze({
   frameworkType,
+  isExecutionStopped(platform) { return platform.hostOperations.closed && platform.vm.state === 'terminated'; },
   invokeObjectToString,
   formatDecimal(value, format) {
     return isDecimal(value) ? decimalFormat(value, format, {fault: (name, message) => new ManagedFault(name, message)}) : null;

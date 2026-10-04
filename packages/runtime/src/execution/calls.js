@@ -75,7 +75,11 @@ export function invoke(vm,instruction) {
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]') {
       caller.stack.push(stringFromChars(vm,args[0]));return;
     }
-    if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
+    if(instruction.name==='newobj'&&contract) {
+      const value=vm.platform.invoke(contract,args);
+      if(vm.state!=='terminated')caller.stack.push(value);
+      return;
+    }
     if(instruction.name==='newobj'&&valueType){constructUserValue(vm,descriptor,valueType,args);return;}
     if(instruction.name==='newobj') {
       let ref;
@@ -86,6 +90,7 @@ export function invoke(vm,instruction) {
       else if(systemType(descriptor.owner)==='System.Object'&&args.length===0)ref=vm.heap.object(vm.typeSystem.table('System.Object'),[]);
       else if(systemType(descriptor.owner)==='System.Exception')ref=vm.heap.allocate('exception','System.Exception',[args[0]??null]);
       else throw new ManagedFault('NotSupportedException','External object construction is unavailable');
+      if(vm.state==='terminated')return;
       args.unshift(ref);vm.heap.pins.push(ref);
       if(target)vm.call(target,args,{returnObject:ref,genericIdentity,methodArguments:descriptor.methodArguments});
       else {vm.intrinsic(descriptor,args);caller.stack.push(ref);}

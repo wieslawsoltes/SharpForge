@@ -27,6 +27,7 @@ import { interfaceReimplementations } from './interface-reimplementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 import { constantTypeOf, constantRowValue, NULL_REFERENCE_CONSTANT } from './constant-metadata.js';
 import { writeParameterConstant } from './parameter-metadata.js';
+import { hasReturnAttributes, returnAttributeSource } from './attribute-targets.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
 const SEMANTICS = Object.freeze({ Setter: 1, Getter: 2, AddOn: 8, RemoveOn: 16 });
@@ -87,6 +88,9 @@ export class SymbolMetadataWriter {
     this.eventTokens = new Map();
     this.parameterTokens = new Map();
     this.returnParameterTokens = new Map();
+    this.genericParameterRows = [];
+    this.genericConstraintRows = [];
+    this.interfaceRows = [];
   }
   typeToken(type) {
     return this.tokens.definitionToken(type);
@@ -187,14 +191,17 @@ export class SymbolMetadataWriter {
           Signature: signature,
           ParamList: nextParameter,
         });
-        const returned = method.symbol?.returnType;
-        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned))) {
+        const returnSource = returnAttributeSource(method), returned = returnSource?.returnType;
+        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned) || hasReturnAttributes(returnSource))) {
           // The return value has a Param row (sequence 0) only when an attribute is written on it.
-          this.returnParameterTokens.set(method.symbol, this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' }));
+          method.returnParameterToken = this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' });
+          if (method.symbol) this.returnParameterTokens.set(method.symbol, method.returnParameterToken);
           nextParameter++;
         }
+        method.parameterTokens = [];
         method.parameters.forEach((parameter, index) => {
           const row = this.builder.addRow('Param', { Flags: parameter.flags, Sequence: index + 1, Name: parameter.name ?? '' });
+          method.parameterTokens.push(row);
           if (method.symbol) this.parameterTokens.set(method.symbol.parameters[index], row);
           writeParameterConstant(this.builder, row, method.symbol?.parameters[index]);
           nextParameter++;
@@ -210,7 +217,8 @@ export class SymbolMetadataWriter {
       ownTokens = this.tokensOf(type);
     // `plan.interfaces`: interfaces code generation adds to the ones the type lists (a record's `IEquatable<R>`).
     for (const implemented of [...(type.interfaces ?? []), ...(plan.interfaces ?? [])]) {
-      builder.addRow('InterfaceImpl', { Class: self, Interface: ownTokens.typeToken(implemented) });
+      const row = builder.addRow('InterfaceImpl', { Class: self, Interface: ownTokens.typeToken(implemented) });
+      this.interfaceRows.push({ type, interface: implemented, token: row });
     }
     if (type.containingType) builder.addRow('NestedClass', { NestedClass: self, EnclosingClass: this.tokens.definitionToken(type.containingType) });
     const hasInstanceField = plan.fields.some(field => !(field.flags & FieldAttributes.Static));
@@ -297,14 +305,17 @@ export class SymbolMetadataWriter {
   writeGenericParameters(owner, parameters, tokens = this.tokens) {
     parameters.forEach((parameter, number) => {
       const row = this.builder.addRow('GenericParam', { Number: number, Flags: genericParameterFlags(parameter), Owner: owner, Name: parameter.name });
+      this.genericParameterRows.push({ symbol: parameter, token: row, owner });
       // `struct` is also written as a constraint to System.ValueType, as Roslyn writes it.
       if (parameter.hasValueTypeConstraint || parameter.hasUnmanagedTypeConstraint) {
-        this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: this.builder.typeRef('System.ValueType') });
+        const constraintRow = this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: this.builder.typeRef('System.ValueType') });
+        this.genericConstraintRows.push({ symbol: parameter, type: this.core.valueType, token: constraintRow, owner: row });
       }
       for (const constraint of parameter.constraintTypes ?? []) {
         const type = constraint.type ?? constraint;
         if (type.specialType === 'System_Object') continue;
-        this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: tokens.typeToken(type) });
+        const constraintRow = this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: tokens.typeToken(type) });
+        this.genericConstraintRows.push({ symbol: parameter, type, token: constraintRow, owner: row });
       }
     });
   }

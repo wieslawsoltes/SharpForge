@@ -1,7 +1,6 @@
 import {collectHeap} from './execution/heap-collection.js';
 import {MethodTableRegistry} from './execution/method-table.js';
 import {recordAllocation,replaceHeapData} from './execution/heap-allocation.js';
-import {createHeapReference} from './execution/heap-reference.js';
 /** A precise, non-moving tracing heap. Managed references are generation-checked handles, never raw JS object references. */
 export class ManagedFault extends Error {
   constructor(type,message,reference=null){super(message);this.name=type;this.reference=reference;}
@@ -26,13 +25,14 @@ export class ManagedHeap {
   }
   allocate(kind,type,data,roots=[]){
     const size=sizeOf(kind,data),methodTable=this.methodTables.get(type),typeName=typeof type==='string'?type:methodTable.name;
-    // Input references must survive a collection before their new owner exists.
-    const allocationRoots=(function*(){yield* roots;if(kind!=='string')yield* data;})();
-    this.reserve(size,allocationRoots);
-    const g=this.generationCounter+1;if(!Number.isSafeInteger(g))throw new ManagedFault('OutOfMemoryException','Managed reference identity exhausted');this.generationCounter=g;const h=this.free.length?this.free.pop():this.records.length;
-    this.generations[h]=g;this.records[h]={kind,type:typeName,methodTable,data,size};
-    recordAllocation(this,size);
-    return createHeapReference(this,h,g);
+    const pinStart = this.pins.length;
+    try {
+      for (const value of roots) this.pins.push(value);
+      this.reserve(size, kind === 'string' ? [] : data);
+      const g=this.generationCounter+1;if(!Number.isSafeInteger(g))throw new ManagedFault('OutOfMemoryException','Managed reference identity exhausted');this.generationCounter=g;const h=this.free.length?this.free.pop():this.records.length;
+      this.generations[h]=g;this.records[h]={kind,type:typeName,methodTable,data,size};
+      return recordAllocation(this,size,h,g);
+    } finally { this.pins.length = pinStart; }
   }
   replaceData(reference,data){return replaceHeapData(this,reference,data);}
   string(value,roots=[]){return this.allocate('string','string',String(value),roots);}

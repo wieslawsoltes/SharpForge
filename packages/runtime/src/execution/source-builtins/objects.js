@@ -16,6 +16,7 @@ function typeFullName(vm,args) {
 }
 function objectReferenceEquals(vm,args) { return referenceEquals(args[0],args[1]); }
 function enumFlag(vm,args) { return enumHasFlag(vm,args[0],args[1]); }
+function objectNew(vm) { return vm.heap.object('System.Object',[]); }
 function exceptionNew(vm,args) { return vm.heap.allocate('exception','Exception',[args[0]]); }
 function exceptionMessage(vm,args) { return vm.heap.get(args[0]).data[0]; }
 
@@ -28,6 +29,7 @@ export const objectBuiltins=Object.freeze({
   'Type.FullName':typeFullName,
   'object.ReferenceEquals':objectReferenceEquals,
   'Enum.HasFlag':enumFlag,
+  'object.new':objectNew,
   'Exception.new':exceptionNew,
   'Exception.Message':exceptionMessage
 });
