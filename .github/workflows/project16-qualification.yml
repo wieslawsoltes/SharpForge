@@ -103,6 +103,7 @@ jobs:
               'triggerRef': os.environ['QUALIFICATION_TRIGGER_REF'],
               'triggerNonce': os.environ['QUALIFICATION_TRIGGER_NONCE'] or None,
               'captureOnly': os.environ['QUALIFICATION_CAPTURE_ONLY'] == 'true',
+              'baselineProfile': os.environ['QUALIFICATION_BASELINE_PROFILE'] or None,
               'workflowRunId': os.environ['GITHUB_RUN_ID'],
               'stage': os.environ['QUALIFICATION_STAGE'],
               'engine': os.environ['SHARPFORGE_BROWSER_ENGINE'],
