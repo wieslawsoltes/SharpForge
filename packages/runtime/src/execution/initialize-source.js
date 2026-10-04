@@ -7,6 +7,7 @@ import { normalizeRuntimeLaunchOptions } from '../launch-options.js';
 import { createSourceMethodTables } from './method-table.js';
 import { sourceEntryArguments } from './entry-arguments.js';
 import { defaultValue } from './source-ops.js';
+import { initializeExecutionProfiler } from './profiler.js';
 
 /** Initialize each source runtime's heap, state and entry frame from independent host options. */
 export function initializeSourceVM(vm, image, options) {
@@ -43,6 +44,7 @@ export function initializeSourceVM(vm, image, options) {
   vm.onOutput = options.onOutput ?? (() => {});
   vm.onException = null;
   vm.onWrite = null;
+  initializeExecutionProfiler(vm, options.profile);
   vm.platform = new ManagedPlatform(vm, options);
   vm.scheduler = new CooperativeScheduler(vm, options);
   vm.call(image.entryPoint, sourceEntryArguments(vm, options));
