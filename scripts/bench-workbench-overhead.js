@@ -1,17 +1,19 @@
 import {existsSync} from 'node:fs';
 import {loadPlaywright} from './editor-benchmarks/browser.js';
-import {environment, isMain, parseArguments, writeReport} from './editor-benchmarks/common.js';
+import {environment, isMain, parseArguments, rootDirectory, writeReport} from './editor-benchmarks/common.js';
 import {assessOverhead} from './workbench-overhead/assessment.js';
 import {captureRun} from './workbench-overhead/capture.js';
 import {pairOrder, protocol, viewport, workspaceFixture} from './workbench-overhead/protocol.js';
 import {productionServer} from './workbench-overhead/server.js';
+import {prepareIdentity, requireExactSource, verifyServedIdentity} from './workbench-overhead/identity.js';
 
 /** Explicit serial real-browser measurement; unavailable browsers and >1% overhead both fail closed. */
 export async function benchmarkWorkbenchOverhead({browser: engineName = 'chromium', output, url} = {}) {
   const fixture = workspaceFixture();
+  const {commit: driverCommit, ...hostEnvironment} = environment();
   const report = {format: 'sharpforge-instrumentation-overhead', version: 1, protocol: protocol.id,
     captureStatus: 'incomplete', startedAt: new Date().toISOString(), environment: {
-      ...environment(), engine: engineName, servingMode: 'http-production', viewport, deviceScaleFactor: 1,
+      ...hostEnvironment, driverCommit, engine: engineName, servingMode: 'http-production', viewport, deviceScaleFactor: 1,
       clock: 'browser PerformanceNavigationTiming and performance.now',
       contexts: 'fresh isolated context per capture; browser process shared; serial alternating order'
     }, fixture: {sha256: fixture.sha256, sourceFiles: protocol.sourceFiles, projectFiles: 1},
@@ -24,13 +26,18 @@ export async function benchmarkWorkbenchOverhead({browser: engineName = 'chromiu
       limitations: 'fixed small C# workspace, one shared-host observation; no statistical proof or claim for every workload/platform'
     }};
   const destination = output ?? `artifacts/project16/instrumentation-overhead-${engineName}.json`;
-  let server, browser;
+  let server, browser, identity;
   try {
     if (!['chromium', 'firefox', 'webkit'].includes(engineName)) throw new Error('Unsupported browser engine');
     const engine = loadPlaywright()[engineName];
     const executablePath = process.env[`${engineName.toUpperCase()}_EXECUTABLE`];
     if (!existsSync(executablePath ?? engine.executablePath())) throw new Error(`Missing ${engineName} executable; no measurement available`);
+    identity = await prepareIdentity(rootDirectory);
+    report.identity = identity.report;
+    requireExactSource(identity.report.source, identity.report.driver);
+    if (!identity.report.artifact.stable) throw new Error('Source changed while production artifact was built');
     server = await productionServer(url);
+    await verifyServedIdentity(identity, server.url, 'before');
     browser = await engine.launch({headless: true, timeout: 30000, ...(executablePath ? {executablePath} : {})});
     report.environment.browserVersion = browser.version();
     report.environment.url = server.url;
@@ -46,6 +53,7 @@ export async function benchmarkWorkbenchOverhead({browser: engineName = 'chromiu
         if (report.browserErrors.length) throw new Error('Browser errors invalidate instrumentation capture');
       }
     }
+    await verifyServedIdentity(identity, server.url, 'after');
     report.captureStatus = 'completed';
     report.assessment = assessOverhead(report);
   } catch (error) {

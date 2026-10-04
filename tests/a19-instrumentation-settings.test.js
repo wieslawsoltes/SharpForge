@@ -96,3 +96,46 @@ test('disabled instruments read no clock and retain no marks, including input ob
   target.dispatchEvent(new Event('keydown'));
   assert.equal(metrics.samples.length, 1);
 });
+
+test('disabling rejects in-flight marks without clock reads, including after re-enabling', () => {
+  let reads = 0;
+  const metrics = new WorkbenchPerformance({clock: () => ++reads});
+  const abandoned = metrics.start('command');
+  metrics.enabled = false;
+  const before = reads;
+  assert.equal(metrics.end(abandoned), undefined);
+  assert.equal(reads, before);
+  metrics.enabled = true;
+  assert.equal(metrics.end(abandoned), undefined);
+  assert.equal(reads, before);
+  assert.equal(metrics.samples.length, 0);
+  const current = metrics.start('command');
+  assert.equal(metrics.end(current).duration, 1);
+});
+
+test('unchanged enabled values preserve current marks; marks are single-use and instance-owned', () => {
+  let time = 0;
+  const first = new WorkbenchPerformance({clock: () => ++time});
+  const second = new WorkbenchPerformance({clock: () => { throw new Error('Foreign mark read a clock'); }});
+  const mark = first.start('command');
+  first.enabled = true;
+  assert.equal(second.end(mark), undefined);
+  assert.equal(first.end({...mark}), undefined);
+  assert.equal(first.end(mark).duration, 1);
+  assert.equal(first.end(mark), undefined);
+  first.enabled = false;
+  first.enabled = true;
+  assert.equal(first.end(mark), undefined);
+  assert.equal(first.samples.length, 1);
+  assert.throws(() => { first.enabled = 'false'; }, /boolean/);
+  assert.equal(first.enabled, true);
+});
+
+test('a real shell settings change invalidates an outstanding asynchronous operation mark', context => {
+  const shell = shellFixture(context);
+  const mark = shell.metrics.start('tool-activation');
+  shell.settings.apply({environment: {performanceTracing: false}});
+  shell.settings.apply({environment: {performanceTracing: true}});
+  assert.equal(shell.metrics.end(mark), undefined);
+  assert.deepEqual(shell.metrics.samples, []);
+});

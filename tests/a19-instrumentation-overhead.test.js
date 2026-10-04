@@ -19,6 +19,11 @@ function capture(enabledDuration = 100, disabledDuration = 100) {
         insertedCharacters: protocol.inputs, trustedInputs: protocol.inputs, coldTools: protocol.tools.length}});
   }
   return {format: 'sharpforge-instrumentation-overhead', version: 1, protocol: protocol.id, captureStatus: 'completed',
+    identity: {driver: {commit: 'a'.repeat(40), tree: 'b'.repeat(40), clean: true},
+      source: {commit: 'a'.repeat(40), tree: 'b'.repeat(40), clean: true}, harness: {sha256: 'c'.repeat(64)},
+      artifact: {manifestSha256: 'd'.repeat(64), assetCount: 1, stable: true},
+      served: ['before', 'after'].map(phase => ({phase, matched: true, expectedManifestSha256: 'd'.repeat(64),
+        assetsSha256: 'e'.repeat(64), assets: [{path: 'synthetic'}]}))},
     environment: {engine: 'chromium', browserVersion: 'synthetic-unit-fixture', servingMode: 'http-production'}, workload: protocol,
     fixture: {sha256: workspaceFixture().sha256, sourceFiles: protocol.sourceFiles, projectFiles: 1}, browserErrors: [], runs};
 }
@@ -51,6 +56,9 @@ test('assessment rejects missing pairs, wrong order, altered counts, nonfinite d
     report => { report.runs[0].verified.insertedCharacters--; }, report => { report.runs[0].verified.trustedInputs--; },
     report => { report.captureStatus = 'incomplete'; }, report => { report.environment.servingMode = 'in-memory'; },
     report => { report.fixture.sha256 = '0'.repeat(64); }, report => { report.workload = {...protocol, inputs: 1}; },
+    report => { report.identity.source.commit = 'f'.repeat(40); }, report => { report.identity.source.clean = false; },
+    report => { report.identity.served[1].matched = false; }, report => { report.identity.served[1].assetsSha256 = '0'.repeat(64); },
+    report => { report.identity.artifact.stable = false; },
     report => report.browserErrors.push('uncaught')]) {
     const report = capture(); mutate(report);
     assert.throws(() => assessOverhead(report));

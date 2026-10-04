@@ -15,6 +15,10 @@ the startup mark. Later settings updates affect only that shell. Explicit
 `performance.enabled` embedding options take precedence, including `false`.
 `mountStudioComposition` and `mountStudioShell` forward this optional instance option.
 Disabling tracing retains existing samples; a newly created disabled instance has none.
+Marks are instance-owned and single-use. Changing the enabled boolean starts a
+new recording epoch: pending marks from an earlier epoch are discarded without
+reading the clock, even after tracing is re-enabled. Assigning the same boolean
+does not invalidate current marks. A foreign or copied mark cannot be completed.
 The disabled baseline uses the product's normal early-return branches and input
 listener; the experiment measures the incremental cost of enabled trace recording.
 
@@ -35,6 +39,24 @@ existing executables. No dependency installation or implicit build occurs.
 The driver starts `scripts/serve.js` over the existing `dist` artifact with the
 production CSP, or uses an explicitly supplied local HTTP `--url` /
 `SHARPFORGE_BROWSER_URL`. In-memory documents and remote origins are rejected.
+
+The completed build writes `artifacts/results/build-identity/manifest.json`
+after all production transformations. This local sidecar binds the source Git
+revision/tree and clean/stable status to every completed asset's bytes and SHA-256.
+It publishes no status paths, untracked file inventory, or environment values.
+It stays outside `dist` and release payloads, preserving deterministic archive
+rebuilds without Git metadata. Ordinary archive/development builds still work;
+unknown or dirty source provenance cannot support an exact-source measurement.
+
+Before timing, the driver requires a clean checkout matching the build's source
+revision/tree and verifies the local asset inventory. It records driver, harness,
+source, local artifact, and observed served identities separately; the driver
+commit is never presented as an unverified served commit. Both the default server
+and an explicit local URL undergo the same serial HTTP byte verification before
+and after capture. HTML bytes must match their sealed local asset hash before
+applying the production server's explicit CSP transformation. Stale source,
+modified assets, different served bytes, or missing provenance fail closed.
+Each verification phase has a two-minute bound and is outside all timed spans.
 
 The fixed `studio-instrumentation-overhead-v1` protocol performs 12 pairs, each
 with one enabled and one disabled capture in fresh isolated browser contexts.
@@ -113,6 +135,10 @@ isolation, live updates, the Options checkbox, and disabled observation cleanup.
 to test strict threshold boundaries, negative observations, aggregate versus
 per-operation semantics, missing/invalid evidence, percentile recomputation,
 zero durations, immutable workload identity, and production-origin restrictions.
+`tests/a19-instrumentation-artifact.test.js` uses tiny real temporary directories
+and local HTTP servers for completed-build identity, unchanged release bytes,
+stale local/served assets, source mismatch, sealed HTML, final verification, and
+the behavior-preserving module-path extraction from frozen `scripts/build.js`.
 
 At this source-complete handoff, these new tests and all browser captures are
 **unrun**. The parent qualification batch must run them after the full correction
