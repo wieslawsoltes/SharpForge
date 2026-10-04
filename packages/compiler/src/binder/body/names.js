@@ -446,11 +446,18 @@ export const NameBinding = Base =>
     }
     /** The extension methods named `name` in scope, innermost namespace first. */
     extensionScopesNamed(name) {
-      const chain = this.typeScope.namespaceChain.map(level => ({
+      return extensionScopes(this.extensionChain(), name);
+    }
+    /**
+     * The namespace levels a call site looks for extension methods in, innermost first: each with its using
+     * directives and the `file` types the calling file declares at that level (they are not members of the namespace).
+     */
+    extensionChain() {
+      return this.typeScope.namespaceChain.map(level => ({
         namespace: level.namespace,
         usings: level.scope.usings ? this.d.typeBinder.usingsOf(level.scope) : null,
+        fileTypes: level.scope.fileTypes ? [...level.scope.fileTypes.values()] : null,
       }));
-      return extensionScopes(chain, name);
     }
     /** The method group of the extension methods named `name` on the receiver `left`, or null when none is in scope. */
     extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments, scopes = this.extensionScopesNamed(name) }) {

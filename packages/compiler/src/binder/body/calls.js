@@ -160,11 +160,7 @@ export const CallBinding = Base =>
     /** The extension methods named like the group, innermost namespace first. */
     extensionScopesOf(group) {
       if (group.extensionScopes) return group.extensionScopes;
-      const chain = this.typeScope.namespaceChain.map(l => ({
-        namespace: l.namespace,
-        usings: l.scope.usings ? this.d.typeBinder.usingsOf(l.scope) : null,
-      }));
-      return extensionScopes(chain, group.name);
+      return extensionScopes(this.extensionChain(), group.name);
     }
     call(group, args, syntax) {
       const nameNode = group.nameNode ?? group.syntax,
