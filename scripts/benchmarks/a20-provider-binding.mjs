@@ -3,12 +3,13 @@ import {createHash} from 'node:crypto';
 import {cpus, totalmem, loadavg} from 'node:os';
 import {performance} from 'node:perf_hooks';
 import {getHeapStatistics} from 'node:v8';
-import {compile, Compilation} from '@sharpforge/compiler';
+import {compile, Compilation, SourceSemanticModel} from '@sharpforge/compiler';
 import {parse} from '@sharpforge/syntax';
 import {SourceText} from '@sharpforge/text';
 
 const options = Object.freeze({outputKind: 'library', pipeline: 'bound'});
 const hash = value => createHash('sha256').update(value).digest('hex');
+const queryPhases = Object.freeze({'signature-first-query': 1, 'signature-repeated-query': 64});
 
 function argumentsOf(values) {
   const result = {calls: 96, samples: 15, warmups: 5, output: null};
@@ -44,8 +45,13 @@ function fixtures(count) {
     {name: 'incomplete-instance-call', text: start + instanceCalls + 'total+=receiver.F(', invocationSites: count + 1,
       probe: 'receiver.F(', incomplete: true}
   ];
-  return rows.map(row => ({...row, uri: row.name + '.cs', sha256: hash(row.text), utf16Length: row.text.length,
-    utf8Bytes: Buffer.byteLength(row.text), probeOffset: row.text.lastIndexOf(row.probe) + row.probe.lastIndexOf('.') + 1}));
+  return rows.map(row => {
+    const probeStart = row.text.lastIndexOf(row.probe);
+    const callStart = probeStart + row.probe.length - 1;
+    return {...row, uri: row.name + '.cs', sha256: hash(row.text), utf16Length: row.text.length,
+      utf8Bytes: Buffer.byteLength(row.text), probeOffset: probeStart + row.probe.lastIndexOf('.') + 1,
+      callStart, queryOffset: callStart + 1, signatureName: row.probe.slice(row.probe.lastIndexOf('.') + 1, -1)};
+  });
 }
 
 function summarize(values) {
@@ -56,11 +62,20 @@ function summarize(values) {
 }
 
 function prepare(fixture, phase) {
-  if (phase === 'compile') return () => compile([{uri: fixture.uri, text: fixture.text}], options);
+  if (phase === 'compile') return {execute: () => compile([{uri: fixture.uri, text: fixture.text}], options)};
   // Fresh syntax and Compilation preparation are excluded from source-model binding time and retained-heap deltas.
   const source = new SourceText(fixture.text, fixture.uri);
   const compilation = new Compilation([parse(source)], options);
-  return () => compilation.getSourceModel();
+  if (phase === 'source-model-bind') return {execute: () => compilation.getSourceModel()};
+  const model = compilation.getSourceModel();
+  const queryOptions = {callStart: fixture.callStart};
+  const queryCount = queryPhases[phase];
+  if (phase === 'signature-repeated-query') model.signatureHelp(fixture.uri, fixture.queryOffset, queryOptions);
+  return {model, execute: () => {
+    let result;
+    for (let index = 0; index < queryCount; index++) result = model.signatureHelp(fixture.uri, fixture.queryOffset, queryOptions);
+    return result;
+  }};
 }
 
 function observe(result, fixture, phase) {
@@ -80,19 +95,27 @@ function observe(result, fixture, phase) {
     probe: target ? [target.kind, target.name, target.uri] : null};
 }
 
+function observeSignature(result, model, fixture) {
+  if (!result?.signatures?.some(signature => signature.label.includes(fixture.signatureName + '('))) {
+    throw new Error(`Signature query did not resolve ${fixture.name}/${fixture.signatureName}`);
+  }
+  return {binding: observe(model, fixture, 'source-model-bind'), signature: result};
+}
+
 function sample(fixture, phase) {
-  const execute = prepare(fixture, phase);
+  const prepared = prepare(fixture, phase);
   globalThis.gc();
   const before = process.memoryUsage();
   const started = performance.now();
-  const retained = execute();
+  const retained = prepared.execute();
   const elapsedMs = performance.now() - started;
   const uncollected = process.memoryUsage();
   globalThis.gc();
   const collected = process.memoryUsage();
-  // This public observation after GC keeps the returned result strongly reachable during both heap measurements.
-  const evidence = observe(retained, fixture, phase);
+  // Observations keep both the returned result and, for a query, the prepared model alive during heap measurements.
+  const evidence = prepared.model ? observeSignature(retained, prepared.model, fixture) : observe(retained, fixture, phase);
   return {elapsedMs, uncollectedHeapDeltaBytes: uncollected.heapUsed - before.heapUsed,
+    ...(queryPhases[phase] ? {elapsedPerQueryMs: elapsedMs / queryPhases[phase]} : {}),
     retainedHeapDeltaBytes: collected.heapUsed - before.heapUsed,
     retainedArrayBufferDeltaBytes: collected.arrayBuffers - before.arrayBuffers,
     retainedExternalDeltaBytes: collected.external - before.external,
@@ -100,13 +123,19 @@ function sample(fixture, phase) {
 }
 
 function measure(fixture, phase, settings) {
+  const queryCount = queryPhases[phase];
+  if (queryCount && typeof SourceSemanticModel.prototype.signatureHelp !== 'function') {
+    return {phase, queryCount, available: false, reason: 'This revision has no public SourceSemanticModel.signatureHelp API.'};
+  }
   for (let index = 0; index < settings.warmups; index++) sample(fixture, phase);
   const samples = Array.from({length: settings.samples}, () => sample(fixture, phase));
   const evidenceJson = JSON.stringify(samples[0].evidence);
   if (samples.some(row => JSON.stringify(row.evidence) !== evidenceJson)) throw new Error(`Unstable output for ${fixture.name}/${phase}`);
   const metrics = ['elapsedMs', 'uncollectedHeapDeltaBytes', 'retainedHeapDeltaBytes',
     'retainedArrayBufferDeltaBytes', 'retainedExternalDeltaBytes', 'rssAfterBytes'];
-  return {phase, metrics: Object.fromEntries(metrics.map(name => [name, summarize(samples.map(row => row[name]))])),
+  if (queryCount) metrics.push('elapsedPerQueryMs');
+  return {phase, available: true, ...(queryCount ? {queryCount} : {}),
+    metrics: Object.fromEntries(metrics.map(name => [name, summarize(samples.map(row => row[name]))])),
     evidence: samples[0].evidence, evidenceSha256: hash(evidenceJson),
     samples: samples.map(({evidence, ...measurements}) => measurements)};
 }
@@ -119,19 +148,28 @@ function main() {
   if (scriptSha256 !== exportInfo.benchmarkSha256) throw new Error('Benchmark source changed after the commit export was prepared');
   const startedAt = new Date().toISOString();
   const initialLoadAverage = loadavg();
-  const cases = fixtures(settings.calls).map(fixture => ({name: fixture.name, sourceSha256: fixture.sha256,
+  const corpus = fixtures(settings.calls);
+  const cases = corpus.map(fixture => ({name: fixture.name, sourceSha256: fixture.sha256,
     utf16Length: fixture.utf16Length, utf8Bytes: fixture.utf8Bytes, syntacticInvocationSites: fixture.invocationSites,
     phases: ['compile', 'source-model-bind'].map(phase => measure(fixture, phase, settings))}));
-  const report = {schemaVersion: 1, benchmark: 'SF-A20-T14-bound-invocations', revision: exportInfo.revision,
+  // Run common phases first, so candidate-only query work cannot prime later compile/bind families.
+  for (let index = 0; index < corpus.length; index++) {
+    for (const phase of Object.keys(queryPhases)) cases[index].phases.push(measure(corpus[index], phase, settings));
+  }
+  const report = {schemaVersion: 2, benchmark: 'SF-A20-T14-bound-invocations', revision: exportInfo.revision,
     benchmarkSha256: scriptSha256, packages: exportInfo.packages, startedAt, completedAt: new Date().toISOString(),
-    settings: {calls: settings.calls, samples: settings.samples, warmups: settings.warmups, compilerOptions: options},
+    settings: {calls: settings.calls, samples: settings.samples, warmups: settings.warmups, compilerOptions: options, queryPhases},
     environment: {node: process.version, v8: process.versions.v8, platform: process.platform, architecture: process.arch,
       cpu: cpus()[0]?.model, logicalCpus: cpus().length, totalMemoryBytes: totalmem(), execArgv: process.execArgv,
       nodeOptions: process.env.NODE_OPTIONS ?? '', heapSizeLimitBytes: getHeapStatistics().heap_size_limit,
       initialLoadAverage, finalLoadAverage: loadavg()},
-    notes: ['Timing excludes import/startup, explicit GC, observations, serialization and fresh parse/Compilation setup for bind only.',
+    notes: ['Timing excludes import/startup, explicit GC, observations, serialization and phase-specific preparation.',
       'Compile measures public compile including parsing, execution-profile binding/emission and any semantic fallback.',
-      'Source-model-bind measures public Compilation.getSourceModel on fresh parsed input, including binding and query indexes.',
+      'Source-model-bind measures public Compilation.getSourceModel on fresh parsed input, including binding and eager indexes.',
+      'Signature-first-query uses a freshly bound model; its timing and retained heap include any deferred document-index construction.',
+      'Signature-repeated-query primes that model once outside timing, then measures 64 queries; per-query time divides the total by 64.',
+      'Query heap baselines already retain the bound model; post-GC query deltas retain that model and the last signature result.',
+      'A revision without the signature API reports those phases unavailable; candidate-only results are not before/after comparisons.',
       'Retained heap is the post-GC live result delta; uncollected heap is a GC-dependent proxy, not total allocated bytes.',
       'Heap deltas can be negative. No allocation-count, allocation-rate, noise-free or statistical-significance claim is made.',
       'Valid source may be outside the executable profile; exact compiler results are retained and must match before/after.'], cases};
