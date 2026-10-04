@@ -19,6 +19,7 @@ export const yes = known(true);
 export const no = known(false);
 
 export function typeSystemBudget(options) {
+  if (!options || typeof options !== 'object') rejectTypeSystem('CILVT0002', 'options');
   const limits = {};
   for (const [name, maximum] of Object.entries({ maxTypes: 65535, maxEdges: 65535, maxQueryNodes: 4096, maxDepth: 256 })) {
     const value = options[name] ?? maximum;

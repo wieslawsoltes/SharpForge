@@ -77,7 +77,7 @@ test('snapshots own hierarchy facts and do not expose mutable metadata arrays', 
 
 test('invalid tokens, local cycles and class/interface edge kinds are rejected', () => {
   const { adapter } = fixture();
-  for (const token of [0, -1, 1.5, 0x100000000, 0x06000001, 0x0200ffff]) {
+  for (const token of [0, -1, 1.5, 0x100000000, 0x06000001, 0x0200ffff, NaN, {}, 1n, Symbol('token')]) {
     assert.throws(() => adapter.resolveType(token), fails('CILVT0001'));
   }
   const cyclic = typeSystemFixture();
@@ -98,7 +98,7 @@ test('invalid tokens, local cycles and class/interface edge kinds are rejected',
 test('metadata and traversal budgets are enforced before unbounded expansion', () => {
   const input = typeSystemFixture();
   const inspector = input.inspect();
-  for (const options of [{ maxTypes: 1 }, { maxEdges: 1 }, { maxTypes: 65536 }, { maxDepth: -1 }, { maxQueryNodes: NaN }]) {
+  for (const options of [null, { maxTypes: 1 }, { maxEdges: 1 }, { maxTypes: 65536 }, { maxDepth: -1 }, { maxQueryNodes: NaN }]) {
     assert.throws(() => create(inspector, options), fails('CILVT0002'));
   }
   const adapter = create(inspector, { maxDepth: 1 });
