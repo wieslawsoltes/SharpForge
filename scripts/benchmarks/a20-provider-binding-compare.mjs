@@ -27,7 +27,7 @@ function measurements(phase) {
     uncollectedHeapDeltaBytes: phase.metrics.uncollectedHeapDeltaBytes};
 }
 
-const queryPhases = new Set(['signature-first-query', 'signature-repeated-query']);
+const queryPhases = new Set(['signature-first-query', 'signature-repeated-query', 'compiled-model-first-query']);
 const rows = [];
 for (const before of baseline.cases) {
   const after = candidate.cases.find(entry => entry.name === before.name);

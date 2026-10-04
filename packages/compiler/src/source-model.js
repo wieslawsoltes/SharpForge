@@ -7,10 +7,18 @@ import {argumentHints} from './source-arguments.js';
 import {metadataReference} from './source-metadata.js';
 import {SourceSignatureIndex} from './source-signatures.js';
 
+function signatureAnalysis(analysis) {
+  if (analysis.invocations) return analysis;
+  // A reused compile analysis remains immutable; only a signature request pays for separate candidate capture.
+  const captured = new SemanticAnalysis(analysis.files, {...analysis.options, captureInvocations: true});
+  captured.run();
+  return captured;
+}
+
 /** A revision-local query index over actual lossless-source binding; it never changes or emits program code. */
 export class SourceSemanticModel {
   constructor(compilation) {
-    const options = {...compilation.options, nullableContext: compilation.typedOptions?.nullableContext ??
+    const options = {...compilation.options, captureInvocations: true, nullableContext: compilation.typedOptions?.nullableContext ??
       compilation.options.nullableContext};
     this.analysis = compilation.sourceAnalysisComplete ? compilation.sourceAnalysis :
       new SemanticAnalysis(compilation.inputFiles, options);
@@ -189,7 +197,7 @@ export class SourceSemanticModel {
     if (options.activeParameter !== undefined && (!Number.isInteger(options.activeParameter) || options.activeParameter < 0)) {
       throw new RangeError('Invalid signature parameter index');
     }
-    this.signatureIndex ??= new SourceSignatureIndex(this.analysis);
+    this.signatureIndex ??= new SourceSignatureIndex(signatureAnalysis(this.analysis));
     return this.signatureIndex.help(uri, offset, options);
   }
 }

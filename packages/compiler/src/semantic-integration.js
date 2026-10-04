@@ -131,6 +131,8 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   try {
     const analysis = new SemanticAnalysis(files, {
       ...compilation.options,
+      // Compilation consumes diagnostics and bound trees, not editor invocation candidates.
+      captureInvocations: false,
       // Retain the execution profile's builtin receiver shorthands when semantic lowering takes over.
       // Explicit using policy or metadata references keep ordinary C# name resolution.
       executionBuiltinAliases: !compiled && !hasReferences && options.implicitUsings === undefined,
