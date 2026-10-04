@@ -115,19 +115,20 @@ test('provider invalidation is scoped, explicitly disposable and does not fabric
   assert.throws(() => services.subscribe(() => {}), /disposed/);
 });
 
-test('rename preview refuses a newer source revision even when external edits reproduce its displayed bytes', () => {
+test('rename preview refuses a newer low-level buffer revision even when external edits reproduce its displayed bytes', () => {
   const model = new EditorModel('class Widget {}', {uri: 'Widget.cs'});
   const editor = {model, get value() {return this.model.value;}, refreshPreview() {}};
   const preview = new RenamePreview(editor);
   preview.show([{start: 6, end: 12, text: 'Gadget'}]);
   const displayed = model.value;
-  model.applyEdits([{start: model.length, end: model.length, text: ' '}]);
-  model.applyEdits([{start: model.length - 1, end: model.length, text: ''}]);
+  model.buffer.applyEdits([{start: model.length, end: model.length, text: ' '}]);
+  model.buffer.applyEdits([{start: model.length - 1, end: model.length, text: ''}]);
   assert.equal(model.value, displayed);
   const version = model.version;
-  assert.throws(() => preview.restore(), /outside the rename preview/);
+  assert.throws(() => preview.restore(), {code: 'SFEDITOR_PREVIEW_STALE'});
   assert.equal(model.value, displayed);
   assert.equal(model.version, version);
+  assert.equal(model.previewActive, false);
 });
 
 test('changing the active model restores only the captured rename preview and refuses another preview', () => {

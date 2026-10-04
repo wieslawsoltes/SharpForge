@@ -1,0 +1,10 @@
+{
+  "suite": "editor-insights",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.12.14/x64/bin/python",
+    "tests/browser_a20_insights_test.py"
+  ],
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 2.2249706560000106
+}
