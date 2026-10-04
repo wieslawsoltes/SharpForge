@@ -19,6 +19,7 @@ import { walk } from '../../bound/semantic-walker.js';
 import { TypedIlBuilder } from './il-stack-types.js';
 import { AsyncBuilderMembers } from './async-builders.js';
 import { awaiterOf } from './awaitables.js';
+import { restorePendingOperands, savePendingOperands } from './pending-operands.js';
 import { isReference, isVoid } from './type-facts.js';
 
 const NOT_STARTED = -1;
@@ -191,22 +192,14 @@ export const AsyncEmission = Base =>
       }
       return field;
     }
-    /** Empties the evaluation stack into temporaries; returns their slots, bottom first. */
+    /** Empties the evaluation stack before a suspension; returns what `restorePending` takes. */
     savePending(syntax) {
-      const types = this.il.pendingTypes;
-      if (types.includes(null)) return this.unsupported('await while a value the emitter cannot save is on the evaluation stack', syntax);
-      const slots = types.map(type => this.temp(type));
-      for (let index = slots.length - 1; index >= 0; index--) this.il.emit('stloc', slots[index]);
-      return slots;
+      const saved = savePendingOperands(this);
+      return saved ?? this.unsupported('await while a value the emitter cannot save is on the evaluation stack', syntax);
     }
     /** Pushes the saved values back, below the result of the await when it has one. */
-    restorePending(slots, resultType) {
-      if (!slots.length) return;
-      const il = this.il,
-        result = isVoid(resultType) ? null : this.temp(resultType);
-      if (result !== null) il.emit('stloc', result);
-      for (const slot of slots) il.emit('ldloc', slot);
-      if (result !== null) il.emit('ldloc', result);
+    restorePending(saved, resultType) {
+      restorePendingOperands(this, saved, isVoid(resultType) ? null : resultType);
     }
     exprAwait(node) {
       if (!this.isAsyncBody) return this.unsupported('await outside an async method', node.syntax);

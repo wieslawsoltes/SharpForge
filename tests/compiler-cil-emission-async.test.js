@@ -279,8 +279,11 @@ test('A02-T30 async constructs the emitter has no shape for yet are SF2200', () 
   assert.match(
     refused(`using System.Threading.Tasks;
       struct Counter { public int Count; public void Add(int amount) { Count += amount; } }
+      class Holder { public Counter Inner; }
       class C {
-        static async Task Run(Task<int> source) { Counter counter = new Counter(); counter.Add(await source); }
+        // The address of a struct local is taken again after the await (tests/compiler-await-struct-receiver.test.js);
+        // the address of a field of another object is not saved yet.
+        static async Task Run(Task<int> source) { Holder holder = new Holder(); holder.Inner.Add(await source); }
         static void Main() { }
       }`)[0],
     /^SF2200 .*await while a value the emitter cannot save is on the evaluation stack/,

@@ -12,6 +12,7 @@ import { PointerTypeSymbol, TypeKind } from '../../symbols/types.js';
 import { walk } from '../../bound/semantic-walker.js';
 import { IlBuilder } from './il-builder.js';
 import { TypedIlBuilder } from './il-stack-types.js';
+import { restorePendingOperands, savePendingOperands } from './pending-operands.js';
 import { primitiveOf } from './type-facts.js';
 
 const BITS_PER_BYTE = 8;
@@ -100,20 +101,14 @@ export const StackAllocEmission = Base =>
         this.storeIndirect(elementType);
       });
     }
-    /** Empties the evaluation stack into temporaries; returns their slots, bottom first. */
+    /** Empties the evaluation stack; returns what `restoreOperands` takes. */
     saveOperands(syntax) {
-      const types = this.il.pendingTypes;
-      if (types.includes(null)) return this.unsupported('stackalloc while a value the emitter cannot save is on the evaluation stack', syntax);
-      const slots = types.map(type => this.temp(type));
-      for (let index = slots.length - 1; index >= 0; index--) this.il.emit('stloc', slots[index]);
-      return slots;
+      const saved = savePendingOperands(this);
+      return saved ?? this.unsupported('stackalloc while a value the emitter cannot save is on the evaluation stack', syntax);
     }
     /** Pushes the saved operands back, below the result. */
-    restoreOperands(slots, resultType) {
-      const il = this.il,
-        result = this.temp(resultType);
-      il.emit('stloc', result);
-      for (const slot of slots) il.emit('ldloc', slot);
-      il.emit('ldloc', result);
+    restoreOperands(saved, resultType) {
+      if (saved.length) return restorePendingOperands(this, saved, resultType);
+      return undefined;
     }
   };
