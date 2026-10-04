@@ -73,7 +73,7 @@ documented bounds. Relevant metadata rows are indexed in linear time; inherited
 interface output is materialized once per completed definition. Concurrent first
 loads may repeat work but publish the same descriptor.
 
-Generic inheritance/constraints, exported-type forwarding,
+Generic inheritance/constraints, linked netmodule loading,
 multi-module TypeRefs, layout/dispatch/assignability and full verification remain
 separate batches. Unsupported resolution forms produce explicit TypeLoad errors.
 The independent native graph fixture covers ordinary C# base/interfaces, nested
