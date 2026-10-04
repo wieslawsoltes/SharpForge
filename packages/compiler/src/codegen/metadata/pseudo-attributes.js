@@ -13,8 +13,16 @@ const attributes = new Set([
   COMPILER + 'MethodImplAttribute', COMPILER + 'SpecialNameAttribute',
 ]);
 
+/** Recognize pseudo-attributes before allocating the layout/interop writer for this assembly. */
+export function applyPseudoAttribute(writer, parent, attribute, symbol) {
+  const fullName = fullNameOf(attribute.attributeClass);
+  if (!attributes.has(fullName)) return false;
+  writer.pseudo ??= new PseudoAttributeWriter(writer);
+  return writer.pseudo.apply(parent, attribute, symbol, fullName);
+}
+
 /** Pseudo-custom attributes are CLI flags and layout/interop rows, so no CustomAttribute row is emitted. */
-export class PseudoAttributeWriter {
+class PseudoAttributeWriter {
   constructor(writer) {
     this.writer = writer;
     this.builder = writer.builder;
@@ -22,9 +30,7 @@ export class PseudoAttributeWriter {
     this.modules = new Map((this.builder.rows[TABLE.ModuleRef] ?? []).map((row, index) => [row[0], token(TABLE.ModuleRef, index + 1)]));
     this.layouts = new Map((this.builder.rows[15] ?? []).map(row => [row[2], row]));
   }
-  apply(parent, attribute, symbol) {
-    const fullName = fullNameOf(attribute.attributeClass);
-    if (!attributes.has(fullName)) return false;
+  apply(parent, attribute, symbol, fullName) {
     const row = this.builder.rows[parent >>> 24]?.[(parent & 0xffffff) - 1];
     if (!row) return true;
     const named = Object.fromEntries(attribute.named.map(({ name, member, value }) => [name, valueOf(value, member.type, this.types)]));

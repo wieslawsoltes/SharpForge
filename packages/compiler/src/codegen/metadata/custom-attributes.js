@@ -32,7 +32,7 @@ import { contractAssemblyOf } from './reference-contracts.js';
 import { explicitInterfaceOf, metadataPropertyName } from './explicit-interface-names.js';
 import { writeParameterAttributes } from './parameter-metadata.js';
 import { fixedBufferTypeName } from './fixed-buffer-type-name.js';
-import { PseudoAttributeWriter } from './pseudo-attributes.js';
+import { applyPseudoAttribute } from './pseudo-attributes.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const REQUIRED_MEMBER = 'System.Runtime.CompilerServices.RequiredMemberAttribute';
@@ -163,8 +163,7 @@ export class CustomAttributeWriter {
   applied(parent, symbol, location = DEFAULT_LOCATIONS[symbol.kind]) {
     for (const attribute of symbol.boundAttributes ?? []) {
       if (attribute.location !== location) continue;
-      this.pseudo ??= new PseudoAttributeWriter(this);
-      if (this.pseudo.apply(parent, attribute, symbol)) continue;
+      if (applyPseudoAttribute(this, parent, attribute, symbol)) continue;
       this.one(parent, attribute);
     }
   }

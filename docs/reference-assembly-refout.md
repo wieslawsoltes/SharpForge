@@ -225,7 +225,7 @@ resolution or establish a general speedup. All 120 samples per run remain record
 
 The ordinary-metadata median exceeds the 5% review threshold. Its single first-compilation observation also increased
 from 113.958974 ms to 133.244493 ms (**+16.9232%**). These recorded regressions require coordinator review; no
-performance-budget pass is claimed and no retry or optimization was attempted to improve the reported figures.
+performance-budget pass is claimed and no retry or optimization preceded these recorded measurements.
 The metadata p99 changed by -4.7681%, while refout p99 changed by -15.4041%. Refout's first-compilation observation
 changed from 127.934818 ms to 108.198931 ms (-15.4265%); import timing remains subject to the harness limits above.
 
@@ -240,6 +240,26 @@ raw samples, output-hash equality and review thresholds alongside the original r
 The [source inspection](evidence/a03-reference-assemblies/integration-51db/source-findings.json) records concrete new
 attribute-dispatch and return-attribute allocations without attributing the measured regression to them. Native
 byte equality does not waive review of ordinary metadata performance.
+
+## Pending allocation follow-up
+
+A separate source change after evidence commit `4f80ef2a5bb952199b35cea7cf5ad83d1b87f6eb` moves the existing
+pseudo-attribute name and set lookup ahead of writer construction. Assemblies with only ordinary attributes no longer
+construct the layout/interop writer and its two maps. The canonical recognition set and every pseudo-attribute handler
+remain unchanged. Return-attribute presence checks scan the existing bound attributes without creating temporary
+symbol arrays or callbacks; only the exact delegate Invoke source symbol inherits the declaration's return contract.
+Token maps, member plans and parameter/interface/generic-constraint rows are preserved.
+
+This is a narrow change to shared compiler metadata emission outside A03's package ownership. It addresses avoidable
+work identified by source inspection, without attributing the measured 22.2381% regression to those constructions.
+The new public-API regression covers ordinary/pseudo/ordinary ordering and exact delegate return targets in executable,
+ordinary metadata and refout modes. Validation and performance measurements for this follow-up are pending; the prior
+correctness and benchmark evidence continues to identify its own frozen source revision.
+
+The benchmark driver, dynamic-import allowlist hash and rich source fixture are unchanged. Qualification should repeat
+the focused shared-emitter cohort, the two-case refout metadata/consumer capture and the two affected main native
+fixtures at the new source revision, then measure each output mode once against the retained `51db` observations.
+Historical baselines and captures remain distinct, and no new performance-budget conclusion is established yet.
 
 ## Changes outside A03
 
