@@ -744,6 +744,36 @@ five samples and managed allocations; validation and timing are queued serially.
 Comparer equality interfaces, object overloads, hashing, culture comparers and
 native/Wasm execution remain outside this batch; #2621 stays open.
 
+`StringBuilder.Equals(StringBuilder)` appends A07 contract `524331` after
+Single Append `524330`. It compares exact UTF-16 content independently of chunk
+arrangement and capacity. The shared builder dispatcher still validates the
+receiver before a null argument returns false; self and empty/length shortcuts
+avoid reading chunks. Distinct equal-length builders stream their live chunk
+prefixes from the end, loading each visited chunk once. No case folding,
+normalization, ToString call, substring, joined text, copied array or cursor
+record is used. Work is O(text units + chunks visited), with constant auxiliary
+space, no writes and no new managed allocations.
+
+The [pinned native reference](reference/string-builder-equals/README.md) records
+35 .NET 10.0.5 / SDK 10.0.201 cases, including null receiver/source, identity,
+different append segmentation, raw surrogate boundaries, cleared/truncated/grown
+histories and unequal capacities. It confirms equal content ignores Capacity and
+MaxCapacity. Thirty-one supported constructor profiles run through both compiler
+pipelines/VMs and independent CIL. Four rows requiring the unsupported
+`StringBuilder(int, int)` constructor remain native evidence only; this batch
+does not implement that constructor or change existing capacity-growth behavior.
+
+Native inherited Object.Equals distinguishes identity from typed content
+equality. SharpForge's pre-existing Object.Equals execution guard remains in
+place; it is not redirected to this overload. Existing Object.ReferenceEquals
+controls retain identity semantics. No equality interface, hash or span overload
+is added. Tests check no writes/allocations at an exhausted managed heap budget,
+once-per-chunk reads with forced collection, snapshots and subsequent mutation.
+The static `scripts/benchmarks/a07-string-builder-equals.mjs` runner separates
+released Length/Capacity controls from new equality costs, including 256 live
+chunks versus one chunk. Validation/timing are pending in the serial queue;
+native/Wasm execution and the remaining #2637 APIs stay outside this batch.
+
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null
 first, then compares exact UTF-16 code units without normalization, case folding
