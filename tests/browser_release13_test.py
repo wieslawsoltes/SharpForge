@@ -40,7 +40,13 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  def ds():return ev('sharpforge.designer.get()')
  def text():return ev('sharpforge.getState().files.find(f=>f.uri==="Program.cs").text')
  def node(id):return next(n for n in ds()['document']['nodes'] if n['id']==id)
- def edit(s):ev('sharpforge.openFile("Program.cs")');page.locator('[data-source-uri="Program.cs"] .sf-input').fill(s)
+ def edit(s):
+  ev('sharpforge.openFile("Program.cs")')
+  field=page.locator('[data-source-uri="Program.cs"] .sf-input')
+  field.focus()
+  field.press('ControlOrMeta+a')
+  page.keyboard.insert_text(s)
+  truth(text()==s,'Source input did not replace the complete document')
  def load(s):cmd('stop');ev('sharpforge.designer.disconnect()');ev('text=>sharpforge.loadDiskRecords([{path:"Program.cs",text}],{name:"SourceSyncWorkshop"})',s);ev('sharpforge.build()');truth(not ev('sharpforge.getState().diagnostics.filter(d=>d.severity==="error")'),str(ev('sharpforge.getState().diagnostics')));ev('sharpforge.designer.open()')
  try:
   load_application(page)

@@ -58,11 +58,26 @@ export function registerStatusRegions(bar, {context, documents, tasks, notificat
   };
   const cursor = () => {
     const {current, record, source} = documentState();
-    if (!record) return null;
-    const offset = current.caretOffset ?? current.offset ?? 0;
-    const position = current.caretPosition ?? current.position ?? source?.positionAt(offset);
-    if (!position) return null;
-    const column = positionStatus.column(source, position, {offset, visualColumn: current.visualColumn,
+    if (!record) { positionStatus.dispose(); return null; }
+    const requestedOffset = current.caretOffset ?? current.offset ?? 0;
+    if (!Number.isSafeInteger(requestedOffset)) {
+      positionStatus.dispose();
+      return null;
+    }
+    const length = source?.length ?? source?.buffer?.length;
+    const offset = Number.isSafeInteger(length)
+      ? Math.max(0, Math.min(requestedOffset, length)) : Math.max(0, requestedOffset);
+    const reportedPosition = current.caretPosition ?? current.position;
+    // Document changes reach this view before the editor publishes its new caret.
+    const position = source?.positionAt?.(offset) ?? reportedPosition;
+    if (!position) {
+      positionStatus.dispose();
+      return null;
+    }
+    const samePosition = !reportedPosition ||
+      reportedPosition.line === position.line && reportedPosition.character === position.character;
+    const visualColumn = offset === requestedOffset && samePosition ? current.visualColumn : undefined;
+    const column = positionStatus.column(source, position, {offset, visualColumn,
       tabSize: current.tabSize ?? settings.get('editor', 'tabSize') ?? 4});
     return {position, column, columnStatus: positionStatus.pending ? 'pending' : 'unavailable'};
   };
