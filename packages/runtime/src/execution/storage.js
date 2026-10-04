@@ -5,12 +5,14 @@ import {resolveCallType} from './generic-calls.js';
 import {ManagedFault} from '../heap.js';
 import {defaults,storage as numericStorage} from './numeric-ops.js';
 import {enumInfo,enumUnderlying} from './enums.js';
+import {executionFieldAccessError} from '@sharpforge/cil';
 
 /** Physical static keys can include a closed generic owner and a thread identity. */
 export function staticStorageType(vm, key, write = true) {
   const [token, owner] = typeof key === 'string' ? JSON.parse(key) : [key, null];
   const field = vm.typeSystem.fieldCache.resolve(token, null, owner).field;
-  if (write && field.decimalConstant) throw new ManagedFault('InvalidProgramException', 'Decimal constants are readonly');
+  const error = write && executionFieldAccessError(field, 'stsfld');
+  if (error) throw new ManagedFault('InvalidProgramException', error);
   return field.signature.type;
 }
 

@@ -4,9 +4,11 @@ import {clearRuntimeTypes} from './tokens.js';
 import {stopCilMethodEvents} from './cil-method-events.js';
 import {stopFramePool} from './frame-retirement.js';
 import {stopSourceRuntimeEvents} from './source-runtime-events.js';
+import {cancelCallbackScopes} from './callback-frames.js';
 
 /** Dispose live and parked storage before dropping the VM's execution roots. */
 export function stopExecution(vm) {
+  cancelCallbackScopes(vm.scheduler);
   const hadGuestFault = vm.fault || vm.pendingFault;
   vm.profiler?.closeSlice();
   if (vm.inspector) invalidateExecutionCode(vm, 'stop');

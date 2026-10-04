@@ -13,6 +13,21 @@ All eight debug tables are parsed; unknown CDI retains raw bytes. PE CodeView/em
 
 Implementation is separated into sequence point codecs, metadata reader and builder, PDB writer, PE debug directory, identity binding and source binding modules. The package entry point remains the public contract; consumers do not import these internal modules directly.
 
+`readPortablePdbDelta(bytes, { typeSystemRowCounts })` reads minimal Roslyn/SRM
+PDB deltas, preserving original metadata and projecting method tokens through
+`EncMap`. `PortablePdbGenerations` indexes a baseline plus successive deltas,
+retains old maps, and resolves unchanged methods from earlier generations.
+The caller supplies authoritative aggregate CLI row counts and a baseline /
+previous-PDB identity envelope. See the [generation API and native
+fixture](interop/PdbGenerations/README.md) for handle semantics, limits,
+errors and a runnable example. The baseline reader continues to reject deltas.
+`emitPortablePdbDelta(debug, generation, options)` writes changed methods through
+the same codecs and returns a baseline/previous-generation envelope alongside
+the standard bytes. See the [delta writer contract](interop/PdbGenerations/delta-writer.md).
+`PortablePdbRevisionMap` binds an exact caller-supplied generation/method/revision
+triple to a retained snapshot, keeping old frame maps stable after updates.
+See the [snapshot contract](interop/PdbGenerations/revision-map.md).
+
 `emitPortablePdb(assembly, debug)` accepts `debug.importScopes` in row order;
 `parent` is zero or an earlier one-based scope id. Each scope has `definitions`
 using Portable PDB import kinds 1–9 (`alias`, `namespace`, AssemblyRef row id
@@ -238,6 +253,15 @@ language column and no vendor column. References: the
 [Portable PDB v1.0 specification](https://github.com/dotnet/runtime/blob/main/docs/design/specs/PortablePdb-Metadata.md)
 and [SRM document-name encoder](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Reflection.Metadata/src/System/Reflection/Metadata/Ecma335/MetadataBuilder.Heaps.cs).
 
+For a mapped document whose source is unavailable, pass `{ uri, documentOnly: true }`.
+Its hash and algorithm handles are nil and no source is embedded. An optional
+`hashAlgorithm` GUID and `hash` Uint8Array pair preserves a producer-declared
+checksum, such as C# `#pragma checksum`, without claiming to verify missing bytes.
+Both fields must be supplied together; opaque hashes are bounded to 4,096 bytes.
+Unknown algorithm GUIDs and empty declared hashes are preserved. Providing `text`
+or `bytes` with `documentOnly` is rejected. Ordinary source records retain their
+existing checksum computation and exact-content verification.
+
 The independent [native gate](interop/README.md) checks emitted imports, constants,
 document-name bytes, hashes and debug directories with System.Reflection.Metadata.
 Its checked-in report records the exact tools and cases; this qualification does
@@ -287,6 +311,8 @@ zero-based #Pdb stream position used to zero the identity while hashing.
 | Documents | Deduplicated names; SHA-1/256/384/512; arbitrary language GUIDs |
 | Locals and imports | Lexical scopes, primitive/enum/modified/typed-null constants, explicit unresolved payloads, import kinds 1–9 |
 | State machines and CDI | Async/iterator links, EnC maps, seven compilation records, raw unknown records |
+| PDB generations | Minimal-delta read/write; bounded aggregate history; caller-supplied baseline/previous-generation identity |
+| Revision snapshots | Exact generation/method/revision checks; retained maps; shared bounded cache and explicit disposal |
 | PE binding | CodeView, reproducible, checksums, embedded PDB, existing entries/overlays |
 | Native formats | Windows MSF and legacy CodeView detected with explicit unsupported errors |
 

@@ -1,3 +1,4 @@
+import {imageMethod} from './codegen/image-method.js';
 import {DiagnosticId} from './diagnostics/codes.js';
 import {languageVersion} from './modern.js';
 import {collectDeclarations,declareField,declareProperty,declareMethod} from './declarations.js';
@@ -137,7 +138,7 @@ export class Compilation {
       sources:this.files.map(f=>({uri:f.source.uri,text:f.source.text,version:f.source.version})),
       types:this.types.map(t=>({id:t.id,name:t.name,...(t.interfaces.length?{interfaces:t.interfaces}:{}),fields:t.fields.filter(f=>!f.isStatic).map(f=>({name:f.name,type:f.type,index:f.index,...(f.backing?{backing:true}:{} )})),...(t.properties.length?{properties:t.properties.map(p=>({name:p.name,type:p.type,isStatic:p.isStatic,access:p.access,get:p.get?.id??null,set:p.set?.id??null,backing:p.backing?.name??null}))}:{}),initializer:t.initializer})),
       statics:this.statics.map(f=>({name:`${f.owner.name}.${f.name}`,type:f.type,value:defaultValue(f.type),...(f.backing?{backing:true}:{} )})),
-      methods:this.methods.map(m=>({...(m.node?.uri&&m.node.body&&(!m.node.asyncRole||m.node.asyncRole==='body')&&!m.name.startsWith('<startup>')?{sourceRange:{uri:m.node.uri,start:m.node.start,end:m.node.end}}:{}),...(m.node.asyncRole?{asyncRole:m.node.asyncRole,asyncOrigin:m.node.asyncOrigin}:{}),id:m.id,name:m.name,qualifiedName:m.qualifiedName,owner:m.owner?.name??null,isStatic:m.isStatic,returnType:m.returnType,...(m.accessor?{accessor:m.accessor}:{}),...(m.implementsDispose?{implementsDispose:true}:{}),parameters:m.parameters.map(p=>({name:p.name,type:p.type})),locals:m.locals??[],code:m.code??new Int32Array(),handlers:m.handlers??[]}))};
+      methods:this.methods.map(imageMethod)};
     // Warning options (#pragma warning, nowarn, warnaserror, warning level) decide the final diagnostic list.
     // Programs outside the execution profile get the diagnostics of the type system (semantic-integration.js).
     const reconciled=reconcileWithSemanticAnalysis(this,this.syntaxFeatureDiagnostics);if(reconciled){this.diagnostics=reconciled.diagnostics;this.semanticAnalysis=reconciled.semantic;}const finalImage=reconciled?.image??image;

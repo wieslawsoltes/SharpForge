@@ -88,6 +88,7 @@ export const ExceptionEmission = Base =>
         const handlerEnd = il.newLabel(),
           type = clause.type ?? this.core.object,
           region = { tryStart, tryEnd, handlerStart, handlerEnd };
+        this.debug?.catchClause(clause, region);
         if (clause.filter) {
           region.kind = 'filter';
           region.filterStart = handlerStart;

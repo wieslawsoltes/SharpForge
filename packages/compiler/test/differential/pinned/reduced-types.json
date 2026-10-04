@@ -8,5 +8,7 @@
   "reduced-types/defensive-copies-and-ref-struct-constraints":{"hash":"3def6dd7d6cd183b","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3 3 3\n3 3 1/1/1\n4 4\n2 1\nmain 4 -1\n"},
   "reduced-types/attribute-constructor-forms":{"hash":"c40cbf3daac8aa90","kind":"output","langVersion":"14.0","diagnostics":[],"output":"array:4 #x | - | 2\nordered:2 | - | 0\nplain:7 | - | 0\ntagged:3 #safe#audited | ship Target | 0\n6/3 0/0\n"},
   "reduced-types/file-local-extension-class":{"hash":"eeea6a596b41d401","kind":"output","langVersion":"14.0","diagnostics":[],"output":"smoke=60 heat=20 | smoke=60\nsmoke=60 door=5\n"},
-  "reduced-types/readonly-ref-fields":{"hash":"cf2565eede629187","kind":"output","langVersion":"14.0","diagnostics":[],"output":"124 124 9,7\n0 0\n"}
+  "reduced-types/readonly-ref-fields":{"hash":"cf2565eede629187","kind":"output","langVersion":"14.0","diagnostics":[],"output":"124 124 9,7\n0 0\n"},
+  "reduced-types/record-printmembers-and-equality-contract":{"hash":"af4bd6efefbb8f02","kind":"output","langVersion":"14.0","diagnostics":[],"output":"Heading { Id = h1, Contract = Heading, Heading = ## Intro }\nChapter { Id = c1, Contract = Chapter, Heading = # Start, Number = 7 }\nTrue: Id = c1, Contract = Chapter, Heading = # Start, Number = 7\nHeading Chapter False True\n[Value = 5] Cell`1 | [tag: Value = v] Cell`1 | Tagged { tag: Value = v }\nTrue False True\nTrue X = 3, Y = 4 | <>False Empty\n"},
+  "reduced-types/ref-safe-contexts-of-elements-and-iteration":{"hash":"8cbc7e30718d260d","kind":"output","langVersion":"14.0","diagnostics":[],"output":"6,-3,9,101,14\n6,1033,9,101,15 none=44\napple none True\n6,-1,9,101,20 | inner 1; outer 1; inner -1; outer -1\n69 70\n"}
 }}

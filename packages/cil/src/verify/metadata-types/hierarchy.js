@@ -21,7 +21,10 @@ export function metadataHierarchy(snapshot, budget) {
       const edges = includeInterfaces ? record.edges : record.baseToken ? [record.baseToken] : [];
       for (const token of edges) {
         const result = snapshot.resolve(token);
-        if (result.status === 'unknown') missing ??= result;
+        if (result.status === 'unknown') {
+          // A complete core class chain in a proven different module cannot contain a local class identity.
+          if (includeInterfaces || !record.closedExternalBase) missing ??= result;
+        }
         else {
           const next = snapshot.identities.get(result.value);
           if (scheduled.has(next)) continue;

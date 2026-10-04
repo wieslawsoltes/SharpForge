@@ -1,3 +1,4 @@
+import {imageMethod} from '../image-method.js';
 /**
  * The program being generated from semantic bound trees: image classes, fields, statics, methods, the constant pool
  * and sequence points. It is the `compilation` the IR emitter writes into, and it serialises to the bytecode image
@@ -80,6 +81,9 @@ export class ProgramModel {
       qualifiedName: (owner ? owner.name + '.' : '') + name,
       owner,
       isStatic: signature.isStatic,
+      isVirtual: signature.isVirtual,
+      isOverride: signature.isOverride,
+      isFinal: signature.isFinal,
       returnType: signature.returnType,
       parameters: signature.parameters.map(p => ({ start: node.start, end: node.end, ...p })),
       node,
@@ -111,21 +115,7 @@ export class ProgramModel {
         initializer: t.initializer,
       })),
       statics: this.statics.map(f => ({ name: `${f.owner.name}.${f.name}`, type: f.type, value: defaultValue(f.type) })),
-      methods: this.methods.map(m => ({
-        ...(m.hasSource && m.node.uri ? { sourceRange: { uri: m.node.uri, start: m.node.start, end: m.node.end } } : {}),
-        ...(m.asyncRole ? { asyncRole: m.asyncRole, asyncOrigin: m.asyncOrigin } : {}),
-        id: m.id,
-        name: m.name,
-        qualifiedName: m.qualifiedName,
-        owner: m.owner?.name ?? null,
-        isStatic: m.isStatic,
-        returnType: m.returnType,
-        ...(m.accessor ? { accessor: m.accessor } : {}),
-        parameters: m.parameters.map(p => ({ name: p.name, type: p.type })),
-        locals: m.locals,
-        code: m.code,
-        handlers: m.handlers,
-      })),
+      methods: this.methods.map(imageMethod),
     };
   }
 }

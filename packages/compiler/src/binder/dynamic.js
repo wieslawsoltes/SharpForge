@@ -18,12 +18,13 @@
  *   CS8364  an `in` argument    CS8197  `out var x`    CS8183  `out _`    CS0307  `d.Name<T>` that is not invoked
  *   CS1962  typeof(dynamic)     CS1981  `is dynamic` (warning)            CS8386  new dynamic()
  *
- * Nothing here runs: the runtime has no late binder (see `dynamicOperation` in codegen/semantic/unsupported.js).
+ * Direct CIL emission uses Microsoft.CSharp call sites. The image runtime still reports its missing late binder.
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, RefKind, DynamicTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { isRefLike } from './ref-struct.js';
+import { classifyVariable } from './ref-kinds.js';
 
 const dynamicType = DynamicTypeSymbol.instance;
 
@@ -36,6 +37,9 @@ const isSource = symbol => {
 };
 const hasDynamicArgument = args => args.some(a => !a.hasErrors && isDynamic(a.type));
 const argumentList = args => args.map(a => ({ expression: a, refKind: a.refKind ?? null, name: a.name ?? null }));
+const restrictedTypes = new Set(['System_TypedReference', 'System_ArgIterator', 'System_RuntimeArgumentHandle']);
+const isIllegalDynamicType = type => !!type && (type.specialType === 'System_Void'
+  || type.typeKind === TypeKind.Pointer || type.typeKind === TypeKind.FunctionPointer || isRefLike(type) || restrictedTypes.has(type.specialType));
 
 /** Class mixin: the operations that are bound at run time because an operand, receiver or argument is `dynamic`. */
 export const DynamicBinding = Base =>
@@ -82,13 +86,18 @@ export const DynamicBinding = Base =>
         else if (a.form === 'lambda') fail(node, DiagnosticId.CS1977);
         else if (a.kind === 'MethodGroup') fail(node, DiagnosticId.CS1976);
         else if (a.literal === 'default') fail(node, DiagnosticId.CS8716);
-        else if (a.type && (a.type.specialType === 'System_Void' || a.type.typeKind === TypeKind.Pointer || isRefLike(a.type)))
-          fail(node, DiagnosticId.CS1978, [this.display(a.type)]);
+        else if (isIllegalDynamicType(a.type)) fail(node, DiagnosticId.CS1978, [this.display(a.type)]);
       }
       return isValid;
     }
     dynamicNode(kind, syntax, properties, type = dynamicType) {
       return this.node(kind, syntax, type, { ...properties, isDynamic: true });
+    }
+    /** The runtime binder may mutate a writable struct receiver through its original storage. */
+    dynamicReceiverRefKind(receiver) {
+      if (!receiver?.type?.isValueType) return RefKind.None;
+      const location = classifyVariable(receiver, this.c);
+      return location.isVariable && location.isWritable ? RefKind.Ref : RefKind.None;
     }
 
     // ---- members, calls and element access ----
@@ -139,7 +148,18 @@ export const DynamicBinding = Base =>
       }
       if (!this.checkDynamicArguments(args)) return this.bad(syntax, { args: argumentList(args) });
       for (const method of group.methods) if (!this.quiet) this.d.noteUse?.(method, this.c.uri, syntax);
-      return this.dynamicNode('DynamicInvocation', syntax, { receiver: group, args: argumentList(args) });
+      // Materialize an implicit instance receiver before capture analysis; a lambda containing `M(d)` captures
+      // `this` just as one containing `this.M(d)` does. Keep lexical binding flags independent of generated methods.
+      const implicitInstance = group.implicitReceiver && !group.receiver && !group.viaType && !group.outer
+        && !this.c.isStatic && group.methods.some(method => !method.isStatic);
+      const receiver = implicitInstance ? this.node('This', group.syntax, this.c.containingType, { isImplicit: true }) : group.receiver;
+      if (isIllegalDynamicType(receiver?.type)) {
+        this.report(receiver.syntax, DiagnosticId.CS9230, [this.display(receiver.type)]);
+        return this.bad(syntax);
+      }
+      const target = { ...group, receiver, receiverRefKind: this.dynamicReceiverRefKind(receiver),
+        invokeSimpleName: group.implicitReceiver && !this.c.isStatic };
+      return this.dynamicNode('DynamicInvocation', syntax, { receiver: target, args: argumentList(args) });
     }
     invokeConditional(target, args, syntax) {
       const isLate = isDynamic(target.type) || (target.kind === 'MethodGroup' && hasDynamicArgument(args));
@@ -161,7 +181,13 @@ export const DynamicBinding = Base =>
         return super.elementAccessOn(target, args, syntax);
       const { node, isLateBound } = this.lateBound(() => super.elementAccessOn(target, args, syntax));
       if (!isLateBound || !this.checkDynamicArguments(args)) return node;
-      return this.dynamicNode('DynamicElementAccess', syntax, { receiver: target, args: argumentList(args) });
+      if (isIllegalDynamicType(target.type)) {
+        this.report(target.syntax, DiagnosticId.CS9230, [this.display(target.type)]);
+        return this.bad(syntax);
+      }
+      return this.dynamicNode('DynamicElementAccess', syntax, {
+        receiver: target, args: argumentList(args), receiverRefKind: this.dynamicReceiverRefKind(target),
+      });
     }
     create(type, args, syntax, typeNode, initializer) {
       if (isDynamic(type)) {
@@ -170,12 +196,33 @@ export const DynamicBinding = Base =>
       }
       if (!hasDynamicArgument(args) || type.typeKind === TypeKind.Delegate) return super.create(type, args, syntax, typeNode, initializer);
       const { node, isLateBound } = this.lateBound(() => super.create(type, args, syntax, typeNode, initializer));
-      // Only an ambiguity leaves the constructor to the runtime binder; the type of the expression is the class either way.
-      if (!isLateBound || node.kind !== 'Bad' || !this.checkDynamicArguments(args)) return node;
-      return this.dynamicNode('DynamicObjectCreation', syntax, { args: argumentList(args) }, type);
+      if (!isLateBound || !this.checkDynamicArguments(args)) return node;
+      // Even one applicable candidate must be rebound against the argument's runtime type. Keep initializer targets
+      // already bound by the static check; an ambiguous call has no bound initializer and binds it once here.
+      const created = this.dynamicNode('DynamicObjectCreation', syntax, { args: argumentList(args) }, type);
+      return node.kind === 'ObjectCreation' ? { ...node, ...created } : this.withInitializer(created, initializer);
     }
 
     // ---- operators ----
+    binaryOperation(syntax, operator, left, right) {
+      if ((isDynamic(left.type) || isDynamic(right.type))
+        && (operator === '>>>' || isIllegalDynamicType(left.type) || isIllegalDynamicType(right.type))) {
+        this.report(syntax, DiagnosticId.CS0019,
+          [syntax.operatorToken?.text ?? operator, this.operandDisplay(left), this.operandDisplay(right)]);
+        return this.bad(syntax);
+      }
+      return super.binaryOperation(syntax, operator, left, right);
+    }
+    delegateOperation(syntax, operator, left, right) {
+      if (isDynamic(left.type) || isDynamic(right.type)) return null;
+      return super.delegateOperation(syntax, operator, left, right);
+    }
+    condition(syntax) {
+      const condition = super.condition(syntax);
+      if (condition.kind !== 'Conversion' || condition.isExplicit || !isDynamic(condition.operand.type)) return condition;
+      // Conditions accept operator true; a conversion binder would incorrectly require a conversion to bool.
+      return this.dynamicNode('DynamicCondition', syntax, { operand: condition.operand }, this.core.bool);
+    }
     resolveUnaryOperator(operator, operand) {
       if (!isDynamic(operand.type)) return super.resolveUnaryOperator(operator, operand);
       return { kind: 'predefined', resultType: dynamicType, leftType: dynamicType, isDynamic: true };
@@ -193,6 +240,7 @@ export const DynamicBinding = Base =>
     }
     expression(syntax, options = {}) {
       const node = super.expression(syntax, options);
+      if (!this.quiet && (isDynamic(node.type) || node.isDynamic)) this.d.hasDynamicExpressions = true;
       if (syntax.kind === 'TypeOfExpression' && isDynamic(node.operandType)) this.report(syntax, DiagnosticId.CS1962);
       return node;
     }
