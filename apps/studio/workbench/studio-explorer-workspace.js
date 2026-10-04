@@ -1,6 +1,8 @@
 import { workspaceCandidates } from '@sharpforge/project-system';
 import { loadStudioWorkspace } from './studio-workspace-loader.js';
 import { isStudioTextRecord } from './workspace-limits.js';
+import { createStudioRecords } from './workspace-records.js';
+import { sameExplorerRecord } from '../explorer-records.js';
 
 export function mapStudioWorkspacePath(path, mappings) {
   if (!path) return path;
@@ -14,6 +16,8 @@ export function commitStudioExplorerWorkspace(payload, context) {
   const { state } = context;
   const revision = state.revision;
   const epoch = state.workspaceEpoch;
+  const previousDisk = state.disk;
+  const previousSystem = state.projectSystem;
   const current = context.workspaceSettings();
   const mapped = path => mapStudioWorkspacePath(path, mappings);
   const available = new Set(records.filter(record => /\.cs$/i.test(record.path) && isStudioTextRecord(record)).map(record => record.path));
@@ -27,12 +31,28 @@ export function commitStudioExplorerWorkspace(payload, context) {
     .map(([uri, points]) => [restore ? uri : mapped(uri), points]).filter(([uri]) => available.has(uri)));
   const settings = { ...current, active: available.has(active) ? active : [...available][0] ?? '', tabs, breakpoints,
     entry: entry ?? undefined, startup: restore?.startup ?? mapped(state.startupProject) ?? undefined };
+  let dirty = payload.dirty ?? restore?.dirty;
+  if (dirty === undefined) {
+    const changed = new Set([...state.dirtyFiles].map(mapped));
+    if (payload.diskCommitted) for (const path of payload.persistedPaths ?? []) changed.delete(path);
+    else {
+      const previous = new Map(createStudioRecords({state, documents: context.documents, nativeBuild: context.nativeBuild})
+        .map(record => [mapped(record.path), record]));
+      for (const record of records) if (!sameExplorerRecord(previous.get(record.path), record)) changed.add(record.path);
+    }
+    dirty = [...changed].filter(path => paths.has(path));
+  }
   return loadStudioWorkspace(records, {
     name: state.name, mode: entry ? /\.(slnx|sln)$/i.test(entry) ? 'solution' : 'project' : 'folder', entry,
     folders, settings, startup: settings.startup, configuration: state.configuration,
-    disk: state.disk, documentStates, preserveDocumentState: true, membershipDirty: true, updateOnly: true,
+    disk: payload.diskSnapshot ?? state.disk, documentStates, dirty,
+    diskCommitted: payload.diskCommitted, persistedPaths: payload.persistedPaths,
+    preserveMembership: payload.preserveMembership, signal: payload.signal,
+    preserveDocumentState: true, updateOnly: true,
+    membershipDirty: payload.preserveMembership ? state.membershipDirty : !payload.diskCommitted,
     validate: () => {
-      if (state.readOnly || state.nativeMode || state.revision !== revision || state.workspaceEpoch !== epoch) {
+      if (state.readOnly || state.nativeMode || state.revision !== revision || state.workspaceEpoch !== epoch
+          || state.disk !== previousDisk || state.projectSystem !== previousSystem) {
         throw new Error('Workspace changed while preparing the file operation; no changes were applied');
       }
       validate?.();

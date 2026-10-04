@@ -8,8 +8,8 @@ const sourceChange = snapshot => snapshot.source
 
 /** File targets and late completion belong to exact document instances and captured immutable source roots. */
 export class StudioSave {
-  constructor({ documents, state, nativeBuild, saveRecovery, canRecover, saveAs, notify, refresh }) {
-    Object.assign(this, { documents, state, nativeBuild, saveRecovery, canRecover, saveAs, notify, refresh });
+  constructor({ documents, state, nativeBuild, saveRecovery, canRecover, saveAs, saveWorkspace, notify, refresh }) {
+    Object.assign(this, { documents, state, nativeBuild, saveRecovery, canRecover, saveAs, saveWorkspace, notify, refresh });
     this.sourceTargets = new Map();
     this.operations = new Set();
     this.disposed = false;
@@ -58,7 +58,18 @@ export class StudioSave {
     operation.check();
     if (this.state().nativeMode) return this.native(snapshot, operation);
     const disk = this.target(snapshot.uri);
-    if (disk?.handles.has(snapshot.uri)) {
+    if (disk?.handles.has(snapshot.uri) || disk?.rootHandle) {
+      if (disk.provider && this.saveWorkspace) {
+        let report;
+        try {
+          report = await this.saveWorkspace({disk, captures: [snapshot], wholeWorkspace: false,
+            signal: operation.signal, check: () => operation.check()});
+        } catch (error) {
+          this.reconcile(error.written, error.savedSnapshots ?? [snapshot], operation);
+          throw error;
+        }
+        return !report.cancelled && (operation.current(snapshot.uri) || report.committed === true);
+      }
       if (this.state().membershipDirty && disk === this.state().disk) {
         throw new Error('Export the full workspace to preserve structural file changes before saving source only.');
       }
@@ -113,6 +124,7 @@ export class StudioSave {
       ...studioDiskLimits, readSource: readStudioSource
     });
     this.sourceTargets.set(snapshot.uri, { record: operation.records.get(snapshot.uri), model: this.documents.models.get(snapshot.uri), disk });
+    operation.adoptTarget(snapshot.uri, disk);
   }
 
   async as(uri = this.documents.active) {
@@ -135,6 +147,9 @@ export class StudioSave {
   }
 
   async all() {
+    if (this.saveWorkspace && (this.state().disk?.rootHandle || this.state().disk?.handles.size || this.sourceTargets.size)) {
+      if ((await this.disk()).cancelled) return false;
+    }
     const records = this.documents.list().filter(record => record.dirty);
     for (const record of records) {
       if (this.disposed || this.documents.get(record.uri) !== record || !await this.documents.save(record.uri)) return false;
@@ -147,6 +162,9 @@ export class StudioSave {
   async disk() {
     const state = this.state();
     if (state.nativeMode) return this.nativeBuild().save();
+    if (this.saveWorkspace && (state.disk?.provider || [...this.sourceTargets.values()].some(target => target.disk.provider))) {
+      return this.workspaceDisk();
+    }
     if (state.membershipDirty) throw new Error('Export the full workspace to preserve structural file changes before saving source only.');
     const records = this.documents.list().filter(record => record.dirty && this.target(record.uri)?.handles.has(record.uri));
     if (!state.disk?.handles.size && !this.sourceTargets.size) throw new Error('No writable folder is attached. Open a folder or export the workspace.');
@@ -162,13 +180,48 @@ export class StudioSave {
           written.push(...report.written);
           this.reconcile(report.written, captures, operation);
         } catch (error) {
-          this.reconcile(error.written, captures, operation);
+          this.reconcile(error.written, error.savedSnapshots ?? captures, operation);
           error.written = [...written, ...(error.written ?? [])];
           throw error;
         }
       }
       if (!this.disposed) this.notify('Saved ' + written.length + ' source file(s) to disk.');
       return { written, atomic: false };
+    } finally { operation.finish(); }
+  }
+
+  async workspaceDisk() {
+    const disk = this.state().disk;
+    const records = this.documents.list().filter(record => record.dirty
+      && (this.target(record.uri)?.rootHandle || this.target(record.uri)?.handles.has(record.uri)));
+    if (!disk?.rootHandle && !disk?.handles.size && !this.sourceTargets.size) {
+      throw new Error('No writable folder is attached. Open a folder or export the workspace.');
+    }
+    const operation = this.begin(records.map(record => record.uri));
+    const written = [];
+    try {
+      const groups = await this.prepareDiskGroups(records, operation);
+      if (disk?.provider && (disk.rootHandle || disk.handles.size) && !groups.has(disk)) groups.set(disk, []);
+      const excludedPaths = [...this.sourceTargets].filter(([uri, target]) => this.target(uri) === target.disk && target.disk !== disk)
+        .map(([uri]) => uri);
+      for (const [target, captures] of groups) {
+        operation.check();
+        let report;
+        try {
+          report = target.provider ? await this.saveWorkspace({disk: target, captures, wholeWorkspace: target === disk,
+            excludedPaths: target === disk ? excludedPaths : [], signal: operation.signal, check: () => operation.check()})
+            : await target.save(captures.map(sourceChange), {signal: operation.signal});
+        } catch (error) {
+          this.reconcile(error.written, error.savedSnapshots ?? captures, operation);
+          error.written = [...written, ...(error.written ?? [])];
+          throw error;
+        }
+        if (report.cancelled) return {...report, written};
+        written.push(...report.written);
+        this.reconcile(report.acknowledged ?? report.written, captures, operation);
+      }
+      if (!this.disposed) this.notify('Saved ' + written.length + ' file(s) to disk.');
+      return {written, atomic: false};
     } finally { operation.finish(); }
   }
 

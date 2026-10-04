@@ -1,7 +1,10 @@
 import {FileSystemError, hashFileBytes, workspaceRecordBytes} from '@sharpforge/workspace';
+import {cloneWorkspaceRecord, recordSource} from '@sharpforge/project-system';
+import {evictWorkspaceDocument} from './workspace-document-eviction.js';
 
-const sameRecord = (left, right) => left && right && ['version', 'lazy', 'size', 'lastModified', 'text', 'bytes']
-  .every(key => left[key] === right[key]);
+const sameRecord = (left, right) => left && right && ['version', 'lazy', 'size', 'lastModified', 'bytes']
+  .every(key => left[key] === right[key]) && (recordSource(left) || recordSource(right)
+    ? recordSource(left) === recordSource(right) : left.text === right.text);
 const sameBytes = (left, right) => left.length === right.length && left.every((value, index) => value === right[index]);
 
 function openInView(host, path) {
@@ -91,11 +94,12 @@ export function createWorkspaceEditorLifecycle(host) {
   async function closeRecord(path, {signal} = {}) {
     const operation = begin(path, signal);
     const result = reason => ({path, evicted: false, reason});
+    let committed = false;
     try {
       const before = host.context();
       const original = before.records.find(record => record.path === path);
       if (!original) return result('missing');
-      if (original.lazy && typeof original.text !== 'string' && !original.bytes) return result('unloaded');
+      if (original.lazy && !recordSource(original) && typeof original.text !== 'string' && !original.bytes) return result('unloaded');
       const reason = retainedReason(host, before, original);
       if (reason) return result(reason);
       const disk = before.disk;
@@ -111,24 +115,39 @@ export function createWorkspaceEditorLifecycle(host) {
           hash !== baseline || !sameBytes(bytes, workspaceRecordBytes(member))) return result('modified');
       const version = Math.max(member.version ?? 1, physical.version ?? 1);
       if (!Number.isSafeInteger(version) || version < 1 || version === Number.MAX_SAFE_INTEGER) return result('version-limit');
-      if (host.releaseDocumentView?.(path) === false) return result('open');
-      if (!host.releaseDocumentView) releaseWorkspaceEditorView({editors: host.editors}, path);
-      // The disk watermark survives eviction so a later compilation cannot resend an obsolete version to the worker.
-      disk.replaceRecord({...physical, version});
-      disk.unload(path);
-      const metadata = {...disk.record(path)};
-      state.files = state.files.filter(file => file.uri !== path);
-      state.projectSystem?.files.set(path, metadata);
-      const index = state.extraFiles.findIndex(file => file.path === path);
-      if (index >= 0) state.extraFiles[index] = metadata;
-      else if (!state.projectSystem) state.extraFiles.push(metadata);
-      if (state.active === path) state.active = state.tabs.at(-1) ?? '';
+      if (!host.documents) {
+        if (host.releaseDocumentView?.(path) === false) return result('open');
+        if (!host.releaseDocumentView) releaseWorkspaceEditorView({editors: host.editors}, path);
+      }
+      const publish = () => {
+        // The disk watermark survives eviction so a later compilation cannot resend an obsolete version to the worker.
+        const saved = cloneWorkspaceRecord(physical, path);
+        Object.defineProperty(saved, 'version', {value: version, enumerable: true, configurable: true});
+        disk.replaceRecord(saved);
+        disk.unload(path);
+        const metadata = {...disk.record(path)};
+        state.projectSystem?.files.set(path, metadata);
+        const index = state.extraFiles.findIndex(file => file.path === path);
+        if (index >= 0) state.extraFiles[index] = metadata;
+        else if (!state.projectSystem) state.extraFiles.push(metadata);
+      };
+      if (host.documents) evictWorkspaceDocument(host, path, publish);
+      else {
+        publish();
+        state.files = state.files.filter(file => file.uri !== path);
+        if (state.active === path) state.active = state.tabs.at(-1) ?? '';
+      }
+      committed = true;
       host.releaseDocumentCaches?.(path);
       host.renderDocuments?.();
       host.saveLocal();
       await host.releaseCompilerDocuments?.([{uri: path, version: member.version ?? 1}]);
       return {path, evicted: true, version, bytes: bytes.length};
     } catch (error) {
+      if (committed || error.committed) {
+        error.committed = true;
+        throw error;
+      }
       if (operation.signal.aborted || error.name === 'AbortError') return result('cancelled');
       if (error instanceof FileSystemError && error.code === 'Conflict') return result('changed');
       throw error;

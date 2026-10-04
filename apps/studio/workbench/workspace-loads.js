@@ -11,6 +11,8 @@ function createLoad({ state, documents, signal, current, release }) {
   const controller = new AbortController();
   const workspaceEpoch = state.workspaceEpoch;
   const nativeMode = state.nativeMode;
+  const disk = state.disk;
+  const projectSystem = state.projectSystem;
   const revision = documents.revision;
   let finished = false;
 
@@ -28,9 +30,10 @@ function createLoad({ state, documents, signal, current, release }) {
     if (finished) message = 'Workspace opening has already finished';
     else if (!current()) message = 'Workspace opening was superseded or disposed';
     else if (documents.disposed) message = 'The document service was disposed during workspace opening';
-    else if (state.readOnly) message = 'Stop execution before opening a workspace';
+    else if (state.readOnly && !state.recoveryReadOnly) message = 'Stop execution before opening a workspace';
     else if (state.workspaceEpoch !== workspaceEpoch) message = 'The workspace changed during opening';
     else if (state.nativeMode !== nativeMode) message = 'The workspace backend changed during opening';
+    else if (state.disk !== disk || state.projectSystem !== projectSystem) message = 'The workspace inputs changed during opening';
     else if (documents.revision !== revision) message = 'Documents changed during workspace opening';
     if (message) {
       const error = abortError(message);
