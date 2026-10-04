@@ -6,9 +6,41 @@ These public models and injectable renderer contributions are imported through `
 
 `defaultControlTemplates`, `defaultControlTemplate`, `materializeDefaultControlStyle` and `controlVisualStates` describe actual named visuals, template bindings and per-instance states. Button style padding is applied once by managed layout. Unknown controls receive no fabricated template. Renderer registration preserves caller ownership and explicit override policy; capability requests remain host-owned.
 
+## Application and window lifetime
+
+`ApplicationSession`, `WindowSession`, `VisibilityLifecycle` and `ActivationService` own independent app/window state and events. Closing waits for cancellation and deferral decisions before finalization. Snapshot restoration does not replay external activation or device effects. Deadline clocks and platform services are injected.
+
+## Localization and data transfer
+
+`ResourceLoader`, `ResourceManager`, `ResourceMap`, `ResourceContext`, `importResw` and `languageFallbacks` own language refresh and resource lookup. `DataPackage`, `ClipboardService` and `LauncherService` retain explicit caller-supplied backends and origin/grant policy. Denied clipboard operations return a reason and denied launches return false; no global fallback clipboard is fabricated.
+
+## Managed application adapters
+
+`managedDataPackage` and `createDataPackageView` expose the same authoritative data-transfer state used by drag/drop and clipboard operations. Application/window and resource adapters register through the caller-owned UI extension registry. Windows finalize only after their managed Closed decision commits; the host supplies windowClosed/applicationExited and task/permission services.
+
 ## Items and sparse selection
 
 `SelectionModel` and `SelectionMode` track current selection and stable duplicate occurrences. `ViewportItemSource` and `ViewportSelectionModel` consume count/revision plus bounded realized records; `GroupedItemIndex`, `ViewportGroupIndex` and `SemanticZoomModel` retain group identity. `visibleItemRange`, `navigationIndex` and `sourceItems` expose bounded source helpers. Materialized reconciliation is O(n); lookup and membership are indexed. Performance timings remain unmeasured.
+
+## Navigation models and geometry
+
+`NavigationFrame` commits cached/history state only after navigation succeeds. `PaneState` and `registerNavigationLayouts` share adaptive NavigationView and four SplitView modes with the renderer. Superseded pane decisions cannot close a newer state. Menus retain source identity and expansion state.
+
+## Commands, accelerators and icons
+
+`XamlUICommand`, `StandardUICommand`, `commandCanExecute` and `executeCommand` share command policy. `KeyboardAcceleratorRouter` waits for Handled decisions before default invocation. `partitionCommandBar` and `commandBarGeometry` preserve source order and explicit priority groups. Icon elements/sources validate glyphs and use the declared font fallback policy.
+
+## Popup, dialog and tooltip ownership
+
+`OverlayManager`, `DeferralGroup`, `dispatchDeferred` and `placeOverlay` own root-relative placement and close lifetimes. Opposite-edge flipping preserves alignment. Modal overlays contain focus and restore it on close; tooltips update aria-describedby without moving focus. A second pending ContentDialog.ShowAsync fails explicitly.
+
+## Text and password models
+
+`TextBuffer` owns selection, composition, replacement and undo/redo; offsets use UTF-16 code units and surrogate boundaries are preserved. `PasswordBuffer` exposes length-only snapshots and the exported `redactPasswordProperties` preserves the private-value boundary. `RichTextDocument` supports plain text and bounded formatting. Typography helpers retain explicit inheritance and typed weight/style values.
+
+## Command geometry and text operations
+
+`registerCommandLayouts` and `registerMenuLayouts` arrange the same partitioned commands used by native renderers. `TextCommandController` and `textCommandLabels` provide selection/history-aware actions. Paste first waits for its cancellable event, then applies the approved edit; unsupported clipboard capabilities produce an explicit result.
 
 ## TreeView model
 
@@ -26,17 +58,9 @@ Virtual list/grid/item views consume stable occurrence keys and at most 2,048 re
 
 Managed adapters use context-owned `SelectionModel`/`TreeViewModel`, authoritative source collections and ICollectionView current-position updates. Selected items, graph contents and deferred source references are traced through retainedValues; snapshot restoration does not replay input events.
 
-## Text and password models
-
-`TextBuffer` owns selection, composition, replacement and undo/redo; offsets use UTF-16 code units and surrogate boundaries are preserved. `PasswordBuffer` exposes length-only snapshots and the exported `redactPasswordProperties` preserves the private-value boundary. `RichTextDocument` supports plain text and bounded formatting. Typography helpers retain explicit inheritance and typed weight/style values.
-
 ## Inline display and rich overflow
 
 `getRichTextDocument`, `applyTypography` and `renderRichDocument` consume immutable formatting spans and shared text metrics. Linked overflow fragments preserve UTF-16 ranges, selection and source-document identity. Typography and bidi geometry follow the injected renderer/font provider.
-
-## Localization and data transfer
-
-`ResourceLoader`, `ResourceManager`, `ResourceMap`, `ResourceContext`, `importResw` and `languageFallbacks` own language refresh and resource lookup. `DataPackage`, `ClipboardService` and `LauncherService` retain explicit caller-supplied backends and origin/grant policy. Denied clipboard operations return a reason and denied launches return false; no global fallback clipboard is fabricated.
 
 ## Editor and document contributions
 
@@ -46,18 +70,6 @@ Managed adapters use context-owned `SelectionModel`/`TreeViewModel`, authoritati
 
 `NumericRange`, `CultureNumberFormatter` and `evaluateNumericExpression` validate bounded input and share clamping/NaN policy. `CalendarModel`, `dateValue`, `dateText`, `timeValue`, `dateFieldOrder` and `dateFromFields` use Gregorian UTC arithmetic. RGB/HSV and ARGB helpers preserve channel values and explicit alpha.
 
-## Commands, accelerators and icons
-
-`XamlUICommand`, `StandardUICommand`, `commandCanExecute` and `executeCommand` share command policy. `KeyboardAcceleratorRouter` waits for Handled decisions before default invocation. `partitionCommandBar` and `commandBarGeometry` preserve source order and explicit priority groups. Icon elements/sources validate glyphs and use the declared font fallback policy.
-
-## Application and window lifetime
-
-`ApplicationSession`, `WindowSession`, `VisibilityLifecycle` and `ActivationService` own independent app/window state and events. Closing waits for cancellation and deferral decisions before finalization. Snapshot restoration does not replay external activation or device effects. Deadline clocks and platform services are injected.
-
-## Popup, dialog and tooltip ownership
-
-`OverlayManager`, `DeferralGroup`, `dispatchDeferred` and `placeOverlay` own root-relative placement and close lifetimes. Opposite-edge flipping preserves alignment. Modal overlays contain focus and restore it on close; tooltips update aria-describedby without moving focus. A second pending ContentDialog.ShowAsync fails explicitly.
-
 ## Value and status renderers
 
 `registerValueRenderers`, `getRangeModel` and `getCalendarModel` share clamping, snapping, calendar bounds and selected state with managed input. Nullable selection displays a placeholder even when a non-nullable DateValue/TimeValue companion retains its last typed value; midnight remains present zero.
@@ -66,17 +78,9 @@ Managed adapters use context-owned `SelectionModel`/`TreeViewModel`, authoritati
 
 Clearing SelectedDate/SelectedTime changes the nullable selection and event payload; non-nullable DateValue/TimeValue keep their last/default typed value. Explicit null in a host event wins over stale companion data. Range input preserves NaN policy, clamping and indeterminate state.
 
-## Navigation models and geometry
-
-`NavigationFrame` commits cached/history state only after navigation succeeds. `PaneState` and `registerNavigationLayouts` share adaptive NavigationView and four SplitView modes with the renderer. Superseded pane decisions cannot close a newer state. Menus retain source identity and expansion state.
-
 ## Navigation control contributions
 
 `registerNavigationRenderers` mounts TabView/Pivot, NavigationView/SplitView and Frame/Page behavior. Tab reorder mutates the authoritative collection; pane transitions preserve the acknowledged cancellation decision and named template ownership. History commits only after successful page navigation.
-
-## Command geometry and text operations
-
-`registerCommandLayouts` and `registerMenuLayouts` arrange the same partitioned commands used by native renderers. `TextCommandController` and `textCommandLabels` provide selection/history-aware actions. Paste first waits for its cancellable event, then applies the approved edit; unsupported clipboard capabilities produce an explicit result.
 
 ## Menus and interaction routing
 
@@ -89,10 +93,6 @@ Clearing SelectedDate/SelectedTime changes the nullable selection and event payl
 ## Managed command and checked-state ABI
 
 Synchronous command adapters invoke managed overrides through the supplied virtual-call seam. Checked state distinguishes true/false/null, preserves the released bool IsChecked property via the explicit indeterminate flag and boxes the object-valued GetChecked result.
-
-## Managed application adapters
-
-`managedDataPackage` and `createDataPackageView` expose the same authoritative data-transfer state used by drag/drop and clipboard operations. Application/window and resource adapters register through the caller-owned UI extension registry. Windows finalize only after their managed Closed decision commits; the host supplies windowClosed/applicationExited and task/permission services.
 
 ## Media and platform policy
 
