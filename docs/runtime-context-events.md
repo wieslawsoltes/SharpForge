@@ -1,10 +1,11 @@
-# Cooperative CIL context events
+# Cooperative runtime context events
 
-With `runtimeEvents: true`, `Suspend` records a live active CIL context losing
+With `runtimeEvents: true`, `Suspend` records a live active context losing
 execution when the cooperative scheduler switches to another context or parks
 because nothing is runnable. `Resume` records a previously observed suspended
 context becoming active again. A newly queued context's first activation emits
-neither event. Payloads contain only `{context, frame}`: logical context ID and
+neither event. Direct CIL, source and reloaded-source VMs use the same scheduler
+observer. Payloads contain only `{context, frame}`: logical context ID and
 the top managed frame ID at that transition. They are not OS thread identifiers.
 
 The events are emitted after the existing load or park operation commits. The
@@ -20,8 +21,8 @@ no guest frames, task handles, or stacks. There are no new VM, context, schedule
 or snapshot fields. Completion removes a context's observation, and cancellation
 or stop clears the observation baseline without inventing a `Resume` for work
 that never ran again. Bookkeeping is constant-time per transition and allocates
-no event payload when CIL events are disabled. Source-VM event instrumentation is
-outside this delivery; its existing scheduling behavior is preserved.
+no event payload when events are disabled. Source support reuses these exact
+transition hooks and weak observation state; it adds no scheduling policy.
 
 Restore explicitly starts a fresh observation baseline. Existing log history
 remains chronological, but its old suspensions are not paired with the restored
@@ -41,6 +42,9 @@ with `{runtimeEvents: true, virtualTime: true}`. `vm.run()` parks it and queues
 `runSlice()` delivers the resume notification. Filter the log for
 `RuntimeEventName.Suspend` and `RuntimeEventName.Resume`.
 
-This partial #1403 increment has authored direct-CIL regression cases in
-`tests/a05-context-events.test.js`. Tests and broader platform/performance
-qualification remain in the serial queue; no performance result is claimed.
+Direct-CIL regression cases are in `tests/a05-context-events.test.js`; source and
+reloaded-source cases are in `tests/a05-source-context-events.test.js`. The source
+extension covers actual wait/wake, round-robin switch, freeze, cancellation,
+restore, disabled instrumentation and host callback failures. Source test execution
+and broader #1403 platform/performance qualification remain in the serial queue;
+no performance result is claimed.

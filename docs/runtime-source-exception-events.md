@@ -34,8 +34,8 @@ Source has no separate public single-opcode `step()` method: an instruction-budg
 one `runSlice` uses this origin boundary. Direct host `vm.handleFault()` calls and
 direct opcode-handler invocation are lower-level APIs and do not automatically
 emit it. This leaf does not add first-chance AppDomain events or a new callback
-mechanism. Source scheduler-event delivery and broader platform/performance
-qualification remain separate #1403 work.
+mechanism. [Source scheduler events](runtime-context-events.md) use the shared
+context observer. Broader platform/performance qualification remains #1403 work.
 
 `tests/a05-source-exception-events.test.js` authors source/reload cases for catch,
 finally, valid/invalid/explicit rethrow, pending and caught snapshots, original

@@ -44,5 +44,5 @@ and ordering assertions. Tests have not been run here; serial validation is
 pending. [Source method-load events](runtime-source-method-load-events.md) now
 precede each metadata method's first observed admission.
 [Source exception origins](runtime-source-exception-events.md) share the same log.
-Source scheduler events and broader platform/performance qualification remain
-separate #1403 work.
+[Cooperative scheduler events](runtime-context-events.md) now share this log too.
+Broader platform/performance qualification remains separate #1403 work.
