@@ -11,3 +11,4 @@ export {registerObjectModelAdapters, getDispatcherQueue, routedEventRegistry} fr
 export {visualStateGroups, visualStateManagerModel} from './visual-state-resource-adapters.js';
 export {getResourceServices} from './resource-services.js';
 export {DefaultTemplateCatalog, installDefaultTemplateCatalog} from './default-template-catalog.js';
+export {createContextXamlLoader} from './xaml-resource-adapters.js';
