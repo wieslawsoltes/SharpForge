@@ -36,7 +36,7 @@ node scripts/limited.js node --test --test-concurrency=1 \
 
 The scheduled serial run took 25.483 seconds. Real Roslyn consumers compile against implementation
 and reference assemblies, then execute the original implementations. Native tests also cover
-readonly/scoped signatures and virtual delegates, unmanaged constraint rejection, reflected fallback
+readonly/scoped signatures, delegate Invoke and virtual overrides, unmanaged constraint rejection, reflected fallback
 attribute constructors, metadata marker throw bodies, static extension entry points, source attribute
 targets, and normalized grouping constraints in both declaration orders. The existing nullable scope
 control preserves 29 declaration records across registry/actual-PE and executable/reference surfaces.
