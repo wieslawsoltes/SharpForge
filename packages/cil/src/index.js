@@ -44,3 +44,5 @@ export { createMetadataVerificationTypeSystem, verificationTypeSystemDiagnosticC
 export {ConstrainedObjectProfile} from './constrained-object-profile.js';
 export {ConstrainedReferenceObjectProfile} from './constrained-reference-object-profile.js';
 export { createMetadataVerificationContext, verificationMemberDiagnosticCatalog } from './verify/member-system.js';
+
+export { AssemblySymbolIndex } from './browser/index.js';
