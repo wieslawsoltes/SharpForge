@@ -1,5 +1,6 @@
+import {numericTypeId} from '@sharpforge/bytecode';
 /**
- * Maps type symbols to image type names. The bytecode image knows `int`, `double`, `bool`, `string`, `object`,
+ * Maps type symbols to image type names. The bytecode image knows all numeric scalar widths, `bool`, `string`, `object`,
  * `Exception`, framework registry types, classes declared in the image and single-dimensional arrays of those.
  * Arrays of a higher rank are objects of a synthesized class (lowering/arrays.js).
  * Everything else either lowers to one of them (enums to `int`, delegate types to a synthesized class) or is
@@ -9,6 +10,9 @@ import { TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { unsupported } from './unsupported.js';
 
 const specialNames = Object.freeze({
+  System_SByte: 'sbyte', System_Byte: 'byte', System_Int16: 'short', System_UInt16: 'ushort',
+  System_UInt32: 'uint', System_Int64: 'long', System_UInt64: 'ulong', System_Char: 'char',
+  System_Single: 'float', System_Decimal: 'decimal', System_IntPtr: 'nint', System_UIntPtr: 'nuint',
   System_Int32: 'int',
   System_Double: 'double',
   System_Boolean: 'bool',
@@ -16,20 +20,7 @@ const specialNames = Object.freeze({
   System_Object: 'object',
   System_Void: 'void',
 });
-const unsupportedSpecial = Object.freeze({
-  System_Char: 'char values',
-  System_Int64: '64-bit integers',
-  System_UInt64: '64-bit integers',
-  System_UInt32: 'unsigned integers',
-  System_Byte: 'small integer types',
-  System_SByte: 'small integer types',
-  System_Int16: 'small integer types',
-  System_UInt16: 'small integer types',
-  System_Single: 'float values',
-  System_Decimal: 'decimal values',
-  System_IntPtr: 'native integers',
-  System_UIntPtr: 'native integers',
-});
+
 
 export class TypeMapper {
   /**
@@ -65,7 +56,6 @@ export class TypeMapper {
     if (type.typeKind === TypeKind.Pointer) unsupported('pointer types (the image has no addressable storage)', syntax);
     const special = type.specialType;
     if (special && specialNames[special]) return specialNames[special];
-    if (special && unsupportedSpecial[special]) unsupported(unsupportedSpecial[special], syntax);
     if (type.isErrorType?.()) unsupported('a type the framework registry does not list', syntax);
     const core = this.host.analysis.core,
       definition = type.originalDefinition;
@@ -110,6 +100,6 @@ export class TypeMapper {
   }
   /** True when values of the image type are references (cleared at scope exit, comparable with null). */
   isReference(imageType) {
-    return !['int', 'double', 'bool'].includes(imageType);
+    return imageType !== 'bool' && numericTypeId(imageType) === undefined;
   }
 }

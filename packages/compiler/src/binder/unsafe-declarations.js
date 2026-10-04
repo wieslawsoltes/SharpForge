@@ -9,6 +9,7 @@
  *           primitive types (CS1663), its size a positive constant (CS1665, CS0443 comes from the parser) and it needs
  *           an unsafe context (CS0214). The field's type becomes `T*`: using it yields a pointer to its first element.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, PointerTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
 import { isPointerType } from '../conversions/pointer.js';
 import { isNullableType } from '../conversions/nullable.js';
@@ -48,6 +49,12 @@ export function isUnsafeSymbol(member, type) {
 /** Where CS0214 is reported for a pointer type: the type, or the `delegate*` of a function pointer type (as in Roslyn). */
 export const unsafeMarker = pointer =>
   pointer.kind === 'FunctionPointerType' ? { start: pointer.delegateKeyword.span.start, end: pointer.asteriskToken.span.end } : pointer;
+
+/** True for a pointer type and for an array (of arrays) of pointers. */
+function isPointerOrArrayOfPointers(type) {
+  for (let current = type; current; current = current.elementType) if (isPointerType(current)) return true;
+  return false;
+}
 
 /** The outermost PointerType or FunctionPointerType node inside a type syntax, or null. */
 export function findPointerSyntax(syntax) {
@@ -129,7 +136,7 @@ export function checkUnsafeDeclarations(type, { allowUnsafe, core, evaluate }) {
   if (!allowUnsafe)
     for (const declaration of type.declarations ?? [])
       if ((declaration.syntax.modifiers ?? []).some(token => token.text === 'unsafe'))
-        results.push({ code: 'CS0227', args: [], uri: declaration.uri, node: declaration.syntax.identifier });
+        results.push({ code: DiagnosticId.CS0227, args: [], uri: declaration.uri, node: declaration.syntax.identifier });
   for (const member of type.getMembers()) {
     if (member.isImplicitlyDeclared || member.kind === SymbolKind.NamedType || (member.kind === SymbolKind.Method && member.isAccessor)) continue;
     const uri = member.uri ?? member.locations?.[0]?.uri,
@@ -137,15 +144,19 @@ export function checkUnsafeDeclarations(type, { allowUnsafe, core, evaluate }) {
     // Both parts of a partial member are declarations of their own; with /unsafe they must agree on the modifier.
     const definition = member.partialDefinitionPart ?? null;
     for (const part of [definition, member])
-      if (!allowUnsafe && part && hasUnsafeModifier(part) && part.locations?.[0]) add('CS0227', [], part.locations[0]);
+      if (!allowUnsafe && part && hasUnsafeModifier(part) && part.locations?.[0]) add(DiagnosticId.CS0227, [], part.locations[0]);
     if (allowUnsafe && definition && hasUnsafeModifier(definition) !== hasUnsafeModifier(member) && member.locations?.[0])
-      add('CS0764', [], member.locations[0]);
+      add(DiagnosticId.CS0764, [], member.locations[0]);
     const isUnsafe = isUnsafeSymbol(member, type);
-    for (const syntax of signatureTypeSyntaxes(member)) {
+    const types = signatureTypes(member);
+    signatureTypeSyntaxes(member).forEach((syntax, index) => {
+      if (isUnsafe || !syntax) return;
       const pointer = findPointerSyntax(syntax);
-      if (pointer && !isUnsafe) add('CS0214', [], unsafeMarker(pointer));
-    }
-    for (const { type: signatureType, node } of signatureTypes(member))
+      if (pointer) add(DiagnosticId.CS0214, [], unsafeMarker(pointer));
+      // A pointer type behind an alias (`using unsafe P = int*;`) needs an unsafe context where the alias is used.
+      else if (isPointerOrArrayOfPointers(types[index]?.type)) add(DiagnosticId.CS0214, [], syntax.elementType ?? syntax);
+    });
+    for (const { type: signatureType, node } of types)
       if (node && pointsAtConstructedType(signatureType)) results.push({ feature: 'UnmanagedConstructedTypes', uri, node });
     if (member.kind === SymbolKind.Field && modifiersOf(member).includes('fixed')) checkFixedBuffer(member, type, isUnsafe, { core, evaluate, add });
   }
@@ -156,12 +167,12 @@ function checkFixedBuffer(field, type, isUnsafe, { evaluate, add }) {
   const declarator = field.syntax,
     size = declarator.argumentList?.arguments?.[0]?.expression ?? null,
     element = field.type;
-  if (type.typeKind !== TypeKind.Struct) add('CS1642', [], declarator.identifier);
-  else if (!isUnsafe) add('CS0214', [], declarator.identifier);
-  if (element && !element.isErrorType() && !bufferElementTypes.has(element.specialType)) add('CS1663', [], field.typeSyntax);
+  if (type.typeKind !== TypeKind.Struct) add(DiagnosticId.CS1642, [], declarator.identifier);
+  else if (!isUnsafe) add(DiagnosticId.CS0214, [], declarator.identifier);
+  if (element && !element.isErrorType() && !bufferElementTypes.has(element.specialType)) add(DiagnosticId.CS1663, [], field.typeSyntax);
   if (size) {
     const bound = evaluate(size, field.scope);
-    if (!bound.errors && bound.constant?.isIntegral && bound.constant.bigint <= 0n) add('CS1665', [], size);
+    if (!bound.errors && bound.constant?.isIntegral && bound.constant.bigint <= 0n) add(DiagnosticId.CS1665, [], size);
   }
   // Naming the buffer yields a pointer to its first element.
   if (element && !isPointerType(element)) {
