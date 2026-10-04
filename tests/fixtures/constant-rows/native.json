@@ -1,0 +1,26 @@
+{
+  "runtime": ".NET 10.0.5",
+  "rows": [
+    {
+      "parent": 67108865,
+      "flags": 32854,
+      "type": 8,
+      "blob": "2A000000",
+      "value": 42
+    },
+    {
+      "parent": 134217729,
+      "flags": 4112,
+      "type": 8,
+      "blob": "F9FFFFFF",
+      "value": -7
+    },
+    {
+      "parent": 385875969,
+      "flags": 4608,
+      "type": 14,
+      "blob": "7400650078007400",
+      "value": "text"
+    }
+  ]
+}
