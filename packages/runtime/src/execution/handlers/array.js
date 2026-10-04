@@ -7,7 +7,7 @@ import {nativeInteger} from '../native-int.js';
 const aliases={'System.Int32':'int','System.UInt32':'uint','System.Int64':'long','System.UInt64':'ulong','System.Boolean':'bool','System.Double':'double','System.Single':'float','System.String':'string','System.Object':'object','System.Char':'char','System.Byte':'byte','System.SByte':'sbyte','System.Int16':'short','System.UInt16':'ushort'};
 const handlers=new Map([
   ['newarr',(vm,frame,instruction)=>{
-    const length=cilArrayIndex(vm.pop()),type=vm.inspector.metadata.typeName(instruction.operand),alias=aliases[type]??type,ref=vm.heap.array(alias,length);
+    const length=cilArrayIndex(vm.pop()),type=vm.typeSystem.table(instruction.operand).name,alias=aliases[type]??type,ref=vm.heap.array(alias,length);
     vm.heap.get(ref).data.fill(storageDefault(vm,alias));vm.push(ref);
   }],
   ['ldlen',vm=>{const record=vm.heap.get(vm.pop());if(record.kind!=='array')throw new CilError('ldlen requires an array');vm.push(nativeInteger(record.data.length,vm.options.nativeIntBits));}],

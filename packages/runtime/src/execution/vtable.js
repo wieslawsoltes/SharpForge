@@ -1,6 +1,6 @@
 import {CilDispatchTable} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
-import {interfaceMap, interfaceTarget} from './interface-map.js';
+import {interfaceMap} from './interface-map.js';
 
 /** Runtime adapter over the verifier's assembly-owned declaration tables. */
 export class VirtualDispatch extends CilDispatchTable {
@@ -17,12 +17,10 @@ export class VirtualDispatch extends CilDispatchTable {
     return table;
   }
 
-  resolve(typeToken, methodToken) {
+  resolve(typeToken, methodToken, ownerInstance = null) {
     const declaration = this.definition(methodToken);
     const table = this.table(typeToken);
-    const target = declaration.flags & 0x40 && this.types.get(declaration.ownerToken)?.flags & 0x20
-      ? interfaceTarget(table, this.interfaceMaps.get(table), declaration.ownerToken, declaration.token)
-      : super.resolve(typeToken, methodToken);
+    const target = super.resolve(typeToken, methodToken, ownerInstance);
     if (target?.ambiguousImplementation) {
       throw new ManagedFault('System.Runtime.AmbiguousImplementationException', 'No most-specific interface implementation exists');
     }

@@ -1,3 +1,4 @@
+import {isDecimal} from '../decimal.js';
 import {castReference} from '../casting.js';
 import {staticSlot,finishMemoryAccess} from '../statics.js';
 import {frameworkType} from '@sharpforge/framework';
@@ -23,10 +24,12 @@ for(const name of ['ldfld','stfld','ldflda'])handlers.set(name,(vm,frame,instruc
 });
 handlers.set('box',(vm,frame,instruction)=>{
   const value=vm.pop(),table=vm.typeSystem.table(instruction.operand),type=table.name;
+  if(!table.flags.valueType){vm.push(castReference(vm.heap,value,table));return;}
   if(isReference(value)&&frameworkType(type)?.kind==='value'&&vm.heap.get(value).type===type) {
     vm.heap.withRoots([value],()=>{const record=vm.heap.get(value),copy=vm.heap.allocate(record.kind,record.type,[...record.data]);vm.push(vm.heap.allocate('box',table,[copy],[copy]));});return;
   }
-  if(!isNumber(value))throw new ManagedFault('NotSupportedException','Only primitive and registered immutable WinUI value boxing is implemented');
+  if(isDecimal(value)&&type!=='System.Decimal')throw new ManagedFault('InvalidProgramException','Decimal boxing requires its declared type');
+  if(!isNumber(value)&&!isDecimal(value))throw new ManagedFault('NotSupportedException','Only numeric and registered immutable WinUI value boxing is implemented');
   vm.push(vm.heap.allocate('box',table,[vm.storage(value,type)]));
 });
 for(const name of ['unbox','unbox.any'])handlers.set(name,(vm,frame,instruction)=>{
@@ -37,6 +40,6 @@ for(const name of ['unbox','unbox.any'])handlers.set(name,(vm,frame,instruction)
   vm.push(name==='unbox'?vm.address('box',0,ref):vm.storage(record.data[0],type));
 });
 for(const name of ['castclass','isinst'])handlers.set(name,(vm,frame,instruction)=>{
-  vm.push(castReference(vm.heap,vm.pop(),instruction.operand,name==='castclass'));
+  vm.push(castReference(vm.heap,vm.pop(),vm.typeSystem.table(instruction.operand),name==='castclass'));
 });
 export {handlers};
