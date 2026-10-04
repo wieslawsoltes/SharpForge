@@ -32,3 +32,4 @@ export {gaussianWeights, systemBackdropPolicy, XamlCompositionBrushBase} from '.
 export * from './media/materializer.js';
 export * from './composition/index.js';
 export * from './animation/index.js';
+export {ensureNumericsContracts, registerCompositionContracts} from './contracts/composition.js';
