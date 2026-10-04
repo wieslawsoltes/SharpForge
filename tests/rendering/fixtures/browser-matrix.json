@@ -5,7 +5,7 @@
     {
       "id": "glyph-atlas-residency-5000", "scene": "atlas-residency", "width": 2400, "height": 1400, "dpr": 1, "fontSize": 16,
       "requiresVerification": true, "benchmark": true, "workIds": ["SF-A17-T04.2"],
-      "budgets": {"atlasBytes": 33554432},
+      "webgpuBudgets": {"atlasBytes": 33554432},
       "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
       "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
     },

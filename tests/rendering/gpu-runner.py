@@ -169,6 +169,7 @@ def run_fixture(page, fixture, args, budget, output):
     paired = capture_pair(page, fixture, args, output, dimensions)
     comparison = compare_capture(result, fixture, args, output, pixels, dimensions, paired)
     result['budget'] = check_budget(result.get('metrics', {}), {**budget, **fixture.get('budgets', {}),
+        **fixture.get(args.backend + 'Budgets', {}),
         **fixture.get(args.tier + 'Budgets', {})})
     result['semanticVerification'] = verification_result(result, fixture)
     result['pixelAssertions'] = inspect_pixels(pixels, dimensions, fixture)
