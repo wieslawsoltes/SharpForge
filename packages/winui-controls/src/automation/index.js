@@ -12,6 +12,8 @@ export * from './conformance.js';
 export * from './member-schema.js';
 export * from './model-handle.js';
 export * from './callback-peer.js';
+export * from './member-service.js';
+export * from './member-adapters.js';
 export * from './virtual-item-peer.js';
 export * from './visibility.js';
 export * from './state-transport.js';
