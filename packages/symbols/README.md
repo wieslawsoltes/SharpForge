@@ -48,8 +48,14 @@ decoding and 1,024 UTF-16 units afterward. These options also apply through
 `interop/LocalConstants` and `tests/fixtures/portable-pdb-local-constants`.
 
 For bound symbols, `loadSymbols` recognizes a top-level `System.Decimal`
-TypeDef/TypeRef by its metadata-declared namespace/name, as specified by the
-Portable PDB format. It does not load or resolve referenced assemblies. Decimal
+TypeDef/TypeRef only when its declared assembly scope matches an invariant-culture
+framework identity: `System.Runtime` / `b03f5f7f11d50a3a`,
+`System.Private.CoreLib` / `7cec85d7bea7798e`, or `mscorlib` / `b77a5c561934e089`.
+AssemblyRef tokens and full public keys are supported; TypeDef requires its own
+Assembly public key. This checks declared metadata identity without loading
+assemblies or verifying signatures. Custom-assembly lookalikes remain unresolved.
+The binder caps inspected assembly scopes at 1,024, each public key at 16 KiB
+and aggregate key bytes at 1 MiB before hashing. Decimal
 constants expose `type: 'decimal'`, exact decimal text in `value`, and
 `decimal: { coefficient, scale, negative }`; `coefficient` is an unsigned 96-bit
 BigInt. Trailing fractional zeroes and the sign bit of zero are preserved without

@@ -116,21 +116,86 @@ test('same-name nested types, different namespaces and TypeSpec handles are not 
   }
 });
 
-test('a top-level TypeDef declaration uses the same exact decimal format', () => {
-  const heap = new TextEncoder().encode('\0Decimal\0System\0');
+function declaredDecimal({
+  name = 'mscorlib',
+  culture = '',
+  reference = false,
+  key = Buffer.from('00000000000000000400000000000000', 'hex'),
+  flags = 1,
+} = {}) {
+  const names = new Map();
+  const indices = new Map();
+  let text = '';
+  for (const value of ['', 'Decimal', 'System', name, culture]) {
+    if (indices.has(value)) continue;
+    indices.set(value, text.length);
+    names.set(text.length, value);
+    text += value + '\0';
+  }
+  const identity = reference
+    ? [4, 0, 0, 0, flags, 1, indices.get(name), indices.get(culture), 0]
+    : [0x8004, 4, 0, 0, 0, flags, 1, indices.get(name), indices.get(culture)];
+  const typeToken = reference ? 0x01000001 : 0x02000001;
+  const type = [reference ? 6 : 1, indices.get('Decimal'), indices.get('System')];
   const metadata = {
-    counts: { 2: 1 },
-    row: () => [1, 1, 9],
-    streams: new Map([['#Strings', heap]]),
-    string: (index) => (index === 1 ? 'Decimal' : 'System'),
+    counts: { 1: 1, 2: 1, 35: 1 },
+    rows: { 32: reference ? [] : [identity] },
+    row: (token) => (token === typeToken ? type : identity),
+    blob: () => key,
+    streams: new Map([['#Strings', new TextEncoder().encode(text)]]),
+    string: (index) => names.get(index),
   };
   const constant = {
-    typeToken: 0x02000001,
-    signature: new Writer().u8(17).compressed(4).u8(1).u32(15).u32(0).u32(0).finish(),
+    typeToken,
+    decoded: false,
+    reason: 'type-metadata-required',
+    signature: new Writer()
+      .u8(17)
+      .compressed(codedIndex('TypeDefOrRef', typeToken))
+      .u8(1)
+      .u32(15)
+      .u32(0)
+      .u32(0)
+      .finish(),
   };
-  bindConstantTypes([constant], metadata);
-  assert.equal(constant.value, '1.5');
-  assert.deepEqual(constant.decimal, { coefficient: 15n, scale: 1, negative: false });
+  return { metadata, constant };
+}
+
+test('known framework AssemblyRef tokens and own Assembly public keys establish declared identity', () => {
+  const identities = [
+    {},
+    { reference: true, name: 'System.Runtime', flags: 0, key: Buffer.from('b03f5f7f11d50a3a', 'hex') },
+    { reference: true, name: 'System.Private.CoreLib', flags: 0, key: Buffer.from('7cec85d7bea7798e', 'hex') },
+  ];
+  for (const identity of identities) {
+    const { metadata, constant } = declaredDecimal(identity);
+    bindConstantTypes([constant], metadata);
+    assert.equal(constant.value, '1.5');
+    assert.deepEqual(constant.decimal, { coefficient: 15n, scale: 1, negative: false });
+  }
+});
+
+test('custom-assembly lookalikes, wrong keys, cultures and unsupported flags stay unresolved', () => {
+  const identities = [
+    { name: 'Custom' },
+    { name: 'Custom', reference: true },
+    { key: new Uint8Array(), flags: 0 },
+    { culture: 'en-US' },
+    { flags: 0x201 },
+    { reference: true, name: 'System.Runtime', flags: 0, key: new Uint8Array(8) },
+    { reference: true, name: 'System.Runtime', flags: 0, key: new Uint8Array() },
+  ];
+  for (const identity of identities) {
+    const { metadata, constant } = declaredDecimal(identity);
+    bindConstantTypes([constant], metadata);
+    assert.equal(constant.decoded, false);
+    assert.equal(constant.reason, 'type-metadata-required');
+  }
+});
+
+test('framework public keys are bounded before hashing', () => {
+  const { metadata, constant } = declaredDecimal({ key: new Uint8Array(16385) });
+  assert.throws(() => bindConstantTypes([constant], metadata), /assembly key byte limit/);
 });
 
 test('bound decimal values own their scalar representation after PE/PDB mutation', () => {
