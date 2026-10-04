@@ -21,15 +21,34 @@ export class DocumentLocks {
 
   subscribe(listener, options) { return this.events.subscribe(listener, options); }
   isProjectLocked(id) { return (this.projectLocks.get(id)?.size ?? 0) > 0; }
-  isDocumentLocked(uri) { return this.documents.projectsFor(uri).some(id => this.isProjectLocked(id)); }
+  isDocumentExecutionLocked(uri) { return this.documents.projectsFor(uri).some(id => this.isProjectLocked(id)); }
+
+  isDocumentLocked(uri) {
+    const record = this.documents.get(uri);
+    return record?.readOnly === true || record?.generated === true || this.readOnlyPolicy?.(uri, record) === true
+      || this.isDocumentExecutionLocked(uri);
+  }
+
+  /** Add host policy without replacing project-session ownership or reading model.readOnly recursively. */
+  setReadOnlyPolicy(policy) {
+    if (policy !== undefined && typeof policy !== 'function') throw new TypeError('Document read-only policy must be a function');
+    this.readOnlyPolicy = policy;
+    this.apply();
+  }
 
   refresh() {
     const next = new Map();
     for (const session of this.sessions.list()) {
       if (!session.readOnly) continue;
-      const set = next.get(session.projectId) ?? new Set();
-      set.add(session.id);
-      next.set(session.projectId, set);
+      const projects = new Set([session.projectId]);
+      for (const dependency of session.lastLaunch?.dependencies ?? []) {
+        if (typeof dependency.project === 'string') projects.add(dependency.project);
+      }
+      for (const project of projects) {
+        const set = next.get(project) ?? new Set();
+        set.add(session.id);
+        next.set(project, set);
+      }
     }
     const changed = next.size !== this.projectLocks.size || [...next].some(([projectId, ids]) => {
       const previous = this.projectLocks.get(projectId);
