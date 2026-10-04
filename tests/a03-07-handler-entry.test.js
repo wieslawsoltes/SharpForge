@@ -43,7 +43,15 @@ test('unreachable try entries do not invent heights, and finally still begins wi
   assert.ok(underflow.issues.some(issue => issue.code === 'IL_STACK' && issue.message.includes('underflow')));
 });
 
-test('ten retained ILVerify cases agree with reachable try-entry admission', () => {
+test('nested try entry consumes the enclosing catch exception before entering the try', () => {
+  const seed = entryFixture({ nestedCatch: true, nonempty: true });
+  const rejected = verifyCilAssembly(seed.bytes);
+  assert.ok(rejected.issues.some(issue => issue.code === 'IL_EH_ENTRY' && issue.offset === seed.entryOffset));
+  const accepted = verifyCilAssembly(entryFixture({ nestedCatch: true }).bytes);
+  assert.equal(accepted.success, true, JSON.stringify(accepted.issues));
+});
+
+test('twelve retained ILVerify cases agree with reachable try-entry admission', () => {
   const capture = JSON.parse(readFileSync(new URL('./fixtures/a03-handler-entry/native.json', import.meta.url), 'utf8'));
   assert.equal(capture.observations.length, nativeCases.length);
   for (const fixture of nativeCases) {
