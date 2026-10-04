@@ -1,7 +1,8 @@
-import {DesignGeometrySession, geometryInvariant, rectanglePoints, boundsOfPoints, toggleDesignAnchor,
-  transformRectangle, inverseMatrix, guideSettings, DesignSnaplines} from '@sharpforge/designer';
+import {DesignGeometrySession, geometryInvariant, boundsOfPoints, toggleDesignAnchor,
+  guideSettings, DesignSnaplines} from '@sharpforge/designer';
 import {DesignerOrderGesture} from './designer-surface-order.js';
 import {marginLayoutBounds} from './designer-surface-margin.js';
+import {localSnapBaseline, localSnapTarget} from './designer-surface-snap-targets.js';
 
 /** Pointer/keyboard gesture ownership is explicit; no temporary document or history mutation is needed. */
 export class DesignerSurfaceGestures {
@@ -17,12 +18,7 @@ export class DesignerSurfaceGestures {
       && !(this.view.outline?.isLocked(id) ?? false) && (this.view.outline?.isVisible(id) ?? true));
   }
 
-  baseline(entry, origin, matrix = null) {
-    if (!Number.isFinite(entry.baseline)) return null;
-    matrix ??= this.controller.multiply(inverseMatrix(entry.parentMatrix), entry.matrix);
-    if (Math.abs(matrix[1]) > 1e-8) return null;
-    return matrix[3] * entry.baseline + matrix[5] - origin;
-  }
+  baseline(entry, origin, matrix) { return localSnapBaseline(entry, origin, matrix); }
 
   session(ids, {start = {x: 0, y: 0}, handle = null} = {}) {
     const entries = ids.map(id => this.controller.geometry.get(id));
@@ -47,13 +43,14 @@ export class DesignerSurfaceGestures {
     const parent = this.controller.geometry.get(parentId);
     geometryInvariant(parent, 'SFD_SNAP_PARENT', 'Snap parent has no rendered layout.');
     const excludedIds = new Set(excluded);
-    const matrix = inverseMatrix(parent.matrix);
-    const siblings = settings.snapSiblings ? parent.node.children.filter(id => !excludedIds.has(id)
-      && (this.view.outline?.isVisible(id) ?? true)).map(id => this.controller.geometry.get(id)).filter(Boolean).map(entry => {
-      const relative = this.controller.multiply(matrix, entry.matrix);
-      const bounds = transformRectangle({Width: entry.width, Height: entry.height}, relative);
-      return {id: entry.id, bounds, baseline: this.baseline(entry, bounds.Top, relative)};
-    }) : [];
+    const siblings = [];
+    if (settings.snapSiblings) {
+      for (const id of parent.node.children) {
+        if (excludedIds.has(id) || !(this.view.outline?.isVisible(id) ?? true)) continue;
+        const entry = this.controller.geometry.entries?.get(id) ?? this.controller.geometry.get(id);
+        if (entry) siblings.push(entry.snap ?? localSnapTarget(entry));
+      }
+    }
     const guides = settings.snapGuides ? settings.guides.map(guide => {
       const axisAligned = Math.abs(parent.stageMatrix[1]) < 1e-9 && Math.abs(parent.stageMatrix[2]) < 1e-9;
       if (!axisAligned) return null;

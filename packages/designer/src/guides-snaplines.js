@@ -14,28 +14,25 @@ function lowerBound(items, position) {
   return low;
 }
 
-function addRectangle(lines, item) {
-  const rectangle = designRectangle(item.bounds ?? item);
+function addTarget(lines, axis, position, kind, target) {
+  const key = `${position}:${kind}`;
+  if (!lines[axis].has(key)) lines[axis].set(key, {axis, position, kind, target});
+}
+
+function addRectangle(lines, rectangle) {
   for (const [axis, [position, size]] of Object.entries(axisNames)) {
-    lines[axis].push({axis, position: rectangle[position], kind: 'edge', target: item.id},
-      {axis, position: rectangle[position] + rectangle[size] / 2, kind: 'center', target: item.id},
-      {axis, position: rectangle[position] + rectangle[size], kind: 'edge', target: item.id});
+    addTarget(lines, axis, rectangle[position], 'edge', rectangle.id);
+    addTarget(lines, axis, rectangle[position] + rectangle[size] / 2, 'center', rectangle.id);
+    addTarget(lines, axis, rectangle[position] + rectangle[size], 'edge', rectangle.id);
   }
-  if (Number.isFinite(item.baseline)) {
-    lines.y.push({axis: 'y', position: rectangle.Top + item.baseline, kind: 'baseline', target: item.id});
+  if (Number.isFinite(rectangle.baseline)) {
+    addTarget(lines, 'y', rectangle.Top + rectangle.baseline, 'baseline', rectangle.id);
   }
 }
 
-function compactTargets(items, discriminator = item => item.kind) {
-  const result = [];
-  let previous = null;
-  for (const item of items) {
-    const key = `${item.position}:${discriminator(item)}`;
-    if (key === previous) continue;
-    previous = key;
-    result.push(item);
-  }
-  return result;
+function addSpacing(lines, item) {
+  const key = `${item.position}:${item.trailing}:${item.gap}`;
+  if (!lines.has(key)) lines.set(key, item);
 }
 
 function prefer(candidate, best) {
@@ -55,31 +52,35 @@ export class DesignSnaplines {
     this.snapGrid = snapGrid;
     this.lines = {x: [], y: []};
     this.spacing = {x: [], y: []};
-    for (const sibling of siblings) addRectangle(this.lines, sibling);
-    if (parent) addRectangle(this.lines, {...parent, id: parent.id ?? '$parent'});
+    const targets = {x: new Map(), y: new Map()};
+    const rectangles = siblings.map(item => ({...designRectangle(item.bounds ?? item), id: item.id, baseline: item.baseline}));
+    for (const rectangle of rectangles) addRectangle(targets, rectangle);
+    if (parent) addRectangle(targets, {...designRectangle(parent.bounds ?? parent), id: parent.id ?? '$parent', baseline: parent.baseline});
     for (const guide of guides) {
       geometryInvariant(['x', 'y'].includes(guide.axis) && Number.isFinite(guide.position),
         'SFD_GUIDE_VALUE', 'Guides require an axis and a finite position.');
-      this.lines[guide.axis].push({...guide, kind: 'guide', target: guide.id ?? '$guide'});
+      const key = `${guide.position}:guide`;
+      if (!targets[guide.axis].has(key)) targets[guide.axis].set(key, {...guide, kind: 'guide', target: guide.id ?? '$guide'});
     }
     for (const [axis, [position, size]] of Object.entries(axisNames)) {
+      this.lines[axis] = [...targets[axis].values()];
       this.lines[axis].sort((left, right) => left.position - right.position || rank[left.kind] - rank[right.kind]);
-      this.lines[axis] = compactTargets(this.lines[axis]);
-      const sorted = siblings.map(item => ({id: item.id, ...designRectangle(item.bounds ?? item)}));
+      const sorted = [...rectangles];
       sorted.sort((left, right) => left[position] - right[position]);
+      const spacing = new Map();
       for (let index = 1; index < sorted.length; index++) {
         const previous = sorted[index - 1];
         const current = sorted[index];
         const gap = current[position] - previous[position] - previous[size];
         if (gap < 0) continue;
-        this.spacing[axis].push({axis, position: current[position] + current[size] + gap,
+        addSpacing(spacing, {axis, position: current[position] + current[size] + gap,
           kind: 'spacing', target: current.id, other: previous.id, gap, trailing: false});
-        this.spacing[axis].push({axis, position: previous[position] - gap,
+        addSpacing(spacing, {axis, position: previous[position] - gap,
           kind: 'spacing', target: previous.id, other: current.id, gap, trailing: true});
       }
+      this.spacing[axis] = [...spacing.values()];
       this.spacing[axis].sort((left, right) => left.position - right.position || Number(left.trailing) - Number(right.trailing)
         || left.gap - right.gap);
-      this.spacing[axis] = compactTargets(this.spacing[axis], item => `${item.trailing}:${item.gap}`);
     }
   }
 
