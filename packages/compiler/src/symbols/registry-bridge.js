@@ -8,6 +8,7 @@ import {NamespaceSymbol,NamespaceExtent} from './namespaces.js';
 import {attachOpenMembers} from './registry-open-members.js';
 import {registryParameter,registryContractMethod} from './registry-contracts.js';
 import {appendRegistryIndexers} from './registry-indexers.js';
+import {appendRegistryFields} from './registry-fields.js';
 import {declareCoreTypes,TypeProvider,specialTypeFromKeyword,coreTypeDescriptor,specialTypeIds} from './special-types.js';
 /**
  * Bridges the closed framework registry (packages/framework) and the bytecode builtin table to read-only,
@@ -98,6 +99,7 @@ export class RegistryBridge {
     for(const [name,p] of properties){const type=p.get?.returnType??p.set.parameters[0].type;members.push(new PropertySymbol({...pub,name,type,getMethod:p.get??null,setMethod:p.set??null,modifiers:p.isStatic?DeclarationModifiers.Static:0}),...[p.get,p.set].filter(Boolean));}
     for(const [name,e] of events){const type=this.typeFromName(entry?.events?.[name])??e.eventAdd?.parameters[0].type??this.objectType;members.push(new EventSymbol({...pub,name,type,addMethod:e.eventAdd??null,removeMethod:e.eventRemove??null}),...[e.eventAdd,e.eventRemove].filter(Boolean));}
     appendRegistryIndexers(members,owner,entry,this.types);
+    appendRegistryFields(members,entry,this,pub);
     if(entry?.kind==='enum')for(const [name,value] of Object.entries(entry.values??{}))members.push(new FieldSymbol({...pub,name,type:owner,modifiers:DeclarationModifiers.Const,constantValue:{value}}));
     for(const b of this.builtinsByOwner.get(registryName)??[]){
       const {name: short, instance, property} = builtinMemberShape(b);

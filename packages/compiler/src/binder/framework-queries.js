@@ -10,10 +10,11 @@
  * All queries are side-effect free unless `report` is passed.
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
-import { canonicalType, frameworkType, frameworkAssignable, enumValue } from '@sharpforge/framework';
+import { frameworkType, frameworkAssignable, enumValue } from '@sharpforge/framework';
 import { Conversion, ConversionKind } from '../conversions/classify.js';
 import { typeText } from '../type-utils.js';
 import { memberPath as pathOf } from './member-path.js';
+import {frameworkReceiver} from '../framework-receivers.js';
 
 const valueKeywords = ['int', 'double', 'bool', 'void'];
 const collectionFamilies = ['List', 'HashSet'];
@@ -39,13 +40,7 @@ export const FrameworkQueries = Base =>
 
     /** The framework type a member access is made on: `{type, isStatic, node}` or null. */
     frameworkReceiver(node) {
-      if (node?.kind !== 'Member') return null;
-      const path = pathOf(node.target),
-        staticType = path && !this.c.findType(path, this.m) && frameworkType(path === 'string' ? 'System.String' : path);
-      if (staticType) return { type: staticType.name, isStatic: true, node: null };
-      const inferred = this.infer(node.target),
-        type = frameworkType(inferred === 'string' ? 'System.String' : canonicalType(inferred));
-      return type ? { type: type.name, isStatic: false, node: node.target } : null;
+      return frameworkReceiver(this, node);
     }
 
     /** The contract of the nearest method called `name` on a framework type, or undefined. */
