@@ -1,0 +1,10 @@
+<Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+  <Border Canvas.Left="8" Canvas.Top="8" Width="168" Height="48" CornerRadius="2,14,20,6"
+          BorderThickness="1,3,7,11" BorderBrush="#CC153E87" Background="#885FBA81" Padding="4,2,8,6">
+    <Rectangle Fill="#FFE6BC40" />
+  </Border>
+  <Border Canvas.Left="24" Canvas.Top="76" Width="128" Height="34" CornerRadius="17"
+          BorderThickness="0.5,2,8,4" BorderBrush="#FF81335A" Background="#80A4CEEC" RenderTransformOrigin="0.5,0.5">
+    <Border.RenderTransform><RotateTransform Angle="8" /></Border.RenderTransform>
+  </Border>
+</Canvas>

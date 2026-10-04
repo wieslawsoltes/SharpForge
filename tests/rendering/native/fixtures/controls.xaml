@@ -1,0 +1,9 @@
+<StackPanel xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Spacing="6" Padding="8">
+  <Button x:Name="FocusButton" Content="Button" Width="176" />
+  <CheckBox Content="Check box" IsChecked="True" />
+  <RadioButton Content="Radio button" IsChecked="True" />
+  <ToggleSwitch Header="Toggle" IsOn="False" />
+  <Slider Minimum="0" Maximum="100" Value="37" Width="176" />
+  <ProgressBar Minimum="0" Maximum="100" Value="63" Width="176" Height="4" />
+</StackPanel>

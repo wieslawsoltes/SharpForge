@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "referencePolicy": "Initial absolute thresholds, not measured speedup claims. The 5% regression gate requires matching scene, resolution, adapter, driver and browser.",
+  "hardware": {
+    "default": {"cpuMedianMs": 4, "cpuP95Ms": 8, "cpuP99Ms": 16, "drawCalls": 128, "gpuMemoryBytes": 67108864, "atlasBytes": 16777216},
+    "large": {"cpuMedianMs": 8, "cpuP95Ms": 16, "cpuP99Ms": 32, "drawCalls": 128, "gpuMemoryBytes": 268435456, "atlasBytes": 67108864}
+  },
+  "software": {
+    "default": {"cpuMedianMs": 16, "cpuP95Ms": 50, "cpuP99Ms": 100, "drawCalls": 128, "gpuMemoryBytes": 67108864, "atlasBytes": 16777216},
+    "large": {"cpuMedianMs": 50, "cpuP95Ms": 150, "cpuP99Ms": 300, "drawCalls": 128, "gpuMemoryBytes": 268435456, "atlasBytes": 67108864}
+  }
+}
