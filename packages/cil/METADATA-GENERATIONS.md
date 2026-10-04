@@ -144,8 +144,9 @@ the other heaps. It does not return borrowed heap buffers.
 
 ## Ownership, bounds and cancellation
 
-Inputs are bounded before allocation, copied into private storage, and parsed
-once. Every returned collection and binary heap value is independently owned.
+Input byte extents are checked before allocating the owned byte copy. Each input
+is copied into private storage and parsed once. Every returned collection and
+binary heap value is independently owned.
 Appending or disposing the reader does not change previously returned facts.
 Admission completes before commit. Failed/canceled appends preserve prior state;
 reentrant appends are rejected and disposal during a signal callback cannot revive
@@ -191,8 +192,10 @@ when they are classified into the generation API's diagnostic categories.
 ## Qualification and performance status
 
 This source preparation has not been executed. The focused API, boundary and
-shared-reader tests are authored; native observer/corpus preparation is in
-`tests/fixtures/metadata-generations`. No native, Node, browser, Rust/Wasm, source
+shared-reader tests are authored. The native observer, second Roslyn mixed
+insert/update corpus generator, strict provenance verifier and Node/browser replay
+are prepared in `tests/fixtures/metadata-generations`; its README records the
+scheduled commands and retention layout. No native, Node, browser, Rust/Wasm, source
 VM or direct-CIL runtime pass is claimed. Runtime update execution is outside this
 JavaScript metadata API. The existing Portable PDB generation inputs are retained
 unchanged and are not themselves proof that the new API passed.
