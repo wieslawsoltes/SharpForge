@@ -7,10 +7,13 @@ import { runProcess } from '../../scripts/conformance/oracle/process.js';
 import { parseILVerify } from '../../scripts/conformance/verifier/catalog.js';
 import { checkTools } from '../../scripts/conformance/verifier/tools.js';
 
-/** Capture authored one-method assemblies serially, preserving raw output before parsing or asserting it. */
-export async function captureVerifierCases({ output, input, cases, createFixture, describe, inputs }) {
+/** Capture one selected method per assembly, preserving raw output before parsing or asserting it. */
+export async function captureVerifierCases({ output, input, cases, createFixture, describe, inputs, methodFilter }) {
   if (!output) throw new Error('Pass an explicit capture JSON path');
+  if (methodFilter !== undefined && (typeof methodFilter !== 'string' || !methodFilter.length || methodFilter.length > 512))
+    throw new Error('Method filter must be a nonempty pattern of at most 512 characters');
   const capture = { inputSHA256: sha256(await readFile(input)), observations: [] };
+  if (methodFilter !== undefined) capture.methodFilter = methodFilter;
   if (inputs) {
     capture.inputs = {};
     for (const [name, url] of Object.entries(inputs)) capture.inputs[name] = sha256(await readFile(url));
@@ -30,6 +33,7 @@ export async function captureVerifierCases({ output, input, cases, createFixture
       const assembly = path.join(temporary, fixture.name + '.dll');
       await writeFile(assembly, bytes);
       const args = ['--fx-version', pin.runtime, tools.ilverify, assembly, '--system-module', 'System.Runtime', '--statistics'];
+      if (methodFilter !== undefined) args.push('--include', methodFilter);
       for (const reference of toolchain.references) args.push('--reference', reference);
       const raw = await runProcess(toolchain.dotnet, args, { cwd: temporary, timeoutMs: 30000 });
       const verify = { ...raw, stdout: raw.stdout.replaceAll(temporary, '<temporary>'),
