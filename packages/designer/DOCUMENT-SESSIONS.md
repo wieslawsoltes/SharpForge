@@ -28,6 +28,8 @@ block-bodied `Create`, `InitializeComponent`, or `Main` containing directly cons
 `compatible`, `code`, `reason` / `blockingReason`, `methodName`, `method`, and `span`. Spans are UTF-16 offsets into the original text.
 Lexical incompleteness, missing methods, ambiguous construction methods, unsupported file types, and the two-million-character source
 limit have distinct stable diagnostic codes. `options.cancellationToken` is the syntax package cancellation contract.
+The probe uses the Scanner's explicit `captureTrivia: false` raw-sequence mode: token values and offsets remain available without
+retaining whitespace records. The lexer still owns comments, directives, Unicode trivia, lexical diagnostics and cancellation.
 
 A successful probe means that Studio can offer a design view. The subsequent complete source reader still validates the supported
 declarative profile and reports source diagnostics. Dynamic expressions remain owned by C#; the probe does not assert that every

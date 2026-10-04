@@ -112,7 +112,7 @@ export function probeDesignSource(text, uri = 'Program.cs', {maxCharacters = 2_0
     return result(uri, codes.method, 'No Create, InitializeComponent, or Main construction method was found.');
   }
   const scanner = new Scanner(new SourceText(text, uri), undefined, {cancellationToken});
-  const {raws: tokens} = scanner.sequence();
+  const {raws: tokens} = scanner.sequence(null, {captureTrivia: false});
   const {pairs, methodTokens, invalid} = pairTokens(tokens);
   if (invalid || scanner.diagnostics.some(diagnostic => diagnostic.severity === 'error')) {
     return result(uri, codes.syntax, 'Complete the C# tokens and balanced method body before opening the design view.');

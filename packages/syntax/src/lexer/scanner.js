@@ -148,22 +148,25 @@ export class Scanner {
     this.feature('Utf8StringLiterals', raw.start, this.i);
     if (encoded.error) this.error(raw.start, this.i - raw.start, encoded.error.code, encoded.error.message);
   }
-  /** Lexes tokens until `stop()` holds or the end of file. Returns { raws, tail } where tail is trivia before the stop. */
-  sequence(stop) {
+  /**
+   * Lexes until `stop()` or EOF. With captureTrivia:false, raw leading/trailing fields are omitted and head/tail are empty.
+   * Token values, offsets, directives and lexical diagnostics remain unchanged; run()/lex() retain lossless trivia by default.
+   */
+  sequence(stop, {captureTrivia = true} = {}) {
     const raws = [],
-      first = scanTrivia(this, !!stop),
+      first = scanTrivia(this, !!stop, captureTrivia),
       head = first.trailing;
     let pending = first.leading;
     for (;;) {
       if (stop && stop()) return { raws, tail: pending, head };
       const raw = this.token();
-      raw.leading = pending;
+      if (captureTrivia) raw.leading = pending;
       raws.push(raw);
       if (raw.kind === 'eof') return { raws, tail: empty, head };
       if ((raws.length & 255) === 0 && this.options.cancellationToken) this.options.cancellationToken.throwIfCancellationRequested();
       if (!stop) this.state.seenToken = true;
-      const trivia = scanTrivia(this, true);
-      raw.trailing = trivia.trailing;
+      const trivia = scanTrivia(this, true, captureTrivia);
+      if (captureTrivia) raw.trailing = trivia.trailing;
       pending = trivia.leading;
     }
   }
