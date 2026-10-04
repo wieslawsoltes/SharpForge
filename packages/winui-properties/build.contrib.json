@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "styles": [],
+  "workers": [],
+  "assets": [
+    {
+      "source": "packages/winui-properties/src",
+      "target": "packages/winui-properties/src",
+      "order": 1500
+    }
+  ]
+}
