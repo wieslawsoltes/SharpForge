@@ -52,6 +52,11 @@ export class NativeKeymapAdapter {
     this.bindings.setBindings(bindings);
     this.mode = mode;
     this.editor.keymap = mode;
+    if (mode === 'vim' && ['insert', 'replace'].includes(this.vim.mode) && !this.vim.inUndoGroup && !this.context.readOnly) {
+      this.editor.model?.beginUndoGroup?.('vim-insert');
+      this.vim.inUndoGroup = true;
+      this.vim.keys = [this.vim.mode === 'replace' ? 'R' : 'i'];
+    }
     if (this.editor.element) this.editor.element.dataset.keymap = mode;
     this.onState({ keymap: mode, mode: mode === 'vim' ? this.vim.mode : 'editing' });
   }
@@ -59,6 +64,9 @@ export class NativeKeymapAdapter {
     if (!this.vim.inUndoGroup) return;
     this.editor.model?.endUndoGroup?.();
     this.vim.inUndoGroup = false;
+    this.vim.keys.push('Escape');
+    this.vim.finishChange();
+    this.vim.resetPending();
   }
   beforeModelChange() {
     this.modelSubscription?.();

@@ -5,7 +5,7 @@ import { normalizeSelections, transformSelections } from '../packages/editor/src
 import {
   addCaret, addNextOccurrence, addAllOccurrences, removeLastCaret, collapseSelections, insertCaretsAtLineEnds, replaceSelections
 } from '../packages/editor/src/commands/multi-caret.js';
-import { setBoxSelection, applyBoxText } from '../packages/editor/src/commands/box-selection.js';
+import { setBoxSelection, applyBoxText, boxSelectionEdits } from '../packages/editor/src/commands/box-selection.js';
 import { copySelections, pasteSelections, pasteBox } from '../packages/editor/src/commands/multi-clipboard.js';
 
 const carets = model => model.selections.map(({ anchor, active }) => [anchor, active]);
@@ -149,6 +149,20 @@ test('multicaret clipboard round-trips N fragments and rectangular pastes grow m
   box.undo();
   assert.equal(box.value, 'a');
   assert.throws(() => pasteSelections(target, 'x', { metadata: '{' }), /Malformed/);
+});
+
+test('box deletion avoids manufacturing virtual spaces and insertion budgets reject before any model edit', () => {
+  const model = new EditorModel('a\nb');
+  setBoxSelection(model, { anchorLine: 0, activeLine: 1, anchorColumn: 1000, activeColumn: 1001 });
+  const edits = boxSelectionEdits(model, model.selections, '', { padVirtualSpace: false });
+  assert.ok(edits.every(edit => edit.start === edit.end && edit.text === ''));
+  assert.throws(() => applyBoxText(model, 'X', { maxInsertedCharacters: 8 }), /budget/);
+  assert.equal(model.value, 'a\nb');
+  assert.equal(model.undoStack.depth, 0);
+  model.setSelections([{ anchor: 1, active: 1 }]);
+  assert.throws(() => pasteBox(model, ['abcd', 'abcd', 'abcd'], { maxInsertedCharacters: 10 }), /budget/);
+  assert.equal(model.value, 'a\nb');
+  assert.equal(model.undoStack.depth, 0);
 });
 
 test('explicit nested groups override per-command stops and selection jumps while preserving saved state identity', () => {

@@ -1,5 +1,10 @@
+import { visualColumnAt } from '@sharpforge/text';
+import { boxSelectionEdits, boxSelectionText, createBoxSelections } from '../commands/box-selection.js';
+import { pasteBox } from '../commands/multi-clipboard.js';
 import { adjacentCharacter } from '../commands/movement.js';
 import { normalPoint } from './vim-motions.js';
+import { visualRanges } from './vim-visual.js';
+import { shiftBlockEdits } from './vim-block-editing.js';
 
 export function enterInsert(vim, mode = 'insert') {
   if (vim.context.readOnly) { vim.context.status('The document is read-only'); return; }
@@ -21,25 +26,28 @@ export function leaveInsert(vim) {
   vim.notify();
 }
 
-export function applyOperator(vim, operation, ranges) {
+export function applyOperator(vim, operation, ranges, count = 1) {
   const context = vim.context;
   const ordered = [...ranges].sort((left, right) => left.start - right.start);
   if (operation !== 'y' && context.readOnly) { context.status('The document is read-only'); vim.resetPending(); return; }
   const linewise = ordered.every(range => range.linewise);
+  const blockwise = ordered.every(range => range.box);
   if (['d', 'c', 'y'].includes(operation)) {
-    let text = ordered.map(range => context.slice(range.start, range.end)).join(linewise ? '' : ordered.length > 1 ? '\n' : '');
+    const fragments = ordered.map(range => blockwise ? boxSelectionText(context.buffer, range) : context.slice(range.start, range.end));
+    let text = fragments.join(linewise ? '' : ordered.length > 1 ? '\n' : '');
     if (linewise && !/[\r\n]$/.test(text)) text += context.eol;
     const capture = context.capture();
-    const written = vim.registers.write(vim.register, text, { linewise, yank: operation === 'y' });
+    const block = blockwise ? { fragments, width: ordered[0].box.endColumn - ordered[0].box.startColumn } : undefined;
+    const written = vim.registers.write(vim.register, text, { linewise, block, yank: operation === 'y' });
     if (written?.then) return written.then(() => {
       context.assertCurrent(capture, 'writing a register');
-      return commitOperator(vim, operation, ordered);
+      return commitOperator(vim, operation, ordered, count);
     });
   }
-  return commitOperator(vim, operation, ordered);
+  return commitOperator(vim, operation, ordered, count);
 }
 
-function commitOperator(vim, operation, ordered) {
+function commitOperator(vim, operation, ordered, count) {
   const context = vim.context;
   vim.register = '"';
   if (operation === 'y') {
@@ -49,12 +57,13 @@ function commitOperator(vim, operation, ordered) {
     vim.notify();
     return;
   }
-  const size = context.editor.options?.indentSize ?? context.editor.options?.tabSize ?? 4;
-  const edits = ordered.map(range => {
+  const size = (context.editor.options?.indentSize ?? context.editor.options?.tabSize ?? 4) * count;
+  const blockwise = ordered.every(range => range.box);
+  let edits = ordered.map(range => {
     if (operation === 'd' && range.linewise && range.end === context.length && range.start > 0) {
       range = { ...range, start: context.lineEnd(context.position(range.start).line - 1) };
     }
-    const text = context.slice(range.start, range.end);
+    const text = blockwise ? boxSelectionText(context.buffer, range, { padVirtualSpace: false }) : context.slice(range.start, range.end);
     const transforms = {
       d: () => '', c: () => range.linewise && /[\r\n]$/.test(text) ? context.eol : '',
       '>': () => text.replace(/^/gm, ' '.repeat(size)).replace(/ +$/, ''),
@@ -66,12 +75,24 @@ function commitOperator(vim, operation, ordered) {
     if (!transform) throw new Error(`Unsupported Vim operator '${operation}'`);
     return { start: range.start, deleteCount: range.end - range.start, text: transform() };
   });
+  if (blockwise) edits = ['>', '<'].includes(operation) ? shiftBlockEdits(context, ordered, operation === '>' ? 1 : -1, count) :
+    boxSelectionEdits(context.buffer, ordered, edits.map(edit => edit.text), { padVirtualSpace: false });
+  if (!edits.length) { vim.resetPending(); return false; }
   if (operation === 'c' && !vim.inUndoGroup) {
     context.editor.model?.beginUndoGroup?.('vim-change');
     vim.inUndoGroup = true;
   }
   const start = edits[0].start;
-  context.apply(edits, [{ anchor: start, head: start }], { undoStop: operation !== 'c' });
+  let delta = 0;
+  const carets = operation === 'c' && blockwise ? edits.map((edit, index) => {
+    const head = edit.start + delta + edit.caretInText;
+    const line = context.line(ordered[index].box.line);
+    const column = visualColumnAt(line, line.length, { tabSize: ordered[index].box.tabSize });
+    const activeVirtualSpace = Math.max(0, ordered[index].box.startColumn - column);
+    delta += edit.text.length - (edit.end - edit.start);
+    return { anchor: head, head, activeVirtualSpace };
+  }) : [{ anchor: start, head: start }];
+  context.apply(edits, carets, { undoStop: operation !== 'c', primaryIndex: 0 });
   if (operation !== 'c') context.goto(normalPoint(context, Math.min(start, context.length)));
   vim.mode = 'normal';
   vim.changed = true;
@@ -81,45 +102,24 @@ function commitOperator(vim, operation, ordered) {
   vim.notify();
 }
 
-export function visualRanges(vim) {
+/** I retains short rows, while A pads to the block boundary, matching Vim's separate insertion contracts. */
+export function insertVisualBlock(vim, append = false) {
   const context = vim.context;
-  const anchor = vim.visualAnchor;
-  const head = vim.visualHead;
-  const first = Math.min(context.position(anchor).line, context.position(head).line);
-  const last = Math.max(context.position(anchor).line, context.position(head).line);
-  vim.visualRange = { first, last };
-  if (vim.mode === 'visual-line') return [{ start: context.lineStart(first), end: context.lineEnd(last, true), linewise: true }];
-  if (vim.mode === 'visual-block') {
-    const left = Math.min(context.position(anchor).character, context.position(head).character);
-    const right = Math.max(context.position(anchor).character, context.position(head).character) + 1;
-    const ranges = [];
-    for (let line = first; line <= last; line++) ranges.push({
-      start: context.offset({ line, character: left }), end: context.offset({ line, character: right }), linewise: false
-    });
-    return ranges;
-  }
-  return [{ start: Math.min(anchor, head), end: adjacentCharacter(context, Math.max(anchor, head), 1), linewise: false }];
-}
-
-export function updateVisual(vim) {
+  if (context.readOnly) { context.status('The document is read-only'); return false; }
   const ranges = visualRanges(vim);
-  vim.context.select(ranges.map(range => ({ anchor: range.start, head: range.end })));
-  vim.notify();
-}
-
-export function toggleVisual(vim, mode) {
-  if (vim.mode === mode) {
-    vim.mode = 'normal';
-    vim.context.goto(vim.visualHead);
-  } else {
-    if (!vim.mode.startsWith('visual')) {
-      vim.visualAnchor = vim.context.selection.head;
-      vim.visualHead = vim.visualAnchor;
-    }
-    vim.mode = mode;
-    updateVisual(vim);
-  }
-  vim.notify();
+  const selections = ranges.flatMap(range => {
+    const line = range.box.line;
+    const width = visualColumnAt(context.line(line), context.line(line).length, { tabSize: range.box.tabSize });
+    const column = append ? vim.visualToEol ? width : range.box.endColumn : range.box.startColumn;
+    if (!append && width < column) return [];
+    return createBoxSelections(context.buffer, {
+      anchorLine: line, activeLine: line, anchorColumn: column, activeColumn: column, tabSize: range.box.tabSize
+    });
+  });
+  if (!selections.length) return false;
+  context.select(selections, true, 0);
+  enterInsert(vim);
+  return true;
 }
 
 export function removeCharacters(vim, backwards = false, count = 1) {
@@ -149,7 +149,11 @@ export async function pasteRegister(vim, before = false, count = 1) {
   const text = register.text.repeat(count);
   if (vim.mode.startsWith('visual')) {
     const ranges = visualRanges(vim);
-    const edits = ranges.map(range => ({ start: range.start, deleteCount: range.end - range.start, text }));
+    const blockwise = ranges.every(range => range.box);
+    const replacements = ranges.map((_, index) => register.block ?
+      (register.block.fragments[index % register.block.fragments.length] ?? '').repeat(count) : text);
+    const edits = blockwise ? boxSelectionEdits(context.buffer, ranges, replacements) :
+      ranges.map(range => ({ start: range.start, deleteCount: range.end - range.start, text }));
     const head = ranges[0].start;
     context.apply(edits, [{ anchor: head, head }]);
     vim.mode = 'normal';
@@ -164,6 +168,17 @@ export async function pasteRegister(vim, before = false, count = 1) {
   if (register.linewise) {
     start = before ? context.lineStart(position.line) : context.lineEnd(position.line, true);
     if (!before && position.line === context.lineCount - 1) prefix = context.eol;
+  }
+  if (register.block) {
+    context.goto(start);
+    const fragments = register.block.fragments.map(fragment => fragment.repeat(count));
+    pasteBox(context.selectionModel, fragments, {
+      tabSize: context.editor.options?.tabSize ?? 4, source: 'vim-paste', maxInsertedCharacters: vim.registers.maxCharacters
+    });
+    context.goto(start);
+    vim.changed = true;
+    vim.finishChange();
+    return true;
   }
   context.apply([{ start, deleteCount: 0, text: prefix + text }], [{ anchor: start + prefix.length, head: start + prefix.length }]);
   vim.changed = true;
