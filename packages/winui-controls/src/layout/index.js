@@ -1,15 +1,29 @@
 import { RendererRegistry } from '../registry.js';
 import { contentLayout } from './border-viewbox.js';
+import { buttonLayout } from './button-layout.js';
 import { stackPanelLayout } from './stackpanel.js';
 import { canvasLayout } from './canvas.js';
+import { gridLayout } from './grid.js';
+import { relativePanelLayout } from './relativepanel.js';
+import { wrapGridLayout } from './wrapgrid.js';
 import { viewboxLayout } from './border-viewbox.js';
+import { expanderLayout } from './expander.js';
+import { twoPaneLayout } from './twopaneview.js';
+import { parallaxLayout } from './parallaxview.js';
 
 export function createLayoutRegistry(options) {
   const registry = new RendererRegistry(options);
   registry.register('*', contentLayout);
+  registry.register(['Button', 'ToggleButton', 'AppBarButton', 'HyperlinkButton'], buttonLayout);
   registry.register('StackPanel', stackPanelLayout);
   registry.register('Canvas', canvasLayout);
+  registry.register('Grid', gridLayout);
+  registry.register('RelativePanel', relativePanelLayout);
+  registry.register(['WrapGrid', 'VariableSizedWrapGrid'], wrapGridLayout);
   registry.register('Viewbox', viewboxLayout);
+  registry.register('Expander', expanderLayout);
+  registry.register('TwoPaneView', twoPaneLayout);
+  registry.register('ParallaxView', parallaxLayout);
   return registry;
 }
 export * from './geometry.js';
@@ -19,4 +33,13 @@ export * from './custom-layout.js';
 export * from './stackpanel.js';
 export * from './canvas.js';
 export * from './border-viewbox.js';
+export * from './grid.js';
+export * from './grid-tracks.js';
+export * from './grid-span.js';
+export * from './relativepanel.js';
+export * from './wrapgrid.js';
 export * from './annotated-scrollbar.js';
+export * from './expander.js';
+export * from './twopaneview.js';
+export * from './parallaxview.js';
+export * from './button-layout.js';
