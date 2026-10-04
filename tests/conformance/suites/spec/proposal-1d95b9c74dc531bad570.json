@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-1d95b9c74dc531bad570",
+  "kind": "spec",
+  "sourceText": "partial class C\n{\n    // Defining declaration\n    public partial string Prop { get; set; }\n\n    // Implementing declaration\n    public partial string Prop { get => field; set => field = value; }\n}",
+  "sourceSHA256": "1ea0045f8b9d8444c832aaf7bcd0be78dd0b29b6a044b7832daa8ebaeb190fe6",
+  "target": "library",
+  "featureId": "csharp-13-0-partial-properties",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/partial-properties.md",
+    "sha256": "743e4ee38f66cc2149a2117435ea0179d508e3e253074e4f91240212206590ae",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/partial-properties.md",
+    "license": "NOASSERTION",
+    "offset": 1584
+  }
+}

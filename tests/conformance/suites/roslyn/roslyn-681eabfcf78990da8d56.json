@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-681eabfcf78990da8d56",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public static void Main() {}\n    public void M1(object o)\n    {\n        switch (o)\n        {\n            //case string { Length is 2 }:\n            //    break;\n            case string s:\n                break;\n            //case System.Collections.ArrayList(2):\n            //    break;\n        }\n        //let x = o is object t ? t : null;\n        //o = o match (\n        //    case string { Length is 2 }: null\n        //    case string s: s\n        //    case System.Collections.ArrayList(2): x\n        //    case *: throw null\n        //);\n    }\n}\n",
+  "sourceSHA256": "ee7b7be261ca85969138a749e6d6032bd3965baecbac19d78fdf5366e6801bc3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "PatternsNoCrash",
+    "offset": 7170
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

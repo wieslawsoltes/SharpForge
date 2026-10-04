@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-36f68fba4f9a01a09c70",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct C\n{\n    static void Main()\n    {\n        long x;\n        string y;\n        \n        var c = new C();\n        (x, y) = c;\n        System.Console.WriteLine(x + \" \" + y);\n    }\n}\nstatic class D\n{\n    public static void Deconstruct(this ref C value, out int a, out string b)\n    {\n        a = 1;\n        b = \"hello\";\n    }\n}\n",
+  "sourceSHA256": "69e2c6b43fe2fc00cf63de47507f0f0bf7d25c456af3ead255d1e42d36f83ed5",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "DeconstructRefExtensionMethod",
+    "offset": 73976
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1510",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,9): error CS1510: A ref or out value must be an assignable variable\n                //         (x, y) = c;\n                Diagnostic(ErrorCode.ERR_RefLvalueExpected, \"(x, y) = c\").WithLocation(10, 9)\n                ",
+  "unsupported": []
+}

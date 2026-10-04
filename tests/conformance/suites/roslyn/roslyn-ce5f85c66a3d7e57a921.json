@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ce5f85c66a3d7e57a921",
+  "kind": "diagnostics",
+  "sourceText": "\nclass B\n{\n    B(out int z) { z = 2; } \n}\n\nclass C\n{\n    int F = G(out var v1);    \n    int P => G(out var v2);    \n\n    C() \n    : base(out var v3)\n    { \n        G(out var v4);\n    }\n\n    int G(out int x) \n    {\n        x = 1;\n        return 2;\n    }\n}\n",
+  "sourceSHA256": "56474478dbe9716c1eec81a371463627e2c6cb7f35d3aeea35f3752b68febc2e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/PDB/PDBTests.cs",
+    "sha256": "aadcd07e0944d99a1634255c9107a08fdc0098047388f2d7dfc6d7410f6e5726",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/PDB/PDBTests.cs",
+    "license": "MIT",
+    "method": "SyntaxOffset_OutVarInConstructor",
+    "offset": 409362
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0236",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,13): error CS0236: A field initializer cannot reference the non-static field, method, or property 'C.G(out int)'\n                //     int F = G(out var v1);    \n                Diagnostic(ErrorCode.ERR_FieldInitRefNonstatic, \"G\").WithArguments(\"C.G(out int)\").WithLocation(9, 13),\n                // (13,7): error CS1729: 'object' does not contain a constructor that takes 1 arguments\n                //     : base(out var v3)\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"base\").WithArguments(\"object\", \"1\").WithLocation(13, 7)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

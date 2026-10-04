@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-ba4e0c59b1aca9f9ccf9",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\n[Attr1, Attr2(\"hello\"), Attr3, Attr2(\"goodbye\")]\nclass A {}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "e5c8a93d351f47dfcf21c82feed9926d36f1379e1eb7aa9294797539ab3bc75c",
+  "originalSource": "[Attr1, Attr2(\"hello\"), Attr3, Attr2(\"goodbye\")]\nclass A {}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "AttributeSpecification7",
+    "additionalFiles": [
+      "Attr1Attribute.cs",
+      "Attr2Attribute.cs",
+      "Attr3Attribute.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-attributes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/attributes.md",
+    "sha256": "9ab07c36a912273dd0eb341141ca62153c76e5f32f422e70950477a6b89c5242",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/attributes.md",
+    "license": "MIT",
+    "example": "AttributeSpecification7",
+    "offsetInUnquotedMarkdown": 22754
+  }
+}

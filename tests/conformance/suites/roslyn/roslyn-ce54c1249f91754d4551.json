@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ce54c1249f91754d4551",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass Convertible\n{\n    [Obsolete(\"To int\")]\n    public static implicit operator int(Convertible c)\n    {\n        return 0;\n    }\n\n    [Obsolete(\"From int\")]\n    public static implicit operator Convertible(int i)\n    {\n        return null;\n    }\n}\n\nclass Test\n{\n    static void Main(string[] args)\n    {\n        foreach (int i in new Convertible[1])\n        {\n            Convertible c = new Convertible();\n            c++;\n            c -= 2;\n        }\n    }\n}\n",
+  "sourceSHA256": "206927ef5956ee4e17e70e8f90718d9482c3ef6dc7a7e96e7bf64e91a7b214e7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ObsoleteUserDefinedConversion5",
+    "offset": 318293
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (26,13): warning CS0618: 'Convertible.implicit operator Convertible(int)' is obsolete: 'From int'\n                //             c++;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"c++\").WithArguments(\"Convertible.implicit operator Convertible(int)\", \"From int\").WithLocation(26, 13),\n                // (26,13): warning CS0618: 'Convertible.implicit operator int(Convertible)' is obsolete: 'To int'\n                //             c++;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"c++\").WithArguments(\"Convertible.implicit operator int(Convertible)\", \"To int\").WithLocation(26, 13),\n                // (27,13): warning CS0618: 'Convertible.implicit operator Convertible(int)' is obsolete: 'From int'\n                //             c -= 2;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"c -= 2\").WithArguments(\"Convertible.implicit operator Convertible(int)\", \"From int\").WithLocation(27, 13),\n                // (27,13): warning CS0618: 'Convertible.implicit operator int(Convertible)' is obsolete: 'To int'\n                //             c -= 2;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"c\").WithArguments(\"Convertible.implicit operator int(Convertible)\", \"To int\").WithLocation(27, 13),\n                // (23,9): warning CS0618: 'Convertible.implicit operator int(Convertible)' is obsolete: 'To int'\n                //         foreach (int i in new Convertible[1])\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"foreach\").WithArguments(\"Convertible.implicit operator int(Convertible)\", \"To int\").WithLocation(23, 9)",
+  "unsupported": []
+}

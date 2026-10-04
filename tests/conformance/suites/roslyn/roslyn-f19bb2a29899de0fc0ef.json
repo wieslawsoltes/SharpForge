@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f19bb2a29899de0fc0ef",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class A\n{\n    protected virtual int M()\n    {\n        return 1;\n    }\n}\n\npublic class B : A\n{\n    protected override int M()\n    {\n        return 2;\n    }\n}\n\npublic class C : B\n{\n    [Num(base.M())]\n    void Test()\n    {\n    }\n}\n\npublic class NumAttribute : Attribute\n{\n    public NumAttribute(int x) { }\n}\n",
+  "sourceSHA256": "68bc70de1bfd8a9db3c793b155e0beb7c32e70dca06dd6908821f5f52309cdf2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ConditionalLazyObsoleteDiagnosticInAttribute",
+    "offset": 365764
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1512",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (22,10): error CS1512: Keyword 'base' is not available in the current context\n                //     [Num(base.M())]\n                Diagnostic(ErrorCode.ERR_BaseInBadContext, \"base\")",
+  "unsupported": []
+}

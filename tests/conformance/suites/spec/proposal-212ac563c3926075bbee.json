@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-212ac563c3926075bbee",
+  "kind": "spec",
+  "sourceText": "static void Test(in Vector3 v1)\n{\n    // no need to make a copy of v1 since Vector3 is a readonly struct\n    System.Console.WriteLine(v1.ToString());\n}\n\nreadonly struct Vector3\n{\n    . . .\n\n    public override string ToString()\n    {\n        // not OK!!  `this` is an `in` parameter\n        foo(ref this.X);\n\n        // OK\n        return $\"X: {X}, Y: {Y}, Z: {Z}\";\n    }\n}",
+  "sourceSHA256": "9944fbaffbe062692a4a2e071532084aba7426c0a49c6dfa9819213119657bde",
+  "target": "library",
+  "featureId": "csharp-7-2-in-parameters-and-readonly-references",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/readonly-ref.md",
+    "sha256": "d859c5f6e0e030570288248c429a08d0e4b8d5c0eecd6bf9042317e99198122b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+    "license": "NOASSERTION",
+    "offset": 21395
+  }
+}

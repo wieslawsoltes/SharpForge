@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-ea2577adc4e64c8ef529",
+  "kind": "spec",
+  "sourceText": "interface I1\n{\n    void M() { Impl1 }\n}\ninterface I2 : I1\n{\n    override void M() { Impl2 }\n}\ninterface I3 : I1\n{\n}\nclass C : I2, I3\n{\n}",
+  "sourceSHA256": "2c16f94151ef6f94c5917149c4323aa94605b75adedfa381943fa38e8ed8a0ee",
+  "target": "library",
+  "featureId": "csharp-8-0-default-interface-members",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/default-interface-methods.md",
+    "sha256": "feebc11b0983ad0c24c2017ac76706a9f3ff81b9cf1cc2703ec12d4829f24c42",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/default-interface-methods.md",
+    "license": "NOASSERTION",
+    "offset": 30679
+  }
+}

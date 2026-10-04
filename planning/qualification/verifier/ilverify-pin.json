@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "version": "10.0.5",
+  "url": "https://api.nuget.org/v3-flatcontainer/dotnet-ilverify/10.0.5/dotnet-ilverify.10.0.5.nupkg",
+  "packageSHA256": "033fb76e11259febeaf98860c8a2a11eed42acfbced22c7871eb0c51e88ece78",
+  "license": "MIT",
+  "repositoryCommit": "a612c2a1056fe3265387ae3ff7c94eba1505caf9",
+  "entry": "ILVerify.dll",
+  "files": [
+    {
+      "path": "DotnetToolSettings.xml",
+      "sha256": "500491655ad9546aeb5d0b64448dc1a761f8a7c24164d977f57671a5840a51ad"
+    },
+    {
+      "path": "ILVerify.deps.json",
+      "sha256": "d02e1b0e044f5a2beefbfad8a4250e1857c0a0706f6e9423641e87f840a969b4"
+    },
+    {
+      "path": "ILVerify.dll",
+      "sha256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be"
+    },
+    {
+      "path": "ILVerify.runtimeconfig.json",
+      "sha256": "496353322d6695f2ab5009233672f177844a87c877b78d0ad5d7c623c90dc96f"
+    },
+    {
+      "path": "System.CommandLine.dll",
+      "sha256": "0b7790b44a438c6c2f4714ec9d408e02c5ed98145d7c89ecd9a9d11acf0932cb"
+    }
+  ]
+}

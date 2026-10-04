@@ -1,4 +1,5 @@
 import {ManagedFault} from './heap.js';
+import {invalidateExecutionCode} from './execution/code-version.js';
 
 /** Clone execution graphs, preserving aliases, immutable handles and fault identity. */
 export function copyExecution(value, memo = new Map()) {
@@ -146,4 +147,5 @@ export function restoreVM(vm, snapshot, engine) {
   if (engine === 'source') { vm.state = 'paused'; vm.currentPoint = vm.top?.point ?? null; }
   vm.scheduler.restore(snapshot.scheduler);
   vm.platform.restore(snapshot.platform);
+  if (engine === 'cil') invalidateExecutionCode(vm, 'snapshot-restore');
 }

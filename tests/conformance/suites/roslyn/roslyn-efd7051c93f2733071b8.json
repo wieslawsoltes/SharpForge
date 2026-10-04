@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-efd7051c93f2733071b8",
+  "kind": "diagnostics",
+  "sourceText": "\n#nullable enable\n\nstruct S\n{\n    public static bool operator ==(S left, S right) => false;\n    public static bool operator !=(S left, S right) => false;\n    public override bool Equals(object obj) => false;\n    public override int GetHashCode() => 0;\n\n    public S M0(out int x, out int y) { x = 42; y = 42; return this; }\n\n    public void M1(S? s)\n    {\n        int x, y;\n        _ = s?.M0(out x, out y) != s\n            ? x.ToString() // 1\n            : y.ToString(); // 2\n    }\n\n    public void M2(S? s)\n    {\n        int x, y;\n        _ = s?.M0(out x, out y) == s\n            ? x.ToString() // 3\n            : y.ToString(); // 4\n    }\n\n    public void M3(S? s)\n    {\n        int x, y;\n        _ = s != s?.M0(out x, out y)\n            ? x.ToString() // 5\n            : y.ToString(); // 6\n    }\n\n    public void M4(S? s)\n    {\n        int x, y;\n        _ = s == s?.M0(out x, out y)\n            ? x.ToString() // 7\n            : y.ToString(); // 8\n    }\n}\n",
+  "sourceSHA256": "c487a478c66671d26db3eeca8a84600d6d3b878471c951221fd6bc07b72945e1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "EqualsCondAccess_09",
+    "offset": 185921
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (17,15): error CS0165: Use of unassigned local variable 'x'\n                //             ? x.ToString() // 1\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(17, 15),\n                // (18,15): error CS0165: Use of unassigned local variable 'y'\n                //             : y.ToString(); // 2\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(18, 15),\n                // (25,15): error CS0165: Use of unassigned local variable 'x'\n                //             ? x.ToString() // 3\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(25, 15),\n                // (26,15): error CS0165: Use of unassigned local variable 'y'\n                //             : y.ToString(); // 4\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(26, 15),\n                // (33,15): error CS0165: Use of unassigned local variable 'x'\n                //             ? x.ToString() // 5\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(33, 15),\n                // (34,15): error CS0165: Use of unassigned local variable 'y'\n                //             : y.ToString(); // 6\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(34, 15),\n                // (41,15): error CS0165: Use of unassigned local variable 'x'\n                //             ? x.ToString() // 7\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(41, 15),\n                // (42,15): error CS0165: Use of unassigned local variable 'y'\n                //             : y.ToString(); // 8\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(42, 15)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5d9358ba59533f6e01b2",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M<T, TClass, TStruct>() \n        where TClass : class \n        where TStruct : struct\n    {\n        lock (default(object)) ;\n        lock (default(int)) ;       // CS0185\n        lock (default(T)) {}        // new CS0185 - no constraints (Bug#10755)\n        lock (default(TClass)) {}\n        lock (default(TStruct)) {}  // new CS0185 - constraints to value type (Bug#10756)\n        lock (null) {}              // new CS0185 - null is not an object type\n    }\n}\n",
+  "sourceSHA256": "0bade69e9b8fbbeeb1f8f9f65e795d47a3d0578477a4f121bfdfe74d770bc34e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "CS0185ERR_LockNeedsReference_RequireRefType",
+    "offset": 15105
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular.WithStrictFeature())",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0642",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0642",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0185",
+        "severity": "error"
+      },
+      {
+        "code": "CS0185",
+        "severity": "error"
+      },
+      {
+        "code": "CS0185",
+        "severity": "error"
+      },
+      {
+        "code": "CS0185",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,32): warning CS0642: Possible mistaken empty statement\n                //         lock (default(object)) ;\n                Diagnostic(ErrorCode.WRN_PossibleMistakenNullStatement, \";\").WithLocation(8, 32),\n                // (9,29): warning CS0642: Possible mistaken empty statement\n                //         lock (default(int)) ;       // CS0185\n                Diagnostic(ErrorCode.WRN_PossibleMistakenNullStatement, \";\").WithLocation(9, 29),\n                // (9,15): error CS0185: 'int' is not a reference type as required by the lock statement\n                //         lock (default(int)) ;       // CS0185\n                Diagnostic(ErrorCode.ERR_LockNeedsReference, \"default(int)\").WithArguments(\"int\").WithLocation(9, 15),\n                // (10,15): error CS0185: 'T' is not a reference type as required by the lock statement\n                //         lock (default(T)) {}        // new CS0185 - no constraints (Bug#10755)\n                Diagnostic(ErrorCode.ERR_LockNeedsReference, \"default(T)\").WithArguments(\"T\").WithLocation(10, 15),\n                // (12,15): error CS0185: 'TStruct' is not a reference type as required by the lock statement\n                //         lock (default(TStruct)) {}  // new CS0185 - constraints to value type (Bug#10756)\n                Diagnostic(ErrorCode.ERR_LockNeedsReference, \"default(TStruct)\").WithArguments(\"TStruct\").WithLocation(12, 15),\n                // (13,15): error CS0185: '<null>' is not a reference type as required by the lock statement\n                //         lock (null) {}              // new CS0185 - null is not an object type\n                Diagnostic(ErrorCode.ERR_LockNeedsReference, \"null\").WithArguments(\"<null>\").WithLocation(13, 15)\n                ",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f925ad4335eb31981f2d",
+  "kind": "diagnostics",
+  "sourceText": "\nclass M\n{\n    void F()\n    {   \n        var r = checked(decimal.MaxValue + 1);\n        \n        // error should be reported regardless checked or not\n        // decimal math has not concept of \"checked\"\n        var r1 = decimal.MaxValue + 1;\n    }\n}",
+  "sourceSHA256": "c0b5a32a7ea111eca3e3aa2053f3dc9b7933999c9b67e43d4173a47f9b1cec11",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenCheckedTests.cs",
+    "sha256": "f2262713714ec42eed0da78ca7f3380b90b319605a9e172f651873904588a77f",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenCheckedTests.cs",
+    "license": "MIT",
+    "method": "CheckedExpressionWithDecimal",
+    "offset": 43833
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0463",
+        "severity": "error"
+      },
+      {
+        "code": "CS0463",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,25): error CS0463: Evaluation of the decimal constant expression failed\n                //         var r = checked(decimal.MaxValue + 1);\n                Diagnostic(ErrorCode.ERR_DecConstError, \"decimal.MaxValue + 1\").WithLocation(6, 25),\n                // (10,18): error CS0463: Evaluation of the decimal constant expression failed\n                //         var r1 = decimal.MaxValue + 1;\n                Diagnostic(ErrorCode.ERR_DecConstError, \"decimal.MaxValue + 1\").WithLocation(10, 18)\n                ",
+  "unsupported": []
+}

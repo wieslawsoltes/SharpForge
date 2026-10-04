@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8f296349182b76e895ad",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing System.Linq.Expressions;\n\npublic class Test\n{\n    public static int ModAdd2(int x = 3, int y = 4, params int[] b) { return 0; }\n\n    static void Main()\n    {\n        Expression<Func<int>> testExpr = () => ModAdd2();\n        Console.WriteLine(testExpr);\n    }\n}",
+  "sourceSHA256": "26fca7d75940e3b9735f256160ed9c176ee1c02200f9701d68dcc6b31e70b3a6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "sha256": "6ded88d14b8dc1163d157ec2de9f3f9566d5ff0a7e20170d6687ea20cf6d1f00",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "license": "MIT",
+    "method": "MethodCallWithParams3",
+    "offset": 92243
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, parseOptions: TestOptions.Regular.WithLanguageVersion(languageVersion), options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0854",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (10,48): error CS0854: An expression tree may not contain a call or invocation that uses optional arguments\n                    //         Expression<Func<int>> testExpr = () => ModAdd2();\n                    Diagnostic(ErrorCode.ERR_ExpressionTreeContainsOptionalArgument, \"ModAdd2()\")\n                    ",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

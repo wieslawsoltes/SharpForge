@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-81cf1e695313906ba353",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\n\n[StructLayout(LayoutKind.Auto)]\npublic class A\n{\n    [FieldOffset(4)]\n    int a;\n}\n\n[StructLayout(LayoutKind.Sequential)]\npublic class S\n{\n    [FieldOffset(4)]\n    int a;\n\n    [FieldOffset(-1)]\n    int b;\n}\n\n[StructLayout(LayoutKind.Explicit)]\npublic class E\n{\n    [FieldOffset(-1)]\n    int a;\n\n    [FieldOffset(5)]\n    static int b;\n\n    int c1, c2;\n\n    static int d;\n\n    const int e = 3;\n\n    [FieldOffset(10)]\n    object f;\n\n    [FieldOffset(-1)]\n    static int g;\n\n    [FieldOffset(5)]\n    const int h = 1;\n}\n\nenum En\n{\n    [FieldOffset(5)]\n    A = 1\n}\n",
+  "sourceSHA256": "ef8b4f9664212a83a757e367063b57a57dcea7c359d21f6118196e01c34ae3ce",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_StructLayout.cs",
+    "sha256": "ce938700c356369c7e978139464b937226a731a78b59b5f3818c266a31875abc",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_StructLayout.cs",
+    "license": "MIT",
+    "method": "ExplicitFieldLayout_Errors",
+    "offset": 18981
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0636",
+        "severity": "error"
+      },
+      {
+        "code": "CS0636",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0636",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0637",
+        "severity": "error"
+      },
+      {
+        "code": "CS0625",
+        "severity": "error"
+      },
+      {
+        "code": "CS0625",
+        "severity": "error"
+      },
+      {
+        "code": "CS0637",
+        "severity": "error"
+      },
+      {
+        "code": "CS0637",
+        "severity": "error"
+      },
+      {
+        "code": "CS0637",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,6): error CS0636: The FieldOffset attribute can only be placed on members of types marked with the StructLayout(LayoutKind.Explicit)\n                //     [FieldOffset(4)]\n                Diagnostic(ErrorCode.ERR_StructOffsetOnBadStruct, \"FieldOffset\").WithLocation(7, 6),\n                // (14,6): error CS0636: The FieldOffset attribute can only be placed on members of types marked with the StructLayout(LayoutKind.Explicit)\n                //     [FieldOffset(4)]\n                Diagnostic(ErrorCode.ERR_StructOffsetOnBadStruct, \"FieldOffset\").WithLocation(14, 6),\n                // (17,18): error CS0591: Invalid value for argument to 'FieldOffset' attribute\n                //     [FieldOffset(-1)]\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"-1\").WithArguments(\"FieldOffset\").WithLocation(17, 18),\n                // (17,6): error CS0636: The FieldOffset attribute can only be placed on members of types marked with the StructLayout(LayoutKind.Explicit)\n                //     [FieldOffset(-1)]\n                Diagnostic(ErrorCode.ERR_StructOffsetOnBadStruct, \"FieldOffset\").WithLocation(17, 6),\n                // (24,18): error CS0591: Invalid value for argument to 'FieldOffset' attribute\n                //     [FieldOffset(-1)]\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"-1\").WithArguments(\"FieldOffset\").WithLocation(24, 18),\n                // (27,6): error CS0637: The FieldOffset attribute is not allowed on static or const fields\n                //     [FieldOffset(5)]\n                Diagnostic(ErrorCode.ERR_StructOffsetOnBadField, \"FieldOffset\").WithLocation(27, 6),\n                // (30,9): error CS0625: 'E.c1': instance field in types marked with StructLayout(LayoutKind.Explicit) must have a FieldOffset attribute\n                //     int c1, c2;\n                Diagnostic(ErrorCode.ERR_MissingStructOffset, \"c1\").WithArguments(\"E.c1\").WithLocation(30, 9),\n                // (30,13): error CS0625: 'E.c2': instance field in types marked with StructLayout(LayoutKind.Explicit) must have a FieldOffset attribute\n                //     int c1, c2;\n                Diagnostic(ErrorCode.ERR_MissingStructOffset, \"c2\").WithArguments(\"E.c2\").WithLocation(30, 13),\n                // (39,6): error CS0637: The FieldOffset attribute is not allowed on static or const fields\n                //     [FieldOffset(-1)]\n                Diagnostic(ErrorCode.ERR_StructOffsetOnBadField, \"FieldOffset\").WithLocation(39, 6),\n                // (42,6): error CS0637: The FieldOffset attribute is not allowed on static or const fields\n                //     [FieldOffset(5)]\n                Diagnostic(ErrorCode.ERR_StructOffsetOnBadField, \"FieldOffset\").WithLocation(42, 6),\n                // (48,6): error CS0637: The FieldOffset attribute is not allowed on static or const fields\n                //     [FieldOffset(5)]\n                Diagnostic(ErrorCode.ERR_StructOffsetOnBadField, \"FieldOffset\").WithLocation(48, 6)",
+  "unsupported": []
+}

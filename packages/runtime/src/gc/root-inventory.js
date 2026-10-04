@@ -4,12 +4,14 @@ export const rootProviderInventory = Object.freeze([
   {id: 'static-and-caches', category: 'static', owner: 'vm', provider: 'visitVMRoots'},
   {id: 'scheduler-contexts', category: 'scheduler', owner: 'scheduler', provider: 'visitSchedulerRoots'},
   {id: 'host-operations', category: 'host-operation', owner: 'hostOperations', provider: 'visitRoots'},
+  {id: 'host-payload-operation', category: 'host-operation', owner: 'HostPayloadRoots', provider: 'visitPayloadRoots'},
   {id: 'platform-and-animation', category: 'interop', owner: 'platform', provider: 'visitPlatformRoots'},
   {id: 'assembly-context-bridge', category: 'interop', owner: 'gcRuntime.rootRegistry', provider: 'registerContextRoots'},
   {id: 'strong-handles', category: 'handle', owner: 'heap.lifetime', provider: 'visitStrongRoots'},
   {id: 'temporary-and-pin', category: 'pinned', owner: 'heap', provider: 'visitRoots'},
   {id: 'finalizer-contexts', category: 'finalizer', owner: 'heap.lifetime', provider: 'visitStrongRoots'},
-  {id: 'debugger-stops', category: 'debugger', owner: 'debuggerRoots', provider: 'visitStrongRoots'}
+  {id: 'debugger-stops', category: 'debugger', owner: 'debuggerRoots', provider: 'visitStrongRoots'},
+  {id: 'debugger-memory', category: 'pinned', owner: 'debuggerMemory', provider: 'PinManager.visitRoots'}
 ].map(Object.freeze));
 
 /** Heap storage is traced independently; code/host resources and copied history are not live roots. */

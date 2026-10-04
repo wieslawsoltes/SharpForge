@@ -125,6 +125,12 @@ export function classifyVariable(expression, context = {}) {
         return { isVariable: false, isWritable: false, reason: 'initOnly', isProperty: true, symbol: p };
       return { isVariable: false, isWritable: true, isProperty: true, symbol: p };
     }
+    case 'InlineArrayAccess': {
+      // An element of an inline array is a variable exactly when the array is, and read-only when the array is.
+      const outer = classifyVariable(expression.receiver, context);
+      if (!outer.isVariable) return no('notVariable');
+      return outer.isWritable ? yes : { isVariable: true, isWritable: false, reason: 'readonlyRef', symbol: outer.symbol, detail: 'variable' };
+    }
     case 'ImplicitIndexerAccess':
       // `a[^1]` is as assignable as the element or indexer it stands for; a slice (`a[1..2]`) is a value.
       return expression.accessKind === 'index' ? classifyVariable(expression.access, context) : no('notVariable');

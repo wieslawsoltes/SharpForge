@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-82027e75b9d0cd95b5c4",
+  "kind": "diagnostics",
+  "sourceText": "\nvar (x, y) = (1, 2);\nvar (z, y) = (1, 2);\n",
+  "sourceSHA256": "967259173df25b1d76ae92c31418429ba432efb4300c9c61e2531722e135c47f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "NameConflictInDeconstructionInScript2",
+    "offset": 179718
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "references: s_valueTupleRefs)",
+  "options": "(source, parseOptions: TestOptions.Script, options: TestOptions.DebugExe, references: s_valueTupleRefs)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0102",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,9): error CS0102: The type 'Script' already contains a definition for 'y'\n                // var (z, y) = (1, 2);\n                Diagnostic(ErrorCode.ERR_DuplicateNameInClass, \"y\").WithArguments(\"Script\", \"y\").WithLocation(3, 9)\n                ",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

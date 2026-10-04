@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b846f3ca22eb22a7cace",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.InteropServices;\n\n[StructLayout(LayoutKind.Sequential, Size = 1, Pack = -1  )] class PM1   {}\n[StructLayout(LayoutKind.Sequential, Size = 1, Pack = 3  )] class P3   {}\n[StructLayout(LayoutKind.Sequential, Size = 1, Pack = 5  )] class P5   {}\n[StructLayout(LayoutKind.Sequential, Size = 1, Pack = 6  )] class P6   {}\n[StructLayout(LayoutKind.Sequential, Size = 1, Pack = 256  )] class P256   {}\n[StructLayout(LayoutKind.Sequential, Size = 1, Pack = 512  )] class P512   {}\n[StructLayout(LayoutKind.Sequential, Size = 1, Pack = Int32.MaxValue  )] class PMax   {}\n",
+  "sourceSHA256": "5e4d8ead15c5f3f16fca9bd44313a65c63b14e850775af9c0b4ac039752580a8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_StructLayout.cs",
+    "sha256": "ce938700c356369c7e978139464b937226a731a78b59b5f3818c266a31875abc",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_StructLayout.cs",
+    "license": "MIT",
+    "method": "Pack_Errors",
+    "offset": 10201
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,48): error CS0599: Invalid value for named attribute argument 'Pack'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"Pack = -1\").WithArguments(\"Pack\"),\n                // (6,48): error CS0599: Invalid value for named attribute argument 'Pack'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"Pack = 3\").WithArguments(\"Pack\"),\n                // (7,48): error CS0599: Invalid value for named attribute argument 'Pack'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"Pack = 5\").WithArguments(\"Pack\"),\n                // (8,48): error CS0599: Invalid value for named attribute argument 'Pack'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"Pack = 6\").WithArguments(\"Pack\"),\n                // (9,48): error CS0599: Invalid value for named attribute argument 'Pack'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"Pack = 256\").WithArguments(\"Pack\"),\n                // (10,48): error CS0599: Invalid value for named attribute argument 'Pack'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"Pack = 512\").WithArguments(\"Pack\"),\n                // (11,48): error CS0599: Invalid value for named attribute argument 'Pack'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"Pack = Int32.MaxValue\").WithArguments(\"Pack\")",
+  "unsupported": []
+}
