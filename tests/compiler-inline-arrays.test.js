@@ -73,6 +73,22 @@ test('A02-T80 ref-struct inline arrays produce the unsupported-language warning 
   assert.equal(inlineArrayShape(result.assembly.types.find(type => type.name === 'Invalid')), null);
 });
 
+test('A02-T80 emitted backing fields count toward the single-field layout and substitute generic types', () => {
+  const source = `using System; using System.Runtime.CompilerServices;
+    [InlineArray(2)] struct Auto<T> { public T First { get; set; } }
+    [InlineArray(2)] struct Events { public event Action First; }
+    class Program { static void Main() {
+      Auto<string> value = default; value[^1] = "last"; ReadOnlySpan<string> span = value;
+      Events events = default; Action callback = events[0];
+    } }`;
+  assert.deepEqual(codes(source), []);
+  for (const extra of ['public int Other { get; set; }', 'public event Action Changed;']) {
+    const invalid = `using System; using System.Runtime.CompilerServices;
+      [InlineArray(2)] struct Invalid { private int first; ${extra} } class Program { static void Main() { } }`;
+    assert.deepEqual(codes(invalid), ['CS9169']);
+  }
+});
+
 test('A02-T80 no element covariance or numeric conversion is part of an inline-array conversion', () => {
   assert.deepEqual(codes(program('Row<string> row = default; ReadOnlySpan<object> span = row;')), ['CS0029']);
   assert.deepEqual(codes(program('Quad value = default; Span<long> span = value;')), ['CS0029']);

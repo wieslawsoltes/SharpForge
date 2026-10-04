@@ -6,6 +6,10 @@ and a positive element count. The field's type is the element type. The compiler
 recognizes the same layout in source and imported assemblies, including generic
 inline arrays whose element type is substituted at the use site.
 
+The one-field rule counts emitted storage, including auto-property and field-like
+event backing fields. A single writable backing field may serve as the element;
+adding backing storage alongside an explicit field makes the layout invalid.
+
 Explicit layout, record structs, and required, readonly, volatile, or fixed-size
 element fields are rejected. Types or elements that cannot participate in the
 generic span operations receive the unsupported-inline-array-language warning;
