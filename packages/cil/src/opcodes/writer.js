@@ -1,5 +1,5 @@
 import { Writer, CilError } from '../binary.js';
-import { CilOpcodes } from './catalog.js';
+import { opcodeByName } from './catalog.js';
 import { emitLocal, emitInteger } from './compact.js';
 
 /** Byte-oriented CIL writer. Optional compact helpers select encodings before offsets are observed. */
@@ -31,10 +31,10 @@ export class CilWriter extends Writer {
   }
 
   op(name, operand) {
-    if (typeof name !== 'string' || !Object.hasOwn(CilOpcodes, name)) {
+    const opcode = typeof name === 'string' ? opcodeByName[name] : undefined;
+    if (!opcode) {
       throw new CilError(typeof name === 'string' ? `Unsupported CIL opcode ${name}` : 'Invalid CIL opcode name');
     }
-    const opcode = CilOpcodes[name];
     if (opcode.value > 255) this.u8(0xfe).u8(opcode.value & 255);
     else this.u8(opcode.value);
     if (opcode.operand.startsWith('br') && typeof operand === 'string') {
