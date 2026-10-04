@@ -11,7 +11,11 @@ const sourceDecimals = [
     [name, ['System.Decimal', 'System.Decimal'], ['d1', 'd2']]),
   ['Compare', ['System.Decimal', 'System.Decimal'], ['d1', 'd2'], 'int'],
   ['Equals', ['System.Decimal', 'System.Decimal'], ['d1', 'd2'], 'bool'],
-  ['Negate', ['System.Decimal'], ['d']], ['Abs', ['System.Decimal'], ['value']]
+  ['Negate', ['System.Decimal'], ['d']], ['Abs', ['System.Decimal'], ['value']],
+  ['ToSByte', ['System.Decimal'], ['value'], 'sbyte'], ['ToByte', ['System.Decimal'], ['value'], 'byte'],
+  ['ToInt16', ['System.Decimal'], ['value'], 'short'], ['ToUInt16', ['System.Decimal'], ['value'], 'ushort'],
+  ['ToInt32', ['System.Decimal'], ['d'], 'int'], ['ToUInt32', ['System.Decimal'], ['d'], 'uint'],
+  ['ToInt64', ['System.Decimal'], ['d'], 'long'], ['ToUInt64', ['System.Decimal'], ['d'], 'ulong']
 ].map(([name, parameters, parameterNames, returnType = 'System.Decimal']) => {
   const descriptor = decimalIntrinsicDefinitions.find(candidate => candidate.owner === 'System.Decimal' &&
     candidate.isStatic && candidate.name === name && candidate.returnType === returnType &&
