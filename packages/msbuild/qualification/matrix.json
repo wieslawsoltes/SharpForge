@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "specification": "Microsoft.NET.Sdk installed toolchain; exact versions are retained in reports",
+  "sdkSelections": ["latest-stable", "latest-preview"],
+  "platforms": ["win32", "linux", "darwin"],
+  "engines": ["dotnet", "msbuild"],
+  "actions": ["restore", "build", "pack", "publish"],
+  "solutionFormats": ["slnx", "sln"],
+  "graphBuild": [false, true],
+  "policy": "Unavailable operating systems, SDKs or engines are skipped explicitly and never count as passes"
+}
