@@ -1,0 +1,9 @@
+{
+  "runtime": ".NET 10.0.5",
+  "results": {
+    "Main": 42,
+    "Catch": 42,
+    "Filter": 43,
+    "Switch": 44
+  }
+}

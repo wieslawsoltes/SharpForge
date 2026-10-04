@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {SourceText} from '@sharpforge/text';
 import {parse} from '@sharpforge/syntax';
 import {compile,Compilation} from '@sharpforge/compiler';
+import {VirtualMachine} from '@sharpforge/runtime';
 import {buildControlFlowGraph,BasicBlock,ControlFlowGraph} from '../packages/compiler/src/flow/cfg.js';
 import {computeReachableBlocks,analyzeReachability} from '../packages/compiler/src/flow/reachability.js';
 import {analyzeDefiniteAssignment,writeConsideredUse} from '../packages/compiler/src/flow/definite-assignment.js';
@@ -40,7 +41,11 @@ test('A02-T33 constant conditions prune edges; code after them is unreachable',(
 test('A02-T33 reachability replaces alwaysReturns for CS0161 and reports CS0162, CS0163 and CS8070',()=>{
   const method=body=>`class P{static int F(int x){${body}} static void Main(){Console.WriteLine(F(1));}}`;
   assert.deepEqual(codes(method('if(x>0)return 1;')),['CS0161']);assert.deepEqual(codes(method('while(true){if(x>0)return x;x++;}')),[],'an endless loop never reaches the end (the legacy check reported CS0161)');
-  assert.deepEqual(codes(method('while(true){if(x>0)return x;x++;}'),{pipeline:'legacy'}),['CS0161']);assert.deepEqual(codes(method('while(true){if(x>0)break;x++;}')),['CS0161']);
+  // The legacy method compiler's own check still reports CS0161 here; it stands only where the semantic analysis cannot take over (no `System` in scope).
+  assert.deepEqual(codes(method('while(true){if(x>0)return x;x++;}'),{pipeline:'legacy',implicitUsings:false}),['CS0161']);
+  assert.deepEqual(codes(method('while(true){if(x>0)return x;x++;}'),{pipeline:'legacy'}),[],'as Roslyn: the semantic analysis replaces the legacy answer');
+  assert.equal(new VirtualMachine(compile(method('while(true){if(x>0)return x;x++;}'),{pipeline:'legacy'}).image).run().output,'1\n','and the program prints what .NET prints');
+  assert.deepEqual(codes(method('while(true){if(x>0)break;x++;}')),['CS0161']);
   assert.deepEqual(codes(method('switch(x){case 1:if(x>0)break;return 1;default:return 0;}')),['CS0161'],'a break inside a returning section reaches the end (the legacy check accepted this)');
   assert.deepEqual(codes(method('try{return x;}finally{Console.WriteLine(0);}')),[]);assert.deepEqual(codes(method('throw new Exception("x");')),[]);
   assert.deepEqual(codes('return;Console.WriteLine(1);'),['CS0162']);assert.deepEqual(codes('return;Console.WriteLine(1);',{pipeline:'legacy'}),[],'the legacy compiler emitted no CS0162');
@@ -63,7 +68,9 @@ test('A02-T34 definite assignment follows branches, loops, try/finally and when-
   assert.deepEqual(first('int x;try{x=1;}catch(Exception){}Console.WriteLine(x);'),['CS0165:x']);assert.deepEqual(first('int x;try{}finally{x=1;}Console.WriteLine(x);'),[]);assert.deepEqual(first('int x;try{x=1;}finally{Console.WriteLine(x);}'),['CS0165:x']);
   assert.deepEqual(first('int x;if(b){return;}else{x=1;}Console.WriteLine(x);'),[]);assert.deepEqual(first('int x;x+=1;'),['CS0165:x']);assert.deepEqual(first('int x;Console.WriteLine(x);Console.WriteLine(x);'),['CS0165:x'],'reported once');
   assert.deepEqual(first('int x;return;Console.WriteLine(x);'),[],'unreachable code reads nothing');
-  assert.deepEqual(compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'legacy'}).diagnostics.map(d=>d.code),['CS0165'],'the legacy analysis ignored constant conditions');
+  assert.deepEqual(compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'legacy',implicitUsings:false}).diagnostics.map(d=>d.code),['CS0165'],'the legacy analysis ignored constant conditions');
+  const constant=compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'legacy'});assert.deepEqual(constant.diagnostics.map(d=>d.code),[],'as Roslyn: the semantic analysis replaces the legacy answer');
+  assert.equal(new VirtualMachine(constant.image).run().output,'1\n','and the program prints what .NET prints');
   const d=compile('int value;Console.WriteLine(value);').diagnostics[0];assert.deepEqual([d.code,d.start,d.length,d.message],['CS0165',28,5,"Use of unassigned local variable 'value'"]);
 });
 test('A02-T34 unused-variable warnings follow the Roslyn write-is-a-use rule',()=>{

@@ -1,9 +1,7 @@
 import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { spawn, spawnSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
-import { GitHubProject } from '../../planning/lib/github-project.js';
-import { ghTransport, isReadOnlyRequest } from '../../planning/lib/gh-retry.js';
 import { isMain } from '../../planning/lib/io.js';
 import { checkContractChange, contractsAt, versionsAt } from '../../planning/check-contract-change.js';
 import { checkSeamLock } from '../../planning/golden-output.js';
@@ -11,22 +9,8 @@ import { qualificationEnvironment, reviewOwnership } from './gates.js';
 import { groupGit, validateMergeGroupContext } from './merge-group-context.js';
 import { createPlan } from './impact.js';
 import { groupClaimedIdentity } from './merge-group-projects.js';
-
-/** Project GraphQL reads and repository reads use separate, explicitly configured credentials. */
-export function mergeGroupClient(environment = process.env, { spawnProcess = spawn } = {}) {
-  if (!environment.GH_TOKEN || !environment.PROJECT_READ_TOKEN) {
-    throw new Error('Merge-group planning requires GH_TOKEN and read-only PROJECT_READ_TOKEN (PLANNING_PROJECT_READ_TOKEN secret)');
-  }
-  const transport = token => ghTransport({ spawnProcess: (command, args, options) => spawnProcess(command, args, {
-    ...options, env: { ...qualificationEnvironment(environment), GH_TOKEN: token },
-  }) });
-  const project = transport(environment.PROJECT_READ_TOKEN), repository = transport(environment.GH_TOKEN);
-  const [owner, repo] = (environment.GITHUB_REPOSITORY ?? '').split('/');
-  return new GitHubProject({ owner, repo, transport: request => {
-    if (!isReadOnlyRequest(request)) throw new Error('Merge-group planning credentials permit read-only requests');
-    return request.path === 'graphql' ? project(request) : repository(request);
-  } });
-}
+import { planningClient as mergeGroupClient } from './qualification-client.js';
+export { planningClient as mergeGroupClient } from './qualification-client.js';
 
 /** Review the actual commits with only the contributing PR's authoritative labels. */
 function reviewContracts({ root, base, head, labels }) {

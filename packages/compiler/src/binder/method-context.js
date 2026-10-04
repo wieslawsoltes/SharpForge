@@ -21,8 +21,9 @@ export class MethodBinderContext {
     this.methodSymbol=this.sym.method(method);const container=compilation.containerBinder?.(method)??new InContainerBinder(method.owner?this.sym.type(method.owner):this.sym.globalNamespace,new BuckStopsHereBinder(compilation,BinderFlags.None));
     this.methodBinder=new InMethodBinder(this.methodSymbol,container);this.thisParameter=null;this.parameters=new Map();this.scope=new LocalScopeBinder(this.methodBinder,method.node);this.scopeSpans.push({binder:this.scope,start:method.node.start,end:method.node.end});
     // Parameters (and `this`) are the outermost variables; declaring them records their IDE symbols and reports duplicates.
+    // Compiler-synthesized parameters (the implicit top-level `args`, the startup forwarders) have no source declaration and no IDE symbol.
     if(!method.isStatic){this.thisParameter=new ParameterSymbol({name:'this',type:this.sym.type(method.owner),isThis:true});this.thisParameter.legacyType=method.owner.name;this.thisParameter.declaredAt=method.node.start;}
-    this.methodSymbol.parameters.forEach((parameter,i)=>{const p=method.parameters[i];if(this.parameters.has(p.name)||p.name==='this'&&this.thisParameter)this.c.report(p,DiagnosticId.CS0136,[p.name]);parameter.legacyType=p.type;parameter.declaredAt=p.start;parameter.ideSymbol=this.c.symbol({...p,name:p.name},'local',p.type,{method:this.m.qualifiedName,scopeStart:this.m.node.start,scopeEnd:this.m.node.end});this.parameters.set(p.name,parameter);});
+    this.methodSymbol.parameters.forEach((parameter,i)=>{const p=method.parameters[i];if(this.parameters.has(p.name)||p.name==='this'&&this.thisParameter)this.c.report(p,DiagnosticId.CS0136,[p.name]);parameter.legacyType=p.type;parameter.declaredAt=p.start;parameter.ideSymbol=p.hidden?null:this.c.symbol({...p,name:p.name},'local',p.type,{method:this.m.qualifiedName,scopeStart:this.m.node.start,scopeEnd:this.m.node.end});this.parameters.set(p.name,parameter);});
   }
   // ---- types -------------------------------------------------------------------------------------------------
   /** The TypeSymbol for a legacy type name. */
