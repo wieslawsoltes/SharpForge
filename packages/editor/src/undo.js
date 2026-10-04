@@ -28,6 +28,7 @@ export class UndoStack {
   }
   get canUndo() { return this.#history.length > 0; }
   get canRedo() { return this.#future.length > 0; }
+  get stateId() { return this.#state; }
   get isDirty() { return this.#state !== this.#saved; }
   get depth() { return this.#history.length; }
   get redoDepth() { return this.#future.length; }
@@ -55,12 +56,11 @@ export class UndoStack {
     if (!event.changes.length) return;
     const previous = this.#history.at(-1);
     const step = Object.freeze({ edits: copyEdits(event.changes), inverseEdits: copyEdits(event.inverseEdits) });
-    const canCoalesce = previous && !this.#barrier && !undoStop && previous.afterState !== this.#saved
-      && sameSelections(previous.afterSelections, beforeSelections) && (
-        this.#group && previous.explicitGroup === this.#group
-        || !this.#group && ['typing', 'insertText', 'deleteBackward', 'deleteForward'].includes(command)
-          && previous.command === command && time >= previous.time && time - previous.time <= this.coalesceMs
-      );
+    const sameGroup = this.#group && previous?.explicitGroup === this.#group;
+    const canCoalesce = previous && (sameGroup || !this.#group && !this.#barrier && !undoStop
+      && previous.afterState !== this.#saved && sameSelections(previous.afterSelections, beforeSelections)
+      && ['typing', 'insertText', 'deleteBackward', 'deleteForward'].includes(command)
+      && previous.command === command && time >= previous.time && time - previous.time <= this.coalesceMs);
     const characters = step.edits.reduce((sum, edit) => sum + edit.text.length, 0)
       + step.inverseEdits.reduce((sum, edit) => sum + edit.text.length, 0);
     const afterState = ++this.#sequence;

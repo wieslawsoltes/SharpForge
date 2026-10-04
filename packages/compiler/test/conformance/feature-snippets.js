@@ -194,7 +194,8 @@ const csharp7 = {
   OutVar: type('static void M(out int x) { x = 1; } static void N() { M(out int y); }'),
   ExpressionBodiedAccessor: type('int backing; int P { get => backing; set => backing = value; }'),
   ExpressionBodiedDeOrConstructor: unit('class A { int x; public A() => x = 1; ~A() => x = 0; }'),
-  Discards: type('static void M(out int x) { x = 1; } static void N() { M(out var _); }'),
+  // `out var _` and `out int _` are only 'out variable declaration' to Roslyn below C# 7; `out _` is a discard.
+  Discards: type('static void M(out int x) { x = 1; } static void N() { M(out _); }'),
   Deconstruction: main('int a; int b; (a, b) = (1, 2);'),
   GeneralizedAsyncReturnTypes: type('static async System.Threading.Tasks.ValueTask<int> M() { return 1; }'),
   IsPatternExpression: main('object o = 1; bool b = o is 1;'),

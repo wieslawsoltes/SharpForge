@@ -41,7 +41,7 @@ function directive(s, hash) {
     script: !!s.options.script,
     fileBasedProgram: s.options.fileBasedProgram
   };
-  const result = (marker || word === 'r' || word === 'load' ? scanScriptDirective(marker, word, rest, context, features) : null) ??
+  const result = (marker || word === 'r' || word === 'load' ? scanScriptDirective(marker, word, rest, context) : null) ??
     scanConditionalDirective(word, rest, s.state) ??
     scanMiscDirective(word, rest, features, 1 + body.length - rest.length) ?? {
       kind: 'BadDirectiveTrivia',
