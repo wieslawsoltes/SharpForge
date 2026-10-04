@@ -31,6 +31,7 @@ export class AnalysisCore {
   /**
    * @param {object[]} files parsed files (`parse()` results with `syntax`, `source`, `directives`)
    * @param {object} [options] compilation options: langVersion, langVersionByUri, nullableContext, name, references (imported global namespaces)
+   * `captureInvocations` additionally retains editor method-group candidates; diagnostics/emission leave it disabled.
    */
   constructor(files, options = {}) {
     this.files = files.filter(f => f.syntax);
@@ -47,6 +48,7 @@ export class AnalysisCore {
     this.constructions = [];
     this.nullableMaps = new Map();
     this.bound = new Map();
+    this.invocations = options.captureInvocations === true ? new Map() : null;
     this.constantState = new Map();
     this.unexecutable = new Map();
     this.typeBinder = new TypeBinder({
@@ -104,6 +106,14 @@ export class AnalysisCore {
       if (this.references.isUnification(d.code)) this.report(this.files[0]?.source.uri, { start: 0, end: 0 }, d.code, d.args);
       else this.report(uri, node, d.code, d.args);
     }
+  }
+
+  /** Retain method groups per document; syntax keys also preserve incomplete-call nesting boundaries. */
+  recordInvocation(context, syntax, target, result) {
+    let invocations = this.invocations.get(context.uri);
+    if (!invocations) this.invocations.set(context.uri, invocations = new Map());
+    invocations.set(syntax, {target, result,
+      isStatic: context.isStatic, instanceInitializer: context.isFieldInitializer && !context.isStaticInitializer});
   }
   /** The reason (`{code,args}`) the nearest unresolved base type of an imported type is missing, or null. */
   missingBaseReason(type) {

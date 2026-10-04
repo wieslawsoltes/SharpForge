@@ -23,6 +23,7 @@ import {typeSyntaxSpan} from './binder/type-spans.js';
 import {syntaxFeatureChecks} from './syntax-features.js';
 import {reconcileWithSemanticAnalysis} from './semantic-integration.js';
 import {declareTopLevelEntry,declareEntryStartup} from './codegen/entry-startup.js';
+import {SourceSemanticModel} from './source-model.js';
 export class Compilation {
   constructor(parsedFiles, options={}) {
     const syntaxChecks = syntaxFeatureChecks(parsedFiles, options);
@@ -34,6 +35,8 @@ export class Compilation {
     this.nullableMaps=new Map();this.fullNames=new Map();this.simpleNames=new Map();this.fileUsings=new Map();this.binderChains=new Map();this.pipeline=options.pipeline??globalThis.process?.env?.SHARPFORGE_PIPELINE??Compilation.defaultPipeline;this.semantic=new CompilationSymbols(this);this.boundPipeline=null;
   }
   static defaultPipeline='bound';
+  /** Reuses the full source binder when compilation already needed it; otherwise binds lazily once. */
+  getSourceModel(){return this.sourceModel??=new SourceSemanticModel(this);}
   /** Where code lives: `context` is a type record, a method record or null (the first file's global scope). */
   scopeOf(context){if(!context)return {namespace:'',uri:this.files[0]?.source.uri};if(context.declarations)return {namespace:context.namespace??'',uri:context.node.uri};return {namespace:context.owner?.namespace??'',uri:context.node?.uri??context.owner?.node.uri??this.files[0]?.source.uri};}
   /** The using directives of a file: `{namespaces:[dotted names], aliases:Map<alias,dotted name>}`. */

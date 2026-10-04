@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "revision": "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+  "packages": [
+    "archive",
+    "bcl-collections",
+    "bcl-core",
+    "bytecode",
+    "cil",
+    "compiler",
+    "framework",
+    "symbols",
+    "syntax",
+    "text"
+  ],
+  "inventory": {
+    "files": 840,
+    "bytes": 4747816
+  },
+  "benchmarkSha256": "f654fedb21cf64751ef8ba4bbb1b5fa91c42afab43d406f5af3fc911fd1f55e8"
+}

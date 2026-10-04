@@ -131,6 +131,8 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   try {
     const analysis = new SemanticAnalysis(files, {
       ...compilation.options,
+      // Compilation consumes diagnostics and bound trees, not editor invocation candidates.
+      captureInvocations: false,
       // Retain the execution profile's builtin receiver shorthands when semantic lowering takes over.
       // Explicit using policy or metadata references keep ordinary C# name resolution.
       executionBuiltinAliases: !compiled && !hasReferences && options.implicitUsings === undefined,
@@ -138,6 +140,9 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
     });
     // Wrong using directives of a program that compiles are diagnosed from the directives alone.
     result = usings === 'directives' && !rechecked ? analysis.runUsings() : analysis.run();
+    compilation.sourceAnalysis = analysis;
+    compilation.sourceAnalysisResult = result;
+    compilation.sourceAnalysisComplete = !result.usingsOnly && !result.unsupported;
   } catch (error) {
     // An internal failure of the analysis must not hide the profile diagnostics the pipeline already has, and it must
     // not pass silently either: it is reported as a diagnostic of its own.
