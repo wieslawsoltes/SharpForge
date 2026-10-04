@@ -32,7 +32,7 @@ export class CilTypeSystem {
       const dispatch=this.dispatch.table(type.token);
       this.methodTables.define({name:type.name,token:type.token,base,interfaces:type.interfaces.map(token=>metadata.typeName(token)),fields,
         flags:{interface:!!(type.flags&0x20),abstract:!!(type.flags&0x80),sealed:!!(type.flags&0x100),enum:base==='System.Enum',valueType:base==='System.ValueType'||base==='System.Enum'},
-        enumUnderlyingType:underlying,variance:parameters.map(row=>(row[1]&3)===1?1:(row[1]&3)===2?-1:0),
+        enumUnderlyingType:underlying,genericArity:parameters.length,variance:parameters.map(row=>(row[1]&3)===1?1:(row[1]&3)===2?-1:0),
         vtable:[...[...dispatch.slots.keys()].map(slot=>[slot,this.dispatch.resolveSlot(dispatch,slot)]),...[...dispatch.declarations].map(([declaration,slot])=>[declaration,this.dispatch.resolveSlot(dispatch,slot)])]});
     }
     // Complete the metadata graph before execution so casts never scan name lists.

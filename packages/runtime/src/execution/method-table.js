@@ -1,4 +1,5 @@
 import {asyncTypeTable} from './async-type-tables.js';
+import {genericTypeParts} from '@sharpforge/cil';
 import {nativeIntegerBits} from '@sharpforge/bytecode';
 import {frameworkMethodTable} from './framework-method-table.js';
 import {frameworkType, canonicalType} from '@sharpforge/framework';
@@ -10,35 +11,28 @@ const genericPrefix = 'System.Collections.Generic.';
 const genericNames = new Set(['IEnumerable','IEnumerator','ICollection','IList','IReadOnlyCollection','IReadOnlyList','IComparer','IEqualityComparer','List','Dictionary','HashSet','Queue','Stack']);
 const arrayInterfaces = ['System.Collections.IList','System.Collections.ICollection','System.Collections.IEnumerable','System.ICloneable','System.Collections.IStructuralComparable','System.Collections.IStructuralEquatable'];
 
-export function splitTypeArguments(text) {
-  const result=[];let start=0,depth=0;
-  for(let i=0;i<text.length;i++) {
-    if(text[i]==='<'||text[i]==='[')depth++;
-    else if(text[i]==='>'||text[i]===']')depth--;
-    else if(text[i]===','&&depth===0){result.push(text.slice(start,i).trim());start=i+1;}
-    if(depth<0)throw new TypeError('Unbalanced runtime type name');
-  }
-  if(depth!==0)throw new TypeError('Unbalanced runtime type name');
-  result.push(text.slice(start).trim());return result;
-}
-export function runtimeTypeName(input) {
+export function runtimeTypeName(input, definitions = null) {
   if(typeof input!=='string'||!input.trim())throw new TypeError('A runtime type name is required');
-  const name=input.trim(),array=/^(.*)\[([^\[\]]*)\]$/.exec(name);
+  const name = input.trim();
+  if (definitions?.has(name)) return name;
+  const array = /^(.*)\[([^\[\]]*)\]$/.exec(name);
   if(array) {
     const shape=array[2],dimensions=shape.split(',');
     if(shape!==''&&shape!=='*'&&!dimensions.every(dimension=>dimension===''||/^-?\d+\.\.\.-?\d*$/.test(dimension)))throw new TypeError('Invalid runtime array shape');
     if(dimensions.length>32)throw new TypeError('Runtime array rank exceeds 32');
-    return runtimeTypeName(array[1])+(shape===''?'[]':dimensions.length===1?'[*]':'['+','.repeat(dimensions.length-1)+']');
+    return runtimeTypeName(array[1], definitions)+(shape===''?'[]':dimensions.length===1?'[*]':'['+','.repeat(dimensions.length-1)+']');
   }
-  if(name.endsWith('?'))return 'System.Nullable`1<'+runtimeTypeName(name.slice(0,-1))+'>';
-  if(name.endsWith('&')||name.endsWith('*'))return runtimeTypeName(name.slice(0,-1))+name.at(-1);
-  const start=name.indexOf('<');
-  if(start>=0) {
-    if(!name.endsWith('>'))throw new TypeError('Unbalanced runtime type name');
-    const arguments_=splitTypeArguments(name.slice(start+1,-1));
-    let definition=name.slice(0,start).trim();
-    if(!/`\d+$/.test(definition)){const short=definition.replace(/^System\.Collections\.Generic\./,'');definition+='`'+(genericNames.has(short)?short==='Dictionary'?2:1:arguments_.length);}
-    return runtimeTypeName(definition)+'<'+arguments_.map(argument=>argument?runtimeTypeName(argument):'').join(', ')+'>';
+  if(name.endsWith('?'))return 'System.Nullable`1<'+runtimeTypeName(name.slice(0,-1), definitions)+'>';
+  if(name.endsWith('&')||name.endsWith('*'))return runtimeTypeName(name.slice(0,-1), definitions)+name.at(-1);
+  const parts = genericTypeParts(name);
+  if (parts.arguments.length) {
+    let definition = parts.definition.trim();
+    if (!definitions?.has(definition) && !/`\d+$/.test(definition)) {
+      const short = definition.replace(/^System\.Collections\.Generic\./, '');
+      definition += '`' + (genericNames.has(short) ? short === 'Dictionary' ? 2 : 1 : parts.arguments.length);
+    }
+    return runtimeTypeName(definition, definitions) + '<' +
+      parts.arguments.map(argument => argument ? runtimeTypeName(argument, definitions) : '').join(', ') + '>';
   }
   const stem=name.replace(/`\d+$/,'');
   if(/[<>\[\]]/.test(name))throw new TypeError('Unbalanced runtime type name');
@@ -121,7 +115,7 @@ export class MethodTableRegistry {
       if(!name)throw new TypeError('Unknown runtime type token: '+input);
       const table=this.get(name);this.tokens.set(input,table);return table;
     }
-    const name=this.descriptors.has(input)?input:runtimeTypeName(input);
+    const name=this.descriptors.has(input)?input:runtimeTypeName(input, this.descriptors);
     if(this.tables.has(name))return this.tables.get(name);
     if(this.building.size>=128)throw new TypeError('Runtime type nesting limit exceeded');
     let descriptor=this.descriptors.get(name),array=/^(.*)(\[(?:,*|\*)\])$/.exec(name);
@@ -131,9 +125,9 @@ export class MethodTableRegistry {
     }
     if(!descriptor&&(name.endsWith('&')||name.endsWith('*')))descriptor={name,base:null,elementType:name.slice(0,-1),flags:{byRef:name.endsWith('&'),pointer:name.endsWith('*')}};
     if(!descriptor&&/^!\d+$/.test(name))descriptor={name,base:null,flags:{genericParameter:true}};
-    const angle=name.indexOf('<');
-    if(!descriptor&&angle>=0) {
-      const definition=this.get(name.slice(0,angle)),typeArguments=splitTypeArguments(name.slice(angle+1,-1));
+    const parts = descriptor ? null : genericTypeParts(name);
+    if (parts?.arguments.length) {
+      const definition = this.get(parts.definition), typeArguments = parts.arguments;
       if(typeArguments.every(argument=>!argument))return definition;
       if(typeArguments.length!==definition.genericArity||typeArguments.some(argument=>!argument))throw new TypeError('Generic type argument count does not match definition');
       const args=typeArguments.map(argument=>this.get(argument));
@@ -151,7 +145,7 @@ export class MethodTableRegistry {
     const token=descriptor.token??this.nextToken--,table=new MethodTable(this,name,token);
     this.tables.set(name,table);this.tokens.set(token,table);this.building.add(name);
     try {
-      const arity=Number(/`(\d+)$/.exec(name)?.[1]??0);
+      const arity=descriptor.genericArity??Number(/`(\d+)$/.exec(name)?.[1]??0);
       table.flags=Object.freeze({interface:false,valueType:false,enum:false,array:false,szArray:false,delegate:false,nullable:false,primitive:false,byRef:false,pointer:false,genericParameter:false,genericDefinition:arity>0,...descriptor.flags});
       table.genericArity=descriptor.genericDefinition?.genericArity??arity;
       table.genericDefinition=descriptor.genericDefinition??null;
