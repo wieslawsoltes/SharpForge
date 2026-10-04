@@ -1,11 +1,9 @@
 import {hasLegacyBclBuiltin,invokeLegacyBclBuiltin} from '@sharpforge/bcl-core';
-import {mutateArray} from './array-ops.js';
 import {Builtins} from '@sharpforge/bytecode';
 import {ManagedFault,isReference} from '../heap.js';
-import {internString,isInternedString,referenceEquals,stringChar} from './strings.js';
-import {enumHasFlag} from './enums.js';
 import {SourceBuiltinResults} from './source-values.js';
-import {objectType,typeName,runtimeTypeText} from './tokens.js';
+import {objectType,runtimeTypeText} from './tokens.js';
+import {invokeNamedBuiltin} from './source-builtins/index.js';
 
 function legacyStringPlatform(vm) {
   // The builtin seam also supports heap/value/format services without a complete VM.
@@ -57,35 +55,6 @@ export function builtin(vm, id, args) {
       }
       return Math[fn](...args);
     }
-    switch (name) {
-      case 'string.Intern': return internString(vm,args[0]);
-      case 'string.IsInterned': return isInternedString(vm,args[0]);
-      case 'string.get_Chars': return stringChar(vm,args[0],args[1]);
-      case 'object.GetType': return objectType(vm,args[0]);
-      case 'Type.Name': case 'Type.FullName': {const text=typeName(vm,args[0],name==='Type.FullName');return text===null?null:vm.heap.string(text);}
-      case 'object.ReferenceEquals': return referenceEquals(args[0],args[1]);
-      case 'Enum.HasFlag': return enumHasFlag(vm,args[0],args[1]);
-      case '$Math.Abs.Int32':
-        if (a === -2147483648) throw new ManagedFault('OverflowException', 'Absolute value of Int32.MinValue is not representable');
-        return Math.abs(a);
-      case 'Console.WriteLine': vm.emitOutput((args.length ? vm.format(args[0]) : '') + '\n'); return null;
-      case 'Console.Write': vm.emitOutput(vm.format(args[0])); return null;
-      case 'GC.Collect': vm.heap.collect(); return null;
-      case 'GC.GetTotalMemory':
-        if (a === true) vm.heap.collect();
-        return BigInt(vm.heap.stats.liveBytes);
-      case 'GC.CollectionCount':
-        if (!Number.isInteger(a) || a < 0 || a > 2) throw new ManagedFault('ArgumentOutOfRangeException', 'GC generation must be between 0 and 2');
-        // Every collection in this non-generational heap collects all three generations.
-        return vm.heap.stats.collections;
-      case 'Array.Reverse': case 'Array.Sort': return mutateArray(vm,name.slice(6),args[0]);
-      case 'Exception.new': return vm.heap.allocate('exception', 'Exception', [args[0]]);
-      case 'Exception.Message': return vm.heap.get(args[0]).data[0];
-      case 'Debug.Assert':
-        if (a !== true) throw new ManagedFault('AssertionException', args.length > 1 ? vm.format(args[1]) : 'Assertion failed');
-        return null;
-      case 'Environment.TickCount': return Math.trunc(performance.now()) | 0;
-      default: throw new ManagedFault('MissingMethodException', `Intrinsic '${name}' is not implemented`);
-    }
+    return invokeNamedBuiltin(vm,name,args,a);
   });
 }
