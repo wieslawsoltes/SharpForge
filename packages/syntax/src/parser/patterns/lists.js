@@ -1,10 +1,11 @@
+import { Precedence } from '../../lexer/operators.js';
 /** C# 11 list patterns `[p1, .., pn]`, slice patterns with an optional sub-pattern (`.. var rest`) and a trailing designation. */
 export const listPatternMethods = {
   /** `..` with an optional sub-pattern; the cursor is at `..`. */
   slicePattern() {
     const dots = this.take(),
       hasPattern = !this.at(',') && !this.at(']') && this.canStartPattern(this.current);
-    return this.n('SlicePattern', dots, hasPattern ? this.pattern(false) : null);
+    return this.n('SlicePattern', dots, hasPattern ? this.pattern(false, Precedence.Conditional) : null);
   },
   listPattern() {
     const start = this.current,
@@ -14,7 +15,7 @@ export const listPatternMethods = {
     this.nested(() => {
       while (!this.at(']') && !this.at('eof')) {
         const before = this.i;
-        list.push(this.at('..') ? this.slicePattern() : this.pattern(false));
+        list.push(this.at('..') ? this.slicePattern() : this.pattern(false, Precedence.Conditional));
         if (this.at(',')) list.push(this.take());
         else break;
         if (before === this.i) break;

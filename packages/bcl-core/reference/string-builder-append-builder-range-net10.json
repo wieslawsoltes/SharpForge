@@ -1,0 +1,3824 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "ef3150b413b166665f06dad310f32722f4992a37987d3bd8f4076b905ad94540",
+  "rows": [
+    {
+      "id": "value-0-range-0",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": -1,
+      "count": -1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-0-range-1",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": -2147483648,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-0-range-2",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 0,
+      "count": -2147483648,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "value-0-range-3",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 0,
+      "count": -1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "value-0-range-4",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 1,
+      "count": -1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "value-0-range-5",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 0,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-0-range-6",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 1,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "value-0-range-7",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 8,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "value-0-range-8",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 9,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "value-0-range-9",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 2147483647,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "value-0-range-10",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 0,
+      "count": 1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "value-0-range-11",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 1,
+      "count": 1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "value-0-range-12",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 6,
+      "count": 2,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "value-0-range-13",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 8,
+      "count": 1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "value-0-range-14",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 0,
+      "count": 2147483647,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "value-0-range-15",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": null,
+      "startIndex": 2147483647,
+      "count": 2147483647,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "value-1-range-0",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": -1,
+      "count": -1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-1-range-1",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": -2147483648,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-1-range-2",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 0,
+      "count": -2147483648,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "value-1-range-3",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 0,
+      "count": -1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "value-1-range-4",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 1,
+      "count": -1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "value-1-range-5",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 0,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-1-range-6",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 1,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-1-range-7",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 8,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-1-range-8",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 9,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-1-range-9",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 2147483647,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-1-range-10",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 0,
+      "count": 1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-1-range-11",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 1,
+      "count": 1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-1-range-12",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 6,
+      "count": 2,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-1-range-13",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 8,
+      "count": 1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-1-range-14",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 0,
+      "count": 2147483647,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-1-range-15",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [],
+      "startIndex": 2147483647,
+      "count": 2147483647,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-2-range-0",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": -1,
+      "count": -1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-2-range-1",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": -2147483648,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-2-range-2",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 0,
+      "count": -2147483648,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "value-2-range-3",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 0,
+      "count": -1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "value-2-range-4",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 1,
+      "count": -1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "value-2-range-5",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 0,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-2-range-6",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 1,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-2-range-7",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 8,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-2-range-8",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 9,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-2-range-9",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 2147483647,
+      "count": 0,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-2-range-10",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 0,
+      "count": 1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65
+      ],
+      "length": 6,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-2-range-11",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 1,
+      "count": 1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0
+      ],
+      "length": 6,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-2-range-12",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 6,
+      "count": 2,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        56320,
+        90
+      ],
+      "length": 7,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "value-2-range-13",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 8,
+      "count": 1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-2-range-14",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 0,
+      "count": 2147483647,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "value-2-range-15",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 2147483647,
+      "count": 2147483647,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "length": 5,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "complete-units",
+      "destination": [
+        [
+          115
+        ],
+        [
+          101
+        ],
+        [
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 0,
+      "count": 8,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "length": 13,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "nul-and-pair",
+      "destination": [],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 1,
+      "count": 3,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        0,
+        55296,
+        56320
+      ],
+      "length": 3,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "isolated-high",
+      "destination": [
+        [
+          56320
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 4,
+      "count": 1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        56320,
+        55296
+      ],
+      "length": 2,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "isolated-low",
+      "destination": [
+        [
+          55296
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "startIndex": 6,
+      "count": 1,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "output": [
+        55296,
+        56320
+      ],
+      "length": 2,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "moderate-chunk-boundaries",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120
+        ],
+        [
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121
+        ],
+        [
+          122,
+          122,
+          122,
+          122,
+          122,
+          122,
+          122,
+          122,
+          122,
+          122,
+          122,
+          122,
+          122,
+          122,
+          122
+        ]
+      ],
+      "startIndex": 16,
+      "count": 35,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122
+      ],
+      "sourceOutput": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122,
+        122
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        120,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        121,
+        122
+      ],
+      "length": 40,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "many-segments",
+      "destination": [
+        [
+          115,
+          101,
+          101,
+          100,
+          124
+        ]
+      ],
+      "source": [
+        [
+          65
+        ],
+        [
+          66
+        ],
+        [
+          67
+        ],
+        [
+          68
+        ],
+        [
+          69
+        ],
+        [
+          70
+        ],
+        [
+          71
+        ],
+        [
+          72
+        ],
+        [
+          73
+        ],
+        [
+          74
+        ],
+        [
+          75
+        ],
+        [
+          76
+        ],
+        [
+          77
+        ],
+        [
+          78
+        ],
+        [
+          79
+        ],
+        [
+          80
+        ],
+        [
+          81
+        ],
+        [
+          82
+        ],
+        [
+          83
+        ],
+        [
+          84
+        ],
+        [
+          85
+        ],
+        [
+          86
+        ],
+        [
+          87
+        ],
+        [
+          88
+        ],
+        [
+          89
+        ],
+        [
+          90
+        ],
+        [
+          65
+        ],
+        [
+          66
+        ],
+        [
+          67
+        ],
+        [
+          68
+        ],
+        [
+          69
+        ],
+        [
+          70
+        ],
+        [
+          71
+        ],
+        [
+          72
+        ],
+        [
+          73
+        ],
+        [
+          74
+        ],
+        [
+          75
+        ],
+        [
+          76
+        ],
+        [
+          77
+        ],
+        [
+          78
+        ],
+        [
+          79
+        ],
+        [
+          80
+        ],
+        [
+          81
+        ],
+        [
+          82
+        ],
+        [
+          83
+        ],
+        [
+          84
+        ],
+        [
+          85
+        ],
+        [
+          86
+        ],
+        [
+          87
+        ],
+        [
+          88
+        ],
+        [
+          89
+        ],
+        [
+          90
+        ],
+        [
+          65
+        ],
+        [
+          66
+        ],
+        [
+          67
+        ],
+        [
+          68
+        ],
+        [
+          69
+        ],
+        [
+          70
+        ],
+        [
+          71
+        ],
+        [
+          72
+        ],
+        [
+          73
+        ],
+        [
+          74
+        ],
+        [
+          75
+        ],
+        [
+          76
+        ],
+        [
+          77
+        ],
+        [
+          78
+        ],
+        [
+          79
+        ],
+        [
+          80
+        ],
+        [
+          81
+        ],
+        [
+          82
+        ],
+        [
+          83
+        ],
+        [
+          84
+        ],
+        [
+          85
+        ],
+        [
+          86
+        ],
+        [
+          87
+        ],
+        [
+          88
+        ],
+        [
+          89
+        ],
+        [
+          90
+        ],
+        [
+          65
+        ],
+        [
+          66
+        ],
+        [
+          67
+        ],
+        [
+          68
+        ],
+        [
+          69
+        ],
+        [
+          70
+        ],
+        [
+          71
+        ],
+        [
+          72
+        ],
+        [
+          73
+        ],
+        [
+          74
+        ],
+        [
+          75
+        ],
+        [
+          76
+        ],
+        [
+          77
+        ],
+        [
+          78
+        ],
+        [
+          79
+        ],
+        [
+          80
+        ],
+        [
+          81
+        ],
+        [
+          82
+        ],
+        [
+          83
+        ],
+        [
+          84
+        ],
+        [
+          85
+        ],
+        [
+          86
+        ],
+        [
+          87
+        ],
+        [
+          88
+        ],
+        [
+          89
+        ],
+        [
+          90
+        ],
+        [
+          65
+        ],
+        [
+          66
+        ],
+        [
+          67
+        ],
+        [
+          68
+        ],
+        [
+          69
+        ],
+        [
+          70
+        ],
+        [
+          71
+        ],
+        [
+          72
+        ],
+        [
+          73
+        ],
+        [
+          74
+        ],
+        [
+          75
+        ],
+        [
+          76
+        ],
+        [
+          77
+        ],
+        [
+          78
+        ],
+        [
+          79
+        ],
+        [
+          80
+        ],
+        [
+          81
+        ],
+        [
+          82
+        ],
+        [
+          83
+        ],
+        [
+          84
+        ],
+        [
+          85
+        ],
+        [
+          86
+        ],
+        [
+          87
+        ],
+        [
+          88
+        ]
+      ],
+      "startIndex": 31,
+      "count": 65,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88
+      ],
+      "sourceOutput": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82
+      ],
+      "length": 70,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "empty-segments",
+      "destination": [],
+      "source": [
+        [],
+        [],
+        [
+          97,
+          98,
+          99
+        ],
+        []
+      ],
+      "startIndex": 1,
+      "count": 2,
+      "self": false,
+      "nullReceiver": false,
+      "sourceBefore": [
+        97,
+        98,
+        99
+      ],
+      "sourceOutput": [
+        97,
+        98,
+        99
+      ],
+      "output": [
+        98,
+        99
+      ],
+      "length": 2,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "self-empty",
+      "destination": [],
+      "source": null,
+      "startIndex": 0,
+      "count": 0,
+      "self": true,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [],
+      "length": 0,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "self-empty-past-end",
+      "destination": [],
+      "source": null,
+      "startIndex": 1,
+      "count": 0,
+      "self": true,
+      "nullReceiver": false,
+      "sourceBefore": [],
+      "sourceOutput": [],
+      "output": [],
+      "length": 0,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "self-full",
+      "destination": [
+        [
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99
+        ]
+      ],
+      "source": null,
+      "startIndex": 0,
+      "count": 3,
+      "self": true,
+      "nullReceiver": false,
+      "sourceBefore": [
+        97,
+        98,
+        99
+      ],
+      "sourceOutput": [
+        97,
+        98,
+        99,
+        97,
+        98,
+        99
+      ],
+      "output": [
+        97,
+        98,
+        99,
+        97,
+        98,
+        99
+      ],
+      "length": 6,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "self-middle",
+      "destination": [
+        [
+          97,
+          98
+        ],
+        [
+          99,
+          100
+        ],
+        [
+          101,
+          102
+        ]
+      ],
+      "source": null,
+      "startIndex": 1,
+      "count": 4,
+      "self": true,
+      "nullReceiver": false,
+      "sourceBefore": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "sourceOutput": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        98,
+        99,
+        100,
+        101
+      ],
+      "output": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        98,
+        99,
+        100,
+        101
+      ],
+      "length": 10,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "self-tail",
+      "destination": [
+        [
+          97,
+          98
+        ],
+        [
+          99,
+          100
+        ],
+        [
+          101,
+          102
+        ]
+      ],
+      "source": null,
+      "startIndex": 5,
+      "count": 1,
+      "self": true,
+      "nullReceiver": false,
+      "sourceBefore": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "sourceOutput": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        102
+      ],
+      "output": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        102
+      ],
+      "length": 7,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "self-units",
+      "destination": [
+        [
+          65
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          55296,
+          120
+        ],
+        [
+          56320,
+          90
+        ]
+      ],
+      "source": null,
+      "startIndex": 1,
+      "count": 6,
+      "self": true,
+      "nullReceiver": false,
+      "sourceBefore": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90
+      ],
+      "sourceOutput": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320
+      ],
+      "output": [
+        65,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320,
+        90,
+        0,
+        55296,
+        56320,
+        55296,
+        120,
+        56320
+      ],
+      "length": 14,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "self-end-zero",
+      "destination": [
+        [
+          97,
+          98,
+          99
+        ]
+      ],
+      "source": null,
+      "startIndex": 3,
+      "count": 0,
+      "self": true,
+      "nullReceiver": false,
+      "sourceBefore": [
+        97,
+        98,
+        99
+      ],
+      "sourceOutput": [
+        97,
+        98,
+        99
+      ],
+      "output": [
+        97,
+        98,
+        99
+      ],
+      "length": 3,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "self-past-end-zero",
+      "destination": [
+        [
+          97,
+          98,
+          99
+        ]
+      ],
+      "source": null,
+      "startIndex": 4,
+      "count": 0,
+      "self": true,
+      "nullReceiver": false,
+      "sourceBefore": [
+        97,
+        98,
+        99
+      ],
+      "sourceOutput": [
+        97,
+        98,
+        99
+      ],
+      "output": [
+        97,
+        98,
+        99
+      ],
+      "length": 3,
+      "same": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "self-invalid",
+      "destination": [
+        [
+          97,
+          98,
+          99
+        ]
+      ],
+      "source": null,
+      "startIndex": -1,
+      "count": -1,
+      "self": true,
+      "nullReceiver": false,
+      "sourceBefore": [
+        97,
+        98,
+        99
+      ],
+      "sourceOutput": [
+        97,
+        98,
+        99
+      ],
+      "output": [
+        97,
+        98,
+        99
+      ],
+      "length": 3,
+      "same": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex"
+    },
+    {
+      "id": "null-receiver-null-zero",
+      "destination": [],
+      "source": null,
+      "startIndex": 0,
+      "count": 0,
+      "self": false,
+      "nullReceiver": true,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "null-receiver-invalid",
+      "destination": [],
+      "source": null,
+      "startIndex": -1,
+      "count": -1,
+      "self": false,
+      "nullReceiver": true,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "null-receiver-valid",
+      "destination": [],
+      "source": [
+        [
+          97,
+          98,
+          99
+        ]
+      ],
+      "startIndex": 1,
+      "count": 1,
+      "self": false,
+      "nullReceiver": true,
+      "sourceBefore": [
+        97,
+        98,
+        99
+      ],
+      "sourceOutput": [
+        97,
+        98,
+        99
+      ],
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "null-receiver-self",
+      "destination": [],
+      "source": null,
+      "startIndex": 0,
+      "count": 0,
+      "self": true,
+      "nullReceiver": true,
+      "sourceBefore": null,
+      "sourceOutput": null,
+      "output": null,
+      "length": null,
+      "same": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    }
+  ]
+}

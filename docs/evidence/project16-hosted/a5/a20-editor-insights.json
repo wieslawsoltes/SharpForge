@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "engine": "chromium",
+  "passed": 12,
+  "checks": [
+    "completion renders kind/filter/docs and applies selected text",
+    "completion Escape preserves typed text",
+    "snippet fields mirror while typing and Tab advances without losing source",
+    "inline rename previews/cancels exactly and commits across three real models",
+    "code action preview is exact and does not mutate until Apply",
+    "Quick Info combines signature, safe documentation and diagnostic quick fix",
+    "parameter info highlights active argument and cycles overloads",
+    "Peek Definition edits the target model and navigates multiple results",
+    "native Find history combobox preserves source until regex capture replacement is applied",
+    "incremental search restores its original caret on Escape",
+    "inlay hints retain source offsets and CodeLens resolves once with actionable UI",
+    "disposal removes every popup and produces no uncaught browser errors"
+  ],
+  "failure": null
+}

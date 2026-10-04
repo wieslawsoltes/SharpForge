@@ -1,0 +1,383 @@
+{
+  "schemaVersion": 1,
+  "provenance": {
+    "baseline": {
+      "commit": "d51b3ad69b6f21154da1e5a1dd5577db084ece51",
+      "files": {
+        "packages/cil/src/verify/metadata-types/snapshot.js": "39e1e6cb69fdd8dbab3ed1fbb4c5c4de6acf31c4c94874bf7bd48d076553a65c",
+        "packages/cil/src/verify/metadata-types/results.js": "db861737499020c8cfb8d7966eb332240e1235eb93cedee04029779e0cbf2990",
+        "packages/cil/src/verify/metadata-types/tokens.js": "962436f4c4e650d0af23342edc2bbf16144f630bb19ddfa9382bfe9e9bb36835",
+        "packages/cil/src/verify/metadata-types/hierarchy.js": "238bfa7dd33127e20d5301497c1e55c8e1f4290e00541811409a96f15330ff68",
+        "packages/cil/src/verify/type-system.js": "8ffa921c5c9866a27917da84489e645903adee41d148ddd7e00da7682edde2e8",
+        "packages/cil/tools/benchmark-verifier-types.mjs": "bc0920829d406fe6d2def8f08ca6663a843847044f02f4672c40b5c45a1ff443",
+        "tests/fixtures/a03-verifier-types/input.js": "744f29eefc9dd310d5dd415054bd0ae23af927f8a94867886454f5fe9005e243",
+        "tests/a03-07-local-type-references.test.js": "fca0f92c4aae415690812893f1dec9ef1551866ba42032b1d90852e3ddfc4c6f",
+        "tests/fixtures/a03-local-type-references/input.js": "a29038f9438e518fd53c331548e754b4ada6ceac4c49982642b2e4f4c48711c8",
+        "packages/cil/tools/benchmark-local-type-references.mjs": "d568b1a062c0732b0ca5b664f8984f3172576a02cc943f5aca9fb3bdc461a58c"
+      }
+    },
+    "candidate": {
+      "commit": "ec8d13b77fd90eef0e79dc398d650567bfaa02d8",
+      "files": {
+        "packages/cil/src/verify/metadata-types/snapshot.js": "0d9c99fd321f7cd836fbd28d7327e830a67c602351a5c2030e4227878ddd5958",
+        "packages/cil/src/verify/metadata-types/results.js": "1bd036637af1cb8712f6044a2a7938388fb5ed9b2d1237d45bafebf38417403e",
+        "packages/cil/src/verify/metadata-types/tokens.js": "962436f4c4e650d0af23342edc2bbf16144f630bb19ddfa9382bfe9e9bb36835",
+        "packages/cil/src/verify/metadata-types/hierarchy.js": "238bfa7dd33127e20d5301497c1e55c8e1f4290e00541811409a96f15330ff68",
+        "packages/cil/src/verify/type-system.js": "8ffa921c5c9866a27917da84489e645903adee41d148ddd7e00da7682edde2e8",
+        "packages/cil/tools/benchmark-verifier-types.mjs": "bc0920829d406fe6d2def8f08ca6663a843847044f02f4672c40b5c45a1ff443",
+        "tests/fixtures/a03-verifier-types/input.js": "744f29eefc9dd310d5dd415054bd0ae23af927f8a94867886454f5fe9005e243",
+        "tests/a03-07-local-type-references.test.js": "fca0f92c4aae415690812893f1dec9ef1551866ba42032b1d90852e3ddfc4c6f",
+        "tests/fixtures/a03-local-type-references/input.js": "a29038f9438e518fd53c331548e754b4ada6ceac4c49982642b2e4f4c48711c8",
+        "packages/cil/tools/benchmark-local-type-references.mjs": "d568b1a062c0732b0ca5b664f8984f3172576a02cc943f5aca9fb3bdc461a58c",
+        "packages/cil/src/verify/metadata-types/local-references.js": "ca6832d78cea29dcd5b0c0de44e444abf457c7e146060ba173cd858eb27035cd"
+      }
+    }
+  },
+  "commands": [
+    {
+      "label": "install",
+      "command": "npm",
+      "args": [
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-references",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "baseline-install",
+      "command": "npm",
+      "args": [
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-reference-baseline",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "baseline-red",
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "--test-name-pattern=explicit Module-scoped TypeRefs",
+        "tests/a03-07-local-type-references.test.js"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-reference-baseline",
+      "exitCode": 1,
+      "signal": null
+    },
+    {
+      "label": "baseline-local-performance",
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--expose-gc",
+        "packages/cil/tools/benchmark-local-type-references.mjs",
+        "/tmp/a03-local-type-references-validation/baseline-local-performance.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-reference-baseline",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "baseline-existing-performance",
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--expose-gc",
+        "packages/cil/tools/benchmark-verifier-types.mjs",
+        "/tmp/a03-local-type-references-validation/baseline-existing-performance.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-reference-baseline",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "native",
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "tests/fixtures/a03-local-type-references/capture.mjs",
+        "/tmp/a03-local-type-references-validation/native.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-references",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "focused-tests",
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "tests/a03-07-local-type-references.test.js",
+        "tests/a03-07-local-type-references-native.test.js",
+        "tests/a03-07-type-system.test.js",
+        "tests/a03-07-type-system-native.test.js",
+        "tests/a03-verification-types.test.js",
+        "tests/a03-07-members.test.js",
+        "tests/a03-07-members-inherited.test.js",
+        "tests/a03-07-type-access.test.js",
+        "tests/a03-07-nested-access.test.js",
+        "tests/a03-07-member-access.test.js",
+        "tests/a03-coded-index-bounds.test.js"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-references",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "candidate-local-performance",
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--expose-gc",
+        "packages/cil/tools/benchmark-local-type-references.mjs",
+        "/tmp/a03-local-type-references-validation/candidate-local-performance.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-references",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "candidate-existing-performance",
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--expose-gc",
+        "packages/cil/tools/benchmark-verifier-types.mjs",
+        "/tmp/a03-local-type-references-validation/candidate-existing-performance.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-references",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "manifests",
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "scripts/planning/check-test-manifests.js"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-references",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "syntax",
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "scripts/check.js"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-references",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "static-imports",
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "scripts/conformance/static/check-imports.js",
+        "--output",
+        "/tmp/a03-local-type-references-validation/static-imports.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-references",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "structure",
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "scripts/quality/check-structure.js"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-references",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "diff-check",
+      "command": "git",
+      "args": [
+        "diff",
+        "--check"
+      ],
+      "cwd": "/tmp/sharpforge-a03-local-type-references",
+      "exitCode": 0,
+      "signal": null
+    }
+  ],
+  "validation": {
+    "tests": 74,
+    "failures": 0,
+    "nativeObservations": 20,
+    "supportedNativeAliases": 9,
+    "syntaxModules": 3565,
+    "staticModules": 3561,
+    "manifestAreas": 30,
+    "manifestNodeFiles": 962,
+    "unassigned": 0,
+    "duplicate": 0,
+    "structureFindings": 271,
+    "changedStructureFindings": 0
+  },
+  "baselineLocal": {
+    "platform": "darwin-arm64",
+    "release": "25.6.0",
+    "cpu": "Apple M3 Pro",
+    "node": "v24.21.0",
+    "gc": true,
+    "iterations": 1000,
+    "rounds": 12,
+    "warmups": 3,
+    "sharedMachine": true,
+    "known": 0,
+    "medianMs": 3.5187910000000215,
+    "p95Ms": 3.8876249999999857,
+    "samples": [
+      {"elapsedMs":6.933166,"heapDelta":4058632},
+      {"elapsedMs":3.9845830000000007,"heapDelta":15194472},
+      {"elapsedMs":4.477582999999996,"heapDelta":15126856},
+      {"elapsedMs":3.8876249999999857,"heapDelta":15109736},
+      {"elapsedMs":3.8683329999999785,"heapDelta":14377624},
+      {"elapsedMs":3.513957999999974,"heapDelta":13944568},
+      {"elapsedMs":3.5187910000000215,"heapDelta":13941792},
+      {"elapsedMs":3.3987089999999966,"heapDelta":13941792},
+      {"elapsedMs":3.5454170000000147,"heapDelta":13941792},
+      {"elapsedMs":3.3896249999999952,"heapDelta":13941792},
+      {"elapsedMs":3.531833000000006,"heapDelta":13947632},
+      {"elapsedMs":3.4490830000000017,"heapDelta":14018760}
+    ],
+    "note": "Construction plus one resolution per iteration. Heap deltas are not allocation volume or peak memory."
+  },
+  "candidateLocal": {
+    "platform": "darwin-arm64",
+    "release": "25.6.0",
+    "cpu": "Apple M3 Pro",
+    "node": "v24.21.0",
+    "gc": true,
+    "iterations": 1000,
+    "rounds": 12,
+    "warmups": 3,
+    "sharedMachine": true,
+    "known": 12000,
+    "medianMs": 10.023667000000017,
+    "p95Ms": 10.18545899999998,
+    "samples": [
+      {"elapsedMs":16.081000000000003,"heapDelta":7112904},
+      {"elapsedMs":12.397541000000018,"heapDelta":1398096},
+      {"elapsedMs":10.904333000000008,"heapDelta":549184},
+      {"elapsedMs":10.18545899999998,"heapDelta":16028416},
+      {"elapsedMs":10.068916999999999,"heapDelta":16020816},
+      {"elapsedMs":9.879958999999985,"heapDelta":15973808},
+      {"elapsedMs":9.973458999999991,"heapDelta":16019360},
+      {"elapsedMs":10.065083999999985,"heapDelta":16005144},
+      {"elapsedMs":10.023667000000017,"heapDelta":16017056},
+      {"elapsedMs":9.963415999999995,"heapDelta":16017056},
+      {"elapsedMs":10.07166699999999,"heapDelta":16013312},
+      {"elapsedMs":10.019166999999982,"heapDelta":16305680}
+    ],
+    "note": "Construction plus one resolution per iteration. Heap deltas are not allocation volume or peak memory."
+  },
+  "baselineExisting": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "warmupSamples": 3,
+    "host": "shared; no before/after or speedup claim",
+    "results": {
+      "construction": {
+        "iterations": 1000,
+        "medianMs": 3.3614589999999964,
+        "p95Ms": 4.262457999999981,
+        "samples": [
+          {"ms":6.506833,"heapDelta":4065432},
+          {"ms":4.184375000000003,"heapDelta":732440},
+          {"ms":3.743417000000022,"heapDelta":15182624},
+          {"ms":4.262457999999981,"heapDelta":15164480},
+          {"ms":3.7084580000000074,"heapDelta":14423912},
+          {"ms":3.4423339999999882,"heapDelta":14218208},
+          {"ms":3.3611669999999947,"heapDelta":14126048},
+          {"ms":3.3029999999999973,"heapDelta":14126048},
+          {"ms":3.3559580000000153,"heapDelta":14126048},
+          {"ms":3.3452079999999853,"heapDelta":14126048},
+          {"ms":3.3614589999999964,"heapDelta":14126048},
+          {"ms":3.392458000000005,"heapDelta":14208648}
+        ]
+      },
+      "inheritedInterface": {
+        "iterations": 1000,
+        "medianMs": 0.36354199999999537,
+        "p95Ms": 0.3911249999999882,
+        "samples": [
+          {"ms":1.650541000000004,"heapDelta":2605040},
+          {"ms":0.37258399999998915,"heapDelta":2424768},
+          {"ms":0.38720899999998437,"heapDelta":2424768},
+          {"ms":0.3779170000000249,"heapDelta":2424768},
+          {"ms":0.37066700000002584,"heapDelta":2424768},
+          {"ms":0.3911249999999882,"heapDelta":2344856},
+          {"ms":0.3394999999999868,"heapDelta":2296760},
+          {"ms":0.33824999999998795,"heapDelta":2296760},
+          {"ms":0.3585419999999999,"heapDelta":2296760},
+          {"ms":0.3503330000000062,"heapDelta":2296760},
+          {"ms":0.3751670000000047,"heapDelta":2296760},
+          {"ms":0.36354199999999537,"heapDelta":2215352}
+        ]
+      }
+    }
+  },
+  "candidateExisting": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "warmupSamples": 3,
+    "host": "shared; no before/after or speedup claim",
+    "results": {
+      "construction": {
+        "iterations": 1000,
+        "medianMs": 3.9291660000000093,
+        "p95Ms": 4.3044590000000085,
+        "samples": [
+          {"ms":7.042958000000013,"heapDelta":5662912},
+          {"ms":4.5327079999999995,"heapDelta":611256},
+          {"ms":4.455292000000014,"heapDelta":170904},
+          {"ms":4.140291999999988,"heapDelta":15854664},
+          {"ms":4.3044590000000085,"heapDelta":15634504},
+          {"ms":3.954874999999987,"heapDelta":15523248},
+          {"ms":4.113250000000022,"heapDelta":15565032},
+          {"ms":3.7088329999999985,"heapDelta":15474448},
+          {"ms":3.7879170000000215,"heapDelta":15343944},
+          {"ms":3.9291660000000093,"heapDelta":15343944},
+          {"ms":3.7902090000000044,"heapDelta":15343944},
+          {"ms":3.741125000000011,"heapDelta":15514184}
+        ]
+      },
+      "inheritedInterface": {
+        "iterations": 1000,
+        "medianMs": 0.3385419999999897,
+        "p95Ms": 0.3730419999999981,
+        "samples": [
+          {"ms":1.3719580000000065,"heapDelta":2575376},
+          {"ms":0.367999999999995,"heapDelta":2424768},
+          {"ms":0.3754160000000013,"heapDelta":2424768},
+          {"ms":0.3730419999999981,"heapDelta":2424768},
+          {"ms":0.3692920000000015,"heapDelta":2424768},
+          {"ms":0.3656660000000045,"heapDelta":2325704},
+          {"ms":0.33799999999999386,"heapDelta":2296760},
+          {"ms":0.3434169999999881,"heapDelta":2296760},
+          {"ms":0.3385419999999897,"heapDelta":2296760},
+          {"ms":0.3252499999999827,"heapDelta":1956312},
+          {"ms":0.2622080000000153,"heapDelta":1656736},
+          {"ms":0.25304200000002197,"heapDelta":1656736}
+        ]
+      }
+    }
+  },
+  "notes": [
+    "One chronological run per variant; first 3 of 12 samples are warmups; each sample contains 1000 operations.",
+    "Both worktrees installed independently. @sharpforge/cil resolved to the corresponding local packages/cil directory.",
+    "Baseline local-reference lookup returns unknown; candidate resolves it, so this workload measures added supported work.",
+    "Shared Apple M3 Pro / Darwin 25.6.0 / Node 24.21.0. No speedup or noise attribution; heap deltas are not allocation volume or peak memory."
+  ]
+}

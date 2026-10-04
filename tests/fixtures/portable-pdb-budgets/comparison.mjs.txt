@@ -1,0 +1,70 @@
+// Run only through the scheduled sole limiter-owned validation driver.
+import { cpus, platform, arch } from 'node:os';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
+const [configuration, output] = process.argv.slice(2);
+const config = JSON.parse(readFileSync(configuration, 'utf8'));
+const modules = {};
+for (const [label, entry] of Object.entries(config.variants))
+  modules[label] = await import(pathToFileURL(entry.directory + '/packages/symbols/src/index.js'));
+const directory = config.variants.budgets.directory + '/tests/fixtures/portable-pdb-local-constants';
+const assembly = readFileSync(directory + '/LocalConstants.dll');
+const pdb = readFileSync(directory + '/LocalConstants.pdb');
+const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+const observations = {};
+for (const [label, symbols] of Object.entries(modules)) {
+  const parsed = symbols.readPortablePdb(pdb), loaded = symbols.loadSymbols(assembly, pdb);
+  const enumeration = loaded.constants.find(value => value.name === 'Enumeration');
+  if (!loaded.bound || enumeration?.value !== -1234 || enumeration.type !== 'short') throw Error('Native control mismatch');
+  observations[label] = { documents: parsed.documents.length, methods: parsed.methods.length, scopes: parsed.scopes.length,
+    imports: parsed.imports.length, custom: parsed.custom.length,
+    cdiBytes: parsed.custom.reduce((sum, record) => sum + record.bytes.length, 0),
+    embeddedSources: parsed.custom.filter(record => record.source).length,
+    constants: loaded.constants.length, enumValue: enumeration.value, enumType: enumeration.type };
+}
+if (new Set(Object.values(observations).map(value => JSON.stringify(value))).size !== 1) throw Error('Control observations differ');
+const permutations = [
+  ['baseline', 'references', 'budgets'], ['budgets', 'references', 'baseline'],
+  ['references', 'budgets', 'baseline'], ['baseline', 'budgets', 'references'],
+  ['budgets', 'baseline', 'references'], ['references', 'baseline', 'budgets'],
+];
+const chronologicalSamples = [], summaries = {};
+const startedAt = new Date().toISOString(), start = performance.now();
+const report = { config, node: process.version, host: `${platform()} ${arch()} ${cpus()[0].model}`, startedAt,
+  protocol: { rounds: 20, warmups: 40, parseIterations: 200, loadIterations: 100, permutations,
+    gcBeforeEachSample: true, median: 'mean of positions 10 and 11', p95: 'nearest-rank position 19',
+    qualification: 'One fixed shared-host schedule; no retries, excluded samples, causal/noise/significance or allocation claim.' },
+  fixtures: { assemblyBytes: assembly.length, assemblySha256: hash(assembly), pdbBytes: pdb.length,
+    pdbSha256: hash(pdb), harnessSha256: hash(readFileSync(new URL(import.meta.url))) },
+  observations, summaries, chronologicalSamples };
+try {
+  for (const [control, iterations] of [['parse', 200], ['load', 100]]) {
+    const actions = Object.fromEntries(Object.entries(modules).map(([label, symbols]) => [label,
+      control === 'parse' ? () => symbols.readPortablePdb(pdb).methods.length : () => symbols.loadSymbols(assembly, pdb).bound]));
+    for (let warmup = 0; warmup < 40; warmup++) for (const action of Object.values(actions)) action();
+    for (let round = 0; round < 20; round++) for (const label of permutations[round % permutations.length]) {
+      globalThis.gc?.();
+      let observed;
+      const sampleStart = performance.now();
+      for (let iteration = 0; iteration < iterations; iteration++) observed = actions[label]();
+      const elapsedMs = performance.now() - sampleStart;
+      if (!observed) throw Error('Missing benchmark result');
+      chronologicalSamples.push({ control, round, label, startOffsetMs: sampleStart - start, elapsedMs, perOperationMs: elapsedMs / iterations });
+    }
+    summaries[control] = {};
+    for (const label of Object.keys(modules)) {
+      const values = chronologicalSamples.filter(sample => sample.control === control && sample.label === label)
+        .map(sample => sample.perOperationMs).sort((a, b) => a - b);
+      summaries[control][label] = { medianMs: (values[9] + values[10]) / 2, p95Ms: values[18] };
+    }
+  }
+  report.passed = true;
+} catch (error) {
+  report.passed = false;
+  report.error = { name: error.name, message: error.message };
+  throw error;
+} finally {
+  writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
+}
+console.log(JSON.stringify({ output, summaries }, null, 2));

@@ -1,0 +1,16 @@
+{
+  "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+  "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+  "trigger": "create",
+  "triggerRef": "refs/heads/codex/project16/qualify-windows-firefox-browser-20261004-w1",
+  "triggerNonce": "20261004-w1",
+  "captureOnly": true,
+  "baselineProfile": null,
+  "workflowRunId": "37184606471",
+  "stage": "browser",
+  "engine": "firefox",
+  "runner": "Windows",
+  "runnerLabel": "windows-latest",
+  "editorBaseline": null,
+  "workbenchBaseline": null
+}

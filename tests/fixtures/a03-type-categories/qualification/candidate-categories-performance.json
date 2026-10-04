@@ -1,0 +1,65 @@
+{
+  "platform": "darwin-arm64",
+  "release": "25.6.0",
+  "cpu": "Apple M3 Pro",
+  "node": "v24.21.0",
+  "gc": true,
+  "iterations": 1000,
+  "rounds": 12,
+  "warmups": 3,
+  "sharedMachine": true,
+  "known": 12000,
+  "medianMs": 5.615583000000015,
+  "p95Ms": 7.46604099999999,
+  "samples": [
+    {
+      "elapsedMs": 10.795209,
+      "heapDelta": 9077776
+    },
+    {
+      "elapsedMs": 8.273124999999993,
+      "heapDelta": 6534440
+    },
+    {
+      "elapsedMs": 7.789749999999998,
+      "heapDelta": 4914800
+    },
+    {
+      "elapsedMs": 6.842375000000004,
+      "heapDelta": 3050200
+    },
+    {
+      "elapsedMs": 7.46604099999999,
+      "heapDelta": 2807816
+    },
+    {
+      "elapsedMs": 6.238082999999989,
+      "heapDelta": 1843016
+    },
+    {
+      "elapsedMs": 5.341250000000002,
+      "heapDelta": 1025208
+    },
+    {
+      "elapsedMs": 5.615583000000015,
+      "heapDelta": 1057384
+    },
+    {
+      "elapsedMs": 4.746292000000011,
+      "heapDelta": 974880
+    },
+    {
+      "elapsedMs": 5.41145800000001,
+      "heapDelta": 1038696
+    },
+    {
+      "elapsedMs": 5.857291000000004,
+      "heapDelta": 1110352
+    },
+    {
+      "elapsedMs": 5.067875000000015,
+      "heapDelta": 1366440
+    }
+  ],
+  "note": "Authority construction plus category query. New capability; heap deltas are not allocations or peak memory."
+}

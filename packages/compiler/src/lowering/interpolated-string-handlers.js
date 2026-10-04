@@ -25,6 +25,7 @@ export const InterpolatedStringHandlerLowering = Base =>
       if (node.conversion?.kind !== handlerConversion) return super.exprConversion(node);
       const pattern = node.conversion.handler;
       if (!pattern) return this.unsupported('an interpolated string handler that did not bind', node.syntax);
+      if (pattern.argumentPlaceholders?.length) return this.unsupported('an interpolated string handler that takes arguments of its call', node.syntax);
       const handler = this.temp(this.imageType(node.type, node.syntax), 'handler'),
         locals = [handler],
         outer = this.handlerPlaceholders;

@@ -1,16 +1,13 @@
 import { WorkbenchEvents, requireIdentifier, workbenchError } from './state-events.js';
-
-function documentRecord(record) {
-  requireIdentifier(record?.uri, 'Document URI');
-  if (typeof record.text !== 'string') throw new TypeError('Document text must be a string');
-  const version = record.version ?? 1;
-  if (!Number.isSafeInteger(version) || version < 0) throw new RangeError('Invalid document version');
-  return { ...record, version };
-}
+import { DocumentIngress, validateDocumentModel } from './documents-ingress.js';
+import { captureDocumentSave, savedModelBaseline } from './documents-save.js';
+import { captureDocumentState } from './documents-state.js';
+import { reloadDocument } from './documents-reload.js';
+import { documentSource } from './document-source.js';
 
 /** Workspace documents own text and editors; prompt/tab placement policies belong to the host. */
 export class DocumentService {
-  constructor({ records = [], createEditor, createModel, modelFactory, saveDocument, maxDocuments = 20_000 } = {}) {
+  constructor({ records = [], createEditor, createModel, modelFactory, saveDocument, coordinateSave, maxDocuments = 20_000 } = {}) {
     this.records = new Map();
     this.recordList = [];
     this.baselines = new Map();
@@ -26,12 +23,14 @@ export class DocumentService {
     this.models = new Map();
     this.modelSubscriptions = new Map();
     this.staleSaves = new Set();
+    this.reloadChanges = new WeakSet();
     this.events = new WorkbenchEvents();
     this.revision = 0;
     this.disposed = false;
     this.createEditor = createEditor;
     this.modelFactory = createModel ?? modelFactory;
     this.saveDocument = saveDocument;
+    this.coordinateSave = coordinateSave;
     this.maxDocuments = maxDocuments;
     this.replace(records, { discard: true });
   }
@@ -41,13 +40,8 @@ export class DocumentService {
   get(uri) {
     const found = this.records.get(uri);
     if (found) return found;
-    const appended = this.recordList.find(record => record.uri === uri);
-    if (appended) {
-      this.records.set(uri, appended);
-      if (!this.baselines.has(uri)) this.baselines.set(uri, appended.text);
-      if (this.modelFactory) this.bindModel(appended, this.newModel(documentRecord(appended)));
-    }
-    return appended ?? null;
+    const index = this.recordList.findIndex(record => (record.uri ?? record.path) === uri);
+    return index < 0 ? null : this.adopt(this.recordList[index], { dirty: !!this.recordList[index].dirty }, index);
   }
   list() { return this.files; }
 
@@ -58,62 +52,70 @@ export class DocumentService {
     return record;
   }
 
-  replace(records, { tabs = [], active = '', discard = false, preserveEditors = false } = {}) {
+  replace(records, { tabs = [], active = '', discard = false, preserveEditors = false,
+    preserveDirty = false, documentStates = null, commitMetadata, signal } = {}) {
+    if (this.disposed) throw workbenchError('DOCUMENTS_DISPOSED', 'Document service is disposed');
+    if (commitMetadata !== undefined && typeof commitMetadata !== 'function') throw new TypeError('Invalid metadata commit contribution');
     if (!Array.isArray(records) || records.length > this.maxDocuments) throw new RangeError('Document limit exceeded');
-    if (this.dirtyFiles.size && !discard) throw workbenchError('DOCUMENT_DIRTY', 'Save or discard changed documents before replacing the workspace');
-    const next = new Map();
-    for (const value of records) {
-      const record = documentRecord(value);
-      if (next.has(record.uri)) throw new TypeError(`Duplicate document '${record.uri}'`);
-      next.set(record.uri, record);
+    if (this.dirtyFiles.size && !discard && !preserveDirty) {
+      throw workbenchError('DOCUMENT_DIRTY', 'Save or discard changed documents before replacing the workspace');
     }
-    if (tabs.some(uri => !next.has(uri)) || active && !next.has(active)) throw new TypeError('Invalid restored document tabs');
-    const models = new Map();
+    const staged = new DocumentIngress(this, { signal, preserveEditors, preserveDirty, documentStates }).prepare(records);
     try {
-      if (this.modelFactory) for (const [uri, record] of next) {
-        const previous = preserveEditors ? this.models.get(uri) : null;
-        models.set(uri, previous && previous.version === record.version && previous.text === record.text ? previous : this.newModel(record));
+      if (!discard && [...this.dirtyFiles].some(uri => !staged.preserved.has(uri))) {
+        throw workbenchError('DOCUMENT_DIRTY', 'Save or discard changed documents before replacing them');
       }
-    } catch (error) {
-      for (const [uri, model] of models) if (this.models.get(uri) !== model) model.dispose?.();
-      throw error;
-    }
-    if (!preserveEditors) this.resetEditors();
-    else for (const uri of this.records.keys()) if (!next.has(uri)) this.releaseViews(uri);
-    for (const dispose of this.modelSubscriptions.values()) dispose();
+      if (!Array.isArray(tabs) || tabs.some(uri => !staged.records.has(uri)) || active && !staged.records.has(active)) {
+        throw new TypeError('Invalid restored document tabs');
+      }
+      staged.prepareSavedState();
+    } catch (error) { staged.reject(error); }
+    const oldModels = new Map(this.models);
+    const oldSubscriptions = [...this.modelSubscriptions.values()];
+    const oldUris = [...this.records.keys()];
+    this.records = staged.records;
+    this.recordList = [...staged.records.values()];
+    this.baselines = staged.baselines;
     this.modelSubscriptions.clear();
-    for (const [uri, model] of this.models) if (models.get(uri) !== model) model.dispose?.();
+    for (const [uri, dispose] of staged.subscriptions) this.modelSubscriptions.set(uri, dispose);
     this.models.clear();
-    this.records = next;
-    this.recordList = [...next.values()];
-    for (const record of this.recordList) record.dirty = false;
-    this.baselines = new Map([...next].map(([uri, record]) => [uri, record.text]));
+    for (const [uri, model] of staged.models) this.models.set(uri, model);
     this.dirtyFiles.clear();
+    for (const record of staged.records.values()) if (record.dirty) this.dirtyFiles.add(record.uri);
     this.staleSaves.clear();
-    for (const [uri, model] of models) {
-      model.markSaved();
-      this.bindModel(next.get(uri), model);
-      for (const view of this.views.get(uri)?.values() ?? []) this.setEditorModel(uri, view.editor);
-    }
+    for (const uri of staged.staleSaves) this.staleSaves.add(uri);
     this.tabs = [...new Set(tabs)];
     this.active = active || this.tabs[0] || '';
     if (this.active && !this.tabs.includes(this.active)) this.tabs.push(this.active);
     this.revision++;
-    this.events.emit({ type: 'reset', files: this.files, tabs: [...this.tabs], active: this.active, revision: this.revision });
+    staged.commit();
+    this.finishReplacement({ oldModels, oldSubscriptions, oldUris, preserveEditors, commitMetadata });
+    return { committed: true, count: this.records.size };
   }
 
-  add(value, { dirty = false } = {}) {
-    const record = documentRecord(value);
-    if (this.records.has(record.uri)) throw new TypeError(`Duplicate document '${record.uri}'`);
+  add(value, options) { return this.adopt(value, options); }
+
+  adopt(value, { dirty = false, signal } = {}, index = -1) {
+    if (this.disposed) throw workbenchError('DOCUMENTS_DISPOSED', 'Document service is disposed');
     if (this.records.size >= this.maxDocuments) throw new RangeError('Document limit exceeded');
-    const model = this.modelFactory ? this.newModel(record) : null;
+    const staged = new DocumentIngress(this, { signal }).prepare([value], { dirty });
+    const record = staged.records.values().next().value;
+    try {
+      if (this.records.has(record.uri)) throw new TypeError(`Duplicate document '${record.uri}'`);
+      staged.prepareSavedState();
+    } catch (error) { staged.reject(error); }
     this.records.set(record.uri, record);
-    this.recordList.push(record);
-    this.baselines.set(record.uri, dirty ? null : record.text);
+    if (index < 0) this.recordList.push(record); else this.recordList[index] = record;
+    this.baselines.set(record.uri, staged.baselines.get(record.uri));
     if (dirty) this.dirtyFiles.add(record.uri);
-    record.dirty = dirty;
-    if (model) this.bindModel(record, model);
-    this.events.emit({ type: 'added', uri: record.uri, record, revision: ++this.revision });
+    const model = staged.models.get(record.uri);
+    if (model) {
+      this.models.set(record.uri, model);
+      this.modelSubscriptions.set(record.uri, staged.subscriptions.get(record.uri));
+    }
+    this.revision++;
+    staged.commit();
+    this.afterCommit([() => this.events.emit({ type: 'added', uri: record.uri, record, revision: this.revision })]);
     return record;
   }
 
@@ -169,10 +171,11 @@ export class DocumentService {
     return record;
   }
 
-  markSaved(uri, { version, text } = {}) {
+  markSaved(uri, options = {}) {
     const record = this.require(uri);
     const model = this.models.get(uri);
-    if (model) return this.markModelSaved(uri, model, record, { version, text });
+    if (model) return this.markModelSaved(uri, model, record, options);
+    const { version, text } = options;
     const baseline = text ?? record.text;
     if (version !== undefined && version !== record.version && text === undefined) return false;
     this.baselines.set(uri, baseline);
@@ -183,18 +186,43 @@ export class DocumentService {
     return !record.dirty;
   }
 
+  /** Capture immutable source/version for disk streaming; legacy providers may read the lazy text property. */
+  captureSave(uri) { return captureDocumentSave(this.require(uri), this.models.get(uri)); }
+
+  captureState(uri) { return captureDocumentState(this, uri); }
+
+  /** Accept a bounded external source with exact ownership and a synchronous metadata commit before notifications. */
+  reload(uri, text, options) { return reloadDocument(this, uri, text, options); }
+
   async save(uri) {
     const record = this.require(uri);
-    if (!this.saveDocument) throw workbenchError('DOCUMENT_SAVE_UNAVAILABLE', 'No document save provider is registered');
+    if (!this.saveDocument && !this.coordinateSave) {
+      throw workbenchError('DOCUMENT_SAVE_UNAVAILABLE', 'No document save provider is registered');
+    }
     const editor = this.views.get(uri)?.get(this.activeViews.get(uri))?.editor ?? this.editors.get(uri);
-    const prepared = editor?.prepareSave?.();
-    if (prepared && typeof prepared.then === 'function') await prepared;
-    if (this.records.get(uri) !== record) return false;
-    const snapshot = { ...record };
-    const result = await this.saveDocument(snapshot);
+    const isCurrent = () => !this.disposed && this.records.get(uri) === record;
+    const capture = () => {
+      if (!isCurrent()) throw workbenchError('DOCUMENT_SAVE_STALE', 'The document changed ownership during save preparation');
+      return this.captureSave(uri);
+    };
+    const prepare = options => {
+      capture();
+      const pending = editor?.prepareSave?.(options);
+      return pending && typeof pending.then === 'function' ? pending.then(capture) : capture();
+    };
+    let snapshot = this.captureSave(uri);
+    let result;
+    if (this.coordinateSave) {
+      result = await this.coordinateSave({ snapshot, prepare, isCurrent });
+      snapshot = result?.snapshot ?? snapshot;
+    } else {
+      const prepared = prepare();
+      snapshot = prepared && typeof prepared.then === 'function' ? await prepared : prepared;
+      result = await this.saveDocument(snapshot);
+    }
     if (result === false || result?.ok === false) return false;
-    if (this.records.get(uri) !== record) return false;
-    return this.markSaved(uri, { version: snapshot.version, text: snapshot.text });
+    if (!isCurrent()) return false;
+    return this.markSaved(uri, snapshot);
   }
 
   close(uri, { discard = false } = {}) {
@@ -304,18 +332,24 @@ export class DocumentService {
   }
 
   releaseViews(uri) {
+    const effects = [...this.views.get(uri)?.values() ?? []].map(view => () => view.editor.prepareViewState?.());
     for (const [viewId, view] of this.views.get(uri) ?? []) {
-      const saved = this.viewStates.get(uri) ?? new Map();
-      saved.set(viewId, this.getViewState(uri, viewId));
-      this.viewStates.set(uri, saved);
-      view.editor.dispose?.();
+      effects.push(() => {
+        const saved = this.viewStates.get(uri) ?? new Map();
+        saved.set(viewId, this.getViewState(uri, viewId));
+        this.viewStates.set(uri, saved);
+      });
+      effects.push(() => view.editor.dispose?.());
     }
-    this.views.delete(uri);
-    this.editors.delete(uri);
-    this.activeViews.delete(uri);
+    try { this.afterCommit(effects); }
+    finally {
+      this.views.delete(uri);
+      this.editors.delete(uri);
+      this.activeViews.delete(uri);
+    }
   }
 
-  resetEditors() { for (const uri of [...this.views.keys()]) this.releaseViews(uri); }
+  resetEditors() { this.afterCommit([...this.views.keys()].map(uri => () => this.releaseViews(uri))); }
 
   snapshot() {
     return { files: this.files.map(record => ({ ...record })), tabs: [...this.tabs], active: this.active, dirtyFiles: [...this.dirtyFiles] };
@@ -323,42 +357,75 @@ export class DocumentService {
 
   dispose() {
     if (this.disposed) return;
-    this.resetEditors();
-    for (const dispose of this.modelSubscriptions.values()) dispose();
-    this.modelSubscriptions.clear();
-    for (const model of this.models.values()) model.dispose?.();
-    this.models.clear();
     this.disposed = true;
-    this.events.dispose();
+    const effects = [() => this.resetEditors(), ...this.modelSubscriptions.values(),
+      ...[...this.models.values()].map(model => () => model.dispose?.()), () => this.events.dispose()];
+    this.modelSubscriptions.clear();
+    this.models.clear();
+    this.records.clear();
+    this.recordList.length = 0;
+    this.baselines.clear();
+    this.dirtyFiles.clear();
+    this.staleSaves.clear();
+    this.documentProjects.clear();
+    this.projectMembership.clear();
+    this.tabs.length = 0;
+    this.active = '';
+    try { this.afterCommit(effects); }
+    finally { this.viewStates.clear(); }
   }
 
   newModel(record) {
+    if (record.model) { validateDocumentModel(record, record.model); return record.model; }
     const model = this.modelFactory(record);
-    if (!model || !['onDidChange', 'setValue', 'markSaved', 'snapshot'].every(name => typeof model[name] === 'function')) {
-      model?.dispose?.();
-      throw new TypeError('Document model factory must return an EditorModel-compatible object');
-    }
-    if (model.uri !== record.uri || model.version !== record.version) {
-      model.dispose?.();
-      throw new TypeError('Document model URI and version must match its record');
-    }
+    try { validateDocumentModel(record, model); }
+    catch (error) { if (!this.ownsModel(model)) model?.dispose?.(); throw error; }
     return model;
   }
 
-  bindModel(record, model) {
+  ownsModel(model) { return !!model && this.models.get(model.uri) === model; }
+
+  observeModel(record, model) {
     const uri = record.uri;
-    this.models.set(uri, model);
-    if (this.baselines.get(uri) !== null) this.baselines.set(uri, model.snapshot());
-    record.dirty = model.isDirty || this.baselines.get(uri) === null;
     Object.defineProperties(record, {
-      text: { enumerable: true, configurable: true, get: () => model.text, set: text => this.update(uri, text) },
-      version: { enumerable: true, configurable: true, get: () => model.version }
+      text: { enumerable: true, configurable: true, get: () => documentSource(null, model).text, set: text => this.update(uri, text) },
+      version: { enumerable: true, configurable: true, get: () => documentSource(null, model).version },
+      model: { enumerable: false, configurable: true, value: model },
+      source: { enumerable: false, configurable: true, get: () => documentSource(null, model) },
+      length: { enumerable: false, configurable: true, get: () => documentSource(null, model).length }
     });
-    this.modelSubscriptions.set(uri, model.onDidChange(change => this.modelChanged(uri, record, model, change)));
+    const unsubscribe = model.onDidChange(change => this.modelChanged(uri, record, model, change));
+    if (typeof unsubscribe !== 'function') throw new TypeError('Document model subscription must return a disposer');
+    return unsubscribe;
+  }
+
+  finishReplacement({ oldModels, oldSubscriptions, oldUris, preserveEditors, commitMetadata }) {
+    const effects = [...(commitMetadata ? [commitMetadata] : []), ...oldSubscriptions];
+    if (!preserveEditors) effects.push(() => this.resetEditors());
+    else for (const uri of oldUris) if (!this.records.has(uri)) effects.push(() => this.releaseViews(uri));
+    for (const [uri, model] of oldModels) if (this.models.get(uri) !== model) effects.push(() => model.dispose?.());
+    if (preserveEditors) for (const uri of this.models.keys()) for (const view of this.views.get(uri)?.values() ?? []) {
+      effects.push(() => this.setEditorModel(uri, view.editor));
+    }
+    effects.push(() => this.events.emit({ type: 'reset', files: this.files, tabs: [...this.tabs], active: this.active, revision: this.revision }));
+    this.afterCommit(effects);
+  }
+
+  afterCommit(effects) {
+    const failures = [];
+    for (const effect of effects) {
+      try { effect(); } catch (error) { failures.push(error); }
+    }
+    if (failures.length) {
+      const error = new AggregateError(failures, 'Documents committed, but a view or cleanup callback failed');
+      Object.assign(error, { code: 'DOCUMENT_COMMITTED', committed: true });
+      throw error;
+    }
   }
 
   modelChanged(uri, record, model, change) {
     if (this.disposed || this.models.get(uri) !== model || this.records.get(uri) !== record) return;
+    if (this.reloadChanges.has(change.bufferEdit)) return;
     const wasDirty = this.dirtyFiles.has(uri);
     const dirty = model.isDirty || this.staleSaves.has(uri) || this.baselines.get(uri) === null;
     record.dirty = dirty;
@@ -376,15 +443,16 @@ export class DocumentService {
     if (dirty !== wasDirty) this.events.emit({ type: 'dirty', uri, record, dirty });
   }
 
-  markModelSaved(uri, model, record, { version, text }) {
-    if (version !== undefined && version !== model.version || text !== undefined && text !== model.text) {
-      if (text === undefined) return false;
-      this.baselines.set(uri, text);
+  markModelSaved(uri, model, record, options) {
+    const saved = savedModelBaseline(model, options);
+    if (!saved) return false;
+    if (saved.stale) {
+      this.baselines.set(uri, saved.baseline);
       this.staleSaves.add(uri);
     } else {
       model.markSaved();
       this.staleSaves.delete(uri);
-      this.baselines.set(uri, model.snapshot());
+      this.baselines.set(uri, saved.baseline);
     }
     record.dirty = model.isDirty || this.staleSaves.has(uri);
     if (record.dirty) this.dirtyFiles.add(uri); else this.dirtyFiles.delete(uri);

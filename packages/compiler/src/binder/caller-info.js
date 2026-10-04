@@ -41,8 +41,21 @@ const attributesNamed = (symbol, fullName) => symbol.boundAttributes.filter(attr
 /** The caller info attributes applied to a parameter, strongest first: `[{ kind, attribute, ...codes }]`. */
 function appliedTo(parameter) {
   const definition = parameter.originalDefinition ?? parameter;
-  if (!definition.boundAttributes?.length) return [];
+  if (!definition.boundAttributes) return importedAttributes(definition);
+  if (!definition.boundAttributes.length) return [];
   return kinds.flatMap(row => attributesNamed(definition, namespaceName + row.className).map(attribute => ({ ...row, attribute })));
+}
+
+/** The same for a parameter of a referenced assembly, whose attributes are decoded metadata (`ThrowIfNull(argument, paramName)`). */
+function importedAttributes(definition) {
+  const attributes = definition.metadataToken === undefined ? null : definition.attributes;
+  if (!attributes?.length) return [];
+  const asBound = attribute => ({ arguments: attribute.constructorArguments.map(argument => ({ constantValue: { value: argument.value } })) });
+  return kinds.flatMap(row =>
+    attributes
+      .filter(attribute => attribute.attributeClassName === namespaceName + row.className)
+      .map(attribute => ({ ...row, attribute: asBound(attribute) })),
+  );
 }
 
 /** The parameter name a `[CallerArgumentExpression("name")]` attribute gives, or null. */
@@ -57,8 +70,9 @@ function targetNameOf(attribute) {
  *   argument text a `[CallerArgumentExpression]` passes
  */
 export function callerInfoOf(parameter, method) {
+  if (!parameter.isOptional) return null;
   const [strongest] = appliedTo(parameter);
-  if (!strongest || !parameter.isOptional) return null;
+  if (!strongest) return null;
   if (strongest.kind !== 'expression') return { kind: strongest.kind, target: null };
   const name = targetNameOf(strongest.attribute),
     definition = parameter.originalDefinition ?? parameter,

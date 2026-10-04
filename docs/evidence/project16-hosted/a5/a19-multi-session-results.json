@@ -1,0 +1,24 @@
+{
+  "target": "production-studio-real-workers",
+  "status": "failed",
+  "engine": "chromium",
+  "checks": [
+    {
+      "name": "solution import uses Studio project and compiler services",
+      "passed": true
+    },
+    {
+      "name": "toolbar retains the selected launch profile separately for each project",
+      "passed": true
+    }
+  ],
+  "failure": {
+    "type": "TimeoutError",
+    "message": "Browser predicate remained false: () => {\n        const services = sharpforge.workbenchServices;\n        const sessions = services.sessions.list();\n        return services.launches.operations.size === 0 && sessions.length === 2 &&\n            sessions.every(session => session.live && session.debug?.uiActive && !session.launchBusy &&\n                session.programOutput.endsWith(' environment\\n'));\n    }"
+  },
+  "pageErrors": [
+    "Workbench event listeners failed",
+    "Workbench event listeners failed"
+  ],
+  "milliseconds": 65201.35
+}

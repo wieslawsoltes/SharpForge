@@ -1,0 +1,6 @@
+{
+  "qualifiedHead": "f9d00bdcddd2f5804cc0469a0353b14daf5f879a",
+  "nativeInputUnchanged": true,
+  "resumeStep": 5,
+  "reason": "Existing decoder rejects all malformed branch targets before typed propagation. Removed duplicate scan and asserted its existing diagnostic/message/offset. Retained original26of27 log;77 native captures unchanged; no benchmarks executed yet."
+}

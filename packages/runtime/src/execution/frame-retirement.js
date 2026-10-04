@@ -1,9 +1,14 @@
 import {retirePooledFrame, flushFramePool, clearFramePool} from './frame-pool.js';
+import {releaseStackFrame, clearStackBudget} from './stack-budget.js';
+import {forgetContextSuspension} from './context-events.js';
 
 /** Remove an exited frame; defer clearing until its return/unwind handler finishes. */
 export function popPooledFrame(vm) {
   const frame = vm.frames.pop();
-  if (frame) retirePooledFrame(vm, frame);
+  if (frame) {
+    releaseStackFrame(vm, frame);
+    retirePooledFrame(vm, frame);
+  }
   return frame;
 }
 
@@ -11,6 +16,7 @@ export function popPooledFrame(vm) {
 export function discardContextFrames(vm, context) {
   for (const frame of context.frames === vm.frames ? [] : context.frames) {
     // A current fatal stack remains inspectable until stop or restore.
+    releaseStackFrame(vm, frame);
     retirePooledFrame(vm, frame);
   }
   context.frames = [];
@@ -24,12 +30,14 @@ export function stopFramePool(vm) {
     for (const frame of context.frames) retirePooledFrame(vm, frame);
   }
   clearFramePool(vm);
+  clearStackBudget(vm);
 }
 
 const terminal = new Set(['completed', 'faulted', 'canceled']);
 
 /** Complete task delivery before releasing the execution context's storage. */
 export function finishContext(scheduler, context) {
+  forgetContextSuspension(scheduler, context);
   if (terminal.has(context.status)) return;
   context.status = scheduler.vm.state === 'faulted' ? 'faulted' : 'completed';
   Object.assign(context, scheduler.capture());
@@ -47,6 +55,7 @@ export function finishContext(scheduler, context) {
 
 /** Dispose parked contexts while retaining the active fatal stack for inspection. */
 export function cancelContexts(scheduler) {
+  forgetContextSuspension(scheduler);
   if (!scheduler.enabled) return;
   for (const context of scheduler.contexts.values()) {
     if (terminal.has(context.status)) continue;

@@ -158,7 +158,9 @@ export const EscapeChecks = Base =>
   };
 
 /** `out var x` and discards have no earlier value a callee could overwrite with something narrower. */
-const isAssignableTarget = argument => argument.kind !== 'DeclarationExpression' && argument.kind !== 'Discard';
+// An interpolated string handler passed by reference is a temporary made for the call: it is as narrow as its arguments.
+const isHandlerTemporary = argument => argument.kind === 'Conversion' && argument.conversion?.kind === 'InterpolatedStringHandler';
+const isAssignableTarget = argument => argument.kind !== 'DeclarationExpression' && argument.kind !== 'Discard' && !isHandlerTemporary(argument);
 
 function describe(expression) {
   const e = variableOf(expression);

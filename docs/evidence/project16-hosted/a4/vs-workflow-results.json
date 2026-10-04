@@ -1,0 +1,21 @@
+{
+  "suite": "browser_vs_workflows_test",
+  "mode": "http",
+  "engine": "chromium",
+  "passed": false,
+  "sourceSha": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+  "sourceTree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+  "checks": [],
+  "navigation": {
+    "mode": "http",
+    "url": "http://127.0.0.1:37995/",
+    "offline": false
+  },
+  "httpAttempts": [],
+  "pageErrors": [],
+  "browser": "153.0.8010.12",
+  "failure": {
+    "type": "Error",
+    "message": "Page.evaluate: Error: Project creation failed: Document 'Particle.cs' is not open in this workspace\n    at eval (eval at evaluate (:311:30), <anonymous>:3:26)\n    at UtilityScript.evaluate (<anonymous>:318:18)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+  }
+}

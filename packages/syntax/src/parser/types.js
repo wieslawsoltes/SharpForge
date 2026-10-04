@@ -119,7 +119,8 @@ export const typeMethods = {
    * Scans a type at `i` without building nodes; returns the index after it or -1.
    * `info.must` is set when the tokens can only be a type (predefined, array, nullable, pointer, alias-qualified);
    * `info.alias` and `info.suffix` say whether that came from an `alias::` prefix or a `?`, `*` or `[]` suffix.
-   * `mode` 'afterIs' applies the `T ? a : b` rule: `?` and `*` extend the type only when no expression can follow.
+   * `mode` 'afterIs' applies the `T ? a : b` rule: `?` and `*` extend the type only when no expression can follow
+   * (or, for `?`, when a rank specifier does: `int?[]`).
    */
   scanType(i, info, mode) {
     if (this.depthScan > 64) return -1;
@@ -154,7 +155,9 @@ export const typeMethods = {
       for (;;) {
         const kind = this.kindAt(i);
         if (kind === '?' || kind === '*') {
-          if (mode === 'afterIs' && this.canStartExpression(this.tokens[i + 1] ?? this.tokens.at(-1))) break;
+          // `T?[]` is an array of nullable values even where an expression could follow: `[]` is no operand of `?:`.
+          const nullableArray = kind === '?' && this.isRankSpecifier(i + 1);
+          if (mode === 'afterIs' && !nullableArray && this.canStartExpression(this.tokens[i + 1] ?? this.tokens.at(-1))) break;
           i++;
           if (info) {
             info.must = info.suffix = true;
@@ -200,7 +203,11 @@ export const typeMethods = {
     for (let first = true; ;) {
       if (
         this.at('?') &&
-        (mode === 'afterIs' ? !this.canStartExpression(this.peek()) : mode === 'new' ? ['(', '[', '{'].includes(this.peek().kind) : true)
+        (mode === 'afterIs'
+          ? !this.canStartExpression(this.peek()) || this.isRankSpecifier(this.i + 1)
+          : mode === 'new'
+            ? ['(', '[', '{'].includes(this.peek().kind)
+            : true)
       ) {
         this.feature('Nullable', this.current);
         type = this.n('NullableType', type, this.take());

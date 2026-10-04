@@ -1,4 +1,5 @@
 import {RuntimeEventLog, RuntimeEventName} from './runtime-events.js';
+import {observeWasmCall} from './wasm/call-tier-state.js';
 
 // Host observations belong to the VM lifetime, not its rewindable execution graph.
 const observers = new WeakMap();
@@ -18,6 +19,7 @@ export function cilRuntimeEvents(vm) {
 }
 
 export function enterCilMethod(vm, frame, reason = 'call') {
+  if (reason === 'call') observeWasmCall(vm, frame);
   if (reason === 'call') vm.profiler?.enter(frame);
   const observer = observers.get(vm);
   if (!observer) return;
@@ -27,7 +29,7 @@ export function enterCilMethod(vm, frame, reason = 'call') {
       {method: method.token, name: (method.owner + '::' + method.name).slice(0, 4096)}, vm.instructions);
     observer.loaded.add(method);
   }
-  observer.active.set(frame.id, {method: method.token, frame: frame.id});
+  observer.active.set(frame.id, {method: method.token, frame: frame.id, live: true});
   observer.log.emit(RuntimeEventName.MethodEnter, {method: method.token, frame: frame.id, reason}, vm.instructions);
 }
 
@@ -37,7 +39,7 @@ export function leaveCilMethod(vm, frame, reason = 'return') {
   const active = observer.active.get(frame.id);
   if (!active) return;
   observer.active.delete(frame.id);
-  observer.log.emit(RuntimeEventName.MethodLeave, {...active, reason}, vm.instructions);
+  observer.log.emit(RuntimeEventName.MethodLeave, {method: active.method, frame: active.frame, reason}, vm.instructions);
 }
 
 function* liveFrames(vm) {
@@ -53,18 +55,23 @@ function* liveFrames(vm) {
 export function flushCilMethodEvents(vm) {
   const observer = observers.get(vm);
   if (!observer) return;
-  const live = new Set();
-  for (const frame of liveFrames(vm)) live.add(frame.id);
-  let discarded = null;
-  for (const active of observer.active.values()) {
-    if (live.has(active.frame)) continue;
-    if (!discarded) discarded = [];
-    discarded.push(active.frame);
-  }
-  // An entire parked stack can disappear together. Close callees before callers,
-  // matching the order of ordinary returns, exception unwind and explicit stop.
-  if (discarded) for (let index = discarded.length - 1; index >= 0; index--) {
-    leaveCilMethod(vm, {id: discarded[index]}, 'canceled');
+  if (observer.active.size) {
+    // Reuse scalar span rows instead of allocating a frame-ID Set each boundary.
+    for (const active of observer.active.values()) active.live = false;
+    for (const frame of liveFrames(vm)) {
+      const active = observer.active.get(frame.id);
+      if (active) active.live = true;
+    }
+    let discarded = null;
+    for (const active of observer.active.values()) {
+      if (active.live) continue;
+      if (!discarded) discarded = [];
+      discarded.push(active.frame);
+    }
+    // Discarded callees leave before their callers, as on ordinary return.
+    if (discarded) for (let index = discarded.length - 1; index >= 0; index--) {
+      leaveCilMethod(vm, {id: discarded[index]}, 'canceled');
+    }
   }
   observer.log.flush();
 }

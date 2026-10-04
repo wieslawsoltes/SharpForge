@@ -1,0 +1,72 @@
+// Prepared fixed schedule: run only under the root-granted outer limiter.
+import assert from 'node:assert/strict';
+import { cpus, platform, arch } from 'node:os';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
+const [configuration, output] = process.argv.slice(2);
+const config = JSON.parse(readFileSync(configuration, 'utf8'));
+const modules = {};
+for (const [label, variant] of Object.entries(config.variants))
+  modules[label] = await import(pathToFileURL(variant.directory + '/packages/cil/src/index.js'));
+const root = config.variants.after.directory;
+const { assemblyFixture } = await import(pathToFileURL(root + '/tests/fixtures/assembly-index/fixture.mjs'));
+const bytes = readFileSync(root + '/tests/fixtures/portable-pdb-unnamed-slots/UnnamedSlots.dll');
+const hash = value => createHash('sha256').update(value).digest('hex');
+const loaded = Array.from({ length: 20 }, (_, index) => new modules.after.AssemblyInspector(assemblyFixture(index + 1, 1000)));
+const facts = new modules.after.AssemblySymbolIndex(loaded).storage;
+assert.equal(facts.entries, 20120);
+const controls = Object.fromEntries(Object.entries(modules).map(([label, { AssemblyInspector }]) =>
+  [label, () => new AssemblyInspector(bytes).methods.size]));
+const count = controls.before();
+assert.equal(controls.after(), count);
+const chronologicalSamples = [], summaries = {};
+const start = performance.now();
+const report = {
+  config, node: process.version, host: `${platform()} ${arch()} ${cpus()[0].model}`, startedAt: new Date().toISOString(),
+  protocol: { controlPairs: 20, controlWarmups: 30, controlIterations: 100, order: 'AB/BA alternating',
+    newIndexSamples: 20, newIndexWarmups: 5, newIndexIterations: 3, gcBeforeEachSample: true,
+    median: 'mean of positions 10 and 11', p95: 'nearest-rank position 19',
+    qualification: 'One fixed shared-host schedule; all chronological samples retained, no repeats/exclusions, no causal noise/significance/peak-memory claim.' },
+  fixture: { nativeBytes: bytes.length, nativeSha256: hash(bytes), nativeMethodCount: count,
+    authoredBuilderSha256: hash(readFileSync(root + '/tests/fixtures/assembly-index/fixture.mjs')),
+    harnessSha256: hash(readFileSync(new URL(import.meta.url))) },
+  logicalIndexStorage: facts, summaries, chronologicalSamples,
+};
+
+function sample(control, label, pair, action, iterations, expected) {
+  globalThis.gc?.();
+  let observed;
+  const sampleStart = performance.now();
+  for (let iteration = 0; iteration < iterations; iteration++) observed = action();
+  const elapsedMs = performance.now() - sampleStart;
+  assert.equal(observed, expected);
+  chronologicalSamples.push({ control, label, pair, startOffsetMs: sampleStart - start, elapsedMs, perOperationMs: elapsedMs / iterations });
+}
+
+function summarize(control, label) {
+  const values = chronologicalSamples.filter(value => value.control === control && value.label === label)
+    .map(value => value.perOperationMs).sort((left, right) => left - right);
+  return { medianMs: (values[9] + values[10]) / 2, p95Ms: values[18] };
+}
+
+try {
+  for (let warmup = 0; warmup < 30; warmup++) { controls.before(); controls.after(); }
+  for (let pair = 0; pair < 20; pair++) for (const label of pair % 2 === 0 ? ['before', 'after'] : ['after', 'before'])
+    sample('existingInspectorConstructor', label, pair, controls[label], 100, count);
+  summaries.existingInspectorConstructor = { before: summarize('existingInspectorConstructor', 'before'),
+    after: summarize('existingInspectorConstructor', 'after') };
+  const build = () => new modules.after.AssemblySymbolIndex(loaded).size;
+  for (let warmup = 0; warmup < 5; warmup++) build();
+  for (let pair = 0; pair < 20; pair++) sample('index20Assemblies', 'after', pair, build, 3, facts.entries);
+  summaries.index20Assemblies = { after: summarize('index20Assemblies', 'after') };
+  assert.ok(loaded.every(inspector => inspector.cache.size === 0));
+  report.passed = true;
+} catch (error) {
+  report.passed = false;
+  report.error = { name: error.name, message: error.message };
+  throw error;
+} finally {
+  writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
+}
+console.log(JSON.stringify({ output, summaries, logicalIndexStorage: facts }, null, 2));

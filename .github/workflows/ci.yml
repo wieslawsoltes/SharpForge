@@ -40,6 +40,8 @@ jobs:
       - name: Review contract changes and seam lock against the PR snapshot
         if: github.event_name == 'pull_request'
         run: node scripts/planning/review-gates.js
+      - name: Enforce oracle tool license coverage and committed payload boundaries
+        run: node scripts/conformance/oracle/license-policy.js
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm run check
       - name: Plan affected areas with conservative fallback

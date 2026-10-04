@@ -1,0 +1,10 @@
+{
+  "suite": "workbench-workflows-standalone",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.12.14/x64/bin/python",
+    "tests/browser_vs_workflows_standalone_test.py"
+  ],
+  "exitCode": 0,
+  "timedOut": false,
+  "seconds": 4.930375674000004
+}

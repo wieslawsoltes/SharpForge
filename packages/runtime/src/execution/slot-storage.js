@@ -1,5 +1,6 @@
 import {ManagedFault} from '../heap.js';
 import {scalarStorageGuard} from './scalar-storage-plan.js';
+import {instancePointerLocalPlan, instancePointerLocalValue} from './instance-pointer-locals.js';
 
 // Metadata only; no VM, frame, values or type-registry identities are retained.
 const plans = new WeakMap();
@@ -23,6 +24,8 @@ function guardFor(method, argument, index, type) {
 export function loadSlot(vm, frame, argument, index) {
   const value = (argument ? frame.args : frame.locals)[index];
   if (value === undefined) throw new ManagedFault('InvalidProgramException', 'Read of uninitialized local');
+  const pointer = !argument && instancePointerLocalPlan(vm, frame, index);
+  if (pointer) return instancePointerLocalValue(vm, value, pointer);
   const type = vm.slotType(frame, argument, index);
   if (vm.options.scalarSlotLoads !== false) {
     const accepts = guardFor(frame.method, argument, index, type);

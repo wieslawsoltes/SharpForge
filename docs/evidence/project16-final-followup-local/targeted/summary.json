@@ -1,0 +1,84 @@
+{
+  "purpose": "One combined completed-scope cohort for bounded change tracking and isolated standalone qualification selection",
+  "source": "20474bfed2c3c442ae50ae46d2dbcff02f155bc5",
+  "tree": "5c5d290f9c190cd4e5c1b5d8e7124f9c0980ec4a",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "tests/a20-change-tracking-deletions.test.js",
+    "tests/a20-view-editing-options.test.js",
+    "tests/a20-model-preview-publication.test.js",
+    "tests/a19-qualification-standalone.test.js",
+    "tests/a19-qualification-outcomes.test.js",
+    "tests/a19-qualification-trigger.test.js",
+    "tests/a19-qualification-profiles.test.js"
+  ],
+  "startedAt": "2026-10-04T07:23:45.467443+00:00",
+  "finishedAt": "2026-10-04T07:23:46.986351+00:00",
+  "exitCode": 0,
+  "node": "v24.19.0",
+  "counts": [
+    "# tests 69",
+    "# pass 69",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# todo 0",
+    "# duration_ms 1396.190192"
+  ],
+  "trackedCleanAfter": true,
+  "sourceUnchanged": true,
+  "untracked": [
+    "packages/clr/src/type-system/metadata-method-definitions.js",
+    "packages/syntax/test/matrix/10/LineSpanDirective/positive.cs",
+    "packages/syntax/test/matrix/10/LineSpanDirective/positive.cs.json",
+    "packages/syntax/test/matrix/10/LineSpanDirective/rejected.cs",
+    "packages/syntax/test/matrix/10/LineSpanDirective/rejected.cs.roslyn.json",
+    "packages/syntax/test/matrix/14/IgnoredDirectives/positive.cs",
+    "packages/syntax/test/matrix/14/IgnoredDirectives/positive.cs.json",
+    "packages/syntax/test/matrix/14/IgnoredDirectives/rejected.cs",
+    "packages/syntax/test/matrix/14/IgnoredDirectives/rejected.cs.roslyn.json"
+  ],
+  "packageRoots": {
+    "editor": "/workspace/scratch/6b99131ca908/p16-integration/packages/editor",
+    "text": "/workspace/scratch/6b99131ca908/p16-integration/packages/text",
+    "syntax": "/workspace/scratch/6b99131ca908/p16-integration/packages/syntax"
+  },
+  "log": {
+    "bytes": 16940,
+    "sha256": "4510c1cfa60ad3a05a890d252ce6f0ff438406b2563e6db6ce418fcf886ed949"
+  },
+  "testFiles": [
+    {
+      "path": "tests/a20-change-tracking-deletions.test.js",
+      "sha256": "17e1b3ccc620a0721534f567620d17cea5f0e1867de60466dc2cf37e7f33200f"
+    },
+    {
+      "path": "tests/a20-view-editing-options.test.js",
+      "sha256": "4b0b12467fe268edd6204d2874d2354549b97c0c59afc95eaf2a0f1f9b5f5c72"
+    },
+    {
+      "path": "tests/a20-model-preview-publication.test.js",
+      "sha256": "f6f792a2b9c93d6238aea475140f76043c3f5eebc684cfaa1956da04dafcbf1c"
+    },
+    {
+      "path": "tests/a19-qualification-standalone.test.js",
+      "sha256": "70805493f010d65771bd76405a7d66f9cc884b29be944bfa2c07af85ed0e1e63"
+    },
+    {
+      "path": "tests/a19-qualification-outcomes.test.js",
+      "sha256": "e87cd2cada5c60a54b44579a09ff10d4ede6be2b923d8cd0056ce24844895824"
+    },
+    {
+      "path": "tests/a19-qualification-trigger.test.js",
+      "sha256": "54508030bbddcd7f84cafdd33cb002c491f8d5c0c0fdb79015271e6870e91829"
+    },
+    {
+      "path": "tests/a19-qualification-profiles.test.js",
+      "sha256": "990f46549d1d5fbe3c2d7a0524286c72ab41dbe8b0bf891e199bfafb0821ca1c"
+    }
+  ]
+}

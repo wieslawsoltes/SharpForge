@@ -1,12 +1,12 @@
 {
-  "properties/auto-properties": ["diagnostics", "warnings", "bytecode", "cil"],
-  "properties/computed-and-validated": ["diagnostics", "warnings", "bytecode", "cil"],
+  "properties/auto-properties": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "properties/computed-and-validated": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "properties/cs0029-property-type-mismatch": ["diagnostics", "warnings"],
   "properties/cs0154-no-get-accessor": ["diagnostics", "warnings"],
   "properties/cs0200-assign-get-only": ["diagnostics", "warnings"],
   "properties/cs0272-private-setter": ["diagnostics", "warnings"],
   "properties/cs8852-init-only-assignment": ["diagnostics", "warnings"],
-  "properties/indexer": ["diagnostics", "warnings", "bytecode", "cil"],
+  "properties/indexer": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "properties/init-only": ["diagnostics", "warnings", "bytecode", "cil"],
-  "properties/static-property": ["diagnostics", "warnings", "bytecode", "cil"]
+  "properties/static-property": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }
