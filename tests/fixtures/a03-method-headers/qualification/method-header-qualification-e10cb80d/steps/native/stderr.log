@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Tiny1
+
+12 !== 1
+
+    at file:///workspace/scratch/7e3d2a445c44/sf6-maxstack/tests/fixtures/a03-method-headers/capture.mjs:122:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 12,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

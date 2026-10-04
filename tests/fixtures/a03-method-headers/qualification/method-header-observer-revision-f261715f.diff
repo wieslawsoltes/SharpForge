@@ -1,0 +1,375 @@
+diff --git a/tests/fixtures/a03-method-headers/Program.cs b/tests/fixtures/a03-method-headers/Program.cs
+index 66e66f97b5..0ba0419ffc 100644
+--- a/tests/fixtures/a03-method-headers/Program.cs
++++ b/tests/fixtures/a03-method-headers/Program.cs
+@@ -52,7 +52,9 @@ var methods = metadata.MethodDefinitions.Select(handle => {
+         token = MetadataTokens.GetToken(handle), name = metadata.GetString(method.Name),
+         headerSize, headerHex = Convert.ToHexStringLower(raw.AsSpan(0, headerSize)),
+         maxStack = body.MaxStack, codeHex = Convert.ToHexStringLower(body.GetILBytes()!),
+-        localSignature = MetadataTokens.GetToken(body.LocalSignature), initLocals = body.LocalVariablesInitialized,
++        localSignature = body.LocalSignature.IsNil ? 0 : MetadataTokens.GetToken(body.LocalSignature),
++        localSignatureRawToken = MetadataTokens.GetToken(body.LocalSignature),
++        initLocals = body.LocalVariablesInitialized,
+         handlers = body.ExceptionRegions.Select(region => new {
+             flags = (int)region.Kind, start = region.TryOffset, end = region.TryOffset + region.TryLength,
+             target = region.HandlerOffset, handlerEnd = region.HandlerOffset + region.HandlerLength,
+
+--- method-header-run-step-c0e3352e-v2.py
++++ method-header-run-step-f261715f.py
+@@ -15,8 +15,8 @@
+ 
+ 
+ ROOT = Path('/workspace/scratch/7e3d2a445c44')
+-PLAN = ROOT / 'method-header-preflight-c0e3352e-v2.json'
+-PLAN_SHA256 = 'eb152c11829e651c66d7f15c0790cc4458692888d203dbc302d1a8891c6e5252'
++PLAN = ROOT / 'method-header-preflight-f261715f.json'
++PLAN_SHA256 = '880824acdbc5b4c5a99d3851e7ba30f3ba8a1f08075b21ff5152acaff8891ac6'
+ 
+ 
+ def sha256(path):
+
+--- method-header-preflight-c0e3352e-v2.json
++++ method-header-preflight-f261715f.json
+@@ -1,15 +1,15 @@
+ {
+   "schema": 1,
+-  "status": "prepared-unexecuted-v2; existing adapter test adjudicated separately; root must regrant the sole heavy slot",
+-  "createdAt": "2026-10-04T18:26:35.819430+00:00",
++  "status": "prepared-unexecuted observer correction; root must explicitly regrant the sole heavy slot",
++  "createdAt": "2026-10-04T18:33:14.055763+00:00",
+   "originalProductHead": "3316898efee4a9d23b8e0cb87919b9de28a1084a",
+-  "candidateHead": "c0e3352e0d68298c5e9653b3e118c28453a193ef",
++  "candidateHead": "f261715fa9dc3040fb32046f54e182f765eb0ade",
+   "baselineHead": "e60b0764782f1122439e5b161cb9494c75724e32",
+   "checkouts": {
+     "candidate": {
+       "path": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+-      "head": "c0e3352e0d68298c5e9653b3e118c28453a193ef",
+-      "tree": "3883211d40be3e7c1594adf4e5dfe584f11d951e",
++      "head": "f261715fa9dc3040fb32046f54e182f765eb0ade",
++      "tree": "00e692fffc122578d4edf51bd922f251f67b35ea",
+       "aliases": [
+         {
+           "name": "archive",
+@@ -6325,8 +6325,8 @@
+         },
+         {
+           "path": "tests/fixtures/a03-method-headers/Program.cs",
+-          "bytes": 6441,
+-          "sha256": "5f87da296fe8149aededb73f74cf3edc0dcc295b61fdd2bb8c680dce60f10bb2"
++          "bytes": 6560,
++          "sha256": "6839b078cb3befe22bebc2e2d7bd710924a4b3c3c6acc809e901188723350fa6"
+         },
+         {
+           "path": "tests/fixtures/a03-method-headers/README.md",
+@@ -11450,7 +11450,7 @@
+         },
+         {
+           "path": "tests/fixtures/a03-method-headers/Program.cs",
+-          "blob": "66e66f97b58b4786cbf80c627bd114f47d10d510"
++          "blob": "0ba0419ffc518eb6a85b9c59e7ded5a08875fbe7"
+         },
+         {
+           "path": "tests/fixtures/a03-method-headers/README.md",
+@@ -22242,7 +22242,7 @@
+       ]
+     }
+   },
+-  "executionDirectory": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e",
++  "executionDirectory": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f",
+   "nodeExecutable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+   "environment": {
+     "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+@@ -25047,9 +25047,9 @@
+     }
+   ],
+   "sourceArchive": {
+-    "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-c0e3352e.zip",
+-    "bytes": 4529610,
+-    "sha256": "1d26a1e7389dc328a07ea20ac11d98cc08ac1715ed8add877221bc6927b9d0f1"
++    "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-f261715f.zip",
++    "bytes": 4529628,
++    "sha256": "1b2ce338b282e7e670973b2d2f97d1c85489591bc7398837c41cf001efe4792d"
+   },
+   "steps": {
+     "native": {
+@@ -25060,7 +25060,7 @@
+         "scripts/limited.js",
+         "node",
+         "tests/fixtures/a03-method-headers/capture.mjs",
+-        "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first"
++        "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first"
+       ],
+       "originalArgv": [
+         "node",
+@@ -25074,7 +25074,7 @@
+       ],
+       "timeoutSeconds": 900,
+       "minimumFreeBytes": 402653184,
+-      "output": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first"
++      "output": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first"
+     },
+     "refout": {
+       "id": "refout",
+@@ -25241,7 +25241,7 @@
+       "minimumFreeBytes": 134217728,
+       "output": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-controls.json",
+       "benchmark": {
+-        "compilerRevision": "c0e3352e0d68298c5e9653b3e118c28453a193ef",
++        "compilerRevision": "f261715fa9dc3040fb32046f54e182f765eb0ade",
+         "headerMode": "auto",
+         "workload": "controls",
+         "compilerEntry": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/compiler/src/index.js",
+@@ -25337,7 +25337,7 @@
+       "minimumFreeBytes": 134217728,
+       "output": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-corpus.json",
+       "benchmark": {
+-        "compilerRevision": "c0e3352e0d68298c5e9653b3e118c28453a193ef",
++        "compilerRevision": "f261715fa9dc3040fb32046f54e182f765eb0ade",
+         "headerMode": "auto",
+         "workload": "corpus",
+         "compilerEntry": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/compiler/src/index.js",
+@@ -25355,6 +25355,7 @@
+     "paths": [
+       "scripts/conformance/oracle/toolchain.js",
+       "tests/a03-05-header-capture.test.js",
++      "tests/fixtures/a03-method-headers/Program.cs",
+       "tests/fixtures/a03-method-headers/README.md",
+       "tests/fixtures/a03-method-headers/capture.mjs",
+       "tests/fixtures/a03-method-headers/process-capture.mjs"
+@@ -25539,8 +25540,8 @@
+       {
+         "path": "tests/fixtures/a03-method-headers/Program.cs",
+         "originalSha256": "5f87da296fe8149aededb73f74cf3edc0dcc295b61fdd2bb8c680dce60f10bb2",
+-        "candidateSha256": "5f87da296fe8149aededb73f74cf3edc0dcc295b61fdd2bb8c680dce60f10bb2",
+-        "unchanged": true
++        "candidateSha256": "6839b078cb3befe22bebc2e2d7bd710924a4b3c3c6acc809e901188723350fa6",
++        "unchanged": false
+       },
+       {
+         "path": "tests/fixtures/a03-method-headers/README.md",
+@@ -25582,14 +25583,15 @@
+       "tests/fixtures/a03-method-headers/input.js",
+       "tests/fixtures/a03-method-headers/corpus.cs",
+       "tests/fixtures/a03-method-headers/controls.cs"
+-    ]
++    ],
++    "observerCommit": "f261715fa9dc3040fb32046f54e182f765eb0ade"
+   },
+-  "executionPolicy": "One prepared step per invocation; no automatic retries, changed inputs, aliases, installs or publication. Each step has exclusive logs and fresh outputs, and checks all source/fixture/tool hashes before and after. Only native/refout output destinations are redirected outside the worktree; the 13-file gate and four benchmark argv are unchanged. The added adapter failure test is a separately recorded prerequisite. Native logs retain the canonical runner UTF-8 strings, including error.result on failure, within canonical limits.",
++  "executionPolicy": "One prepared step per invocation; no automatic retries, changed inputs, aliases, installs or publication. Each step has exclusive logs and fresh outputs, and checks all source/fixture/tool hashes before and after. Only native/refout output destinations are redirected outside the worktree; the 13-file gate and four benchmark argv are unchanged. The added adapter failure test is a separately recorded prerequisite. Native logs retain the canonical runner UTF-8 strings, including error.result on failure, within canonical limits. The observer-only revision changes only the native capture destination to a fresh directory. Refout, focused and all benchmark argv retain their prior destinations; those outputs remain absent. Original adapter recorder failure/adjudication and first native failure are preserved separately.",
+   "coverageLimits": "Issue2391 remains open; legacy emitter.js/emit/pe-options.js/loader.js integration under active PR3766/3971 remains outside this batch; inherited #8 schema prerequisite unqualified. No planning/claim mutation.",
+   "previousPlan": {
+-    "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-c0e3352e.json",
+-    "bytes": 1019134,
+-    "sha256": "e02ab46edd9cdd1e996f3bb70afdbce2365667492ca0a245676078f0aa4a7544"
++    "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-c0e3352e-v2.json",
++    "bytes": 1019510,
++    "sha256": "eb152c11829e651c66d7f15c0790cc4458692888d203dbc302d1a8891c6e5252"
+   },
+   "adjudicatedPrerequisites": {
+     "adapter": {
+@@ -25601,5 +25603,202 @@
+       }
+     }
+   },
+-  "recorderCorrection": "Require a complete, single-format, nonduplicated set of TAP # or Node spec \u2139 test counters. Preserve the original failed adapter attempt and validate its separate adjudication before native launch. No adapter rerun is available in this plan."
++  "recorderCorrection": "Require a complete, single-format, nonduplicated set of TAP # or Node spec \u2139 test counters. Preserve the original failed adapter attempt and validate its separate adjudication before native launch. No adapter rerun is available in this plan.",
++  "preservedFirstNativeFailure": {
++    "execution": {
++      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/native/execution.json",
++      "bytes": 9253,
++      "sha256": "bd739003c1ebaef28d6d16727339009ae03363b1da6487be8f0c8ed78c5ab039"
++    },
++    "status": "failed",
++    "files": [
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/native/execution.json",
++        "bytes": 9253,
++        "sha256": "bd739003c1ebaef28d6d16727339009ae03363b1da6487be8f0c8ed78c5ab039"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/native/stdout.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/native/stderr.log",
++        "bytes": 543,
++        "sha256": "1a16e03066153d272f2ee988b433fafa544445bc2cd35294943a2cb63f6ddd98"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/native/source-before.json",
++        "bytes": 601458,
++        "sha256": "aa429f6eab530ead35b2095367a738d7f30efaa6528de9fa3bce5c73d4b1a55a"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/native/source-after.json",
++        "bytes": 601458,
++        "sha256": "aa429f6eab530ead35b2095367a738d7f30efaa6528de9fa3bce5c73d4b1a55a"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/Observer.dll",
++        "bytes": 22016,
++        "sha256": "475788d05c27035795a2f23a42fc64b2b698c9d905dd0f7511ef3835078fb62e"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/Observer.runtimeconfig.json",
++        "bytes": 100,
++        "sha256": "75494a2c9c324d9e814bc41acfc719b493d28cde3980caf1643b2bdbd85dddb6"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/Program.cs",
++        "bytes": 6441,
++        "sha256": "5f87da296fe8149aededb73f74cf3edc0dcc295b61fdd2bb8c680dce60f10bb2"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/Roslyn.dll",
++        "bytes": 4608,
++        "sha256": "b41eef889c82b09826e99f33360b444e582f4835c070da91a875242727314de1"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/SharpForge.dll",
++        "bytes": 2560,
++        "sha256": "3d52cf8f642a5bb90dfe912d29a02055adaefde533ce33e451a31581e936c7aa"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/capture.json",
++        "bytes": 91246,
++        "sha256": "6de8c7d4c0c7d9cc1c3e3252d94119d5346e474f51a035dacb9579d89fa48996"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/capture.mjs",
++        "bytes": 8418,
++        "sha256": "6e6d6c858bd7e29d6940228469df5cba227a25004cf25197d9004d37aa8e79a6"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/corpus.cs",
++        "bytes": 1307,
++        "sha256": "6c7a86183afc367e4eb817c3644ea3018ac9756c1211afc1a0556e723c36c8a4"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/input.js",
++        "bytes": 3242,
++        "sha256": "95c8ad7d4978eb7fb421351f080a77db0d404ec1c2e9df8574bc48735084f118"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-01.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-01.stdout.log",
++        "bytes": 9,
++        "sha256": "38c8354f0a1a3a4e913e03fe6396aa12c2ef1d427921d44b19123e42dcb74e92"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-02.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-02.stdout.log",
++        "bytes": 63,
++        "sha256": "4d0c9a4904503f1705fefa87cf647485beb84f2ab0e692c446b4abdd615db85f"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-03.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-03.stdout.log",
++        "bytes": 222,
++        "sha256": "0f888c5dfd832ce30d94fff56d4bdaeeb327567b09d34f328f2cb80e7e9c3633"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-04.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-04.stdout.log",
++        "bytes": 61,
++        "sha256": "335ee5c8674ef201012063d1afcf0c093316d04c0c357f69b6322dea86a5529d"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-05.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-05.stdout.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-06.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-06.stdout.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-07.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-07.stdout.log",
++        "bytes": 8927,
++        "sha256": "3efa76d4bd2722ccd2015ad84581ec40c56163c75e70a02dd10d5c7a548ffb55"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/native-first/process-capture.mjs",
++        "bytes": 2766,
++        "sha256": "376cf307467c9ccca6407019f0cd76078b48a30b1686b970ee50679adb3a0fef"
++      }
++    ],
++    "mismatch": "roslyn.Empty.localSignature: product CLI token0 versus SRM MetadataTokens.GetToken(nil StandaloneSignatureHandle) raw0x11000000",
++    "rawExamples": [
++      {
++        "name": "Empty",
++        "headerHex": "06",
++        "oldObserverToken": 285212672
++      },
++      {
++        "name": "DeepCall",
++        "headerHex": "13300a001200000000000000",
++        "oldObserverToken": 285212672
++      },
++      {
++        "name": "Loop",
++        "headerHex": "133002001500000001000011",
++        "oldObserverToken": 285212673
++      }
++    ],
++    "newNormalization": "Only a nil handle normalizes to CLI token0. Non-nil handles keep their original token. Every method also retains localSignatureRawToken."
++  },
++  "adapterPrerequisiteCarryForward": {
++    "adjudication": {
++      "path": "/workspace/scratch/7e3d2a445c44/method-header-adapter-adjudication-c0e3352e.json",
++      "bytes": 3832,
++      "sha256": "645fb5f1cfa88b8f95e2084ff36ce46b07fa27ad9338d5c6566b5d6908aba8c3"
++    },
++    "unchangedDependencyPaths": [
++      "tests/a03-05-header-capture.test.js",
++      "tests/fixtures/a03-method-headers/process-capture.mjs",
++      "scripts/conformance/oracle/process.js"
++    ],
++    "reason": "The only additional committed file is the native C# observer; the Node adapter test and its complete implementation dependency chain are byte-identical. No adapter rerun."
++  },
++  "observerSourceOverlay": {
++    "baseHead": "c0e3352e0d68298c5e9653b3e118c28453a193ef",
++    "head": "f261715fa9dc3040fb32046f54e182f765eb0ade",
++    "tree": "00e692fffc122578d4edf51bd922f251f67b35ea",
++    "path": "tests/fixtures/a03-method-headers/Program.cs",
++    "beforeSha256": "5f87da296fe8149aededb73f74cf3edc0dcc295b61fdd2bb8c680dce60f10bb2",
++    "afterSha256": "6839b078cb3befe22bebc2e2d7bd710924a4b3c3c6acc809e901188723350fa6",
++    "changedFixtureMethods": false,
++    "changedProductSources": false
++  }
+ }

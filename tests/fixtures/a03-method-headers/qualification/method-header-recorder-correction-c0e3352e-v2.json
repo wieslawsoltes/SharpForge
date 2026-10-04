@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "status": "source-only correction prepared; no test/native/refout/gate/benchmark rerun",
+  "createdAt": "2026-10-04T18:26:35.889075+00:00",
+  "adjudication": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-adapter-adjudication-c0e3352e.json",
+    "bytes": 3832,
+    "sha256": "645fb5f1cfa88b8f95e2084ff36ce46b07fa27ad9338d5c6566b5d6908aba8c3"
+  },
+  "plan": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-c0e3352e-v2.json",
+    "bytes": 1019510,
+    "sha256": "eb152c11829e651c66d7f15c0790cc4458692888d203dbc302d1a8891c6e5252"
+  },
+  "recorder": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-c0e3352e-v2.py",
+    "bytes": 15423,
+    "sha256": "386ab3759d11f88cfe02cc2b49e1d749bf3bbb8beb439a071e302f37d434b952"
+  },
+  "exactDiff": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-recorder-correction-c0e3352e-v2.diff",
+    "bytes": 7800,
+    "sha256": "3275a6f0ae528670f334805b35509d49cb0f56a47f0c0a3dd9c0dbf0563c1309"
+  },
+  "originalPlan": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-c0e3352e.json",
+    "bytes": 1019134,
+    "sha256": "e02ab46edd9cdd1e996f3bb70afdbce2365667492ca0a245676078f0aa4a7544"
+  },
+  "originalRecorder": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-c0e3352e.py",
+    "bytes": 13612,
+    "sha256": "a38bb5c75403c79102f110b68e150a1a57c300856ec3798c708d15fe638b4988"
+  },
+  "originalFailedRecord": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/adapter/execution.json",
+    "bytes": 3430,
+    "sha256": "84a36517eb7835dd356c6e84cb75a749712938ece2d4c91b0b8ac7906306c23b"
+  },
+  "originalFailedStatusPreserved": true,
+  "sourceToolAliasArchiveAndEnvironmentPinsUnchanged": true,
+  "remainingStepObjectsUnchanged": true,
+  "remainingStepIds": [
+    "native",
+    "refout",
+    "focused",
+    "baseline-controls",
+    "candidate-controls",
+    "baseline-corpus",
+    "candidate-corpus"
+  ],
+  "adapterStepRemovedToPreventRerun": true,
+  "newRecorderSyntaxParsedWithoutExecution": true,
+  "actualAdapterCounters": {
+    "reporter": "node-spec",
+    "tests": 1,
+    "suites": 0,
+    "pass": 1,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "heavyExecutionResumed": false,
+  "parserPatternCheckedAgainstExistingRawLogWithoutExecutingRecorder": true
+}

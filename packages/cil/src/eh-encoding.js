@@ -64,7 +64,24 @@ function writeSection(writer, section, handlers, signal) {
   }
 }
 
-/** Encode a fat method header and bounded catch/filter/finally/fault sections; fat remains the replay-compatible default. */
+function headerPlan(codeSize, localToken, maxStack, handlers, options) {
+  const { headerFormat, initLocals = true, hasDynamicStackAllocation = false } = options;
+  if (headerFormat === undefined) {
+    if (options.initLocals !== undefined || options.hasDynamicStackAllocation !== undefined) {
+      fail('CILEH0001', 'Explicit initialization policy requires headerFormat');
+    }
+    return { tiny: false, initLocals: true, maxStack: Math.max(1, maxStack) };
+  }
+  if (!['auto', 'fat', 'tiny'].includes(headerFormat) || typeof initLocals !== 'boolean' ||
+      typeof hasDynamicStackAllocation !== 'boolean') fail('CILEH0001', 'Invalid method header policy');
+  const eligible = codeSize < 64 && localToken === 0 && maxStack <= 8 && handlers.length === 0 &&
+    (!hasDynamicStackAllocation || !initLocals);
+  if (headerFormat === 'tiny' && !eligible) fail('CILEH0001', 'Method body is not eligible for a tiny header');
+  return { tiny: headerFormat !== 'fat' && eligible, initLocals, maxStack };
+}
+
+/** Encode bounded method/EH sections. Omitted headerFormat preserves legacy fat bytes (including the maxstack floor).
+ * Explicit auto/fat/tiny keeps exact fat maxstack; tiny implies eight. Dynamic-allocation/initLocals facts are caller-owned. */
 export function writeMethodBody(code, localToken, maxStack, handlers = [], options = defaultOptions) {
   cancelled(options.signal);
   if (!(code instanceof Uint8Array) || !Array.isArray(handlers) || !unsigned(maxStack, 65535) ||
@@ -73,9 +90,15 @@ export function writeMethodBody(code, localToken, maxStack, handlers = [], optio
   }
   if (code.length > 64 * 1024 * 1024) fail('CILEH0002');
   const section = sectionPlan(handlers, code.length, options);
+  const header = headerPlan(code.length, localToken, maxStack, handlers, options);
+  if (header.tiny) {
+    const bytes = new Writer(code.length + 1).u8((code.length << 2) | 2).bytes(code).finish();
+    cancelled(options.signal);
+    return bytes;
+  }
   const headerBytes = 12 + code.length;
   const capacity = section ? align(headerBytes) + section.bytes : headerBytes;
-  const writer = new Writer(capacity).u16(0x3013 | (handlers.length ? 8 : 0)).u16(Math.max(1, maxStack))
+  const writer = new Writer(capacity).u16(0x3003 | (header.initLocals ? 0x10 : 0) | (handlers.length ? 8 : 0)).u16(header.maxStack)
     .u32(code.length).u32(localToken).bytes(code);
   if (section) writeSection(writer.pad(), section, handlers, options.signal);
   cancelled(options.signal);

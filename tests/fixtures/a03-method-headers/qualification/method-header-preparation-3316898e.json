@@ -1,0 +1,161 @@
+{
+  "status": "Prepared, unexecuted; root owns serial slot and all publication",
+  "executed": false,
+  "head": "3316898efee4a9d23b8e0cb87919b9de28a1084a",
+  "base": "e60b0764782f1122439e5b161cb9494c75724e32",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+  "baselineCwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack-baseline",
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+    "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm"
+  },
+  "sourceSha256": {
+    "packages/cil/METHOD-HEADERS.md": "4a5e492cc9a9fb8ef8ff3d1dd726439971d705ac766b9ce2eca3c42e8f0c0589",
+    "packages/cil/README.md": "0b37a2acc0cf46a6bdb410e800091decb70659e396dd6acd3c74a225cd9db2e6",
+    "packages/cil/src/eh-encoding.js": "5e88fcece4674c1a3f0489af7d02183ad225b3d9fccfd1d5ab6a9157b56dd4b0",
+    "packages/cil/src/il-prefixes.js": "0bc1dc0c9cde16fbccaa90a8bdda6e945857cf12fa7e004ba5e9cedf0b7ea4ca",
+    "packages/cil/src/index.js": "8760938fb9f2495bba54b1a8be01bdbf2e4249b19a7f436b1b4e9ddb4b72239e",
+    "packages/cil/src/maxstack.js": "b6eb32d3690435527009bd2eea2290b837420a4f55e24c3576a4e22914079804",
+    "packages/cil/src/opcodes/decoder.js": "3c863de60614bb2b44d47849edb76754616bd43f4cdcaca1573a84966823a485",
+    "packages/cil/src/stack-effects.js": "8e740a382658c77bc849eca40da05906e1cfefc321b0120f7bc660d1ea937f45",
+    "packages/cil/src/verify/handlers-access.js": "c7de25499033cef2db6321282988bed158f724133252fee5dfee8f2517b2471c",
+    "packages/cil/tools/benchmark-method-headers.mjs": "572fd15a6c5844abbf94d2a43fd155ee4c03b6fedb94c84919b217ef3a062432",
+    "packages/compiler/README.md": "6113883da010dd75b74c7740eb552332167acd72881983928d4a6c7da5b0dc58",
+    "packages/compiler/src/emit/cil/assembly-emitter.js": "84986a9f80f5915528888cb62e3ce5a129924b795e7164796a5427f44c0554ca",
+    "packages/compiler/src/emit/cil/il-builder.js": "83b9d9dfc88d4fcf4328bd97efd32bcc47afd822f555bb768416e6aaac5ad412",
+    "scripts/conformance/static/allowlist.json": "f34e3fdd3fd12b53e5b3d15761c9c72c66456d36ebbbcc5af3482af1cfd39855",
+    "tests/a03-05-compiler-method-headers.test.js": "e024933e9d0a97c6efe596de1a9aad3c7f0a13c5d9e21caa9a61c48aac4c479c",
+    "tests/a03-05-decoding-limit-tags.test.js": "7dd7ecf90d557585c27a088970d00d59417663c32443dc7b0ebda0f6e37ba9ff",
+    "tests/a03-05-maxstack-eh.test.js": "5a6c46edf41903e4be24c5ade084dab3e7ad0f12a3d051c94c11540e19ebe59c",
+    "tests/a03-05-maxstack.test.js": "a2cdf1030472ac0efb6e775c696a5ac18916b6643f1bddd89e357893c66df147",
+    "tests/a03-05-method-headers.test.js": "0773e20915488a83b998564ef57cebbe92170bb14a0a7ed745e1e136ae98149d",
+    "tests/fixtures/a03-method-headers/Program.cs": "5f87da296fe8149aededb73f74cf3edc0dcc295b61fdd2bb8c680dce60f10bb2",
+    "tests/fixtures/a03-method-headers/README.md": "5debcea0e1ccafc467dcc182d2ad30a8037986f7448e78571ec3247199e9203f",
+    "tests/fixtures/a03-method-headers/capture.mjs": "f896fe2ca856da0e13c5fbe575b108ac40e1b3048fbbfe65221d0fb3ff802373",
+    "tests/fixtures/a03-method-headers/controls.cs": "241d813980f6c759d9157ae177b1c75b367b75a062286c87479899c8c9e6e630",
+    "tests/fixtures/a03-method-headers/corpus.cs": "6c7a86183afc367e4eb817c3644ea3018ac9756c1211afc1a0556e723c36c8a4",
+    "tests/fixtures/a03-method-headers/input.js": "95c8ad7d4978eb7fb421351f080a77db0d404ec1c2e9df8574bc48735084f118"
+  },
+  "focusedArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a03-05-decoding-limit-tags.test.js",
+    "tests/a03-05-maxstack.test.js",
+    "tests/a03-05-maxstack-eh.test.js",
+    "tests/a03-05-method-headers.test.js",
+    "tests/a03-05-compiler-method-headers.test.js",
+    "tests/a03-06-eh-encoding.test.js",
+    "tests/compiler-cil-portable-pdb.test.js",
+    "tests/a03-22-attribute-dispatch.test.js",
+    "tests/a03-22-reference-assemblies.test.js",
+    "tests/a03-22-reference-identity.test.js",
+    "tests/a03-22-reference-interface-members.test.js",
+    "tests/a03-22-reference-policy.test.js",
+    "tests/a03-22-reference-synthesized-metadata.test.js"
+  ],
+  "nativeArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/a03-method-headers/capture.mjs",
+    "/workspace/scratch/7e3d2a445c44/sf6-maxstack/artifacts/a03-method-headers-3316898e"
+  ],
+  "refoutArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "packages/cil/tools/capture-reference-assemblies.mjs",
+    "--dotnet",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "--output",
+    "/workspace/scratch/7e3d2a445c44/sf6-maxstack/artifacts/a03-reference-assemblies-headers-3316898e"
+  ],
+  "benchmarks": [
+    {
+      "id": "baseline-controls",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "packages/cil/tools/benchmark-method-headers.mjs",
+        "--compiler",
+        "/workspace/scratch/7e3d2a445c44/sf6-maxstack-baseline/packages/compiler/src/index.js",
+        "--headers",
+        "legacy",
+        "--workload",
+        "controls",
+        "--output",
+        "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/baseline-controls.json"
+      ],
+      "output": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/baseline-controls.json"
+    },
+    {
+      "id": "candidate-controls",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "packages/cil/tools/benchmark-method-headers.mjs",
+        "--compiler",
+        "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/compiler/src/index.js",
+        "--headers",
+        "auto",
+        "--workload",
+        "controls",
+        "--output",
+        "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-controls.json"
+      ],
+      "output": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-controls.json"
+    },
+    {
+      "id": "baseline-corpus",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "packages/cil/tools/benchmark-method-headers.mjs",
+        "--compiler",
+        "/workspace/scratch/7e3d2a445c44/sf6-maxstack-baseline/packages/compiler/src/index.js",
+        "--headers",
+        "legacy",
+        "--workload",
+        "corpus",
+        "--output",
+        "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/baseline-corpus.json"
+      ],
+      "output": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/baseline-corpus.json"
+    },
+    {
+      "id": "candidate-corpus",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "packages/cil/tools/benchmark-method-headers.mjs",
+        "--compiler",
+        "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/compiler/src/index.js",
+        "--headers",
+        "auto",
+        "--workload",
+        "corpus",
+        "--output",
+        "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-corpus.json"
+      ],
+      "output": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-corpus.json"
+    }
+  ],
+  "benchmarkPolicy": "Four fresh serial processes, one first compile +20 warmups +100 measured; all121 retained. Create output parent once before execution. No historical result rerun. PE/header changes intentional; report per-method IL hashes and whole-checkout scope. No static product import before selected compiler timer.",
+  "readiness": "Issue2391 remains open; legacy emitter.js/emit/pe-options.js/loader.js integration under active PR3766/3971 remains outside this batch; inherited #8 schema prerequisite unqualified. No planning/claim mutation."
+}

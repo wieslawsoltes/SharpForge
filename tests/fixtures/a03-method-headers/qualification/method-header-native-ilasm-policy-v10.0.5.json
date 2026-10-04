@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "repository": "dotnet/runtime",
+  "ref": "v10.0.5",
+  "path": "src/coreclr/ilasm/assem.cpp",
+  "githubBlobSha": "8daec130bcc76ae6414f26eec892ec72d06af1c5",
+  "url": "https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/ilasm/assem.cpp",
+  "retrievedLineStart": 318,
+  "retrievedLineEnd": 352,
+  "sourceProvider": "GitHub connector fetch_file",
+  "interpretation": "ILAsm forces a fat header when the declared maxstack is below 8, there is no local-signature token, the code is shorter than 64 bytes and there are no extra sections. It sets InitLocals to preserve the declared bound instead of using a tiny header's implicit bound of 8. Native fixtures intended to test tiny headers must declare 8; exact computed depth and product-header expectations remain unchanged.",
+  "authorizedCorrection": ".maxstack ${item.headerSize === 1 ? 8 : item.depth}",
+  "productSourceChange": false,
+  "assertionChange": false,
+  "retrievedAt": "2026-10-04T19:34:24.434623+00:00",
+  "retrievedSliceSha256": "b9787a815520cb66ee794269183009e812e46f4649475deba7197e043078db78",
+  "retrievedSliceBytes": 1819,
+  "conditionLineNumbers": [
+    342,
+    343
+  ]
+}

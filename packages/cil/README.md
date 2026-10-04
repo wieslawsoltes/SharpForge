@@ -1,5 +1,9 @@
 # @sharpforge/cil
 
+`analyzeMaxStack` and `fixedStackEffect` expose canonical opcode/graph height analysis with explicit unknown,
+invalid and bounded results. `writeMethodBody` supports opt-in automatic tiny headers and exact fat maxstack;
+omitted header policy preserves historical bytes. See [Method headers and exact stack heights](METHOD-HEADERS.md).
+
 Reference-assembly member policy and marker emission are available through `referenceAssemblyMemberIncluded` and
 `addReferenceAssemblyAttribute`. The compiler's `{ refout: true }` adapter, example and qualification commands are in
 [Reference assembly output](../../docs/reference-assembly-refout.md).

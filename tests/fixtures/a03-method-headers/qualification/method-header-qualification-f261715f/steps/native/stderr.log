@@ -1,0 +1,40 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: /workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm: 
+.NET IL Assembler.  Version 10.0.5
+Copyright (c) Microsoft Corporation.  All rights reserved.
+Assembling '/dll.il'  to EXE --> '/dll.exe'
+Could not open /dll.il
+
+Assembling '/output:/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/NativeBoundaries.dll'  to EXE --> '/dll.exe'
+Could not open /output:/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/NativeBoundaries.dll
+
+Assembling '/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/boundaries.il'  to EXE --> '/dll.exe'
+Source file is UTF-8
+
+Assembled method Cases::Tiny1
+Assembled method Cases::Tiny63
+Assembled method Cases::Fat64
+Assembled method Cases::Stack8
+Assembled method Cases::Stack9
+
+***** FAILURE ***** 
+
+/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/boundaries.il(189) : error : syntax error at token 'value' in:       .locals init (int32 value)
+
+
+1 !== 0
+
+    at run (file:///workspace/scratch/7e3d2a445c44/sf6-maxstack/tests/fixtures/a03-method-headers/capture.mjs:23:10)
+    at async file:///workspace/scratch/7e3d2a445c44/sf6-maxstack/tests/fixtures/a03-method-headers/capture.mjs:112:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

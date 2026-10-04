@@ -1,0 +1,19 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: roslyn.Empty.localSignature
+
+0 !== 285212672
+
+    at observe (file:///workspace/scratch/7e3d2a445c44/sf6-maxstack/tests/fixtures/a03-method-headers/capture.mjs:52:92)
+    at async file:///workspace/scratch/7e3d2a445c44/sf6-maxstack/tests/fixtures/a03-method-headers/capture.mjs:104:20 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 285212672,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

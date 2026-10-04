@@ -1,0 +1,297 @@
+{
+  "schema": 1,
+  "status": "source-only correction frozen; not executed",
+  "createdAt": "2026-10-04T19:25:12.137235+00:00",
+  "head": "e10cb80d38a9da7a3a50a78f5b214b5e7895f8e0",
+  "tree": "c02d233aee43569432b2ae5c958135a880fdf663",
+  "parent": "f261715fa9dc3040fb32046f54e182f765eb0ade",
+  "originalProductHead": "3316898efee4a9d23b8e0cb87919b9de28a1084a",
+  "sourceOnlyDiff": "diff --git a/tests/fixtures/a03-method-headers/capture.mjs b/tests/fixtures/a03-method-headers/capture.mjs\nindex 891ec47a6b..4c0c554204 100644\n--- a/tests/fixtures/a03-method-headers/capture.mjs\n+++ b/tests/fixtures/a03-method-headers/capture.mjs\n@@ -109,7 +109,8 @@ try {\n   await writeFile(path.join(output, 'boundaries.il'), ilSource);\n   capture.sourceSHA256['boundaries.il'] = sha256(ilSource);\n   const native = path.join(output, 'NativeBoundaries.dll');\n-  await run(ilasm, ['/dll', '/output:' + native, path.join(output, 'boundaries.il')]);\n+  const prefix = process.platform === 'win32' ? '/' : '-';\n+  await run(ilasm, [`${prefix}dll`, `${prefix}output:${native}`, path.join(output, 'boundaries.il')]);\n   const productBoundaryPath = path.join(output, 'ProductBoundaries.dll');\n   await writeFile(productBoundaryPath, productBoundaries());\n   const nativeBoundaries = await observe('ilasm', native, toolchain, observer);\ndiff --git a/tests/fixtures/a03-method-headers/input.js b/tests/fixtures/a03-method-headers/input.js\nindex e74d5a80de..77c3850f0d 100644\n--- a/tests/fixtures/a03-method-headers/input.js\n+++ b/tests/fixtures/a03-method-headers/input.js\n@@ -16,7 +16,7 @@ export function nativeSource() {\n       ...Array(Math.max(0, item.depth - 1)).fill('pop'), 'ret'];\n     return `.method public static ${item.result === 'int' ? 'int32' : 'void'} ${item.name}() cil managed {\n       .maxstack ${item.depth}\n-      ${item.local ? '.locals init (int32 value)' : ''}\n+      ${item.local ? \".locals init (int32 'value')\" : ''}\n       ${operations.join('\\n      ')}\n     }`;\n   });\n",
+  "sourceOverlay": {
+    "baseHead": "f261715fa9dc3040fb32046f54e182f765eb0ade",
+    "head": "e10cb80d38a9da7a3a50a78f5b214b5e7895f8e0",
+    "tree": "c02d233aee43569432b2ae5c958135a880fdf663",
+    "paths": [
+      "tests/fixtures/a03-method-headers/capture.mjs",
+      "tests/fixtures/a03-method-headers/input.js"
+    ],
+    "files": [
+      {
+        "path": "tests/fixtures/a03-method-headers/capture.mjs",
+        "before": {
+          "path": "tests/fixtures/a03-method-headers/capture.mjs",
+          "bytes": 8418,
+          "sha256": "6e6d6c858bd7e29d6940228469df5cba227a25004cf25197d9004d37aa8e79a6"
+        },
+        "after": {
+          "path": "tests/fixtures/a03-method-headers/capture.mjs",
+          "bytes": 8493,
+          "sha256": "550ecfb8cc8382aced1a90c6bc48e3332ff181527a9ae819d34e52ec0b65a7c7"
+        }
+      },
+      {
+        "path": "tests/fixtures/a03-method-headers/input.js",
+        "before": {
+          "path": "tests/fixtures/a03-method-headers/input.js",
+          "bytes": 3242,
+          "sha256": "95c8ad7d4978eb7fb421351f080a77db0d404ec1c2e9df8574bc48735084f118"
+        },
+        "after": {
+          "path": "tests/fixtures/a03-method-headers/input.js",
+          "bytes": 3244,
+          "sha256": "d4d8b748c3032fc840d17b3aecccad9e6cb8a77912e23789471daaf2b612a446"
+        }
+      }
+    ],
+    "platformPrefixSource": {
+      "commit": "75f0caad1c3ea096a656feb2989b867781edc82f",
+      "path": "tests/fixtures/a03-type-access/capture.mjs",
+      "sha256": "ff9010691e8a33d1b885c44dbfaec0c0442f19922f49224212bec0a345774a04"
+    },
+    "boundaryObjectLiteral": {
+      "bytes": 645,
+      "sha256": "36818259bc7619990ec79a5919fba06a702fb9b729bc013ca453561070457fc4",
+      "unchanged": true
+    },
+    "productBoundariesFunctionText": {
+      "bytes": 1377,
+      "sha256": "dda8dbdcbd3d978d5a8ba1095f2e2a4fc92ab3509e77f752c2f8030d650f214c",
+      "unchanged": true
+    },
+    "nativeSourceOnlyChange": "Quote the existing local identifier: .locals init (int32 value) -> .locals init (int32 'value'). No instruction, maxstack, method signature, result, boundary definition, or assertion changes.",
+    "changedProductSources": false,
+    "changedObservationMatrix": false,
+    "changedExpectations": false,
+    "changedWorkloads": false
+  },
+  "fileBounds": [
+    {
+      "path": "tests/fixtures/a03-method-headers/capture.mjs",
+      "bytes": 8493,
+      "sha256": "550ecfb8cc8382aced1a90c6bc48e3332ff181527a9ae819d34e52ec0b65a7c7",
+      "lines": 139,
+      "longestLine": 160
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/input.js",
+      "bytes": 3244,
+      "sha256": "d4d8b748c3032fc840d17b3aecccad9e6cb8a77912e23789471daaf2b612a446",
+      "lines": 64,
+      "longestLine": 128
+    }
+  ],
+  "plan": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-e10cb80d.json",
+    "bytes": 1044051,
+    "sha256": "43a791262290c3846f6bfb1bc957182803ae9ae0ae7fbf88379ba94a8c625aec"
+  },
+  "recorder": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-e10cb80d.py",
+    "bytes": 15420,
+    "sha256": "51ddc118070e3141b90bb345575da72bd1adb21f9c242149236983d287f70d09"
+  },
+  "sourceArchive": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-e10cb80d-v2.zip",
+    "bytes": 4529669,
+    "sha256": "49b8e8bf2266bc1e38fc690709f2a4915fc3237fa07a5b12fb3cad6ba36ab83d"
+  },
+  "exactDiff": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-harness-revision-e10cb80d.diff",
+    "bytes": 27624,
+    "sha256": "a68ac771e9006856d460b9146e7e2ced6beeb61be77cd1fd113f7d4dd3939a41"
+  },
+  "productTreesUnchanged": [
+    {
+      "path": "packages/archive/src",
+      "original": "efc7f1f82e3401599f470905d812b398a7647280",
+      "before": "efc7f1f82e3401599f470905d812b398a7647280",
+      "candidate": "efc7f1f82e3401599f470905d812b398a7647280",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bcl-collections/src",
+      "original": "f1d1096869a82faaeaeefae45552544b147ba7ae",
+      "before": "f1d1096869a82faaeaeefae45552544b147ba7ae",
+      "candidate": "f1d1096869a82faaeaeefae45552544b147ba7ae",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bcl-core/src",
+      "original": "60f0c837486308c9cb6c03445f4515f6067d67a2",
+      "before": "60f0c837486308c9cb6c03445f4515f6067d67a2",
+      "candidate": "60f0c837486308c9cb6c03445f4515f6067d67a2",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bytecode/src",
+      "original": "e929355514cad0a058982101fa52f975a2ea1f55",
+      "before": "e929355514cad0a058982101fa52f975a2ea1f55",
+      "candidate": "e929355514cad0a058982101fa52f975a2ea1f55",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src",
+      "original": "4a0b788760d6b2c08e0fc4d75f5c3ca673f73f71",
+      "before": "4a0b788760d6b2c08e0fc4d75f5c3ca673f73f71",
+      "candidate": "4a0b788760d6b2c08e0fc4d75f5c3ca673f73f71",
+      "unchanged": true
+    },
+    {
+      "path": "packages/compiler/src",
+      "original": "ec8b5068db6eea603c59161b07b599d34c9880f4",
+      "before": "ec8b5068db6eea603c59161b07b599d34c9880f4",
+      "candidate": "ec8b5068db6eea603c59161b07b599d34c9880f4",
+      "unchanged": true
+    },
+    {
+      "path": "packages/framework/src",
+      "original": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+      "before": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+      "candidate": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+      "unchanged": true
+    },
+    {
+      "path": "packages/symbols/src",
+      "original": "8eecb3e2749c0c5c6d76fd1262aeb09c490f67bb",
+      "before": "8eecb3e2749c0c5c6d76fd1262aeb09c490f67bb",
+      "candidate": "8eecb3e2749c0c5c6d76fd1262aeb09c490f67bb",
+      "unchanged": true
+    },
+    {
+      "path": "packages/syntax/src",
+      "original": "2f9602d3e929781d0399653b03377226c00d3c16",
+      "before": "2f9602d3e929781d0399653b03377226c00d3c16",
+      "candidate": "2f9602d3e929781d0399653b03377226c00d3c16",
+      "unchanged": true
+    },
+    {
+      "path": "packages/text/src",
+      "original": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+      "before": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+      "candidate": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+      "unchanged": true
+    }
+  ],
+  "allPackagesTreeUnchangedFromOriginalProductHead": true,
+  "toolPinsUnchanged": true,
+  "toolFilesVerified": 414,
+  "baselinePlanByteEquivalent": true,
+  "sourceFilesVerified": 2457,
+  "archivePathsChanged": [
+    "candidate/tests/fixtures/a03-method-headers/capture.mjs",
+    "candidate/tests/fixtures/a03-method-headers/input.js"
+  ],
+  "archiveEntriesVerified": 2461,
+  "historicalArchiveEntries": [
+    {
+      "path": "original331/tests/fixtures/a03-method-headers/capture.mjs",
+      "bytes": 8083,
+      "sha256": "f896fe2ca856da0e13c5fbe575b108ac40e1b3048fbbfe65221d0fb3ff802373"
+    },
+    {
+      "path": "original331/tests/fixtures/a03-method-headers/README.md",
+      "bytes": 6148,
+      "sha256": "5debcea0e1ccafc467dcc182d2ad30a8037986f7448e78571ec3247199e9203f"
+    },
+    {
+      "path": "original331/preparation.json",
+      "bytes": 8119,
+      "sha256": "015aed88a13998ef82d602a4ba0d60f2ade650de0dbc44cf4270f16914f552ed"
+    },
+    {
+      "path": "original331/source-bounds.json",
+      "bytes": 4500,
+      "sha256": "cac0d12d3f3db2f4b3408381c80458574ed651d529c871f7919e15a24c167161"
+    }
+  ],
+  "allPriorFailuresUnchanged": true,
+  "preservedFirstNativeFailureFiles": 29,
+  "preservedAssemblerFailureFiles": 34,
+  "adapterSuccessAdjudication": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-adapter-adjudication-c0e3352e.json",
+    "bytes": 3832,
+    "sha256": "645fb5f1cfa88b8f95e2084ff36ce46b07fa27ad9338d5c6566b5d6908aba8c3"
+  },
+  "adapterWasNotRerun": true,
+  "unchangedCommandIds": [
+    "refout",
+    "focused",
+    "baseline-controls",
+    "candidate-controls",
+    "baseline-corpus",
+    "candidate-corpus"
+  ],
+  "nativeArgvDifference": "Only the fresh output destination changes in the prepared outer argv. Inside capture, ILAsm uses the existing repository platform prefix. Native IL changes only local-identifier quoting.",
+  "recorderRuntimeCodeUnchanged": true,
+  "recorderParsedWithoutExecution": true,
+  "freshExecutionDirectoryAbsent": true,
+  "heavySlotOwned": false,
+  "executionNotPerformed": true,
+  "preservedPreviousPreparationArtifacts": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-f261715f.json",
+      "bytes": 1029154,
+      "sha256": "880824acdbc5b4c5a99d3851e7ba30f3ba8a1f08075b21ff5152acaff8891ac6"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-f261715f.py",
+      "bytes": 15420,
+      "sha256": "af49c101c992225514c301a3f15b3896e7127cb7efe8dbc23c2d6a507cd2af76"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-f261715f.zip",
+      "bytes": 4529628,
+      "sha256": "1b2ce338b282e7e670973b2d2f97d1c85489591bc7398837c41cf001efe4792d"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-observer-revision-f261715f.json",
+      "bytes": 5149,
+      "sha256": "7dcc2fccdfffeab80da30e5c7eab3914380f257aec20553c8d03aab67ba2ee9c"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-observer-revision-f261715f.diff",
+      "bytes": 19497,
+      "sha256": "76f791fa7ede88f1ee52d4c43a4c9239593ec91762250efb29ac466d50d4e74b"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-regrant-guard-f261715f-20261004T191202Z.json",
+      "bytes": 1355,
+      "sha256": "19cfafbac592e4dd4cd4bd71f9daff7c59572cc5c7a06f5824d90be4bf745eef"
+    }
+  ],
+  "preservedSourcePreparationFailure": {
+    "kind": "external-source-archive-preparation-error",
+    "error": "KeyError: 'original331'",
+    "partialArchive": {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-e10cb80d.zip",
+      "bytes": 4519701,
+      "sha256": "2dd05f6dd0805e9abee86ab1d098cb4d463fa38bbe6c5f3665b82fd72bf594d7"
+    },
+    "partialArchiveEntries": 2457,
+    "partialArchiveIsExecutionInput": false,
+    "correctedArchivePreservesAllHistoricalEntries": [
+      {
+        "path": "original331/tests/fixtures/a03-method-headers/capture.mjs",
+        "bytes": 8083,
+        "sha256": "f896fe2ca856da0e13c5fbe575b108ac40e1b3048fbbfe65221d0fb3ff802373"
+      },
+      {
+        "path": "original331/tests/fixtures/a03-method-headers/README.md",
+        "bytes": 6148,
+        "sha256": "5debcea0e1ccafc467dcc182d2ad30a8037986f7448e78571ec3247199e9203f"
+      },
+      {
+        "path": "original331/preparation.json",
+        "bytes": 8119,
+        "sha256": "015aed88a13998ef82d602a4ba0d60f2ade650de0dbc44cf4270f16914f552ed"
+      },
+      {
+        "path": "original331/source-bounds.json",
+        "bytes": 4500,
+        "sha256": "cac0d12d3f3db2f4b3408381c80458574ed651d529c871f7919e15a24c167161"
+      }
+    ],
+    "qualificationExecuted": false,
+    "sourceInputsChangedByError": false
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "featureDiffPathCount": 294,
+  "oldFeatureDiffPathCount": 295,
+  "alreadyPresentOnMain": [
+    {
+      "path": "scripts/conformance/oracle/toolchain.js",
+      "sha256": "9c3fc59aac8d487f855cc9d2df9d94845dbb529eb918a6f871d66f9006dd5708"
+    }
+  ],
+  "featurePathsWithInheritedMainChanges": [
+    {
+      "path": "packages/cil/README.md",
+      "oldSha256": "0b37a2acc0cf46a6bdb410e800091decb70659e396dd6acd3c74a225cd9db2e6",
+      "mergedSha256": "712b96fe0253ef61beae03a4895c08a491084d9332959df39d1b959c3e26732f"
+    },
+    {
+      "path": "packages/cil/src/index.js",
+      "oldSha256": "8760938fb9f2495bba54b1a8be01bdbf2e4249b19a7f436b1b4e9ddb4b72239e",
+      "mergedSha256": "1561a8ffd1ef63ad63a7d5aaa879a459627993193e278a77c9ca4e51a7b06a9e"
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/assembly-emitter.js",
+      "oldSha256": "84986a9f80f5915528888cb62e3ce5a129924b795e7164796a5427f44c0554ca",
+      "mergedSha256": "6dbabf4d6c480bf2cc89bcb643ad804ba0ae3acdcc30ca710e205d1b4f7b566c"
+    },
+    {
+      "path": "scripts/conformance/static/allowlist.json",
+      "oldSha256": "f34e3fdd3fd12b53e5b3d15761c9c72c66456d36ebbbcc5af3482af1cfd39855",
+      "mergedSha256": "c9164f5a250c6151ed726a3980158d3b89947ec9094728605d80352c2910ea7b"
+    }
+  ]
+}

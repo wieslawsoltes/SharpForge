@@ -1,0 +1,114 @@
+{
+  "step": "candidate-corpus",
+  "status": "passed",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--expose-gc",
+    "packages/cil/tools/benchmark-method-headers.mjs",
+    "--compiler",
+    "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/compiler/src/index.js",
+    "--headers",
+    "auto",
+    "--workload",
+    "corpus",
+    "--output",
+    "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-corpus.json"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+  "originalArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--expose-gc",
+    "packages/cil/tools/benchmark-method-headers.mjs",
+    "--compiler",
+    "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/compiler/src/index.js",
+    "--headers",
+    "auto",
+    "--workload",
+    "corpus",
+    "--output",
+    "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-corpus.json"
+  ],
+  "planSha256": "c29a45dcbc86dfae886d404ae6a62d863b5dae8d64fa1af7c8c7a27eacab04b5",
+  "recorderSha256": "9ba748c491c798f5ec320e5e27d8665c8c6387a589ddd918188cf35c76ed6655",
+  "preflightStartedAt": "2026-10-04T20:46:40.150877+00:00",
+  "qualification": "passed-for-this-step-only",
+  "sourceBefore": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/steps/candidate-corpus/source-before.json",
+    "bytes": 601458,
+    "sha256": "ce14acd5b2f17131582d909e76ad3dd7aa8ec364bce3687d26566e6a353e7f6f"
+  },
+  "startedAt": "2026-10-04T20:46:40.530452+00:00",
+  "timeoutSeconds": 600,
+  "availableDiskBytesBefore": 541097984,
+  "environment": {
+    "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "Europe/Berlin",
+    "TMPDIR": null,
+    "CI": null,
+    "GITHUB_ACTIONS": null,
+    "NODE_OPTIONS": null,
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+    "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+    "DOTNET_ROLL_FORWARD": null,
+    "DOTNET_ROLL_FORWARD_TO_PRERELEASE": null,
+    "DOTNET_CLI_TELEMETRY_OPTOUT": null,
+    "DOTNET_NOLOGO": null,
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+    "GIT_OPTIONAL_LOCKS": "0"
+  },
+  "environmentScope": "Public execution settings only; unlisted inherited variables are not serialized.",
+  "pid": 53,
+  "exitCode": 0,
+  "signal": null,
+  "elapsedSeconds": 5.064798685998539,
+  "finishedAt": "2026-10-04T20:46:45.595429+00:00",
+  "availableDiskBytesAfter": 539938816,
+  "resultSummary": {
+    "workload": "corpus",
+    "headerMode": "auto",
+    "compilerImportMs": 783.9755620000001,
+    "firstCompileMs": 119.73585500000013,
+    "medianMs": 16.246553000000176,
+    "p95Ms": 19.195050000000265,
+    "p99Ms": 23.137672000000066,
+    "assemblyBytes": 2560,
+    "assemblySHA256": "2ec9c8509b02b6298df9d1d27fd64a822a447b6729d39e8eb967ec0bab3910cc",
+    "gcExposed": true
+  },
+  "outerLogs": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/steps/candidate-corpus/stdout.log",
+      "bytes": 10115,
+      "sha256": "b214399a06bc5cbf4dde63b32f920e08b3c2ae960a5fb5c5001f7f4cadf8ee28"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/steps/candidate-corpus/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "outputInventory": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-corpus.json",
+      "bytes": 13456,
+      "sha256": "71a7887e221845c64178434b69fd79d7a43699ca05970a071cf539d730e60a5c"
+    }
+  ],
+  "sourceAfter": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/steps/candidate-corpus/source-after.json",
+    "bytes": 601458,
+    "sha256": "ce14acd5b2f17131582d909e76ad3dd7aa8ec364bce3687d26566e6a353e7f6f"
+  },
+  "sourcesAndToolsUnchanged": true,
+  "recordFinishedAt": "2026-10-04T20:46:45.982083+00:00"
+}

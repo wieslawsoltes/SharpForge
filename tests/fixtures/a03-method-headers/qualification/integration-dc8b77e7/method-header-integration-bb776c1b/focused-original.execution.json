@@ -1,0 +1,54 @@
+{
+  "id": "focused-original",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a03-05-decoding-limit-tags.test.js",
+    "tests/a03-05-maxstack.test.js",
+    "tests/a03-05-maxstack-eh.test.js",
+    "tests/a03-05-method-headers.test.js",
+    "tests/a03-05-compiler-method-headers.test.js",
+    "tests/a03-06-eh-encoding.test.js",
+    "tests/compiler-cil-portable-pdb.test.js",
+    "tests/a03-22-attribute-dispatch.test.js",
+    "tests/a03-22-reference-assemblies.test.js",
+    "tests/a03-22-reference-identity.test.js",
+    "tests/a03-22-reference-interface-members.test.js",
+    "tests/a03-22-reference-policy.test.js",
+    "tests/a03-22-reference-synthesized-metadata.test.js"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+  "status": "failed",
+  "startedUtc": "2026-10-04T22:27:05.700085+00:00",
+  "exitCode": 1,
+  "signal": null,
+  "outputs": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.stdout.tap",
+      "bytes": 20836,
+      "sha256": "0049774dab7d28d0858ef46e80654bc8a4772aed334107a634489030b9840ce6"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "availableDiskBefore": 237363200,
+  "sourceBefore": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.source-before.json",
+    "bytes": 271753,
+    "sha256": "39b4966c9867575e2b26f82e1530f8649b15299786a0cd2355c56e6c3638235a"
+  },
+  "pid": 46,
+  "sourceAfter": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.source-after.json",
+    "bytes": 271753,
+    "sha256": "39b4966c9867575e2b26f82e1530f8649b15299786a0cd2355c56e6c3638235a"
+  },
+  "finishedUtc": "2026-10-04T22:27:13.411414+00:00"
+}

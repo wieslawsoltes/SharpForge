@@ -1,0 +1,484 @@
+TAP version 13
+# Subtest: direct compiler chooses tiny for small no-local methods and fat for initialization-sensitive stackalloc
+ok 1 - direct compiler chooses tiny for small no-local methods and fat for initialization-sensitive stackalloc
+  ---
+  duration_ms: 110.718684
+  type: 'test'
+  ...
+# Subtest: final compiler analysis removes cumulative insertion estimates and covers hoisted field rewrites
+ok 2 - final compiler analysis removes cumulative insertion estimates and covers hoisted field rewrites
+  ---
+  duration_ms: 0.818673
+  type: 'test'
+  ...
+# Subtest: final relaxed offsets preserve variable effects after compact integers, locals and prefixed calls
+ok 3 - final relaxed offsets preserve variable effects after compact integers, locals and prefixed calls
+  ---
+  duration_ms: 0.971287
+  type: 'test'
+  ...
+# Subtest: reference output keeps throw-null contract and IL-document no-change keeps chosen header bytes
+ok 4 - reference output keeps throw-null contract and IL-document no-change keeps chosen header bytes
+  ---
+  duration_ms: 23.842786
+  type: 'test'
+  ...
+# Subtest: instruction budget errors retain legacy name/code/message and add only their structured limit kind
+ok 5 - instruction budget errors retain legacy name/code/message and add only their structured limit kind
+  ---
+  duration_ms: 1.401569
+  type: 'test'
+  ...
+# Subtest: prefix budget tags distinguish exhaustion from invalid options, malformed operands and dangling chains
+ok 6 - prefix budget tags distinguish exhaustion from invalid options, malformed operands and dangling chains
+  ---
+  duration_ms: 0.750973
+  type: 'test'
+  ...
+# Subtest: catch, filter, filtered handler, finally and fault roots contribute independent peaks
+ok 7 - catch, filter, filtered handler, finally and fault roots contribute independent peaks
+  ---
+  duration_ms: 5.979345
+  type: 'test'
+  ...
+# Subtest: nested try coincident with catch or filtered handler receives the injected exception
+ok 8 - nested try coincident with catch or filtered handler receives the injected exception
+  ---
+  duration_ms: 0.724825
+  type: 'test'
+  ...
+# Subtest: leave clears its outgoing stack but retains the incoming peak
+ok 9 - leave clears its outgoing stack but retains the incoming peak
+  ---
+  duration_ms: 0.390463
+  type: 'test'
+  ...
+# Subtest: ordinary nonempty try entry, invalid terminal residue and malformed clauses are rejected
+ok 10 - ordinary nonempty try entry, invalid terminal residue and malformed clauses are rejected
+  ---
+  duration_ms: 0.881686
+  type: 'test'
+  ...
+# Subtest: grouped tail prefixes retain EH placement validation and structural transfers stay checked
+ok 11 - grouped tail prefixes retain EH placement validation and structural transfers stay checked
+  ---
+  duration_ms: 0.709452
+  type: 'test'
+  ...
+# Subtest: canonical fixed effects are immutable and variable effects have no fallback
+ok 12 - canonical fixed effects are immutable and variable effects have no fallback
+  ---
+  duration_ms: 3.201854
+  type: 'test'
+  ...
+# Subtest: exact peak includes branch joins, loops, switch and ignores unreachable variable effects
+ok 13 - exact peak includes branch joins, loops, switch and ignores unreachable variable effects
+  ---
+  duration_ms: 1.364174
+  type: 'test'
+  ...
+# Subtest: authoritative call, virtual, constructor, calli and ret effects use actual final opcode offsets
+ok 14 - authoritative call, virtual, constructor, calli and ret effects use actual final opcode offsets
+  ---
+  duration_ms: 0.664426
+  type: 'test'
+  ...
+# Subtest: underflow, inconsistent joins and nonempty terminal stacks are invalid without invented bounds
+ok 15 - underflow, inconsistent joins and nonempty terminal stacks are invalid without invented bounds
+  ---
+  duration_ms: 1.00761
+  type: 'test'
+  ...
+# Subtest: no signature guess is made and malformed authoritative effects or prefix targets are rejected
+ok 16 - no signature guess is made and malformed authoritative effects or prefix targets are rejected
+  ---
+  duration_ms: 1.054328
+  type: 'test'
+  ...
+# Subtest: UInt16 stack bound, resource budgets, cancellation and dynamic allocation facts stay explicit
+ok 17 - UInt16 stack bound, resource budgets, cancellation and dynamic allocation facts stay explicit
+  ---
+  duration_ms: 124.782955
+  type: 'test'
+  ...
+# Subtest: automatic tiny headers cover 1 and 63 bytes and stack bounds through eight
+ok 18 - automatic tiny headers cover 1 and 63 bytes and stack bounds through eight
+  ---
+  duration_ms: 2.202275
+  type: 'test'
+  ...
+# Subtest: 64 bytes, stack nine, locals and EH require fat headers with exact bounds
+ok 19 - 64 bytes, stack nine, locals and EH require fat headers with exact bounds
+  ---
+  duration_ms: 0.641262
+  type: 'test'
+  ...
+# Subtest: explicit fat zero and initialization policy differ intentionally from the exact legacy default
+ok 20 - explicit fat zero and initialization policy differ intentionally from the exact legacy default
+  ---
+  duration_ms: 0.56508
+  type: 'test'
+  ...
+# Subtest: forced tiny and malformed policies reject lossy encodings; byte ownership and cancellation remain checked
+ok 21 - forced tiny and malformed policies reject lossy encodings; byte ownership and cancellation remain checked
+  ---
+  duration_ms: 0.947261
+  type: 'test'
+  ...
+# Subtest: filter and fault payloads round trip through small, fat and automatic sections
+ok 22 - filter and fault payloads round trip through small, fat and automatic sections
+  ---
+  duration_ms: 15.313916
+  type: 'test'
+  ...
+# Subtest: legacy fat bytes and filter union payload remain compatible
+ok 23 - legacy fat bytes and filter union payload remain compatible
+  ---
+  duration_ms: 0.869978
+  type: 'test'
+  ...
+# Subtest: small section boundaries include UInt16 offsets, byte lengths and twenty clauses
+ok 24 - small section boundaries include UInt16 offsets, byte lengths and twenty clauses
+  ---
+  duration_ms: 1.391324
+  type: 'test'
+  ...
+# Subtest: malformed flags, payloads, ranges, headers and section limits fail before encoding
+ok 25 - malformed flags, payloads, ranges, headers and section limits fail before encoding
+  ---
+  duration_ms: 0.745044
+  type: 'test'
+  ...
+# Subtest: caller byte ownership and cancellation are preserved
+ok 26 - caller byte ownership and cancellation are preserved
+  ---
+  duration_ms: 0.429541
+  type: 'test'
+  ...
+# Subtest: native CoreCLR executes filter and fault fixtures and SRM reads every encoded region
+ok 27 - native CoreCLR executes filter and fault fixtures and SRM reads every encoded region
+  ---
+  duration_ms: 4.950282
+  type: 'test'
+  ...
+# Subtest: A03-T22 lazy attribute dispatch preserves interleaving and exact delegate return targets
+ok 28 - A03-T22 lazy attribute dispatch preserves interleaving and exact delegate return targets
+  ---
+  duration_ms: 148.318841
+  type: 'test'
+  ...
+# Subtest: A03-T22 refout marks the image and emits only throw-null, abstract or runtime method bodies
+ok 29 - A03-T22 refout marks the image and emits only throw-null, abstract or runtime method bodies
+  ---
+  duration_ms: 175.065124
+  type: 'test'
+  ...
+# Subtest: A03-T22 private and internal class storage and functions are stripped without leaving accessor rows
+ok 30 - A03-T22 private and internal class storage and functions are stripped without leaving accessor rows
+  ---
+  duration_ms: 32.849017
+  type: 'test'
+  ...
+# Subtest: A03-T22 all declared types, struct fields and attribute constructors remain in the reference surface
+ok 31 - A03-T22 all declared types, struct fields and attribute constructors remain in the reference surface
+  ---
+  duration_ms: 30.254515
+  type: 'test'
+  ...
+# Subtest: A03-T22 explicit properties and events retain virtual accessors and MethodImpl associations
+ok 32 - A03-T22 explicit properties and events retain virtual accessors and MethodImpl associations
+  ---
+  duration_ms: 19.021123
+  type: 'test'
+  ...
+# Subtest: A03-T22 InternalsVisibleTo keeps internal members while private accessors and storage are removed
+ok 33 - A03-T22 InternalsVisibleTo keeps internal members while private accessors and storage are removed
+  ---
+  duration_ms: 24.403663
+  type: 'test'
+  ...
+# Subtest: A03-T22 explicit static interface methods and accessors survive without a Virtual method flag
+ok 34 - A03-T22 explicit static interface methods and accessors survive without a Virtual method flag
+  ---
+  duration_ms: 21.630212
+  type: 'test'
+  ...
+# Subtest: A03-T22 fixed buffers retain storage references while synthesized implementation types are omitted
+ok 35 - A03-T22 fixed buffers retain storage references while synthesized implementation types are omitted
+  ---
+  duration_ms: 21.924305
+  type: 'test'
+  ...
+# Subtest: A03-T22 fixed buffers preserve generic field signatures and local TypeRef resolution scopes
+ok 36 - A03-T22 fixed buffers preserve generic field signatures and local TypeRef resolution scopes
+  ---
+  duration_ms: 22.737308
+  type: 'test'
+  ...
+# Subtest: A03-T22 a generic fixed buffer still requires a positive source length
+ok 37 - A03-T22 a generic fixed buffer still requires a positive source length
+  ---
+  duration_ms: 3.882178
+  type: 'test'
+  ...
+# Subtest: A03-T22 body and stripped declaration edits leave the complete reference bytes unchanged
+ok 38 - A03-T22 body and stripped declaration edits leave the complete reference bytes unchanged
+  ---
+  duration_ms: 103.366018
+  type: 'test'
+  ...
+# Subtest: A03-T22 metadata-only default remains unchanged and an explicit reference marker is not duplicated
+ok 39 - A03-T22 metadata-only default remains unchanged and an explicit reference marker is not duplicated
+  ---
+  duration_ms: 25.87991
+  type: 'test'
+  ...
+# Subtest: A03-T22 generic marker and friend lookalikes do not suppress the real marker or expose internals
+ok 40 - A03-T22 generic marker and friend lookalikes do not suppress the real marker or expose internals
+  ---
+  duration_ms: 4.899791
+  type: 'test'
+  ...
+# Subtest: A03-T22 file-local well-known attributes follow Roslyn source-name recognition and retain mangled identities
+ok 41 - A03-T22 file-local well-known attributes follow Roslyn source-name recognition and retain mangled identities
+  ---
+  duration_ms: 3.474209
+  type: 'test'
+  ...
+# Subtest: A03-T22 invalid refout options and source errors report diagnostics with no assembly
+ok 42 - A03-T22 invalid refout options and source errors report diagnostics with no assembly
+  ---
+  duration_ms: 4.180856
+  type: 'test'
+  ...
+# Subtest: A03-T22 assembly reference identities agree with emitted rows for every fallback profile
+ok 43 - A03-T22 assembly reference identities agree with emitted rows for every fallback profile
+  ---
+  duration_ms: 5.615521
+  type: 'test'
+  ...
+# Subtest: A03-T22 configured identities are canonical and defensively owned
+ok 44 - A03-T22 configured identities are canonical and defensively owned
+  ---
+  duration_ms: 0.700078
+  type: 'test'
+  ...
+# Subtest: A03-T22 full public keys preserve their flags and helper results never alias the registry
+ok 45 - A03-T22 full public keys preserve their flags and helper results never alias the registry
+  ---
+  duration_ms: 0.563327
+  type: 'test'
+  ...
+# Subtest: A03-T22 identity lookup rejects the same invalid names and missing framework inputs as emission
+ok 46 - A03-T22 identity lookup rejects the same invalid names and missing framework inputs as emission
+  ---
+  duration_ms: 0.836848
+  type: 'test'
+  ...
+# Subtest: A03-T22 only accessors mapped by the binder gain an implicit interface slot
+ok 47 - A03-T22 only accessors mapped by the binder gain an implicit interface slot
+  ---
+  duration_ms: 102.024244
+  type: 'test'
+  ...
+# Subtest: A03-T22 explicit interface names match Roslyn for aliases, constructed nested types, tuples and accessors
+ok 48 - A03-T22 explicit interface names match Roslyn for aliases, constructed nested types, tuples and accessors
+  ---
+  duration_ms: 58.051953
+  type: 'test'
+  ...
+# Subtest: A03-T22 an explicit-only indexer does not synthesize DefaultMemberAttribute
+ok 49 - A03-T22 an explicit-only indexer does not synthesize DefaultMemberAttribute
+  ---
+  duration_ms: 20.666448
+  type: 'test'
+  ...
+# Subtest: A03-T22 qualified file-local attributes do not leak from another compilation file
+ok 50 - A03-T22 qualified file-local attributes do not leak from another compilation file
+  ---
+  duration_ms: 7.92513
+  type: 'test'
+  ...
+# Subtest: A03-T22 file-local attribute lookup follows namespace imports and type aliases
+ok 51 - A03-T22 file-local attribute lookup follows namespace imports and type aliases
+  ---
+  duration_ms: 7.53605
+  type: 'test'
+  ...
+# Subtest: A03-T22 qualified generic file-local attributes bind their suffixed source type
+ok 52 - A03-T22 qualified generic file-local attributes bind their suffixed source type
+  ---
+  duration_ms: 8.432184
+  type: 'test'
+  ...
+# Subtest: A03-T22 assembly attributes can call internal constructors in their own source module
+ok 53 - A03-T22 assembly attributes can call internal constructors in their own source module
+  ---
+  duration_ms: 10.361777
+  type: 'test'
+  ...
+# Subtest: A03-T22 assembly attribute binding still rejects a private constructor with its accessibility diagnostic
+ok 54 - A03-T22 assembly attribute binding still rejects a private constructor with its accessibility diagnostic
+  ---
+  duration_ms: 3.321745
+  type: 'test'
+  ...
+# Subtest: A03-T22 reference visibility policy distinguishes every CLI accessibility
+ok 55 - A03-T22 reference visibility policy distinguishes every CLI accessibility
+  ---
+  duration_ms: 0.914292
+  type: 'test'
+  ...
+# Subtest: A03-T22 reference member policy rejects unsupported tables, corrupt flags and malformed context
+ok 56 - A03-T22 reference member policy rejects unsupported tables, corrupt flags and malformed context
+  ---
+  duration_ms: 0.588693
+  type: 'test'
+  ...
+# Subtest: A03-T22 marker writer is idempotent and emits the standard zero-argument constructor and blob
+ok 57 - A03-T22 marker writer is idempotent and emits the standard zero-argument constructor and blob
+  ---
+  duration_ms: 4.727227
+  type: 'test'
+  ...
+# Subtest: A03-T22 marker writer follows an explicit reference identity and refuses netmodules before mutation
+ok 58 - A03-T22 marker writer follows an explicit reference identity and refuses netmodules before mutation
+  ---
+  duration_ms: 0.624377
+  type: 'test'
+  ...
+# Subtest: A03-T22 retained property and primary-constructor storage has Roslyn debugger attributes
+ok 59 - A03-T22 retained property and primary-constructor storage has Roslyn debugger attributes
+  ---
+  duration_ms: 204.023836
+  type: 'test'
+  ...
+# Subtest: A03-T22 readonly auto getters are marked only for the instance struct contract
+ok 60 - A03-T22 readonly auto getters are marked only for the instance struct contract
+  ---
+  duration_ms: 14.454583
+  type: 'test'
+  ...
+# Subtest: A03-T22 virtual access checks and static interface event slots match captured Roslyn flags
+ok 61 - A03-T22 virtual access checks and static interface event slots match captured Roslyn flags
+  ---
+  duration_ms: 36.198408
+  type: 'test'
+  ...
+# Subtest: A03-T22 fixed-buffer attributes preserve element types and lengths when storage definitions are omitted
+ok 62 - A03-T22 fixed-buffer attributes preserve element types and lengths when storage definitions are omitted
+  ---
+  duration_ms: 33.557727
+  type: 'test'
+  ...
+# Subtest: A03-T22 serialized fixed-buffer element identity follows the selected framework contract
+ok 63 - A03-T22 serialized fixed-buffer element identity follows the selected framework contract
+  ---
+  duration_ms: 6.024631
+  type: 'test'
+  ...
+# Subtest: A03-T22 legacy metadata-only output keeps its existing synthesized attribute profile
+ok 64 - A03-T22 legacy metadata-only output keeps its existing synthesized attribute profile
+  ---
+  duration_ms: 5.735828
+  type: 'test'
+  ...
+# Subtest: direct CIL source markers survive insertion and compact branch relaxation without emitting bytes
+ok 65 - direct CIL source markers survive insertion and compact branch relaxation without emitting bytes
+  ---
+  duration_ms: 4.276317
+  type: 'test'
+  ...
+# Subtest: direct CIL returns bound deterministic PDBs with exact source hashes and instruction boundaries
+ok 66 - direct CIL returns bound deterministic PDBs with exact source hashes and instruction boundaries
+  ---
+  duration_ms: 145.581818
+  type: 'test'
+  ...
+# Subtest: enabling symbols preserves every emitted instruction, branch and exception clause
+ok 67 - enabling symbols preserves every emitted instruction, branch and exception clause
+  ---
+  duration_ms: 22.600865
+  type: 'test'
+  ...
+# Subtest: zero-code and unreachable source constructs do not steal another statement sequence point
+ok 68 - zero-code and unreachable source constructs do not steal another statement sequence point
+  ---
+  duration_ms: 12.652051
+  type: 'test'
+  ...
+# Subtest: lexical locals and constants use actual slots and nested block/loop/handler extents
+ok 69 - lexical locals and constants use actual slots and nested block/loop/handler extents
+  ---
+  duration_ms: 22.722322
+  type: 'test'
+  ...
+# Subtest: partial-type initializers retain their actual documents inside the same emitted method
+ok 70 - partial-type initializers retain their actual documents inside the same emitted method
+  ---
+  duration_ms: 15.443388
+  type: 'test'
+  ...
+# Subtest: constant scopes retain exact enum, decimal, wide integer and typed-null signatures
+ok 71 - constant scopes retain exact enum, decimal, wide integer and typed-null signatures
+  ---
+  duration_ms: 20.818187
+  type: 'test'
+  ...
+# Subtest: stackalloc stream replacement retains source points and exact local slots
+ok 72 - stackalloc stream replacement retains source points and exact local slots
+  ---
+  duration_ms: 12.047524
+  type: 'test'
+  ...
+# Subtest: constructor initializer points start before the receiver and cover complete stores and calls
+ok 73 - constructor initializer points start before the receiver and cover complete stores and calls
+  ---
+  duration_ms: 21.438467
+  type: 'test'
+  ...
+# Subtest: line mappings, hidden regions, reset paths and declared checksums are preserved without fabricated source
+ok 74 - line mappings, hidden regions, reset paths and declared checksums are preserved without fabricated source
+  ---
+  duration_ms: 10.521955
+  type: 'test'
+  ...
+# Subtest: enhanced line directives map generated prefixes to the declared whole-span end
+ok 75 - enhanced line directives map generated prefixes to the declared whole-span end
+  ---
+  duration_ms: 6.438701
+  type: 'test'
+  ...
+# Subtest: portable and embedded symbols are opt-in and explicit false suppresses both modes
+ok 76 - portable and embedded symbols are opt-in and explicit false suppresses both modes
+  ---
+  duration_ms: 19.878689
+  type: 'test'
+  ...
+# Subtest: diagnostic failures return no PDB and library symbols keep an empty entry point
+ok 77 - diagnostic failures return no PDB and library symbols keep an empty entry point
+  ---
+  duration_ms: 10.669872
+  type: 'test'
+  ...
+# Subtest: async and iterator links, await labels and hoisted-local ranges refer to emitted methods
+ok 78 - async and iterator links, await labels and hoisted-local ranges refer to emitted methods
+  ---
+  duration_ms: 45.96644
+  type: 'test'
+  ...
+# Subtest: async catch entries identify the selected Main or top-level kickoff and exclude ordinary Task methods
+ok 79 - async catch entries identify the selected Main or top-level kickoff and exclude ordinary Task methods
+  ---
+  duration_ms: 60.812693
+  type: 'test'
+  ...
+1..79
+# tests 79
+# suites 0
+# pass 79
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9113.319242

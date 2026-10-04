@@ -194,7 +194,12 @@ test('A03-T22 metadata-only default remains unchanged and an explicit reference 
   assert.equal(markers(metadata).length, 0);
   const explicit = source.replace('using System;', 'using System;\n[assembly: System.Runtime.CompilerServices.ReferenceAssembly]');
   assert.equal(markers(emit(explicit).metadata).length, 1);
-  assert.deepEqual(emit('').inspector.types.map(type => type.name), ['<Module>']);
+  // Empty source still carries the current language version's module ref-safety contract.
+  assert.deepEqual(emit('').inspector.types.map(type => type.name), [
+    '<Module>',
+    'Microsoft.CodeAnalysis.EmbeddedAttribute',
+    'System.Runtime.CompilerServices.RefSafetyRulesAttribute',
+  ]);
 });
 
 test('A03-T22 generic marker and friend lookalikes do not suppress the real marker or expose internals', () => {

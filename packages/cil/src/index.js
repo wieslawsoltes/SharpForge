@@ -55,6 +55,8 @@ export { AssemblyTypeHierarchy } from './browser/hierarchy.js';
 export { referenceAssemblyMemberIncluded, addReferenceAssemblyAttribute } from './emit/ref-assembly.js';
 export { AssemblyUsageAnalysis } from './browser/analyzers.js';
 export { MetadataTableInspector } from './inspector-tables.js';
+export { analyzeMaxStack, maxStackDiagnosticCatalog } from './maxstack.js';
+export { fixedStackEffect } from './stack-effects.js';
 export { MetadataGenerations, metadataGenerationDiagnosticCatalog } from './metadata/delta-reader.js';
 
 export {asyncTypes, asyncValueType, asyncMethodDefinition} from './async-profile.js';
