@@ -100,6 +100,106 @@
       },
       "expected": "loaded",
       "description": "Closed ComboBox contains three static items and an explicit selection."
+    },
+    {
+      "id": "listview-selection",
+      "file": "listview-selection.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "ListView contains three static items within fixed bounds and selects one item."
+    },
+    {
+      "id": "slider-upper-bound",
+      "file": "slider-upper-bound.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "Slider value equals the upper boundary of an explicit signed range."
+    },
+    {
+      "id": "progressbar-determinate",
+      "file": "progressbar-determinate.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "Determinate ProgressBar has fixed range and value without an indeterminate animation."
+    },
+    {
+      "id": "viewbox-uniform",
+      "file": "viewbox-uniform.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "Viewbox uniformly scales a fixed-size child Grid and its centered text."
+    },
+    {
+      "id": "canvas-positioned",
+      "file": "canvas-positioned.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "Canvas places fixed-size children at the origin and a nonzero position."
+    },
+    {
+      "id": "scrollviewer-overflow",
+      "file": "scrollviewer-overflow.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "ScrollViewer has static content taller than its viewport and automatic vertical scrolling."
+    },
+    {
+      "id": "visibility-collapsed",
+      "file": "visibility-collapsed.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "StackPanel combines visible, collapsed and zero-opacity children to observe their native layout participation."
+    },
+    {
+      "id": "margin-asymmetric",
+      "file": "margin-asymmetric.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "loaded",
+      "description": "Child Border uses different margin, border thickness and padding on each side."
+    },
+    {
+      "id": "load-malformed-xml",
+      "file": "load-malformed-xml.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "load-error",
+      "description": "Intentionally mismatched XML closing tags must fail native XAML loading."
+    },
+    {
+      "id": "load-unknown-property",
+      "file": "load-unknown-property.xaml",
+      "viewport": {
+        "width": 320,
+        "height": 240
+      },
+      "expected": "load-error",
+      "description": "An unknown Button property must fail native XAML loading."
     }
   ]
 }

@@ -27,7 +27,7 @@ internal static class Program
         try
         {
             Input = JsonSerializer.Deserialize<Input>(File.ReadAllText(args[0]), new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
-            if (Input == null || Input.Fixtures == null || Input.Fixtures.Count is < 1 or > 20 ||
+            if (Input == null || Input.Fixtures == null || Input.Fixtures.Count != 20 ||
                 Input.Fixtures.Select(f => f.Id).Distinct().Count() != Input.Fixtures.Count) throw new InvalidDataException("Invalid measurement input");
             if (Environment.Version.ToString() != Input.Runtime) throw new InvalidOperationException("CoreCLR version drift: " + Environment.Version);
             Output = args[1];
