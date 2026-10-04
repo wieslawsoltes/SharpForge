@@ -1,5 +1,6 @@
 import {ControlTemplate} from './template-factory.js';
 import {ResourceFault} from '../resources/errors.js';
+import {withUIConstruction} from '../object-model/construction-roots.js';
 
 /** A control's replaceable template. Old handlers are detached before OnApplyTemplate sees the new tree. */
 export class TemplateHost {
@@ -16,7 +17,11 @@ export class TemplateHost {
     this.disposed = false;
   }
 
-  apply(template, {signal = null, force = false} = {}) {
+  apply(template, options = {}) {
+    return withUIConstruction(this.adapter, () => this.applyTemplate(template, options), [this.owner]);
+  }
+
+  applyTemplate(template, {signal = null, force = false} = {}) {
     if (this.disposed) throw new ResourceFault('SFTPL009', 'Template host is disposed.');
     if (this.template === template && !force) { this.initialized = true; return false; }
     if (template !== null && !(template instanceof ControlTemplate)) throw new ResourceFault('SFTPL010', 'A ControlTemplate is required.');

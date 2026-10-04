@@ -33,3 +33,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Templates and content
 
 `ControlTemplate`, `DataTemplate` and `ItemsPanelTemplate` create fresh per-instance trees with private namescopes. `TemplateHost` replaces and disposes one control template, retaining initial ApplyTemplate/layout timing and snapshot identity. Template bindings subscribe to the owner property store. `ContentPresenterController` resolves explicit templates, selectors, implicit data templates, primitive content and already-owned UI elements through its injected adapter.
+
+## Temporary construction roots
+
+`UIConstructionRoots` keeps only the references issued during an active synchronous factory operation. Nested factories share the outer operation, bounded to one million distinct references and 512 nested operations by default. Both a successful return and a fault release every temporary root. Templates and content presentation forward the optional `withConstruction(action, roots)` host capability through creation, attachment and callback completion. Managed heap integration is introduced by the later VM host batch; standalone model adapters remain synchronous.

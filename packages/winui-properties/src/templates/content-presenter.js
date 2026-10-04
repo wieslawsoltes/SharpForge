@@ -1,5 +1,6 @@
 import {DataTemplate} from './template-factory.js';
 import {ResourceFault} from '../resources/errors.js';
+import {withUIConstruction} from '../object-model/construction-roots.js';
 
 /** Content adaptation is explicit: data template, UIElement or an implicit TextBlock. */
 export class ContentPresenterController {
@@ -15,7 +16,11 @@ export class ContentPresenterController {
     this.disposed = false;
   }
 
-  present(content, {template = null, selector = null, signal = null} = {}) {
+  present(content, options = {}) {
+    return withUIConstruction(this.adapter, () => this.presentContent(content, options), [this.presenter, this.owner, content]);
+  }
+
+  presentContent(content, {template = null, selector = null, signal = null} = {}) {
     if (this.disposed) throw new ResourceFault('SFTPL012', 'The content presenter is disposed.');
     signal?.throwIfAborted();
     const selected = template ?? selector?.selectTemplate(content, this.presenter) ?? null;
