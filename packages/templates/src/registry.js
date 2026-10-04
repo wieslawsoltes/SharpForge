@@ -5,6 +5,10 @@ import { nativeTestTemplates } from './project/tests.js';
 import { nativeWinuiTemplates } from './project/winui-native.js';
 import { configFileTemplates } from './item/config-files.js';
 import { coreCodeTemplates } from './item/code.js';
+import { winuiXamlTemplates } from './item/winui-xaml.js';
+import { winuiControlTemplates } from './item/winui-controls.js';
+import { winuiAnimationTemplates } from './item/winui-animation.js';
+import { winuiMvvmTemplates } from './item/winui-mvvm.js';
 
 // The original exports remain the qualified browser example inventory. All targets use an explicit catalog.
 export const projectTemplates = legacyProjectTemplates;
@@ -13,6 +17,7 @@ export const builtInTemplates = Object.freeze([
   ...projectTemplates.map(template => ({ ...template, kind: 'project', targets: ['browser-managed'] })),
   ...itemTemplates.map(template => ({ ...template, kind: 'item', targets: ['browser-managed'] })),
   ...nativeTestTemplates, ...nativeWinuiTemplates, ...configFileTemplates, ...coreCodeTemplates,
+  ...winuiXamlTemplates, ...winuiControlTemplates, ...winuiAnimationTemplates, ...winuiMvvmTemplates
 ].map(template => Object.freeze(template)));
 
 /** Explicit catalog instance: installed packages never mutate process-global template state. */

@@ -4,3 +4,5 @@ export { templateOptions, normalizeTemplateOptions } from './options.js';
 export { validateFilePlan } from './file-plan.js';
 export { createItemPlan } from './item-plan.js';
 export { createProjectPlan } from './project-plan.js';
+export { mergeResourceDictionary } from './item/winui-controls.js';
+export { validateTemplateQualifications } from './qualification.js';
