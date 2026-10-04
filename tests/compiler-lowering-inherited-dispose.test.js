@@ -1,16 +1,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {compile, compileToIL} from '@sharpforge/compiler';
+import {parse} from '@sharpforge/syntax';
+import {SourceText} from '@sharpforge/text';
+import {emitAssembly} from '@sharpforge/cil';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
+import {analyze} from '../packages/compiler/src/semantic-analysis.js';
+import {generateFromSemanticAnalysis} from '../packages/compiler/src/codegen/semantic/generator.js';
 import {disposeMethod} from '../packages/compiler/src/codegen/semantic/dispose-method.js';
 import {RegistryBridge} from '../packages/compiler/src/symbols/registry-bridge.js';
 import {CoreTypes} from '../packages/compiler/src/symbols/core-types.js';
 import {Accessibility} from '../packages/compiler/src/symbols/types.js';
 
-// Marker forces semantic generation; StringContent is a released registry type and makes no network request.
+// HttpContent's released metadata omits IDisposable, so automatic semantic generation remains incomplete.
+// Exercise its actual bound trees through the generator seam; no registry state or product guard is changed.
 const source = `using System;
 using System.Net.Http;
-delegate void Marker();
 class Program {
   static int ReturnEarly() {
     using (var content = new StringContent("return")) { return 7; }
@@ -32,10 +37,19 @@ class Program {
 }`;
 let compiled;
 
+function compileSemanticFixture() {
+  const files = [parse(new SourceText(source, 'Program.cs'))];
+  const analysis = analyze(files);
+  assert.deepEqual(analysis.diagnostics.filter(item => item.severity === 'error'), []);
+  assert.equal(analysis.incomplete, true, 'HttpContent IDisposable metadata remains a separate prerequisite');
+  const generated = generateFromSemanticAnalysis(analysis, files);
+  assert(generated.image, JSON.stringify(generated.unsupported));
+  return {image: generated.image, assembly: emitAssembly(generated.image)};
+}
+
 for (const engine of ['source', 'cil']) {
-  test(`SF-A09-T03 prerequisite ${engine}: semantic using resolves registered inherited Dispose`, () => {
-    compiled ??= compileToIL(source);
-    assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
+  test(`SF-A09-T03 prerequisite ${engine}: direct semantic lowering resolves registered inherited Dispose`, () => {
+    compiled ??= compileSemanticFixture();
     const vm = engine === 'source' ? new VirtualMachine(compiled.image) : new CilVirtualMachine(compiled.assembly);
     const disposed = [];
     vm.onWrite = event => {
@@ -84,11 +98,19 @@ test('SF-A09-T03 prerequisite: a Dispose-shaped source method alone does not mak
 });
 
 test('SF-A09-T03 prerequisite: registered resources without Dispose remain explicitly unsupported', () => {
-  const result = compile(`using System; delegate void Marker();
+  const result = compile(`using System;
     class Program { static void Main() { using (var value = new Uri("https://example.test")) {} } }`);
   assert.equal(result.success, false);
-  assert(result.diagnostics.some(item => item.code === 'SF2200' && item.message.includes('without a Dispose method')),
-    JSON.stringify(result.diagnostics));
+  assert(result.diagnostics.some(item => item.code === 'CS1674'), JSON.stringify(result.diagnostics));
+  assert(!result.diagnostics.some(item => item.code === 'SF1010'), 'the negative must not depend on a declaration profile error');
+});
+
+test('SF-A09-T03 prerequisite: public compilation retains the incomplete framework metadata boundary', () => {
+  const outsideProfile = source.replace('class Program', 'delegate void Marker();\nclass Program');
+  const result = compile(outsideProfile);
+  assert.equal(result.success, false);
+  assert(result.diagnostics.some(item => item.code === 'SF1010'), JSON.stringify(result.diagnostics));
+  assert.notEqual(result.semantic?.generated, true, 'the public compiler must not bypass incomplete metadata');
 });
 
 function registeredResource(overrides = {}) {
