@@ -1,4 +1,5 @@
 import {keywords} from '@sharpforge/syntax';
+import {prepareTypeRename as prepareCompilationTypeRename} from '@sharpforge/compiler';
 
 const identifierBefore = /[\p{L}\p{N}\p{M}\p{Pc}_\u200c\u200d]$/u;
 const identifierAfter = /^[\p{L}\p{N}\p{M}\p{Pc}_\u200c\u200d]/u;
@@ -12,6 +13,15 @@ export function renameTarget(workspace, uri, offset) {
   const symbol = model.symbolsById.get(record.id);
   if (!['NamedType', 'Method', 'Field', 'Property', 'Event', 'Local', 'Parameter'].includes(symbol.kind)) {
     throw new Error('This symbol cannot be renamed');
+  }
+  if (symbol.kind === 'NamedType') {
+    for (const file of workspace.documentStore?.entries.values() ?? []) {
+      if (/\.cs$/i.test(file.path) && file.compile !== false && !workspace.documents.has(file.path)) {
+        const error = new Error('Open all compilation inputs before renaming a type; unloaded references cannot be skipped.');
+        error.code = 'SFL2401';
+        throw error;
+      }
+    }
   }
   return {model, reference, record, symbol};
 }
@@ -99,4 +109,33 @@ export function prepareSourceRename(workspace, uri, offset) {
   return {start: reference.start, end: reference.end, placeholder: record.name, capabilities,
     version: workspace.documents.get(uri)?.source.version, symbolId: record.id,
     declaration: {uri: record.uri, start: record.start, end: record.end}};
+}
+
+const unavailable = reason => ({available: false, reason,
+  diagnostic: {code: 'SFL2401', severity: 'warning', message: reason}, edits: [], documents: []});
+
+/** Prepare versioned edits without mutating documents. Every compilation input must be loaded and every target editable. */
+export function prepareWorkspaceTypeRename(workspace, uri, offset, newName, options = {}) {
+  options.signal?.throwIfAborted();
+  for (const record of workspace.documentStore?.entries.values() ?? []) {
+    if (/\.cs$/i.test(record.path) && record.compile !== false && !workspace.documents.has(record.path)) {
+      return unavailable('Open all compilation inputs before renaming a type; unloaded references cannot be skipped.');
+    }
+  }
+  if (workspace.extensions) workspace.compile({signal: options.signal});
+  const inputs = [...workspace.documents.keys(), ...workspace.generatedDocuments.keys()].map(path => workspace.syntax(path));
+  const plan = prepareCompilationTypeRename(inputs, {uri, offset, newName, ...options, compilationOptions: workspace.compilationOptions});
+  if (!plan.available) return {...plan, documents: []};
+  if (plan.edits.some(edit => !workspace.documents.has(edit.uri))) return unavailable('Type rename would edit read-only generated source.');
+  return {...plan, revision: workspace.revision,
+    edits: plan.edits.map(edit => ({...edit, version: workspace.documents.get(edit.uri).source.version})),
+    documents: [...workspace.documents.keys()].map(path => {
+      const source = workspace.documents.get(path).source;
+      return {uri: path, text: source.text, version: source.version};
+    })};
+}
+
+/** Compatibility helper retains the historical text-only result through the current bound-source planner. */
+export function renameLanguageSymbol(service, uri, offset, newName, options = {}) {
+  return renameSourceText(service.workspace, uri, offset, newName, options);
 }

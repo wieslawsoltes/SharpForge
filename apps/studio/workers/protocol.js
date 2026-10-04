@@ -34,6 +34,7 @@ export const workerMethods=Object.freeze({
     "definition",
     "references",
     "rename",
+    "prepareTypeRename",
     "symbols",
     "signatureHelp",
     "diagnostics",

@@ -12,7 +12,8 @@
     "tests/project-configuration-contract.test.js",
     "tests/project-context-contract.test.js",
     "tests/project-input-contract.test.js",
-    "tests/a23-*.test.js"
+    "tests/a23-*.test.js",
+    "tests/project-edits-roundtrip.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"

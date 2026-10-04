@@ -1,4 +1,5 @@
 import { ExplorerResourceState } from './explorer-resource-state.js';
+import { resourceTransactionError } from './explorer-resource-errors.js';
 import { normalizeResourcePlan, validateResourcePaths, prepareResourceWrites, prepareResourceProjectWrites } from './explorer-resource-plan.js';
 
 /** Stage versioned text edits, C# resource renames and literal XML references before one Explorer ownership commit. */
@@ -17,6 +18,8 @@ export async function applyExplorerResourceTransaction(input, { documents, explo
     validate();
     await explorer.perform([...writes, ...moves, ...projectWrites], mappings, { validate });
     return { applied: true, changes: plan.changes, resources: plan.resources };
+  } catch (error) {
+    throw resourceTransactionError(error);
   } finally {
     for (const model of created) if (!documents.ownsModel(model)) model.dispose();
   }

@@ -50,3 +50,23 @@ The Explorer snapshot tests exercise these exports through the package entry poi
 The public `sanitizeStartupConfiguration`, `sanitizeLaunchProfileMetadata` and `sanitizeSessionUserSettings` functions validate and copy these fields. Their optional context accepts `paths: Set<string>` for workspace paths or `projectIds: Set<string>` for loaded project identities. A project ID must be a portable relative path; `$workspace` identifies the loose-source workspace. Archive manifests require other project IDs to name included `.csproj` files. Workbench staging separately validates executable project kinds and profile references before replacing a workspace.
 
 The exported `startupActions`, `startupModes`, `sessionUserSettingsLimits` and immutable `sessionUserSettingsContributions` table define this schema once. Limits are 1,024 projects, 64 profiles per project, 512 characters per profile ID, 200 per profile name and 4 MiB of compact metadata characters. Serialized workspace manifests also enforce the existing 4 MiB UTF-8 byte budget, including their other settings and indentation. Unknown fields are discarded; invalid versions, paths, duplicate IDs, selections or bounds throw before the import returns settings. Compute metadata is a preference, not a grant: the runtime validates whether its selected backend is supported.
+
+## Metadata-only disk inventory
+
+`scanDirectory(provider, options)` returns `{records, folders, report, limits}`
+only after its complete cancellable traversal. Records explicitly contain
+`lazy: true`, path, size and modification metadata; absent text is never an
+empty source file. It uses provider directory iteration and yields progress
+every 128 entries. Defaults are 20,000 files, depth 48, 2,000,000 bytes per file,
+64 MiB for assembly/PDB files and 128 MiB loaded content. The inventory does not
+read ordinary file contents; optional `.gitignore` rules are bounded exceptions.
+
+`WorkspaceImportReport` records every ignored, duplicate, non-portable, aliased
+or over-budget path with a reason. `GitIgnoreMatcher` supports ordered rules,
+negation, nested scopes, directory rules, `**`, character ranges and escapes.
+Apply ignore rules explicitly with `applyGitignore: true`; generated dependency
+folders are excluded by default. This inventory API leaves the existing eager
+`readDirectory` and its explicit-save behavior intact until the host adopts the
+lazy document lifecycle.
+
+Focused validation: `node scripts/limited.js node --test tests/a24-disk-scan.test.js tests/workspace-io.test.js`.

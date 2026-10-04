@@ -29,7 +29,7 @@ test('every worker message has a handler seam and unknown messages fail structur
       'findInFiles', 'replaceAll', 'callHierarchy', 'incomingCalls', 'outgoingCalls', 'referenceLenses', 'selectionRanges',
       'codeActions', 'resolveCodeAction', 'outlineReorder', 'validateWorkspaceEdit', 'format', 'validateRefactoring',
       'validateDesigner', 'configureExtensions', 'importAssembly', 'completion', 'hover', 'definition', 'references',
-      'rename', 'symbols', 'signatureHelp', 'diagnostics', 'semanticTokens', 'foldingRanges', 'inlayHints', 'prepareRename',
+      'rename', 'prepareTypeRename', 'symbols', 'signatureHelp', 'diagnostics', 'semanticTokens', 'foldingRanges', 'inlayHints', 'prepareRename',
       'documentHighlights', 'formatRange', 'formatOnType', 'readDocument'
     ],
     runtime: [

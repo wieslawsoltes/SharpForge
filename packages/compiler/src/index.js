@@ -9,3 +9,4 @@ export {SemanticModel} from './semantic-model.js';
 export {inspectMetadataReference} from './metadata-reference.js';
 
 export {SourceSemanticModel} from './source-model.js';
+export {prepareTypeRename} from './type-rename.js';

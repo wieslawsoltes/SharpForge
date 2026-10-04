@@ -21,3 +21,4 @@ export * from './native-metadata.js';
 export * from './launch.js';
 export * from './publish-profiles.js';
 export {NativeTestAdapter, registerNativeTestingServices} from './testing/native-adapter.js';
+export * from './project-edits/index.js';

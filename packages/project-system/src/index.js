@@ -153,7 +153,7 @@ export function createCsproj({assemblyName='Application',targetFramework='net10.
   return `<Project Sdk="Microsoft.NET.Sdk">\n  <PropertyGroup>\n    <OutputType>${xmlEscape(outputType)}</OutputType>\n    <TargetFramework>${xmlEscape(targetFramework)}</TargetFramework>\n    <AssemblyName>${xmlEscape(assemblyName)}</AssemblyName>\n${files.length?'    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>\n':''}  </PropertyGroup>\n${files.length?'  <ItemGroup>\n'+files.map(f=>`    <Compile Include="${xmlEscape(normalizePath(f))}" />`).join('\n')+'\n  </ItemGroup>\n':''}</Project>\n`;
 }
 export function createSlnx(projects){return `<Solution>\n${projects.map(path=>`  <Project Path="${xmlEscape(normalizePath(path))}" />`).join('\n')}\n</Solution>\n`;}
-export {relativeTo,removeSolutionProject,editNamedProjectItem,buildSolutionTree,validateItemPath,editProjectMembership,addSolutionProject,addSolutionFolder,rewriteProjectPath} from './explorer.js';
+export * from './project-edit-exports.js';
 export * from './archive.js';
 
 export {decodeWorkspaceFile,encodeWorkspaceFile} from '@sharpforge/archive';

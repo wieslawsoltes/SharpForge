@@ -2,13 +2,11 @@ import {sourceHover} from './hover.js';
 import {boundInlayHints} from './inlay-hints.js';
 import {boundSignatureHelp} from './signature-help.js';
 import {withCSharpCommitCharacters} from './completion-rules.js';
-import {renameSource, renameSourceText, prepareSourceRename} from './rename.js';
-import {sourceReferences, sourceReferenceLenses} from './source-queries.js';
+import {renameSource, renameSourceText, prepareSourceRename, prepareWorkspaceTypeRename} from './rename.js';
+import {sourceReferences, sourceReferenceLenses, sourceCalls, findSourceText, sourceSymbolDetail as symbolDetail} from './source-queries.js';
 import {types as frameworkTypes,frameworkType,canonicalType,propertiesFor,eventsFor,findContracts,contracts} from '@sharpforge/framework';
-import { findTextMatches } from '@sharpforge/text';
 import { keywords } from '@sharpforge/syntax';
 import { Builtins } from '@sharpforge/bytecode';
-const symbolDetail=s=>s.kind==='method'?`${s.isStatic?'static ':''}${s.type} ${s.owner?s.owner+'.':''}${s.name}(${(s.parameters??[]).map(p=>p.type+' '+p.name).join(', ')})`:s.kind==='class'?`class ${s.name}`:`${s.type} ${s.name}`;
 const intrinsicDocs={Console:'Writes program output to the managed console.',Math:'Numeric functions in the supported runtime profile.',GC:'Controls the precise, non-generational managed collector.',Array:'Array helpers.',Convert:'Primitive conversion helpers.',Debug:'Runtime assertions.'};
 export class LanguageService {
   constructor(workspace){this.workspace=workspace;}
@@ -37,14 +35,11 @@ export class LanguageService {
   rename(uri,offset,newName,options={}){return renameSourceText(this.workspace,uri,offset,newName,options);}
   renamePlan(uri,offset,newName,options={}){return renameSource(this.workspace,uri,offset,newName,options);}
   prepareRename(uri,offset){return prepareSourceRename(this.workspace,uri,offset);}
-  findInFiles(query,options={}){return findTextMatches([...this.workspace.documents.values()].map(d=>d.source),query,options);}
+  prepareTypeRename(uri,offset,newName,options={}){return prepareWorkspaceTypeRename(this.workspace,uri,offset,newName,options);}
+  findInFiles(query,options={}){return findSourceText(this.workspace,query,options);}
   callHierarchy(uri,offset){const symbol=this.symbolAt(uri,offset);return symbol?.kind==='method'?[this.callItem(symbol)]:[];}
   callItem(symbol){return {...symbol,start:symbol.bodyStart??symbol.start,end:symbol.bodyEnd??symbol.end,selectionStart:symbol.start,selectionEnd:symbol.end,revision:this.workspace.revision};}
-  calls(item,direction='incoming'){
-    if(item.revision!==this.workspace.revision)throw new Error('Call hierarchy is stale; prepare it again');
-    const result=this.workspace.compile(),symbol=result.symbols.find(s=>s.id===item.id&&s.kind==='method');if(!symbol)return [];
-    const groups=new Map();for(const reference of result.references){if(!reference.call)continue;const match=direction==='incoming'?reference.symbolId===symbol.id:reference.callerId===symbol.id;if(!match)continue;const id=direction==='incoming'?reference.callerId:reference.symbolId,target=result.symbols.find(s=>s.id===id&&s.kind==='method');if(!target)continue;if(!groups.has(id))groups.set(id,{item:this.callItem(target),ranges:[]});groups.get(id).ranges.push({uri:reference.uri,start:reference.start,end:reference.end});}return [...groups.values()];
-  }
+  calls(item,direction='incoming'){return sourceCalls(this,item,direction);}
   referenceLenses(uri){return sourceReferenceLenses(this.workspace,uri);}
   documentSymbols(uri){return (this.workspace.sourceModel()?.documentSymbols(uri)??[]).map(s=>({...s,detail:symbolDetail(s)}));}
   signatureHelp(uri,offset,options){return boundSignatureHelp(this.workspace,uri,offset,options);}

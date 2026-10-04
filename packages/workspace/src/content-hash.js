@@ -1,4 +1,6 @@
-import {encodeWorkspaceFile} from '@sharpforge/archive';
+import {workspaceRecordSource} from './transaction-records.js';
+import {workspaceRecordByteChunks, encodedWorkspaceRecordBytes} from './source-record-bytes.js';
+import {WorkspaceSha256} from './sha256-stream.js';
 
 /** Abort before admission and after every awaited operation without replacing its reason. */
 export function throwIfWorkspaceAborted(signal) {
@@ -16,6 +18,24 @@ export async function hashWorkspaceBytes(bytes, {signal} = {}) {
 }
 
 /** Use the archive codec so hashes and saves agree for BOM, UTF-16 and untouched legacy encodings. */
-export function workspaceRecordBytes(record) {
-  return encodeWorkspaceFile(record);
+export function workspaceRecordBytes(record, options) {
+  return encodedWorkspaceRecordBytes(record, options);
+}
+
+/** Hash immutable sources in bounded ranges so history never materializes the full compatibility text view. */
+export async function hashWorkspaceRecordContent(record, options = {}) {
+  throwIfWorkspaceAborted(options.signal);
+  if (!workspaceRecordSource(record)) return hashWorkspaceBytes(workspaceRecordBytes(record, options), options);
+  const digest = new WorkspaceSha256();
+  for (const bytes of workspaceRecordByteChunks(record, options)) {
+    throwIfWorkspaceAborted(options.signal);
+    // Untouched source records can retain a large original byte buffer; yield within that buffer as well.
+    for (let offset = 0; offset < bytes.length; offset += 65536) {
+      digest.update(bytes.subarray(offset, offset + 65536));
+      await new Promise(resolve => setTimeout(resolve, 0));
+      throwIfWorkspaceAborted(options.signal);
+    }
+  }
+  throwIfWorkspaceAborted(options.signal);
+  return digest.digest();
 }
