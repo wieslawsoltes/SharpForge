@@ -13,7 +13,7 @@ handlers.set('ldftn',(vm,frame,instruction)=>{
 handlers.set('ret',(vm,frame)=>{
   const type=frame.method.signature.returnType;
   let result=type==='void'?null:vm.pop();
-  if(isNativeStorageType(type))result=vm.storage(result,type);
+  if(isNativeStorageType(type)||type.startsWith('method '))result=vm.storage(result,type);
   const value=valueCallResult(vm,frame,result);
   if(frame.initializes)completeInitialization(vm,frame);
   leaveCilMethod(vm, frame);

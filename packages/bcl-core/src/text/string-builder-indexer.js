@@ -13,9 +13,12 @@ function replaceCharacter(platform, reference, location, unit) {
   const replacement = platform.heap.string(text.slice(0, offset) + String.fromCharCode(unit) + text.slice(offset + 1));
   platform.heap.withRoots([storage, previous, replacement], () => {
     platform.heap.get(storage).data[slot] = replacement;
-    platform.heap.mutationRevision++;
-    platform.vm.notifyWrite?.({kind: 'array', handle: storage.h, generation: storage.g, index: slot,
-      oldValue: previous, value: replacement});
+    if (platform.vm.notifyWrite) {
+      platform.vm.notifyWrite({kind: 'array', handle: storage.h, generation: storage.g, index: slot,
+        oldValue: previous, value: replacement});
+    } else {
+      platform.heap.mutationRevision++;
+    }
     // A callback may clear or append to the builder; never restore a captured backing array or count afterward.
     platform.set(reference, '$version', platform.get(reference, '$version', 0) + 1);
   });

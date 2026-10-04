@@ -12,7 +12,7 @@ export const LoopEmission = Base =>
   class extends Base {
     stmtForEach(node) {
       if (!node.local) return this.unsupported('deconstruction in foreach', node.syntax);
-      if (node.isAwait) return this.unsupported('await foreach', node.syntax);
+      if (node.isAwait) return this.unsupported('await foreach with deconstruction', node.syntax);
       const type = node.collection.type;
       if (type?.elementType) return this.forEachArray(node);
       if (type?.specialType === 'System_String') return this.forEachString(node);
