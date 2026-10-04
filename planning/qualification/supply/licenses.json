@@ -4,7 +4,8 @@
     "MIT",
     "Apache-2.0",
     "PSF-2.0",
-    "MIT AND PSF-2.0"
+    "MIT AND PSF-2.0",
+    "MIT AND PSF-2.0 AND Unicode-3.0"
   ],
   "scope": "Every tracked vendor file and asset has explicit origin/license evidence. Original source remains repository MIT; declarations need human review.",
   "files": [
@@ -1242,6 +1243,510 @@
       "provenance": [
         "tests/fixtures/metadata/README.md",
         "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "docs/architecture.svg",
+      "sha256": "dd56572fe4ee5c337f4829f227433f0affc87f11d159193adf6cd2e26ebf05a5",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/docs/architecture.svg",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "docs/architecture.svg",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a2/p16-hosted-a2.zip",
+      "sha256": "08dfddfe17b2d4a02bd03aff172699ad972b6d6f8d371d4cc452e86ff19ac61f",
+      "kind": "captured mixed-license evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/docs/evidence/project16-hosted/a2/p16-hosted-a2.zip",
+      "license": "MIT AND PSF-2.0",
+      "licenseFile": "planning/qualification/supply/licenses/trace-python.txt",
+      "licenseSHA256": "d41c1b274830690d7d9c2ded5daa50cf61a973fd5bf6fd7bd583f87c02d3dfd1",
+      "notice": "Captured browser trace source licenses",
+      "provenance": [
+        "docs/evidence/project16-hosted/a2/source.json",
+        "tests/conformance/browser/launch.py",
+        "LICENSE",
+        "https://github.com/jfhbrook/pyee/blob/v13.0.1/LICENSE",
+        "https://github.com/python/cpython/blob/v3.12.14/Lib/contextlib.py",
+        "https://github.com/python/cpython/blob/v3.12.14/LICENSE"
+      ]
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/p16-hosted-a3.zip",
+      "sha256": "7fe07d3374bdb1bb1c9c17dc36e730dfa36b39381e40c7b905d40452aeb550ba",
+      "kind": "captured mixed-license evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/docs/evidence/project16-hosted/a3/p16-hosted-a3.zip",
+      "license": "MIT AND PSF-2.0",
+      "licenseFile": "planning/qualification/supply/licenses/trace-python.txt",
+      "licenseSHA256": "d41c1b274830690d7d9c2ded5daa50cf61a973fd5bf6fd7bd583f87c02d3dfd1",
+      "notice": "Captured browser trace source licenses",
+      "provenance": [
+        "docs/evidence/project16-hosted/a3/source.json",
+        "tests/conformance/browser/launch.py",
+        "LICENSE",
+        "https://github.com/jfhbrook/pyee/blob/v13.0.1/LICENSE",
+        "https://github.com/python/cpython/blob/v3.12.14/Lib/contextlib.py",
+        "https://github.com/python/cpython/blob/v3.12.14/LICENSE"
+      ]
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a4/p16-hosted-a4.zip",
+      "sha256": "f07f9ef776d60f070e8ac9614bc65233e77a75215fce3559f8cc02acf8a680c3",
+      "kind": "captured mixed-license evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/docs/evidence/project16-hosted/a4/p16-hosted-a4.zip",
+      "license": "MIT AND PSF-2.0 AND Unicode-3.0",
+      "licenseFile": "planning/qualification/supply/licenses/trace-python.txt",
+      "licenseSHA256": "d41c1b274830690d7d9c2ded5daa50cf61a973fd5bf6fd7bd583f87c02d3dfd1",
+      "notice": "Captured browser trace source licenses",
+      "provenance": [
+        "docs/evidence/project16-hosted/a4/source.json",
+        "tests/conformance/browser/launch.py",
+        "LICENSE",
+        "https://github.com/jfhbrook/pyee/blob/v13.0.1/LICENSE",
+        "https://github.com/python/cpython/blob/v3.12.14/Lib/contextlib.py",
+        "https://github.com/python/cpython/blob/v3.12.14/LICENSE",
+        "packages/text/reference/unicode-16.0.0/LICENSE.txt",
+        "packages/text/reference/unicode-16.0.0/sources.json",
+        "packages/text/src/grapheme/ranges-0.generated.js",
+        "packages/text/src/grapheme/ranges-1.generated.js"
+      ]
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a6/p16-hosted-a6.zip",
+      "sha256": "4d18d06390e92f13c47194e89926a85a674c2ed0249405656491571583b2d74f",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/docs/evidence/project16-hosted/a6/p16-hosted-a6.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "docs/evidence/project16-hosted/a6/source.json",
+        "tests/conformance/browser/launch.py",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a7/p16-hosted-a7.zip",
+      "sha256": "92a4ff4c16e00ac4ab7c02fb06a788ae1d5ded631d4c7554e22f47777ffb3ec0",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/docs/evidence/project16-hosted/a7/p16-hosted-a7.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "docs/evidence/project16-hosted/a7/source.json",
+        "tests/conformance/browser/launch.py",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "docs/evidence/project16-hosted/m1/artifact.zip",
+      "sha256": "420c7388efaeb54e1079d53b7434171311b67c6b0947fbdac61346781ab4c92d",
+      "kind": "captured mixed-license evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/docs/evidence/project16-hosted/m1/artifact.zip",
+      "license": "MIT AND PSF-2.0",
+      "licenseFile": "planning/qualification/supply/licenses/trace-python.txt",
+      "licenseSHA256": "d41c1b274830690d7d9c2ded5daa50cf61a973fd5bf6fd7bd583f87c02d3dfd1",
+      "notice": "Captured browser trace source licenses",
+      "provenance": [
+        "docs/evidence/project16-hosted/m1/source.json",
+        "tests/conformance/browser/launch.py",
+        "LICENSE",
+        "https://github.com/jfhbrook/pyee/blob/v13.0.1/LICENSE",
+        "https://github.com/python/cpython/blob/v3.12.14/Lib/contextlib.py",
+        "https://github.com/python/cpython/blob/v3.12.14/LICENSE"
+      ]
+    },
+    {
+      "path": "docs/evidence/project16-hosted/m1/browser_vs_workflows_standalone_test/screenshot.png",
+      "sha256": "7fda87da1757582b96415a4aadd25ff6cda89b887c47ff36a3a33a235f5a2034",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/docs/evidence/project16-hosted/m1/browser_vs_workflows_standalone_test/screenshot.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "docs/evidence/project16-hosted/m1/source.json",
+        "tests/conformance/browser/launch.py",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "docs/evidence/project16-hosted/m1/browser_vs_workflows_standalone_test/trace.zip",
+      "sha256": "504eb7ea91d1afb176266238fbb04253d6f3c228c9fc66d636118126f96c59ae",
+      "kind": "captured mixed-license evidence",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/docs/evidence/project16-hosted/m1/browser_vs_workflows_standalone_test/trace.zip",
+      "license": "MIT AND PSF-2.0",
+      "licenseFile": "planning/qualification/supply/licenses/trace-python.txt",
+      "licenseSHA256": "d41c1b274830690d7d9c2ded5daa50cf61a973fd5bf6fd7bd583f87c02d3dfd1",
+      "notice": "Captured browser trace source licenses",
+      "provenance": [
+        "docs/evidence/project16-hosted/m1/source.json",
+        "tests/conformance/browser/launch.py",
+        "LICENSE",
+        "https://github.com/jfhbrook/pyee/blob/v13.0.1/LICENSE",
+        "https://github.com/python/cpython/blob/v3.12.14/Lib/contextlib.py",
+        "https://github.com/python/cpython/blob/v3.12.14/LICENSE"
+      ]
+    },
+    {
+      "path": "docs/evidence/project16-hosted/m2/artifact.zip",
+      "sha256": "4dac7ada7468eadc27801eb2d145480e021e9830f511771b4261cff1d4660b24",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/docs/evidence/project16-hosted/m2/artifact.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "docs/evidence/project16-hosted/m2/source.json",
+        "tests/conformance/browser/launch.py",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "docs/evidence/project16-hosted/w1/artifact.zip",
+      "sha256": "b79f4c7f36d8771896d6e35415718ba4f8511335a050c3323587f9a2c8804f2d",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/docs/evidence/project16-hosted/w1/artifact.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "docs/evidence/project16-hosted/w1/source.json",
+        "tests/conformance/browser/launch.py",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/imported-signatures/Library.dll",
+      "sha256": "6c62332bfacea5a8d5fd6c6f7c257426de7350ace2aa875663a3ba21b603f6ee",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/packages/compiler/test/imported-signatures/Library.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/imported-signatures/Library.cs",
+        "packages/compiler/test/imported-signatures/verify-dotnet.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/references/assemblies/Closed.dll",
+      "sha256": "65dde52eb758f18e34c4c180ee93c8087c5a136b946354f6601fbf41917c8369",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/packages/compiler/test/references/assemblies/Closed.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/references/fixtures.js",
+        "packages/compiler/test/references/tools/generate.mjs",
+        "packages/compiler/test/references/tools/Program.cs",
+        "packages/compiler/test/references/pinned.json",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-async-writer/AsyncWriter.dll",
+      "sha256": "a71bd36cf7970a39c9e621986bf318e93b057d591f690a4db0b0a951fce6d901",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-async-writer/AsyncWriter.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/AsyncWriter",
+        "tests/fixtures/portable-pdb-async-writer/README.md",
+        "tests/fixtures/portable-pdb-async-writer/reference.json",
+        "scripts/validate-pdb-async-writer.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-closure-map/ClosureMap.dll",
+      "sha256": "49844779f41e2e345179675635e57bf1073e9c55f6caa3dbffbe0202890becf2",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-closure-map/ClosureMap.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/ClosureMap",
+        "tests/fixtures/portable-pdb-closure-map/README.md",
+        "tests/fixtures/portable-pdb-closure-map/reference.json",
+        "scripts/validate-pdb-closure-map.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-closure-map/ClosureMap.pdb",
+      "sha256": "a1279f399c862041225853cfd35dfa1aaaa3340c696b1605828f4d913b3e917a",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-closure-map/ClosureMap.pdb",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/ClosureMap",
+        "tests/fixtures/portable-pdb-closure-map/README.md",
+        "tests/fixtures/portable-pdb-closure-map/reference.json",
+        "scripts/validate-pdb-closure-map.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-datetime-constants/DateTimeConstants.dll",
+      "sha256": "270dd64e3a33e09c779d874f566fb9fc7fdc4e35f570030acdf871dd1431b9f4",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-datetime-constants/DateTimeConstants.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/DateTimeConstants",
+        "tests/fixtures/portable-pdb-datetime-constants/README.md",
+        "tests/fixtures/portable-pdb-datetime-constants/reference.json",
+        "scripts/validate-pdb-datetime-constants.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-datetime-constants/DateTimeConstants.pdb",
+      "sha256": "44626ff5dfcf5fbc6da071f0b191a9de63f9fb3f5756fcbaf828494a4698be13",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-datetime-constants/DateTimeConstants.pdb",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/DateTimeConstants",
+        "tests/fixtures/portable-pdb-datetime-constants/README.md",
+        "tests/fixtures/portable-pdb-datetime-constants/reference.json",
+        "scripts/validate-pdb-datetime-constants.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-effective-imports/EffectiveImports.dll",
+      "sha256": "17ad50fb1e79dbc7d1064a9538ef406379949dd919169b36e6a611594ba4d258",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-effective-imports/EffectiveImports.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/EffectiveImports",
+        "tests/fixtures/portable-pdb-effective-imports/README.md",
+        "tests/fixtures/portable-pdb-effective-imports/reference.json",
+        "scripts/validate-pdb-effective-imports.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-effective-imports/EffectiveImports.pdb",
+      "sha256": "de9436dc9b12ffc8b3a8168eb42876d4a45d81e0d44c2c048e4a20b5e1ae16ad",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-effective-imports/EffectiveImports.pdb",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/EffectiveImports",
+        "tests/fixtures/portable-pdb-effective-imports/README.md",
+        "tests/fixtures/portable-pdb-effective-imports/reference.json",
+        "scripts/validate-pdb-effective-imports.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-hoisted-locals/HoistedLocals.dll",
+      "sha256": "29c47cb7753a45d72eecaec3259b60766fd63e0bd6b371cefff43f1de5c54730",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-hoisted-locals/HoistedLocals.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/HoistedLocals",
+        "tests/fixtures/portable-pdb-hoisted-locals/README.md",
+        "tests/fixtures/portable-pdb-hoisted-locals/reference.json",
+        "scripts/validate-pdb-hoisted-locals.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-hoisted-locals/HoistedLocals.pdb",
+      "sha256": "6c6ce4f374beef4c519b8a18883cd21861870e3acc04607bfb0620fbbe3bbdef",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-hoisted-locals/HoistedLocals.pdb",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/HoistedLocals",
+        "tests/fixtures/portable-pdb-hoisted-locals/README.md",
+        "tests/fixtures/portable-pdb-hoisted-locals/reference.json",
+        "scripts/validate-pdb-hoisted-locals.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-local-constants/LocalConstants.dll",
+      "sha256": "2bc24dbbe692eea3cabc20af34808395d8f3c649ff955b1116edc85cf7b33226",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-local-constants/LocalConstants.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/LocalConstants",
+        "tests/fixtures/portable-pdb-local-constants/README.md",
+        "tests/fixtures/portable-pdb-local-constants/reference.json",
+        "scripts/validate-pdb-local-constants.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-local-constants/LocalConstants.pdb",
+      "sha256": "4c4b2edea79e17147cec25dc25dc0543223525c69560b93ce203a855fec9b48e",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-local-constants/LocalConstants.pdb",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/LocalConstants",
+        "tests/fixtures/portable-pdb-local-constants/README.md",
+        "tests/fixtures/portable-pdb-local-constants/reference.json",
+        "scripts/validate-pdb-local-constants.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-nullable-constants/NullableDefaults.dll",
+      "sha256": "cb45796cd60e92beb9fda8def1fc80b81685e175c6f6629fcc2798d1b355bc65",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-nullable-constants/NullableDefaults.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/NullableConstants",
+        "tests/fixtures/portable-pdb-nullable-constants/README.md",
+        "tests/fixtures/portable-pdb-nullable-constants/reference.json",
+        "scripts/validate-pdb-nullable-constants.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-nullable-constants/NullableDefaults.pdb",
+      "sha256": "eb3a07d5e30669e99a04e90967875b7ea072f185ca616b11c0211eed2e6c69eb",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-nullable-constants/NullableDefaults.pdb",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/NullableConstants",
+        "tests/fixtures/portable-pdb-nullable-constants/README.md",
+        "tests/fixtures/portable-pdb-nullable-constants/reference.json",
+        "scripts/validate-pdb-nullable-constants.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-scope-tree/ScopeTree.dll",
+      "sha256": "ab6e6f7b5d9ce33cfc8fdb57c2b795cb1f46962276ced429fcbb3d1339a07807",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-scope-tree/ScopeTree.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/ScopeTree",
+        "tests/fixtures/portable-pdb-scope-tree/README.md",
+        "tests/fixtures/portable-pdb-scope-tree/reference.json",
+        "scripts/validate-pdb-scope-tree.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-scope-tree/ScopeTree.pdb",
+      "sha256": "35450902e65b63b7c5a5a26849ef4a777b1b353ecbff274cc86572568dda174e",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-scope-tree/ScopeTree.pdb",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/ScopeTree",
+        "tests/fixtures/portable-pdb-scope-tree/README.md",
+        "tests/fixtures/portable-pdb-scope-tree/reference.json",
+        "scripts/validate-pdb-scope-tree.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-unnamed-slots/UnnamedSlots.dll",
+      "sha256": "6ca9c7f4b2e54ef06165da991e2d6c1ae1eda44ead31c15f6b05b1777b364a73",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-unnamed-slots/UnnamedSlots.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/UnnamedSlots",
+        "tests/fixtures/portable-pdb-unnamed-slots/README.md",
+        "tests/fixtures/portable-pdb-unnamed-slots/reference.json",
+        "scripts/validate-pdb-unnamed-slots.mjs",
+        "LICENSE"
+      ]
+    },
+    {
+      "path": "tests/fixtures/portable-pdb-unnamed-slots/UnnamedSlots.pdb",
+      "sha256": "c109422b2fa946695e6cdfaeeb8b5c547e7b3da14b9864cfe0cf07fb706fc037",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/1750d2c9ba48e2501d7231c5431357b98c095a28/tests/fixtures/portable-pdb-unnamed-slots/UnnamedSlots.pdb",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/symbols/interop/UnnamedSlots",
+        "tests/fixtures/portable-pdb-unnamed-slots/README.md",
+        "tests/fixtures/portable-pdb-unnamed-slots/reference.json",
+        "scripts/validate-pdb-unnamed-slots.mjs",
+        "LICENSE"
       ]
     }
   ]
