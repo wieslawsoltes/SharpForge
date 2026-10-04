@@ -22,6 +22,7 @@ export function executeCilStep(vm) {
   if (!handler) {
     throw new ManagedFault('NotSupportedException', `Opcode '${instruction.name}' is not executable`);
   }
+  vm.profiler?.instruction(frame);
   try { handler(vm, frame, instruction); }
   finally { flushFramePool(vm); }
 }

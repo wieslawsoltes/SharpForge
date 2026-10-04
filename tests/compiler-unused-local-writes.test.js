@@ -28,6 +28,10 @@ test('SF-A02-T34 the rule: what a write must store to count as a use of the loca
     conversion = (operand, extra = {}) => ({ kind: 'Conversion', operand, conversion: extra });
   assert.equal(isWriteAUse(int, null), true, 'nothing known about the value');
   assert.equal(isWriteAUse(int, { kind: 'Call', hasErrors: true }), true);
+  const outOfRange = { kind: 'Conversion', hasErrors: true, conversion: { kind: 'ExplicitNumeric' }, operand: constant };
+  assert.equal(isWriteAUse(int, outOfRange), false, '(byte)300 is CS0221 and still a constant');
+  assert.equal(isWriteAUse(int, { ...outOfRange, conversion: { kind: 'InterpolatedStringHandler' } }), true, 'any other conversion in error');
+  assert.equal(isWriteAUse(int, { ...outOfRange, operand: call }), true);
   assert.equal(isWriteAUse(int, constant), false);
   assert.equal(isWriteAUse(int, call), true);
   assert.equal(isWriteAUse(int, { kind: 'Default' }), false);

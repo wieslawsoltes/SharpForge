@@ -6,6 +6,7 @@ import {stopFramePool} from './frame-retirement.js';
 
 /** Dispose live and parked storage before dropping the VM's execution roots. */
 export function stopExecution(vm) {
+  vm.profiler?.boundary();
   if (vm.inspector) invalidateExecutionCode(vm, 'stop');
   clearStrings(vm);
   clearRuntimeTypes(vm);

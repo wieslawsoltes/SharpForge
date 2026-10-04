@@ -130,6 +130,9 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   try {
     const analysis = new SemanticAnalysis(files, {
       ...compilation.options,
+      // Retain the execution profile's builtin receiver shorthands when semantic lowering takes over.
+      // Explicit using policy or metadata references keep ordinary C# name resolution.
+      executionBuiltinAliases: !compiled && !hasReferences && options.implicitUsings === undefined,
       nullableContext: compilation.typedOptions?.nullableContext ?? compilation.options.nullableContext,
     });
     // Wrong using directives of a program that compiles are diagnosed from the directives alone.
