@@ -16,6 +16,7 @@ import { Conversions } from '../conversions/classify.js';
 import { OverloadResolver } from '../overload/resolution.js';
 import { OperatorResolver } from '../overload/operators.js';
 import { resolveBases } from '../binder/inheritance.js';
+import { checkConstructedMethod } from '../binder/constraints.js';
 import { createFeatureGate } from '../binder/feature-check.js';
 import { formatMessage, defaultSeverity, hasDiagnosticCode } from '../diagnostics/codes.js';
 import { NullableContextMap } from '../nullable/annotations.js';
@@ -44,6 +45,8 @@ export class AnalysisCore {
     const latest = this.versionOf(this.files[0]?.source.uri).number;
     this.conversions = new Conversions(this.core, { numericIntPtr: latest >= 11, firstClassSpans: latest >= 14 });
     this.overloads = new OverloadResolver(this.conversions, this.core);
+    // C# 7.3: the constraints of a generic candidate take part in overload resolution (overload/resolution.js).
+    this.overloads.violatesConstraints = method => checkConstructedMethod(method, this.core).some(violation => violation.severity !== 'warning');
     this.operators = new OperatorResolver(this.conversions, this.core, this.overloads);
     this.constructions = [];
     this.nullableMaps = new Map();
