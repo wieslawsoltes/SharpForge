@@ -1,0 +1,6479 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "be4303dc07d122812afad033cea599b1cce7b63593a297d26397f9963ae9a1f3",
+  "rows": [
+    {
+      "id": "null-full",
+      "segments": null,
+      "start": 0,
+      "length": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-zero",
+      "segments": null,
+      "start": 0,
+      "length": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-end-zero",
+      "segments": null,
+      "start": 0,
+      "length": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-prefix",
+      "segments": null,
+      "start": 0,
+      "length": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-suffix",
+      "segments": null,
+      "start": 0,
+      "length": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-middle",
+      "segments": null,
+      "start": 0,
+      "length": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-end-one",
+      "segments": null,
+      "start": 0,
+      "length": 1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-past-zero",
+      "segments": null,
+      "start": 1,
+      "length": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-negative-start",
+      "segments": null,
+      "start": -1,
+      "length": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-negative-length",
+      "segments": null,
+      "start": 0,
+      "length": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-both-negative",
+      "segments": null,
+      "start": -1,
+      "length": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-past-negative",
+      "segments": null,
+      "start": 1,
+      "length": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-too-long",
+      "segments": null,
+      "start": 0,
+      "length": 1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-minimum-start",
+      "segments": null,
+      "start": -2147483648,
+      "length": 2147483647,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-maximum-start",
+      "segments": null,
+      "start": 2147483647,
+      "length": -2147483648,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-maximum-start-zero",
+      "segments": null,
+      "start": 2147483647,
+      "length": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-maximum-length",
+      "segments": null,
+      "start": 0,
+      "length": 2147483647,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-minimum-length",
+      "segments": null,
+      "start": 0,
+      "length": -2147483648,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-both-maximum",
+      "segments": null,
+      "start": 2147483647,
+      "length": 2147483647,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-both-minimum",
+      "segments": null,
+      "start": -2147483648,
+      "length": -2147483648,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "empty-full",
+      "segments": [],
+      "start": 0,
+      "length": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-zero",
+      "segments": [],
+      "start": 0,
+      "length": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-end-zero",
+      "segments": [],
+      "start": 0,
+      "length": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-prefix",
+      "segments": [],
+      "start": 0,
+      "length": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-suffix",
+      "segments": [],
+      "start": 0,
+      "length": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-middle",
+      "segments": [],
+      "start": 0,
+      "length": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-end-one",
+      "segments": [],
+      "start": 0,
+      "length": 1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-past-zero",
+      "segments": [],
+      "start": 1,
+      "length": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-negative-start",
+      "segments": [],
+      "start": -1,
+      "length": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-negative-length",
+      "segments": [],
+      "start": 0,
+      "length": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-both-negative",
+      "segments": [],
+      "start": -1,
+      "length": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-past-negative",
+      "segments": [],
+      "start": 1,
+      "length": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-too-long",
+      "segments": [],
+      "start": 0,
+      "length": 1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-minimum-start",
+      "segments": [],
+      "start": -2147483648,
+      "length": 2147483647,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-maximum-start",
+      "segments": [],
+      "start": 2147483647,
+      "length": -2147483648,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-maximum-start-zero",
+      "segments": [],
+      "start": 2147483647,
+      "length": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-maximum-length",
+      "segments": [],
+      "start": 0,
+      "length": 2147483647,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-minimum-length",
+      "segments": [],
+      "start": 0,
+      "length": -2147483648,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-both-maximum",
+      "segments": [],
+      "start": 2147483647,
+      "length": 2147483647,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-both-minimum",
+      "segments": [],
+      "start": -2147483648,
+      "length": -2147483648,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-full",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 0,
+      "length": 1,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-zero",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 0,
+      "length": 0,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-end-zero",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 1,
+      "length": 0,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-prefix",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 0,
+      "length": 1,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-suffix",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 0,
+      "length": 1,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-middle",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 1,
+      "length": 0,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-end-one",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 1,
+      "length": 1,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-past-zero",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 2,
+      "length": 0,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-negative-start",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": -1,
+      "length": 0,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-negative-length",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 0,
+      "length": -1,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-both-negative",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": -1,
+      "length": -1,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-past-negative",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 2,
+      "length": -1,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-too-long",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 0,
+      "length": 2,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-minimum-start",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": -2147483648,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-maximum-start",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 2147483647,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-maximum-start-zero",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 2147483647,
+      "length": 0,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-maximum-length",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 0,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-minimum-length",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 0,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-both-maximum",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": 2147483647,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "single-both-minimum",
+      "segments": [
+        [
+          97
+        ]
+      ],
+      "start": -2147483648,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "flat-full",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 0,
+      "length": 5,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "flat-zero",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 0,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-end-zero",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 5,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-prefix",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 0,
+      "length": 1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 4,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "flat-suffix",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 4,
+      "length": 1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100
+        ],
+        "length": 4,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-middle",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 1,
+      "length": 3,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          101
+        ],
+        "length": 2,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-end-one",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 5,
+      "length": 1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-past-zero",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 6,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-negative-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": -1,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-negative-length",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 0,
+      "length": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-both-negative",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": -1,
+      "length": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-past-negative",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 6,
+      "length": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-too-long",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 0,
+      "length": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-minimum-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": -2147483648,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-maximum-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 2147483647,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-maximum-start-zero",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 2147483647,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-maximum-length",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 0,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-minimum-length",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 0,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-both-maximum",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": 2147483647,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-both-minimum",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "start": -2147483648,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "chunks-full",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 0,
+      "length": 8,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "chunks-zero",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 0,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-end-zero",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 8,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-prefix",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 0,
+      "length": 1,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 7,
+        "capacity": 7,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "chunks-suffix",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 7,
+      "length": 1,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-middle",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 1,
+      "length": 6,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          103
+        ],
+        "length": 2,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "chunks-end-one",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 8,
+      "length": 1,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-past-zero",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 9,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-negative-start",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": -1,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-negative-length",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 0,
+      "length": -1,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-both-negative",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": -1,
+      "length": -1,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-past-negative",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 9,
+      "length": -1,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-too-long",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 0,
+      "length": 9,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-minimum-start",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": -2147483648,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-maximum-start",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 2147483647,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-maximum-start-zero",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 2147483647,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-maximum-length",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 0,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-minimum-length",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 0,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-both-maximum",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": 2147483647,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-both-minimum",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98
+        ],
+        [
+          99,
+          100,
+          101
+        ],
+        [
+          102,
+          103
+        ]
+      ],
+      "start": -2147483648,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-full",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 0,
+      "length": 7,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "raw-zero",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 0,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-end-zero",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 7,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-prefix",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 0,
+      "length": 1,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 6,
+        "capacity": 11,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "raw-suffix",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 6,
+      "length": 1,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535
+        ],
+        "length": 6,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-middle",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 1,
+      "length": 5,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          99
+        ],
+        "length": 2,
+        "capacity": 7,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "raw-end-one",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 7,
+      "length": 1,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-past-zero",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 8,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-negative-start",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": -1,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-negative-length",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 0,
+      "length": -1,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-both-negative",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": -1,
+      "length": -1,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-past-negative",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 8,
+      "length": -1,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-too-long",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 0,
+      "length": 8,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-minimum-start",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": -2147483648,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-maximum-start",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 2147483647,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-maximum-start-zero",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 2147483647,
+      "length": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-maximum-length",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 0,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-minimum-length",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 0,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-both-maximum",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": 2147483647,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-both-minimum",
+      "segments": [
+        [
+          97,
+          0,
+          55296
+        ],
+        [
+          56320,
+          98
+        ],
+        [
+          65535,
+          99
+        ]
+      ],
+      "start": -2147483648,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          97,
+          0,
+          55296,
+          56320,
+          98,
+          65535,
+          99
+        ],
+        "length": 7,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-full",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 0,
+      "length": 6,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 7,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "pair-cuts-zero",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 0,
+      "length": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-end-zero",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 6,
+      "length": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-prefix",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 0,
+      "length": 1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 5,
+        "capacity": 7,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "pair-cuts-suffix",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 5,
+      "length": 1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360
+        ],
+        "length": 5,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-middle",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 1,
+      "length": 4,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          122
+        ],
+        "length": 2,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "pair-cuts-end-one",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 6,
+      "length": 1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-past-zero",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 7,
+      "length": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-negative-start",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": -1,
+      "length": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-negative-length",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 0,
+      "length": -1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-both-negative",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": -1,
+      "length": -1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-past-negative",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 7,
+      "length": -1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-too-long",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 0,
+      "length": 7,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-minimum-start",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": -2147483648,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-maximum-start",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 2147483647,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-maximum-start-zero",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 2147483647,
+      "length": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-maximum-length",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 0,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-minimum-length",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 0,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-both-maximum",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 2147483647,
+      "length": 2147483647,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-both-minimum",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": -2147483648,
+      "length": -2147483648,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length",
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "surrogate-cut-0-1",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 0,
+      "length": 1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 5,
+        "capacity": 7,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "surrogate-cut-1-1",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 1,
+      "length": 1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 5,
+        "capacity": 7,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "surrogate-cut-2-2",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 2,
+      "length": 2,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          56360,
+          122
+        ],
+        "length": 4,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "surrogate-cut-3-1",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 3,
+      "length": 1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          56360,
+          122
+        ],
+        "length": 5,
+        "capacity": 7,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "surrogate-cut-4-1",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 4,
+      "length": 1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          122
+        ],
+        "length": 5,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "surrogate-cut-1-4",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 1,
+      "length": 4,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          122
+        ],
+        "length": 2,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "surrogate-cut-0-2",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 0,
+      "length": 2,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 4,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "surrogate-cut-3-2",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          97,
+          55297
+        ],
+        [
+          56360,
+          122
+        ]
+      ],
+      "start": 3,
+      "length": 2,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          97,
+          122
+        ],
+        "length": 4,
+        "capacity": 7,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "many-chunks",
+      "segments": [
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ]
+      ],
+      "start": 2,
+      "length": 236,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99,
+          97,
+          98,
+          99
+        ],
+        "length": 240,
+        "capacity": 384,
+        "maxCapacity": 2147483647,
+        "chunks": 9
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          98,
+          99
+        ],
+        "length": 4,
+        "capacity": 194,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "cross-chunk-partial",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100
+        ],
+        [
+          101,
+          102,
+          103
+        ],
+        [
+          104,
+          105,
+          106,
+          107
+        ]
+      ],
+      "start": 2,
+      "length": 7,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107
+        ],
+        "length": 11,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          106,
+          107
+        ],
+        "length": 4,
+        "capacity": 10,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    }
+  ]
+}
