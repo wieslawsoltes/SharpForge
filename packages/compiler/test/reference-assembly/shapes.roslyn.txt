@@ -1,0 +1,112 @@
+assembly Shapes
+  [assembly: [System.Runtime.CompilerServices.CompilationRelaxationsAttribute((Int32)8)]]
+  [assembly: [System.Runtime.CompilerServices.RuntimeCompatibilityAttribute(WrapNonExceptionThrows = True)]]
+  [assembly: [System.Diagnostics.DebuggableAttribute((System.Diagnostics.DebuggableAttribute+DebuggingModes)2)]]
+  [assembly: [System.Runtime.Versioning.TargetFrameworkAttribute(".NETCoreApp,Version=v10.0", FrameworkDisplayName = ".NET 10.0")]]
+type Acme.Shapes.Access : System.Enum attrs=Public, Sealed
+  [[System.FlagsAttribute()]]
+  implements System.IComparable
+  implements System.IConvertible
+  implements System.IFormattable
+  implements System.ISpanFormattable
+  field Acme.Shapes.Access None attrs=Public, Static, Literal, HasDefault = 0
+  field Acme.Shapes.Access Read attrs=Public, Static, Literal, HasDefault = 1
+  field System.Int32 value__ attrs=Public, SpecialName, RTSpecialName
+  field Acme.Shapes.Access Write attrs=Public, Static, Literal, HasDefault = 2
+type Acme.Shapes.Box`1 : System.Object attrs=Public, BeforeFieldInit
+  implements System.Collections.Generic.IEnumerable`1[T]
+  implements System.Collections.IEnumerable
+  typeparam T None : System.IComparable`1[T]
+  field !T Value attrs=Public
+  method System.Collections.Generic.IEnumerator`1[T] GetEnumerator() attrs=Public, Final, Virtual, HideBySig, VtableLayoutMask impl=IL
+  method System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() attrs=Private, Final, Virtual, HideBySig, VtableLayoutMask impl=IL
+  method .ctor() attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+type Acme.Shapes.Circle : Acme.Shapes.Shape attrs=Public, Sealed, BeforeFieldInit
+  implements Acme.Shapes.IShape
+  implements System.IComparable`1[Acme.Shapes.Circle]
+  implements System.IDisposable
+  method System.Double get_Area() attrs=Public, Virtual, HideBySig, SpecialName impl=IL
+  method System.Int32 CompareTo(Acme.Shapes.Circle other) attrs=Public, Final, Virtual, HideBySig, VtableLayoutMask impl=IL
+  method .ctor() attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+  method System.Void IDisposable_Like() attrs=Private, HideBySig impl=IL
+  method System.Void Scale(System.Double factor) attrs=Public, Final, Virtual, HideBySig impl=IL
+  property System.Double Area[] get=get_Area set=
+  map Acme.Shapes.IShape.get_Area -> Acme.Shapes.Circle.get_Area
+  map Acme.Shapes.IShape.Scale -> Acme.Shapes.Circle.Scale
+  map Acme.Shapes.IShape.add_Resized -> Acme.Shapes.Shape.add_Resized
+  map Acme.Shapes.IShape.remove_Resized -> Acme.Shapes.Shape.remove_Resized
+  map System.IDisposable.Dispose -> Acme.Shapes.Shape.Dispose
+  map System.IComparable`1[Acme.Shapes.Circle].CompareTo -> Acme.Shapes.Circle.CompareTo
+type Acme.Shapes.Color : System.Enum attrs=Public, Sealed
+  implements System.IComparable
+  implements System.IConvertible
+  implements System.IFormattable
+  implements System.ISpanFormattable
+  field Acme.Shapes.Color Both attrs=Public, Static, Literal, HasDefault = 3
+  field Acme.Shapes.Color Green attrs=Public, Static, Literal, HasDefault = 2
+  field Acme.Shapes.Color Red attrs=Public, Static, Literal, HasDefault = 1
+  field System.Byte value__ attrs=Public, SpecialName, RTSpecialName
+type Acme.Shapes.Empty : System.ValueType attrs=Public, SequentialLayout, Sealed, BeforeFieldInit
+type Acme.Shapes.IShape : - attrs=Public, ClassSemanticsMask, Abstract, BeforeFieldInit
+  method System.Double get_Area() attrs=Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName impl=IL
+  method System.Void add_Resized(System.Action value) attrs=Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Void remove_Resized(System.Action value) attrs=Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Void Scale(System.Double factor) attrs=Public, Virtual, HideBySig, VtableLayoutMask, Abstract impl=IL
+  property System.Double Area[] get=get_Area set=
+  event System.Action Resized add=add_Resized remove=remove_Resized
+type Acme.Shapes.Point : System.ValueType attrs=Public, SequentialLayout, Sealed, BeforeFieldInit
+  field System.Int32 X attrs=Public
+  field System.Int32 Y attrs=Public
+  method .ctor(System.Int32 x, System.Int32 y) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+type Acme.Shapes.Program : System.Object attrs=Abstract, Sealed, BeforeFieldInit
+  method System.Void Main() attrs=Private, Static, HideBySig impl=IL
+type Acme.Shapes.Shape : System.Object attrs=Public, Abstract
+  [[System.Reflection.DefaultMemberAttribute("Item")]]
+  implements Acme.Shapes.IShape
+  implements System.IDisposable
+  field System.String <Name>k__BackingField attrs=Private
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.Int32 count attrs=FamORAssem
+  field System.String Label attrs=Public, Static, Literal, HasDefault = shape
+  field System.Action Resized attrs=Private
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.Int32 Sides attrs=Public, Static, Literal, HasDefault = 3
+  field System.String tag attrs=Private, Static, InitOnly
+  method Acme.Shapes.Shape op_Addition(Acme.Shapes.Shape a, Acme.Shapes.Shape b) attrs=Public, Static, HideBySig, SpecialName impl=IL
+  method System.Double get_Area() attrs=Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName impl=IL
+  method System.Int32 get_Item(System.Int32 i) attrs=Public, HideBySig, SpecialName impl=IL
+  method System.String get_Name() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method !T Pick<T:ReferenceTypeConstraint, DefaultConstructorConstraint:Acme.Shapes.IShape>(!T a, System.Int32& b, out System.String& c, System.Object[] rest) attrs=Public, HideBySig impl=IL
+    param c [[System.Runtime.InteropServices.OutAttribute()]]
+    param rest [[System.ParamArrayAttribute()]]
+  method .cctor() attrs=Private, Static, HideBySig, SpecialName, RTSpecialName impl=IL
+  method .ctor(System.Int32 count) attrs=Family, HideBySig, SpecialName, RTSpecialName impl=IL
+  method System.Void add_Resized(System.Action value) attrs=Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Void Dispose() attrs=Public, Final, Virtual, HideBySig, VtableLayoutMask impl=IL
+  method System.Void remove_Resized(System.Action value) attrs=Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Void Scale(System.Double factor) attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=IL
+  method System.Void set_Item(System.Int32 i, System.Int32 value) attrs=Public, HideBySig, SpecialName impl=IL
+  method System.Void set_Name(System.String value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  property System.Double Area[] get=get_Area set=
+  property System.Int32 Item[System.Int32] get=get_Item set=set_Item
+  property System.String Name[] get=get_Name set=set_Name
+  event System.Action Resized add=add_Resized remove=remove_Resized
+type Acme.Shapes.Shape+Nested`1 : System.Object attrs=NestedAssembly, BeforeFieldInit
+  typeparam U NotNullableValueTypeConstraint, DefaultConstructorConstraint : System.ValueType
+  field System.Collections.Generic.List`1[U] Items attrs=Public
+  field System.Collections.Generic.Dictionary`2[System.String,U[]] Map attrs=Public
+  field !U Value attrs=Public
+  method .ctor() attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+type Acme.Shapes.Transform : System.MulticastDelegate attrs=Public, Sealed
+  implements System.ICloneable
+  implements System.Runtime.Serialization.ISerializable
+  method System.Int32 EndInvoke(System.String& text, System.IAsyncResult result) attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=CodeTypeMask
+  method System.Int32 Invoke(System.Int32 x, System.String& text) attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=CodeTypeMask
+  method System.IAsyncResult BeginInvoke(System.Int32 x, System.String& text, System.AsyncCallback callback, System.Object object) attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=CodeTypeMask
+  method .ctor(System.Object object, System.IntPtr method) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=CodeTypeMask

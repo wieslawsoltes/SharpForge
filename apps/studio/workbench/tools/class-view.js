@@ -11,7 +11,8 @@ export function mountClassView(host, {symbolIndex, navigate, onError}) {
       if (!node?.symbol) return;
       const symbol = node.symbol;
       const bases = symbol.baseTypes ?? (symbol.baseType ? [symbol.baseType] : []);
-      const derived = symbols.filter(item => item.baseType === symbol.name || item.baseTypes?.includes(symbol.name));
+      const name = symbol.fullName ?? symbol.name;
+      const derived = symbols.filter(item => item.baseType === name || item.baseTypes?.includes(name));
       tree.details.textContent = (symbol.detail ?? symbol.name) + '\nBase types: ' + (bases.join(', ') || 'none reported') +
         '\nDerived types: ' + (derived.map(item => item.name).join(', ') || 'none reported');
     }});
@@ -28,6 +29,7 @@ export function mountClassView(host, {symbolIndex, navigate, onError}) {
   tree.toolbar.append(button(host.ownerDocument, 'Refresh', refresh));
   tree.toolbar.append(checkbox(host.ownerDocument, 'Members', members, value => { members = value; render(); }));
   tree.toolbar.append(checkbox(host.ownerDocument, 'Private members', privateMembers, value => { privateMembers = value; render(); }));
+  const unsubscribe = symbolIndex.subscribe?.(refresh);
   refresh();
-  return {refresh, dispose: () => { controller?.abort(); tree.dispose(); }};
+  return {refresh, dispose: () => { unsubscribe?.(); controller?.abort(); tree.dispose(); }};
 }

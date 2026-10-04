@@ -71,7 +71,7 @@ export class WorkbenchShell {
     if (this.document.activeElement?.closest('.sf-editor')) this.lastDocumentKind = 'code';
     else if (state.panel === 'designer' || state.panel?.startsWith('designer-')) this.lastDocumentKind = 'designer';
     const designer = this.lastDocumentKind === 'designer';
-    return {uri, offset: editor?.offset ?? 0, selectionLength: editor?.selectionLength ??
+    return {uri, workspaceEpoch: state.workspaceEpoch, offset: editor?.offset ?? 0, selectionLength: editor?.selectionLength ??
       Math.abs((editor?.input?.selectionEnd ?? 0) - (editor?.input?.selectionStart ?? 0)),
     position: editor?.sourceSnapshot?.().positionAt(editor.offset ?? 0),
     caretOffset, caretPosition: editor?.sourceSnapshot?.().positionAt(caretOffset), tabSize: editor?.options?.tabSize,
@@ -108,6 +108,15 @@ export class WorkbenchShell {
     const mark = this.metrics.start('document-switch', this.context().sessionId);
     try { return await this.options.navigate(location); }
     finally { this.metrics.end(mark, {uri: location.uri}); }
+  }
+
+  /** Open the shared lazy hierarchy for the requested URI, retaining its provider-selected project. */
+  async openCallHierarchy(location, options) {
+    const roots = await this.calls.prepare(location, options);
+    if (this.disposed) return [];
+    await this.activateTool('calls');
+    this.invalidateTool('calls');
+    return roots;
   }
 
   navigateBookmark(backwards) {
@@ -230,7 +239,7 @@ export class WorkbenchShell {
       return;
     }
     const targets = event.type === 'output' ? ['output'] : event.type === 'selection' ? ['properties', 'toolbox', 'outline'] :
-      ['problems', 'output', 'properties', 'outline', 'references', 'diagnostic-timeline', 'solution-view'];
+      ['problems', 'output', 'properties', 'outline', 'references', 'diagnostic-timeline', 'solution-view', 'object-browser', 'code-definition'];
     for (const id of targets) this.invalidateTool(id);
   }
 
@@ -318,7 +327,8 @@ export class WorkbenchShell {
     this.registeredPanels.clear();
     this.mounts.clear(); this.scheduler.dispose(); this.dialogs.dispose(); this.statusBar?.dispose(); this.announcer?.dispose();
     for (const model of [this.tasks, this.notifications, this.search, this.symbols, this.taskList, this.bookmarks,
-      this.calls, this.tests, this.timeline, this.references, this.recent, this.toolbars, this.configuration, this.explorerViews]) model.dispose?.();
+      this.calls, this.tests, this.executionCapture, this.timeline, this.references, this.recent, this.toolbars, this.configuration,
+      this.explorerViews, this.metadata]) model?.dispose?.();
     this.restoreEnvironment?.();
     this.contextKeys.dispose();
   }

@@ -12,6 +12,51 @@ lookup reads only ownership rows and names. It does not resolve type references,
 decode signatures, build virtual slots or load executable bodies. Repeated
 lookups in a module share identity; different loaded modules remain distinct.
 
+`isAbstract`, `isFinal`, `isVirtual`, `isHideBySig` and `isSpecialName` project
+individual MethodAttributes bits. `isPrivate`, `isFamilyAndAssembly`, `isAssembly`,
+`isFamily`, `isFamilyOrAssembly` and `isPublic` compare the masked access value;
+PrivateScope and the reserved access value match none of them. These predicates
+read no signature, Param row or body, and do not validate combinations of flags.
+Raw `flags` and `implementationFlags` remain unchanged.
+
+Lazy `callingConvention` projects the cached signature into Reflection's numeric
+CallingConventions: Standard=1, VarArgs=2, HasThis=32 and ExplicitThis=64. Only the
+ECMA VARARG convention maps to VarArgs; other decoder-supported conventions map
+to Standard, with the two receiver bits preserved. Generic arity is not a
+CallingConventions flag. This mirrors [CoreCLR v10.0.5 SignatureNative](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/runtimehandles.h)
+and [MethodBase attribute predicates](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Reflection/MethodBase.cs).
+It is raw header projection, not validation that a MethodDef can execute with a
+particular unmanaged or explicit-this convention. Existing signature diagnostics
+and limits apply lazily. Queries are O(1) after the existing signature decode,
+add no descriptor fields or result allocations, and remain usable through
+cooperative unloading.
+
+The new method-attribute fixture independently captures CoreCLR visibility,
+virtual/final/abstract/special-name, implementation flags and calling conventions,
+including constructors, generic methods and static/instance varargs. Authored
+metadata covers all access-mask values, each bit independently, explicit-this and
+other decoder-supported conventions, malformed headers, oversized signatures and
+unload. SDK 10.0.201/CoreCLR 10.0.5 captured 18 records; all 26 focused Method
+tests pass on Node 24.21.0. Syntax/static checks pass (3,029/3,025 modules), and
+structure reports 267 existing findings, none in CLR/changed files. Every local
+job ran serially through the limiter. Full constructor classification, MethodInfo
+ToString, GetBaseDefinition and invocation remain separate capabilities.
+
+On a shared Apple M3 Pro/darwin-arm64, cold attributes/conventions for all 18
+records measured median 52.750 µs / p95 138.792 µs; cached convention+visibility
+queries measured 0.004479 µs / p95 0.026600 µs. All 200 measured samples are
+retained in collection order with exact sources/hashes in
+`benchmarks/method-attributes-node24.json`. There is no prior equivalent API or
+speed claim. Allocation totals were not measured. These added prototype getters
+do not change existing lookup/signature paths or descriptor layouts; no existing
+path benchmarks were rerun, as agreed with the root reviewer.
+
+```sh
+node scripts/limited.js node packages/clr/tools/capture-method-attributes.mjs tests/fixtures/clr-method-attributes
+node scripts/limited.js node --test --test-concurrency=1 tests/clr-methods-*.test.js
+node scripts/limited.js node packages/clr/tools/benchmark-method-attributes.mjs
+```
+
 The lazy `signature` getter uses the public CIL decoder and caches a deeply frozen
 signature AST. A malformed blob, a non-method signature or a receiver/static flag
 mismatch produces `SFCLR005` only when the signature is requested. The original
@@ -54,11 +99,19 @@ assembly, consistent with existing collectible metadata lifetimes.
 
 The first lookup indexes MethodList ownership in O(TypeDef + MethodDef + MethodPtr)
 rows, bounded to 100,000 combined rows. The module owns all caches, and repeated
-identity/signature reads use indexed lookups. Names are bounded to 4,096
-characters; signature decoding uses the existing CIL depth/node limits. Invalid
+identity/signature reads use indexed lookups. Names are bounded to 4,096 UTF-16
+code units, with a generous 16 KiB UTF-8 ceiling checked before string decoding.
+Signature blobs are bounded to 1 MiB before defensive copying; decoding also
+uses the existing CIL depth/node limits. Invalid
 or duplicate ownership, unowned methods and invalid tokens produce `SFCLR005`;
-row/name limits produce `SFCLR007`. This synchronous metadata service introduces
+row/name/blob limits produce `SFCLR007`. This synchronous metadata service introduces
 no cancellable asynchronous operation.
+
+The heap-preflight regression reproduced both premature materializations before
+this correction. All three focused regressions pass after the guard changes,
+including non-ASCII names at the existing UTF-16 limit. Node 24.21.0 syntax/static
+checks pass (2,471/2,467 modules); the structure report has no CLR findings.
+This bounded fix does not change cached identity/signature lookup paths.
 
 The native fixture in `tests/fixtures/clr-method-definitions/Program.cs` records
 CoreCLR reflection attributes, owner tokens, signatures and raw method IL for

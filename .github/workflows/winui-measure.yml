@@ -1,0 +1,35 @@
+name: WinUI reference measurements
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: reference-oracles-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  measure:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.21.0'
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          dotnet-version: '10.0.201'
+      - name: Capture twenty fixtures in three serial native processes
+        run: node scripts/conformance/oracle/winui-measure/run.js --output artifacts/results/winui-measure/report.json
+      - name: Require a clean checkout
+        if: always()
+        run: node scripts/conformance/clean-checkout.js
+      - name: Retain native observations and exact-source provenance
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: winui-measure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/results/winui-measure/report.json
+          if-no-files-found: error
+          retention-days: 30

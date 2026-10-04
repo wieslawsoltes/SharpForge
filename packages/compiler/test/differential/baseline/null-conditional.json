@@ -1,4 +1,4 @@
 {
   "null-conditional/cs0023-cs0201-cs8978-invalid-accesses": ["diagnostics", "warnings"],
-  "null-conditional/receivers-chains-and-value-typed-results": ["diagnostics", "warnings", "bytecode", "cil"]
+  "null-conditional/receivers-chains-and-value-typed-results": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

@@ -9,3 +9,9 @@ export {executionCodeStatistics, invalidateExecutionCode} from './execution/code
 export {RuntimeEventLog, RuntimeEventName} from './execution/runtime-events.js';
 export {framePoolStatistics} from './execution/frame-pool.js';
 export {instructionProfile} from './execution/profiler.js';
+export {wasmEligibility, lowerWasmIR} from './execution/wasm/eligibility.js';
+export {exportSpeedscope} from './execution/profile-export.js';
+export {encodeWasmIR} from './execution/wasm/encoder.js';
+export {instantiateWasmIR} from './execution/wasm/compile.js';
+export {prepareWasmMethod, runWasmSlice, disposeWasmMethod} from './execution/wasm/manual-runtime.js';
+export {wasmTieringStatistics, disposeWasmTiering} from './execution/wasm/tiering.js';

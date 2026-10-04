@@ -4,7 +4,9 @@ import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
 import { MetadataMemberDefinitions } from './type-system/metadata-member-definitions.js';
 import { MetadataConstants } from './type-system/metadata-constants.js';
+import { MetadataAccessors } from './type-system/metadata-accessors.js';
 import { MetadataParameters } from './type-system/metadata-parameters.js';
+import { MetadataPropertyParameters } from './type-system/metadata-property-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
 
 function namedIdentityRow(row, reference) {
@@ -41,8 +43,12 @@ export class RuntimeModule {
   #typeDefinitions;
   #methodDefinitions;
   #fieldDefinitions;
+  #propertyDefinitions;
+  #eventDefinitions;
+  #accessors;
   #constants;
   #parameterDefinitions;
+  #propertyParameters;
   #genericParameters;
   constructor(assembly, pe) {
     this.#assembly = assembly;
@@ -155,6 +161,55 @@ export class RuntimeModule {
     this.#assembly.ensureUsable();
     this.#fieldDefinitions ??= new MetadataMemberDefinitions(this, 'field');
     return this.#fieldDefinitions.forType(typeToken);
+  }
+
+  /** Canonical Property metadata identity with lazy signature and accessor links. */
+  propertyDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#propertyDefinitions ??= new MetadataMemberDefinitions(this, 'property');
+    return this.#propertyDefinitions.get(token);
+  }
+
+  /** Frozen declared-property list through PropertyMap and optional #- PropertyPtr indirection. */
+  propertyDefinitions(typeToken) {
+    this.#assembly.ensureUsable();
+    this.#propertyDefinitions ??= new MetadataMemberDefinitions(this, 'property');
+    return this.#propertyDefinitions.forType(typeToken);
+  }
+
+  /** Frozen {getMethod, setMethod, otherMethods} using canonical methods; no visibility filtering or execution. */
+  propertyAccessors(token) {
+    this.#assembly.ensureUsable();
+    this.#accessors ??= new MetadataAccessors(this);
+    return this.#accessors.get(token);
+  }
+
+  /** Frozen index parameters projected from getter or setter Param metadata, with the Property as owning member. */
+  propertyParameters(token) {
+    this.#assembly.ensureUsable();
+    this.#propertyParameters ??= new MetadataPropertyParameters(this);
+    return this.#propertyParameters.get(token);
+  }
+
+  /** Canonical Event metadata identity; the event type is an unresolved module-relative token. */
+  eventDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#eventDefinitions ??= new MetadataMemberDefinitions(this, 'event');
+    return this.#eventDefinitions.get(token);
+  }
+
+  /** Frozen declared-event list through EventMap and optional #- EventPtr indirection. */
+  eventDefinitions(typeToken) {
+    this.#assembly.ensureUsable();
+    this.#eventDefinitions ??= new MetadataMemberDefinitions(this, 'event');
+    return this.#eventDefinitions.forType(typeToken);
+  }
+
+  /** Frozen {addMethod, removeMethod, raiseMethod, otherMethods}; no visibility filtering or invocation. */
+  eventAccessors(token) {
+    this.#assembly.ensureUsable();
+    this.#accessors ??= new MetadataAccessors(this);
+    return this.#accessors.get(token, 20);
   }
 
   /** Frozen raw Constant value for a Field/Param/Property token, or null; malformed metadata yields SFCLR005/007. */

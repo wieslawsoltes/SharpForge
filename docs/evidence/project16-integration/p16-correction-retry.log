@@ -1,0 +1,44 @@
+✔ two independent tools start and a failed third batch restores the container (1.869848ms)
+✔ container preflights duplicates, reports disposal errors and rolls back cancellation (0.367043ms)
+✔ commands preserve handler behavior and reject duplicate registrations (3.032591ms)
+✔ tools append menu items without global state or editing Studio (0.747176ms)
+✔ each mount has independent state and DOM, and failed render cleans up (0.419683ms)
+✔ automation contributions preserve the complete pre-extraction key surface (10.89415ms)
+✔ automation duplicate batches roll back and namespaces dispose cleanly (0.505032ms)
+✔ storage preserves v1 payloads, versions and quota failures (0.607045ms)
+✔ every worker message has a handler seam and unknown messages fail structurally (0.793466ms)
+✔ Studio has no command branches, direct persistence or inline automation literal (16.926123ms)
+✔ real compiler and runtime workers dispatch known requests and return structured unknown errors (746.735489ms)
+✔ startup toolbar selection changes the explicit compiler project while background work retains it (17.334578ms)
+✔ Studio routes language requests by document membership without selecting background projects (2.18242ms)
+✔ workspace replacement clears former project memberships, sessions and launch profiles (4.787116ms)
+✔ Studio language providers preserve originating versions and resolve the requested target document (2.513178ms)
+✔ workspace record metadata does not read source text and explicit reads retain the captured snapshot (2.593229ms)
+✔ partial disk saves acknowledge only written snapshots and keep edits made during I/O dirty (3.815081ms)
+✔ start new instance keeps existing applications and launches the selected profile (4.302636ms)
+✔ silent Studio builds leave large documents available without sending them to the compiler (42.979131ms)
+✔ Studio source policy admits 501 files and a 200 MiB buffer and rejects bounded overflow (0.911804ms)
+✔ launch fields preserve literal arguments and equals signs and reject invalid or duplicate environment entries (0.576108ms)
+✔ breakpoint remapping applies several ordered source changes against their captured versions (2.436032ms)
+✔ background build failure never reveals a tool or changes user intent (6.567499ms)
+✔ an explicit build reveals its errors only while the initiating navigation remains current (4.385731ms)
+✔ an explicit build cannot reveal results for a project that is no longer selected (1.361272ms)
+✔ late launch completion and stop-on-entry navigation respect a newer tool selection (4.415636ms)
+✔ a pending new-instance launch cannot replace an explicitly selected existing application (2.085624ms)
+✔ a current launch may reveal its source and application without invalidating its own ticket (1.556366ms)
+✔ faults, exits and verified-symbol source cannot override later user navigation (1.555124ms)
+✔ current active-session faults may reveal output while foreign owners and worker serials are rejected (1.835026ms)
+✔ continuing after navigation captures a new action without reviving earlier paused events (1.59898ms)
+✔ restart follows the new epoch while the previous worker identity remains unable to reveal (1.724369ms)
+✔ registered debug commands refresh follow intent; cancelled or unavailable commands do not authorize reveals (1.806543ms)
+✔ main and detached document navigation invalidate pending reveals and listeners are disposed (0.742339ms)
+✔ an explicit target starts even when the selected build project is a library (1.303855ms)
+✔ stopping a pending launch revokes its later reveal without leaving an activation callback in worker options (4.54419ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1673.837158

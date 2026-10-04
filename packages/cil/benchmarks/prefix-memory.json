@@ -1,0 +1,198 @@
+{
+  "environment": {
+    "machine": "Apple M3 Pro / Mac15,6",
+    "os": "macOS ARM64",
+    "scheduling": "Sole scheduled team validation job on a shared host. Limiter waited for an external job before this process. No uncontended-host or statistical-significance claim."
+  },
+  "method": {
+    "candidate": "8c7d0d0681f33b8b2242ad2284def276ff04b6aa",
+    "unchangedGroupingBase": "c652049fb86ba6d376daf616ec6cb2e2fec7f759",
+    "command": "node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-prefix-memory.mjs OUTPUT",
+    "warmups": 2,
+    "samples": 7,
+    "sampleOrder": "Chronological; medians/p95 derived from sorted copies. Seven observations make the reported p95 the maximum.",
+    "comparison": "Unchanged structural grouping versus new opt-in semantic validation. Not an old/new regression comparison.",
+    "memory": "heapUsed after minus before each operation; GC before each operation. Not total allocation, peak heap or RSS."
+  },
+  "node": "v24.21.0",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "results": [
+    {
+      "count": 1000,
+      "bytes": 6000,
+      "mode": "grouping",
+      "medianMs": 0.8599579999999918,
+      "p95Ms": 1.071124999999995,
+      "samples": [
+        {
+          "ms": 1.0124160000000018,
+          "heapDelta": 1063488,
+          "groups": 1000
+        },
+        {
+          "ms": 1.071124999999995,
+          "heapDelta": 1088320,
+          "groups": 1000
+        },
+        {
+          "ms": 0.8554579999999987,
+          "heapDelta": 1030840,
+          "groups": 1000
+        },
+        {
+          "ms": 0.8599579999999918,
+          "heapDelta": 1029496,
+          "groups": 1000
+        },
+        {
+          "ms": 0.8900000000000148,
+          "heapDelta": 1024720,
+          "groups": 1000
+        },
+        {
+          "ms": 0.516791999999981,
+          "heapDelta": 1124312,
+          "groups": 1000
+        },
+        {
+          "ms": 0.31870899999998414,
+          "heapDelta": 986912,
+          "groups": 1000
+        }
+      ]
+    },
+    {
+      "count": 1000,
+      "bytes": 6000,
+      "mode": "validation",
+      "medianMs": 0.944375000000008,
+      "p95Ms": 1.0583749999999839,
+      "samples": [
+        {
+          "ms": 1.0382499999999766,
+          "heapDelta": 1232808,
+          "groups": 1000
+        },
+        {
+          "ms": 1.0583749999999839,
+          "heapDelta": 1244408,
+          "groups": 1000
+        },
+        {
+          "ms": 1.0549999999999784,
+          "heapDelta": 1249312,
+          "groups": 1000
+        },
+        {
+          "ms": 0.9017920000000004,
+          "heapDelta": 1033680,
+          "groups": 1000
+        },
+        {
+          "ms": 0.9054580000000101,
+          "heapDelta": 1024840,
+          "groups": 1000
+        },
+        {
+          "ms": 0.9204159999999888,
+          "heapDelta": 1025312,
+          "groups": 1000
+        },
+        {
+          "ms": 0.944375000000008,
+          "heapDelta": 1037864,
+          "groups": 1000
+        }
+      ]
+    },
+    {
+      "count": 5000,
+      "bytes": 30000,
+      "mode": "grouping",
+      "medianMs": 2.2913330000000087,
+      "p95Ms": 3.173833000000002,
+      "samples": [
+        {
+          "ms": 1.4069159999999954,
+          "heapDelta": 3443120,
+          "groups": 5000
+        },
+        {
+          "ms": 3.1026659999999993,
+          "heapDelta": 3669560,
+          "groups": 5000
+        },
+        {
+          "ms": 2.1099170000000242,
+          "heapDelta": 3610688,
+          "groups": 5000
+        },
+        {
+          "ms": 3.0657089999999982,
+          "heapDelta": 3660248,
+          "groups": 5000
+        },
+        {
+          "ms": 2.2913330000000087,
+          "heapDelta": 3610688,
+          "groups": 5000
+        },
+        {
+          "ms": 3.173833000000002,
+          "heapDelta": 3670904,
+          "groups": 5000
+        },
+        {
+          "ms": 2.116749999999996,
+          "heapDelta": 3610688,
+          "groups": 5000
+        }
+      ]
+    },
+    {
+      "count": 5000,
+      "bytes": 30000,
+      "mode": "validation",
+      "medianMs": 2.7348340000000064,
+      "p95Ms": 3.3070419999999956,
+      "samples": [
+        {
+          "ms": 2.7348340000000064,
+          "heapDelta": 3606264,
+          "groups": 5000
+        },
+        {
+          "ms": 1.6387919999999951,
+          "heapDelta": 3441392,
+          "groups": 5000
+        },
+        {
+          "ms": 3.3070419999999956,
+          "heapDelta": 3670904,
+          "groups": 5000
+        },
+        {
+          "ms": 3.3030410000000074,
+          "heapDelta": 3671720,
+          "groups": 5000
+        },
+        {
+          "ms": 2.6345839999999896,
+          "heapDelta": 3606264,
+          "groups": 5000
+        },
+        {
+          "ms": 1.6429170000000113,
+          "heapDelta": 3439792,
+          "groups": 5000
+        },
+        {
+          "ms": 3.264499999999998,
+          "heapDelta": 3670904,
+          "groups": 5000
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "string-elements/foreach-over-a-string": ["diagnostics", "warnings", "bytecode", "cil"],
+  "string-elements/index-reads-code-units": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "string-elements/out-of-range-and-null-throw": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
+}

@@ -1,5 +1,5 @@
 {
-  "indexer-name/constant-name": ["diagnostics", "warnings", "bytecode", "cil"],
+  "indexer-name/constant-name": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "indexer-name/cs0102-name-conflicts": ["diagnostics", "warnings"],
   "indexer-name/cs0415-cs0633-invalid-uses": ["diagnostics", "warnings"],
   "indexer-name/cs0571-accessor-by-name": ["diagnostics", "warnings"],
