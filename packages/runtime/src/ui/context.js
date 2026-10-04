@@ -2,7 +2,7 @@ import {UIExtensionRegistry, ValueSource, UnsetValue, registerBuiltInAttachedPro
   registerPropertyAdapters, registerObjectModelAdapters, initializeBindingContext, installDefaultTemplateCatalog,
   initializeItemsContext, initializeContentPresentation, ItemContainerGenerator, UIConstructionRoots} from '@sharpforge/winui-properties';
 import {registerControlFamilyAdapters, materializeDefaultControlStyle,
-  getControlFamilyModel, createLayoutTemplateServices} from '@sharpforge/winui-controls';
+  getControlFamilyModel, createLayoutTemplateServices, registerLayoutAdapters, registerAutomationMemberAdapters} from '@sharpforge/winui-controls';
 import {registerRenderingAdapters, registerCompositionAdapters, materializeRenderingResource,
   syncRenderingModelProperty, materializeRenderingModelDefaults, createRenderingBrushConnections} from '@sharpforge/rendering';
 import {canonicalType, frameworkType, frameworkAssignable, propertiesFor, types, contracts, AnimationClock, XAML} from '@sharpforge/framework';
@@ -10,6 +10,9 @@ import {ManagedFault, isReference} from '../heap.js';
 import {ManagedPropertyServices} from './dependency-properties.js';
 import {ManagedUIModelState} from './model-state.js';
 import {invokeManagedCallback} from './callbacks.js';
+import {createManagedLayoutServices} from './layout-services.js';
+import {createManagedAutomationServices} from './automation-services.js';
+import {createManagedDragServices} from './drag-services.js';
 import {registerManagedPropertyAdapters} from './property-adapters.js';
 import {managedTypeName, managedPropertyType} from './property-values.js';
 import {runtimeTypeObject} from '../execution/tokens.js';
@@ -80,6 +83,9 @@ export class ManagedUIContext {
       createGenerator: options => new ItemContainerGenerator({adapter: this.itemContainerAdapter, ...options})
     });
     initializeContentPresentation(this);
+    this.services.layout ??= createManagedLayoutServices(this);
+    registerLayoutAdapters(this.registry);
+    registerAutomationMemberAdapters(this.registry);
     installDefaultTemplateCatalog(this, materializeDefaultControlStyle);
     this.brushConnections = createRenderingBrushConnections(this);
     this.valueDependencies = createManagedValueDependencies(this);
@@ -97,6 +103,8 @@ export class ManagedUIContext {
       return this.work.enqueue(() => this.emit(owner, 'Draw'), [owner]);
     };
     initializeManagedApplicationServices(this);
+    this.services.drag ??= createManagedDragServices(this);
+    this.services.automation ??= createManagedAutomationServices(this);
     this.removeCollectionObserver = observeHeapCollections(platform.heap, () => this.prune());
   }
 
