@@ -118,13 +118,23 @@ try {
   writeFileSync(join(imagesDirectory, 'GenericInstantiationOracle.runtimeconfig.json'),
     JSON.stringify(createRuntimeConfig({ version: pin.runtime, rollForward: 'Disable' }), null, 2) + '\n');
   const observed = JSON.parse(run('native-observer', [observerPath, imagesDirectory]));
-  assert.equal(observed.schemaVersion, 1);
+  assert.equal(observed.schemaVersion, 2);
   assert.equal(observed.runtime, pin.runtime);
   assert.equal(observed.architecture, process.arch === 'ia32' ? 'x86' : process.arch);
   const cases = new Map(observed.cases.map(item => [item.id, item]));
   assert.equal(cases.size, observed.cases.length, 'Native case IDs must be unique');
   assert.equal(observed.cases.length, 101, 'The complete native case matrix must be present');
   assert.equal(observed.lifetime.reference.cases.length, 7, 'The complete lifetime case matrix must be present');
+  for (const identity of observed.identities) {
+    const unavailable = [identity.left, identity.right].filter(id => {
+      assert.ok(cases.has(id), 'Identity endpoint must be an observed case');
+      return !cases.get(id).result;
+    });
+    assert.deepEqual(identity.unavailable, unavailable);
+    assert.equal(identity.status, unavailable.length ? 'unavailable' : 'observed');
+    if (unavailable.length) assert.equal(identity.same, null, 'Unavailable identity is not a ReferenceEquals result');
+    else assert.equal(typeof identity.same, 'boolean');
+  }
   assert.ok(Object.hasOwn(cases.get('null-arguments').request, 'arguments'), 'Explicit null arguments must survive JSON serialization');
   assert.equal(cases.get('null-arguments').request.arguments, null);
   assert.equal(Object.hasOwn(cases.get('scope-no-environment').request, 'typeArguments'), false);

@@ -37,7 +37,8 @@ internal static class Program
             assemblies.Add(image.id, assembly);
         }
         var cases = new CaseObservations(types);
-        var matrix = new CaseMatrix(types, cases);
+        var definitions = CaseMatrix.DefinitionTokens(fixturePath);
+        var matrix = new CaseMatrix(types, cases, typeof(Fixture.Box<>).Assembly, definitions);
         matrix.Definitions();
         matrix.Graphs();
         matrix.Elements();
@@ -54,7 +55,7 @@ internal static class Program
         var lifetime = LifetimeObservations.Capture(types, fixturePath);
         Console.WriteLine(JsonSerializer.Serialize(new
         {
-            schemaVersion = 1,
+            schemaVersion = 2,
             runtime = Environment.Version.ToString(),
             framework = RuntimeInformation.FrameworkDescription,
             architecture = RuntimeInformation.ProcessArchitecture.ToString().ToLowerInvariant(),
@@ -62,7 +63,7 @@ internal static class Program
             images,
             tokens = new
             {
-                definitions = CaseMatrix.DefinitionTokens(),
+                definitions,
                 methods = new
                 {
                     scope = typeof(Fixture.MethodOwner<>).GetMethod("M")!.MetadataToken,
@@ -77,4 +78,3 @@ internal static class Program
         }, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull }));
     }
 }
-

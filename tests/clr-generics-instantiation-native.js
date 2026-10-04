@@ -15,7 +15,7 @@ const descriptorSpecifications = Object.freeze({
 
 export async function readNativeInstantiation() {
   const native = JSON.parse(await readFile(new URL('native-instantiation.json', directory), 'utf8'));
-  assert.equal(native.schemaVersion, 1);
+  assert.equal(native.schemaVersion, 2);
   assert.equal(native.sdk, '10.0.201');
   assert.equal(native.runtime, '10.0.5');
   assert.equal(native.referencePack, '10.0.5');
@@ -147,10 +147,13 @@ export class NativeInstantiationReplay {
     if (request.op === 'instantiate') value = await types.instantiate(await this.materialize(request.definition), await this.arguments(request.arguments));
     else if (request.op === 'resolve') value = await types.load(await this.module(request.image, request.context), request.token, await this.scope(request));
     else if (request.op === 'element') value = await this.materialize({ ...request, kind: request.kind });
-    else if (request.op === 'baseArgument') value = this.values.get(request.of).baseType.genericArguments[request.index];
-    else if (request.op === 'interfaceArgument') {
+    else if (request.op === 'baseArgument') {
+      const source = request.source ? await this.materialize(request.source) : this.values.get(request.of);
+      value = source.baseType.genericArguments[request.index];
+    } else if (request.op === 'interfaceArgument') {
       const definition = await this.materialize(request.definition);
-      value = this.values.get(request.of).interfaces.find(contract => contract.genericDefinition === definition)?.genericArguments[request.index];
+      const source = request.source ? await this.materialize(request.source) : this.values.get(request.of);
+      value = source.interfaces.find(contract => contract.genericDefinition === definition)?.genericArguments[request.index];
     } else if (request.op === 'retained') {
       for (const id of ['a', 'b']) this.context(id).unload();
       value = this.values.get(request.of);

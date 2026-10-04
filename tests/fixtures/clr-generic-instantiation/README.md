@@ -1,8 +1,11 @@
 # CLR generic instantiation: native reference preparation
 
-**Status: source preparation only. No native build, capture, comparison test or
-benchmark has been run for this fixture.** The reference JSON and DLLs must come
-from the approved native capture; do not create substitute expected values.
+**Status: the first native attempt compiled the fixture and observer, then
+failed before producing reference JSON when an eager `typeof(Node<>)` loaded
+an expanding recursive generic definition. The revised observer is prepared
+for a separate authorized capture. No successful comparison is claimed.**
+The reference JSON and DLLs must come from the approved native capture;
+do not create substitute expected values.
 A reference comparison must fail when the required JSON, image or source hash
 is absent or stale. It must never skip because the fixture is missing.
 
@@ -54,22 +57,36 @@ Review the saved evidence before copying qualified reference files into this
 directory. A failed run does not produce a replacement
 `native-instantiation.json`.
 
-## Reference schema, version 1
+## Reference schema, version 2
 
 `images[].file` is a basename relative to the fixture directory.
 `sources[].path` is relative to the repository root. SHA-256 values cover the
 exact bytes; the replay must verify both image and source hashes.
 
 `tokens.definitions` and `tokens.methods` identify declarations in
-`Fixture.dll`. Each SRM image has its own `specifications` and
+`Fixture.dll`. The TypeDef inventory comes directly from SRM metadata,
+including nested ownership; inventory does not load the represented types.
+Each SRM image has its own `specifications` and
 `definitions` maps. `signatures[].rows` preserves each raw TypeSpec blob and
 its independent SRM decoding, or the SRM error for malformed bytes.
 
 Each `cases[]` entry has an `id`, a replay `request`, an observed `result`
 or `error`, and an explicit `comparison` scope. Errors preserve native
 managed exception type and HRESULT; they are not fabricated SharpForge
-diagnostics. `identities[].left/right` name case IDs and `same` is the result
-of actual `ReferenceEquals`.
+diagnostics. `identities[].left/right` name case IDs. An identity with
+`status: "observed"` has a boolean `same` from actual `ReferenceEquals` and
+an empty `unavailable` array. If a named operation rejected, the identity has
+`status: "unavailable"`, explicit `same: null`, and the unavailable case IDs.
+This is an unavailable observation, not a false equality result or a parity
+success. The strict replay still requires every rejecting operation to fail;
+a product acceptance cannot be hidden by an unavailable identity.
+
+Potentially invalid recursive definitions use symbolic token shapes. Their
+resolution, construction and graph requests execute inside the recorded
+operation, so a native type-load rejection cannot abort metadata inventory.
+Base/interface argument requests can supply an independent `source` shape
+instead of relying on a prior successful `of` result. Descriptor serialization
+and other observer defects remain outside the operation catch and fail capture.
 
 Type shapes are structural:
 
@@ -108,7 +125,7 @@ entry are separate explicit native rejection cases.
 | --- | --- |
 | Tuple identity | Repeated construction, C# `typeof`, two consumer assemblies, reordered arguments, own-parameter normalization |
 | Open types | Open/partial/closed flags; equal parameter names with different owners |
-| Graphs | Substituted base, diamond interfaces, argument reordering and finite self-referential Node shapes |
+| Graphs | Substituted base, diamond interfaces, argument reordering and independently observed expanding recursive Node requests |
 | Nesting | Outer/inner argument order, inherited outer arity, open declaring definition, zero-row detached inner, arity without a backtick suffix |
 | Scoped signatures | VAR/MVAR, swapped environments, foreign parameters, nested arrays, missing and undersized environments |
 | Element types | Vectors, rank-one nonvectors, matrices, jagged arrays, pointer and byref descriptors |
@@ -140,9 +157,14 @@ invocation or general reflected-member substitution.
 constraint case. The product deliberately rejects constrained target
 definitions until #2463; casts/assignability belong to #2464.
 
-The Node descriptor only expands the requested base/interface graph. Shapes
-of argument types do not recursively expand their inheritance, so recursive
-generic templates remain finite.
+The unchanged Node fixture declares `Node<T> : Box<Node<T>>,
+IContract<Node<Node<T>>>`. Its nested self-reference is an expanding generic
+inheritance dependency; the first native attempt rejected it.
+[ECMA-335 II.9.2](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf)
+requires a finite instantiation closure, beyond finite descriptor printing.
+The revised observer records actual rejection or acceptance for all Node
+requests without predicting the outcome. Successful simpler self references
+must be qualified separately from this expanding shape.
 
 `lifetime.reference` contains deterministic identity/descriptor observations
 and counts synchronous Unloading events. It retains handles while observing

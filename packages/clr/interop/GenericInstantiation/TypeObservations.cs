@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace GenericInstantiationOracle;
 
@@ -82,7 +83,8 @@ internal sealed class TypeObservations
 
 internal sealed record NativeError(string managedType, int hresult);
 internal sealed record NativeCase(string id, object request, object? result, NativeError? error, string comparison);
-internal sealed record IdentityObservation(string left, string right, bool same);
+internal sealed record IdentityObservation(string left, string right, string status,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)] bool? same, string[] unavailable);
 internal sealed record NativeScope(Type[]? TypeArguments = null, Type[]? MethodArguments = null, string Comparison = "parity");
 
 internal sealed class CaseObservations(TypeObservations types)
@@ -130,8 +132,14 @@ internal sealed class CaseObservations(TypeObservations types)
         Cases.Add(new NativeCase(id, request, types.Describe(value), null, "native-compatibility"));
     }
 
-    public void Same(string left, string right) =>
-        Identities.Add(new IdentityObservation(left, right, ReferenceEquals(values[left], values[right])));
+    public void Same(string left, string right)
+    {
+        if (!Cases.Any(item => item.id == left) || !Cases.Any(item => item.id == right))
+            throw new InvalidOperationException("An identity endpoint is absent from the observation matrix.");
+        var missing = new[] { left, right }.Where(id => !values.ContainsKey(id)).ToArray();
+        Identities.Add(new IdentityObservation(left, right, missing.Length == 0 ? "observed" : "unavailable",
+            missing.Length == 0 ? ReferenceEquals(values[left], values[right]) : null, missing));
+    }
 
     public void Instantiate(string id, Type definition, Type[] arguments, string comparison = "parity") =>
         Add(id, new { op = "instantiate", definition = types.Shape(definition),

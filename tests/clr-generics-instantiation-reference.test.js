@@ -11,6 +11,27 @@ const functionObservations = Object.freeze({
   'managedFunction-resolved': 'function-closed', 'nativeFunction-resolved': 'function-cdecl', 'nestedFunction-resolved': 'function-nested',
 });
 
+function compareIdentity(cases, identity, replay) {
+  const endpoints = [identity.left, identity.right];
+  for (const id of endpoints) assert.ok(cases.has(id), `Native identity endpoint ${id} must exist`);
+  const unavailable = endpoints.filter(id => !cases.get(id).result);
+  assert.deepEqual(identity.unavailable, unavailable);
+  if (unavailable.length) {
+    assert.equal(identity.status, 'unavailable');
+    assert.equal(identity.same, null, 'A failed native operation cannot supply a ReferenceEquals fact');
+    for (const id of unavailable) {
+      assert.ok(cases.get(id).error, `${id}: native rejection must be retained`);
+      assert.equal(replay.values.has(id), false, `${id}: product acceptance cannot hide behind an unavailable identity`);
+    }
+    return 'unavailable';
+  }
+  assert.equal(identity.status, 'observed');
+  assert.equal(typeof identity.same, 'boolean');
+  assert.ok(endpoints.every(id => replay.values.has(id)), 'Each observed identity endpoint must be replayed');
+  assert.equal(replay.values.get(identity.left) === replay.values.get(identity.right), identity.same, endpoints.join(' and '));
+  return 'observed';
+}
+
 async function replayCase(replay, native, item) {
   if (item.comparison === 'constraint-unsupported-2463') {
     await assert.rejects(replay.run(item), fails(LoadErrorCode.UnsupportedFeature), item.id);
@@ -58,22 +79,20 @@ test('CLR generic instantiation replays every pinned native identity, scope and 
   assert.equal(new Set(native.cases.map(item => item.id)).size, 101);
   const replay = new NativeInstantiationReplay(native, images);
   const comparisons = new Map();
+  const identities = { observed: 0, unavailable: 0 };
   for (const item of native.cases) {
     const comparison = await replayCase(replay, native, item);
     comparisons.set(comparison, (comparisons.get(comparison) ?? 0) + 1);
   }
-  for (const identity of native.identities) {
-    assert.ok(replay.values.has(identity.left) && replay.values.has(identity.right), 'Each native identity endpoint must be replayed');
-    assert.equal(replay.values.get(identity.left) === replay.values.get(identity.right), identity.same,
-      `${identity.left} and ${identity.right}`);
-  }
+  const cases = new Map(native.cases.map(item => [item.id, item]));
+  for (const identity of native.identities) identities[compareIdentity(cases, identity, replay)]++;
   assert.equal(comparisons.get('constraint-unsupported-2463'), 2);
   assert.equal(comparisons.get('explicit-TypeSpec-byref-context-boundary'), 1);
   assert.ok(comparisons.get('fixture-type-graph') > 0);
   assert.ok(comparisons.get('host-intrinsic-shape') > 0);
   await replay.assertNoBodies();
   context.diagnostic(JSON.stringify({ sdk: native.sdk, runtime: native.runtime, cases: native.cases.length,
-    identities: native.identities.length, comparisons: Object.fromEntries(comparisons),
+    identities, comparisons: Object.fromEntries(comparisons),
     omittedReflectionSurfaces: ['BCL assembly/interface graph', 'fullName/AQN', 'function-pointer reflection flags and named conventions'] }));
 });
 
@@ -120,9 +139,8 @@ test('CLR native collectible generic cases preserve defining ownership and retai
     assert.ok(item.result);
     compareNativeType(replay, await replay.run(item), item.result, item.id);
   }
-  for (const identity of reference.identities) {
-    assert.equal(replay.values.get(identity.left) === replay.values.get(identity.right), identity.same, identity.left);
-  }
+  const cases = new Map(reference.cases.map(item => [item.id, item]));
+  for (const identity of reference.identities) assert.equal(compareIdentity(cases, identity, replay), 'observed');
   assert.equal(replay.unloadEvents.get('a'), reference.firstUnloadEvents);
   assert.equal(replay.unloadEvents.get('b'), reference.secondUnloadEvents);
   assert.equal(reference.firstUnloadEvents, 1);

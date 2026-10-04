@@ -1,11 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
+using System.Reflection.Metadata.Ecma335;
+using System.Reflection.PortableExecutable;
 
 namespace GenericInstantiationOracle;
 
-internal sealed class CaseMatrix(TypeObservations types, CaseObservations observations)
+internal sealed class CaseMatrix(TypeObservations types, CaseObservations observations,
+    Assembly fixtureAssembly, IReadOnlyDictionary<string, int> definitionTokens)
 {
     private static readonly Type Integer = typeof(int);
     private static readonly Type Text = typeof(string);
@@ -14,23 +19,45 @@ internal sealed class CaseMatrix(TypeObservations types, CaseObservations observ
     private static readonly Type Other = typeof(Fixture.Other<>);
     private static readonly Type MethodOwner = typeof(Fixture.MethodOwner<>);
 
-    public static Dictionary<string, int> DefinitionTokens() => new(StringComparer.Ordinal)
+    public static Dictionary<string, int> DefinitionTokens(string fixturePath)
     {
-        ["box"] = Box.MetadataToken, ["pair"] = Pair.MetadataToken, ["other"] = Other.MetadataToken,
-        ["cell"] = typeof(Fixture.Cell<>).MetadataToken, ["variant"] = typeof(Fixture.IVariant<>).MetadataToken,
-        ["derived"] = typeof(Fixture.Derived<>).MetadataToken, ["reorder"] = typeof(Fixture.Reorder<,>).MetadataToken,
-        ["node"] = typeof(Fixture.Node<>).MetadataToken, ["outer"] = typeof(Fixture.Outer<>).MetadataToken,
-        ["inner"] = typeof(Fixture.Outer<>.Inner<>).MetadataToken,
-        ["inheritedInner"] = typeof(Fixture.Outer<>.NonGenericInner).MetadataToken,
-        ["constrained"] = typeof(Fixture.Constrained<>).MetadataToken, ["methodOwner"] = MethodOwner.MetadataToken,
-        ["contract"] = typeof(Fixture.IContract<>).MetadataToken,
-        ["left"] = typeof(Fixture.ILeft<>).MetadataToken, ["right"] = typeof(Fixture.IRight<>).MetadataToken
-    };
+        var names = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["box"] = "Fixture.Box`1", ["pair"] = "Fixture.Pair`2", ["other"] = "Fixture.Other`1",
+            ["cell"] = "Fixture.Cell`1", ["variant"] = "Fixture.IVariant`1", ["derived"] = "Fixture.Derived`1",
+            ["reorder"] = "Fixture.Reorder`2", ["node"] = "Fixture.Node`1", ["outer"] = "Fixture.Outer`1",
+            ["inner"] = "Fixture.Outer`1+Inner`1", ["inheritedInner"] = "Fixture.Outer`1+NonGenericInner",
+            ["constrained"] = "Fixture.Constrained`1", ["methodOwner"] = "Fixture.MethodOwner`1",
+            ["contract"] = "Fixture.IContract`1", ["left"] = "Fixture.ILeft`1", ["right"] = "Fixture.IRight`1"
+        };
+        using var stream = File.OpenRead(fixturePath);
+        using var pe = new PEReader(stream);
+        var metadata = pe.GetMetadataReader();
+        var tokens = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (var handle in metadata.TypeDefinitions)
+            tokens.Add(DefinitionName(metadata, handle), MetadataTokens.GetToken(handle));
+        return names.ToDictionary(item => item.Key, item => tokens[item.Value], StringComparer.Ordinal);
+    }
+
+    private static string DefinitionName(MetadataReader metadata, TypeDefinitionHandle handle, int depth = 0)
+    {
+        if (depth > 64) throw new InvalidOperationException("Fixture nesting depth exceeds the observer bound.");
+        var definition = metadata.GetTypeDefinition(handle);
+        var name = metadata.GetString(definition.Name);
+        var parent = definition.GetDeclaringType();
+        if (!parent.IsNil) return DefinitionName(metadata, parent, depth + 1) + "+" + name;
+        var space = metadata.GetString(definition.Namespace);
+        return space.Length == 0 ? name : space + "." + name;
+    }
+
+    private object DefinitionShape(string id) => new { kind = "definition", image = "fixture", context = "default", token = definitionTokens[id] };
+    private Type ResolveDefinition(string id) => fixtureAssembly.ManifestModule.ResolveType(definitionTokens[id]);
 
     public void Definitions()
     {
-        foreach (var (id, token) in DefinitionTokens())
-            observations.Resolve("definition-" + id, Box.Assembly, "fixture", token);
+        foreach (var (id, token) in definitionTokens)
+            observations.Compatibility("definition-" + id, new { op = "resolve", image = "fixture", token },
+                () => fixtureAssembly.ManifestModule.ResolveType(token));
         observations.Instantiate("box-own-parameters", Box, Box.GetGenericArguments());
         observations.Same("definition-box", "box-own-parameters");
         observations.Instantiate("box-integer", Box, [Integer]);
@@ -54,14 +81,19 @@ internal sealed class CaseMatrix(TypeObservations types, CaseObservations observ
     {
         observations.Instantiate("derived-integer", typeof(Fixture.Derived<>), [Integer]);
         observations.Instantiate("reorder-integer-string", typeof(Fixture.Reorder<,>), [Integer, Text]);
-        observations.Instantiate("node-integer", typeof(Fixture.Node<>), [Integer]);
-        observations.Instantiate("node-node-integer", typeof(Fixture.Node<>), [typeof(Fixture.Node<int>)]);
-        observations.Add("node-base-argument", new { op = "baseArgument", of = "node-integer", index = 0 },
-            () => typeof(Fixture.Node<int>).BaseType!.GetGenericArguments()[0]);
+        var nodeDefinition = DefinitionShape("node");
+        var nodeInteger = new { kind = "generic", definition = nodeDefinition, arguments = new[] { types.Shape(Integer) } };
+        observations.Compatibility("node-integer", new { op = "instantiate", definition = nodeDefinition,
+            arguments = new[] { types.Shape(Integer) } }, () => ResolveDefinition("node").MakeGenericType(Integer));
+        observations.Compatibility("node-node-integer", new { op = "instantiate", definition = nodeDefinition,
+            arguments = new object[] { nodeInteger } },
+            () => ResolveDefinition("node").MakeGenericType(ResolveDefinition("node").MakeGenericType(Integer)));
+        observations.Compatibility("node-base-argument", new { op = "baseArgument", source = nodeInteger, index = 0 },
+            () => ResolveDefinition("node").MakeGenericType(Integer).BaseType!.GetGenericArguments()[0]);
         observations.Same("node-integer", "node-base-argument");
-        observations.Add("node-contract-argument", new { op = "interfaceArgument", of = "node-integer",
+        observations.Compatibility("node-contract-argument", new { op = "interfaceArgument", source = nodeInteger,
             definition = types.Shape(typeof(Fixture.IContract<>)), index = 0 },
-            () => typeof(Fixture.Node<int>).GetInterfaces().Single().GetGenericArguments()[0]);
+            () => ResolveDefinition("node").MakeGenericType(Integer).GetInterfaces().Single().GetGenericArguments()[0]);
         observations.Same("node-node-integer", "node-contract-argument");
         observations.Instantiate("nested-closed", typeof(Fixture.Outer<>.Inner<>), [Integer, Text]);
         observations.Instantiate("nested-partial", typeof(Fixture.Outer<>.Inner<>), [Integer, Other.GetGenericArguments()[0]]);
