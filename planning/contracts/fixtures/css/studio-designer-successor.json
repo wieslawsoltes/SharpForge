@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "migrationSourceRevision": "34a28b52028b1d06839a35c082e56b0962d7e6e2",
+  "upstreamRevision": "7bd1239a773de5eb5c904172aa1371f3fc196789",
+  "authoringSourceRevision": "548b28993aec0ae25cc230995f0321e59357cb34",
+  "reason": "A18 deliberately extracts retired fragments and replaces chrome geometry. The original migration receipt remains unchanged; these exact successor declarations are covered by A18 geometry and theme cases.",
+  "qualification": "Prepared from source bytes only; root owns the combined execution gate.",
+  "files": [
+    {
+      "file": "apps/studio/styles/designer-light.css",
+      "predecessor": {
+        "file": "apps/studio/styles/designer-light.css",
+        "originalSha256": "8b385cc3826d8df72f0364acfc6cc8623f74129ed459bf356f064af66ef91bb3",
+        "paint": {
+          "count": 22,
+          "sha256": "d42fc83bc8f1d8af2636de32526f2cb3ca5613f73e9897918b851d9d718a239b"
+        },
+        "other": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      },
+      "paint": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "other": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    {
+      "file": "apps/studio/styles/designer-sync.css",
+      "predecessor": {
+        "file": "apps/studio/styles/designer-sync.css",
+        "originalSha256": "cca6e0db430f3113628309929f07309a81f499b4189513e4c4c6a5581bbfbd34",
+        "paint": {
+          "count": 110,
+          "sha256": "06d0b9657d25c5348cfffbb8a2c11b3c67e2673aa0c1b69a5e9b309fc21b362e"
+        },
+        "other": {
+          "count": 157,
+          "sha256": "9f7530c3e528d4b9820226018adf0bfb3af7ca00357f0d5e2d2bf782f94c3189"
+        }
+      },
+      "paint": {
+        "count": 110,
+        "sha256": "6ecbcfa9e9ad61ab2b2151f4f9f10bb9b732cefe6ba3ebdb0ab1e61df6e02bec"
+      },
+      "other": {
+        "count": 162,
+        "sha256": "3a09d5bbf4c2e4ae6045c431b9680ef142751c866a70beda2385e0a16fb545c2"
+      }
+    },
+    {
+      "file": "apps/studio/styles/designer.css",
+      "predecessor": {
+        "file": "apps/studio/styles/designer.css",
+        "originalSha256": "e613bfab0b4ec664defafe0795380d8ccc91c45954144aa998816d30ccdaef93",
+        "paint": {
+          "count": 76,
+          "sha256": "a19cb1e30e1fcac79fb0a2526ba1b2b0c1b2680e5a1a1c910effb9b3f3638dbe"
+        },
+        "other": {
+          "count": 255,
+          "sha256": "9f05f75e01709f04eae282672a7c7fd2bd1c9e4d48e9fcca3d6dc4eff2813aba"
+        }
+      },
+      "paint": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "other": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+.design-resource-scaffold-hidden {
+  display: none !important;
+}
+.design-resource-visual-disabled > :not(.design-resource-unavailable) {
+  display: none !important;
+}
+.design-resource-unavailable {
+  padding: 12px;
+  color: var(--design-foreground);
+}
+.design-resource-unavailable p {
+  color: var(--design-muted);
+  line-height: 1.5;
+}
+.design-resource-gallery [hidden],
+.design-command-bar [hidden] {
+  display: none !important;
+}
+.design-resource-gallery {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+  padding: 16px;
+  color: var(--design-foreground);
+  background: var(--design-background);
+}
+.design-resource-gallery[hidden] {
+  display: none;
+}
+.design-resource-gallery h2 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+.design-resource-gallery p {
+  color: var(--design-muted);
+  font-size: 12px;
+}
+.design-resource-gallery-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+.design-resource-gallery article {
+  overflow: hidden;
+  border: 1px solid var(--design-line);
+  background: var(--design-panel);
+}
+.design-resource-gallery button {
+  padding: 6px 10px;
+  min-height: 30px;
+  border: 1px solid var(--design-line);
+  color: var(--design-foreground);
+  background: var(--design-input);
+  cursor: pointer;
+}
+.design-resource-gallery button:focus-visible {
+  outline: 2px solid var(--design-focus);
+}
+.design-resource-gallery button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+.design-resource-gallery-preview {
+  position: relative;
+  width: 240px;
+  height: 150px;
+  pointer-events: none;
+}
+.design-resource-scalar-preview {
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.design-resource-gallery-preview[data-contrast="high"] {
+  --sf-app-bg: var(--design-preview-contrast-background);
+  --sf-app-fg: var(--design-preview-contrast-foreground);
+  --sf-app-input: var(--design-preview-contrast-background);
+  --sf-app-line: var(--design-preview-contrast-foreground);
+  --sf-app-accent: var(--design-preview-contrast-accent);
+}
+.design-resource-gallery-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.design-resource-gallery nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}

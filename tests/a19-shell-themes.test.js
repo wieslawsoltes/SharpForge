@@ -64,21 +64,31 @@ test('all Studio styles pass the color gate and extracted paint and token styles
   assert(order.get('apps/studio/themes.css') < order.get('apps/studio/workbench/theme-tokens.css'));
 });
 
-test('the migration preserves every legacy dark/light paint value, geometry declaration and ordered override', async () => {
+test('the migration and reviewed A18 successors preserve their paint, geometry and ordered override receipts', async () => {
   const proof = JSON.parse(await read('planning/contracts/fixtures/css/studio-theme-migration.json'));
+  const successor = JSON.parse(await read('planning/contracts/fixtures/css/studio-designer-successor.json'));
   assert.match(proof.sourceRevision, /^[\da-f]{40}$/);
+  assert.equal(successor.migrationSourceRevision, proof.sourceRevision);
+  assert.deepEqual(successor.files.map(source => source.file).sort(), [
+    'apps/studio/styles/designer-light.css',
+    'apps/studio/styles/designer-sync.css',
+    'apps/studio/styles/designer.css'
+  ]);
   const palette = literalThemePalette(await Promise.all(migrationStyles.map(read)));
   assert.equal(palette.size, proof.tokenCount);
   assert.equal(fingerprintDeclarations([...palette.keys()].sort()), proof.tokenNamesSha256);
   for (const source of proof.files) {
+    const replacement = successor.files.find(value => value.file === source.file);
+    if (replacement) assert.deepEqual(replacement.predecessor, source, `${source.file}: preserved migration evidence`);
+    const expected = replacement ?? source;
     let records = cssDeclarations(await read(source.file));
     if (source.file === 'apps/studio/studio.css') {
       for (const style of proof.extractedStyles) records.push(...cssDeclarations(await read(style.source)));
     }
     const groups = normalizedDeclarations(records, {palette, declared: proof.declaredTokens, animations: proof.extractedAnimations});
     for (const group of ['paint', 'other']) {
-      assert.equal(groups[group].length, source[group].count, `${source.file} ${group} count`);
-      assert.equal(fingerprintDeclarations(groups[group]), source[group].sha256, `${source.file} ${group} declarations`);
+      assert.equal(groups[group].length, expected[group].count, `${source.file} ${group} count`);
+      assert.equal(fingerprintDeclarations(groups[group]), expected[group].sha256, `${source.file} ${group} declarations`);
     }
   }
 });
