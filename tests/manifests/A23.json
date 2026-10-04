@@ -21,7 +21,8 @@
     "tests/a23-source-emission-model.test.js",
     "tests/a23-project-reference-emission.test.js",
     "tests/a23-project-reference-binding.test.js",
-    "tests/a23-project-runtime-types.test.js"
+    "tests/a23-project-runtime-types.test.js",
+    "tests/a23-project-runtime.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"

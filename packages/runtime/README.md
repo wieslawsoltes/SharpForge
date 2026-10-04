@@ -92,3 +92,5 @@ The focused source, emitted CIL, independent CIL and production-worker tests are
 
 [Assembly-aware type identity](TYPE-IDENTITY.md) documents opaque project type
 registration, pre-execution admission, closed field context and performance review.
+
+Verified separate-PE execution is documented in [PROJECT-ASSEMBLIES.md](./PROJECT-ASSEMBLIES.md).

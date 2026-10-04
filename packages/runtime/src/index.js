@@ -9,3 +9,4 @@ export {executionCodeStatistics, invalidateExecutionCode} from './execution/code
 export {RuntimeEventLog, RuntimeEventName} from './execution/runtime-events.js';
 export {framePoolStatistics} from './execution/frame-pool.js';
 export {instructionProfile} from './execution/profiler.js';
+export {createProjectAssemblyInspector} from './project-assemblies/inspector.js';
