@@ -1,4 +1,5 @@
 import {ManagedFault} from '../heap.js';
+import {requireHostCallbackBoundary} from './host-callbacks.js';
 
 const terminal = new Set(['completed', 'faulted', 'canceled']);
 
@@ -29,6 +30,7 @@ export function requireSnapshotBoundary(vm) {
   if (vm.scheduler?.callbackScopes?.length) {
     throw new TypeError('Execution snapshot and restore are unavailable during synchronous managed callbacks');
   }
+  requireHostCallbackBoundary(vm.platform);
 }
 
 /** Drop retained roots only after stop has retired their pooled storage. */
