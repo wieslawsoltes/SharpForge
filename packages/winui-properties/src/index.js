@@ -14,3 +14,4 @@ export * from './items/index.js';
 export * from './visual-states/index.js';
 export * from './contracts/resources.js';
 export * from './contracts/object-model-contracts.js';
+export * from './adapters/scene-privacy.js';
