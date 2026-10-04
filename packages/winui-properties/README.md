@@ -13,3 +13,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Compiled binding descriptors
 
 Version 1 descriptors contain bounded metadata tokens and immutable expression data. Validation rejects accessors, executable values, foreign versions and malformed paths without invoking supplied getters. The shipped JSON schema describes the same data boundary.
+
+## Typed expression compilation
+
+`Binding`, `RelativeSource` and `PropertyPath` retain explicit configuration and bounded parsed paths. `compileBindingDescriptor` resolves names through an injected symbol index and emits only actual metadata tokens. Paths, indexers, null-conditional access, casts, static/instance functions, event methods and BindBack use checked parameter/result types. Unknown tokens, types, arities and unsupported syntax fail without reflective fallback.
