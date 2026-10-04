@@ -1,0 +1,12 @@
+export { CredentialVault } from './vault.js';
+export { IndexedDbCredentialStore } from './indexeddb-store.js';
+export { CredentialLifecycle } from './lifecycle.js';
+export { personalAccessCredential, credentialAuthorization } from './pat.js';
+export { OAuthDeviceFlow, deviceAuthorizationEndpoints } from './device-flow.js';
+export { OAuthPkceFlow, pkceChallenge } from './pkce.js';
+export { OAuthTokenBroker, supportedAuthenticationFlows } from './broker.js';
+export { GitHubAppSession } from './github-app.js';
+export { oauthCredential } from './oauth-http.js';
+export { createGitAuthContext, gitAuthMethods, scopedWritePermissions } from './context.js';
+export { createAuthOperations } from './service.js';
+export { createOAuthLifecycleHandlers, oauthProviderEndpoints } from './provider-lifecycle.js';
