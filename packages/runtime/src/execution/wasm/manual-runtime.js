@@ -5,6 +5,7 @@ import {getDecodePlan} from '../decode-plan.js';
 import {lowerWasmIR} from './eligibility.js';
 import {instantiateWasmIR} from './compile.js';
 import {createWasmImports} from './imports.js';
+import {wasmFrameSuppressed} from './deopt.js';
 
 const handles = new WeakMap();
 const optionNames = new Set(['maxMethodInstructions', 'maxAnalysisSlots', 'maxBytes']);
@@ -53,7 +54,7 @@ function release(record) {
 function dispatch(record, frame, instruction, index, handler) {
   const vm = record.vm;
   const operation = record.ir.instructions[index];
-  if (frame.method !== record.method || record.plan.instructions[index] !== instruction ||
+  if (wasmFrameSuppressed(vm, frame) || frame.method !== record.method || record.plan.instructions[index] !== instruction ||
       record.plan.handlers[index] !== handler || operation?.depth === null || operation?.depth !== frame.stack.length) {
     return handler(vm, frame, instruction);
   }
@@ -135,7 +136,7 @@ export function preparedWasmDispatch(vm, handle) {
   return Object.freeze({
     current: () => current(record),
     canEnter: frame => {
-      if (!current(record) || record.context.active || frame.method !== record.method) return false;
+      if (wasmFrameSuppressed(vm, frame) || !current(record) || record.context.active || frame.method !== record.method) return false;
       const index = frame.pc, operation = record.ir.instructions[index];
       return operation?.depth !== null && operation?.depth === frame.stack.length &&
         record.plan.instructions[index] === frame.method.instructions[index];

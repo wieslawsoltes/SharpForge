@@ -8,7 +8,7 @@ import {
   validateManifest,
   requirements,
 } from '../../../scripts/conformance/release15/manifest.js';
-import { summarize } from '../../../scripts/conformance/release15/run.js';
+import { summarize, applyBrowserOutcomes } from '../../../scripts/conformance/release15/run.js';
 import { reproduceArchive } from '../../../scripts/conformance/release15/archive.js';
 
 async function data() {
@@ -37,7 +37,6 @@ test('release15 records every obligation and separates executable components fro
   for (const id of [
     'REMOTE-GIT',
     'DOCUMENT-SESSIONS',
-    'MULTI-APP',
     'FAIR-SESSION-IO',
     'APP-EXPORT',
     'PROVIDER-AUTH',
@@ -45,6 +44,12 @@ test('release15 records every obligation and separates executable components fro
     assert(blockers.has(id));
     assert(scenario.checks.some((row) => row.blocker === id));
   }
+  assert(blockers.has('MULTI-APP'));
+  const sessions = scenario.checks.find((row) => row.id === 'two-apps-two-instances');
+  assert.equal(sessions.requirement, 'session-isolation');
+  assert.equal(sessions.adapter, 'browser');
+  assert.deepEqual(sessions.actions, ['sessions']);
+  assert.equal(sessions.blocker, undefined);
 });
 
 test('unknown blockers, missing obligations, duplicate checks and invented adapters fail closed', async () => {
@@ -92,6 +97,26 @@ test('component success cannot hide blocked, cancelled or failed release obligat
     summarize([{ status: 'passed' }, { status: 'running' }]),
     'blocked',
   );
+});
+
+test('a browser blocker preserves independent step and phase evidence without overriding failure', () => {
+  const blocker = { id: 'MULTI-APP', reason: 'Observed duplicate-instance editor lock' };
+  const blockers = new Map([[blocker.id, blocker]]);
+  const phases = [{ name: 'debugger', status: 'passed' }, { name: 'hot-reload', status: 'blocked' }];
+  const outcomes = new Map([['sessions', { blocker: blocker.id, checks: phases }]]);
+  const report = { status: 'passed', steps: [
+    { id: 'documents', status: 'passed' }, { id: 'sessions', status: 'passed' },
+  ] };
+  applyBrowserOutcomes(report, outcomes, blockers);
+  assert.equal(report.status, 'blocked');
+  assert.equal(report.steps[0].status, 'passed');
+  assert.equal(report.steps[1].status, 'blocked');
+  assert.deepEqual(report.steps[1].phases, phases);
+  report.status = 'failed';
+  applyBrowserOutcomes(report, outcomes, blockers);
+  assert.equal(report.status, 'failed');
+  assert.throws(() => applyBrowserOutcomes(report, new Map([['sessions', {blocker:'INVENTED'}]]), blockers),
+    /Unrecorded release15 blocker/);
 });
 
 test('exact source archive capture rejects missing pins and changed bytes before building', async (t) => {

@@ -164,6 +164,10 @@ Inline rename temporarily changes the current model using a retained checkpoint
 without publishing source-change events. Each new preview first restores that
 checkpoint. Cancel restores exact bytes, version, selection, and history.
 Commit restores the checkpoint before applying the final atomic workspace plan.
+During this preview, the insight context cancels pending language requests and
+suspends background provider calls. Only rename may query the restored original
+source. This keeps temporary preview versions out of the host's monotonic
+semantic workspace; cancellation, commit and disposal release the suspension.
 `editor.refreshPreview()` synchronizes the visible text, highlighter and bounded
 input context without publishing an extra edit.
 
