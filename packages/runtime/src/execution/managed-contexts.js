@@ -20,6 +20,7 @@ export function prepareManagedContext(scheduler) {
 /** Shared managed call-frame admission for delegate work and verified state-machine continuations. */
 export function enqueueManagedContext(scheduler, call, options = {}, prepared = false) {
   const vm = scheduler.vm;
+  const parentId = options.parentId === undefined ? scheduler.currentId : options.parentId;
   if (!prepared) prepareManagedContext(scheduler);
   scheduler.save();
   const previous = scheduler.capture(), previousState = vm.state;
@@ -30,11 +31,10 @@ export function enqueueManagedContext(scheduler, call, options = {}, prepared = 
   try { vm.call(call.method, call.arguments, call.extra ?? {}); }
   catch (error) { restore(vm, previous, previousState); throw error; }
   const id = scheduler.nextId++;
-  const parentId = options.parentId ?? scheduler.currentId;
   const origin = vm.inspector ? vm.inspector.debug?.methods?.find(method => method.token === call.method)?.asyncOrigin
     ?? vm.top.method.name : vm.image.methods[call.method].asyncOrigin ?? vm.image.methods[call.method].name;
   const context = {id, name: options.name ?? origin,
-    kind: options.kind ?? 'task', status: 'ready', frozen: false, parentId, task: options.task?.ref ?? null,
+    kind: options.kind === undefined ? 'task' : options.kind, status: 'ready', frozen: false, parentId, task: options.task?.ref ?? null,
     taskId: options.task?.id ?? null, thread: options.thread ?? null, delegate: options.delegate ?? null,
     wait: null, eagerParent: options.eager ? parentId : null, ...scheduler.capture()};
   scheduler.contexts.set(id, context);
