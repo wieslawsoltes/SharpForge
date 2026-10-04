@@ -4,7 +4,8 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const prefix = 'codex/project16/qualify-';
-const branchPattern = /^codex\/project16\/qualify-(ubuntu|windows|macos)-(chromium|firefox|webkit)-(all|node|browser|performance)-([a-z0-9][a-z0-9-]{6,62}[a-z0-9])$/;
+const branchPattern =
+  /^codex\/project16\/qualify-(ubuntu|windows|macos)-(chromium|firefox|webkit)-(all|node|browser|performance)-([a-z0-9][a-z0-9-]{6,62}[a-z0-9])$/;
 const runners = new Map([
   ['ubuntu-latest', 'Linux'], ['windows-latest', 'Windows'], ['macos-latest', 'macOS']
 ]);

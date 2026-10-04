@@ -84,7 +84,8 @@ export const CallBinding = Base =>
     errorNode(error, args, nameNode, offset = 0) {
       if (error.argument !== undefined && args[error.argument - offset]?.argumentSyntax) {
         const a = args[error.argument - offset].argumentSyntax;
-        return error.code === DiagnosticId.CS1739 || error.code === DiagnosticId.CS1740 || error.code === DiagnosticId.CS1744 || error.code === DiagnosticId.CS8323
+        return error.code === DiagnosticId.CS1739 || error.code === DiagnosticId.CS1740 ||
+          error.code === DiagnosticId.CS1744 || error.code === DiagnosticId.CS8323
           ? a.nameColon.name
           : error.code === DiagnosticId.CS1620 || error.code === DiagnosticId.CS1615
             ? a.expression

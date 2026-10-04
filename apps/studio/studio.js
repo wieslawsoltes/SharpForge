@@ -479,10 +479,6 @@ function commandsDialog(){showModal('Command palette',`<input class="command-inp
 function openMenuAt(x,y,items,options={}){sharedMenu.show({items:items.map(item=>Array.isArray(item)?[item[0],typeof item[1]==='function'?item[1]:()=>execute(item[1]),item[2],item[3]]:item),x,y,...options});}
 function closeMenu(){sharedMenu.close(false);$$('[data-menu]').forEach(b=>b.classList.remove('active'));}
 
-
-
-
-
 async function execute(command){try{return await commandRegistry.execute(command);}catch(error){toast(error.message,'error');}}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-command]');if(b&&!b.disabled)execute(b.dataset.command);});
 for(const content of docking.content.values())content.addEventListener('click',e=>{const button=e.target.closest('[data-command]');if(button){e.stopPropagation();if(!button.disabled)execute(button.dataset.command);}});
