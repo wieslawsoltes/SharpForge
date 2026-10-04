@@ -10,7 +10,7 @@ export class ActiveDesignerTools {
         await workbench.documents.open(uri ?? workbench.state.active, 'split');
         return this.current.sourceSync.snapshot();
       },
-      disconnect: () => this.current.sourceSync.disconnect(),
+      disconnect: () => workbench.documents.tools?.sourceSync.disconnect(),
       read: options => this.current.sourceSync.read(options),
       write: () => this.current.sourceSync.write(),
       setAuto: value => this.current.sourceSync.setAuto(value),
