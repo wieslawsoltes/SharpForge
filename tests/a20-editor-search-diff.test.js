@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {EditorModel} from '../packages/editor/src/model.js';
-import {EditorModelWorkspace, commitWorkspaceEdit} from '../packages/editor/src/services/index.js';
+import {EditorModelWorkspace, editorWorkspace, commitWorkspaceEdit} from '../packages/editor/src/services/index.js';
 import {EditorSearchSession, preserveReplacementCase} from '../packages/editor/src/features/search-session.js';
 import {buildDiffRows, inlineDiffRows, MergeSession} from '../packages/editor/src/diff/index.js';
 
@@ -25,6 +25,63 @@ test('find selection scope retains the captured range, whole-word filters and pr
   assert.equal(model.value, 'BAR Bar bar food foo');
   assert.equal(preserveReplacementCase('newName', 'NAME'), 'NEWNAME');
   assert.equal(preserveReplacementCase('name', '123'), 'name');
+});
+
+test('selection search counts only its captured scope and restores original regex capture coordinates', () => {
+  const prefix = 'word=0; '.repeat(11_000) + '\r\n😀 ';
+  const model = new EditorModel(prefix + 'word=42; word=54;', {uri: 'a'});
+  const workspace = new EditorModelWorkspace(new Map([['a', model]]));
+  const search = new EditorSearchSession(workspace);
+  const result = search.search('(word)=(\\d+)', {uri: 'a', scope: 'selection', regex: true,
+    selection: {start: prefix.length, end: model.length}, timeLimitMs: 1000});
+  assert.equal(result.matches.length, 2);
+  assert.equal(result.truncated, false);
+  assert.equal(result.matches[0].start, prefix.length);
+  assert.equal(result.matches[0].line, 1);
+  assert.equal(result.matches[0].character, 3);
+  commitWorkspaceEdit(workspace, search.prepareReplacement('$1($2)'));
+  assert.equal(model.value, prefix + 'word(42); word(54);');
+  model.undo();
+  const wordStart = prefix.length + 1;
+  assert.equal(search.search('ord', {uri: 'a', scope: 'selection', wholeWord: true,
+    selection: {start: wordStart, end: wordStart + 3}}).matches.length, 0);
+});
+
+test('single-editor and selection snapshots stay lazy and reject replaced model identities', async () => {
+  let model = new EditorModel('line\n'.repeat(40_000) + 'needle', {uri: 'a'});
+  const editor = {uri: 'a', get model() { return model; }, input: {readOnly: false},
+    sourceSnapshot: () => model.snapshot(), get value() { throw new Error('Search must not request the full editor value'); }};
+  const workspace = editorWorkspace(editor);
+  const search = new EditorSearchSession(workspace);
+  let yields = 0;
+  const result = await search.searchAsync('needle', {uri: 'a', scope: 'selection',
+    selection: {start: model.length - 6, end: model.length}, yieldControl: async () => { yields++; }});
+  assert.equal(result.matches[0].start, model.length - 6);
+  assert.equal(yields, 0);
+  const pending = search.searchAsync('needle', {uri: 'a', yieldControl: async () => {
+    if (!yields++) model = new EditorModel('replacement at the same external version', {uri: 'a'});
+  }});
+  await assert.rejects(pending, /source changed/);
+});
+
+test('a newer search supersedes pending matches and an invalid pattern cannot reuse an older result', async () => {
+  const model = new EditorModel('word\n'.repeat(5000) + 'needle', {uri: 'a'});
+  const workspace = new EditorModelWorkspace(new Map([['a', model]]));
+  const search = new EditorSearchSession(workspace);
+  let resume;
+  const wait = new Promise(resolve => { resume = resolve; });
+  let held = false;
+  const old = search.searchAsync('needle', {uri: 'a', chunkSize: 1024, yieldControl: () => {
+    if (held) return Promise.resolve();
+    held = true;
+    return wait;
+  }});
+  const current = search.search('word', {uri: 'a', timeLimitMs: 1000});
+  resume();
+  await assert.rejects(old, {name: 'AbortError'});
+  assert.equal(search.matches, current.matches);
+  assert.throws(() => search.search('(', {uri: 'a', regex: true}));
+  assert.deepEqual(search.matches, []);
 });
 
 test('invalid regex and stale replace preview leave source unchanged and history stays bounded', () => {
