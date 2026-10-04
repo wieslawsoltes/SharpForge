@@ -83,6 +83,8 @@ const attributes = [
   [interop, 'ComImportAttribute', T.Class | T.Interface, false, [[]], []],
   [interop, 'CoClassAttribute', T.Interface, false, [[['coClass', 't']]], []],
   ['System.Runtime.CompilerServices', 'CompilerGeneratedAttribute', T.All, false, [[]], []],
+  ['System.Runtime.CompilerServices', 'ReferenceAssemblyAttribute', T.Assembly, false, [[]], []],
+  ['System.Runtime.CompilerServices', 'InternalsVisibleToAttribute', T.Assembly, true, [[['assemblyName', 's']]], []],
   // The metadata name of an indexer (binder/members/indexer-names.js decodes it).
   ['System.Runtime.CompilerServices', 'IndexerNameAttribute', T.Property, false, [[['indexerName', 's']]], []],
   // Caller info (binder/caller-info.js decodes them).

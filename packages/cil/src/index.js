@@ -49,3 +49,4 @@ export { createMetadataVerificationContext, verificationMemberDiagnosticCatalog 
 
 export { AssemblySymbolIndex } from './browser/index.js';
 export { AssemblyTypeHierarchy } from './browser/hierarchy.js';
+export { referenceAssemblyMemberIncluded, addReferenceAssemblyAttribute } from './emit/ref-assembly.js';

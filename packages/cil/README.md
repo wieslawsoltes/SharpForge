@@ -1,5 +1,9 @@
 # @sharpforge/cil
 
+Reference-assembly member policy and marker emission are available through `referenceAssemblyMemberIncluded` and
+`addReferenceAssemblyAttribute`. The compiler's `{ refout: true }` adapter, example and qualification commands are in
+[Reference assembly output](../../docs/reference-assembly-refout.md).
+
 Genuine ECMA-335 PE/CLI emission, typed CIL lowering, bounded metadata/IL loading, canonical-profile verification and disassembly. JavaScript ESM. Version 0.6.0. MIT. Only sibling dependency: `@sharpforge/bytecode`.
 
 ```js

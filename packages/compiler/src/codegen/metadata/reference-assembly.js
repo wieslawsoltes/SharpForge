@@ -8,7 +8,7 @@
  *
  * Driven entirely through the public API of `@sharpforge/cil` (MetadataBuilder, writeMethodBody, writePE).
  */
-import { MetadataBuilder, Writer, writeMethodBody, writePE, TEXT_RVA, CilError } from '@sharpforge/cil';
+import { MetadataBuilder, Writer, writeMethodBody, writePE, TEXT_RVA, CilError, addReferenceAssemblyAttribute } from '@sharpforge/cil';
 import { DiagnosticId, formatMessage } from '../../diagnostics/codes.js';
 import { diagnostic } from '@sharpforge/text';
 import { parseCompilerInput } from '../../parse-input.js';
@@ -20,6 +20,7 @@ import { MetadataEmitError } from './type-tokens.js';
 import { referenceIdentitiesOf } from './reference-identities.js';
 
 import { RecordPlan } from './record-plan.js';
+import { refoutEnabled, RefoutPlan } from './refout-plan.js';
 
 const CLI_HEADER_SIZE = 72;
 /** `ldnull; throw`. */
@@ -27,10 +28,11 @@ const THROW_NULL = Uint8Array.of(0x14, 0x7a);
 
 /**
  * Writes the reference assembly of an analysis that has run without errors.
- * @param analysis a SemanticAnalysis  @param {{name?: string, framework?: string, deterministic?: boolean}} [options]
+ * @param analysis a SemanticAnalysis  @param {{name?: string, framework?: string, deterministic?: boolean, refout?: boolean}} [options]
  * @returns {{bytes: Uint8Array, writer: SymbolMetadataWriter}} the image and the writer (definition tokens by symbol)
  */
 export function emitReferenceAssembly(analysis, options = {}) {
+  const refout = refoutEnabled(options) ? new RefoutPlan(analysis) : null;
   const builder = new MetadataBuilder(options.name ?? 'Application', {
     framework: options.framework ?? 'net8',
     assemblyReferences: referenceIdentitiesOf(analysis),
@@ -40,9 +42,16 @@ export function emitReferenceAssembly(analysis, options = {}) {
   const bodyRva = TEXT_RVA + section.length;
   section.bytes(writeMethodBody(THROW_NULL, 0, 1, []));
   const records = new RecordPlan(analysis.core),
-    synthesized = { types: [], extend: (type, plan) => records.extend(type, plan) },
+    synthesized = { types: [], extend: (type, plan) => {
+      records.extend(type, plan);
+      refout?.filter(type, plan);
+    } },
     writer = new SymbolMetadataWriter(builder, analysis, { bodyRva, synthesized }).write();
   new CustomAttributeWriter(writer, analysis).write();
+  if (refout && !refout.hasMarker) {
+    const marker = 'System.Runtime.CompilerServices.ReferenceAssemblyAttribute';
+    addReferenceAssemblyAttribute(builder, writer.tokens.assemblyOf({}, marker));
+  }
   section.pad();
   const metadataOffset = section.length,
     metadata = builder.finish(null, section.finish());
@@ -53,7 +62,8 @@ export function emitReferenceAssembly(analysis, options = {}) {
 
 /**
  * Compiles source to a reference assembly.
- * @param {string|object|object[]} input what `compile` accepts  @param {object} [options] compilation options and `name`
+ * @param {string|object|object[]} input what `compile` accepts  @param {object} [options] compilation options and `name`;
+ *   `refout: true` strips inaccessible members and adds ReferenceAssemblyAttribute, while the default keeps every declaration
  * @returns {{success: boolean, assembly: Uint8Array|null, diagnostics: object[]}} `assembly` is null when the program
  *   has errors, or when a declaration cannot be written to metadata (reported as SF3001)
  */

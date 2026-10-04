@@ -148,7 +148,7 @@ export class SymbolMetadataWriter {
     for (const type of this.types) {
       const plan = this.plans.get(type),
         // A type initializer that only runs field initializers leaves the type `beforefieldinit`, as Roslyn does.
-        hasStaticConstructor = plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
+        hasStaticConstructor = plan.hasStaticConstructor ?? plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
         base = type.typeKind === TypeKind.Interface ? null : type.baseType;
       builder.addRow('TypeDef', {
         Flags: typeFlags(type, { hasStaticConstructor }),

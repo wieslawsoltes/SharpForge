@@ -10,6 +10,10 @@ This package is part of SharpForge, an executable C# subset toolchain. It is not
 import * as api from '@sharpforge/compiler';
 ```
 
+Use `compileToReferenceAssembly(source, { name: 'Library', refout: true })` for a deterministic reference assembly
+with inaccessible members removed and `ReferenceAssemblyAttribute`. The default metadata-only output remains
+available. See [Reference assembly output](../../docs/reference-assembly-refout.md) for the policy, example and checks.
+
 Install its declared sibling packages together. npm publication is not part of this release. See the root project README and docs/embedding.md for integration.
 
 ## 0.10 integration
