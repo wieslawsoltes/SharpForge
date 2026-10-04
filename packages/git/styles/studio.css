@@ -76,6 +76,8 @@
 .git-history-author { color: var(--git-muted); max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .git-history-row code { color: var(--git-muted); font-size: 10px; }
 .git-commit-detail { flex: 0 1 220px; min-height: 0; overflow: auto; }
+.git-commit-detail:empty { display: none; }
+.git-commit-detail:not(:empty) { min-height: 56px; }
 .git-commit-detail h3 { font-size: 14px; margin: 3px 0; }
 .git-commit-detail p { margin: 5px 0; overflow-wrap: anywhere; }
 .git-commit-detail pre { white-space: pre-wrap; }

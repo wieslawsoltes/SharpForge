@@ -7,6 +7,7 @@ import traceback
 from browser_harness import load_application, wait_condition
 from a25_studio_observers import observe_commit_indicator, highlight_work_coverage
 from a25_studio_blame import qualify_blame_scroll
+from a25_studio_layout import qualify_history_layout
 
 
 BASE = 'using System;\nclass Program {\n  static void Main() {\n    Console.WriteLine("base");\n  }\n}\n'
@@ -356,7 +357,10 @@ class StudioWorkflow:
 
     def historical_diff_and_blame(self):
         history = self.open_tool("git-repository")
+        empty_height = history.locator('.git-commit-detail').evaluate("node => node.getBoundingClientRect().height")
+        require(empty_height == 0, "Empty commit details reserve space in the history dock")
         history.locator('.git-history-row').filter(has_text="Initial browser commit").click()
+        layout = {"emptyDetailHeight": empty_height, "sizes": qualify_history_layout(self.page, history)}
         history.locator('.git-commit-detail .git-path').filter(has_text="Program.cs").click()
         diff = self.open_tool("git-diff")
         diff.locator('.git-diff-row').filter(has_text='Console.WriteLine("base")').wait_for()
@@ -370,7 +374,7 @@ class StudioWorkflow:
         value = self.snapshot()
         require(value["head"]["oid"] == self.final_head, "Historical inspection changed HEAD")
         self.screenshot("historical-blame")
-        return {"head": value["head"], "blame": blame, "liveBlameRows": diff.locator('.git-blame-row').count()}
+        return {"head": value["head"], "blame": blame, "liveBlameRows": diff.locator('.git-blame-row').count(), "layout": layout}
 
     def blame_margin_without_retokenizing(self):
         self.page.evaluate('sharpforge.openFile("Program.cs")')
