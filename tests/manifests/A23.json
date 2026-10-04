@@ -28,7 +28,8 @@
     "tests/a23-native-launch.test.js",
     "tests/a23-native-publish-model.test.js",
     "tests/a23-native-publish-encoding.test.js",
-    "tests/a23-native-profile-ui-model.test.js"
+    "tests/a23-native-profile-ui-model.test.js",
+    "tests/a23-native-view-contracts.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
