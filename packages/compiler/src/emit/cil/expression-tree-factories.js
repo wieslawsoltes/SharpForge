@@ -143,6 +143,7 @@ export class ExpressionTreeFactories {
       parameter,
       node.parameters.map(declared => () => il.emit('ldloc', this.parameterSlots.get(declared))),
     );
+    if (!node.type) return this.factory('Lambda', [this.expression, this.arrayOf(parameter)], this.core.lambdaExpression);
     return il.emit('call', this.tokens.externalGeneric(this.expression, 'Lambda', shape, [node.type]), { pops: 2, pushes: 1 });
   }
   emitParameter(node) {
@@ -155,6 +156,9 @@ export class ExpressionTreeFactories {
       constant = this.result('ConstantExpression');
     if (node.isThis) {
       emitter.exprThis({ syntax: null });
+      if (needsBox(node.type)) il.emit('box', this.tokens.type(node.type));
+    } else if (node.isDefault) {
+      emitter.defaultValue(node.type);
       if (needsBox(node.type)) il.emit('box', this.tokens.type(node.type));
     } else if (node.value === null || node.value === undefined) il.emit('ldnull');
     else {
@@ -179,8 +183,7 @@ export class ExpressionTreeFactories {
     this.emit(node.operands[1]);
     if (!node.method && node.factory === 'Add' && node.type?.specialType === 'System_String') return this.concatenation(node, result);
     if (!node.method) return this.factory(node.factory, [expression, expression], result);
-    // A user-defined comparison says whether a lifted form yields null: never, in a tree the binder accepted.
-    if (comparisons.has(node.factory)) this.il.emit('ldc.i4', 0);
+    if (comparisons.has(node.factory)) this.il.emit('ldc.i4', node.liftToNull ? 1 : 0);
     this.methodOf(node.method);
     const parameters = comparisons.has(node.factory) ? [expression, expression, this.core.bool, methodInfo] : [expression, expression, methodInfo];
     return this.factory(node.factory, parameters, result);
@@ -216,6 +219,12 @@ export class ExpressionTreeFactories {
     const { expression } = this;
     for (const operand of node.operands) this.emit(operand);
     return this.factory('Condition', [expression, expression, expression], this.result('ConditionalExpression'));
+  }
+  emitCoalesce(node) {
+    if (!node.conversion) return this.binary(node);
+    for (const operand of node.operands) this.emit(operand);
+    this.emit(node.conversion);
+    return this.factory('Coalesce', [this.expression, this.expression, this.core.lambdaExpression], this.result('BinaryExpression'));
   }
   /** The object a member is read from: the expression, or null for a static member. */
   instance(expression) {

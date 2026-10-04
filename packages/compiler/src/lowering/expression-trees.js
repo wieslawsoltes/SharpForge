@@ -18,33 +18,10 @@
 import { MethodKind } from '../symbols/members.js';
 import { expressionTreeDelegate } from '../symbols/expression-tree-types.js';
 import { expressionTreeCreationVisitors } from './expression-tree-creation.js';
+import { expressionTreeConversionVisitors } from './expression-tree-conversions.js';
+import { expressionTreeOperatorVisitors } from './expression-tree-operators.js';
 
-const binaryFactories = Object.freeze({
-  '+': ['Add', 'AddChecked'],
-  '-': ['Subtract', 'SubtractChecked'],
-  '*': ['Multiply', 'MultiplyChecked'],
-  '/': ['Divide'],
-  '%': ['Modulo'],
-  '&': ['And'],
-  '|': ['Or'],
-  '^': ['ExclusiveOr'],
-  '<<': ['LeftShift'],
-  '>>': ['RightShift'],
-  '==': ['Equal'],
-  '!=': ['NotEqual'],
-  '<': ['LessThan'],
-  '<=': ['LessThanOrEqual'],
-  '>': ['GreaterThan'],
-  '>=': ['GreaterThanOrEqual'],
-  '&&': ['AndAlso'],
-  '||': ['OrElse'],
-});
-const unaryFactories = Object.freeze({ '-': ['Negate', 'NegateChecked'], '+': ['UnaryPlus'], '!': ['Not'], '~': ['Not'] });
-const integralTypes = new Set(
-  ['Int32', 'UInt32', 'Int64', 'UInt64', 'Int16', 'UInt16', 'Byte', 'SByte'].map(name => 'System_' + name),
-);
-/** Conversions that leave the operand as it is in the tree. */
-const transparentConversions = new Set(['Identity', 'InterpolatedString']);
+const visitors = Object.freeze({ ...expressionTreeCreationVisitors, ...expressionTreeConversionVisitors, ...expressionTreeOperatorVisitors });
 
 class Unsupported extends Error {
   constructor(what, syntax) {
@@ -81,7 +58,7 @@ class TreeBuilder {
   visit(node) {
     if (node.hasErrors) this.fail('an expression with errors', node);
     if (node.constantValue && node.kind !== 'Lambda') return this.constant(node.constantValue.isNull ? null : node.constantValue.value, node.type);
-    const handler = expressionTreeCreationVisitors[node.kind] ?? this['visit' + node.kind];
+    const handler = visitors[node.kind] ?? this['visit' + node.kind];
     if (!handler) this.fail(`'${node.kind}' in an expression tree`, node);
     return handler.call(this, node);
   }
@@ -93,7 +70,7 @@ class TreeBuilder {
     return this.fail('this literal', node);
   }
   visitDefault(node) {
-    return this.node('Default', node.type, {});
+    return this.node('Constant', node.type, { isDefault: true });
   }
   visitParameter(node) {
     return this.parameters.get(node.parameter) ?? this.captured(node.parameter, node);
@@ -109,31 +86,6 @@ class TreeBuilder {
   visitThis(node) {
     return this.node('Constant', node.type, { value: undefined, isThis: true });
   }
-  visitBinary(node) {
-    if (node.isLifted) this.fail('lifted operators', node);
-    if (node.isLogical && node.method) this.fail('user-defined conditional logical operators', node);
-    const [plain, checkedName] = binaryFactories[node.operator] ?? [];
-    if (!plain) this.fail(`operator '${node.operator}'`, node);
-    const useChecked = node.isChecked && checkedName && !node.method && integralTypes.has(node.type?.specialType);
-    const factory = useChecked ? checkedName : plain;
-    return this.node(factory, node.type, { operands: [this.visit(node.left), this.visit(node.right)], method: node.method ?? null });
-  }
-  visitUnary(node) {
-    if (node.isLifted) this.fail('lifted operators', node);
-    const [plain, checkedName] = unaryFactories[node.operator] ?? [];
-    if (!plain) this.fail(`operator '${node.operator}'`, node);
-    const useChecked = node.isChecked && checkedName && !node.method && integralTypes.has(node.type?.specialType);
-    return this.node(useChecked ? checkedName : plain, node.type, { operands: [this.visit(node.operand)], method: node.method ?? null });
-  }
-  visitConversion(node) {
-    const kind = node.conversion?.kind;
-    if (kind === 'AnonymousFunction') return this.nestedLambda(node);
-    if (kind === 'NullLiteral' || kind === 'DefaultLiteral') return this.constant(null, node.type);
-    if (transparentConversions.has(kind)) return this.visit(node.operand);
-    if (kind === 'ImplicitReference' && !node.isExplicit) return this.visit(node.operand);
-    if (kind === 'MethodGroup') this.fail('a method group conversion', node);
-    return this.node('Convert', node.type, { operands: [this.visit(node.operand)], method: node.conversion?.method ?? null });
-  }
   /** A lambda inside the tree: a Lambda node, quoted when it is itself converted to an expression tree. */
   nestedLambda(node) {
     const delegateType = expressionTreeDelegate(node.type, this.core),
@@ -145,19 +97,6 @@ class TreeBuilder {
   }
   visitIs(node) {
     return this.node('TypeIs', this.core.bool, { expression: this.visit(node.operand), typeOperand: node.testedType });
-  }
-  visitConditional(node) {
-    return this.node(
-      'Condition',
-      node.type,
-      { operands: [this.visit(node.condition), this.visit(node.whenTrue), this.visit(node.whenFalse)] },
-      'Conditional',
-    );
-  }
-  visitCoalesce(node) {
-    if (node.right.form === 'throw') this.fail('a throw expression', node.right);
-    if (node.leftConversion && !node.leftConversion.isIdentity) this.fail('a coalescing conversion', node);
-    return this.node('Coalesce', node.type, { operands: [this.visit(node.left), this.visit(node.right)] });
   }
   visitFieldAccess(node) {
     return this.member('Field', node, node.field);

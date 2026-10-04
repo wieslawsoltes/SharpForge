@@ -74,7 +74,7 @@ export const OperatorBinding = Base =>
         return this.bad(syntax);
       }
       if (r.kind === 'user') {
-        const node = this.node('Unary', syntax, r.resultType, { operator, operand, method: r.method, isLifted: r.isLifted }),
+        const node = this.node('Unary', syntax, r.resultType, { operator, operand, method: r.method, isLifted: r.isLifted, isChecked: this.checked }),
           constant = operand.constantValue;
         // `-Price` over a decimal constant is a constant, also when the operator is the method of System.Decimal.
         if (r.method.containingType?.specialType === 'System_Decimal' && constant?.type === 'decimal' && !r.isLifted) {
@@ -193,6 +193,7 @@ export const OperatorBinding = Base =>
           right: args[1],
           method: r.method,
           isLifted: r.isLifted,
+          isChecked: this.checked,
           isLogical: !!r.isLogical,
           shortCircuit: r.shortCircuitOperator ?? null,
         });

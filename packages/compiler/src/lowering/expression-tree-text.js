@@ -102,6 +102,8 @@ export function childrenOf(node) {
       return node.expression ? [node.expression] : [];
     case 'TypeIs':
       return [node.expression];
+    case 'Coalesce':
+      return [node.operands[0], ...(node.conversion ? [node.conversion] : []), node.operands[1]];
     case 'Call':
       return [...(node.object ? [node.object] : []), ...node.arguments];
     case 'Invoke':
@@ -246,8 +248,11 @@ export function factoryCalls(tree) {
         return `Expression.Constant(${csharpValue(node)}, ${typeOf(node.type)})`;
       case 'Lambda': {
         const parameters = node.parameters.map(call);
-        return `Expression.Lambda<${node.type.toDisplayString()}>(${[call(node.body), ...parameters].join(', ')})`;
+        const generic = node.type ? `<${node.type.toDisplayString()}>` : '';
+        return `Expression.Lambda${generic}(${[call(node.body), ...parameters].join(', ')})`;
       }
+      case 'Coalesce':
+        return `Expression.Coalesce(${[...node.operands, ...(node.conversion ? [node.conversion] : [])].map(call).join(', ')})`;
       case 'Field':
       case 'Property':
         return `Expression.${node.factory}(${node.expression ? call(node.expression) : 'null'}, "${node.member.name}")`;
