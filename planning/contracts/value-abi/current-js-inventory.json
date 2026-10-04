@@ -78,7 +78,11 @@
     },
     {
       "shape": "{valueType:MethodTable,fields:frozen array}",
-      "meaning": "immutable VM-owned direct-CIL reference-free sequential struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data"
+      "meaning": "immutable VM-owned direct-CIL reference-free struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data"
+    },
+    {
+      "shape": "{valueType:MethodTable,fields:frozen array,explicitBytes:frozen byte array}",
+      "meaning": "reference-free explicit-layout value or nested view with immutable little-endian storage; overlapping fields alias within a value; copies preserve padding and scalar bits; not a portable snapshot or raw-memory API"
     },
     {
       "shape": "{byref:true,vmOwner,kind,index,owner,frameId,path:frozen array}",

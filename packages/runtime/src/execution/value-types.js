@@ -4,6 +4,8 @@ import {ManagedFault, isReference} from '../heap.js';
 import {defaults, storage as numericStorage} from './numeric-ops.js';
 import {valueLayout} from './value-layout.js';
 import {executionCodeState} from './code-version.js';
+import {byteLayout, hasExplicitLayout} from './explicit-layout.js';
+import {createExplicitValue, copyExplicitValue, replaceExplicitField} from './explicit-values.js';
 
 const plans = new WeakMap();
 const invalid = message => { throw new ManagedFault('InvalidProgramException', message); };
@@ -37,10 +39,24 @@ export function requireValueStorage(vm, table) {
   const cache = cacheFor(vm);
   if (cache.types.has(table)) return;
   const definition = vm.typeSystem.types.get(table.definitionToken);
-  if (!definition || (definition.flags & 0x18) !== 8 || table.flags.nullable || table.flags.refStruct ||
+  const layoutKind = definition?.flags & 0x18;
+  if (!definition || layoutKind !== 8 && layoutKind !== 0x10 || table.flags.nullable || table.flags.refStruct ||
       cache.restricted.has(table.definitionToken)) unsupported(table.name);
   if (valueLayout(vm, table).containsReferences) unsupported('managed-reference fields in ' + table.name);
+  if (hasExplicitLayout(vm, table)) byteLayout(vm, table);
   cache.types.add(table);
+}
+
+function fieldValue(vm, type, value, budget, defaulting = false) {
+  if (isAggregateType(type)) {
+    if (!defaulting && value === null) invalid('Nested struct field requires a value');
+    return record(vm, type, defaulting ? null : value, budget);
+  }
+  if (defaulting) value = defaults(type.enumUnderlyingType?.name ?? type.name, vm.options);
+  if (value === undefined || isReference(value) || value?.byref || value?.valueType || value?.methodPointer) {
+    invalid('Struct scalar field has an incompatible value');
+  }
+  return numericStorage(value, type.enumUnderlyingType?.name ?? type.name, vm.options);
 }
 
 function record(vm, table, source, budget) {
@@ -51,22 +67,16 @@ function record(vm, table, source, budget) {
   }
   budget.fields -= table.fields.length;
   if (budget.fields < 0) throw new ManagedFault('OutOfMemoryException', 'Struct copy exceeds its field budget');
-  const fields = table.fields.map((field, index) => {
-    const type = field.type;
-    if (isAggregateType(type)) {
-      if (source !== null && source.fields[index] === null) invalid('Nested struct field requires a value');
-      return record(vm, type, source === null ? null : source.fields[index], budget);
-    }
-    const value = source === null ? defaults(type.enumUnderlyingType?.name ?? type.name, vm.options) : source.fields[index];
-    if (value === undefined || isReference(value) || value?.byref || value?.valueType || value?.methodPointer) {
-      invalid('Struct scalar field has an incompatible value');
-    }
-    return numericStorage(value, type.enumUnderlyingType?.name ?? type.name, vm.options);
-  });
+  const fields = table.fields.map((field, index) => fieldValue(vm, field.type, source?.fields[index], budget, source === null));
+  if (source && Object.hasOwn(source, 'explicitBytes')) return copyExplicitValue(vm, table, source, fields, budget);
+  if (hasExplicitLayout(vm, table)) {
+    if (source !== null) invalid('Explicit scalar copies require immutable byte storage');
+    return createExplicitValue(vm, table, budget);
+  }
   return Object.freeze({valueType: table, fields: Object.freeze(fields)});
 }
 
-/** Reference-free sequential values have immutable owned fields; copies never expose mutable host aliases. */
+/** Reference-free values have immutable owned fields; copies never expose mutable host aliases. */
 export function createValue(vm, table, source = null) {
   if (table.registry !== vm.heap.methodTables) invalid('Struct type belongs to another VM');
   return record(vm, table, source, {fields: 65_536});
@@ -76,6 +86,12 @@ export function replaceValueField(vm, value, index, replacement) {
   const table = value.valueType;
   if (table.registry !== vm.heap.methodTables || !Number.isInteger(index) || index < 0 || index >= table.fields.length) {
     invalid('Invalid struct field address');
+  }
+  if (Object.hasOwn(value, 'explicitBytes') || hasExplicitLayout(vm, table)) {
+    const budget = {fields: 65_536};
+    const original = record(vm, table, value, budget);
+    const next = fieldValue(vm, table.fields[index].type, replacement, budget);
+    return replaceExplicitField(vm, original, index, next, budget);
   }
   const fields = [...value.fields];
   fields[index] = replacement;
