@@ -4,6 +4,7 @@ import {canonicalType,frameworkType,enumTypes} from '@sharpforge/framework';
 import {EnumConvertBase,Op,Binary,Unary,BuiltinMap,frameworkBuiltin} from '@sharpforge/bytecode';
 import {isReference,defaultValue} from '../type-utils.js';
 import {classifyBinary,binaryMode} from '../binder/operators.js';
+import {prepareFrameworkReceiver, storeFrameworkReceiver, emitFrameworkValueArgument} from './framework-value-receivers.js';
 /**
  * Bytecode IR generation from lowered bound trees.
  *
@@ -103,7 +104,7 @@ export class IrEmitter {
     return {branches,fallback,otherwise:this.emit(Op.JUMP),slot};
   }
   // ---- expressions -------------------------------------------------------------------------------------------
-  args(list){for(const a of list)this.expr(a);}
+  args(list){for(const a of list)emitFrameworkValueArgument(this,a);}
   binary(operator,left,right,checked,method,negate){
     if(method){this.emitContract(method.contract);if(negate)this.emit(Op.UNARY,Unary['!']);return;}
     this.emit(Op.BINARY,Binary[operator],binaryMode(operator,left,classifyBinary(operator,left,right).result,checked));
@@ -199,8 +200,8 @@ export class IrEmitter {
       case 'PropertyAccess':{
         const legacy=node.property.legacy;
         if(legacy){let receiver=null;if(!legacy.isStatic){this.expr(node.receiver);receiver=this.temp(legacy.owner.name);this.emit(Op.STLOC,receiver);this.emit(Op.POP);}return {kind:'property',property:legacy,type,receiver};}
-        let receiver=null;if(node.receiver){this.expr(node.receiver);const legacyType=node.receiver.legacyType;receiver=this.temp(frameworkType(legacyType==='string'?'System.String':canonicalType(legacyType)).name);this.emit(Op.STLOC,receiver);this.emit(Op.POP);}
-        return {kind:'framework',type,receiver,get:node.property.getMethod?.contract??null,set:node.property.setMethod?.contract??null};}
+        return {kind:'framework',type,...prepareFrameworkReceiver(this,node.receiver),
+          get:node.property.getMethod?.contract??null,set:node.property.setMethod?.contract??null};}
       case 'IndexerAccess':{
         const get=node.indexer.getMethod?.contract??null,set=node.indexer.setMethod?.contract??null;this.expr(node.receiver);const receiver=this.temp(node.receiver.legacyType);this.emit(Op.STLOC,receiver);this.emit(Op.POP);
         this.expr(node.args[0]);const key=this.temp(get?.parameters[0]??set.parameters[0]);this.emit(Op.STLOC,key);this.emit(Op.POP);return {kind:'framework',type,receiver,key,get,set};}
@@ -218,6 +219,7 @@ export class IrEmitter {
     if(ref.kind==='framework'){
       const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);
       if(ref.set){if(ref.receiver!==null)this.emit(Op.LDLOC,ref.receiver);if(ref.key!==undefined)this.emit(Op.LDLOC,ref.key);this.emit(Op.LDLOC,value);this.emitContract(ref.set);this.emit(Op.POP);}
+      storeFrameworkReceiver(this,ref);
       this.emit(Op.LDLOC,value);this.clear(value);if(ref.receiver!==null)this.clear(ref.receiver);if(ref.key!==undefined)this.clear(ref.key);
     }else if(ref.kind==='property'){
       const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);

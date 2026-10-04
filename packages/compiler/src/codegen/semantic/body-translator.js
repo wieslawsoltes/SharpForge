@@ -29,6 +29,7 @@ import { RecordTranslation } from '../../lowering/records/translate-records.js';
 import { StructuralPatternTranslation } from '../../lowering/patterns/translate-structural-patterns.js';
 import { languageLowerings } from '../../lowering/language-lowerings.js';
 import { GenericTranslation } from '../../lowering/generics/index.js';
+import { UITranslation } from './translate-ui.js';
 
 export { Frame } from './frame.js';
 
@@ -226,6 +227,7 @@ const families = [
   RecordTranslation,
   StructuralPatternTranslation,
   ...languageLowerings,
+  UITranslation,
   // Last: what depends on a type argument is decided before any other family sees the node.
   ScalarTranslation,
   GenericTranslation,

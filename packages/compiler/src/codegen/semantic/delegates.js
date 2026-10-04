@@ -15,6 +15,7 @@
  * delegate identity for `-=`.
  */
 import { n } from './node-factory.js';
+import { loweredDelegateName } from './ui-class-profile.js';
 import { typeNameText } from '../../lowering/generics/instantiation-names.js';
 import { isScalarType, scalarDefault } from '../scalar-values.js';
 
@@ -40,7 +41,8 @@ export class DelegateClasses {
     if (!invoke) return this.generator.unsupported(`delegate type '${type.toDisplayString()}'`, syntax);
     // The image reads `Name<...>` as a framework generic and `,` as an argument separator (also inside the element
     // type of an array), so the class is named like a construction: `System.Func{int;string}`.
-    const record = this.program.addClass(typeNameText(type));
+    const contractName = this.generator.bridge.registryName(type) ?? typeNameText(type);
+    const record = this.program.addClass(loweredDelegateName(contractName));
     info = { type, record, targets: new Map(), thunks: [], helpers: new Map() };
     // Registered before the signature is mapped: a delegate type may mention itself.
     this.byType.set(type, info);
@@ -57,16 +59,24 @@ export class DelegateClasses {
       returnType: info.returnType,
       parameters: [{ name: 'delegate', type: record.name }, ...info.parameters],
     });
+    record.delegateContract = contractName;
+    record.delegateInvoke = info.invoke.id;
+    if (this.generator.bridge.registryName(type)) {
+      info.frameworkInvoke = this.program.addMethod(record, '<framework-invoke>', {
+        isStatic: false, returnType: info.returnType, parameters: info.parameters
+      });
+      record.frameworkInvoke = info.frameworkInvoke.id;
+    }
     return info;
   }
   /**
    * A new delegate over an image method; `receiver` is the target expression for instance methods, and with
    * `bindsFirstArgument` the value bound as the first argument of a static method (an extension method's receiver).
    */
-  create(info, method, receiver, { bindsFirstArgument = false } = {}) {
-    let thunk = info.thunks.find(t => t.method === method && t.bindsFirstArgument === bindsFirstArgument);
+  create(info, method, receiver, { bindsFirstArgument = false, virtualSymbol = null } = {}) {
+    let thunk = info.thunks.find(t => t.method === method && t.bindsFirstArgument === bindsFirstArgument && !!t.virtualSymbol === !!virtualSymbol);
     if (!thunk) {
-      thunk = { id: info.thunks.length + 1, method, targetField: null, bindsFirstArgument };
+      thunk = { id: info.thunks.length + 1, method, targetField: null, bindsFirstArgument, virtualSymbol };
       if (bindsFirstArgument) thunk.targetField = this.targetField(info, { name: method.parameters[0].type });
       else if (!method.isStatic) thunk.targetField = this.targetField(info, method.owner);
       info.thunks.push(thunk);
@@ -117,6 +127,12 @@ export class DelegateClasses {
     // Helpers declare the helpers they call, so the list grows while it is walked.
     for (const info of this.all) {
       bodies.push({ method: info.invoke, body: this.invokeBody(info) });
+      if (info.frameworkInvoke) {
+        const args = info.parameters.map((p, i) => n.parameter(n.newParameter(p.name, p.type, i)));
+        const call = this.invoke(info, n.thisReference(info.record.name), args);
+        const statement = info.returnType === 'void' ? n.expressionStatement(call) : n.returnStatement(call);
+        bodies.push({method: info.frameworkInvoke, body: n.block([statement])});
+      }
       const built = new Set();
       for (let more = true; more; ) {
         more = false;
@@ -140,7 +156,8 @@ export class DelegateClasses {
     let dispatch = null;
     for (const thunk of [...info.thunks].reverse()) {
       const receiver = thunk.targetField ? n.field(n.local(current), thunk.targetField) : null;
-      const invocation = thunk.bindsFirstArgument ? n.call(thunk.method, null, [receiver, ...args]) : n.call(thunk.method, receiver, args);
+      const invocation = thunk.virtualSymbol ? this.generator.ui.invoke(thunk.virtualSymbol, receiver, args) :
+        thunk.bindsFirstArgument ? n.call(thunk.method, null, [receiver, ...args]) : n.call(thunk.method, receiver, args);
       dispatch = n.ifStatement(
         n.equals(n.field(n.local(current), info.methodField), n.literal(thunk.id, 'int')),
         n.expressionStatement(isVoid ? invocation : n.assign(n.local(result), invocation)),

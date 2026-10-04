@@ -43,8 +43,10 @@ export const ExpressionTranslation = Base =>
         // The existing enum field IR emits Op.ENUM, retaining the registered carrier on both engines.
         return {kind: 'FieldAccess', legacyType: type, isExpression: true, receiver: null, field: null, constantValue: value};
       }
-      if (!type || !foldableTypes.has(type)) return null;
       const raw = typeof value.value === 'bigint' ? Number(value.value) : value.value;
+      // Registered enums retain their runtime type; a raw integer literal would erase it at contract boundaries.
+      if (value.isEnum && this.g.bridge.types.get(type)?.kind === 'enum') return n.convert(n.literal(raw, 'int'), type);
+      if (!type || !foldableTypes.has(type)) return null;
       return n.literal(raw, type);
     }
     exprLiteral(node) {
@@ -211,9 +213,12 @@ export const ExpressionTranslation = Base =>
           );
         case 'Identity':
         case 'ImplicitReference':
-        case 'ImplicitEnumeration':
-        case 'ExplicitEnumeration':
           return this.retyped(this.expression(operand), node);
+        case 'ImplicitEnumeration':
+        case 'ExplicitEnumeration': {
+          const value = this.expression(operand), type = this.imageType(node.type, node.syntax);
+          return value.legacyType === type ? value : n.convert(value, type, !!node.isChecked);
+        }
         case 'NullLiteral':
         case 'DefaultLiteral':
           return this.defaultValue(this.imageType(node.type, node.syntax));

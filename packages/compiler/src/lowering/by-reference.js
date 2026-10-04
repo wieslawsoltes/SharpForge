@@ -71,7 +71,7 @@ export const ByReferenceTranslation = Base =>
       const args = node.args ?? [],
         parameters = method?.parameters ?? [];
       if (!args.some(isByReference) && !parameters.some(isByReference)) return super.arguments(node, method);
-      if (!method || !this.g.isSource(method.originalDefinition ?? method))
+      if (!method || (!this.g.isSource(method.originalDefinition ?? method) && !method.contract))
         return this.unsupported('ref, out and in arguments of framework methods', node.syntax);
       const positions = node.mapping?.parameterOf,
         covered = new Set();
