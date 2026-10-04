@@ -1,0 +1,720 @@
+{
+  "config": {
+    "variants": {
+      "before": {
+        "directory": "/tmp/sharpforge-a13-navigation-qualification/baseline",
+        "sourceRevision": "e905566c1933830deb6de7249062113c2b0eeee5"
+      },
+      "after": {
+        "directory": "/Users/wieslawsoltes/GitHub/SharpForge-a13-inspector-navigation",
+        "sourceRevision": "75ebc1606454b0f44230a31f9d2ce5138a944893",
+        "qualificationHead": "8ee7dfc696f5787a8b477d0a05ac0a9aa8b9b150"
+      }
+    },
+    "dependencies": "Own CIL source per variant; only hash-identical transitive package trees/manifests shared.",
+    "sharedHashes": {
+      "package.json": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "package-lock.json": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "unchangedPackageTrees": "040000 tree 6451aced45878f841bb3343d46f19abb6ade87fb\tarchive\n040000 tree 71e38278536a6e9cbf19f12ac991cef100f7c82d\tbcl-collections\n040000 tree a60436110fed5effbcd23d43b7d79b04105cffaa\tbcl-core\n040000 tree 61a3bff3f38a3d942ec91f2c12620752f7e651d8\tbytecode\n040000 tree 4602fc068eb0be47675bcd901fd452f0810005bc\tclr\n040000 tree 5f1ff7af001322bc7df7677f02b5a524c7ee49e1\tcompiler\n040000 tree 0ba385b2754947d34e884b975fee619d6d2b71ec\tcompute\n040000 tree fe83d527755ba36794b73e0d34a90f94187055ba\tcontrols\n040000 tree fd17779feebc4ae7c9c202bdfad3e213a2c74d00\tdebugger\n040000 tree 0d1086a83afd08708b0537a1483ce2e17774a24d\tdesigner\n040000 tree aa39592ceb5254769301fe24a0ed64b48b221513\tdocking\n040000 tree d46aedab942a4c9546042c4de3f696ed31f0418b\teditor\n040000 tree 427b86e3d081c0895f4e7664111f21b4986df541\textensions\n040000 tree 50d30190855892cd750a7df16a30323e0e850214\tframework\n040000 tree 51eba0f53f80cf915307e84578a00e0f6632eea4\tlanguage\n040000 tree 3fb5a1ebc086c121907f2c6b2c76353630619783\tmsbuild\n040000 tree a0ff0f968d8fd9a04ede276e5a7c90f6317c22e5\tnetwork\n040000 tree bdfc9583047902789d8bedf0717e0e638582f3c0\tproject-system\n040000 tree 32463189d2d45a832d614d8e81b5924cac073965\tprotocol\n040000 tree 1ae684c57dba0709a30e4dcdbf78bf2815785f34\trefactoring\n040000 tree 5c6e1015de19c89df38d0fc0612a7eee05d39472\truntime\n040000 tree d07a1381aa773f8bffa39eba8ea8471c322ce820\tsymbols\n040000 tree 3462eee3ed62ed6e49dd819f54349a92e7042e80\tsyntax\n040000 tree cd2c191bfb65843ea99448059521d44343b23552\ttemplates\n040000 tree e68012e1423ba4c7dcb5fcab453f22fa87ffda05\ttext\n040000 tree 6158f4499d0ed48e6780605ea05736a97ade3b29\twinui\n040000 tree 2ef61c563232e8ed2966421936e621d4d6466e82\tworkspace"
+    }
+  },
+  "node": "v24.21.0",
+  "host": "darwin arm64 Apple M3 Pro",
+  "startedAt": "2026-10-04T07:34:17.797Z",
+  "protocol": {
+    "pairsPerControl": 20,
+    "coldWarmups": 30,
+    "warmWarmups": 100,
+    "coldIterations": 100,
+    "warmIterations": 500,
+    "order": "AB/BA alternating",
+    "gcBeforeEachSample": true,
+    "median": "mean of positions 10 and 11",
+    "p95": "nearest-rank position 19",
+    "qualification": "One fixed shared-host schedule; all chronological samples retained, no retries/exclusion, no causal noise/significance/peak allocation claim."
+  },
+  "fixture": {
+    "bytes": 12800,
+    "sha256": "2bc24dbbe692eea3cabc20af34808395d8f3c649ff955b1116edc85cf7b33226",
+    "harnessSha256": "6f11851710c9b3ef3a97f76e5f89589310f2017b9b770916c7478468882fb733"
+  },
+  "observations": {
+    "before": {
+      "methodCount": 25,
+      "typeCount": 7,
+      "summarySha256": "0eabc26d588c949db4cfb0cb8bcfa3a2bdf8bf76fa605669aed865465a45af44",
+      "cachedMethods": 25
+    },
+    "after": {
+      "methodCount": 25,
+      "typeCount": 7,
+      "summarySha256": "0eabc26d588c949db4cfb0cb8bcfa3a2bdf8bf76fa605669aed865465a45af44",
+      "cachedMethods": 25
+    }
+  },
+  "summaries": {
+    "coldSummary": {
+      "before": {
+        "medianMs": 0.7154885449999984,
+        "p95Ms": 0.7504987500000015
+      },
+      "after": {
+        "medianMs": 0.6909649999999999,
+        "p95Ms": 0.7170441700000003
+      }
+    },
+    "cachedSummary": {
+      "before": {
+        "medianMs": 0.02222658300000012,
+        "p95Ms": 0.023813583999999537
+      },
+      "after": {
+        "medianMs": 0.019921458999999687,
+        "p95Ms": 0.02083466599999974
+      }
+    }
+  },
+  "chronologicalSamples": [
+    {
+      "control": "coldSummary",
+      "pair": 0,
+      "label": "before",
+      "startOffsetMs": 58.898499999999984,
+      "elapsedMs": 58.130708,
+      "perOperationMs": 0.58130708
+    },
+    {
+      "control": "coldSummary",
+      "pair": 0,
+      "label": "after",
+      "startOffsetMs": 120.66170799999998,
+      "elapsedMs": 66.04262500000004,
+      "perOperationMs": 0.6604262500000004
+    },
+    {
+      "control": "coldSummary",
+      "pair": 1,
+      "label": "after",
+      "startOffsetMs": 190.558291,
+      "elapsedMs": 64.18766699999998,
+      "perOperationMs": 0.6418766699999998
+    },
+    {
+      "control": "coldSummary",
+      "pair": 1,
+      "label": "before",
+      "startOffsetMs": 258.056375,
+      "elapsedMs": 67.86787499999997,
+      "perOperationMs": 0.6786787499999997
+    },
+    {
+      "control": "coldSummary",
+      "pair": 2,
+      "label": "before",
+      "startOffsetMs": 329.867208,
+      "elapsedMs": 62.51912500000003,
+      "perOperationMs": 0.6251912500000003
+    },
+    {
+      "control": "coldSummary",
+      "pair": 2,
+      "label": "after",
+      "startOffsetMs": 396.278958,
+      "elapsedMs": 71.70441700000003,
+      "perOperationMs": 0.7170441700000003
+    },
+    {
+      "control": "coldSummary",
+      "pair": 3,
+      "label": "after",
+      "startOffsetMs": 474.80654100000004,
+      "elapsedMs": 71.03033399999993,
+      "perOperationMs": 0.7103033399999993
+    },
+    {
+      "control": "coldSummary",
+      "pair": 3,
+      "label": "before",
+      "startOffsetMs": 550.380666,
+      "elapsedMs": 75.16716699999995,
+      "perOperationMs": 0.7516716699999995
+    },
+    {
+      "control": "coldSummary",
+      "pair": 4,
+      "label": "before",
+      "startOffsetMs": 629.014625,
+      "elapsedMs": 71.12520799999993,
+      "perOperationMs": 0.7112520799999993
+    },
+    {
+      "control": "coldSummary",
+      "pair": 4,
+      "label": "after",
+      "startOffsetMs": 703.621416,
+      "elapsedMs": 71.31608400000005,
+      "perOperationMs": 0.7131608400000005
+    },
+    {
+      "control": "coldSummary",
+      "pair": 5,
+      "label": "after",
+      "startOffsetMs": 778.549,
+      "elapsedMs": 68.624416,
+      "perOperationMs": 0.68624416
+    },
+    {
+      "control": "coldSummary",
+      "pair": 5,
+      "label": "before",
+      "startOffsetMs": 853.241375,
+      "elapsedMs": 75.04987500000016,
+      "perOperationMs": 0.7504987500000015
+    },
+    {
+      "control": "coldSummary",
+      "pair": 6,
+      "label": "before",
+      "startOffsetMs": 931.8671250000001,
+      "elapsedMs": 74.61899999999991,
+      "perOperationMs": 0.7461899999999991
+    },
+    {
+      "control": "coldSummary",
+      "pair": 6,
+      "label": "after",
+      "startOffsetMs": 1009.9622909999999,
+      "elapsedMs": 71.33762500000012,
+      "perOperationMs": 0.7133762500000012
+    },
+    {
+      "control": "coldSummary",
+      "pair": 7,
+      "label": "after",
+      "startOffsetMs": 1087.705833,
+      "elapsedMs": 69.939167,
+      "perOperationMs": 0.69939167
+    },
+    {
+      "control": "coldSummary",
+      "pair": 7,
+      "label": "before",
+      "startOffsetMs": 1161.1945409999998,
+      "elapsedMs": 72.15045899999996,
+      "perOperationMs": 0.7215045899999996
+    },
+    {
+      "control": "coldSummary",
+      "pair": 8,
+      "label": "before",
+      "startOffsetMs": 1236.8295830000002,
+      "elapsedMs": 71.40891699999997,
+      "perOperationMs": 0.7140891699999997
+    },
+    {
+      "control": "coldSummary",
+      "pair": 8,
+      "label": "after",
+      "startOffsetMs": 1311.955625,
+      "elapsedMs": 73.82737500000007,
+      "perOperationMs": 0.7382737500000007
+    },
+    {
+      "control": "coldSummary",
+      "pair": 9,
+      "label": "after",
+      "startOffsetMs": 1389.659416,
+      "elapsedMs": 69.39166699999987,
+      "perOperationMs": 0.6939166699999987
+    },
+    {
+      "control": "coldSummary",
+      "pair": 9,
+      "label": "before",
+      "startOffsetMs": 1462.7100409999998,
+      "elapsedMs": 74.49779200000012,
+      "perOperationMs": 0.7449779200000012
+    },
+    {
+      "control": "coldSummary",
+      "pair": 10,
+      "label": "before",
+      "startOffsetMs": 1540.7514580000002,
+      "elapsedMs": 58.53170799999998,
+      "perOperationMs": 0.5853170799999998
+    },
+    {
+      "control": "coldSummary",
+      "pair": 10,
+      "label": "after",
+      "startOffsetMs": 1602.6650829999999,
+      "elapsedMs": 68.28045799999995,
+      "perOperationMs": 0.6828045799999996
+    },
+    {
+      "control": "coldSummary",
+      "pair": 11,
+      "label": "after",
+      "startOffsetMs": 1674.985083,
+      "elapsedMs": 69.33450000000016,
+      "perOperationMs": 0.6933450000000017
+    },
+    {
+      "control": "coldSummary",
+      "pair": 11,
+      "label": "before",
+      "startOffsetMs": 1749.6829160000002,
+      "elapsedMs": 74.72408399999995,
+      "perOperationMs": 0.7472408399999995
+    },
+    {
+      "control": "coldSummary",
+      "pair": 12,
+      "label": "before",
+      "startOffsetMs": 1830.133291,
+      "elapsedMs": 71.49370899999985,
+      "perOperationMs": 0.7149370899999985
+    },
+    {
+      "control": "coldSummary",
+      "pair": 12,
+      "label": "after",
+      "startOffsetMs": 1905.2353750000002,
+      "elapsedMs": 71.3901249999999,
+      "perOperationMs": 0.7139012499999989
+    },
+    {
+      "control": "coldSummary",
+      "pair": 13,
+      "label": "after",
+      "startOffsetMs": 1980.469458,
+      "elapsedMs": 69.4419170000001,
+      "perOperationMs": 0.6944191700000011
+    },
+    {
+      "control": "coldSummary",
+      "pair": 13,
+      "label": "before",
+      "startOffsetMs": 2053.403791,
+      "elapsedMs": 71.60399999999981,
+      "perOperationMs": 0.7160399999999981
+    },
+    {
+      "control": "coldSummary",
+      "pair": 14,
+      "label": "before",
+      "startOffsetMs": 2128.38025,
+      "elapsedMs": 58.26933299999973,
+      "perOperationMs": 0.5826933299999973
+    },
+    {
+      "control": "coldSummary",
+      "pair": 14,
+      "label": "after",
+      "startOffsetMs": 2189.9568750000003,
+      "elapsedMs": 66.33554099999992,
+      "perOperationMs": 0.6633554099999992
+    },
+    {
+      "control": "coldSummary",
+      "pair": 15,
+      "label": "after",
+      "startOffsetMs": 2262.148916,
+      "elapsedMs": 68.85849999999982,
+      "perOperationMs": 0.6885849999999982
+    },
+    {
+      "control": "coldSummary",
+      "pair": 15,
+      "label": "before",
+      "startOffsetMs": 2337.113666,
+      "elapsedMs": 71.76724999999988,
+      "perOperationMs": 0.7176724999999987
+    },
+    {
+      "control": "coldSummary",
+      "pair": 16,
+      "label": "before",
+      "startOffsetMs": 2412.168958,
+      "elapsedMs": 71.41258299999981,
+      "perOperationMs": 0.7141258299999982
+    },
+    {
+      "control": "coldSummary",
+      "pair": 16,
+      "label": "after",
+      "startOffsetMs": 2486.9842080000003,
+      "elapsedMs": 68.59879199999978,
+      "perOperationMs": 0.6859879199999978
+    },
+    {
+      "control": "coldSummary",
+      "pair": 17,
+      "label": "after",
+      "startOffsetMs": 2558.95075,
+      "elapsedMs": 67.48504100000036,
+      "perOperationMs": 0.6748504100000037
+    },
+    {
+      "control": "coldSummary",
+      "pair": 17,
+      "label": "before",
+      "startOffsetMs": 2630.1965,
+      "elapsedMs": 72.05304100000012,
+      "perOperationMs": 0.7205304100000012
+    },
+    {
+      "control": "coldSummary",
+      "pair": 18,
+      "label": "before",
+      "startOffsetMs": 2705.7205830000003,
+      "elapsedMs": 71.96312499999976,
+      "perOperationMs": 0.7196312499999976
+    },
+    {
+      "control": "coldSummary",
+      "pair": 18,
+      "label": "after",
+      "startOffsetMs": 2781.0040830000003,
+      "elapsedMs": 68.20412499999975,
+      "perOperationMs": 0.6820412499999975
+    },
+    {
+      "control": "coldSummary",
+      "pair": 19,
+      "label": "after",
+      "startOffsetMs": 2852.477291,
+      "elapsedMs": 66.79758399999992,
+      "perOperationMs": 0.6679758399999991
+    },
+    {
+      "control": "coldSummary",
+      "pair": 19,
+      "label": "before",
+      "startOffsetMs": 2922.5888330000002,
+      "elapsedMs": 70.06116699999984,
+      "perOperationMs": 0.7006116699999985
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 0,
+      "label": "before",
+      "startOffsetMs": 3000.4795830000003,
+      "elapsedMs": 11.16420799999969,
+      "perOperationMs": 0.02232841599999938
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 0,
+      "label": "after",
+      "startOffsetMs": 3015.277875,
+      "elapsedMs": 9.714124999999967,
+      "perOperationMs": 0.019428249999999935
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 1,
+      "label": "after",
+      "startOffsetMs": 3028.250541,
+      "elapsedMs": 7.546042000000398,
+      "perOperationMs": 0.015092084000000795
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 1,
+      "label": "before",
+      "startOffsetMs": 3039.738541,
+      "elapsedMs": 11.906791999999768,
+      "perOperationMs": 0.023813583999999537
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 2,
+      "label": "before",
+      "startOffsetMs": 3055.206583,
+      "elapsedMs": 7.74716699999999,
+      "perOperationMs": 0.015494333999999981
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 2,
+      "label": "after",
+      "startOffsetMs": 3066.2291250000003,
+      "elapsedMs": 10.002165999999761,
+      "perOperationMs": 0.02000433199999952
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 3,
+      "label": "after",
+      "startOffsetMs": 3079.5205410000003,
+      "elapsedMs": 10.67791699999998,
+      "perOperationMs": 0.02135583399999996
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 3,
+      "label": "before",
+      "startOffsetMs": 3093.588166,
+      "elapsedMs": 11.938542000000325,
+      "perOperationMs": 0.02387708400000065
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 4,
+      "label": "before",
+      "startOffsetMs": 3109.566958,
+      "elapsedMs": 8.549375000000055,
+      "perOperationMs": 0.01709875000000011
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 4,
+      "label": "after",
+      "startOffsetMs": 3122.23925,
+      "elapsedMs": 10.226874999999836,
+      "perOperationMs": 0.020453749999999674
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 5,
+      "label": "after",
+      "startOffsetMs": 3135.7513750000003,
+      "elapsedMs": 10.417332999999871,
+      "perOperationMs": 0.02083466599999974
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 5,
+      "label": "before",
+      "startOffsetMs": 3149.47075,
+      "elapsedMs": 11.773458000000119,
+      "perOperationMs": 0.023546916000000237
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 6,
+      "label": "before",
+      "startOffsetMs": 3164.787666,
+      "elapsedMs": 8.845166999999947,
+      "perOperationMs": 0.017690333999999894
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 6,
+      "label": "after",
+      "startOffsetMs": 3176.947958,
+      "elapsedMs": 10.008499999999913,
+      "perOperationMs": 0.020016999999999827
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 7,
+      "label": "after",
+      "startOffsetMs": 3192.65425,
+      "elapsedMs": 10.17366600000014,
+      "perOperationMs": 0.02034733200000028
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 7,
+      "label": "before",
+      "startOffsetMs": 3206.779666,
+      "elapsedMs": 11.849750000000313,
+      "perOperationMs": 0.023699500000000626
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 8,
+      "label": "before",
+      "startOffsetMs": 3221.8545,
+      "elapsedMs": 8.62533300000041,
+      "perOperationMs": 0.01725066600000082
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 8,
+      "label": "after",
+      "startOffsetMs": 3233.7048330000002,
+      "elapsedMs": 10.143207999999959,
+      "perOperationMs": 0.02028641599999992
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 9,
+      "label": "after",
+      "startOffsetMs": 3247.2337500000003,
+      "elapsedMs": 7.077665999999681,
+      "perOperationMs": 0.014155331999999361
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 9,
+      "label": "before",
+      "startOffsetMs": 3257.695,
+      "elapsedMs": 11.13433299999997,
+      "perOperationMs": 0.02226866599999994
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 10,
+      "label": "before",
+      "startOffsetMs": 3272.735583,
+      "elapsedMs": 8.04641700000002,
+      "perOperationMs": 0.01609283400000004
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 10,
+      "label": "after",
+      "startOffsetMs": 3284.146208,
+      "elapsedMs": 9.495332999999846,
+      "perOperationMs": 0.01899066599999969
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 11,
+      "label": "after",
+      "startOffsetMs": 3296.7387080000003,
+      "elapsedMs": 7.465166999999838,
+      "perOperationMs": 0.014930333999999676
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 11,
+      "label": "before",
+      "startOffsetMs": 3308.020708,
+      "elapsedMs": 11.40908300000001,
+      "perOperationMs": 0.022818166000000018
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 12,
+      "label": "before",
+      "startOffsetMs": 3323.623208,
+      "elapsedMs": 8.200542000000041,
+      "perOperationMs": 0.016401084000000083
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 12,
+      "label": "after",
+      "startOffsetMs": 3335.661916,
+      "elapsedMs": 10.141834000000017,
+      "perOperationMs": 0.020283668000000036
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 13,
+      "label": "after",
+      "startOffsetMs": 3349.2627500000003,
+      "elapsedMs": 7.447165999999925,
+      "perOperationMs": 0.014894331999999849
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 13,
+      "label": "before",
+      "startOffsetMs": 3364.111041,
+      "elapsedMs": 11.695291999999881,
+      "perOperationMs": 0.023390583999999763
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 14,
+      "label": "before",
+      "startOffsetMs": 3379.187416,
+      "elapsedMs": 8.364166999999725,
+      "perOperationMs": 0.01672833399999945
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 14,
+      "label": "after",
+      "startOffsetMs": 3390.721875,
+      "elapsedMs": 9.75545800000009,
+      "perOperationMs": 0.01951091600000018
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 15,
+      "label": "after",
+      "startOffsetMs": 3403.6452910000003,
+      "elapsedMs": 9.9617089999997,
+      "perOperationMs": 0.0199234179999994
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 15,
+      "label": "before",
+      "startOffsetMs": 3418.423666,
+      "elapsedMs": 11.829999999999927,
+      "perOperationMs": 0.023659999999999855
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 16,
+      "label": "before",
+      "startOffsetMs": 3433.4877500000002,
+      "elapsedMs": 7.662291000000096,
+      "perOperationMs": 0.01532458200000019
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 16,
+      "label": "after",
+      "startOffsetMs": 3444.126458,
+      "elapsedMs": 10.05745799999977,
+      "perOperationMs": 0.02011491599999954
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 17,
+      "label": "after",
+      "startOffsetMs": 3457.9617080000003,
+      "elapsedMs": 9.885499999999865,
+      "perOperationMs": 0.01977099999999973
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 17,
+      "label": "before",
+      "startOffsetMs": 3471.178,
+      "elapsedMs": 11.09225000000015,
+      "perOperationMs": 0.022184500000000298
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 18,
+      "label": "before",
+      "startOffsetMs": 3486.292375,
+      "elapsedMs": 7.68041600000015,
+      "perOperationMs": 0.0153608320000003
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 18,
+      "label": "after",
+      "startOffsetMs": 3497.520583,
+      "elapsedMs": 9.959749999999985,
+      "perOperationMs": 0.019919499999999972
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 19,
+      "label": "after",
+      "startOffsetMs": 3512.40575,
+      "elapsedMs": 7.733958000000257,
+      "perOperationMs": 0.015467916000000513
+    },
+    {
+      "control": "cachedSummary",
+      "pair": 19,
+      "label": "before",
+      "startOffsetMs": 3524.024291,
+      "elapsedMs": 11.784166999999798,
+      "perOperationMs": 0.023568333999999594
+    }
+  ],
+  "passed": true
+}
