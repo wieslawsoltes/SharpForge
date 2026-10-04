@@ -159,7 +159,7 @@ export class AnalysisDecorations {
   activateLens(lens, offset) {
     if (lens.command) return this.context.command(lens.command);
     if (lens.count === undefined) return false;
-    return this.context.editor.request('references', {uri: this.context.editor.uri, offset});
+    return this.context.hostRequest('references', {uri: this.context.editor.uri, offset});
   }
 
   showCodeLensMenu() {
@@ -203,7 +203,7 @@ export class AnalysisDecorations {
   }
 
   async definition(offset) {
-    if (!this.context.services.supports('definition')) return this.context.editor.request('definition', {uri: this.context.editor.uri, offset});
+    if (!this.context.services.supports('definition')) return this.context.hostRequest('definition', {uri: this.context.editor.uri, offset});
     const result = await this.context.request('definition', {offset});
     const location = Array.isArray(result?.value) ? result.value[0] : result?.value;
     if (location) this.context.navigate(location);
