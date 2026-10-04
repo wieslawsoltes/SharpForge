@@ -57,12 +57,29 @@ node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js te
 npm run check
 npm run check:structure
 python tests/browser_a19_shell_test.py
+python tests/browser_vs_workflows_test.py
+node scripts/benchmark-workbench.js
 ```
 
 The browser command must run against both static and standalone output through the
 repository browser harness before either target is marked qualified. Unit fixtures
 do not qualify rendering, native process integration, device DPI, screen-reader
 behavior or pixel parity.
+
+The native keyboard Options follow-up consumes public `KeybindingService` and
+`eventStroke` exports from the editor workstream. Run its focused settings and
+boundary suites after integrating those exports. `project16-shell-coverage.json`
+maps each of the 54 assigned leaf issues to source, tests, qualification state and
+specific remaining acceptance limits.
+
+The large-workspace driver creates one real project with 501 C# source files,
+opens 20 documents and activates five real tools. Its output includes measured
+p50, p95 and p99. Set `SHARPFORGE_WORKBENCH_BASELINE` to a previously qualified
+trace to enforce the 20-percent relative p95 regression gate. Absolute startup,
+document-switch and tool-activation limits also apply. The separate comparator
+`node tests/workbench-perf-budget.mjs current.json baseline.json` checks captured
+traces without launching another browser. No browser timing is claimed until the
+integrated static and standalone drivers actually run.
 
 ## Embedding example
 
