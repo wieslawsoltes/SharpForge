@@ -21,6 +21,7 @@ import { MethodEmitter } from './method-emitter.js';
 import { SynthesizedMembers, isEntryPointMethod } from './synthesized-members.js';
 import { UnsupportedInCil } from './unsupported.js';
 import { nameThroughInstantiations, synthesizedMembersByToken } from './instantiated-members.js';
+import { createCilDebugInformation } from './debug-information.js';
 
 const CLI_HEADER_SIZE = 72;
 const initializedKinds = new Set([SymbolKind.Field, SymbolKind.Property, SymbolKind.Event]);
@@ -28,15 +29,17 @@ const initializedKinds = new Set([SymbolKind.Field, SymbolKind.Property, SymbolK
 export class AssemblyEmitter {
   /**
    * @param analysis a SemanticAnalysis that has run without errors
-   * @param {{name?: string, framework?: string, deterministic?: boolean, outputKind?: string}} [options]
+   * @param {{name?: string, framework?: string, deterministic?: boolean, outputKind?: string, portablePdb?: boolean,
+   *   embeddedPdb?: boolean, embedSources?: boolean, sourceLink?: object|string}} [options]
    */
   constructor(analysis, options = {}) {
     this.analysis = analysis;
     this.options = options;
     this.core = analysis.core;
     this.bodyAddresses = new Map();
+    this.debugInformation = createCilDebugInformation(analysis, options);
   }
-  /** @returns {{bytes: Uint8Array, entryPoint: number}} the image and the token of its entry point (0 for a library) */
+  /** @returns {{bytes: Uint8Array, entryPoint: number, pdb: Uint8Array|null}} the image, entry point, and optional symbols */
   emit() {
     const options = this.options,
       // With reference assemblies every AssemblyRef carries the identity of the assembly the type was read from.
@@ -75,7 +78,7 @@ export class AssemblyEmitter {
     section.bytes(metadata);
     const peOptions = { outputKind: isLibrary ? 'library' : 'console', deterministic: options.deterministic ?? true },
       bytes = writePE(section.finish(), metadataOffset, metadata.length, entryPoint, peOptions);
-    return { bytes, entryPoint };
+    return this.debugInformation?.finish({ bytes, entryPoint }) ?? { bytes, entryPoint, pdb: null };
   }
   /** Emits the bodies of one type into the text section and records where each begins. */
   emitBodies(type, writer, section) {
@@ -93,6 +96,7 @@ export class AssemblyEmitter {
     }
     nameThroughInstantiations(il, program.tokens, this.synthesizedIndex.byToken);
     const body = il.assemble();
+    this.debugInformation?.record(method, il, body);
     section.pad();
     this.bodyAddresses.set(method, TEXT_RVA + section.length);
     section.bytes(writeMethodBody(body.code, program.tokens.locals(il.locals), body.maxStack, body.handlers));
@@ -170,7 +174,7 @@ export class AssemblyEmitter {
 
 /**
  * Emits the assembly of an analysed compilation.
- * @returns {{bytes: Uint8Array, entryPoint: number}}
+ * @returns {{bytes: Uint8Array, entryPoint: number, pdb: Uint8Array|null}}
  * @throws {UnsupportedInCil} for a construct the emitter has no code for
  */
 export function emitAssemblyFromAnalysis(analysis, options = {}) {
