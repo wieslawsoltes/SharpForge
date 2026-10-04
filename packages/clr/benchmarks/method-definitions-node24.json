@@ -1,0 +1,25 @@
+{
+  "node": "v24.21.0",
+  "cpu": "Apple M3 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "definitions": 5,
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": false,
+  "results": [
+    {
+      "name": "cold all fixture method identities",
+      "unit": "microseconds/operation",
+      "median": 22.58399999999483,
+      "p95": 45.49999999998988,
+      "p99": 734.6249999999941
+    },
+    {
+      "name": "cached method and signature lookup",
+      "unit": "microseconds/operation",
+      "median": 0.007933300000000542,
+      "p95": 0.02923749999999927,
+      "p99": 0.07548329999999907
+    }
+  ]
+}

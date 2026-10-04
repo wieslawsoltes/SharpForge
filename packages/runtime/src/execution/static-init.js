@@ -1,6 +1,6 @@
 import {ManagedFault} from '../heap.js';
 
-const triggers=new Set(['field','static-method','constructor','instance-method']);
+const triggers=new Set(['field','static-method','constructor','instance-method','interface-method']);
 export function initializationKey(typeToken,genericIdentity=null) {
   return genericIdentity===null||genericIdentity===undefined?typeToken:`${typeToken}:${JSON.stringify(genericIdentity)}`;
 }
@@ -9,6 +9,7 @@ function mustInitialize(vm,typeToken,trigger) {
   const type=vm.typeSystem.types.get(typeToken);
   if(!type)return false;
   if(type.flags&0x100000)return trigger==='field';
+  if(trigger==='interface-method')return !!(type.flags&0x20);
   if(trigger!=='instance-method')return true;
   const base=type.baseToken?vm.inspector.metadata.typeName(type.baseToken):null;
   return base==='System.ValueType'||base==='System.Enum';

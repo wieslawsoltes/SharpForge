@@ -1,3 +1,4 @@
+import {DiagnosticId} from './codes.js';
 /**
  * `[SuppressMessage]` in programs of the execution profile (SF-A02-T37).
  *
@@ -18,7 +19,7 @@ const attributeNames = new Set([
   'global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute',
 ]);
 const namedProperties = new Set(['Scope', 'Target', 'Justification', 'MessageId']);
-const rejectionCode = 'SF1018';
+const rejectionCode = DiagnosticId.SF1018;
 const textOf = node => node.toString().replace(/\s+/g, '');
 const isString = expression => expression?.kind === 'StringLiteralExpression';
 

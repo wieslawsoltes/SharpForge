@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { claimedIdentity, runGates } from '../../../scripts/conformance/ci-planning/gates.js';
+import { normalizePlanningContext } from '../../../scripts/conformance/ci-planning/context.js';
 
 const task = 'SF-A29-T13';
 const pr = { head: { ref: 'codex/planning' }, body: `Task: ${task}`, base: { sha: 'a'.repeat(40) } };
@@ -26,16 +27,16 @@ test('PR identity binds project branch and authoritative claim/lock generation',
   mismatch.readRecord = async name => ({ ...await read(name), generation: name.startsWith('agent-locks/') ? 'wrong' : 'generation' });
   await assert.rejects(claimedIdentity(mismatch, pr), /Unverified lock/);
 });
-test('all gate outcomes survive a real failure; incompatible queue fixture is invoked', async () => {
+test('context-free planning qualification fails before executing repository commands', async () => {
   const commands = [];
-  const report = await runGates({ event: {}, execute: (command, args) => {
+  const report = await runGates({ execute: (command, args) => {
     commands.push(args);
     return { status: args.includes('scripts/planning/dag.js') ? 1 : 0, stdout: '', stderr: 'Duplicate work ID: fixture' };
   } });
   assert.equal(report.passed, false);
-  assert.equal(report.results.length, 4);
-  assert.match(report.errors[0], /Duplicate work ID/);
-  assert(commands.some(args => args.includes('planning/contracts/tests/merge-pair.test.js')));
+  assert.equal(report.results.length, 1);
+  assert.match(report.errors[0], /Missing authoritative PR qualification context/);
+  assert.deepEqual(commands, []);
 });
 test('cross-area actual Git diff fails ownership and the matching authoritative lock passes', async t => {
   const root = mkdtempSync(join(tmpdir(), 'sf-ci-gates-'));
@@ -52,6 +53,11 @@ test('cross-area actual Git diff fails ownership and the matching authoritative 
   mkdirSync(join(root, 'packages/other'), { recursive: true });
   writeFileSync(join(root, 'packages/other/index.js'), 'export const n=1;\n');
   git(['add', '.']); git(['commit', '-m', 'cross-area']);
+  const repository = 'fixture/repository', head = git(['rev-parse', 'HEAD']);
+  const context = normalizePlanningContext({ repository, number: 1, head, base: request.base.sha,
+    request: { ...request, number: 1, state: 'open', labels: [],
+      base: { ...request.base, repo: { full_name: repository } },
+      head: { ...request.head, sha: head, repo: { full_name: repository } } } });
   const execute = (command, args, options) => {
     if (command !== 'git') return { status: 0, stdout: '', stderr: '' };
     try { return { status: 0, stdout: execFileSync(command, args, options) }; }
@@ -60,6 +66,16 @@ test('cross-area actual Git diff fails ownership and the matching authoritative 
   const noLock = client();
   const read = noLock.readRecord;
   noLock.readRecord = async name => ({ ...await read(name), locks: [] });
-  assert.equal((await runGates({ root, event: { pull_request: request }, client: noLock, execute })).passed, false);
-  assert.equal((await runGates({ root, event: { pull_request: request }, client: client(), execute })).passed, true);
+  assert.equal((await runGates({ root, context, client: noLock, execute })).passed, false);
+  assert.equal((await runGates({ root, context, client: client(), execute })).passed, true);
+  const commands = [];
+  const failed = await runGates({ root, context, client: client(), execute: (command, args, options) => {
+    commands.push(args);
+    if (command === 'git') return execute(command, args, options);
+    return { status: args.includes('scripts/planning/dag.js') ? 1 : 0, stdout: '', stderr: 'Duplicate work ID: fixture' };
+  } });
+  assert.equal(failed.passed, false);
+  assert.equal(failed.results.length, 5);
+  assert.match(failed.errors[0], /Duplicate work ID/);
+  assert(commands.some(args => args.includes('planning/contracts/tests/merge-pair.test.js')));
 });

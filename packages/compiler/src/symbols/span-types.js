@@ -87,6 +87,8 @@ export function declareSpanTypes(core) {
   const readOnlySpan = declareSpan(core, 'System_ReadOnlySpan_T', RefKind.RefReadOnly);
   if (!alreadyDeclared && !span.isErrorType() && !readOnlySpan.isErrorType()) {
     addImplicitConversion(span, span, readOnlySpan.construct(span.typeParameters[0]));
+    // `string` declares `implicit operator ReadOnlySpan<char>(string)`: below C# 14 this operator is the conversion.
+    if (core.string?.addMember && core.char) addImplicitConversion(core.string, core.string, readOnlySpan.construct(core.char));
   }
   return { span, readOnlySpan };
 }
