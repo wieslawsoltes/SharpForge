@@ -2,10 +2,13 @@ import { SearchPatternError } from './errors.js';
 
 /** Unicode simple-fold canonicalization. Multi-code-point uppercase/lowercase expansions remain distinct. */
 export function foldCharacter(character) {
+  const code = character.charCodeAt(0);
+  if (code < 128) return code >= 65 && code <= 90 ? String.fromCharCode(code + 32) : character;
   if (character === '\u0131') return character;
   const upper = character.toUpperCase();
   const lower = upper.toLowerCase();
-  return [...upper].length === 1 && [...lower].length === 1 ? lower : character.toLowerCase();
+  const scalar = value => value.length === 1 || value.length === 2 && value.codePointAt(0) > 0xffff;
+  return scalar(upper) && scalar(lower) ? lower : character.toLowerCase();
 }
 
 export function isWord(character, matchCase = true) {
@@ -25,17 +28,11 @@ function entryPredicate(node, options) {
     return character => (options.matchCase ? character : foldCharacter(character)) === expected;
   }
   if (node.kind === 'range') {
-    const first = node.first.codePointAt(0);
-    const last = node.last.codePointAt(0);
-    return character => {
-      const code = character.codePointAt(0);
-      if (code >= first && code <= last) return true;
-      if (options.matchCase) return false;
-      for (const folded of [character.toUpperCase(), character.toLowerCase()]) {
-        if ([...folded].length === 1 && folded.codePointAt(0) >= first && folded.codePointAt(0) <= last) return true;
-      }
-      return false;
-    };
+    const first = node.first.codePointAt(0).toString(16);
+    const last = node.last.codePointAt(0).toString(16);
+    // Exactly one character-class range: native Unicode case folding is bounded to one scalar.
+    const predicate = new RegExp(`^[\\u{${first}}-\\u{${last}}]$`, options.matchCase ? 'u' : 'iu');
+    return character => predicate.test(character);
   }
   if (node.kind === 'builtin') return character => builtin(node.value, character, options);
   if (node.kind === 'property') {

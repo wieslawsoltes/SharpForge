@@ -21,7 +21,7 @@ export class SearchLimitError extends Error {
 
 export class SearchBudget {
   constructor({ maxSteps = 2000000, timeLimitMs = 25, maxStack = 20000, signal, clock = () => performance.now() } = {}) {
-    if (!Number.isSafeInteger(maxSteps) || maxSteps < 1 || maxSteps > 100000000) throw new RangeError('Invalid search step limit');
+    if (!Number.isSafeInteger(maxSteps) || maxSteps < 1 || maxSteps > 1000000000) throw new RangeError('Invalid search step limit');
     if (!Number.isFinite(timeLimitMs) || timeLimitMs <= 0 || timeLimitMs > 30000) throw new RangeError('Invalid search time limit');
     if (!Number.isSafeInteger(maxStack) || maxStack < 1 || maxStack > 100000) throw new RangeError('Invalid search stack limit');
     this.maxSteps = maxSteps;
