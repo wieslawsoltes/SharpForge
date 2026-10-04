@@ -15,6 +15,9 @@ import { MethodKind } from '../../symbols/members.js';
 import { isInheritedPositional } from '../../symbols/synthesized/records.js';
 import { fieldFlags, methodFlags, memberAccessFlags, parameterFlags } from './attribute-flags.js';
 import { covariantOverrideOf } from './covariant-overrides.js';
+import { explicitInterfaceOf, metadataMemberName } from './explicit-interface-names.js';
+
+export { explicitInterfaceOf } from './explicit-interface-names.js';
 
 const ENUM_VALUE_FIELD = 'value__';
 const ENUM_VALUE_FLAGS = FieldAttributes.Public | FieldAttributes.SpecialName | FieldAttributes.RTSpecialName;
@@ -36,11 +39,6 @@ function implementedBy(type, member) {
   return false;
 }
 
-/** The interface the declaration names when it is an explicit implementation (`void I.M()`), else null. */
-export function explicitInterfaceOf(method) {
-  return method.explicitInterfaceType ?? method.associatedSymbol?.explicitInterfaceType ?? null;
-}
-
 /**
  * An accessor of a static auto-property (`static int Count { get; private set; }`). In an interface it is the one
  * accessor without a written body that still has one: it reads or writes the property's backing field.
@@ -56,10 +54,13 @@ export function plannedMethod(type, method) {
     isAbstract = method.isAbstract || (inInterface && !method.hasBody && !isStaticAutoAccessor(method)),
     explicit = !!explicitInterfaceOf(method),
     overrides = covariantOverrideOf(type, method),
-    flags = methodFlags(method, { inInterface, implementsInterface: explicit || implementedBy(type, method) || implementedBy(type, method.associatedSymbol) });
+    // The binder maps property accessors individually: a getter-only interface does not make a private setter virtual.
+    implementsInterface = explicit || implementedBy(type, method) ||
+      (method.associatedSymbol?.kind === SymbolKind.Event && implementedBy(type, method.associatedSymbol)),
+    flags = methodFlags(method, { inInterface, implementsInterface });
   return {
     symbol: method,
-    name: method.metadataName,
+    name: metadataMemberName(method),
     // An override with a covariant return type has a slot of its own and names what it overrides (covariant-overrides.js).
     flags: overrides ? flags | MethodAttributes.NewSlot : flags,
     implFlags: MethodImplAttributes.IL,

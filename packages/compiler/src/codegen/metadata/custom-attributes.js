@@ -27,6 +27,7 @@ import { methodSignature, methodSymbolSignature } from './member-signatures.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
 import { contractAssemblyOf } from './reference-contracts.js';
+import { explicitInterfaceOf, metadataPropertyName } from './explicit-interface-names.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const TYPE_DEF_TABLE = 2;
@@ -176,7 +177,7 @@ export class CustomAttributeWriter {
         declaresExtensions = true;
       }
       // Roslyn writes the attributes it synthesizes for a type before the ones the program applies.
-      if (plan.properties.some(property => property.symbol.parameters.length)) this.defaultMember(typeToken, plan);
+      this.defaultMember(typeToken, plan);
       // The runtime refuses a by-reference-like field (a `Span<T>`) in a struct that is not marked as a ref struct.
       if (type.isRefLikeType) this.wellKnown(typeToken, IS_BY_REF_LIKE);
       if (type.isFixedBufferType) {
@@ -336,9 +337,10 @@ export class CustomAttributeWriter {
   }
   /** `[DefaultMember]` names the indexer, by the name its accessors have. */
   defaultMember(typeToken, plan) {
-    const indexer = plan.properties.find(property => property.symbol.parameters.length),
-      accessor = indexer.getter ?? indexer.setter;
-    this.wellKnown(typeToken, 'System.Reflection.DefaultMemberAttribute', [accessor.name.slice(4)]);
+    const indexer = plan.properties.find(property => property.symbol.parameters.length && !explicitInterfaceOf(property.symbol));
+    if (!indexer) return;
+    const name = metadataPropertyName(indexer.symbol, indexer.getter ?? indexer.setter);
+    this.wellKnown(typeToken, 'System.Reflection.DefaultMemberAttribute', [name]);
   }
   add(parent, constructor, value) {
     this.builder.addRow('CustomAttribute', { Parent: parent, Type: constructor, Value: value });

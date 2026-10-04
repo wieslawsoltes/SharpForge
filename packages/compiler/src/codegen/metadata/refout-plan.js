@@ -13,7 +13,7 @@ const markerAttribute = 'System.Runtime.CompilerServices.ReferenceAssemblyAttrib
 function hasAssemblyAttribute(assembly, name) {
   return attributesNamed(assembly, name).some(attribute => {
     const definition = attribute.attributeClass.originalDefinition ?? attribute.attributeClass;
-    return attribute.location === 'assembly' && !definition.containingType && !definition.isFileLocal && definition.arity === 0;
+    return attribute.location === 'assembly' && !definition.containingType && definition.arity === 0;
   });
 }
 

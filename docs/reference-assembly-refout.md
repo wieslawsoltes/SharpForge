@@ -35,6 +35,20 @@ Attributes on retained declarations use the existing custom-attribute writer. An
 marker is preserved once. Both `ReferenceAssemblyAttribute` and `InternalsVisibleToAttribute` can be written in source
 using the default framework symbol registry, or resolved from supplied metadata references.
 
+Well-known assembly attributes are recognized by their bound top-level, nongeneric source name, as Roslyn recognizes
+them. A generic or nested type with a similar name does not qualify. Same-file types participate in qualified names,
+namespace imports and type aliases before framework types are considered; they do not leak into another file or an
+extern alias. Explicit interface metadata names likewise use the resolved interface, including namespaces, nested
+constructions and expanded tuple types. Only the accessors the binder maps to an interface receive implicit virtual
+slots. Explicit-only indexers do not add `DefaultMemberAttribute` to their implementing type.
+
+There is a source-defined attribute exception to the normal CLR marker contract. When source explicitly applies a
+file-local `System.Runtime.CompilerServices.ReferenceAssemblyAttribute`, Roslyn recognizes its unmangled source name
+and preserves the applied attribute without synthesizing another one. Its emitted type name is mangled, so the image
+has no attribute with the standard CLR name and can load. The analogous file-local `InternalsVisibleToAttribute` keeps
+internal declarations without emitting the standard friend-assembly identity. SharpForge follows that observed
+source behavior. Use the framework attributes for the conventional reference and friend-assembly identities.
+
 Every concrete managed method shares one `ldnull; throw` body. Abstract methods and runtime delegate methods have no
 body. A removed static constructor still determines the type's `BeforeFieldInit` flag. Body edits and edits confined to
 removed declarations leave the emitted bytes unchanged. A primary-constructor capture edit that changes struct storage
@@ -62,11 +76,11 @@ uncached base links; the cache is released with the compilation. There are no pr
 
 ## Verification
 
-Focused tests are `tests/a03-22-reference-assemblies.test.js` and `tests/a03-22-reference-policy.test.js`. The source and
-native observer are in `tests/fixtures/a03-reference-assemblies/`.
+Focused tests are `tests/a03-22-reference-assemblies.test.js`, `tests/a03-22-reference-interface-members.test.js` and
+`tests/a03-22-reference-policy.test.js`. The source and native observer are in `tests/fixtures/a03-reference-assemblies/`.
 
 ```sh
-node scripts/limited.js node --test tests/a03-22-reference-assemblies.test.js tests/a03-22-reference-policy.test.js
+node scripts/limited.js node --test tests/a03-22-*.test.js
 node scripts/limited.js node packages/cil/tools/capture-reference-assemblies.mjs --dotnet /path/to/dotnet --output artifacts/a03-reference-assemblies
 node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-assemblies.mjs --mode refout --output artifacts/refout-performance.json
 ```
@@ -77,7 +91,12 @@ layout, base/interface relations, custom attributes, MethodImpl and accessor ass
 bodies, compiles an independent consumer against the SharpForge image, verifies friend access, and compares CoreCLR's
 reference-loading HRESULT against Roslyn while a marker-free control loads successfully. Serialized `typeof` values
 are compared by type name because the reference contract versions differ. Every retained observation records SDK,
-compiler, runtime, platform and input hashes. Tests, native capture and performance are pending at the implementation commit.
+compiler, runtime, platform and input hashes. The separate `edge-roslyn.json` observation was captured from
+`edge-source.cs` with SDK 10.0.201 and CoreCLR 10.0.5 on Linux x64, using `/refonly /target:library /deterministic+`
+and `/langversion:latest`, the installed reference-pack assemblies and the same native observer. It records source,
+compiler, observer and reference-image hashes, canonical interface names and the file-local attribute exception above.
+The source was named `Source.cs` during capture; file-local name hashes are compiler-specific. Unit tests, the main
+native comparison and performance are pending at this revision.
 Browser, Rust-native and Wasm execution are not qualified by these checks: the output is a compile-time reference
 assembly and its marker deliberately prevents execution loading.
 
@@ -86,5 +105,7 @@ assembly and its marker deliberately prevents execution loading.
 The compiler's reference-emission adapter applies the policy, registers the two framework attribute descriptors and
 preserves the static-constructor fact when filtering its member plan. These are narrow integration changes in existing
 metadata modules. Existing fixed-buffer and primary-capture planners supply required struct storage. Fixed-buffer
-type lookup now uses the planner's `byType` index rather than a scan per generated buffer. No compiler entry point,
-parser, executable instruction lowering or runtime dispatcher changes.
+type lookup now uses the planner's `byType` index rather than a scan per generated buffer. The source assembly and
+type/attribute binders share a per-file namespace index so qualified well-known attributes retain their bound identity.
+Canonical explicit interface names and precise accessor flags apply to the shared metadata writer. No compiler entry
+point, parser, executable instruction lowering or runtime dispatcher changes.

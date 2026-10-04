@@ -135,7 +135,7 @@ test('A03-T22 explicit static interface methods and accessors survive without a 
 test('A03-T22 fixed buffers and captured primary-constructor parameters retain struct layout metadata', () => {
   const { inspector, metadata } = emit();
   const packet = declared(inspector, 'RefSurface.Packet');
-  assert.equal(packet.fields[0].type, 'RefSurface.Packet+<Data>e__FixedBuffer');
+  assert.equal(inspector.signature(packet.fields[0].token).type, 'RefSurface.Packet+<Data>e__FixedBuffer');
   const buffer = declared(inspector, 'RefSurface.Packet+<Data>e__FixedBuffer');
   assert.deepEqual(names(buffer, 'fields'), ['FixedElementField']);
   assert.ok(metadata.rows[15].some(([, size, parent]) => size === 16 && parent === (buffer.token & 0xffffff)));
@@ -180,7 +180,7 @@ test('A03-T22 generic marker and friend lookalikes do not suppress the real mark
   assert.equal(names(declared(inspector, 'Contract'), 'methods').includes('Hidden'), false);
 });
 
-test('A03-T22 file-local attribute lookalikes retain mangled identities alongside the standard marker', () => {
+test('A03-T22 file-local well-known attributes follow Roslyn source-name recognition and retain mangled identities', () => {
   const text = `
     [assembly: System.Runtime.CompilerServices.ReferenceAssembly]
     [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Friend")]
@@ -190,9 +190,16 @@ test('A03-T22 file-local attribute lookalikes retain mangled identities alongsid
     }
     public class Contract { internal int Hidden() { return 1; } }`;
   const { inspector, metadata } = emit(text);
-  assert.equal(markers(metadata).length, 1);
-  assert.equal(names(declared(inspector, 'Contract'), 'methods').includes('Hidden'), false);
+  // Roslyn SDK 10.0.201 recognizes these source names before file-local metadata mangling (edge-roslyn.json).
+  assert.equal(markers(metadata).length, 0);
+  assert.equal(names(declared(inspector, 'Contract'), 'methods').includes('Hidden'), true);
   assert.equal(inspector.types.filter(type => type.name.includes('__ReferenceAssemblyAttribute')).length, 1);
+  const constructors = (metadata.rows[12] ?? [])
+    .filter(([parent]) => decodeCoded('HasCustomAttribute', parent) === 0x20000001)
+    .map(([, constructor]) => decodeCoded('CustomAttributeType', constructor));
+  assert.deepEqual(constructors.map(token => token >>> 24), [6, 6]);
+  assert.ok(constructors.some(token => inspector.resolveToken(token).owner.includes('__ReferenceAssemblyAttribute')));
+  assert.ok(constructors.some(token => inspector.resolveToken(token).owner.includes('__InternalsVisibleToAttribute')));
 });
 
 test('A03-T22 invalid refout options and source errors report diagnostics with no assembly', () => {

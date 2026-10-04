@@ -152,7 +152,7 @@ export const AttributeBinding = Base =>
       const text = simple.identifier.valueText,
         find = candidate => {
           if (!container) return binder.lookup(candidate, 0, scope);
-          if (container.kind === SymbolKind.Namespace) return container.getTypeMembers(candidate, 0)[0] ?? null;
+          if (container.kind === SymbolKind.Namespace) return binder.namespaceTypes(container, candidate, 0, scope)[0] ?? null;
           return (container.originalDefinition ?? container).getTypeMembers?.(candidate, 0)[0] ?? null;
         };
       const plain = find(text),
