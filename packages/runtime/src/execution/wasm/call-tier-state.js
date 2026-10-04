@@ -93,6 +93,8 @@ export function observeWasmCall(vm, frame) {
       selected.record = record;
     }
     state.selectedCalls = increment(state.selectedCalls);
+    vm.runtimeEvents?.emit(RuntimeEventName.TierUp,
+      {kind: 'call', method: record.token, frame: frame.id, epoch: state.epoch.epoch}, vm.instructions);
   } else if (record.calls >= owner.options.callThreshold) queue(state, record);
 }
 

@@ -1,6 +1,8 @@
 import {compareObjects} from './object-comparison.js';
 import {resolveStringComparer, registerStringComparerExtensions} from './string-comparer.js';
 import {registerStringComparisonExtensions} from './string.js';
+import {registerStringBuilderCharacterExtensions} from '../text/string-builder-append.js';
+import {registerStringSearchWindowExtensions} from './string-search.js';
 
 const comparerType = 'System.Collections.IComparer';
 
@@ -12,6 +14,8 @@ function contracts(registry) {
   // Ordered A07 append point: new registrations follow these calls, never precede released IDs.
   registerStringComparerExtensions(registry);
   registerStringComparisonExtensions(registry);
+  registerStringBuilderCharacterExtensions(registry);
+  registerStringSearchWindowExtensions(registry);
 }
 
 function invoke(platform, descriptor, args) {
