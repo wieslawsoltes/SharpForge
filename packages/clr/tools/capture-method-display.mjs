@@ -6,7 +6,8 @@ import { executeAssembly } from '../../../scripts/conformance/oracle/clr-run.js'
 
 const output = process.argv[2];
 if (!output) throw new Error('Pass an explicit capture JSON path');
-const sourceBytes = await readFile(new URL('../../../tests/fixtures/clr-method-display/Program.cs', import.meta.url));
+const source = process.argv[3] ?? new URL('../../../tests/fixtures/clr-method-display/Program.cs', import.meta.url);
+const sourceBytes = await readFile(source);
 const toolchain = await resolveToolchain();
 const compiled = await compileOnce({ source: 'Program.cs', sourceBytes, langVersion: '12.0' }, toolchain);
 assert.equal(compiled.result.exitCode, 0, JSON.stringify(compiled.result));

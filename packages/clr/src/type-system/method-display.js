@@ -1,4 +1,4 @@
-import { cliSystemName, formatSignatureType } from '@sharpforge/cil';
+import { cliSystemName, decodeCoded, formatSignatureType } from '@sharpforge/cil';
 import { loadError, LoadErrorCode } from '../load-errors.js';
 
 const unsupported = message => loadError(LoadErrorCode.TypeLoad, message);
@@ -31,6 +31,29 @@ class MethodDisplayTypes {
     const result = { name, namespace, fullName, nested };
     this.#names.set(token, result);
     return result;
+  }
+  nestedName(token, name) {
+    if (name.checkedAncestors) return name.fullName;
+    const module = this.#method.module;
+    let depth = 0;
+    if (token >>> 24 === 2) {
+      for (let parent = module.typeDefinition(token).declaringType; parent; parent = parent.declaringType) {
+        if (++depth > 64) throw limit();
+        identifier(parent.name);
+        identifier(parent.namespace);
+      }
+    } else {
+      let parent = decodeCoded('ResolutionScope', module.row(token)[0]);
+      while (parent >>> 24 === 1) {
+        if (++depth > 64) throw limit();
+        const row = module.row(parent);
+        identifier(module.string(row[1], { maxBytes: 16384 }));
+        identifier(module.string(row[2], { maxBytes: 16384 }));
+        parent = decodeCoded('ResolutionScope', row[0]);
+      }
+    }
+    name.checkedAncestors = true;
+    return name.fullName;
   }
   parameters(owner) {
     if (!this.#genericNamesChecked) {
@@ -71,8 +94,7 @@ class MethodDisplayTypes {
       }
       if (node.kind === 'class' || node.kind === 'valuetype') {
         const name = this.named(node.token);
-        if (!simple && name.nested) throw unsupported('Nested generic arguments require resolved type formatting');
-        return this.bounded(simple ? name.name : name.fullName);
+        return this.bounded(simple ? name.name : name.nested ? this.nestedName(node.token, name) : name.fullName);
       }
       if (node.kind === 'genericParameter') {
         const owner = node.scope === 'method' ? this.#method : this.#method.declaringType;
