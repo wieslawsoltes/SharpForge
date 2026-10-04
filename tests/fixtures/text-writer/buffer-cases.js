@@ -18,23 +18,47 @@ export function sourceBufferWriter(row, name = 'Write') {
   const call = (member, parameters, count) => emit(Op.BUILTIN, frameworkBuiltin(writerContract(member, parameters)).id, count);
   if (row.nullWriter) constant(null);
   else call('.ctor', [], 0);
-  emit(Op.STSTATIC, 0); emit(Op.POP);
+  emit(Op.STSTATIC, 0);
+  emit(Op.POP);
   if (!row.nullWriter) {
-    emit(Op.LDSTATIC, 0); constant('seed|'); call('Write', ['string'], 2); emit(Op.POP);
+    emit(Op.LDSTATIC, 0);
+    constant('seed|');
+    call('Write', ['string'], 2);
+    emit(Op.POP);
     if (row.setNewLine) {
-      emit(Op.LDSTATIC, 0); constant(newline(row)); call('set_NewLine', ['string'], 2); emit(Op.POP);
+      emit(Op.LDSTATIC, 0);
+      constant(newline(row));
+      call('set_NewLine', ['string'], 2);
+      emit(Op.POP);
     }
   }
-  if (row.disposed) { emit(Op.LDSTATIC, 0); call('Dispose', [], 1); emit(Op.POP); }
+  if (row.disposed) {
+    emit(Op.LDSTATIC, 0);
+    call('Dispose', [], 1);
+    emit(Op.POP);
+  }
   if (row.input === null) constant(null);
-  else { constant(row.input.length); emit(Op.NEWARR, image.constants.push('char') - 1); }
-  emit(Op.STSTATIC, 1); emit(Op.POP);
+  else {
+    constant(row.input.length);
+    emit(Op.NEWARR, image.constants.push('char') - 1);
+  }
+  emit(Op.STSTATIC, 1);
+  emit(Op.POP);
   row.input?.forEach((value, index) => {
-    emit(Op.LDSTATIC, 1); constant(index); constant(value); emit(Op.STELEM); emit(Op.POP);
+    emit(Op.LDSTATIC, 1);
+    constant(index);
+    constant(value);
+    emit(Op.STELEM);
+    emit(Op.POP);
   });
-  emit(Op.LDSTATIC, 0); emit(Op.LDSTATIC, 1);
-  if (!row.full) { constant(row.index); constant(row.count); }
-  call(name, row.full ? fullParameters : sliceParameters, row.full ? 2 : 4); emit(Op.RET);
+  emit(Op.LDSTATIC, 0);
+  emit(Op.LDSTATIC, 1);
+  if (!row.full) {
+    constant(row.index);
+    constant(row.count);
+  }
+  call(name, row.full ? fullParameters : sliceParameters, row.full ? 2 : 4);
+  emit(Op.RET);
   image.statics = [{name: 'Writer', type: row.baseView ? parentType : writerType, value: null},
     {name: 'Buffer', type: 'char[]', value: null}];
   image.methods[0].code = Int32Array.from(code);
@@ -53,7 +77,8 @@ export function bufferWriterAssembly(row, name = 'Write') {
       else writer.op('newobj', context.member(writerType, '.ctor', 'void', [], false)).op('castclass', context.resolve(owner));
       writer.op('stsfld', writerField);
       if (!row.nullWriter) {
-        writer.op('ldsfld', writerField).op('ldstr', 0x70000000 + context.md.userString('seed|')); call('Write', ['string']);
+        writer.op('ldsfld', writerField).op('ldstr', 0x70000000 + context.md.userString('seed|'));
+        call('Write', ['string']);
         if (row.setNewLine) {
           writer.op('ldsfld', writerField);
           if (row.newLine === null) writer.op('ldnull');
@@ -61,13 +86,17 @@ export function bufferWriterAssembly(row, name = 'Write') {
           call('set_NewLine', ['string']);
         }
       }
-      if (row.disposed) { writer.op('ldsfld', writerField); call('Dispose'); }
+      if (row.disposed) {
+        writer.op('ldsfld', writerField);
+        call('Dispose');
+      }
       if (row.input === null) writer.op('ldnull');
       else writer.op('ldc.i4', row.input.length).op('newarr', context.resolve('System.Char'));
       writer.op('stsfld', buffer);
       row.input?.forEach((value, index) => writer.op('ldsfld', buffer).op('ldc.i4', index).op('ldc.i4', value).op('stelem.i2'));
       writer.op('ldsfld', writerField).op('ldsfld', buffer);
       if (!row.full) writer.op('ldc.i4', row.index).op('ldc.i4', row.count);
-      call(name, row.full ? fullParameters : sliceParameters); writer.op('ret');
+      call(name, row.full ? fullParameters : sliceParameters);
+      writer.op('ret');
     }}]});
 }

@@ -115,6 +115,26 @@ for (const engine of ['source', 'cil']) {
     } finally { heap.releaseHandle(root); writer.stop(); }
   });
 
+  test(`StringWriter buffer line ${engine}: the released string overload keeps its single disposal check`, () => {
+    const writer = writerPlatform(engine);
+    const {platform, vm, call} = writer;
+    call('Write', ['string'], ['seed|']);
+    const builder = call('GetStringBuilder');
+    let armed = true;
+    try {
+      vm.onWrite = event => {
+        if (armed && event.handle === builder.h && event.property === '$capacity') {
+          armed = false;
+          call('Dispose');
+        }
+      };
+      call('WriteLine', ['string'], ['AB']);
+      assert.equal(armed, false);
+      assert.equal(platform.native(call('ToString')), 'seed|AB\n');
+      assert.throws(() => call('WriteLine'), {name: 'ObjectDisposedException'});
+    } finally { vm.onWrite = null; writer.stop(); }
+  });
+
   test(`StringWriter buffer line ${engine}: host text limit preserves a completed value before newline failure`, () => {
     const writer = writerPlatform(engine);
     const {platform, reference, call} = writer;

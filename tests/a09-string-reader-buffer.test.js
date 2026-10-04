@@ -165,11 +165,13 @@ test('SF-A09-T03 buffer: registration appends after all reader and writer base I
     ctor(owner, parameters = []) {entries.push({owner, name: '.ctor', parameters});},
     prop(owner, name) {entries.push({owner, name: 'get_' + name}, {owner, name: 'set_' + name});}
   });
-  assert.equal(entries.length, 24);
-  assert.deepEqual(entries.slice(-4, -2), ['Read', 'ReadBlock']
+  assert.equal(entries.length, 26);
+  assert.deepEqual(entries.slice(-6, -4), ['Read', 'ReadBlock']
     .map(name => ({owner: parentType, name, parameters: ['char[]', 'int', 'int']})));
-  assert.deepEqual(entries.slice(-2), [['char[]'], ['char[]', 'int', 'int']]
+  assert.deepEqual(entries.slice(-4, -2), [['char[]'], ['char[]', 'int', 'int']]
     .map(parameters => ({owner: 'System.IO.TextWriter', name: 'Write', parameters})));
+  assert.deepEqual(entries.slice(-2), [['char[]'], ['char[]', 'int', 'int']]
+    .map(parameters => ({owner: 'System.IO.TextWriter', name: 'WriteLine', parameters})));
 });
 
 test('SF-A09-T03 buffer: native capture pins exact source bytes and UTF-16 boundary data', () => {
