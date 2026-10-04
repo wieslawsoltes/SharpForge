@@ -8,3 +8,4 @@ export {applyDesignPatch} from './design-patch.js';
 export {executionCodeStatistics, invalidateExecutionCode} from './execution/code-version.js';
 export {RuntimeEventLog, RuntimeEventName} from './execution/runtime-events.js';
 export {framePoolStatistics} from './execution/frame-pool.js';
+export {instructionProfile} from './execution/profiler.js';
