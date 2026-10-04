@@ -17,6 +17,8 @@ containers, object-null constants and a TypeSpec class-null constant containing
 a tuple. The TypeSpec case is explicitly authored metadata, not a C# tuple
 constant declaration. Negative cases cover framework-name lookalikes, mismatched
 flags/name counts, parent references, duplicates and limits before expansion.
+Unresolved enum TypeSpec annotations keep an explicit unsupported reason and the
+existing unverified enum/scalar result, rather than attempting a missing type decode.
 The public formatter hook is independently covered for unchanged fallback,
 AST ownership, result validation and shared depth/node/cancellation budgets.
 

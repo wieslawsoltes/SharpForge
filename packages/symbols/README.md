@@ -123,7 +123,9 @@ Unbound locals and type-dependent constants keep `displayTypeName: null` and
 annotated without a PE. Mismatched annotations keep their raw fields and expose
 `dynamic-type-mismatch`, `tuple-name-count-mismatch` or `tuple-type-mismatch`;
 no source spelling is guessed. Referenced TypeSpec constants are decoded for
-display only, not interpreted as runtime values. Tuple labels preserve PDB text;
+display only, not interpreted as runtime values. Enum TypeSpec annotations remain
+`unsupported-enum-type-specification`, preserving their unverified enum identity
+and scalar value. Tuple labels preserve PDB text;
 this display is not a C# source serializer.
 
 Before CDI decoding, annotation parents and duplicate kinds are checked; limits

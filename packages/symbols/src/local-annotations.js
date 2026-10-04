@@ -90,6 +90,10 @@ export function bindConstantAnnotations(constants, metadata = null) {
   const specs = metadata && constantTypeSpecs(annotated, metadata);
   const types = new Map();
   for (const constant of annotated) {
+    if (constant.enumTypeToken >>> 24 === 27) {
+      constant.annotationReason = 'unsupported-enum-type-specification';
+      continue;
+    }
     let type;
     if (!constant.typeToken && !constant.enumTypeToken) type = { kind: 'primitive', name: constant.type };
     else if (!metadata) continue;
