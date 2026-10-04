@@ -46,3 +46,11 @@ performs an explicit baseline comparison for an adapter.
 Focused validation: `node scripts/limited.js node --test
 tests/a24-vfs-memory.test.js tests/a24-path-encoding.test.js`. The shared provider
 conformance helper is reusable by each complete storage implementation.
+
+## Prepared source record foundation
+
+`workspaceRecordSource`, `cloneWorkspaceRecordSnapshot`, `hashWorkspaceRecord`
+and `workspaceRecordBytes` accept immutable prepared roots without reading the
+compatibility text getter. The [prepared-source contract](PREPARED_SOURCES.md)
+describes exact encoding, bounded hashing, and the dependent journal/recovery
+composition across the completed Project 18 source stack.
