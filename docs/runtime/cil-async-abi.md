@@ -58,3 +58,13 @@ ValueTask, custom notification awaiters, async void and async iterators remain s
 runtime extensions. Browser and Rust/Wasm execution have not been qualified for this
 contribution. No performance pass is claimed; the verifier, scheduler and GC changes
 require paired ordinary-control and async measurements in the serial validation slot.
+
+The prepared benchmark uses 80 warmups and 24 samples, reporting median/p95 admission,
+execution and total time plus managed allocations. It includes an ordinary arithmetic
+and intrinsic-call control. A directory produced by the genuine reference capture adds
+the same Debug/Release async images on both revisions; unsupported baseline images are
+reported as rejected rather than timed as successful executions.
+
+```sh
+node scripts/limited.js node packages/runtime/bench/cil-async.mjs <reference-capture-directory>
+```
