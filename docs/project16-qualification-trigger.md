@@ -63,26 +63,37 @@ concurrency group remains `project16-qualification` with
 GitHub concurrency is not an unlimited queue, so explicit requests must remain
 one at a time.
 
-Branch-triggered runs always have **empty editor and workbench baselines** and
-therefore use capture-only comparison mode. They do not invent relative
-regression verdicts. Existing absolute correctness/latency checks still apply
-where the chosen stage runs them. To compare against reviewed compatible
-baselines, use manual dispatch; its baseline inputs are preserved exactly and
-are checked by the existing baseline preflight before a performance capture.
+Ordinary branch-triggered runs have **empty editor and workbench baselines** and
+use capture-only comparison mode. Their relative regression verdict remains
+null; existing absolute correctness/latency checks still apply. An explicit
+`compare-a5-` nonce prefix opts into the
+[pinned, reviewed a5 baseline profile](project16-a5-baseline-profile.md):
+
+```text
+codex/project16/qualify-ubuntu-chromium-all-compare-a5-20261004-a6
+```
+
+This profile permits only Ubuntu/Chromium with `all` or `performance`. The
+`compare-` namespace is reserved: malformed or unknown profile requests fail
+instead of falling back to capture-only. Profile bytes, source identity and
+schemas are verified before environment output; live host compatibility stays
+in the existing performance preflight. Manual dispatch continues to preserve its
+exact baseline path inputs and use that same preflight before capture.
 
 ## Recorded provenance and scope
 
 Subsequent step conditions and artifact names use the resolver's runner, engine
 and stage. `source.json` records the immutable commit and tree, trigger event,
 full ref, optional nonce, runner label/OS, stage, engine, capture-only flag,
-baseline paths and workflow run ID. The evidence and artifact steps run only if
+baseline paths, nullable `baselineProfile` and workflow run ID. The evidence and artifact steps run only if
 the resolver succeeded, including when a later build or qualification step
 fails. An invalid trigger cannot upload a misleading qualification artifact.
 
-The new focused regression source is
-`tests/a19-qualification-trigger.test.js`. It covers all platform/engine/stage
+The focused regression sources are `tests/a19-qualification-trigger.test.js`
+and `tests/a19-qualification-profiles.test.js`. They cover platform/engine/stage
 choices, manual defaults/baselines, unrelated or malformed events, ref/SHA and
-runner mismatches, bounded event reads and environment injection rejection.
+runner mismatches, bounded event reads, environment injection rejection, pinned
+profile integrity, reserved prefixes and preserved performance-stage failures.
 These tests exercise no browser, benchmark, dependency install or remote action.
 They were authored for the next consolidated affected validation; no execution
 or successful remote qualification is claimed by this source change.
