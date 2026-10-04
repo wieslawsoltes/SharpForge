@@ -122,6 +122,9 @@ test('A02-T30 a struct of the framework created with arguments calls its constru
 });
 
 test('A02-T30 a list pattern over a type the binder has no list shape for is refused, not miscompiled', () => {
-  const errors = refused(`class C { static int Main() { string s = "ab"; return s is ['a', ..] ? 1 : 0; } }`);
+  // (A string has a list shape since SF-A02-T30 - tests/compiler-list-pattern-shapes.test.js; the type without one
+  // here is countable but indexed by System.Index only.)
+  const errors = refused(`class Only { public int Count { get { return 1; } } public int this[System.Index index] { get { return 0; } } }
+    class C { static int Main() { var only = new Only(); return only is [0, ..] ? 1 : 0; } }`);
   assert.match(errors[0], /^SF2200 /);
 });
