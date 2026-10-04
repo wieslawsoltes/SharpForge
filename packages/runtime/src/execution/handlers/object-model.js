@@ -17,7 +17,7 @@ for(const name of ['ldsfld','stsfld','ldsflda'])handlers.set(name,(vm,frame,inst
   else vm.push(vm.address('static',slot.key));
   finishMemoryAccess(frame);
 });
-for(const name of ['ldfld','stfld','ldflda'])handlers.set(name,executeFieldAccess);
+for(const name of ['ldfld','stfld','ldflda'])handlers.set(name,(vm,frame,instruction)=>executeFieldAccess(vm,frame,instruction,name));
 handlers.set('box',(vm,frame,instruction)=>{
   const value=vm.pop(),table=vm.typeSystem.table(instruction.operand),type=table.name;
   if(!table.flags.valueType){vm.push(castReference(vm.heap,value,table));return;}

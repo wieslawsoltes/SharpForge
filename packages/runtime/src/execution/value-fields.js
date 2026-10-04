@@ -4,9 +4,8 @@ import {loadFieldValue} from './field-storage.js';
 import {finishMemoryAccess} from './statics.js';
 
 /** Existing field resolution validates closed owner identity for both heap and inline receivers. */
-export function executeFieldAccess(vm, frame, instruction) {
+export function executeFieldAccess(vm, frame, instruction, name) {
   try {
-    const name = instruction.name;
     const replacement = name === 'stfld' ? vm.pop() : undefined;
     const receiver = vm.pop();
     const value = receiver?.byref ? vm.dereference(receiver) : receiver;
