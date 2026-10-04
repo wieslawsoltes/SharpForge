@@ -4,7 +4,8 @@ export const DEFAULT_DISK_LIMITS = Object.freeze({
 
 /** Limits are caller-owned and immutable once a workspace has been opened. */
 export function diskLimits(options = {}) {
-  const limits = {...DEFAULT_DISK_LIMITS, ...options};
+  const limits = Object.fromEntries(Object.keys(DEFAULT_DISK_LIMITS).map(key => [key,
+    Object.hasOwn(options, key) ? options[key] : DEFAULT_DISK_LIMITS[key]]));
   for (const key of Object.keys(DEFAULT_DISK_LIMITS)) {
     if (!Number.isSafeInteger(limits[key]) || limits[key] < 1) throw new RangeError(`Invalid disk workspace limit ${key}`);
   }
