@@ -63,10 +63,12 @@ export class WorkbenchShell {
 
   context() {
     const state = this.options.state();
-    const editor = this.options.getEditor?.();
-    const caretOffset = editor?.caretOffset ?? editor?.offset ?? 0;
     const uri = state.active ?? this.documents.active;
     const file = this.documents.get(uri);
+    const candidate = this.options.getEditor?.();
+    const model = this.documents.models?.get(uri);
+    const editor = file && !candidate?.disposed && candidate?.uri === uri && (!model || candidate.model === model) ? candidate : null;
+    const caretOffset = editor?.caretOffset ?? editor?.offset ?? 0;
     const session = this.services.sessions?.active;
     if (this.document.activeElement?.closest('.sf-editor')) this.lastDocumentKind = 'code';
     else if (state.panel === 'designer' || state.panel?.startsWith('designer-')) this.lastDocumentKind = 'designer';
