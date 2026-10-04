@@ -1,0 +1,103 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "687dafa12b716bd17c380e091a5b45facca857719ebab265130e39ecca92615c",
+  "source": "Public TimeSpan(long) constructor and TotalMilliseconds/TotalSeconds getters; no simulator or private state mutation.",
+  "rows": [
+    {
+      "ticks": "-9223372036854775808",
+      "totalMilliseconds": "-922337203685477",
+      "totalSeconds": "-922337203685.4775"
+    },
+    {
+      "ticks": "-9223372036854775807",
+      "totalMilliseconds": "-922337203685477",
+      "totalSeconds": "-922337203685.4775"
+    },
+    {
+      "ticks": "-9223372036854770001",
+      "totalMilliseconds": "-922337203685477",
+      "totalSeconds": "-922337203685.4769"
+    },
+    {
+      "ticks": "-9223372036854770000",
+      "totalMilliseconds": "-922337203685477",
+      "totalSeconds": "-922337203685.4769"
+    },
+    {
+      "ticks": "-9223372036854769999",
+      "totalMilliseconds": "-922337203685477",
+      "totalSeconds": "-922337203685.4769"
+    },
+    {
+      "ticks": "-123456789012345678",
+      "totalMilliseconds": "-12345678901234.568",
+      "totalSeconds": "-12345678901.234568"
+    },
+    {
+      "ticks": "-9007199254740993",
+      "totalMilliseconds": "-900719925474.0992",
+      "totalSeconds": "-900719925.4740992"
+    },
+    {
+      "ticks": "-123456789",
+      "totalMilliseconds": "-12345.6789",
+      "totalSeconds": "-12.3456789"
+    },
+    {
+      "ticks": "-1",
+      "totalMilliseconds": "-0.0001",
+      "totalSeconds": "-1E-07"
+    },
+    {
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0"
+    },
+    {
+      "ticks": "1",
+      "totalMilliseconds": "0.0001",
+      "totalSeconds": "1E-07"
+    },
+    {
+      "ticks": "123456789",
+      "totalMilliseconds": "12345.6789",
+      "totalSeconds": "12.3456789"
+    },
+    {
+      "ticks": "9007199254740993",
+      "totalMilliseconds": "900719925474.0992",
+      "totalSeconds": "900719925.4740992"
+    },
+    {
+      "ticks": "123456789012345678",
+      "totalMilliseconds": "12345678901234.568",
+      "totalSeconds": "12345678901.234568"
+    },
+    {
+      "ticks": "9223372036854769999",
+      "totalMilliseconds": "922337203685477",
+      "totalSeconds": "922337203685.4769"
+    },
+    {
+      "ticks": "9223372036854770000",
+      "totalMilliseconds": "922337203685477",
+      "totalSeconds": "922337203685.4769"
+    },
+    {
+      "ticks": "9223372036854770001",
+      "totalMilliseconds": "922337203685477",
+      "totalSeconds": "922337203685.4769"
+    },
+    {
+      "ticks": "9223372036854775806",
+      "totalMilliseconds": "922337203685477",
+      "totalSeconds": "922337203685.4775"
+    },
+    {
+      "ticks": "9223372036854775807",
+      "totalMilliseconds": "922337203685477",
+      "totalSeconds": "922337203685.4775"
+    }
+  ]
+}
