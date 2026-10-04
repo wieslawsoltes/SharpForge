@@ -6,15 +6,16 @@ export function documentLayoutFixture() {
     { name: 'Main', result: 'int', initLocals: false, maxStack: 1,
       body: writer => writer.op('br.s', 'done').mark('done').op('ldc.i4', 42).op('ret') },
     { name: 'Catch', result: 'int', locals: ['int'], body: writer => writer.mark('try').op('ldnull').op('throw')
-      .mark('catch').op('pop').op('ldc.i4', 42).op('stloc.0').op('leave.s', 'done').mark('done').op('ldloc.0').op('ret'),
+      .mark('catch').op('pop').op('ldc.i4', 42).op('stloc.0').op('leave.s', 'done')
+      .mark('handlerEnd').op('nop').mark('done').op('ldloc.0').op('ret'),
       handlers: (labels, context) => [{ start: labels.get('try'), end: labels.get('catch'), target: labels.get('catch'),
-        handlerEnd: labels.get('done'), catchType: context.resolve('System.Exception') }] },
+        handlerEnd: labels.get('handlerEnd'), catchType: context.resolve('System.Exception') }] },
     { name: 'Filter', result: 'int', locals: ['int'], body: writer => writer.mark('try').op('br', 'throw')
       .mark('throw').op('ldnull').op('throw').mark('filter').op('pop').op('ldc.i4.1').op('endfilter')
       .mark('handler').op('pop').op('ldc.i4', 43).op('stloc.0').op('leave.s', 'done')
-      .mark('done').op('ldloc.0').op('ret'),
+      .mark('handlerEnd').op('nop').mark('done').op('ldloc.0').op('ret'),
       handlers: labels => [{ flags: 1, start: labels.get('try'), end: labels.get('filter'), target: labels.get('handler'),
-        handlerEnd: labels.get('done'), catchType: labels.get('filter') }] },
+        handlerEnd: labels.get('handlerEnd'), catchType: labels.get('filter') }] },
     { name: 'Switch', result: 'int', body: writer => writer.op('ldc.i4.1').op('switch', ['bad', 'good'])
       .mark('bad').op('ldc.i4.m1').op('ret').mark('good').op('ldc.i4', 44).op('ret') },
   ] });

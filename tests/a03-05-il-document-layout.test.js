@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { assembleILDocument, formatILDocument, AssemblyInspector, CilError, ilLabel } from '@sharpforge/cil';
 import { CilVirtualMachine } from '@sharpforge/runtime';
+import { managedFixture } from './managed-fixtures.js';
 import { documentLayoutFixture, editedLayoutDocument, rebuiltLayoutFixture } from './fixtures/a03-il-document-layout/input.js';
 
 const methodTokens = [0x06000001, 0x06000002, 0x06000003, 0x06000004];
@@ -46,28 +47,29 @@ test('layout remaps catch/filter starts, ends and handler endpoints with both sh
   const oldCatch = before.getMethod(methodTokens[1]), newCatch = after.getMethod(methodTokens[1]);
   assert.equal(newCatch.handlers[0].start, oldCatch.handlers[0].start);
   assert.equal(newCatch.handlers[0].end, oldCatch.handlers[0].end);
-  assert.equal(newCatch.handlers[0].handlerEnd, oldCatch.handlers[0].handlerEnd + 303);
-  assert.equal(newCatch.instructions.find(instruction => instruction.name === 'leave').operand, newCatch.handlers[0].handlerEnd);
+  assert.equal(newCatch.handlers[0].handlerEnd, oldCatch.handlers[0].handlerEnd + 3);
+  assert.equal(newCatch.instructions.find(instruction => instruction.name === 'leave').operand, newCatch.handlers[0].handlerEnd + 301);
   const oldFilter = before.getMethod(methodTokens[2]), newFilter = after.getMethod(methodTokens[2]);
   assert.equal(newFilter.instructions[0].name, 'br.s');
   assert.equal(newFilter.handlers[0].catchType, oldFilter.handlers[0].catchType - 3);
   assert.equal(newFilter.handlers[0].end, oldFilter.handlers[0].end - 3);
   assert.equal(newFilter.handlers[0].target, oldFilter.handlers[0].target - 3);
-  assert.equal(newFilter.handlers[0].handlerEnd, oldFilter.handlers[0].handlerEnd + 300);
+  assert.equal(newFilter.handlers[0].handlerEnd, oldFilter.handlers[0].handlerEnd);
   const starts = new Set(newFilter.instructions.map(instruction => instruction.offset));
   for (const field of ['start', 'end', 'target', 'handlerEnd', 'catchType']) assert(starts.has(newFilter.handlers[0][field]));
 });
 
 test('switch targets and implicit method-end EH labels survive explicit layout', () => {
-  const bytes = documentLayoutFixture();
-  const before = new AssemblyInspector(bytes);
-  const text = formatILDocument(bytes);
-  const catchMethod = before.getMethod(methodTokens[1]), clause = catchMethod.handlers[0];
-  const oldDirective = `.eh 0 ${ilLabel(clause.start)} ${ilLabel(clause.end)} ${ilLabel(clause.target)} ${ilLabel(clause.handlerEnd)}`;
-  const edited = text.replace(oldDirective,
-    `.eh 0 ${ilLabel(clause.start)} ${ilLabel(clause.end)} ${ilLabel(clause.target)} ${ilLabel(catchMethod.codeSize)}`);
-  const rebuilt = new AssemblyInspector(assembleILDocument(edited, { relaxBranches: true }).bytes);
-  assert.equal(rebuilt.getMethod(methodTokens[1]).handlers[0].handlerEnd, rebuilt.getMethod(methodTokens[1]).codeSize);
+  const bytes = managedFixture({ methods: [{ name: 'Main', result: 'int', locals: ['int'],
+    body: writer => writer.mark('try').op('ldnull').op('throw').mark('done').op('ldloc.0').op('ret')
+      .mark('catch').op('pop').op('ldc.i4', 42).op('stloc.0')
+      .op('leave', 'done').mark('end'),
+    handlers: (labels, context) => [{ start: labels.get('try'), end: labels.get('done'), target: labels.get('catch'),
+      handlerEnd: labels.get('end'), catchType: context.resolve('System.Exception') }],
+  }] });
+  const rebuilt = new AssemblyInspector(assembleILDocument(formatILDocument(bytes), { relaxBranches: true }).bytes);
+  assert.equal(rebuilt.getMethod(methodTokens[0]).handlers[0].handlerEnd, rebuilt.getMethod(methodTokens[0]).codeSize);
+  assert.equal(run(rebuilt.pe.bytes, methodTokens[0]), 42);
   const switched = new AssemblyInspector(rebuiltLayoutFixture()).getMethod(methodTokens[3]);
   const targets = switched.instructions.find(instruction => instruction.name === 'switch').operand;
   assert.deepEqual(targets.map(offset => switched.instructions.find(instruction => instruction.offset === offset).operand), [undefined, 44]);
