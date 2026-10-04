@@ -1,109 +1,118 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
-  "properties": {
-    "schemaVersion": {
-      "const": 1
-    },
-    "typeToken": {
-      "type": "string"
-    },
-    "messageHandle": {
-      "anyOf": [
-        {
-          "type": "null"
+  "$ref": "#/$defs/fault",
+  "$defs": {
+    "fault": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": 1
         },
-        {
-          "type": "object",
-          "properties": {
-            "h": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 4294967295
-            },
-            "g": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 4294967295
-            }
-          },
-          "required": [
-            "h",
-            "g"
-          ],
-          "additionalProperties": false
-        }
-      ]
-    },
-    "exceptionHandle": {
-      "anyOf": [
-        {
-          "type": "null"
+        "typeToken": {
+          "type": "string"
         },
-        {
-          "type": "object",
-          "properties": {
-            "h": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 4294967295
+        "messageHandle": {
+          "anyOf": [
+            {
+              "type": "null"
             },
-            "g": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 4294967295
+            {
+              "type": "object",
+              "properties": {
+                "h": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 4294967295
+                },
+                "g": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 4294967295
+                }
+              },
+              "required": [
+                "h",
+                "g"
+              ],
+              "additionalProperties": false
             }
-          },
-          "required": [
-            "h",
-            "g"
-          ],
-          "additionalProperties": false
-        }
-      ]
-    },
-    "frames": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "method": {
-            "type": "string"
-          },
-          "offset": {
-            "type": [
-              "integer",
-              "null"
+          ]
+        },
+        "exceptionHandle": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "h": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 4294967295
+                },
+                "g": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 4294967295
+                }
+              },
+              "required": [
+                "h",
+                "g"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "frames": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string"
+              },
+              "offset": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              }
+            },
+            "required": [
+              "method",
+              "offset"
             ],
-            "minimum": 0
-          }
+            "additionalProperties": false
+          },
+          "maxItems": 1000000
         },
-        "required": [
-          "method",
-          "offset"
-        ],
-        "additionalProperties": false
+        "uncatchable": {
+          "type": "boolean"
+        },
+        "cause": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/fault"
+            }
+          ]
+        }
       },
-      "maxItems": 1000000
-    },
-    "uncatchable": {
-      "type": "boolean"
-    },
-    "cause": {
-      "type": [
-        "object",
-        "null"
-      ]
+      "required": [
+        "schemaVersion",
+        "typeToken",
+        "messageHandle",
+        "exceptionHandle",
+        "frames",
+        "uncatchable",
+        "cause"
+      ],
+      "additionalProperties": false
     }
-  },
-  "required": [
-    "schemaVersion",
-    "typeToken",
-    "messageHandle",
-    "exceptionHandle",
-    "frames",
-    "uncatchable",
-    "cause"
-  ],
-  "additionalProperties": false
+  }
 }

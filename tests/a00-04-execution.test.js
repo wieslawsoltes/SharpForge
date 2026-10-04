@@ -2,6 +2,34 @@ import test from 'node:test';import assert from 'node:assert/strict';import {rea
 import {compileToIL} from '@sharpforge/compiler';import {VirtualMachine,CilVirtualMachine} from '@sharpforge/runtime';
 import {runSafepointFixtures,forceCollections} from '../scripts/planning/run-safepoint-fixtures.js';import {checkRootProviders,rootSites} from '../scripts/planning/check-root-providers.js';import {snapshotRecord,faultRecord} from '../scripts/planning/schema/adapters.js';import {validate} from '../scripts/planning/schema/validate.js';
 const build=text=>{const c=compileToIL(text);assert(c.success,JSON.stringify(c.diagnostics));return c;};const engines={source:c=>new VirtualMachine(c.image,{virtualTime:true}),cil:c=>new CilVirtualMachine(c.assembly,{virtualTime:true})};const schema=name=>JSON.parse(readFileSync(new URL('../planning/contracts/schema/'+name+'.schema.json',import.meta.url)));const tick=()=>new Promise(resolve=>setImmediate(resolve));
+const portableFault=(cause=null)=>({schemaVersion:1,typeToken:'T:Exception',messageHandle:null,exceptionHandle:null,frames:[{method:'Example.Main',offset:0}],uncatchable:false,cause});
+test('A00 fault schema accepts complete nested causes and preserves root version rejection',()=>{
+  const definition=schema('fault'),leaf={...portableFault(),messageHandle:{h:1,g:2},exceptionHandle:{h:3,g:4},frames:[{method:'Example.Throw',offset:null}]};
+  const record=portableFault(portableFault(leaf));
+  assert.equal(validate(definition,record),record);assert.equal(validate(definition,portableFault()).cause,null);
+  assert.throws(()=>validate(definition,{...record,schemaVersion:2}),{code:'SCHEMA_VERSION'});
+  assert.throws(()=>validate(definition,portableFault({...leaf,schemaVersion:2})),{code:'SCHEMA_INVALID'});
+});
+test('A00 fault schema rejects malformed nested records, handles and frames',()=>{
+  const definition=schema('fault'),valid=portableFault();
+  const missing=Object.keys(valid).map(key=>{const copy={...valid};delete copy[key];return copy;});
+  const malformed=[...missing,{},true,'cause',[],{...valid,extra:true},{...valid,typeToken:1},{...valid,uncatchable:'false'},
+    {...valid,messageHandle:{h:0,g:1}},{...valid,exceptionHandle:{h:1,g:0x100000000}},
+    {...valid,messageHandle:{h:1,g:1,extra:true}},
+    {...valid,frames:[{method:'Example.Throw',offset:-1}]},{...valid,frames:[{method:'Example.Throw'}]},
+    {...valid,frames:[{method:7,offset:0}]},{...valid,frames:[{method:'Example.Throw',offset:0,extra:true}]}];
+  for(const cause of malformed){
+    assert.throws(()=>validate(definition,portableFault(cause)),{code:'SCHEMA_INVALID'});
+    assert.throws(()=>validate(definition,portableFault(portableFault(cause))),{code:'SCHEMA_INVALID'});
+  }
+});
+test('A00 fault schema bounds recursive cause validation',()=>{
+  const definition=schema('fault'),record=portableFault(portableFault(portableFault()));
+  assert.equal(validate(definition,record),record);
+  assert.throws(()=>validate(definition,record,{maxDepth:4}),{code:'SCHEMA_LIMIT'});
+  const cyclic=portableFault();cyclic.cause=cyclic;
+  assert.throws(()=>validate(definition,cyclic),{code:'SCHEMA_LIMIT'});
+});
 test('A00 force GC at safepoints in both actual VMs',async()=>{const results=await runSafepointFixtures();assert.equal(results.length,14);assert(results.every(r=>r.collections>r.polls));});
 test('A00 root provider manifest guards new sites',()=>{assert(checkRootProviders().length>=13);const root=mkdtempSync(join(tmpdir(),'sf-roots-'));try{mkdirSync(join(root,'packages/runtime/src'),{recursive:true});mkdirSync(join(root,'planning/contracts'),{recursive:true});writeFileSync(join(root,'packages/runtime/src/new.js'),'class NewProvider { *roots(){ yield null; } }');writeFileSync(join(root,'planning/contracts/gc-roots.md'),'');assert.throws(()=>checkRootProviders(root),/Undocumented root site new.js/);writeFileSync(join(root,'planning/contracts/gc-roots.md'),'`new.js:roots:1`');assert.equal(checkRootProviders(root).length,1);mkdirSync(join(root,'packages/runtime/src/execution'));writeFileSync(join(root,'packages/runtime/src/execution/parked.js'),'function roots(){}');assert.throws(()=>checkRootProviders(root),/execution\/parked.js/);}finally{rmSync(root,{recursive:true,force:true});}});
 for(const [engine,make]of Object.entries(engines)){
