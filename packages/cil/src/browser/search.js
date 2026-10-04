@@ -1,6 +1,7 @@
 import { CilError } from '../binary.js';
 
 const maximumCacheBytes = 64 * 1024 * 1024;
+const nonAscii = /[^\x00-\x7f]/;
 const unicodeWord = /[\p{L}\p{Nd}\p{M}]/u;
 const unicodeDigit = /\p{Nd}/u;
 const modes = new Set(['prefix', 'substring', 'camel']);
@@ -28,7 +29,25 @@ function options(query, input) {
   return { mode, offset, limit, resultLimit, cacheBytes, signal };
 }
 
+function asciiInitials(name, lengthOnly = false) {
+  let result = '', length = 0, word = false, digit = false;
+  for (let index = 0; index < name.length; index++) {
+    const code = name.charCodeAt(index);
+    const number = code >= 48 && code <= 57;
+    const upper = code >= 65 && code <= 90;
+    const inWord = number || upper || code >= 97 && code <= 122;
+    if (inWord && (!word || upper || number && !digit)) {
+      length++;
+      if (!lengthOnly) result += name[index];
+    }
+    word = inWord;
+    digit = number;
+  }
+  return lengthOnly ? length : result.toLowerCase();
+}
+
 function initials(name) {
+  if (!nonAscii.test(name)) return asciiInitials(name);
   let result = '', word = false, digit = false;
   for (const character of name) {
     const code = character.codePointAt(0);
@@ -49,8 +68,10 @@ function preflight(entries, maximum, signal) {
   for (let index = 0; index < entries.length; index++) {
     if (!(index & 255)) cancelled(signal);
     const name = entries[index].name;
-    // A single name is bounded by AssemblySymbolIndex. Only scratch strings exist in this first pass.
-    bytes += 2 * (name.toLowerCase().length + initials(name).length);
+    // ASCII folding preserves length. Count its initials without allocating scratch strings;
+    // Unicode keeps whole-string folding, including expansions and contextual case mappings.
+    bytes += nonAscii.test(name) ? 2 * (name.toLowerCase().length + initials(name).length)
+      : 2 * (name.length + asciiInitials(name, true));
     if (bytes > maximum) throw new CilError('Symbol search cache budget exceeded');
   }
   return bytes;

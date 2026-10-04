@@ -80,6 +80,22 @@ test('search cache has an independent exact budget and is lazy for zero pages an
   assert.equal(index.search('Search', { cacheBytes: bytes }).entries.length, 20);
 });
 
+test('ASCII length preflight preserves exact cache accounting and mixed Unicode initial semantics', () => {
+  const cases = [['XMLReader', 'xmlr'], ['foo_bar', 'fb'], ['Alpha99Beta2', 'a9b2'], ['a.b+c/d', 'abcd'],
+    ['a$b-c', 'abc'], ['a\u007fB', 'ab'], ['a\u0080B', 'ab'], ['İstanbulIndex', 'i\u0307i'], ['AΣ', 'aς'],
+    ['\u{10400}Name', '\u{10428}n'], ['x\u0301Name', 'xn'], ['中文_类型', '中类']];
+  const records = [['<Module>', 'm'], ...cases.map(([name, humps]) => ['Fixtures.' + name, 'f' + humps])];
+  const bytes = records.reduce((total, [name, humps]) => total + 2 * (1 + name.toLowerCase().length + humps.length), 0);
+  const source = cases.map(([name]) => name);
+  const index = make(source);
+  index.search('absent', { cacheBytes: bytes });
+  assert.deepEqual(index.searchStorage, { entries: records.length, bytes });
+  for (const [name, humps] of cases) assert.ok(names(index.search('f' + humps, { mode: 'camel' })).includes('Fixtures.' + name));
+  const rejected = make(source);
+  assert.throws(() => rejected.search('absent', { cacheBytes: bytes - 1 }), /cache budget/);
+  assert.deepEqual(rejected.searchStorage, { entries: 0, bytes: 0 });
+});
+
 test('search checks query/options/page boundaries and reports only actual continuation or cap overflow', () => {
   const index = make(['Alpha', 'AlphaBeta', 'Beta']);
   for (const query of [null, 1, {}, 'x'.repeat(257)]) assert.throws(() => index.search(query), CilError);
