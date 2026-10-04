@@ -5,7 +5,10 @@ import {decimalIntrinsicDefinitions} from './decimal-intrinsic-profile.js';
 // distinguish overloads; the descriptor retains the actual CLR member identity.
 const sourceDecimals = [
   ['Truncate', ['System.Decimal'], ['d']], ['Round', ['System.Decimal'], ['d']],
-  ['Round', ['System.Decimal', 'int'], ['d', 'decimals']], ['Parse', ['string'], ['s']]
+  ['Round', ['System.Decimal', 'int'], ['d', 'decimals']], ['Parse', ['string'], ['s']],
+  ['Ceiling', ['System.Decimal'], ['d']], ['Floor', ['System.Decimal'], ['d']],
+  ...['Add', 'Subtract', 'Multiply', 'Divide', 'Remainder'].map(name =>
+    [name, ['System.Decimal', 'System.Decimal'], ['d1', 'd2']])
 ].map(([name, parameters, parameterNames]) => {
   const descriptor = decimalIntrinsicDefinitions.find(candidate => candidate.owner === 'System.Decimal' &&
     candidate.isStatic && candidate.name === name && candidate.returnType === 'System.Decimal' &&

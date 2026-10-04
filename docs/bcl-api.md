@@ -679,8 +679,11 @@ Registered families: <code>builder</code>.
 | 524315 | <code>void System.Text.StringBuilder::CopyTo(int, char[], int, int)</code> | implemented |
 | 524316 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(long)</code> | implemented |
 | 524317 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(ulong)</code> | implemented |
+| 524319 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(string, int, int)</code> | implemented |
+| 524320 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(char[])</code> | implemented |
+| 524321 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(char[], int, int)</code> | implemented |
 
-Pinned reference: 38 implemented and 70 missing exact metadata rows.
+Pinned reference: 41 implemented and 67 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -703,8 +706,8 @@ Pinned reference: 38 implemented and 70 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Append``0(System.Char):System.Text.StringBuilder instance</code> | implemented | 524309 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Char*,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Char,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524310 |
-| method | <code>System.Text.StringBuilder::Append``0(System.Char[]):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Append``0(System.Char[],System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.Char[]):System.Text.StringBuilder instance</code> | implemented | 524320 |
+| method | <code>System.Text.StringBuilder::Append``0(System.Char[],System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524321 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Decimal):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Double):System.Text.StringBuilder instance</code> | implemented | 805 |
 | method | <code>System.Text.StringBuilder::Append``0(System.IFormatProvider,System.Text.StringBuilder+AppendInterpolatedStringHandler&amp;):System.Text.StringBuilder instance</code> | missing | — |
@@ -717,7 +720,7 @@ Pinned reference: 38 implemented and 70 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Append``0(System.SByte):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Single):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.String):System.Text.StringBuilder instance</code> | implemented | 807 |
-| method | <code>System.Text.StringBuilder::Append``0(System.String,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.String,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524319 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder+AppendInterpolatedStringHandler&amp;):System.Text.StringBuilder instance</code> | missing | — |
@@ -851,8 +854,9 @@ Registered families: <code>string</code>.
 | 524308 | <code>int System.String::IndexOf(string, int, System.StringComparison)</code> | implemented |
 | 524311 | <code>int System.String::IndexOf(string, int, int, System.StringComparison)</code> | implemented |
 | 524314 | <code>int System.String::LastIndexOf(string, int, System.StringComparison)</code> | implemented |
+| 524318 | <code>int System.String::LastIndexOf(string, int, int, System.StringComparison)</code> | implemented |
 
-Pinned reference: 49 implemented and 137 missing exact metadata rows.
+Pinned reference: 50 implemented and 136 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -979,7 +983,7 @@ Pinned reference: 49 implemented and 137 missing exact metadata rows.
 | method | <code>System.String::LastIndexOf``0(System.String):System.Int32 instance</code> | implemented | 1261 |
 | method | <code>System.String::LastIndexOf``0(System.String,System.Int32):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::LastIndexOf``0(System.String,System.Int32,System.Int32):System.Int32 instance</code> | missing | — |
-| method | <code>System.String::LastIndexOf``0(System.String,System.Int32,System.Int32,System.StringComparison):System.Int32 instance</code> | missing | — |
+| method | <code>System.String::LastIndexOf``0(System.String,System.Int32,System.Int32,System.StringComparison):System.Int32 instance</code> | implemented | 524318 |
 | method | <code>System.String::LastIndexOf``0(System.String,System.Int32,System.StringComparison):System.Int32 instance</code> | implemented | 524314 |
 | method | <code>System.String::LastIndexOf``0(System.String,System.StringComparison):System.Int32 instance</code> | implemented | 524307 |
 | method | <code>System.String::LastIndexOfAny``0(System.Char[]):System.Int32 instance</code> | missing | — |

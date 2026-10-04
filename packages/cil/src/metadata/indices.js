@@ -34,11 +34,14 @@ export function codedIndex(kind, metadataToken) {
 
 /** Decode a physical coded index, rejecting reserved tags. */
 export function decodeCoded(kind, value) {
-  if (!value) return 0;
+  if (!Number.isInteger(value) || value < 0 || value > 0xffffffff) throw new CilError('Invalid physical coded index');
+  if (value === 0) return 0;
   const [bits, tables] = metadataCodedIndices[kind];
+  const row = value >>> bits;
+  if (row > 0xffffff) throw new CilError(`${kind} row exceeds 24-bit token range`);
   const table = tables[value & ((1 << bits) - 1)];
   if (table === undefined || table === null) throw new CilError(`Invalid ${kind} tag`);
-  return token(table, value >>> bits);
+  return token(table, row);
 }
 
 /** Compute a column width in bytes from row counts and the heap-size bit field. */
