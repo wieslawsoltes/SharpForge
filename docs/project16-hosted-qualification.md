@@ -1,4 +1,11 @@
-# Project 16 initial hosted qualification
+# Project 16 hosted qualification history
+
+The latest recorded attempt is [a4](#appended-hosted-attempt-a4--original-completed-outcome):
+the complete Ubuntu/Chromium scope finished with nine passing and six failing
+outcomes. The a1–a3 sections below retain their original evidence cutoff; the
+appended a4 section records the later execution and does not change those results.
+
+## Historical a1–a3 evidence cutoff
 
 These are the actual first three hosted attempts, including their failures.
 The machine-readable [ledger](project16-hosted-qualification.json) records exact
