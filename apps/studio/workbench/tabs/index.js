@@ -3,6 +3,10 @@ export { confirmDirtyDocuments } from './close-dialog.js';
 
 export const sourcePanelId = uri => `source:${uri}`;
 
+function validateDocumentUri(uri) {
+  if (typeof uri !== 'string' || !uri || uri.length > 8192) throw new TypeError('Invalid document URI');
+}
+
 /** Document tab policy over DockLayout; DocumentService owns buffers and saving. No editor instance is serialized. */
 export class DocumentTabs {
   constructor({ layout, documents, confirmClose, onActivate = () => {}, onClosed = () => {}, closedLimit = 50 } = {}) {
@@ -19,11 +23,19 @@ export class DocumentTabs {
     this.serial = 0;
     this.closing = null;
     this.openQueue = Promise.resolve();
+    this.openGeneration = 0;
+    this.observedActivePanel = layout.state.activePanel;
+    this.admissionTarget = null;
     this.disposed = false;
     this.controller = new AbortController();
     this.unsubscribe = documents.subscribe?.(event => this.documentChanged(event));
     this.offLayout = layout.subscribe(event => {
-      if (event.type === 'activate') this.recordActivation(layout.state.activePanel);
+      const active = layout.state.activePanel;
+      if (active !== this.observedActivePanel) {
+        this.observedActivePanel = active;
+        if (this.admissionTarget === null || active !== this.admissionTarget) this.openGeneration++;
+      }
+      if (event.type === 'activate') this.recordActivation(active);
     });
   }
 
@@ -38,7 +50,7 @@ export class DocumentTabs {
   }
 
   ensure(uri, viewId = 'primary') {
-    if (typeof uri !== 'string' || !uri || uri.length > 8192) throw new TypeError('Invalid document URI');
+    validateDocumentUri(uri);
     let id = this.panel(uri, viewId);
     if (!id) {
       do { id = `document-view:${++this.serial}:${uri}`; } while (this.layout.panels.has(id));
@@ -58,46 +70,80 @@ export class DocumentTabs {
     return groups.flatMap(group => group.panels).filter(id => this.metadata(id) && this.layout.require(id).kind === 'document');
   }
 
+  /** Keep one guarded request current through queued admission and its caller's final activation. */
+  createOpenAdmission({signal, isCurrent = () => true} = {}) {
+    const generation = ++this.openGeneration;
+    const current = () => !this.disposed && !signal?.aborted && generation === this.openGeneration && isCurrent();
+    const admission = {
+      owner: this, signal, isCurrent: current,
+      activate: id => {
+        if (!current()) return false;
+        const previous = this.admissionTarget;
+        this.admissionTarget = id;
+        try { return this.activate(id, {admission}); }
+        finally { this.admissionTarget = previous; }
+      }
+    };
+    return Object.freeze(admission);
+  }
+
   open(uri, options = {}) {
+    if (options.admission && options.admission.owner !== this) throw new TypeError('Document admission belongs to another tab service');
+    if (!options.admission) this.openGeneration++;
     const operation = this.openQueue.then(() => this.openNow(uri, options));
     this.openQueue = operation.catch(() => {});
     return operation;
   }
 
-  async openNow(uri, { preview = false, pinned = false, groupId = null, viewId = 'primary', viewState = null } = {}) {
+  async openNow(uri, {
+    preview = false, pinned = false, groupId = null, viewId = 'primary', viewState = null,
+    activate = true, signal, admission
+  } = {}) {
     if (this.disposed) throw new Error('Document tabs have been disposed');
+    validateDocumentUri(uri);
+    const current = () => !this.disposed && !signal?.aborted && (!admission || admission.isCurrent());
+    if (!current()) return null;
+    if (groupId && !this.layout.group(groupId)) throw new Error('Unknown document group');
+    const record = await this.documents.open(uri, { activate: false, viewId, signal: signal ?? admission?.signal });
+    if (!current()) return null;
     const id = this.ensure(uri, viewId);
     const wasOpen = this.layout.locate(id).kind !== 'closed';
     const target = groupId ? this.layout.group(groupId) : this.layout.groups().find(group => group.kind === 'document');
     if (groupId && !target) throw new Error('Unknown document group');
-    const record = await this.documents.open(uri, { activate: false, viewId });
-    if (this.disposed) return null;
     if (preview && !wasOpen && target) {
       const replace = target.panels.filter(item => this.layout.state.tabState[item]?.preview && item !== id);
       for (const oldId of replace) {
         const old = this.metadata(oldId);
         if (this.documents.get(old.uri)?.dirty) this.promote(oldId);
         else await this.closeMany([oldId], { remember: false });
+        if (!current()) return null;
       }
     }
+    if (!current()) return null;
     this.layout.transaction('openDocument', () => {
       if (!wasOpen) this.layout.setTabState(id, { pinned: Boolean(pinned), preview: Boolean(preview && !pinned && !record?.dirty) });
       else if (pinned) this.layout.setTabState(id, { pinned: true, preview: false });
-      this.layout.open(id, target?.id);
+      this.layout.open(id, target?.id, { activate: activate && !admission });
     });
+    if (!current()) return null;
     if (viewState) this.documents.restoreViewState(uri, viewState, viewId);
-    this.activate(id);
+    if (activate) {
+      if (admission) admission.activate(id);
+      else this.activate(id);
+    }
     return id;
   }
 
-  activate(id) {
+  activate(id, {admission} = {}) {
     const view = this.metadata(id);
-    if (!view) return false;
+    if (!view || admission && !admission.isCurrent()) return false;
     this.layout.activate(id);
+    if (admission && !admission.isCurrent()) return false;
     this.documents.activate?.(view.uri, { viewId: view.viewId });
+    if (admission && !admission.isCurrent()) return false;
     this.recordActivation(id);
     this.onActivate(id, view);
-    return true;
+    return !admission || admission.isCurrent();
   }
 
   recordActivation(id) {
