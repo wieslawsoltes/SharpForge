@@ -72,7 +72,18 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
   def templates():ui.templates()
   check('control-template editor creates bound parts and clones independent per-control template trees',templates)
   def persist():
-   action('save');files=ev('sharpforge.getWorkspace()')['records'];truth(any(r['path'].endswith('.sfdesign.json') for r in files));ev('async()=>{window.__designArchive=await sharpforge.exportWorkspaceZip()}');bytes_=ev('window.__designArchive.length');truth(bytes_>1000);before=ds()['document'];ev('async()=>await sharpforge.openWorkspaceZip(new File([window.__designArchive],"Designer.zip",{type:"application/zip"}))');stored=next(r for r in ev('sharpforge.getWorkspace()')['records'] if r['path'].endswith('.sfdesign.json'));truth(json.loads(stored['text'])==before);ev('sharpforge.designer.open()')
+   action('save')
+   current=ds();uri=current['uri'];before=current['document']
+   files=ev('sharpforge.getWorkspace()')['records']
+   saved=next(r for r in files if r['path']==uri)
+   truth(json.loads(saved['text'])==before,'The active design was not saved before export')
+   ev('async()=>{window.__designArchive=await sharpforge.exportWorkspaceZip()}')
+   truth(ev('window.__designArchive.length')>1000)
+   ev('async()=>await sharpforge.openWorkspaceZip(new File([window.__designArchive],"Designer.zip",{type:"application/zip"}))')
+   stored=next(r for r in ev('sharpforge.getWorkspace()')['records'] if r['path']==uri)
+   truth(json.loads(stored['text'])==before,'The exported active design changed when the workspace was reopened')
+   ev('uri=>sharpforge.designerDocuments.open(uri,"design")',uri)
+   truth(ds()['document']==before,'Reopening the saved design changed its authored state')
   check('saved design JSON including styles/templates survives a real complete-workspace ZIP export/reopen',persist)
   def generate():
    new();action('generate');wait('sharpforge.getState().debug?.uiActive');tool('winui');ev('sharpforge.uiSettled()');truth(not ev('sharpforge.getState().diagnostics.filter(d=>d.severity==="error")'),str(ev('sharpforge.getState().diagnostics')));page.locator('[data-tool="winui"]') if False else None
