@@ -81,8 +81,8 @@ export class DesignerSurfaceController {
     this.onDocumentChanged({kind: 'initialize'});
   }
 
-  scene(document = this.view.document.value) {
-    return this.installed ? this.preview.scene(document) : designScene(document);
+  scene(document = this.view.document.value, options) {
+    return this.installed ? this.preview.scene(document, options) : designScene(document);
   }
 
   onDocumentChanged(event = {}) {
@@ -96,8 +96,8 @@ export class DesignerSurfaceController {
       this.lastClick = null;
       this.preview.environment.update({state: null});
     }
-    if (documentChanged || event.kind !== 'selection') {
-      this.geometry.invalidate();
+    if (documentChanged || event.kind !== 'selection') this.geometry.invalidate();
+    if (documentChanged || event.kind !== 'selection' && event.changes?.kind !== 'properties') {
       this.preview.applyDimensions();
       this.guides.render();
       const snap = (this.view.controlsRoot ?? this.view.panel('designer')).querySelector('#designer-snap');

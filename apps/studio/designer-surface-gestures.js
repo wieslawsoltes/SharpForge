@@ -33,7 +33,9 @@ export class DesignerSurfaceGestures {
     const constraints = Object.fromEntries(entries.map(entry => [entry.id, {minWidth: entry.node.properties.MinWidth ?? 0,
       minHeight: entry.node.properties.MinHeight ?? 0, maxWidth: entry.node.properties.MaxWidth ?? Infinity,
       maxHeight: entry.node.properties.MaxHeight ?? Infinity}]));
-    return new DesignGeometrySession(this.view.document, {rectangles, matrices, constraints, baselines, start, handle});
+    const canEdit = (id, property) => !this.view.outline?.isLocked(id)
+      && !this.view.sourceSync?.session?.analysis?.bindings?.[id]?.properties?.[property]?.dynamic;
+    return new DesignGeometrySession(this.view.document, {rectangles, matrices, constraints, baselines, start, handle, canEdit});
   }
 
   properties(id) {
@@ -107,9 +109,11 @@ export class DesignerSurfaceGestures {
       this.controller.adorners.guides(session.guides, parentId);
     }, () => {
       this.active = null;
-      session.commit({properties: item => this.properties(item)});
-      this.controller.adorners.guides([], null);
-      this.controller.drawAdorners();
+      try { session.commit({properties: item => this.properties(item)}); }
+      finally {
+        this.controller.adorners.guides([], null);
+        this.controller.drawAdorners();
+      }
     }, () => {
       session.cancel();
       this.active = null;
@@ -220,12 +224,13 @@ export class DesignerSurfaceGestures {
     const keyboard = this.keyboard;
     this.keyboard = null;
     if (!keyboard) return;
-    if (keyboard.kind === 'order') {
-      if (cancel) keyboard.cancel();
-      else keyboard.commit();
-    } else if (cancel) keyboard.session.cancel();
-    else keyboard.session.commit({properties: id => this.properties(id)});
-    this.controller.drawAdorners();
+    try {
+      if (keyboard.kind === 'order') {
+        if (cancel) keyboard.cancel();
+        else keyboard.commit();
+      } else if (cancel) keyboard.session.cancel();
+      else keyboard.session.commit({properties: id => this.properties(id)});
+    } finally { this.controller.drawAdorners(); }
   }
 
   dispose() {

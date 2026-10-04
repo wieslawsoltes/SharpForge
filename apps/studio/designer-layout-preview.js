@@ -61,8 +61,9 @@ export class DesignerLayoutPreview {
     return this.value;
   }
 
-  scene(document = this.view.document.value) {
-    return designScene(this.environment.document(document));
+  scene(document = this.view.document.value, {appearance = true} = {}) {
+    const scene = designScene(this.environment.document(document));
+    return appearance ? this.environment.applyToScene(scene) : scene;
   }
 
   render() {
