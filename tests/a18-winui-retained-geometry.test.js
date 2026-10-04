@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {canvasScene, geometryHost} from './fixtures/a18-host-geometry-dom.js';
 
-test('one property transaction renders and measures one existing control in a real 5000-node host', () => {
+test('one position transaction updates and measures one existing control in a real 5000-node host', () => {
   const {host, rendered, measured} = geometryHost(canvasScene());
   const element = host.elements.get('item255');
   const neighbor = host.elements.get('item256');
@@ -10,14 +10,17 @@ test('one property transaction renders and measures one existing control in a re
   host.nodes.values = () => { throw new Error('Full scene enumeration during a retained edit'); };
   assert.equal(host.tryPatchProperties([{id: 'item255', properties: {Left: 293, Top: 275}}]), true);
   host.flush();
-  assert.deepEqual(rendered, ['item255']);
+  assert.deepEqual(rendered, [], 'An isolated fixed-size move must not invalidate the Canvas layout.');
   assert.deepEqual(measured, ['item255']);
   assert.equal(host.sceneRevision, revision + 1);
   assert.equal(host.nodes.size, 5000);
   assert.equal(host.elements.get('item255'), element);
   assert.equal(host.elements.get('item256'), neighbor);
-  assert.equal(element.style.left, '293px');
-  assert.equal(element.style.top, '275px');
+  assert.equal(host.nodes.get('item255').properties.Left, 293);
+  assert.equal(host.nodes.get('item255').properties.Top, 275);
+  assert.equal(element.style.left, '255px');
+  assert.equal(element.style.top, '255px');
+  assert.equal(element.style.transform, 'translate(38px, 20px)');
   assert.equal(element.style.width, '140px');
   assert.equal(element.style.height, '40px');
   host.dispose();
@@ -65,7 +68,7 @@ test('flow, reference, drawing, structural and unknown-property fallbacks never 
 });
 
 test('external scene commands invalidate retained eligibility until one complete render rebuilds dependencies', () => {
-  const {host, reset, rendered} = geometryHost(canvasScene(4));
+  const {host, reset, rendered, measured} = geometryHost(canvasScene(4));
   const before = host.sceneRevision;
   host.apply({op: 'set', id: 'item2', property: 'Content', value: 'Runtime value'});
   assert(host.sceneRevision > before);
@@ -76,7 +79,10 @@ test('external scene commands invalidate retained eligibility until one complete
   reset();
   assert.equal(host.tryPatchProperties([{id: 'item2', properties: {Left: 8}}]), true);
   host.flush();
-  assert.deepEqual(rendered, ['item2']);
+  assert.deepEqual(rendered, []);
+  assert.deepEqual(measured, ['item2']);
+  assert.equal(host.nodes.get('item2').properties.Left, 8);
+  assert.equal(host.elements.get('item2').style.transform, 'translate(6px, 0px)');
   const replacement = canvasScene(4);
   replacement.nodes[1].type = 'Microsoft.UI.Xaml.Controls.StackPanel';
   host.load(replacement);
@@ -105,5 +111,6 @@ test('retained updates are bounded, reject malformed batches and release pending
   host.dispose();
   assert.equal(frames.size, 0);
   assert.equal(host.geometryUpdates.parents.size, 0);
+  assert.equal(host.geometryUpdates.translations.records.size, 0);
   assert.equal(host.tryPatchProperties([{id: 'item2', properties: {Left: 11}}]), false);
 });
