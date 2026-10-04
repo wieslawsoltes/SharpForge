@@ -43,7 +43,8 @@ After acceptance, changed/saved/dirty notifications observe coherent source and 
 failures never roll back accepted disk content: they report `DOCUMENT_COMMITTED` with `committed: true` and aggregate the
 postcommit failures. Remaining document notifications and independent legacy view refreshes are still attempted. The
 successful result is `{ committed: true, record, source, version, encoding, bom, byteLength }`; `source` is undefined for a
-legacy document without an editor model.
+legacy document without an editor model. A newer edit made by a notification callback remains dirty against the accepted
+external source; later publication effects verify the captured source/version and skip obsolete reload notifications.
 
 The algorithm compares at most both source lengths and retains only one changed range in undo history. Comparison reads
 use 64 KiB ranges; encoding validation and the changed undo payload are bounded by the shared reload limit. This is an
