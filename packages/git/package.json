@@ -11,6 +11,7 @@
   },
   "files": [
     "src",
+    "styles",
     "proxy",
     "broker",
     "README.md",
