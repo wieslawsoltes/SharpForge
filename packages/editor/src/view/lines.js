@@ -1,4 +1,5 @@
 import {whitespaceMarkers} from './whitespace.js';
+import {LineContent} from './line-content.js';
 
 /** Recycled DOM rows; only visible visual lines plus overscan own elements. */
 export class VirtualLines {
@@ -6,6 +7,7 @@ export class VirtualLines {
     this.view = view;
     this.pool = [];
     this.visible = new Map();
+    this.content = new LineContent(view);
     this.layer = view.document.createElement('div');
     this.layer.className = 'sf-highlight sf-line-layer';
     this.layer.setAttribute('aria-hidden', 'true');
@@ -43,8 +45,7 @@ export class VirtualLines {
       element.classList.toggle('sf-selected-frame-line', row.line + 1 === editor.selectedFrameLine);
       if (element.dataset.revision !== revision) {
         const ranges = editor.highlightIndex.ranges(start, end, 1000);
-        renderText(element, ranges.runs, editor);
-        renderMarkers(element, row, editor, this.view);
+        if (this.content.render(element, ranges.runs, row)) renderMarkers(element, row, editor, this.view);
         element.dataset.revision = revision;
       }
       characters += end - start;
@@ -65,37 +66,7 @@ export class VirtualLines {
   }
 
   elementFor(line, continuation = 0) { return this.visible.get(`${line}:${continuation}`); }
-  dispose() { this.visible.clear(); this.pool.length = 0; this.layer.remove(); }
-}
-
-function renderText(element, runs, editor) {
-  const document = element.ownerDocument;
-  const fragment = document.createDocumentFragment();
-  for (const run of runs) {
-    const spans = editor.decorationsInRange(run.start, run.end);
-    const cuts = new Set([run.start, run.end]);
-    for (const decoration of spans) {
-      cuts.add(Math.max(run.start, decoration.start));
-      cuts.add(Math.min(run.end, decoration.end));
-    }
-    const positions = [...cuts].sort((left, right) => left - right);
-    for (let index = 0; index < positions.length - 1; index++) {
-      const start = positions[index];
-      const end = positions[index + 1];
-      const span = document.createElement('span');
-      span.className = run.kind ? `tok-${run.kind}` : '';
-      span.textContent = editor.model.getText(start, end);
-      span.dataset.offset = String(start);
-      if (run.bracket) span.dataset.bracket = String(start);
-      for (const decoration of spans) {
-        if (decoration.start >= end || decoration.end <= start) continue;
-        if (decoration.className) span.classList.add(...decoration.className.split(/\s+/).filter(Boolean));
-        if (decoration.hover) span.title = decoration.hover;
-      }
-      fragment.append(span);
-    }
-  }
-  element.replaceChildren(fragment);
+  dispose() { this.content.dispose(); this.visible.clear(); this.pool.length = 0; this.layer.remove(); }
 }
 
 function renderMarkers(element, row, editor, view) {
