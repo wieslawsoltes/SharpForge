@@ -42,6 +42,18 @@ Retained brush descriptors preserve owned color stops, interpolation space, mask
 
 Canvas, SVG and reported GPU fallbacks share bounded pixel-center brush sampling and premultiplied effect conversion. Complex masks, nine-grid brushes and authorized backdrops use the same ownership and color-space policy. Missing backdrop access reports the selected fallback explicitly.
 
+## Frames and retained caches
+
+`FrameScheduler` coalesces work in explicit input/layout/animation/build/submit/present phases. Debug pause freezes animation time while layout and painting remain available. `DirtyRegions` requires preserved contents before partial redraw; `LayerCache` excludes placement from reusable local content. `FrameMetrics` separates CPU submission, GPU completion and presentation.
+
+## Text layout services
+
+`TextLayoutService` caches actual provider results and shares them with measurement and drawing. The browser provider retains shaped native runs with explicit opaque glyph access. Cluster maps drive caret, hit testing and selection; rich spans, trimming and ink bounds remain separate from raster policy. Numeric portable shaping is supplied by a separate provider.
+
+## Canvas2D replay
+
+`Canvas2DBackend` executes the complete drawing command ABI with balanced transforms/clips, transparent stroke-only geometry and the chosen working color space. Cached layer pixels remain local to their content; placement changes reuse them. Partial redraw first clears the damaged interior while preserving pixels outside it.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
