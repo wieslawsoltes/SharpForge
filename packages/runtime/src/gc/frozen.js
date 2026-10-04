@@ -62,6 +62,25 @@ export class FrozenHeap {
     return reference;
   }
 
+  /** Session teardown only: callers first release execution roots and lifetime leases. */
+  clear() {
+    const references = [];
+    for (const binding of this.heap.spaces.bindings.values()) {
+      if (binding.record.space === 'frozen' && binding.reference) references.push(binding.reference);
+    }
+    let releasedObjects = 0;
+    let releasedBytes = 0;
+    for (const reference of references) {
+      if (this.heap.tryGet(reference)?.space !== 'frozen') continue;
+      releasedBytes += this.heap.reclaim(reference.h);
+      releasedObjects++;
+    }
+    this.literals.clear();
+    this.dataSources.clear();
+    this.sourceMetadata = new WeakMap();
+    return {releasedObjects, releasedBytes};
+  }
+
   snapshot() {
     return {literals: [...this.literals], dataSources: [...this.dataSources].map(([owner, entries]) => [owner, [...entries]])};
   }

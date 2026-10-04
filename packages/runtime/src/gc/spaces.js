@@ -9,6 +9,8 @@ import {createCompactionPlan, applyCompactionPlan} from './compaction.js';
 import {ManagedFault} from './fault.js';
 import {copySpatialRange, fillSpatialRange} from './spatial-bulk.js';
 import {ArenaAllocationIndex} from './arena-allocation-index.js';
+import {DenseHandleBindings} from './handle-bindings.js';
+import {publicPayload, readPublicSlot, synchronizePayload} from './spatial-payload.js';
 
 const storageBinding = Symbol('managed-storage-binding');
 const spaceNames = ['small', 'large', 'pinned', 'frozen'];
@@ -38,7 +40,7 @@ export class HeapSpaces {
     this.arenas = new Map();
     this.allocationIndex = new ArenaAllocationIndex();
     this.bindings = new Map();
-    this.byHandle = new Map();
+    this.byHandle = new DenseHandleBindings(heap);
     this.views = new WeakMap();
     this.arrayViews = new SpatialArrayViews();
     this.bindingProperty = {value: null, writable: true, enumerable: false, configurable: false};
@@ -116,6 +118,8 @@ export class HeapSpaces {
     if (record.kind === 'string') {
       if (initialize !== null) writeUtf16(arena, block, initialize);
       record.data = initialize ?? readUtf16(arena, block, length);
+      binding.view = record.data;
+      if (binding.readOnly) Object.defineProperty(record, 'data', {writable: false});
       return;
     }
     if (initialize !== null) {
@@ -133,7 +137,9 @@ export class HeapSpaces {
       }
     }
     record.data = this.arrayViews.create(binding);
+    binding.view = record.data;
     this.views.set(record.data, binding);
+    if (binding.readOnly) Object.defineProperty(record, 'data', {writable: false});
   }
 
   _account(binding, direction) {
@@ -167,7 +173,7 @@ export class HeapSpaces {
     const binding = {
       arena, block, codec, record, owner: this, length, readOnly: !!frozen,
       elementType: codec ? element.enumUnderlyingType?.name ?? element.name : null,
-      reference: null, accountedSize: null
+      reference: null, accountedSize: null, view: null
     };
     this.bindings.set(block.id, binding);
     record.space = space;
@@ -177,7 +183,7 @@ export class HeapSpaces {
       this._account(binding, 1);
     } catch (error) {
       this.release(null, record);
-      record.data = data;
+      Object.defineProperty(record, 'data', {value: data, writable: true, enumerable: true, configurable: true});
       throw error;
     }
     this._announceSegment(arena);
@@ -241,6 +247,7 @@ export class HeapSpaces {
 
   compact({generation = 2, includeLarge = false} = {}) {
     if (generation !== 2) return {compacted: false, movedObjects: 0, movedBytes: 0};
+    for (const binding of this.bindings.values()) synchronizePayload(binding);
     const before = this.memoryInfo();
     const result = {compacted: true, includeLarge, movedObjects: 0, movedBytes: 0, pinnedObjects: 0, pinnedBytes: 0};
     for (const arena of this.arenas.values()) {
@@ -269,22 +276,26 @@ export class HeapSpaces {
   }
 
   /** Borrow current storage without allocating; descriptor visitors own range bounds. */
-  getBinding(record) {
+  getBinding(record, validatePayload = true) {
     const binding = activeBinding(record, this);
     if (!binding) {
       throw new ManagedFault('InvalidReferenceException', 'Managed backing storage is unavailable');
     }
+    if (validatePayload && record.data !== binding.view) publicPayload(binding);
     return binding;
   }
 
   /** Direct indexed read for runtime services; no Array Proxy or string-index conversion. */
   readSlot(record, index) {
-    const binding = this.getBinding(record);
+    const binding = this.getBinding(record, false);
     if (record.kind === 'string' || !Number.isSafeInteger(index) || index < 0 || index >= binding.length) {
       throw new ManagedFault('IndexOutOfRangeException', 'Managed slot is outside its backing storage');
     }
-    return binding.codec ? binding.codec.read(binding.arena.view, binding.block.offset + index * binding.codec.size)
-      : binding.arena.values[binding.block.offset / 8 + index];
+    return readPublicSlot(binding, index);
+  }
+
+  synchronizePayload(record) {
+    synchronizePayload(this.getBinding(record));
   }
 
   memoryInfo() {
@@ -308,6 +319,7 @@ export class HeapSpaces {
   }
 
   snapshot() {
+    for (const binding of this.bindings.values()) synchronizePayload(binding);
     return {
       nextArenaId: this.nextArenaId, nextBlockId: this.nextBlockId, compactions: this.compactions,
       pendingSegmentEvents: this.pendingSegmentEvents.map(event => ({method: event.method, info: {...event.info}})),
@@ -348,7 +360,8 @@ export class HeapSpaces {
       const block = arena?.blocks.get(saved.blockId);
       if (!record || !block) throw new TypeError('Invalid storage snapshot binding');
       block.released = false;
-      const binding = {...saved, record, arena, block, owner: this, codec: primitiveStorage(saved.elementType, saved.elementSize)};
+      const binding = {...saved, record, arena, block, owner: this, view: null,
+        codec: primitiveStorage(saved.elementType, saved.elementSize)};
       this.bindings.set(block.id, binding);
       this.byHandle.set(saved.reference.h, binding);
       this._attachData(binding);

@@ -1,5 +1,6 @@
 import {isReference} from './reference.js';
 import {ManagedFault} from './fault.js';
+import {publicPayload, readStoredSlot, writePublicSlot, writeRawSlot, synchronizePayload} from './spatial-payload.js';
 
 const nativeLittleEndian = new Uint8Array(new Uint16Array([1]).buffer)[0] === 1;
 
@@ -11,10 +12,7 @@ function range(length, start, count) {
 
 function liveBinding(spaces, reference, mutable = false) {
   const record = spaces.heap.get(reference);
-  const binding = spaces.byHandle.get(reference.h);
-  if (!binding || binding.reference.g !== reference.g || binding.block.released) {
-    throw new ManagedFault('InvalidReferenceException', 'Managed backing storage is unavailable');
-  }
+  const binding = spaces.getBinding(record);
   if (record.kind === 'string' || mutable && binding.readOnly) {
     throw new ManagedFault('InvalidOperationException', 'The requested backing storage is immutable');
   }
@@ -47,12 +45,6 @@ function copyIdentical(target, start, source, sourceStart, count) {
   return false;
 }
 
-function readBinding(binding, index) {
-  return binding.codec
-    ? binding.codec.read(binding.arena.view, binding.block.offset + index * binding.codec.size)
-    : binding.arena.values[binding.block.offset / 8 + index];
-}
-
 function directTypedCopy(target, start, source, sourceStart, count) {
   if (!target.codec?.arrayType || source.constructor !== target.codec.arrayType || !nativeLittleEndian) return false;
   const width = target.codec.size;
@@ -62,34 +54,49 @@ function directTypedCopy(target, start, source, sourceStart, count) {
   return true;
 }
 
-function overlapsTypedStorage(target, start, source, sourceStart, count) {
-  if (!target.codec || source.buffer !== target.arena.buffer) return false;
-  const targetBegin = target.block.offset + start * target.codec.size;
-  const sourceBegin = source.byteOffset + sourceStart * source.BYTES_PER_ELEMENT;
-  return targetBegin < sourceBegin + count * source.BYTES_PER_ELEMENT && sourceBegin < targetBegin + count * target.codec.size;
+function copyPublicRange(target, data, start, source, binding, sourceStart, count) {
+  // An arbitrary host Proxy may alias either backing store. Capture before the
+  // first write, preserving memmove semantics and validating every scalar first.
+  const values = new Array(count);
+  const raw = binding && target.codec === binding.codec && !!target.codec?.readRaw;
+  for (let index = 0; index < count; index++) {
+    const value = raw ? binding.codec.readRaw(binding.arena.view, binding.block.offset + (sourceStart + index) * binding.codec.size)
+      : binding ? readStoredSlot(binding, sourceStart + index) : source[sourceStart + index];
+    if (raw) target.codec.validateRaw(value);
+    else target.codec?.validate(value);
+    values[index] = value;
+  }
+  for (let index = 0; index < count; index++) {
+    if (raw) writeRawSlot(target, start + index, values[index], data);
+    else writePublicSlot(target, data, start + index, values[index]);
+  }
 }
 
 /** Bulk backing copy. The heap barrier owns preflight reference checks and one post-copy range barrier. */
 export function copySpatialRange(spaces, destination, start, source, sourceStart, count) {
   const target = liveBinding(spaces, destination, true);
-  let sourceBinding = isReference(source) ? liveBinding(spaces, source) : spaces.views.get(source);
+  const data = publicPayload(target);
+  const managedSource = isReference(source);
+  let sourceBinding = managedSource ? liveBinding(spaces, source) : spaces.views.get(source);
   if (sourceBinding?.block.released) throw new ManagedFault('InvalidReferenceException', 'Source array backing storage was reclaimed');
-  let input = sourceBinding ? null : source;
+  const input = managedSource ? publicPayload(sourceBinding) : source;
+  const detachedSource = managedSource && input !== sourceBinding.view;
+  if (detachedSource && !sourceBinding.codec?.readRaw) sourceBinding = null;
   if (!sourceBinding && !Array.isArray(input) && !(ArrayBuffer.isView(input) && Number.isSafeInteger(input.length))) {
     throw new ManagedFault('ArgumentException', 'An array or managed indexed source is required');
   }
   range(target.length, start, count);
   range(sourceBinding?.length ?? input.length, sourceStart, count);
   if (!count) return destination;
-  if (sourceBinding && copyIdentical(target, start, sourceBinding, sourceStart, count)) return destination;
-  if (!sourceBinding && ArrayBuffer.isView(input)) {
-    if (directTypedCopy(target, start, input, sourceStart, count)) return destination;
-    if (overlapsTypedStorage(target, start, input, sourceStart, count)) {
-      input = input.slice(sourceStart, sourceStart + count);
-      sourceStart = 0;
-    }
+  if (detachedSource && sourceBinding) synchronizePayload(sourceBinding, sourceStart, count);
+  if (data === target.view && sourceBinding && copyIdentical(target, start, sourceBinding, sourceStart, count)) return destination;
+  if (data === target.view && !sourceBinding && ArrayBuffer.isView(input)
+    && directTypedCopy(target, start, input, sourceStart, count)) return destination;
+  if (data !== target.view || !sourceBinding) {
+    copyPublicRange(target, data, start, input, sourceBinding, sourceStart, count);
+    return destination;
   }
-  const read = sourceBinding ? index => readBinding(sourceBinding, index) : index => input[index];
+  const read = index => readStoredSlot(sourceBinding, index);
   if (target.codec) {
     const codec = target.codec;
     for (let index = 0; index < count; index++) codec.validate(read(sourceStart + index));
@@ -110,6 +117,12 @@ export function fillSpatialRange(spaces, destination, start, count, value) {
   if (target.record.kind !== 'array') throw new ManagedFault('ArgumentException', 'A managed array is required');
   range(target.length, start, count);
   if (!count) return destination;
+  const data = publicPayload(target);
+  if (data !== target.view) {
+    target.codec?.validate(value);
+    for (let index = 0; index < count; index++) writePublicSlot(target, data, start + index, value);
+    return destination;
+  }
   if (!target.codec) {
     const begin = target.block.offset / 8 + start;
     target.arena.values.fill(value, begin, begin + count);
