@@ -5,6 +5,7 @@ import {DisplayList, diffDisplayLists} from '../packages/rendering/src/drawing/d
 import {DrawOp, DrawingError, radii} from '../packages/rendering/src/drawing/commands.js';
 import {RenderDelegateRegistry, DisplayListTreeBuilder} from '../packages/rendering/src/drawing/delegates.js';
 import {drawingPrimitives, primitivesToDisplayList} from '../packages/rendering/src/drawing/legacy.js';
+import {displayListBounds} from '../packages/rendering/src/drawing/bounds.js';
 import {ResourceTable} from '../packages/rendering/src/resources/resource-table.js';
 
 const diagnostic = code => error => error instanceof DrawingError && error.code === code;
@@ -94,4 +95,12 @@ test('released primitives preserve stroke-only, elliptical radii and reachable e
   radii([50, 30], [0, 0, 20, 10]).forEach((value, index) => assert.ok(Math.abs(value - (index % 2 ? 5 : 25 / 3)) < 1e-12));
   assert.throws(() => drawingPrimitives([{op: 'ExecuteScript'}]), diagnostic('SFRENDER120'));
   assert.equal(drawingPrimitives([{op: 'FillRectangle', args: [0, 0, 2, 2, 'red']}, {op: 'Clear'}]).length, 0);
+});
+
+test('painted bounds include transformed content, wide blur and native glyph overhangs', () => {
+  const child = rectangleList('a', 1), drawing = new DrawingContext();
+  drawing.PushTransform([1, 0, 0, 1, 20, 30]).DrawLayer({displayList: child, effect: {type: 'GaussianBlur', blurAmount: 100}}).Pop();
+  assert.deepEqual(displayListBounds(drawing.finish()), [-280, -270, 610, 620]);
+  const text = new DrawingContext().DrawGlyphRun({width: 10, height: 16, inkBounds: [-2, -3, 15, 20]}, [10, 10], 'black').finish();
+  assert.deepEqual(displayListBounds(text), [8, 7, 15, 20]);
 });

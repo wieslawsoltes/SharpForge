@@ -1,7 +1,19 @@
 # @sharpforge/winui-controls
 
-Application-owned layout, input and automation services for SharpForge. Only the modules present in this publication tree are exported. Hosts supply scheduling, managed values and platform capabilities.
+Layout, input and WinUI control models with pluggable host renderers.
 
-This stage adds: Routed drag data/flags, stale-response protection, internal worker replies, expiring file tokens and explicit per-session permission/disposal.
+This package contains framework-independent services. Hosts supply their type registry,
+managed values, scheduling, rendering and permission services explicitly. Import public
+APIs from `@sharpforge/winui-controls`; implementation paths are not public contracts.
 
-The complete A16 implementation has authored scope-level fixtures. Validation is pending on this exact publication tree. Browser/native/assistive-technology qualification remains separate.
+Instances belong to an application or rendering session and must be disposed with it.
+Control model, renderer, managed adapter and platform service APIs are described
+in [FAMILIES.md](FAMILIES.md).
+Focused contracts and scope are documented in [LAYOUT-INPUT.md](LAYOUT-INPUT.md),
+[SCROLLING.md](SCROLLING.md), [AUTOMATION.md](AUTOMATION.md),
+[ENVIRONMENT.md](ENVIRONMENT.md), and [DRAG_DROP.md](DRAG_DROP.md).
+[ACCEPTANCE.md](ACCEPTANCE.md) records authored coverage and the pending
+integrated qualification gate.
+
+Project 14 additions are allocated from the existing area contract reservations. Released
+framework contract identifiers and signatures retain their original meanings.
