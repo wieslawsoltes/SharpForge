@@ -69,6 +69,13 @@ Channel conversion verifies the premultiplied invariant; it does not silently
 unpremultiply, clamp bad alpha, or fill transparent pixels. The negative XAML case
 records the actual exception type and HRESULT and has no pixel artifact.
 
+The producer also constructs fresh native Rectangle, Ellipse, Line, Path, Polygon,
+and Polyline instances and records their actual `StrokeThickness`, `Stretch`, and
+whether either property has a local value. Per-reference `nativeDefaults.shapeDefaults`
+retains those observations. The consumer compares fresh browser framework objects
+with the captured values; an older artifact without these observations cannot
+qualify the native-defaults criterion. Expected defaults are not inserted by this harness.
+
 Segoe UI is explicitly requested by the text input. Available Segoe UI, bold,
 symbol, and emoji font files are hashed. This records installed files; it does
 not assert which fallback face supplied each native glyph. Browser text parity
@@ -100,7 +107,7 @@ not been run merely by checking in this harness and its test sources.
 At the completed-scope validation slot:
 
 ```sh
-node scripts/limited.js node --test tests/a17-native-pixel-*.test.js
+node scripts/limited.js node --test tests/a17-native-pixel-*.test.js tests/a17-native-shape-defaults.test.js
 ```
 
 These tests exercise data contracts, source hashes, actual BGRA/RGBA conversion,

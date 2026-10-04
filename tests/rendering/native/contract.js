@@ -95,7 +95,23 @@ export function validateDump(value, input, pin) {
       value.stabilityPolicy?.maximumRenderingTurns !== 120 || !Array.isArray(value.observations) ||
       value.observations.length !== input.fixtures.length) fail('SFNPIX005', 'Invalid native capture provenance');
   value.observations.forEach((observation, index) => validateObservation(observation, input.fixtures[index]));
+  if (value.shapeDefaults != null) validateShapeDefaults(value.shapeDefaults);
   return value;
+}
+
+/** Preserve observed native defaults and local-value state without substituting expected framework values. */
+export function validateShapeDefaults(values) {
+  const required = new Set(['Rectangle', 'Ellipse', 'Line', 'Path', 'Polygon', 'Polyline']
+    .map(name => 'Microsoft.UI.Xaml.Shapes.' + name));
+  if (!Array.isArray(values) || values.length !== required.size) fail('SFNPIX025', 'Native shape default observations are incomplete');
+  for (const value of values) {
+    if (!required.delete(value?.type) || !Number.isFinite(value.strokeThickness) || value.strokeThickness < 0 ||
+        !['None', 'Fill', 'Uniform', 'UniformToFill'].includes(value.stretch) ||
+        typeof value.strokeHasLocalValue !== 'boolean' || typeof value.stretchHasLocalValue !== 'boolean') {
+      fail('SFNPIX025', 'Invalid native shape default observation');
+    }
+  }
+  return values;
 }
 
 /** Exported metadata binds provider-owned pixels to exact XAML, native toolchain, and source revision. */
@@ -116,6 +132,7 @@ export function referenceMetadata({ fixture, observation, dump, input, provenanc
     sourceRevision: provenance.sourceRevision, sourceDirty: provenance.sourceDirty, capturedAt: provenance.capturedAt,
     stabilityPolicy: { ...dump.stabilityPolicy, freshProcesses: 2 },
     nativeEnvironment: { ...dump.environment, rasterizationScale: observation.rasterizationScale, actualTheme: observation.actualTheme },
+    nativeDefaults: { shapeDefaults: dump.shapeDefaults ?? null },
     pinnedToolchain: pin, materials: input.materials, tolerance: fixture.tolerance,
     referenceStatus: 'Native capture; browser parity requires a separate comparison',
     captureProfile: 'static-xaml; excludes popup/composition-only/media/SwapChainPanel content' };

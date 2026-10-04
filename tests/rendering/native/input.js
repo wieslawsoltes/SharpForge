@@ -6,7 +6,7 @@ import { hash, limits, validateCatalog } from './contract.js';
 
 export const directory = fileURLToPath(new URL('./', import.meta.url));
 export const runtimeFiles = ['Oracle.WinUI.csproj', 'app.manifest', 'packages.lock.json'];
-export const nativeFiles = ['Program.cs', 'NativeCapture.cs'];
+export const nativeFiles = ['Program.cs', 'NativeCapture.cs', 'ShapeDefaults.cs'];
 
 export async function boundedRead(file, parent, bound) {
   const canonical = await realpath(file);
