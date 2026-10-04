@@ -6,7 +6,7 @@ import {compareOrdinalRange} from './string-compare.js';
 import {equalsWithComparison, registerStringEqualityExtensions} from './string-equality.js';
 import {compareWithComparison, compareRangeWithComparison} from './string-comparison.js';
 import {affixWithComparison, registerStringAffixExtensions} from './string-affix.js';
-import {containsWithComparison, indexOfWithComparison, indexOfFromWithComparison,
+import {containsWithComparison, indexOfWithComparison, indexOfFromWithComparison, indexOfWindowWithComparison,
   lastIndexOfWithComparison, registerStringSearchExtensions} from './string-search.js';
 
 const owner = 'System.String';
@@ -139,6 +139,7 @@ function instanceString(platform, descriptor, receiver, values, scalars) {
     case 'EndsWith': return scalars.length === 1 ? receiver.endsWith(string(platform, values[0]))
       : affixWithComparison(platform, receiver, scalars[0], scalars[1], true);
     case 'IndexOf':
+      if (descriptor.parameters[3] === 'System.StringComparison') return indexOfWindowWithComparison(platform, receiver, scalars);
       if (descriptor.parameters[2] === 'System.StringComparison') {
         return indexOfFromWithComparison(platform, receiver, scalars[0], scalars[1], scalars[2]);
       }

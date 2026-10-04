@@ -844,8 +844,9 @@ Registered families: <code>string</code>.
 | 524306 | <code>int System.String::IndexOf(string, System.StringComparison)</code> | implemented |
 | 524307 | <code>int System.String::LastIndexOf(string, System.StringComparison)</code> | implemented |
 | 524308 | <code>int System.String::IndexOf(string, int, System.StringComparison)</code> | implemented |
+| 524311 | <code>int System.String::IndexOf(string, int, int, System.StringComparison)</code> | implemented |
 
-Pinned reference: 47 implemented and 139 missing exact metadata rows.
+Pinned reference: 48 implemented and 138 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -940,7 +941,7 @@ Pinned reference: 47 implemented and 139 missing exact metadata rows.
 | method | <code>System.String::IndexOf``0(System.String):System.Int32 instance</code> | implemented | 1259 |
 | method | <code>System.String::IndexOf``0(System.String,System.Int32):System.Int32 instance</code> | implemented | 1260 |
 | method | <code>System.String::IndexOf``0(System.String,System.Int32,System.Int32):System.Int32 instance</code> | missing | — |
-| method | <code>System.String::IndexOf``0(System.String,System.Int32,System.Int32,System.StringComparison):System.Int32 instance</code> | missing | — |
+| method | <code>System.String::IndexOf``0(System.String,System.Int32,System.Int32,System.StringComparison):System.Int32 instance</code> | implemented | 524311 |
 | method | <code>System.String::IndexOf``0(System.String,System.Int32,System.StringComparison):System.Int32 instance</code> | implemented | 524308 |
 | method | <code>System.String::IndexOf``0(System.String,System.StringComparison):System.Int32 instance</code> | implemented | 524306 |
 | method | <code>System.String::IndexOfAny``0(System.Char[]):System.Int32 instance</code> | missing | — |
