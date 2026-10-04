@@ -1,0 +1,124 @@
+# INACTIVE PROPOSAL: the ci-workflows lock holder must register this under
+# .github/workflows/ after the completed A25 scope is ready. This file runs nothing.
+# Coordinate one validation slot; this workflow is never triggered by PRs/labels.
+name: A25 Git completed-scope qualification
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Candidate captures measurements; regression requires a reviewed measured baseline
+        type: choice
+        options: [regression, candidate]
+        default: regression
+        required: true
+      baseline_path:
+        description: Regression only; tracked packages/git/bench/baselines/*.json from an actual matching run
+        type: string
+        default: ''
+        required: false
+permissions:
+  contents: read
+concurrency:
+  group: a25-git-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  qualify:
+    name: A25 ${{ inputs.mode }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    defaults:
+      run:
+        shell: bash
+    env:
+      QUALIFICATION_MODE: ${{ inputs.mode }}
+      BASELINE_PATH: ${{ inputs.baseline_path }}
+      SHARPFORGE_RESULTS_DIR: artifacts/results/a25
+      SHARPFORGE_BROWSER_ENGINE: chromium
+      NODE_OPTIONS: --max-old-space-size=4096
+      TMPDIR: ${{ runner.temp }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.21.0'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Record source, capacity and explicit comparison intent
+        run: |
+          mkdir -p "$SHARPFORGE_RESULTS_DIR"
+          git rev-parse HEAD > "$SHARPFORGE_RESULTS_DIR/source.txt"
+          node --input-type=module <<'JS' | tee "$SHARPFORGE_RESULTS_DIR/preflight.json"
+          import { statfs, readFile } from 'node:fs/promises';
+          import { totalmem } from 'node:os';
+          import { execFileSync } from 'node:child_process';
+          const disk = await statfs(process.env.RUNNER_TEMP);
+          const mode = process.env.QUALIFICATION_MODE;
+          const path = process.env.BASELINE_PATH;
+          const record = { mode, baselinePath: path || null, node: process.version,
+            freeDiskBytes: disk.bavail * disk.bsize, memoryBytes: totalmem(),
+            minimumFreeDiskBytes: 12 * 1024 ** 3, minimumMemoryBytes: 6 * 1024 ** 3,
+            comparisonRequested: mode === 'regression', regressionVerdict: 'not-run' };
+          console.log(JSON.stringify(record, null, 2));
+          if (!['candidate', 'regression'].includes(mode)) throw new Error('Unknown mode');
+          if (mode === 'candidate' && path) throw new Error('Candidate mode must not supply a baseline');
+          if (mode === 'regression') {
+            if (!/^packages\/git\/bench\/baselines\/[A-Za-z0-9._-]+\.json$/u.test(path)) {
+              throw new Error('Regression requires an explicit tracked benchmark baseline path');
+            }
+            execFileSync('git', ['ls-files', '--error-unmatch', '--', path], { stdio: 'pipe' });
+            const baseline = JSON.parse(await readFile(path, 'utf8'));
+            if (baseline.complete !== true || baseline.ok !== true) throw new Error('Baseline is not a complete successful measurement');
+          }
+          if (record.freeDiskBytes < record.minimumFreeDiskBytes || record.memoryBytes < record.minimumMemoryBytes) {
+            throw new Error('Insufficient runner capacity; provision capacity without deleting unrelated work');
+          }
+          JS
+          if [ "$QUALIFICATION_MODE" = regression ]; then
+            cp -- "$BASELINE_PATH" "$SHARPFORGE_RESULTS_DIR/input-baseline.json"
+          fi
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Serial Node scope and actual 100 MiB pack qualification
+        run: |
+          node packages/git/scripts/qualify.js --scope node,pack-memory \
+            --output "$SHARPFORGE_RESULTS_DIR/core" 2>&1 | tee "$SHARPFORGE_RESULTS_DIR/core.log"
+      - name: Full 100k-file and 1 GiB clone, status, log and blame benchmark
+        run: |
+          args=(--scope benchmark --output "$SHARPFORGE_RESULTS_DIR/benchmark")
+          if [ "$QUALIFICATION_MODE" = regression ]; then
+            args+=(--baseline "$BASELINE_PATH" --require-baseline)
+          fi
+          node packages/git/scripts/qualify.js "${args[@]}" 2>&1 | tee "$SHARPFORGE_RESULTS_DIR/benchmark.log"
+      - name: Install pinned browser prerequisites and build the actual Studio
+        run: |
+          python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+          python -m playwright install --with-deps chromium
+          node scripts/limited.js npm run build
+      - name: Native Chromium storage, Studio, canonical clone and full collaboration
+        run: |
+          node scripts/limited.js python tests/a25_storage_browser_test.py
+          node scripts/limited.js python tests/a25_studio_browser_test.py
+          node scripts/limited.js python tests/a25_clone_events_test.py
+          node scripts/limited.js python tests/a25_clone_browser_test.py
+          node scripts/limited.js python tests/a25_collab_browser_test.py
+          node scripts/limited.js python tests/a25_collab_browser_test.py --scope websocket-fallback
+      - name: Require unmodified source
+        if: always()
+        run: node scripts/conformance/clean-checkout.js
+      - name: State the benchmark comparison boundary
+        if: always()
+        run: |
+          if [ "$QUALIFICATION_MODE" = candidate ]; then
+            echo 'Candidate measurements only: no baseline comparison and no 20% regression verdict.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Regression mode: consult benchmark/qualification.json and benchmark/benchmark.json; missing, incomplete or failed stages are not passes.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: a25-git-${{ inputs.mode }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/results/a25/
+          retention-days: 30
+          if-no-files-found: error
