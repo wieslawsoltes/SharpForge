@@ -1,4 +1,6 @@
 import {sha256} from '../conformance/build-identity.js';
+import {browserCsp} from '../conformance/security/csp.js';
+import {samePolicy} from '../conformance/security/html-policy.js';
 
 export const protocol = Object.freeze({id: 'studio-lazy-evaluation-v1', pairs: 12, timeDomain: 'threadTicks',
   captureTimeoutMs: 60000, totalTimeoutMs: 900000, marker: 'SharpForge.entry.evaluated'});
@@ -9,6 +11,13 @@ export const variants = Object.freeze(['lazy', 'eager']);
 export const entryPath = variant => `/_sf-${variant}-entry.js`;
 export const pagePath = variant => `/_sf-${variant}.html`;
 export const pairOrder = pair => pair % 2 === 0 ? variants : [...variants].reverse();
+
+/** Match generated directives; permitted inline styles must not be mistaken for inline script permission. */
+export function requireEntryPolicy(policy, allowedOrigins = []) {
+  if (typeof policy !== 'string' || !samePolicy(policy, browserCsp({allowedOrigins}))) {
+    throw new Error('Entry response did not retain the generated production CSP');
+  }
+}
 
 /** Identical entry scaffolding; only the eager counterfactual imports the five deferred module graphs. */
 export function entryModule(variant) {

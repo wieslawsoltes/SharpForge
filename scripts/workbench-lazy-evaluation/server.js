@@ -1,8 +1,9 @@
 import {createServer} from 'node:http';
 import {request as httpRequest} from 'node:http';
 import {request as httpsRequest} from 'node:https';
-import {overlayAssets} from './protocol.js';
+import {overlayAssets, requireEntryPolicy} from './protocol.js';
 import {sha256} from '../conformance/build-identity.js';
+import {connectOrigins} from '../conformance/security/csp.js';
 
 async function boundedBody(response, maximum) {
   const chunks = [];
@@ -22,12 +23,12 @@ export async function evaluationServer(productionUrl) {
   if (base.pathname !== '/' || base.search || base.hash) throw new Error('Lazy evaluation requires a production root URL');
   const response = await fetch(new URL('index.html', base), {signal: AbortSignal.timeout(15000), redirect: 'error'});
   const policy = response.headers.get('content-security-policy');
-  if (!response.ok || !policy || policy.includes("'unsafe-eval'") || policy.includes("'unsafe-inline'")) {
-    throw new Error('Production HTTP/CSP precondition failed');
-  }
+  if (!response.ok) throw new Error('Production HTTP precondition failed');
+  requireEntryPolicy(policy, connectOrigins(process.env.SHARPFORGE_CONNECT_ORIGINS));
   const html = (await boundedBody(response, 1024 * 1024)).toString('utf8');
   const assets = overlayAssets(html), byPath = new Map(assets.map(asset => [asset.path, asset]));
   const failures = [], pending = new Set();
+  let cancellations = 0;
   const server = createServer((incoming, outgoing) => {
     const location = new URL(incoming.url, 'http://127.0.0.1');
     const asset = byPath.get(location.pathname);
@@ -43,26 +44,34 @@ export async function evaluationServer(productionUrl) {
     }
     const target = new URL(base);
     target.pathname = location.pathname;
+    let cancelled = false;
     const request = (target.protocol === 'https:' ? httpsRequest : httpRequest)(target, {method: 'GET'}, upstream => {
       outgoing.writeHead(upstream.statusCode, upstream.headers);
+      upstream.once('error', error => request.destroy(error));
       upstream.pipe(outgoing);
     });
     pending.add(request);
     request.setTimeout(30000, () => request.destroy(new Error('Production proxy request timed out')));
     request.once('error', error => {
+      if (cancelled) return;
       failures.push({path: location.pathname, message: error.message});
       if (!outgoing.headersSent) outgoing.writeHead(502);
       outgoing.end();
     });
     request.once('close', () => pending.delete(request));
-    outgoing.once('close', () => request.destroy());
+    outgoing.once('close', () => {
+      if (outgoing.writableFinished) return;
+      cancelled = true;
+      cancellations++;
+      request.destroy();
+    });
     request.end();
   });
   await new Promise((resolve, reject) => {
     server.once('error', reject);
     server.listen(0, '127.0.0.1', resolve);
   });
-  return {url: `http://127.0.0.1:${server.address().port}/`, assets, failures,
+  return {url: `http://127.0.0.1:${server.address().port}/`, assets, failures, get cancellations() { return cancellations; },
     async stop() {
       for (const request of pending) request.destroy();
       server.closeAllConnections();

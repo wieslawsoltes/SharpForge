@@ -3,14 +3,15 @@ import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
 import {assessEvaluation} from '../scripts/workbench-lazy-evaluation/assessment.js';
 import {captureEvaluation, enableThreadMetrics} from '../scripts/workbench-lazy-evaluation/capture.js';
-import {deferredModules, entryDurations, entryModule, metricValues, overlayAssets, pairOrder, protocol}
+import {deferredModules, entryDurations, entryModule, metricValues, overlayAssets, pairOrder, protocol, requireEntryPolicy}
   from '../scripts/workbench-lazy-evaluation/protocol.js';
 import {evaluationServer, verifyOverlays} from '../scripts/workbench-lazy-evaluation/server.js';
 import {sha256} from '../scripts/conformance/build-identity.js';
+import {browserCsp} from '../scripts/conformance/security/csp.js';
 
 const html = '<!doctype html><html><head><title>fixture</title></head><body>'
   + '<script type="module" src="./studio.js"></script></body></html>';
-const policy = "default-src 'self'; script-src 'self'; object-src 'none'";
+const policy = browserCsp();
 const hash = character => character.repeat(64);
 const metrics = (script, timestamp) => [
   {name: 'ScriptDuration', value: script}, {name: 'V8CompileDuration', value: .01}, {name: 'Timestamp', value: timestamp}
@@ -117,6 +118,14 @@ test('unsupported threadTicks rejects without a timing fallback', async () => {
   assert.deepEqual(calls, [{method: 'Performance.enable', parameters: {timeDomain: 'threadTicks'}}]);
 });
 
+test('actual production CSP permits inline styles while rejecting any relaxed script directive', () => {
+  assert.match(policy, /style-src[^;]*'unsafe-inline'/);
+  assert.doesNotThrow(() => requireEntryPolicy(policy));
+  assert.throws(() => requireEntryPolicy(policy.replace('script-src ', "script-src 'unsafe-inline' ")), /CSP/);
+  assert.throws(() => requireEntryPolicy(policy.replace('script-src ', "script-src 'unsafe-eval' ")), /CSP/);
+  assert.throws(() => requireEntryPolicy(undefined), /CSP/);
+});
+
 function fakeEngine({missingMarker = false, unsupported = false} = {}) {
   const ownership = {launches: 0, closes: 0};
   const session = {listener: null, async send(method) {
@@ -151,9 +160,12 @@ test('capture owns a fresh process for each sample and closes it on unsupported 
   assert.deepEqual(stalled.ownership, {launches: 1, closes: 1});
 });
 
-test('real local HTTP overlay preserves product bytes/CSP and verifies all four served fixture resources', async t => {
+test('real local HTTP overlay preserves product bytes/CSP and tracks downstream cancellation separately', {timeout: 5000}, async t => {
   const javascript = 'export const product = 42;\n';
+  let acceptSlow;
+  const slowReceived = new Promise(resolve => { acceptSlow = resolve; });
   const upstream = createServer((request, response) => {
+    if (request.url === '/slow.js') { acceptSlow(); return; }
     const body = request.url === '/index.html' ? html : javascript;
     response.writeHead(200, {'content-security-policy': policy, 'content-type': 'text/plain'});
     response.end(body);
@@ -173,4 +185,14 @@ test('real local HTTP overlay preserves product bytes/CSP and verifies all four 
   const forbidden = await fetch(new URL('/studio.js?unexpected=1', server.url));
   assert.equal(forbidden.status, 400);
   await assert.rejects(evaluationServer(server.url + 'nested/'), /root URL/);
+  const controller = new AbortController();
+  const pending = fetch(new URL('/slow.js', server.url), {signal: controller.signal});
+  const rejected = assert.rejects(pending, {name: 'AbortError'});
+  await slowReceived;
+  controller.abort();
+  await rejected;
+  const deadline = Date.now() + 1000;
+  while (!server.cancellations && Date.now() < deadline) await new Promise(resolve => setTimeout(resolve, 1));
+  assert.equal(server.cancellations, 1);
+  assert.deepEqual(server.failures, []);
 });

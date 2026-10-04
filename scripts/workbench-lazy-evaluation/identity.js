@@ -6,7 +6,7 @@ import {prepareIdentity} from '../workbench-overhead/identity.js';
 /** Extend the existing completed-build provenance with every module specific to this measurement driver. */
 export async function evaluationIdentity(root) {
   const identity = await prepareIdentity(root);
-  const paths = ['scripts/bench-workbench-lazy-evaluation.js',
+  const paths = ['scripts/bench-workbench-lazy-evaluation.js', 'scripts/conformance/security/html-policy.js',
     ...(await files(join(root, 'scripts/workbench-lazy-evaluation'))).map(path => 'scripts/workbench-lazy-evaluation/' + path)];
   const rows = [...identity.report.harness.files];
   for (const path of paths) rows.push({path, ...await hashFile(join(root, path))});

@@ -52,6 +52,10 @@ host caches remain shared. Each capture includes launch and cleanup within its
 asset identity, wrong module graph, product error, or incomplete sample set fails
 closed. Firefox and WebKit produce an explicit unsupported failure: no other
 clock or fabricated sample substitutes for Chromium's metric.
+Normal downstream request cancellation during browser shutdown is counted
+separately; actual upstream failures and timeouts remain fatal. The CSP check
+compares parsed generated directives, retaining permitted inline styles without
+relaxing script execution policy.
 
 Every signed eager-minus-lazy observation is retained, including negative and
 zero values. The gate requires a strictly positive paired aggregate decrease;

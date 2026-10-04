@@ -1,7 +1,12 @@
 import {settingsState, viewport} from '../workbench-overhead/protocol.js';
-import {deferredModules, entryDurations, pagePath, protocol} from './protocol.js';
+import {deferredModules, entryDurations, pagePath, protocol, requireEntryPolicy} from './protocol.js';
+import {connectOrigins} from '../conformance/security/csp.js';
 
 function timeoutError() { return new Error('Lazy-evaluation capture exceeded its deadline (maximum 60 seconds)'); }
+function recordError(run, error) {
+  if (run.errors.length < 128) run.errors.push(error);
+  else run.droppedErrorCount = (run.droppedErrorCount ?? 0) + 1;
+}
 
 /** Unsupported CDP clocks fail explicitly; never silently substitute elapsed wall time for thread time. */
 export async function enableThreadMetrics(session) {
@@ -35,13 +40,13 @@ async function measure(browser, url, run, deadline) {
   const context = await browser.newContext({viewport, deviceScaleFactor: 1,
     storageState: settingsState(new URL(url).origin, true), serviceWorkers: 'block'});
   const page = await context.newPage();
-  page.on('pageerror', error => run.errors.push({type: 'pageerror', message: error.message}));
+  page.on('pageerror', error => recordError(run, {type: 'pageerror', message: error.message}));
   page.on('console', message => {
-    if (message.type() === 'error') run.errors.push({type: 'console', message: message.text()});
+    if (message.type() === 'error') recordError(run, {type: 'console', message: message.text()});
   });
   page.on('request', request => {
     if (run.requests.length >= 30000) {
-      if (!run.requestLimitExceeded) run.errors.push({type: 'request-limit', message: 'Request capture limit exceeded'});
+      if (!run.requestLimitExceeded) recordError(run, {type: 'request-limit', message: 'Request capture limit exceeded'});
       run.requestLimitExceeded = true;
       return;
     }
@@ -49,7 +54,7 @@ async function measure(browser, url, run, deadline) {
   });
   await context.route('**/*', route => {
     if (new URL(route.request().url()).origin === new URL(url).origin) return route.continue();
-    run.errors.push({type: 'external-request', url: route.request().url()});
+    recordError(run, {type: 'external-request', url: route.request().url()});
     return route.abort('blockedbyclient');
   });
   const session = await context.newCDPSession(page);
@@ -60,7 +65,7 @@ async function measure(browser, url, run, deadline) {
   const marker = new Promise(resolve => { acceptMarker = resolve; });
   session.on('Performance.metrics', event => {
     if (run.metricEvents.length >= 32) {
-      if (!run.metricLimitExceeded) run.errors.push({type: 'metrics-limit', message: 'CDP metric event limit exceeded'});
+      if (!run.metricLimitExceeded) recordError(run, {type: 'metrics-limit', message: 'CDP metric event limit exceeded'});
       run.metricLimitExceeded = true;
       return;
     }
@@ -73,9 +78,8 @@ async function measure(browser, url, run, deadline) {
   const navigation = await page.goto(new URL(pagePath(run.variant), url).href,
     {waitUntil: 'commit', timeout: remaining()});
   const csp = navigation?.headers()['content-security-policy'];
-  if (!navigation?.ok() || !csp || csp.includes("'unsafe-eval'") || csp.includes("'unsafe-inline'")) {
-    throw new Error('Entry response did not retain production CSP');
-  }
+  if (!navigation?.ok()) throw new Error('Entry response failed');
+  requireEntryPolicy(csp, connectOrigins(process.env.SHARPFORGE_CONNECT_ORIGINS));
   run.entryEvent = await marker;
   Object.assign(run, entryDurations(run.baselineMetrics, run.entryEvent));
   // The metric was already captured synchronously at the wrapper marker. This check cannot extend its timed span.

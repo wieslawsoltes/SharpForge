@@ -19,6 +19,7 @@ export async function runEvaluation({engine, server, report, remaining, executab
         throw error;
       } finally {
         report.serverErrors = [...server.failures];
+        report.cancelledDownstreamRequests = server.cancellations;
         await save();
       }
     }
