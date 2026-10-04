@@ -1,5 +1,7 @@
 import { Writer, CilError, align } from './binary.js';
 
+const defaultOptions = Object.freeze({});
+
 export const exceptionEncodingDiagnosticCatalog = Object.freeze({
   CILEH0001: 'Invalid method body or exception clause',
   CILEH0002: 'Method body or exception section limit exceeded',
@@ -44,7 +46,9 @@ function validateClause(clause, codeSize) {
 
 function sectionPlan(handlers, codeSize, options) {
   const { exceptionFormat = 'fat', maxClauses = 100000, signal } = options;
-  if (!['fat', 'small', 'auto'].includes(exceptionFormat)) fail('CILEH0001', 'Invalid exception section format');
+  if (exceptionFormat !== 'fat' && exceptionFormat !== 'small' && exceptionFormat !== 'auto') {
+    fail('CILEH0001', 'Invalid exception section format');
+  }
   if (!unsigned(maxClauses, 1000000) || handlers.length > maxClauses) fail('CILEH0002');
   if (options.clausesPerSection !== undefined) fail('CILEH0005');
   if (!handlers.length) return null;
@@ -80,7 +84,7 @@ function writeSection(writer, section, handlers, signal) {
 }
 
 /** Encode a fat method header and bounded catch/filter/finally/fault sections; fat remains the replay-compatible default. */
-export function writeMethodBody(code, localToken, maxStack, handlers = [], options = {}) {
+export function writeMethodBody(code, localToken, maxStack, handlers = [], options = defaultOptions) {
   cancelled(options.signal);
   if (!(code instanceof Uint8Array) || !Array.isArray(handlers) || !unsigned(maxStack, 65535) ||
       !unsigned(localToken, 0xffffffff) || (localToken !== 0 && (localToken >>> 24 !== 17 || !(localToken & 0xffffff)))) {
