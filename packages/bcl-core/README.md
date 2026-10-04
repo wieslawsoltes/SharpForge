@@ -370,6 +370,39 @@ The static benchmark `scripts/benchmarks/a07-framework-object-string.mjs` report
 the unchanged primitive control and newly virtual framework cases separately;
 copy it to baseline `82ec8ed4` for a serial comparison with setup excluded.
 
+`String.IndexOf(string, int startIndex, StringComparison)` appends A07 contract
+`524308` and searches the suffix beginning at an inclusive UTF-16 offset. The
+result is an absolute offset in the original receiver, or -1. Start indices from
+zero through `Length` are valid; an empty value returns `startIndex`, including
+`Length`. The released one-argument, int-start and comparison-mode overloads keep
+their contract IDs and behavior.
+
+Receiver/value null checks precede enum validation; an invalid enum wins over an
+invalid start. A valid enum then requires a start within `0..Length`. Culture
+modes 0–3 remain explicitly unsupported after those checks, including on empty
+and identical strings. The [pinned .NET 10.0.5 capture](reference/string-indexof-comparison-start/README.md)
+retains 832 native results and faults, including actual culture outcomes rather
+than substituting the profile guard into the reference.
+
+Both first-search routes share the existing <=8-unit bounded candidate path and
+Two-Way helper. Searches begin at the absolute start offset without substring,
+folded-string, options-object or per-call closure allocation. Raw surrogate
+endpoints retain candidate-boundary semantics even when `startIndex` splits a
+pair; the full-input folded accessor and LastIndexOf continuation remain shared.
+For an eligible suffix of n units and a value of m units, the ignore-case path
+uses O(n + m) folded reads and O(1) auxiliary space. Long nonempty folded cores
+still use two constant-size host factorization records; successful calls do not
+allocate managed strings or arrays.
+
+The focused tests cover both compiler pipelines and VMs, independent CIL,
+managed collection, every start in an exhaustive small UTF-16 corpus, direct
+Two-Way paths and counted reads after an excluded prefix. The static benchmark
+`scripts/benchmarks/a07-string-indexof-comparison-start.mjs` compares unchanged
+first/last/int-start controls against parent `b679f98d`, then reports the new
+ordinal and ignore-case overloads separately, with 8/9/64-unit repeated needles.
+Count overloads and culture implementations remain separate work under #2621;
+native/Wasm execution is not qualified by this batch.
+
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null
 first, then compares exact UTF-16 code units without normalization, case folding
