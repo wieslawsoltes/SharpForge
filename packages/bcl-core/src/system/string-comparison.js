@@ -1,13 +1,9 @@
 import {fail} from '../host.js';
 import {compareOrdinal} from './string-comparer.js';
 import {compareOrdinalIgnoreCase, compareOrdinalIgnoreCaseRange, compareOrdinalRange} from './string-compare.js';
+import {validateStringComparisonMode} from './string-comparison-mode.js';
 
-/** Validate the enum independently of operation-specific argument checks and culture support. */
-export function validateStringComparisonMode(platform, mode) {
-  if (!Number.isInteger(mode) || mode < 0 || mode > 5) {
-    fail(platform, 'ArgumentException', "Invalid string comparison type. (Parameter 'comparisonType')");
-  }
-}
+export {validateStringComparisonMode} from './string-comparison-mode.js';
 
 /** Reject valid culture modes after the caller has checked its native argument precedence. */
 export function requireOrdinalStringComparison(platform, mode, member) {

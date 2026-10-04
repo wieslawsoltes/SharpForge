@@ -1,6 +1,7 @@
 import {compareObjects} from './object-comparison.js';
 import {compareOrdinalIgnoreCase} from './string-compare.js';
-import {fail, string} from '../host.js';
+import {validateStringComparisonMode} from './string-comparison-mode.js';
+import {bclScalar, fail, string} from '../host.js';
 
 const comparerType = 'System.StringComparer';
 const stringInterface = 'System.Collections.Generic.IComparer`1<string>';
@@ -29,6 +30,26 @@ export function registerStringComparerExtensions(registry) {
   registry.prop(comparerType, 'OrdinalIgnoreCase', comparerType, null, true, true);
 }
 
+/** Append the factory after existing A07 members without changing getter or comparison IDs. */
+export function registerStringComparerFactoryExtensions(registry) {
+  registry.member(comparerType, 'FromComparison', ['System.StringComparison'], comparerType, {isStatic: true});
+}
+
+function comparerSingleton(platform, getter) {
+  const key = comparerType + '.' + getter.slice(4);
+  return platform.singleton(key, () => platform.make(comparerType, {'$comparison': getters[getter]}));
+}
+
+function fromComparison(platform, value) {
+  const mode = bclScalar(platform, value);
+  validateStringComparisonMode(platform, mode);
+  if (mode < 4) {
+    fail(platform, 'NotSupportedException',
+      'StringComparer.FromComparison supports only StringComparison.Ordinal and OrdinalIgnoreCase; culture modes are not implemented');
+  }
+  return comparerSingleton(platform, mode === 4 ? 'get_Ordinal' : 'get_OrdinalIgnoreCase');
+}
+
 /** Invoke Compare through either StringComparer or its IComparer<string> contract. */
 function invokeStringCompare(platform, args) {
   const compare = resolveStringComparer(platform, args[0]);
@@ -53,9 +74,10 @@ function registerStringComparer(registry) {
 
 function invokeStringComparer(platform, descriptor, args) {
   if (Object.hasOwn(getters, descriptor.name)) {
-    const key = comparerType + '.' + descriptor.name.slice(4);
-    const value = platform.singleton(key, () => platform.make(comparerType, {'$comparison': getters[descriptor.name]}));
-    return {handled: true, value};
+    return {handled: true, value: comparerSingleton(platform, descriptor.name)};
+  }
+  if (descriptor.name === 'FromComparison') {
+    return {handled: true, value: fromComparison(platform, args[0])};
   }
   if (descriptor.name === 'Compare') {
     if (descriptor.parameters[0] === 'object') {
