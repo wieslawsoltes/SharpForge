@@ -6,7 +6,7 @@
     "packages/runtime/src/cil-vm.js": "35d6cfb8c09251a39157ce1f1bf0124725faa14e0668a248cfc2cb5845528684",
     "packages/runtime/src/execution/delegate-targets.js": "ec19efa480e2d864ba35268cfee220015e7655d84213502d6d2fc4b95094ae5d",
     "packages/runtime/src/execution/source-ops.js": "d281c22b9072dc0151a2b0b3571c02b29bfe3074dbf783cf879269b6e5af9a22",
-    "packages/runtime/src/execution/storage.js": "90796038ab9b92e0bd29c1e48df58c98655f625b330f6dc8df2e48284ab516ad",
+    "packages/runtime/src/execution/storage.js": "510a6a5db8f93a2ef8f020d0e4b72181dfb2990c959ac3a807e499d7b299a4f8",
     "packages/runtime/src/execution/numeric-ops.js": "407778ba5fa9b1b97d26e625874dac923b2de5c6e4f9a5a30d42f1b2da7ee2b2",
     "packages/runtime/src/execution/enums.js": "7235807aed0ec81512a186db091608087e4418b38dfbd1cb228cde697a46ff5c",
     "packages/bytecode/src/index.js": "a7415f7b70d7fa8b44674f85278a307e5cc9cbd7df0544953733eda2a3a1b32d",
@@ -57,10 +57,14 @@
     },
     "any": {
       "source": "number | bigint | boolean | null | undefined | {h,g} | enum | float | nativeInt | Decimal",
-      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields}"
+      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields} | frozen Nullable"
     }
   },
   "additionalShapes": [
+    {
+      "shape": "{nullableType:MethodTable,hasValue:boolean,value}",
+      "meaning": "immutable direct-CIL Nullable with an admitted reference-free copied payload or null; boxes as null or underlying T; ordinary same-VM snapshot-safe"
+    },
     {
       "shape": "{valueType:MethodTable,fields:frozen array}",
       "meaning": "immutable VM-owned direct-CIL reference-free sequential struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data"
