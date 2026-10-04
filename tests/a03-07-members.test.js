@@ -62,6 +62,16 @@ test('definition signatures and raw token ranges are checked without coercion', 
   assert.throws(() => wrong.context.resolveMember(0x06000001), fails('CILVM0001'));
 });
 
+test('oversized coded rows cannot turn external owners or signature types into local definitions', () => {
+  const { inspector } = fixture();
+  inspector.metadata.rows[10][0][0] = 0x08000011;
+  assert.throws(() => create(inspector), fails('CILVM0001'));
+  const badSignature = fixture({}, ({ md }) => {
+    md.rows[4][0][2] = md.blob(new Uint8Array([6, 0x12, 0xc4, 0, 0, 9]));
+  });
+  assert.throws(() => badSignature.context.resolveMember(0x04000001), fails('CILVM0001'));
+});
+
 test('snapshot and query budgets precede expansion and cancellation applies after construction', () => {
   const input = memberFixture();
   const inspector = new AssemblyInspector(input.bytes);
