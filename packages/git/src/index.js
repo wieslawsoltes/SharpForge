@@ -40,3 +40,4 @@ export * from './refspec.js';
 export * from './shallow.js';
 export * from './promisor.js';
 export * from './lfs.js';
+export * from './lfs-push.js';
