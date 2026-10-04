@@ -54,6 +54,22 @@ Canvas, SVG and reported GPU fallbacks share bounded pixel-center brush sampling
 
 `Canvas2DBackend` executes the complete drawing command ABI with balanced transforms/clips, transparent stroke-only geometry and the chosen working color space. Cached layer pixels remain local to their content; placement changes reuse them. Partial redraw first clears the damaged interior while preserving pixels outside it.
 
+## Device lifetime
+
+`GpuDevice` coalesces acquisition for surfaces owned by one app, publishes loss/recovery epochs and owns per-epoch pipeline caches. Buffer and texture pools publish reusable leases only after submission retirement has cleared. Borrowing surfaces do not dispose the shared device.
+
+## Glyph and texture residency
+
+`GlyphAtlas` bounds live glyph metadata and raster pages, preserves pages pinned by retained plans, and distinguishes font version, size, density and subpixel phase. Dirty shelves upload incrementally; first residency and recovery upload the full texture. Empty glyphs preserve advances and pending decodes are retried.
+
+## GPU pipelines
+
+Vector, analytic rectangle/ellipse and glyph pipelines share explicit premultiplied working-color semantics. App-owned per-epoch caches distinguish render/presentation formats and sample counts. Compilation errors are surfaced and failed promises are evicted so a later retry can recover.
+
+## GPU mesh encoding
+
+`MeshBuilder` reuses the shared fill/stroke geometry and image/brush policy. Eligible solid primitives pack analytic instances; other shapes retain exact meshes or explicit raster fallback. Numeric glyphs pack measured origin, atlas coordinates, color and opacity without reshaping or guessing glyph IDs.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.

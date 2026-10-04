@@ -1,0 +1,35 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {GpuDevice} from '../packages/rendering/src/webgpu/device.js';
+import {createVectorPipelines} from '../packages/rendering/src/webgpu/pipelines.js';
+import {createMockGpu} from './fixtures/rendering/mock-gpu.js';
+
+test('device-owned pipelines distinguish target formats and reject failed shader compilation without caching failure', async () => {
+  const mock = createMockGpu(), service = new GpuDevice({gpu: mock.gpu});
+  const device = await service.acquire();
+  const cache = service.pipelineCaches.vector;
+  const options = {cache, format: 'rgba8unorm', presentationFormat: 'bgra8unorm', sampleCount: 4};
+  const first = await createVectorPipelines(device, options);
+  assert.equal(await createVectorPipelines(device, options), first);
+  const linear = await createVectorPipelines(device, {...options, format: 'rgba16float'});
+  assert.notEqual(linear, first);
+  assert.equal(linear.draw.descriptor.fragment.targets[0].format, 'rgba16float');
+  assert.equal(linear.present.descriptor.fragment.targets[0].format, 'bgra8unorm');
+  assert.equal(linear.present.descriptor.multisample.count, 1);
+  const failureOptions = {compilationErrors: [{type: 'error', message: 'injected compile failure'}]};
+  const failure = createMockGpu(failureOptions);
+  const brokenDevice = await failure.adapter.requestDevice();
+  const brokenCache = new Map();
+  await assert.rejects(createVectorPipelines(brokenDevice, {cache: brokenCache}), /injected compile failure/);
+  failureOptions.compilationErrors = [];
+  await createVectorPipelines(brokenDevice, {cache: brokenCache});
+  const oldCaches = service.pipelineCaches;
+  device.lose();
+  await Promise.resolve();
+  const recovered = await service.acquire();
+  assert.notEqual(recovered, device);
+  assert.notEqual(service.pipelineCaches, oldCaches);
+  assert.equal(oldCaches.vector.size, 0);
+  await service.dispose();
+  brokenDevice.destroy();
+});
