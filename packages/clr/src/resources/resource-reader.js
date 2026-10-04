@@ -69,7 +69,7 @@ export class ManagedResourceReader {
       data: this.#bytes.slice(value.rawStart, value.rawStart + value.rawLength) });
   }
 
-  /** Lazy [name, descriptor] pairs; cancellation and disposal are checked on every step. */
+  /** Lazy [name, descriptor] pairs; cancellation and disposal are checked before each yielded value. */
   *entries({ signal } = {}) {
     this.#ensureUsable(signal);
     const names = this.#index.names;

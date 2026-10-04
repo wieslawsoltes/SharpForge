@@ -114,6 +114,29 @@ It includes every v2 built-in code, serialized user data, numeric extremes,
 negative zero, non-finite floats, Unicode, BOMs, colliding name hashes, an empty
 key, and an independent MSBuild resgen-generated `.resources` file.
 
+The retained capture was produced with .NET SDK 10.0.201 and CoreCLR 10.0.5
+on Linux x64. All 11 focused Node tests passed on Node 24.19.0, including
+the native ResourceWriter and MSBuild resgen comparison. The capture is stored
+in `tests/fixtures/clr-resources/native-resources.json`; the focused test log
+and tested source hashes are in its `qualification` directory. Browser and
+managed runtime integration have not been qualified by this capture.
+
+The candidate-cost benchmark used the 1,799-byte native file with 38 entries,
+100 measured samples, Node 24.19.0 on Linux x64, and an AMD EPYC 9V74 host.
+This was a shared machine with one validation job from this team. Allocation
+counts were not measured; there is no previous equivalent implementation.
+
+| Operation | Median, microseconds | p95, microseconds |
+| --- | ---: | ---: |
+| Cold index, including input ownership copy | 20.584 | 35.781 |
+| Cold index and full value enumeration | 41.199 | 52.359 |
+| Warm scalar lookup | 0.041 | 0.074 |
+| Owned byte-array lookup | 0.092 | 0.121 |
+
+The complete measurement is retained in `qualification/cost.json` beside the
+native fixture. These numbers describe this corpus and host; they are not a
+before-and-after speedup or a guarantee for larger files.
+
 ```sh
 node scripts/limited.js node packages/clr/tools/capture-resources.mjs artifacts/clr-resources
 node scripts/limited.js node --test tests/clr-resources-reader.test.js tests/clr-resources-corruption.test.js tests/clr-resources-reference.test.js
