@@ -1,10 +1,11 @@
-import {decodeWorkspaceFile, encodeWorkspaceFile} from '@sharpforge/archive';
-import {FileSystemAccessProvider, FileSystemError, hashFileBytes} from '@sharpforge/workspace';
+import {decodeWorkspaceFile} from '@sharpforge/archive';
+import {FileSystemAccessProvider, FileSystemError, hashFileBytes, hashWorkspaceRecord} from '@sharpforge/workspace';
 import {createHandleMapRoot} from './disk-handle-map.js';
 import {DISK_WORKSPACE_LIMITS, checkDiskCancelled} from './disk-scan.js';
 import {saveDiskChanges} from './disk-save.js';
 import {applyDiskOperations} from './disk-operations.js';
 import {DiskTextBaselines, diskRecordBytes} from './disk-baseline.js';
+import {cloneWorkspaceRecord, isTextRecord, recordSource} from './workspace-records.js';
 
 /** Directory-backed records. Lazy entries carry explicit metadata and never stand in for empty source text. */
 export class ProviderDiskWorkspace {
@@ -17,7 +18,7 @@ export class ProviderDiskWorkspace {
     this.options = {...DISK_WORKSPACE_LIMITS, ...options};
     this.rootHandle = options.rootHandle ?? null;
     this.provider = options.provider ?? new FileSystemAccessProvider(this.rootHandle ?? createHandleMapRoot(handles,
-      new Set(records.filter(record => !record.bytes && typeof record.text === 'string').map(record => record.path))),
+      new Set(records.filter(record => !record.bytes && isTextRecord(record)).map(record => record.path))),
     {maxFileBytes: Math.max(this.options.maxFileBytes, this.options.maxAssemblyBytes), caseSensitive: options.caseSensitive ?? false});
     this.baseline = new DiskTextBaselines(this);
     this.baselineHashes = new Map();
@@ -49,7 +50,7 @@ export class ProviderDiskWorkspace {
     for (const record of this.records) {
       checkDiskCancelled(signal);
       if (record.lazy) continue;
-      this.baselineHashes.set(record.path, await hashFileBytes(encodeWorkspaceFile(record), {signal}));
+      this.baselineHashes.set(record.path, await hashWorkspaceRecord(record, {signal}));
     }
   }
 
@@ -142,12 +143,16 @@ export class ProviderDiskWorkspace {
       const path = this.provider.check(input.path ?? input.uri, {allowRoot: false});
       const identity = this.provider.pathPolicy.identity(path);
       if (index.has(identity)) throw new FileSystemError('AlreadyExists', path, 'Duplicate disk snapshot identity');
-      if (input.text !== undefined && typeof input.text !== 'string' || input.bytes !== undefined && !(input.bytes instanceof Uint8Array)) {
-        throw new TypeError('Disk snapshot records require text, Uint8Array bytes, or explicit lazy metadata');
+      const source = recordSource(input);
+      if (!source && input.text !== undefined && typeof input.text !== 'string'
+          || input.bytes !== undefined && !(input.bytes instanceof Uint8Array)) {
+        throw new TypeError('Disk snapshot records require text, immutable source, Uint8Array bytes, or explicit lazy metadata');
       }
-      if (input.text === undefined && input.bytes === undefined && input.lazy !== true) throw new TypeError('Unloaded disk records must be explicit');
-      if (input.lazy === true && (input.text !== undefined || input.bytes !== undefined)) throw new TypeError('Lazy disk records cannot retain contents');
-      const record = {...input, path};
+      if (!isTextRecord(input) && input.bytes === undefined && input.lazy !== true) throw new TypeError('Unloaded disk records must be explicit');
+      if (input.lazy === true && (source || input.text !== undefined || input.bytes !== undefined)) {
+        throw new TypeError('Lazy disk records cannot retain contents');
+      }
+      const record = cloneWorkspaceRecord(input, path);
       const size = diskRecordBytes(record);
       const maximum = /\.(?:dll|exe|pdb)$/i.test(path) ? this.options.maxAssemblyBytes : this.options.maxFileBytes;
       if (size > maximum) throw new FileSystemError('FileTooLarge', path);

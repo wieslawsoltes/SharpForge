@@ -1,13 +1,19 @@
-import {encodeWorkspaceFile, decodeWorkspaceFile} from '@sharpforge/archive';
-import {FileSystemError, hashFileBytes} from '@sharpforge/workspace';
+import {decodeWorkspaceFile} from '@sharpforge/archive';
+import {FileSystemError, hashFileBytes, hashWorkspaceRecord} from '@sharpforge/workspace';
 import {diskRecordBytes} from './disk-baseline.js';
 import {checkDiskCancelled} from './disk-scan.js';
+import {captureDiskSaveRecord, encodeDiskSaveRecord} from './disk-save-records.js';
+
+function checkSave(options) {
+  checkDiskCancelled(options.signal);
+  options.check?.();
+}
 
 async function baselineHash(workspace, record, options) {
   if (workspace.baselineHashes.has(record?.path)) return workspace.baselineHashes.get(record.path);
   if (!record) return null;
   if (record.lazy) throw new FileSystemError('Conflict', record.path, 'Load the file before replacing its bytes');
-  const hash = await hashFileBytes(encodeWorkspaceFile(record), options);
+  const hash = await hashWorkspaceRecord(record, options);
   workspace.baselineHashes.set(record.path, hash);
   return hash;
 }
@@ -26,8 +32,9 @@ function nextVersion(record) {
 async function preflight(workspace, pending, options) {
   const provider = workspace.provider;
   for (const file of pending) {
-    checkDiskCancelled(options.signal);
+    checkSave(options);
     if (typeof provider.permission === 'function') await provider.permission(provider.rootHandle, file.path, {...options, write: true});
+    checkSave(options);
     if (typeof provider.prepareWrite === 'function') {
       try { await provider.prepareWrite(file.path, {...options, expectedHash: file.expectedHash}); }
       catch (error) {
@@ -37,11 +44,13 @@ async function preflight(workspace, pending, options) {
     } else if (await readHash(provider, file.path, options) !== file.expectedHash) {
       throw new FileSystemError('Conflict', file.path, 'Disk conflict; no files were written');
     }
+    checkSave(options);
   }
 }
 
 /** Prepare encoded bytes and every target before the first mutation; retain exact bytes as the next baseline. */
 export async function saveDiskChanges(workspace, changes, options = {}) {
+  checkSave(options);
   if (!Array.isArray(changes) || changes.length > workspace.options.maxFiles) throw new TypeError('Expected a bounded list of file changes');
   if (workspace.requireSaveLock && !workspace.saveLocks && workspace.resolveSaveLocks) {
     workspace.saveLocks = await workspace.resolveSaveLocks(workspace, options);
@@ -54,17 +63,22 @@ export async function saveDiskChanges(workspace, changes, options = {}) {
   const seen = new Set();
   let loadedBytes = workspace.loadedBytes;
   for (const change of changes) {
-    checkDiskCancelled(options.signal);
+    checkSave(options);
     const candidate = workspace.provider.check(change.path ?? change.uri, {...options, write: true, allowRoot: false});
     const record = workspace.record(candidate);
     const path = record?.path ?? workspace.canonicalPath(candidate);
     const identity = workspace.provider.pathPolicy.identity(path);
     if (seen.has(identity)) throw new FileSystemError('AlreadyExists', path, 'Duplicate save path');
     seen.add(identity);
-    if (typeof change.text !== 'string' && !(change.bytes instanceof Uint8Array)) throw new TypeError('Save requires text or bytes');
-    const next = {...record, ...change, path};
-    const bytes = change.bytes instanceof Uint8Array && change.text === undefined ? change.bytes.slice() : encodeWorkspaceFile(next);
-    if (bytes.length > workspace.options.maxFileBytes) throw new FileSystemError('FileTooLarge', path, 'Encoded save exceeds maxFileBytes');
+    const next = captureDiskSaveRecord(record, change, path);
+    const maximum = /\.(?:dll|exe|pdb)$/i.test(path) ? workspace.options.maxAssemblyBytes : workspace.options.maxFileBytes;
+    let bytes;
+    try { bytes = await encodeDiskSaveRecord(next, maximum, options); }
+    catch (error) {
+      if (!(error instanceof RangeError)) throw error;
+      throw new FileSystemError('FileTooLarge', path, 'Encoded save exceeds the file byte limit');
+    }
+    checkSave(options);
     loadedBytes += bytes.length - diskRecordBytes(record);
     if (loadedBytes > workspace.options.maxTotalBytes) throw new FileSystemError('QuotaExceeded', path, 'Loaded workspace byte budget exceeded');
     const expectedHash = change.expectedHash === undefined ? await baselineHash(workspace, record, options) : change.expectedHash;
@@ -72,6 +86,7 @@ export async function saveDiskChanges(workspace, changes, options = {}) {
   }
   await preflight(workspace, pending, options);
   for (const file of pending) {
+    checkSave(options);
     if (await readHash(workspace.provider, file.path, options) !== file.expectedHash) {
       throw new FileSystemError('Conflict', file.path, 'Disk conflict after permission prompt; no files were written');
     }
@@ -81,8 +96,10 @@ export async function saveDiskChanges(workspace, changes, options = {}) {
   const locks = workspace.saveLocks;
   for (const file of pending) {
     try {
-      const write = ({signal = options.signal} = {}) =>
-        workspace.provider.writeFile(file.path, file.bytes, {...options, signal, expectedHash: file.expectedHash});
+      const write = ({signal = options.signal} = {}) => {
+        checkSave({...options, signal});
+        return workspace.provider.writeFile(file.path, file.bytes, {...options, signal, expectedHash: file.expectedHash});
+      };
       const result = locks ? await locks.guardedSave({path: file.path, expectedHash: file.expectedHash, signal: options.signal,
         read: async ({signal = options.signal} = {}) => { try { return await workspace.provider.readFile(file.path, {...options, signal}); }
           catch (error) { if (error.code === 'NotFound') return null; throw error; } }, write}) : await write();
