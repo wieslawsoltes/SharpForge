@@ -29,3 +29,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Object lifetimes and UI dispatch
 
 `UIObjectTree` keeps logical and visual parents, bounded host-coordinate lookup and loading/unloading state. `DispatcherQueue` serializes work by priority and FIFO order on an injected logical UI thread. `RoutedEventRegistry` owns event identities; `RoutedHandlerList` delegates actual routing to the injected host router. `DisposableScope` owns subscriptions and supports in-memory rewind without replaying factories.
+
+## Templates and content
+
+`ControlTemplate`, `DataTemplate` and `ItemsPanelTemplate` create fresh per-instance trees with private namescopes. `TemplateHost` replaces and disposes one control template, retaining initial ApplyTemplate/layout timing and snapshot identity. Template bindings subscribe to the owner property store. `ContentPresenterController` resolves explicit templates, selectors, implicit data templates, primitive content and already-owned UI elements through its injected adapter.
