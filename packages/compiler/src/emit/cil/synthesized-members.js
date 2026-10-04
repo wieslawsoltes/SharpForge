@@ -4,6 +4,7 @@
  *
  *   Program.<Main>$   the entry point that holds the top-level statements (and `Program` itself when not declared)
  *   .cctor            for a type with static field initializers and no static constructor of its own
+ *   record members    `EqualityContract`, `PrintMembers`, `<Clone>$` and `Equals(Base)` (codegen/metadata/record-plan.js)
  *
  * A synthesized method is a planned entry without a symbol whose `emitBody(program)` returns its instruction stream.
  */
@@ -17,6 +18,7 @@ import { planClosures } from './closure-plan.js';
 import { planStateMachines } from './state-machine-plan.js';
 import { completeFieldLikeEvent } from './synthesized-events.js';
 import { planPrimaryCaptures } from './primary-constructor-captures.js';
+import { RecordPlan } from '../../codegen/metadata/record-plan.js';
 
 const ENTRY_FLAGS = MethodAttributes.Private | MethodAttributes.Static | MethodAttributes.HideBySig;
 const TYPE_INITIALIZER_FLAGS = ENTRY_FLAGS | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
@@ -45,6 +47,7 @@ export class SynthesizedMembers {
     this.topLevel = topLevel ? { file: topLevel[0], body: topLevel[1], type: programType } : null;
     this.closures = planClosures(analysis, this.topLevel);
     this.primaryCaptures = planPrimaryCaptures(analysis);
+    this.records = new RecordPlan(analysis.core);
     /** Types to append after the source types. */
     this.stateMachines = planStateMachines(analysis, this.closures);
     const ownProgram = programType && !declared.includes(programType) ? [programType] : [];
@@ -62,6 +65,7 @@ export class SynthesizedMembers {
     const declaresTypeInitializer = plan.methods.some(method => method.name === '.cctor');
     if (!declaresTypeInitializer && this.hasStaticInitializers(type)) plan.methods.push(this.typeInitializer(type));
     for (const event of plan.events) completeFieldLikeEvent(type, event, plan);
+    this.records.extend(type, plan);
     plan.fields.push(...(this.primaryCaptures.byType.get(type) ?? []));
     for (const additions of [this.closures.additions.get(type), this.stateMachines.additions.get(type)]) {
       if (!additions) continue;

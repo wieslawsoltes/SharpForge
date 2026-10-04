@@ -30,6 +30,7 @@ import { IndexRangeEmission } from './emit-index-range.js';
 import { PrimaryCaptureEmission } from './primary-constructor-captures.js';
 import { TupleEmission } from './emit-tuples.js';
 import { DeconstructionEmission } from './emit-deconstruction.js';
+import { RecordEmission } from './records/emit-records.js';
 import { StateMachineEmission } from './emit-state-machine.js';
 import { IteratorEmission } from './emit-iterators.js';
 
@@ -61,6 +62,7 @@ const families = [
   PrimaryCaptureEmission,
   TupleEmission,
   DeconstructionEmission,
+  RecordEmission,
   StateMachineEmission,
   IteratorEmission,
 ];

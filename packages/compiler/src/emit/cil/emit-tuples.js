@@ -83,6 +83,24 @@ export const TupleEmission = Base =>
         node.elements.map(element => () => this.expression(element)),
       );
     }
+    /** A tuple literal without a type of its own (`(0, null)`) passed to a parameter takes the parameter's type. */
+    argument(argument, parameter) {
+      const expression = argument.expression;
+      if (expression.kind !== 'Tuple' || expression.type || !parameter?.type?.isTupleType) return super.argument(argument, parameter);
+      return this.targetTypedTuple(expression, parameter.type);
+    }
+    /** Builds `target` from a literal whose elements convert to its element types by a standard implicit conversion. */
+    targetTypedTuple(literal, target) {
+      const types = tupleElements(target);
+      const pushers = literal.elements.map((element, index) => () => {
+        const type = types[index].type;
+        if (element.kind === 'Tuple' && !element.type) return this.targetTypedTuple(element, type);
+        if (!element.type) return this.defaultValue(type);
+        this.expression(element);
+        return this.implicitStandardConversion(element.type, type, element.syntax);
+      });
+      return this.constructTuple(target, pushers);
+    }
     fieldLocation(field, receiver, type) {
       const position = field.tupleElementIndex;
       if (position === undefined || !receiver) return super.fieldLocation(field, receiver, type);

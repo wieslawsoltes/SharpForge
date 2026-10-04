@@ -48,6 +48,7 @@ export class AssemblyEmitter {
     this.closures = synthesized.closures;
     this.stateMachines = synthesized.stateMachines;
     this.primaryCaptures = synthesized.primaryCaptures.byParameter;
+    this.records = synthesized.records;
     // A state machine class gets fields while its `MoveNext` is emitted, which moves the field tokens of the classes
     // after it: those bodies come first, class by class, and nothing emitted before names a later class's fields.
     const lateFieldTypes = new Set(synthesized.stateMachines.lateFieldTypes);

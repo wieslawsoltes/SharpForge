@@ -173,7 +173,7 @@ export function declareIterator(plan, machine, shape) {
     privateField = (name, fieldType) => plan.field(type, name, fieldType, FieldAttributes.Private),
     implement = (name, flags, returnType, overrides, emitBody) => {
       const method = synthesizedMethod(name, flags, instance(returnType), [], program => emitBody(program, machine));
-      method.overrides = overrides;
+      method.interfaceSlots = overrides;
       methods.push(method);
       return method;
     },

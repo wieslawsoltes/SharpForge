@@ -174,15 +174,22 @@ export class SymbolMetadataWriter {
     const builder = this.builder,
       self = this.tokens.definitionToken(type),
       plan = this.plans.get(type);
-    for (const implemented of type.interfaces ?? []) builder.addRow('InterfaceImpl', { Class: self, Interface: this.tokens.typeToken(implemented) });
+    // `plan.interfaces`: interfaces code generation adds to the ones the type lists (a record's `IEquatable<R>`).
+    for (const implemented of [...(type.interfaces ?? []), ...(plan.interfaces ?? [])]) {
+      builder.addRow('InterfaceImpl', { Class: self, Interface: this.tokens.typeToken(implemented) });
+    }
     if (type.containingType) builder.addRow('NestedClass', { NestedClass: self, EnclosingClass: this.tokens.definitionToken(type.containingType) });
     const hasInstanceField = plan.fields.some(field => !(field.flags & FieldAttributes.Static));
     if (type.typeKind === TypeKind.Struct && !hasInstanceField) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: 1, Parent: self });
     this.writeGenericParameters(self, this.allTypeParameters(type));
     for (const method of plan.methods) {
       if (method.symbol?.typeParameters?.length) this.writeGenericParameters(method.token, method.symbol.typeParameters);
+      // A covariant override (a record's clone) has a slot of its own and names the method it overrides.
+      if (method.overrides) {
+        builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: this.methodReference(method.overrides) });
+      }
       // A synthesized method names the interface slots it fills: `{owner, name, shape}`.
-      for (const slot of method.overrides ?? []) {
+      for (const slot of method.interfaceSlots ?? []) {
         const declaration = builder.member(this.tokens.typeToken(slot.owner), slot.name, methodSignature(this.tokens, slot.shape));
         builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: declaration });
       }
