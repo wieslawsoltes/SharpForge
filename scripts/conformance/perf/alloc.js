@@ -12,6 +12,8 @@ export function allocationSummary(records,tolerance=.05){
  if(!Array.isArray(records)||!records.length||!Number.isFinite(tolerance)||tolerance<0)throw new Error('Invalid allocation stability inputs');
  const rows=records.map(x=>x?.managed);if(rows.some(x=>!x))return {status:'unsupported',reason:'No managed VM counters for this adapter'};
  const range=key=>{const values=rows.map(x=>x[key]);if(values.some(x=>!Number.isFinite(x)||x<0))throw new Error('Invalid managed counter');const min=Math.min(...values),max=Math.max(...values);return {min,max,relativeSpread:min===0?(max===0?0:null):(max-min)/min};};
- const allocations=range('allocationsPerOperation'),bytes=range('bytesPerOperation');
- return {status:'measured',stable:[allocations,bytes].every(x=>x.relativeSpread!==null&&x.relativeSpread<=tolerance),tolerance,allocationsPerOperation:allocations,bytesPerOperation:bytes,maxPauseMs:Math.max(...rows.map(x=>x.maxPauseMs)),collectionCounts:rows.map(x=>x.collections)};
+ const allocations=range('allocationsPerOperation'),bytes=range('bytesPerOperation'),pauses=range('maxPauseMs');
+ const collectionCounts=rows.map(x=>x.collections);
+ if(collectionCounts.some(x=>!Number.isSafeInteger(x)||x<0))throw new Error('Invalid managed collection count');
+ return {status:'measured',stable:[allocations,bytes,pauses].every(x=>x.relativeSpread!==null&&x.relativeSpread<=tolerance),tolerance,allocationsPerOperation:allocations,bytesPerOperation:bytes,maxPauseMs:pauses.max,maxPauseMsRange:pauses,collectionCounts};
 }

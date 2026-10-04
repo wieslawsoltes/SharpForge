@@ -2,10 +2,11 @@
   "arithmetic/bitwise": ["diagnostics", "warnings", "bytecode", "cil"],
   "arithmetic/compound-assignment": ["diagnostics", "warnings", "bytecode", "cil"],
   "arithmetic/cs0020-constant-division-by-zero": ["diagnostics", "warnings"],
-  "arithmetic/cs0220-constant-overflow": ["warnings"],
+  "arithmetic/cs0220-constant-overflow": ["diagnostics", "warnings"],
   "arithmetic/double-ops": ["diagnostics", "warnings", "bytecode", "cil"],
   "arithmetic/increment-order": ["diagnostics", "warnings", "bytecode", "cil"],
   "arithmetic/int-ops": ["diagnostics", "warnings", "bytecode", "cil"],
-  "arithmetic/int-overflow-wraps": ["warnings"],
+  "arithmetic/int-overflow-wraps": ["diagnostics", "warnings", "bytecode", "cil"],
+  "arithmetic/long-factorial": ["diagnostics", "warnings", "bytecode", "cil"],
   "arithmetic/math-functions": ["diagnostics", "warnings", "bytecode", "cil"]
 }
