@@ -6,6 +6,7 @@ export class PropertyDesc {
   #signature;
   #accessors;
   #constant;
+  #indexParameters;
   constructor(state, key) {
     if (key !== creationKey) throw new TypeError('Property descriptors are created by their runtime module');
     this.#state = state;
@@ -24,6 +25,7 @@ export class PropertyDesc {
   get getMethod() { return this.#methods.getMethod; }
   get setMethod() { return this.#methods.setMethod; }
   get otherMethods() { return this.#methods.otherMethods; }
+  get indexParameters() { return this.#indexParameters ??= this.module.propertyParameters(this.metadataToken); }
   get constant() {
     if (this.#constant !== undefined) return this.#constant;
     return this.#constant = this.module.constant(this.metadataToken);
