@@ -12,6 +12,7 @@
  * The entry-point selection (binder/entry-point.js) reports CS7022 (a Main method that is ignored). The pinned Roslyn
  * no longer rejects a main-type option next to top-level statements.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, RefKind, Accessibility, NamedTypeSymbol } from '../symbols/types.js';
 import { BodyBinder } from './body-binder.js';
 import { analyzeDefiniteAssignment } from '../flow/semantic-assignment.js';
@@ -36,8 +37,8 @@ export function checkTopLevelPlacement(file) {
   if (!statements.length) return rows;
   const firstDeclaration = members.findIndex(member => !isStatement(member) && member.kind !== 'IncompleteMember'),
     misplaced = firstDeclaration < 0 ? null : members.slice(firstDeclaration).find(isStatement);
-  if (misplaced) rows.push({ node: misplaced.statement, code: 'CS8803', args: [] });
-  if (statements.every(statement => statement.kind === 'EmptyStatement')) rows.push({ node: statements[0], code: 'CS8937', args: [] });
+  if (misplaced) rows.push({ node: misplaced.statement, code: DiagnosticId.CS8803, args: [] });
+  if (statements.every(statement => statement.kind === 'EmptyStatement')) rows.push({ node: statements[0], code: DiagnosticId.CS8937, args: [] });
   return rows;
 }
 
@@ -47,7 +48,7 @@ export function checkTopLevelPlacement(file) {
  */
 export function misplacedTopLevelStatement(file) {
   if (!file.syntax?.members) return null;
-  return checkTopLevelPlacement(file).find(row => row.code === 'CS8803')?.node ?? null;
+  return checkTopLevelPlacement(file).find(row => row.code === DiagnosticId.CS8803)?.node ?? null;
 }
 
 /** The names the top-level statements of a file declare at their outermost level: locals and local functions. */
@@ -104,11 +105,11 @@ export const TopLevelPrograms = Base =>
       const name = topLevelProgramTypeName(),
         declared = this.assembly.globalNamespace.getTypeMembers(name, 0).find(type => type.isSource);
       if (declared && declared.typeKind !== TypeKind.Class)
-        this.report(uri, firstStatement.firstToken(), 'CS0101', ['<global namespace>', name]);
+        this.report(uri, firstStatement.firstToken(), DiagnosticId.CS0101, ['<global namespace>', name]);
       else if (declared) {
         const isPartial = declaration => [...declaration.syntax.modifiers].some(token => token.text === 'partial');
         for (const declaration of declared.declarations.filter(d => !isPartial(d)))
-          this.report(declaration.uri, declaration.syntax.identifier, 'CS0260', [name]);
+          this.report(declaration.uri, declaration.syntax.identifier, DiagnosticId.CS0260, [name]);
         return (this.programType = declared);
       }
       this.programType = Object.assign(
@@ -136,8 +137,8 @@ export const TopLevelPrograms = Base =>
         const statements = items.filter(i => i.statement).map(i => i.statement);
         if (!statements.length) continue;
         const uri = file.source.uri;
-        if (units++) this.report(uri, statements[0].firstToken(), 'CS8802');
-        else if (this.options.outputKind === 'library') this.report(uri, statements[0].firstToken(), 'CS8805');
+        if (units++) this.report(uri, statements[0].firstToken(), DiagnosticId.CS8802);
+        else if (this.options.outputKind === 'library') this.report(uri, statements[0].firstToken(), DiagnosticId.CS8805);
         for (const row of checkTopLevelPlacement(file)) this.report(uri, row.node, row.code, row.args);
         const binder = new BodyBinder(this, {
           uri,

@@ -1,0 +1,25 @@
+{
+  "node": "v24.21.0",
+  "cpu": "Apple M3 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "methods": 4,
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": false,
+  "results": [
+    {
+      "name": "cold all fixture method generic parameters",
+      "unit": "microseconds/operation",
+      "median": 40.70800000000929,
+      "p95": 119.74999999999625,
+      "p99": 947.4579999999975
+    },
+    {
+      "name": "cached method parameter array",
+      "unit": "microseconds/operation",
+      "median": 0.0019249999999999545,
+      "p95": 0.017029200000000345,
+      "p99": 0.025758399999999425
+    }
+  ]
+}

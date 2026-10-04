@@ -1,0 +1,3 @@
+{
+  "tuple-equality-names/cs8383-names-ignored-by-equality": ["diagnostics", "warnings"]
+}

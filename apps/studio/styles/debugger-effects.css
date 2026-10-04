@@ -1,1 +1,14 @@
-.effect-options{display:flex;gap:14px;padding:5px 12px;align-items:center;font-size:12px}.effect-options label{display:flex;align-items:center;gap:6px}.hot-edit-badge{color:#ffa62b}.panel-tools select{max-width:250px}
+.effect-options {
+  display: flex;
+  gap: 14px;
+  padding: 5px 12px;
+  align-items: center;
+  font-size: 12px;
+}
+.effect-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hot-edit-badge { color: var(--debugger-effects-hot-edit-badge-foreground); }
+.panel-tools select { max-width: 250px; }
