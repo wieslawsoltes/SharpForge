@@ -78,6 +78,19 @@ signature, modifiers and unbound behavior apply. VB Date literals and SRM
 Calendar formatting, time-zone conversion, DateTimeOffset and general type
 resolution are separate capabilities.
 
+Payload-free `VALUETYPE` constants referencing a TypeSpec for `System.Nullable<T>`
+now bind to `type: 'nullable'`, `value: null`, `decoded: true` and
+`defaultValue: true`. The original TypeSpec token and owned raw signature remain
+available. This represents the boxed default (no value), not a fabricated value
+of `T`. The nullable definition uses the same declared framework identity gate.
+Closed arguments supported here are Boolean, Char, signed/unsigned integer widths,
+Single, Double, IntPtr, UIntPtr and identity-checked Decimal/DateTime. Other
+constructed types, generic variables, modified arguments and nonempty nullable
+payloads remain explicitly unresolved. TypeSpec count (1,024), each blob (4 KiB)
+and aggregate bytes (1 MiB) are checked before decoding; each AST has depth 32
+and node 256 limits. ASTs/PE views do not escape the load. The native reference
+uses SRM-built metadata and CLR boxed defaults, not C# nullable const declarations.
+
 Source documents accept `hashAlgorithm` and `language` GUIDs and a `hash`
 Uint8Array. SHA-1, SHA-256, SHA-384 and SHA-512 are computed synchronously when omitted;
 supplied hashes are checked against the exact source bytes. Hash inputs are exact source
