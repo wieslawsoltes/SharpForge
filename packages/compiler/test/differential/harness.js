@@ -11,8 +11,8 @@
  * (Profile diagnostics next to a semantic analysis do not make a diagnostics fixture unsupported; they are not compared.)
  * A fixture `passed` when its errors match and, for output fixtures, both image back ends match; for diagnostics
  * fixtures the warnings must match as well. A fixture is `unsupported` - and can never pass on an image axis - when
- * the compiler crashes or reports a non-Roslyn (SFxxxx profile) diagnostic for it, or when its pin is missing or
- * stale. The direct-CIL axis does not depend on the image: a fixture `unsupported` there can pass on it.
+ * the compiler crashes or reports a non-Roslyn (SFxxxx profile) diagnostic for it, when its pin is missing or
+ * stale, or when the fixture is `referencesOnly` (it needs the real class library; see tools/dotnet-axis.mjs). The direct-CIL axis does not depend on the image: a fixture `unsupported` there can pass on it.
  */
 import {compile,compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine,CilVirtualMachine} from '@sharpforge/runtime';
@@ -41,6 +41,8 @@ export function runFixture(fixture,pinned,options={}){
   const unsupported=reason=>{row.unsupported=true;row.details.unsupported=reason;return row;};
   if(!pinned)return unsupported('no pinned Roslyn result; run tools/pin.mjs');
   if(pinned.hash!==fixtureHash(fixture)||pinned.kind!==fixture.kind)return unsupported('pinned Roslyn result is stale; run tools/pin.mjs');
+  // These axes bind against the closed framework registry; a program written for the real class library is not theirs.
+  if(fixture.referencesOnly)return unsupported('bound against reference assemblies only; its axis is tools/dotnet-axis.mjs');
   const compileOptions=fixture.langVersion?{langVersion:fixture.langVersion}:{};
   if(fixture.allowUnsafe)compileOptions.allowUnsafe=true;
   if(isOutput){const direct=runDirectCilAxis(fixture,pinned,compileOptions,options);row.directCil=direct.ok;if(!direct.ok)row.details.directCil=direct.detail;}
