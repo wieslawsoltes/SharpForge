@@ -123,5 +123,17 @@
     "tests": "final-tests.log",
     "boundaries": "boundary-repros.log",
     "benchmarks": "benchmark-results.json"
+  },
+  "isolatedReplay": {
+    "sourceHead": "01231617c3c3da9ffe0bdfe0ccff6f93fb2547c8",
+    "base": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+    "tests": {
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0
+    },
+    "log": "isolated-tests.log",
+    "command": "DOTNET_ROOT=<sdk-root> DOTNET=<dotnet-host> node scripts/limited.js node --test tests/a13-document-only.test.js tests/compiler-cil-portable-pdb.test.js tests/compiler-cil-portable-pdb-reference.test.js",
+    "native": "Independent System.Reflection.Metadata comparison and both sidecar/embedded executions passed on the same pinned SDK10.0.201/runtime10.0.5 host."
   }
 }

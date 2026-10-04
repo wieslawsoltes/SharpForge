@@ -1,0 +1,32 @@
+✔ mapped documents with unavailable content have no invented checksum or embedded source (4.289947ms)
+✔ mapped document checksums preserve the producer declaration without hashing absent content (1.225031ms)
+✔ mapped document checksum boundaries retain explicit empty and maximum-size declarations (1.607674ms)
+✔ ordinary content keeps exact checksum validation and source embedding (1.474207ms)
+✔ document-only mode rejects ambiguous content and malformed checksum records (1.168487ms)
+✔ document-only and content-backed documents preserve ordering and duplicate-name rejection (1.088891ms)
+✔ direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack traces agree with Roslyn (9530.821983ms)
+ℹ Roslyn entry points: PE <Main>, PDB <Main>; async catch entries {"Fire":true,"Main":true,"Value":false}
+ℹ SRM and Roslyn on .NET SDK 10.0.201; reference pack 10.0.5; both symbol delivery modes executed
+✔ direct CIL source markers survive insertion and compact branch relaxation without emitting bytes (2.95912ms)
+✔ direct CIL returns bound deterministic PDBs with exact source hashes and instruction boundaries (116.429326ms)
+✔ enabling symbols preserves every emitted instruction, branch and exception clause (13.501627ms)
+✔ zero-code and unreachable source constructs do not steal another statement sequence point (7.987602ms)
+✔ lexical locals and constants use actual slots and nested block/loop/handler extents (15.88366ms)
+✔ partial-type initializers retain their actual documents inside the same emitted method (8.307843ms)
+✔ constant scopes retain exact enum, decimal, wide integer and typed-null signatures (11.087118ms)
+✔ stackalloc stream replacement retains source points and exact local slots (8.345459ms)
+✔ constructor initializer points start before the receiver and cover complete stores and calls (17.824388ms)
+✔ line mappings, hidden regions, reset paths and declared checksums are preserved without fabricated source (8.732607ms)
+✔ enhanced line directives map generated prefixes to the declared whole-span end (5.431615ms)
+✔ portable and embedded symbols are opt-in and explicit false suppresses both modes (12.864652ms)
+✔ diagnostic failures return no PDB and library symbols keep an empty entry point (13.614324ms)
+✔ async and iterator links, await labels and hoisted-local ranges refer to emitted methods (23.934455ms)
+✔ async catch entries identify the selected Main or top-level kickoff and exclude ordinary Task methods (21.306071ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12301.984795
