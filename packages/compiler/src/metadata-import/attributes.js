@@ -1,5 +1,6 @@
 import {DiagnosticId} from '../diagnostics/codes.js';
 import {decodeCustomAttribute} from '@sharpforge/cil';
+export {grantsInternalsAccess} from '@sharpforge/cil';
 import {TypeWithAnnotations,NullableAnnotation,NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,PointerTypeSymbol,FunctionPointerTypeSymbol,TypeParameterSymbol,ErrorTypeSymbol,DynamicTypeSymbol,RefKind,SymbolDisplayFormat} from '../symbols/types.js';
 /**
  * Custom-attribute decoding for imported metadata (ECMA-335 II.23.3) and the well-known attributes the
@@ -89,14 +90,6 @@ export function obsoleteDiagnostic(symbol){
   const base=o.message==null?{code:DiagnosticId.CS0612,args:[display]}:{code:o.isError?DiagnosticId.CS0619:DiagnosticId.CS0618,args:[display,o.message]};
   return o.diagnosticId?{...base,customId:o.diagnosticId,helpLink:o.urlFormat?o.urlFormat.replace('{0}',o.diagnosticId):null}:base;
 }
-/**
- * Whether an InternalsVisibleTo declaration list grants access to an assembly identity. A declaration with a
- * PublicKey only matches an assembly signed with that key; names compare case-insensitively.
- */
-export function grantsInternalsAccess(declarations,identity){
-  return declarations.some(text=>{const [name,...rest]=text.split(',').map(p=>p.trim());if(name.toLowerCase()!==identity.name.toLowerCase())return false;const key=rest.map(p=>/^PublicKey\s*=\s*([0-9a-f]+)$/i.exec(p)).find(Boolean)?.[1];return !key||key.toLowerCase()===identity.publicKey;});
-}
-
 const annotationOf=flag=>flag===1?NullableAnnotation.NotAnnotated:flag===2?NullableAnnotation.Annotated:NullableAnnotation.Oblivious;
 const Mismatch=Symbol('mismatch');
 /** Type arguments of a named type including those of its containing types, outermost first. */
