@@ -22,3 +22,9 @@ through public workbench/project APIs. The source is projected exactly from
 `7b087e0f0e3105c71ec86e39554358766b45d3bf`; root owns its consolidated qualification.
 The protected Studio entry is a separate text-only proposal. This module-level
 contract does not claim actual full-Studio, Windows target or browser execution.
+
+`projectRuntimeDependencies(result)` rejects failed, missing, empty, oversized or
+over-budget PE artifact envelopes before worker transport. It preserves dependency
+byte-array identity and project/context provenance and omits the entry artifact,
+analysis graphs, PDBs and resource graphs. Three existing focused boundary cases
+qualify this canonical transport adapter; it consumes public bytecode limits.
