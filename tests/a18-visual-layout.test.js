@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DesignDocument, createDesign, editGridTracks, resizeGridTracks, resolveGridTracks, layoutInsertion,
   DesignPreviewEnvironment, anchoredDesignZoom, fitDesignBounds, setResponsiveState, applyResponsivePreview,
-  selectedResponsiveState, generateResponsiveMethods, generateDesignCode, csharpValue} from '@sharpforge/designer';
+  selectedResponsiveState, generateResponsiveMethods, generateDesignCode, csharpValue, designScene} from '@sharpforge/designer';
 import {compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 
@@ -77,7 +77,8 @@ test('preview device/theme/contrast/RTL/scale never changes source serialization
   const environment = new DesignPreviewEnvironment({width: 390, height: 844, theme: 'light', direction: 'rtl', contrast: 'high', scale: 2});
   const preview = environment.document(document.value);
   assert.equal(preview.width, 390);
-  assert.equal(preview.nodes.find(node => node.id === 'action').properties.Background.Color.R, 0);
+  const scene = environment.applyToScene(designScene(preview));
+  assert.equal(scene.nodes.find(node => node.id === 'action').properties.Background.Color.R, 0);
   assert.equal(document.serialize(), before);
   assert.equal(document.undoStack.length, 0);
   assert.throws(() => environment.update({scale: 0}), {code: 'SFD_PREVIEW_SCALE'});

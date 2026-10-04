@@ -14,7 +14,8 @@ function fixture(change = () => {}) {
   const buildPreviewScene = () => {
     builds++;
     const theme = environment.value.contrast === 'high' ? 'highContrast' : environment.value.theme;
-    return projectDesignerAuthoringScene(document.value, designScene(environment.document(document.value)), {theme});
+    return environment.applyToScene(projectDesignerAuthoringScene(document.value,
+      designScene(environment.document(document.value)), {theme}));
   };
   const dom = geometryHost(buildPreviewScene());
   const view = {document, host: dom.host, resourceGallery: {render() {}}, resourceDocument: false, buildPreviewScene,
@@ -89,6 +90,29 @@ test('clearing local geometry restores the style/default value instead of retain
   assert.equal(host.nodes.get('action').properties.Width, 90);
   assert.equal(Object.hasOwn(view.document.node('action').properties, 'Width'), false);
   assertReference(host, reference());
+  host.dispose();
+});
+
+test('high-contrast resources and bindings remain projected during a retained geometry edit and undo', () => {
+  const {view, host, projection, reference, environment} = fixture(value => {
+    value.resources = {AccentBrush: {kind: 'theme', type: 'Microsoft.UI.Xaml.Media.Brush', variants: {
+      default: normalizeDesignerBrush('#123456')
+    }}};
+    const action = value.nodes.find(node => node.id === 'action');
+    action.resourceReferences = {Background: {kind: 'theme', key: 'AccentBrush'}};
+    action.bindings = {Foreground: {path: 'TextColor'}};
+  });
+  environment.update({contrast: 'high'});
+  projection.update({kind: 'preview'});
+  const before = view.document.serialize();
+  const edit = transaction(view, document => document.patchProperties({action: {Left: 75}}, {label: 'Move'}));
+  assert.equal(projection.update(edit), true);
+  assert.equal(host.nodes.get('action').properties.Background.Color.R, 0);
+  assert.equal(host.nodes.get('action').properties.Foreground.Color.R, 255);
+  assertReference(host, reference());
+  assert.equal(projection.update(transaction(view, document => document.undo())), true);
+  assertReference(host, reference());
+  assert.equal(view.document.serialize(), before);
   host.dispose();
 });
 

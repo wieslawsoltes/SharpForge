@@ -29,7 +29,12 @@ export class DesignPreviewEnvironment {
     const preview = applyResponsivePreview(source, width / this.value.scale, this.value.state);
     preview.width = width;
     preview.height = height;
-    for (const node of preview.nodes) {
+    return preview;
+  }
+
+  /** Apply appearance to a caller-owned resolved scene, after resources, samples and component instances. */
+  applyToScene(scene) {
+    for (const node of scene.nodes) {
       const schema = propertySchema(node.type);
       if (schema.RequestedTheme) node.properties.RequestedTheme = this.value.theme === 'light' ? 1 : 2;
       if (this.value.contrast !== 'high') continue;
@@ -38,7 +43,7 @@ export class DesignPreviewEnvironment {
         if (schema[property]) node.properties[property] = normalizeProperty(node.type, property, color);
       }
     }
-    return preview;
+    return scene;
   }
 }
 

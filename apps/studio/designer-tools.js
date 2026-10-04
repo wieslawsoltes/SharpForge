@@ -1,7 +1,4 @@
-import {
-  DesignDocument, DesignerSession, DesignerOptionsService, DesignerAssetPreviewStore,
-  projectDesignerAuthoringScene
-} from '@sharpforge/designer';
+import {DesignDocument, DesignerSession, DesignerOptionsService, DesignerAssetPreviewStore} from '@sharpforge/designer';
 import {ContextMenu} from '@sharpforge/controls';
 import {WinUIHost} from '@sharpforge/winui';
 import {DesignerSourceSync} from './designer-source-sync.js';
@@ -22,6 +19,7 @@ import {mountDesignerSurface, resizeDesignerArtboard} from './designer-surface-v
 import {createDesignerActions, renderDesignerSource} from './designer-actions.js';
 import {disposeDesignerTools} from './designer-tools-disposal.js';
 import {DesignerDocumentUpdates} from './designer-document-updates.js';
+import {buildDesignerPreviewScene} from './designer-preview-scene.js';
 
 export const DESIGN_TOOLS = Object.freeze(['designer', 'designer-toolbox', 'designer-tree', 'designer-properties',
   'designer-layout', 'designer-styles', 'designer-source']);
@@ -192,15 +190,7 @@ export class DesignerTools {
 
   flushVisiblePanels() { this.updates.flushVisible(); }
 
-  buildPreviewScene() {
-    const environment = this.surface.preview.value;
-    const theme = environment.contrast === 'high' ? 'highContrast' : environment.theme;
-    const options = {
-      theme, samples: true, resolveAsset: uri => this.assetPreviews.resolve(uri)
-    };
-    const scene = projectDesignerAuthoringScene(this.document.value, this.surface.scene(), options);
-    return this.projectRoots?.project(this.document.value, scene, options).scene ?? scene;
-  }
+  buildPreviewScene() { return buildDesignerPreviewScene(this); }
 
   updatePreview(event) { return this.updates.preview.update(event); }
 
