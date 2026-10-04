@@ -9,7 +9,7 @@ Project-field, release or platform-pass claim.
 - Repository: [SharpForge](https://github.com/wieslawsoltes/SharpForge); requested board: [Project #4](https://github.com/users/wieslawsoltes/projects/4).
 - Record prepared: `2026-10-04T12:28:25Z`; isolated record base: [dc84bcbfea54](https://github.com/wieslawsoltes/SharpForge/commit/dc84bcbfea548a152e239d60b3950f06b9ebd2c7).
 - Live issue/claim observation: `2026-10-04T11:12:01Z` at source [ca3c083b61d6](https://github.com/wieslawsoltes/SharpForge/commit/ca3c083b61d637f98d53d0e55d9c2e564b11bf5d).
-- Classification code inspection: `2026-10-04T11:45:46.044Z` with source [db6eb3278c49](https://github.com/wieslawsoltes/SharpForge/commit/db6eb3278c49043132554463ceffc18f8e50899d).
+- Classification code inspection: `2026-10-04T11:45:46.044Z` with local inspection commit `db6eb3278c49043132554463ceffc18f8e50899d`.
 - The inputs agree on all 244 unique issue/Work-ID pairs and observed states: **109 A00, 133 A29, 2 R015; 204 open and 40 closed**.
 - The open issues comprise **32 parent trackers and 172 non-parent items**; these are not 204 independent missing features.
 - There are **43 group definitions, 40 populated groups**. `a00-services`, `a00-claims` and `a29-ci` preserve context with zero assigned rows.
