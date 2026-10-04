@@ -30,6 +30,8 @@ export const StateMachineEmission = Base =>
     beginStates() {
       this.nextState = 0;
       this.resumeLabels = new Set();
+      /** Slots that are written again after every resume point before they are read: they stay locals. */
+      this.transientSlots = new Set();
       /** The dispatch being filled: `{first, labels, entry, parent}`. */
       this.dispatchScope = { first: 0, labels: [], entry: null, parent: null };
       return this.dispatchScope.labels;
@@ -48,6 +50,10 @@ export const StateMachineEmission = Base =>
       }
       this.resumeLabels.add(resume);
       return state;
+    }
+    /** The body of a kickoff: the method the program declared only creates its state machine. */
+    kickoffBody(machine) {
+      return machine.kind === 'iterator' ? this.iteratorKickoff(machine) : this.asyncKickoff(machine);
     }
     loadState() {
       this.il.emit('ldarg', 0).emit('ldfld', this.machine.fields.state.token);
@@ -120,6 +126,7 @@ export const StateMachineEmission = Base =>
         names = new Map([...this.slots].map(([local, slot]) => [slot, local.name])),
         fields = new Map();
       for (const slot of [...slotsAcrossSuspensions(il, this.resumeLabels)].sort((left, right) => left - right)) {
+        if (this.transientSlots.has(slot)) continue;
         const { type, isByReference } = il.locals[slot];
         if (isByReference) return this.unsupported('a by-reference local that lives across a suspension point');
         const ordinal = ++machine.hoistedCount,
