@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "captureProfile": "static-xaml",
+  "fixtures": [
+    {
+      "id": "native-xaml-shapes-light-dpr1", "file": "shapes.xaml",
+      "width": 192, "height": 128, "dpr": 1, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "f41f151b6b43e379d1cde8b264b0084e26492b0775db600bcdd0a9edb4267bce",
+      "description": "Fill-null ellipse ring, rounded and rotated rectangles, half-pixel line",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-shapes-light-dpr1-5", "file": "shapes.xaml",
+      "width": 192, "height": 128, "dpr": 1.5, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "f41f151b6b43e379d1cde8b264b0084e26492b0775db600bcdd0a9edb4267bce",
+      "description": "Fill-null ellipse ring, rounded and rotated rectangles, half-pixel line",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-shapes-light-dpr2", "file": "shapes.xaml",
+      "width": 192, "height": 128, "dpr": 2, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "f41f151b6b43e379d1cde8b264b0084e26492b0775db600bcdd0a9edb4267bce",
+      "description": "Fill-null ellipse ring, rounded and rotated rectangles, half-pixel line",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-shapes-dark-dpr1", "file": "shapes.xaml",
+      "width": 192, "height": 128, "dpr": 1, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "f41f151b6b43e379d1cde8b264b0084e26492b0775db600bcdd0a9edb4267bce",
+      "description": "Fill-null ellipse ring, rounded and rotated rectangles, half-pixel line",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-shapes-dark-dpr1-5", "file": "shapes.xaml",
+      "width": 192, "height": 128, "dpr": 1.5, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "f41f151b6b43e379d1cde8b264b0084e26492b0775db600bcdd0a9edb4267bce",
+      "description": "Fill-null ellipse ring, rounded and rotated rectangles, half-pixel line",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-shapes-dark-dpr2", "file": "shapes.xaml",
+      "width": 192, "height": 128, "dpr": 2, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "f41f151b6b43e379d1cde8b264b0084e26492b0775db600bcdd0a9edb4267bce",
+      "description": "Fill-null ellipse ring, rounded and rotated rectangles, half-pixel line",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-paths-light-dpr1", "file": "paths.xaml",
+      "width": 192, "height": 128, "dpr": 1, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "f32caf7939d367e38c8d5522c4e0fa09c0a31878161308e9e8c0a14c1af58e20",
+      "description": "EvenOdd and Nonzero holes, cubic and elliptical arcs, dashes, star",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-paths-light-dpr1-5", "file": "paths.xaml",
+      "width": 192, "height": 128, "dpr": 1.5, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "f32caf7939d367e38c8d5522c4e0fa09c0a31878161308e9e8c0a14c1af58e20",
+      "description": "EvenOdd and Nonzero holes, cubic and elliptical arcs, dashes, star",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-paths-light-dpr2", "file": "paths.xaml",
+      "width": 192, "height": 128, "dpr": 2, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "f32caf7939d367e38c8d5522c4e0fa09c0a31878161308e9e8c0a14c1af58e20",
+      "description": "EvenOdd and Nonzero holes, cubic and elliptical arcs, dashes, star",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-paths-dark-dpr1", "file": "paths.xaml",
+      "width": 192, "height": 128, "dpr": 1, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "f32caf7939d367e38c8d5522c4e0fa09c0a31878161308e9e8c0a14c1af58e20",
+      "description": "EvenOdd and Nonzero holes, cubic and elliptical arcs, dashes, star",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-paths-dark-dpr1-5", "file": "paths.xaml",
+      "width": 192, "height": 128, "dpr": 1.5, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "f32caf7939d367e38c8d5522c4e0fa09c0a31878161308e9e8c0a14c1af58e20",
+      "description": "EvenOdd and Nonzero holes, cubic and elliptical arcs, dashes, star",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-paths-dark-dpr2", "file": "paths.xaml",
+      "width": 192, "height": 128, "dpr": 2, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "f32caf7939d367e38c8d5522c4e0fa09c0a31878161308e9e8c0a14c1af58e20",
+      "description": "EvenOdd and Nonzero holes, cubic and elliptical arcs, dashes, star",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-brushes-light-dpr1", "file": "brushes.xaml",
+      "width": 192, "height": 128, "dpr": 1, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "7df15323d12d29810b311dcccd5ca695184f69f12f4d0be7586c035efe099269",
+      "description": "Relative reflected and absolute repeated gradients with transparent stops",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-brushes-light-dpr1-5", "file": "brushes.xaml",
+      "width": 192, "height": 128, "dpr": 1.5, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "7df15323d12d29810b311dcccd5ca695184f69f12f4d0be7586c035efe099269",
+      "description": "Relative reflected and absolute repeated gradients with transparent stops",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-brushes-light-dpr2", "file": "brushes.xaml",
+      "width": 192, "height": 128, "dpr": 2, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "7df15323d12d29810b311dcccd5ca695184f69f12f4d0be7586c035efe099269",
+      "description": "Relative reflected and absolute repeated gradients with transparent stops",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-brushes-dark-dpr1", "file": "brushes.xaml",
+      "width": 192, "height": 128, "dpr": 1, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "7df15323d12d29810b311dcccd5ca695184f69f12f4d0be7586c035efe099269",
+      "description": "Relative reflected and absolute repeated gradients with transparent stops",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-brushes-dark-dpr1-5", "file": "brushes.xaml",
+      "width": 192, "height": 128, "dpr": 1.5, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "7df15323d12d29810b311dcccd5ca695184f69f12f4d0be7586c035efe099269",
+      "description": "Relative reflected and absolute repeated gradients with transparent stops",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-brushes-dark-dpr2", "file": "brushes.xaml",
+      "width": 192, "height": 128, "dpr": 2, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "7df15323d12d29810b311dcccd5ca695184f69f12f4d0be7586c035efe099269",
+      "description": "Relative reflected and absolute repeated gradients with transparent stops",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-border-light-dpr1", "file": "border.xaml",
+      "width": 192, "height": 128, "dpr": 1, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "283bea016a302827e7f8643249135efc22b1973219803a41f5a47d3478a6765d",
+      "description": "Asymmetric corner radii, thickness, padding, and transformed Border",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-border-light-dpr1-5", "file": "border.xaml",
+      "width": 192, "height": 128, "dpr": 1.5, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "283bea016a302827e7f8643249135efc22b1973219803a41f5a47d3478a6765d",
+      "description": "Asymmetric corner radii, thickness, padding, and transformed Border",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-border-light-dpr2", "file": "border.xaml",
+      "width": 192, "height": 128, "dpr": 2, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "283bea016a302827e7f8643249135efc22b1973219803a41f5a47d3478a6765d",
+      "description": "Asymmetric corner radii, thickness, padding, and transformed Border",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-border-dark-dpr1", "file": "border.xaml",
+      "width": 192, "height": 128, "dpr": 1, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "283bea016a302827e7f8643249135efc22b1973219803a41f5a47d3478a6765d",
+      "description": "Asymmetric corner radii, thickness, padding, and transformed Border",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-border-dark-dpr1-5", "file": "border.xaml",
+      "width": 192, "height": 128, "dpr": 1.5, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "283bea016a302827e7f8643249135efc22b1973219803a41f5a47d3478a6765d",
+      "description": "Asymmetric corner radii, thickness, padding, and transformed Border",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-border-dark-dpr2", "file": "border.xaml",
+      "width": 192, "height": 128, "dpr": 2, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "283bea016a302827e7f8643249135efc22b1973219803a41f5a47d3478a6765d",
+      "description": "Asymmetric corner radii, thickness, padding, and transformed Border",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-text-light-dpr1", "file": "text.xaml",
+      "width": 192, "height": 148, "dpr": 1, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "d8ec4d0ca7a48a4e6d02d1953dd5002029161b63e1976861f5c41ae222f2b7df",
+      "description": "Segoe UI wrapping, ellipsis, bidirectional text, and decorated inline runs",
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05}
+    },
+    {
+      "id": "native-xaml-text-light-dpr1-5", "file": "text.xaml",
+      "width": 192, "height": 148, "dpr": 1.5, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "d8ec4d0ca7a48a4e6d02d1953dd5002029161b63e1976861f5c41ae222f2b7df",
+      "description": "Segoe UI wrapping, ellipsis, bidirectional text, and decorated inline runs",
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05}
+    },
+    {
+      "id": "native-xaml-text-light-dpr2", "file": "text.xaml",
+      "width": 192, "height": 148, "dpr": 2, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "d8ec4d0ca7a48a4e6d02d1953dd5002029161b63e1976861f5c41ae222f2b7df",
+      "description": "Segoe UI wrapping, ellipsis, bidirectional text, and decorated inline runs",
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05}
+    },
+    {
+      "id": "native-xaml-text-dark-dpr1", "file": "text.xaml",
+      "width": 192, "height": 148, "dpr": 1, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "d8ec4d0ca7a48a4e6d02d1953dd5002029161b63e1976861f5c41ae222f2b7df",
+      "description": "Segoe UI wrapping, ellipsis, bidirectional text, and decorated inline runs",
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05}
+    },
+    {
+      "id": "native-xaml-text-dark-dpr1-5", "file": "text.xaml",
+      "width": 192, "height": 148, "dpr": 1.5, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "d8ec4d0ca7a48a4e6d02d1953dd5002029161b63e1976861f5c41ae222f2b7df",
+      "description": "Segoe UI wrapping, ellipsis, bidirectional text, and decorated inline runs",
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05}
+    },
+    {
+      "id": "native-xaml-text-dark-dpr2", "file": "text.xaml",
+      "width": 192, "height": 148, "dpr": 2, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "d8ec4d0ca7a48a4e6d02d1953dd5002029161b63e1976861f5c41ae222f2b7df",
+      "description": "Segoe UI wrapping, ellipsis, bidirectional text, and decorated inline runs",
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05}
+    },
+    {
+      "id": "native-xaml-controls-light-dpr1", "file": "controls.xaml",
+      "width": 192, "height": 384, "dpr": 1, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "056f2b3a79749b12b84416220599d539bcae2b3eb06ab7ca59bba6d591ad07bb",
+      "description": "Native default Button, CheckBox, RadioButton, ToggleSwitch, Slider and ProgressBar",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-controls-light-dpr1-5", "file": "controls.xaml",
+      "width": 192, "height": 384, "dpr": 1.5, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "056f2b3a79749b12b84416220599d539bcae2b3eb06ab7ca59bba6d591ad07bb",
+      "description": "Native default Button, CheckBox, RadioButton, ToggleSwitch, Slider and ProgressBar",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-controls-light-dpr2", "file": "controls.xaml",
+      "width": 192, "height": 384, "dpr": 2, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "056f2b3a79749b12b84416220599d539bcae2b3eb06ab7ca59bba6d591ad07bb",
+      "description": "Native default Button, CheckBox, RadioButton, ToggleSwitch, Slider and ProgressBar",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-controls-dark-dpr1", "file": "controls.xaml",
+      "width": 192, "height": 384, "dpr": 1, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "056f2b3a79749b12b84416220599d539bcae2b3eb06ab7ca59bba6d591ad07bb",
+      "description": "Native default Button, CheckBox, RadioButton, ToggleSwitch, Slider and ProgressBar",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-controls-dark-dpr1-5", "file": "controls.xaml",
+      "width": 192, "height": 384, "dpr": 1.5, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "056f2b3a79749b12b84416220599d539bcae2b3eb06ab7ca59bba6d591ad07bb",
+      "description": "Native default Button, CheckBox, RadioButton, ToggleSwitch, Slider and ProgressBar",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-controls-dark-dpr2", "file": "controls.xaml",
+      "width": 192, "height": 384, "dpr": 2, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "056f2b3a79749b12b84416220599d539bcae2b3eb06ab7ca59bba6d591ad07bb",
+      "description": "Native default Button, CheckBox, RadioButton, ToggleSwitch, Slider and ProgressBar",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-focus-light", "file": "controls.xaml",
+      "width": 192, "height": 384, "dpr": 1, "theme": "Light", "expected": "pixels",
+      "xamlSha256": "056f2b3a79749b12b84416220599d539bcae2b3eb06ab7ca59bba6d591ad07bb",
+      "description": "Actual native keyboard focus ring on the named default Button",
+      "focusTarget": "FocusButton",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-focus-dark", "file": "controls.xaml",
+      "width": 192, "height": 384, "dpr": 1, "theme": "Dark", "expected": "pixels",
+      "xamlSha256": "056f2b3a79749b12b84416220599d539bcae2b3eb06ab7ca59bba6d591ad07bb",
+      "description": "Actual native keyboard focus ring on the named default Button",
+      "focusTarget": "FocusButton",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-xaml-invalid-property", "file": "invalid.xaml",
+      "width": 16, "height": 16, "dpr": 1, "theme": "Light", "expected": "load-error",
+      "xamlSha256": "5c8669dd297d82f53e4cb8c2399e81093da764f41c876ac9c6d9d2dfa81e9ea3",
+      "description": "Native unknown-property load error preserves type and HRESULT",
+      "tolerance": {"maxChannel": 0, "meanChannel": 0, "differentPixelFraction": 0}
+    }
+  ]
+}
