@@ -15,10 +15,12 @@
  */
 import { token, FieldAttributes } from '@sharpforge/cil';
 import { SymbolKind, TypeKind } from '../../symbols/types.js';
-import { TypeTokens, namespaceOf } from './type-tokens.js';
+import { needsTypeSpec } from '../generics.js';
+import { TypeTokens, namespaceOf, definitionNameOf } from './type-tokens.js';
 import { planMembers, explicitInterfaceOf } from './member-plan.js';
 import { typeFlags, genericParameterFlags } from './attribute-flags.js';
 import { tupleElementNamesOf } from './tuple-element-names.js';
+import { staticVirtualImplementations } from './static-interface-implementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
@@ -50,7 +52,20 @@ export function sourceTypesInMetadataOrder(assembly) {
     }
   };
   addNamespace(assembly.globalNamespace);
+  // C# 11 `file` types are declared in the scope of their file, not in a namespace: they follow, in declaration order.
+  for (const type of assembly.types ?? []) if (type.isFileLocal && !type.isDuplicate && !ordered.includes(type)) addType(type);
   return ordered;
+}
+
+/** The method pairs of an implementation map entry: the methods themselves, or the accessors of a property or event. */
+function accessorPairs(declaration, implementation) {
+  if (declaration.kind === SymbolKind.Method) return [[declaration, implementation]];
+  return [
+    [declaration.getMethod, implementation.getMethod],
+    [declaration.setMethod, implementation.setMethod],
+    [declaration.addMethod, implementation.addMethod],
+    [declaration.removeMethod, implementation.removeMethod],
+  ].filter(([declared, implementing]) => declared && implementing);
 }
 
 export class SymbolMetadataWriter {
@@ -126,7 +141,7 @@ export class SymbolMetadataWriter {
         base = type.typeKind === TypeKind.Interface ? null : type.baseType;
       builder.addRow('TypeDef', {
         Flags: typeFlags(type, { hasStaticConstructor }),
-        Name: type.metadataName,
+        Name: definitionNameOf(type),
         Namespace: namespaceOf(type),
         Extends: base ? this.tokens.typeToken(base) : 0,
         FieldList: plan.fieldStart,
@@ -203,11 +218,29 @@ export class SymbolMetadataWriter {
         const declaration = builder.member(ownTokens.typeToken(slot.owner), slot.name, methodSignature(this.tokens, slot.shape));
         builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: declaration });
       }
-      if (!method.symbol || !explicitInterfaceOf(method.symbol)) continue;
-      // An explicit implementation has a name of its own, so the slot it fills is stated by a MethodImpl row.
-      for (const [declaration, implementation] of type.interfaceImplementations ?? []) {
-        if (implementation !== method.symbol) continue;
-        builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: this.methodReference(declaration) });
+    }
+    this.writeInterfaceImplementations(type, self, plan);
+  }
+  /**
+   * MethodImpl rows for the interface members the type implements with a method the CLR would not match by name and
+   * signature: an explicit implementation (`void I.M()`), an implicit one under another name (an indexer that
+   * `[IndexerName]` renames on either side), and the implementation of a static abstract or virtual member (C# 11).
+   */
+  writeInterfaceImplementations(type, self, plan) {
+    const planned = new Map(plan.methods.filter(method => method.symbol).map(method => [method.symbol, method])),
+      written = new Map();
+    const implementations = [...(type.interfaceImplementations ?? []), ...staticVirtualImplementations(type)];
+    for (const [declaration, implementation] of implementations) {
+      for (const [declared, implementing] of accessorPairs(declaration, implementation)) {
+        const method = planned.get(implementing);
+        if (!method) continue;
+        const declaredName = (declared.originalDefinition ?? declared).metadataName;
+        // A static member has no slot of its own to match by name: its implementation is always stated.
+        if (!explicitInterfaceOf(implementing) && !implementing.isStatic && method.name === declaredName) continue;
+        // The map may list an accessor both by itself and through its property.
+        if (written.get(method)?.has(declared.originalDefinition ?? declared)) continue;
+        written.set(method, (written.get(method) ?? new Set()).add(declared.originalDefinition ?? declared));
+        this.builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: this.methodReference(declared) });
       }
     }
   }
@@ -215,7 +248,8 @@ export class SymbolMetadataWriter {
   methodReference(method) {
     const definition = method.originalDefinition ?? method,
       defined = this.methodTokens.get(definition);
-    if (defined) return defined;
+    // A member of a constructed type (`I<int>.M`) is named through the TypeSpec of the construction.
+    if (defined && !needsTypeSpec(method.containingType)) return defined;
     return this.builder.member(this.tokens.typeToken(method.containingType), definition.metadataName, methodSymbolSignature(this.tokens, definition));
   }
   /** The type parameters a TypeDef declares: those of its enclosing types first, as VAR numbers them. */

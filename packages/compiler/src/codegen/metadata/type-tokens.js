@@ -26,6 +26,25 @@ export function namespaceOf(type) {
   return names.join('.');
 }
 
+/** FNV-1a over the UTF-16 code units of a text, as eight hexadecimal digits: a stable name component. */
+function stableHash(text) {
+  let hash = 0x811c9dc5;
+  for (let index = 0; index < text.length; index++) hash = Math.imul(hash ^ text.charCodeAt(index), 0x01000193);
+  return (hash >>> 0).toString(16).toUpperCase().padStart(8, '0');
+}
+
+/**
+ * The TypeDef name of a source type. A C# 11 `file` type is named `<File>F<hash>__Name`, as Roslyn names it, so that
+ * equally named file-local types of different files do not collide; the hash here is of the file's URI (Roslyn
+ * hashes the path with SHA-256).
+ */
+export function definitionNameOf(type) {
+  if (!type.isFileLocal) return type.metadataName;
+  const uri = String(type.locations?.[0]?.uri ?? ''),
+    stem = (uri.split(/[\\/]/).pop() ?? '').replace(/\.[^.]*$/, '').replace(/[^A-Za-z0-9_]/g, '_');
+  return `<${stem}>F${stableHash(uri)}__${type.metadataName}`;
+}
+
 export class TypeTokens {
   /** @param builder a MetadataBuilder  @param {object[]} sourceTypes the source type definitions in TypeDef order (after `<Module>`) */
   constructor(builder, sourceTypes) {

@@ -7,7 +7,7 @@ import {equalsWithComparison, registerStringEqualityExtensions} from './string-e
 import {compareWithComparison, compareRangeWithComparison} from './string-comparison.js';
 import {affixWithComparison, registerStringAffixExtensions} from './string-affix.js';
 import {containsWithComparison, indexOfWithComparison, indexOfFromWithComparison, indexOfWindowWithComparison,
-  lastIndexOfWithComparison, registerStringSearchExtensions} from './string-search.js';
+  lastIndexOfWithComparison, lastIndexOfFromWithComparison, registerStringSearchExtensions} from './string-search.js';
 
 const owner = 'System.String';
 
@@ -147,9 +147,15 @@ function instanceString(platform, descriptor, receiver, values, scalars) {
         return indexOfWithComparison(platform, receiver, scalars[0], scalars[1]);
       }
       return receiver.indexOf(string(platform, values[0]), values.length === 2 ? integer(platform, scalars[1], 0, receiver.length) : 0);
-    case 'LastIndexOf': return descriptor.parameters[1] === 'System.StringComparison'
-      ? lastIndexOfWithComparison(platform, receiver, scalars[0], scalars[1])
-      : receiver.lastIndexOf(string(platform, values[0]));
+    case 'LastIndexOf': {
+      const parameters = descriptor.parameters;
+      const parameterCount = parameters.length;
+      if (parameters[parameterCount - 1] === 'System.StringComparison') {
+        return parameterCount === 3 ? lastIndexOfFromWithComparison(platform, receiver, scalars[0], scalars[1], scalars[2])
+          : lastIndexOfWithComparison(platform, receiver, scalars[0], scalars[1]);
+      }
+      return receiver.lastIndexOf(string(platform, values[0]));
+    }
     case 'Trim': return trimWhiteSpace(receiver);
     case 'TrimStart': return trimWhiteSpace(receiver, true, false);
     case 'TrimEnd': return trimWhiteSpace(receiver, false, true);
