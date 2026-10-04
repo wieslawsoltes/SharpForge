@@ -43,7 +43,10 @@ test('CLR finite-instantiation closure replays every isolated native request and
         assert.equal(operation.stage, 'complete');
         assert.equal(operation.nativeReturned, true);
         assert.equal(operation.descriptionCompleted, true);
-        compareNativeType(replay, await replay.run(operation), operation.result, `${item.id}:${operation.id}`);
+        let actual;
+        try { actual = await replay.run(operation); }
+        catch (cause) { throw new Error(`${item.id}:${operation.id}: product rejected a native-success operation`, { cause }); }
+        compareNativeType(replay, actual, operation.result, `${item.id}:${operation.id}`);
         counts.accepted++;
       }
     }

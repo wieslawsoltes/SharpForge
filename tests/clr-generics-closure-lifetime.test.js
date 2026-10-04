@@ -76,10 +76,33 @@ test('CLR closure-only foreign contexts are monitored through throwing unload ca
   await rejected;
   remove();
   assert.equal(state.argument.isLoaded, false);
-  const retained = await state.host.instantiate(state.box, [state.argument]);
+  assert.equal(state.argumentContext.isUnloading, true);
+  await assert.rejects(state.host.instantiate(state.box, [state.argument]), fails(LoadErrorCode.Disposed));
+  assert.equal(state.argument.isLoaded, false, 'An unresolved dependency cannot be newly accepted after unload');
+  assert.equal(state.calls, 1, 'The unloaded context does not reinvoke its dependency provider');
+});
+
+test('CLR a fresh host can use retained metadata whose required dependency graphs completed before unload', async () => {
+  const state = await pendingArgument({ isCollectible: true });
+  const pending = state.argumentContext.types.load(state.module, state.argument.metadataToken);
+  await state.started;
+  state.release();
+  assert.equal(await pending, state.argument);
+  const dependency = state.argument.baseType.genericArguments[0];
+  assert.equal(await state.argumentContext.types.instantiate(dependency.genericDefinition, dependency.genericArguments), dependency);
+  assert.equal(state.argument.isLoaded, true);
+  assert.equal(dependency.isLoaded, true);
+  assert.equal(dependency.genericDefinition.isLoaded, true);
+  state.argumentContext.unload();
+  const host = arrayContext().types;
+  const box = host.defineIntrinsic('Host.Retained`1', { genericArity: 1 });
+  const retained = await host.instantiate(box, [state.argument]);
   assert.equal(retained.isCollectible, true);
   assert.equal(retained.genericArguments[0], state.argument);
+  assert.equal(retained.genericDefinition, box);
+  assert.equal(state.argumentContext.isUnloading, true);
   assert.equal(state.calls, 1);
+  assert.equal(state.module.methodBodyReadCount + dependency.module.methodBodyReadCount, 0);
 });
 
 test('CLR reentrant host resolution cannot admit a partially read expanding graph', async () => {
