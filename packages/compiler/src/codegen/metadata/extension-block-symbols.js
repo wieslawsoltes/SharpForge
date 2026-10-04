@@ -1,6 +1,7 @@
 /** Metadata declaration symbols of extension groups, separate from their original static implementation symbols. */
 import { TypeParameterSymbol, TypeMap, TypeWithAnnotations, SymbolKind } from '../../symbols/types.js';
 import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from '../../symbols/members.js';
+import { normalizedExtensionConstraint } from './extension-constraint-shapes.js';
 
 const copiedParameterFlags = Object.freeze([
   'variance', 'hasReferenceTypeConstraint', 'hasValueTypeConstraint', 'hasUnmanagedTypeConstraint',
@@ -36,12 +37,13 @@ export function bindExtensionConstraints(originals, copies, substitution, normal
     copy._constraintTypes = original.constraintTypes.map(constraint => {
       const annotated = original.constraintTypesWithAnnotations?.get(constraint) ??
         (constraint instanceof TypeWithAnnotations ? constraint : new TypeWithAnnotations(constraint));
-      const result = annotated.substitute(substitution);
+      const substituted = annotated.substitute(substitution);
+      const result = normalized ? normalizedExtensionConstraint(substituted) : substituted;
       if (!normalized) annotations.set(result.type, result);
       return result.type;
     });
     copy.constraintTypesWithAnnotations = annotations;
-    if (original.nullableConstraintTypes) {
+    if (!normalized && original.nullableConstraintTypes) {
       copy.nullableConstraintTypes = new Set([...original.nullableConstraintTypes].map(type => substitution.substituteType(type).type));
     }
   });
@@ -76,6 +78,7 @@ export function extensionMethod(original, group, blockArity, kind, methodKind = 
     modifiers: isStatic ? DeclarationModifiers.Static : DeclarationModifiers.None,
     refKind: original.refKind, isVararg: original.isVararg, isInitOnly: original.isInitOnly,
   });
+  method.isExtensionMetadataDeclaration = true;
   const own = original.typeParameters.slice(blockArity);
   method.typeParameters = Object.freeze(extensionTypeParameters(own, method));
   const substitution = new TypeMap(original.typeParameters, [...group.typeParameters, ...method.typeParameters]);

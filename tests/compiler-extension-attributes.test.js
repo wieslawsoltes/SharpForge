@@ -71,7 +71,7 @@ test('A02-T83 extension property AttributeUsage and duplicate diagnostics apply 
     [source.replace('[PropertyOnly("expression")]', '[Tag("first"), Tag("second")]'), 'CS0579'],
     [source.replace('[Tag("method")]', '[PropertyOnly("invalidMethod")]'), 'CS0592'],
   ]) {
-    const analysis = new SemanticAnalysis(parseCompilerInput(text), { langVersion: '14' });
+    const analysis = new SemanticAnalysis(parseCompilerInput(text, {}), { langVersion: '14' });
     const result = analysis.run();
     assert.equal(result.diagnostics.filter(diagnostic => diagnostic.code === code).length, 1, errors(result).join('\n'));
   }

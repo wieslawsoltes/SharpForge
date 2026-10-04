@@ -8,7 +8,8 @@ import { applyTypeTransforms, decodeWellKnownAttributes } from '../packages/comp
 import { encodeNullableFlags } from '../packages/compiler/src/nullable/metadata-flags.js';
 import { tupleElementNamesOf } from '../packages/compiler/src/binder/tuples.js';
 import { SymbolDisplayFormat } from '../packages/compiler/src/symbols/types.js';
-import { MetadataView, Table, tokenOf, ridOf, findType, extensionMarker } from './fixtures/exported-extension-blocks/metadata.mjs';
+import { MetadataView, Table, tokenOf, ridOf, findType, extensionMarker, genericSnapshot, attributeSnapshot } from
+  './fixtures/exported-extension-blocks/metadata.mjs';
 import { locateInteropToolchain, interopScratch } from './fixtures/exported-extension-blocks/dotnet.mjs';
 
 const toolchain = locateInteropToolchain();
@@ -54,8 +55,19 @@ function constraintSnapshot(bytes) {
   const first = extensionMarker(view, owner, 'A'), second = extensionMarker(view, owner, 'B');
   assert.equal(first.group, second.group, 'CLR-equivalent constraints share a grouping type');
   assert.notEqual(first.marker, second.marker, 'exact receiver constraints retain separate marker declarations');
+  const transforms = name => /\.(Nullable|NullableContext|TupleElementNames)Attribute$/.test(name);
+  const group = genericSnapshot(view, first.group, transforms);
+  assert.deepEqual(attributeSnapshot(view, first.group, transforms), []);
+  for (const parameter of view.genericParameters(first.group)) {
+    assert.deepEqual(attributeSnapshot(view, tokenOf(Table.GenericParam, parameter.rid), transforms), []);
+    for (const constraint of view.genericConstraints(parameter.rid)) {
+      assert.deepEqual(attributeSnapshot(view, tokenOf(Table.GenericParamConstraint, constraint.rid), transforms), []);
+    }
+  }
+  const groupSymbol = assembly.typeFromToken(first.group);
   return {
-    group: parameterShape(view, assembly, first.group),
+    group,
+    returns: ['A', 'B'].map(name => encodeNullableFlags(groupSymbol.getMembers(name)[0].returnTypeWithAnnotations)),
     first: parameterShape(view, assembly, first.marker),
     second: parameterShape(view, assembly, second.marker),
   };
@@ -63,7 +75,7 @@ function constraintSnapshot(bytes) {
 
 function sourceFor(constraints, reverse) {
   const members = constraints.map((constraint, index) =>
-    `extension<T>(T value) where T : ${constraint} { public int ${index ? 'B' : 'A'}() => ${index + 1}; }`);
+    `extension<T>(T value) where T : ${constraint} { public ${index ? 'string B() => ""' : 'string? A() => null'}; }`);
   if (reverse) members.reverse();
   return '#nullable enable\npublic interface I<T> { }\npublic static class Extensions {\n' + members.join('\n') + '\n}';
 }

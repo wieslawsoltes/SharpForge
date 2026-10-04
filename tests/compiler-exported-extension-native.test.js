@@ -94,9 +94,10 @@ test('A02-T83 marker skeleton methods throw while Roslyn calls the static implem
   }
 });
 
-test('A02-T83 metadata-only static extension Main does not become an additional entry point', { skip }, () => {
-  const source = `using System; public static class Extensions { extension(int) { public static int Main() => 4; } }
-    class Program { static void Main() { Console.WriteLine(int.Main()); } }`;
+test('A02-T83 static extension Main is the entry point without counting its metadata grouping declaration twice', { skip }, () => {
+  const source = `using System; public static class Extensions {
+    extension(int) { public static void Main() { Console.WriteLine(4); } }
+  }`;
   const scratch = interopScratch(toolchain);
   try {
     const reference = scratch.compile(source, { name: 'RoslynEntryPoint', library: null });
@@ -106,6 +107,22 @@ test('A02-T83 metadata-only static extension Main does not become an additional 
     assert.deepEqual(errors(result), []);
     scratch.write('Consumer.dll', result.assembly);
     assert.equal(scratch.run(), '4\n');
+  } finally {
+    scratch.close();
+  }
+});
+
+test('A02-T83 a genuine static extension Main remains an entry candidate alongside an ordinary Main', { skip }, () => {
+  const source = `public static class Extensions { extension(int) { public static int Main() => 4; } }
+    class Program { static void Main() { } }`;
+  const scratch = interopScratch(toolchain);
+  try {
+    const reference = scratch.compile(source, { name: 'RoslynDuplicateEntry', library: null });
+    assert.notEqual(reference.status, 0);
+    assert.match(reference.output, /CS0017/);
+    const result = compileToAssembly(source, { name: 'Consumer', langVersion: '14', references: toolchain.references });
+    assert.equal(result.success, false);
+    assert.equal(result.assembly, null);
   } finally {
     scratch.close();
   }

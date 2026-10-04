@@ -97,6 +97,7 @@ export class ExtensionBlockMetadataPlan {
     }
     const plan = planMembers(group, core, () => null);
     plan.typeFlags = GROUP_FLAGS;
+    plan.emitsNullableTypeAttributes = false;
     this.plans.set(group, plan);
     for (const method of plan.methods) this.bodies.set(method, { kind: ExtensionMetadataBody.Declaration });
   }

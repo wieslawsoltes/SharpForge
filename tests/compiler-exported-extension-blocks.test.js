@@ -173,7 +173,8 @@ test('A02-T83 a marker contract must be a concrete attribute class', () => {
       public static class E { extension(int number) { public int P => number; } }`;
     const result = compileToReferenceAssembly(source, { langVersion: '14' });
     assert.equal(result.success, false);
-    assert.ok(errors(result).some(error => error.includes('ExtensionMarkerAttribute') && error.includes('attribute')), errors(result).join('\n'));
+    assert.ok(errors(result).some(error => error.includes('ExtensionMarkerAttribute') && error.includes('System.Attribute')),
+      errors(result).join('\n'));
     assert.equal(result.assembly, null);
   }
 });
