@@ -1,6 +1,7 @@
 import {collectHeap} from './execution/heap-collection.js';
 import {MethodTableRegistry} from './execution/method-table.js';
 import {recordAllocation,replaceHeapData} from './execution/heap-allocation.js';
+import {createHeapReference} from './execution/heap-reference.js';
 /** A precise, non-moving tracing heap. Managed references are generation-checked handles, never raw JS object references. */
 export class ManagedFault extends Error {
   constructor(type,message,reference=null){super(message);this.name=type;this.reference=reference;}
@@ -31,7 +32,7 @@ export class ManagedHeap {
     const g=this.generationCounter+1;if(!Number.isSafeInteger(g))throw new ManagedFault('OutOfMemoryException','Managed reference identity exhausted');this.generationCounter=g;const h=this.free.length?this.free.pop():this.records.length;
     this.generations[h]=g;this.records[h]={kind,type:typeName,methodTable,data,size};
     recordAllocation(this,size);
-    return Object.freeze({h,g});
+    return createHeapReference(this,h,g);
   }
   replaceData(reference,data){return replaceHeapData(this,reference,data);}
   string(value,roots=[]){return this.allocate('string','string',String(value),roots);}
