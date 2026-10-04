@@ -49,16 +49,51 @@ for(const method of ["runToCursor"])handlers.registerHandler(method,(params,meth
 for(const method of ["disassemble"])handlers.registerHandler(method,(params,method)=>{let result;result=session.disassemble(params.reference,params);return result;});
 for(const method of ["gotoTargets"])handlers.registerHandler(method,(params,method)=>{let result;result=session.gotoTargets(params);return result;});
 for(const method of ["setNextStatement"])handlers.registerHandler(method,(params,method)=>{let result;result=session.setNextStatement(params);state();return result;});
-for(const method of ["hotReload"])handlers.registerHandler(method,(params,method)=>{let result;result=session.applyChanges(params.image??params.assembly,{expectedVersion:params.expectedVersion});self.postMessage({event:'loaded',sessionId:sessionSerial,sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});state();return result;});
+for(const method of ["hotReload"])handlers.registerHandler(method,(params,method)=>{
+  let result;
+  result=session.applyChanges(params.image??params.assembly,{expectedVersion:params.expectedVersion});
+  self.postMessage({event:'loaded',sessionId:sessionSerial,
+    sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});
+  state();
+  return result;
+});
 for(const method of ["evaluateFunction"])handlers.registerHandler(method,(params,method)=>{let result;result=session.evaluateFunction(params.expression,{...params,allowSideEffects:params.allowSideEffects===true});state();return result;});
-for(const method of ["loadSymbols"])handlers.registerHandler(method,(params,method)=>{let result;result=session.loadSymbols(params.pdb??null,params.sources??{});self.postMessage({event:'loaded',sessionId:sessionSerial,sources:(session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});state();return result;});
-for(const method of ["symbolInfo"])handlers.registerHandler(method,(params,method)=>{let result;result=session.symbolBinding?{id:session.symbols.idHex,documents:session.symbolBinding.documents.map(({embedded,hash,...d})=>({...d,text:undefined,hash:[...hash]})),methods:session.symbols.methods.length,stateMachines:session.symbols.stateMachines}:null;return result;});
+for(const method of ["loadSymbols"])handlers.registerHandler(method,(params,method)=>{
+  let result;
+  result=session.loadSymbols(params.pdb??null,params.sources??{});
+  self.postMessage({event:'loaded',sessionId:sessionSerial,
+    sources:(session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});
+  state();
+  return result;
+});
+for(const method of ["symbolInfo"])handlers.registerHandler(method,(params,method)=>{
+  let result;
+  result=session.symbolBinding?{id:session.symbols.idHex,
+    documents:session.symbolBinding.documents.map(({embedded,hash,...d})=>({...d,text:undefined,hash:[...hash]})),
+    methods:session.symbols.methods.length,stateMachines:session.symbols.stateMachines}:null;
+  return result;
+});
 for(const method of ["threads"])handlers.registerHandler(method,(params,method)=>{let result;result=session.threads();return result;});
 for(const method of ["parallelStacks"])handlers.registerHandler(method,(params,method)=>{let result;result=session.parallelStacks();return result;});
 for(const method of ["stackTrace"])handlers.registerHandler(method,(params,method)=>{let result;result=session.stackTrace(params.threadId);return result;});
 for(const method of ["freezeThread"])handlers.registerHandler(method,(params,method)=>{let result;result=session.freezeThread(params.threadId,params.frozen);state();schedule();return result;});
-for(const method of ["uiEvent"])handlers.registerHandler(method,(params,method)=>{let result;if(session.vm.state==='paused')throw new Error('Continue execution before interacting with the managed application');result=session.vm.platform.dispatchEvent(params.id,params.event,params.payload);state();schedule();return result;});
-for(const method of ["uiAnimationAdvance"])handlers.registerHandler(method,(params,method)=>{let result;if(session.vm.state==='paused')throw new Error('Animation clock is frozen while paused');result=session.vm.platform.advanceAnimations(params.milliseconds);flush();schedule();scheduleAnimations();return result;});
+for(const method of ["uiEvent"])handlers.registerHandler(method,(params,method)=>{
+  let result;
+  if(session.vm.state==='paused')throw new Error('Continue execution before interacting with the managed application');
+  result=session.vm.platform.dispatchEvent(params.id,params.event,params.payload);
+  state();
+  schedule();
+  return result;
+});
+for(const method of ["uiAnimationAdvance"])handlers.registerHandler(method,(params,method)=>{
+  let result;
+  if(session.vm.state==='paused')throw new Error('Animation clock is frozen while paused');
+  result=session.vm.platform.advanceAnimations(params.milliseconds);
+  flush();
+  schedule();
+  scheduleAnimations();
+  return result;
+});
 for(const method of ["uiAnimationMode"])handlers.registerHandler(method,(params,method)=>{let result;activity.manualAnimations=!!params.manual;scheduleAnimations();result={manual:activity.manualAnimations};return result;});
 for(const method of ["runtimeInfo"])handlers.registerHandler(method,(params,method)=>{let result;result=session.vm.platform.runtimeInfo();return result;});
 for(const method of ["uiScene"])handlers.registerHandler(method,(params,method)=>{let result;result=session.vm.platform.scene();return result;});
