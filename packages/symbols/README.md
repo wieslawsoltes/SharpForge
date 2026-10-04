@@ -262,3 +262,24 @@ alias entries, stepping parents and awaits before snapshot allocation (default
 parents and ambiguous aliases throw `SymbolError`. Each lookup costs O(returned
 awaits), with fresh state and step records. This API exposes PDB stepping metadata;
 it does not infer runtime states or iterator yield positions.
+
+Bound `loadSymbols` results expose `closureInfo(lambdaMethodToken)`. For supported
+Roslyn C# generation-zero, nongeneric display classes, it returns `available: true`,
+the `containingMethod`, `methodOrdinal`, `lambdaOrdinal`, lambda `syntaxOffset`,
+`closureType`, `closureOrdinal`, `closureSyntaxOffset` and `captures` containing
+`{ name, fieldToken }`. The syntax offsets are the EnC values relative to the
+containing method body, not source line/column positions. Method identity uses the
+enclosing type plus EnC method ordinal and exact generated lambda/closure ordinals.
+It never selects an overloaded method by name alone.
+
+Unknown, missing, inconsistent or unsupported mappings return `available: false`,
+an explicit `reason` and no captures. VB, generic or edited display-class naming,
+static/this-only lambdas, capture-link traversal and runtime field values are not
+supported by this capability. Recognized lambda delegate caches are omitted from
+captures; other synthesized capture fields make the result unavailable.
+`maxClosureEntries` bounds metadata, EnC records and expanded capture entries
+(default 100,000; maximum 1,000,000) before snapshots/index expansion. Names share
+the bounded 3,072-byte/1,024-UTF-16-unit metadata scan used by hoisted locals.
+Relevant facts are owned at load, the query index is lazy, and results are fresh;
+input-byte and returned-record mutations cannot alter subsequent queries.
+Naming follows Roslyn's [GeneratedNames](https://github.com/dotnet/roslyn/blob/main/src/Compilers/CSharp/Portable/Symbols/Synthesized/GeneratedNames.cs).

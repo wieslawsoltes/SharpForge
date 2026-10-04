@@ -7,7 +7,7 @@ function unavailable(reason, pair) {
 
 function snapshotScopes(pe, symbols, limit) {
   let entries = symbols.stateMachines.length * 2 + symbols.custom.length;
-  for (const table of [2, 4, 6]) entries += pe.metadata.counts[table] ?? 0;
+  for (const table of [2, 3, 4, 5, 6]) entries += pe.metadata.counts[table] ?? 0;
   if (entries > limit) fail('Hoisted local index entry limit exceeded');
   for (const record of symbols.custom) {
     if (record.kind !== PdbGuids.hoistedScopes) continue;
