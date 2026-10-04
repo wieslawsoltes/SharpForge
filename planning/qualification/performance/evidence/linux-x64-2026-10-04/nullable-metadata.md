@@ -126,3 +126,24 @@ The only manifest change outside the compiler workstream is the exact path/count
 `packages/compiler/bench/nullable-metadata.bench.js` in `scripts/conformance/static/allowlist.json`. It reviews the
 single dynamic import of the fixed compiler package entry from an operator-selected trusted checkout. The checker
 and all other policy entries remain unchanged by this batch.
+
+
+## Isolated publication replay
+
+The isolated publication was independently replayed at
+`a8153fe3f7a97b675548671b9b5f36fdbaa68b41` on Linux x64 with SDK 10.0.201,
+reference pack 10.0.5 and Roslyn 5.3.0.0. All **27 tests passed, with zero failures
+and zero skips**. This includes the six-file 23-test suite above and four tests in
+`tests/compiler-nullable-delegate-signatures.test.js`, covering executable and
+reference assembly APIs with both registry and actual PE reference signatures.
+The tracked checkout and untracked-file list were clean before and after the run.
+
+The additional fix resolves planned delegate framework signature names through
+actual core type symbols, retaining the target reference identity. Native modern
+and projected missing-contract reflection, attribute construction and consumer
+checks all ran in this isolated replay. The raw log and its SHA-256 are retained
+under `tests/fixtures/nullable-metadata/qualification/`.
+
+This replay validates the isolated publication's correctness. The before/after
+performance evidence above remains attributed to its explicitly recorded whole
+revisions and was not rerun or relabeled as this isolated commit.
