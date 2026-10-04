@@ -75,6 +75,14 @@ export function localDefinitionNames(metadata, records, budget) {
     }
   }
   return {
+    key,
+    // Internal cross-heap lookup: callers obtain both keys from another bounded name index.
+    lookupKeys(owner, namespace, name) {
+      if (owner && !lexical) indexNested();
+      if (!name) rejectTypeSystem('CILVT0001', 'empty TypeRef name');
+      const target = owners.get(owner)?.get(namespace)?.get(name);
+      return target === undefined ? 0 : target;
+    },
     top: row => lookup(0, row),
     nested(owner, row) {
       if (!lexical) indexNested();
