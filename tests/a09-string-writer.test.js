@@ -27,6 +27,21 @@ const faultCases = [
   {name: 'WriteLine', parameters: ['string'], args: [null], nullValue: true}
 ];
 
+for (const pipeline of ['bound', 'legacy']) {
+  for (const [engine, create] of Object.entries(engines)) {
+    test(`SF-A09-T03.2 ${pipeline} ${engine}: source character writes use the registered overload`, () => {
+      const program = compileToIL("using System.IO; var writer = new StringWriter(); writer.Write('x'); Console.WriteLine(writer.ToString());", {pipeline});
+      assert.equal(program.success, true, JSON.stringify(program.diagnostics));
+      const vm = create(program);
+      try {
+        const result = vm.run();
+        assert.equal(result.state, 'terminated', result.fault?.stack);
+        assert.equal(result.output, 'x\n');
+      } finally { vm.stop(); }
+    });
+  }
+}
+
 for (const [engine, create] of Object.entries(engines)) {
   test(`SF-A09-T03.2 ${engine}: unchanged StringWriter source matches .NET 10.0.5`, () => {
     compiled ??= compileToIL(source);
