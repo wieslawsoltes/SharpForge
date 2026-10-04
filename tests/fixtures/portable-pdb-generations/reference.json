@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "runtime": "10.0.5",
+  "compiler": "5.3.0.0",
+  "compilerSha256": "2e29a995bcee2351d2cc1bb1d3187b1a5d9170e300ef1c15a47a5e4d64c1bb1d",
+  "generations": [
+    {
+      "generation": 0,
+      "typeSystemRowCounts": {
+        "0": 1,
+        "1": 6,
+        "2": 2,
+        "6": 3,
+        "10": 4,
+        "12": 4,
+        "17": 1,
+        "32": 1,
+        "35": 1
+      },
+      "symbols": {
+        "id": "111b6e5d3344c345970e5a846fe218ec3efd0583",
+        "mapping": [],
+        "documents": [
+          {
+            "id": 1,
+            "name": "/src/PdbGenerations/Fixture.cs"
+          },
+          {
+            "id": 2,
+            "name": "Generation.cs"
+          }
+        ],
+        "methods": [
+          {
+            "token": 100663297,
+            "localRow": 1,
+            "localSignature": 0,
+            "points": [
+              {
+                "offset": 0,
+                "document": 2,
+                "startLine": 10,
+                "startColumn": 34,
+                "endLine": 10,
+                "endColumn": 35,
+                "hidden": false
+              }
+            ],
+            "scopes": [
+              {
+                "start": 0,
+                "end": 2,
+                "names": []
+              }
+            ]
+          },
+          {
+            "token": 100663298,
+            "localRow": 2,
+            "localSignature": 1,
+            "points": [
+              {
+                "offset": 0,
+                "document": 2,
+                "startLine": 21,
+                "startColumn": 5,
+                "endLine": 21,
+                "endColumn": 6,
+                "hidden": false
+              },
+              {
+                "offset": 1,
+                "document": 2,
+                "startLine": 22,
+                "startColumn": 9,
+                "endLine": 22,
+                "endColumn": 24,
+                "hidden": false
+              },
+              {
+                "offset": 4,
+                "document": 2,
+                "startLine": 23,
+                "startColumn": 9,
+                "endLine": 23,
+                "endColumn": 22,
+                "hidden": false
+              },
+              {
+                "offset": 8,
+                "document": 2,
+                "startLine": 24,
+                "startColumn": 5,
+                "endLine": 24,
+                "endColumn": 6,
+                "hidden": false
+              }
+            ],
+            "scopes": [
+              {
+                "start": 0,
+                "end": 10,
+                "names": [
+                  "local"
+                ]
+              }
+            ]
+          },
+          {
+            "token": 100663299,
+            "localRow": 3,
+            "localSignature": 0,
+            "points": [
+              {
+                "offset": 0,
+                "document": 2,
+                "startLine": 30,
+                "startColumn": 33,
+                "endLine": 30,
+                "endColumn": 34,
+                "hidden": false
+              }
+            ],
+            "scopes": [
+              {
+                "start": 0,
+                "end": 2,
+                "names": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "generation": 1,
+      "typeSystemRowCounts": {
+        "0": 1,
+        "1": 7,
+        "2": 2,
+        "6": 3,
+        "10": 4,
+        "12": 4,
+        "17": 2,
+        "32": 1,
+        "35": 2
+      },
+      "symbols": {
+        "id": "62e2a0cd96600a4da435b4dafdd2355bb038c26a",
+        "mapping": [
+          822083586
+        ],
+        "documents": [
+          {
+            "id": 1,
+            "name": "/src/PdbGenerations/Fixture.cs"
+          },
+          {
+            "id": 2,
+            "name": "Generation.cs"
+          }
+        ],
+        "methods": [
+          {
+            "token": 100663298,
+            "localRow": 1,
+            "localSignature": 2,
+            "points": [
+              {
+                "offset": 0,
+                "document": 2,
+                "startLine": 121,
+                "startColumn": 5,
+                "endLine": 121,
+                "endColumn": 6,
+                "hidden": false
+              },
+              {
+                "offset": 1,
+                "document": 2,
+                "startLine": 122,
+                "startColumn": 9,
+                "endLine": 122,
+                "endColumn": 25,
+                "hidden": false
+              },
+              {
+                "offset": 4,
+                "document": 2,
+                "startLine": 123,
+                "startColumn": 9,
+                "endLine": 123,
+                "endColumn": 22,
+                "hidden": false
+              },
+              {
+                "offset": 8,
+                "document": 2,
+                "startLine": 124,
+                "startColumn": 5,
+                "endLine": 124,
+                "endColumn": 6,
+                "hidden": false
+              }
+            ],
+            "scopes": [
+              {
+                "start": 0,
+                "end": 10,
+                "names": [
+                  "local"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "generation": 2,
+      "typeSystemRowCounts": {
+        "0": 1,
+        "1": 8,
+        "2": 2,
+        "6": 3,
+        "10": 4,
+        "12": 4,
+        "17": 2,
+        "32": 1,
+        "35": 3
+      },
+      "symbols": {
+        "id": "52345c07b892fe4f9c1ef308045b47f4b038c26a",
+        "mapping": [
+          822083585
+        ],
+        "documents": [
+          {
+            "id": 1,
+            "name": "/src/PdbGenerations/Fixture.cs"
+          },
+          {
+            "id": 2,
+            "name": "Generation.cs"
+          }
+        ],
+        "methods": [
+          {
+            "token": 100663297,
+            "localRow": 1,
+            "localSignature": 0,
+            "points": [
+              {
+                "offset": 0,
+                "document": 2,
+                "startLine": 210,
+                "startColumn": 34,
+                "endLine": 210,
+                "endColumn": 38,
+                "hidden": false
+              }
+            ],
+            "scopes": [
+              {
+                "start": 0,
+                "end": 6,
+                "names": []
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "sdk": "10.0.201",
+  "artifacts": {
+    "baseline.cs": "9e75caf0dd99bff57a3461b1e123d8e21beabbbd8d0483e26b2f13e4419b586a",
+    "baseline.dll": "3ee1f7ecac5b03a334bf7f03f8adaf2c423bdb1de938d0feb664bdeb1a80dc9b",
+    "baseline.pdb": "bab3c90a4642d5aacddf22da352fd6b5b002ac075d4ff302c4cdffea129d2909",
+    "delta1.cs": "adc37377d68483f88d4869daed0ec8232aebd9c61f6f1b8218354a40799e60eb",
+    "delta1.dil": "e05701f490a0115fa77187b0ef5ccc0cbb79a1b8dac33e06097bfdeef58a7152",
+    "delta1.dmeta": "eb0e6bde4e41af126871204193acaa4e8c5f92b58cd0638b8644e3c12539065b",
+    "delta1.pdb": "e2c4fe2ac3463ac294d39067914a1d082ce67e26840f07330fee43737064de1c",
+    "delta2.cs": "ac0fd309fe727083e4534ed2443162f42c3ee20bb6aca2a65020cf4c39185a2d",
+    "delta2.dil": "34ab1b0b676e4b609772a0ccc1af6053869a8cef71259ac498f9f5f6d3e3d588",
+    "delta2.dmeta": "055f242824d42ab30849525848f495ebb77602028378b5fa063ea22acfc07fec",
+    "delta2.pdb": "d1175cd7119c6a4f084585957a87f813f67bddd1ffc1a2b0e97df1d0b2c7ddc4"
+  },
+  "qualification": "native Roslyn EmitDifference and SRM, Linux host; no runtime ApplyUpdate"
+}

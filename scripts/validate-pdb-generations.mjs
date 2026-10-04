@@ -30,6 +30,17 @@ try {
     '-m:1', '-p:UseSharedCompilation=false', '-nodeReuse:false']);
   const executable = join(output, 'PdbGenerations.dll');
   const reference = JSON.parse(run([executable, 'capture', fixtures]));
+  const capture = process.argv.indexOf('--capture');
+  const destination = capture >= 0 ? resolve(process.argv[capture + 1]) : null;
+  const artifacts = {};
+  for (const file of (await readdir(fixtures)).sort()) artifacts[file] = digest(await readFile(join(fixtures, file)));
+  const record = { ...reference, sdk, artifacts, qualification: 'native capture; JavaScript comparison pending' };
+  // Retain the native bytes before asserting parity so a failed comparison remains reproducible.
+  if (destination) {
+    await mkdir(destination, { recursive: true });
+    await cp(fixtures, destination, { recursive: true });
+    await writeFile(join(destination, 'reference.json'), JSON.stringify(record, null, 2) + '\n');
+  }
   const baseline = await readFile(join(fixtures, 'baseline.pdb'));
   const history = new PortablePdbGenerations(baseline);
   for (const item of reference.generations) {
@@ -58,14 +69,8 @@ try {
   assert.deepEqual(history.getMethodByVersion(updated, 1).points, original.points);
   assert.deepEqual(history.getMethodByVersion(updated, 2).points, reference.generations[1].symbols.methods[0].points);
   assert.equal(history.getMethodByVersion(updated, 3).generation, 1);
-  const artifacts = {};
-  for (const file of (await readdir(fixtures)).sort()) artifacts[file] = digest(await readFile(join(fixtures, file)));
-  const record = { ...reference, sdk, artifacts, qualification: 'native Roslyn EmitDifference and SRM, Linux host; no runtime ApplyUpdate' };
-  const capture = process.argv.indexOf('--capture');
-  if (capture >= 0) {
-    const destination = resolve(process.argv[capture + 1]);
-    await mkdir(destination, { recursive: true });
-    await cp(fixtures, destination, { recursive: true });
+  record.qualification = 'native Roslyn EmitDifference and SRM, Linux host; no runtime ApplyUpdate';
+  if (destination) {
     await writeFile(join(destination, 'reference.json'), JSON.stringify(record, null, 2) + '\n');
   }
   console.log(JSON.stringify({ passed: true, sdk, runtime: reference.runtime, generations: reference.generations.length }, null, 2));
