@@ -107,6 +107,13 @@
       "reason": "Reviewed developer-only CFG benchmark imports fixed CIL package entry points from operator-selected trusted local baseline/current checkouts. Before import it verifies exact baseline commit, candidate source identity and local workspace aliases; paths never come from CIL, metadata or product input. No generated JavaScript or product dynamic-code surface is added."
     },
     {
+      "path": "packages/cil/tools/metadata-generations-benchmark-worker.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "dc8e825b11d00d928453647cf8f72fa630dd74b0853d5f5bdbd16343a929b917",
+      "reason": "Developer-only metadata reader comparison imports the verified public CIL entry and the fixed existing structural fixture helper from an operator-selected trusted local checkout. It checks exact baseline/product commits, clean source hashes and own public dependency aliases before import. Baseline children never import candidate CIL or generation feature modules. This exact count/hash adds no runtime product dynamic-code surface; assembly bytes never choose modules."
+    },
+    {
       "path": "packages/cil/tools/benchmark-pe-inspection.mjs",
       "operation": "dynamic-import",
       "count": 2,

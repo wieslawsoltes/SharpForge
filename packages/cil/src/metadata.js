@@ -2,15 +2,14 @@ import { writeAssemblyReference } from './metadata/assembly-references.js';
 import { initializeMetadataBuilder } from './metadata/builder-state.js';
 import { encodeTypeSignature } from './metadata/signature-writer.js';
 import { parseSignatureType } from './metadata/signature-parser.js';
-import { MetadataTypeNames } from './metadata/type-names.js';
-import { readUserString } from './metadata/user-strings.js';
+export { readMetadata } from './metadata/reader.js';
+export { metadataReaderDiagnosticCatalog } from './metadata/reader-budget.js';
 import {canonicalType} from '@sharpforge/framework';
 export { validateMetadata, metadataDiagnosticCatalog } from './metadata/validate.js';
-import { readMetadataTables, writeMetadataTables } from './metadata/table-stream.js';
-import { metadataList } from './metadata/pointer-tables.js';
+import { writeMetadataTables } from './metadata/table-stream.js';
 import { sortMetadataRows } from './metadata/sorting.js';
 export { metadataSortedMask } from './metadata/sorting.js';
-import { Writer, Reader, CilError, align, utf8, text, buildId } from './binary.js';
+import { Writer, CilError, align, utf8, buildId } from './binary.js';
 /** ECMA-335 II.22 tables and II.24 heaps. Table/index widths are computed, never fixed. */
 import { writeMetadataRow } from './metadata/row-writer.js';
 export * from './metadata/rows-definitions.js';
@@ -44,23 +43,6 @@ export class MetadataBuilder {
     for(const [name,data]of streams){headers.push(root.length);root.u32(0).u32(data.length).bytes(utf8(name)).u8(0).pad();}
     streams.forEach(([name,data],i)=>{root.pad();root.patch32(headers[i],root.length);root.bytes(data);});return root.finish();
   }
-}
-export function readMetadata(bytes) {
-  const r=new Reader(bytes);if(r.u32()!==0x424a5342)throw new CilError('Invalid CLI metadata signature');r.u16();r.u16();r.u32();const versionLength=r.u32();if(versionLength>256)throw new CilError('Metadata version string is too long');const version=text(r.take(versionLength)).replace(/\0+$/,'');r.u16();const count=r.u16();if(count>32)throw new CilError('Too many metadata streams');const streams=new Map(),ranges=[];
-  for(let i=0;i<count;i++){const offset=r.u32(),size=r.u32();let name='';for(let j=0;j<32;j++){const b=r.u8();if(!b)break;name+=String.fromCharCode(b);if(j===31)throw new CilError('Invalid stream name');}r.position=align(r.position);if(offset+size>bytes.length||streams.has(name))throw new CilError('Invalid or duplicate metadata stream');streams.set(name,bytes.subarray(offset,offset+size));ranges.push([offset,offset+size]);}
-  for(let i=0;i<ranges.length;i++){if(ranges[i][0]<r.position)throw new CilError('Metadata stream overlaps its header');for(let j=0;j<i;j++)if(ranges[i][0]<ranges[j][1]&&ranges[j][0]<ranges[i][1])throw new CilError('Overlapping metadata streams');}
-  const tableData=readMetadataTables(streams,bytes),{rows}=tableData;
-  const strings=streams.get('#Strings')??new Uint8Array([0]),blobs=streams.get('#Blob')??new Uint8Array([0]),us=streams.get('#US')??new Uint8Array([0]);const stringCache=new Map();
-  const typeNames=new MetadataTypeNames();
-  const result={version,streams,...tableData,
-    list(owner,column){return metadataList(this,owner,column);},
-    guid(index){const data=streams.get('#GUID')??new Uint8Array();if(index===0)return new Uint8Array(16);if(!Number.isInteger(index)||index<1||index*16>data.length)throw new CilError('Invalid GUID heap index');return new Uint8Array(data.subarray((index-1)*16,index*16));},
-    row(t){const value=rows[t>>>24]?.[(t&0xffffff)-1];if(!value)throw new CilError(`Invalid metadata token 0x${t.toString(16)}`);return value;},
-    string(index){if(stringCache.has(index))return stringCache.get(index);if(index>=strings.length)throw new CilError('Invalid string heap index');let end=index;while(end<strings.length&&strings[end])end++;if(end===strings.length)throw new CilError('Unterminated metadata string');const s=text(strings.subarray(index,end));stringCache.set(index,s);return s;},
-    blob(index){if(index>=blobs.length)throw new CilError('Invalid blob heap index');const br=new Reader(blobs,index);return br.take(br.compressed());},
-    userString(t){return readUserString(us,t);},
-    typeName(t,depth=0){return typeNames.read(this,t,depth);}
-  };return result;
 }
 export {
   cliSystemName, signatureType, methodSignature, propertySignature, localSignature, fieldSignature,

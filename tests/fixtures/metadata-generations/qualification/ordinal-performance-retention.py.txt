@@ -1,0 +1,81 @@
+from pathlib import Path
+import hashlib,json,math,statistics,datetime
+session=Path('/workspace/scratch/7e3d2a445c44')
+root=session/'sf6-metadata-generations'
+q=root/'tests/fixtures/metadata-generations/qualification'
+source=session/'project6-metadata-generations-performance.ordinal-first'
+report=json.loads((source/'report.json').read_text())
+assert report['status']=='completed' and len(report['commands'])==15
+assert len(report['chronologicalSamples'])==2400
+sha=lambda data:hashlib.sha256(data).hexdigest()
+def distribution(values):
+ ordered=sorted(values);size=len(ordered)
+ return {'count':size,'median':statistics.median(ordered),'p95':ordered[math.ceil(size*.95)-1],
+         'p99':ordered[math.ceil(size*.99)-1],'min':ordered[0],'max':ordered[-1]}
+def close(left,right):
+ assert math.isclose(left,right,rel_tol=1e-12,abs_tol=1e-12),(left,right)
+raw=[];workloads={};memory=[]
+for command in report['commands']:
+ assert command['process']['exitCode']==0 and command['process']['signal'] is None
+ result=command['result'];assert result['status'] in ['prepared','passed']
+ for sample in result['chronologicalSamples']:
+  assert sample['guard']=='passed'
+  close(sample['microsecondsPerOperation'],sample['elapsedMs']*1000/sample['operations'])
+  raw.append((command['label'],sample))
+ for row in result['results']:
+  assert len(row['warmups'])==20 and len(row['samples'])==100
+  for phase,samples in [('warmup',row['warmups']),('measured',row['samples'])]:
+   assert [s['batch'] for s in samples]==list(range(len(samples)))
+   assert all(s['phase']==phase and s['operations']==row['operationsPerBatch'] for s in samples)
+  stats=distribution([s['microsecondsPerOperation'] for s in row['samples']])
+  for name,value in stats.items():close(value,row['statistics'][name])
+  workloads[(command['label'],row['id'])]=stats
+  heaps=[s['nodeHeapDeltaBytes'] for s in row['samples']]
+  memory.append({'child':command['label'],'workload':row['id'],'measuredNetHeapBytes':distribution(heaps),
+                 'negativeBatches':sum(n<0 for n in heaps),'operationsPerBatch':row['operationsPerBatch']})
+assert len(workloads)==20 and len(raw)==2400
+for index,((child,sample),retained) in enumerate(zip(raw,report['chronologicalSamples'])):
+ assert retained['sequence']==index and retained['child']==child and retained['childSequence']==sample['sequence']
+ for key,value in sample.items():
+  if key!='sequence':assert retained[key]==value
+for group in ['defaultComparisons','explicitBudgetComparisons']:
+ for row in report[group]:
+  name=row['id'];before_side='baseline' if group=='defaultComparisons' else 'candidate'
+  after_label=name+'-candidate'+('' if group=='defaultComparisons' else '-bounded')
+  after_name=name+('' if group=='defaultComparisons' else '-bounded')
+  before=workloads[(name+'-'+before_side,name)];after=workloads[(after_label,after_name)]
+  for metric in ['median','p95','p99']:
+   expected={'baseline':before[metric],'candidate':after[metric],'delta':after[metric]-before[metric],
+             'percent':(after[metric]/before[metric]-1)*100}
+   for key,value in expected.items():close(value,row['metrics'][metric][key])
+for row in report['newFeatures']:
+ assert row['statistics']==workloads[('generation-features-candidate',row['id'])]
+files=[]
+def copy_file(src,dst,label):
+ data=src.read_bytes();dst.parent.mkdir(parents=True,exist_ok=True)
+ with dst.open('xb') as out:out.write(data)
+ assert dst.read_bytes()==data
+ files.append({'source':str(src),'retained':label,'bytes':len(data),'sourceSha256':sha(data),'retainedSha256':sha(dst.read_bytes())})
+for src in sorted(source.iterdir()):
+ assert src.is_file();copy_file(src,q/'performance-ordinal-first'/src.name,'performance-ordinal-first/'+src.name)
+for name in ['performance.execution.json','performance.stdout.txt','performance.stderr.txt']:
+ copy_file(session/'metadata-qualification-ordinal-edafb801-first'/name,q/'execution-ordinal-first'/name,'execution-ordinal-first/'+name)
+for name,dest in [('metadata-ordinal-baseline-preparation.json','ordinal-baseline-preparation.json'),
+                  ('metadata-ordinal-baseline-prepare.py','ordinal-baseline-preparation.py.txt')]:
+ copy_file(session/name,q/dest,dest)
+record={'schemaVersion':1,'recordedUtc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+ 'reportSha256':sha((source/'report.json').read_bytes()),'harnessCommit':report['harnessCommit'],
+ 'baselineCommit':report['sources']['baseline']['head'],'productCommit':report['sources']['candidate']['productCommit'],
+ 'commands':15,'workloads':20,'warmupBatches':400,'measuredBatches':2000,'chronologicalBatches':2400,
+ 'measuredOperations':sum(s['operations'] for _,s in raw if s['phase']=='measured'),
+ 'warmupOperations':sum(s['operations'] for _,s in raw if s['phase']=='warmup'),
+ 'statisticsRecomputed':'Python statistics.median and sorted nearest-rank ceil(N*p)-1 on all 100 measured batch means per workload; every driver statistic and comparison verified.',
+ 'statisticsScope':'Microseconds per operation from batch means, not individual-call latency percentiles.',
+ 'files':files,'retainedBytes':sum(f['bytes'] for f in files),'memory':memory,
+ 'defaultComparisons':report['defaultComparisons'],'explicitBudgetComparisons':report['explicitBudgetComparisons'],
+ 'newFeatures':report['newFeatures'],'environment':report['environment'],
+ 'performanceAcceptance':'Pending independent root review and explicit quantified PR sign-off; this receipt grants no exception.',
+ 'scriptSha256':sha(Path(__file__).read_bytes())}
+with (q/'ordinal-performance-retention.json').open('x') as out:json.dump(record,out,indent=2);out.write('\n')
+with (q/'ordinal-performance-retention.py.txt').open('xb') as out:out.write(Path(__file__).read_bytes())
+print(json.dumps({k:record[k] for k in ['reportSha256','commands','workloads','chronologicalBatches','measuredOperations','warmupOperations','retainedBytes']}))

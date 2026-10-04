@@ -1,0 +1,92 @@
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+
+root = Path('/workspace/scratch/7e3d2a445c44')
+repo = root / 'sf6-metadata-generations'
+plan_path = repo / 'tests/fixtures/metadata-generations/validation-plan.json'
+plan_bytes = plan_path.read_bytes()
+assert hashlib.sha256(plan_bytes).hexdigest() == '80a4be087ff4a927967f416bb5ce970c91881b41716dd620c9bb74893e2a0169'
+plan = json.loads(plan_bytes)
+step = sys.argv[1]
+commands = {'native': plan['native']['command']['argv'],
+            'verify-external': plan['native']['strictExternalVerificationArgv'],
+            'verify-retained': plan['native']['strictRetainedVerificationArgv'],
+            'focused': plan['nodeGate']['argv'], 'performance': plan['performance']['argv']}
+argv = commands[step]
+directory = root / 'metadata-qualification-8b9b74f6'
+directory.mkdir(exist_ok=True)
+record_path = directory / (step + '.execution.json')
+assert not record_path.exists()
+if step == 'native':
+    assert shutil.disk_usage(root).free >= 268435456
+    assert not Path(plan['native']['destination']).exists()
+for name in plan['prerequisites']['candidatePublicAliases']:
+    alias = repo / 'node_modules/@sharpforge' / name
+    target = repo / 'packages' / name
+    assert (target / 'package.json').is_file()
+    alias.parent.mkdir(parents=True, exist_ok=True)
+    if not alias.exists() and not alias.is_symlink():
+        alias.symlink_to(Path('../../packages') / name)
+    assert alias.resolve(strict=True) == target
+
+def git(*args):
+    return subprocess.check_output(['git', *args], cwd=repo).decode().strip()
+
+def snapshot():
+    paths = git('ls-files', '--', 'packages/cil/src', 'packages/bytecode/src', 'packages/framework/src',
+                'packages/bcl-core/src', 'packages/bcl-collections/src', 'packages/symbols/src', 'packages/archive/src',
+                'packages/cil/tools', 'tests/fixtures/metadata-generations/oracle',
+                'tests/fixtures/metadata-generations/capture.mjs', 'tests/fixtures/metadata-generations/replay.mjs',
+                'tests/fixtures/metadata-generations/verify.mjs', 'tests/fixtures/metadata-generations/browser.mjs',
+                'tests/support/cli-metadata-delta.js', 'tests/a03-24-*.test.js',
+                'tests/fixtures/portable-pdb-generations').splitlines()
+    files = []
+    for name in paths:
+        data = (repo / name).read_bytes()
+        files.append({'path': name, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
+    return {'head': git('rev-parse', 'HEAD'), 'tree': git('rev-parse', 'HEAD^{tree}'),
+            'trackedChanges': git('status', '--porcelain', '--untracked-files=no'), 'files': files}
+
+before = snapshot()
+assert not before['trackedChanges']
+manifest_path = repo / plan['prerequisites']['originalManifest']['path']
+assert hashlib.sha256(manifest_path.read_bytes()).hexdigest() == plan['prerequisites']['originalManifest']['sha256']
+environment = dict(os.environ)
+environment.update(plan['schedule']['environment'])
+if step == 'native': environment.update(plan['native']['command']['environment'])
+assert not environment.get('CI')
+record = {'step': step, 'status': 'running', 'argv': argv, 'cwd': str(repo), 'sourceBefore': before,
+          'planSha256': hashlib.sha256(plan_bytes).hexdigest(),
+          'recorderSha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+          'startedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'availableDiskBytesBefore': shutil.disk_usage(root).free,
+          'environment': {name: environment.get(name) for name in ['CI', 'NODE_OPTIONS', 'SHARPFORGE_MAX_PARALLEL_RUNS',
+              'SHARPFORGE_TEST_CONCURRENCY', 'SHARPFORGE_MAX_OLD_SPACE_MB', 'SHARPFORGE_ORACLE_DOTNET', 'DOTNET_ROOT']}}
+record_path.write_text(json.dumps(record, indent=2) + '\n')
+stdout_path = directory / (step + '.stdout.txt')
+stderr_path = directory / (step + '.stderr.txt')
+with stdout_path.open('xb') as out, stderr_path.open('xb') as err:
+    process = subprocess.run(argv, cwd=repo, env=environment, stdout=out, stderr=err)
+record.update({'status': 'passed' if process.returncode == 0 else 'failed', 'exitCode': process.returncode,
+               'finishedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+               'availableDiskBytesAfter': shutil.disk_usage(root).free, 'outputs': []})
+try:
+    record['sourceAfter'] = snapshot()
+    record['sourcesUnchanged'] = before == record['sourceAfter']
+    assert record['sourcesUnchanged']
+except Exception as error:
+    record['status'] = 'failed'; record['sourceVerificationError'] = repr(error)
+for path in [stdout_path, stderr_path]:
+    data = path.read_bytes()
+    record['outputs'].append({'path': str(path), 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
+record_path.write_text(json.dumps(record, indent=2) + '\n')
+print(json.dumps({key: value for key, value in record.items() if key not in ['sourceBefore', 'sourceAfter']}))
+print(stdout_path.read_text()[-3000:])
+if process.returncode: print(stderr_path.read_text()[-5000:])
+sys.exit(0 if record['status'] == 'passed' else 1)

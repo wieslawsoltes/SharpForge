@@ -1,0 +1,64 @@
+import datetime
+import hashlib
+import json
+from pathlib import Path
+import re
+import subprocess
+
+root = Path('/workspace/scratch/7e3d2a445c44')
+repo = root / 'sf6-metadata-generations'
+fixture = repo / 'tests/fixtures/metadata-generations'
+qualification = fixture / 'qualification'
+destination = qualification / 'execution-first'
+assert not destination.exists()
+destination.mkdir()
+rows = []
+for step in ['native', 'verify-external', 'verify-retained', 'focused']:
+    source = root / 'metadata-qualification-8b9b74f6'
+    record = json.loads((source / (step + '.execution.json')).read_bytes())
+    assert record['sourcesUnchanged']
+    assert record['sourceBefore']['head'] == '8b9b74f6b7b8faf1692409987da2af4ab4e8b3d5'
+    for output in record['outputs']:
+        data = Path(output['path']).read_bytes()
+        assert len(data) == output['bytes'] and hashlib.sha256(data).hexdigest() == output['sha256']
+    for extension in ['execution.json', 'stdout.txt', 'stderr.txt']:
+        name = step + '.' + extension
+        data = (source / name).read_bytes()
+        with (destination / name).open('xb') as output:
+            output.write(data)
+        assert (destination / name).read_bytes() == data
+        rows.append({'path': 'execution-first/' + name, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
+
+plan = json.loads((fixture / 'validation-plan.json').read_bytes())
+paths = plan['nodeGate']['focusedFiles'] + plan['nodeGate']['adjacentFiles']
+paths += ['package.json', 'scripts/limited.js', 'scripts/planning/lib/resource-limits.js',
+          'tests/support/cli-metadata-delta.js', 'tests/support/pdb-delta.js']
+paths += ['packages/' + name + '/package.json' for name in plan['prerequisites']['candidatePublicAliases']]
+paths += subprocess.check_output(['git', 'ls-files', '--', 'tests/fixtures/a03-metadata',
+    'tests/fixtures/metadata-table-views', 'tests/fixtures/inspector-navigation',
+    'tests/fixtures/portable-pdb-generations'], cwd=repo).decode().splitlines()
+inputs = []
+for name in sorted(set(paths)):
+    data = (repo / name).read_bytes()
+    inputs.append({'path': name, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
+stdout = (destination / 'focused.stdout.txt').read_text()
+counts = {name: int(re.search(r'^ℹ ' + name + r' (\d+)$', stdout, re.M).group(1))
+          for name in ['tests', 'pass', 'fail', 'cancelled', 'skipped', 'todo']}
+assert counts == {'tests': 51, 'pass': 50, 'fail': 1, 'cancelled': 0, 'skipped': 0, 'todo': 0}
+with (qualification / 'first-gate-retention.json').open('x') as output:
+    output.write(json.dumps({
+        'schemaVersion': 1, 'status': 'first-gate-failed-preserved',
+        'retainedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        'sourceCommit': '8b9b74f6b7b8faf1692409987da2af4ab4e8b3d5', 'counts': counts,
+        'argv': ['python', str(Path(__file__).resolve())], 'cwd': str(Path.cwd()),
+        'toolSha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'files': rows,
+        'additionalGateSourceInputs': inputs,
+        'sourceScope': 'The outer execution records retain both source snapshots for the seven package source closures, tools and focused inputs. This inventory adds all eleven test files, package manifests, relevant shared fixture files and wrapper inputs observed after the unchanged-source gate.',
+        'failure': {'file': 'tests/a03-24-metadata-generation-boundaries.test.js', 'line': 60,
+                    'expectedCode': 'MD_GEN_IDENTITY', 'actualCode': 'MD_GEN_MAP',
+                    'actualMessage': 'EncMap inserts must be contiguous'},
+        'subsequentWork': 'Heavy slot released. No product/test edit, new baseline or benchmark followed this failed gate.',
+    }, indent=2) + '\n')
+with (qualification / 'first-gate-retention.py.txt').open('xb') as output:
+    output.write(Path(__file__).read_bytes())
+print(json.dumps({'retainedExecutionFiles': len(rows), 'additionalSourceInputs': len(inputs), 'counts': counts}))

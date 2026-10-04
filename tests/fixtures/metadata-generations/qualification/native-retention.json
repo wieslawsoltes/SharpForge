@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "status": "exact-byte-copy-completed",
+  "completedUtc": "2026-10-04T17:33:26.407248+00:00",
+  "sourceDirectory": "/workspace/scratch/7e3d2a445c44/project6-metadata-generations-native.first",
+  "retainedDirectory": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations/tests/fixtures/metadata-generations/reference",
+  "head": "8b9b74f6b7b8faf1692409987da2af4ab4e8b3d5",
+  "argv": [
+    "python",
+    "/workspace/scratch/7e3d2a445c44/metadata-retain-native.py"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44",
+  "toolSha256": "e5901dd91a0b5cdff88262b6357a4915e05d8a341cc7cde52d97f09311a281a7",
+  "planSha256": "80a4be087ff4a927967f416bb5ce970c91881b41716dd620c9bb74893e2a0169",
+  "files": [
+    {
+      "path": "native.json",
+      "bytes": 422072,
+      "sourceSha256": "b212069f11b57db48ef2c2d6cd25e87f75fb667f23a2833de7a54df80121aa31",
+      "retainedSha256": "b212069f11b57db48ef2c2d6cd25e87f75fb667f23a2833de7a54df80121aa31"
+    },
+    {
+      "path": "build.stdout.log",
+      "bytes": 377,
+      "sourceSha256": "e749273bbe140bf504c835029eea9a2cd305aef7887ba437c0f7f803a21ac2cd",
+      "retainedSha256": "e749273bbe140bf504c835029eea9a2cd305aef7887ba437c0f7f803a21ac2cd"
+    },
+    {
+      "path": "build.stderr.log",
+      "bytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "create-mixed.stdout.log",
+      "bytes": 1269,
+      "sourceSha256": "f27d986b3c699b453ec5ed2c149a761427a823405251b609b5269b63915709c3",
+      "retainedSha256": "f27d986b3c699b453ec5ed2c149a761427a823405251b609b5269b63915709c3"
+    },
+    {
+      "path": "create-mixed.stderr.log",
+      "bytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "observe-original.stdout.log",
+      "bytes": 54623,
+      "sourceSha256": "d2afd9165a3a4885d5b56a4815fa7f3f58952295d5155973a8b49dc79987630d",
+      "retainedSha256": "d2afd9165a3a4885d5b56a4815fa7f3f58952295d5155973a8b49dc79987630d"
+    },
+    {
+      "path": "observe-original.stderr.log",
+      "bytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "observe-mixed.stdout.log",
+      "bytes": 58313,
+      "sourceSha256": "abdf305020db7348fe9eb6165f02ff878c1e82406c912f92da81e33556017d91",
+      "retainedSha256": "abdf305020db7348fe9eb6165f02ff878c1e82406c912f92da81e33556017d91"
+    },
+    {
+      "path": "observe-mixed.stderr.log",
+      "bytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "mixed/baseline.cs",
+      "bytes": 142,
+      "sourceSha256": "4992a712c3e556273556d83c1be29e6dd7431f346d3ff53247ca31a65a191e8c",
+      "retainedSha256": "4992a712c3e556273556d83c1be29e6dd7431f346d3ff53247ca31a65a191e8c"
+    },
+    {
+      "path": "mixed/baseline.dll",
+      "bytes": 2560,
+      "sourceSha256": "e7defc83e8da4e12a1827caaa2ce68f94e83a6bf9cf7d579c19dc89894dd12b1",
+      "retainedSha256": "e7defc83e8da4e12a1827caaa2ce68f94e83a6bf9cf7d579c19dc89894dd12b1"
+    },
+    {
+      "path": "mixed/baseline.pdb",
+      "bytes": 792,
+      "sourceSha256": "b7442d6191278fa71bf4f95d77adc51ea1736a0a495687c705c683f5498da28b",
+      "retainedSha256": "b7442d6191278fa71bf4f95d77adc51ea1736a0a495687c705c683f5498da28b"
+    },
+    {
+      "path": "mixed/delta1.cs",
+      "bytes": 234,
+      "sourceSha256": "43d0245a0f1840826e636a5fd978d7aaaddd3bf23c2b1684a3f79da4d2e21655",
+      "retainedSha256": "43d0245a0f1840826e636a5fd978d7aaaddd3bf23c2b1684a3f79da4d2e21655"
+    },
+    {
+      "path": "mixed/delta1.dmeta",
+      "bytes": 576,
+      "sourceSha256": "24b9cce265800ae044abf8f8d6e0e1acc2e707473ce5706b00766b9a1258940c",
+      "retainedSha256": "24b9cce265800ae044abf8f8d6e0e1acc2e707473ce5706b00766b9a1258940c"
+    },
+    {
+      "path": "mixed/delta1.dil",
+      "bytes": 18,
+      "sourceSha256": "fa9c4e111c7b67947b71732b46af6e149d3d2845cf825d43485273fb8e49ca8f",
+      "retainedSha256": "fa9c4e111c7b67947b71732b46af6e149d3d2845cf825d43485273fb8e49ca8f"
+    },
+    {
+      "path": "mixed/delta1.pdb",
+      "bytes": 464,
+      "sourceSha256": "3f48513c35d55e2ae6ef90b2196be73edbcf63c60ec6c08b69ea6935aa3ba74a",
+      "retainedSha256": "3f48513c35d55e2ae6ef90b2196be73edbcf63c60ec6c08b69ea6935aa3ba74a"
+    },
+    {
+      "path": "mixed/delta2.cs",
+      "bytes": 293,
+      "sourceSha256": "fa8ab514c8bbd54e938dbb6d14d2a941db4b8710b985174b33d0759cc3c39c4a",
+      "retainedSha256": "fa8ab514c8bbd54e938dbb6d14d2a941db4b8710b985174b33d0759cc3c39c4a"
+    },
+    {
+      "path": "mixed/delta2.dmeta",
+      "bytes": 600,
+      "sourceSha256": "96270911e8b793e057a856baa6521148929273cb7a9ca782b2ab52a24291352c",
+      "retainedSha256": "96270911e8b793e057a856baa6521148929273cb7a9ca782b2ab52a24291352c"
+    },
+    {
+      "path": "mixed/delta2.dil",
+      "bytes": 18,
+      "sourceSha256": "55c2925525d9a4328143f6070b571cb456e77a4ba419b361eb51fa86376f685a",
+      "retainedSha256": "55c2925525d9a4328143f6070b571cb456e77a4ba419b361eb51fa86376f685a"
+    },
+    {
+      "path": "mixed/delta2.pdb",
+      "bytes": 460,
+      "sourceSha256": "e263871cce54b1487a16d554d3fcd5f388bcd5f6a55991ed6b206ad29043c374",
+      "retainedSha256": "e263871cce54b1487a16d554d3fcd5f388bcd5f6a55991ed6b206ad29043c374"
+    }
+  ],
+  "nativeProcessProvenance": "Raw stdout/stderr and outcomes cover the four workload commands. Version probes inside the existing resolveToolchain helper have recorded resolved identities but no retained raw subprocess output."
+}

@@ -1,0 +1,116 @@
+{
+  "qualifiedHead": "39f36190bb9bd17904e33ae607f2644c152f1abc",
+  "main": "75f0caad1c3ea096a656feb2989b867781edc82f",
+  "reason": "GitHub PR4580 mergeable=false, mergeable_state=dirty; one actual conflict",
+  "conflicts": [
+    "scripts/conformance/static/allowlist.json"
+  ],
+  "resolution": "Preserve all76 main entries and add the exact source-bound metadata worker entry; other files auto-merged.",
+  "integratedTreeBeforeEvidence": "8155993599af565523c89b0a0cb1c51f49563b7a",
+  "productFiles": [
+    {
+      "path": "packages/cil/src/index.js",
+      "qualifiedSha256": "52109f219943d88e51987e2e1c9e3e483cd7974179b1daafa8af92211d44291d",
+      "integratedSha256": "9dbcac474709584c8a6245b8a47b9d267f6266b9fb0570dcafa260ffa1f6f473",
+      "unchanged": false
+    },
+    {
+      "path": "packages/cil/src/metadata.js",
+      "qualifiedSha256": "e5e1100b627e96f582c13ffedbaad2cb35ebcb89b2c27da9ff78456e9471ff7f",
+      "integratedSha256": "e5e1100b627e96f582c13ffedbaad2cb35ebcb89b2c27da9ff78456e9471ff7f",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/metadata/delta-contracts.js",
+      "qualifiedSha256": "3f1e3866e8995f33cbef19ebcfcc3ea76a0b7dc764e062a7dfeeeb5094f8b5ce",
+      "integratedSha256": "3f1e3866e8995f33cbef19ebcfcc3ea76a0b7dc764e062a7dfeeeb5094f8b5ce",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/metadata/delta-heaps.js",
+      "qualifiedSha256": "b07ac80e6f6d476a53ab17683dd502a91748b2f719eb4b5469e377eac8d1a87c",
+      "integratedSha256": "b07ac80e6f6d476a53ab17683dd502a91748b2f719eb4b5469e377eac8d1a87c",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/metadata/delta-input.js",
+      "qualifiedSha256": "0d0ab3ca946dda5c73215f599c44342e8a88a2c00a68e76057ecb92be7ba12fa",
+      "integratedSha256": "0d0ab3ca946dda5c73215f599c44342e8a88a2c00a68e76057ecb92be7ba12fa",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/metadata/delta-map.js",
+      "qualifiedSha256": "23014fe6cd4076d0e4276ad0dfa33798fa4780c3bd1338c39abd8eacbe0a9c13",
+      "integratedSha256": "23014fe6cd4076d0e4276ad0dfa33798fa4780c3bd1338c39abd8eacbe0a9c13",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/metadata/delta-reader.js",
+      "qualifiedSha256": "76d049f78bb6dbad178e6dd07d1e64ad6fcad1b487d1a7de5c323dcc53be0077",
+      "integratedSha256": "76d049f78bb6dbad178e6dd07d1e64ad6fcad1b487d1a7de5c323dcc53be0077",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/metadata/delta-rows.js",
+      "qualifiedSha256": "b712397474f983252972fa9271571c568bf03372bd5965ae8b948a45a8c148af",
+      "integratedSha256": "b712397474f983252972fa9271571c568bf03372bd5965ae8b948a45a8c148af",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/metadata/reader-budget.js",
+      "qualifiedSha256": "ce56605c87e22b8d435f23841f5f1df15a84e7b6e4c52a48c0c19040a25aef9c",
+      "integratedSha256": "ce56605c87e22b8d435f23841f5f1df15a84e7b6e4c52a48c0c19040a25aef9c",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/metadata/reader.js",
+      "qualifiedSha256": "fc89aff5c355ff88f0399efe06f302a0c5a96cd4222de3fda6bf79255eac1551",
+      "integratedSha256": "fc89aff5c355ff88f0399efe06f302a0c5a96cd4222de3fda6bf79255eac1551",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/metadata/table-stream.js",
+      "qualifiedSha256": "179a55dd305a7ac8ff347ffcd044bd8a867b3741e3b597d145fce1dd7b028140",
+      "integratedSha256": "179a55dd305a7ac8ff347ffcd044bd8a867b3741e3b597d145fce1dd7b028140",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/pe/reader.js",
+      "qualifiedSha256": "deb1d9851b803c4855809b5ee8fa6f662cbb5704a659fe69535e765cee32e634",
+      "integratedSha256": "b68ada768e64b69feacafa5c8e12f978bc790bdb7cf336fb916fea5629f41ae7",
+      "unchanged": false
+    }
+  ],
+  "priorFixtureFilesUnchanged": 164,
+  "inheritedCilSourcePaths": [
+    "packages/cil/src/browser/analyzers-input.js",
+    "packages/cil/src/browser/summary.js",
+    "packages/cil/src/decompiler/inventory-contracts.js",
+    "packages/cil/src/decompiler/inventory.js",
+    "packages/cil/src/decompiler/pipeline.js",
+    "packages/cil/src/emit/ref-assembly.js",
+    "packages/cil/src/execution-profile.js",
+    "packages/cil/src/index.js",
+    "packages/cil/src/inspector-method.js",
+    "packages/cil/src/inspector-pe.js",
+    "packages/cil/src/inspector.js",
+    "packages/cil/src/metadata/assembly-references.js",
+    "packages/cil/src/pe.js",
+    "packages/cil/src/pe/debug-directory.js",
+    "packages/cil/src/pe/headers.js",
+    "packages/cil/src/pe/method-code.js",
+    "packages/cil/src/pe/method-header.js",
+    "packages/cil/src/pe/optional-header.js",
+    "packages/cil/src/pe/reader.js",
+    "packages/cil/src/verify/numeric-tables.js",
+    "packages/cil/src/verify/object-annotations.js",
+    "packages/cil/src/verify/object-constructor-owners.js",
+    "packages/cil/src/verify/ops-numeric.js",
+    "packages/cil/src/verify/ops-object-model.js",
+    "packages/cil/src/verify/typed-object-model.js",
+    "packages/cil/src/verify/typed-relations.js",
+    "packages/cil/src/verify/typed-transfers.js"
+  ],
+  "ownChangesExplanation": "index.js retains all inherited exports; pe/reader.js retains current-main optional-header/inspection fields and metadataOptions forwarding. All other batch product files unchanged.",
+  "qualification": "Original eleven-file gate to run once on this integrated source; original native captures/cohort retained. No integration benchmark rerun or exact-current timing claim."
+}

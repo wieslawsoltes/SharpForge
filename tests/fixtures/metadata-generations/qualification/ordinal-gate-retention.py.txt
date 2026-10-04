@@ -1,0 +1,28 @@
+from pathlib import Path
+import hashlib, json, subprocess, datetime
+root=Path('/workspace/scratch/7e3d2a445c44/sf6-metadata-generations')
+q=root/'tests/fixtures/metadata-generations/qualification'
+src=root.parent/'metadata-qualification-ordinal-edafb801-first'
+dst=q/'execution-ordinal-first'
+assert not dst.exists()
+dst.mkdir()
+hash_bytes=lambda b:hashlib.sha256(b).hexdigest()
+files=[]
+for path in sorted(src.iterdir()):
+    assert path.is_file()
+    data=path.read_bytes()
+    with (dst/path.name).open('xb') as out: out.write(data)
+    assert (dst/path.name).read_bytes()==data
+    files.append({'path':path.name,'bytes':len(data),'sourceSha256':hash_bytes(data),'retainedSha256':hash_bytes((dst/path.name).read_bytes())})
+assert len(files)==13
+phases=[]
+for name in ['native','verify-external','retain-native','verify-retained','focused']:
+    d=json.loads((dst/(name+'.execution.json')).read_text())
+    assert d['status']=='passed' and d['exitCode']==0 and d['signal'] is None and d['sourcesUnchanged']
+    phases.append({k:d[k] for k in ['step','startedUtc','finishedUtc','exitCode','signal','sourcesUnchanged']})
+native=root/'tests/fixtures/metadata-generations/reference-ordinal/native.json'
+n=json.loads(native.read_text())
+record={'schemaVersion':1,'recordedUtc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceCommit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),'productCommit':'edafb8018be5b75916c8655e9ff1147b38035a24','source':str(src),'destination':str(dst),'files':files,'bytes':sum(f['bytes'] for f in files),'phases':phases,'focused':{'files':11,'tests':51,'passed':51,'failed':0,'skipped':0,'cancelled':0,'todo':0,'reporter':'actual Node spec output'},'native':{'bytes':native.stat().st_size,'sha256':hash_bytes(native.read_bytes()),'sourceCommit':n['sourceCommit'],'sourceFiles':len(n['sourceHashes']),'referenceCopyInventory':'execution-ordinal-first/retain-native.execution.json','retainedFiles':20},'rawNativeProvenance':'Four workload commands only; toolchain version probe raw outputs are not retained.','firstEvidence':'All prior evidence and original Portable PDB corpus remain byte-exact; recorder verifies immutable inventories before and after every phase.','retentionScriptSha256':hash_bytes(Path(__file__).read_bytes()),'performance':'Not run at this retention point.'}
+with (q/'ordinal-gate-retention.json').open('x') as out: json.dump(record,out,indent=2);out.write('\n')
+with (q/'ordinal-gate-retention.py.txt').open('xb') as out: out.write(Path(__file__).read_bytes())
+print(json.dumps({'files':len(files),'bytes':record['bytes'],'nativeSha256':record['native']['sha256']}))
