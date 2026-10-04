@@ -1,24 +1,7 @@
-import { Binary, FORMAT_VERSION, Op, deserializeImage, serializeImage, verifyImage } from '@sharpforge/bytecode';
+import { deserializeImage, verifyImage } from '@sharpforge/bytecode';
 import { binaryAdmission, binaryJsonBudget, binaryLimits, binaryRejection } from './binary-guards.js';
-import { executePureBytecode, pureBytecodeProfile } from './binary-bytecode-profile.js';
-
-function seed(name, code) {
-  const image = {
-    formatVersion: FORMAT_VERSION,
-    name: 'FuzzScalar',
-    entryPoint: 0,
-    constants: [40, 2],
-    types: [],
-    statics: [],
-    sequencePoints: [],
-    sources: [],
-    methods: [{
-      id: 0, name: 'Main', qualifiedName: 'Main', owner: null, isStatic: true,
-      returnType: 'int', parameters: [], handlers: [], locals: [], code: Int32Array.from(code),
-    }],
-  };
-  return { name, input: new TextEncoder().encode(serializeImage(image)) };
-}
+import { boundedBytecodeProfile, executeBoundedBytecode, excludedBytecodeProfile } from './binary-bytecode-profile.js';
+import { bytecodeSeeds } from './bytecode-seeds.js';
 
 function decode(input, limits) {
   let source;
@@ -46,12 +29,7 @@ function decode(input, limits) {
 /** Small self-authored wire images; the harness owns all mutations and process isolation. */
 export const target = Object.freeze({
   id: 'bytecode-image',
-  createSeeds() {
-    return [
-      seed('return-constant', [Op.CONST, 0, 0, Op.RET, 0, 0]),
-      seed('add-two-integers', [Op.CONST, 0, 0, Op.CONST, 1, 0, Op.BINARY, Binary['+'], 0, Op.RET, 0, 0]),
-    ];
-  },
+  createSeeds: bytecodeSeeds,
   run(input, context) {
     const limits = binaryLimits(input, context);
     const admission = binaryAdmission(input, limits);
@@ -60,9 +38,7 @@ export const target = Object.freeze({
     if (failure) return failure;
     const diagnostics = verifyImage(image);
     if (diagnostics.length) return binaryRejection('BYTECODE_VALIDATION', diagnostics[0]);
-    if (!pureBytecodeProfile(image)) {
-      return { status: 'unsupported', code: 'BYTECODE_EXECUTION_PROFILE', detail: 'Verified; scalar-only execution profile excluded this image' };
-    }
-    return executePureBytecode(image, limits);
+    if (!boundedBytecodeProfile(image)) return excludedBytecodeProfile();
+    return executeBoundedBytecode(image, limits);
   },
 });
