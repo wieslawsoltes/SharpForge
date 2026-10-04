@@ -137,7 +137,7 @@ function navigate(direction){const target=navigation[direction]();navigationButt
 editorIntegration=createStudioEditorFactory({services:workbenchServices,state:()=>state,
  providers:createStudioLanguageProviders({projects:projectServices,documents:workbenchServices.documents,state:()=>state,
   getTestCodeLens:()=>testCodeLens,requestHost:editorHostCommand}),
- applyResourceTransaction:plan=>applyExplorerResourceTransaction(plan,{documents:workbenchServices.documents,explorer:explorerActions}),
+ applyResourceTransaction:(plan,{signal}={})=>applyExplorerResourceTransaction(plan,{documents:workbenchServices.documents,explorer:explorerActions,signal}),
  supportsResourceRename:()=>!state.nativeMode,
  getConfigurationRecords:()=>explorerContext().records,getLanguageOptions:()=>studioEditorOptions(workbenchShell?.settings.snapshot()),
  requestCompiler:(method,params,options)=>projectServices.request(method,params,options),requestHost:editorHostCommand,

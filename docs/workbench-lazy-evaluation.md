@@ -5,6 +5,13 @@ initial script-evaluation decrease and working first activation offline in the
 standalone artifact. This driver measures the former; the existing standalone
 workflow's actual offline tool activation remains a separate required result.
 
+Project16's `performance` and `all` stages select `performance:lazy-evaluation`
+serially after instrumentation and write `SHARPFORGE_RESULTS_DIR/lazy-evaluation.json`.
+The command has a 20-minute outer deadline around its own bounded 15-minute
+protocol. Requested engines are forwarded unchanged; only Chromium supports this
+measurement, so other engines produce an explicit failed outcome. Functional
+Firefox and WebKit qualification uses the separate `browser` stage.
+
 After the complete scope is integrated, committed, built and otherwise ready for
 its scheduled serial qualification slot, run:
 
