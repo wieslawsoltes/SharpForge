@@ -6,6 +6,10 @@ The source runtime uses the shared CLI arithmetic helpers for `sbyte`, `byte`,
 conversions and checked context when lowering ordinary C# to source IR. This
 includes captured values, arguments, return values, compound assignment and
 increment. Existing Int32/Double-only instructions retain their encoding.
+Predefined numeric bounds and IEEE constants are represented as typed constants
+in the semantic core registry. Decimal lexer coefficient/scale data is converted
+directly into the compiler's exact constant representation. Neither change
+suppresses a parser error or admits an unregistered framework method.
 
 `NumericType` preserves Int32 and Double IDs 0 and 1 and appends the other
 types. `numericMode(type, checked)` encodes typed operations starting at 16;

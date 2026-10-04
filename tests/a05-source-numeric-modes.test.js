@@ -17,6 +17,28 @@ function engines(result, options = {}) {
     new CilVirtualMachine(result.assembly, options)];
 }
 
+test('predefined numeric bounds complete semantic admission instead of retaining legacy profile errors', () => {
+  const result = artifact(`
+    long signed = int.MaxValue; ulong unsigned = ulong.MaxValue; uint small = uint.MaxValue;
+    nint native = (nint)int.MaxValue;
+    Console.WriteLine(signed); Console.WriteLine(unsigned); Console.WriteLine(small);
+    Console.WriteLine((long)native);`);
+  assert.equal(result.semantic?.complete, true);
+  assert(!result.diagnostics.some(diagnostic => ['SF1003', 'SF1004', 'SF1005', 'SF2200'].includes(diagnostic.code)));
+  for (const vm of engines(result)) {
+    assert.equal(vm.run().output, '2147483647\n18446744073709551615\n4294967295\n2147483647\n');
+  }
+});
+
+test('lossless Decimal lexer values survive semantic constants and declaration defaults', () => {
+  const result = artifact('const decimal amount = 1.2300m; decimal maximum = decimal.MaxValue; Console.WriteLine(amount); Console.WriteLine(maximum);');
+  assert.equal(result.semantic?.complete, true);
+  for (const vm of engines(result)) assert.equal(vm.run().output, '1.2300\n79228162514264337593543950335\n');
+  const invalid = compile('class P { static void Main() { int.MaxValue = 3; } }');
+  assert.equal(invalid.success, false);
+  assert(invalid.diagnostics.some(diagnostic => ['CS0131', 'CS0200'].includes(diagnostic.code)));
+});
+
 const fixtures = [
   ['Int64 increment crosses the Int32 boundary', 'long x = int.MaxValue; x++; Console.WriteLine(x);', '2147483648\n'],
   ['unsigned arithmetic and comparison', `
