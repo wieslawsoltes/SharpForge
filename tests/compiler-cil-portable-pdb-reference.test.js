@@ -122,7 +122,7 @@ test('direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack
     assert.equal(expected, '42\n1\n2\nTrue');
     const nativeReference = JSON.parse(run([reader, 'inspect', join(reference, 'bin', 'Reference.pdb'), join(reference, 'bin', 'Reference.dll')]));
     assert.ok(mappedSpans(nativeReference, 'view.cs').some(span => span[0] === 123));
-    assert.deepEqual(mappedSpans(nativeReference, 'component.razor'), [[200, 5, 201, 8]]);
+    assert.deepEqual(mappedSpans(nativeReference, 'component.razor'), [[200, 5, 201, 9]]);
     const catchKinds = asyncCatchKinds(nativeReference, new AssemblyInspector(readFileSync(join(reference, 'bin', 'Reference.dll'))));
     assert.equal(catchKinds.get('Fire'), true);
     assert.equal(catchKinds.get('Value'), false);

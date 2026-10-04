@@ -201,7 +201,7 @@ test('enhanced line directives map generated prefixes to the declared whole-span
 } }`;
   const { pe, pdb } = compile(source);
   const points = pointsOf(pdb, methodNamed(pe, 'Main').token).filter(point => !point.hidden);
-  assert.deepEqual(points.map(point => [point.startLine, point.startColumn, point.endLine, point.endColumn]), [[200, 5, 201, 8]]);
+  assert.deepEqual(points.map(point => [point.startLine, point.startColumn, point.endLine, point.endColumn]), [[200, 5, 201, 9]]);
 });
 
 test('portable and embedded symbols are opt-in and explicit false suppresses both modes', () => {

@@ -37,8 +37,9 @@ function mappedEnd(source, mapping, span) {
   const entry = mapping.map.entries[0];
   if (entry?.mode === 'span' && entry.characterOffset > 0) {
     const start = source.positionAt(span.start);
+    // The directive's end is inclusive; sequence point ends are exclusive.
     if (start.line === entry.from && start.character < entry.characterOffset)
-      return { line: entry.end.line - 1, character: entry.end.character - 1 };
+      return { line: entry.end.line - 1, character: entry.end.character };
   }
   return mapping.map.map(span.end);
 }
