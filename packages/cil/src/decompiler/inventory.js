@@ -10,6 +10,12 @@ const summaryTables = new Set([0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 15, 16, 18, 19, 20
   28, 29, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 44]);
 const counts = () => ({ rendered: 0, summarized: 0, unsupported: 0 });
 
+function tableLayout(context, definition) {
+  const columns = tableColumns(context, definition);
+  const last = columns.at(-1);
+  return { columns, byteLength: last ? last.offset + last.width : 0 };
+}
+
 function census(context, limits) {
   const { metadata } = context;
   if (!metadata.counts || typeof metadata.counts !== 'object' || Array.isArray(metadata.counts) ||
@@ -18,6 +24,7 @@ function census(context, limits) {
   }
   let totalRows = 0;
   let physicalBytes = 0;
+  const layouts = [];
   for (const [key, count] of Object.entries(metadata.counts)) {
     inventoryCancellation(limits.signal);
     const table = Number(key);
@@ -28,20 +35,22 @@ function census(context, limits) {
       inventoryFailure('CILDI0004', tableDefinitions[table].name);
     }
     totalRows += count;
-    physicalBytes += count * tableColumns(context, tableDefinitions[table]).reduce((sum, column) => sum + column.width, 0);
+    const layout = tableLayout(context, tableDefinitions[table]);
+    layouts[table] = layout;
+    physicalBytes += count * layout.byteLength;
   }
   if (Object.keys(metadata.rows).some((table) => !Object.hasOwn(metadata.counts, table))) {
     inventoryFailure('CILDI0004', 'rows without a physical table count');
   }
   if (totalRows > limits.maxRows) inventoryFailure('CILDI0002', 'physical rows');
   if (physicalBytes > limits.maxBytes) inventoryFailure('CILDI0002', 'physical row bytes');
-  return totalRows;
+  return { totalRows, layouts };
 }
 
-function rawRecord(context, definition, columns, rowId, budget) {
+function rawRecord(context, definition, layout, rowId, budget) {
+  const { columns, byteLength } = layout;
   const source = context.metadata.rows[definition.id][rowId - 1];
   if (!Array.isArray(source) || source.length !== columns.length) inventoryFailure('CILDI0004', definition.name);
-  const byteLength = columns.reduce((sum, column) => sum + column.width, 0);
   budget.charge(byteLength);
   const location = physicalRow(context, definition.id, rowId);
   if (location.streamOffset + byteLength > context.tableStream.data.length) {
@@ -112,23 +121,24 @@ export function createMetadataInventory(input, limits) {
     inventoryCancellation(limits.signal);
     throw error;
   }
-  const totalRows = census(context, limits);
+  const { totalRows, layouts } = census(context, limits);
   const budget = new InventoryBudget(limits);
   const names = new Map();
   const tables = [];
   for (const definition of Object.values(tableDefinitions)) {
     inventoryCancellation(limits.signal);
-    const columns = tableColumns(context, definition);
+    // Layouts belong to this snapshot; census and output share them without caching across calls.
+    const layout = layouts[definition.id] ?? tableLayout(context, definition);
     const rowCount = context.metadata.counts[definition.id] ?? 0;
     const rows = [];
     for (let rowId = 1; rowId <= rowCount; rowId++) {
-      const record = rawRecord(context, definition, columns, rowId, budget);
+      const record = rawRecord(context, definition, layout, rowId, budget);
       summarize(context, definition, record, budget, names);
       rows.push(record);
     }
     tables.push({ table: definition.id, name: definition.name, rowCount,
       present: Object.hasOwn(context.metadata.counts, definition.id),
-      externalRowCount: context.metadata.externalCounts[definition.id] ?? 0, columns, rows, ...counts() });
+      externalRowCount: context.metadata.externalCounts[definition.id] ?? 0, columns: layout.columns, rows, ...counts() });
   }
   return { schemaVersion: 1, identity: 'physical-table-row', minimalDelta: context.metadata.minimalDelta,
     totalRows, accountedRows: totalRows, accountingComplete: true, sourceComplete: false,
