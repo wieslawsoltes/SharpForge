@@ -53,3 +53,7 @@ registerPropertyAdapters installs metadata, dependency-property, Binding and obs
 ## Style and binding adapter prerequisites
 
 The complete binding and deferred-construction branch now shares the typed style implementation. Only the secondary style modules and their focused model tests are carried; the newer binding/property barrels and flags validation remain authoritative. Package metadata continues to include the checked-in third-party notices.
+
+## Resource and object adapter capabilities
+
+Resource dictionaries, collection views, typed/legacy style definitions and selector callbacks use owner-scoped models. `initializeResourceContext` connects resource ancestry to injected application/tree/environment services. `registerObjectModelAdapters` exposes the dispatcher and shared logical/visual tree contracts; a valid detached object has no parent or visual children. Registrations do not activate framework metadata or construct an application by themselves.

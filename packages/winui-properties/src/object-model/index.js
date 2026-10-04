@@ -5,3 +5,6 @@ export {DispatcherQueue, DispatcherQueuePriority} from './dispatcher-queue.js';
 export {RoutedEventRegistry, builtInRoutedEvents} from './routed-event-registry.js';
 export {RoutedHandlerList} from './routed-handler-list.js';
 export {UIConstructionRoots, withUIConstruction} from './construction-roots.js';
+export {ResourceModelCollection, dictionaryModel, nameScopeModel, resourceScopeModel, styleModel, setterModel} from './resource-adapter-models.js';
+export {selectorModel} from './selector-model.js';
+export {registerObjectModelAdapters, getDispatcherQueue, routedEventRegistry} from './object-model-adapters.js';
