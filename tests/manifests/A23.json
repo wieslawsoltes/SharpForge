@@ -10,7 +10,8 @@
     "tests/msbuild-solution.test.js",
     "tests/msbuild-tools.test.js",
     "tests/project-configuration-contract.test.js",
-    "tests/project-context-contract.test.js"
+    "tests/project-context-contract.test.js",
+    "tests/project-input-contract.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
