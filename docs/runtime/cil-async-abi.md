@@ -83,3 +83,35 @@ reported as rejected rather than timed as successful executions.
 ```sh
 node scripts/limited.js node packages/runtime/bench/cil-async.mjs <reference-capture-directory>
 ```
+
+The paired driver exports only the Git-pinned runtime workspace dependency sources
+and package manifests into temporary directories. It creates local package aliases,
+checks every exported source hash before and after each process, and removes the
+exports afterward. It does not create or modify a Git worktree. Both revisions receive
+the same committed runner and ordinary fixture builder; emitted fixture hashes must
+match. Native fixture bytes and output are checked against the genuine capture record.
+The baseline is fixed at `eadd85149b0740f337f7b8f3e92d259353892fdb`.
+
+Four fresh processes run serially in baseline/candidate/candidate/baseline order. Each
+per-process case receives 80 warmups and 24 samples, retaining the individual samples
+and per-process results. The combined report also provides pooled median/p95 values
+and percentage changes for cases supported by both revisions. Unsupported baseline
+async images remain explicit rejected entries and receive no invented timing.
+
+```sh
+node scripts/limited.js python3 packages/runtime/bench/cil-async-paired.py benchmark \
+  --candidate <exact-full-candidate-commit> --capture <reference-capture-directory> --output <report.json>
+```
+
+The same exporter can replay only the unresolved diagnostic assertion against the
+frozen baseline test and runtime sources. This command preserves the assertion and
+its real exit status; it does not import candidate runtime code or translate failures
+into passes. Its execution remains queued.
+
+```sh
+node scripts/limited.js python3 packages/runtime/bench/cil-async-paired.py dispatch-baseline --output <report.json>
+```
+
+The exported dependency sources occupy about 2.7 MB per revision. The paired report
+is expected to remain below 1 MB; the baseline-only report below 250 KB. These are
+preparation estimates, not measured execution or output-size results.
