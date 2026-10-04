@@ -99,7 +99,7 @@ test('direct CIL async builder reachability rejects invalid MoveNext before exec
     const inspector = new AssemblyInspector(bytes);
     const method = [...inspector.methods.values()].find(candidate => candidate.name === 'MoveNext');
     assert.ok(method, 'real Roslyn state machine');
-    const body = inspector.getMethod(method.token);
+    const body = inspector.pe.methodBody(method.token);
     bytes[body.fileOffset + body.headerSize] = 0x26; // pop at an empty entry stack
     const report = verifyCilAssembly(bytes);
     assert.equal(report.success, false);

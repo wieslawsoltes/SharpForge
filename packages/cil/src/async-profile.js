@@ -77,7 +77,10 @@ export function asyncMethodDefinition(descriptor) {
   const arguments_ = descriptor.methodArguments ?? descriptor.genericArguments ?? [];
   const arity = signature.genericArity ?? 0;
   if (arguments_.length !== arity || arity && !descriptor.genericArguments) return null;
-  const close = type => substituteCallType(type, ownerArguments, arguments_);
+  const close = type => {
+    const value = substituteCallType(type, ownerArguments, arguments_);
+    return value === 'Exception' ? 'System.Exception' : value;
+  };
   const parameters = signature.parameters.map(close), result = close(signature.returnType);
   const match = (name, expected, returns, isStatic = false, genericArity = 0) =>
     descriptor.name === name && signature.isStatic === isStatic && arity === genericArity &&
