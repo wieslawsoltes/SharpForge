@@ -12,10 +12,11 @@ approval is claimed. Browser checks remain unrun.
 | [Native capture](native.json) | `73f9ab77` | 52 declared expectations matched: 34 accepted, 18 rejected |
 | [Initial focused log](qualification/focused-node.log.json) | `73f9ab77` | 14 files, 80 tests: 79 passed, 1 failed during malformed-fixture serialization |
 | [Correction log](qualification/correction-node.log.json) | `31b18645` | Annotation file plus strict native replay: 8 passed, 0 failed |
+| [Main integration](qualification/integration-f64/README.md) | `f64a9daba` | Original 14-file gate: 80 passed, 0 failed, 0 skipped |
 | Browser API | None | Not run |
 | [Performance cohort](PERFORMANCE.md) | `407ece8a` against `88c861e3` | 24 children completed; all recorded guards passed; five median threshold exceedances and adverse tails retained under an explicit automated-review exception |
 
-Both Node runs had zero cancellations and skips. The initial failure and exact
+Both historical Node runs had zero cancellations and skips. The initial failure and exact
 raw output remain retained. It encoded a CustomAttributeType as `0x7fffb`
 (524,283), beyond the two-byte column, so serialization failed before verification.
 The separate test-only correction uses `0xfffb` (65,531), decoding MemberRef
@@ -23,7 +24,8 @@ The separate test-only correction uses `0xfffb` (65,531), decoding MemberRef
 MemberRef row count. The verifier must reject with `CILVM0001` before invoking
 host classification. No product source or native expectation changed. Only the
 annotation file and strict native replay were rerun; this is not a claim of a new
-80-test full pass at the corrected revision.
+80-test full pass at the corrected revision. The later 80/80 integration result
+has its own source and execution scope, documented below.
 
 The product corpus has 26 verified, 17 rejected and 9 unknown cases. Of 43
 determinate cases, 42 agree with ILVerify. `RefLikeBox` preserves the predeclared
@@ -42,7 +44,7 @@ and runtime/ILVerify 10.0.5; it is a local environment, not a pinned runner imag
 
 ## Source and dependency scope
 
-The object product source is frozen at merge `e543f649`, with all 22 object-batch
+The native/performance object product source was frozen at merge `e543f649`, with all 22 object-batch
 files from `69b6c1f7` preserved and qualified literal dependency `88c861e3` merged.
 Subsequent preparation changes only benchmark tooling, its focused tests and docs.
 The 52 predeclared native cases and explicit ref-like/native differences remain
@@ -52,11 +54,11 @@ unchanged. Their source hash is
 The controlled performance baseline is literal-qualified commit
 `88c861e3a294a249e7a8cdd7319e032d7c29fb35`, the merge's exact second parent.
 Merged-main `c7509a3b` includes additional table-view, metadata, binary, loader and
-execution changes absent from this frozen candidate. Comparing those different
+execution changes absent from that performance candidate. Comparing those different
 sources would confound attribution; the coordinator approved the equivalent
 qualified literal parent instead. The detached baseline worktree is
 `/workspace/scratch/7e3d2a445c44/sf6-object-baseline-88c861e3`.
-Both it and the candidate have 28 workspace package aliases pointing into their
+At performance execution, both checkouts had 28 workspace package aliases pointing into their
 own `packages` directories. No package installation is needed for these commands.
 
 The read-only preparation found SDK 10.0.201, runtime/reference pack 10.0.5 and
@@ -65,6 +67,47 @@ Linux x64 ILAsm executable match the repository hashes. No native process was
 run during that earlier inspection. The later successful capture checked actual
 SDK/runtime/Roslyn versions, the complete reference hash, tool identity and the
 selected-method count.
+
+## Main integration at f64a9daba
+
+Merge `f64a9daba4da3700ab8fd010f610a0fbba9dd8f9` integrates exact main
+`19755847de71941a96ff4888d3b16402c966c401` with parent
+`ec8968879f49233b546401fb1f7407853a097454`; its tree is
+`7065a3d19e7bbb26f1cc2694344dc1fa6815da47`. The three conflict resolutions preserve
+the object-profile paragraph, object-transfer registration, and the static policy
+union of all 73 main entries plus the reviewed benchmark-loader entry.
+
+All eight object product files and 91 of the 92 object-owned changed paths remain
+byte-identical before this evidence update; only the policy file gained main's
+entries. The [retained integration record](qualification/integration-f64/project6-object-main-integration.json)
+includes those hashes and before/after hashes for 57 inherited CIL source changes.
+Relevant dependencies include MethodDef body-kind admission and decoded method
+facts, PE/header/body reading, shared error/text re-exports, and minimal-delta
+metadata index widths. Other inherited changes include analysis, emission and
+runtime admission; unchanged object handlers alone do not qualify this dependency
+integration.
+
+The coordinator ran the original 14-file focused list once at `f64a9daba`, from
+`2026-10-04T17:04:44.238866+00:00` to `2026-10-04T17:04:49.852532+00:00`:
+**80 passed, 0 failed, 0 skipped, 0 cancelled**, exit 0. This is a new integration
+result, separate from historical 79/1 and 8/8 results. Its strict native replay
+checks existing fixture/source/assembly hashes; no native tool was recaptured.
+The exact argv includes `--test-reporter=tap` and is retained with raw TAP and
+empty stderr in [integration-f64](qualification/integration-f64/README.md).
+
+PR #4575's earlier core attempt failed before tests/builds because the benchmark
+loader lacked its dynamic-import review entry. After adding the exact source-hash/
+count entry, the coordinator's historical static check at `ec8968879` passed for
+3,740 modules, from `2026-10-04T16:55:49.515433+00:00` to
+`2026-10-04T16:56:01.492558+00:00`. That result is not attributed to the later
+merged registry; the final registry is pending the CI core check. No additional
+local static execution is claimed.
+
+The 52-case native capture remains at source `73f9ab77`; the performance cohort
+remains at `407ece8a` against `88c861e3`. All prior native, failed/corrected test
+and performance records are unchanged. No integrated performance measurement,
+new native capture or browser pass is claimed. The nine new raw records total
+156,664 bytes and are retained byte for byte with a [hash manifest](qualification/integration-f64/manifest.json).
 
 ## Capture and strict replay
 

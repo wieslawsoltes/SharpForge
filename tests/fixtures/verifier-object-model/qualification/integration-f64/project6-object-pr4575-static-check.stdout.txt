@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "inspected": 3740,
+  "modules": 3740,
+  "errors": []
+}
