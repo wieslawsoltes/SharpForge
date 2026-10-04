@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "productSource": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+  "productBlobs": {
+    "packages/msbuild/src/testing/portable/runner.js": "c598da410c5dbdfc25027ccbd479b9dc791b99b3"
+  },
+  "tests": [
+    "tests/a23-36-provider-projection.test.js",
+    "tests/a23-39-portable-runner.test.js",
+    "tests/a23-39-portable-fixtures.test.js",
+    "tests/a23-39-shared-framework-fixtures.test.js"
+  ],
+  "fixture": "tests/msbuild-differential/framework-fixtures.js",
+  "assertionChanges": "None; discovery/runner imports use the public package entry. The projection-unit test still directly targets its own private harness helper.",
+  "qualification": {
+    "nodes": [
+      "22.23.3",
+      "26.10.0"
+    ],
+    "scopePassed": 135,
+    "scopeFailed": 0,
+    "selectedCases": 17,
+    "selectedPassed": 17,
+    "selectedFailed": 0,
+    "captures": [
+      "planning/evidence/project18/testing/node22.tap",
+      "planning/evidence/project18/testing/node26.tap"
+    ],
+    "node22CaptureSha256": "1da313e5473a0ce2adda04e1be83212e9c01229fd6b64f4fe9f3cf5f3e8d7c5b"
+  },
+  "base": "691027333e7d85c98f287e75dedc371ba9b58937",
+  "limitations": [
+    "Native framework oracle not qualified: one50second restore timeout and empty package cache",
+    "No duplicate projection test run",
+    "Rust native/Wasm unsupported",
+    "Protected root lock synchronization and required core pending"
+  ]
+}

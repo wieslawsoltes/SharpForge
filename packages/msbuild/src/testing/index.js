@@ -7,3 +7,4 @@ export * from './portable/discovery.js';
 export * from './portable/xunit.js';
 export * from './portable/nunit.js';
 export * from './portable/mstest.js';
+export * from './portable/runner.js';
