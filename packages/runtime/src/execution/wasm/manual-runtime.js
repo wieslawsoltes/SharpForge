@@ -134,6 +134,12 @@ export function preparedWasmDispatch(vm, handle) {
   requireCurrent(record);
   return Object.freeze({
     current: () => current(record),
+    canEnter: frame => {
+      if (!current(record) || record.context.active || frame.method !== record.method) return false;
+      const index = frame.pc, operation = record.ir.instructions[index];
+      return operation?.depth !== null && operation?.depth === frame.stack.length &&
+        record.plan.instructions[index] === frame.method.instructions[index];
+    },
     dispatch: (machine, frame, instruction, index, handler) => {
       if (machine !== vm || !current(record)) return handler(machine, frame, instruction);
       return dispatch(record, frame, instruction, index, handler);

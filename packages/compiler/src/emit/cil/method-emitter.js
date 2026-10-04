@@ -28,6 +28,8 @@ import { DelegateEmission } from './emit-delegates.js';
 import { ReferenceEmission } from './emit-references.js';
 import { IndexRangeEmission } from './emit-index-range.js';
 import { PrimaryCaptureEmission } from './primary-constructor-captures.js';
+import { TupleEmission } from './emit-tuples.js';
+import { DeconstructionEmission } from './emit-deconstruction.js';
 import { StateMachineEmission } from './emit-state-machine.js';
 import { IteratorEmission } from './emit-iterators.js';
 
@@ -57,6 +59,8 @@ const families = [
   ReferenceEmission,
   IndexRangeEmission,
   PrimaryCaptureEmission,
+  TupleEmission,
+  DeconstructionEmission,
   StateMachineEmission,
   IteratorEmission,
 ];

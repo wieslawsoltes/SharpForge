@@ -12,9 +12,8 @@ export function userValueCallType(vm, method, opcode = 'call') {
   if (method.signature.isStatic) return null;
   const table = vm.typeSystem.table(method.genericIdentity ?? method.ownerInstance ?? method.ownerToken);
   if (!table.flags.valueType || !vm.typeSystem.types.has(table.definitionToken)) return null;
-  const definition = vm.inspector.methods.get(method.resolvedToken ?? method.token);
   if (!isAggregateType(table) || table.genericArity || table.typeArguments.length || table.containsGenericParameters ||
-      method.signature.genericArity || method.methodArguments?.length || definition?.flags & 0x40 ||
+      method.signature.genericArity || method.methodArguments?.length ||
       method.signature.returnType.endsWith('&') || !['call', 'newobj'].includes(opcode)) unsupported();
   return table;
 }
