@@ -26,3 +26,6 @@ including nonenumerable numeric slots, explicit `undefined`, accessors, inherite
 indices, subclass species and proxies; non-array bases retain iterable behavior.
 The JavaScript engine determines array storage costs; no fixed memory reduction
 is part of this API contract.
+
+The [closed project reference contract](PROJECT-REFERENCES.md) documents explicit PE
+identity/hash descriptors, shared admission bounds and appended external opcodes.
