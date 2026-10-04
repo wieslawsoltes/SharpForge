@@ -1,11 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {frameworkType} from '@sharpforge/framework';
 import {DependencyPropertyRegistry, PropertyStore, PropertyMetadata} from '@sharpforge/winui-properties';
 
 test('A15 declared flags accept combinations and reject unknown bits without changing the prior value', () => {
   const type = 'Windows.ApplicationModel.DataTransfer.DataPackageOperation';
-  const registry = new DependencyPropertyRegistry({typeDefinition: name => name === type
-    ? {kind: 'enum', values: {None: 0, Copy: 1, Move: 2, Link: 4}, flags: true} : null});
+  const registry = new DependencyPropertyRegistry({typeDefinition: frameworkType});
   const property = registry.register({ownerType: 'Owner', name: 'AllowedOperations', propertyType: type,
     metadata: new PropertyMetadata(7)});
   const store = new PropertyStore({registry, ownerType: 'Owner'});
