@@ -1,4 +1,5 @@
 import {buildSolutionTree} from '../../packages/project-system/src/index.js';
+import {prepareExplorerIdentities, publishExplorerIdentities} from './solution-explorer-identities.js';
 
 // Text, versions, tabs and dirty flags do not change the display hierarchy. Project
 // snapshots remain value-compared because membership can be updated in place.
@@ -25,9 +26,7 @@ function captureSymbol(symbol) {
 }
 
 function sameSymbol(entry, symbol) {
-  // Keep the existing compiler-derived tree IDs. A changed identity rebuilds at
-  // the accepted analysis boundary; location-only updates retain the same nodes.
-  if (!entry || entry.id !== symbol.id || entry.uri !== symbol.uri || entry.name !== symbol.name
+  if (!entry || entry.uri !== symbol.uri || entry.name !== symbol.name
       || entry.kind !== symbol.kind || entry.owner !== symbol.owner || entry.type !== symbol.type
       || entry.parameters.length !== (symbol.parameters?.length ?? 0)) return false;
   for (let index = 0; index < entry.parameters.length; index++) {
@@ -75,9 +74,15 @@ export class SolutionExplorerProjection {
       && this.roots === this.model.roots && this.nodes === this.model.nodes;
     const updates = reusable ? this.symbolUpdates(symbols) : null;
     if (updates === null) return this.rebuild(data, {key, showAll, view, scope});
+    const dirty = new Set(data.dirty ?? []);
+    const identities = prepareExplorerIdentities(this.model, updates);
+    publishExplorerIdentities(this.model, identities);
     this.applySymbolUpdates(updates);
-    const dirtyChanged = this.updateDirty(data.dirty ?? []);
-    return {scope: this.scope, rebuilt: false, dirtyChanged};
+    const dirtyChanged = this.updateDirty(dirty);
+    this.scope = identities?.renames.get(this.scope) ?? this.scope;
+    this.nodes = this.model.nodes;
+    if (identities || dirtyChanged) this.model.notify();
+    return {scope: this.scope, rebuilt: false, dirtyChanged, identityChanged: !!identities};
   }
 
   symbolUpdates(symbols) {
@@ -86,8 +91,9 @@ export class SolutionExplorerProjection {
     for (let index = 0; index < symbols.length; index++) {
       const entry = this.symbols[index], symbol = symbols[index];
       if (!sameSymbol(entry, symbol)) return null;
-      if (entry.source !== symbol || entry.start !== symbol.start || entry.end !== symbol.end) {
-        updates.push({entry, symbol});
+      const id = symbol.id, start = symbol.start, end = symbol.end;
+      if (entry.source !== symbol || entry.id !== id || entry.start !== start || entry.end !== end) {
+        updates.push({entry, symbol, id, start, end});
       }
     }
     return updates;
@@ -102,7 +108,8 @@ export class SolutionExplorerProjection {
     const entries = new Map(symbols.map(entry => [entry.source, entry]));
     const dirtyNodes = new Map();
     for (const node of this.model.nodes.values()) {
-      entries.get(node.symbol)?.nodes.push(node);
+      const entry = entries.get(node.symbol);
+      if (entry) entry.nodes.push({node, prefix: node.id.slice(0, node.id.length - String(entry.id).length)});
       if (!Object.hasOwn(node, 'dirty')) continue;
       const appearances = dirtyNodes.get(node.path) ?? [];
       appearances.push(node);
@@ -114,20 +121,20 @@ export class SolutionExplorerProjection {
   }
 
   applySymbolUpdates(updates) {
-    for (const {entry, symbol} of updates) {
-      for (const node of entry.nodes) {
-        node.start = symbol.start;
-        node.end = symbol.end;
+    for (const {entry, symbol, id, start, end} of updates) {
+      for (const {node} of entry.nodes) {
+        node.start = start;
+        node.end = end;
         node.symbol = symbol;
       }
       entry.source = symbol;
-      entry.start = symbol.start;
-      entry.end = symbol.end;
+      entry.id = id;
+      entry.start = start;
+      entry.end = end;
     }
   }
 
-  updateDirty(paths) {
-    const dirty = new Set(paths);
+  updateDirty(dirty) {
     let changed = false;
     for (const [path, nodes] of this.dirtyNodes) {
       const value = dirty.has(path);
@@ -137,7 +144,6 @@ export class SolutionExplorerProjection {
         changed = true;
       }
     }
-    if (changed) this.model.notify();
     return changed;
   }
 }

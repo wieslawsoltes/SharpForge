@@ -100,7 +100,7 @@ test('same-identity analysis refreshes navigation spans and metadata without rep
   sameAsFresh(host.model, {...data, symbols});
 });
 
-test('changed compiler identities rebuild at the analysis boundary and retain unchanged file state', () => {
+test('changed compiler identities retain the ordered nodes and unchanged file state', () => {
   const data = sourceWorkspace(), host = harness();
   host.projection.update(data);
   const file = sourceNode(host.model);
@@ -111,7 +111,8 @@ test('changed compiler identities rebuild at the analysis boundary and retain un
 
   host.projection.update({...data, symbols});
 
-  assert.equal(host.builds, 2);
+  assert.equal(host.builds, 1);
+  assert.equal(sourceNode(host.model), file);
   assert(host.model.expanded.has(file.id));
   assert(host.model.selected.has(file.id));
   assert.equal(symbolNode(host.model, 'Method2').symbol, symbols[3]);
@@ -257,7 +258,7 @@ test('a rejected candidate leaves the indexed nodes, navigation locations and re
   assert.equal(method.start, data.symbols[1].start);
   assert.equal(sourceNode(host.model).dirty, false);
   assert.equal(host.projection.update(data).rebuilt, false);
-  assert.equal(host.builds, 2, 'the failed build does not displace the last accepted cache');
+  assert.equal(host.builds, 1, 'the rejected identity update does not displace the last accepted cache');
 });
 
 function attributeElement() {
