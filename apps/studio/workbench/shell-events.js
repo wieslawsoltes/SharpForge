@@ -1,7 +1,11 @@
+import { BuildTasks } from './build-tasks.js';
+
 /** Subscribe once to service events, invalidate only relevant tools, and preserve background session isolation. */
 export function subscribeShellServices(shell) {
   const disposers = [];
-  const operations = new Map();
+  const buildTasks = shell.services.builds && new BuildTasks({ builds: shell.services.builds, queue: shell.services.queue,
+    tasks: shell.tasks, onError: error => shell.onError?.(error) });
+  if (buildTasks) disposers.push(() => buildTasks.dispose());
   const listen = (service, callback) => { if (service?.subscribe) disposers.push(service.subscribe(callback)); };
   const invalidate = (...ids) => { for (const id of ids) shell.invalidateTool(id); };
   listen(shell.services.output, () => invalidate('output'));
@@ -21,16 +25,8 @@ export function subscribeShellServices(shell) {
     shell.updateContext();
   });
   listen(shell.services.builds, event => {
-    if (event.type === 'started') {
-      const id = 'build:' + event.projectId + ':' + event.revision;
-      operations.set(event.projectId, shell.tasks.begin({id, label: 'Build ' + event.projectId,
-        projectId: event.projectId, cancel: () => shell.services.builds.get(event.projectId)?.cancel()}));
-    }
+    buildTasks.receive(event);
     if (['completed', 'failed', 'cancelled'].includes(event.type)) {
-      const operation = operations.get(event.projectId);
-      if (event.type === 'completed') operation?.complete();
-      else operation?.fail(event.error ?? Object.assign(new Error('Build cancelled'), {name: 'AbortError'}));
-      operations.delete(event.projectId);
       if (event.type === 'completed') shell.announcer?.announce('Build ' + (event.result?.success ? 'succeeded' : 'failed') + ': ' + event.projectId,
         {id: 'build-result:' + event.projectId + ':' + event.revision});
     }

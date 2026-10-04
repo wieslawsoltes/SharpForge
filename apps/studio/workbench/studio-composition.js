@@ -1,5 +1,6 @@
 import { normalizePath, ProjectSystem } from '@sharpforge/project-system';
 import { BackgroundTaskBridge } from './background-tasks.js';
+import { connectExplorerProjectDecorations } from './explorer-project-decorations.js';
 import { createTestCodeLensProvider } from './test-code-lens.js';
 import { studioDocumentProjects } from './studio-language-providers.js';
 import { createRecentWorkspaces } from './recent-workspaces.js';
@@ -181,7 +182,7 @@ function mountHistory(context) {
   context.document.getElementById('navigate-back')?.after(button);
 }
 
-function installLifecycle(context, owners, disconnectTestLenses, disconnectStartup) {
+function installLifecycle(context, owners, disconnectTestLenses, disconnectStartup, disconnectDecorations) {
   let disposed = false;
   context.window.addEventListener('pagehide', event => {
     if (event.persisted || disposed) return;
@@ -198,6 +199,7 @@ function installLifecycle(context, owners, disconnectTestLenses, disconnectStart
       disconnectTestLenses,
       () => owners.testCodeLens.dispose(),
       disconnectStartup,
+      disconnectDecorations,
       () => context.advancedTools.dispose(),
       () => context.navigation.dispose(),
       () => context.watchWindows.dispose(),
@@ -209,6 +211,7 @@ function installLifecycle(context, owners, disconnectTestLenses, disconnectStart
       () => context.editorIntegration.dispose(),
       () => context.lazyFeatures.dispose(),
       () => context.runtimeTools.dispose?.(),
+      () => context.projects.dispose(),
       () => context.docking.dispose(),
       () => context.services.dispose(),
       () => context.studioServices.dispose()
@@ -301,7 +304,8 @@ export function mountStudioComposition(context) {
       context.refreshEngineIndicators();
     }
   });
-  installLifecycle(context, owners, disconnectTestLenses, disconnectStartup);
+  const disconnectDecorations = connectExplorerProjectDecorations({ services: context.services, explorer: context.explorer.view });
+  installLifecycle(context, owners, disconnectTestLenses, disconnectStartup, disconnectDecorations);
   registerCommands(context, owners);
   startWorkspace(context, owners);
   return owners;

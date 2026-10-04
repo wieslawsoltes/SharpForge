@@ -75,31 +75,32 @@ export class BuildService {
     const revision = this.revision;
     this.busy = true;
     this.output?.append('Build', `Build started: ${this.project.name ?? this.id}\n`, { projectId: this.id });
-    this.events.emit({ type: 'started', projectId: this.id, revision, background });
     const abort = () => this.cancel(signal.reason);
     signal?.addEventListener('abort', abort, { once: true });
     try {
+      this.events.emit({ type: 'started', projectId: this.id, revision, epoch, background });
+      if (epoch !== this.buildEpoch || signal?.aborted) throw abortError(signal?.reason ?? 'Project build cancelled');
       const loading = this.snapshot().loadingDiagnostics ?? [];
       const errors = loading.filter(diagnostic => diagnostic.severity === 'error');
       const result = errors.length ? {
         success: false, diagnostics: loading, image: null, assembly: null, metrics: { errors: errors.length }
       } : await this.request('build', {}, { signal });
       if (epoch !== this.buildEpoch || revision !== this.revision) throw workbenchError('BUILD_STALE', 'Build result was superseded');
-      this.applyResult(result, 'build');
+      this.applyResult(result, 'build', errors.length && this.diagnostics?.projects.get(this.id)?.has('project') ? [] : result.diagnostics);
       const label = result.success ? 'succeeded' : 'failed';
       this.output?.append('Build', `Build ${label}: ${this.project.name ?? this.id}\n`, {
         projectId: this.id, severity: result.success ? 'success' : 'error'
       });
-      this.events.emit({ type: 'completed', projectId: this.id, result, revision, background });
+      this.events.emit({ type: 'completed', projectId: this.id, result, revision, epoch, background });
       return result;
     } catch (error) {
       const cancelled = signal?.aborted || epoch !== this.buildEpoch;
-      this.events.emit({ type: cancelled ? 'cancelled' : 'failed', projectId: this.id, error, revision, background });
+      this.events.emit({ type: cancelled ? 'cancelled' : 'failed', projectId: this.id, error, revision, epoch, background });
       throw cancelled ? abortError(signal?.reason ?? 'Project build cancelled') : error;
     } finally {
       signal?.removeEventListener('abort', abort);
       if (epoch === this.buildEpoch) this.busy = false;
-      this.events.emit({ type: 'idle', projectId: this.id, busy: this.busy });
+      this.events.emit({ type: 'idle', projectId: this.id, busy: this.busy, epoch });
     }
   }
 
@@ -109,12 +110,12 @@ export class BuildService {
 
   cancelAnalysis(reason, options) { return this.analysis.cancel(reason, options); }
 
-  applyResult(result, source = 'build') {
+  applyResult(result, source = 'build', publishedDiagnostics = result?.diagnostics) {
     if (!result || !Array.isArray(result.diagnostics)) throw new TypeError('Malformed compiler result');
     this.result = result;
     if (source === 'build') this.buildResult = result;
     else this.analysisResult = result;
-    this.diagnostics?.replace(this.id, source, result.diagnostics, { revision: this.revision });
+    this.diagnostics?.replace(this.id, source, publishedDiagnostics, { revision: this.revision });
     if (source === 'build') {
       this.image = result.success ? result.image : null;
       this.assembly = result.success ? result.assembly : null;
@@ -123,13 +124,15 @@ export class BuildService {
     }
   }
 
-  cancel(reason = 'Project build cancelled') {
-    if (this.disposed) return;
+  cancel(reason = 'Project build cancelled', { epoch: expectedEpoch } = {}) {
+    if (this.disposed || expectedEpoch !== undefined && expectedEpoch !== this.buildEpoch) return false;
+    const epoch = this.buildEpoch;
     this.buildEpoch++;
     this.analysis.cancel(reason);
     this.busy = false;
     this.worker.restart(abortError(reason));
-    this.events.emit({ type: 'cancelled', projectId: this.id, reason });
+    this.events.emit({ type: 'cancelled', projectId: this.id, reason, epoch });
+    return true;
   }
 
   dispose() {
