@@ -1,19 +1,10 @@
 import { TemplateError } from './common.js';
-import { legacyProjectTemplates } from './project/legacy-catalog.js';
-import { legacyItemTemplates } from './item/legacy-catalog.js';
-import { nativeTestTemplates } from './project/tests.js';
-import { nativeWinuiTemplates } from './project/winui-native.js';
-import { configFileTemplates } from './item/config-files.js';
-import { coreCodeTemplates } from './item/code.js';
+import { legacyProjectTemplates, legacyItemTemplates, builtInTemplates } from './catalog.generated.js';
 
-// The original exports remain the qualified browser example inventory. All targets use an explicit catalog.
+// The released example inventories retain their identifiers, order and object shape.
 export const projectTemplates = legacyProjectTemplates;
 export const itemTemplates = legacyItemTemplates;
-export const builtInTemplates = Object.freeze([
-  ...projectTemplates.map(template => ({ ...template, kind: 'project', targets: ['browser-managed'] })),
-  ...itemTemplates.map(template => ({ ...template, kind: 'item', targets: ['browser-managed'] })),
-  ...nativeTestTemplates, ...nativeWinuiTemplates, ...configFileTemplates, ...coreCodeTemplates,
-].map(template => Object.freeze(template)));
+export { builtInTemplates };
 
 /** Explicit catalog instance: installed packages never mutate process-global template state. */
 export class TemplateCatalog {

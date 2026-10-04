@@ -450,6 +450,27 @@
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
     },
     {
+      "path": "packages/templates/build-catalog.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "a22161e95bcfb0da7d30ced7c905da2a1701f93b69bcc15eaedce9d4bcd6dd8e",
+      "reason": "Build-only catalog generation imports bounded ordinary *.template.js modules from the trusted repository template directories. Imported nupkg contents are data and are never JavaScript modules."
+    },
+    {
+      "path": "scripts/build-generators.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "21cd45465304d223d749cf379611860e2f3c2490b30453a017c1afedca4208bc",
+      "reason": "Build tooling imports trusted repository contribution modules after root-relative source/target validation. Generated outputs are bounded and only declared destinations are written."
+    },
+    {
+      "path": "tests/a24-07-catalog-discovery.test.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "526141fde2176d335aaa7808bb9c8f302e93579bb4d590d65278ea68019b8bcf",
+      "reason": "The deterministic catalog fixture imports its own generated index from a test-owned temporary directory; it uses no user-selected module source."
+    },
+    {
       "path": "packages/project-system/examples/archive-benchmark.mjs",
       "operation": "dynamic-import",
       "count": 1,

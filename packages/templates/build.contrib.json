@@ -8,5 +8,12 @@
       "target": "packages/templates",
       "order": 100
     }
+  ],
+  "generators": [
+    {
+      "source": "packages/templates/build-catalog.js",
+      "target": "packages/templates/src/catalog.generated.js",
+      "order": 100
+    }
   ]
 }

@@ -15,17 +15,18 @@ export async function loadBuildContributions(root = buildRoot) {
       try {await stat(resolve(root, path)); paths.push(path);} catch (error) {if (error.code !== 'ENOENT') throw error;}
     }
   }
-  const result = {styles: [], workers: [], assets: []};
+  const result = {styles: [], workers: [], assets: [], generators: []};
   for (const path of paths) {
     const contribution = JSON.parse(await readFile(resolve(root, path), 'utf8'));
-    keys(contribution, ['schemaVersion', 'styles', 'workers', 'assets'], path);
+    keys(contribution, ['schemaVersion', 'styles', 'workers', 'assets', 'generators'], path);
     if (contribution.schemaVersion !== 1) throw new Error(`${path}: unsupported build contribution version`);
     for (const kind of Object.keys(result)) {
+      if (kind === 'generators' && contribution.generators === undefined) continue;
       if (!Array.isArray(contribution[kind])) throw new Error(`${path}: ${kind} must be an array`);
       for (const item of contribution[kind]) {
         keys(item, kind === 'styles' ? ['source', 'order', 'separator'] : kind === 'workers' ? ['entry', 'order'] : ['source', 'target', 'order'], path);
         if (!Number.isSafeInteger(item.order) || item.order < 0) throw new Error(`${path}: invalid ${kind} order`);
-        for (const field of kind === 'workers' ? ['entry'] : kind === 'assets' ? ['source', 'target'] : ['source']) {
+        for (const field of kind === 'workers' ? ['entry'] : ['assets', 'generators'].includes(kind) ? ['source', 'target'] : ['source']) {
           if (typeof item[field] !== 'string' || safePath(item[field]) !== item[field]) throw new Error(`${path}: invalid ${field}`);
         }
         if (kind === 'styles' && item.separator !== undefined && !['', '\n'].includes(item.separator)) throw new Error(`${path}: invalid stylesheet separator`);
@@ -33,6 +34,9 @@ export async function loadBuildContributions(root = buildRoot) {
         if (kind !== 'workers') {
           const source = await stat(resolve(root, item.source)).catch(error => {throw new Error(`${path}: missing source ${item.source}: ${error.message}`);});
           if (kind === 'styles' && !source.isFile()) throw new Error(`${path}: stylesheet is not a file: ${item.source}`);
+          if (kind === 'generators' && (!source.isFile() || !/\.m?js$/.test(item.source))) {
+            throw new Error(`${path}: generator must be a JavaScript module: ${item.source}`);
+          }
         }
         result[kind].push({...item, contribution: path});
       }
@@ -42,7 +46,7 @@ export async function loadBuildContributions(root = buildRoot) {
     items.sort((a, b) => a.order - b.order || a.contribution.localeCompare(b.contribution) || (a.source ?? a.entry).localeCompare(b.source ?? b.entry));
     const seen = new Set();
     for (const item of items) {
-      const key = kind === 'assets' ? item.target : kind === 'workers' ? item.entry : item.source;
+      const key = ['assets', 'generators'].includes(kind) ? item.target : kind === 'workers' ? item.entry : item.source;
       if (seen.has(key)) throw new Error(`Duplicate ${kind} contribution: ${key}`);
       seen.add(key);
     }

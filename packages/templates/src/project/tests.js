@@ -1,4 +1,4 @@
-import { definition, joinPath, wrapNamespace, TemplateError } from '../common.js';
+import { joinPath, wrapNamespace, TemplateError } from '../common.js';
 import { projectXml } from './project-xml.js';
 
 export const testPackages = Object.freeze({
@@ -30,15 +30,6 @@ export function packageReferences(packages) {
     `    <PackageReference Include="${name}" Version="${version}"${/Adapter|runner|Test.Sdk/.test(name) ? ' PrivateAssets="all"' : ''} />`).join('\n') +
     '\n  </ItemGroup>\n';
 }
-
-export const nativeTestTemplates = Object.freeze(Object.keys(testPackages).map(framework => definition(
-  framework, framework === 'xunit' ? 'xUnit Test Project' : framework === 'nunit' ? 'NUnit Test Project' : 'MSTest Test Project',
-  'SDK test project with pinned packages and one passing test. Requires native dotnet restore and dotnet test.', 'Tests', {
-    nativeOnly: true, nativeCompatible: true, platform: '.NET SDK', targets: ['native-dotnet'], kind: 'project',
-    prerequisites: ['.NET SDK for the selected target framework', 'NuGet restore access or populated package cache'],
-    qualification: { 'native-dotnet': 'pending' }, generate: generateTestProject
-  }
-)));
 
 export function generateTestProject(template, options) {
   if (options.framework.startsWith('netstandard')) throw new TemplateError('SFTPL002', 'Test runners require an executable .NET target framework');
