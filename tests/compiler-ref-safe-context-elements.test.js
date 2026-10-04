@@ -17,8 +17,10 @@ const method = body => `static class Refs { ${body} }`;
 
 test('A02-T30 an element from the end and a ref iteration variable over a parameter span may be returned by reference', () => {
   assert.deepEqual(errorsOf(method('static ref int Last(int[] values) => ref values[^1];')), []);
-  assert.deepEqual(errorsOf(method('static ref int Last(Span<int> values) { ref int cursor = ref values[0]; cursor = ref values[^1]; return ref cursor; }')), []);
-  assert.deepEqual(errorsOf(method('static ref int First(Span<int> values, ref int none) { foreach (ref int item in values) return ref item; return ref none; }')), []);
+  const reassigned = 'static ref int Last(Span<int> values) { ref int cursor = ref values[0]; cursor = ref values[^1]; return ref cursor; }',
+    iterated = 'static ref int First(Span<int> values, ref int none) { foreach (ref int item in values) return ref item; return ref none; }';
+  assert.deepEqual(errorsOf(method(reassigned)), []);
+  assert.deepEqual(errorsOf(method(iterated)), []);
   assert.deepEqual(errorsOf(method('static ref int Guarded(int[] values) { try { return ref values[0]; } finally { values[1] = 2; } }')), []);
 });
 
