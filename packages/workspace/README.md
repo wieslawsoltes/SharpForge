@@ -54,3 +54,51 @@ and `workspaceRecordBytes` accept immutable prepared roots without reading the
 compatibility text getter. The [prepared-source contract](PREPARED_SOURCES.md)
 describes exact encoding, bounded hashing, and the dependent journal/recovery
 composition across the completed Project 18 source stack.
+
+## Change observation
+
+`PollingFileWatcher(provider, listener, options)` scans metadata once, then
+prioritizes `watchedPaths` and rotates through the remaining inventory. A
+saturated priority set rotates too, retaining a bounded background share; a
+one-stat budget alternates priority and background work. Configure
+`maxStatsPerTick`, `maxDirectoryEntriesPerTick`, `maxEntries` and `intervalMs` to
+bound each interval. Open files receive exact-byte hashes so equal-size changes
+are visible. `start({schedule: false})` and `poll()` support deterministic hosts;
+`setWatchedPaths` changes priority without restarting. Dispose ends scheduled
+work and suppresses subsequent callbacks. Enumeration uses `iterateDirectory`
+when a provider supplies it, otherwise bounded provider directory results.
+
+`observeFileSystemHandle` adapts `FileSystemObserver` records and returns a
+disposable subscription, or `null` when the API is unavailable/unsupported so
+the caller can select polling. Permission failures remain explicit errors.
+`FileWatchCoalescer` collapses create/delete/rename save bursts and suppresses an
+own write only when its exact hash matches; an unrelated external write stays
+visible. Hosts call `markOwnWrite(path, hash)` after successful persistence.
+
+Focused validation: `node scripts/limited.js node --test tests/a24-vfs-watch.test.js`.
+The deterministic 20,000-file inventory checks per-interval operation budgets;
+it does not claim an operating-system notification latency measurement.
+
+
+## Granted browser directories
+
+`FileSystemAccessProvider(directoryHandle, options)` implements the provider
+contract for a previously granted directory. It queries permissions before I/O;
+a write operation with `{requestPermission: true}` can explicitly request a
+write grant. A denied grant reports `NoPermissions` without opening a writable
+stream. Metadata enumeration supports `iterateDirectory` and does not read file
+contents when metadata is disabled. Limits bound individual files and recursive
+operations, and all paths stay inside the granted root.
+
+Writes use `createWritable` and become visible only after `close`; failed or
+cancelled writes abort their stream. Exact hashes guard replacement. Rename
+uses the handle's native move capability when available; the fallback copies
+bytes, verifies the original source tree again, and only then removes it. A
+concurrent source-tree change preserves the original and rolls back the copied
+destination. Capabilities report the fallback as non-atomic. Watch prefers
+`FileSystemObserver` and uses the bounded poller when observation is unavailable.
+
+Focused validation: `node scripts/limited.js node --test tests/a24-vfs-fsa.test.js`.
+The deterministic handle fixture covers byte identity, permissions, failed
+writes, cancellation and concurrent directory rename. Actual browser handles
+and operating-system folder pickers require separate browser qualification.
