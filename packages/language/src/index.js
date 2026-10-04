@@ -1,3 +1,5 @@
+import {boundInlayHints} from './inlay-hints.js';
+import {boundSignatureHelp} from './signature-help.js';
 import {types as frameworkTypes,frameworkType,canonicalType,propertiesFor,eventsFor,findContracts,contracts} from '@sharpforge/framework';
 import { findTextMatches } from '@sharpforge/text';
 import { keywords } from '@sharpforge/syntax';
@@ -43,7 +45,8 @@ export class LanguageService {
   }
   referenceLenses(uri){const result=this.workspace.compile(),counts=new Map();for(const reference of result.references)if(!reference.declaration)counts.set(reference.symbolId,(counts.get(reference.symbolId)??0)+1);return this.documentSymbols(uri).filter(s=>s.kind==='method'||s.kind==='field'||s.kind==='property').map(s=>({uri,start:s.start,end:s.end,symbolId:s.id,count:counts.get(s.id)??0}));}
   documentSymbols(uri){return this.workspace.compile().symbols.filter(s=>s.uri===uri&&s.kind!=='local'&&!s.name.startsWith('<')).map(s=>({...s,detail:symbolDetail(s)}));}
-  signatureHelp(uri,offset){const text=this.workspace.documents.get(uri)?.source.text.slice(0,offset)??'',match=text.match(/([\w.]+)\(([^()]*)$/);if(!match)return null;const name=match[1],index=match[2].split(',').length-1,result=this.workspace.compile(),methods=result.symbols.filter(s=>s.kind==='method'&&(s.name===name||s.owner+'.'+s.name===name));return {activeParameter:index,signatures:methods.map(s=>({label:symbolDetail(s),parameters:(s.parameters??[]).map(p=>({label:p.type+' '+p.name}))}))};}
+  signatureHelp(uri,offset){return boundSignatureHelp(this.workspace,uri,offset,symbolDetail);}
+  inlayHints(uri,range){return boundInlayHints(this.workspace,uri,range);}
   diagnostics(uri){return this.workspace.compile().diagnostics.filter(d=>d.uri===uri);}
   semanticTokens(uri){const syntax=this.workspace.syntax(uri),result=this.workspace.compile(),refMap=new Map(result.references.filter(r=>r.uri===uri).map(r=>[r.start,r])),symbolMap=new Map(result.symbols.map(s=>[s.id,s]));return syntax.tokens.filter(t=>t.kind!=='eof').map(t=>{const symbol=symbolMap.get(refMap.get(t.start)?.symbolId);const kind=symbol?symbol.kind:['string','char'].includes(t.kind)?'string':['integer','double'].includes(t.kind)?'number':keywords.has(t.kind)?'keyword':t.kind==='identifier'?'variable':'operator';return {start:t.start,end:t.end,kind};});}
 }

@@ -45,8 +45,12 @@ class FixtureEditor {
     this.insights?.cursor();
   }
   applyEdits(edits, options = {}) {
-    this.model.setSelections([{anchor: input.selectionStart, active: input.selectionEnd}], {notify: false});
-    return this.model.applyEdits(edits, options);
+    const selection = this.nativeSelection ?? {start: input.selectionStart, end: input.selectionEnd};
+    this.nativeSelection = null;
+    this.model.setSelections([{anchor: selection.start, active: selection.end}], {notify: false});
+    this.insights?.beforeEdit({edits, options});
+    try { return this.model.applyEdits(edits, options); }
+    finally { this.insights?.afterEdit({edits, options}); }
   }
   insert(text, start = input.selectionStart, end = input.selectionEnd, caret) {
     this.applyEdits([{start, end, text}], {source: 'typing'});
@@ -114,11 +118,22 @@ window.setup = (text = 'value + value', options = {}) => {
 input.addEventListener('keydown', event => {
   if (current?.insights.keydown(event)) event.preventDefault();
 });
-input.addEventListener('beforeinput', event => current?.insights.beforeinput(event));
+input.addEventListener('beforeinput', event => {
+  if (!current) return;
+  current.insights.beforeinput(event);
+  current.nativeSelection = {start: input.selectionStart, end: input.selectionEnd};
+});
 input.addEventListener('input', () => {
   const start = input.selectionStart;
   const end = input.selectionEnd;
-  current.model.setValue(input.value, {source: 'typing'});
-  current.goto(start, end);
+  const before = current.value;
+  const after = input.value;
+  let first = 0;
+  while (first < before.length && first < after.length && before[first] === after[first]) first++;
+  let oldEnd = before.length;
+  let newEnd = after.length;
+  while (oldEnd > first && newEnd > first && before[oldEnd - 1] === after[newEnd - 1]) { oldEnd--; newEnd--; }
+  current.applyEdits([{start: first, end: oldEnd, text: after.slice(first, newEnd)}],
+    {source: 'typing', command: 'typing', selections: [{anchor: start, active: end}]});
 });
 window.setup();
