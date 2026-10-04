@@ -268,6 +268,19 @@ Evidence: Browser fixture: forced-colors/reduced-motion emulation; execution pen
 
 ## Large-file disk integration follow-up (SF-A20-T44, #1513)
 
+The prepared-ingress follow-up adds `src/source-loader.js`,
+`apps/studio/workbench/studio-source-reader.js`, project-system source reader and
+snapshot writer contributions, descriptor-preserving project membership and
+explicit manifest/prefix rebasing. `tests/a20-source-loader.test.js`,
+`tests/a20-prepared-source-workspace.test.js` and
+`tests/a20-prepared-source-paths.test.js` cover actual Node File/Blob chunk decoding,
+UTF-8/UTF-16 BOM and byte boundaries, cancellation, failed preparations, snapshot
+saves, disk conflicts and URI/handle rebasing. These follow-up fixtures are
+authored; their consolidated execution is pending the completed source batch.
+Browser timing, physical File System Access and 200 MB interaction budgets remain
+unqualified until actual captures exist. See `docs/source-loading.md` and
+`packages/project-system/docs/disk-limits.md` for the ownership/public contracts.
+
 The disk seam lives in `packages/project-system/src/disk/` behind the existing `disk.js` public exports.
 It preserves the 2,000,000 default source limit and carries explicit read limits through to saves.
 Encoded-byte limits include UTF-8/UTF-16 and BOMs. Total size, baselines, permission rechecks and optional

@@ -27,6 +27,13 @@ snapshot without serializing editor internals. `source === model.snapshot()` on
 return. Edits to the model leave that captured original snapshot intact. The
 model starts clean, at the requested version, with an empty undo history.
 
+`rebaseEditorSource(record, newUri)` creates a separate clean model over the same
+persistent text tree with a new URI. It requires the record's captured snapshot
+to match its model's current snapshot; stale preparations are rejected. It does
+not read the whole text, mutate the original model, or dispose the original.
+The project system accepts this function through explicit `rebaseSource`
+contributions when stripping a manifest root or prefixing imported paths.
+
 The caller owns the model until a whole workspace adoption succeeds. Failed or
 cancelled loads do not replace any live editor. A multi-file reader disposes the
 models that it created if its own batch fails; a failed DocumentService adoption
