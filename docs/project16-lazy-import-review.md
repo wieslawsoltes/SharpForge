@@ -89,3 +89,19 @@ this specific rationale. No source assertion or dynamic-code gate was changed.
 The root owns the affected static-gate rerun. No check, test or build was run in
 this inventory-only follow-up; the earlier failed attempt is not reported as a
 passing complete `npm run check`.
+
+## Final sparse metadata enumeration
+
+Shell source `d46e8993` changes intrinsic metadata enumeration from the sparse
+public dispatch array to `BuiltinMap.values()`, the public index of actual
+registered descriptions. The descriptor projection and single literal
+`@sharpforge/bytecode` import are unchanged. The inventory binds these exact
+reviewed bytes and names the bounded descriptor enumeration in its rationale.
+No dynamic-code rule, assertion or import destination changed.
+
+The canonical command inventory was separately regenerated through the existing
+`createWorkbenchInventory` function after the full A19 run exposed its missing
+`keymap:resharper` command. The generated record now includes
+`Keyboard: ReSharper-like (IntelliJ)`; the exact inventory assertion is preserved.
+Neither correction ran tests or repeated a static gate. Root owns the affected
+qualification after the complete combined A19/A20 run.

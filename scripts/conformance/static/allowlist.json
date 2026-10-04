@@ -33,8 +33,8 @@
       "path": "apps/studio/workbench/metadata/intrinsic-model.js",
       "operation": "dynamic-import",
       "count": 1,
-      "sha256": "2533e57a12fbeaae94ba04eec6bdc7ca2801f375d45fee04d0039fb24e1b1eb4",
-      "reason": "The shared intrinsic metadata adapter lazily imports the literal @sharpforge/bytecode public entry and projects its registered Builtins through the pure builtinMemberShape, builtinOwners and builtinParameterType contract; source identifiers and assembly data never select or execute JavaScript modules."
+      "sha256": "8877a98405a923ec7ca6840c97d95f3fb933545fe0155eed2c730419e87e15e9",
+      "reason": "The shared intrinsic metadata adapter lazily imports the literal @sharpforge/bytecode public entry and projects only actual registered descriptors from BuiltinMap.values() through the pure builtinMemberShape, builtinOwners and builtinParameterType contract; source identifiers and assembly data never select or execute JavaScript modules."
     },
     {
       "path": "apps/studio/workbench/shell-models.js",
