@@ -31,6 +31,9 @@ import { PrimaryCaptureEmission } from './primary-constructor-captures.js';
 import { TupleEmission } from './emit-tuples.js';
 import { DeconstructionEmission } from './emit-deconstruction.js';
 import { RecordEmission } from './records/emit-records.js';
+import { MultiDimensionalArrayEmission } from './emit-multidim-arrays.js';
+import { IndexValueEmission } from './emit-index-values.js';
+import { ListPatternEmission } from './emit-list-patterns.js';
 
 const families = [
   ConstantEmission,
@@ -61,6 +64,9 @@ const families = [
   TupleEmission,
   DeconstructionEmission,
   RecordEmission,
+  MultiDimensionalArrayEmission,
+  IndexValueEmission,
+  ListPatternEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

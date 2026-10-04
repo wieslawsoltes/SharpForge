@@ -14,6 +14,10 @@ const LOCAL_SIGNATURE = 0x07;
 const BY_REFERENCE = 0x10;
 const PINNED = 0x45;
 const USER_STRING = 0x70000000;
+const GENERIC_METHOD = 0x10;
+const GENERIC_INSTANTIATION = 0x0a;
+const SZ_ARRAY = 0x1d;
+const METHOD_TYPE_PARAMETER = 0x1e;
 
 /**
  * The declaration a member of a constructed framework type stands for. The framework registry lists closed
@@ -101,6 +105,24 @@ export class MemberTokens {
    */
   external(owner, name, shape) {
     return this.builder.member(this.type(owner), name, methodSignature(this.types, shape));
+  }
+  /**
+   * MethodSpec token of `RuntimeHelpers.GetSubArray<T>(T[], Range)` for an element type: the generic framework
+   * method behind `array[range]`, which the symbol table does not model.
+   */
+  subArrayMethod(elementType, rangeType) {
+    const owner = this.builder.typeRef('System.Runtime.CompilerServices.RuntimeHelpers'),
+      vector = [SZ_ARRAY, METHOD_TYPE_PARAMETER, 0],
+      signature = Uint8Array.from([GENERIC_METHOD, 1, 2, ...vector, ...vector, ...this.types.signature(rangeType)]),
+      parent = this.builder.member(owner, 'GetSubArray', signature),
+      instantiation = [GENERIC_INSTANTIATION, 1, ...this.types.signature(elementType)],
+      key = parent + ':' + instantiation.join(',');
+    let token = this.methodSpecs.get(key);
+    if (!token) {
+      token = this.builder.addRow('MethodSpec', { Method: parent, Instantiation: Uint8Array.from(instantiation) });
+      this.methodSpecs.set(key, token);
+    }
+    return token;
   }
   /** The token of `D::.ctor(object, native int)`, which the runtime implements for every delegate type. */
   delegateConstructor(type) {
