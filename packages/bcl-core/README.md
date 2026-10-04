@@ -345,6 +345,25 @@ qualifies binary64 default, general and round-trip output; it does not qualify
 Single or Decimal formatting. Runtime display adapters reuse this helper while
 retaining their engine-specific object, enum and typed integer handling.
 
+`formatSingleDefault(value)` formats invariant default Single text. Its input is
+a raw JavaScript number already rounded to IEEE binary32 (for example,
+`Math.fround(value)`); runtime callers unwrap their existing CLI carriers before
+calling it. It preserves signed zero and accepts NaNs and infinities. It does
+not coerce carriers or arbitrary binary64 values to Single. The helper retains
+the existing search over at most nine significant digits for the shortest
+binary32 round trip, then uses Single's nine-digit notation boundary instead
+of Double's seventeen-digit boundary. Thus exact Single `1e9` renders `1E+09`,
+while the explicitly widened Double remains `1000000000`.
+
+Single and Double share only pure default notation. Common fixed output avoids
+scientific digit records, and default formatting does not enter explicit-
+precision BigInt rounding. The forty exact-bit values plus four null-receiver
+controls in `reference/string-builder-append-single-net10.json` retain pinned
+.NET 10.0.5 output and source provenance. This prerequisite qualifies existing
+default Single display paths; adding `Append(float)` is a separate batch.
+Explicit Single format strings and configurable culture are not qualified here.
+The pure helper creates bounded host text and no managed objects.
+
 `StringBuilder.Append(char)` and `Append(char, int)` preserve individual UTF-16
 units, return the same builder, and append one managed chunk per nonzero call.
 Zero repeats perform no writes or managed allocations. Invalid repeat counts
