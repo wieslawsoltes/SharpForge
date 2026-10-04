@@ -14,10 +14,16 @@ function contracts({define, member, ctor}) {
   ctor(readerType, ['string']);
 }
 
+function extensionContracts({member}) {
+  for (const name of ['Read', 'ReadBlock']) member(parentType, name, ['char[]', 'int', 'int'], 'int');
+}
+
 function invoke(platform, descriptor, args, type = platform.bclHost.frameworkType(descriptor.owner)) {
   if (type?.kind !== 'bcl' || type.family !== 'textReader') return {handled: false};
   return {handled: true, value: invokeStringReader(platform, descriptor, args)};
 }
 
-/** Synchronous StringReader and inherited TextReader calls; buffered/async/writer APIs are not registered yet. */
-export const stringReaderModule = Object.freeze({name: 'string-reader', families: ['textReader'], contracts, invoke});
+/** Synchronous StringReader and inherited TextReader calls, including bounded UTF-16 buffer slices. */
+export const stringReaderModule = Object.freeze({
+  name: 'string-reader', group: 'bcl-io', families: ['textReader'], contracts, extensionContracts, invoke
+});

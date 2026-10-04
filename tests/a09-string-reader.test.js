@@ -164,8 +164,8 @@ test('SF-A09-T03.1 abstract metadata and A09 IDs preserve existing JSON contract
     .map(name => readerContract(name).id), [655361, 655362, 655363, 655364, 655365, 655366, 655367]);
 });
 
-test('SF-A09-T03.1 deferred buffer/async APIs and abstract construction remain compile-time errors', () => {
-  for (const expression of ['new TextReader()', 'new StringReader("x").Read(new char[1], 0, 1)',
+test('SF-A09-T03.1 deferred async APIs and abstract construction remain compile-time errors', () => {
+  for (const expression of ['new TextReader()', 'new StringReader("x").ReadBlockAsync(new char[1], 0, 1)',
     'new StringReader("x").ReadLineAsync()']) {
     const result = compileToIL('using System.IO; class Program { static void Main() { ' + expression + '; } }');
     assert.equal(result.success, false, expression);
@@ -181,7 +181,7 @@ test('SF-A09-T03.1 public IO registration uses the shared module protocol', () =
     ctor(owner) { members.push(owner + '..ctor'); },
     prop(owner, name) { members.push(owner + '.get_' + name, owner + '.set_' + name); }
   });
-  assert.equal(members.filter(name => /^System\.IO\.(TextReader|StringReader)\./.test(name)).length, 7);
+  assert.equal(members.filter(name => /^System\.IO\.(TextReader|StringReader)\./.test(name)).length, 9);
   assert.equal(ioModules[0], stringReaderModule);
   assert(Object.isFrozen(ioModules));
   assert.deepEqual(stringReaderModule.invoke({bclHost: {frameworkType: () => null}}, {owner: 'unknown'}, []), {handled: false});

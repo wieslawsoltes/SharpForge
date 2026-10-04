@@ -1,4 +1,5 @@
 import {fail, string} from '@sharpforge/bcl-core';
+import {readStringBuffer} from './string-reader-buffer.js';
 
 const readerType = 'System.IO.StringReader';
 
@@ -53,6 +54,9 @@ export function invokeStringReader(platform, descriptor, args) {
   const reference = args[0];
   requireReader(platform, reference);
   if (descriptor.name === 'Close' || descriptor.name === 'Dispose') return dispose(platform, reference);
+  if (descriptor.name === 'ReadBlock' || descriptor.name === 'Read' && args.length === 4) {
+    return readStringBuffer(platform, reference, args);
+  }
   if (platform.get(reference, '$disposed')) fail(platform, 'ObjectDisposedException', 'Cannot read from a closed TextReader');
   const source = string(platform, platform.get(reference, '$source'));
   const position = platform.get(reference, '$position');

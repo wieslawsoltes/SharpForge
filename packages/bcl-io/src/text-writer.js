@@ -23,4 +23,4 @@ function invoke(platform, descriptor, args, type = platform.bclHost.frameworkTyp
 }
 
 /** Synchronous StringWriter and inherited TextWriter primitives, appended after the reader contracts. */
-export const stringWriterModule = Object.freeze({name: 'string-writer', families: ['textWriter'], contracts, invoke});
+export const stringWriterModule = Object.freeze({name: 'string-writer', group: 'bcl-io', families: ['textWriter'], contracts, invoke});
