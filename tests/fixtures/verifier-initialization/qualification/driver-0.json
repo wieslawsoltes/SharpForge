@@ -1,0 +1,173 @@
+[
+  {
+    "command": "git",
+    "args": [
+      "-c",
+      "gc.auto=0",
+      "worktree",
+      "add",
+      "--detach",
+      "/tmp/sharpforge-project6-a03-local-initialization-baseline",
+      "b79fbbb9e9b54cb77d2376765e290e9b0922b2d6"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization",
+    "started": "2026-10-04T09:19:27.620Z",
+    "completed": "2026-10-04T09:19:29.245Z",
+    "status": 0,
+    "signal": null,
+    "log": "00-baseline"
+  },
+  {
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization",
+    "started": "2026-10-04T09:19:29.249Z",
+    "completed": "2026-10-04T09:19:29.644Z",
+    "status": 0,
+    "signal": null,
+    "log": "01-install-candidate-node24"
+  },
+  {
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization-baseline",
+    "started": "2026-10-04T09:19:29.645Z",
+    "completed": "2026-10-04T09:19:29.839Z",
+    "status": 0,
+    "signal": null,
+    "log": "02-install-baseline-node24"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/verifier-initialization/baseline.mjs"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization-baseline",
+    "started": "2026-10-04T09:19:29.840Z",
+    "completed": "2026-10-04T09:19:29.968Z",
+    "status": 1,
+    "signal": null,
+    "log": "03-failing-before-node24"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/verifier-initialization/capture.mjs",
+      "tests/fixtures/verifier-initialization/native.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization",
+    "started": "2026-10-04T09:19:29.968Z",
+    "completed": "2026-10-04T09:19:32.090Z",
+    "status": 0,
+    "signal": null,
+    "log": "04-native-pinned"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--test",
+      "--test-concurrency=1",
+      "tests/a03-local-initialization.test.js",
+      "tests/a03-numeric-transfers.test.js",
+      "tests/a03-verifier-dataflow.test.js",
+      "tests/a03-verification-types.test.js"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization",
+    "started": "2026-10-04T09:19:32.090Z",
+    "completed": "2026-10-04T09:19:32.822Z",
+    "status": 0,
+    "signal": null,
+    "log": "05-focused"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-numeric-verifier.mjs",
+      "/tmp/a03-initialization-validation/baseline.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization-baseline",
+    "started": "2026-10-04T09:19:32.823Z",
+    "completed": "2026-10-04T09:19:33.146Z",
+    "status": 0,
+    "signal": null,
+    "log": "06-benchmark-baseline"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-numeric-verifier.mjs",
+      "/tmp/a03-initialization-validation/candidate.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization",
+    "started": "2026-10-04T09:19:33.146Z",
+    "completed": "2026-10-04T09:19:33.469Z",
+    "status": 0,
+    "signal": null,
+    "log": "07-benchmark-candidate"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "packages/cil/tools/benchmark-local-initialization.mjs",
+      "/tmp/a03-initialization-validation/initialization.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization",
+    "started": "2026-10-04T09:19:33.469Z",
+    "completed": "2026-10-04T09:19:33.902Z",
+    "status": 0,
+    "signal": null,
+    "log": "08-benchmark-initialization"
+  },
+  {
+    "command": "/tmp/sharpforge-bcl-browser-venv/bin/python",
+    "args": [
+      "/tmp/a03-initialization-browser.py",
+      "/tmp/sharpforge-project6-a03-local-initialization",
+      "/tmp/a03-initialization-validation/browser"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization",
+    "started": "2026-10-04T09:19:33.903Z",
+    "completed": "2026-10-04T09:19:39.206Z",
+    "status": 0,
+    "signal": null,
+    "log": "09-browser"
+  },
+  {
+    "command": "npm",
+    "args": [
+      "run",
+      "check"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization",
+    "started": "2026-10-04T09:19:39.206Z",
+    "completed": "2026-10-04T09:19:41.839Z",
+    "status": 0,
+    "signal": null,
+    "log": "10-check"
+  },
+  {
+    "command": "npm",
+    "args": [
+      "run",
+      "check:structure"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-local-initialization",
+    "started": "2026-10-04T09:19:41.839Z",
+    "completed": "2026-10-04T09:19:42.115Z",
+    "status": 0,
+    "signal": null,
+    "log": "11-structure"
+  }
+]
