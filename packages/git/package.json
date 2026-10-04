@@ -14,7 +14,8 @@
     "proxy",
     "broker",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "collab-server"
   ],
   "dependencies": {
     "@sharpforge/archive": "0.14.0",
