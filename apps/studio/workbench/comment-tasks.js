@@ -34,4 +34,3 @@ export async function scanCommentTasks(documents, tokens, {signal, onProgress = 
   }
   return result;
 }
-

@@ -1,5 +1,9 @@
 # Project 16: docking, lazy tools, and editor performance evidence
 
+## Docking review scope
+
+Review04 contains the docking, navigation, Watch and lazy tool source modules and their focused tests. Studio bootstrap wiring, actual Studio browser workflows, standalone bundling changes and A20 performance drivers remain in the dependent composition layer. Qualification records below describe the original completed source batches; no tests or builds were rerun for this review branch. The standalone docking DOM fixture is present and uses built assets with the production server/CSP, but remains unrun. See [project16-workbench-review.md](project16-workbench-review.md) for the exact scope and host contracts.
+
 This ledger records the assigned source scope and its verification boundary.
 The root integration branch owns Studio composition, manifests, CI scheduling,
 upstream synchronization, project claims, and stacked pull requests. Browser and

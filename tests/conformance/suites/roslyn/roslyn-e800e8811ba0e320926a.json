@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e800e8811ba0e320926a",
+  "kind": "diagnostics",
+  "sourceText": "#pragma warning disable 219\nclass C\n{\n    static void Main()\n    {\n        unchecked\n        {\n            var u = ((byte, byte))(0, -1);\n            var (a, b) = ((byte, byte))(0, -2);\n        }\n        checked\n        {\n            var c = ((byte, byte))(0, -1);\n            var (a, b) = ((byte, byte))(0, -2);\n        }\n    }\n}",
+  "sourceSHA256": "1d1cc2046702565c6553d31d1b94b38f2f4e088cd37cdcc14f135f886a28a6dc",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "CheckedConstantConversions",
+    "offset": 1094080
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "references: new[] { ValueTupleRef, SystemRuntimeFacadeRef },\n                options: TestOptions.ReleaseExe)",
+  "options": "(\n                source,\n                references: new[] { ValueTupleRef, SystemRuntimeFacadeRef },\n                options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0221",
+        "severity": "error"
+      },
+      {
+        "code": "CS0221",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (13,39): error CS0221: Constant value '-1' cannot be converted to a 'byte' (use 'unchecked' syntax to override)\n                //             var c = ((byte, byte))(0, -1);\n                Diagnostic(ErrorCode.ERR_ConstOutOfRangeChecked, \"-1\").WithArguments(\"-1\", \"byte\").WithLocation(13, 39),\n                // (14,44): error CS0221: Constant value '-2' cannot be converted to a 'byte' (use 'unchecked' syntax to override)\n                //             var (a, b) = ((byte, byte))(0, -2);\n                Diagnostic(ErrorCode.ERR_ConstOutOfRangeChecked, \"-2\").WithArguments(\"-2\", \"byte\").WithLocation(14, 44)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

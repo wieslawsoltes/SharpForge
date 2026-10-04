@@ -6,6 +6,7 @@
  * fields `Item1..ItemN` of the definition; a named element is another name for the field at its position, so a member
  * access through a name binds to the same field symbol as the access through `ItemN`.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Accessibility } from '../symbols/types.js';
 import { FieldSymbol } from '../symbols/members.js';
 
@@ -68,10 +69,10 @@ export function tupleElementProblem(type, name, display) {
   if (!type?.isTupleType || type.isDefinition) return null;
   if ((type.tupleElementNames ?? []).filter(element => element === name).length > 1) {
     const member = display + '.' + name;
-    return { code: 'CS0229', args: [member, member] };
+    return { code: DiagnosticId.CS0229, args: [member, member] };
   }
   const item = itemName.exec(name);
-  if (item && Number(item[1]) > type.typeArguments.length && Number(item[1]) <= maxTupleElements) return { code: 'CS1061', args: [display, name] };
+  if (item && Number(item[1]) > type.typeArguments.length && Number(item[1]) <= maxTupleElements) return { code: DiagnosticId.CS1061, args: [display, name] };
   return null;
 }
 
@@ -111,9 +112,9 @@ export function tupleNameProblems(names) {
   names.forEach((name, index) => {
     if (!name) return;
     const item = itemName.exec(name);
-    if (forbiddenNames.has(name)) problems.push({ index, code: 'CS8126', args: [name] });
-    else if (item && Number(item[1]) !== index + 1) problems.push({ index, code: 'CS8125', args: [name, Number(item[1])] });
-    else if (seen.has(name)) problems.push({ index, code: 'CS8127', args: [] });
+    if (forbiddenNames.has(name)) problems.push({ index, code: DiagnosticId.CS8126, args: [name] });
+    else if (item && Number(item[1]) !== index + 1) problems.push({ index, code: DiagnosticId.CS8125, args: [name, Number(item[1])] });
+    else if (seen.has(name)) problems.push({ index, code: DiagnosticId.CS8127, args: [] });
     seen.add(name);
   });
   return problems;

@@ -68,6 +68,33 @@ test('framework member caret resolves Console.WriteLine rather than treating it 
   assert.equal(await frameworkDefinition('Missing.Type.Method'), null);
 });
 
+test('core intrinsic metadata uses accepted arities, canonical owners, instance parameters and property shape', async () => {
+  const metadata = new MetadataCatalog();
+  const write = await metadata.definition({owner: 'System.Console', name: 'WriteLine', argumentCount: 0});
+  assert.equal(write.overloadCount, 1);
+  assert.match(write.text.slice(write.selection.start, write.selection.end), /void WriteLine\(\);/u);
+  const substring = await metadata.definition({owner: 'System.String', name: 'Substring', argumentCount: 1});
+  assert.equal(substring.overloadCount, 1, 'overlapping registered/core signatures are shown once');
+  const signature = substring.text.slice(substring.selection.start, substring.selection.end);
+  assert.match(signature, /^string Substring\(int arg0\);$/u);
+  assert.doesNotMatch(signature, /static/u);
+  const tick = await metadata.definition({owner: 'System.Environment', name: 'TickCount'});
+  assert.match(tick.text.slice(tick.selection.start, tick.selection.end), /static int TickCount \{ get; \}/u);
+  metadata.dispose();
+});
+
+test('bound assembly simple identity selects actual PE metadata and rejects multiple matching versions', async () => {
+  const first = inspect(fixture('VersionedLib.1.0.0.0.dll'), {...source, id: 'p:a', version: '1'});
+  const second = inspect(fixture('VersionedLib.2.0.0.0.dll'), {...source, id: 'p:b', version: '2'});
+  assert.equal(findMetadataDefinition([first], {expression: 'Lib.Widget', assemblyIdentity: 'VersionedLib'}).assembly, first);
+  assert.throws(() => findMetadataDefinition([first, second], {expression: 'Lib.Widget', assemblyIdentity: 'VersionedLib'}),
+    {code: 'METADATA_DEFINITION_AMBIGUOUS'});
+  const metadata = new MetadataCatalog({sources: async () => [{...source, read: async () => miniBytes}], inspect});
+  const result = await metadata.definition({owner: 'System.Console', name: 'WriteLine', assemblyIdentity: 'MiniStandard'});
+  assert.match(result.assemblyIdentity, /^MiniStandard, Version=2\.1\.0\.0/u);
+  metadata.dispose();
+});
+
 test('reference sources use authorized HintPath bytes, transitive project visibility and no source text getters', async () => {
   const file = {path: 'lib/MiniStandard.dll', version: 2, bytes: miniBytes};
   const huge = {path: 'Large.cs', get text() { throw new Error('Whole source must not be read'); }};
@@ -142,6 +169,8 @@ test('Code Definition reads only a bounded caret fragment and prioritizes struct
     }}]])};
   const current = {uri: file.uri, offset: 14, projectId: 'p'};
   assert.equal(metadataQuery(documents, file, current).expression, 'Console.WriteLine');
+  assert.deepEqual(metadataQuery(documents, file, current, {metadata: {owner: 'System.Console', name: 'Console', kind: 'class'}}),
+    {expression: 'System.Console', type: 'System.Console', assemblyIdentity: undefined});
   const metadata = new MetadataCatalog();
   const result = await resolveCodeDefinition({documents, metadata, request: async method => method === 'definition' ? null :
     {contents: 'Human prose is deliberately irrelevant', metadata: {owner: 'System.Console', name: 'WriteLine', kind: 'method'}}}, current);

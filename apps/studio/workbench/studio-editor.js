@@ -1,5 +1,6 @@
 import { CodeEditor, EditorModelWorkspace, FoldingStateStore, createRequestServices,
   prepareWorkspaceEdit, commitWorkspaceEdit } from '@sharpforge/editor';
+import { configureDocumentEditor } from './editor-configuration.js';
 
 /** Preserve breakpoint positions using edit snapshots, without flattening a large source buffer. */
 export function remapBreakpointChanges(breakpoints, change) {
@@ -23,19 +24,22 @@ export function remapBreakpointChanges(breakpoints, change) {
 
 /** Editors share one document model and workspace transaction adapter, with independent view state. */
 export function createStudioEditorFactory({ services, state, requestCompiler, requestHost, onFocus, onCursor,
-  onKeymapState, onBreakpoint, onBreakpointEdit, onError, openDocument, document = globalThis.document }) {
+  onKeymapState, onBreakpoint, onBreakpointEdit, onError, openDocument,
+  providers = {}, applyResourceTransaction, supportsResourceRename,
+  getConfigurationRecords = () => [], getLanguageOptions = () => ({}), document = globalThis.document }) {
   const session = { models: services.documents.models, views: new Set(), foldingState: new FoldingStateStore() };
-  const workspace = new EditorModelWorkspace(session.models);
+  const workspace = new EditorModelWorkspace(session.models, { applyResourceTransaction, supportsResourceRename });
   const language = createRequestServices((method, parameters) => {
     const { signal, ...params } = parameters;
     return requestCompiler(method, params, { signal });
   }, [
-    'completion', 'hover', 'signatureHelp', 'diagnostics', 'codeActions', 'rename', 'semanticTokens',
+    'completion', 'hover', 'signatureHelp', 'diagnostics', 'codeActions', 'resolveCodeAction', 'outlineReorder', 'rename', 'semanticTokens',
     'definition', 'references', 'format', 'formatRange', 'formatOnType', 'prepareRename', 'documentHighlights', 'inlayHints',
     'selectionRanges',
     { method: 'documentSymbols', remote: 'symbols' },
     { method: 'folding', remote: 'foldingRanges' }, { method: 'codeLens', remote: 'referenceLenses' }
-  ]);
+  ].filter(entry => !providers[typeof entry === 'string' ? entry : entry.method]));
+  for (const [method, provider] of Object.entries(providers)) language.register(method, provider);
   language.register('readDocument', ({ signal, ...params }) => {
     const targetUri = params.targetUri ?? params.uri;
     return workspace.getDocument(targetUri) ?? requestCompiler('readDocument', { ...params, targetUri }, { signal });
@@ -58,12 +62,23 @@ export function createStudioEditorFactory({ services, state, requestCompiler, re
       onBreakpointEdit: (line, event) => onBreakpointEdit(record.uri, line, event),
       onError
     });
+    try {
+      configureDocumentEditor(editor, { records: getConfigurationRecords(), languageOptions: getLanguageOptions(editor.options.language) });
+    } catch (error) {
+      editor.dispose();
+      throw error;
+    }
     editor.input.setAttribute('aria-label', `${record.uri} — C# source editor`);
     editor.input.addEventListener('focus', () => { activate(); onFocus?.(record.uri, editor, viewId); });
     return { editor, element: root };
   };
   return {
     create, workspace, language, session,
+    configure(editor, languageOptions = getLanguageOptions(editor.options.language)) {
+      return configureDocumentEditor(editor, {
+        records: getConfigurationRecords(), languageOptions
+      });
+    },
     apply(edits, label = 'Workspace edit') {
       const versions = new Map(services.documents.list().map(record => [record.uri, record.version]));
       const plan = prepareWorkspaceEdit(workspace, edits, { label, versions, maxDocumentLength: 256 * 1024 * 1024 });

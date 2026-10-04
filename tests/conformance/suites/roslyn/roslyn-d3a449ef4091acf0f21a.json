@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d3a449ef4091acf0f21a",
+  "kind": "diagnostics",
+  "sourceText": "class A { [@return:X] void B() { } }",
+  "sourceSHA256": "e867be01d50d2be51314daa8d8bf7f735f9ed6e009219246dab270d468ee10cf",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Locations.cs",
+    "sha256": "3dbd3d9ee7d2dee3cdc924e1c4cf0ede1fb1f8fe46564b3dc0cc69c717a92256",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Locations.cs",
+    "license": "MIT",
+    "method": "CS0246ERR_SingleTypeNameNotFound_VerbatimIdentifierAttributeTarget",
+    "offset": 89549
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"class A { [@return:X] void B() { } }\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (1,20): error CS0246: The type or namespace name 'XAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                // class A { [@return:X] void B() { } }\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"X\").WithArguments(\"XAttribute\").WithLocation(1, 20),\n                // (1,20): error CS0246: The type or namespace name 'X' could not be found (are you missing a using directive or an assembly reference?)\n                // class A { [@return:X] void B() { } }\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"X\").WithArguments(\"X\").WithLocation(1, 20)",
+  "unsupported": []
+}

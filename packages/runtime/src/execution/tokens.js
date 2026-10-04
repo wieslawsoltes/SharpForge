@@ -1,5 +1,6 @@
 import {decodeCoded,token} from '@sharpforge/cil';
 import {ManagedFault,isReference} from '../heap.js';
+import {cachedMetadataToken} from './token-cache.js';
 
 function tableFor(vm,type) {
   const registry=vm.heap.methodTables;
@@ -19,7 +20,7 @@ export function loadToken(vm,metadataToken) {
   if(!Number.isInteger(metadataToken)||metadataToken<=0||metadataToken>0xffffffff)
     throw new ManagedFault('InvalidProgramException','Invalid ldtoken operand');
   let descriptor;
-  try {descriptor=vm.inspector.resolveToken(metadataToken);}
+  try {descriptor=cachedMetadataToken(vm,metadataToken);}
   catch {throw new ManagedFault('InvalidProgramException','Invalid ldtoken metadata token');}
   if(!['type','method','field'].includes(descriptor.kind))
     throw new ManagedFault('InvalidProgramException','ldtoken requires a type, method, or field token');

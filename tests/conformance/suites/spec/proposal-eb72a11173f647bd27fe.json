@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-eb72a11173f647bd27fe",
+  "kind": "spec",
+  "sourceText": "class C \n{\n    const object i = 5;         // error: boxing conversion not permitted\n    const object str = \"hello\"; // error: implicit reference conversion\n}",
+  "sourceSHA256": "b94b9b5a2ab008a7e6679fd0df293c3e4fa2b528336e211ccdc3744ec9504a40",
+  "target": "library",
+  "featureId": "csharp-10-0-constant-interpolated-strings",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/constant_interpolated_strings.md",
+    "sha256": "ab8f1e892a4126382720a39552197ea4540f7173c8f5d8034f6d7adbb3bc7e23",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/constant_interpolated_strings.md",
+    "license": "NOASSERTION",
+    "offset": 3169
+  }
+}

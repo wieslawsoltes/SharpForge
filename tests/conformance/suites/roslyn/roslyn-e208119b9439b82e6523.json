@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e208119b9439b82e6523",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Test\n{\n    public static void Main()\n    {\n        int value = 5;\n        var obj = new TestRef();\n        obj[value] = 0;\n    }\n}",
+  "sourceSHA256": "23cd3f56e2c985e9ce39044ebb241945f07d68776d52daf240f285ab8aac5fef",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "sha256": "fed7c6d5beeb0e3296094c4c3973b927e627482323c4609b726e7af2365eb925",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "license": "MIT",
+    "method": "InAttributeModReqIsRejectedOnSignaturesWithoutIsReadOnlyAttribute_Indexers_Parameters",
+    "offset": 116594
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { CompileIL(ilSource) })",
+  "options": "(code, references: new[] { CompileIL(ilSource) })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1546",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,9): error CS1546: Property, indexer, or event 'TestRef.this[ref int]' is not supported by the language; try directly calling accessor method 'TestRef.set_Item(ref int, int)'\n                //         obj[value] = 0;\n                Diagnostic(ErrorCode.ERR_BindToBogusProp1, \"obj[value]\").WithArguments(\"TestRef.this[ref int]\", \"TestRef.set_Item(ref int, int)\").WithLocation(8, 9)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

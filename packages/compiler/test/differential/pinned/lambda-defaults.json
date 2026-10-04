@@ -1,0 +1,7 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "lambda-defaults/defaults-and-params":{"hash":"f139408f40b60295","kind":"output","langVersion":"14.0","diagnostics":[],"output":"11\n3\n6\n0\nnone\n10\nh2h0\nTrue True 1.5\nFalse False 1.5\n"},
+  "lambda-defaults/synthesized-delegate-types":{"hash":"73aa1fdf5901b95c","kind":"output","langVersion":"14.0","diagnostics":[],"output":"15\n11\n6\n20\n"},
+  "lambda-defaults/cs9099-cs9100-target-differs":{"hash":"d8b36ed6d905fd8e","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS9099",248,1,"warning"],["CS9099",287,1,"warning"],["CS9100",379,1,"warning"],["CS1678",428,1,"error"],["CS1661",431,2,"error"]]},
+  "lambda-defaults/cs1736-cs1750-cs1737-declaration":{"hash":"64bc8c3ae88e5777","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1736",103,9,"error"],["CS1750",145,1,"error"],["CS1737",197,1,"error"]]},
+  "lambda-defaults/cs0029-natural-types-differ":{"hash":"1491aa9948823bec","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0029",161,1,"error"],["CS0029",220,1,"error"],["CS0029",266,1,"error"],["CS0029",403,6,"error"]]}
+}}

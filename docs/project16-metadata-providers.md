@@ -2,6 +2,8 @@
 
 Work items: SF-A19-T17 (#1453) and SF-A19-T23 (#1459).
 
+The registered framework model also includes core intrinsic declarations from the actual bytecode builtin catalog. Canonical owners, instance receiver rules and parameter categories come from the same public bytecode metadata helpers used by compiler binding. This covers `System.Console.WriteLine`, primitive/string members and other core intrinsics that are not entries in the separate framework contribution table. Accepted core arities are shown as signatures; internal `$` builtins are excluded. This model identifies itself as registered SharpForge metadata, separately from inspected PE metadata.
+
 The shell owns one `MetadataCatalog`. Object Browser and Code Definition share
 its declaration models, while each tool owns its cancellation and selection
 state. The framework model is built from the public registered contract tables.

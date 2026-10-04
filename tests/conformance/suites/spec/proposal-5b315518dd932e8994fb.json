@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-5b315518dd932e8994fb",
+  "kind": "spec",
+  "sourceText": "// 1. Use init \nint Option1 { get; init; }\n// 2. Use init set\nint Option2 { get; init set; }\n// 3. Use initonly\nint Option3 { get; initonly; }",
+  "sourceSHA256": "c1139db518a74b0c970cffc5ea5c4c049f013bf61c8a1b7880d791d39044b0a8",
+  "target": "library",
+  "featureId": "csharp-9-0-init-only-setters",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/init.md",
+    "sha256": "299746635180451088968dc21830e0e4ef886be903357c63780a90434b5034e5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/init.md",
+    "license": "NOASSERTION",
+    "offset": 11431
+  }
+}

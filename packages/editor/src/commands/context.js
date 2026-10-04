@@ -127,4 +127,3 @@ export class EditorCommandContext {
   }
   dispose() { this.disposed = true; }
 }
-

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-df33c0740f0552f0248a",
+  "kind": "spec",
+  "sourceText": "void M<T>(\n    ref int i,\n    decimal d,\n    bool b = false,\n    bool? n = false,\n    string s = \"Hello\",\n    object o = null,\n    T t = default(T),\n    params int[] a\n) { }",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [
+      "CS8321"
+    ]
+  },
+  "sourceSHA256": "644ff10959ec309eacf0da7212f110002322f61b320442b361593e56a82b28b0",
+  "originalSource": "void M<T>(\n    ref int i,\n    decimal d,\n    bool b = false,\n    bool? n = false,\n    string s = \"Hello\",\n    object o = null,\n    T t = default(T),\n    params int[] a\n) { }",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "MethodParameters",
+    "ignoredWarnings": [
+      "CS8321"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "MethodParameters",
+    "offsetInUnquotedMarkdown": 114343
+  }
+}

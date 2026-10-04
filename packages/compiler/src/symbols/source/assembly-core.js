@@ -2,6 +2,7 @@
  * The source assembly: declares every type of every file (names, arity, containers, partial merging) and
  * builds the member list of a type on first use.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { mergeGlobalUsings } from '../../binder/global-usings.js';
 import { mergePartialMembers } from './partial-members.js';
 import { synthesizeRecordMembers } from '../synthesized/records.js';
@@ -106,18 +107,18 @@ export class SourceAssemblyCore {
           access(modifiers) &&
           existing.declarations.some(d => access(words(d.syntax.modifiers)) && access(words(d.syntax.modifiers)) !== access(modifiers))
         )
-          this.report(existing.declarations[0].uri, existing.declarations[0].syntax.identifier, 'CS0262', [name]);
+          this.report(existing.declarations[0].uri, existing.declarations[0].syntax.identifier, DiagnosticId.CS0262, [name]);
         existing.declarations.push(declaration);
         this.declareNested(syntax, existing, declaration, file);
         return existing;
       }
       if (partial !== allPartial || (partial && existing.typeKind !== kind))
-        this.report(uri, syntax.identifier, existing.typeKind !== kind ? 'CS0261' : 'CS0260', [name]);
+        this.report(uri, syntax.identifier, existing.typeKind !== kind ? DiagnosticId.CS0261 : DiagnosticId.CS0260, [name]);
       else
         this.report(
           uri,
           syntax.identifier,
-          isFileLocal ? 'CS9071' : container ? 'CS0102' : 'CS0101',
+          isFileLocal ? DiagnosticId.CS9071 : container ? DiagnosticId.CS0102 : DiagnosticId.CS0101,
           container
             ? [container.toDisplayString(), name]
             : [name, namespace.isGlobalNamespace ? '<global namespace>' : namespace.toDisplayString()],

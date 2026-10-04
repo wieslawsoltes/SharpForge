@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9cb1954b17b9aa9a9afe",
+  "kind": "diagnostics",
+  "sourceText": "namespace ConsoleApp1\n{\n    public class TestHelper\n    {\n        public static void Main()\n        {\n            IsValueTypeT(new Result<(Cls, IInt)>((new Cls(), new Int())));\n            System.Console.WriteLine(\"done\");\n        }\n\n        public static void IsValueTypeT<T>(Result<T> result)\n        {\n            if (!(result.Value is T v))\n                throw new NotPossibleException();\n        }\n    }\n\n    public class Result<T>\n    {\n        public T Value { get; }\n\n        public Result(T value)\n        {\n            Value = value;\n        }\n    }\n\n    public class Cls { }\n    public interface IInt { }\n\n    public class Int : IInt { }\n\n    public class NotPossibleException : System.Exception { }\n}",
+  "sourceSHA256": "c7324d4556ca63e7211663aed6d1efe7cc3715ad6a7cb416ec73558ef47e4e95",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "ValueTypeArgument02",
+    "offset": 87239
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

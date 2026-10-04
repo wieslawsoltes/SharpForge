@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e40f6e5e024003ebffcb",
+  "kind": "spec",
+  "sourceText": "Span<byte> Convert<T>(ref T value) where T : unmanaged \n{\n    ...\n}",
+  "sourceSHA256": "0d7a8bd2f8a972e829e4441689a9b5f48b4107f54b4a3a75380dbb2ef066ee3a",
+  "target": "library",
+  "featureId": "csharp-7-3-enum-delegate-unmanaged-constraints",
+  "langVersion": "7.3",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.3/blittable.md",
+    "sha256": "b4e487f453bc07bc46640486ab48bb96516e752bd5a411250472fc3dba6146f6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/blittable.md",
+    "license": "NOASSERTION",
+    "offset": 1899
+  }
+}

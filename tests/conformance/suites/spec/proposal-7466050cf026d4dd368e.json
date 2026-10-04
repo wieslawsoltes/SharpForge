@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-7466050cf026d4dd368e",
+  "kind": "spec",
+  "sourceText": "interface IPerson\n{\n    string Name { get; init; }\n}\n\nclass Init\n{\n    void M<T>() where T : IPerson, new()\n    {\n        var local = new T()\n        {\n            Name = \"Jared\"\n        };\n        local.Name = \"Jraed\"; // Error\n    }\n}",
+  "sourceSHA256": "55bd2848846f1f7a0c0675f62b9b42db4f48a65f687e6ddeb8b1f9bfd3844a6b",
+  "target": "library",
+  "featureId": "csharp-9-0-init-only-setters",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/init.md",
+    "sha256": "299746635180451088968dc21830e0e4ef886be903357c63780a90434b5034e5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/init.md",
+    "license": "NOASSERTION",
+    "offset": 5664
+  }
+}

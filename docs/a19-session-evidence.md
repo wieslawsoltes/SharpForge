@@ -66,3 +66,10 @@ Both JavaScript engines execute the argv/environment fixtures: the source VM and
 Program argv is separate from explicit managed method parameters, bounded to 1,024 strings / 1,048,576 UTF-16 code units total with 65,536 units per string. Per-launch environment data is an immutable, case-sensitive map with 256 keys maximum and explicit per-name/value/total limits. The managed surface added is `System.Environment.GetEnvironmentVariable(string)` only: no process mutation, host OS environment, user/machine overload, or hidden import of credentials. Unsupported launch targets must report their capability rejection explicitly.
 
 No speedup is claimed. The runtime builtin table correction came from upstream main unchanged; an additional benchmark of that unrelated correction was not run. Local focused tests use the repository's bounded resource wrapper. Full epic/CI validation and stacked PR publication remain the integration owner's responsibility.
+
+## Historical review synchronization
+
+The sessions-only review boundary and its captured upstream-main reconciliation are retained in
+`docs/project16-sessions-review.md`. Review03 excluded later prepared ingress, atomic resources and Studio
+composition; this integrated ledger retains their separately recorded evidence above. Importing that review
+does not remove the actual Studio fixture or relabel historical component qualification as a browser pass.

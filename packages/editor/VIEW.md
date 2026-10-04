@@ -29,7 +29,8 @@ Include `@sharpforge/editor/editor.css`. The package stylesheet imports the indi
 token, widget, keymap and accessibility stylesheets. Studio's build contribution concatenates those
 same files directly, so no runtime CSS import is required by the bundled application.
 
-The runnable example is `packages/editor/examples/virtual-view.html`; serve the repository over HTTP.
+The runnable example is `/packages/editor/examples/virtual-view.html` in the built distribution.
+See [examples/README.md](examples/README.md) for the production-server and module-worker setup.
 The **Load 500,000 lines** action constructs a real Blob, decodes chunks into a persistent buffer,
 and navigates the actual DOM editor. It is a functional example, not a native-platform qualification result.
 

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-419fa9909534dde31e16",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\npartial class C\n{\n    static partial void Goo(Action a);\n\n    static void Main()\n    {\n        Goo(() => { int x, y = x; });\n    }\n}",
+  "sourceSHA256": "a1df8ccdf34a3dd49d077ed7e502712e8c40e8b73b53c84ddeec5d02b24f8899",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "LambdaInUnimplementedPartial",
+    "offset": 24299
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,32): error CS0165: Use of unassigned local variable 'x'\n                //         Goo(() => { int x, y = x; });\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\")\n                ",
+  "unsupported": []
+}

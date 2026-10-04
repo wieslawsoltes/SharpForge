@@ -1,0 +1,1 @@
+<TextBox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="fixture" Text="" MaxLength="0" Width="0" />

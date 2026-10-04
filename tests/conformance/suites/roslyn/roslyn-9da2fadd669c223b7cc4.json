@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9da2fadd669c223b7cc4",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\npublic abstract class BaseClass<T>\n{\n    public abstract int Method(T input);\n}\n\npublic class DerivingClass<T> : BaseClass<T>\n{\n    [Obsolete(\"Deprecated\")]\n    public override void Method(T input)\n    {\n        throw new NotImplementedException();\n    }\n}\n",
+  "sourceSHA256": "7016d017d4b0a59418383885d7814e0fbfcfdb00003b3cb96b306078b645e1a9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "sha256": "a146aeb41311a33fd51733055804d5bdd45ba0e5302ca02348a06cb7e94dd243",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "license": "MIT",
+    "method": "ObsoleteAttributeOverride",
+    "offset": 229823
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0809",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0508",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,26): warning CS0809: Obsolete member 'DerivingClass<T>.Method(T)' overrides non-obsolete member 'BaseClass<T>.Method(T)'\n                //     public override void Method(T input)\n                Diagnostic(ErrorCode.WRN_ObsoleteOverridingNonObsolete, \"Method\").WithArguments(\"DerivingClass<T>.Method(T)\", \"BaseClass<T>.Method(T)\").WithLocation(11, 26),\n                // (11,26): error CS0508: 'DerivingClass<T>.Method(T)': return type must be 'int' to match overridden member 'BaseClass<T>.Method(T)'\n                //     public override void Method(T input)\n                Diagnostic(ErrorCode.ERR_CantChangeReturnTypeOnOverride, \"Method\").WithArguments(\"DerivingClass<T>.Method(T)\", \"BaseClass<T>.Method(T)\", \"int\").WithLocation(11, 26)",
+  "unsupported": []
+}

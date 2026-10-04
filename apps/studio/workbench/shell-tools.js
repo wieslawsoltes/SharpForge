@@ -78,7 +78,7 @@ export async function mountShellTool(shell, id, host) {
   const options = {
     context, documents: shell.documents, request: shell.options.requestCompiler, applyEdits: shell.options.applyEdits,
     navigate: location => shell.navigate(location), dialogs: shell.dialogs, onError: error => shell.onError(error),
-    designer: shell.options.designer, tasks: shell.tasks, sessions: shell.services.sessions,
+    designer: shell.options.designer, tasks: shell.tasks, sessions: shell.services.sessions, executionCapture: shell.executionCapture,
     readDocument: shell.options.readDocument, newWindow: newId => shell.activateTool(newId),
     openNew: newId => shell.activateTool(newId), symbolIndex: shell.symbols,
     assemblies: shell.options.assemblies, inspect: shell.options.inspectAssembly, metadata: shell.metadata,

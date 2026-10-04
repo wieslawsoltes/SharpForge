@@ -1,5 +1,9 @@
 # A19 document groups and window management
 
+## Review branch scope
+
+Review04 contains the docking, navigation, Watch and lazy tool source modules and their focused tests. Studio bootstrap wiring, actual Studio browser workflows, standalone bundling changes and A20 performance drivers remain in the dependent composition layer. Qualification records below describe the original completed source batches; no tests or builds were rerun for this review branch. The standalone docking DOM fixture is present and uses built assets with the production server/CSP, but remains unrun. See [project16-workbench-review.md](project16-workbench-review.md) for the exact scope and host contracts.
+
 This document describes the Project 16 implementation contracts for SF-A19-T03, T04, T37, T38 and the docking portion of T10.3. It covers the browser DOM host and JavaScript model. Native cross-process docking, independent-window application lifetimes and OS monitor enumeration are outside this browser implementation.
 
 ## Capability inventory

@@ -13,13 +13,17 @@ export function mountStudioShell(context) {
   let shell = createWorkbenchShell({
     document, root: document.querySelector('#app'), commands, keybindings: keyboard, services, state, docking,
     requestCompiler: context.requestCompiler, navigate: context.navigate,
+    readAssemblyReference: context.readAssemblyReference,
     getEditor: context.getEditor, designer: context.designer, download: context.download,
     applyEdits: context.applyEdits, projectData: context.projectData, setKeymap: context.setKeymap,
     applyKeybindings: bindings => keyboard.apply(bindings), editorOptionsPage: createEditorOptionsPage,
     applySettings: settings => {
-      for (const views of services.documents.views.values()) for (const { editor } of views.values()) editor.updateOptions(settings.editor);
+      for (const views of services.documents.views.values()) for (const { editor } of views.values()) {
+        if (context.configureEditor) context.configureEditor(editor, settings);
+        else editor.updateOptions(settings.editor);
+      }
     },
-    applyConfiguration: context.applyConfiguration, importFiles: context.importFiles,
+    applyConfiguration: context.applyConfiguration, importFiles: context.importFiles, openRecent: context.openRecent,
     readDisk: context.readDisk, reloadDocument: context.reloadDocument, restoreFiles: context.restoreFiles,
     readDocument: uri => services.documents.get(uri), onError: context.onError
   });

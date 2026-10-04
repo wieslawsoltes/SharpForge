@@ -1,4 +1,5 @@
 import {enumTypes,frameworkType} from '@sharpforge/framework';
+export {smallInteger, smallIntegerIndirect} from './numeric/small-int.js';
 export {managedExceptionTypes, exceptionTypeName, exceptionBaseType, exceptionHResult, exceptionMatches} from './exception-types.js';
 /** Versioned, structured-cloneable stack bytecode. Each instruction is three signed 32-bit words. */
 export const FORMAT_VERSION = 2;
@@ -12,6 +13,7 @@ export const Unary = Object.freeze({ '-':0, '+':1, '!':2, '~':3 });
 export const UnaryName = Object.freeze(Object.keys(Unary));
 import {Builtins} from './builtins.js';
 export {Builtins,BuiltinMap,frameworkBuiltin,CONTRACT_BUILTIN_OFFSET,createBuiltinRegistry} from './builtins.js';
+export {builtinOwners,builtinMemberShape,builtinParameterType} from './builtin-metadata.js';
 export function disassemble(image, methodId) {
   const methods=methodId===undefined?image.methods:[image.methods[methodId]];
   return methods.map(m=>({name:m.qualifiedName,id:m.id,instructions:Array.from({length:m.code.length/3},(_,i)=>({offset:i,op:OpName[m.code[i*3]],a:m.code[i*3+1],b:m.code[i*3+2],point:m.code[i*3]===Op.SEQ?image.sequencePoints[m.code[i*3+1]]:null}))}));
@@ -62,3 +64,9 @@ export function verifyImage(image){
 
 export {float, floatBinary, floatCompare, finiteFloat, ieeeRemainder} from './numeric/float.js';
 export {int64Binary, int64Compare, int64Unary} from './numeric/int64.js';
+export {uint32Binary, uint32Compare} from './numeric/uint32.js';
+
+export {convert, conversionTargets} from './numeric/conversions.js';
+export {number, isNumber} from './numeric/numeric-values.js';
+
+export {nativeIntegerBits, isNativeInteger, nativeInteger, nativeBinary, nativeSize} from './numeric/native-int.js';
