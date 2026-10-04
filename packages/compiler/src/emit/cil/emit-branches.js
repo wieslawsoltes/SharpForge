@@ -5,6 +5,7 @@
  * A jump that leaves a protected region is a `leave`, and a `return` inside one stores its value and leaves to the
  * shared return point of the method (ECMA-335 III.3.46: `ret` is not allowed inside a try or handler block).
  */
+import { TypeKind } from '../../symbols/types.js';
 import { isVoid, isReference } from './type-facts.js';
 
 /** Class mixin: control flow. */
@@ -171,7 +172,9 @@ export const BranchEmission = Base =>
     /** `a ?? b` over references: `a` when it is not null, else `b`. */
     exprCoalesce(node) {
       const il = this.il,
-        left = node.left;
+        left = node.left,
+        isOpen = left.type?.typeKind === TypeKind.TypeParameter && !left.type.isValueType;
+      if (isOpen && (!node.leftConversion || node.leftConversion.isIdentity)) return this.typeParameterCoalesce(node);
       if (!left.type || !isReference(left.type) || (node.leftConversion && !node.leftConversion.isIdentity && !node.leftConversion.isReference)) {
         return this.nullableCoalesce(node);
       }
@@ -180,6 +183,25 @@ export const BranchEmission = Base =>
       il.emit('dup').emit('brtrue', end).emit('pop');
       if (node.right.form === 'throw' || node.right.kind === 'Throw') this.throwExpression(node.right);
       else this.expression(node.right);
+      il.mark(end);
+      return undefined;
+    }
+    /** A null-coalescing operator whose left operand is a type parameter: the value is tested for null through its box. */
+    typeParameterCoalesce(node) {
+      const il = this.il,
+        type = node.left.type,
+        slot = this.temp(type),
+        present = il.newLabel(),
+        end = il.newLabel();
+      this.expression(node.left);
+      il.emit('stloc', slot).emit('ldloc', slot).emit('box', this.tokens.type(type)).emit('brtrue', present);
+      if (node.right.form === 'throw' || node.right.kind === 'Throw') this.throwExpression(node.right);
+      else {
+        this.expression(node.right);
+        il.emit('br', end);
+      }
+      il.mark(present);
+      il.emit('ldloc', slot);
       il.mark(end);
       return undefined;
     }
