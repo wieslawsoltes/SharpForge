@@ -73,3 +73,21 @@ These tests and source have not been executed in this lane. The parent owns the
 serial completed-scope regression cohort and later hosted browser qualification.
 Transport/DOM doubles in the Node fixtures are explicit; no new real browser,
 native file permission, cross-platform or latency acceptance is claimed here.
+
+## Initial parent cohort and fixture corrections
+
+The parent completed the combined areas at source `80dfe3f5`: A19 had 748 cases,
+746 passes and two failures; A20 had 712 cases, 702 passes, one failure and nine
+existing explicit skips. The three failures were in these new fixtures. Both
+Studio snapshot tests called the editor service name `documentSymbols` directly
+on the compiler transport; production `studio-editor.js` maps that name to
+`symbols`. They now use the actual protocol request and additionally assert the
+exact `analyze`/`symbols` request sequence, retaining all source/version checks.
+The no-normalization save view lacked CodeEditor's explicit default
+`endOfLineExplicit: false`, so it incorrectly enabled EOL normalization. The
+fixture now supplies that real default; the assertion that enabled normalization
+rejects an active preview remains unchanged.
+
+This correction was not executed here. Parent-owned affected-file retries remain
+pending; do not report the original combined cohorts as all passing or add their
+eventual overlapping retry counts to their original totals.
