@@ -6,7 +6,7 @@ import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { locateReferencePack } from '../../../packages/compiler/src/node/reference-pack.js';
-import { nullableAttributeRows } from './inspect-metadata.mjs';
+import { nullableAttributeRows, tupleAttributeRows } from './inspect-metadata.mjs';
 
 const root = process.env.DOTNET_ROOT;
 if (!root) throw new Error('Set DOTNET_ROOT to the .NET SDK installation used for this oracle.');
@@ -18,8 +18,10 @@ const compiler = join(root, 'sdk', sdk, 'Roslyn', 'bincore', 'csc.dll');
 const pack = locateReferencePack();
 if (!pack) throw new Error('No .NET reference pack was found.');
 const here = dirname(fileURLToPath(import.meta.url));
-const source = join(here, 'NullableMetadata.cs');
-const output = join(here, 'NullableMetadata.dll');
+const name = process.argv[2] ?? 'NullableMetadata';
+if (!['NullableMetadata', 'TupleMetadata'].includes(name)) throw new Error('Unknown metadata fixture: ' + name);
+const source = join(here, name + '.cs');
+const output = join(here, name + '.dll');
 const options = ['-nologo', '-noconfig', '-nostdlib', '-target:library', '-deterministic', '-debug-', '-optimize+',
   '-langversion:preview', '-nullable:disable', '-unsafe', '-nowarn:CS8618,CS0067'];
 const compiled = spawnSync(dotnet, [compiler, ...options, '-out:' + output,
@@ -38,6 +40,8 @@ const provenance = {
   sourceSha256: sha256(source),
   assemblySha256: sha256(output),
 };
-writeFileSync(join(here, 'provenance.json'), JSON.stringify(provenance, null, 2) + '\n');
-writeFileSync(join(here, 'roslyn-attributes.json'), JSON.stringify(nullableAttributeRows(readFileSync(output)), null, 2) + '\n');
+const tuple = name === 'TupleMetadata';
+writeFileSync(join(here, tuple ? 'tuple-provenance.json' : 'provenance.json'), JSON.stringify(provenance, null, 2) + '\n');
+writeFileSync(join(here, tuple ? 'roslyn-tuple-attributes.json' : 'roslyn-attributes.json'),
+  JSON.stringify((tuple ? tupleAttributeRows : nullableAttributeRows)(readFileSync(output)), null, 2) + '\n');
 process.stdout.write(`Roslyn ${provenance.compiler}; ${readFileSync(output).length} bytes; ${provenance.assemblySha256}\n`);
