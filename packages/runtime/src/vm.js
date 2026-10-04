@@ -1,4 +1,5 @@
 import {callSourceFrame,callSourceFromStack} from './execution/call-frames.js';
+import {beginSourceStackInstruction,handleSourceInstructionFault} from './execution/source-stack-admission.js';
 import {rootValues} from './execution/frame-roots.js';
 import {executionProfiler} from './execution/profiler.js';
 import {flushFramePool} from './execution/frame-pool.js';
@@ -47,6 +48,7 @@ export class VirtualMachine {
     while(this.state==='running'&&this.frames.length&&count<instructionBudget){
       if((count&255)===0&&performance.now()-started>=timeBudgetMs)break;
       this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,method=this.image.methods[frame.methodId],code=method.code,base=frame.pc*3,op=code[base],a=code[base+1],b=code[base+2];
+      if(!beginSourceStackInstruction(this,frame))break;
       if(op===Op.SEQ){frame.point=this.image.sequencePoints[a];this.currentPoint=frame.point;if(onSequence?.(frame.point,frame)){this.sourcePause=true;this.state='paused';break;}}
       this.sourcePause=false;frame.pc++;count++;this.instructions++;
       try{
@@ -78,7 +80,7 @@ export class VirtualMachine {
           case Op.RETHROW:rethrow(frame);break;
           default:throw new ManagedFault('InvalidProgramException','Unknown instruction');
         }
-      }catch(error){const fault=this.makeFault(error);if(fault.name==='InstructionLimitException'){this.fault=fault;this.state='faulted';break;}if(this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.handleFault(fault);}finally{flushFramePool(this);}
+      }catch(error){if(!handleSourceInstructionFault(this,error))break;}finally{flushFramePool(this);}
       this.scheduler.afterInstruction();
     }
     this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;return this.state;
