@@ -1,0 +1,42 @@
+[
+  {
+    "name": "archive",
+    "actual": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/archive/src/index.js"
+  },
+  {
+    "name": "bcl-collections",
+    "actual": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bcl-collections/src/index.js"
+  },
+  {
+    "name": "bcl-core",
+    "actual": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bcl-core/src/index.js"
+  },
+  {
+    "name": "bytecode",
+    "actual": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bytecode/src/index.js"
+  },
+  {
+    "name": "cil",
+    "actual": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/cil/src/index.js"
+  },
+  {
+    "name": "compiler",
+    "actual": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/compiler/src/index.js"
+  },
+  {
+    "name": "framework",
+    "actual": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/framework/src/index.js"
+  },
+  {
+    "name": "symbols",
+    "actual": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/symbols/src/index.js"
+  },
+  {
+    "name": "syntax",
+    "actual": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/syntax/src/index.js"
+  },
+  {
+    "name": "text",
+    "actual": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/text/src/index.js"
+  }
+]
