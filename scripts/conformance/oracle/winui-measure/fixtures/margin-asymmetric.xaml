@@ -1,0 +1,9 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      x:Name="Subject" AutomationProperties.Name="Asymmetric child margin"
+      Width="240" Height="160" Background="WhiteSmoke">
+  <Border x:Name="InsetChild" Margin="8,12,20,4" BorderThickness="1,2,3,4"
+          BorderBrush="DarkBlue" Padding="4,8,12,16" Background="LightBlue">
+    <TextBlock x:Name="Caption" Text="Unequal insets" TextWrapping="Wrap" />
+  </Border>
+</Grid>

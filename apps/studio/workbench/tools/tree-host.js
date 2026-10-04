@@ -30,7 +30,9 @@ export function hierarchicalSymbols(symbols, {includeMembers = true, includePriv
     const projectId = symbol.projectId ?? '(workspace)';
     let project = projects.get(projectId);
     if (!project) projects.set(projectId, project = {id: 'project:' + projectId, label: projectId, children: [], defaultExpanded: true});
-    if (['class', 'struct', 'interface', 'enum', 'record', 'namespace'].includes(symbol.kind)) {
+    if (['class', 'struct', 'interface', 'enum', 'record', 'delegate', 'namespace'].includes(symbol.kind)) {
+      const qualified = symbol.fullName ?? symbol.qualifiedName ?? symbol.name;
+      if (types.has(projectId + ':' + qualified)) continue;
       const namespace = symbol.namespace ?? (symbol.qualifiedName?.includes('.') ? symbol.qualifiedName.split('.').slice(0, -1).join('.') : '');
       let parent = project;
       if (namespace) {
@@ -42,14 +44,14 @@ export function hierarchicalSymbols(symbols, {includeMembers = true, includePriv
         symbol, children: [], defaultExpanded: false};
       parent.children.push(node);
       types.set(projectId + ':' + symbol.name, node);
-      if (symbol.qualifiedName) types.set(projectId + ':' + symbol.qualifiedName, node);
+      types.set(projectId + ':' + qualified, node);
     }
   }
   if (includeMembers) for (const symbol of symbols) {
     if (!['method', 'property', 'field', 'event', 'constructor'].includes(symbol.kind)) continue;
     if (!includePrivate && (symbol.accessibility === 'private' || symbol.modifiers?.includes('private'))) continue;
     const projectId = symbol.projectId ?? '(workspace)';
-    const parent = types.get(projectId + ':' + symbol.owner) ?? projects.get(projectId);
+    const parent = types.get(projectId + ':' + (symbol.ownerFullName ?? symbol.owner)) ?? projects.get(projectId);
     parent?.children.push({id: 'symbol:' + symbol.id, label: symbol.name, detail: symbol.detail, symbol, children: []});
   }
   return [...projects.values()];

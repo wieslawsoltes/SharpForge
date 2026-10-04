@@ -1,7 +1,11 @@
+import { BuildTasks } from './build-tasks.js';
+
 /** Subscribe once to service events, invalidate only relevant tools, and preserve background session isolation. */
 export function subscribeShellServices(shell) {
   const disposers = [];
-  const operations = new Map();
+  const buildTasks = shell.services.builds && new BuildTasks({ builds: shell.services.builds, queue: shell.services.queue,
+    tasks: shell.tasks, onError: error => shell.onError?.(error) });
+  if (buildTasks) disposers.push(() => buildTasks.dispose());
   const listen = (service, callback) => { if (service?.subscribe) disposers.push(service.subscribe(callback)); };
   const invalidate = (...ids) => { for (const id of ids) shell.invalidateTool(id); };
   listen(shell.services.output, () => invalidate('output'));
@@ -10,26 +14,19 @@ export function subscribeShellServices(shell) {
     if (event.type === 'activated') {
       shell.recent.add({uri: event.uri, kind: 'file', workspaceId: shell.options.workspaceId});
       shell.lastDocumentKind = 'code';
-      invalidate('outline', 'toolbox', 'properties', 'code-definition', 'solution-view');
+      invalidate('outline', 'toolbox', 'properties', 'code-definition', 'solution-view', 'object-browser');
     }
     if (['changed', 'added', 'removed', 'reset'].includes(event.type)) {
       shell.bookmarks.trackChanges(event);
       invalidate('outline', 'class-view', 'bookmarks', 'code-definition', 'solution-view');
+      if (event.type === 'reset') invalidate('object-browser');
       shell.taskListDirty = true;
     }
     shell.updateContext();
   });
   listen(shell.services.builds, event => {
-    if (event.type === 'started') {
-      const id = 'build:' + event.projectId + ':' + event.revision;
-      operations.set(event.projectId, shell.tasks.begin({id, label: 'Build ' + event.projectId,
-        projectId: event.projectId, cancel: () => shell.services.builds.get(event.projectId)?.cancel()}));
-    }
+    buildTasks.receive(event);
     if (['completed', 'failed', 'cancelled'].includes(event.type)) {
-      const operation = operations.get(event.projectId);
-      if (event.type === 'completed') operation?.complete();
-      else operation?.fail(event.error ?? Object.assign(new Error('Build cancelled'), {name: 'AbortError'}));
-      operations.delete(event.projectId);
       if (event.type === 'completed') shell.announcer?.announce('Build ' + (event.result?.success ? 'succeeded' : 'failed') + ': ' + event.projectId,
         {id: 'build-result:' + event.projectId + ':' + event.revision});
     }
@@ -40,7 +37,9 @@ export function subscribeShellServices(shell) {
     shell.updateContext();
   });
   listen(shell.services.sessions, event => {
-    if (event.session) shell.timeline.record(event.session.id, event.event ?? event.session.debug ?? event);
+    if (event.session) shell.timeline.record(event.session.id, event.event ?? event.session.debug ?? event,
+      {identity: event.session.identity, name: event.session.name, projectId: event.projectId,
+        runtimeSession: event.session.runtimeSession, generation: event.generation});
     invalidate('diagnostic-timeline');
     if (event.active) {
       invalidate('output', 'properties');
@@ -52,6 +51,7 @@ export function subscribeShellServices(shell) {
     }
   });
   listen(shell.references, () => invalidate('references'));
+  listen(shell.timeline, () => invalidate('diagnostic-timeline'));
   listen(shell.bookmarks, () => invalidate('bookmarks'));
   listen(shell.taskList, () => invalidate('task-list'));
   listen(shell.tests, () => { invalidate('test-explorer'); shell.commands.invalidate(); });

@@ -1,0 +1,71 @@
+/**
+ * Signature blobs of declared members (SF-A02-T29), ECMA-335 II.23.2: FieldSig, MethodDefSig and PropertySig built
+ * from symbols. Types are encoded by `TypeTokens.signature`; a by-reference parameter or return is `BYREF type`.
+ */
+import { RefKind } from '../../symbols/types.js';
+import { compressUnsigned, ElementType } from '../generics.js';
+
+const FIELD = 0x06;
+const PROPERTY = 0x08;
+const HAS_THIS = 0x20;
+const GENERIC = 0x10;
+const BY_REFERENCE = 0x10;
+
+const isByReference = refKind => !!refKind && refKind !== RefKind.None;
+
+/** The signature of a symbol type, or of a framework class named by its full metadata name. */
+function typeBytes(types, type) {
+  return typeof type === 'string' ? types.frameworkClassSignature(type) : types.signature(type);
+}
+
+function passed(types, type, refKind) {
+  return isByReference(refKind) ? [BY_REFERENCE, ...typeBytes(types, type)] : typeBytes(types, type);
+}
+
+function returned(types, type, refKind) {
+  if (type.specialType === 'System_Void') return [ElementType.Void];
+  return passed(types, type, refKind);
+}
+
+/** FieldSig: `FIELD type`. */
+export function fieldSignature(types, type) {
+  return Uint8Array.from([FIELD, ...types.signature(type)]);
+}
+
+/**
+ * MethodDefSig: calling convention, generic arity, parameter count, return type, parameters.
+ * @param {{isStatic: boolean, arity?: number, returnType: object|string, refKind?: string, parameters: object[]}} shape
+ *   `parameters` are `{type, refKind}`; a type is a type symbol, or the full metadata name of a framework class
+ */
+export function methodSignature(types, shape) {
+  const arity = shape.arity ?? 0,
+    convention = (shape.isStatic ? 0 : HAS_THIS) | (arity ? GENERIC : 0);
+  return Uint8Array.from([
+    convention,
+    ...(arity ? compressUnsigned(arity) : []),
+    ...compressUnsigned(shape.parameters.length),
+    ...returned(types, shape.returnType, shape.refKind),
+    ...shape.parameters.flatMap(parameter => passed(types, parameter.type, parameter.refKind)),
+  ]);
+}
+
+/** The MethodDefSig of a method symbol. */
+export function methodSymbolSignature(types, method) {
+  return methodSignature(types, {
+    isStatic: method.isStatic,
+    arity: method.typeParameters?.length ?? 0,
+    returnType: method.returnType,
+    refKind: method.refKind,
+    parameters: method.parameters,
+  });
+}
+
+/** PropertySig: `PROPERTY [HASTHIS] count type parameters` (the parameters are those of an indexer). */
+export function propertySignature(types, property) {
+  return Uint8Array.from([
+    PROPERTY | (property.isStatic ? 0 : HAS_THIS),
+    ...compressUnsigned(property.parameters.length),
+    ...passed(types, property.type, property.refKind),
+    ...property.parameters.flatMap(parameter => passed(types, parameter.type, parameter.refKind)),
+  ]);
+}

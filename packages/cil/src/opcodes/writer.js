@@ -1,7 +1,8 @@
 import { Writer, CilError } from '../binary.js';
-import { CilOpcodes } from './catalog.js';
+import { opcodeByName } from './catalog.js';
 import { emitLocal, emitInteger } from './compact.js';
 import { finishCilLayout } from '../il-layout.js';
+import { emitInstructionGroup } from '../il-prefixes.js';
 
 /** Byte-oriented CIL writer. Optional compact helpers select encodings before offsets are observed. */
 export class CilWriter extends Writer {
@@ -37,8 +38,10 @@ export class CilWriter extends Writer {
   }
 
   op(name, operand) {
-    const opcode = CilOpcodes[name];
-    if (!opcode) throw new CilError(`Unsupported CIL opcode ${name}`);
+    const opcode = typeof name === 'string' ? opcodeByName[name] : undefined;
+    if (!opcode) {
+      throw new CilError(typeof name === 'string' ? `Unsupported CIL opcode ${name}` : 'Invalid CIL opcode name');
+    }
     if (opcode.value > 255) this.u8(0xfe).u8(opcode.value & 255);
     else this.u8(opcode.value);
     if (opcode.operand.startsWith('br') && typeof operand === 'string') {
@@ -71,4 +74,6 @@ export class CilWriter extends Writer {
 
   local(name, index) { return emitLocal(this, name, index, this.compact); }
   integer(value) { return emitInteger(this, value, this.compact); }
+  /** Write a target instruction with a bounded validated prefix sequence; operands keep op() wire semantics. */
+  group(name, operand, prefixes) { return emitInstructionGroup(this, name, operand, prefixes); }
 }

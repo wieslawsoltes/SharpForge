@@ -15,4 +15,20 @@ test('schema scalar negatives agree with codec bounds',()=>{for(const value of [
 
 test('ABI nested structs fail with typed depth limit',()=>{let value={kind:'null'};for(let i=0;i<66;i++)value={kind:'struct',value:{type:'T:Recursive',fields:[value]}};assert.throws(()=>encode(envelope([value])),{code:'ABI_LIMIT'});});
 
+test('ABI sparse slots and heap data fail before encoding instead of becoming null values',()=>{
+  for(const index of [0,1,2]){
+    const slots=[{kind:'null'},{kind:'i32',value:42},{kind:'null'}];delete slots[index];
+    const documents=[envelope(slots),...['array','object'].map(kind=>({
+      ...envelope([{kind:'ref',value:{h:1,g:1}}]),
+      handles:[{h:1,g:1,kind,type:kind==='array'?'object[]':'T:Record',data:slots}]
+    }))];
+    for(const doc of documents)for(const operation of [validateEnvelope,encode]){
+      assert.throws(()=>operation(doc),{name:'AbiError',code:'ABI_TAG'});
+    }
+  }
+  const explicitNulls={...envelope([{kind:'null'},{kind:'ref',value:{h:1,g:1}},{kind:'null'}]),
+    handles:[{h:1,g:1,kind:'array',type:'object[]',data:[{kind:'null'},{kind:'i32',value:42},{kind:'null'}]}]};
+  assert.deepEqual(decode(encode(explicitNulls)),explicitNulls);
+});
+
 test('ABI floating width and signed zero apply inside structs and heap arrays',()=>{const doc={...envelope([{kind:'struct',value:{type:'T:Pair',fields:[{kind:'f32',value:1.1},{kind:'f64',value:-0}]}},{kind:'ref',value:{h:1,g:1}}]),handles:[{h:1,g:1,kind:'array',type:'float[]',data:[{kind:'f32',value:1.1}]}]};const decoded=decode(encode(doc));assert.equal(decoded.slots[0].value.fields[0].value,Math.fround(1.1));assert.equal(decoded.slots[0].value.fields[1].value,'-0');assert.equal(decoded.handles[0].data[0].value,Math.fround(1.1));assert.deepEqual(encode(decoded),encode(doc));});
